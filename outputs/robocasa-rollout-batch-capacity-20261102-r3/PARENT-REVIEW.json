@@ -1,0 +1,80 @@
+{
+  "completed": true,
+  "review": "Saved scalarJSON audit only; no model/array/video payload loaded onMac",
+  "job": "job-pvcv8in7o1kb",
+  "source_commit": "3bda6a0acd9ffa1274388b90dea6714d54fbf0ca",
+  "rows": [
+    {
+      "environments_per_GPU": 1,
+      "replicas": 2,
+      "mean_controls_per_second_per_GPU": 15.763859864157627,
+      "speedup": 1.0,
+      "mean_full8episode_collection_seconds": 380.62323126755655,
+      "sampled_peak_GPU_GiB": 8.908203125,
+      "max_initial_action_batch_single_drift": 0.0,
+      "max_initial_feature_batch_single_drift": 0.0
+    },
+    {
+      "environments_per_GPU": 2,
+      "replicas": 2,
+      "mean_controls_per_second_per_GPU": 27.94848708213314,
+      "speedup": 1.7729469383117118,
+      "mean_full8episode_collection_seconds": 214.6806787471287,
+      "sampled_peak_GPU_GiB": 10.4501953125,
+      "max_initial_action_batch_single_drift": 0.0035698413848876953,
+      "max_initial_feature_batch_single_drift": 0.08473491668701172
+    },
+    {
+      "environments_per_GPU": 4,
+      "replicas": 2,
+      "mean_controls_per_second_per_GPU": 51.66795452266298,
+      "speedup": 3.2776207710486367,
+      "mean_full8episode_collection_seconds": 116.1306209640461,
+      "sampled_peak_GPU_GiB": 13.4580078125,
+      "max_initial_action_batch_single_drift": 0.004736542701721191,
+      "max_initial_feature_batch_single_drift": 0.1815166473388672
+    },
+    {
+      "environments_per_GPU": 8,
+      "replicas": 2,
+      "mean_controls_per_second_per_GPU": 86.92819255461993,
+      "speedup": 5.514397698514754,
+      "mean_full8episode_collection_seconds": 69.02705077751307,
+      "sampled_peak_GPU_GiB": 18.765625,
+      "max_initial_action_batch_single_drift": 0.004683852195739746,
+      "max_initial_feature_batch_single_drift": 0.2752723693847656
+    }
+  ],
+  "all8workers_complete": true,
+  "all4nodes_exit0": true,
+  "full_horizon_physical_episodes": 64,
+  "distinct_native_cases": 8,
+  "policy_controls": 48000,
+  "all_in_controls": 48000,
+  "optimizer_updates": 0,
+  "closed_GPU_seconds": 2732,
+  "prior_failure_GPU_seconds": 640,
+  "combined_capacity_GPU_seconds": 3372,
+  "unused_capacity_GPU_seconds": 11028,
+  "selected_configuration": {
+    "environments_per_GPU": 8,
+    "policy_copies_per_GPU": 1,
+    "scope": "best tested standalone rollout capacity, not hardwaremaximum or integratedFlora capacity"
+  },
+  "production_constraints": [
+    "Keep full80episode joint globalrollout, same optimizer/minibatches and complete case accounting; executionbatching does not multiply trainingbudget.",
+    "Real batched BF16 actions/features differ slightly from lane1 despite identical percase noise. Match batching across rewardarms and before/after panels; no currenttrainingjob mutation or oldbank equivalence claim.",
+    "Standalone native batch8 sampled19,216MiB, Flora batch8 sampled77,625MiB separately. Sum96,841MiB leaves only1,046MiB of97,887MiB; colocationneeds its own real memorycheck/reservation, not assumed safe.",
+    "OpenDrawer only, twoGPUreplicas per setting, fixed8case workload; mixed-task horizons and persistentproduction throughput remain unmeasured."
+  ],
+  "files": [
+    {
+      "path": "outputs/robocasa-rollout-batch-capacity-20261102-r3/RESULT.json",
+      "sha256": "0a3539e588bd1ad56afa7da01297ad27b62bda8dd0df76de1bcf59a9f44ffc5a"
+    },
+    {
+      "path": "outputs/robocasa-rollout-batch-capacity-20261102-r3/TERMINAL-PACKET.json",
+      "sha256": "22033968fd3918407a925ffad55e393eec9588bc53cb815a6b6b463bc69e6acb"
+    }
+  ]
+}

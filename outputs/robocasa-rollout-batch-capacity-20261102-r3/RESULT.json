@@ -1,0 +1,79 @@
+{
+  "completed": true,
+  "source_commit": "3bda6a0acd9ffa1274388b90dea6714d54fbf0ca",
+  "configurations": [
+    {
+      "batch_size": 1,
+      "replicates": 2,
+      "controls_per_second_each": [
+        15.702374964861333,
+        15.825344763453922
+      ],
+      "aggregate_controls_per_second": 31.527719728315255,
+      "peak_nvml_mib_each": [
+        9122.0,
+        9122.0
+      ],
+      "collection_seconds_each": [
+        382.10780301876366,
+        379.13865951634943
+      ]
+    },
+    {
+      "batch_size": 2,
+      "replicates": 2,
+      "controls_per_second_each": [
+        27.953283969910135,
+        27.943690194356144
+      ],
+      "aggregate_controls_per_second": 55.89697416426628,
+      "peak_nvml_mib_each": [
+        10701.0,
+        10701.0
+      ],
+      "collection_seconds_each": [
+        214.64383241906762,
+        214.71752507518977
+      ]
+    },
+    {
+      "batch_size": 4,
+      "replicates": 2,
+      "controls_per_second_each": [
+        51.346923848427636,
+        51.988985196898334
+      ],
+      "aggregate_controls_per_second": 103.33590904532596,
+      "peak_nvml_mib_each": [
+        13781.0,
+        13781.0
+      ],
+      "collection_seconds_each": [
+        116.85218023404013,
+        115.40906169405207
+      ]
+    },
+    {
+      "batch_size": 8,
+      "replicates": 2,
+      "controls_per_second_each": [
+        86.22132929611583,
+        87.63505581312401
+      ],
+      "aggregate_controls_per_second": 173.85638510923985,
+      "peak_nvml_mib_each": [
+        19216.0,
+        19216.0
+      ],
+      "collection_seconds_each": [
+        69.58834953000769,
+        68.46575202501845
+      ]
+    }
+  ],
+  "optimizer_updates": 0,
+  "physical_episodes": 64,
+  "policy_controls": 48000,
+  "actual_all_in_controls": 48000,
+  "interpretation": "Fixed eight-case OpenDrawer speed test; twoGPU replicas per setting. No new calibration/learning evidence."
+}

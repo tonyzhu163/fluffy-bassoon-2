@@ -1,0 +1,3728 @@
+{
+  "job": "job-pvcv8in7o1kb",
+  "completed": true,
+  "summary": {
+    "completed": true,
+    "source_commit": "3bda6a0acd9ffa1274388b90dea6714d54fbf0ca",
+    "configurations": [
+      {
+        "batch_size": 1,
+        "replicates": 2,
+        "controls_per_second_each": [
+          15.702374964861333,
+          15.825344763453922
+        ],
+        "aggregate_controls_per_second": 31.527719728315255,
+        "peak_nvml_mib_each": [
+          9122.0,
+          9122.0
+        ],
+        "collection_seconds_each": [
+          382.10780301876366,
+          379.13865951634943
+        ]
+      },
+      {
+        "batch_size": 2,
+        "replicates": 2,
+        "controls_per_second_each": [
+          27.953283969910135,
+          27.943690194356144
+        ],
+        "aggregate_controls_per_second": 55.89697416426628,
+        "peak_nvml_mib_each": [
+          10701.0,
+          10701.0
+        ],
+        "collection_seconds_each": [
+          214.64383241906762,
+          214.71752507518977
+        ]
+      },
+      {
+        "batch_size": 4,
+        "replicates": 2,
+        "controls_per_second_each": [
+          51.346923848427636,
+          51.988985196898334
+        ],
+        "aggregate_controls_per_second": 103.33590904532596,
+        "peak_nvml_mib_each": [
+          13781.0,
+          13781.0
+        ],
+        "collection_seconds_each": [
+          116.85218023404013,
+          115.40906169405207
+        ]
+      },
+      {
+        "batch_size": 8,
+        "replicates": 2,
+        "controls_per_second_each": [
+          86.22132929611583,
+          87.63505581312401
+        ],
+        "aggregate_controls_per_second": 173.85638510923985,
+        "peak_nvml_mib_each": [
+          19216.0,
+          19216.0
+        ],
+        "collection_seconds_each": [
+          69.58834953000769,
+          68.46575202501845
+        ]
+      }
+    ],
+    "optimizer_updates": 0,
+    "physical_episodes": 64,
+    "policy_controls": 48000,
+    "actual_all_in_controls": 48000,
+    "interpretation": "Fixed eight-case OpenDrawer speed test; twoGPU replicas per setting. No new calibration/learning evidence."
+  },
+  "nodes": [
+    {
+      "node": 0,
+      "charge": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/clock/attempts/1793591374000000-0000",
+        "started_unix": 1793591374.0,
+        "slice_seconds": 1560,
+        "reserved_seconds": 1620,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793591840.9795043,
+        "exit_code": 0,
+        "charged_seconds": 527,
+        "slice_overrun": false,
+        "charged_gpu_seconds": 1054
+      },
+      "manifest": {
+        "source_commit": "3bda6a0acd9ffa1274388b90dea6714d54fbf0ca",
+        "hostname": "job-pvcv8in7o1kb-master-0",
+        "node_rank": 0,
+        "devices": [
+          {
+            "allocation_ordinal": 0,
+            "visibility_token": "0",
+            "cuda_uuid": "90133544-ffe4-8747-43d9-870b389ac18f",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:61:00.0",
+            "uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+            "inventory": {
+              "index": 0,
+              "uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 0.0,
+              "pci_bus_id": "00000000:61:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-5321a03d-b105-c290-1e56-96906faa6675"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-5321a03d-b105-c290-1e56-96906faa6675"
+              ]
+            }
+          },
+          {
+            "allocation_ordinal": 1,
+            "visibility_token": "1",
+            "cuda_uuid": "3bd05a83-1e0b-2486-2f87-f3070d6edda2",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:a1:00.0",
+            "uuid": "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7",
+            "inventory": {
+              "index": 1,
+              "uuid": "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 0.0,
+              "pci_bus_id": "00000000:A1:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7",
+                "GPU-5321a03d-b105-c290-1e56-96906faa6675"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7",
+                "GPU-5321a03d-b105-c290-1e56-96906faa6675"
+              ]
+            }
+          }
+        ],
+        "allocated_start_unix": 1793591374,
+        "cpus": 64,
+        "ram_gib": 256,
+        "free_bytes": 840479801344,
+        "quota": "UNVERIFIED",
+        "batch_size": 1
+      },
+      "exit_code": "0"
+    },
+    {
+      "node": 1,
+      "charge": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/clock/attempts/1793591378000000-0000",
+        "started_unix": 1793591378.0,
+        "slice_seconds": 1560,
+        "reserved_seconds": 1620,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793591673.8183749,
+        "exit_code": 0,
+        "charged_seconds": 356,
+        "slice_overrun": false,
+        "charged_gpu_seconds": 712
+      },
+      "manifest": {
+        "source_commit": "3bda6a0acd9ffa1274388b90dea6714d54fbf0ca",
+        "hostname": "job-pvcv8in7o1kb-worker-0",
+        "node_rank": 1,
+        "devices": [
+          {
+            "allocation_ordinal": 0,
+            "visibility_token": "0",
+            "cuda_uuid": "d12f98a9-bbc5-871e-6174-eac57036a113",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:a2:00.0",
+            "uuid": "GPU-a43e533b-8529-7dbf-6938-f3907dcc1b01",
+            "inventory": {
+              "index": 0,
+              "uuid": "GPU-a43e533b-8529-7dbf-6938-f3907dcc1b01",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 0.0,
+              "pci_bus_id": "00000000:A2:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-a43e533b-8529-7dbf-6938-f3907dcc1b01"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-a43e533b-8529-7dbf-6938-f3907dcc1b01"
+              ]
+            }
+          },
+          {
+            "allocation_ordinal": 1,
+            "visibility_token": "1",
+            "cuda_uuid": "0c8b2ef6-39dd-b281-d4af-cd7ad74b487d",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:a3:00.0",
+            "uuid": "GPU-c0d2e906-c69e-b9ed-ab6e-304cee158af4",
+            "inventory": {
+              "index": 1,
+              "uuid": "GPU-c0d2e906-c69e-b9ed-ab6e-304cee158af4",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 0.0,
+              "pci_bus_id": "00000000:A3:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-a43e533b-8529-7dbf-6938-f3907dcc1b01",
+                "GPU-c0d2e906-c69e-b9ed-ab6e-304cee158af4"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-a43e533b-8529-7dbf-6938-f3907dcc1b01",
+                "GPU-c0d2e906-c69e-b9ed-ab6e-304cee158af4"
+              ]
+            }
+          }
+        ],
+        "allocated_start_unix": 1793591378,
+        "cpus": 64,
+        "ram_gib": 256,
+        "free_bytes": 840479801344,
+        "quota": "UNVERIFIED",
+        "batch_size": 2
+      },
+      "exit_code": "0"
+    },
+    {
+      "node": 2,
+      "charge": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/clock/attempts/1793591380000000-0000",
+        "started_unix": 1793591380.0,
+        "slice_seconds": 1560,
+        "reserved_seconds": 1620,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793591584.1180599,
+        "exit_code": 0,
+        "charged_seconds": 265,
+        "slice_overrun": false,
+        "charged_gpu_seconds": 530
+      },
+      "manifest": {
+        "source_commit": "3bda6a0acd9ffa1274388b90dea6714d54fbf0ca",
+        "hostname": "job-pvcv8in7o1kb-worker-1",
+        "node_rank": 2,
+        "devices": [
+          {
+            "allocation_ordinal": 0,
+            "visibility_token": "0",
+            "cuda_uuid": "6701e8ff-8d9f-93c0-88e1-7d781a44db4e",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:61:00.0",
+            "uuid": "GPU-3298f6ce-66b3-09e9-3f00-2d51a1e0aa0f",
+            "inventory": {
+              "index": 0,
+              "uuid": "GPU-3298f6ce-66b3-09e9-3f00-2d51a1e0aa0f",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 0.0,
+              "pci_bus_id": "00000000:61:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-3298f6ce-66b3-09e9-3f00-2d51a1e0aa0f"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-3298f6ce-66b3-09e9-3f00-2d51a1e0aa0f"
+              ]
+            }
+          },
+          {
+            "allocation_ordinal": 1,
+            "visibility_token": "1",
+            "cuda_uuid": "9da1b166-043d-88fc-a145-4fceb196e983",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:64:00.0",
+            "uuid": "GPU-3be1501f-813c-fda6-763b-da00e562883c",
+            "inventory": {
+              "index": 1,
+              "uuid": "GPU-3be1501f-813c-fda6-763b-da00e562883c",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 0.0,
+              "pci_bus_id": "00000000:64:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-3298f6ce-66b3-09e9-3f00-2d51a1e0aa0f",
+                "GPU-3be1501f-813c-fda6-763b-da00e562883c"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-3298f6ce-66b3-09e9-3f00-2d51a1e0aa0f",
+                "GPU-3be1501f-813c-fda6-763b-da00e562883c"
+              ]
+            }
+          }
+        ],
+        "allocated_start_unix": 1793591380,
+        "cpus": 64,
+        "ram_gib": 256,
+        "free_bytes": 840479801344,
+        "quota": "UNVERIFIED",
+        "batch_size": 4
+      },
+      "exit_code": "0"
+    },
+    {
+      "node": 3,
+      "charge": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/clock/attempts/1793591380000000-0000",
+        "started_unix": 1793591380.0,
+        "slice_seconds": 1560,
+        "reserved_seconds": 1620,
+        "status": "finished",
+        "scheduler_allowance_seconds": 60,
+        "ended_unix": 1793591537.9710202,
+        "exit_code": 0,
+        "charged_seconds": 218,
+        "slice_overrun": false,
+        "charged_gpu_seconds": 436
+      },
+      "manifest": {
+        "source_commit": "3bda6a0acd9ffa1274388b90dea6714d54fbf0ca",
+        "hostname": "job-pvcv8in7o1kb-worker-2",
+        "node_rank": 3,
+        "devices": [
+          {
+            "allocation_ordinal": 0,
+            "visibility_token": "0",
+            "cuda_uuid": "f3b4f0b5-1f3a-43f1-f886-36f89c84b0c8",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:62:00.0",
+            "uuid": "GPU-6c5a0d2c-60d1-0a85-800a-3a56b5a37c2a",
+            "inventory": {
+              "index": 0,
+              "uuid": "GPU-6c5a0d2c-60d1-0a85-800a-3a56b5a37c2a",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 0.0,
+              "pci_bus_id": "00000000:62:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-6c5a0d2c-60d1-0a85-800a-3a56b5a37c2a"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-6c5a0d2c-60d1-0a85-800a-3a56b5a37c2a"
+              ]
+            }
+          },
+          {
+            "allocation_ordinal": 1,
+            "visibility_token": "1",
+            "cuda_uuid": "457da6ae-fab8-fc85-2bc3-f36701e80079",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:63:00.0",
+            "uuid": "GPU-e9761922-0f32-985a-5dc4-70da0cbafb8b",
+            "inventory": {
+              "index": 1,
+              "uuid": "GPU-e9761922-0f32-985a-5dc4-70da0cbafb8b",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 0.0,
+              "pci_bus_id": "00000000:63:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-6c5a0d2c-60d1-0a85-800a-3a56b5a37c2a",
+                "GPU-e9761922-0f32-985a-5dc4-70da0cbafb8b"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-6c5a0d2c-60d1-0a85-800a-3a56b5a37c2a",
+                "GPU-e9761922-0f32-985a-5dc4-70da0cbafb8b"
+              ]
+            }
+          }
+        ],
+        "allocated_start_unix": 1793591380,
+        "cpus": 64,
+        "ram_gib": 256,
+        "free_bytes": 840479801344,
+        "quota": "UNVERIFIED",
+        "batch_size": 8
+      },
+      "exit_code": "0"
+    }
+  ],
+  "workers": [
+    {
+      "node": 0,
+      "worker": 0,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/result.json",
+      "sha256": "4b696600d2a8b56410c9d05598f1f6a3da68a1de0327595bd164dc367a3f41d3",
+      "result": {
+        "completed": true,
+        "batch_size": 1,
+        "rank": 0,
+        "model_load_seconds": 56.397978217341006,
+        "episodes": 8,
+        "policy_controls": 6000,
+        "actual_all_in_controls": 6000,
+        "collection_wall_seconds": 382.10780301876366,
+        "controls_per_second": 15.702374964861333,
+        "inference_seconds": 36.3054540483281,
+        "reset_seconds": 72.35456563159823,
+        "simulation_video_seconds": 269.21012661326677,
+        "extra_numerical_reference_seconds": 1.9222806366160512,
+        "model_decisions": 120,
+        "batched_forward_calls": 120,
+        "initial_batch_single_comparison": [
+          {
+            "lane": 0,
+            "action_max_abs": 0.0,
+            "feature_max_abs": 0.0
+          }
+        ],
+        "optimizer_updates": 0,
+        "full_episode_evidence": [
+          {
+            "id": "capacity-r0-case0-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 0,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-00/capacity-r0-case0-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "079891bdf748ca171018ff694f961e848baf60dccdbb641f77c2ef9660028fed"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-00/capacity-r0-case0-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "bd9f31d20f3106fb211bf96576e129d9939eb9bc6d4bf37b13a42dc30bc900a7"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-00/capacity-r0-case0-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "18d59545d5273748e9d9e90c753848cd6190c6324583297a6b848996d2c721a9"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r0-case1-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 0,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-01/capacity-r0-case1-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "f358022d5dc38cdcdff98ced2c511a6d5648cd1162b0da83cc6085281bd23673"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-01/capacity-r0-case1-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "3a8d01b8d4e75942c5660700969eb7d538c034dfbbed2e3e534bca645b838035"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-01/capacity-r0-case1-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "4d823bff462244ce8be4af217301070b9dd312f5b49fe49931c1e22c49454311"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r0-case2-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 0,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-02/capacity-r0-case2-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "d60190fb1b7743d73708d8f275c0dc5d04a7c5ca404282236aedd592fac9b26b"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-02/capacity-r0-case2-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "df467c96b90bd70d1181321140d7e8486727c7242f8d3db93a1a2a1437c6f282"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-02/capacity-r0-case2-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "2793c5f078dc2e3b0c2ee2daa112f3103299a45a9f883c43b02865e93d48f0cc"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r0-case3-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 0,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-03/capacity-r0-case3-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "bf4c848f32ef991ad2b062d86d052c5b4cb3779f4449fddd6cf95297b673cbf1"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-03/capacity-r0-case3-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "e883e89fa9e9bd45f9a2f826668488b45989e1dcc76de63fb0b76a188bd1c228"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-03/capacity-r0-case3-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "34338f7eff18257fcb32ac5a137ad735033abffefd76080e68eb867810c73052"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r0-case4-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 0,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-04/capacity-r0-case4-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "b15b8a42ef7384c2cd89564ca0215fdfed457bd81992dfaf85c1869f8fa94a21"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-04/capacity-r0-case4-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "31027a42e3cf940e09897a52bdeb1107c396586992beb5ef8d9b932c063d6092"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-04/capacity-r0-case4-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "0b96bcfe85369219ee9c7ff595a2fb788ed105710ab596b6ed854b7d7303818a"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r0-case5-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 0,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-05/capacity-r0-case5-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "b59d7e46d9e9f92f23333b7cafd5b776001ea810adef367e5d35a3f865e16940"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-05/capacity-r0-case5-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "350f2f8c6be1e08493621f29e57a4f00da43569ad570e98ad731e5171d5ddbc4"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-05/capacity-r0-case5-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "536e8cad5270ddf113e759213b6cedbd693cb3e488105860f924c380212c7a83"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r0-case6-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 0,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-06/capacity-r0-case6-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "0b5ddc1ac1af6612d064d8c7e2c4fb95a8a9422801e9c8f02f31358fce66b71f"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-06/capacity-r0-case6-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "28d38c9b1ebc00828e16fa9cac47bd9de3e3999c348f475e027c5edb88a2cd39"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-06/capacity-r0-case6-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "d3e43f66e507efb35ade620a9a3ec4a1d0611affb1dcfe5eb5023df5a2724e65"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r0-case7-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 0,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-07/capacity-r0-case7-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "83ef8331703cac306f3c23b201453eff4a7c6ee94dc8cd60c8f4165a95b9f77a"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-07/capacity-r0-case7-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "e8bae6521ebfb25a18389617702fdabc969dfeda38fcae63000cc2bb7d249bf2"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-0/case-07/capacity-r0-case7-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "006a285ed2f36d7b86ae1bce9a8ea6963f7536eca00c41e29cf56a85de02d401"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          }
+        ],
+        "torch_peak_allocated_bytes": 7144768000,
+        "torch_peak_reserved_bytes": 7308574720,
+        "policy_checkpoint_sha256": "0bf0a89a34ae957c7d4802f2d103e43e9ef56a0391af03ff7720a79019f2aab7",
+        "total_seconds": 440.4342136764899,
+        "observed_memory": {
+          "phase": "parallel_native_H50_execution",
+          "completed_episodes": 8,
+          "policy_controls": 6000,
+          "peak_nvml_mib": 9122.0,
+          "gpu_utilization_percent": 0.0
+        },
+        "gpu_uuid": "GPU-5321a03d-b105-c290-1e56-96906faa6675"
+      }
+    },
+    {
+      "node": 0,
+      "worker": 1,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/result.json",
+      "sha256": "7d9e499f7e999ea108fc33cc281fe8662b880454778915f133e8c18c19ef33c1",
+      "result": {
+        "completed": true,
+        "batch_size": 1,
+        "rank": 1,
+        "model_load_seconds": 56.45600120909512,
+        "episodes": 8,
+        "policy_controls": 6000,
+        "actual_all_in_controls": 6000,
+        "collection_wall_seconds": 379.13865951634943,
+        "controls_per_second": 15.825344763453922,
+        "inference_seconds": 34.89024438802153,
+        "reset_seconds": 72.6734400363639,
+        "simulation_video_seconds": 267.757683834061,
+        "extra_numerical_reference_seconds": 1.9081154763698578,
+        "model_decisions": 120,
+        "batched_forward_calls": 120,
+        "initial_batch_single_comparison": [
+          {
+            "lane": 0,
+            "action_max_abs": 0.0,
+            "feature_max_abs": 0.0
+          }
+        ],
+        "optimizer_updates": 0,
+        "full_episode_evidence": [
+          {
+            "id": "capacity-r1-case0-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 1,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-00/capacity-r1-case0-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "079891bdf748ca171018ff694f961e848baf60dccdbb641f77c2ef9660028fed"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-00/capacity-r1-case0-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "6d4a7cf7b59e21b0aa0c9aa29a0ffad79ffa5af58acdbcb457988124b1694272"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-00/capacity-r1-case0-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "18d59545d5273748e9d9e90c753848cd6190c6324583297a6b848996d2c721a9"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r1-case1-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 1,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-01/capacity-r1-case1-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "f358022d5dc38cdcdff98ced2c511a6d5648cd1162b0da83cc6085281bd23673"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-01/capacity-r1-case1-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "3a8d01b8d4e75942c5660700969eb7d538c034dfbbed2e3e534bca645b838035"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-01/capacity-r1-case1-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "4d823bff462244ce8be4af217301070b9dd312f5b49fe49931c1e22c49454311"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r1-case2-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 1,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-02/capacity-r1-case2-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "60c4ce4f38afc2c56dcfad0e73c1d21e3270b35b27e4814c94486586dfcf9c2e"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-02/capacity-r1-case2-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "d1005725ddd857f3c40e5fe6c12344f75ca391976dc465fcc2a984d4f07adec9"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-02/capacity-r1-case2-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "bff6edac116fdd4f2f90434925d49294b041c3c33069f2fe6402445b1d6d5a00"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r1-case3-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 1,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-03/capacity-r1-case3-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "25bbc1bb73641e4b7a306a0c87dd8e879b356efc8e8cc045588892bc9eb8007c"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-03/capacity-r1-case3-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "c7aaf423ca622a5095e67f987125a6a034c516d6edce32131661eb6d30c7d175"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-03/capacity-r1-case3-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "f72c31b33f176544fb47bf44f1fab2d2af139c6431d94ed6c448705d1c49c400"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r1-case4-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 1,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-04/capacity-r1-case4-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "632fbdc645e743d5054776e81cd2309b6ebc043939c8e78b83177b7a56c88373"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-04/capacity-r1-case4-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "a6192ccb4d45c9b75a73eee27788e0430e740c32bba127f56c9d1a0ac5c585f5"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-04/capacity-r1-case4-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "b0c40ea2688047b5799a777b89ed79acab8f131a54a1c7c203f01a41521d476f"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r1-case5-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 1,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-05/capacity-r1-case5-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "310ebcbf27cddb7843a297aa390ad88e93b2a372b299f1e38cdab3ee21f481da"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-05/capacity-r1-case5-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "f700cbedece73bf2bb4cc24a8cea3e7ba104562155a12155ec0ffeef591d615d"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-05/capacity-r1-case5-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "23c784895eab4f77fe26818e482e45783bc00a53266169128c1eee6399572f3d"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r1-case6-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 1,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-06/capacity-r1-case6-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "0b5ddc1ac1af6612d064d8c7e2c4fb95a8a9422801e9c8f02f31358fce66b71f"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-06/capacity-r1-case6-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "f76c4307ae6d3b5fe28ce1fc781471614b1035f1de6f9383d26855f74117293b"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-06/capacity-r1-case6-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "d3e43f66e507efb35ade620a9a3ec4a1d0611affb1dcfe5eb5023df5a2724e65"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r1-case7-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 1,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-07/capacity-r1-case7-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "da441008426bf10c699ce929ef0a32297be3303f3488539da16da9fd53e7a973"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-07/capacity-r1-case7-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "3c38544c56eaa684e2fe4d4742b300bfb4c2bb8d6c3a4097596218f955254f46"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-00/worker-1/case-07/capacity-r1-case7-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "2186925b630e58e55e57b48e5edb7923291478f0c7729ebfefea8d3bde2bc25b"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          }
+        ],
+        "torch_peak_allocated_bytes": 7144768000,
+        "torch_peak_reserved_bytes": 7308574720,
+        "policy_checkpoint_sha256": "0bf0a89a34ae957c7d4802f2d103e43e9ef56a0391af03ff7720a79019f2aab7",
+        "total_seconds": 437.51822178810835,
+        "observed_memory": {
+          "phase": "parallel_native_H50_execution",
+          "completed_episodes": 8,
+          "policy_controls": 6000,
+          "peak_nvml_mib": 9122.0,
+          "gpu_utilization_percent": 1.0
+        },
+        "gpu_uuid": "GPU-2ec54bee-f8e2-925a-90a4-8064c2f350b7"
+      }
+    },
+    {
+      "node": 1,
+      "worker": 0,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/result.json",
+      "sha256": "f7e716b1741406ab14da9d7cda82b75e5c4d2e96e3546743b69409afc533c6fb",
+      "result": {
+        "completed": true,
+        "batch_size": 2,
+        "rank": 2,
+        "model_load_seconds": 57.04381954856217,
+        "episodes": 8,
+        "policy_controls": 6000,
+        "actual_all_in_controls": 6000,
+        "collection_wall_seconds": 214.64383241906762,
+        "controls_per_second": 27.953283969910135,
+        "inference_seconds": 19.051661354489625,
+        "reset_seconds": 45.06882012356073,
+        "simulation_video_seconds": 146.3494433136657,
+        "extra_numerical_reference_seconds": 1.794631983153522,
+        "model_decisions": 120,
+        "batched_forward_calls": 60,
+        "initial_batch_single_comparison": [
+          {
+            "lane": 0,
+            "action_max_abs": 0.0030573010444641113,
+            "feature_max_abs": 0.08473491668701172
+          },
+          {
+            "lane": 1,
+            "action_max_abs": 0.0035698413848876953,
+            "feature_max_abs": 0.04536247253417969
+          }
+        ],
+        "optimizer_updates": 0,
+        "full_episode_evidence": [
+          {
+            "id": "capacity-r2-case0-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 2,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-00/capacity-r2-case0-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "3b8455824fbbe219ad9dcb0e313f16c7269a5548563b8750885e716a08b023a5"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-00/capacity-r2-case0-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "dd42f62fda9340b9313589125bf6ec2aa5220daff32bf5ef0fbf64167c437f09"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-00/capacity-r2-case0-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "f211035e50c34bd034a8d44b91dd1c2a00e3787c74c2427c8e2fec75efa3093e"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r2-case1-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 2,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-01/capacity-r2-case1-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "1ee3fff72e01807794abb140390c47dce797bcc48284d396431cdea5d7ffe84e"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-01/capacity-r2-case1-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "9b5a7a3545e989e53171381f9fc042003efdd15fca63ba6b1ba73c6c3154dcfe"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-01/capacity-r2-case1-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "8557f764f56d48479d6552e8d78188f2535744ddc29c6f7e948c6a950e5d07c6"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r2-case2-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 2,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-02/capacity-r2-case2-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "3d2c5d0bd47aa6efb77a19069e7e335774a0cb62a90ada439a75d7ba070616bf"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-02/capacity-r2-case2-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "c9ffb7667d8ee7d4c8b1b7c1b88c2cde0312099a4efa416b3680d280521de432"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-02/capacity-r2-case2-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "2b298ab384ff754415503d636fdc1040b6bc01006bde5b3e0cc7d4f19efe3826"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r2-case3-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 2,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-03/capacity-r2-case3-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "e210f862f960ac3a7dfe31b86dff48f74099c2c13b2547f75742a243fb9cd88a"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-03/capacity-r2-case3-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "3fea8c8acd380ad27fb3791aaaadc5f8d2bf5c99ddff55d30d61debbf522c78f"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-03/capacity-r2-case3-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "3350f24f858aa41b049766c2ba18d0ceac1bf4ddcaebbb4ed04406ce67a59ce4"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r2-case4-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 2,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-04/capacity-r2-case4-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "abd26bddff589efba009bcb1f722cca70af7b741310d852ce7c97415741a1527"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-04/capacity-r2-case4-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "bd0dc7c5c3d2dd9e2e3313d38f64eaacbef1230f85546f616b732260d37c40f4"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-04/capacity-r2-case4-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "58ab09ae6fe4f2bfda044795003f8a6c77a20b611eb462bca98fc42dd27e0881"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r2-case5-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 2,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-05/capacity-r2-case5-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "412a468bd270e2209dc92bb44ae33a600a474d6aab6303fc4d1b605c2b69e2db"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-05/capacity-r2-case5-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "1b8e9549b940d2c859a6358d68f14487fb9028b5d57b408da4ae57de26acf28f"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-05/capacity-r2-case5-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "8f5eae6248eb24ea9b7761354e1ed66146e4ef6cc63bc6c267fdb0e1e3dccb12"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r2-case6-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 2,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-06/capacity-r2-case6-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "1b79113e7c64f99314e59b4f5656ca1bfcc42cf7d23d9d9bf684bd348fe7ad0d"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-06/capacity-r2-case6-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "ef0e99adbb8bda5ff4f2a04f0363edc7b6933a978fab7d8305dac3a659713700"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-06/capacity-r2-case6-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "32e468dd322848d3dd38d94e5cfdde1e415c18179eea07e25d5d9e44441e01bb"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r2-case7-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 2,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-07/capacity-r2-case7-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "afb3d542517e9f97ac29950e6bb6677d659a7e8b710e932128a346dc7234ae3f"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-07/capacity-r2-case7-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "9fba51195995963e3e63d68c24792bb2aedb47d8bbda20792b741dd5bb3beda8"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-0/case-07/capacity-r2-case7-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "cf9df2aa2670be05a5d04a1aebad15678c718a2ba1bc599022c856e2c47fe3af"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          }
+        ],
+        "torch_peak_allocated_bytes": 7318502912,
+        "torch_peak_reserved_bytes": 7662993408,
+        "policy_checkpoint_sha256": "0bf0a89a34ae957c7d4802f2d103e43e9ef56a0391af03ff7720a79019f2aab7",
+        "total_seconds": 273.493763548322,
+        "observed_memory": {
+          "phase": "parallel_native_H50_execution",
+          "completed_episodes": 8,
+          "policy_controls": 6000,
+          "peak_nvml_mib": 10701.0,
+          "gpu_utilization_percent": 0.0
+        },
+        "gpu_uuid": "GPU-a43e533b-8529-7dbf-6938-f3907dcc1b01"
+      }
+    },
+    {
+      "node": 1,
+      "worker": 1,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/result.json",
+      "sha256": "7641ae095c3304c53ea8a619f2594ec49105501e725f46ba3cec58817cc81028",
+      "result": {
+        "completed": true,
+        "batch_size": 2,
+        "rank": 3,
+        "model_load_seconds": 56.866797767579556,
+        "episodes": 8,
+        "policy_controls": 6000,
+        "actual_all_in_controls": 6000,
+        "collection_wall_seconds": 214.71752507518977,
+        "controls_per_second": 27.943690194356144,
+        "inference_seconds": 18.62990353628993,
+        "reset_seconds": 44.11565706413239,
+        "simulation_video_seconds": 147.41471767611802,
+        "extra_numerical_reference_seconds": 1.7968110712245107,
+        "model_decisions": 120,
+        "batched_forward_calls": 60,
+        "initial_batch_single_comparison": [
+          {
+            "lane": 0,
+            "action_max_abs": 0.0030573010444641113,
+            "feature_max_abs": 0.08473491668701172
+          },
+          {
+            "lane": 1,
+            "action_max_abs": 0.0035698413848876953,
+            "feature_max_abs": 0.04536247253417969
+          }
+        ],
+        "optimizer_updates": 0,
+        "full_episode_evidence": [
+          {
+            "id": "capacity-r3-case0-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 3,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-00/capacity-r3-case0-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "3b8455824fbbe219ad9dcb0e313f16c7269a5548563b8750885e716a08b023a5"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-00/capacity-r3-case0-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "feb55ff4353e75c730384920ffe364ce08f2158b79d74ec5c8d9ded006f0b4ef"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-00/capacity-r3-case0-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "f211035e50c34bd034a8d44b91dd1c2a00e3787c74c2427c8e2fec75efa3093e"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r3-case1-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 3,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-01/capacity-r3-case1-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "1ee3fff72e01807794abb140390c47dce797bcc48284d396431cdea5d7ffe84e"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-01/capacity-r3-case1-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "9b5a7a3545e989e53171381f9fc042003efdd15fca63ba6b1ba73c6c3154dcfe"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-01/capacity-r3-case1-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "8557f764f56d48479d6552e8d78188f2535744ddc29c6f7e948c6a950e5d07c6"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r3-case2-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 3,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-02/capacity-r3-case2-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "f1291ca95fa5dde627f908c376b711d791cde26a0b1a265c0e475fa2474b655b"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-02/capacity-r3-case2-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "a128e7ab8735567ac1ec7bbd0f529feacaff23b3ec1a4d613d2358d3721c5487"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-02/capacity-r3-case2-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "ef01cfced33016386b6668abf802b5e012c3ff955c6309249a1e0ba375902c88"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r3-case3-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 3,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-03/capacity-r3-case3-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "8b435a6660da2264d546b74adb2cd210c2c2554cccb2430d66bbeb76a88864ac"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-03/capacity-r3-case3-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "25a7d6c1ba33f1d248c967b2c163851ce339e94cf2dd62346c06d0bbf1c982d4"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-03/capacity-r3-case3-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "9ab13a922b96c9f7bb0f4bb917eccc42c0634b8ea2d174d779085e56d3294642"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r3-case4-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 3,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-04/capacity-r3-case4-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "abd26bddff589efba009bcb1f722cca70af7b741310d852ce7c97415741a1527"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-04/capacity-r3-case4-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "defa005c52efd9d2dd3710d3ce11f7d20082887165a727fa61534cde47c83fc8"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-04/capacity-r3-case4-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "58ab09ae6fe4f2bfda044795003f8a6c77a20b611eb462bca98fc42dd27e0881"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r3-case5-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 3,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-05/capacity-r3-case5-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "07299099f89198a5ffb7e49eef1250bba9e3ba0686542ea321415fe15a251be4"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-05/capacity-r3-case5-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "69cc1b86009cc45d153c1475d5eb420ccc970e47b262a284a4cd3c4f09686a94"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-05/capacity-r3-case5-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "a890d572e11d5a37161c1e46fc98e4b66739b81fda8d6357085d13d0a371b61b"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r3-case6-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 3,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-06/capacity-r3-case6-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "1b79113e7c64f99314e59b4f5656ca1bfcc42cf7d23d9d9bf684bd348fe7ad0d"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-06/capacity-r3-case6-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "ef0e99adbb8bda5ff4f2a04f0363edc7b6933a978fab7d8305dac3a659713700"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-06/capacity-r3-case6-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "32e468dd322848d3dd38d94e5cfdde1e415c18179eea07e25d5d9e44441e01bb"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r3-case7-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 3,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-07/capacity-r3-case7-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "67b231e77c853399ed1b44b2831072c50d425fd167d2fb21bcc66110345b5501"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-07/capacity-r3-case7-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "c323b6af62ba3d1cfc468baf9585e70669b2e4ada96e64728635c4dec1bd1d1a"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-01/worker-1/case-07/capacity-r3-case7-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "6870e0db179139571d0eab2ff2af41597945355f8291efdf3d02890ed9cad1a5"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          }
+        ],
+        "torch_peak_allocated_bytes": 7318502912,
+        "torch_peak_reserved_bytes": 7662993408,
+        "policy_checkpoint_sha256": "0bf0a89a34ae957c7d4802f2d103e43e9ef56a0391af03ff7720a79019f2aab7",
+        "total_seconds": 273.38861185032874,
+        "observed_memory": {
+          "phase": "parallel_native_H50_execution",
+          "completed_episodes": 8,
+          "policy_controls": 6000,
+          "peak_nvml_mib": 10701.0,
+          "gpu_utilization_percent": 0.0
+        },
+        "gpu_uuid": "GPU-c0d2e906-c69e-b9ed-ab6e-304cee158af4"
+      }
+    },
+    {
+      "node": 2,
+      "worker": 0,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/result.json",
+      "sha256": "7781a12422224dfb5f8ecaaf630631be97f695689bc06540fc73334eaec5e70a",
+      "result": {
+        "completed": true,
+        "batch_size": 4,
+        "rank": 4,
+        "model_load_seconds": 64.97936892102007,
+        "episodes": 8,
+        "policy_controls": 6000,
+        "actual_all_in_controls": 6000,
+        "collection_wall_seconds": 116.85218023404013,
+        "controls_per_second": 51.346923848427636,
+        "inference_seconds": 10.698844072059728,
+        "reset_seconds": 24.515235530911013,
+        "simulation_video_seconds": 77.22654332220554,
+        "extra_numerical_reference_seconds": 2.586701847962104,
+        "model_decisions": 120,
+        "batched_forward_calls": 30,
+        "initial_batch_single_comparison": [
+          {
+            "lane": 0,
+            "action_max_abs": 0.004217684268951416,
+            "feature_max_abs": 0.04724884033203125
+          },
+          {
+            "lane": 1,
+            "action_max_abs": 0.003238677978515625,
+            "feature_max_abs": 0.03625297546386719
+          },
+          {
+            "lane": 2,
+            "action_max_abs": 0.004736542701721191,
+            "feature_max_abs": 0.1815166473388672
+          },
+          {
+            "lane": 3,
+            "action_max_abs": 0.0039021968841552734,
+            "feature_max_abs": 0.06974506378173828
+          }
+        ],
+        "optimizer_updates": 0,
+        "full_episode_evidence": [
+          {
+            "id": "capacity-r4-case0-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 4,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-00/capacity-r4-case0-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "c42acd238bb73185dfd1f78df467dfaf2c8f3cb4c2fef5611a7a83ce47af9d64"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-00/capacity-r4-case0-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "66354b08ecdbb88db52421d86e38d3ed15b6f134d7ccb84a7bb8b433f9d56670"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-00/capacity-r4-case0-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "3633325d2b71cf9664ce082d42c57bd47f0345d707ff2bda9059b56391160471"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r4-case1-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 4,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-01/capacity-r4-case1-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "947754c365b73a9b0fae20de32dbac8419f763b782e54a9298c9f0913655fc68"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-01/capacity-r4-case1-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "1ee1be89125fbd5c9d4ebdab9e8f329f96c58db1561b1ce9f8fb9df0eb572f3d"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-01/capacity-r4-case1-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "88c00bc3f6a96716eef0b1ce5d23071e38e3cc6e6796982f98a8159a579c08bd"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r4-case2-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 4,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-02/capacity-r4-case2-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "91f6acd78262e744375d2e3bb5a8b1a1d941813f74a09dd7e625d5f3bb5bbe5c"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-02/capacity-r4-case2-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "325133bac19302f19a4330fad2dada75cf5555d43322e080b580e096fddc6917"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-02/capacity-r4-case2-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "b0db12ffbe1e01ce1187f1d51d89287278f90da5149870cc1c8e005299af8ece"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r4-case3-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 4,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-03/capacity-r4-case3-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "5389a0a26ce5a35cfb6d6e83cf2a370df4e9c732ebfc5ed70c593ac9629da367"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-03/capacity-r4-case3-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "1a9a9b51e4c100edf89cddc6d4b1fe74bccac95ddd31154c65b481268db7d268"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-03/capacity-r4-case3-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "00e0e0717e802c258aa824ad83ce7678d663858b7a6f22e4d90ecdd2261cc67d"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r4-case4-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 4,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-04/capacity-r4-case4-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "644d09efa62d4c823267568773e022183832e049582d4a0d8ebc6c71320072af"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-04/capacity-r4-case4-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "59336772fe382452a2aa3be14133a74f77e15e945e81bce26e6088a813bacb02"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-04/capacity-r4-case4-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "d9be4325376a3a82b7ff7003e05d4d392e9de08819a7478d32ef49d338cf83c7"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r4-case5-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 4,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-05/capacity-r4-case5-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "dbda265349e3931524119cef8e0460348eb0a3ee13a40a9ab003233023554b96"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-05/capacity-r4-case5-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "3102626d6ea9d8f7730ce34220aeb26b14630e5d4ecf26369dca9db7989bc584"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-05/capacity-r4-case5-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "f25eeb8389de6bed8a850dca7fdbe8ef59f4045a3d5ec487f9ec07ebd90b7905"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r4-case6-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 4,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-06/capacity-r4-case6-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "4e26f6d13d5e337f17539ccb946243946a37eb243da01d3d29fa2737e84de738"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-06/capacity-r4-case6-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "9f3b35f2ffa5972140ba217a164e90858c2878223635d7ed55301fa944970607"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-06/capacity-r4-case6-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "8834e8d4f8e329472857b3a4ea52f5bc587a897472cc27230014af0db38cc556"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r4-case7-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 4,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-07/capacity-r4-case7-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "c2018ab39c6e0b217e3cc2bcaecfa8de538e8723dd9bd4ef20dc419825a293d3"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-07/capacity-r4-case7-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "71bdf82ef8540a4e5cf110ba56cc2aba2bec4b68382c9857a41a938d1b2e3797"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-0/case-07/capacity-r4-case7-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "256011890521426b941350931bdfdd2a7eaf338478ee18619b7d85d8e3242c75"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          }
+        ],
+        "torch_peak_allocated_bytes": 7664625664,
+        "torch_peak_reserved_bytes": 8170504192,
+        "policy_checkpoint_sha256": "0bf0a89a34ae957c7d4802f2d103e43e9ef56a0391af03ff7720a79019f2aab7",
+        "total_seconds": 184.42577165202238,
+        "observed_memory": {
+          "phase": "parallel_native_H50_execution",
+          "completed_episodes": 8,
+          "policy_controls": 6000,
+          "peak_nvml_mib": 13781.0,
+          "gpu_utilization_percent": 0.0
+        },
+        "gpu_uuid": "GPU-3298f6ce-66b3-09e9-3f00-2d51a1e0aa0f"
+      }
+    },
+    {
+      "node": 2,
+      "worker": 1,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/result.json",
+      "sha256": "38d9639a8e3203b283d035c8ca84cbc4d190d089638587a426fbf5689e369687",
+      "result": {
+        "completed": true,
+        "batch_size": 4,
+        "rank": 5,
+        "model_load_seconds": 65.47338968398981,
+        "episodes": 8,
+        "policy_controls": 6000,
+        "actual_all_in_controls": 6000,
+        "collection_wall_seconds": 115.40906169405207,
+        "controls_per_second": 51.988985196898334,
+        "inference_seconds": 10.96478325908538,
+        "reset_seconds": 24.41530944884289,
+        "simulation_video_seconds": 75.67640234809369,
+        "extra_numerical_reference_seconds": 2.609819854958914,
+        "model_decisions": 120,
+        "batched_forward_calls": 30,
+        "initial_batch_single_comparison": [
+          {
+            "lane": 0,
+            "action_max_abs": 0.004217684268951416,
+            "feature_max_abs": 0.04724884033203125
+          },
+          {
+            "lane": 1,
+            "action_max_abs": 0.003238677978515625,
+            "feature_max_abs": 0.03625297546386719
+          },
+          {
+            "lane": 2,
+            "action_max_abs": 0.004736542701721191,
+            "feature_max_abs": 0.1815166473388672
+          },
+          {
+            "lane": 3,
+            "action_max_abs": 0.0039021968841552734,
+            "feature_max_abs": 0.06974506378173828
+          }
+        ],
+        "optimizer_updates": 0,
+        "full_episode_evidence": [
+          {
+            "id": "capacity-r5-case0-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 5,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-00/capacity-r5-case0-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "c42acd238bb73185dfd1f78df467dfaf2c8f3cb4c2fef5611a7a83ce47af9d64"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-00/capacity-r5-case0-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "432c3f02d87f2629db6d3e4a38ad43cbf9916c8d67cacbd6cb375ab012e01c4c"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-00/capacity-r5-case0-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "3633325d2b71cf9664ce082d42c57bd47f0345d707ff2bda9059b56391160471"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r5-case1-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 5,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-01/capacity-r5-case1-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "947754c365b73a9b0fae20de32dbac8419f763b782e54a9298c9f0913655fc68"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-01/capacity-r5-case1-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "1ee1be89125fbd5c9d4ebdab9e8f329f96c58db1561b1ce9f8fb9df0eb572f3d"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-01/capacity-r5-case1-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "88c00bc3f6a96716eef0b1ce5d23071e38e3cc6e6796982f98a8159a579c08bd"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r5-case2-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 5,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-02/capacity-r5-case2-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "91f6acd78262e744375d2e3bb5a8b1a1d941813f74a09dd7e625d5f3bb5bbe5c"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-02/capacity-r5-case2-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "ccc4104c420063f492422d5b037a049e1befcce770aefbd2566baaf7c731eedf"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-02/capacity-r5-case2-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "b0db12ffbe1e01ce1187f1d51d89287278f90da5149870cc1c8e005299af8ece"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r5-case3-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 5,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-03/capacity-r5-case3-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "5389a0a26ce5a35cfb6d6e83cf2a370df4e9c732ebfc5ed70c593ac9629da367"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-03/capacity-r5-case3-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "e3a7df7ee61ad23b9a4c4cc3f92a9a1187d85fae70955616701dc6993339333b"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-03/capacity-r5-case3-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "00e0e0717e802c258aa824ad83ce7678d663858b7a6f22e4d90ecdd2261cc67d"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r5-case4-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 5,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-04/capacity-r5-case4-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "644d09efa62d4c823267568773e022183832e049582d4a0d8ebc6c71320072af"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-04/capacity-r5-case4-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "59336772fe382452a2aa3be14133a74f77e15e945e81bce26e6088a813bacb02"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-04/capacity-r5-case4-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "d9be4325376a3a82b7ff7003e05d4d392e9de08819a7478d32ef49d338cf83c7"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r5-case5-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 5,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-05/capacity-r5-case5-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "2ad8c697349bbb48e314ed2462fbc7eecb94235af082c9eaee1491fa4a230b0e"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-05/capacity-r5-case5-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "f14eb2cc7b1705ed641ef721b6b7f111607b216bb04cc630db125502eea8d015"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-05/capacity-r5-case5-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "4082b7ee36cd90580f7ae15ba830db666d4d577296b80eba480404f47673734e"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r5-case6-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 5,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-06/capacity-r5-case6-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "4e26f6d13d5e337f17539ccb946243946a37eb243da01d3d29fa2737e84de738"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-06/capacity-r5-case6-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "9f3b35f2ffa5972140ba217a164e90858c2878223635d7ed55301fa944970607"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-06/capacity-r5-case6-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "8834e8d4f8e329472857b3a4ea52f5bc587a897472cc27230014af0db38cc556"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r5-case7-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 5,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-07/capacity-r5-case7-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "9e172dcf0390d864bbaa9265d258eb66e37f1b06e122145da2cb45d9acae7c9c"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-07/capacity-r5-case7-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "2511376ebf33a78b253adbb1336b5f9a4b9ac92448e56cec06f7751456d9b8d4"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-02/worker-1/case-07/capacity-r5-case7-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "80fc4b5d0aa104d6215ff75e2d3bba85a0a6ae59091386af438dd3018ce0be94"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          }
+        ],
+        "torch_peak_allocated_bytes": 7664625664,
+        "torch_peak_reserved_bytes": 8170504192,
+        "policy_checkpoint_sha256": "0bf0a89a34ae957c7d4802f2d103e43e9ef56a0391af03ff7720a79019f2aab7",
+        "total_seconds": 183.503545068088,
+        "observed_memory": {
+          "phase": "parallel_native_H50_execution",
+          "completed_episodes": 8,
+          "policy_controls": 6000,
+          "peak_nvml_mib": 13781.0,
+          "gpu_utilization_percent": 0.0
+        },
+        "gpu_uuid": "GPU-3be1501f-813c-fda6-763b-da00e562883c"
+      }
+    },
+    {
+      "node": 3,
+      "worker": 0,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/result.json",
+      "sha256": "891a849d9353fcafb19735f57aa243123f3542eb482aebb57fac6b0d3e5440f1",
+      "result": {
+        "completed": true,
+        "batch_size": 8,
+        "rank": 6,
+        "model_load_seconds": 65.16726988099981,
+        "episodes": 8,
+        "policy_controls": 6000,
+        "actual_all_in_controls": 6000,
+        "collection_wall_seconds": 69.58834953000769,
+        "controls_per_second": 86.22132929611583,
+        "inference_seconds": 6.646710640867241,
+        "reset_seconds": 16.220395103096962,
+        "simulation_video_seconds": 42.09444388526026,
+        "extra_numerical_reference_seconds": 3.8042317639337853,
+        "model_decisions": 120,
+        "batched_forward_calls": 15,
+        "initial_batch_single_comparison": [
+          {
+            "lane": 0,
+            "action_max_abs": 0.002468883991241455,
+            "feature_max_abs": 0.04981040954589844
+          },
+          {
+            "lane": 1,
+            "action_max_abs": 0.004683852195739746,
+            "feature_max_abs": 0.04724311828613281
+          },
+          {
+            "lane": 2,
+            "action_max_abs": 0.0034066438674926758,
+            "feature_max_abs": 0.2752723693847656
+          },
+          {
+            "lane": 3,
+            "action_max_abs": 0.00323641300201416,
+            "feature_max_abs": 0.10391807556152344
+          },
+          {
+            "lane": 4,
+            "action_max_abs": 0.004148602485656738,
+            "feature_max_abs": 0.048094749450683594
+          },
+          {
+            "lane": 5,
+            "action_max_abs": 0.002758204936981201,
+            "feature_max_abs": 0.17827796936035156
+          },
+          {
+            "lane": 6,
+            "action_max_abs": 0.004090487957000732,
+            "feature_max_abs": 0.031426429748535156
+          },
+          {
+            "lane": 7,
+            "action_max_abs": 0.0035049915313720703,
+            "feature_max_abs": 0.0223388671875
+          }
+        ],
+        "optimizer_updates": 0,
+        "full_episode_evidence": [
+          {
+            "id": "capacity-r6-case0-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 6,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-00/capacity-r6-case0-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "39310e03473123e53c8b91254d2cfee3fc740a515da179ccb9f1506abcde74b3"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-00/capacity-r6-case0-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "194a1902b0b8507b7d9603f5e7e88c34c41851812232fcae950a7f9f4ff88c58"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-00/capacity-r6-case0-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "3e53101b552b199e8cb893dd79c45d80ef070b673d91cde4e44e7b1cff552d8c"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r6-case1-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 6,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-01/capacity-r6-case1-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "9dafb139fb7dd1247c91fd3fa03f3aa37588d562d01cc0f21ee656424b245466"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-01/capacity-r6-case1-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "8b714a25ec37b05ec1a205c10bdbf7501fbb73b4d1f3db7eecc2f42015e1d961"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-01/capacity-r6-case1-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "6071589e423259e5a03d8235b5bb2a1a9dede23e4a44d8a0e98bed61d7701c8f"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r6-case2-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 6,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-02/capacity-r6-case2-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "8d120f2b4661a0c8c6998c1e79ae11d73bf57abefcb6d9d96ad29f2ce5278413"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-02/capacity-r6-case2-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "f291f1b8d320af341a8ac40d177253c3c0030277d2e958ad6b59194a522dbd89"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-02/capacity-r6-case2-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "d5ba13cd26c0c9385add877068b61dde10b6fb43277dc0f3526450d198924bed"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r6-case3-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 6,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-03/capacity-r6-case3-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "1c933df943058aea49aee3c73648d659a485dbd950b20d6ef94ba405d13b879f"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-03/capacity-r6-case3-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "2f4745670521bbcd9b59434a59cd57346cfccc3e7c632768989aca3123ff6831"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-03/capacity-r6-case3-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "5991a793c0f094a921044d0129af8ce68a651814596e857360a245c7cecdbbd6"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r6-case4-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 6,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-04/capacity-r6-case4-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "97b7c67d24df2952cfda2eadf58c40d23e0f0ac273e6df42141b981df2d6e622"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-04/capacity-r6-case4-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "5ef214033611012781d45aa0304cd18c8815ee9dce95721ae48b57c06a14f654"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-04/capacity-r6-case4-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "609ed629d776fe4cc6ec0d4ed07aa64c607061ce00d4143775e85ab8c59e21f0"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r6-case5-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 6,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-05/capacity-r6-case5-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "4482c76fe462c71a18f1fead0b7f884c50562432d8b00e6e1299f7add096d07a"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-05/capacity-r6-case5-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "f1b43b5b484b7423e31eb5ddb2a0183f1765401ebd14115fa4849b2a2b4e2422"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-05/capacity-r6-case5-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "32d1ea7ad63ee24262db3e73a310856b1f65f53098f2a6ec6a1f00d05d6c64bf"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r6-case6-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 6,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-06/capacity-r6-case6-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "513e822a33120681cc36eb5b7e0ae3a980ec8248a4c4a8f188b19464d5da60c2"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-06/capacity-r6-case6-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "182c51d689fc6391eb70140804cbed552c5995fe404e36c94a4417f391f1ae23"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-06/capacity-r6-case6-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "59e6a7777558fadfe5bc6e64f820f99b8db4c0058c9fa62f8b2c49b4fe31dee8"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r6-case7-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 6,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-07/capacity-r6-case7-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "4f2981a52411d782a81f6e2ad277caf46eaed630a0aa484b672df67683f0bc14"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-07/capacity-r6-case7-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "d67d8b8af8bdcfe130a60660ff954eec35675af831d540ba912207509a47dd77"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-0/case-07/capacity-r6-case7-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "f96afcd83c4ebd5f67d6a19729f6ef66ed7bad93bdcf6a16e65e99bd2b21dc4f"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          }
+        ],
+        "torch_peak_allocated_bytes": 8346873344,
+        "torch_peak_reserved_bytes": 9334423552,
+        "policy_checkpoint_sha256": "0bf0a89a34ae957c7d4802f2d103e43e9ef56a0391af03ff7720a79019f2aab7",
+        "total_seconds": 138.56605446594767,
+        "observed_memory": {
+          "phase": "parallel_native_H50_execution",
+          "completed_episodes": 8,
+          "policy_controls": 6000,
+          "peak_nvml_mib": 19216.0,
+          "gpu_utilization_percent": 2.0
+        },
+        "gpu_uuid": "GPU-6c5a0d2c-60d1-0a85-800a-3a56b5a37c2a"
+      }
+    },
+    {
+      "node": 3,
+      "worker": 1,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/result.json",
+      "sha256": "b8ef40094ae50f574391314a171b9f48398af29be37960e6648fb2b6e81a247c",
+      "result": {
+        "completed": true,
+        "batch_size": 8,
+        "rank": 7,
+        "model_load_seconds": 65.23572914302349,
+        "episodes": 8,
+        "policy_controls": 6000,
+        "actual_all_in_controls": 6000,
+        "collection_wall_seconds": 68.46575202501845,
+        "controls_per_second": 87.63505581312401,
+        "inference_seconds": 6.642190061858855,
+        "reset_seconds": 16.085067871026695,
+        "simulation_video_seconds": 41.45822971093003,
+        "extra_numerical_reference_seconds": 3.829880425008014,
+        "model_decisions": 120,
+        "batched_forward_calls": 15,
+        "initial_batch_single_comparison": [
+          {
+            "lane": 0,
+            "action_max_abs": 0.002468883991241455,
+            "feature_max_abs": 0.04981040954589844
+          },
+          {
+            "lane": 1,
+            "action_max_abs": 0.004683852195739746,
+            "feature_max_abs": 0.04724311828613281
+          },
+          {
+            "lane": 2,
+            "action_max_abs": 0.003876209259033203,
+            "feature_max_abs": 0.10379981994628906
+          },
+          {
+            "lane": 3,
+            "action_max_abs": 0.00323641300201416,
+            "feature_max_abs": 0.10391807556152344
+          },
+          {
+            "lane": 4,
+            "action_max_abs": 0.004148602485656738,
+            "feature_max_abs": 0.048094749450683594
+          },
+          {
+            "lane": 5,
+            "action_max_abs": 0.002758204936981201,
+            "feature_max_abs": 0.17827796936035156
+          },
+          {
+            "lane": 6,
+            "action_max_abs": 0.004090487957000732,
+            "feature_max_abs": 0.031426429748535156
+          },
+          {
+            "lane": 7,
+            "action_max_abs": 0.0035049915313720703,
+            "feature_max_abs": 0.0223388671875
+          }
+        ],
+        "optimizer_updates": 0,
+        "full_episode_evidence": [
+          {
+            "id": "capacity-r7-case0-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 7,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-00/capacity-r7-case0-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "39310e03473123e53c8b91254d2cfee3fc740a515da179ccb9f1506abcde74b3"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-00/capacity-r7-case0-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "2c5743b5d121d3758ef0761e42992218a6c059c44c285b7920673306209753c7"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-00/capacity-r7-case0-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "3e53101b552b199e8cb893dd79c45d80ef070b673d91cde4e44e7b1cff552d8c"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r7-case1-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 7,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-01/capacity-r7-case1-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "9dafb139fb7dd1247c91fd3fa03f3aa37588d562d01cc0f21ee656424b245466"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-01/capacity-r7-case1-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "8b714a25ec37b05ec1a205c10bdbf7501fbb73b4d1f3db7eecc2f42015e1d961"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-01/capacity-r7-case1-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "6071589e423259e5a03d8235b5bb2a1a9dede23e4a44d8a0e98bed61d7701c8f"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r7-case2-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 7,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-02/capacity-r7-case2-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "2d403ab1f8edc385b6316a6440c3daa9956020c6a40d7f254577400c77449dbc"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-02/capacity-r7-case2-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "f60b80ce87fe4826c34c8367cf8a18b1443b92664595bac64bfc7e5e294b5872"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-02/capacity-r7-case2-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "6466fe7e138352895296705237e24340cb823baed9228828311d14f3459f82bf"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r7-case3-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 7,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-03/capacity-r7-case3-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "d6459c28031be76438b89eff833d3b8be9d2368f2de3b935875f6131139f03b8"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-03/capacity-r7-case3-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "35ba9e1a9f296e0c801d58e23ddccae4424470d4b037fedfe30afbe9720d25ce"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-03/capacity-r7-case3-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "34f03f6a5a18f4783d5959298b12c0998a6f8f57d106c2631284ce8f412d987e"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r7-case4-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 7,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-04/capacity-r7-case4-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "97b7c67d24df2952cfda2eadf58c40d23e0f0ac273e6df42141b981df2d6e622"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-04/capacity-r7-case4-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "5ef214033611012781d45aa0304cd18c8815ee9dce95721ae48b57c06a14f654"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-04/capacity-r7-case4-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "93b8be78c2c6c7821d417ee3876cb59bb80c91e5469186a392281220b2238cf0"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r7-case5-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 7,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-05/capacity-r7-case5-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "4482c76fe462c71a18f1fead0b7f884c50562432d8b00e6e1299f7add096d07a"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-05/capacity-r7-case5-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "97cf2d4882dc861cf7717a635dd6e05089bab375a73dd3dbf0b97b79cb4d04e7"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-05/capacity-r7-case5-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "32d1ea7ad63ee24262db3e73a310856b1f65f53098f2a6ec6a1f00d05d6c64bf"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r7-case6-episode-000000",
+            "task": "Open the left drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 7,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-06/capacity-r7-case6-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "513e822a33120681cc36eb5b7e0ae3a980ec8248a4c4a8f188b19464d5da60c2"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-06/capacity-r7-case6-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "182c51d689fc6391eb70140804cbed552c5995fe404e36c94a4417f391f1ae23"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-06/capacity-r7-case6-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "59e6a7777558fadfe5bc6e64f820f99b8db4c0058c9fa62f8b2c49b4fe31dee8"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          },
+          {
+            "id": "capacity-r7-case7-episode-000000",
+            "task": "Open the right drawer.",
+            "camera_order": [
+              "robot0_agentview_left",
+              "robot0_eye_in_hand",
+              "robot0_agentview_right"
+            ],
+            "horizon": 750,
+            "completed": true,
+            "success_termination_disabled": true,
+            "raw_rgb_only": true,
+            "info_on_video": false,
+            "extra_info_on_video": [],
+            "rank": 7,
+            "round": 0,
+            "local_env": 0,
+            "videos": [
+              {
+                "camera": "robot0_agentview_left",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-07/capacity-r7-case7-episode-000000-robot0_agentview_left.mp4",
+                "sha256": "3042c06ea02399ce4997392f09f07aac343c0461be8df28861c7471f5439853c"
+              },
+              {
+                "camera": "robot0_eye_in_hand",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-07/capacity-r7-case7-episode-000000-robot0_eye_in_hand.mp4",
+                "sha256": "c4f5dd8ca4fa11a6592032077d5ab5b69fe8695f167d97c816742abc0e138ca4"
+              },
+              {
+                "camera": "robot0_agentview_right",
+                "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-batch-capacity-20261102-r3/job/node-03/worker-1/case-07/capacity-r7-case7-episode-000000-robot0_agentview_right.mp4",
+                "sha256": "ba0dc0c698f4d1477894905011d593996f03a382e410096b64b333bffefbeebb"
+              }
+            ],
+            "frame_clock": {
+              "frame_count": 751,
+              "native_fps": 20.0,
+              "encoded_fps": 20.0,
+              "resampled": false,
+              "physical_steps": 750,
+              "initial_frame_included": true,
+              "timestamp_sha256": "131d004b9900a83042b43c55a1aa8d750e4a92492fc22a2b65c641b7dc375e69"
+            }
+          }
+        ],
+        "torch_peak_allocated_bytes": 8346873344,
+        "torch_peak_reserved_bytes": 9334423552,
+        "policy_checkpoint_sha256": "0bf0a89a34ae957c7d4802f2d103e43e9ef56a0391af03ff7720a79019f2aab7",
+        "total_seconds": 137.54116930800956,
+        "observed_memory": {
+          "phase": "parallel_native_H50_execution",
+          "completed_episodes": 8,
+          "policy_controls": 6000,
+          "peak_nvml_mib": 19216.0,
+          "gpu_utilization_percent": 0.0
+        },
+        "gpu_uuid": "GPU-e9761922-0f32-985a-5dc4-70da0cbafb8b"
+      }
+    }
+  ],
+  "closed_GPU_seconds": 2732,
+  "prior_launcher_failure_GPU_seconds": 640,
+  "combined_capacity_GPU_seconds": 3372
+}
