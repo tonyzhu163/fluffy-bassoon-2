@@ -263,6 +263,8 @@ def collect_pending(policy, bound, motor, environment, *, episodes, generator, d
     records, finished = [], []
     for episode_index in range(episodes):
         observation, done, first = environment.reset(), False, True
+        if hasattr(policy, "begin_episode"):
+            policy.begin_episode()
         while not done:
             planned = planned_motor_seeds is not None
             index = len(records)
@@ -281,6 +283,8 @@ def collect_pending(policy, bound, motor, environment, *, episodes, generator, d
                 if np.any(control != 0) or not np.array_equal(executed, base_reference):
                     raise ValueError("Zero-residual native sampler replay differs before physical execution")
             observation, done, info = environment.step_chunk(executed)
+            if hasattr(policy, "observe"):
+                policy.observe(control.astype(np.float32), 0., bool(done))
             records.append(dict(features=np.array(features, dtype=np.float32, copy=True), noise_seed=seed,
                 base_chunk=np.array(chunk, copy=True), executed_chunk=np.array(executed, copy=True),
                 control=control.astype(np.float32), log_prob=float(log_prob[0]), value=float(value[0]),
