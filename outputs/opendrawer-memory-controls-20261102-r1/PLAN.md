@@ -75,3 +75,16 @@ workers were advancing.119 saved fresh episodes passed source/checkpoint,
 record/truth hash, simulator pairing and reset/window-limit checks. The live
 shared output `MONITOR.json` contains this check; no worker terminal failures
 were present. Continue20-minute checks and retain the original source pin.
+
+Terminal failure, Nov2 22:14:02: `job-kw6ub7t73wri-worker-1` exited1.
+Worker05 reached its first ID case and the current environment guard rejected
+the historical750-control OpenDrawer horizon because current prospective
+`TASKS` uses600. The preflight checked controller behavior but missed this
+cohort/registry mismatch.267 completed AD/OOD episodes remain (184 reset,
+83 window64); no ID or DPT control episode completed. All containers stopped.
+Charge at most36minutes ×8 GPUs =17280 GPU-seconds, including interrupted
+episodes. The distinct r2 continuation binds750/900 locally in the evaluation
+process, checks both constructors on CPU before allocation, verifies/reuses
+the267 completed rows, and has a140-minute8-GPU cap. Combined maximum84480
+GPU-seconds remains below the original86400. Preserve this failed worktree
+and its original binding; no in-place retry or historical horizon change.

@@ -11,7 +11,7 @@ import time
 
 ROOT = Path('/mowenjie/fluffy-bassoon-2')
 CODE = Path(__file__).resolve().parents[2]
-OUT = ROOT / 'outputs/opendrawer-memory-controls-20261102-r1'
+OUT = Path(os.environ.get('TASK_MEMORY_OUTPUT', ROOT / 'outputs/opendrawer-memory-controls-20261102-r1'))
 CORE = ROOT / 'worktrees/opendrawer-ad-dpt-20261102-r1'
 os.environ.setdefault('TASK_CURVE_METHOD', 'ad_full')
 os.environ.setdefault('TASK_CURVE_OUTPUT', str(OUT))
@@ -22,6 +22,20 @@ PAIRING, replay, signature = (OLD[name] for name in ('PAIRING', 'replay', 'memor
 native_case, motor_seeds, horizon = (OLD[name] for name in ('native_case', 'motor_seeds', 'horizon'))
 TASKS = OLD['TASKS']
 WORLD = 8
+
+
+def bind_historical_horizons():
+    # This retrospective comparison must keep its original 750/900 protocol.
+    # Bind only this process; current prospective training defaults stay intact.
+    from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import TASKS as registered
+    for cohort in ('ID', 'OOD'):
+        task = native_case(cohort, 0)['task']
+        registered[task] = (horizon(cohort), *registered[task][1:])
+    return {native_case(c, 0)['task']: horizon(c) for c in ('ID', 'OOD')}
+
+
+def recovery_key(family, arm, cohort, index, attempt):
+    return f'{family}/{arm}/{cohort}/{index:03d}/{attempt}'
 
 
 def source_episode(family, binding, cohort, index, attempt):
@@ -38,6 +52,15 @@ def reusable(arm, cohort, attempt):
 def bind():
     import torch
     assert sys.platform == 'linux' and not torch.cuda.is_available()
+    horizons = bind_historical_horizons()
+    # Check both cohorts before allocating GPUs; no native episode is started.
+    import tempfile
+    from fluffy_bassoon.meta_rl.robocasa_residual import RoboCasaResidualEnvironment
+    with tempfile.TemporaryDirectory() as tmp:
+        for c in ('ID', 'OOD'):
+            RoboCasaResidualEnvironment(None, [native_case(c, 0)], horizon=horizon(c),
+                output=Path(tmp)/c, monitoring_root=Path(tmp)/f'{c}-truth', journal=None,
+                writer_factory=None)
     models = {}
     for family in ('ad', 'dpt'):
         original = ROOT / 'outputs' / f'opendrawer-{family}-attempts50-20261102-r1'
@@ -60,13 +83,35 @@ def bind():
             pairing=b['pairing'], episodes=episodes)
     assert models['ad']['pairing'] == models['dpt']['pairing']
     assert models['ad']['assembly'] == models['dpt']['assembly']
+    recovered = {}; recovered_binding = None; recovered_controls = 0
+    if os.environ.get('TASK_MEMORY_REUSE'):
+        previous = Path(os.environ['TASK_MEMORY_REUSE'])
+        assert previous.resolve() != OUT.resolve()
+        recovered_binding = ref(previous/'binding.json')
+        prior = read_ref(recovered_binding)
+        assert prior['models'] == models and prior['cases'] == [list(x) for x in TASKS]
+        for path in sorted(previous.glob('episodes/*/*/*/*/*/result.json')):
+            r = json.loads(path.read_text()); f, a, c, i, k = (r[x] for x in ('family','arm','cohort','index','attempt'))
+            assert r['complete'] and r['source'] == prior['source'] and not reusable(a, c, k)
+            assert r['candidate'] == models[f]['selected']['candidate']
+            old = read_ref(models[f]['episodes'][f'{c}-{i:03d}'][str(k)])
+            assert r['original'] == models[f]['episodes'][f'{c}-{i:03d}'][str(k)]
+            assert r['native_case'] == old['native_case'] and r['motor_seeds'] == old['motor_seeds']
+            assert sha(r['records']['path']) == r['records']['sha256']
+            assert int(read_ref(r['truth'])['simulator_final_success']) == r['success']
+            assert r['initial_pairing']['report']['matched']
+            recovered[recovery_key(f, a, c, i, k)] = ref(path)
+            recovered_controls += horizon(c)
     assert BASE['clean'](CODE)
     write(OUT / 'binding.json', dict(source=BASE['head'](CODE), models=models, cases=TASKS,
-        world=WORLD, arms=['reset', 'window64'], fresh_episodes=1100, fresh_policy_controls=915000,
+        world=WORLD, arms=['reset', 'window64'], fresh_episodes=1100-len(recovered),
+        fresh_policy_controls=915000-recovered_controls, recovered=recovered,
+        recovered_binding=recovered_binding, historical_horizons=horizons,
         reused_endpoints=900, evaluation_endpoints=2000, optimizer=None,
         original_runtime_core=OLD['CORE_PIN'], training_window=64,
         memory_window='64 raw input tokens, including the current query; recompute after eviction'))
-    print(json.dumps(dict(binding=ref(OUT / 'binding.json'), fresh_episodes=1100)), flush=True)
+    print(json.dumps(dict(binding=ref(OUT / 'binding.json'), fresh_episodes=1100-len(recovered),
+        recovered=len(recovered), historical_horizons=horizons)), flush=True)
 
 
 def worker(rank, binding, deadline):
@@ -81,6 +126,7 @@ def worker(rank, binding, deadline):
     from fluffy_bassoon.meta_rl.vla_history import load_policy
     from fluffy_bassoon.meta_rl.warmstart import atomic_save
     from fluffy_bassoon.rl.action_residual import ResidualBound
+    assert bind_historical_horizons() == binding['historical_horizons']
     assert torch.cuda.device_count() == 1
     verify_selected_cuda(torch); torch.set_num_threads(4); mp.set_start_method('spawn', force=True)
     assert BASE['head'](CODE) == binding['source'] and BASE['clean'](CODE)
@@ -97,7 +143,7 @@ def worker(rank, binding, deadline):
     stats = json.loads(Path(init['norm_path']).read_text())
     motor = FrozenRoboCasaMotor(model, stats.get('norm_stats', stats), seed=991)
     bound = ResidualBound(**assembly['contract']['bound'])
-    journal = ActionJournal(OUT / 'actions', rank=rank, world=WORLD, attempt='controls-r1', maximum_actions=None)
+    journal = ActionJournal(OUT / 'actions', rank=rank, world=WORLD, attempt=OUT.name, maximum_actions=None)
     completed = 0
     for family, mb in binding['models'].items():
         policy, _ = load_policy(mb['selected']['candidate']['path'],
@@ -115,6 +161,13 @@ def worker(rank, binding, deadline):
                             if k > 1:
                                 assert signature(actor) == original['memory_entry']['signature']
                             replay(actor, torch.load(original['records']['path'], map_location='cpu', weights_only=False))
+                        continue
+                    previous = binding['recovered'].get(recovery_key(family, arm, c, i, k))
+                    if previous:
+                        saved = read_ref(previous)
+                        if arm == 'window64':
+                            assert signature(actor) == saved['memory_entry']['signature']
+                            replay(actor, torch.load(saved['records']['path'], map_location='cpu', weights_only=False))
                         continue
                     assert time.time() + 300 < deadline, 'Deadline: preserve completed episodes, no retry'
                     directory = OUT / 'episodes' / family / arm / c / f'case-{i:03d}' / f'p{k}'

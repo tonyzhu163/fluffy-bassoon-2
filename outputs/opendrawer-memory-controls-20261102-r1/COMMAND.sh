@@ -2,10 +2,12 @@
 set -Eeuo pipefail
 : "${TASK_CODE:?}" "${TASK_PIN:?}" "${RANK:?}" "${WORLD_SIZE:?}"
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
-TASK_OUT=$TASK_ROOT/outputs/opendrawer-memory-controls-20261102-r1
+TASK_OUT=${TASK_MEMORY_OUTPUT:-$TASK_ROOT/outputs/opendrawer-memory-controls-20261102-r1}
 TASK_PY=$TASK_ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
 TASK_STARTED=$(date +%s)
-TASK_DEADLINE=$((TASK_STARTED+10500))
+TASK_LIMIT_SECONDS=${TASK_MEMORY_LIMIT_SECONDS:-10800}
+test "$TASK_LIMIT_SECONDS" -le 10800
+TASK_DEADLINE=$((TASK_STARTED+TASK_LIMIT_SECONDS-300))
 export PYTHONPATH=$TASK_CODE/src:$TASK_ROOT/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf
 export RLINF_PATH=$TASK_ROOT/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf
 export ROBOCASA_ASSETS_PATH=$TASK_ROOT/setups/robocasa365-native-20261101-r1/assets
@@ -29,7 +31,7 @@ finish() {
  exit "$TASK_RC"
 }
 trap finish EXIT
-timeout --signal=TERM --kill-after=60s 10620 "$TASK_PY" -B \
+timeout --signal=TERM --kill-after=60s "$((TASK_LIMIT_SECONDS-180))" "$TASK_PY" -B \
  "$TASK_CODE/outputs/opendrawer-memory-controls-20261102-r1/CONTROL.py" --deadline "$TASK_DEADLINE"
 if [ "$RANK" = 0 ]; then
  CUDA_VISIBLE_DEVICES='' OMP_NUM_THREADS=1 "$TASK_PY" -B \

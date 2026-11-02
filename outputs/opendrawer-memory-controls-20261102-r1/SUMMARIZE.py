@@ -47,10 +47,12 @@ for family, model in b['models'].items():
                     if m['reusable'](arm, c, k):
                         r = old
                     else:
+                        previous = b.get('recovered', {}).get(m['recovery_key'](family, arm, c, i, k))
                         path = OUT / 'episodes' / family / arm / c / f'case-{i:03d}' / f'p{k}' / 'result.json'
-                        r = json.loads(path.read_text())
+                        r = read_ref(previous) if previous else json.loads(path.read_text())
                         assert r['complete'] and r['family'] == family and r['arm'] == arm
-                        assert r['source'] == b['source'] and r['candidate'] == model['selected']['candidate']
+                        expected_source = read_ref(b['recovered_binding'])['source'] if previous else b['source']
+                        assert r['source'] == expected_source and r['candidate'] == model['selected']['candidate']
                         assert r['original'] == model['episodes'][f'{c}-{i:03d}'][str(k)]
                         assert r['native_case'] == old['native_case'] and r['motor_seeds'] == old['motor_seeds']
                         assert sha(r['records']['path']) == r['records']['sha256']
@@ -95,6 +97,7 @@ for index, row in enumerate(ordered):
     row['holm_p_40_comparisons'] = adjusted
 assert verified == 1100
 r = dict(complete=True, binding=ref(OUT / 'binding.json'), verified_fresh_episodes=verified,
+    new_episodes_this_allocation=b['fresh_episodes'], recovered_episodes=len(b.get('recovered', {})),
     evaluation_endpoints=2000, models=results, comparisons=comparisons,
     limits=['50 cases per task; repeated streams remain correlated within each case.',
             'One source task/fit seed; controls are exploratory mechanism diagnostics.',
