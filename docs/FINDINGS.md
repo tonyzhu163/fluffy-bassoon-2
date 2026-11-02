@@ -299,6 +299,18 @@ stack sentence alone as a sufficient explanation under the remaining1.6 text.
 The positive location and negative exclusion clauses remain coupled in the
 compact condition; neither is established as the cause. No promotion.
 [Target wording and per-case results](../outputs/robocasa-flora-drawer-target-wording-20261103-r1/RESULT.md).
+Separating location from exclusion also fails on the same35 prefixes. Adding
+only the countertop-location sentence to the depth-only base lowers128's
+350/400/450/750 grades2/4/4/4→1/2/3/3, while wrong-drawer112 is still confirmed
+at200. Exclusion alone briefly gives128 a5 at400, then3 at450, and falsely
+confirms112 at350. Both fresh conditions detect4/5 successful cases with1
+false accepted episode under the frozen two-score>=4 rule. Neither passes.
+All74 new grades,4 exact repeats,11 receipts,74 message audits and47 hashes
+verify;175 paired labels include105 recovered grades.698 workerGPU-s,0 new
+controls/SGD. This location sentence's effect does not require the negative
+clause; the model's internal cause remains unknown. The next diagnosis should
+add other retained never-success failures before further tuning to112 alone.
+[Factorial texts, scores and limits](../outputs/robocasa-flora-drawer-location-exclusion-20261103-r1/RESULT.md).
 A subsequent CPU geometry audit finds all six selected targets at z=0.785,
 with no drawer above the target in its stack, and matching scene metadata.
 Thus an incorrectly assumed uppermost target does not explain the128/144
