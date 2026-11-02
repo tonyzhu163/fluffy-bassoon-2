@@ -1,0 +1,22 @@
+{
+  "checked_at": "2026-11-02T16:30:17.183219+00:00",
+  "source_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+  "batch": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/training-rollouts/iteration-0007-policy-0006-rank-00.pt",
+  "functions_sha256": {
+    "compute_gae_advantages_and_returns": "de7b563307c9037407ea6c1f3fde1cee7c0d3cfce7bb00b9cb8227e2ea6d7d30",
+    "preprocess_embodied_advantages_inputs": "b0f806092607c291bf75c5861aa09bdb036146c0b672efb7440e7a0a2c8477e9"
+  },
+  "rewards_shape": [8, 64, 50],
+  "dones_shape": [9, 64, 50],
+  "saved_return_max_abs_error": 0.0,
+  "positive_chunks": 41,
+  "example": {
+    "env": 2,
+    "positive_reward_chunk": 3,
+    "rewards": [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0],
+    "dones": [0, 0, 0, 0, 1, 1, 1, 1, 1],
+    "loss_mask": [1, 1, 1, 1, 0, 0, 0, 0],
+    "zero_value_returns": [0.8319101333618164, 0.8845402598381042, 0.940500020980835, 1.0, 0.0, 0.0, 0.0, 0.0],
+    "preterminal_change_after_injecting_postterminal_reward_9": 0.0
+  }
+}
