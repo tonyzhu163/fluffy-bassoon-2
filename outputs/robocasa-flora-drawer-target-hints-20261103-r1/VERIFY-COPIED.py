@@ -1,0 +1,125 @@
+"""Check downloaded artifact bytes and JSON; does not execute model code."""
+from pathlib import Path
+import hashlib
+import json
+import zipfile
+
+root = Path(__file__).resolve().parent
+archive = Path('/Users/mowenjie/Downloads/drawer-hints-r1-evidence.zip')
+source = '74efd591fc0286f57691836927b0ebaaa015d7d0'
+sha = lambda b: hashlib.sha256(b).hexdigest()
+read = lambda p: json.loads(p.read_text())
+with zipfile.ZipFile(archive) as z:
+    manifest = json.loads(z.read('TRANSFER-MANIFEST.json'))
+    assert manifest['source_commit'] == source
+    for name, digest in manifest['files'].items():
+        assert not Path(name).is_absolute() and '..' not in Path(name).parts
+        data = z.read(name)
+        assert sha(data) == digest, name
+        path = root/name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        if path.exists():
+            assert path.read_bytes() == data, name
+        else:
+            path.write_bytes(data)
+    (root/'TRANSFER-MANIFEST.json').write_bytes(z.read('TRANSFER-MANIFEST.json'))
+checks = read(root/'CPU-CHECKS.json')
+assert checks['completed'] and checks['new_outputs'] == 82 and checks['recovered_labels'] == 26
+assert sha((root/'scoring/PROMPTS.json').read_bytes()) == sha((root/'PREPARED-PROMPTS.json').read_bytes()) == checks['prompts_sha256']
+prepared = read(root/'scoring/PROMPTS.json')
+messages = {p['id']: p['messages'] for p in prepared}
+assert len(messages) == len(prepared) == 82
+rows = []
+receipts = list((root/'scoring').glob('*.receipt.json'))
+for path in receipts:
+    stem = path.name.removesuffix('.receipt.json')
+    receipt = read(path)
+    out = root/'scoring'/(stem+'.jsonl')
+    audit = root/'scoring'/(stem+'.prompts.json')
+    result = [json.loads(line) for line in out.read_text().splitlines()]
+    actual = read(audit)
+    assert receipt['completed'] and receipt['labels'] == len(result) == len(actual)
+    assert sha(out.read_bytes()) == receipt['sha256']
+    assert sha(audit.read_bytes()) == receipt['prompts_sha256']
+    for row, prompt in zip(result, actual):
+        assert row['id'] == prompt['id']
+        assert prompt['messages_sha256'] == sha(json.dumps(messages[row['id']], sort_keys=True).encode())
+        assert len(prompt['rendered_sha256']) == 64
+        uid = row['id'].rsplit('/', 1)[0]
+        control = int(uid.rsplit('-', 1)[1])
+        assert row['sampled_frames'] == checks['expected_sampled_frames'][uid]
+        assert row['observed_through'] == control and row['prefix_frame_count'] == control+1
+    rows.extend(result)
+assert len(receipts) == 13 and len(rows) == len({r['id'] for r in rows}) == 82
+for arm, digest in checks['criteria_sha256'].items():
+    assert sha((root/(arm+'.json')).read_bytes()) == digest
+assert checks['videos'] == 10 and checks['prefixes'] == 26 and len(checks['video_checks']) == 30
+assert all(v['frames'] == 751 and v['fps'] == 20. for v in checks['video_checks'].values())
+frames = read(root/'FRAME-REFERENCE.json')
+assert sha((root/'FRAME-REFERENCE.json').read_bytes()) == checks['frame_reference_sha256']
+assert len(frames) == checks['actual_cpu_prefix_decodes'] == 26
+assert len(checks['prior_visual_audit_matches']) == 4
+for uid, frame in frames.items():
+    assert frame['frame_count'] == len(frame['indices']) == len(frame['rgb_sha256']) == 64
+    assert frame['shape'] == [320,960,3]
+    assert sha(''.join(frame['rgb_sha256']).encode()) == frame['ordered_rgb_hashes_sha256']
+actual_frame_ids = []
+for receipt_path in receipts:
+    receipt = read(receipt_path)
+    frame_path = receipt_path.with_name(receipt_path.name.replace('.receipt.json','.frames.json'))
+    assert sha(frame_path.read_bytes()) == receipt['frames_sha256']
+    assert receipt['raw_rgb_inputs_match_cpu']
+    for frame in read(frame_path):
+        uid = frame['id'].rsplit('/',1)[0]
+        assert {k:v for k,v in frame.items() if k!='id'} == frames[uid]
+        actual_frame_ids.append(frame['id'])
+assert len(actual_frame_ids) == len(set(actual_frame_ids)) == 82
+assert set(actual_frame_ids) == {r['id'] for r in rows}
+paired = read(root/'PAIRED-SAMPLE.json')
+assert len(paired) == 26 and sum(len(p['labels']) for p in paired) == 104
+result = read(root/'RESULT.json')
+assert result['completed'] and len(result['anchors']) == 4 and all(a['equal'] for a in result['anchors'])
+for arm, metric in result['metrics'].items():
+    assert metric['false_full_scores'] == sum(not p['native_ever_success'] and p['labels'][arm]['score']==5 for p in paired)
+    assert metric['post_success_full_scores'] == sum(p['native_ever_success'] and p['labels'][arm]['score']==5 for p in paired)
+    for threshold in (4,5):
+        recorded = {r['episode_id']:r for r in metric['two_probe'+str(threshold)]['cases']}
+        for eid, record in recorded.items():
+            seq = sorted((p for p in paired if p['episode_id']==eid), key=lambda p:p['control'])
+            points = [b['control'] for a,b in zip(seq,seq[1:]) if b['control']-a['control']==50 and min(a['labels'][arm]['score'],b['labels'][arm]['score'])>=threshold]
+            assert points == record['positive_probes']
+            assert record['first_accepted'] == (points[0] if points else None)
+assert len(read(root/'RECOVERED.json')['rows']) == 26
+criteria = {a:read(root/(a+'.json')) for a in ('revision1_6','native_boundary','initial_target_lock','shallow_target_type')}
+public = {p['id']:p for p in read(root/'PUBLIC-JOBS.json')}
+for p in prepared:
+    arm = p['id'].rsplit('/',1)[1]
+    if arm == 'repeat_both': arm = 'revision1_6'
+    uid = p['id'].rsplit('/',1)[0]
+    side = public[uid]['task'].split()[2]
+    template = criteria[arm]['task_template'].format(side=side)
+    row = next(r for r in rows if r['id'] == p['id'])
+    assert row['task'] == template
+    assert template in json.dumps(p['messages'])
+    if arm != 'revision1_6': assert '52.25%' in template
+    assert p['messages'][0] == prepared[0]['messages'][0]
+assert len(result['metrics']) == 4
+assert result['negative_prefixes'] == 14 and result['post_success_prefixes'] == 12
+charge = read(root/'terminal-charge.json')
+assert charge['source_commit'] == source and charge['exit_code'] == 0 and charge['charged_gpu_seconds'] <= 900
+report = dict(completed=True, archive_sha256=sha(archive.read_bytes()), source_commit=source,
+    verified_files=len(manifest['files']), receipts=len(receipts), unique_outputs=len(rows),
+    actual_rendered_prompt_audits=len(rows), paired_labels=104, anchor_repeats=4,
+    all_anchors_match=True, prepared_actual_messages_match=True,
+    official_sampled_frame_counts_match=True, actual_rgb_frame_audits=82, raw_rgb_inputs_match_cpu=True, local_check='Artifact bytes and JSON only; no model computation')
+(root/'COPIED-HASHES.json').write_text(json.dumps(report, indent=2)+'\n')
+print(json.dumps(report))
+for arm, metric in result['metrics'].items():
+    print(arm, 'false5', metric['false_full_scores'], 'post5', metric['post_success_full_scores'],
+        'raw_timed', metric['raw']['correctly_timed_episodes'],
+        'confirmed4', metric['two_probe4']['correctly_timed_episodes'],
+        'false4', metric['two_probe4']['false_accepted_episodes'],
+        'confirmed5', metric['two_probe5']['correctly_timed_episodes'], 'passes', metric['passes_development_screen'])
+    for case in metric['two_probe5']['cases']:
+        print(case['episode_id'].split('-case-')[1][:6], case['native_first_success'], case['first_accepted'])
+print('CHARGE', charge)
