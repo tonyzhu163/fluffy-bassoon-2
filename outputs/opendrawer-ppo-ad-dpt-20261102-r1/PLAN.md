@@ -1,68 +1,83 @@
-# OpenDrawer AD/DPT pilot on completed simulator-reward PPO
+# OpenDrawer AD/DPT trained to convergence
 
-**Provisional plan; no GPU launch.** The human questioned the self-imposed
-action/GPU caps before launch. The numeric fit endpoint and total-resource
-caps below are the original proposal, not adopted stopping criteria. Finish
-the offline audit first; measure fitting speed and define convergence and
-paired evaluation criteria before an execution plan replaces this draft.
+Human authorization,2026-11-02: train AD and DPT to convergence and compare
+them against initial and final PPO on the same held-out cases. This
+supersedes the provisional500-update/6GPU-hour/200k-action proposal.
+This is a simulator-reward development experiment, separate from the other
+owner's active Flora PPO. No new PPO training or source collection.
 
-Human request, 2026-11-02: try AD and DPT on the existing OpenDrawer PPO data
-and compare performance with the original PPO. This is an explicitly
-simulator-reward development experiment. It is not the Flora method result;
-the separately owned Flora PPO run remains unchanged.
+## Data
 
-Use the immutable S8-r2 history (SHA256
-`7d66810302a46ddf95477ad108a64ca031d69b0784ae211980c32714e5cc4912`):
-384 episodes, six behavior versions, 5,760 decisions, 2088 features and six
-pre-tanh residual controls. Pin its final teacher checkpoint
-`84b4a25f1f0e55a22f4fdf265766fa5f6295504db2cf9a0a3ba8a0a28cc44f4d`.
-The original zero-residual checkpoint is
-`0bf0a89a34ae957c7d4802f2d103e43e9ef56a0391af03ff7720a79019f2aab7`.
+The immutable S8-r2 source contains384 episodes,six behavior versions,
+5760 decisions,2088 features and six pre-tanh residual controls. Its hashes
+and the original/final PPO hashes are pinned in [assembly.json](assembly.json).
+Group64 collection slots across six source versions (different scenes,not
+same-scene retries). Eight VAL slots are selected by PCG64 seed90211 before
+windows:56 TRAIN streams/336 episodes/5040 positions;8 VAL streams/48 episodes/
+720 positions. Source PPO saw VAL states; this is held-out student imitation,
+not independent teacher training. Source successes35,37,26,32,34,33 per64
+show no clear improvement. Retain every episode and report that limitation.
 
-Group each of 64 collection slots across the six PPO versions. Every stream
-contains six complete episodes (different scenes, not same-scene retries).
-Select eight validation slots with NumPy PCG64 seed 90211 before windows;
-56 streams/336 episodes train, eight streams/48 episodes validate. Validation
-states were used by the original source PPO: this measures held-out student
-imitation, not independent teacher training. New physical evaluation cases
-are separate from every source episode and previous DEV/ID/OOD panel.
+AD labels are actual u. DPT-inspired labels are the pinned final PPO actor's
+deterministic means at the original features,with original normalization.
+Every non-target context array is bitwise identical. These are candidate
+teacher labels,not asserted optimal actions. Rewards stay actual simulator
+terminal success. Preserve all failures and chronological version identities.
 
-AD labels are actual recorded u. DPT-inspired labels are the pinned final
-PPO actor's deterministic means on those exact saved features, using its
-original normalization. Every non-target context array stays identical.
-Mean labels match the original PPO's deterministic evaluation convention;
-they are candidate-teacher labels, not independently qualified optimal actions.
+## Fit and convergence
 
-Train AD/full, AD/static, DPT/full and DPT/static with the existing plain
-causal decoder learner: seed0, width128, two layers, four heads, context128,
-window64, batch8, AdamW LR3e-4, 500 updates, Gaussian NLL, final endpoint
-selection, validation every100 updates/four fixed batches. Normalization is
-TRAIN-only. Same initialization, sampled windows and optimizer schedule.
-Each fit has a 900-second operational cap; a partial endpoint cannot enter
-evaluation. No architecture or hyperparameter sweep.
+AD/full,AD/static,DPT/full,DPT/static use the existing plain causal decoder:
+seed0,width128,two layers,four heads,context128,window64,batch8,AdamW LR3e-4,
+Gaussian NLL,TRAIN-only normalization. Match initialization,sampling,optimizer
+and checkpoint-selection rules; report differing convergence endpoints/costs.
+No architecture or hyperparameter sweep.
 
-Primary readout: 32 prospectively fixed new native constructor seeds
-880110000..880110031, same native target split, paired H50 motor innovations
-and full H750 episodes. Compare original PPO initializer, final PPO, and all
-four students, deterministic means throughout. Each case starts empty student
-memory. Report success counts, paired wins/losses and exact paired sign tests;
-one seed and 32 cases are preliminary.
+Validate on16 fixed batches every100 updates. Require at least1000 updates,
+then10 checks without a material decrease in validation NLL. Material means
+more than0.001*max(1,abs(reference NLL)); update the reference only on material
+improvement. Save the candidate at ANY lower validation NLL. Select that best
+validation checkpoint. There is no fixed total-update or GPU-hour cutoff
+that declares convergence. Only the saved validation plateau admits evaluation.
 
-Secondary mechanism check: first eight cases, each full student gets one
-complete support episode on the same reset, then a separate query with the
-primary query's exact motor draws. Actual simulator terminal support reward
-is installed before the query. Source histories do not train same-scene
-retries. The matched context-reset query equals the already measured primary
-K0 query: same weights, empty memory, episode-start token, reset and noise;
-there is no episode-index input. Reuse those results, retaining support cost
-for both comparisons. K1 success is separate from support success. No weight
-updates, rewarder substitution, evaluation-driven checkpoint selection or
-automatic scale-up.
+An invocation checkpoints after at most12000 seconds,an operational boundary.
+Resume identical weights,Adam,sampler,Python/NumPy/Torch/CUDA RNG and plateau
+state under the same source/data/fit contract. Scheduler limits trigger
+checkpoint/resume; diagnose failures before another fresh allocation attempt.
 
-Resources: one Baige job, two allocated GPUs, at most three wall hours
-(six GPU-hours), at most 200,000 all-in new actions, 32GiB new outputs. There
-are at most224 physical episodes; worst-case224*(750+128)=196672 controls.
-CPU qualification and export use allocated Linux CPUs with CUDA hidden.
-Run the actual GPU probe inside the new allocation, qualify zero residual on
-the first retained initializer episode, and preserve journals/records/clips
-and full optimizer/sampler/RNG checkpoints. Stop at bounds; no hidden retries.
+## Physical comparison
+
+50 prospectively fixed fresh constructor seeds880110000..880110049 from the
+unchanged native target split,paired per-chunk motor draws,full H750 episodes.
+Compare initial PPO,final PPO,and all four students with deterministic means,
+identical frozen motor/norm/residual bounds. Primary cases begin with empty
+student memory; full retains history within the episode. Require exact initial
+public features and base chunk hashes across all six policies. Evaluation
+cannot select checkpoints,change cases,or tune hyperparameters.
+
+Report success counts,paired wins/losses and exact paired tests against BOTH
+PPO baselines,plus full/static differences and source/deployment costs. One
+task,one source seed and50 cases remain preliminary.
+
+Secondary check:first eight cases,each full student gets one actual support
+on the same reset,then a separate query with the primary query's motor draws.
+Install actual terminal simulator reward before query. Report support and
+query success separately. Matched context-reset query is exactly primary K0:
+same weights,empty memory,episode-start token,reset,noise,no episode-index
+input. Reuse those results,charging support to both interpretations. Source
+histories did not train same-scene retries; persistence alone proves no ICRL.
+
+## Execution
+
+One Baige container,two GPUs,32 CPUs,128GiB RAM,16GiB shared memory. Each GPU
+fits one objective's two modes,then25 primary and four support/query cases.
+Scheduler chunks at most479 minutes; resume if more is needed. Aggregate
+compute is reported,not cut at the abandoned six-hour estimate.
+
+The fixed cohort contains332 physical episodes at most,with conservative
+332*(750+128)=291496 controls including constructor controls. This is cohort
+accounting,not a fitting limit. Verify at least32GiB free output space and a
+write probe; record quota as unavailable if no quota query exists. Preserve
+source data/checkpoints. Probe actual allocated GPUs inside the job. First
+retained initializer episode verifies zero-residual parity on all15 chunks
+before each executes. Keep records,three-view clips,journals and recoveries.
+Monitor every20 minutes; report cluster,job,progress,last check,next action.
