@@ -38,12 +38,20 @@ def test_changed_public_state_is_rejected_even_with_matching_images():
 
 
 @pytest.mark.parametrize('left,right', [(100, 102), (255, 0)])
-def test_larger_pixel_change_is_rejected_without_uint8_wraparound(left, right):
+def test_pixel_variation_is_reported_without_uint8_wraparound_or_modification(left, right):
     a = snapshot(); b = deepcopy(a)
     a['images']['main_images'][0, 0, 0, 0] = left
     b['images']['main_images'][0, 0, 0, 0] = right
-    with pytest.raises(ValueError, match='render roundoff'):
-        compare_native_pair(a, b)
+    before = deepcopy(b)
+    report = compare_native_pair(a, b)
+    assert report['matched'] and report['physical_state_exact'] and report['public_state_exact']
+    assert report['image_comparison'] == 'diagnostic_only' and not report['images_exact']
+    image = report['images']['main_images']
+    assert image['max_absolute_delta'] == abs(left - right)
+    assert image['differing_components'] == 1
+    assert image['mean_absolute_delta'] == pytest.approx(abs(left - right) / 27)
+    assert not report['observations_modified']
+    assert np.array_equal(b['images']['main_images'], before['images']['main_images'])
 
 
 def test_camera_geometry_or_presence_change_is_rejected():
