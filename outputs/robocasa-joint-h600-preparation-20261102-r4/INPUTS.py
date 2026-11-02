@@ -98,6 +98,10 @@ def check(code, *, full):
                  ROOT / 'envs/flora-rewarder-129a2ada-py312-20261101-r1/bin/python'):
         assert path.is_file() and os.access(path, os.X_OK)
     if not full:
+        qualification = read(code / 'outputs' / RUN_ID / 'CPU-QUALIFICATION.json')
+        assert qualification['completed'] and qualification['failures'] == qualification['errors'] == 0
+        for name, expected in qualification['files'].items():
+            assert sha(code / name) == expected, name
         receipt = read(code / 'outputs' / RUN_ID / 'INPUT-CLOSURE.json')
         assert receipt['completed'] and receipt['full_native_model_hash_verified']
         for row in receipt['files']:
