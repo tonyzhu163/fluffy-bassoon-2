@@ -115,6 +115,9 @@ def collect_case_attempts(policy, spec, case, *, horizon, environment_factory, m
                     features=features.copy(), control=control.copy(), native_noise=noise.copy(),
                     native_noise_provenance=provenance, requested_commands=np.array(commands, copy=True),
                     observation=deepcopy(observation), memory_entry=entry if chunk == 0 else None)
+                execution = getattr(prepared, "execution_provenance", None)
+                if execution is not None:
+                    intent["execution_provenance"] = deepcopy(execution)
                 before_dispatch(intent, environment)
                 begin = environment.steps
                 observation, done, _ = environment.step_chunk(commands)

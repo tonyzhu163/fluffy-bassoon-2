@@ -5,12 +5,14 @@ This backend uses the same physical environment as frozen steering PPO, saves
 an intent before every real dispatch, and admits only complete native truth.
 """
 from copy import deepcopy
+from concurrent.futures import ThreadPoolExecutor
 import gzip
 import hashlib
 import json
 from pathlib import Path
 import pickle
 import time
+import threading
 
 import numpy as np
 import torch
@@ -37,6 +39,20 @@ def attempt_noise(case, attempt, chunk):
     return noise, dict(identity, seed=seed, law="PCG64 standard_normal float64 cast float32")
 
 
+class _ThreadJournal:
+    """Serialize a shared rank's physical-intent writes across native lanes."""
+    def __init__(self, journal, lock):
+        self.journal, self.lock = journal, lock
+
+    def begin(self, requested, *, phase):
+        with self.lock:
+            return self.journal.begin(requested, phase=phase)
+
+    def finish(self, token, executed):
+        with self.lock:
+            return self.journal.finish(token, executed)
+
+
 class NativeAttemptBackend:
     def __init__(self, *, output, canonical_root, motor, spec, native_factory, journal,
                  writer_factory, binding, maximum_rgb_delta,
@@ -58,6 +74,8 @@ class NativeAttemptBackend:
         self.rank, self.environment_type, self.maximum_rgb_delta = rank, environment_type, maximum_rgb_delta
         self.environments, self.chunks, self.initials = {}, {}, {}
         self.references = []
+        self.lock = threading.RLock()
+        self.environment_journal = _ThreadJournal(journal, self.lock)
 
     def _directory(self, case, attempt):
         return self.output / ("case-" + case_key(case)) / f"attempt-{attempt}"
@@ -68,12 +86,13 @@ class NativeAttemptBackend:
         # never overwritten or silently reset in the same output identity.
         directory.mkdir(parents=True, exist_ok=False)
         environment = self.environment_type(self.native_factory, [deepcopy(case)], horizon=None,
-            output=directory / "videos", monitoring_root=directory / "monitoring", journal=self.journal,
+            output=directory / "videos", monitoring_root=directory / "monitoring", journal=self.environment_journal,
             writer_factory=self.writer_factory, rank=self.rank,
             episode_id_prefix=f"actual-{attempt}-", canonical_root=self.canonical_root,
             source=dict(self.binding, actual_attempt=attempt))
         key = (case_key(case), attempt)
-        self.environments[key], self.chunks[key] = environment, []
+        with self.lock:
+            self.environments[key], self.chunks[key] = environment, []
         return environment
 
     def _before(self, row, environment):
@@ -142,7 +161,12 @@ class NativeAttemptBackend:
         saved.update(format="frozen_steering_actual_attempt_v1", binding=self.binding,
             interface=self.spec.record(), initial=self.initials[key], chunks=self.chunks[key],
             truth=reference(truth_path), video=reference(video_path), policy_weights_sha256=weights_digest(controller.policy))
-        self.references.append(_save(directory / "complete.pt", saved))
+        reference = _save(directory / "complete.pt", saved)
+        with self.lock:
+            self.references.append(reference)
+            # Completed truth is durable. Do not retain every case's camera
+            # snapshots in host RAM across a large native readout bank.
+            del self.environments[key], self.chunks[key], self.initials[key]
 
     def recover_prefix(self, references, *, case, horizon, policy):
         prefix = []
@@ -178,16 +202,28 @@ class NativeAttemptBackend:
             prefix.append(dict(saved, records=rows))
         return prefix
 
-    def run_case(self, policy, case, *, horizon, attempts=5, prefix_references=()):
+    def run_case(self, policy, case, *, horizon, attempts=5, prefix_references=(), motor=None, gate=None, on_error=None):
         prefix = self.recover_prefix(prefix_references, case=case, horizon=horizon, policy=policy)
         try:
+            def factory(case, attempt):
+                if gate is not None:
+                    gate()
+                return self._factory(case, attempt)
+            def before(row, environment):
+                if gate is not None:
+                    gate()
+                self._before(row, environment)
             result = collect_case_attempts(policy, self.spec, case, horizon=horizon,
-                environment_factory=self._factory, motor=self.motor, noise_for=attempt_noise,
-                before_dispatch=self._before, after_dispatch=self._after, completed_attempt=self._completed,
+                environment_factory=factory, motor=self.motor if motor is None else motor, noise_for=attempt_noise,
+                before_dispatch=before, after_dispatch=self._after, completed_attempt=self._completed,
                 attempts=attempts, completed_prefix=prefix)
         except BaseException as error:
+            if on_error is not None:
+                on_error(error)
             failed = []
-            for key, environment in self.environments.items():
+            with self.lock:
+                environments = list(self.environments.items())
+            for key, environment in environments:
                 if key[0] == case_key(case):
                     failed.append(dict(attempt=key[1], observed_steps=getattr(environment, "steps", None),
                         dispatched_commands=np.asarray(environment.dispatched_commands),
@@ -196,3 +232,52 @@ class NativeAttemptBackend:
                   dict(binding=self.binding, error=repr(error), physical_attempts=failed))
             raise
         return result
+
+    def run_bank(self, policy, cases, *, lanes, attempts=5, prefix_references=None, deadline_unix=None):
+        """Continuously refill native inference; each case retains its own cache.
+
+        Completed attempts are admitted immediately by the serial protocol.
+        Returned summaries exclude images/transition arrays already archived,
+        so the entire readout does not accumulate in host memory.
+        """
+        from .steering_history_batch import BatchedMotorBroker
+        if type(lanes) is not int or lanes < 1 or not cases:
+            raise ValueError("Require a finite case bank and qualified execution lanes")
+        if (type(attempts) is not int or not 1 <= attempts <= 5
+                or policy.config.noise_dim != self.spec.steering_dim
+                or any(type(item["horizon"]) is not int or item["horizon"] < 50 or item["horizon"] % 50
+                    or attempts * (item["horizon"] // 50) > policy.config.context_length for item in cases)):
+            raise ValueError("Every bound full attempt must fit the frozen controller dimensions and memory")
+        keys = [case_key(item["case"]) for item in cases]
+        prefixes = prefix_references or {}
+        if len(set(keys)) != len(keys) or not set(prefixes) <= set(keys):
+            raise ValueError("Case bank and recovery prefixes must have unique matching identities")
+        broker = BatchedMotorBroker(self.motor, self.spec, maximum_batch=lanes, deadline_unix=deadline_unix)
+        policy.eval().requires_grad_(False)
+
+        def worker(item):
+            try:
+                broker.check()
+                key = case_key(item["case"])
+                results = self.run_case(policy, item["case"], horizon=item["horizon"], attempts=attempts,
+                    prefix_references=prefixes.get(key, ()), motor=broker.port(key),
+                    gate=broker.check, on_error=broker.abort)
+                return [{k: v for k, v in row.items() if k not in ("records", "pairing")} for row in results]
+            except BaseException as error:
+                broker.abort(error)
+                raise
+
+        pool = ThreadPoolExecutor(max_workers=lanes)
+        futures = [pool.submit(worker, item) for item in cases]
+        try:
+            while not all(future.done() for future in futures):
+                broker.service_next()
+            broker.check()
+            results = [row for future in futures for row in future.result()]
+            self.last_batch_sizes = broker.batch_sizes
+            return results
+        except BaseException as error:
+            broker.abort(error)
+            raise
+        finally:
+            pool.shutdown(wait=True, cancel_futures=True)

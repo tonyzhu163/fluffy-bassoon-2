@@ -2,14 +2,17 @@
 import json
 from pathlib import Path
 from types import SimpleNamespace
+from copy import deepcopy
+import threading
 
 import numpy as np
 import pytest
+import torch
 
 from fluffy_bassoon.meta_rl.interface_ppo import InterfaceSpec
 from fluffy_bassoon.meta_rl.rlinf_native_ppo import ActionJournal
 from fluffy_bassoon.meta_rl.robocasa_interface import FrozenRoboCasaInterface
-from fluffy_bassoon.meta_rl.steering_history_native import NativeAttemptBackend, attempt_noise
+from fluffy_bassoon.meta_rl.steering_history_native import NativeAttemptBackend, attempt_noise, case_key
 from fluffy_bassoon.meta_rl.vla_history import HistoryConfig, HistoryNoisePolicy, file_sha256
 
 
@@ -18,7 +21,7 @@ class PhysicalReference:
     render_delta = 0
 
     def __init__(self, factory, cases, *, output, monitoring_root, journal, **kwargs):
-        self.case, self.horizon = cases[0], 100
+        self.case, self.horizon = cases[0], cases[0].get("fixture_horizon", 100)
         self.output, self.monitoring_root = Path(output), Path(monitoring_root)
         self.output.mkdir(); self.monitoring_root.mkdir()
         self.key, self.journal = "reference", journal
@@ -148,3 +151,82 @@ def test_explicit_diagnostic_render_contract_keeps_original_policy_pixels(tmp_pa
     np.testing.assert_array_equal(results[0]["records"][0]["observation"]["main_images"],
                                  np.arange(12, dtype=np.uint8).reshape(1, 2, 2, 3))
     assert runner.binding["native_attempt_protocol"]["maximum_rgb_delta"] is None
+
+
+@pytest.mark.parametrize("kind", ["velocity", "kv_all_layers"])
+def test_batched_motor_preserves_serial_case_memory_feedback_and_recovery(tmp_path, kind):
+    torch.manual_seed(712)
+    spec = (InterfaceSpec(kind=kind, steering_dim=32, fraction=.05) if kind == "velocity"
+            else InterfaceSpec(kind=kind, steering_dim=1152, kv_layers=18, fraction=.04))
+    policy = HistoryNoisePolicy(HistoryConfig(20, spec.steering_dim, width=8, heads=2,
+                                            layers=1, context_length=32))
+    cases = [dict(case=dict(task="OpenDrawer", native_seed=17, fixture_horizon=horizon), horizon=horizon)
+             for horizon in (100, 150, 50)]
+    serial, _, _ = backend(tmp_path / "serial", spec=spec)
+    expected = []
+    for item in cases:
+        expected.extend(serial.run_case(policy, item["case"], horizon=item["horizon"]))
+    parallel, model, journal = backend(tmp_path / "parallel", spec=spec)
+    actual = parallel.run_bank(deepcopy(policy), cases, lanes=2)
+    assert len(actual) == len(parallel.references) == 15
+    assert model.prefixes == model.draws <= 35
+    assert any(size > 1 for size in parallel.last_batch_sizes)
+    assert journal.charged() == sum(5 * (item["horizon"] + 3) for item in cases)
+    assert not parallel.environments  # Closed cameras are not retained across the bank.
+    references = {}
+    for reference in parallel.references:
+        saved = torch.load(reference["path"], weights_only=False)
+        references.setdefault(case_key(saved["case"]), {})[saved["attempt"]] = reference
+    for item in cases:
+        key = case_key(item["case"])
+        replayed = parallel.recover_prefix([references[key][i] for i in range(1, 6)],
+                                           case=item["case"], horizon=item["horizon"], policy=policy)
+        for result in replayed:
+            original = next(row for row in expected if row["case"] == result["case"] and row["attempt"] == result["attempt"])
+            assert original["memory_entry"] == result["memory_entry"]
+            assert original["memory_exit"] == result["memory_exit"]
+            for before, after in zip(original["records"], result["records"], strict=True):
+                np.testing.assert_array_equal(before["control"], after["control"])
+                np.testing.assert_array_equal(before["native_noise"], after["native_noise"])
+                np.testing.assert_array_equal(after["executed_commands"], after["dispatched_commands"])
+                assert after["execution_provenance"]["case_owners"][after["execution_provenance"]["row"]] == key
+    recovery, model, journal = backend(tmp_path / "recovery", spec=spec)
+    prefixes = {case_key(cases[0]["case"]): [references[case_key(cases[0]["case"])][i] for i in range(1, 4)],
+                case_key(cases[1]["case"]): [references[case_key(cases[1]["case"])][i] for i in range(1, 6)]}
+    recovered = recovery.run_bank(policy, cases, lanes=2, prefix_references=prefixes)
+    assert len(recovered) == 15 and len(recovery.references) == 7
+    assert journal.charged() == 2 * 103 + 5 * 53
+    assert model.draws > 0 and all("records" not in result for result in recovered)
+
+
+def test_batched_failure_preserves_completed_sibling_and_stops_new_cases(tmp_path):
+    completed = threading.Event()
+
+    class Failure(PhysicalReference):
+        def step_chunk(self, commands):
+            result = super().step_chunk(commands)
+            if self.case["native_seed"] == 2:
+                assert completed.wait(timeout=10)
+                raise RuntimeError("failed owned physical lane")
+            return result
+
+    spec = InterfaceSpec(kind="velocity", steering_dim=32)
+    policy = HistoryNoisePolicy(HistoryConfig(20, 32, width=8, heads=2, layers=1, context_length=16))
+    runner, _, journal = backend(tmp_path, spec=spec, environment_type=Failure)
+    original = runner._completed
+
+    def completed_attempt(result, controller):
+        original(result, controller)
+        completed.set()
+
+    runner._completed = completed_attempt
+    cases = [dict(case=dict(task="OpenDrawer", native_seed=i, fixture_horizon=h), horizon=h)
+             for i, h in ((1, 50), (2, 100), (3, 50))]
+    with pytest.raises(RuntimeError, match="failed owned physical lane"):
+        runner.run_bank(policy, cases, lanes=2)
+    saved = [torch.load(ref["path"], weights_only=False) for ref in runner.references]
+    assert any(row["case"]["native_seed"] == 1 and row["attempt"] == 1 for row in saved)
+    assert all(row["case"]["native_seed"] != 2 for row in saved)
+    assert not (tmp_path / "episodes" / ("case-" + case_key(cases[2]["case"]))).exists()
+    assert journal.charged() >= 106
+    assert all(env.closed for env in runner.environments.values())
