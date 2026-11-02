@@ -1,0 +1,25 @@
+{
+  "human_instruction": "update that: use eight concurrent native environments per GPU for future PPO rollouts",
+  "rollout_envs_per_gpu": 8,
+  "policy_copies_per_gpu": 1,
+  "global_training_episodes_preserved": 80,
+  "per_task_episodes_preserved": 16,
+  "changes": "Batched shared motor; shrink completed native lanes; serial case/chunk record order and per-case random draws; pending full-bank barrier and complete recovery.",
+  "active_jobs": "All existing active/ended worktrees and run profiles remain unchanged; no sampler migration implicit in a checkpoint resume.",
+  "maximum_additional_GPUs": 0,
+  "CPU_qualification": {
+    "maximum_worker_wall_seconds": 180,
+    "location": "retained allocated Linux development container, raw1GPU excluded from experiment cap, CPU child masks CUDA; only small fake motor/environment/learner cases",
+    "selected_core_tests": [
+      "tests/test_robocasa_batched_collection.py",
+      "tests/test_robocasa_residual.py::test_full_native_horizon_and_video_are_truth_isolated",
+      "tests/test_robocasa_residual.py::test_mixed_task_native_horizons_recover_only_at_full_episode_boundary",
+      "tests/test_robocasa_residual.py::test_pending_recovery_reproduces_next_optimizer_update_and_final_checkpoint",
+      "tests/test_residual_parallel.py::test_uneven_worker_results_merge_all_episodes_and_preserve_recovery"
+    ]
+  },
+  "Flora": "Same lane count required in both future arms; minimum native free memory after scorer warmup27408MiB. Actual simultaneous Flora+8lane GPU execution remains unqualified; guard fails before rollout if insufficient.",
+  "optimizer": "Do not alter configured PPO epochs, minibatches, optimizer or global rollout count.",
+  "experiment_GPU_limit": 40,
+  "development_container_excluded": true
+}

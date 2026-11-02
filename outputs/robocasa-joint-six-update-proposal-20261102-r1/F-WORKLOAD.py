@@ -54,6 +54,8 @@ def main():
     assert authority['allow_joint_stage_actions'] is True and authority['maximum_stage_actions']==2_500_000
     assert authority['direct_human_instruction'] and authority['old_trial_spend_preserved'] is True
     profile=copy.deepcopy(binding['policy_profile'])
+    execution=json.loads((code/'configs/native_ppo/robocasa_residual_execution.json').read_text())
+    profile['rollout_envs_per_gpu']=execution['rollout_envs_per_gpu']
     assert profile['task']=='joint_five' and profile['tasks']==list(PPO_TASKS) and profile['maximum_iterations']==6
     assert profile['baseline_validations']==spec['baseline_validations']
     exceptions=profile.get('calibration_exceptions',{})
@@ -138,7 +140,8 @@ def main():
             source_commit=binding['source_commit'],F_output=str(run/'policy'),output=str(out/f'scorer-{annotation_rank:02d}'),
             model=flora['model'],official_code=flora['official_code'],model_receipt=flora['model_receipt'],
             baseline_validations=profile['baseline_validations'],calibration_exceptions=exceptions,
-            batch_size=8,gpu_memory_utilization=.78,minimum_free_mib_after_engine_warmup=17536,
+            batch_size=8,gpu_memory_utilization=.78,
+            minimum_free_mib_after_engine_warmup=execution['native_rollout_memory_reserve_mib'],
             engine_ready_path=str(job/'engines'/f'rank-{annotation_rank:02d}.json'),
             actual_gpu_probe=dict(path=str(probe),sha256=sha(probe)),expected_gpu_uuid=device['uuid'],
             scheduler_seconds=21540,deadline_unix=deadline,closure_seconds=300,maximum_batches=6,

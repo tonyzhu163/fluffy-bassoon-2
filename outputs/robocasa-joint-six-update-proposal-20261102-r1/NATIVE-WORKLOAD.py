@@ -85,6 +85,8 @@ global_devices = [dict(d, node_rank=rank, probe_path=m['probe_path']) for rank, 
 assert len(global_devices) == len({d['uuid'] for d in global_devices}) == 8
 deadline = min(m['allocated_start_unix'] for m in manifests) + slice_seconds - closure
 profile = copy.deepcopy(binding['policy_profile'])
+execution = json.loads((code/'configs/native_ppo/robocasa_residual_execution.json').read_text())
+profile['rollout_envs_per_gpu'] = execution['rollout_envs_per_gpu']
 assert profile['task'] == 'joint_five' and profile['tasks'] == list(PPO_TASKS)
 assert profile['maximum_iterations'] == 6 and set(profile['baseline_validations']) == set(PPO_TASKS)
 assert not any(profile.get(key) for key in ('resume', 'rollout_migration', 'checkpoint', 'prior_dev_evaluations'))

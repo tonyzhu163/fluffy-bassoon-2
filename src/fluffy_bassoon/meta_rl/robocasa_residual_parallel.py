@@ -55,6 +55,19 @@ def native_chunk_offsets(cases, horizon=None):
     return offsets
 
 
+def rollout_envs_per_gpu(profile):
+    """Missing fields retain the legacy singleton checkpoint/sampler contract."""
+    value = profile.get('rollout_envs_per_gpu', 1)
+    if type(value) is not int or value not in (1, 2, 4, 8):
+        raise ValueError('Bind one of the measured native rollout lane counts')
+    return value
+
+
+def native_rollout_memory_reserve_mib(profile):
+    # Measured standalone peaks plus the same8GiB operational reserve.
+    return {1: 17536, 2: 10701+8192, 4: 13781+8192, 8: 19216+8192}[rollout_envs_per_gpu(profile)]
+
+
 class ParallelActionJournal:
     """Read the actual per-worker escrows, including unresolved intents."""
     def __init__(self, root, world, maximum_actions=1_000_000):
@@ -80,17 +93,22 @@ class ParallelResidualEnvironment:
         native_chunk_offsets(self.cases, self.horizon)
         self.output, self.monitoring_root = Path(output), Path(monitoring_root)
         self.profile, self.code, self.report = profile, Path(code), report
+        self.environments_per_gpu = rollout_envs_per_gpu(profile)
         self.cursor, self.active, self.batch = 0, False, 0
         self.worker_recovery = []
 
     def state_dict(self):
         if self.active:
             raise ValueError("Only a complete parallel episode bank is resumable")
-        return dict(cases=deepcopy(self.cases), cursor=self.cursor, horizon=self.horizon,
-                    worker_recovery=deepcopy(self.worker_recovery))
+        state = dict(cases=deepcopy(self.cases), cursor=self.cursor, horizon=self.horizon,
+                     worker_recovery=deepcopy(self.worker_recovery))
+        if self.environments_per_gpu != 1:
+            state['rollout_envs_per_gpu'] = self.environments_per_gpu
+        return state
 
     def load_state_dict(self, state):
-        if self.active or state["cases"] != self.cases or state["horizon"] != self.horizon:
+        if (self.active or state["cases"] != self.cases or state["horizon"] != self.horizon
+                or state.get('rollout_envs_per_gpu', 1) != self.environments_per_gpu):
             raise ValueError("Preserve the exact native case bank on migration")
         self.cursor = int(state["cursor"])
         self.worker_recovery = deepcopy(state.get("worker_recovery", []))
@@ -170,6 +188,7 @@ class ParallelResidualEnvironment:
                 if (result["cases"] != request["cases"] or len(result["records"]) != len(request["seeds"])
                         or len(result["episodes"]) != len(request["cases"])
                         or result["environment"]["cursor"] != len(request["cases"])
+                        or result['environment'].get('rollout_envs_per_gpu', 1) != self.environments_per_gpu
                         or [row["noise_seed"] for row in result["records"]] != request["seeds"]
                         or any(row["reward"] != 0 for row in result["records"])):
                     raise ValueError("Exact complete unlabeled worker bank required")

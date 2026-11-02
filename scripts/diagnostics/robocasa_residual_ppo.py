@@ -26,6 +26,7 @@ from fluffy_bassoon.meta_rl.robocasa_residual import (
     FrozenRoboCasaMotor, RoboCasaResidualEnvironment, collect_pending,
     install_terminal_labels, native_environment_factory, restore_checkpoint, save_checkpoint,
 )
+from fluffy_bassoon.meta_rl.robocasa_residual_parallel import rollout_envs_per_gpu, native_rollout_memory_reserve_mib
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo import (
     FLORA_CODE, FLORA_MODEL, digest, flora_jobs, parse_outputs, sha, write_new,
 )
@@ -75,6 +76,8 @@ def wait_for_annotation_engines(profile, report):
         ready = json.loads(path.read_text())
         device = profile["rollout_devices"][rank]
         required = scorer["minimum_free_mib_after_engine_warmup"]
+        if required < native_rollout_memory_reserve_mib(profile):
+            raise ValueError('Scorer memory reservation does not cover the selected native lane count')
         memory = ready["memory"]
         if joint:
             gate_binding = (scorer.get('baseline_validations') == profile.get('baseline_validations')
@@ -275,6 +278,10 @@ def main():
         motor_seed=profile["motor_seed"], residual_seed=profile["residual_seed"], update_seed=profile["update_seed"],
         features="normalized proprio16+base first12+mean12+same-prefix masked mean2048/RMS; fixed no fit")
     contract.update(calibration_contract)
+    lanes = rollout_envs_per_gpu(profile)
+    if lanes != 1:
+        contract['rollout_execution'] = dict(environments_per_gpu=lanes,
+            grouping='contiguous complete native cases, no padding', noise='serial per-case chunk seeds')
     train_episodes = 80 if joint else 64
     if joint:
         contract.update(tasks=list(PPO_TASKS), train_episodes=train_episodes,
@@ -289,6 +296,8 @@ def main():
             initial=dict(completed=True,policy_tensor_sha256=fingerprint.hexdigest(),ppo=asdict(config),
                 bound=asdict(bound),initializer=initializer,motor_seed=profile['motor_seed'],
                 residual_seed=profile['residual_seed'],update_seed=profile['update_seed'],optimizer_states=len(optimizer.state))
+            if lanes != 1:
+                initial['rollout_execution'] = contract['rollout_execution']
             if profile.get('initial_policy_fingerprint'):
                 if digest(read_ref(profile['initial_policy_fingerprint']))!=digest(initial):
                     raise ValueError('Both fresh arms must have identical actual initializer/normalizer/sampler/head states')

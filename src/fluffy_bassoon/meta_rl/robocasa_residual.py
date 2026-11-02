@@ -108,7 +108,7 @@ class RoboCasaResidualEnvironment:
     Simulator labels go ONLY to monitoring_root. Returned info is truth free.
     """
     def __init__(self, factory, cases, *, horizon, output, monitoring_root, journal, writer_factory, observer=None,
-                 episode_id_prefix="", rank=0):
+                 episode_id_prefix="", rank=0, episode_index_offset=0):
         from .rlinf_robocasa_ppo import TASKS
         if (not cases or any(case['task'] not in TASKS for case in cases)
                 or horizon is not None and (horizon not in {row[0] for row in TASKS.values()}
@@ -122,6 +122,9 @@ class RoboCasaResidualEnvironment:
         self.journal, self.writer_factory = journal, writer_factory
         self.observer = observer
         self.episode_id_prefix, self.rank = episode_id_prefix, int(rank)
+        if type(episode_index_offset) is not int or episode_index_offset < 0:
+            raise ValueError('Preserve a nonnegative original case index')
+        self.episode_index_offset = episode_index_offset
         self.cursor, self.active = 0, False
         self.native = None
 
@@ -134,7 +137,7 @@ class RoboCasaResidualEnvironment:
         case = self.cases[self.cursor]
         from .rlinf_robocasa_ppo import TASKS
         self.horizon = TASKS[case['task']][0]
-        self.key = f"{self.episode_id_prefix}episode-{self.cursor:06d}"
+        self.key = f"{self.episode_id_prefix}episode-{self.cursor+self.episode_index_offset:06d}"
         self.case = case
         intent = self.journal.begin(128, phase="native_constructor_reset")
         self.native = self.factory(case)
@@ -191,7 +194,8 @@ class RoboCasaResidualEnvironment:
         from .robocasa_video import REWARD_CAMERAS
         episode = dict(id=self.key, task=self.native.task_descriptions[0], camera_order=list(REWARD_CAMERAS),
             horizon=self.horizon, completed=True, success_termination_disabled=True, raw_rgb_only=True,
-                info_on_video=False, extra_info_on_video=[], rank=self.rank, round=self.cursor - 1, local_env=0,
+                info_on_video=False, extra_info_on_video=[], rank=self.rank,
+                round=self.cursor - 1 + self.episode_index_offset, local_env=0,
                 videos=self.writer.refs(),
             frame_clock=dict(frame_count=self.horizon + 1, native_fps=self.fps, encoded_fps=self.fps,
                 resampled=False, physical_steps=self.horizon, initial_frame_included=True))
@@ -208,10 +212,14 @@ class RoboCasaResidualEnvironment:
     def state_dict(self):
         if self.active:
             raise ValueError("Only complete episode boundaries are resumable")
-        return dict(cases=deepcopy(self.cases), cursor=self.cursor, horizon=self.bound_horizon)
+        state = dict(cases=deepcopy(self.cases), cursor=self.cursor, horizon=self.bound_horizon)
+        if self.episode_index_offset:
+            state['episode_index_offset'] = self.episode_index_offset
+        return state
 
     def load_state_dict(self, state):
-        if self.active or state["cases"] != self.cases or state["horizon"] != self.bound_horizon:
+        if (self.active or state["cases"] != self.cases or state["horizon"] != self.bound_horizon
+                or state.get('episode_index_offset', 0) != self.episode_index_offset):
             raise ValueError("Cannot change native case layout at recovery")
         self.cursor = state["cursor"]
 
