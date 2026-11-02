@@ -1,0 +1,23 @@
+{
+  "completed": true,
+  "source_commit": "e0511e7f881cf0a6cc482ea39f130cc8fa8582ac",
+  "cluster": "Baige Pro6K",
+  "job_id": "job-80hp54zqcwta",
+  "scheduler_status": "SUCCEEDED",
+  "scheduler_submitted_Shanghai": "2026-11-03 00:26:43",
+  "scheduler_ended_Shanghai": "2026-11-03 00:38:50",
+  "scheduler_submission_to_end_seconds_upper": 727,
+  "process_elapsed_seconds": 656.9442698955536,
+  "exit_code": 0,
+  "resources": {"gpus": 1, "cpus": 64, "ram_gib": 256, "shm_gib": 32},
+  "cohort": "Same32fresh capacity-only cases across the five training tasks;600controls each, real native simulator and three-view video, one frozen shared motor.",
+  "optimizer_updates": 0,
+  "configurations": [
+    {"lanes": 8, "episodes": 32, "policy_controls": 19200, "all_in_controls": 19200, "controls_per_second": 83.03562889767842, "collection_seconds": 231.22604422806762, "reset_seconds": 62.527080148109235, "inference_seconds": 20.694977357285097, "simulation_video_seconds": 127.2653219408813, "observed_peak_GPU_MiB": 18524, "observed_peak_container_RAM_bytes": 45292392448},
+    {"lanes": 16, "episodes": 32, "policy_controls": 19200, "all_in_controls": 19200, "controls_per_second": 138.93253319742112, "collection_seconds": 138.19657324405853, "reset_seconds": 33.10696051095147, "inference_seconds": 15.126264032878692, "simulation_video_seconds": 68.97033322686401, "observed_peak_GPU_MiB": 29246, "observed_peak_container_RAM_bytes": 71866245120},
+    {"lanes": 32, "episodes": 32, "policy_controls": 19200, "all_in_controls": 19200, "controls_per_second": 202.0764220534836, "collection_seconds": 95.01355875609443, "reset_seconds": 19.315317119006068, "inference_seconds": 12.242121352056029, "simulation_video_seconds": 41.864776732050814, "observed_peak_GPU_MiB": 50964, "observed_peak_container_RAM_bytes": 125013808832}
+  ],
+  "controls_per_second_scope": "Includes resets, simulator/video execution and environment closure; excludes one-time model loading and extra batch-versus-single numerical reference calls.",
+  "raw_server_result": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-rollout-capacity-1632-20261103-r1/gpu/RESULT.json",
+  "interpretation": "All three configurations complete, no OOM. Single-GPU capacity evidence; does not establish eight-GPU throughput, Flora colocation, or velocity/all-layer-KV history-writer overhead. Per-GPU64CPU cannot be multiplied by8on a180CPU node."
+}
