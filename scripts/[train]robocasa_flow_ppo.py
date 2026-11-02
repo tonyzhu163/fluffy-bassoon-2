@@ -28,8 +28,9 @@ def main(cfg):
     print(json.dumps(OmegaConf.to_container(cfg, resolve=True), indent=2), flush=True)
     cluster = Cluster(cluster_cfg=cfg.cluster, distributed_log_dir=cfg.runner.per_worker_log_path)
     placement = HybridComponentPlacement(cfg, cluster)
-    assert placement.get_world_size('actor') == placement.get_world_size('env') == 2
-    assert placement.get_world_size('rollout') == 2
+    assert placement.get_world_size('actor') == 2  # retain qualified rank-local reductions/Adam
+    assert placement.get_world_size('env') == placement.get_world_size('rollout') == cfg.native_pilot.world_size
+    assert cfg.native_pilot.world_size in (2, 8)
     actor = FlowActor.create_group(cfg).launch(cluster, name=cfg.actor.group_name,
         placement_strategy=placement.get_strategy('actor'))
     rollout = FlowRollout.create_group(cfg).launch(cluster, name=cfg.rollout.group_name,

@@ -23,7 +23,8 @@ hydra:
 cluster:
   num_nodes: 1
   component_placement:
-    actor,env,rollout: all
+    actor: ${oc.env:ROBOCASA_SIM_PPO_ACTOR_PLACEMENT,0-1}
+    env,rollout: ${oc.env:ROBOCASA_SIM_PPO_ROLLOUT_PLACEMENT,0-1}
 
 runner:
   task_type: embodied
@@ -207,7 +208,8 @@ critic:
 native_pilot:
   output: ${oc.env:ROBOCASA_SIM_PPO_OUTPUT}
   accounting_root: ${oc.env:ROBOCASA_SIM_PPO_ACCOUNTING}
-  world_size: 2
+  world_size: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_WORLD_SIZE,2}}
+  global_action_escrow: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_GLOBAL_ESCROW,false}}
   attempt: ${oc.env:TASK_ATTEMPT}
   deadline_unix: ${oc.decode:${oc.env:TASK_DEADLINE}}
   before_reference: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_BEFORE_REFERENCE,null}}

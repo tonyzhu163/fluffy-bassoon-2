@@ -23,7 +23,7 @@ from rlinf.workers.env.env_worker import EnvWorker
 from .rlinf_native_ppo import ActionJournal, cpu_tree, restore_rng, snapshot_rng, tensor_hash, write
 from .rlinf_native_ppo import sha
 from .rlinf_native_ppo_runtime import PilotActor, PilotRollout, PilotRunner, save_tensor
-from .rlinf_robocasa_flow_ppo import first_success_reward
+from .rlinf_robocasa_flow_ppo import GlobalActionJournal, first_success_reward
 from .rlinf_robocasa_ppo_env import counted_native_factory
 from .robocasa_pairing import canonical_case, native_fingerprint, public_snapshot
 
@@ -167,7 +167,19 @@ class FlowActor(PilotActor):
 
 
 class FlowRollout(PilotRollout):
-    pass
+    def pilot_restore(self, directory):
+        result = super().pilot_restore(directory)
+        state = torch.load(Path(directory) / f'rollout-{self._rank:02d}.pt',
+                           map_location='cpu', weights_only=False)
+        if 'migration_rng_seed' in state:
+            seed = state['migration_rng_seed']
+            random.seed(seed)
+            np.random.seed(seed)
+            torch.manual_seed(seed)
+            torch.cuda.manual_seed_all(seed)
+            self._pilot_rng = snapshot_rng()
+            result['new_world_rng_seed'] = seed
+        return result
 
 
 class FlowEnvironment(EnvWorker):
@@ -176,7 +188,8 @@ class FlowEnvironment(EnvWorker):
         mp.set_start_method('spawn', force=True)
         self._flow_phase = 'initialization'
         self._flow_iteration = 0
-        self._flow_journal = ActionJournal(self.cfg.native_pilot.accounting_root,
+        journal = GlobalActionJournal if self.cfg.native_pilot.get('global_action_escrow', False) else ActionJournal
+        self._flow_journal = journal(self.cfg.native_pilot.accounting_root,
             rank=self._rank, world=self._world_size, attempt=self.cfg.native_pilot.attempt)
         return super().init_worker()
 
@@ -242,14 +255,24 @@ class FlowEnvironment(EnvWorker):
 class FlowRunner(PilotRunner):
     def _log_step_metrics(self, *args, **kwargs):
         result = EmbodiedRunner._log_step_metrics(self, *args, **kwargs)
-        if self.global_step == 1 or self.global_step % 6 == 0 or self.global_step == self.max_steps:
+        output = Path(self.cfg.native_pilot.output)
+        requested = (output / 'CHECKPOINT_AND_EXIT').exists()
+        first_after_restore = self.global_step == getattr(self, '_flow_resume_step', 0) + 1
+        if requested or first_after_restore or self.global_step % 6 == 0 or self.global_step == self.max_steps:
             self._capture_boundary()
-        write(Path(self.cfg.native_pilot.output) / 'progress.json',
+        write(output / 'progress.json',
             dict(completed_iterations=self.global_step, target_iterations=self.max_steps,
-                 checked_unix=time.time()))
+                 checked_unix=time.time(), operator_checkpoint_exit=requested))
+        if requested:
+            write(output / 'operator-checkpoint-exit.json', dict(completed=True,
+                global_step=self.global_step, requested_marker='CHECKPOINT_AND_EXIT',
+                scope='All update handles completed; native DCP and all worker sidecars saved; no next rollout'))
+            self._finish_run()
+            raise SystemExit(0)
         return result
 
     def run(self):
+        self._flow_resume_step = self.global_step
         output = Path(self.cfg.native_pilot.output)
         write(output / 'resolved-config.json', OmegaConf.to_container(self.cfg, resolve=True))
         if self.cfg.runner.get('resume_dir'):
