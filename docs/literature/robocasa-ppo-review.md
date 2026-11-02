@@ -322,6 +322,12 @@ evidence.
 
 ## Decision
 
+The separate experimental branch records the
+[matched atomic-task alternative](structrl-ppo-alternative.md): 256 environments
+and 50 iterations in both arms, with the remaining finalized PPO settings
+shared. It adapts the reward method rather than claiming the paper's
+composite-task reproduction.
+
 Use StructRL's **sparse PPO baseline** as the strongest released external
 reference to reconstruct, with its exact SFT/data/launcher/patch boundaries
 made explicit. Use πRL to audit the π0.5 critic and stochastic likelihoods.
