@@ -1,0 +1,325 @@
+{
+  "completed": true,
+  "checked_utc": "2026-11-02T11:17:54.669299+00:00",
+  "job_id": "job-al2ztuon33dz",
+  "nodes": [
+    {
+      "manifest": {
+        "node_rank": 0,
+        "hostname": "job-al2ztuon33dz-master-0",
+        "source_commit": "b7b9c8996c5124ebb56d06a2986824474b4b471c",
+        "allocated_start_unix": 1793618151,
+        "devices": [
+          {
+            "allocation_ordinal": 0,
+            "visibility_token": "0",
+            "cuda_uuid": "b97127ab-7f30-0db0-ed0e-5998d26f62d5",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:64:00.0",
+            "uuid": "GPU-391c7e48-a84e-0117-f2ef-2ce225a9cb94",
+            "inventory": {
+              "index": 0,
+              "uuid": "GPU-391c7e48-a84e-0117-f2ef-2ce225a9cb94",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 0.0,
+              "pci_bus_id": "00000000:64:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-391c7e48-a84e-0117-f2ef-2ce225a9cb94"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-391c7e48-a84e-0117-f2ef-2ce225a9cb94"
+              ]
+            }
+          }
+        ],
+        "probe_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/job/node-00/gpu-probe.json",
+        "cpus": 32,
+        "ram_gib": 128,
+        "shm_gib": 16,
+        "free_bytes": 719822258176,
+        "write_probe_pass": true,
+        "quota": "UNVERIFIED",
+        "resource_authority_sha256": "239b5255505dec1a9ee6cd5957543711ff75a095a824256bd5e1de260385b41f"
+      },
+      "input_preflight": {
+        "completed": true,
+        "reference_migrations": [
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json",
+            "sha256": "5d1723f6e66c65037b192174017225a29f6302bc03ebce2c921912e4513f3a57"
+          },
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-native-core-20261102-r1/READY.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-native-core-20261102-r1/READY.json",
+            "sha256": "d0fec170ecd7fb12ab4d43d7e9e8c6a01c3f01b1681ff956cf1e8d07b8e34ba3"
+          },
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-reward-core-20261102-r1/READY.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-reward-core-20261102-r1/READY.json",
+            "sha256": "66b626804163e3996947a96c89d5aaec4f82c13f09a82d3e099660a009ed173e"
+          },
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json",
+            "sha256": "f081bc81996783a63db6f9f9ea7ce828212436c514fe810d156477554a380cf3"
+          },
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json",
+            "sha256": "9a086359d7e96510923b5f505012f6a1f55c78bce76c51c8f8703ca19475711e"
+          }
+        ]
+      },
+      "scorer_log_bytes": 9774,
+      "official_engine_loading": true
+    },
+    {
+      "manifest": {
+        "node_rank": 1,
+        "hostname": "job-al2ztuon33dz-worker-0",
+        "source_commit": "b7b9c8996c5124ebb56d06a2986824474b4b471c",
+        "allocated_start_unix": 1793618158,
+        "devices": [
+          {
+            "allocation_ordinal": 0,
+            "visibility_token": "0",
+            "cuda_uuid": "435a8b15-94d5-6b94-a283-341e2b0ffd6c",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:a1:00.0",
+            "uuid": "GPU-b756d8ea-a2c4-f365-504b-61c87e6173c0",
+            "inventory": {
+              "index": 0,
+              "uuid": "GPU-b756d8ea-a2c4-f365-504b-61c87e6173c0",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 0.0,
+              "pci_bus_id": "00000000:A1:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-b756d8ea-a2c4-f365-504b-61c87e6173c0"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-b756d8ea-a2c4-f365-504b-61c87e6173c0"
+              ]
+            }
+          }
+        ],
+        "probe_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/job/node-01/gpu-probe.json",
+        "cpus": 32,
+        "ram_gib": 128,
+        "shm_gib": 16,
+        "free_bytes": 720250077184,
+        "write_probe_pass": true,
+        "quota": "UNVERIFIED",
+        "resource_authority_sha256": "239b5255505dec1a9ee6cd5957543711ff75a095a824256bd5e1de260385b41f"
+      },
+      "input_preflight": {
+        "completed": true,
+        "reference_migrations": [
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json",
+            "sha256": "5d1723f6e66c65037b192174017225a29f6302bc03ebce2c921912e4513f3a57"
+          },
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-native-core-20261102-r1/READY.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-native-core-20261102-r1/READY.json",
+            "sha256": "d0fec170ecd7fb12ab4d43d7e9e8c6a01c3f01b1681ff956cf1e8d07b8e34ba3"
+          },
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-reward-core-20261102-r1/READY.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-reward-core-20261102-r1/READY.json",
+            "sha256": "66b626804163e3996947a96c89d5aaec4f82c13f09a82d3e099660a009ed173e"
+          },
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json",
+            "sha256": "f081bc81996783a63db6f9f9ea7ce828212436c514fe810d156477554a380cf3"
+          },
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json",
+            "sha256": "9a086359d7e96510923b5f505012f6a1f55c78bce76c51c8f8703ca19475711e"
+          }
+        ]
+      },
+      "scorer_log_bytes": 9323,
+      "official_engine_loading": true
+    },
+    {
+      "manifest": {
+        "node_rank": 2,
+        "hostname": "job-al2ztuon33dz-worker-1",
+        "source_commit": "b7b9c8996c5124ebb56d06a2986824474b4b471c",
+        "allocated_start_unix": 1793618157,
+        "devices": [
+          {
+            "allocation_ordinal": 0,
+            "visibility_token": "0",
+            "cuda_uuid": "ece2b111-42e7-c372-9a95-5ce93ab0d828",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:a2:00.0",
+            "uuid": "GPU-4fdf040e-2cb5-1fd7-71b1-495d9f46333c",
+            "inventory": {
+              "index": 0,
+              "uuid": "GPU-4fdf040e-2cb5-1fd7-71b1-495d9f46333c",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 0.0,
+              "pci_bus_id": "00000000:A2:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-4fdf040e-2cb5-1fd7-71b1-495d9f46333c"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-4fdf040e-2cb5-1fd7-71b1-495d9f46333c"
+              ]
+            }
+          }
+        ],
+        "probe_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/job/node-02/gpu-probe.json",
+        "cpus": 32,
+        "ram_gib": 128,
+        "shm_gib": 16,
+        "free_bytes": 720250077184,
+        "write_probe_pass": true,
+        "quota": "UNVERIFIED",
+        "resource_authority_sha256": "239b5255505dec1a9ee6cd5957543711ff75a095a824256bd5e1de260385b41f"
+      },
+      "input_preflight": {
+        "completed": true,
+        "reference_migrations": [
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json",
+            "sha256": "5d1723f6e66c65037b192174017225a29f6302bc03ebce2c921912e4513f3a57"
+          },
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-native-core-20261102-r1/READY.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-native-core-20261102-r1/READY.json",
+            "sha256": "d0fec170ecd7fb12ab4d43d7e9e8c6a01c3f01b1681ff956cf1e8d07b8e34ba3"
+          },
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-reward-core-20261102-r1/READY.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-reward-core-20261102-r1/READY.json",
+            "sha256": "66b626804163e3996947a96c89d5aaec4f82c13f09a82d3e099660a009ed173e"
+          },
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json",
+            "sha256": "f081bc81996783a63db6f9f9ea7ce828212436c514fe810d156477554a380cf3"
+          },
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json",
+            "sha256": "9a086359d7e96510923b5f505012f6a1f55c78bce76c51c8f8703ca19475711e"
+          }
+        ]
+      },
+      "scorer_log_bytes": 9323,
+      "official_engine_loading": true
+    },
+    {
+      "manifest": {
+        "node_rank": 3,
+        "hostname": "job-al2ztuon33dz-worker-2",
+        "source_commit": "b7b9c8996c5124ebb56d06a2986824474b4b471c",
+        "allocated_start_unix": 1793618157,
+        "devices": [
+          {
+            "allocation_ordinal": 0,
+            "visibility_token": "0",
+            "cuda_uuid": "457da6ae-fab8-fc85-2bc3-f36701e80079",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:63:00.0",
+            "uuid": "GPU-e9761922-0f32-985a-5dc4-70da0cbafb8b",
+            "inventory": {
+              "index": 0,
+              "uuid": "GPU-e9761922-0f32-985a-5dc4-70da0cbafb8b",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 0.0,
+              "pci_bus_id": "00000000:63:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-e9761922-0f32-985a-5dc4-70da0cbafb8b"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-e9761922-0f32-985a-5dc4-70da0cbafb8b"
+              ]
+            }
+          }
+        ],
+        "probe_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-h600-preparation-20261102-r4/job/node-03/gpu-probe.json",
+        "cpus": 32,
+        "ram_gib": 128,
+        "shm_gib": 16,
+        "free_bytes": 720250077184,
+        "write_probe_pass": true,
+        "quota": "UNVERIFIED",
+        "resource_authority_sha256": "239b5255505dec1a9ee6cd5957543711ff75a095a824256bd5e1de260385b41f"
+      },
+      "input_preflight": {
+        "completed": true,
+        "reference_migrations": [
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json",
+            "sha256": "5d1723f6e66c65037b192174017225a29f6302bc03ebce2c921912e4513f3a57"
+          },
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-native-core-20261102-r1/READY.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-native-core-20261102-r1/READY.json",
+            "sha256": "d0fec170ecd7fb12ab4d43d7e9e8c6a01c3f01b1681ff956cf1e8d07b8e34ba3"
+          },
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-reward-core-20261102-r1/READY.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-reward-core-20261102-r1/READY.json",
+            "sha256": "66b626804163e3996947a96c89d5aaec4f82c13f09a82d3e099660a009ed173e"
+          },
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json",
+            "sha256": "f081bc81996783a63db6f9f9ea7ce828212436c514fe810d156477554a380cf3"
+          },
+          {
+            "original": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json",
+            "pinned": "/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json",
+            "sha256": "9a086359d7e96510923b5f505012f6a1f55c78bce76c51c8f8703ca19475711e"
+          }
+        ]
+      },
+      "scorer_log_bytes": 9322,
+      "official_engine_loading": true
+    }
+  ],
+  "all_four_actual_probes_passed": true,
+  "all_four_input_preflights_passed": true,
+  "all_four_scorers_loading": true,
+  "errors": [],
+  "episodes_at_check": 0,
+  "optimizer_updates": 0
+}
