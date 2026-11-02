@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 import random
+import shutil
 import time
 
 import numpy as np
@@ -20,6 +21,7 @@ from rlinf.workers.actor.embodied_fsdp_actor_worker import EmbodiedFSDPActor
 from rlinf.workers.env.env_worker import EnvWorker
 
 from .rlinf_native_ppo import ActionJournal, cpu_tree, restore_rng, snapshot_rng, tensor_hash, write
+from .rlinf_native_ppo import sha
 from .rlinf_native_ppo_runtime import PilotActor, PilotRollout, PilotRunner, save_tensor
 from .rlinf_robocasa_flow_ppo import first_success_reward
 from .rlinf_robocasa_ppo_env import counted_native_factory
@@ -30,6 +32,11 @@ def unwrapped(env):
     while '_flow_round' not in vars(env):
         env = env.env
     return env
+
+
+def json_metrics(metrics):
+    """Native metric aggregation returns NumPy zero-dimensional arrays."""
+    return {key: np.asarray(value).tolist() for key, value in metrics.items()}
 
 
 def fresh_factory(factory, seed):
@@ -246,6 +253,19 @@ class FlowRunner(PilotRunner):
         output = Path(self.cfg.native_pilot.output)
         write(output / 'resolved-config.json', OmegaConf.to_container(self.cfg, resolve=True))
         if self.cfg.runner.get('resume_dir'):
+            reference_path = self.cfg.native_pilot.before_reference
+            if not reference_path or sha(reference_path) != self.cfg.native_pilot.before_reference_sha256:
+                raise ValueError('Resume requires the verified original before panel')
+            reference = json.loads(Path(reference_path).read_text())
+            assert reference['completed'] and reference['cases'] == 64
+            assert Path(reference['checkpoint']) == Path(self.cfg.runner.resume_dir)
+            assert .05 <= reference['metrics']['success_once'] <= .70
+            for row in reference['episode_refs']:
+                assert sha(row['path']) == row['sha256']
+            shutil.copytree(reference['canonical_directory'], output / 'canonical-eval')
+            write(output / 'before-evaluation.json', dict(completed=True,
+                metrics=reference['metrics'], reused_reference=dict(path=reference_path,
+                    sha256=self.cfg.native_pilot.before_reference_sha256), new_evaluation_controls=0))
             for group in (self.actor, self.rollout, self.env):
                 group.pilot_restore(str(Path(self.cfg.runner.resume_dir) / 'pilot')).wait()
         else:
@@ -256,7 +276,7 @@ class FlowRunner(PilotRunner):
             self.env.pilot_phase('before', policy_iteration=0).wait()
             self.rollout.pilot_evaluation_iteration(0).wait()
             before = self.evaluate()
-            write(output / 'before-evaluation.json', dict(completed=True, metrics=before))
+            write(output / 'before-evaluation.json', dict(completed=True, metrics=json_metrics(before)))
             success = float(before['success_once'])
             if not .05 <= success <= .70:
                 raise RuntimeError(f'Before-panel task admission requires human decision: success_once={success}')
@@ -271,4 +291,4 @@ class FlowRunner(PilotRunner):
         self.env.pilot_phase('after', policy_iteration=18).wait()
         self.rollout.pilot_evaluation_iteration(18).wait()
         after = self.evaluate()
-        write(output / 'after-evaluation.json', dict(completed=True, global_step=18, metrics=after))
+        write(output / 'after-evaluation.json', dict(completed=True, global_step=18, metrics=json_metrics(after)))

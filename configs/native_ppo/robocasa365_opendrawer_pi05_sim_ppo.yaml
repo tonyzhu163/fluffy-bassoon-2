@@ -210,3 +210,5 @@ native_pilot:
   world_size: 2
   attempt: ${oc.env:TASK_ATTEMPT}
   deadline_unix: ${oc.decode:${oc.env:TASK_DEADLINE}}
+  before_reference: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_BEFORE_REFERENCE,null}}
+  before_reference_sha256: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_BEFORE_SHA256,null}}
