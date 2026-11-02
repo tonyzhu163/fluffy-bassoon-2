@@ -155,6 +155,12 @@ class RoboCasaResidualEnvironment:
         self.cursor += 1
         return public_observation(observation)
 
+    def seek(self, index):
+        """Skip forward to a later case slot; lane collectors interleave one bank."""
+        if self.active or not self.cursor <= index < len(self.cases):
+            raise ValueError("Only skip forward to an unattempted case between episodes")
+        self.cursor = index
+
     def _counts(self):
         rows = self.native.env.get_env_attr("_flora_accounting")
         if len(rows) != 1 or not isinstance(rows[0], dict):
@@ -296,6 +302,88 @@ def collect_pending(policy, bound, motor, environment, *, episodes, generator, d
         raise ValueError("Incomplete batch cannot enter reward labeling")
     if planned_motor_seeds is not None and len(records) != len(planned_motor_seeds):
         raise ValueError("Full episode draw schedule was not consumed exactly")
+    return records, finished
+
+
+def combine_observations(observations):
+    """Stack single-lane public observations for one shared native forward pass."""
+    result = {}
+    for key in observations[0]:
+        values = [observation[key] for observation in observations]
+        result[key] = (torch.cat(values, 0) if torch.is_tensor(values[0]) else
+                       np.concatenate(values, 0) if isinstance(values[0], np.ndarray) else
+                       sum((list(value) for value in values), []))
+    return result
+
+
+def collect_pending_lanes(policy, bound, motor, environments, *, planned_motor_seeds,
+                          planned_action_noise=None, deterministic=False, verify_zero=False):
+    """Run one worker's case bank with concurrent simulator lanes on one GPU.
+
+    ``environments`` are lane environments over the SAME case list. Episodes run
+    in waves of ``len(environments)`` with one shared native forward per chunk;
+    each chunk keeps its serial-order planned motor seed and actor noise, and
+    records/episodes return in case order, so ids, draws and GAE match the
+    serial collector. Batched BF16 inference is not bitwise equal to batch 1.
+    """
+    from concurrent.futures import ThreadPoolExecutor
+    from .robocasa_residual_parallel import native_chunk_offsets
+    cases = environments[0].cases
+    if (any(env.cases != cases or env.cursor for env in environments)
+            or deterministic != (planned_action_noise is None) or hasattr(policy, "observe")):
+        raise ValueError("Fresh lane environments, a matching actor-noise plan and a memoryless actor required")
+    offsets = native_chunk_offsets(cases)
+    if len(planned_motor_seeds) != offsets[-1]:
+        raise ValueError("Require one planned motor draw per native chunk of the bank")
+    reference = next(policy.parameters())
+    by_slot = {}
+    with ThreadPoolExecutor(max_workers=len(environments)) as pool:
+        for first in range(0, len(cases), len(environments)):
+            lanes = list(zip(range(first, min(first + len(environments), len(cases))), environments))
+            for slot, env in lanes:
+                env.seek(slot)
+            observations = dict(zip((slot for slot, _ in lanes), pool.map(lambda pair: pair[1].reset(), lanes)))
+            chunk_index = {slot: 0 for slot, _ in lanes}
+            for slot, _ in lanes:
+                by_slot[slot] = ([], None)
+            active = [pair for pair in lanes]
+            while active:
+                slots = [slot for slot, _ in active]
+                seeds = [int(planned_motor_seeds[offsets[slot] + chunk_index[slot]]) for slot in slots]
+                chunks, features, _ = motor.infer_batch(combine_observations([observations[slot] for slot in slots]),
+                                                        noise_seeds=seeds)
+                executed = []
+                for row, slot in enumerate(slots):
+                    index = offsets[slot] + chunk_index[slot]
+                    noise = {} if deterministic else {"action_noise": planned_action_noise[index:index + 1]}
+                    tensor = torch.as_tensor(features[row], device=reference.device, dtype=reference.dtype)
+                    control, log_prob, value = policy.act(tensor[None], deterministic=deterministic, **noise)
+                    control = control[0].cpu().numpy()
+                    applied = bound.apply(np.asarray(chunks[row]), control)
+                    verified = verify_zero and slot == 0
+                    if verified and (np.any(control != 0) or not np.array_equal(applied, chunks[row])):
+                        raise ValueError("Zero-residual native sampler replay differs before physical execution")
+                    executed.append(applied)
+                    by_slot[slot][0].append(dict(features=np.array(features[row], dtype=np.float32, copy=True),
+                        noise_seed=seeds[row], base_chunk=np.array(chunks[row], copy=True),
+                        executed_chunk=np.array(applied, copy=True), control=control.astype(np.float32),
+                        log_prob=float(log_prob[0]), value=float(value[0]), reward=0., done=False,
+                        episode_start=chunk_index[slot] == 0, zero_residual_verified=verified))
+                steps = list(pool.map(lambda pair: pair[0][1].step_chunk(pair[1]), zip(active, executed)))
+                still = []
+                for (slot, env), (observation, done, info) in zip(active, steps):
+                    by_slot[slot][0][-1]["done"] = bool(done)
+                    chunk_index[slot] += 1
+                    if done:
+                        by_slot[slot] = (by_slot[slot][0], info)
+                    else:
+                        observations[slot] = observation
+                        still.append((slot, env))
+                active = still
+    records = [row for slot in range(len(cases)) for row in by_slot[slot][0]]
+    finished = [by_slot[slot][1] for slot in range(len(cases))]
+    if len(records) != offsets[-1] or any(info is None for info in finished):
+        raise ValueError("Incomplete lane bank cannot enter reward labeling")
     return records, finished
 
 

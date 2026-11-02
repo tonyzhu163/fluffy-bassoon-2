@@ -165,7 +165,7 @@ def main():
         profile.update(mode='train',arm='F',source_commit=binding['source_commit'],output=str(run/'policy'),
             monitoring_root=str(run/'monitoring'),accounting_root=str(run/'actions'),attempt=os.environ['TASK_RUN'],
             episode_id_namespace='joint-',allocated_start_unix=min(m['allocated_start_unix'] for m in manifests),
-            deadline_unix=deadline,scheduler_seconds=21540,closure_seconds=300,maximum_all_in_actions=None,
+            deadline_unix=deadline,scheduler_seconds=21540,closure_seconds=300,maximum_all_in_actions=None,rollout_lanes_per_gpu=8,
             rollout_devices=global_devices,parallel_controller_cpu_offload=True,stopping='fixed',
             actual_gpu_probe=dict(path=str(probe),sha256=sha(probe)),distributed_rollout_root=str(dispatch),
             gpu_allocation_starts_unix=[m['allocated_start_unix'] for m in manifests for _ in range(2)],

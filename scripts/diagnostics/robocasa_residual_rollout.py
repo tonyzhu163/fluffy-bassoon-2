@@ -14,7 +14,8 @@ from hydra import compose, initialize_config_dir
 from fluffy_bassoon.baige_gpu import verify_selected_cuda
 from fluffy_bassoon.meta_rl.residual_ppo import ResidualActorCritic, ResidualPPOConfig
 from fluffy_bassoon.meta_rl.robocasa_residual import (
-    FrozenRoboCasaMotor, RoboCasaResidualEnvironment, collect_pending, native_environment_factory,
+    FrozenRoboCasaMotor, RoboCasaResidualEnvironment, collect_pending, collect_pending_lanes,
+    native_environment_factory,
 )
 from fluffy_bassoon.meta_rl.rlinf_native_ppo import ActionJournal, snapshot_rng
 from fluffy_bassoon.meta_rl.warmstart import atomic_save
@@ -45,22 +46,37 @@ def main():
     policy = ResidualActorCritic(ResidualPPOConfig(**request["config"])).to("cuda").eval()
     policy.load_state_dict(request["policy"], strict=True)
     bound = ResidualBound(**request["bound"])
-    journal = ActionJournal(profile["accounting_root"], rank=request["rank"], world=request["world"],
-                            attempt=request["attempt"],
-                            maximum_actions=None if profile["maximum_all_in_actions"] is None else 1_000_000)
-    env = RoboCasaResidualEnvironment(native_environment_factory(cfg.env.eval), request["cases"],
+    cap = None if profile["maximum_all_in_actions"] is None else 1_000_000
+    lanes = profile.get("rollout_lanes_per_gpu", 1)
+    if lanes not in (1, 2, 4, 8):
+        raise ValueError("Use a measured lane count per GPU: 1, 2, 4 or 8")
+    lanes = min(lanes, len(request["cases"]))
+    # One journal per lane; the rank directory sums every lane's escrow.
+    journals = [ActionJournal(profile["accounting_root"], rank=request["rank"], world=request["world"],
+                              attempt=request["attempt"] + ("" if lane == 0 else f"-lane{lane}"),
+                              maximum_actions=cap) for lane in range(lanes)]
+    environments = [RoboCasaResidualEnvironment(native_environment_factory(cfg.env.eval), request["cases"],
         horizon=request["horizon"], output=Path(request["output"]) / "videos",
         monitoring_root=request["monitoring_root"], journal=journal, writer_factory=imageio.get_writer,
-        episode_id_prefix=request["episode_id_prefix"], rank=request["rank"])
+        episode_id_prefix=request["episode_id_prefix"], rank=request["rank"]) for journal in journals]
     try:
-        records, episodes = collect_pending(policy, bound, motor, env, episodes=len(request["cases"]),
-            generator=None, deterministic=request["deterministic"], verify_zero=request["verify_zero"],
-            planned_motor_seeds=request["seeds"], planned_action_noise=request["noise"])
+        if lanes == 1:
+            records, episodes = collect_pending(policy, bound, motor, environments[0], episodes=len(request["cases"]),
+                generator=None, deterministic=request["deterministic"], verify_zero=request["verify_zero"],
+                planned_motor_seeds=request["seeds"], planned_action_noise=request["noise"])
+            state = environments[0].state_dict()
+        else:
+            records, episodes = collect_pending_lanes(policy, bound, motor, environments,
+                planned_motor_seeds=request["seeds"], planned_action_noise=request["noise"],
+                deterministic=request["deterministic"], verify_zero=request["verify_zero"])
+            state = dict(environments[0].state_dict(), cursor=len(request["cases"]))
         atomic_save(Path(request["output"]) / "result.pt", dict(cases=request["cases"], records=records,
-            episodes=episodes, environment=env.state_dict(), global_rng=snapshot_rng(),
-            motor_rng=motor.state_dict(), physical_actions=journal.charged()))
+            episodes=episodes, environment=state, global_rng=snapshot_rng(),
+            motor_rng=motor.state_dict(), physical_actions=journals[0].charged(),
+            rollout_lanes_per_gpu=lanes))
     finally:
-        env.close()
+        for env in environments:
+            env.close()
 
 
 if __name__ == "__main__":

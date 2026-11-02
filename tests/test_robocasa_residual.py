@@ -295,3 +295,65 @@ def test_pending_recovery_reproduces_next_optimizer_update_and_final_checkpoint(
     actual = torch.load(final, map_location="cpu", weights_only=False)
     assert actual["final"] and actual["optimizer"]["state"] and actual["iteration"] == 1
     assert actual["contract"]["motor"] == contract["motor"]
+
+
+class LaneModel(MotorModel):
+    action_dim = 32
+
+    def build_prefix_cache(self, observation):
+        self.prefix_calls += 1
+        batch = len(observation["states"])
+        return (torch.tensor([[[1., 3.], [3., 1.], [float("nan"), float("nan")]]]).expand(batch, -1, -1),
+                torch.tensor([[True, True, False]]).expand(batch, -1), ())
+
+    def predict_action_batch(self, observation, mode, rng=None, noise=None):
+        self.calls += 1
+        assert mode == "eval" and "success" not in observation
+        self.build_prefix_cache(observation)
+        states = torch.as_tensor(np.asarray(observation["states"]))
+        if noise is None:
+            noise = torch.randn((len(states), 50, 32), generator=rng)
+        return noise[..., :12] + states[:, None, :12], {}
+
+
+class StepNative(Native):
+    def observation(self):
+        value = super().observation()
+        value["states"] = np.full((1, 25), getattr(self, "steps", 0) / 1000, np.float32)
+        return value
+
+
+def test_lane_collection_matches_serial_draws_ids_and_records(tmp_path):
+    from fluffy_bassoon.meta_rl.robocasa_residual import collect_pending_lanes
+    from fluffy_bassoon.meta_rl.robocasa_residual_parallel import draw_schedule, native_chunk_offsets
+    from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import TASKS
+    stats = {key: dict(mean=[0.] * 32, std=[2.] * 32) for key in ("state", "actions")}
+    cases = [dict(task=task, native_seed=index) for index, task in
+             enumerate(["CoffeeSetupMug", "OpenDrawer", "OpenDrawer", "CoffeeSetupMug", "OpenDrawer"])]
+    torch.manual_seed(0)
+    policy = ResidualActorCritic(ResidualPPOConfig(42, 6, width=8))
+    plan_motor = FrozenRoboCasaMotor(LaneModel(), stats, seed=3)
+    seeds, noise = draw_schedule(plan_motor, policy, torch.Generator().manual_seed(4),
+                                 native_chunk_offsets(cases)[-1], deterministic=False)
+
+    def env(root):
+        return RoboCasaResidualEnvironment(lambda case: StepNative(horizon=TASKS[case["task"]][0]), cases,
+            horizon=None, output=root / "videos", monitoring_root=root / "monitor", journal=Journal(),
+            writer_factory=Writer, episode_id_prefix="case-000000-rank-00-")
+
+    serial_records, serial_episodes = collect_pending(policy, bound(), FrozenRoboCasaMotor(LaneModel(), stats),
+        env(tmp_path / "serial"), episodes=len(cases), generator=None,
+        planned_motor_seeds=seeds, planned_action_noise=noise)
+    lane_motor = FrozenRoboCasaMotor(LaneModel(), stats)
+    lane_records, lane_episodes = collect_pending_lanes(policy, bound(), lane_motor,
+        [env(tmp_path / "lanes") for _ in range(2)], planned_motor_seeds=seeds, planned_action_noise=noise)
+    assert lane_motor.model.calls == 15 + 15 + 15  # Three waves, each bounded by its longest lane.
+    assert [e["id"] for e in lane_episodes] == [e["id"] for e in serial_episodes]
+    assert [e["round"] for e in lane_episodes] == list(range(5))
+    assert len(lane_records) == len(serial_records) == sum(TASKS[c["task"]][0] // 50 for c in cases)
+    for lane, serial in zip(lane_records, serial_records):
+        for key in ("noise_seed", "reward", "done", "episode_start"):
+            assert lane[key] == serial[key]
+        for key in ("features", "control", "base_chunk", "executed_chunk"):
+            np.testing.assert_array_equal(lane[key], serial[key])
+        assert lane["log_prob"] == serial["log_prob"]
