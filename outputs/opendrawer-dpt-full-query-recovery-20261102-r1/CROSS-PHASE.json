@@ -1,0 +1,84 @@
+{
+  "checked_at": "2026-11-02T07:47:43.934430+00:00",
+  "DPT_phases_complete": true,
+  "all_methods_complete": false,
+  "contract_equal": true,
+  "norm_hash_and_quarter_std_bound_exact": true,
+  "cohorts": {
+    "ID": {
+      "cases": 50,
+      "primary_successes": {
+        "dpt_full": 35,
+        "dpt_static": 30
+      },
+      "comparisons": {
+        "dpt_full_K1-vs-dpt_static_K0": {
+          "wins": 6,
+          "losses": 1,
+          "ties": 43,
+          "n": 50,
+          "exact_p": 0.125
+        }
+      },
+      "pending_PPO_counts": {
+        "ppo_initial": 37,
+        "ppo_final": 36
+      }
+    },
+    "OOD": {
+      "cases": 50,
+      "primary_successes": {
+        "dpt_full": 27,
+        "dpt_static": 26,
+        "ppo_initial": 28,
+        "ppo_final": 30
+      },
+      "comparisons": {
+        "dpt_full_K1-vs-dpt_static_K0": {
+          "wins": 7,
+          "losses": 6,
+          "ties": 37,
+          "n": 50,
+          "exact_p": 1.0
+        },
+        "dpt_full-vs-ppo_initial": {
+          "wins": 7,
+          "losses": 8,
+          "ties": 35,
+          "n": 50,
+          "exact_p": 1.0
+        },
+        "dpt_full-vs-ppo_final": {
+          "wins": 5,
+          "losses": 8,
+          "ties": 37,
+          "n": 50,
+          "exact_p": 0.5810546875
+        },
+        "dpt_static-vs-ppo_initial": {
+          "wins": 6,
+          "losses": 8,
+          "ties": 36,
+          "n": 50,
+          "exact_p": 0.79052734375
+        },
+        "dpt_static-vs-ppo_final": {
+          "wins": 3,
+          "losses": 7,
+          "ties": 40,
+          "n": 50,
+          "exact_p": 0.34375
+        }
+      },
+      "pending_PPO_counts": {}
+    }
+  },
+  "p_values": "unadjusted exploratory exact paired binomial tests",
+  "limitations": [
+    "single source task and training seed;50 cases per cohort",
+    "exact physical/camera/public state with qualified <=1uint8 render roundoff; original pixels",
+    "source histories span different scenes across PPO versions,not repeated same-scene adaptation",
+    "OOD held out from students,not necessarily foundation pretraining",
+    "support interacts with simulator and is charged separately; PPO/static have no support interactions"
+  ]
+}

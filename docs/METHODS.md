@@ -62,6 +62,11 @@ an atomic `training-status.json` per fit; readout dispatch selects explicit
 ready methods rather than admitting a whole experiment at once. Archived
 combined drivers require an explicit `--legacy-combined` opt-in.
 
+On schedulers that treat master exit as job success, keep the master alive
+until every node in that allocation records its completed workers. A scheduler
+success badge cannot replace the full episode and worker receipts. This
+synchronization belongs to the allocation and does not gate other models.
+
 Verify paired robot cases from native scene/state and camera observations before
 actions. Qualify and record backend numerical tolerances using unchanged-input
 replays; transformed feature hashes alone are not physical case identifiers.

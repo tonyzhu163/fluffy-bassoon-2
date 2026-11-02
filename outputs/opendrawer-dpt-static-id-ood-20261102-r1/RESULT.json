@@ -1,0 +1,48 @@
+{
+  "completed": true,
+  "primary_endpoint": "one-shot full students vs frozen PPO/static query controls",
+  "binding": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-dpt-static-id-ood-20261102-r1/binding.json",
+    "sha256": "7a7c77c4b65e7e0de6d0f2b4c5032170a28af1fca8525af3aaf01deebc23f9eb"
+  },
+  "methods": [
+    "dpt_static"
+  ],
+  "independent_phase_complete": true,
+  "ID": {
+    "cases": 50,
+    "primary_successes": {
+      "dpt_static": 30
+    },
+    "zero_shot_successes": {
+      "dpt_static": 30
+    },
+    "support_successes": {},
+    "student_vs_PPO": {},
+    "full_K1_vs_K0": {},
+    "context_blind_controls": "PPO/static K0 query results reused; support cannot affect their policy; no invented support episodes"
+  },
+  "OOD": {
+    "cases": 50,
+    "primary_successes": {
+      "dpt_static": 26
+    },
+    "zero_shot_successes": {
+      "dpt_static": 26
+    },
+    "support_successes": {},
+    "student_vs_PPO": {},
+    "full_K1_vs_K0": {},
+    "context_blind_controls": "PPO/static K0 query results reused; support cannot affect their policy; no invented support episodes"
+  },
+  "OOD_meaning": "CloseFridge held out from controller training, not necessarily foundation pretraining",
+  "single_source_task": true,
+  "single_seed": true,
+  "source_streams_span_different_scenes": true,
+  "pairing_contract": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/opendrawer-ad-dpt-paired-cases-20261102-r1/contract.json",
+    "sha256": "05b283a5b307681aee2785d916d9aa90fda67978ccb8d4c3e2a09cc53fffc41d"
+  },
+  "render_roundoff": "Exact native scene/state/camera and public state; RGB differences at most1/255 per component; unmodified policy inputs; feature/base hashes need not be bitwise identical across resets",
+  "reward": "simulator-reward development pilot, not Flora result"
+}

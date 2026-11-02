@@ -189,6 +189,33 @@ establish perfect numerical pairing or the cause of a few-case success gap.
 [Flora terminal audit](../outputs/robocasa-opendrawer-flora-resume-20261102-r1/TERMINAL-REVIEW.json),
 [original matching-panel audit](../outputs/robocasa-original-pi05-eval50-20261102-r1/TERMINAL-REVIEW.json).
 
+The independently completed PPO-history DPT-inspired students use a fresh
+native canonical bank with50 OpenDrawer ID and50 CloseFridge OOD cases.
+Full DPT scores **29/50 ID and32/50 OOD at K0**, then **35/50 and27/50** on a
+separate query after one complete actual support episode. Support succeeds
+30/50 and36/50 respectively. K1 versus K0 has8 paired wins/2 losses on ID
+(two-sided exact p=.1094) and3/8 on OOD (p=.2266). The separately trained
+static student scores30/50 ID and26/50 OOD; full K1 versus static has6/1
+paired wins/losses on ID (p=.125) and7/6 on OOD (p=1).
+Both PPO checkpoints have completed this bank's OOD controls: initial28/50,
+final30/50. Full DPT does not exceed either there (7/8 and5/8 paired
+wins/losses). The new ID PPO comparisons and AD readout are still pending;
+do not substitute the earlier visual-feature-unequal panels for those controls.
+These are single-source-task/single-seed development results, with original
+pixels and exact native scene/state/camera/public-state checks permitting only
+qualified one-level uint8 render roundoff. Source PPO streams span different
+scenes across versions, and OOD means held out from student training, not
+necessarily foundation pretraining. These exploratory unadjusted tests do not
+establish in-context adaptation. All300 full and100 static episode artifacts
+passed independent CPU summaries. A scheduler master-exit bug interrupted one
+full query;299 complete episodes were preserved and just that query recovered
+on one GPU. Both DPT allocations and the recovery are terminal, with failed
+and reused interactions counted separately.
+[Full result](../outputs/opendrawer-dpt-full-query-recovery-20261102-r1/RESULT.json),
+[static result](../outputs/opendrawer-dpt-static-id-ood-20261102-r1/RESULT.json),
+[paired comparison](../outputs/opendrawer-dpt-full-query-recovery-20261102-r1/CROSS-PHASE.json),
+[terminal accounting](../outputs/opendrawer-dpt-full-query-recovery-20261102-r1/TERMINAL-ACCOUNTING.json).
+
 ## LIBERO
 
 **Flora versus simulator PPO stopped before training (2026-11-01).** The

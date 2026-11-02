@@ -1,0 +1,79 @@
+{
+  "checked_at": "2026-11-02T07:41:14.919437+00:00",
+  "provisional": true,
+  "completed": false,
+  "valid_complete_episodes": 299,
+  "simulator_truth_sidecars_verified": true,
+  "final_tensor_audit_pending": true,
+  "missing": [
+    {
+      "cohort": "ID",
+      "index": 48,
+      "shot": "K1",
+      "kind": "query"
+    }
+  ],
+  "counts": {
+    "ID": {
+      "K0_query": {
+        "successes": 29,
+        "n": 50
+      },
+      "K1_support": {
+        "successes": 30,
+        "n": 50
+      },
+      "K1_query": {
+        "successes": 34,
+        "n": 49
+      }
+    },
+    "OOD": {
+      "K0_query": {
+        "successes": 32,
+        "n": 50
+      },
+      "K1_support": {
+        "successes": 36,
+        "n": 50
+      },
+      "K1_query": {
+        "successes": 27,
+        "n": 50
+      }
+    }
+  },
+  "paired": {
+    "ID_K1_vs_K0": {
+      "wins": 7,
+      "losses": 2,
+      "ties": 40,
+      "n": 49,
+      "exact_two_sided_p": 0.1796875
+    },
+    "OOD_K1_vs_K0": {
+      "wins": 3,
+      "losses": 8,
+      "ties": 39,
+      "n": 50,
+      "exact_two_sided_p": 0.2265625
+    },
+    "OOD_DPT_K1_vs_ppo_initial": {
+      "baseline_successes": 28,
+      "wins": 7,
+      "losses": 8,
+      "ties": 35,
+      "n": 50,
+      "exact_two_sided_p": 1.0
+    },
+    "OOD_DPT_K1_vs_ppo_final": {
+      "baseline_successes": 30,
+      "wins": 5,
+      "losses": 8,
+      "ties": 37,
+      "n": 50,
+      "exact_two_sided_p": 0.5810546875
+    }
+  },
+  "p_values": "unadjusted exploratory exact paired tests"
+}
