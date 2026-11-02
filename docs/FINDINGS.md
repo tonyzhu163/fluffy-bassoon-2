@@ -161,9 +161,16 @@ Flora TRAIN reward AUROC is0.925, but the model explicitly emits `Score: 5` on
 binary labels changes23.1% of normalized advantage signs in batch6 (actor-gradient
 cosine0.308), without any optimizer update. This measures reward/metric mismatch,
 not the cause of a reliable S/F performance gap. [Investigation and limits](../outputs/robocasa-ppo-reward-gap-investigation-20261102-r1/RESULT.md).
-A [candidate rubric](../outputs/robocasa-flora-rubric-audit-20261102-r1/CANDIDATE-RUBRIC.md)
-now translates the native predicates into qualitative end-state descriptions;
-physical thresholds stay in the human audit and require separate calibration.
+A frozen original-versus-qualitative-rubric replay on all 384 F TRAIN videos
+and 250 earlier calibration videos does not support adopting the candidate. It
+lowers 20 of the 58 original false full-success grades, introduces five new ones,
+and removes full-success grades from 35 true successes. TRAIN reward AUROC falls
+from 0.9269 to 0.9191; mean expected-grade reward on those 58 failures rises
+slightly from 0.7145 to 0.7182. Stove false full-success grades rise from 6 to 17
+on the 50-video calibration bank. This is retained-video development evidence,
+not a new PPO or independent qualification result. The exact original prompt,
+tested wording, complete comparison and an untested next draft are in
+[the rubric document](../outputs/robocasa-flora-rubric-replay-20261102-r1/RUBRIC.md).
 Do not substitute the separate50-case calibration bank for that baseline.
 The Flora arm completed384 TRAIN episodes with all384 official labels audited;
 its full5760-decision history exactly merges the preserved four-update prefix

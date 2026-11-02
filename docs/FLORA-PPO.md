@@ -25,7 +25,7 @@ For RoboCasa, new reward recordings contain synchronized left, wrist and right
 RGB videos, in that collage order. Use the same official terminal-success
 prompt and 1–5 score across tasks, supplying only the native task instruction;
 completed and active protocols use no task-specific rubrics. A new
-[qualitative completion-criteria candidate](../outputs/robocasa-flora-rubric-audit-20261102-r1/CANDIDATE-RUBRIC.md)
+[qualitative completion-criteria candidate and replay](../outputs/robocasa-flora-rubric-replay-20261102-r1/RUBRIC.md)
 is drafted from native success predicates for separate validation. It uses
 observable end states rather than asking the video model to measure simulator
 distances or percentages. A rubric change requires a new prompt/calibration/cache
