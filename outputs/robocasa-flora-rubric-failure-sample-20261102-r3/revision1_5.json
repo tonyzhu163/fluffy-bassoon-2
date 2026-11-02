@@ -1,0 +1,11 @@
+{
+  "criteria_id": "revision1_5",
+  "previous_criteria_id": "revision1_1",
+  "shared_criteria": "Use the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.",
+  "reward_training_task_criteria": {
+    "OpenDrawer": "The target is the UPPERMOST sliding drawer directly below the countertop on the requested side of the robot's initial position. In a stack of drawers, track the very top drawer front and its own handle from the initial scene. Opening the second drawer or any lower drawer is not success, even if it opens very wide. Do not switch to whichever drawer the hand grasps. Check whether the uppermost drawer front actually moved outward; a lower drawer can be wide open while the target above it stays shut. Follow this same drawer across all views and camera motion. Judge this same drawer's state at the observed endpoint, not its widest earlier opening. For this task, sufficient opening means pulling the target outward by roughly half of its front-to-back depth (at least about52%); it may still be capable of extending farther. Do not require a mechanical end stop or maximum possible extension. A small crack or shallow pull is insufficient. If the drawer is pulled far enough and then pushed back below this opening by the endpoint, score the remaining partial progress1-4. Reserve Score5 for the correct uppermost drawer still open far enough at the endpoint. Use the front's outward displacement and visible side walls across the views. No requirement to open another drawer, release the handle or retreat."
+  },
+  "qualified": false,
+  "static_task_thresholds_in_prompt": true,
+  "episode_simulator_state_in_prompt": false
+}

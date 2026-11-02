@@ -193,6 +193,19 @@ zero old errors corrected, one new false success. The prior rubric reproduces
 all14 hard grades. This stricter-sounding wording does not repair the sampled
 errors and remains unqualified; it is not a population accuracy or first-success
 result. [Exact wording and paired grades](../outputs/robocasa-flora-rubric-failure-sample-20261102-r2/RESULT.md).
+A CPU diagnosis of retained OpenDrawer actions identifies two distinct errors.
+Case112 opens the drawer below the uppermost target while the target stays
+shut; case64 reaches native success at27.1s and then falls below the threshold
+before termination. A success control first crosses at11.1s. All three replays
+match every retained scene metadata field and all15 saved public16D robot-state
+boundaries exactly; no full MuJoCo initial state was saved. A fourth example
+is excluded before controls because semantic-tag ordering differs. The source
+audit also corrects the physical interpretation: native0.95 is normalized by
+0.55×drawer depth, so success begins at0.5225×depth, not95% of mechanical travel.
+These examples justify testing uppermost-target tracking and endpoint wording,
+and show why terminal failure counts cannot directly measure first-success
+false positives. They do not establish the prevalence of these error modes.
+[Source audit and retained-action diagnosis](../outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/RESULT.md).
 An offline threshold screen on the same634 retained videos also leaves Flora
 unqualified: on the original TRAIN scores, reward>=.90 gives89 true positives
 and9 false positives (90.8% precision,44.3% recall); >=.95 gives15 and3

@@ -1,0 +1,11 @@
+{
+  "criteria_id": "revision1_4",
+  "previous_criteria_id": "revision1_1",
+  "shared_criteria": "Use the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.",
+  "reward_training_task_criteria": {
+    "OpenDrawer": "The target is the UPPERMOST sliding drawer directly below the countertop on the requested side of the robot's initial position. In a stack of drawers, track the very top drawer front and its own handle from the initial scene. Opening the second drawer or any lower drawer is not success, even if it opens very wide. Do not switch to whichever drawer the hand grasps. Check whether the uppermost drawer front actually moved outward; a lower drawer can be wide open while the target above it stays shut. Follow this same drawer across all views and camera motion. Open the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat."
+  },
+  "qualified": false,
+  "static_task_thresholds_in_prompt": false,
+  "episode_simulator_state_in_prompt": false
+}
