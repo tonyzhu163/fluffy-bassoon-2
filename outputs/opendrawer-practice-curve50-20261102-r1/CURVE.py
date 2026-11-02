@@ -55,6 +55,16 @@ def replay(actor,rows):
         actor.controller.observe(row['control'],row['reward'],row['done'])
 
 
+def make_journal(rank):
+    from fluffy_bassoon.meta_rl.rlinf_native_ppo import ActionJournal
+    # Use the exact frozen runtime API. Its legacy recording guard exceeds
+    # this entire fixed cohort, including conservative constructor intents.
+    journal=ActionJournal(OUT/'accounting',rank=rank,world=WORLD,attempt=os.environ['TASK_ATTEMPT'])
+    maximum=sum(8*(horizon(c)+128) for c,i in TASKS[rank::WORLD])
+    assert maximum<journal.limit
+    return journal
+
+
 def bind():
     import torch
     from fluffy_bassoon.meta_rl.vla_history import load_policy
@@ -98,13 +108,14 @@ def worker(rank,b,deadline):
     from fluffy_bassoon.baige_gpu import verify_selected_cuda
     from fluffy_bassoon.meta_rl.residual_history import HistoryResidualActor
     from fluffy_bassoon.meta_rl.robocasa_residual import FrozenRoboCasaMotor,RoboCasaResidualEnvironment,collect_pending
-    from fluffy_bassoon.meta_rl.rlinf_native_ppo import ActionJournal,tensor_hash
+    from fluffy_bassoon.meta_rl.rlinf_native_ppo import tensor_hash
     from fluffy_bassoon.meta_rl.vla_history import load_policy
     from fluffy_bassoon.meta_rl.warmstart import atomic_save
     from fluffy_bassoon.rl.action_residual import ResidualBound
     import multiprocessing as mp
     assert torch.cuda.device_count()==1;verify_selected_cuda(torch);torch.set_num_threads(4)
     mp.set_start_method('spawn',force=True)
+    journal=make_journal(rank)
     assembly=read_ref(b['assembly']);init=assembly['contract']['initializer']
     profile=json.loads((ROOT/'outputs/robocasa-eight-gpu-speed-20261102-r1/S8-r2/profile.json').read_text())
     assert BASE['head'](os.environ['RLINF_PATH'])==profile['rlinf_execution_commit']
@@ -119,7 +130,6 @@ def worker(rank,b,deadline):
     policy,_=load_policy(b['selected']['candidate']['path'],expected_sha256=b['selected']['candidate']['sha256'],device='cuda')
     assert policy.config.context_length==128
     weights=tensor_hash(policy.state_dict())
-    journal=ActionJournal(OUT/'accounting',rank=rank,world=WORLD,attempt=os.environ['TASK_ATTEMPT'],maximum_actions=None)
 
     def episode(c,i,k,kind,actor):
         directory=OUT/'episodes'/c/f'case-{i:03d}'/f'K{k}'/kind;p=directory/'result.json'
