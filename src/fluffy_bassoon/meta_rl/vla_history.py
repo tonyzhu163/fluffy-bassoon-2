@@ -290,7 +290,7 @@ class FrozenHistoryController:
     task/trial; episode resets inside a trial preserve context in full mode.
     """
 
-    def __init__(self, policy, *, mode="full", generator=None, max_context=None):
+    def __init__(self, policy, *, mode="full", generator=None, max_context=None, reward_blind=False):
         if mode not in MODES:
             raise ValueError("Unknown history mode")
         if max_context is not None and (type(max_context) is not int
@@ -298,6 +298,7 @@ class FrozenHistoryController:
             raise ValueError("Require a positive context window within policy capacity")
         self.policy, self.mode, self.generator = policy.eval(), mode, generator
         self.max_context = max_context
+        self.reward_blind = bool(reward_blind)
         self.policy.requires_grad_(False)
         self.reset_trial()
 
@@ -320,7 +321,7 @@ class FrozenHistoryController:
             self.state = None
             self._tokens = []
         token = np.concatenate((observation, np.zeros_like(self.previous_noise) if clear else self.previous_noise,
-            np.asarray([0. if clear else self.previous_reward, 0. if clear else self.previous_done,
+            np.asarray([0. if clear or self.reward_blind else self.previous_reward, 0. if clear else self.previous_done,
                         self.episode_start], np.float32)))
         weight = next(self.policy.parameters())
         if self.max_context is not None:

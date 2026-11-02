@@ -78,13 +78,19 @@ zero-shot episodes have zero nonterminal rewards and reset before each case.
 """
 
     def __init__(self, policy, *, mode="full", reset_each_episode=True, generator=None,
-                 max_context=None):
+                 max_context=None, reward_blind=False):
         super().__init__()
         self.policy = policy.eval().requires_grad_(False)
         self.config = SimpleNamespace(residual_dim=policy.config.noise_dim)
         self.controller = FrozenHistoryController(policy, mode=mode, generator=generator,
-                                                   max_context=max_context)
+                                                   max_context=max_context, reward_blind=reward_blind)
         self.reset_each_episode = reset_each_episode
+
+    def begin_trial(self):
+        self.controller.reset_trial()
+
+    def begin_attempt(self):
+        self.begin_episode()
 
     def begin_episode(self):
         if self.reset_each_episode:
