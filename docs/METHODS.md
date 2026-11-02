@@ -51,6 +51,13 @@ parameter signature before and after every run.
 
 Full claim boundaries are in [PAPER.md](PAPER.md#decisions-and-claim-boundaries).
 
+Head-to-head claims require150–200 cases or several independent noise draws
+per case, with paired uncertainty and cases as the resampling unit. Treat
+small50-case differences as exploratory; a fixed10/50 cutoff is not a
+significance test. Repeated-attempt memory comparisons use the same motor
+streams with memory cleared before each attempt, and inference context must
+match the training window or carry an explicit context-length control.
+
 ## Code
 
 Evaluation readiness belongs to each model. Once its declared stopping rule

@@ -290,15 +290,20 @@ class FrozenHistoryController:
     task/trial; episode resets inside a trial preserve context in full mode.
     """
 
-    def __init__(self, policy, *, mode="full", generator=None):
+    def __init__(self, policy, *, mode="full", generator=None, max_context=None):
         if mode not in MODES:
             raise ValueError("Unknown history mode")
+        if max_context is not None and (type(max_context) is not int
+                or not 1 <= max_context <= policy.config.context_length):
+            raise ValueError("Require a positive context window within policy capacity")
         self.policy, self.mode, self.generator = policy.eval(), mode, generator
+        self.max_context = max_context
         self.policy.requires_grad_(False)
         self.reset_trial()
 
     def reset_trial(self):
         self.state = None
+        self._tokens = []
         self.previous_noise = np.zeros(self.policy.config.noise_dim, np.float32)
         self.previous_reward, self.previous_done = 0., False
         self.episode_start, self.pending = True, False
@@ -313,10 +318,21 @@ class FrozenHistoryController:
         clear = self.mode == "static" or (self.mode == "episode" and self.episode_start)
         if clear:
             self.state = None
+            self._tokens = []
         token = np.concatenate((observation, np.zeros_like(self.previous_noise) if clear else self.previous_noise,
             np.asarray([0. if clear else self.previous_reward, 0. if clear else self.previous_done,
                         self.episode_start], np.float32)))
         weight = next(self.policy.parameters())
+        if self.max_context is not None:
+            if len(self._tokens) == self.max_context:
+                # Layer caches contain representations of older history. Rebuild
+                # from raw tokens to enforce the training window at every layer.
+                self._tokens = self._tokens[1:]
+                self.state = None
+                for previous in self._tokens:
+                    _, _, self.state = self.policy.step(torch.as_tensor(previous[None],
+                        device=weight.device, dtype=weight.dtype), self.state, deterministic=True)
+            self._tokens.append(token.copy())
         noise, _, self.state = self.policy.step(torch.as_tensor(token[None], device=weight.device,
             dtype=weight.dtype), self.state, deterministic=deterministic, generator=self.generator)
         self.pending = True

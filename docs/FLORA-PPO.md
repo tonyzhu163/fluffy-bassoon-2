@@ -72,6 +72,13 @@ with simulator success kept outside the reward prompt.
 
 ## Gates on each benchmark
 
+Flora optimization is parked until the simulator-reward positive control
+passes and the false-full-score problem is corrected and independently
+qualified. The retained TRAIN audit found full scores on58/183 true failures;
+AUROC alone does not qualify rewards for optimization. Measure false-positive
+full scores and lost true positives on held-out cases before adopting a fix.
+More source-history collection waits for measured simulator-reward learning.
+
 Earlier LIBERO and RoboTwin runs failed because source learners never
 improved ([FINDINGS.md](FINDINGS.md#lessons-carried-forward)). Pass each gate
 before the next:

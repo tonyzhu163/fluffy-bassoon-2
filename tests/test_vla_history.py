@@ -128,6 +128,48 @@ def test_variable_context_batches_use_masked_real_labels():
         assert torch.isfinite(learner.sequence_nll(*batch))
 
 
+@pytest.mark.parametrize("backbone", ["decoder", "gtrxl"])
+def test_inference_window_matches_raw_token_replay_and_preserves_short_prefix(backbone):
+    torch.manual_seed(41)
+    base = HistoryNoisePolicy(HistoryConfig(3, 2, width=8, heads=2, layers=2,
+                                           context_length=8, backbone=backbone))
+    bounded = FrozenHistoryController(base, max_context=4)
+    unbounded = FrozenHistoryController(deepcopy(base))
+    tokens = trial_tokens(trial(10))
+    for index, token in enumerate(tokens):
+        actual = bounded.act(token[:3], deterministic=True)
+        original = unbounded.act(token[:3], deterministic=True)
+        state = None
+        for previous in tokens[max(0, index - 3):index + 1]:
+            expected, _, state = base.step(torch.tensor(previous[None]), state, deterministic=True)
+        np.testing.assert_array_equal(actual, expected[0].detach().numpy())
+        if index < 4:
+            np.testing.assert_array_equal(actual, original)
+        assert int(bounded.state["length"][0]) == min(index + 1, 4)
+        for controller in (bounded, unbounded):
+            data = trial(10)
+            controller.observe(data["executed_noise"][index], data["rewards"][index], data["dones"][index])
+    bounded.reset_trial()
+    assert bounded._tokens == [] and bounded.state is None
+    np.testing.assert_array_equal(bounded.act(tokens[0, :3], deterministic=True),
+                                 FrozenHistoryController(base).act(tokens[0, :3], deterministic=True))
+
+
+def test_inference_window_rebuild_does_not_spend_extra_sampling_rng():
+    base = policy()
+    generator = torch.Generator().manual_seed(42)
+    expected_generator = torch.Generator().manual_seed(42)
+    controller = FrozenHistoryController(base, generator=generator, max_context=2)
+    for index in range(5):
+        controller.act(np.ones(3, np.float32))
+        torch.randn((1, 2), generator=expected_generator)
+        assert torch.equal(generator.get_state(), expected_generator.get_state())
+        controller.observe(np.zeros(2, np.float32), 0., False)
+    for invalid in (0, 9, True, 1.5):
+        with pytest.raises(ValueError, match="context window"):
+            FrozenHistoryController(base, max_context=invalid)
+
+
 def test_supervised_path_fits_labels_and_exports_frozen_candidate(tmp_path):
     torch.manual_seed(31)
     learner = policy()
