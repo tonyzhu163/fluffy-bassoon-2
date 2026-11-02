@@ -1,6 +1,6 @@
 # OpenDrawer RLinf flow_sde PPO, simulator first-success reward
 
-2026-11-02. Status: **PREPARED; needs a Baige owner to launch.** This
+2026-11-02. Status: **HANDED TO Baige owner chat `01a19b58`; launch human-approved, not yet submitted.** This
 session has no Baige route.
 
 ## Why
