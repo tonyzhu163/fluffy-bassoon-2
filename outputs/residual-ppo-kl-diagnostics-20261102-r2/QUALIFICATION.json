@@ -1,0 +1,36 @@
+{
+  "completed": true,
+  "checked_at": "2026-11-02T14:07:13+08:00",
+  "purpose": "Integration recheck after concurrent 600-control horizon changes and rebasing of the KL commit",
+  "source_commit": "461f633413fd9695231a13bfe276d542609d06ed",
+  "kl_feature_main_commit": "25a2fc3845444c6fe54c60e48dc4ab28b6c52a9a",
+  "environment": "Baige dv-0d0ac1c839 existing exclusive development allocation, CPU only",
+  "python_executable": "/mowenjie/fluffy-bassoon-2/envs/flora-ppo-native-libero-py311-20261101-r1/bin/python",
+  "torch_version": "2.11.0+cu128",
+  "cuda_visible_devices": "",
+  "OMP_NUM_THREADS": 1,
+  "MKL_NUM_THREADS": 1,
+  "OPENBLAS_NUM_THREADS": 1,
+  "timeout_seconds": 240,
+  "tests": 73,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "pytest_seconds": 12.755,
+  "original_qualification": "../residual-ppo-kl-diagnostics-20261102-r1/QUALIFICATION.json",
+  "original_disabled_kl_reference_comparison": "../residual-ppo-kl-diagnostics-20261102-r1/reference-comparison.json",
+  "learner_driver_and_new_test_sha256": {
+    "src/fluffy_bassoon/meta_rl/residual_ppo.py": "44c7d17ef67723cb8b7e7175d7c3e73c538e0a3eb38272185fa7614ae52c32f5",
+    "scripts/diagnostics/robocasa_residual_ppo.py": "176ea2162a1189ded98bcb932d7561e00cab9d4c52e4bc26602c819d96f01d82",
+    "tests/test_residual_ppo.py": "d05e423abd0ac7b31d249509f333ef9eaad302e9f93f297ebc11a70d79fe4691",
+    "tests/test_residual_checkpoint_migration.py": "b4aacee91b7ea5a87a93cb8324fb818f0429ef3e695ebea55d120199b881ad3e"
+  },
+  "new_simulator_episodes": 0,
+  "new_gpu_allocations": 0,
+  "new_scientific_training_updates": 0,
+  "evidence": {
+    "core.xml": "6259a54e6fbbedddb22d976c281cf474f62dcf22f66e684f80c0997b77a0ef8d",
+    "core.log": "14d26bd7a5360e0d00f43fc2f8db6761098430c2948a941fa983180e51bb62ad",
+    "source-commit.txt": "44f8e61cab4ec38014979f7f1f9648173a5ebf8f92088f9e7dafdf561c1c53ee"
+  }
+}

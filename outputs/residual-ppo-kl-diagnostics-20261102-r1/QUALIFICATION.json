@@ -1,0 +1,79 @@
+{
+  "completed": true,
+  "checked_at": "2026-11-02T14:06:00+08:00",
+  "environment": "Baige existing development allocation dv-0d0ac1c839; CPU only, CUDA hidden",
+  "source_commit": "8ef4fd445bcc37a6b1457bf2d797c8508c254e01",
+  "rebased_main_commit": "25a2fc3845444c6fe54c60e48dc4ab28b6c52a9a",
+  "rebased_learner_driver_and_added_tests_byte_identical": {
+    "src/fluffy_bassoon/meta_rl/residual_ppo.py": true,
+    "scripts/diagnostics/robocasa_residual_ppo.py": true,
+    "tests/test_residual_ppo.py": true,
+    "tests/test_residual_checkpoint_migration.py": true
+  },
+  "test_files": [
+    "tests/test_residual_ppo.py",
+    "tests/test_residual_checkpoint_migration.py",
+    "tests/test_residual_parallel.py",
+    "tests/test_robocasa_residual.py",
+    "tests/test_robocasa_batched_collection.py",
+    "tests/test_robocasa_residual_rewards.py",
+    "tests/test_pi05_residual.py"
+  ],
+  "tests": 72,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "pytest_seconds": 85.549,
+  "reference_comparison": {
+    "completed": true,
+    "source_commit": "8ef4fd445bcc37a6b1457bf2d797c8508c254e01",
+    "reference_source_sha256": "b37341a8b7cb42ef5d13ee523141fde75aec6d00641e9d66b3837f8510a4235a",
+    "model_state_bitwise_equal": true,
+    "adam_state_bitwise_equal": true,
+    "original_metrics_exactly_equal": true,
+    "update_rng_bitwise_equal": true,
+    "global_rng_unchanged": true,
+    "optimizer_steps": 16,
+    "epochs_completed": 4,
+    "final_metrics": {
+      "loss": 0.06624951257425196,
+      "actor_loss": -0.006481606294127072,
+      "critic_loss": 0.14546220349695752,
+      "entropy": 1.446999430656433,
+      "approximate_kl": 6.595820463296738e-05,
+      "clip_fraction": 0.0,
+      "explained_variance": -0.08394396305084229
+    }
+  },
+  "default_fresh_robocasa_target_kl": 0.02,
+  "kl_check": "full rollout after each epoch; completed epoch retained",
+  "historical_resume": "missing/null KL target stays disabled; enabled threshold is bound by checkpoint contract",
+  "new_simulator_episodes": 0,
+  "new_gpu_allocations": 0,
+  "new_scientific_training_updates": 0,
+  "runtime": {
+    "hostname": "aibox-rffe453e3884-5f96c78b88-rtvhb",
+    "platform": "Linux-5.15.0-151-generic-x86_64-with-glibc2.35",
+    "python": "3.11.17 (main, Oct 14 2026, 01:05:33) [Clang 23.1.3 ]",
+    "python_executable": "/mowenjie/fluffy-bassoon-2/envs/flora-ppo-native-libero-py311-20261101-r1/bin/python",
+    "torch_version": "2.11.0+cu128",
+    "cuda_visible_devices": "",
+    "cuda_device_count": 0,
+    "torch_threads": 1,
+    "source_commit": "8ef4fd445bcc37a6b1457bf2d797c8508c254e01",
+    "cpu_quota": "1300000 100000",
+    "memory_limit": "120259084288",
+    "file_sha256": {
+      "src/fluffy_bassoon/meta_rl/residual_ppo.py": "44c7d17ef67723cb8b7e7175d7c3e73c538e0a3eb38272185fa7614ae52c32f5",
+      "scripts/diagnostics/robocasa_residual_ppo.py": "176ea2162a1189ded98bcb932d7561e00cab9d4c52e4bc26602c819d96f01d82",
+      "tests/test_residual_ppo.py": "d05e423abd0ac7b31d249509f333ef9eaad302e9f93f297ebc11a70d79fe4691",
+      "tests/test_residual_checkpoint_migration.py": "b4aacee91b7ea5a87a93cb8324fb818f0429ef3e695ebea55d120199b881ad3e"
+    }
+  },
+  "evidence": {
+    "core.xml": "57c76eb2ca250c4bce274adbec97ac74a939b89e115cfa165dfe8d5ba3ff05ea",
+    "core.log": "4c145e89db2fb23bb520f025d35725f7f51a24e480ccc244ccf5473dc8c30a73",
+    "runtime.json": "1169cc0dab2c5a2c5acb2581a427668a680c88dd8a9ab7bb020bca3637a59320",
+    "reference-comparison.json": "180e6682bf861983dfe0fa832ec7c4cdb7adc01a39da89f59ec3d7c4a99d23fa"
+  }
+}
