@@ -40,7 +40,25 @@ class FrozenRoboCasaMotor:
     @torch.no_grad()
     def infer(self, observation, *, noise_seed=None):
         seed = int(self.seed_rng.integers(0, 2**63 - 1)) if noise_seed is None else int(noise_seed)
-        generator = torch.Generator(device=self.model.device).manual_seed(seed)
+        chunks, features = self._infer(observation, [seed], explicit_noise=False)
+        self.last = dict(base_chunk=chunks[0].copy(), noise_seed=seed)
+        return chunks[0], features[0], seed
+
+    @torch.no_grad()
+    def infer_batch(self, observation, *, noise_seeds):
+        """Share one native forward pass; retain each lane's original noise draw."""
+        seeds = [int(seed) for seed in noise_seeds]
+        if not seeds:
+            raise ValueError("A complete nonempty lane seed list is required")
+        chunks, features = self._infer(observation, seeds, explicit_noise=True)
+        return chunks, features, seeds
+
+    def _infer(self, observation, seeds, *, explicit_noise):
+        batch = len(seeds)
+        generators = [torch.Generator(device=self.model.device).manual_seed(seed) for seed in seeds]
+        sampler = dict(noise=torch.cat([torch.randn(
+            (1, self.model.action_horizon, self.model.action_dim),
+            device=self.model.device, generator=generator) for generator in generators], 0)) if explicit_noise else dict(rng=generators[0])
         captured = []
         original = self.model.build_prefix_cache
 
@@ -57,24 +75,23 @@ class FrozenRoboCasaMotor:
 
         self.model.build_prefix_cache = capture
         try:
-            chunk, _ = self.model.predict_action_batch(public_observation(observation), mode="eval", rng=generator)
+            chunk, _ = self.model.predict_action_batch(public_observation(observation), mode="eval", **sampler)
         finally:
             self.model.build_prefix_cache = original
         chunk = np.asarray(chunk.detach().cpu() if torch.is_tensor(chunk) else chunk, dtype=np.float32)
-        if chunk.shape != (1, 50, 12) or len(captured) != 1 or captured[0].shape[0] != 1:
-            raise ValueError("One lane, one actual prefix pass and one decoded H50 chunk required")
+        if chunk.shape != (batch, 50, 12) or len(captured) != 1 or captured[0].shape[0] != batch:
+            raise ValueError("One actual prefix pass and one decoded H50 chunk per lane required")
         raw = np.asarray(observation["states"], dtype=np.float32)
-        if raw.shape != (1, 25):
+        if raw.shape != (batch, 25):
             raise ValueError("Require native public state25 before published16D selection")
         state = raw[:, [*range(11, 25), 7, 8]]
         state_stats, action_stats = self.stats["state"], self.stats["actions"]
         normalize = lambda x, stats: (x - np.asarray(stats["mean"])[:x.shape[-1]]) / (np.asarray(stats["std"])[:x.shape[-1]] + 1e-6)
         features = np.concatenate((normalize(state, state_stats), normalize(chunk[:, 0], action_stats),
-            normalize(chunk.mean(1), action_stats), captured[0]), -1).astype(np.float32)[0]
+            normalize(chunk.mean(1), action_stats), captured[0]), -1).astype(np.float32)
         if not np.isfinite(chunk).all() or not np.isfinite(features).all():
             raise ValueError("Nonfinite native motor result")
-        self.last = dict(base_chunk=chunk[0].copy(), noise_seed=seed)
-        return chunk[0], features, seed
+        return chunk, features
 
     def state_dict(self):
         return deepcopy(self.seed_rng.bit_generator.state)
