@@ -191,32 +191,49 @@ establish perfect numerical pairing or the cause of a few-case success gap.
 [Flora terminal audit](../outputs/robocasa-opendrawer-flora-resume-20261102-r1/TERMINAL-REVIEW.json),
 [original matching-panel audit](../outputs/robocasa-original-pi05-eval50-20261102-r1/TERMINAL-REVIEW.json).
 
-The independently completed PPO-history DPT-inspired students use a fresh
-native canonical bank with50 OpenDrawer ID and50 CloseFridge OOD cases.
-Full DPT scores **29/50 ID and32/50 OOD at K0**, then **35/50 and27/50** on a
-separate query after one complete actual support episode. Support succeeds
-30/50 and36/50 respectively. K1 versus K0 has8 paired wins/2 losses on ID
-(two-sided exact p=.1094) and3/8 on OOD (p=.2266). The separately trained
-static student scores30/50 ID and26/50 OOD; full K1 versus static has6/1
-paired wins/losses on ID (p=.125) and7/6 on OOD (p=1).
-Both PPO checkpoints have completed this bank's OOD controls: initial28/50,
-final30/50. Full DPT does not exceed either there (7/8 and5/8 paired
-wins/losses). The new ID PPO comparisons and AD readout are still pending;
-do not substitute the earlier visual-feature-unequal panels for those controls.
-These are single-source-task/single-seed development results, with original
-pixels and exact native scene/state/camera/public-state checks permitting only
-qualified one-level uint8 render roundoff. Source PPO streams span different
-scenes across versions, and OOD means held out from student training, not
-necessarily foundation pretraining. These exploratory unadjusted tests do not
-establish in-context adaptation. All300 full and100 static episode artifacts
-passed independent CPU summaries. A scheduler master-exit bug interrupted one
-full query;299 complete episodes were preserved and just that query recovered
-on one GPU. Both DPT allocations and the recovery are terminal, with failed
-and reused interactions counted separately.
-[Full result](../outputs/opendrawer-dpt-full-query-recovery-20261102-r1/RESULT.json),
-[static result](../outputs/opendrawer-dpt-static-id-ood-20261102-r1/RESULT.json),
-[paired comparison](../outputs/opendrawer-dpt-full-query-recovery-20261102-r1/CROSS-PHASE.json),
-[terminal accounting](../outputs/opendrawer-dpt-full-query-recovery-20261102-r1/TERMINAL-ACCOUNTING.json).
+All four PPO-history students reached their declared validation plateau:
+AD/full and AD/static at1900 updates, DPT/full at23800 and DPT/static at24100.
+The independent readouts now cover the same fresh native bank of50 OpenDrawer
+ID and50 CloseFridge OOD cases, including both frozen PPO checkpoints.
+
+| Policy | ID /50 | OOD /50 |
+| --- | --- | --- |
+| Initial PPO |33|28|
+| Final PPO |32|30|
+| AD/full, K0 |34|33|
+| AD/full, separate K1 query |34|33|
+| AD/static |29|33|
+| DPT/full, K0 |29|32|
+| DPT/full, separate K1 query |35|27|
+| DPT/static |30|26|
+
+Full students received one complete actual support episode before a separate
+K1 query; support success was24/35 for AD and30/36 for DPT (ID/OOD).
+AD K1 versus K0 has2/2 paired wins/losses on ID and6/6 on OOD (both exact p=1).
+DPT has8/2 on ID (p=.1094) and3/8 on OOD (p=.2266).
+Against initial/final PPO, AD K1 has5/4 and7/5 wins/losses on ID,
+13/8 and12/9 on OOD. DPT K1 has5/3 and7/4 on ID,7/8 and5/8 on OOD.
+None of these exploratory unadjusted paired tests establishes an improvement
+over either PPO checkpoint. Full K1 versus its separately trained static
+student is also reported in the paired evidence.
+
+All1000 admitted native episode artifacts and100 shared canonical cases passed
+the final CPU comparison: exact native scene/state/camera/public state,
+original motor streams and checkpoint hashes, saved records and true simulator
+feedback, with only qualified one-level uint8 render roundoff and original
+policy pixels. A scheduler master-exit bug interrupted the last three AD
+endpoints and one DPT query; only those missing episodes were recovered,
+retaining597 AD and299 DPT records. The future launcher waits for successful
+terminal receipts from every node in its own allocation. Source PPO streams
+span different scenes across versions; these remain single-source-task and
+single-fit-seed development results, and OOD means held out from student
+training rather than foundation pretraining. Failed/partial/recovery costs
+remain separate from admitted scientific episodes; the whole-experiment cost
+ledger is still being closed.
+[Final combined result](../outputs/opendrawer-pairing-recovery-20261102-r1/COMBINED-RESULT.json),
+[AD independent result](../outputs/opendrawer-ad-query-recovery-20261102-r1/RESULT.json),
+[DPT full result](../outputs/opendrawer-dpt-full-query-recovery-20261102-r1/RESULT.json),
+[DPT static result](../outputs/opendrawer-dpt-static-id-ood-20261102-r1/RESULT.json).
 
 ## LIBERO
 
