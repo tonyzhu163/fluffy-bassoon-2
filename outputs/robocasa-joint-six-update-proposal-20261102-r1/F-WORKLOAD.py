@@ -55,7 +55,7 @@ def main():
     assert authority['direct_human_instruction'] and authority['old_trial_spend_preserved'] is True
     profile=copy.deepcopy(binding['policy_profile'])
     execution=json.loads((code/'configs/native_ppo/robocasa_residual_execution.json').read_text())
-    profile['rollout_envs_per_gpu']=execution['rollout_envs_per_gpu']
+    profile['rollout_lanes_per_gpu']=execution['rollout_lanes_per_gpu']
     assert profile['task']=='joint_five' and profile['tasks']==list(PPO_TASKS) and profile['maximum_iterations']==6
     assert profile['baseline_validations']==spec['baseline_validations']
     exceptions=profile.get('calibration_exceptions',{})
@@ -145,7 +145,7 @@ def main():
             engine_ready_path=str(job/'engines'/f'rank-{annotation_rank:02d}.json'),
             actual_gpu_probe=dict(path=str(probe),sha256=sha(probe)),expected_gpu_uuid=device['uuid'],
             scheduler_seconds=21540,deadline_unix=deadline,closure_seconds=300,maximum_batches=6,
-            shutdown_file=str(job/'annotation-shutdown.json'))
+            shutdown_file=str(job/'annotation-shutdown.json'),stream_scoring=True)
         p=out/f'scorer-{annotation_rank:02d}-profile.json';write_new(p,scorer)
         scorer_refs.append((annotation_rank,p))
         toolkit=Path(flora['toolkit']);python=Path(spec['scorer_python']);cache=out/f'scorer-{annotation_rank:02d}-cache'
@@ -168,7 +168,7 @@ def main():
         profile.update(mode='train',arm='F',source_commit=binding['source_commit'],output=str(run/'policy'),
             monitoring_root=str(run/'monitoring'),accounting_root=str(run/'actions'),attempt=os.environ['TASK_RUN'],
             episode_id_namespace='joint-',allocated_start_unix=min(m['allocated_start_unix'] for m in manifests),
-            deadline_unix=deadline,scheduler_seconds=21540,closure_seconds=300,maximum_all_in_actions=None,
+            deadline_unix=deadline,scheduler_seconds=21540,closure_seconds=300,maximum_all_in_actions=None,rollout_lanes_per_gpu=8,
             rollout_devices=global_devices,parallel_controller_cpu_offload=True,stopping='fixed',
             actual_gpu_probe=dict(path=str(probe),sha256=sha(probe)),distributed_rollout_root=str(dispatch),
             gpu_allocation_starts_unix=[m['allocated_start_unix'] for m in manifests for _ in range(2)],

@@ -281,7 +281,7 @@ def main():
     lanes = rollout_envs_per_gpu(profile)
     if lanes != 1:
         contract['rollout_execution'] = dict(environments_per_gpu=lanes,
-            grouping='contiguous complete native cases, no padding', noise='serial per-case chunk seeds')
+            grouping='continuous lane refill in original case order, no padding', noise='serial per-case chunk seeds')
     train_episodes = 80 if joint else 64
     if joint:
         contract.update(tasks=list(PPO_TASKS), train_episodes=train_episodes,

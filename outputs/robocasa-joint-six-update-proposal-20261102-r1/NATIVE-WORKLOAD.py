@@ -86,7 +86,7 @@ assert len(global_devices) == len({d['uuid'] for d in global_devices}) == 8
 deadline = min(m['allocated_start_unix'] for m in manifests) + slice_seconds - closure
 profile = copy.deepcopy(binding['policy_profile'])
 execution = json.loads((code/'configs/native_ppo/robocasa_residual_execution.json').read_text())
-profile['rollout_envs_per_gpu'] = execution['rollout_envs_per_gpu']
+profile['rollout_lanes_per_gpu'] = execution['rollout_lanes_per_gpu']
 assert profile['task'] == 'joint_five' and profile['tasks'] == list(PPO_TASKS)
 assert profile['maximum_iterations'] == 6 and set(profile['baseline_validations']) == set(PPO_TASKS)
 assert not any(profile.get(key) for key in ('resume', 'rollout_migration', 'checkpoint', 'prior_dev_evaluations'))
@@ -112,7 +112,7 @@ try:
             source_commit=binding['source_commit'], output=str(run / 'policy'), monitoring_root=str(run / 'monitoring'),
             accounting_root=str(run / 'actions'), attempt=os.environ['TASK_RUN'], episode_id_namespace='joint-',
             allocated_start_unix=start, deadline_unix=deadline, scheduler_seconds=slice_seconds, closure_seconds=closure,
-            maximum_all_in_actions=action_cap, rollout_devices=global_devices, parallel_controller_cpu_offload=True,
+            maximum_all_in_actions=action_cap, rollout_lanes_per_gpu=8, rollout_devices=global_devices, parallel_controller_cpu_offload=True,
             actual_gpu_probe=dict(path=str(probe), sha256=sha(probe)), distributed_rollout_root=str(dispatch),
             gpu_allocation_starts_unix=[m['allocated_start_unix'] for m in manifests for _ in range(2)])
         if kind == 'S':

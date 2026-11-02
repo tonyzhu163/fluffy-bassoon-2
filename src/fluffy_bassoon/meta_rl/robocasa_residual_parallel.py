@@ -57,7 +57,7 @@ def native_chunk_offsets(cases, horizon=None):
 
 def rollout_envs_per_gpu(profile):
     """Missing fields retain the legacy singleton checkpoint/sampler contract."""
-    value = profile.get('rollout_envs_per_gpu', 1)
+    value = profile.get('rollout_lanes_per_gpu', 1)
     if type(value) is not int or value not in (1, 2, 4, 8):
         raise ValueError('Bind one of the measured native rollout lane counts')
     return value
@@ -103,12 +103,12 @@ class ParallelResidualEnvironment:
         state = dict(cases=deepcopy(self.cases), cursor=self.cursor, horizon=self.horizon,
                      worker_recovery=deepcopy(self.worker_recovery))
         if self.environments_per_gpu != 1:
-            state['rollout_envs_per_gpu'] = self.environments_per_gpu
+            state['rollout_lanes_per_gpu'] = self.environments_per_gpu
         return state
 
     def load_state_dict(self, state):
         if (self.active or state["cases"] != self.cases or state["horizon"] != self.horizon
-                or state.get('rollout_envs_per_gpu', 1) != self.environments_per_gpu):
+                or state.get('rollout_lanes_per_gpu', 1) != self.environments_per_gpu):
             raise ValueError("Preserve the exact native case bank on migration")
         self.cursor = int(state["cursor"])
         self.worker_recovery = deepcopy(state.get("worker_recovery", []))
@@ -188,7 +188,7 @@ class ParallelResidualEnvironment:
                 if (result["cases"] != request["cases"] or len(result["records"]) != len(request["seeds"])
                         or len(result["episodes"]) != len(request["cases"])
                         or result["environment"]["cursor"] != len(request["cases"])
-                        or result['environment'].get('rollout_envs_per_gpu', 1) != self.environments_per_gpu
+                        or result['environment'].get('rollout_lanes_per_gpu', 1) != self.environments_per_gpu
                         or [row["noise_seed"] for row in result["records"]] != request["seeds"]
                         or any(row["reward"] != 0 for row in result["records"])):
                     raise ValueError("Exact complete unlabeled worker bank required")

@@ -107,9 +107,10 @@ class Native:
     task_descriptions = ["open the drawer"]
     current_info_list = [dict(ep_meta={})]
 
-    def __init__(self, early=False, horizon=750):
+    def __init__(self, early=False, horizon=750, success=None):
         self.early = early
         self.horizon = horizon
+        self.success = success or (lambda step: True)
         self.count = dict(controls=3, reset_controls=3, physics_ticks=30, control_time=0., clock=dict(control_freq=20.))
         self.env = SimpleNamespace(get_env_attr=lambda key: [deepcopy(self.count)])
 
@@ -130,7 +131,7 @@ class Native:
         self.count["controls"] += 1
         self.count["physics_ticks"] += 10
         self.count["control_time"] += .05
-        return self.observation(), np.ones(1), np.array([self.early]), np.array([self.steps == self.horizon]), dict(episode=dict(success_at_end=np.array([True])))
+        return self.observation(), np.ones(1), np.array([self.early]), np.array([self.steps == self.horizon]), dict(episode=dict(success_at_end=np.array([self.success(self.steps)])))
 
     def close(self):
         pass
@@ -173,6 +174,26 @@ def test_success_mask_or_short_episode_cannot_be_scored(tmp_path):
     with pytest.raises(ValueError, match="boundaries"):
         env.state_dict()
     assert not list((tmp_path / "monitor").glob("*.json"))
+    env.close()
+
+
+@pytest.mark.parametrize('steps', [(), (137,), (137, 138, 750), (750,)])
+def test_first_success_counts_primitive_controls_and_preserves_transient_success(tmp_path, steps):
+    cases = [dict(native_seed=1, task='OpenDrawer')] * 2
+    env = RoboCasaResidualEnvironment(lambda case: Native(success=lambda step: step in steps), cases,
+        horizon=750, output=tmp_path/'videos', monitoring_root=tmp_path/'monitor',
+        journal=Journal(), writer_factory=Writer)
+    import json
+    for episode_index in range(2):
+        env.reset()
+        for _ in range(15):
+            observation, _, episode = env.step_chunk(np.zeros((50, 12), np.float32))
+            assert 'first_success_step' not in observation and 'first_success_step' not in episode
+        row = json.loads((tmp_path/f'monitor/episode-{episode_index:06d}.json').read_text())
+        assert row['first_success_step'] == (steps[0] if steps else None)
+        assert row['success_steps'] == list(steps)
+        assert row['simulator_success_once'] is bool(steps)
+        assert row['simulator_final_success'] is (750 in steps)
     env.close()
 
 
@@ -295,3 +316,66 @@ def test_pending_recovery_reproduces_next_optimizer_update_and_final_checkpoint(
     actual = torch.load(final, map_location="cpu", weights_only=False)
     assert actual["final"] and actual["optimizer"]["state"] and actual["iteration"] == 1
     assert actual["contract"]["motor"] == contract["motor"]
+
+
+class LaneModel(MotorModel):
+    action_dim = 32
+
+    def build_prefix_cache(self, observation):
+        self.prefix_calls += 1
+        batch = len(observation["states"])
+        return (torch.tensor([[[1., 3.], [3., 1.], [float("nan"), float("nan")]]]).expand(batch, -1, -1),
+                torch.tensor([[True, True, False]]).expand(batch, -1), ())
+
+    def predict_action_batch(self, observation, mode, rng=None, noise=None):
+        self.calls += 1
+        assert mode == "eval" and "success" not in observation
+        self.build_prefix_cache(observation)
+        states = torch.as_tensor(np.asarray(observation["states"]))
+        if noise is None:
+            noise = torch.randn((len(states), 50, 32), generator=rng)
+        return noise[..., :12] + states[:, None, :12], {}
+
+
+class StepNative(Native):
+    def observation(self):
+        value = super().observation()
+        value["states"] = np.full((1, 25), getattr(self, "steps", 0) / 1000, np.float32)
+        return value
+
+
+def test_lane_collection_matches_serial_draws_ids_and_records(tmp_path):
+    from fluffy_bassoon.meta_rl.robocasa_residual import collect_pending_lanes
+    from fluffy_bassoon.meta_rl.robocasa_residual_parallel import draw_schedule, native_chunk_offsets
+    from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import TASKS
+    stats = {key: dict(mean=[0.] * 32, std=[2.] * 32) for key in ("state", "actions")}
+    cases = [dict(task=task, native_seed=index) for index, task in
+             enumerate(["CoffeeSetupMug", "OpenDrawer", "OpenDrawer", "CoffeeSetupMug", "OpenDrawer"])]
+    torch.manual_seed(0)
+    policy = ResidualActorCritic(ResidualPPOConfig(42, 6, width=8))
+    plan_motor = FrozenRoboCasaMotor(LaneModel(), stats, seed=3)
+    seeds, noise = draw_schedule(plan_motor, policy, torch.Generator().manual_seed(4),
+                                 native_chunk_offsets(cases)[-1], deterministic=False)
+
+    def env(root):
+        return RoboCasaResidualEnvironment(lambda case: StepNative(horizon=TASKS[case["task"]][0]), cases,
+            horizon=None, output=root / "videos", monitoring_root=root / "monitor", journal=Journal(),
+            writer_factory=Writer, episode_id_prefix="case-000000-rank-00-")
+
+    serial_records, serial_episodes = collect_pending(policy, bound(), FrozenRoboCasaMotor(LaneModel(), stats),
+        env(tmp_path / "serial"), episodes=len(cases), generator=None,
+        planned_motor_seeds=seeds, planned_action_noise=noise)
+    lane_motor = FrozenRoboCasaMotor(LaneModel(), stats)
+    lane_records, lane_episodes = collect_pending_lanes(policy, bound(), lane_motor,
+        [env(tmp_path / "lanes") for _ in range(2)], planned_motor_seeds=seeds, planned_action_noise=noise)
+    # Background resets make the forward count timing dependent; draws are keyed by case and chunk.
+    assert lane_motor.model.calls >= 42
+    assert [e["id"] for e in lane_episodes] == [e["id"] for e in serial_episodes]
+    assert [e["round"] for e in lane_episodes] == list(range(5))
+    assert len(lane_records) == len(serial_records) == sum(TASKS[c["task"]][0] // 50 for c in cases)
+    for lane, serial in zip(lane_records, serial_records):
+        for key in ("noise_seed", "reward", "done", "episode_start"):
+            assert lane[key] == serial[key]
+        for key in ("features", "control", "base_chunk", "executed_chunk"):
+            np.testing.assert_array_equal(lane[key], serial[key])
+        assert lane["log_prob"] == serial["log_prob"]

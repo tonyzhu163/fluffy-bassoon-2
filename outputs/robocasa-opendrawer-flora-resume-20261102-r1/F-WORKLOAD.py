@@ -68,16 +68,11 @@ def export_full_history(run, binding):
     from fluffy_bassoon.meta_rl.robocasa_residual import install_terminal_labels
     from fluffy_bassoon.meta_rl.rlinf_flora_ppo import parse_outputs
     from fluffy_bassoon.meta_rl.vla_history import load_dataset,save_dataset
-    prefix=[]
-    for item in binding['history_prefix']:
-        pending=read_ref(item['request'])
-        assert sha(pending['pending_checkpoint']['path'])==pending['pending_checkpoint']['sha256']
-        saved=torch.load(pending['pending_checkpoint']['path'],map_location='cpu',weights_only=False)
-        ready=read_ref(item['ready'])
-        assert ready['pending_checkpoint_sha256']==pending['pending_checkpoint']['sha256']
-        labels=parse_outputs(saved['pending_episodes'],read_ref(ready['outputs']),pending['protocol'])
-        prefix.append((saved['iteration'],install_terminal_labels(saved['pending_records'],saved['pending_episodes'],labels,arm='F')))
-    full=history_trial(prefix)
+    prefix,manifest=load_dataset(binding['history_prefix_dataset']['path'],
+        expected_sha256=binding['history_prefix_dataset']['sha256'])
+    assert len(prefix)==1 and len(prefix[0]['observations'])==3840
+    assert prefix[0]['teacher_steps'][0]==0 and prefix[0]['teacher_steps'][-1]==3
+    full=prefix[0]
     suffix=run/'policy/history.npz'
     if suffix.exists():
         trials,manifest=load_dataset(suffix)
@@ -86,7 +81,7 @@ def export_full_history(run, binding):
     return save_dataset(run/'full-history.npz',[full],objective='ad',metadata=dict(
         evaluation_data=False,logical_lineage='original OpenDrawer Flora PPO',
         prefix=binding['history_prefix'],recovery=binding['recovery'],
-        final_checkpoint_sha256=sha(run/'policy/final.pt'),failed_actions_charged=binding['prior_action_charge']))
+        final_checkpoint_sha256=sha(run/'policy/final.pt'),prior_actions_charged=binding['prior_action_charge']))
 
 
 def main():

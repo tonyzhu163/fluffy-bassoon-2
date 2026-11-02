@@ -108,7 +108,7 @@ class RoboCasaResidualEnvironment:
     Simulator labels go ONLY to monitoring_root. Returned info is truth free.
     """
     def __init__(self, factory, cases, *, horizon, output, monitoring_root, journal, writer_factory, observer=None,
-                 episode_id_prefix="", rank=0, episode_index_offset=0):
+                 episode_id_prefix="", rank=0):
         from .rlinf_robocasa_ppo import TASKS
         if (not cases or any(case['task'] not in TASKS for case in cases)
                 or horizon is not None and (horizon not in {row[0] for row in TASKS.values()}
@@ -122,9 +122,6 @@ class RoboCasaResidualEnvironment:
         self.journal, self.writer_factory = journal, writer_factory
         self.observer = observer
         self.episode_id_prefix, self.rank = episode_id_prefix, int(rank)
-        if type(episode_index_offset) is not int or episode_index_offset < 0:
-            raise ValueError('Preserve a nonnegative original case index')
-        self.episode_index_offset = episode_index_offset
         self.cursor, self.active = 0, False
         self.native = None
 
@@ -137,7 +134,7 @@ class RoboCasaResidualEnvironment:
         case = self.cases[self.cursor]
         from .rlinf_robocasa_ppo import TASKS
         self.horizon = TASKS[case['task']][0]
-        self.key = f"{self.episode_id_prefix}episode-{self.cursor+self.episode_index_offset:06d}"
+        self.key = f"{self.episode_id_prefix}episode-{self.cursor:06d}"
         self.case = case
         intent = self.journal.begin(128, phase="native_constructor_reset")
         self.native = self.factory(case)
@@ -152,11 +149,19 @@ class RoboCasaResidualEnvironment:
             raise ValueError("Actual native frame clock missing")
         self.timestamps = [counts["control_time"]]
         self.steps, self.active = 0, True
+        # Monitoring only: do not expose simulator truth to the motor or PPO.
+        self.success_steps = []
         from .robocasa_video import EpisodeVideos
         self.writer = EpisodeVideos(self.output, self.key, fps=self.fps, writer_factory=self.writer_factory)
         self._frame(observation)
         self.cursor += 1
         return public_observation(observation)
+
+    def seek(self, index):
+        """Skip forward to a later case slot; lane collectors interleave one bank."""
+        if self.active or not self.cursor <= index < len(self.cases):
+            raise ValueError("Only skip forward to an unattempted case between episodes")
+        self.cursor = index
 
     def _counts(self):
         rows = self.native.env.get_env_attr("_flora_accounting")
@@ -176,6 +181,8 @@ class RoboCasaResidualEnvironment:
         for action in chunk:
             observation, _, terminations, truncations, info = self.native.step(action[None], auto_reset=False)
             self.steps += 1
+            if bool(np.asarray(info["episode"]["success_at_end"])[0]):
+                self.success_steps.append(self.steps)
             if np.asarray(terminations).any() or bool(np.asarray(truncations).any()) != (self.steps == self.horizon):
                 raise ValueError("Native masks must end exactly at the full horizon")
             counts = self._counts()
@@ -194,8 +201,7 @@ class RoboCasaResidualEnvironment:
         from .robocasa_video import REWARD_CAMERAS
         episode = dict(id=self.key, task=self.native.task_descriptions[0], camera_order=list(REWARD_CAMERAS),
             horizon=self.horizon, completed=True, success_termination_disabled=True, raw_rgb_only=True,
-                info_on_video=False, extra_info_on_video=[], rank=self.rank,
-                round=self.cursor - 1 + self.episode_index_offset, local_env=0,
+                info_on_video=False, extra_info_on_video=[], rank=self.rank, round=self.cursor - 1, local_env=0,
                 videos=self.writer.refs(),
             frame_clock=dict(frame_count=self.horizon + 1, native_fps=self.fps, encoded_fps=self.fps,
                 resampled=False, physical_steps=self.horizon, initial_frame_included=True))
@@ -205,6 +211,9 @@ class RoboCasaResidualEnvironment:
         truth = bool(np.asarray(info["episode"]["success_at_end"])[0])
         write_new(self.monitoring_root / (self.key + ".json"), dict(id=self.key, case=self.case,
             simulator_final_success=truth, native_counts=counts,
+            first_success_step=self.success_steps[0] if self.success_steps else None,
+            simulator_success_once=bool(self.success_steps), success_steps=self.success_steps,
+            success_step_unit="one-based policy controls after reset; excludes reset controls",
             native_ep_meta=deepcopy(self.native.current_info_list[0].get("ep_meta")),
             video_refs_sha256=digest(episode["videos"])))
         return public_observation(observation), True, episode
@@ -212,14 +221,10 @@ class RoboCasaResidualEnvironment:
     def state_dict(self):
         if self.active:
             raise ValueError("Only complete episode boundaries are resumable")
-        state = dict(cases=deepcopy(self.cases), cursor=self.cursor, horizon=self.bound_horizon)
-        if self.episode_index_offset:
-            state['episode_index_offset'] = self.episode_index_offset
-        return state
+        return dict(cases=deepcopy(self.cases), cursor=self.cursor, horizon=self.bound_horizon)
 
     def load_state_dict(self, state):
-        if (self.active or state["cases"] != self.cases or state["horizon"] != self.bound_horizon
-                or state.get('episode_index_offset', 0) != self.episode_index_offset):
+        if self.active or state["cases"] != self.cases or state["horizon"] != self.bound_horizon:
             raise ValueError("Cannot change native case layout at recovery")
         self.cursor = state["cursor"]
 
@@ -263,10 +268,8 @@ def collect_pending(policy, bound, motor, environment, *, episodes, generator, d
                     planned_motor_seeds=None, planned_action_noise=None):
     """Complete batch FIRST. No simulator or Flora reward is read here."""
     if hasattr(environment, "collect"):
-        planned = {} if planned_motor_seeds is None and planned_action_noise is None else dict(
-            planned_motor_seeds=planned_motor_seeds, planned_action_noise=planned_action_noise)
         return environment.collect(policy, bound, motor, episodes=episodes, generator=generator,
-                                   deterministic=deterministic, verify_zero=verify_zero, **planned)
+                                   deterministic=deterministic, verify_zero=verify_zero)
     if planned_motor_seeds is None and planned_action_noise is not None:
         raise ValueError("Explicit actor noise requires a complete motor seed plan")
     reference = next(policy.parameters())
@@ -306,6 +309,103 @@ def collect_pending(policy, bound, motor, environment, *, episodes, generator, d
         raise ValueError("Incomplete batch cannot enter reward labeling")
     if planned_motor_seeds is not None and len(records) != len(planned_motor_seeds):
         raise ValueError("Full episode draw schedule was not consumed exactly")
+    return records, finished
+
+
+def combine_observations(observations):
+    """Stack single-lane public observations for one shared native forward pass."""
+    result = {}
+    for key in observations[0]:
+        values = [observation[key] for observation in observations]
+        result[key] = (torch.cat(values, 0) if torch.is_tensor(values[0]) else
+                       np.concatenate(values, 0) if isinstance(values[0], np.ndarray) else
+                       sum((list(value) for value in values), []))
+    return result
+
+
+def collect_pending_lanes(policy, bound, motor, environments, *, planned_motor_seeds,
+                          planned_action_noise=None, deterministic=False, verify_zero=False):
+    """Run one worker's case bank with concurrent simulator lanes on one GPU.
+
+    ``environments`` are lane environments over the SAME case list. A lane takes
+    the next unstarted case as soon as its episode ends, and its constructor
+    reset runs in the background while the other lanes keep stepping. Every
+    chunk keeps its serial-order planned motor seed and actor noise, and
+    records/episodes return in case order, so ids, draws and GAE match the
+    serial collector. Batched BF16 inference is not bitwise equal to batch 1.
+    """
+    from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
+    from .robocasa_residual_parallel import native_chunk_offsets
+    if not environments or not environments[0].cases:
+        raise ValueError('A nonempty native worker bank and lane set are required')
+    cases = environments[0].cases
+    if (any(env.cases != cases or env.cursor for env in environments)
+            or deterministic != (planned_action_noise is None) or hasattr(policy, "observe")):
+        raise ValueError("Fresh lane environments, a matching actor-noise plan and a memoryless actor required")
+    offsets = native_chunk_offsets(cases)
+    if (planned_motor_seeds is None or len(planned_motor_seeds) != offsets[-1]
+            or planned_action_noise is not None and len(planned_action_noise) != offsets[-1]):
+        raise ValueError("Require one planned motor draw per native chunk of the bank")
+    reference = next(policy.parameters())
+    records = {slot: [] for slot in range(len(cases))}
+    finished = {}
+    upcoming = iter(range(len(cases)))
+    resetting, running = {}, {}  # future -> (lane, slot); lane -> [slot, chunk, observation]
+
+    def start(lane, pool):
+        slot = next(upcoming, None)
+        if slot is not None:
+            environments[lane].seek(slot)
+            resetting[pool.submit(environments[lane].reset)] = (lane, slot)
+
+    with ThreadPoolExecutor(max_workers=len(environments)) as pool:
+        for lane in range(min(len(environments), len(cases))):
+            start(lane, pool)
+        while resetting or running:
+            if not running:
+                wait(resetting, return_when=FIRST_COMPLETED)
+            for future in [future for future in resetting if future.done()]:
+                lane, slot = resetting.pop(future)
+                running[lane] = [slot, 0, future.result()]
+            lanes = sorted(running)
+            slots = [running[lane][0] for lane in lanes]
+            indices = [offsets[slot] + running[lane][1] for lane, slot in zip(lanes, slots)]
+            seeds = [int(planned_motor_seeds[index]) for index in indices]
+            chunks, features, _ = motor.infer_batch(
+                combine_observations([running[lane][2] for lane in lanes]), noise_seeds=seeds)
+            executed = []
+            for row, (lane, slot, index) in enumerate(zip(lanes, slots, indices)):
+                noise = {} if deterministic else {"action_noise": planned_action_noise[index:index + 1]}
+                tensor = torch.as_tensor(features[row], device=reference.device, dtype=reference.dtype)
+                control, log_prob, value = policy.act(tensor[None], deterministic=deterministic, **noise)
+                control = control[0].cpu().numpy()
+                applied = bound.apply(np.asarray(chunks[row]), control)
+                verified = verify_zero and slot == 0
+                if verified and (np.any(control != 0) or not np.array_equal(applied, chunks[row])):
+                    raise ValueError("Zero-residual native sampler replay differs before physical execution")
+                executed.append(applied)
+                records[slot].append(dict(features=np.array(features[row], dtype=np.float32, copy=True),
+                    noise_seed=seeds[row], base_chunk=np.array(chunks[row], copy=True),
+                    executed_chunk=np.array(applied, copy=True), control=control.astype(np.float32),
+                    log_prob=float(log_prob[0]), value=float(value[0]), reward=0., done=False,
+                    episode_start=running[lane][1] == 0, zero_residual_verified=verified))
+            steps = [pool.submit(environments[lane].step_chunk, chunk) for lane, chunk in zip(lanes, executed)]
+            for lane, slot, step in zip(lanes, slots, steps):
+                observation, done, info = step.result()
+                if bool(done) != (running[lane][1]+1 == offsets[slot+1]-offsets[slot]):
+                    raise ValueError('Each lane must finish at its exact native horizon')
+                records[slot][-1]["done"] = bool(done)
+                if done:
+                    finished[slot] = info
+                    del running[lane]
+                    start(lane, pool)
+                else:
+                    running[lane][1] += 1
+                    running[lane][2] = observation
+    records = [row for slot in range(len(cases)) for row in records[slot]]
+    finished = [finished.get(slot) for slot in range(len(cases))]
+    if len(records) != offsets[-1] or any(info is None for info in finished):
+        raise ValueError("Incomplete lane bank cannot enter reward labeling")
     return records, finished
 
 

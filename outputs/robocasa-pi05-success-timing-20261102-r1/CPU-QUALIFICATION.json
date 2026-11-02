@@ -1,0 +1,27 @@
+{
+  "completed": true,
+  "source_commit": "e075acb4ddde0904a27ad857714d2a5f8ea6ca19",
+  "environment": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+  "allocation": "Baige existing exclusive mwj-clean development container; CPU only",
+  "tests": [
+    "tests/test_robocasa_residual.py",
+    "tests/test_residual_parallel.py",
+    "tests/test_robocasa_motor_batch.py"
+  ],
+  "passed": 26,
+  "failed": 0,
+  "seconds": 6.66,
+  "remote_log": "/tmp/pi05-timing-cpu-e075acb4.log",
+  "model_or_simulator_loaded": false,
+  "static_checks": [
+    "py_compile of changed Python sources",
+    "bash -n COMMAND.sh",
+    "git diff --check"
+  ],
+  "initial_qualification": {
+    "source": "722d8d32",
+    "passed": 25,
+    "seconds": 32.37
+  },
+  "source_review": "Rebased onto latest main ea9c71ed before qualification; e075acb4 pushed to main before launch. Native success_at_end is assigned from the original per-control termination flag before ignore_terminations clears it, RLinf robocasa365_env.py:657-658."
+}
