@@ -1,0 +1,31 @@
+{
+  "completed": true,
+  "source_commit": "c0bfd4a4eefda30ae0ce70287677cd5c8727d495",
+  "runtime_source_commit": "6de858c3c77d1805120c196e2941c046f48f03bd",
+  "qualification": "Exact same tested and GPU-measured core bytes; updated future execution config and launch entries reviewed statically",
+  "core_qualification": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json",
+    "sha256": "9a086359d7e96510923b5f505012f6a1f55c78bce76c51c8f8703ca19475711e"
+  },
+  "colocation_qualification": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r5/PARENT-REVIEW.json",
+    "sha256": "11256b64659e326c52eaa16d9175e9c1d692a812ce86e0c7f94addaa6f364b7c"
+  },
+  "entry_review": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r5/ENTRY-REVIEW.json",
+    "sha256": "cb4df71ad6c62388251029f863c5633c45036dc248dc732b5598724b1dd1464b"
+  },
+  "core_files": {
+    "src/fluffy_bassoon/meta_rl/rlinf_robocasa_ppo.py": "7a99d2f7210f773c33563b1ffa2dba22bb8c22c750286a8d58d517f67c650125",
+    "src/fluffy_bassoon/meta_rl/robocasa_residual.py": "04536d050c164ea279cde61c267919746e141c3d252fdc0cf3edf6ef3cf2408f",
+    "scripts/diagnostics/robocasa_residual_score.py": "11b21e49ac27acc98bc7071c8b6f72bdfe9975b5a34f8e0b63e1f27bf453c55b",
+    "scripts/diagnostics/robocasa_flora_fifty_score.py": "90dfaa14d4f8109f88d323b5cba803a9d179fddb809d023c81399b04bb9caea8",
+    "scripts/diagnostics/robocasa_residual_rollout.py": "84b5e8711fa6f5ac6d8cb2edcafb0c99c33d009a227a6d2a45c48426ae1eb028",
+    "src/fluffy_bassoon/meta_rl/robocasa_residual_parallel.py": "10348352c11d8d0192452244853bfe9e1463ecbabbf47b29d6ab888e2e8272f3"
+  },
+  "core_tests_passed": 82,
+  "rollout_lanes_per_gpu": 4,
+  "flora_gpu_memory_utilization": 0.75,
+  "memory_guard_passed": true,
+  "joint_SGD_admitted": false
+}

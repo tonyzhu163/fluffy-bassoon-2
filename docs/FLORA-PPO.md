@@ -55,7 +55,10 @@ with simulator success kept outside the reward prompt.
    OOD tasks keep their native horizons, because Flora never scores them and
    the residual has no clock input; success at control 600 is a secondary
    number from the same records. 600-step results need their own Flora
-   calibration and headroom check, and never pool with 750-step results.
+   calibration and headroom check, and never pool with 750-step results. The600-control
+   factory and four-lane colocated memory guard now pass qualification
+   ([audit](../outputs/robocasa-joint-lane-qualification-20261102-r5/PARENT-REVIEW.json));
+   fresh50/task calibration and the joint before-panels are still pending.
 3. **RoboTwin** follows, for the comparison with VLRLA, the direct precedent
    in [PAPER.md](PAPER.md). It needs its own Flora agreement check: two-arm
    success is harder to judge from one camera.
