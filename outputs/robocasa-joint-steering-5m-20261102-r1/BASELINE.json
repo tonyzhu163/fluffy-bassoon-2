@@ -1,0 +1,95 @@
+{
+  "verified": true,
+  "checked_Shanghai": "2026-11-02T22:39:14+08:00",
+  "provenance": "Our previously collected and fully audited common-before episodes, not checkpoint-provided benchmark numbers",
+  "source_run": "robocasa-joint-h600-preparation-20261102-r4",
+  "source_audit": "outputs/robocasa-joint-h600-preparation-20261102-r4/TERMINAL-AUDIT.json",
+  "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+  "normalization_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+  "episodes": 500,
+  "optimizer_updates": 0,
+  "extra_model_or_simulator_calls": 0,
+  "rows": [
+    {
+      "split": "ID",
+      "task": "OpenDrawer",
+      "horizon": 600,
+      "episodes": 50,
+      "success_once": 26,
+      "success_at_end": 24
+    },
+    {
+      "split": "ID",
+      "task": "PickPlaceCounterToCabinet",
+      "horizon": 600,
+      "episodes": 50,
+      "success_once": 25,
+      "success_at_end": 24
+    },
+    {
+      "split": "ID",
+      "task": "PickPlaceDrawerToCounter",
+      "horizon": 600,
+      "episodes": 50,
+      "success_once": 22,
+      "success_at_end": 21
+    },
+    {
+      "split": "ID",
+      "task": "TurnOffStove",
+      "horizon": 600,
+      "episodes": 50,
+      "success_once": 4,
+      "success_at_end": 4
+    },
+    {
+      "split": "ID",
+      "task": "CoffeeSetupMug",
+      "horizon": 600,
+      "episodes": 50,
+      "success_once": 17,
+      "success_at_end": 17
+    },
+    {
+      "split": "OOD",
+      "task": "CloseFridge",
+      "horizon": 900,
+      "episodes": 50,
+      "success_once": 31,
+      "success_at_end": 28
+    },
+    {
+      "split": "OOD",
+      "task": "OpenCabinet",
+      "horizon": 1050,
+      "episodes": 50,
+      "success_once": 35,
+      "success_at_end": 35
+    },
+    {
+      "split": "OOD",
+      "task": "TurnOnMicrowave",
+      "horizon": 450,
+      "episodes": 50,
+      "success_once": 11,
+      "success_at_end": 8
+    },
+    {
+      "split": "OOD",
+      "task": "TurnOnSinkFaucet",
+      "horizon": 600,
+      "episodes": 50,
+      "success_once": 21,
+      "success_at_end": 21
+    },
+    {
+      "split": "OOD",
+      "task": "OpenStandMixerHead",
+      "horizon": 450,
+      "episodes": 50,
+      "success_once": 34,
+      "success_at_end": 34
+    }
+  ],
+  "pairing_limit": "This verifies original checkpoint competence on the requested ten-task bank. New steering port/batching/canonical physics and noise compatibility must be qualified before reusing these as paired before panels."
+}

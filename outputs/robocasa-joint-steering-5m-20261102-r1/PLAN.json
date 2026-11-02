@@ -1,0 +1,158 @@
+{
+  "status": "PREPARING_AND_QUALIFYING_NOT_SUBMITTED",
+  "scientific_scope": "Two separate joint five-task frozen-motor steering PPO learners; preserve actual steering histories for later AD/DPT",
+  "arms": {
+    "velocity": {
+      "kind": "velocity",
+      "steering_dim": 32,
+      "fraction": 0.05
+    },
+    "kv_all_layers": {
+      "kind": "kv_all_layers",
+      "kv_layers": 18,
+      "rank_per_layer_target": 32,
+      "steering_dim": 1152,
+      "targets": [
+        "key",
+        "value"
+      ],
+      "fraction": 0.041666666666666664,
+      "qualification": "New all-layer map; old last-layer-value Stage 0 qualification does not carry over"
+    }
+  },
+  "initializer": {
+    "repository": "robocasa/robocasa365_checkpoints",
+    "revision": "c484448aba1a9b60a04c9b0ca117241518ea69f3",
+    "prefix": "pi05_pretrain_human300/multitask_learning/75000",
+    "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+    "normalization_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+    "reuse_trained_flow_checkpoint_18": false,
+    "frozen": [
+      "vision_language_backbone",
+      "action_expert"
+    ],
+    "trainable": [
+      "steering_coefficient_distribution",
+      "value_head"
+    ]
+  },
+  "training": {
+    "tasks": [
+      "OpenDrawer",
+      "PickPlaceCounterToCabinet",
+      "PickPlaceDrawerToCounter",
+      "TurnOffStove",
+      "CoffeeSetupMug"
+    ],
+    "horizon": 600,
+    "chunk_horizon": 50,
+    "flow_steps": 10,
+    "episodes_per_update": 80,
+    "episodes_per_task_per_update": 16,
+    "updates": 103,
+    "planned_training_controls": 4944000,
+    "training_and_qualification_ceiling": 5000000,
+    "episode_schedule": "Balanced interleaving of all five tasks in every round; fresh native instances; preserve task and global policy-version identities",
+    "reward": "Simulator first success, +1 in its H50 chunk; later chunks physically execute to full horizon but are excluded from PPO loss",
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "native_noise": "Explicit recorded native iid Gaussian, fixed law; only steering coefficients are learned. Native nuisance-noise density cancels in the PPO ratio",
+    "policy": "Fresh zero-mean Gaussian steering actor and value MLP on the same pre-action public feature port; 2064 feature coordinates",
+    "optimizer": {
+      "learning_rate": 0.0003,
+      "epochs": 10,
+      "minibatch_size": 32,
+      "clip": 0.2,
+      "target_kl": 0.02,
+      "initial_steering_std": 0.5,
+      "max_grad_norm": 1.0
+    },
+    "stop": "Fixed round count, except numerical/runtime/resource failure; development performance is monitoring, not an automatic performance stop",
+    "reset_and_qualification_reserve": 56000,
+    "accounting": "Every actual reset, failed or unresolved call is charged; 103 balanced rounds preserve reset and qualification headroom within 5M total TRAIN controls."
+  },
+  "evaluation": {
+    "baseline": "Verify the previously collected 500-case common-before; reuse only compatible evidence; new canonical pairing before panels are reserved if needed",
+    "development_cases_per_training_task": 8,
+    "development_rounds": [
+      0,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50,
+      55,
+      60,
+      65,
+      70,
+      75,
+      80,
+      85,
+      90,
+      95,
+      100,
+      103
+    ],
+    "development_control_ceiling": 528000,
+    "ID_cases_per_task": 50,
+    "OOD_cases_per_task": 50,
+    "OOD_tasks": [
+      "CloseFridge",
+      "OpenCabinet",
+      "TurnOnMicrowave",
+      "TurnOnSinkFaucet",
+      "OpenStandMixerHead"
+    ],
+    "OOD_horizons": [
+      900,
+      1050,
+      450,
+      600,
+      450
+    ],
+    "before_and_after_ID_OOD_control_ceiling": 645000,
+    "total_evaluation_control_ceiling": 1200000,
+    "per_arm_all_in_control_ceiling": 6200000,
+    "primary": "Macro-average ID first-success gain over the original zero-steering policy on paired cases; report paired uncertainty and exact tests",
+    "secondary": [
+      "ID success at end",
+      "OOD macro-average first-success and success at end",
+      "all ten task-level changes",
+      "ten-task descriptive macro-average"
+    ],
+    "individual_task_pass_required": false,
+    "selection": "Fixed final checkpoint for confirmatory evaluation; development results do not select a final test checkpoint",
+    "policy_controls_planned": 1173000,
+    "reset_and_qualification_reserve": 27000
+  },
+  "resources": {
+    "cluster": "Baige",
+    "maximum_gpus_per_arm": 8,
+    "maximum_concurrent_arm_gpus": 16,
+    "existing_aggregate_experiment_gpu_ceiling": 40,
+    "automatic_retry": false,
+    "admission": "Actual allocated probes, storage/write/capacity, zero-output native parity, all-layer K/V influence, one counted PPO update and complete recovery qualification",
+    "combined_gpu_hour_cap": 20,
+    "cap_source": "Existing Stage 1 human-approved handoff; no larger GPU-hour budget is inferred from approval of 5M controls per arm.",
+    "throughput_qualification": "Measure one counted update and before/evaluation throughput within the existing cap; complete checkpoints and seek a concrete budget decision if the approved data target cannot fit.",
+    "maximum_gpu_hours_per_arm_initial_reservation": 10
+  },
+  "retention": [
+    "raw current and next decision observations",
+    "actual pre-action features",
+    "native Gaussian seeds",
+    "steering coefficients and behavior mean/std/log-probabilities",
+    "executed commands",
+    "primitive rewards and episode boundaries",
+    "task/case/native seed/physical snapshots",
+    "every chronological pre-SGD bank",
+    "actor/value/Adam/RNG/sampler/worker boundary recoveries",
+    "full native three-view videos and action accounting"
+  ],
+  "other_work": "Closed Flow and Stage 0 remain immutable; the older single-task four-learner warm-start proposal is not duplicated; no Flora, student fit or new scientific task expansion"
+}
