@@ -117,6 +117,8 @@ update.
 
 | Gate readiness and native-criteria Flora rubric | Owner chat `01a19bef-b16f`; Baige `job-g86nibs7mi39` RUNNING since Nov3 00:40:31, source `d30380f7`; last checked00:43 |35 causal prefixes from same6 replay-qualified retained videos,1.1 vs short1.6,70 graded labels;1GPU≤900s. Public input hashes/prompt checks passed, model weights loaded. Next: count wrong-target/premature positives and retained first successes, including before/after native thresholds. No production reward promotion or full-bank rescore. [Contract](robocasa-flora-first-success-rubric-20261103-r1/PLAN.md), [CPU evidence](robocasa-flora-first-success-rubric-20261103-r1/CPU-RESULT.md). |
 
+| Baige storage tiering | Storage-audit owner; Baige development CPU only, no GPU allocation | **Nov3 01:24 Shanghai:** six historical checkpoint/data groups cold-moved with source comparison and complete BOS SHA256 readback; about100GiB reclaimed,681GiB free. Three-worker r3 is archiving inactive VIA/action-critic/WAM projects and old runtimes; both Fluffy Bassoon roots, current PPO/history/Flora assets and shared RL runtimes stay on PFS. [Plan](baige-storage-tiering-20261103-r1/PLAN.json), [verified moves and restore commands](baige-storage-tiering-20261103-r1/FIRST-PHASE.json). |
+
 ### Needs owner refresh
 
 - Native VLRLA-recipe PPO pilot: last recorded 2026-10-31 14:06 Shanghai as
