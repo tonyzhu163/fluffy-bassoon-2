@@ -1,0 +1,53 @@
+{
+  "runtime_source_commit": "6de858c3c77d1805120c196e2941c046f48f03bd",
+  "rollout_lanes_per_gpu_both_arms": 4,
+  "flora_gpu_memory_utilization": 0.75,
+  "flora_batch_capacity": 8,
+  "minimum_free_mib_after_engine_warmup": 21973,
+  "observed_free_mib_after_engine_warmup": 23608,
+  "headroom_margin_mib": 1635,
+  "memory_guard_passed": true,
+  "joint_SGD_admitted": false,
+  "global_training_episodes": 80,
+  "per_task_training_episodes": 16,
+  "TRAIN_Flora_ID_horizons": [
+    600,
+    600,
+    600,
+    600,
+    600
+  ],
+  "OOD_horizons": [
+    900,
+    1050,
+    450,
+    600,
+    450
+  ],
+  "maximum_iterations": 6,
+  "stopping": "fixed",
+  "maximum_all_in_actions": null,
+  "ppo_epochs": 10,
+  "ppo_minibatch_size": 32,
+  "stream_scoring": true,
+  "render_resolution": [
+    256,
+    256
+  ],
+  "Flora_view_tile_resolution": [
+    320,
+    320
+  ],
+  "history_retention": [
+    "pending-NNN.pt",
+    "boundary-NNN.pt",
+    "labels-NNN/",
+    "monitoring records"
+  ],
+  "remaining": [
+    "Fresh600-control calibration50/task: do not admit prior750 clips",
+    "Fresh common-beforeDEV40/ID250/OOD250 and common initializer fingerprint",
+    "Finite actual8GPU/storage/clock binding and separate resource-budget approval"
+  ],
+  "scope": "Execution and horizon fixes; this receipt grants no task exception or larger allocation"
+}

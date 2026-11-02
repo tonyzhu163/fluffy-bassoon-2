@@ -1,27 +1,12 @@
 {
-  "status": "SOURCE_ONLY_NOT_ADMITTED; HUMAN_TASK_AND_STAGE_DECISIONS_UNBOUND",
+  "status": "SOURCE_ONLY_NOT_ADMITTED; FRESH600_CALIBRATION_COMMON_BEFORE_AND_RESOURCE_BINDINGS_REQUIRED",
   "source_parent_commit": "300bac2dfdd4c8cd0cb67d512484c778e5acc650",
   "baseline_validations": {
-    "OpenDrawer": {
-      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/OpenDrawer/baseline-validation.json",
-      "sha256": "1354fb5d34c8e2ff5369cef078b6b53cc1eb9d96171d6532e0765207739116cc"
-    },
-    "PickPlaceCounterToCabinet": {
-      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/PickPlaceCounterToCabinet/baseline-validation.json",
-      "sha256": "453d0494880ef4547e3af469092452fcbfb9b0d5c2294e5129a666bdb499cca9"
-    },
-    "PickPlaceDrawerToCounter": {
-      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/PickPlaceDrawerToCounter/baseline-validation.json",
-      "sha256": "b0764eaa2e05e8d2cd5b08c19d1f8f4dac9cc480a306c30c451a27fe76e51c92"
-    },
-    "TurnOffStove": {
-      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/TurnOffStove/baseline-validation.json",
-      "sha256": "d41fa7658ba5109e19048b3e1f5af3bf227fd9bac94404bb508f50b52c05ac8d"
-    },
-    "CoffeeSetupMug": {
-      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-five-task-fifty-score-20261102-r1/exchange/cohorts/CoffeeSetupMug/baseline-validation.json",
-      "sha256": "cc31ac02b35ef87d7c4a411d41109bb4f386d1fe2da0506beda645f19f1cbedc"
-    }
+    "OpenDrawer": null,
+    "PickPlaceCounterToCabinet": null,
+    "PickPlaceDrawerToCounter": null,
+    "TurnOffStove": null,
+    "CoffeeSetupMug": null
   },
   "flora": {
     "official_code": "/mowenjie/fluffy-bassoon-2/deps/nvidia-flora-129a2ada-20261101-r1/repo",
@@ -78,7 +63,7 @@
     "owned_output_GiB": 112,
     "closure_seconds": 300
   },
-  "startup": "Native node service starts idle.8separatePy312TP1processes waitoncontroller offload, batch8/.78/context16384; scoreronlyCUDA13toolkit env. EachchildrealBaigeidentity validatedbeforemodelrendezvous vars cleared.1800s warmupceiling.",
+  "startup": "Native node service starts idle. Eight separate qualifiedPy312 TP1 scorers use batch8/.75/context16384. Each actual warmed engine must leave21973MiB free before four native lanes start. Scheduler visibility is retained; only scorer-child rendezvous keys are cleared after actual Baige identity validation.",
   "shutdown": "Coordinatorrequiresfinalcheckpoint and500finalpanel marker, writesannotation/native shutdown; allnodescloseownedchildren/processgroups and originalbegin/finish clocks. Anyownedservice/scorer/controllerfailure propagates, leavescompletependingevidence, nofallback/recollection.",
   "validation": {
     "static_AST_and_bash_only": true,
@@ -133,5 +118,15 @@
     "gpus_per_node": 2,
     "qualification": "outputs/robocasa-rollout-batch-integration-20261102-r1/QUALIFICATION.json",
     "scope": "Future source-bound allocations only; existing run pins and checkpoints are unchanged. Continuous lane refill, original case/chunk plans and record order."
+  },
+  "execution_migration": {
+    "rollout_lanes_per_gpu": 4,
+    "gpu_memory_utilization": 0.75,
+    "minimum_free_mib_after_engine_warmup": 21973,
+    "PPO_horizon": 600,
+    "OOD": "native horizons",
+    "fresh_calibration_required": true,
+    "headroom_exception": "Only required if a fresh measured gate fails; never carry the old74% exception to new bytes",
+    "historical_review": "Earlier fields and PARENT-ENTRY-REVIEW are source review at their original pin; this migration is reviewed separately"
   }
 }

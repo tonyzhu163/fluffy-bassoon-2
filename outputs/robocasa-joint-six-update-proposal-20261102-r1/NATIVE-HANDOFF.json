@@ -1,5 +1,5 @@
 {
-  "status": "SOURCE_PREPARED_NOT_ADMITTED",
+  "status": "SOURCE_ONLY_NOT_ADMITTED; FRESH600_CALIBRATION_COMMON_BEFORE_AND_RESOURCE_BINDINGS_REQUIRED",
   "source_parent_commit": "300bac2dfdd4c8cd0cb67d512484c778e5acc650",
   "human_action_budget_question": "Asked asynchronously for 2.5M total new five-task stage including180k alreadyspent; answer pending. Separate native74% question still pending. No approval inferred.",
   "resource_allocation": "None; no actual new profile/admission/source deployment/GPU job is created by these templates.",
@@ -47,5 +47,15 @@
     "gpus_per_node": 2,
     "qualification": "outputs/robocasa-rollout-batch-integration-20261102-r1/QUALIFICATION.json",
     "scope": "Future source-bound allocations only; existing run pins and checkpoints are unchanged. Continuous lane refill, original case/chunk plans and record order."
+  },
+  "execution_migration": {
+    "rollout_lanes_per_gpu": 4,
+    "gpu_memory_utilization": 0.75,
+    "minimum_free_mib_after_engine_warmup": 21973,
+    "PPO_horizon": 600,
+    "OOD": "native horizons",
+    "fresh_calibration_required": true,
+    "headroom_exception": "Only required if a fresh measured gate fails; never carry the old74% exception to new bytes",
+    "historical_review": "Earlier fields and PARENT-ENTRY-REVIEW are source review at their original pin; this migration is reviewed separately"
   }
 }

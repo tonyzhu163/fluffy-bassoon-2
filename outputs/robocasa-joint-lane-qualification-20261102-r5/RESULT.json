@@ -1,0 +1,69 @@
+{
+  "completed": true,
+  "optimizer_updates": 0,
+  "selected_lanes": 4,
+  "episodes": 10,
+  "policy_controls": 6000,
+  "inclusive_native_load_collect_seconds": 206.0291701303795,
+  "inclusive_controls_per_second": 29.122089829333763,
+  "combined_collect_score_seconds": 207.05724685173482,
+  "scoring": {
+    "completed": true,
+    "labels": 10,
+    "final_label_wait_seconds": 0.09111565165221691,
+    "receipt": {
+      "code_commit": "129a2ada74c526ee4692f3d1b111bea6ca19d5b7",
+      "model_revision": "031299e46e452fc0cedb4e0975eb9fa95fc37783",
+      "model_receipt": {
+        "path": "/mowenjie/fluffy-bassoon-2/inputs/flora-rewarder-031299e4-20261101-r1-receipt/READY.json",
+        "sha256": "05c31de8122ecd1f467033d671767e1c59db40de9f4a3a43b409446aa38d76bf"
+      },
+      "completed": true,
+      "jobs_sha256": "dc4c0afc3201470503060355eee5abe3a48232fe9514ddd5660f33fb63b5cdab",
+      "video_refs_sha256": "e028c2230a2714577a021ccaf5a25174d91d154ea3bda960853693cc4d05df8e",
+      "output": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r5/gpu/scorer-4/final.jsonl",
+        "sha256": "045a704b46f8ce71957703220dfc812ad8783a68b9fb06fe955103ce44eb4cad"
+      },
+      "training_reward_rule": "(expected_score-1)/4",
+      "engine_process_pid": 366,
+      "model_load_count": 1,
+      "completed_batches": 10,
+      "engine": "official persistent terminal_reward helpers",
+      "batch_size": 8,
+      "gpu_memory_utilization": 0.75,
+      "streamed": {
+        "prescored": 10,
+        "scored_at_request": 0,
+        "note": "Streamed grades use the same engine, prompt and video bytes; engine batch composition differs"
+      },
+      "episode_protocols_sha256": "9600ca25b3d4424092f4c847825bca077aa7a81e5281b7686e0d2c6d2b02d8a8"
+    },
+    "model_load_count": 1,
+    "completed_batches": 10
+  },
+  "headroom": [
+    {
+      "lanes": 8,
+      "required_free_mib": 27408,
+      "measured_free_mib": 23608.0,
+      "admitted": false
+    },
+    {
+      "lanes": 4,
+      "required_free_mib": 21973,
+      "measured_free_mib": 23608.0,
+      "admitted": true
+    }
+  ],
+  "records": 120,
+  "result_sha256": "c8307052a76d0383872b373d0dede4dd10b57f8621b57423d473a50cd56c603e",
+  "child_exit_codes": [
+    0,
+    0
+  ],
+  "sampled_peak_used_mib": 87183.0,
+  "minimum_free_mib": 10068.0,
+  "source_commit": "6de858c3c77d1805120c196e2941c046f48f03bd",
+  "total_wall_seconds": 705.569304227829
+}

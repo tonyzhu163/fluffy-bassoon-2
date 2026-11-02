@@ -61,15 +61,16 @@ def main():
     assert authority['direct_human_instruction'] and authority['old_trial_spend_preserved'] is True
     profile=copy.deepcopy(binding['policy_profile'])
     execution=json.loads((code/'configs/native_ppo/robocasa_residual_execution.json').read_text())
-    profile['rollout_lanes_per_gpu']=execution['rollout_lanes_per_gpu']
+    assert profile['rollout_lanes_per_gpu']==execution['rollout_lanes_per_gpu']
+    assert binding['flora_execution']==dict(batch_size=8,gpu_memory_utilization=execution['flora_gpu_memory_utilization'],
+        minimum_free_mib_after_engine_warmup=execution['native_rollout_memory_reserve_mib'])
     assert profile['task']=='joint_five' and profile['tasks']==list(PPO_TASKS) and profile['maximum_iterations']==6
-    assert profile['baseline_validations']==spec['baseline_validations']
     exceptions=profile.get('calibration_exceptions',{})
     # This required input is the actual human decision, never the pending
     # HEADROOM-DECISION status record or the older one-task AUROC exception.
     assert binding['human_task_authority']==exceptions.get('PickPlaceCounterToCabinet')
-    task_authority=read_ref(binding['human_task_authority'])
-    assert task_authority['direct_human_instruction']
+    if binding['human_task_authority'] is not None:
+        assert read_ref(binding['human_task_authority'])['direct_human_instruction']
     for task,ref in profile['baseline_validations'].items():
         require_calibration_permission(read_ref(ref),protocol(task,baseline_count=50),
             calibration_sha256=ref['sha256'],authorization=read_ref(exceptions[task]) if task in exceptions else None)
@@ -149,7 +150,7 @@ def main():
             source_commit=binding['source_commit'],F_output=str(run/'policy'),output=str(out/f'scorer-{annotation_rank:02d}'),
             model=flora['model'],official_code=flora['official_code'],model_receipt=flora['model_receipt'],
             baseline_validations=profile['baseline_validations'],calibration_exceptions=exceptions,
-            batch_size=8,gpu_memory_utilization=.78,
+            batch_size=8,gpu_memory_utilization=execution['flora_gpu_memory_utilization'],
             minimum_free_mib_after_engine_warmup=execution['native_rollout_memory_reserve_mib'],
             engine_ready_path=str(job/'engines'/f'rank-{annotation_rank:02d}.json'),
             actual_gpu_probe=dict(path=str(probe),sha256=sha(probe)),expected_gpu_uuid=device['uuid'],
@@ -177,7 +178,7 @@ def main():
         profile.update(mode='train',arm='F',source_commit=binding['source_commit'],output=str(run/'policy'),
             monitoring_root=str(run/'monitoring'),accounting_root=str(run/'actions'),attempt=os.environ['TASK_RUN'],
             episode_id_namespace='joint-',allocated_start_unix=min(m['allocated_start_unix'] for m in manifests),
-            deadline_unix=deadline,scheduler_seconds=21540,closure_seconds=300,maximum_all_in_actions=None,rollout_lanes_per_gpu=8,
+            deadline_unix=deadline,scheduler_seconds=21540,closure_seconds=300,maximum_all_in_actions=None,rollout_lanes_per_gpu=execution['rollout_lanes_per_gpu'],
             rollout_devices=global_devices,parallel_controller_cpu_offload=True,stopping='fixed',
             actual_gpu_probe=dict(path=str(probe),sha256=sha(probe)),distributed_rollout_root=str(dispatch),
             gpu_allocation_starts_unix=[m['allocated_start_unix'] for m in manifests for _ in range(2)],
