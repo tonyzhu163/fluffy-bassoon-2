@@ -54,15 +54,18 @@ resampling alone recovers?
   (c) the same at bound 0.5, the declared fallback. Arms (b) and (c) use the
   same motor-noise seeds as (a).
 - Readout: per-arm success rate and best-of-8 recovery per case, compared
-  with (a). Use simulator success only; Flora is not needed here.
+  with (a), scored per case as well as in total. Use simulator success only;
+  Flora is not needed here. Best-of-8 recovery in (a) also measures the
+  headroom available to noise steering (DSRL) and to sample-and-select.
 - Cost estimate: 4 tasks × 20 × 24 × 600 ≈ 1.15M controls. At about 87
   controls/s/GPU (8 lanes, no scorer), that is about 3.7 GPU-h.
 - Decision:
   - If (b) beats (a), pick the task with the largest margin and bound 0.25.
   - If only (c) beats (a), use bound 0.5 (the declared fallback).
-  - If neither beats (a), the residual can't steer at this scale. Escalate
-    to the noise interface (DSRL), the only interface that has worked here,
-    before spending on PPO.
+  - If neither beats (a) but (a) recovers many failures, the useful
+    variation is in the motor noise. Bring noise steering (DSRL) or
+    sample-and-select to the human as an interface revision.
+  - If nothing recovers failures, change the task before the interface.
 
 ## Stage 1: simulator-reward positive control (single task)
 
@@ -85,7 +88,9 @@ resampling alone recovers?
 - Cost estimate: ≤ 1.15M training controls plus 2 × 50 evaluation episodes,
   about 4 GPU-h without the scorer.
 - If it fails, retry in order with one variable at a time:
-  1. Initial std 0.2, so a moved mean dominates the noise.
+  1. Initial std 0.2, so a moved mean dominates the noise. Try this only if
+     Stage 0 shows that the chosen bound has headroom; otherwise lower std
+     weakens an already weak signal.
   2. LR 1e-3.
   3. 128 episodes per update.
   4. Residual SAC (Policy Decorator style) as an off-policy learner on the
