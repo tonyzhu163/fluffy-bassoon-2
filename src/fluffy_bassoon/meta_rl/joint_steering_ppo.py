@@ -297,7 +297,9 @@ def restore_boundary(state, policy, optimizer, generator, *, arm, interface_spec
             or state["policy_config"] != asdict(policy.config)):
         raise ValueError("Cannot change the steering/optimizer contract on recovery")
     policy.load_state_dict(state["policy"], strict=True)
-    optimizer.load_state_dict(state["optimizer"])
+    # Optimizer.load_state_dict may retain CPU moment storage by reference.
+    # Loading one boundary twice must not mutate the reusable checkpoint.
+    optimizer.load_state_dict(deepcopy(state["optimizer"]))
     generator.set_state(state["generator"])
     from .rlinf_native_ppo import restore_rng
     restore_rng(state["global_rng"])
