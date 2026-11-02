@@ -16,6 +16,9 @@ from .residual_ppo import (ResidualActorCritic, ResidualPPOConfig, history_trial
                            stack_records, update)
 
 
+KV_ALL_LAYERS_MAP = "independent_layer_kv_rademacher32_rms_v1"
+
+
 @dataclass(frozen=True)
 class InterfaceSpec:
     kind: str = "action"
@@ -23,10 +26,16 @@ class InterfaceSpec:
     steering_dim: int = 6
     candidates: int = 8
     fraction: float = .25
+    kv_layers: int | None = None
 
     def __post_init__(self):
+        all_kv = self.kind == "kv_all_layers"
+        if (all_kv and (type(self.kv_layers) is not int or self.kv_layers < 1)
+                or not all_kv and self.kv_layers is not None):
+            raise ValueError("Bind kv_layers only for the all-layer K/V interface")
         dimensions = {"action": 6, "noise": 0, "conditioning": 32,
-                      "velocity": 32, "select": self.candidates, "direct": 600}
+                      "velocity": 32, "select": self.candidates, "direct": 600,
+                      "kv_all_layers": 2 * self.kv_layers * 32 if all_kv else None}
         if (self.kind not in dimensions or self.steering_dim != dimensions[self.kind]
                 or self.motor_shape != (50, 32) or type(self.candidates) is not int or self.candidates < 2
                 or not math.isfinite(self.fraction) or self.fraction <= 0):
@@ -46,6 +55,13 @@ class InterfaceSpec:
     def record(self):
         record = asdict(self)
         record["motor_shape"] = list(self.motor_shape)
+        if self.kind == "kv_all_layers":
+            record["kv_map"] = dict(version=KV_ALL_LAYERS_MAP, rank=32, targets=["key", "value"],
+                order="layer,key_or_value,coefficient", seed_base=921003,
+                seed="921003 + 2 * layer_index + key_or_value_index",
+                scale="fraction * per_row_per_layer_per_tensor_RMS; tanh coefficients")
+        else:
+            record.pop("kv_layers")  # Preserve existing checkpoint contracts.
         return record
 
     def decode(self, control):

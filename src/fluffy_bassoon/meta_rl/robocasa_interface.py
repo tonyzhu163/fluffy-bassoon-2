@@ -18,6 +18,25 @@ class _PrefixReady(Exception):
     pass
 
 
+def _steer_kv_tensor(tensor, code, *, fraction, seed):
+    """One independent rank32 block, broadcast over tokens/heads.
+
+    K is the native post-RoPE prefix key. Each K/V tensor has its own fixed
+    basis and per-row RMS. Zero code preserves the original tensor object.
+    """
+    if tensor.ndim < 2 or tensor.shape[0] != len(code):
+        raise ValueError("Require a batch-aligned native K/V cache")
+    if not code.any():
+        return tensor
+    rng = np.random.default_rng(seed)
+    projection = torch.as_tensor(rng.choice((-1., 1.), (32, tensor.shape[-1])) / math.sqrt(32),
+                                 dtype=torch.float32, device=tensor.device)
+    delta = (torch.tanh(code) @ projection).to(tensor.dtype)
+    delta = delta.reshape(len(code), *([1] * (tensor.ndim - 2)), tensor.shape[-1])
+    rms = tensor.float().square().mean(tuple(range(1, tensor.ndim)), keepdim=True).sqrt()
+    return tensor + fraction * rms.to(tensor.dtype) * delta
+
+
 class FrozenRoboCasaInterface:
     def __init__(self, native, *, bound=None):
         self.native, self.bound = native, bound
@@ -106,8 +125,8 @@ class FrozenRoboCasaInterface:
         prefix, velocity = self.model.build_prefix_cache, self.model.velocity_from_suffix
         batch = prepared["batch_size"]
         try:
-            code = torch.as_tensor(steering, dtype=torch.float32, device=self.model.device)
-            draws = torch.as_tensor(noise, device=self.model.device)
+            code = torch.as_tensor(steering, dtype=torch.float32, device=self.model.device).detach()
+            draws = torch.as_tensor(noise, device=self.model.device).detach()
             if code.shape != (batch, spec.steering_dim) or not torch.isfinite(code).all():
                 raise ValueError("Require finite steering [B,steering_dim]")
             expected = ((batch, spec.candidates, 50, 32) if spec.kind == "select" else
@@ -118,17 +137,21 @@ class FrozenRoboCasaInterface:
             if spec.kind == "conditioning":
                 hidden, mask, cache = native_prefix
                 key, value = cache[-1]
-                if value.ndim < 2 or value.shape[0] != batch:
-                    raise ValueError("Require a batch-aligned native value cache")
-                rng = np.random.default_rng(921003)
-                projection = torch.as_tensor(
-                    rng.choice((-1., 1.), (32, value.shape[-1])) / math.sqrt(32),
-                    dtype=torch.float32, device=value.device)
-                delta = (torch.tanh(code) @ projection).to(value.dtype)
-                delta = delta.reshape(batch, *([1] * (value.ndim - 2)), value.shape[-1])
-                rms = value.float().square().mean(tuple(range(1, value.ndim)), keepdim=True).sqrt()
-                native_prefix = (hidden, mask, (*cache[:-1],
-                    (key, value + spec.fraction * rms.to(value.dtype) * delta)))
+                value = _steer_kv_tensor(value, code, fraction=spec.fraction, seed=921003)
+                if value is not cache[-1][1]:
+                    native_prefix = (hidden, mask, (*cache[:-1], (key, value)))
+            elif spec.kind == "kv_all_layers":
+                hidden, mask, cache = native_prefix
+                if len(cache) != spec.kv_layers:
+                    raise ValueError("Declared kv_layers differs from the native prefix cache")
+                blocks = code.reshape(batch, spec.kv_layers, 2, 32)
+                changed = []
+                for layer, (key, value) in enumerate(cache):
+                    changed.append(tuple(_steer_kv_tensor(tensor, blocks[:, layer, target],
+                        fraction=spec.fraction, seed=921003 + 2 * layer + target)
+                        for target, tensor in enumerate((key, value))))
+                if code.any():
+                    native_prefix = (hidden, mask, tuple(changed))
             self.model.build_prefix_cache = lambda *args, **kwargs: native_prefix
             if spec.kind == "velocity":
                 def altered_velocity(suffix):

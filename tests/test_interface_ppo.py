@@ -294,6 +294,109 @@ def test_batched_interface_steering_matches_fixed_projection_and_serial_rows(kin
     torch.testing.assert_close(prepared["prefix"][2][-1][1], original, rtol=0, atol=0)
 
 
+
+class AllLayerNativeModel(BatchNativeModel):
+    def build_prefix_cache(self, observation):
+        hidden, mask, ((key, value),) = super().build_prefix_cache(observation)
+        self.built = (hidden, mask, tuple((key * (layer + 2), value * (layer + 1))
+                                         for layer in range(3)))
+        return self.built
+
+    @torch.no_grad()
+    def predict_action_batch(self, observation, *, mode, noise):
+        chunk, _ = super().predict_action_batch(observation, mode=mode, noise=noise)
+        cache = self.used[2]
+        all_kv = sum(tensor.mean((1, 2, 3)) for pair in cache for tensor in pair)
+        last_v = cache[-1][1].mean((1, 2, 3))
+        return chunk + (all_kv - last_v)[:, None, None], None
+
+
+@pytest.mark.parametrize("zero", [True, False])
+def test_all_layer_kv_blocks_match_reference_native_identity_and_serial_batch(zero):
+    native, observation = batch_native()
+    native.model = AllLayerNativeModel()
+    port = FrozenRoboCasaInterface(native)
+    spec = InterfaceSpec(kind="kv_all_layers", kv_layers=3, steering_dim=192, fraction=.17)
+    assert spec.control_dim == 1600 + 192
+    record = spec.record()
+    assert record["kv_layers"] == 3 and record["kv_map"]["rank"] == 32
+    assert record["kv_map"]["targets"] == ["key", "value"]
+    assert record["kv_map"]["version"] == "independent_layer_kv_rademacher32_rms_v1"
+    noise = np.linspace(-1, 1, 3200, dtype=np.float32).reshape(2, 50, 32)
+    code = np.zeros((2, 192), np.float32)
+    if not zero:
+        code[1] = np.linspace(-1.3, 1.7, 192)
+    state = torch.get_rng_state().clone()
+    _, prepared = port.prepare_batch(observation)
+    prefix = prepared["prefix"]
+    originals = [[tensor.clone() for tensor in pair] for pair in prefix[2]]
+    result = port.execute_batch(prepared, noise=torch.from_numpy(noise).requires_grad_(),
+                               steering=torch.from_numpy(code).requires_grad_(), spec=spec)
+    assert native.model.prefixes == native.model.draws == 1
+    assert native.model.used[0] is prefix[0] and native.model.used[1] is prefix[1]
+    if zero:
+        assert native.model.used is prefix
+    for layer, pair in enumerate(native.model.used[2]):
+        for target, actual in enumerate(pair):
+            original = originals[layer][target]
+            projection = np.random.default_rng(921003 + 2 * layer + target).choice((-1., 1.), (32, 4)) / np.sqrt(32)
+            block = torch.from_numpy(code.reshape(2, 3, 2, 32)[:, layer, target]).tanh()
+            delta = (block @ torch.as_tensor(projection, dtype=torch.float32)).reshape(2, 1, 1, 4)
+            rms = original.square().mean((1, 2, 3), keepdim=True).sqrt()
+            torch.testing.assert_close(actual, original + spec.fraction * rms * delta, rtol=0, atol=0)
+            torch.testing.assert_close(actual[0], original[0], rtol=0, atol=0)
+            torch.testing.assert_close(prefix[2][layer][target], original, rtol=0, atol=0)
+            if not zero:
+                assert not torch.equal(actual[1], original[1])
+    baseline = AllLayerNativeModel()
+    native_result, _ = baseline.predict_action_batch(dict(states=observation["states"]), mode="eval",
+                                                     noise=torch.from_numpy(noise))
+    np.testing.assert_array_equal(result[0], native_result.numpy()[0])
+    if zero:
+        np.testing.assert_array_equal(result, native_result.numpy())
+    serial = []
+    for row in range(2):
+        one, _ = batch_native()
+        one.model = AllLayerNativeModel()
+        adapter = FrozenRoboCasaInterface(one)
+        _, token = adapter.prepare(dict(states=observation["states"][row:row + 1]))
+        serial.append(adapter.execute(token, noise=noise[row:row + 1], steering=code[row], spec=spec))
+    np.testing.assert_allclose(result, serial, rtol=1e-6, atol=1e-6)
+    assert not native.model.weight.requires_grad and native.model.weight.grad is None
+    torch.testing.assert_close(state, torch.get_rng_state(), rtol=0, atol=0)
+
+
+def test_all_layer_kv_coefficients_are_independent_and_layer_binding_is_required():
+    for kwargs in (dict(), dict(kv_layers=0), dict(kv_layers=True), dict(kv_layers=3)):
+        with pytest.raises(ValueError):
+            InterfaceSpec(kind="kv_all_layers", steering_dim=32, **kwargs)
+    with pytest.raises(ValueError, match="kv_layers"):
+        InterfaceSpec(kind="conditioning", steering_dim=32, kv_layers=3)
+    assert "kv_layers" not in InterfaceSpec().record()
+    native, observation = batch_native()
+    native.model = AllLayerNativeModel()
+    port = FrozenRoboCasaInterface(native)
+    spec = InterfaceSpec(kind="kv_all_layers", kv_layers=3, steering_dim=192)
+    _, prepared = port.prepare_batch(observation)
+    cache = prepared["prefix"][2]
+    code = np.zeros((2, 3, 2, 32), np.float32)
+    code[:, 1, 0] = .3  # Exactly layer1's keys; every other block stays native.
+    port.execute_batch(prepared, noise=np.zeros((2, 50, 32)), steering=code.reshape(2, -1), spec=spec)
+    for layer, pair in enumerate(native.model.used[2]):
+        for target, tensor in enumerate(pair):
+            if (layer, target) == (1, 0):
+                assert not torch.equal(tensor, cache[layer][target])
+            else:
+                assert tensor is cache[layer][target]
+    _, prepared = port.prepare_batch(observation)
+    wrong = InterfaceSpec(kind="kv_all_layers", kv_layers=2, steering_dim=128)
+    with pytest.raises(ValueError, match="kv_layers differs"):
+        port.execute_batch(prepared, noise=np.zeros((2, 50, 32)), steering=np.zeros((2, 128)), spec=wrong)
+    assert port._prepared is None
+    _, prepared = port.prepare_batch(observation)
+    with pytest.raises(ValueError, match="steering"):
+        port.execute_batch(prepared, noise=np.zeros((2, 50, 32)), steering=np.zeros((2, 32)), spec=spec)
+
 def test_batched_interface_rejects_bad_rows_and_restores_hooks_after_failures():
     native, observation = batch_native()
     port = FrozenRoboCasaInterface(native)
