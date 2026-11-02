@@ -1,0 +1,65 @@
+{
+  "format": "steering_ad_dpt_campaign_registry_v1",
+  "goal_thread": "01a199fb-3586-7171-bd20-52fa70e5378c",
+  "producer_thread": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
+  "producer_observation": {
+    "path": "/Users/mowenjie/.codex/worktrees/joint-steering-ppo/fluffy-bassoon-2/outputs/robocasa-joint-steering-5m-20261102-r1/PLAN.json",
+    "sha256": "de5e7bc07a9c54d3e1a0bda70778a05112bff1a352435da3ebd52ac13ba52c39",
+    "status": "PREPARING_AND_QUALIFYING_NOT_SUBMITTED",
+    "immutable_source": false
+  },
+  "campaigns": {
+    "stage1_pilot": {
+      "interfaces": [
+        "velocity",
+        "kv_all_layers"
+      ],
+      "objectives": [
+        "ad",
+        "dpt"
+      ],
+      "state": "waiting_for_verified_source",
+      "source_binding": null,
+      "fits": {},
+      "evaluations": {}
+    },
+    "joint_five_task": {
+      "interfaces": [
+        "velocity",
+        "kv_all_layers"
+      ],
+      "objectives": [
+        "ad",
+        "dpt"
+      ],
+      "state": "waiting_for_verified_source",
+      "source_binding": null,
+      "fits": {},
+      "evaluations": {}
+    }
+  },
+  "primary_ID_tasks": [
+    "OpenDrawer",
+    "PickPlaceCounterToCabinet",
+    "PickPlaceDrawerToCounter",
+    "TurnOffStove",
+    "CoffeeSetupMug"
+  ],
+  "primary_OOD_tasks": [
+    "CloseFridge",
+    "OpenCabinet",
+    "TurnOnMicrowave",
+    "TurnOnSinkFaucet",
+    "OpenStandMixerHead"
+  ],
+  "cases_per_task": 50,
+  "actual_attempts": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "status_evidence": "Producer thread was confirmed active by wait_threads; no launched source job or terminal dataset claimed",
+  "next_action": "Qualify source adapter on allocated Linux; follow existing PPO producer and bind each released source without duplicating work"
+}
