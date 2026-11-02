@@ -85,3 +85,16 @@ def test_validation_plateau_counts_material_improvement_and_resumes_exactly():
     for update in (5, 6):
         resumed = advance_plateau(resumed, -2.101, update, **options)
     assert resumed['converged']
+
+
+def test_static_query_is_identical_after_actual_support_feedback():
+    torch.manual_seed(9)
+    policy=HistoryNoisePolicy(HistoryConfig(3,2,width=8,layers=1,heads=2,context_length=4))
+    actor=HistoryResidualActor(policy,mode='static',reset_each_episode=False)
+    support=actor.act(torch.ones(1,3),deterministic=True)[0]
+    actor.observe(support[0].numpy(),0.,True)
+    actor.install_terminal_reward(1.)
+    after_support=actor.act(torch.full((1,3),2.),deterministic=True)[0]
+    fresh=HistoryResidualActor(policy,mode='static')
+    without_support=fresh.act(torch.full((1,3),2.),deterministic=True)[0]
+    torch.testing.assert_close(after_support,without_support,rtol=0,atol=0)
