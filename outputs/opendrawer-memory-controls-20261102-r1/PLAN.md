@@ -68,3 +68,10 @@ GPU probes and first matched simulator episodes are not yet verified. A
 artifacts, stays quiet on unchanged status, and stops after completion or
 terminal failure. The partial web-terminal bundle transfer was abandoned;
 use direct Git fetch for source synchronization.
+
+First allocated check, Nov2 21:57 Shanghai: the job started at21:39. All four
+2-GPU probes passed with eight distinct allocated GPU UUIDs, and all eight
+workers were advancing.119 saved fresh episodes passed source/checkpoint,
+record/truth hash, simulator pairing and reset/window-limit checks. The live
+shared output `MONITOR.json` contains this check; no worker terminal failures
+were present. Continue20-minute checks and retain the original source pin.
