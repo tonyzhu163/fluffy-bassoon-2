@@ -41,6 +41,7 @@ def main():
     assembly=dict(completed=True,campaign=b['campaign'],source=asdict(source),datasets=datasets,
         teacher=b['teacher'],source_binding=provenance['source_binding'],
         physical_episodes=len(episodes),full_physical_history=True,
+        source_physical_horizons=sorted({int(item['physical_episode']['horizon']) for item in episodes}),
         PPO_prefix_and_raw_suffix_retained=True,non_target_history_identical=True)
     (a.output/'assembly.json').write_text(json.dumps(assembly,indent=2)+'\n')
     print(json.dumps(assembly,indent=2))

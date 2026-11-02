@@ -1,6 +1,7 @@
 """One independent convergence fit; scheduler boundaries preserve full recovery."""
 import argparse
 import json
+import math
 import os
 from pathlib import Path
 import socket
@@ -26,6 +27,12 @@ def main():
         raise ValueError('Require exact clean pinned source')
     binding=json.loads(a.assembly.read_text())
     if binding.get('completed') is not True:raise ValueError('Source corpus is not complete')
+    horizons=binding['source_physical_horizons']
+    if not horizons or any(type(h) is not int or h<50 or h%50 for h in horizons):
+        raise ValueError('Bind actual complete source horizons')
+    window_episodes=max(5,math.ceil(5*a.max_eval_horizon/min(horizons)))
+    if window_episodes*(max(horizons)//50)>a.context_length:
+        raise ValueError('Complete source windows covering the longest eval history must fit memory')
     train=binding['datasets'][a.objective+'_train'];validation=binding['datasets'][a.objective+'_validation']
     for item in (train,validation):
         if file_sha256(item['path'])!=item['sha256']:raise ValueError('Bound dataset changed')
@@ -41,7 +48,7 @@ def main():
         '--train-data',train['path'],'--train-sha256',train['sha256'],
         '--validation-data',validation['path'],'--validation-sha256',validation['sha256'],
         '--output-dir',str(a.output),'--mode','full','--width','128','--layers','2','--heads','4',
-        '--context-length',str(a.context_length),'--backbone','decoder','--max-episodes-per-window','5',
+        '--context-length',str(a.context_length),'--backbone','decoder','--max-episodes-per-window',str(window_episodes),
         '--batch-size','8','--learning-rate','0.0003','--eval-every','100','--validation-batches','16',
         '--seed','0','--threads','4','--device','cuda:0','--checkpoint-selection','validation-nll',
         '--until-converged','--minimum-updates','1000','--validation-patience','10',

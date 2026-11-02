@@ -18,10 +18,12 @@
         "ad",
         "dpt"
       ],
-      "state": "waiting_for_verified_source",
+      "state": "historical_unlaunched_pilot_superseded_by_joint_scope_no_duplicate_dispatch",
       "source_binding": null,
       "fits": {},
-      "evaluations": {}
+      "evaluations": {},
+      "disposition_evidence": "outputs/robocasa-stage1-handoff-review-20261102-r1/RESULT.md and producer coordination row; original pilot has no source data",
+      "interfaces_covered_by": "joint_five_task"
     },
     "joint_five_task": {
       "interfaces": [
@@ -61,5 +63,14 @@
     5
   ],
   "status_evidence": "Producer thread was confirmed active by wait_threads; no launched source job or terminal dataset claimed",
-  "next_action": "Qualify source adapter on allocated Linux; follow existing PPO producer and bind each released source without duplicating work"
+  "next_action": "Bind the actual committed producer source and integrate/qualify its native history-controller evaluator; monitor source release and launch each independent convergence fit when exact data become ready",
+  "monitor_automation_id": "monitor-steering-ppo-and-ad-dpt",
+  "adapter": "src/fluffy_bassoon/meta_rl/frozen_steering_history.py",
+  "core_qualification_source": "cfc8fda189e7a424805be353e3632e5065f07ffd",
+  "CPU_core_tests_passed": 23,
+  "context_capacity": 300,
+  "training_window_rule": "1..max(5,ceil(5*max_eval_horizon/min_actual_source_horizon)) complete physical episodes; currently1..9",
+  "numerical_recovery_and_108_token_training_105_token_inference_qualified": true,
+  "evaluation_core": "src/fluffy_bassoon/meta_rl/steering_history_eval.py",
+  "evaluation_core_status": "static_parse_passed; allocated Linux core tests pending; actual source-specific native/GPU qualification pending"
 }
