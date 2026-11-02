@@ -82,7 +82,8 @@ before the next:
 Future matched joint runs use eight native environments per GPU and one shared
 frozen policy copy. The scientific batch stays at 80 complete episodes, 16 per
 training task; execution batching does not increase its size or change the
-configured optimizer. Each worker continuously refills its eight lanes from the original case bank,
+configured optimizer. Two-GPU nodes request 64 CPUs and 256 GiB RAM, matching
+the measured capacity configuration. Each worker continuously refills its eight lanes from the original case bank,
 starting the next case as soon as a lane finishes. Shorter episodes retain
 their native horizons without padding or truncating longer episodes. Both reward arms and their before/after
 evaluations use the same batching.

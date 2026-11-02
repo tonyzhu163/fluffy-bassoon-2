@@ -1,46 +1,56 @@
 {
   "completed": true,
-  "qualified_unique_core_cases": 10,
-  "initial_passed_carried_without_repeat": 7,
-  "repaired_dispatch_cases_passed": 3,
-  "execution": "Allocated Linux CPU child on retained development container; no additional GPU allocation, real VLA model or simulator.",
-  "original_failure": "Generic collect_pending dispatcher omitted explicit motor/actor draw plans when delegating to a custom collector; fixed by forwarding plans only when supplied, preserving legacy collector calls.",
-  "source_commit": "97d73e199f95ca458496df450a217cfa8bc9de86",
+  "backend": "Existing main collect_pending_lanes with continuous refill; prototype duplicate collector deleted",
+  "qualified_unique_core_cases": 12,
+  "initial_passed_carried_without_repeat": 11,
+  "repaired_fixture_cases_passed": 1,
+  "execution": "Allocated Linux CPU child on retained development container; raw container GPU excluded from 40 experiment limit and masked in test child. No real VLA model or simulator computation.",
+  "source_commit": "0e7b299af597c5e73095bca87a0eee9ef94e9ff6",
   "test_attempts": [
     {
-      "path": "outputs/robocasa-rollout-batch-integration-20261102-r1/affected-core.xml",
-      "sha256": "9105bb33dc24837e8ab46807af3b928410162e5803028ffc48baf5f5690623c5",
-      "source_commit": "ff9702c143f80a579da83af4248cc3d5f98777cc",
-      "tests": 10,
-      "failures": 3,
+      "path": "outputs/robocasa-rollout-batch-integration-20261102-r1/affected-core-continuous.xml",
+      "sha256": "9a72759c31d44e098b7af9e7700489e124bce805ecfd437ca30933c4bc17a3db",
+      "source_commit": "8d78478ba033950f7e9aaa6cc48fc1d0f5eafcbc",
+      "tests": 12,
+      "failures": 1,
       "errors": 0,
-      "pytest_seconds": 3.666
+      "pytest_seconds": 5.347
     },
     {
-      "path": "outputs/robocasa-rollout-batch-integration-20261102-r1/affected-core-r2.xml",
-      "sha256": "83e42275513be9932e74a168ec1b9fedfa3c0053f88c79d4a80c5bcd3125a9e2",
-      "source_commit": "97d73e199f95ca458496df450a217cfa8bc9de86",
-      "tests": 3,
+      "path": "outputs/robocasa-rollout-batch-integration-20261102-r1/affected-core-continuous-r2.xml",
+      "sha256": "d145a15ddf1a4ff7543e0743ad129b06b9ead2b56c1163754b4fd2f5f852728e",
+      "source_commit": "0e7b299af597c5e73095bca87a0eee9ef94e9ff6",
+      "tests": 1,
       "failures": 0,
       "errors": 0,
-      "pytest_seconds": 2.815
+      "pytest_seconds": 1.834
     }
   ],
-  "pytest_seconds_total": 6.481,
+  "pytest_seconds_total": 7.181000000000001,
+  "repair": "Seek test initially used a single-case fixture then requested index1; added the required second native case with its original round. Production seek rejected that invalid fixture correctly.",
+  "historical_prototype": {
+    "path": "outputs/robocasa-rollout-batch-integration-20261102-r1/QUALIFICATION-PROTOTYPE.json",
+    "sha256": "c1199cd6247acb5c88a3b191e9964b8d940fc13bc23133263fff9e0caf111f77",
+    "scope": "Superseded fixed-group prototype evidence, not qualification of current continuous backend"
+  },
   "validated": [
-    "Mixed native horizons and smaller final groups without padding",
-    "Chronological case/chunk records and identical next Adam update on deterministic numerical reference",
-    "Unchanged per-case noise plan, IDs and round offsets",
-    "Complete-bank checkpoint recovery pins lane count; partial failures cannot become completed recoveries"
+    "Mixed750/600 native horizons, chronological complete records and identical next Adam/model update on deterministic numerical reference",
+    "Ten cases refill eight lanes exactly once without padding; full motor/actor draw plans before reset",
+    "Native failures leave complete bank unavailable and reject partial recoveries",
+    "Original episode ID and round retained by seek; recovery rejects changing lane count",
+    "Existing native frame clocks, truth isolation, full pending recovery and uneven eight-worker merge cases",
+    "Streamed Flora grades reused only for identical source-matched jobs and complete barrier"
   ],
   "rollout_config": {
     "environments_per_GPU": 8,
     "policy_copies_per_GPU": 1,
     "global_training_episodes": 80,
     "episodes_per_task": 16,
-    "per_rank_training_episodes": 10
+    "per_rank_training_episodes": 10,
+    "CPU_per_two_GPU_node": 64,
+    "RAM_GiB_per_two_GPU_node": 256
   },
-  "production_scope": "Future matched joint templates use8; legacy missing fields retain1. Active/ended run worktrees and existing checkpoints are unchanged. Actual integrated GPU execution remains a first-live-run check; standalone8lane GPU capacity was measured in prior benchmark.",
+  "production_scope": "Future source-bound matched templates only. Legacy field omission retains1; no active run migration or checkpoint rewrite. Actual integrated GPU execution remains a first-live-run check; standalone8lane native GPU capacity was measured in prior benchmark.",
   "Flora": {
     "minimum_free_memory_MiB_after_scorer_warmup": 27408,
     "actual_eight_lane_colocation_qualified": false
@@ -48,31 +58,27 @@
   "files": [
     {
       "path": "src/fluffy_bassoon/meta_rl/robocasa_residual.py",
-      "sha256": "f751d6aa89fa58b3ea12daded9c98ba4ff39fc14da331634b59746ced1fa4f28"
-    },
-    {
-      "path": "src/fluffy_bassoon/meta_rl/robocasa_residual_batch.py",
-      "sha256": "b7beff19e21546bed7d8c05bf5f95d217c35477cf071168cb3380191a2ca2de8"
+      "sha256": "cb3be1fcbdc02abc5e92a9edf4480ca9d63b4e8e8f68100d5c60b9e0be90908b"
     },
     {
       "path": "src/fluffy_bassoon/meta_rl/robocasa_residual_parallel.py",
-      "sha256": "d87bf3015936ad535a1680af48fe9a423638fd92ef54cb60af8cee802aca0316"
+      "sha256": "10348352c11d8d0192452244853bfe9e1463ecbabbf47b29d6ab888e2e8272f3"
     },
     {
       "path": "scripts/diagnostics/robocasa_residual_rollout.py",
-      "sha256": "7029ede470241c5b8bbe4bb07f5769c7c96c593e6b1431747fc22ee52b797979"
+      "sha256": "84b5e8711fa6f5ac6d8cb2edcafb0c99c33d009a227a6d2a45c48426ae1eb028"
     },
     {
       "path": "scripts/diagnostics/robocasa_residual_ppo.py",
-      "sha256": "76dc8a088f1778ebc169ddebf5801b15c8d96b596401537c9fd6f58e90d2c61b"
+      "sha256": "8984027dc19d517c2b528affac2d2f4c0f19febb63c3c38020b90be509d43e07"
     },
     {
       "path": "tests/test_robocasa_batched_collection.py",
-      "sha256": "c395a8d6d236afb22f3809c02c9d863a71508820648f1454e4ad9b3c0b7ad0fa"
+      "sha256": "198e2312e31bee6854ed61c18a5e5c8c6f30d0007fdf4fb3dce40388ecb53c80"
     },
     {
       "path": "configs/native_ppo/robocasa_residual_execution.json",
-      "sha256": "380dde25594c11117fd9d4f4bd9c664393f07154caf504ca5a509d17f061e53b"
+      "sha256": "8bd5ce4e5897b34aefb088cc72899373ce86bdc72c3b36ea95bdf75bc8db63bf"
     }
   ]
 }

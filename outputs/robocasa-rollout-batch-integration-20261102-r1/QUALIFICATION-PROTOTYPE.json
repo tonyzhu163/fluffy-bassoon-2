@@ -1,0 +1,78 @@
+{
+  "completed": true,
+  "qualified_unique_core_cases": 10,
+  "initial_passed_carried_without_repeat": 7,
+  "repaired_dispatch_cases_passed": 3,
+  "execution": "Allocated Linux CPU child on retained development container; no additional GPU allocation, real VLA model or simulator.",
+  "original_failure": "Generic collect_pending dispatcher omitted explicit motor/actor draw plans when delegating to a custom collector; fixed by forwarding plans only when supplied, preserving legacy collector calls.",
+  "source_commit": "97d73e199f95ca458496df450a217cfa8bc9de86",
+  "test_attempts": [
+    {
+      "path": "outputs/robocasa-rollout-batch-integration-20261102-r1/affected-core.xml",
+      "sha256": "9105bb33dc24837e8ab46807af3b928410162e5803028ffc48baf5f5690623c5",
+      "source_commit": "ff9702c143f80a579da83af4248cc3d5f98777cc",
+      "tests": 10,
+      "failures": 3,
+      "errors": 0,
+      "pytest_seconds": 3.666
+    },
+    {
+      "path": "outputs/robocasa-rollout-batch-integration-20261102-r1/affected-core-r2.xml",
+      "sha256": "83e42275513be9932e74a168ec1b9fedfa3c0053f88c79d4a80c5bcd3125a9e2",
+      "source_commit": "97d73e199f95ca458496df450a217cfa8bc9de86",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "pytest_seconds": 2.815
+    }
+  ],
+  "pytest_seconds_total": 6.481,
+  "validated": [
+    "Mixed native horizons and smaller final groups without padding",
+    "Chronological case/chunk records and identical next Adam update on deterministic numerical reference",
+    "Unchanged per-case noise plan, IDs and round offsets",
+    "Complete-bank checkpoint recovery pins lane count; partial failures cannot become completed recoveries"
+  ],
+  "rollout_config": {
+    "environments_per_GPU": 8,
+    "policy_copies_per_GPU": 1,
+    "global_training_episodes": 80,
+    "episodes_per_task": 16,
+    "per_rank_training_episodes": 10
+  },
+  "production_scope": "Future matched joint templates use8; legacy missing fields retain1. Active/ended run worktrees and existing checkpoints are unchanged. Actual integrated GPU execution remains a first-live-run check; standalone8lane GPU capacity was measured in prior benchmark.",
+  "Flora": {
+    "minimum_free_memory_MiB_after_scorer_warmup": 27408,
+    "actual_eight_lane_colocation_qualified": false
+  },
+  "files": [
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robocasa_residual.py",
+      "sha256": "f751d6aa89fa58b3ea12daded9c98ba4ff39fc14da331634b59746ced1fa4f28"
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robocasa_residual_batch.py",
+      "sha256": "b7beff19e21546bed7d8c05bf5f95d217c35477cf071168cb3380191a2ca2de8"
+    },
+    {
+      "path": "src/fluffy_bassoon/meta_rl/robocasa_residual_parallel.py",
+      "sha256": "d87bf3015936ad535a1680af48fe9a423638fd92ef54cb60af8cee802aca0316"
+    },
+    {
+      "path": "scripts/diagnostics/robocasa_residual_rollout.py",
+      "sha256": "7029ede470241c5b8bbe4bb07f5769c7c96c593e6b1431747fc22ee52b797979"
+    },
+    {
+      "path": "scripts/diagnostics/robocasa_residual_ppo.py",
+      "sha256": "76dc8a088f1778ebc169ddebf5801b15c8d96b596401537c9fd6f58e90d2c61b"
+    },
+    {
+      "path": "tests/test_robocasa_batched_collection.py",
+      "sha256": "c395a8d6d236afb22f3809c02c9d863a71508820648f1454e4ad9b3c0b7ad0fa"
+    },
+    {
+      "path": "configs/native_ppo/robocasa_residual_execution.json",
+      "sha256": "380dde25594c11117fd9d4f4bd9c664393f07154caf504ca5a509d17f061e53b"
+    }
+  ]
+}
