@@ -35,3 +35,22 @@ driver requires scheduler nodes × requested local GPUs =8 and probes exactly
 the requested local count. Total requested CPU/RAM and GPU-time cap are
 unchanged. The CPU preflight already verified750/900 and267 carried records
 at `cbcffb71`; rerun the binding at the final scheduler-layout source pin.
+
+## Launch and first simulator verification
+
+Deployed through direct HTTPS Git fetch at
+`1b9291bdc5729490cf0bf34f00c55a777e8bfe23`; final allocated-Linux CPU binding
+verified both750/900 adapters and all267 carried records before submission.
+Baige Pro6K / 算法Z组 job `job-dxxkwgvdk4hy`
+(`mwj_1102_memory_controls_8x1_r2`) started23:10 Shanghai Nov2, with eight
+1-GPU containers and automatic fault retries disabled.
+
+At23:17 Shanghai, all eight allocation probes passed with eight distinct UUIDs.
+The shared `MONITOR.json` verified46 completed r2 episodes (18 ID,28 OOD)
+against source/checkpoint identity, original cases/seeds, record/truth hashes,
+initial pairing reports, terminal records, and reset/window lengths. The first
+ID records contain15 terminal-aligned chunks across750 native controls,
+confirming the historical horizon fix in real simulation. Combined with267
+carried records this is313/1100 collected controls; no final comparison yet.
+The20-minute heartbeat follows this job and will verify all2000 endpoints on
+completion. Source worktrees and the failed r1 artifacts remain preserved.
