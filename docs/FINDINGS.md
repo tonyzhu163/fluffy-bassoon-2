@@ -173,6 +173,21 @@ on the 50-video calibration bank. This is retained-video development evidence,
 not a new PPO or independent qualification result. The exact original prompt,
 tested wording, complete comparison and an untested next draft are in
 [the rubric document](../outputs/robocasa-flora-rubric-replay-20261102-r1/RUBRIC.md).
+An offline threshold screen on the same634 retained videos also leaves Flora
+unqualified: on the original TRAIN scores, reward>=.90 gives89 true positives
+and9 false positives (90.8% precision,44.3% recall); >=.95 gives15 and3
+(83.3%,7.5%). No tested expected-grade/P5 threshold met the proposed precision,
+FPR and recall screen on the fit cases. Terminal labels cannot establish
+first-success precision or timing. This is development evidence, not an
+independently qualified reward repair. [Readout and full sweeps](../outputs/gate-readiness-20261102-r1/RESULT.md).
+
+The four gate0 native8 banks separate motor noise from selected case difficulty:
+59/80 anchor-failure cases have mixed outcomes,21 fail all eight draws, and
+none succeed all eight;28 have3–5 successes. OpenDrawer alone has19/20 mixed
+cases and44.5% within-case pair disagreement. Its oracle best-of8 recovers19/20
+anchor failures. These600-control, failure-selected banks show resampling
+headroom, not an executable selector or a memory effect; eight failures do not
+establish impossibility. [Case counts, intervals and variance decomposition](../outputs/gate-readiness-20261102-r1/OFFLINE.json).
 Do not substitute the separate50-case calibration bank for that baseline.
 The Flora arm completed384 TRAIN episodes with all384 official labels audited;
 its full5760-decision history exactly merges the preserved four-update prefix

@@ -78,6 +78,11 @@ qualified. The retained TRAIN audit found full scores on58/183 true failures;
 AUROC alone does not qualify rewards for optimization. Measure false-positive
 full scores and lost true positives on held-out cases before adopting a fix.
 More source-history collection waits for measured simulator-reward learning.
+Continue rubric iteration around the exact native task predicates and their
+exceptions. Revision1's failure and the threshold diagnostic do not settle
+whether better criteria can work. Compare direct0/1 prompting with1–5 using
+the same revised criteria, under separate output/parser/calibration identities.
+[Next native-criteria rubric and binary comparison](../outputs/gate-readiness-20261102-r1/RUBRIC-NEXT.md).
 
 Earlier LIBERO and RoboTwin runs failed because source learners never
 improved ([FINDINGS.md](FINDINGS.md#lessons-carried-forward)). Pass each gate

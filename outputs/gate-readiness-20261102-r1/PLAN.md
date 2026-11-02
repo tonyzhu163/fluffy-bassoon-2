@@ -7,6 +7,11 @@ multi-task histories and a frozen history controller on the SAME interface.
 This work adds CPU/offline analysis and implementation; no competing GPU PPO
 job, no edits to active worktrees, no new robot histories.
 
+**Human clarification:** continue revising the rubric to reflect the native
+task predicates and their edge cases. Threshold sweeps are a diagnostic, not
+the replacement for that work. Test direct0/1 prompting against1–5 using the
+same revised criteria; [next rubric and output comparison](RUBRIC-NEXT.md).
+
 1. Recompute terminal threshold/P5 sweeps on all634 saved scores, including
    successes. Split384 TRAIN episodes by native case, select on fit only, and
    report internal validation and250 calibration episodes separately. Candidate
