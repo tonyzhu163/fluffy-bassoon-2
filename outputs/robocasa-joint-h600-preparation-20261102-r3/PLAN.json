@@ -47,7 +47,7 @@
       ],
       "controls": 150000,
       "entry": "scripts/diagnostics/robocasa_residual_ppo.py --profile (mode=headroom,50 fixed cases/task); existing native rollout/node services",
-      "scoring": "scripts/diagnostics/robocasa_flora_fifty_score.py --profile; eight source-bound TP1 scorer shards"
+      "scoring": "scripts/diagnostics/robocasa_flora_fifty_score.py --profile; four source-bound TP1 scorer shards"
     },
     {
       "name": "common_before",
@@ -65,7 +65,7 @@
       ],
       "controls": 346500,
       "entry": "scripts/diagnostics/robocasa_residual_ppo.py --profile (mode=common_before,task=joint_five); saves existing COMMON-FINAL and initial-policy fingerprint",
-      "dependency": "All five fresh completed calibration gates pass or exact measured human exceptions are supplied"
+      "dependency": "All five fresh completed calibration gates pass; no exception authorized"
     }
   ],
   "total_episodes": 790,
