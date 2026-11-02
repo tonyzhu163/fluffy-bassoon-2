@@ -27,6 +27,8 @@ def main():
         raise ValueError('Require exact clean pinned source')
     binding=json.loads(a.assembly.read_text())
     if binding.get('completed') is not True:raise ValueError('Source corpus is not complete')
+    if binding.get('producer_recipe',{}).get('finalized') is not True:
+        raise ValueError('Producer iterations/envs per GPU must be finalized before a dependent fit')
     horizons=binding['source_physical_horizons']
     if not horizons or any(type(h) is not int or h<50 or h%50 for h in horizons):
         raise ValueError('Bind actual complete source horizons')

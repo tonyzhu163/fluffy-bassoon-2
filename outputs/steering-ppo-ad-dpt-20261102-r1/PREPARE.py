@@ -22,7 +22,16 @@ def main():
     if not b.get('completion_evidence'):
         raise ValueError('Retain actual scheduler/training/checkpoint completion evidence')
     for evidence in b['completion_evidence']:checked_reference(evidence)
+    recipe=b.get('producer_recipe',{})
+    if (recipe.get('finalized') is not True or type(recipe.get('iterations')) is not int
+            or recipe['iterations']<2 or type(recipe.get('envs_per_gpu')) is not int
+            or recipe['envs_per_gpu']<1 or not recipe.get('authority_reference')
+            or b['expected_updates']!=list(range(recipe['iterations']))):
+        raise ValueError('Require finalized human-agreed producer iterations/envs per GPU and exact behavior coverage')
+    checked_reference(recipe['authority_reference'])
     config=dict(b['source']);config['tasks']=tuple(config['tasks']);source=SteeringSource(**config)
+    if source.episodes_per_task_per_update!=recipe.get('episodes_per_task_per_update'):
+        raise ValueError('Bind the finalized per-task source batch; no provisional16-episode default')
     count=source.episodes_per_task_per_update
     if count%8 or b['validation_slots']!=sorted(np.random.default_rng(90211).choice(count,count//8,replace=False).tolist()):
         raise ValueError('Preserve the declared seed90211 whole-stream12.5% validation split')
@@ -33,13 +42,13 @@ def main():
         sha256=file_sha256(a.binding)),completion_evidence=b['completion_evidence'],
         source_episode_references=b['episode_checkpoints'],
         train_validation_rule='Whole task/collection-slot streams split before labels/windows',
-        validation_slots=b['validation_slots'],expected_updates=b['expected_updates'])
+        validation_slots=b['validation_slots'],expected_updates=b['expected_updates'],producer_recipe=recipe)
     manifests=save_corpus(a.output,streams,source,teacher_reference=b['teacher'],provenance=provenance)
     datasets={key:dict(path=str((a.output/(key.replace('_','-')+'.npz')).resolve()),
         sha256=value['sha256'],transitions=value['transitions'],trials=value['trials'])
         for key,value in manifests.items()}
     assembly=dict(completed=True,campaign=b['campaign'],source=asdict(source),datasets=datasets,
-        teacher=b['teacher'],source_binding=provenance['source_binding'],
+        teacher=b['teacher'],source_binding=provenance['source_binding'],producer_recipe=recipe,
         physical_episodes=len(episodes),full_physical_history=True,
         source_physical_horizons=sorted({int(item['physical_episode']['horizon']) for item in episodes}),
         PPO_prefix_and_raw_suffix_retained=True,non_target_history_identical=True)
