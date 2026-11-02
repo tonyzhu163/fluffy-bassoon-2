@@ -7,14 +7,17 @@
   "batch_adoption_condition": "32 real native environments per GPU pass capacity measurement",
   "requested_joint_ppo_iterations": 60,
   "reason": "Human emphasized that larger batches and a larger total PPO scale are important; previous PPO scale was too small.",
-  "arm_allocation": "PENDING_CLARIFICATION: 60 joint updates per velocity and KV arm, or 60 shared across the two arms",
+  "arm_allocation": "HUMAN_CONFIRMED: 60 joint updates per velocity and all-layer KV arm; separate actors, critics, optimizers, rollout buffers and checkpoints, using the same PPO implementation.",
+  "checkpoint_and_evaluation_cadence": "Full resumable checkpoint and matched DEV evaluation at updates5,10,15,20,25,30,35,40,45,50,55,60; initial DEV at0. Preserve complete optimizer/sampler/RNG recovery boundaries. Final held-out ID/OOD panels remain separate.",
   "if_60_per_arm": {
     "episodes_per_arm": 15360,
     "policy_controls_per_arm": 9216000,
     "physical_reset_controls": "additional, journaled",
     "task_balance": "Each update has one task with52 episodes and four with51; rotate the extra episode over five updates. Over60 updates each task has3072 episodes."
   },
-  "prior_5M_control_plan": "Superseded in scale by this human direction; exact per-arm contract and full physical budget wait for clarification and measured throughput.",
+  "total_policy_controls_both_arms": 18432000,
+  "prior_5M_control_plan": "Superseded in scale by this human direction; bind the new full physical and resource budgets using measured throughput.",
+  "sixteen_gpu_layout": "Two independent eight-GPU Baige jobs, one per arm; at32environments/GPU each arm has256concurrent environments (512combined). Verify node CPU/RAM and pool availability before dispatch. Current production master requires eight worker GPUs on one host per arm; a single learner spanning16GPUs would require a separate multi-host driver change.",
   "resource_budget": "Measure first; publish a concrete runtime estimate and identify any increase beyond the previously retained combined20GPUh ceiling before launching training.",
   "training_launched_here": false
 }
