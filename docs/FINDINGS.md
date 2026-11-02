@@ -352,6 +352,18 @@ the cause of a Flora grade. The next input audit should inspect those actual
 sampled sequences before further rubric search.0 model/simulator calls; these
 annotated human-inspection sheets never enter the scoring comparison.
 [Visual evidence and limits](../outputs/robocasa-flora-drawer-visual-audit-20261103-r1/RESULT.md).
+A follow-up CPU reconstruction inspects all256 protocol-selected collages for
+112@350,256@750,376@750 and128@450.128 includes10 post-native-first-success
+frames, controls386–450, with opening/interior visible in the left view, despite
+all3 preceding reference/candidate grades being1 at450. Omission of all source
+opening frames is therefore insufficient to explain this selected miss; no
+claim about saved post-processor tensors or model internals is made. Wrong-
+drawer112/376 contain near-closed upper fronts alongside lower-drawer motion.
+256 shows an opening but lacks a clear full-depth reference for a reliable
+human52.25% boundary measurement.32 lossless pages/33 hashes verify;19.590CPU-s,
+0 model/simulator calls. Three untested minimal texts now separate an exact1.6
+boundary from initial-target tracking and a conditional shallow-drawer hint.
+No reward promotion. [Sampled-frame evidence and next screen](../outputs/robocasa-flora-drawer-sampled-frames-20261103-r1/RESULT.md).
 A subsequent CPU geometry audit finds all six selected targets at z=0.785,
 with no drawer above the target in its stack, and matching scene metadata.
 Thus an incorrectly assumed uppermost target does not explain the128/144
