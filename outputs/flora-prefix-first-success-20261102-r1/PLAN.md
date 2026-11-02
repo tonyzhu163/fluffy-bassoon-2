@@ -1,9 +1,13 @@
 # Flora prefix scoring for a first-success reward
 
-**Status: DRAFT, not approved, not launched.** Claude Code session
-(tonyzhu163) proposes; this session has no Baige route, so it **needs a Baige
-owner** and **human approval of the GPU budget** below. No new simulator
-controls, no policy inference, no SGD.
+**Status: APPROVED, not launched; needs a Baige owner.** Claude Code session
+(tonyzhu163) proposes. **The human approved the 24,000 GPU-second ceiling
+below on 2026-11-02 ("Approve the budget")**, for this plan's scope only:
+434 OpenDrawer videos, 3,472 prefix labels, at most four GPUs, one
+allocation. This session has no Baige route, so a Baige owner launches it
+under that ceiling, after the `success_steps` check and the one-GPU
+qualification below. No new simulator controls, no policy inference, no SGD.
+Any change of scope or budget needs a new human decision.
 
 ## Why
 
