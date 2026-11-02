@@ -1,0 +1,16 @@
+{
+  "cluster": "Baige",
+  "job": "job-7webxe4sh0sl",
+  "status": "FAILED",
+  "created_Shanghai": "2026-11-02 17:57:34",
+  "terminal_Shanghai": "2026-11-02 17:58:35",
+  "source": "d8c7def6f7b4b5c5154e7636c1a648635e7ec3e7",
+  "process_GPU_seconds": 36,
+  "conservative_creation_to_terminal_GPU_seconds": 122,
+  "new_policy_controls": 0,
+  "new_simulator_episodes": 0,
+  "PPO_updates": 0,
+  "reason": "CUDA_VISIBLE_DEVICES unset at probe, despite scheduler NVIDIA allocation",
+  "remedy": "Preserve explicit CUDA visibility; default to both local allocated indices0,1 if unset",
+  "old_output_immutable": true
+}
