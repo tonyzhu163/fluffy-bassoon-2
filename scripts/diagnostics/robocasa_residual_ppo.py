@@ -419,6 +419,10 @@ def main():
             restored = restore_checkpoint(profile["resume"], policy=policy, optimizer=optimizer, bound=bound,
                 motor=motor, environment=train_env, generators=generators, contract=resume_contract)
             iteration = restored["iteration"]
+            write_new(output / 'RESTORED.json', dict(completed=True,
+                checkpoint=dict(path=profile['resume'], sha256=profile['resume_sha256']),
+                iteration=iteration, stage=restored['stage'], source_commit=profile['source_commit'],
+                restored=['policy', 'critic', 'Adam', 'global/private RNG', 'motor sampler', 'case cursor']))
             if restored["stage"] == "pending_labels":
                 started = Path(profile["resume"]).parent / f"UPDATE-STARTED-{iteration + 1:03d}.json"
                 if started.exists():
