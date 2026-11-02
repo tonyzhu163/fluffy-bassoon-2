@@ -274,6 +274,20 @@ and changing sampled-frame count are coupled, so this does not isolate the
 cause. Next wording work should separate target identification from opening
 depth on full prefixes.
 [Chunk protocol, per-case scores and limits](../outputs/robocasa-flora-drawer-chunk-rubric-20261103-r1/RESULT.md).
+A full-prefix2×2 clause ablation isolates a useful wording tradeoff. With the
+original target-description block, both with and without the depth sentence,
+wrong-drawer112 is rejected but successful128 remains missed. Without that
+block, both conditions recover128 at450 (native384) and falsely confirm112
+at200. The predeclared two-score>=4 rule gives4/5 valid successes with0 false
+accepted episodes for either target-block condition, versus5/5 and1 false
+for either condition without it. Depth-only has no Score5 at all, illustrating
+why zero false full scores alone is insufficient. All109 new outputs,4 exact
+repeats,16 receipts,109 actual message audits and62 exported hashes verify.
+No arm passes the development screen; no production change. Same reused sparse
+six-video panel,0 controls/SGD,756 workerGPU-s. The next target-description
+revision should test removing stack presuppositions while retaining an explicit
+wrong-drawer rule; the cause inside Flora is not established.
+[Clause texts, scores and limits](../outputs/robocasa-flora-drawer-clause-ablation-20261103-r1/RESULT.md).
 A subsequent CPU geometry audit finds all six selected targets at z=0.785,
 with no drawer above the target in its stack, and matching scene metadata.
 Thus an incorrectly assumed uppermost target does not explain the128/144
