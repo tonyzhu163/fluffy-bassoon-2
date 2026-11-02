@@ -46,6 +46,16 @@ with simulator success kept outside the reward prompt.
    evaluation subset; composite tasks come later. It is NVIDIA's GR00T
    benchmark, closer in appearance to the rewarder's likely training data and
    far from saturated. Always report true simulator success.
+   **Horizon (human, 2026-11-02):** the five PPO tasks run at 600 controls
+   (12 H50 chunks) in training, Flora scoring and ID evaluation, cutting
+   stale end frames from Flora's 64-frame sample. Native pi0.5's longest
+   first success was 538 controls over 126 episodes, and one
+   PickPlaceDrawerToCounter end success was lost at 600
+   ([timing](../outputs/robocasa-pi05-success-timing-20261102-r3/RESULT.md)).
+   OOD tasks keep their native horizons, because Flora never scores them and
+   the residual has no clock input; success at control 600 is a secondary
+   number from the same records. 600-step results need their own Flora
+   calibration and headroom check, and never pool with 750-step results.
 3. **RoboTwin** follows, for the comparison with VLRLA, the direct precedent
    in [PAPER.md](PAPER.md). It needs its own Flora agreement check: two-arm
    success is harder to judge from one camera.
