@@ -19,6 +19,7 @@ from fluffy_bassoon.meta_rl.residual_ppo import ResidualActorCritic, ResidualPPO
 from fluffy_bassoon.meta_rl.robocasa_residual import FrozenRoboCasaMotor, RoboCasaResidualEnvironment, native_environment_factory
 from fluffy_bassoon.meta_rl.rlinf_flora_ppo import write_new
 from fluffy_bassoon.meta_rl.rlinf_native_ppo import ActionJournal, sha
+from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import TASKS
 from fluffy_bassoon.rl.action_residual import ResidualBound
 
 
@@ -50,6 +51,9 @@ def run(profile):
                 with lock:
                     state['peak_nvml_mib'] = max(state['peak_nvml_mib'], float(row[0]))
                     state['gpu_utilization_percent'] = float(row[1])
+                    current = Path('/sys/fs/cgroup/memory.current')
+                    if current.exists():
+                        state['peak_container_ram_bytes'] = max(state.get('peak_container_ram_bytes', 0), int(current.read_text()))
             except Exception as error:
                 with lock: state['memory_sample_error'] = str(error)
             with lock: value = dict(state, elapsed_seconds=time.monotonic()-started)
@@ -74,13 +78,18 @@ def run(profile):
         policy.load_state_dict(checkpoint['policy'], strict=True)
         bound = ResidualBound(**checkpoint['contract']['bound'])
         batch = int(profile['batch_size']); rank = int(profile['rank'])
-        if batch not in (1, 2, 4, 8) or len(profile['cases']) != 8:
-            raise ValueError('Exact prospective capacity sweep required')
+        count = len(profile['cases'])
+        horizons = {TASKS[case['task']][0] for case in profile['cases']}
+        if batch not in (1, 2, 4, 8, 16, 32) or count < batch or count % batch or len(horizons) != 1:
+            raise ValueError('Require complete equal-horizon cohorts divisible by the lane count')
+        horizon = horizons.pop()
+        chunks_per_episode = horizon // 50
+        expected_controls = count * horizon
         torch.cuda.synchronize(); result['model_load_seconds'] = time.monotonic()-started
         collect_start = time.monotonic(); inference_seconds = reset_seconds = step_seconds = validation_seconds = 0.
         episodes = []; initial_comparison = []; inferred_decisions = 0
         with ThreadPoolExecutor(max_workers=batch) as pool:
-            for first in range(0, 8, batch):
+            for first in range(0, count, batch):
                 if time.time()+profile['closure_seconds'] >= profile['deadline_unix']:
                     raise TimeoutError('Finite collection clock; preserve partial episodes and escrows')
                 environments = []
@@ -89,13 +98,13 @@ def run(profile):
                     journal = ActionJournal(profile['accounting_root'], rank=rank, world=8,
                         attempt=f'capacity-r{rank}-case{slot}')
                     environments.append(RoboCasaResidualEnvironment(native_environment_factory(cfg.env.eval), [case],
-                        horizon=750, output=out/f'case-{slot:02d}', monitoring_root=out/'monitoring',
+                        horizon=horizon, output=out/f'case-{slot:02d}', monitoring_root=out/'monitoring',
                         journal=journal, writer_factory=imageio.get_writer,
                         episode_id_prefix=f'capacity-r{rank}-case{slot}-', rank=rank))
                 with lock: state['phase'] = 'native_reset'
                 tick = time.monotonic(); observations = list(pool.map(lambda env: env.reset(), environments))
                 reset_seconds += time.monotonic()-tick
-                for chunk_index in range(15):
+                for chunk_index in range(chunks_per_episode):
                     if time.time()+profile['closure_seconds'] >= profile['deadline_unix']:
                         raise TimeoutError('Native partial episodes retained at finite deadline')
                     seeds = [6_600_000+(first+lane)*100+chunk_index for lane in range(batch)]
@@ -127,26 +136,26 @@ def run(profile):
                     rows = list(pool.map(lambda pair: pair[0].step_chunk(pair[1]), zip(environments, executed)))
                     step_seconds += time.monotonic()-tick; inferred_decisions += batch
                     observations = [row[0] for row in rows]
-                    if any(row[1] != (chunk_index == 14) for row in rows):
-                        raise ValueError('Every lane must execute the full750-step horizon')
+                    if any(row[1] != (chunk_index == chunks_per_episode - 1) for row in rows):
+                        raise ValueError('Every lane must execute its complete registered horizon')
                     with lock: state['policy_controls'] += batch*50
-                    if chunk_index == 14: episodes.extend(row[2] for row in rows)
+                    if chunk_index == chunks_per_episode - 1: episodes.extend(row[2] for row in rows)
                 for env in environments: env.close()
                 environments = []
                 with lock: state['completed_episodes'] += batch
         torch.cuda.synchronize(); elapsed = time.monotonic()-collect_start-validation_seconds
-        if len(episodes)!=8 or sum(e['frame_clock']['physical_steps'] for e in episodes)!=6000:
+        if len(episodes)!=count or sum(e['frame_clock']['physical_steps'] for e in episodes)!=expected_controls:
             raise ValueError('Incomplete benchmark cohort')
         journals = [json.loads(path.read_text()) for path in
                     (Path(profile['accounting_root'])/f'rank-{rank:02d}').glob('*.json')]
         if any(not call['resolved'] for row in journals for call in row['calls']):
             raise ValueError('Unresolved physical intents remain charged')
-        result.update(completed=True, episodes=8, policy_controls=6000,
+        result.update(completed=True, episodes=count, horizon=horizon, policy_controls=expected_controls,
             actual_all_in_controls=sum(call['executed_or_conservative'] for row in journals for call in row['calls']),
-            collection_wall_seconds=elapsed, controls_per_second=6000/elapsed,
+            collection_wall_seconds=elapsed, controls_per_second=expected_controls/elapsed,
             inference_seconds=inference_seconds, reset_seconds=reset_seconds, simulation_video_seconds=step_seconds,
             extra_numerical_reference_seconds=validation_seconds,
-            model_decisions=inferred_decisions, batched_forward_calls=120//batch,
+            model_decisions=inferred_decisions, batched_forward_calls=count*chunks_per_episode//batch,
             initial_batch_single_comparison=initial_comparison, optimizer_updates=0,
             full_episode_evidence=episodes, torch_peak_allocated_bytes=torch.cuda.max_memory_allocated(),
             torch_peak_reserved_bytes=torch.cuda.max_memory_reserved(),

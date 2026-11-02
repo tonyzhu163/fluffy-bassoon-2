@@ -1,0 +1,13 @@
+{
+  "authority": "Human requested actual measurements at 16 and 32 native environments per GPU; 32 times 8 equals 256 rollout environments.",
+  "purpose": "Capacity measurement only, no SGD or change to the scientific PPO batch.",
+  "lane_counts": [8, 16, 32],
+  "cohort": "Same 32 fresh capacity-only cases, interleaving the five current PPO tasks at 600 physical controls; native Human300 motor, H50, BF16, one model per GPU and three-view video.",
+  "resources": {"gpus": 1, "cpus": 64, "ram_gib": 256, "shm_gib": 32, "wall_seconds": 1800},
+  "maximum_gpu_seconds": 1800,
+  "maximum_policy_controls": 57600,
+  "optimizer_updates": 0,
+  "metrics": ["complete cohort controls per second", "reset seconds", "inference seconds", "simulation and video seconds", "GPU peak memory", "container peak RAM", "batch versus singleton numerical drift", "all physical and reset controls"],
+  "execution": "Fresh process per lane count on the same allocated GPU; retain failures and OOMs, no automatic retry. Hard allocation timeout includes load and cleanup.",
+  "limits": "A single-GPU capacity result does not establish eight-GPU scaling, simultaneous Flora colocation, or the new velocity/all-layer-KV history writer overhead. Report these boundaries explicitly. Current saved PPO batch and optimizer remain unchanged pending human direction."
+}
