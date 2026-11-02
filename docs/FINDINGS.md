@@ -244,9 +244,23 @@ and first-success wording gives3/20 and1/5. Both still score successful128
 prefixes1. Four repeated1.6 anchors reproduce exactly. All74 new outputs and
 35 artifact hashes are verified, with0 new robot actions or SGD. No candidate
 passes the prespecified development screen. These rewrites leave the system
-and final grading instruction asking for terminal success; putting the rubric
-into grading instructions remains an untested hypothesis.
+and final grading instruction asking for terminal success; that motivated the
+following system-rubric comparison.
 [Exact changes, paired results and prompt limits](../outputs/robocasa-flora-first-success-rubric-20261103-r3/RESULT.md).
+Preserving the native task and moving the verbatim1.6 rubric into system grading
+also fails:5/20 false full scores and3/5 correctly timed successful episodes.
+It recognises128 only at450, while reintroducing wrong-drawer112 errors.
+A second composite change puts1.10 into system grading and aligns the generic
+system/final question to first success:4/20 false full scores,1/5 correctly
+timed successes, and128 still missed. All74 new grades,4 exact repeated anchors,
+47 exported artifact hashes and74 actual renderer message hashes are verified.
+CPU post-hoc two-probe confirmation removes observed false triggers but detects
+only4/5 successful cases under either candidate, still missing128; these are
+50-control-spaced prefix judgments, not consecutive frames or independent
+validation. No rubric is promoted. Worker cost670 GPU-s,0 new controls/SGD;
+the allocation succeeded and released. Recent causal chunks with the explicit
+criterion held fixed are the next untested mechanism.
+[System-message comparison, raw grades and limits](../outputs/robocasa-flora-system-rubric-20261103-r1/RESULT.md).
 A subsequent CPU geometry audit finds all six selected targets at z=0.785,
 with no drawer above the target in its stack, and matching scene metadata.
 Thus an incorrectly assumed uppermost target does not explain the128/144
