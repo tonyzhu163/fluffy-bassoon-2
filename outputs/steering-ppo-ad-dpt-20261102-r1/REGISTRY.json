@@ -6,7 +6,9 @@
     "path": "/Users/mowenjie/.codex/worktrees/joint-steering-ppo/fluffy-bassoon-2/outputs/robocasa-joint-steering-5m-20261102-r1/PLAN.json",
     "sha256": "de5e7bc07a9c54d3e1a0bda70778a05112bff1a352435da3ebd52ac13ba52c39",
     "status": "PREPARING_AND_QUALIFYING_NOT_SUBMITTED",
-    "immutable_source": false
+    "immutable_source": false,
+    "last_live_check_UTC": "2026-11-02T16:13:35Z",
+    "producer_cursor": "18018959-3992-4b70-ad1f-11a754359cf0:6"
   },
   "campaigns": {
     "stage1_pilot": {
@@ -66,11 +68,12 @@
   "next_action": "Bind the actual committed producer source and integrate/qualify its native history-controller evaluator; monitor source release and launch each independent convergence fit when exact data become ready",
   "monitor_automation_id": "monitor-steering-ppo-and-ad-dpt",
   "adapter": "src/fluffy_bassoon/meta_rl/frozen_steering_history.py",
-  "core_qualification_source": "cfc8fda189e7a424805be353e3632e5065f07ffd",
-  "CPU_core_tests_passed": 23,
+  "core_qualification_source": "f01478c3c9af4baeaf1fb7121442060a0ff99be9",
+  "CPU_core_tests_passed": 27,
   "context_capacity": 300,
   "training_window_rule": "1..max(5,ceil(5*max_eval_horizon/min_actual_source_horizon)) complete physical episodes; currently1..9",
   "numerical_recovery_and_108_token_training_105_token_inference_qualified": true,
   "evaluation_core": "src/fluffy_bassoon/meta_rl/steering_history_eval.py",
-  "evaluation_core_status": "static_parse_passed; allocated Linux core tests pending; actual source-specific native/GPU qualification pending"
+  "evaluation_core_status": "27 allocated-Linux CPU core tests passed; actual source-specific native/GPU qualification pending",
+  "legacy_core_qualification_source": "cfc8fda189e7a424805be353e3632e5065f07ffd"
 }
