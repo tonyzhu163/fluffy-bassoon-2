@@ -13,8 +13,24 @@ import numpy as np
 import torch
 
 from .residual_history import relabel_teacher
+from .interface_ppo import InterfaceSpec
 from .residual_ppo import ResidualActorCritic, ResidualPPOConfig, history_trial
 from .vla_history import file_sha256, save_dataset, validate_trial
+
+
+def interface_record(arguments):
+    """Compare constructor and recorded specs without losing mapping metadata."""
+    arguments = dict(arguments)
+    mapping = arguments.pop("kv_map", None)
+    if "motor_shape" in arguments:
+        arguments["motor_shape"] = tuple(arguments["motor_shape"])
+    try:
+        record = InterfaceSpec(**arguments).record()
+    except (TypeError, ValueError) as error:
+        raise ValueError("Require the exact declared steering interface") from error
+    if mapping is not None and mapping != record.get("kv_map"):
+        raise ValueError("Steering interface mapping metadata differs")
+    return record
 
 
 @dataclass(frozen=True)
@@ -38,6 +54,7 @@ class SteeringSource:
                 or self.interface.get("fraction", 0) <= 0
                 or not self.tasks or len(set(self.tasks)) != len(self.tasks)
                 or self.episodes_per_task_per_update < 2 or self.feature_dim < 1
+                or interface_record(self.interface) != self.interface
                 or any(not value for value in (self.source_commit, self.runtime_commit,
                                                self.motor_sha256, self.normalization_sha256))):
             raise ValueError("Bind an exact task set and velocity or independent all-layer K/V source")
@@ -76,11 +93,13 @@ def load_episode(reference, source):
             or episode["success_once"] != (episode["first_success_step"] is not None)):
         raise ValueError("Require an actual complete physical episode and its logical PPO prefix")
     updates = {int(row["policy_iteration"]) for row in rows}
-    if len(updates) != 1 or min(updates) < 1:
+    if len(updates) != 1 or min(updates) < 0:
         raise ValueError("One source behavior version must produce the entire episode")
     update = updates.pop()
     count = source.episodes_per_task_per_update
-    slot = int(case["slot"]) - (update - 1) * count
+    # Producer round n collects with policy n-1, then performs update n.
+    # Initial behavior version0 is real source data, not a missing update.
+    slot = int(case["slot"]) - update * count
     if not 0 <= slot < count:
         raise ValueError("Case slot does not match its declared chronological source round")
     for index, row in enumerate(rows):
@@ -108,6 +127,7 @@ def load_episode(reference, source):
                 or physical.get("runtime_commit") != source.runtime_commit
                 or physical.get("interface") != source.interface
                 or physical.get("policy_iteration") != update
+                or physical.get("iteration") != update + 1
                 or physical.get("case") != case or physical.get("chunk_index") != index
                 or bool(physical.get("physical_done")) != (index == episode["physical_chunks"] - 1)
                 or physical.get("executed_controls") != 50
@@ -175,7 +195,8 @@ def load_final_teacher(reference, source):
     """The DPT target is the frozen final steering mean at the same feature."""
     saved = torch.load(checked_reference(reference), map_location="cpu", weights_only=False)
     if (saved.get("format") != "joint_frozen_steering_boundary_v1"
-            or saved.get("arm") != source.arm or saved.get("spec") != source.interface):
+            or saved.get("arm") != source.arm
+            or interface_record(saved.get("spec", {})) != source.interface):
         raise ValueError("Final teacher belongs to another steering interface")
     config = ResidualPPOConfig(**saved["policy_config"])
     if config.feature_dim != source.feature_dim or config.residual_dim != source.steering_dim:
@@ -202,7 +223,7 @@ def save_corpus(directory, streams, source, *, teacher_reference, provenance):
     manifests = {}
     for partition in ("train", "validation"):
         identities, actual = zip(*streams[partition], strict=True)
-        if any(int(trial["teacher_steps"][-1]) != final_update for trial in actual):
+        if any(int(trial["teacher_steps"][-1]) + 1 != final_update for trial in actual):
             raise ValueError("DPT final teacher must match the declared terminal source version")
         labeled = relabel_teacher(actual, teacher, deterministic=True)
         for objective, trials in (("ad", actual), ("dpt", labeled)):
