@@ -25,7 +25,7 @@ class InterfaceSpec:
     fraction: float = .25
 
     def __post_init__(self):
-        dimensions = {"action": 6, "noise": 0, "conditioning": 32,
+        dimensions = {"action": 6, "noise": 0, "conditioning": 32, "conditioning_all": 32,
                       "velocity": 32, "select": self.candidates, "direct": 600}
         if (self.kind not in dimensions or self.steering_dim != dimensions[self.kind]
                 or self.motor_shape != (50, 32) or type(self.candidates) is not int or self.candidates < 2

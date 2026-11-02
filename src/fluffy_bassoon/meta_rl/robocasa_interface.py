@@ -18,6 +18,19 @@ class _PrefixReady(Exception):
     pass
 
 
+def _steer_value(entry, code, fraction, seed, batch):
+    key, value = entry
+    if value.ndim < 2 or value.shape[0] != batch:
+        raise ValueError("Require a batch-aligned native value cache")
+    rng = np.random.default_rng(seed)
+    projection = torch.as_tensor(rng.choice((-1., 1.), (32, value.shape[-1])) / math.sqrt(32),
+                                 dtype=torch.float32, device=value.device)
+    delta = (torch.tanh(code) @ projection).to(value.dtype)
+    delta = delta.reshape(batch, *([1] * (value.ndim - 2)), value.shape[-1])
+    rms = value.float().square().mean(tuple(range(1, value.ndim)), keepdim=True).sqrt()
+    return key, value + fraction * rms.to(value.dtype) * delta
+
+
 class FrozenRoboCasaInterface:
     def __init__(self, native, *, bound=None):
         self.native, self.bound = native, bound
@@ -115,20 +128,16 @@ class FrozenRoboCasaInterface:
             if draws.shape != expected or not torch.isfinite(draws).all():
                 raise ValueError("Require finite explicit native noise with the configured batch/candidate shape")
             native_prefix = prepared["prefix"]
-            if spec.kind == "conditioning":
+            if spec.kind in ("conditioning", "conditioning_all"):
                 hidden, mask, cache = native_prefix
-                key, value = cache[-1]
-                if value.ndim < 2 or value.shape[0] != batch:
-                    raise ValueError("Require a batch-aligned native value cache")
-                rng = np.random.default_rng(921003)
-                projection = torch.as_tensor(
-                    rng.choice((-1., 1.), (32, value.shape[-1])) / math.sqrt(32),
-                    dtype=torch.float32, device=value.device)
-                delta = (torch.tanh(code) @ projection).to(value.dtype)
-                delta = delta.reshape(batch, *([1] * (value.ndim - 2)), value.shape[-1])
-                rms = value.float().square().mean(tuple(range(1, value.ndim)), keepdim=True).sqrt()
-                native_prefix = (hidden, mask, (*cache[:-1],
-                    (key, value + spec.fraction * rms.to(value.dtype) * delta)))
+                # Final layer only, or every layer with its own fixed projection.
+                # Depth-from-top seeding keeps the final layer's map identical.
+                layers = range(len(cache) - 1, len(cache)) if spec.kind == "conditioning" else range(len(cache))
+                cache = list(cache)
+                for layer in layers:
+                    cache[layer] = _steer_value(cache[layer], code, spec.fraction,
+                                                921003 + len(cache) - 1 - layer, batch)
+                native_prefix = (hidden, mask, tuple(cache))
             self.model.build_prefix_cache = lambda *args, **kwargs: native_prefix
             if spec.kind == "velocity":
                 def altered_velocity(suffix):
