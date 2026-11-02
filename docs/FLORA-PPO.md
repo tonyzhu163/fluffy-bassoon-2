@@ -233,7 +233,7 @@ All other jobs are paused for it.
   Decisions use simulator success only. Stop at a closed boundary with full
   recovery.
 - **Budget:** ~76k all-in actions per iteration with 4/8 workers, including
-  six unscored evaluation padding episodes, under 1M per arm. GPU-hours
+  six unscored evaluation padding episodes, with no fixed per-arm action cap. GPU-hours
   are uncapped for these two arms by human authorization, but each scheduler
   job may request at most 8 GPUs and must run under 8 hours. Logs are plain
   text heartbeats, with no dashboard.

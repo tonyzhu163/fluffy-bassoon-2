@@ -573,7 +573,8 @@ is semantically unseen.
   training goals and six RoboTwin source goals remain. Source-local LIBERO
   validation uses eight fixed goals on disjoint states. This original shared cap applied to the initial pilot. Later human steering
   accepted roughly1M source actions per learner, without increasing the32-hour
-  LIBERO compute pool; existing runs retain their original contracts. Neither
+  LIBERO compute pool; existing runs retain their original contracts. The human
+  removed the per-learner action cap on 2026-11-03. Neither
   quantity is a proven sufficient meta-learning dataset.
 
 - Execution order: after minimal runtime and saved-data qualification, overlap

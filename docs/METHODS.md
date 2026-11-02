@@ -45,8 +45,8 @@ parameter signature before and after every run.
 - Required controls for any memory claim: independently trained static and
   episode-reset controllers on identical data, reward/history interventions,
   native and tied noise, and ordinary DSRL.
-- Accounting: about 1M source actions per learner, charged to that learner.
-  Count all qualification, settling, failures and retries. Report GPU-seconds
+- Accounting: no fixed action cap; charge source actions to the learner that
+  used them. Count all qualification, settling, failures and retries. Report GPU-seconds
   and actions per arm.
 
 Full claim boundaries are in [PAPER.md](PAPER.md#decisions-and-claim-boundaries).

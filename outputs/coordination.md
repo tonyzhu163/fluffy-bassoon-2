@@ -64,10 +64,9 @@ From the [2026-10-31 review](archive/coordination/coordination-20261031.md#coord
 - One or two readable sentences per row: job ID, last check, progress, next
   action and a link. Put hashes, byte counts and budget ledgers in the
   linked run record.
-- Budget: roughly **1M source actions per learner** (human, 2026-10-30;
-  confirmed 2026-10-31), superseding "1M per benchmark, shared". Charge each
-  learner's actions to its own ledger; do not borrow across learners or
-  benchmarks.
+- Budget: **no fixed action cap** (human, 2026-11-03), removing the earlier
+  ~1M source actions per learner. Still charge each learner's actions to its
+  own ledger and report them.
 - Baseline priority (human, 2026-10-31): same-motor DSRL/SAC first, native
   VLRLA PPO afterward. `frozen-vla-poc` (`finish_assembly`/`finish_ppo`) is
   the sole LIBERO launcher; RoboTwin AD GPU work stays deferred.
