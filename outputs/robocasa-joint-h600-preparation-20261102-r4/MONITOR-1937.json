@@ -1,0 +1,52 @@
+{
+  "checked_utc": "2026-11-02T11:39:45.587626+00:00",
+  "job_id": "job-al2ztuon33dz",
+  "state": "healthy_advancing_calibration",
+  "warmup_engines": 4,
+  "free_mib_after_warmup": [
+    23608.0,
+    23608.0,
+    23608.0,
+    23608.0
+  ],
+  "native_banks": [
+    {
+      "task": "OpenDrawer",
+      "episodes": 50,
+      "successes": 31,
+      "horizon": 600,
+      "optimizer_updates": 0
+    },
+    {
+      "task": "PickPlaceCounterToCabinet",
+      "episodes": 50,
+      "successes": 28,
+      "horizon": 600,
+      "optimizer_updates": 0
+    }
+  ],
+  "calibration_gates": [
+    {
+      "task": "OpenDrawer",
+      "count": 50,
+      "native_success_rate": 0.62,
+      "AUROC": 0.933786078098472,
+      "go": true,
+      "training_authorization": false
+    },
+    {
+      "task": "PickPlaceCounterToCabinet",
+      "count": 50,
+      "native_success_rate": 0.56,
+      "AUROC": 0.9058441558441559,
+      "go": true,
+      "training_authorization": false
+    }
+  ],
+  "new_native_complete_episodes": 100,
+  "new_complete_grades": 100,
+  "errors": [],
+  "terminal_audit_pending": true,
+  "common_before_started": false,
+  "optimizer_updates": 0
+}
