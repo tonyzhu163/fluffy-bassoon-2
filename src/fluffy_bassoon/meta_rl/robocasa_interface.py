@@ -26,8 +26,30 @@ class FrozenRoboCasaInterface:
 
     @torch.no_grad()
     def prepare(self, observation):
+        """Serial compatibility port; preparation itself is batched."""
+        if np.shape(observation["states"]) != (1, 25):
+            raise ValueError("Require one native public state25")
+        features, prepared = self.prepare_batch(observation)
+        return features[0], prepared
+
+    @torch.no_grad()
+    def prepare_batch(self, observation):
+        """Return public pre-action features [B, 16 + prefix_width] and one prefix.
+
+        The native input adapter runs with explicit dummy noise, then stops at
+        its first prefix build, before denoising. Execution must consume this
+        token before a second observation can be prepared.
+        """
         if self._prepared is not None:
             raise RuntimeError("Execute the prepared observation before preparing another")
+        state = observation["states"]
+        if torch.is_tensor(state):
+            state = state.detach().cpu().numpy()
+        state = np.asarray(state, dtype=np.float32)
+        if state.ndim != 2 or state.shape[1] != 25 or not len(state):
+            raise ValueError("Require a nonempty batch of native public state25")
+        batch = len(state)
+        public = public_observation(observation)
         original = self.model.build_prefix_cache
         captured = []
 
@@ -38,8 +60,8 @@ class FrozenRoboCasaInterface:
 
         self.model.build_prefix_cache = capture
         try:
-            self.model.predict_action_batch(public_observation(observation), mode="eval",
-                noise=torch.zeros((1, 50, 32), device=self.model.device))
+            self.model.predict_action_batch(public, mode="eval",
+                noise=torch.zeros((batch, 50, 32), device=self.model.device))
         except _PrefixReady:
             pass
         finally:
@@ -47,67 +69,94 @@ class FrozenRoboCasaInterface:
         if len(captured) != 1:
             raise ValueError("Native prefix API must run exactly once before action generation")
         hidden, mask, _ = captured[0]
-        if mask.ndim != 2 or len(mask) != 1 or not mask.any():
-            raise ValueError("Require one nonempty native prefix")
+        if (hidden.ndim != 3 or mask.ndim != 2 or hidden.shape[:2] != mask.shape
+                or len(mask) != batch or mask.dtype != torch.bool or not mask.any(-1).all()):
+            raise ValueError("Require one nonempty native prefix per batch row")
         pooled = hidden.float().masked_fill(~mask[..., None], 0).sum(1) / mask.sum(1, keepdim=True)
         pooled = pooled / pooled.square().mean(-1, keepdim=True).sqrt().clamp_min(1e-6)
-        state = np.asarray(observation["states"], dtype=np.float32)
-        if state.shape != (1, 25):
-            raise ValueError("Require native public state25")
         state = state[:, [*range(11, 25), 7, 8]]
         stats = self.native.stats["state"]
         state = (state - np.asarray(stats["mean"])[:16]) / (np.asarray(stats["std"])[:16] + 1e-6)
-        features = np.concatenate((state, pooled.cpu().numpy()), -1)[0].astype(np.float32)
+        features = np.concatenate((state, pooled.cpu().numpy()), -1).astype(np.float32)
         if not np.isfinite(features).all():
             raise ValueError("Nonfinite pre-action features")
-        self._prepared = dict(observation=public_observation(observation), prefix=captured[0])
+        self._prepared = dict(observation=public, prefix=captured[0], batch_size=batch)
         return features, self._prepared
 
     @torch.no_grad()
     def execute(self, prepared, *, noise, steering, spec):
-        if prepared is not self._prepared:
+        """Preserve the serial candidate axis used by InterfaceSpec.decode."""
+        if self._prepared is None or prepared is not self._prepared or prepared["batch_size"] != 1:
+            raise ValueError("Execute only the current single pre-action prefix")
+        if spec.kind in ("select", "direct"):
+            noise = torch.as_tensor(noise)[None]
+        return self.execute_batch(prepared, noise=noise,
+            steering=torch.as_tensor(steering)[None], spec=spec)[0]
+
+    @torch.no_grad()
+    def execute_batch(self, prepared, *, noise, steering, spec):
+        """Execute [B,50,32] explicit noise and [B,D] steering in one native call.
+
+        Legacy selection accepts [B,candidates,50,32] and performs one batched
+        native call per candidate. Direct actions accept an empty candidate
+        axis. Neither path samples noise or rebuilds the captured VLM prefix.
+        """
+        if self._prepared is None or prepared is not self._prepared:
             raise ValueError("Execute only the current pre-action prefix")
         prefix, velocity = self.model.build_prefix_cache, self.model.velocity_from_suffix
-        native_prefix = prepared["prefix"]
-        code = torch.as_tensor(steering[None], dtype=torch.float32, device=self.model.device)
-        if spec.kind == "conditioning":
-            hidden, mask, cache = native_prefix
-            key, value = cache[-1]
-            rng = np.random.default_rng(921003)
-            projection = torch.as_tensor(rng.choice((-1., 1.), (32, value.shape[-1])) / math.sqrt(32),
-                                         dtype=torch.float32, device=value.device)
-            delta = (torch.tanh(code) @ projection).to(value.dtype)
-            delta = delta.reshape(1, *([1] * (value.ndim - 2)), value.shape[-1])
-            rms = value.float().square().mean(tuple(range(1, value.ndim)), keepdim=True).sqrt()
-            native_prefix = (hidden, mask, (*cache[:-1], (key, value + spec.fraction * rms.to(value.dtype) * delta)))
-        self.model.build_prefix_cache = lambda *args, **kwargs: native_prefix
-        if spec.kind == "velocity":
-            def altered_velocity(suffix):
-                value = velocity(suffix)
-                return value + spec.fraction * torch.tanh(code)[:, None, :].to(value.dtype)
-            self.model.velocity_from_suffix = altered_velocity
+        batch = prepared["batch_size"]
         try:
+            code = torch.as_tensor(steering, dtype=torch.float32, device=self.model.device)
+            draws = torch.as_tensor(noise, device=self.model.device)
+            if code.shape != (batch, spec.steering_dim) or not torch.isfinite(code).all():
+                raise ValueError("Require finite steering [B,steering_dim]")
+            expected = ((batch, spec.candidates, 50, 32) if spec.kind == "select" else
+                        (batch, 0, 50, 32) if spec.kind == "direct" else (batch, 50, 32))
+            if draws.shape != expected or not torch.isfinite(draws).all():
+                raise ValueError("Require finite explicit native noise with the configured batch/candidate shape")
+            native_prefix = prepared["prefix"]
+            if spec.kind == "conditioning":
+                hidden, mask, cache = native_prefix
+                key, value = cache[-1]
+                if value.ndim < 2 or value.shape[0] != batch:
+                    raise ValueError("Require a batch-aligned native value cache")
+                rng = np.random.default_rng(921003)
+                projection = torch.as_tensor(
+                    rng.choice((-1., 1.), (32, value.shape[-1])) / math.sqrt(32),
+                    dtype=torch.float32, device=value.device)
+                delta = (torch.tanh(code) @ projection).to(value.dtype)
+                delta = delta.reshape(batch, *([1] * (value.ndim - 2)), value.shape[-1])
+                rms = value.float().square().mean(tuple(range(1, value.ndim)), keepdim=True).sqrt()
+                native_prefix = (hidden, mask, (*cache[:-1],
+                    (key, value + spec.fraction * rms.to(value.dtype) * delta)))
+            self.model.build_prefix_cache = lambda *args, **kwargs: native_prefix
+            if spec.kind == "velocity":
+                def altered_velocity(suffix):
+                    value = velocity(suffix)
+                    return value + spec.fraction * torch.tanh(code)[:, None, :].to(value.dtype)
+                self.model.velocity_from_suffix = altered_velocity
             if spec.kind == "direct":
-                chunks = np.asarray(steering, dtype=np.float32).reshape(1, 50, 12)
+                chunks = code.cpu().numpy().reshape(batch, 50, 12)
                 stats = self.native.stats["actions"]
                 chunks = chunks * (np.asarray(stats["std"])[:12] + 1e-6) + np.asarray(stats["mean"])[:12]
             else:
+                candidates = draws.unbind(1) if spec.kind == "select" else (draws,)
                 chunks = []
-                for draw in noise:
-                    chunk, _ = self.model.predict_action_batch(prepared["observation"], mode="eval",
-                        noise=torch.as_tensor(draw[None], device=self.model.device))
+                for draw in candidates:
+                    chunk, _ = self.model.predict_action_batch(prepared["observation"], mode="eval", noise=draw)
                     chunks.append(np.asarray(chunk.detach().cpu() if torch.is_tensor(chunk) else chunk,
-                                             dtype=np.float32)[0])
-                chunks = np.asarray(chunks)
-            selected = int(np.argmax(steering)) if spec.kind == "select" else 0
-            chunk = chunks[selected]
+                                             dtype=np.float32))
+                chunks = np.stack(chunks, axis=1)
+                selected = code.argmax(-1).cpu().numpy() if spec.kind == "select" else np.zeros(batch, dtype=int)
+                chunks = chunks[np.arange(batch), selected]
             if spec.kind == "action":
                 if self.bound is None or self.bound.residual_dim != 6:
                     raise ValueError("Action steering requires the qualified six-dimensional residual bound")
-                chunk = self.bound.apply(chunk, steering)
-            if chunk.shape != (50, 12) or not np.isfinite(chunk).all():
-                raise ValueError("Require a finite native action chunk")
-            return np.asarray(chunk, dtype=np.float32)
+                chunks = np.stack([self.bound.apply(chunk, row)
+                    for chunk, row in zip(chunks, code.cpu().numpy())])
+            if chunks.shape != (batch, 50, 12) or not np.isfinite(chunks).all():
+                raise ValueError("Require finite native action chunks [B,50,12]")
+            return np.asarray(chunks, dtype=np.float32)
         finally:
             self.model.build_prefix_cache, self.model.velocity_from_suffix = prefix, velocity
             self._prepared = None

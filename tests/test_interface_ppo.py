@@ -177,6 +177,174 @@ def test_native_adapter_extracts_prefix_before_sampling_and_reuses_it_without_rn
     torch.testing.assert_close(before,torch.get_rng_state(),rtol=0,atol=0)
 
 
+
+class BatchNativeModel(torch.nn.Module):
+    """Small deterministic native-shaped prefix/cache/velocity reference."""
+    device = "cpu"
+
+    def __init__(self):
+        super().__init__()
+        self.weight = torch.nn.Parameter(torch.ones(1))
+        self.prefixes = self.draws = 0
+        self.empty_row = self.fail_draw = False
+
+    def build_prefix_cache(self, observation):
+        self.prefixes += 1
+        row = torch.as_tensor(observation["states"][:, 0])
+        first = (row[:, None] + 1) * torch.arange(1., 5.)
+        second = (row[:, None] + 2) * torch.arange(4., 0., -1)
+        hidden = torch.stack((first, second, torch.full_like(first, float("nan"))), 1)
+        mask = torch.stack((torch.ones_like(row, dtype=torch.bool), row > 0,
+                            torch.zeros_like(row, dtype=torch.bool)), 1)
+        if self.empty_row:
+            mask[-1] = False
+        value = (row[:, None, None, None] + 1) * torch.arange(1., 9.).reshape(1, 1, 2, 4)
+        self.built = (hidden, mask, ((torch.ones_like(value), value),))
+        return self.built
+
+    def velocity_from_suffix(self, suffix):
+        return .75 * suffix
+
+    @torch.no_grad()
+    def predict_action_batch(self, observation, *, mode, noise):
+        assert mode == "eval" and noise is not None and not torch.is_grad_enabled()
+        assert set(observation) <= {"states", "main_images", "wrist_images", "extra_view_images", "task_descriptions"}
+        self.used = self.build_prefix_cache(observation)
+        self.draws += 1
+        if self.fail_draw:
+            raise RuntimeError("native draw failed")
+        offset = self.used[2][-1][1].mean((1, 2, 3))[:, None, None]
+        return self.velocity_from_suffix(noise)[..., :12] + offset, None
+
+
+def batch_native():
+    stats = dict(state=dict(mean=np.arange(16) / 10, std=np.arange(16) / 20 + 1),
+                 actions=dict(mean=np.arange(12), std=np.ones(12) * 2))
+    native = SimpleNamespace(model=BatchNativeModel(), stats=stats)
+    observation = dict(states=np.arange(50, dtype=np.float32).reshape(2, 25),
+                       task_descriptions=["drawer", "fridge"], simulator_success=True, task_id=123)
+    return native, observation
+
+
+@pytest.mark.parametrize("kind", ["conditioning", "velocity"])
+def test_batched_interface_zero_parity_public_features_prefix_reuse_and_no_rng(kind):
+    native, observation = batch_native()
+    adapter = FrozenRoboCasaInterface(native)
+    noise = np.linspace(-1, 1, 2 * 50 * 32, dtype=np.float32).reshape(2, 50, 32)
+    torch_rng, numpy_rng = torch.get_rng_state().clone(), deepcopy(np.random.get_state())
+    features, prepared = adapter.prepare_batch(observation)
+    assert features.shape == (2, 20) and native.model.prefixes == 1 and native.model.draws == 0
+    hidden, mask, cache = prepared["prefix"]
+    expected = hidden.masked_fill(~mask[..., None], 0).sum(1) / mask.sum(1, keepdim=True)
+    expected /= expected.square().mean(-1, keepdim=True).sqrt()
+    np.testing.assert_allclose(features[:, 16:], expected.numpy())
+    state = observation["states"][:, [*range(11, 25), 7, 8]]
+    np.testing.assert_allclose(features[:, :16], (state - native.stats["state"]["mean"]) /
+                               (native.stats["state"]["std"] + 1e-6), rtol=1e-6)
+    original_value = cache[-1][1].clone()
+    spec = InterfaceSpec(kind=kind, steering_dim=32, fraction=.25)
+    result = adapter.execute_batch(prepared, noise=noise, steering=np.zeros((2, 32)), spec=spec)
+    assert result.shape == (2, 50, 12) and native.model.prefixes == native.model.draws == 1
+    assert native.model.used[0] is hidden and native.model.used[1] is mask
+    assert native.model.used[2][-1][0] is cache[-1][0]
+    torch.testing.assert_close(native.model.used[2][-1][1], original_value, rtol=0, atol=0)
+    torch.testing.assert_close(cache[-1][1], original_value, rtol=0, atol=0)
+    reference, _ = batch_native()
+    expected, _ = reference.model.predict_action_batch(dict(states=observation["states"]),
+                                                      mode="eval", noise=torch.from_numpy(noise))
+    np.testing.assert_array_equal(result, expected.numpy())
+    assert not native.model.training and not native.model.weight.requires_grad and native.model.weight.grad is None
+    torch.testing.assert_close(torch_rng, torch.get_rng_state(), rtol=0, atol=0)
+    after = np.random.get_state()
+    assert numpy_rng[0] == after[0] and numpy_rng[2:] == after[2:]
+    np.testing.assert_array_equal(numpy_rng[1], after[1])
+
+
+@pytest.mark.parametrize("kind", ["conditioning", "velocity"])
+def test_batched_interface_steering_matches_fixed_projection_and_serial_rows(kind):
+    native, observation = batch_native()
+    adapter = FrozenRoboCasaInterface(native)
+    noise = np.linspace(-1, 1, 2 * 50 * 32, dtype=np.float32).reshape(2, 50, 32)
+    code = np.linspace(-2, 2, 64, dtype=np.float32).reshape(2, 32)
+    spec = InterfaceSpec(kind=kind, steering_dim=32, fraction=.17)
+    _, prepared = adapter.prepare_batch(observation)
+    original = prepared["prefix"][2][-1][1].clone()
+    result = adapter.execute_batch(prepared, noise=noise, steering=code, spec=spec)
+    tanh = torch.from_numpy(code).tanh()
+    if kind == "conditioning":
+        projection = np.random.default_rng(921003).choice((-1., 1.), (32, 4)) / np.sqrt(32)
+        delta = (tanh @ torch.as_tensor(projection, dtype=torch.float32)).reshape(2, 1, 1, 4)
+        rms = original.square().mean((1, 2, 3), keepdim=True).sqrt()
+        expected = original + spec.fraction * rms * delta
+        torch.testing.assert_close(native.model.used[2][-1][1], expected, rtol=0, atol=0)
+        velocity = .75 * torch.from_numpy(noise)
+    else:
+        expected = original
+        velocity = .75 * torch.from_numpy(noise) + spec.fraction * tanh[:, None]
+    chunks = velocity[..., :12] + expected.mean((1, 2, 3))[:, None, None]
+    np.testing.assert_allclose(result, chunks.numpy(), rtol=0, atol=0)
+    # Per-row RMS and steering must agree with independent serial execution.
+    serial = []
+    for row in range(2):
+        one, _ = batch_native()
+        port = FrozenRoboCasaInterface(one)
+        _, token = port.prepare(dict(states=observation["states"][row:row + 1]))
+        serial.append(port.execute(token, noise=noise[row:row + 1], steering=code[row], spec=spec))
+    np.testing.assert_allclose(result, serial, rtol=1e-6, atol=1e-6)
+    torch.testing.assert_close(prepared["prefix"][2][-1][1], original, rtol=0, atol=0)
+
+
+def test_batched_interface_rejects_bad_rows_and_restores_hooks_after_failures():
+    native, observation = batch_native()
+    port = FrozenRoboCasaInterface(native)
+    prefix, velocity = native.model.build_prefix_cache, native.model.velocity_from_suffix
+    native.model.empty_row = True
+    with pytest.raises(ValueError, match="nonempty native prefix per batch row"):
+        port.prepare_batch(observation)
+    assert native.model.build_prefix_cache == prefix and port._prepared is None
+    native.model.empty_row = False
+    _, prepared = port.prepare_batch(observation)
+    spec = InterfaceSpec(kind="velocity", steering_dim=32)
+    noise, code = np.zeros((2, 50, 32)), np.ones((2, 32))
+    with pytest.raises(ValueError, match="current pre-action prefix"):
+        port.execute_batch(dict(prepared), noise=noise, steering=code, spec=spec)
+    assert port._prepared is prepared
+    with pytest.raises(ValueError, match="explicit native noise"):
+        port.execute_batch(prepared, noise=noise[:1], steering=code, spec=spec)
+    assert native.model.draws == 0 and port._prepared is None
+    _, prepared = port.prepare_batch(observation)
+    native.model.fail_draw = True
+    with pytest.raises(RuntimeError, match="native draw failed"):
+        port.execute_batch(prepared, noise=noise, steering=code, spec=spec)
+    assert native.model.build_prefix_cache == prefix and native.model.velocity_from_suffix == velocity
+    assert port._prepared is None
+    with pytest.raises(ValueError, match="current pre-action prefix"):
+        port.execute_batch(prepared, noise=noise, steering=code, spec=spec)
+
+
+@pytest.mark.parametrize("kind,dim", [("select", 2), ("direct", 600), ("action", 6)])
+def test_serial_interface_retains_candidate_direct_and_action_ports(kind, dim):
+    native, observation = batch_native()
+    bound = SimpleNamespace(residual_dim=6, apply=lambda chunk, code: chunk + code.sum())
+    port = FrozenRoboCasaInterface(native, bound=bound)
+    spec = InterfaceSpec(kind=kind, steering_dim=dim, candidates=2)
+    control = np.linspace(-1, 1, spec.control_dim, dtype=np.float32)
+    noise, code = spec.decode(control)
+    _, prepared = port.prepare(dict(states=observation["states"][:1]))
+    result = port.execute(prepared, noise=noise, steering=code, spec=spec)
+    if kind == "direct":
+        expected = code.reshape(50, 12) * (np.asarray(native.stats["actions"]["std"]) + 1e-6)
+        expected += native.stats["actions"]["mean"]
+        assert native.model.draws == 0
+    else:
+        selected = code.argmax() if kind == "select" else 0
+        expected = .75 * noise[selected, :, :12] + 4.5
+        if kind == "action":
+            expected += code.sum()
+        assert native.model.draws == (2 if kind == "select" else 1)
+    assert native.model.prefixes == 1
+    np.testing.assert_allclose(result, expected, rtol=1e-6, atol=1e-6)
+
 def test_training_windows_reach_128_actual_tokens():
     from fluffy_bassoon.meta_rl.vla_history import sample_batch
     from fluffy_bassoon.meta_rl.vla_history_train import supervised_update
