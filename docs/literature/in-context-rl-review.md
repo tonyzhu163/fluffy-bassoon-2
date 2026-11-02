@@ -461,6 +461,88 @@ transient recurrent state at each new trial. Keep direct reinforcement
 pretraining as a comparison to any supervised warm start; include all teacher
 and data-generation costs.
 
+## Methods beyond AD and DPT for a PPO history dataset
+
+Snapshot: 2 November 2026. The question: once Flora-reward PPO histories
+exist (one graded terminal score per episode, a suboptimal final policy), which
+supervised ICRL methods besides AD, DPT and CND are worth running? RL² is set
+aside as hard to tune. Candidates must keep the plain causal decoder and the
+bounded action residual ([PAPER.md](../PAPER.md)). Results below are from
+abstracts and summaries; read each method section before implementing.
+
+### Recommended
+
+1. **DIT** ([Dong et al., ICML 2025](https://arxiv.org/abs/2601.20116)).
+   DPT with an advantage-weighted loss: in-context Q and value heads estimate
+   advantages, and the query-action loss is weighted by exp(A/η), so labels
+   need not be optimal. This matches our case, where DPT labels come from the
+   final PPO policy rather than an expert. Reported competitive with DPT using
+   optimal labels and better than AD on Dark Room, Miniworld, Meta-World and
+   Half-Cheetah. Cost: a value head and a weighted loss; terminal Flora scores
+   give Monte Carlo returns to fit.
+2. **Value-based offline ICRL on an AD backbone**
+   ([Tarasov et al.](https://arxiv.org/abs/2502.17666), RLC 2026;
+   [SICQL](https://arxiv.org/abs/2506.01299), ICLR 2026). AD's causal model
+   plus expectile value fitting and advantage-weighted policy extraction.
+   Tarasov et al. report about 30% over AD across more than 150 GridWorld and
+   MuJoCo datasets and about 2× on XLand-MiniGrid; conservatism helped almost
+   everywhere. With DIT this gives a 2×2 on bitwise-identical contexts:
+   imitation versus value weighting, AD versus DPT-style targets.
+3. **Return-sorted curriculum**
+   ([CEC, Shi et al., NeurIPS 2023](https://arxiv.org/abs/2310.08549)).
+   Reorder episodes into chains of rising return and clone them; CEC's
+   continuous-control results are on RoboMimic mixed-quality demonstrations.
+   Nearly free, and it tests whether AD needs real learning dynamics or only
+   rising order. Sorting by Flora score bakes reward-model errors into the
+   curriculum, so add a simulator-success-sorted variant for diagnosis only.
+4. **ICEE** ([Dai et al., ICLR 2024](https://arxiv.org/abs/2403.06826)),
+   if time allows. Decision-Transformer-style conditioning on a cross-episode
+   return-to-go ("beat earlier episodes"), removing the need for ordered
+   histories. Reported to learn in tens rather than hundreds of episodes on
+   grid worlds only; the test-time target for a graded terminal reward is an
+   extra design choice.
+
+### Deprioritized
+
+- **DICP** ([Son et al., ICLR 2025](https://arxiv.org/abs/2502.19009)):
+  in-context dynamics prediction plus planning. Strong on Meta-World, but
+  predicting dynamics in VLA feature space over H400 episodes is impractical.
+- **RA-DT** ([Schmied et al.](https://arxiv.org/abs/2410.07071)): retrieves
+  relevant sub-trajectories instead of holding whole episodes in context. A
+  fallback if multi-episode context length binds, not a method arm.
+- **Task-encoder offline meta-RL** (FOCAL, CORRO, UNICORN): does not fit the
+  plain-decoder constraint.
+- **Frozen-VLA memory without RL training** (Zeva
+  [2608.30880](https://huggingface.co/papers/2608.30880), SOMA
+  [2603.24060](https://arxiv.org/abs/2603.24060), WeaveLA
+  [2606.17463](https://arxiv.org/abs/2606.17463)): related work, not
+  baselines; only abstracts were seen.
+
+### Implications for PPO collection
+
+- Needed: the policy version for each episode (AD ordering, DPT/DIT
+  relabels), the residual Gaussian's mean, std and log-probability per
+  decision (importance weights, AWR), and the raw Flora score with the
+  simulator-success sidecar.
+- The RoboCasa residual PPO driver
+  (`scripts/diagnostics/robocasa_residual_ppo.py`, checked 2 November 2026)
+  already records all of this. `pending-NNN.pt` holds every per-chunk record
+  (features, noise seed, base and executed chunks, u, log-probability, value)
+  together with the behavior policy's weights before the update, so its mean
+  and std are recomputable exactly. `boundary-NNN.pt` follows each update,
+  `labels-NNN/` holds the Flora request and outputs, and the monitoring JSON
+  holds simulator success per episode in both arms. `history.npz` carries only
+  the decoder's AD fields and is written at the end of the run.
+- The retention rule allows pruning uncited checkpoint payloads. For any run
+  whose histories feed a meta-learner, keep every `pending-NNN.pt`,
+  `boundary-NNN.pt`, `labels-NNN/` and monitoring record: they are the only
+  copy of the behavior-policy statistics and raw scores. `residual_ppo.history_sidecar` exports these; the
+  [residual PPO plan](../../outputs/robocasa-residual-ppo-20261101-r1/PLAN.md)
+  requires them and per-update checkpoints.
+- Value-weighted methods optimize toward Flora's score and can exploit its
+  errors more than AD. Report true simulator success beside Flora score for
+  every arm, with the same rising-score, flat-success check as the PPO pilot.
+
 ## Language steering of pi0.5
 
 Snapshot: 29 October 2026. This bears on any hidden-target task that changes
@@ -678,4 +760,11 @@ Fine-tune the Stage A learner with `meta_rl/ppo.py` in meta mode:
 - Polubarov et al., [Vintix: Action Model via In-Context Reinforcement Learning](https://arxiv.org/abs/2501.19400), 2025.
 - Shala et al., [Efficient Cross-Episode Meta-RL (ECET)](https://proceedings.iclr.cc/paper_files/paper/2025/file/bbc0df00853596fcf4bbcbef853a880a-Paper-Conference.pdf), ICLR 2025.
 - Shi et al., [VLRLA: Deployment-Time Adaptation of Vision-Language-Action Models through In-Context Reinforcement Learning](https://arxiv.org/abs/2610.19517), 2026.
+- Dong et al., [In-Context Reinforcement Learning From Suboptimal Historical Data (DIT)](https://arxiv.org/abs/2601.20116), ICML 2025.
+- Tarasov et al., [Yes, Q-learning Helps Offline In-Context RL](https://arxiv.org/abs/2502.17666), RLC 2026.
+- Liu et al., [Scalable In-Context Q-Learning (SICQL)](https://arxiv.org/abs/2506.01299), ICLR 2026.
+- Shi et al., [Cross-Episodic Curriculum for Transformer Agents](https://arxiv.org/abs/2310.08549), NeurIPS 2023.
+- Dai, Tomasi, Ghiassian, [In-context Exploration-Exploitation for Reinforcement Learning (ICEE)](https://arxiv.org/abs/2403.06826), ICLR 2024.
+- Son, Lee, Kim, [Distilling Reinforcement Learning Algorithms for In-Context Model-Based Planning (DICP)](https://arxiv.org/abs/2502.19009), ICLR 2025.
+- Schmied et al., [Retrieval-Augmented Decision Transformer: External Memory for In-context RL](https://arxiv.org/abs/2410.07071), CoLLAs.
 - Sakana AI, [Continuous Thought Machines](https://arxiv.org/abs/2505.05522), 2025.
