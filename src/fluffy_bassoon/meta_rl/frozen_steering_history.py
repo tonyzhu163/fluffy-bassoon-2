@@ -42,7 +42,7 @@ class SteeringSource:
     normalization_sha256: str
     tasks: tuple[str, ...]
     interface: dict
-    episodes_per_task_per_update: int = 16
+    episodes_per_task_per_update: int
     feature_dim: int = 2064
 
     def __post_init__(self):

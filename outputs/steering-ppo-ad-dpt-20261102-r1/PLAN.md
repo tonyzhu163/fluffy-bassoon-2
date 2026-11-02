@@ -2,6 +2,10 @@
 
 User objective: monitor the scale-up experiments; after each completed five-task PPO source, train AD and DPT to validation convergence and evaluate actual attempts1–5 on every ID and OOD task. Also monitor the corresponding Stage1 AD/DPT experiments on both interfaces. This goal remains open until the complete source-specific fits, native evaluations, figures and costs are verified. Earlier single-task action-residual results do not complete this goal.
 
+## Human launch hold
+
+**Nov3 00:46 Shanghai: the user explicitly instructed both steering PPO arms to wait until the scale-up iteration count and environments per GPU are finalized.** The earlier103×80 schedule,16 episodes/task/update and four environments/GPU are provisional observations, not final launch authority. The user authorized relaying this hold to owner chat01a19b74 and the instruction was sent. Preserve completed qualification/artifacts. No source binding is admitted here; PREPARE.py/FIT.py require the actual finalized producer recipe and its authority reference. The adapter requires an explicit per-task batch count, with no16-episode default. See LAUNCH-HOLD-20261103-r1.json. This hold does not cancel the requested downstream converged fits and per-task curves.
+
 ## Source campaigns and ownership
 
 Retain the older unlaunched Stage1 OpenDrawer pilot as a separate historical identity. The launch owner has recorded that the newer human-approved joint five-task scope supersedes launching that pilot; do not create an extra pilot run or duplicate its downstream fits. Both interfaces in the joint scope fulfill the Stage1 interface follow-up. If a distinct Stage1 source actually appears, bind it separately rather than silently mixing its data. Both interfaces are velocity and independent all-layer K+V, with the VLA/VLM/action expert frozen. The old `conditioning_all`32-D value-only handoff is not full K+V and cannot be relabeled as it. No PPO/source job is launched by this monitoring chat; the existing owner chat01a19b74 implements and launches its authorized sources. No duplicate jobs, source edits or unrequested task/architecture expansion.

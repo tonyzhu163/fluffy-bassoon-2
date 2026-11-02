@@ -1,0 +1,27 @@
+{
+  "status": "ACTIVE_HUMAN_LAUNCH_HOLD",
+  "issued_UTC": "2026-11-02T16:46:33Z",
+  "authority": "Direct user instruction in this chat, then explicit permission to relay to launch owner",
+  "instruction": "wait we're still changing the scale up formula right now, the PPO steering interface should wait until we are sure how many iterations and how many envs per gpu",
+  "scope": [
+    "Velocity scientific PPO launch",
+    "Full all-layer K+V scientific PPO launch"
+  ],
+  "resume_condition": "User and launch owner finalize iteration count, episodes per update and environments per GPU; bind that exact producer recipe before source or dependent fits",
+  "provisional_only": [
+    "103 iterations",
+    "80 episodes/update",
+    "16 episodes/task/update",
+    "4 environments/GPU"
+  ],
+  "selected_interfaces_unchanged": [
+    "velocity",
+    "kv_all_layers"
+  ],
+  "qualified_artifacts_preserved": true,
+  "source_binding": null,
+  "relayed_to_thread": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
+  "relay_sent": true,
+  "owner_acknowledgement": "pending verification",
+  "goal_disposition": "Remain active; monitor hold and finalization, no stale-recipe launches"
+}
