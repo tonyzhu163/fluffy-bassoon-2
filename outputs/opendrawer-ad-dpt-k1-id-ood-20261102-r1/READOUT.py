@@ -19,6 +19,9 @@ OUT = Path(os.environ.get('TASK_READOUT_OUTPUT',str(ROOT/'outputs/opendrawer-ad-
 CORE = ROOT/'worktrees/opendrawer-ad-dpt-20261102-r1'
 CORE_PIN = '68f2c5aa33218709453a7821f6c6223ac3803035'
 CODE = Path(__file__).resolve().parents[2]
+PAIRING_PATH = CODE/'src/fluffy_bassoon/meta_rl/robocasa_pairing.py'
+PAIRING = runpy.run_path(str(PAIRING_PATH))
+CASE_BANK = Path(os.environ.get('TASK_READOUT_CASE_BANK',str(ROOT/'outputs/opendrawer-ad-dpt-paired-cases-20261102-r1')))
 ALL_METHODS = ('ppo_initial','ppo_final','ad_full','ad_static','dpt_full','dpt_static')
 if 'TASK_READOUT_METHODS' not in os.environ:
     raise ValueError('Select explicit ready methods; evaluation has no all-model default barrier')
@@ -90,6 +93,7 @@ def bind():
     assert sys.platform=='linux' and not torch.cuda.is_available()
     assert head(CORE)==CORE_PIN and clean(CORE) and clean(CODE)
     assembly=json.loads((TRAIN/'data/assembly.json').read_text())
+    assert FRESH_ID,'New pairing snapshots require fresh ID episodes; retain legacy records separately'
     selected={}
     # Only the requested model's own readiness can gate its evaluation.
     for name in STUDENTS:
@@ -104,12 +108,23 @@ def bind():
         assert payload['manifest']['validation_nll']==status['best_validation_nll']
         selected[name]=dict(candidate=ref(folder/'candidate.pt'),status=ref(folder/'training-status.json'),
             selected_update=payload['manifest']['update'],validation_nll=payload['manifest']['validation_nll'])
+    bank_contract=dict(format=PAIRING['FORMAT'],max_RGB_delta=PAIRING['MAX_RGB_DELTA'],
+        runtime_core_commit=CORE_PIN,pairing_code_sha256=sha(PAIRING_PATH),
+        assembly=ref(TRAIN/'data/assembly.json'),ID=dict(seed_first=880110000,cases=50,horizon=750),
+        OOD=dict(seed_first=880210000,cases=50,horizon=900),
+        native_process_start_method='spawn',child_global_RNG_seed='native_seed',observations_modified=False)
+    CASE_BANK.mkdir(parents=True,exist_ok=True)
+    bank_path=CASE_BANK/'contract.json'
+    if bank_path.exists():assert json.loads(bank_path.read_text())==bank_contract
+    else:
+        with bank_path.open('x') as stream:stream.write(json.dumps(bank_contract,indent=2)+'\n')
     OUT.mkdir(parents=True,exist_ok=True)
     path=OUT/'binding.json';assert not path.exists()
     write(path,dict(completed=True,evaluation_driver_commit=head(CODE),runtime_core_commit=CORE_PIN,
         assembly=ref(TRAIN/'data/assembly.json'),selected=selected,initial=assembly['initial'],teacher=assembly['teacher'],
         primary_endpoint='one complete support episode -> separate query, frozen weights',
         methods=list(METHODS),fresh_ID=FRESH_ID,independent_model_admission=True,
+        pairing=dict(contract=ref(bank_path),directory=str(CASE_BANK),code=ref(PAIRING_PATH)),
         ID=dict(task='OpenDrawer',cases=50,seed_first=880110000,horizon=750),
         OOD=dict(task='CloseFridge',cases=50,seed_first=880210000,horizon=900),
         source_training_unchanged=True,new_physical_episodes=sum(episode_count(c) for c,_ in tasks()),
@@ -141,12 +156,14 @@ def worker(rank,binding,deadline):
     from hydra import compose,initialize_config_dir
     from fluffy_bassoon.baige_gpu import verify_selected_cuda
     from fluffy_bassoon.meta_rl.residual_history import HistoryResidualActor
-    from fluffy_bassoon.meta_rl.robocasa_residual import FrozenRoboCasaMotor,RoboCasaResidualEnvironment,collect_pending,native_environment_factory
+    from fluffy_bassoon.meta_rl.robocasa_residual import FrozenRoboCasaMotor,RoboCasaResidualEnvironment,collect_pending
     from fluffy_bassoon.meta_rl.rlinf_native_ppo import ActionJournal
     from fluffy_bassoon.meta_rl.vla_history import load_policy
     from fluffy_bassoon.meta_rl.warmstart import atomic_save
     from fluffy_bassoon.rl.action_residual import ResidualBound
     assert torch.cuda.device_count()==1
+    import multiprocessing as mp
+    mp.set_start_method('spawn',force=True)
     verify_selected_cuda(torch);torch.set_num_threads(4)
     assembly=read_ref(binding['assembly']);contract=assembly['contract'];initializer=contract['initializer']
     profile=json.loads((ROOT/'outputs/robocasa-eight-gpu-speed-20261102-r1/S8-r2/profile.json').read_text())
@@ -182,7 +199,19 @@ def worker(rank,binding,deadline):
             return value,torch.load(value['records']['path'],map_location='cpu',weights_only=False)
         assert time.time()+300<deadline,'Operational boundary; preserve completed cases'
         directory.mkdir(parents=True,exist_ok=False)
-        env=RoboCasaResidualEnvironment(native_environment_factory(cfg.env.eval),[native_case(cohort,index)],
+        class PairedEnvironment(RoboCasaResidualEnvironment):
+            def reset(self):
+                observation=super().reset()
+                physical=self.native.env.get_env_attr('_native_pairing')[0]
+                snapshot=PAIRING['public_snapshot'](observation,native_case(cohort,index),physical)
+                atomic_save(directory/'initial.pt',snapshot)
+                marker,report=PAIRING['canonical_case'](CASE_BANK/cohort/f'case-{index:03d}',snapshot,
+                    save=atomic_save,load=lambda path:torch.load(path,map_location='cpu',weights_only=False),
+                    source=dict(driver=binding['evaluation_driver_commit'],attempt=os.environ['TASK_ATTEMPT'],
+                        method=name,shot=shot,kind=kind,contract=binding['pairing']['contract']))
+                self.initial_pairing=dict(canonical=ref(marker),report=report,snapshot=ref(directory/'initial.pt'))
+                return observation
+        env=PairedEnvironment(PAIRING['pairing_native_factory'](cfg.env.eval),[native_case(cohort,index)],
             horizon=horizon(cohort),output=directory/'videos',monitoring_root=directory/'monitor',journal=journal,
             writer_factory=imageio.get_writer,episode_id_prefix=f'{cohort}-{index}-{name}-{shot}-{kind}-',rank=rank)
         support=kind=='support'
@@ -200,6 +229,7 @@ def worker(rank,binding,deadline):
             initial_features_sha256=hashlib.sha256(np.asarray(rows[0]['features'],np.float32).tobytes()).hexdigest(),
             initial_base_sha256=hashlib.sha256(np.asarray(rows[0]['base_chunk'],np.float32).tobytes()).hexdigest(),
             records=ref(directory/'records.pt'),truth=ref(truth_path),horizon=horizon(cohort),
+            initial_pairing=env.initial_pairing,
             training_source=CORE_PIN,evaluation_source=binding['evaluation_driver_commit'])
         write(result,value)
         print(json.dumps(dict(cohort=cohort,index=index,method=name,shot=shot,kind=kind,
@@ -211,7 +241,7 @@ def worker(rank,binding,deadline):
         if cohort=='OOD' or FRESH_ID:
             for name in METHODS:
                 row,_=episode(cohort,index,name,policies[name],'K0','query');baseline[name]=row
-            assert len({(r['initial_features_sha256'],r['initial_base_sha256']) for r in baseline.values()})==1
+            assert len({r['initial_pairing']['canonical']['sha256'] for r in baseline.values()})==1
         queries=[]
         for name in FULL:
             actor=HistoryResidualActor(policies[name].policy,mode='full',reset_each_episode=False)
@@ -222,9 +252,8 @@ def worker(rank,binding,deadline):
                 actor.controller.observe(row['control'],row['reward'],row['done'])
             query,_=episode(cohort,index,name,actor,'K1','query');queries.append(query)
             if cohort=='OOD' or FRESH_ID:
-                assert query['initial_features_sha256']==baseline[name]['initial_features_sha256']
-                assert query['initial_base_sha256']==baseline[name]['initial_base_sha256']
-        if queries:assert len({(r['initial_features_sha256'],r['initial_base_sha256']) for r in queries})==1
+                assert query['initial_pairing']['canonical']==baseline[name]['initial_pairing']['canonical']
+        if queries:assert len({r['initial_pairing']['canonical']['sha256'] for r in queries})==1
     write(OUT/'workers'/f'rank-{rank:02d}.json',dict(completed=True,rank=rank,source=binding['evaluation_driver_commit'],
         binding_sha256=sha(OUT/'binding.json'),tasks=assigned,charged_actions=journal.charged()))
 
@@ -236,6 +265,7 @@ def paired(a,b):
 
 
 def summarize(binding):
+    import torch
     for rank in range(8):assert json.loads((OUT/'workers'/f'rank-{rank:02d}.json').read_text())['completed']
     if not FRESH_ID:assert json.loads((TRAIN/'RESULT.json').read_text())['completed']
     candidates=dict(ppo_initial=binding['initial'],ppo_final=binding['teacher'])
@@ -252,6 +282,12 @@ def summarize(binding):
         truth=read_ref(row['truth'])
         assert truth['case']==native_case(cohort,index) and int(truth['simulator_final_success'])==row['success']
         assert row.get('horizon',row.get('primitive_policy_steps'))==horizon(cohort)
+        initial=row['initial_pairing'];assert sha(initial['snapshot']['path'])==initial['snapshot']['sha256']
+        canonical=read_ref(initial['canonical']);snapshot_path=Path(initial['canonical']['path']).parent/'initial.pt'
+        assert sha(snapshot_path)==canonical['snapshot_sha256']
+        report=PAIRING['compare_native_pair'](torch.load(snapshot_path,map_location='cpu',weights_only=False),
+            torch.load(initial['snapshot']['path'],map_location='cpu',weights_only=False))
+        assert report==initial['report'] and report['matched']
         return row
 
     tables={}
@@ -262,15 +298,15 @@ def summarize(binding):
                 path=(TRAIN/'evaluation'/f'rank-{index%2:02d}'/'K0'/name/f'case-{index:03d}'/'query/result.json'
                     if cohort=='ID' and not FRESH_ID else OUT/'episodes'/cohort/f'case-{index:03d}'/name/'K0/query/result.json')
                 row=verified(path,cohort,index,name,'K0','query');zero[name].append(row)
-            assert len({(zero[name][-1]['initial_features_sha256'],zero[name][-1]['initial_base_sha256']) for name in METHODS})==1
+            assert len({zero[name][-1]['initial_pairing']['canonical']['sha256'] for name in METHODS})==1
             for name in FULL:
                 directory=(TRAIN/'evaluation'/f'rank-{index%2:02d}'/'K1'/name/f'case-{index:03d}'
                     if cohort=='ID' and index<8 and not FRESH_ID else OUT/'episodes'/cohort/f'case-{index:03d}'/name/'K1')
                 query=verified(directory/'query/result.json',cohort,index,name,'K1','query')
                 previous=verified(directory/'support/result.json',cohort,index,name,'K1','support')
                 assert query['candidate']==binding['selected'][name]['candidate']
-                assert query['initial_features_sha256']==zero[name][-1]['initial_features_sha256']
-                assert query['initial_base_sha256']==zero[name][-1]['initial_base_sha256']
+                assert query['initial_pairing']['canonical']==zero[name][-1]['initial_pairing']['canonical']
+                assert previous['initial_pairing']['canonical']==query['initial_pairing']['canonical']
                 one[name].append(query);support[name].append(previous)
         controls={name:[row['success'] for row in rows] for name,rows in zero.items()}
         primary=dict(controls)
@@ -287,6 +323,8 @@ def summarize(binding):
         ID=tables['ID'],OOD=tables['OOD'],
         OOD_meaning='CloseFridge held out from controller training, not necessarily foundation pretraining',
         single_source_task=True,single_seed=True,source_streams_span_different_scenes=True,
+        pairing_contract=binding['pairing']['contract'],
+        render_roundoff='Exact native scene/state/camera and public state; RGB differences at most1/255 per component; unmodified policy inputs; feature/base hashes need not be bitwise identical across resets',
         reward='simulator-reward development pilot, not Flora result')
     write(OUT/'RESULT.json',result)
     lines=['# One-shot ID/OOD comparison','','Full students use one complete support then a separate query. PPO/static are context-blind query controls.','',
@@ -303,6 +341,9 @@ def main():
     if args.check_plan:check_plan();return
     if args.bind:bind();return
     binding=json.loads((OUT/'binding.json').read_text());assert head(CORE)==binding['runtime_core_commit']==CORE_PIN
+    assert binding['pairing']['directory']==str(CASE_BANK)
+    assert read_ref(binding['pairing']['contract'])['pairing_code_sha256']==sha(PAIRING_PATH)
+    assert binding['pairing']['code']==ref(PAIRING_PATH)
     assert binding['methods']==list(METHODS) and binding['fresh_ID']==FRESH_ID
     assert head(CODE)==binding['evaluation_driver_commit'] and clean(CORE) and clean(CODE)
     if args.summarize:summarize(binding);return

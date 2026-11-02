@@ -62,6 +62,11 @@ an atomic `training-status.json` per fit; readout dispatch selects explicit
 ready methods rather than admitting a whole experiment at once. Archived
 combined drivers require an explicit `--legacy-combined` opt-in.
 
+Verify paired robot cases from native scene/state and camera observations before
+actions. Qualify and record backend numerical tolerances using unchanged-input
+replays; transformed feature hashes alone are not physical case identifiers.
+Keep original policy observations and retain per-episode pairing evidence.
+
 | Path | Contents |
 | --- | --- |
 | `src/fluffy_bassoon/meta_rl/` | Trial environments, PPO/SAC, DSRL drivers (`vla_target_online_dsrl*`, `dsrl_pi0_replication`), headroom screen (`vla_headroom_screen`), RLinf motor (`vla_rlinf_libero`), RLinf native PPO (`rlinf_native_ppo*`), source40 pipeline (`vla_source40_*`), RoboTwin (`robotwin_*`), Meta-World (`metaworld_*`) |
