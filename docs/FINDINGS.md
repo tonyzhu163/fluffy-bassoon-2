@@ -275,6 +275,16 @@ from measured clocks. Source checkpoints and pinned worktrees remain preserved.
 [final resource accounting](../outputs/opendrawer-attempts50-20261102-r1/FINAL-ACCOUNTING.json),
 [consolidated recent results and next-decision rationale](../outputs/opendrawer-results-rollup-20261102-r1/RESULTS.md).
 
+The native-resampling arm now quantifies noise on80 selected anchor-failure
+cases (four tasks, eight draws each,600 controls):21 cases fail all eight,
+59 have mixed outcomes and none succeeds all eight. OpenDrawer redraws
+succeed79/160 times and recover19/20 anchor failures at least once;12/20
+cases have3–5 successes. These conditional TRAIN banks and horizons differ
+from the AD/DPT held-out panel. Eight draws cannot establish p=0 or p=1;
+oracle best-of8 recovery is a diagnostic, not an ICRL ceiling. This makes
+matched empty-memory motor streams essential before claiming memory gains.
+[Per-case estimates and uncertainty](../outputs/opendrawer-memory-controls-20261102-r1/NOISE.md).
+
 ## LIBERO
 
 **Flora versus simulator PPO stopped before training (2026-11-01).** The

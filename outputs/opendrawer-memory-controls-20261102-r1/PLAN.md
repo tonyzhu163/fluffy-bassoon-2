@@ -50,5 +50,5 @@ Flora optimization remains parked until simulator-reward improvement passes
 and the observed false-full-score failure problem is corrected and qualified
 on held-out failures and successes. Do not launch more history collection.
 
-Resource binding and scheduler ID will be added only after actual allocation.
+Request four2-GPU workers (8 GPUs total),64 CPUs/256GiB RAM/32GiB SHM per worker, for at most180minutes (86400 GPU-seconds). The driver has a175-minute operational deadline and preserves partial records on failure. Source/checkpoint binding and core checks run before GPU allocation. Resource binding and scheduler ID will be added only after actual allocation.
 No automatic retries; monitor launched work every20minutes.
