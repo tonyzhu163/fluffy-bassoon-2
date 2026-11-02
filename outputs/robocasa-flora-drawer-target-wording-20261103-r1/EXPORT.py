@@ -15,7 +15,7 @@ paths = sorted(set([*root.glob('*.json'), *(root/'scoring').glob('*.json'),
     *(root/'scoring').glob('*.jsonl'), root/'allocation/gpu-probe.json', root/'allocation/scorer.log']))
 manifest = dict(completed=True, source_commit=charge['source_commit'],
     files={str(path.relative_to(root)): hashlib.sha256(path.read_bytes()).hexdigest() for path in paths})
-archive = Path('/root/workspace/drawer-clause-r1-evidence.zip')
+archive = Path('/root/workspace/drawer-target-r1-evidence.zip')
 with zipfile.ZipFile(archive, 'x', zipfile.ZIP_DEFLATED) as output:
     for path in paths:
         output.write(path, str(path.relative_to(root)))
