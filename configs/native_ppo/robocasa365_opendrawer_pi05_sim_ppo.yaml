@@ -199,3 +199,11 @@ reward:
   use_reward_model: false
 critic:
   use_critic_model: false
+
+# Boundary/history sidecars for the unmodified native PPO/Flow-SDE learner.
+native_pilot:
+  output: ${oc.env:ROBOCASA_SIM_PPO_OUTPUT}
+  accounting_root: ${oc.env:ROBOCASA_SIM_PPO_ACCOUNTING}
+  world_size: 2
+  attempt: ${oc.env:TASK_ATTEMPT}
+  deadline_unix: ${oc.decode:${oc.env:TASK_DEADLINE}}

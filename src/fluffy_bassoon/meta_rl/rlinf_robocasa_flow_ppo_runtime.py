@@ -1,0 +1,272 @@
+"""Instrument the native RLinf learner without replacing PPO or sampling.
+
+Each episode uses a fresh deterministic native constructor. This makes the
+next complete-iteration boundary recoverable without pickling MuJoCo state.
+Actor/Adam/LR/RNG use RLinf DCP; sidecars retain rollout RNG and case cursors.
+"""
+from copy import deepcopy
+import gzip
+import json
+import os
+from pathlib import Path
+import random
+import time
+
+import numpy as np
+import torch
+from omegaconf import OmegaConf
+from rlinf.runners.embodied_runner import EmbodiedRunner
+from rlinf.workers.actor.embodied_fsdp_actor_worker import EmbodiedFSDPActor
+from rlinf.workers.env.env_worker import EnvWorker
+
+from .rlinf_native_ppo import ActionJournal, cpu_tree, restore_rng, snapshot_rng, tensor_hash, write
+from .rlinf_native_ppo_runtime import PilotActor, PilotRollout, PilotRunner, save_tensor
+from .rlinf_robocasa_flow_ppo import first_success_reward
+from .rlinf_robocasa_ppo_env import counted_native_factory
+from .robocasa_pairing import canonical_case, native_fingerprint, public_snapshot
+
+
+def unwrapped(env):
+    while '_flow_round' not in vars(env):
+        env = env.env
+    return env
+
+
+def fresh_factory(factory, seed):
+    def create():
+        random.seed(seed)
+        np.random.seed(seed)
+        env = counted_native_factory(factory, physics_tick_limit=(400 + 128) * 128)()
+        reset = env.reset
+
+        def recorded_reset(*args, **kwargs):
+            result = reset(*args, **kwargs)
+            env._flow_physical = native_fingerprint(env)
+            return result
+        env.reset = recorded_reset
+        return env
+    return create
+
+
+def native_class(original, owner):
+    class FlowRoboCasa(original):
+        def __init__(self, *args, **kwargs):
+            self._flow_round = -1
+            super().__init__(*args, **kwargs)
+
+        def _init_env(self):
+            self._refresh_task_context()  # construct only actual episode banks
+
+        def _calc_step_reward(self, terminations):
+            return first_success_reward(terminations, self.success_once, self.cfg.reward_coef)
+
+        def reset(self, env_idx=None, options=None):
+            if env_idx is not None or options is not None:
+                raise ValueError('Flow PPO uses complete fixed-horizon vector resets')
+            if hasattr(self, 'env'):
+                self.env.close()
+            self._flow_round += 1
+            is_eval = bool(self.cfg.is_eval)
+            # Four fresh128-episode TRAIN banks per iteration; fixed64 eval.
+            offset = 0 if is_eval else owner._flow_iteration * 128 + self._flow_round * 32
+            self.env_seeds = [int(self.cfg.seed) + offset + owner._rank * self.num_envs + i
+                              for i in range(self.num_envs)]
+            self.task_ids = np.zeros(self.num_envs, dtype=np.int32)
+            self._refresh_task_context()
+            self._is_start = True
+            from rlinf.envs.sim.robocasa.venv import RobocasaSubprocEnv
+            token = owner._flow_journal.begin(self.num_envs * 128,
+                phase=owner._flow_phase + '/native_constructor_reset')
+            self.env = RobocasaSubprocEnv([fresh_factory(fn, seed) for fn, seed in
+                zip(super().get_env_fns(), self.env_seeds, strict=True)])
+            observation, info = super().reset()
+            counts = self.env.get_env_attr('_flora_accounting')
+            owner._flow_journal.finish(token, sum(c['reset_controls'] for c in counts))
+            self._flow_steps = 0
+            self._flow_current = cpu_tree(observation)
+            self._flow_first_success = [None] * self.num_envs
+            phase = owner._flow_phase
+            self._flow_key = f'{phase}-i{owner._flow_iteration:03d}-round{self._flow_round:02d}'
+            self._flow_root = Path(owner.cfg.native_pilot.output) / 'environment' / f'rank-{owner._rank:02d}'
+            case = dict(task='OpenDrawer', seeds=self.env_seeds, split='target', horizon=400)
+            snapshot = public_snapshot(observation, case, self.env.get_env_attr('_flow_physical'))
+            initial = self._flow_root / (self._flow_key + '-initial.pt')
+            self._flow_initial = save_tensor(initial, snapshot)
+            if is_eval:
+                canonical, report = canonical_case(Path(owner.cfg.native_pilot.output) / 'canonical-eval' /
+                    f'rank-{owner._rank:02d}', snapshot, save=save_tensor,
+                    load=lambda p: torch.load(p, map_location='cpu', weights_only=False),
+                    source=dict(source=os.environ['TASK_CODE_PIN'], policy_iteration=owner._flow_iteration))
+                write(initial.with_suffix('.json'), dict(canonical=str(canonical), report=report,
+                      initial=self._flow_initial))
+            return observation, info
+
+        def step(self, actions=None, auto_reset=True):
+            result = super().step(actions, auto_reset=False)
+            if actions is not None:
+                self._flow_steps += 1
+                for i, succeeded in enumerate(self.success_once):
+                    if succeeded and self._flow_first_success[i] is None:
+                        self._flow_first_success[i] = self._flow_steps
+            if self._flow_steps == 400:
+                counts = self.env.get_env_attr('_flora_accounting')
+                assert all(c['controls'] - c['reset_controls'] == 400 for c in counts)
+                finals = [bool(info.get('success', False)) for info in self.current_info_list]
+                rows = [dict(seed=seed, success_once=first is not None, first_success_control=first,
+                    success_at_end=final, native_counts=count) for seed, first, final, count in
+                    zip(self.env_seeds, self._flow_first_success, finals, counts, strict=True)]
+                write(self._flow_root / (self._flow_key + '-episodes.json'),
+                    dict(completed=True, phase=owner._flow_phase, iteration=owner._flow_iteration,
+                         rank=owner._rank, initial=self._flow_initial, rows=rows))
+            return result
+
+        def chunk_step(self, actions):
+            if time.time() > float(owner.cfg.native_pilot.deadline_unix) - 180:
+                raise TimeoutError('Preserve last full boundary before allocation deadline')
+            requested = int(actions.shape[0] * actions.shape[1])
+            token = owner._flow_journal.begin(requested, phase=owner._flow_phase)
+            before = self._flow_current
+            result = super().chunk_step(actions)
+            owner._flow_journal.finish(token, requested)
+            path = self._flow_root / (self._flow_key + f'-chunk{self._flow_steps // 50:02d}.pt.gz')
+            with gzip.open(path, 'xb', compresslevel=1) as stream:
+                torch.save(dict(phase=owner._flow_phase, iteration=owner._flow_iteration,
+                    round=self._flow_round, seeds=self.env_seeds, current_observation=before,
+                    decoded_actions=cpu_tree(actions), rewards=cpu_tree(result[1]),
+                    terminations=cpu_tree(result[2]), truncations=cpu_tree(result[3]),
+                    final_info=cpu_tree(result[4][-1])), stream)
+            self._flow_current = cpu_tree(result[0][-1])
+            return result
+    return FlowRoboCasa
+
+
+class FlowActor(PilotActor):
+    def run_training(self):
+        before = self.optimizer_steps
+        batch_shape = tuple(self.rollout_batch['prev_logprobs'].shape)
+        metrics = EmbodiedFSDPActor.run_training(self)
+        assert self.optimizer_steps - before == 16, 'Global PPO optimizer schedule changed'
+        losses = {k: float(v) for k, v in metrics.items() if 'loss' in k or 'grad_norm' in k}
+        assert losses and all(np.isfinite(v) for v in losses.values()), losses
+        unchanged = self._pilot_frozen_before == self._pilot_frozen_signature()
+        assert unchanged, 'Frozen VLM changed during action-expert PPO'
+        write(Path(self.cfg.native_pilot.output) / 'updates' /
+            f'iteration-{self.version + 1:03d}-rank-{self._rank:02d}.json',
+            dict(completed=True, rank=self._rank, producing_policy_iteration=self.version,
+                 optimizer_steps_before=before, optimizer_steps_after=self.optimizer_steps,
+                 batch_shape=batch_shape, losses=losses, metrics={k: float(v) for k, v in metrics.items()},
+                 frozen_vlm_unchanged=unchanged))
+        return metrics
+
+
+class FlowRollout(PilotRollout):
+    pass
+
+
+class FlowEnvironment(EnvWorker):
+    def init_worker(self):
+        self._flow_phase = 'initialization'
+        self._flow_iteration = 0
+        self._flow_journal = ActionJournal(self.cfg.native_pilot.accounting_root,
+            rank=self._rank, world=self._world_size, attempt=self.cfg.native_pilot.attempt)
+        return super().init_worker()
+
+    def _setup_env_and_wrappers(self, env_cls, env_cfg, num_envs_per_stage):
+        assert self.stage_num == 1
+        return super()._setup_env_and_wrappers(native_class(env_cls, self), env_cfg, num_envs_per_stage)
+
+    def set_global_step(self, step):
+        self._flow_iteration = int(step)
+        for wrapped in self.env_list:
+            unwrapped(wrapped)._flow_round = -1
+        return super().set_global_step(step)
+
+    def pilot_phase(self, phase, *, policy_iteration=None):
+        self._flow_phase = phase
+        if policy_iteration is not None:
+            self._flow_iteration = int(policy_iteration)
+        for wrapped in self.eval_env_list:
+            unwrapped(wrapped)._flow_round = -1
+        return dict(rank=self._rank, phase=phase, charged=self._flow_journal.charged())
+
+    def pilot_rng(self, *, restore=False):
+        if restore:
+            restore_rng(self._flow_rng)
+        else:
+            self._flow_rng = snapshot_rng()
+        return dict(rank=self._rank, restored=restore)
+
+    def pilot_capture(self, directory, **kwargs):
+        samplers = []
+        for mode, envs in (('train', self.env_list), ('eval', self.eval_env_list)):
+            for ordinal, wrapped in enumerate(envs):
+                env = unwrapped(wrapped)
+                samplers.append(dict(mode=mode, ordinal=ordinal, seed=env.seed,
+                    generator=deepcopy(env._generator.bit_generator.state),
+                    round=env._flow_round, task_ids=env.task_ids.copy(),
+                    ordered_task_cursor=env._ordered_task_cursor))
+        return save_tensor(Path(directory) / f'env-{self._rank:02d}.pt',
+            dict(role='env', rank=self._rank, rng=snapshot_rng(), phase=self._flow_phase,
+                 iteration=self._flow_iteration, trajectory_step=self._trajectory_step,
+                 samplers=samplers, paired_eval_rng=getattr(self, '_flow_rng', None),
+                 recovery='Whole completed iteration; fresh seeded native constructors at next reset'))
+
+    def pilot_restore(self, directory):
+        state = torch.load(Path(directory) / f'env-{self._rank:02d}.pt', map_location='cpu', weights_only=False)
+        assert state['rank'] == self._rank
+        self._flow_phase, self._flow_iteration = state['phase'], state['iteration']
+        self._trajectory_step = state['trajectory_step']
+        self._flow_rng = state['paired_eval_rng']
+        for row in state['samplers']:
+            envs = self.env_list if row['mode'] == 'train' else self.eval_env_list
+            env = unwrapped(envs[row['ordinal']])
+            assert env.seed == row['seed']
+            env._generator.bit_generator.state = row['generator']
+            env._flow_round, env.task_ids = row['round'], row['task_ids']
+            env._ordered_task_cursor = row['ordered_task_cursor']
+            env._refresh_task_context()
+        self._prefetched_train_bootstrap = None
+        restore_rng(state['rng'])
+        return dict(role='env', rank=self._rank, restored=True)
+
+
+class FlowRunner(PilotRunner):
+    def _log_step_metrics(self, *args, **kwargs):
+        result = EmbodiedRunner._log_step_metrics(self, *args, **kwargs)
+        if self.global_step == 1 or self.global_step % 6 == 0 or self.global_step == self.max_steps:
+            self._capture_boundary()
+        write(Path(self.cfg.native_pilot.output) / 'progress.json',
+            dict(completed_iterations=self.global_step, target_iterations=self.max_steps,
+                 checked_unix=time.time()))
+        return result
+
+    def run(self):
+        output = Path(self.cfg.native_pilot.output)
+        write(output / 'resolved-config.json', OmegaConf.to_container(self.cfg, resolve=True))
+        if self.cfg.runner.get('resume_dir'):
+            for group in (self.actor, self.rollout, self.env):
+                group.pilot_restore(str(Path(self.cfg.runner.resume_dir) / 'pilot')).wait()
+        else:
+            self.update_rollout_weights()
+            for group in (self.actor, self.rollout, self.env):
+                group.pilot_rng().wait()
+            self._capture_boundary()
+            self.env.pilot_phase('before', policy_iteration=0).wait()
+            self.rollout.pilot_evaluation_iteration(0).wait()
+            before = self.evaluate()
+            write(output / 'before-evaluation.json', dict(completed=True, metrics=before))
+            success = float(before['success_once'])
+            if not .05 <= success <= .70:
+                raise RuntimeError(f'Before-panel task admission requires human decision: success_once={success}')
+            for group in (self.actor, self.rollout, self.env):
+                group.pilot_rng(restore=True).wait()
+        self.env.pilot_phase('training').wait()
+        EmbodiedRunner.run(self)
+        assert self.global_step == 18
+        self.update_rollout_weights()
+        self.rollout.pilot_rng(restore=True).wait()
+        self.env.pilot_rng(restore=True).wait()
+        self.env.pilot_phase('after', policy_iteration=18).wait()
+        self.rollout.pilot_evaluation_iteration(18).wait()
+        after = self.evaluate()
+        write(output / 'after-evaluation.json', dict(completed=True, global_step=18, metrics=after))
