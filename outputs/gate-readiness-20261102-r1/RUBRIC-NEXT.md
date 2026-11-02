@@ -1,6 +1,6 @@
 # Continue rubric iteration; compare explicit binary completion
 
-The human-selected next iteration is the [visible completed-state drawer rule](../robocasa-flora-rubric-failure-sample-20261102-r2/revision1_3.json): reserve Score5 until completion is visibly established, retaining1–4 for progress. Its14-video graded check passes Linux preparation but has no new model scores because Baige job creation returned a system service exception; see [status](../robocasa-flora-rubric-failure-sample-20261102-r2/STATUS.md).
+The human-selected next iteration is the [visible completed-state drawer rule](../robocasa-flora-rubric-failure-sample-20261102-r2/revision1_3.json): reserve Score5 until completion is visibly established, retaining1–4 for progress. Its14-video graded check passes Linux preparation; after the earlier service failure, the human-requested retry is now running as Baige job-of3hcwyigjtu, with no completed result yet; see [status](../robocasa-flora-rubric-failure-sample-20261102-r2/STATUS.md).
 
 The subsequent [twenty-video failure sample](../robocasa-flora-rubric-failure-sample-20261102-r1/RESULT.md)
 has now tested two iterations of revision1 and matched direct-binary outputs.
