@@ -224,6 +224,19 @@ but rejects every true control (1/2 full-score failures,0/4 controls, versus
 2/2 and3/4 for verbatim1.1);1.7 gives2/2 and1/4, and1.8 gives2/2 and0/4.
 All six baseline grades reproduce. None passes its frozen promotion rule.
 [Exact task texts and paired results](../outputs/robocasa-flora-rubric-short-sample-20261103-r1/RESULT.md).
+A causal-prefix check on six retained trajectories gives a narrower positive
+result and a remaining tradeoff. On35 selected prefixes,1.6 removes all10
+sampled pre-success/wrong-target full scores from1.1, including every wrong-
+drawer112 probe. It recognises64/72/264 after native success, but misses128/144
+that1.1 accepts; both have three episodes with a first sampled positive after
+native success. A post-hoc Score>=4/two-probe screen recognises4/5 successful
+episodes with no observed false trigger, still missing128. Only112 has the
+full50-control probe grid; successful cases have four selected probes each.
+These results neither qualify an online first-success detector nor justify
+promoting the fitted threshold. The corrected retry completed70 labels,
+including8 recovered baseline outputs, with673 worker GPU-seconds; the failed
+allocation remains separately charged520. No new robot actions or SGD.
+[Per-case times, raw scores and limits](../outputs/robocasa-flora-first-success-rubric-20261103-r2/RESULT.md).
 An offline threshold screen on the same634 retained videos also leaves Flora
 unqualified: on the original TRAIN scores, reward>=.90 gives89 true positives
 and9 false positives (90.8% precision,44.3% recall); >=.95 gives15 and3

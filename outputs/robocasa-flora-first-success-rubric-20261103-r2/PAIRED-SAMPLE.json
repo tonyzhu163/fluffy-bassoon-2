@@ -1,0 +1,1927 @@
+[
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-50",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 50,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.0007077325506684e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-50/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 1,
+        "expected_score": 1.6929,
+        "progress": 0.1732,
+        "probabilities": {
+          "1": 0.5229,
+          "2": 0.3594,
+          "3": 0.0625,
+          "4": 0.0123,
+          "5": 0.0429
+        },
+        "rationale": null,
+        "duration_s": 2.55,
+        "sampled_frames": 24,
+        "output": "Score: 1",
+        "observed_through": 50,
+        "prefix_frame_count": 51,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-50/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 1.7935,
+        "progress": 0.1984,
+        "probabilities": {
+          "1": 0.5111,
+          "2": 0.31,
+          "3": 0.1006,
+          "4": 0.0307,
+          "5": 0.0475
+        },
+        "rationale": null,
+        "duration_s": 2.55,
+        "sampled_frames": 24,
+        "output": "Score: 1",
+        "observed_through": 50,
+        "prefix_frame_count": 51,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-100",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 100,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.0009089410889173e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-100/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 2,
+        "expected_score": 2.0281,
+        "progress": 0.257,
+        "probabilities": {
+          "1": 0.2944,
+          "2": 0.4854,
+          "3": 0.1576,
+          "4": 0.0227,
+          "5": 0.0398
+        },
+        "rationale": null,
+        "duration_s": 5.05,
+        "sampled_frames": 50,
+        "output": "Score: 2",
+        "observed_through": 100,
+        "prefix_frame_count": 101,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-100/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 1.9229,
+        "progress": 0.2307,
+        "probabilities": {
+          "1": 0.4157,
+          "2": 0.3669,
+          "3": 0.135,
+          "4": 0.0438,
+          "5": 0.0387
+        },
+        "rationale": null,
+        "duration_s": 5.05,
+        "sampled_frames": 50,
+        "output": "Score: 1",
+        "observed_through": 100,
+        "prefix_frame_count": 101,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-150",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 150,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.00062545486829e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-150/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 1,
+        "expected_score": 2.1976,
+        "progress": 0.2994,
+        "probabilities": {
+          "1": 0.4039,
+          "2": 0.245,
+          "3": 0.1908,
+          "4": 0.0702,
+          "5": 0.0901
+        },
+        "rationale": null,
+        "duration_s": 7.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 150,
+        "prefix_frame_count": 151,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-150/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.0851,
+        "progress": 0.2713,
+        "probabilities": {
+          "1": 0.4345,
+          "2": 0.2635,
+          "3": 0.1598,
+          "4": 0.0666,
+          "5": 0.0755
+        },
+        "rationale": null,
+        "duration_s": 7.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 150,
+        "prefix_frame_count": 151,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-200",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 200,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.0003338268378076e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-200/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 3,
+        "expected_score": 3.4317,
+        "progress": 0.6079,
+        "probabilities": {
+          "1": 0.0747,
+          "2": 0.1395,
+          "3": 0.2953,
+          "4": 0.2606,
+          "5": 0.23
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-200/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 2,
+        "expected_score": 2.6311,
+        "progress": 0.4078,
+        "probabilities": {
+          "1": 0.2288,
+          "2": 0.2593,
+          "3": 0.2593,
+          "4": 0.1573,
+          "5": 0.0954
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 2",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-250",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 250,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.0001153890211973e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-250/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 3,
+        "expected_score": 2.9447,
+        "progress": 0.4862,
+        "probabilities": {
+          "1": 0.0716,
+          "2": 0.25,
+          "3": 0.4121,
+          "4": 0.1947,
+          "5": 0.0716
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 3",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-250/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 2,
+        "expected_score": 2.2823,
+        "progress": 0.3206,
+        "probabilities": {
+          "1": 0.2411,
+          "2": 0.3976,
+          "3": 0.2411,
+          "4": 0.0783,
+          "5": 0.0419
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 2",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-300",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 300,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.0000034325323948e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-300/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.2992,
+        "progress": 0.8248,
+        "probabilities": {
+          "1": 0.0073,
+          "2": 0.0186,
+          "3": 0.1212,
+          "4": 0.3734,
+          "5": 0.4795
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-300/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.3598,
+        "progress": 0.3399,
+        "probabilities": {
+          "1": 0.3486,
+          "2": 0.2114,
+          "3": 0.2715,
+          "4": 0.0686,
+          "5": 0.0999
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-350",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 350,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.0017646113898718e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-350/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 4,
+        "expected_score": 4.2007,
+        "progress": 0.8002,
+        "probabilities": {
+          "1": 0.0069,
+          "2": 0.0089,
+          "3": 0.115,
+          "4": 0.5152,
+          "5": 0.3541
+        },
+        "rationale": null,
+        "duration_s": 17.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 350,
+        "prefix_frame_count": 351,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-350/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.3909,
+        "progress": 0.3477,
+        "probabilities": {
+          "1": 0.3807,
+          "2": 0.1798,
+          "3": 0.2309,
+          "4": 0.0849,
+          "5": 0.1236
+        },
+        "rationale": null,
+        "duration_s": 17.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 350,
+        "prefix_frame_count": 351,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-400",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 400,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 9.999112967763686e-06,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-400/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 4,
+        "expected_score": 4.3235,
+        "progress": 0.8309,
+        "probabilities": {
+          "1": 0.0045,
+          "2": 0.0083,
+          "3": 0.0744,
+          "4": 0.4849,
+          "5": 0.4279
+        },
+        "rationale": null,
+        "duration_s": 20.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 400,
+        "prefix_frame_count": 401,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-400/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.111,
+        "progress": 0.2778,
+        "probabilities": {
+          "1": 0.469,
+          "2": 0.1955,
+          "3": 0.1725,
+          "4": 0.0815,
+          "5": 0.0815
+        },
+        "rationale": null,
+        "duration_s": 20.05,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 400,
+        "prefix_frame_count": 401,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-450",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 450,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.0000418985163554e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-450/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.5365,
+        "progress": 0.8841,
+        "probabilities": {
+          "1": 0.0083,
+          "2": 0.0156,
+          "3": 0.0698,
+          "4": 0.2437,
+          "5": 0.6625
+        },
+        "rationale": null,
+        "duration_s": 22.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 450,
+        "prefix_frame_count": 451,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-450/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.4006,
+        "progress": 0.3502,
+        "probabilities": {
+          "1": 0.3349,
+          "2": 0.2302,
+          "3": 0.2302,
+          "4": 0.1087,
+          "5": 0.096
+        },
+        "rationale": null,
+        "duration_s": 22.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 450,
+        "prefix_frame_count": 451,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-500",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 500,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 9.999418538570747e-06,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-500/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.8542,
+        "progress": 0.9635,
+        "probabilities": {
+          "1": 0.0089,
+          "2": 0.0048,
+          "3": 0.0189,
+          "4": 0.0581,
+          "5": 0.9093
+        },
+        "rationale": null,
+        "duration_s": 25.05,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 500,
+        "prefix_frame_count": 501,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-500/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.1092,
+        "progress": 0.2773,
+        "probabilities": {
+          "1": 0.533,
+          "2": 0.1189,
+          "3": 0.173,
+          "4": 0.0562,
+          "5": 0.1189
+        },
+        "rationale": null,
+        "duration_s": 25.05,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 500,
+        "prefix_frame_count": 501,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-550",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 550,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.002822553374459e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-550/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.8098,
+        "progress": 0.9525,
+        "probabilities": {
+          "1": 0.0097,
+          "2": 0.0076,
+          "3": 0.0234,
+          "4": 0.0816,
+          "5": 0.8776
+        },
+        "rationale": null,
+        "duration_s": 27.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 550,
+        "prefix_frame_count": 551,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-550/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.6228,
+        "progress": 0.4057,
+        "probabilities": {
+          "1": 0.3214,
+          "2": 0.172,
+          "3": 0.2209,
+          "4": 0.134,
+          "5": 0.1518
+        },
+        "rationale": null,
+        "duration_s": 27.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 550,
+        "prefix_frame_count": 551,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-600",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 600,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 9.986490501923084e-06,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-600/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.6983,
+        "progress": 0.9246,
+        "probabilities": {
+          "1": 0.0149,
+          "2": 0.0132,
+          "3": 0.046,
+          "4": 0.1104,
+          "5": 0.8155
+        },
+        "rationale": null,
+        "duration_s": 30.05,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 600,
+        "prefix_frame_count": 601,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-600/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 1.9077,
+        "progress": 0.2269,
+        "probabilities": {
+          "1": 0.5383,
+          "2": 0.198,
+          "3": 0.1542,
+          "4": 0.0366,
+          "5": 0.0728
+        },
+        "rationale": null,
+        "duration_s": 30.05,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 600,
+        "prefix_frame_count": 601,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-650",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 650,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.002249260105753e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-650/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.5632,
+        "progress": 0.8908,
+        "probabilities": {
+          "1": 0.0173,
+          "2": 0.0223,
+          "3": 0.0777,
+          "4": 0.1452,
+          "5": 0.7374
+        },
+        "rationale": null,
+        "duration_s": 32.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 650,
+        "prefix_frame_count": 651,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-650/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.1036,
+        "progress": 0.2759,
+        "probabilities": {
+          "1": 0.4637,
+          "2": 0.2191,
+          "3": 0.1706,
+          "4": 0.0431,
+          "5": 0.1035
+        },
+        "rationale": null,
+        "duration_s": 32.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 650,
+        "prefix_frame_count": 651,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-700",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 700,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.002214104460742e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-700/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.6099,
+        "progress": 0.9025,
+        "probabilities": {
+          "1": 0.0138,
+          "2": 0.0156,
+          "3": 0.07,
+          "4": 0.1482,
+          "5": 0.7524
+        },
+        "rationale": null,
+        "duration_s": 35.05,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 700,
+        "prefix_frame_count": 701,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-700/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 1.8264,
+        "progress": 0.2066,
+        "probabilities": {
+          "1": 0.5397,
+          "2": 0.225,
+          "3": 0.1546,
+          "4": 0.0304,
+          "5": 0.0502
+        },
+        "rationale": null,
+        "duration_s": 35.05,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 700,
+        "prefix_frame_count": 701,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-750",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001",
+    "control": 750,
+    "native_first_success": null,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 1.0016494896012307e-05,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000112-rank-06-episode-000001.json",
+    "replay_sha256": "c81a01d9e4995f74ecef5a9681062271cb24759a27d4cf01fbe59e55e91d4a9a",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-750/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.8081,
+        "progress": 0.952,
+        "probabilities": {
+          "1": 0.0098,
+          "2": 0.0067,
+          "3": 0.0301,
+          "4": 0.0723,
+          "5": 0.881
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-750/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.584,
+        "progress": 0.396,
+        "probabilities": {
+          "1": 0.3007,
+          "2": 0.2342,
+          "3": 0.2066,
+          "4": 0.0976,
+          "5": 0.1609
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-500",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001",
+    "control": 500,
+    "native_first_success": 542,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 0.005579599158165955,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000064-rank-00-episode-000001.json",
+    "replay_sha256": "40cc7262049b6c4a4a90f5e0e13d06aa8bc726b28327a9120b45cc2b0f0e1184",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-500/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 1,
+        "expected_score": 2.232,
+        "progress": 0.308,
+        "probabilities": {
+          "1": 0.3454,
+          "2": 0.3048,
+          "3": 0.2095,
+          "4": 0.053,
+          "5": 0.0873
+        },
+        "rationale": null,
+        "duration_s": 25.05,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 500,
+        "prefix_frame_count": 501,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-500/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 1.9949,
+        "progress": 0.2487,
+        "probabilities": {
+          "1": 0.4345,
+          "2": 0.2986,
+          "3": 0.1598,
+          "4": 0.0519,
+          "5": 0.0552
+        },
+        "rationale": null,
+        "duration_s": 25.05,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 500,
+        "prefix_frame_count": 501,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-550",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001",
+    "control": 550,
+    "native_first_success": 542,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.2489801369685916,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000064-rank-00-episode-000001.json",
+    "replay_sha256": "40cc7262049b6c4a4a90f5e0e13d06aa8bc726b28327a9120b45cc2b0f0e1184",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-550/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.2812,
+        "progress": 0.8203,
+        "probabilities": {
+          "1": 0.0316,
+          "2": 0.0669,
+          "3": 0.125,
+          "4": 0.1416,
+          "5": 0.6348
+        },
+        "rationale": null,
+        "duration_s": 27.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 550,
+        "prefix_frame_count": 551,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-550/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 5,
+        "expected_score": 3.0174,
+        "progress": 0.5043,
+        "probabilities": {
+          "1": 0.2252,
+          "2": 0.1987,
+          "3": 0.1987,
+          "4": 0.0882,
+          "5": 0.2892
+        },
+        "rationale": null,
+        "duration_s": 27.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 550,
+        "prefix_frame_count": 551,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-600",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001",
+    "control": 600,
+    "native_first_success": 542,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.2811948398726491,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000064-rank-00-episode-000001.json",
+    "replay_sha256": "40cc7262049b6c4a4a90f5e0e13d06aa8bc726b28327a9120b45cc2b0f0e1184",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-600/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.8081,
+        "progress": 0.952,
+        "probabilities": {
+          "1": 0.0077,
+          "2": 0.0144,
+          "3": 0.0305,
+          "4": 0.0569,
+          "5": 0.8905
+        },
+        "rationale": null,
+        "duration_s": 30.05,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 600,
+        "prefix_frame_count": 601,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-600/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 5,
+        "expected_score": 3.7282,
+        "progress": 0.6821,
+        "probabilities": {
+          "1": 0.0994,
+          "2": 0.1276,
+          "3": 0.1638,
+          "4": 0.1638,
+          "5": 0.4454
+        },
+        "rationale": null,
+        "duration_s": 30.05,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 600,
+        "prefix_frame_count": 601,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-750",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001",
+    "control": 750,
+    "native_first_success": 542,
+    "native_current_success": false,
+    "native_ever_success": true,
+    "normalized_opening": 0.8205079455856062,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000064-rank-00-episode-000001.json",
+    "replay_sha256": "40cc7262049b6c4a4a90f5e0e13d06aa8bc726b28327a9120b45cc2b0f0e1184",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-750/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.8942,
+        "progress": 0.9735,
+        "probabilities": {
+          "1": 0.0072,
+          "2": 0.0072,
+          "3": 0.0135,
+          "4": 0.0285,
+          "5": 0.9436
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-750/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 5,
+        "expected_score": 3.7505,
+        "progress": 0.6876,
+        "probabilities": {
+          "1": 0.0674,
+          "2": 0.126,
+          "3": 0.1833,
+          "4": 0.2353,
+          "5": 0.388
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-350",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006",
+    "control": 350,
+    "native_first_success": 384,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": -8.757504580046343e-06,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000128-rank-00-episode-000006.json",
+    "replay_sha256": "547ec449dc13d1115d2622f54b5ee3f5678d565375ff86459bc12e7576333487",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-350/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 1,
+        "expected_score": 1.8408,
+        "progress": 0.2102,
+        "probabilities": {
+          "1": 0.4968,
+          "2": 0.3013,
+          "3": 0.1256,
+          "4": 0.017,
+          "5": 0.0593
+        },
+        "rationale": null,
+        "duration_s": 17.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 350,
+        "prefix_frame_count": 351,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-350/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 1.443,
+        "progress": 0.1108,
+        "probabilities": {
+          "1": 0.6739,
+          "2": 0.2479,
+          "3": 0.0553,
+          "4": 0.007,
+          "5": 0.0158
+        },
+        "rationale": null,
+        "duration_s": 17.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 350,
+        "prefix_frame_count": 351,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-400",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006",
+    "control": 400,
+    "native_first_success": 384,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.5161369074524107,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000128-rank-00-episode-000006.json",
+    "replay_sha256": "547ec449dc13d1115d2622f54b5ee3f5678d565375ff86459bc12e7576333487",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-400/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 3.1532,
+        "progress": 0.5383,
+        "probabilities": {
+          "1": 0.2793,
+          "2": 0.1495,
+          "3": 0.1164,
+          "4": 0.0485,
+          "5": 0.4063
+        },
+        "rationale": null,
+        "duration_s": 20.05,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 400,
+        "prefix_frame_count": 401,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-400/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 1.8252,
+        "progress": 0.2063,
+        "probabilities": {
+          "1": 0.579,
+          "2": 0.213,
+          "3": 0.1006,
+          "4": 0.0186,
+          "5": 0.0888
+        },
+        "rationale": null,
+        "duration_s": 20.05,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 400,
+        "prefix_frame_count": 401,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-450",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006",
+    "control": 450,
+    "native_first_success": 384,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.8176492758449527,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000128-rank-00-episode-000006.json",
+    "replay_sha256": "547ec449dc13d1115d2622f54b5ee3f5678d565375ff86459bc12e7576333487",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-450/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 3.6325,
+        "progress": 0.6581,
+        "probabilities": {
+          "1": 0.0934,
+          "2": 0.1541,
+          "3": 0.1978,
+          "4": 0.1359,
+          "5": 0.4188
+        },
+        "rationale": null,
+        "duration_s": 22.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 450,
+        "prefix_frame_count": 451,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-450/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.3651,
+        "progress": 0.3413,
+        "probabilities": {
+          "1": 0.378,
+          "2": 0.2598,
+          "3": 0.139,
+          "4": 0.0657,
+          "5": 0.1576
+        },
+        "rationale": null,
+        "duration_s": 22.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 450,
+        "prefix_frame_count": 451,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-750",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006",
+    "control": 750,
+    "native_first_success": 384,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.8176492323636342,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000128-rank-00-episode-000006.json",
+    "replay_sha256": "547ec449dc13d1115d2622f54b5ee3f5678d565375ff86459bc12e7576333487",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-750/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 3.5477,
+        "progress": 0.6369,
+        "probabilities": {
+          "1": 0.1038,
+          "2": 0.1333,
+          "3": 0.194,
+          "4": 0.2491,
+          "5": 0.3198
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-750/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 1.9091,
+        "progress": 0.2273,
+        "probabilities": {
+          "1": 0.4482,
+          "2": 0.308,
+          "3": 0.1649,
+          "4": 0.0444,
+          "5": 0.0346
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-200",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000",
+    "control": 200,
+    "native_first_success": 208,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 0.7288782842760492,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000072-rank-01-episode-000000.json",
+    "replay_sha256": "45b338647f91f4d86f264aa582b3260115173c67ae022118c035da065404dcaf",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-200/revision1_1",
+        "task": "Open the right drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 3.9044,
+        "progress": 0.7261,
+        "probabilities": {
+          "1": 0.1024,
+          "2": 0.0797,
+          "3": 0.149,
+          "4": 0.149,
+          "5": 0.5199
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-200/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.8488,
+        "progress": 0.7122,
+        "probabilities": {
+          "1": 0.0384,
+          "2": 0.0812,
+          "3": 0.1949,
+          "4": 0.3641,
+          "5": 0.3213
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-250",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000",
+    "control": 250,
+    "native_first_success": 208,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.5085123404693686,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000072-rank-01-episode-000000.json",
+    "replay_sha256": "45b338647f91f4d86f264aa582b3260115173c67ae022118c035da065404dcaf",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-250/revision1_1",
+        "task": "Open the right drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.4454,
+        "progress": 0.8613,
+        "probabilities": {
+          "1": 0.0472,
+          "2": 0.0368,
+          "3": 0.0778,
+          "4": 0.0999,
+          "5": 0.7383
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-250/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 5,
+        "expected_score": 3.1958,
+        "progress": 0.5489,
+        "probabilities": {
+          "1": 0.2334,
+          "2": 0.1416,
+          "3": 0.1604,
+          "4": 0.1249,
+          "5": 0.3396
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-300",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000",
+    "control": 300,
+    "native_first_success": 208,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.5085123488806598,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000072-rank-01-episode-000000.json",
+    "replay_sha256": "45b338647f91f4d86f264aa582b3260115173c67ae022118c035da065404dcaf",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-300/revision1_1",
+        "task": "Open the right drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.1171,
+        "progress": 0.7793,
+        "probabilities": {
+          "1": 0.056,
+          "2": 0.056,
+          "3": 0.1345,
+          "4": 0.2217,
+          "5": 0.5318
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-300/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.6579,
+        "progress": 0.4145,
+        "probabilities": {
+          "1": 0.268,
+          "2": 0.2365,
+          "3": 0.2087,
+          "4": 0.1434,
+          "5": 0.1434
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-750",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000",
+    "control": 750,
+    "native_first_success": 208,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.3657831821547164,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000072-rank-01-episode-000000.json",
+    "replay_sha256": "45b338647f91f4d86f264aa582b3260115173c67ae022118c035da065404dcaf",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-750/revision1_1",
+        "task": "Open the right drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 1,
+        "expected_score": 2.2189,
+        "progress": 0.3047,
+        "probabilities": {
+          "1": 0.3658,
+          "2": 0.2848,
+          "3": 0.1958,
+          "4": 0.072,
+          "5": 0.0816
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000072-rank-01-episode-000000/prefix-750/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 1.6653,
+        "progress": 0.1663,
+        "probabilities": {
+          "1": 0.5515,
+          "2": 0.2952,
+          "3": 0.1086,
+          "4": 0.0258,
+          "5": 0.0189
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-200",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001",
+    "control": 200,
+    "native_first_success": 216,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 0.6746267583777759,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000264-rank-01-episode-000001.json",
+    "replay_sha256": "366573b8f2e3872f812e7c2f95ec93bed44e5e22b08d57aebc3e6a42f53f449e",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-200/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.2099,
+        "progress": 0.8025,
+        "probabilities": {
+          "1": 0.0045,
+          "2": 0.023,
+          "3": 0.1927,
+          "4": 0.3176,
+          "5": 0.4622
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-200/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 4.1005,
+        "progress": 0.7751,
+        "probabilities": {
+          "1": 0.0019,
+          "2": 0.0109,
+          "3": 0.0915,
+          "4": 0.6762,
+          "5": 0.2195
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-250",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001",
+    "control": 250,
+    "native_first_success": 216,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.8159117173813064,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000264-rank-01-episode-000001.json",
+    "replay_sha256": "366573b8f2e3872f812e7c2f95ec93bed44e5e22b08d57aebc3e6a42f53f449e",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-250/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.6775,
+        "progress": 0.9194,
+        "probabilities": {
+          "1": 0.0027,
+          "2": 0.0056,
+          "3": 0.0417,
+          "4": 0.2116,
+          "5": 0.7385
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-250/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 4.3548,
+        "progress": 0.8387,
+        "probabilities": {
+          "1": 0.0013,
+          "2": 0.007,
+          "3": 0.0627,
+          "4": 0.4935,
+          "5": 0.4355
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-300",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001",
+    "control": 300,
+    "native_first_success": 216,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.8151441425313184,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000264-rank-01-episode-000001.json",
+    "replay_sha256": "366573b8f2e3872f812e7c2f95ec93bed44e5e22b08d57aebc3e6a42f53f449e",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-300/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.8191,
+        "progress": 0.9548,
+        "probabilities": {
+          "1": 0.0059,
+          "2": 0.0043,
+          "3": 0.0263,
+          "4": 0.0919,
+          "5": 0.8716
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-300/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 5,
+        "expected_score": 4.4658,
+        "progress": 0.8665,
+        "probabilities": {
+          "1": 0.0034,
+          "2": 0.0063,
+          "3": 0.0437,
+          "4": 0.4145,
+          "5": 0.5322
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-750",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001",
+    "control": 750,
+    "native_first_success": 216,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.815144217909221,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-first-success-rubric-20261103-r1/physics-replay/flora-single-case-000264-rank-01-episode-000001.json",
+    "replay_sha256": "366573b8f2e3872f812e7c2f95ec93bed44e5e22b08d57aebc3e6a42f53f449e",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-750/revision1_1",
+        "task": "Open the left drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.3361,
+        "progress": 0.834,
+        "probabilities": {
+          "1": 0.008,
+          "2": 0.018,
+          "3": 0.0971,
+          "4": 0.384,
+          "5": 0.493
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000264-rank-01-episode-000001/prefix-750/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 4.0376,
+        "progress": 0.7594,
+        "probabilities": {
+          "1": 0.0097,
+          "2": 0.0464,
+          "3": 0.1429,
+          "4": 0.4986,
+          "5": 0.3024
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-200",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004",
+    "control": 200,
+    "native_first_success": 222,
+    "native_current_success": false,
+    "native_ever_success": false,
+    "normalized_opening": 0.3707553466591283,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000144-rank-02-episode-000004.json",
+    "replay_sha256": "929d4ca04b6aa12da8d9670783a48ea28d48fd208384385415d6d046e5c182f9",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-200/revision1_1",
+        "task": "Open the right drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 4,
+        "expected_score": 3.7448,
+        "progress": 0.6862,
+        "probabilities": {
+          "1": 0.0267,
+          "2": 0.0876,
+          "3": 0.2697,
+          "4": 0.3463,
+          "5": 0.2697
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-200/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.8493,
+        "progress": 0.7123,
+        "probabilities": {
+          "1": 0.0173,
+          "2": 0.0603,
+          "3": 0.164,
+          "4": 0.5725,
+          "5": 0.1859
+        },
+        "rationale": null,
+        "duration_s": 10.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 200,
+        "prefix_frame_count": 201,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-250",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004",
+    "control": 250,
+    "native_first_success": 222,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.7021139821080846,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000144-rank-02-episode-000004.json",
+    "replay_sha256": "929d4ca04b6aa12da8d9670783a48ea28d48fd208384385415d6d046e5c182f9",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-250/revision1_1",
+        "task": "Open the right drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.4394,
+        "progress": 0.8598,
+        "probabilities": {
+          "1": 0.0028,
+          "2": 0.0041,
+          "3": 0.0468,
+          "4": 0.4436,
+          "5": 0.5027
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-250/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 3.9425,
+        "progress": 0.7356,
+        "probabilities": {
+          "1": 0.017,
+          "2": 0.0524,
+          "3": 0.1516,
+          "4": 0.5291,
+          "5": 0.2499
+        },
+        "rationale": null,
+        "duration_s": 12.55,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 250,
+        "prefix_frame_count": 251,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-300",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004",
+    "control": 300,
+    "native_first_success": 222,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.8164663654338535,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000144-rank-02-episode-000004.json",
+    "replay_sha256": "929d4ca04b6aa12da8d9670783a48ea28d48fd208384385415d6d046e5c182f9",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-300/revision1_1",
+        "task": "Open the right drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.9893,
+        "progress": 0.9973,
+        "probabilities": {
+          "1": 0.0013,
+          "2": 0.0003,
+          "3": 0.0008,
+          "4": 0.0028,
+          "5": 0.9948
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-300/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 4,
+        "expected_score": 4.2991,
+        "progress": 0.8248,
+        "probabilities": {
+          "1": 0.0076,
+          "2": 0.0172,
+          "3": 0.0874,
+          "4": 0.4439,
+          "5": 0.4439
+        },
+        "rationale": null,
+        "duration_s": 15.05,
+        "sampled_frames": 64,
+        "output": "Score: 4",
+        "observed_through": 300,
+        "prefix_frame_count": 301,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-750",
+    "episode_id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004",
+    "control": 750,
+    "native_first_success": 222,
+    "native_current_success": true,
+    "native_ever_success": true,
+    "normalized_opening": 1.81167811326595,
+    "replay_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-rubric-diagnosis-20261102-r1/physics-replay/flora-single-case-000144-rank-02-episode-000004.json",
+    "replay_sha256": "929d4ca04b6aa12da8d9670783a48ea28d48fd208384385415d6d046e5c182f9",
+    "labels": {
+      "revision1_1": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-750/revision1_1",
+        "task": "Open the right drawer.\n\nCompletion criteria:\nUse the native instruction to identify the requested object and target. Follow that same physical target across the synchronized left external, wrist and right external views. Compare the initial scene, the motion and the final state. Judge terminal completion, not effort or a moment of earlier progress that is undone. A correct target and its completed final state are both necessary. Use visible evidence across views; occlusion alone proves neither failure nor success. Do not impose extra requirements absent from the task. In particular, touching or continuing to hold a drawer handle or stove knob does not itself disqualify success.\n\nOpen the requested upper drawer completely. Left or right is relative to the robot at its initial position in the kitchen, not the left or right edge of the current camera image. Identify the intended drawer in the initial scene and keep following that drawer as viewpoints change. At the end its drawer box must be extended almost the full opening distance; a clear gap, visible contents or a partly extended drawer is only partial progress. Do not require every drawer in a stack to open, and do not require the gripper to release or retreat.",
+        "score": 5,
+        "expected_score": 4.8124,
+        "progress": 0.9531,
+        "probabilities": {
+          "1": 0.0086,
+          "2": 0.0067,
+          "3": 0.0302,
+          "4": 0.0724,
+          "5": 0.882
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 5",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      },
+      "revision1_6": {
+        "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-750/revision1_6",
+        "task": "Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.",
+        "score": 1,
+        "expected_score": 2.9562,
+        "progress": 0.489,
+        "probabilities": {
+          "1": 0.2246,
+          "2": 0.1982,
+          "3": 0.1982,
+          "4": 0.1544,
+          "5": 0.2246
+        },
+        "rationale": null,
+        "duration_s": 37.55,
+        "sampled_frames": 64,
+        "output": "Score: 1",
+        "observed_through": 750,
+        "prefix_frame_count": 751,
+        "score_protocol": "causal_prefix_terminal_v1"
+      }
+    }
+  }
+]
