@@ -1,0 +1,81 @@
+{
+  "format": "source_native_qualification_observation_v1",
+  "observed_UTC": "2026-11-03 04:04:55 UTC",
+  "producer_thread": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
+  "producer_cursor": "18018959-3992-4b70-ad1f-11a754359cf0:68",
+  "q1": {
+    "job": "job-mdxdgd91xn8o",
+    "status": "SUCCEEDED",
+    "source": "d3a861a6ac67f594902675cb36ddf0ee83608896",
+    "released": true,
+    "actual_complete_episodes_per_arm": 48,
+    "physical_policy_controls": 57600,
+    "scientific_updates": 0,
+    "creation_to_terminal_GPU_seconds_upper": 1331,
+    "source_admitted": false,
+    "reason": "Functionally passed; collection-only projections exceed 40 GPU hours/arm.",
+    "closeout": "outputs/robocasa-joint-steering-scale50-20261103-r1/native-q1/SCHEDULER-CLOSEOUT.json"
+  },
+  "q2": {
+    "job": "job-m2qlxqjuh8ho",
+    "source": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+    "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-native-qualification-20261103-r2",
+    "published_actual_probe": "passed",
+    "status": "active_native_qualification_not_scientific_PPO",
+    "readback": [
+      {
+        "file": "calibrate/RESULT.json",
+        "sha256": "df0b52ad1334d1b8122d8c7c461104cb617de41fd76ae1af631368f1e78aea63",
+        "data": {
+          "completed": true,
+          "status": "passed",
+          "phase": "calibrate",
+          "arm": "both",
+          "scientific_updates": 0,
+          "policy_episodes_admitted_to_PPO": 0,
+          "stage": "reset_only/CoffeeSetupMug",
+          "charged_controls": 0,
+          "ended_unix": 1793678355.3123171,
+          "process_gpu_seconds": 194.21514177322388,
+          "arms": {}
+        }
+      },
+      {
+        "file": "stress/PROGRESS.json",
+        "sha256": "8e52db6496ba58f0943223c2d6ac9ed88baed319aa027289f43543c90cae4db9",
+        "data": {
+          "stage": "stress_48_live/kv_all_layers",
+          "last_check_unix": 1793678642.5979748,
+          "completed": false
+        }
+      },
+      {
+        "file": "stress/RESULT.json",
+        "exists": false
+      },
+      {
+        "file": "stress/velocity/history/progress.json",
+        "sha256": "192fd51ae9c2c9525c681ef8ccd165e477955740ca941e8c3ae4d558c6a2e16a",
+        "data": {
+          "sequence": 1,
+          "completed_episodes": 48,
+          "requested_episodes": 48,
+          "completed_physical_chunks": 576,
+          "active_lanes": 0,
+          "last_progress_unix": 1793678608.655027
+        }
+      },
+      {
+        "file": "stress/kv_all_layers/history/progress.json",
+        "exists": false
+      }
+    ],
+    "final_allocation_cost_pending": true
+  },
+  "source_binding": null,
+  "student_fits": {},
+  "native_student_curves": {},
+  "next_action": "Observe Q2 final native/cost/throughput outcome and producer admission; do not poll terminal Q1 again or treat qualification episodes as source history. Fit only on completed exact scientific PPO sources.",
+  "accounting": "Q1 1331 GPU-second allocation upper bound contains its process clocks; do not add them again. Earlier 122 GPU seconds carried separately by source owner. Q2 final clocks remain pending.",
+  "scope": "Read-only source observation; no job, source, fit, test or owner edit by this chat. Existing broader pipeline preparation in shared main is preserved."
+}

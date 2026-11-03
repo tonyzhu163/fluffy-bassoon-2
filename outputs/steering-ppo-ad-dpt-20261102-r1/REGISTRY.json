@@ -5,10 +5,10 @@
   "producer_observation": {
     "path": "/Users/mowenjie/.codex/worktrees/joint-steering-ppo/fluffy-bassoon-2/outputs/robocasa-joint-steering-5m-20261102-r1/PLAN.json",
     "sha256": "de5e7bc07a9c54d3e1a0bda70778a05112bff1a352435da3ebd52ac13ba52c39",
-    "status": "EXECUTION_RECOVERED_PREPARING_NATIVE_QUALIFICATION_NO_SCIENTIFIC_SOURCE",
+    "status": "Q2_NATIVE_QUALIFICATION_RUNNING_NO_SCIENTIFIC_SOURCE",
     "immutable_source": false,
-    "last_live_check_UTC": "2026-11-03T03:33:48+00:00",
-    "producer_cursor": "18018959-3992-4b70-ad1f-11a754359cf0:61",
+    "last_live_check_UTC": "2026-11-03 04:04:55 UTC",
+    "producer_cursor": "18018959-3992-4b70-ad1f-11a754359cf0:68",
     "driver_reference_commit": "dd3e51334fda9b839f37b777d68ffb79f66d638c",
     "CPU_tests_passed": 80,
     "evidence": "outputs/robocasa-joint-steering-5m-20261102-r1/qualification/CPU-QUALIFICATION.md",
@@ -34,7 +34,9 @@
     },
     "latest_failure": "PRODUCER-CAPACITY-ERROR-20261103-r1.json",
     "latest_recovery": "PRODUCER-EXECUTION-RECOVERY-20261103-r1.json",
-    "latest_failure_resolved_by": "PRODUCER-EXECUTION-RECOVERY-20261103-r1.json"
+    "latest_failure_resolved_by": "PRODUCER-EXECUTION-RECOVERY-20261103-r1.json",
+    "native_qualification_job": "job-m2qlxqjuh8ho",
+    "native_qualification_observation": "NATIVE-QUALIFICATION-CHECK-20261103-r1.json"
   },
   "campaigns": {
     "stage1_pilot": {
@@ -93,7 +95,7 @@
     5
   ],
   "status_evidence": "Direct human recipe/budget messages verified; source owner active on reconciliation, no completed PPO histories, student fit or new native curve.",
-  "next_action": "Monitor recovered producer execution, actual native qualification allocation/admission and completed exact PPO sources; keep original independent AD/DPT convergence and per-task curve objective. Do not repeat the resolved model-capacity alert or launch duplicate work.",
+  "next_action": "Observe owned producer Q2 native throughput/storage/cost closeout and scientific source admission/completion; do not repoll terminal Q1 or admit qualification episodes to student training.",
   "monitor_automation_id": "monitor-steering-ppo-and-ad-dpt",
   "adapter": "src/fluffy_bassoon/meta_rl/frozen_steering_history.py",
   "core_qualification_source": "3babb92b31c596f04759621177c8704c60c7c293",
