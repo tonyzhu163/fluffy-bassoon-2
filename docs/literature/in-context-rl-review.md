@@ -468,26 +468,33 @@ exist (one graded terminal score per episode, a suboptimal final policy), which
 supervised ICRL methods besides AD, DPT and CND are worth running? RL² is set
 aside as hard to tune. Candidates must keep the plain causal decoder and the
 bounded action residual ([PAPER.md](../PAPER.md)). Results below are from
-abstracts and summaries; read each method section before implementing.
+abstracts and summaries unless noted. The DIT and S-ICQL method sections were
+checked against the frozen-steering collector on 3 November 2026; see the
+[collection audit](../../outputs/robocasa-rollout-capacity-3248-20261103-r1/META-LEARNING-COLLECTION-AUDIT.md).
 
 ### Recommended
 
 1. **DIT** ([Dong et al., ICML 2025](https://arxiv.org/abs/2601.20116)).
-   DPT with an advantage-weighted loss: in-context Q and value heads estimate
-   advantages, and the query-action loss is weighted by exp(A/η), so labels
-   need not be optimal. This matches our case, where DPT labels come from the
-   final PPO policy rather than an expert. Reported competitive with DPT using
-   optimal labels and better than AD on Dark Room, Miniworld, Meta-World and
-   Half-Cheetah. Cost: a value head and a weighted loss; terminal Flora scores
-   give Monte Carlo returns to fit.
+   Uses the dataset's actual behavior actions with an advantage-weighted loss.
+   Its separate in-context Q/V estimators learn from trajectory returns with
+   Bellman regularization; their difference weights action imitation by
+   exp(A/η). Final-PPO teacher relabels belong to DPT and are not the original
+   DIT targets. This permits suboptimal source policies but still requires
+   implementing and qualifying the value estimators and weighted objective
+   ([method §4.2](https://arxiv.org/html/2601.20116v1#S4.SS2)).
 2. **Value-based offline ICRL on an AD backbone**
    ([Tarasov et al.](https://arxiv.org/abs/2502.17666), RLC 2026;
    [SICQL](https://arxiv.org/abs/2506.01299), ICLR 2026). AD's causal model
    plus expectile value fitting and advantage-weighted policy extraction.
    Tarasov et al. report about 30% over AD across more than 150 GridWorld and
    MuJoCo datasets and about 2× on XLand-MiniGrid; conservatism helped almost
-   everywhere. With DIT this gives a 2×2 on bitwise-identical contexts:
-   imitation versus value weighting, AD versus DPT-style targets.
+   everywhere. The four intended methods are AD, DPT, DIT and value-based
+   offline ICRL. They can share each interface's raw corpus, while using
+   different labels and value objectives; this is not a literal 2×2 of AD/DPT
+   labels and weighting. S-ICQL also learns a world-model prompt, so an IQL
+   objective on the existing decoder should be identified as an adaptation
+   rather than a complete S-ICQL reproduction
+   ([method §3](https://arxiv.org/html/2506.01299v3#S3)).
 3. **Return-sorted curriculum**
    ([CEC, Shi et al., NeurIPS 2023](https://arxiv.org/abs/2310.08549)).
    Reorder episodes into chains of rising return and clone them; CEC's

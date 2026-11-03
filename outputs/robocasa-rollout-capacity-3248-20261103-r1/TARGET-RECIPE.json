@@ -54,5 +54,25 @@
     "GPU_hour_cap_per_arm": 40,
     "authority": "outputs/robocasa-rollout-capacity-3248-20261103-r1/BUDGET-INCREASE-20261103.json",
     "accounting": "Lifetime allocated GPU-hours including carried charges, qualification, PPO, evaluations and overhead; no automatic retry."
+  },
+  "meta_learning_consumers": {
+    "human_confirmed_methods": [
+      "AD",
+      "DPT",
+      "DIT",
+      "value_based_offline_ICRL_IQL_style"
+    ],
+    "independent_corpus_and_four_fits_per_arm": true,
+    "raw_collection_audit": "outputs/robocasa-rollout-capacity-3248-20261103-r1/META-LEARNING-COLLECTION-AUDIT.md",
+    "implemented_consumers": [
+      "AD",
+      "DPT"
+    ],
+    "not_yet_implemented_or_qualified": [
+      "DIT",
+      "value_based_offline_ICRL_IQL_style"
+    ],
+    "retain_every_update_history_and_checkpoint": true,
+    "current_source_reward": "simulator_first_success"
   }
 }
