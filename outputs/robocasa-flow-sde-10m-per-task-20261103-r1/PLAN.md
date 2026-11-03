@@ -31,23 +31,27 @@ They are not recipe changes.
 
 ## Tasks
 
-| Task | Native first success | Status |
-| --- | ---: | --- |
-| OpenDrawer | 29/50 (58%) | include |
-| PickPlaceDrawerToCounter | 23/50 (46%) | include |
-| CoffeeSetupMug | 17/50 (34%) | include |
-| TurnOffStove | 7/50 (14%) | include |
-| PickPlaceCounterToStove | 10/20 (50%; Wilson 30–70%) | include (decided 2026-11-03, replaces CounterToCabinet) |
+Category-balanced 5 ID + 5 OOD portfolio, adopted by the human on 2026-11-03
+([TASK-PORTFOLIO.json](TASK-PORTFOLIO.json)). It supersedes the
+[2026-11-02 selection](../robocasa-five-task-flora-ppo-20261102-r1/TASK-PORTFOLIO.json).
+Each `atomic_seen` category appears in both sets.
 
-Sources: [five-task qualification](../../docs/FINDINGS.md) and the
-[atomic_seen sweep](../robocasa-atomic-baseline-sweep-20261103-r1/RESULT.md).
-PickPlaceCounterToCabinet (37/50, 74%) fails the 5–70% admission check that
-the runner enforces. PickPlaceCounterToStove replaces it because it is the
-only newly screened pick-and-place task in range, it keeps the portfolio at
-two pick-and-place tasks, and its native horizon is already 600. Its 20-case
-screen is coarse; the runner's 64-case before panel at 600 controls is the
-qualification, and admission stops the run outside 5–70%. TurnOnSinkFaucet
-(10/20, 600) is the backup.
+| Category | ID: PPO teachers (native first success) | OOD: held out (native first success, horizon) |
+| --- | --- | --- |
+| Open/close | OpenDrawer 29/50 (58%); CloseToasterOvenDoor 5/20 (25%) | CloseFridge 28/50 (56%, 900); OpenStandMixerHead 13/20 (65%, 450) |
+| Pick-and-place | PickPlaceDrawerToCounter 23/50 (46%); CoffeeSetupMug 17/50 (34%) | PickPlaceCounterToStove 10/20 (50%, 600) |
+| Buttons/knobs | TurnOffStove 7/50 (14%) | TurnOnMicrowave 6/20 (30%, 450); TurnOnSinkFaucet 10/20 (50%, 600) |
+
+Rates come from the [five-task qualification](../../docs/FINDINGS.md), the CloseFridge
+matching eval50 and the 20-case [atomic_seen sweep](../robocasa-atomic-baseline-sweep-20261103-r1/RESULT.md)
+(coarse). Removed: PickPlaceCounterToCabinet (74%, fails the 5–70% admission
+the runner enforces) and OpenCabinet (75%, horizon 1,050, a near copy of
+OpenDrawer). Both sets now cover open and close, and turn on and turn off.
+CounterToStove is the OOD set's only pick-and-place task in range. For ID,
+the runner's 64-case before panel at 600 controls is the qualification;
+CloseToasterOvenDoor's native horizon is 450, so its rate may rise at 600.
+OOD tasks need a fresh 50-case native panel at their own horizons
+(`5x0100` seeds) before any meta-learner readout.
 
 **Horizon 600 controls for every task** (12 H50 chunks), the human's
 2026-11-02 selection. Observed first-success maxima were 279/538/538/317/524
@@ -116,7 +120,7 @@ colocated on GPUs 0–1 already peaks at ~35 GiB, against 96 GiB per card.
 
 ## Decisions (2026-11-03, delegated by the human)
 
-- **Fifth task:** PickPlaceCounterToStove (see Tasks).
+- **Tasks:** the balanced ID/OOD portfolio above (human adopted it).
 - **Storage:** keep the env chunk records (the student corpus) and the full
   sampling records (chains, Gaussian parameters, RNG). Drop from the actor
   batch only what those already hold: `forward_inputs.observation/image`,
