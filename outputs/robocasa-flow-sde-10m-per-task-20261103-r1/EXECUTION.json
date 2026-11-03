@@ -1,6 +1,6 @@
 {
   "owner_chat": "01a1a077-e5ab-7982-840d-de8a81d4321a",
-  "checked_shanghai": "2026-11-03 19:42:37",
+  "checked_shanghai": "2026-11-03 19:45:08",
   "source_commit": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
   "phase": "All five production runs advancing; first production data/joins qualified for every task",
   "cluster": "Baige Pro6K",
@@ -74,6 +74,7 @@
       "ETA_remaining_hours": 7.967024922370911,
       "ETA_finish_shanghai": "2026-11-04T02:52:48.586972",
       "local_complete_boundaries": [
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints/global_step_30",
         "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints/global_step_20"
       ],
       "latest_C1_passed": true,
@@ -291,9 +292,9 @@
       "max_minutes": 1440,
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TurnOffStove/production-r1",
       "resume": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TurnOffStove/q1-r1/TurnOffStove/checkpoints/global_step_1",
-      "completed_iterations": 13,
+      "completed_iterations": 14,
       "target_iterations": 130,
-      "optimizer_steps": 312,
+      "optimizer_steps": 336,
       "frozen_vlm_unchanged": true,
       "gpu_probe_passed": true,
       "before_reference": "TurnOffStove/BEFORE-RESUME.json",
@@ -415,29 +416,38 @@
     "automation_id": "monitor-five-task-10m-ppo-campaign",
     "cadence_minutes": 20,
     "status": "ACTIVE",
-    "next_action": "Check all five advancing jobs, newest complete boundaries, PFS and cumulative costs; tier superseded checkpoints and preserve all corpora. No fitting until full130/finalteacher/corpus closeout.",
-    "last_check_shanghai": "2026-11-03 19:42:37",
-    "next_check_shanghai": "2026-11-03 20:02 Shanghai",
+    "next_action": "Check all five advancing jobs, tier receipt/PID, newest boundaries, PFS and costs; preserve fixed130-update scientific contract. Quiet routine health.",
+    "last_check_shanghai": "2026-11-03 19:45:08",
+    "next_check_shanghai": "2026-11-03 20:05 Shanghai",
     "scheduler_check": "All five actual job containers verified through manifests, eight-device probes and advancing native artifacts. Browser DOM unavailable; native Chrome accessibility works; previous user tab restored after read-only access attempt."
   },
   "storage": {
-    "pfs_free_GiB": 586.1640625,
+    "pfs_free_GiB": 583.015625,
     "stop_floor_GiB": 200,
     "tier_receipt": "TIER-20261103-1901.json",
     "tiered_superseded_boundaries": 15,
     "latest_full_checkpoint_retained": true,
     "bos": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1",
-    "tiering_in_progress": null
+    "tiering_in_progress": {
+      "pid": 2028111,
+      "started_unix": 1793706391.7250092,
+      "tool_commit": "475e1c5d",
+      "script_sha256": "88a12eaf79e18bfd527f22870085414505eb473737773230b364c3b790bc3b97",
+      "receipt": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TIER-20261103-1944.json",
+      "log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/tier-20261103-1944.log",
+      "state": "RUNNING",
+      "next_action": "Inspect receipt and exact PID/command before another tier invocation; retain newest full boundary and all corpora"
+    }
   },
   "usage_snapshot": {
-    "checked_shanghai": "2026-11-03 19:42:37",
+    "checked_shanghai": "2026-11-03 19:45:08",
     "valid_Q1_process_GPU_seconds": 21824,
     "failed_Q1_process_GPU_seconds": 4352,
     "diagnostics_scheduler_GPU_seconds_upper": 213,
-    "live_production_GPU_seconds_to_snapshot": 221619,
-    "cumulative_GPU_hours_using_diagnostic_upper": 68.891,
+    "live_production_GPU_seconds_to_snapshot": 227650,
+    "cumulative_GPU_hours_using_diagnostic_upper": 70.566,
     "active_jobs_accruing": true,
-    "evidence": "MONITOR-20261103-1901-CLOSE.json"
+    "evidence": "MONITOR-20261103-1944.json"
   },
   "data_readiness": "DATA-READINESS.md",
   "control_steps": {
