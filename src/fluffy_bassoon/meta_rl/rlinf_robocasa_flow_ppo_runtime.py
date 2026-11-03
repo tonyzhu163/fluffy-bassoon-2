@@ -23,7 +23,8 @@ from rlinf.workers.env.env_worker import EnvWorker
 from .rlinf_native_ppo import ActionJournal, cpu_tree, restore_rng, snapshot_rng, tensor_hash, write
 from .rlinf_native_ppo import sha
 from .rlinf_native_ppo_runtime import PilotActor, PilotRollout, PilotRunner, save_tensor
-from .rlinf_robocasa_flow_ppo import GlobalActionJournal, first_success_reward
+from .rlinf_robocasa_flow_ppo import (GlobalActionJournal, RESET_CONTROL_RESERVE, first_success_reward,
+    flow_contract, train_case_seeds)
 from .rlinf_robocasa_ppo_env import counted_native_factory
 from .robocasa_pairing import canonical_case, native_fingerprint, public_snapshot
 
@@ -39,11 +40,11 @@ def json_metrics(metrics):
     return {key: np.asarray(value).tolist() for key, value in metrics.items()}
 
 
-def fresh_factory(factory, seed):
+def fresh_factory(factory, seed, physics_tick_limit):
     def create():
         random.seed(seed)
         np.random.seed(seed)
-        env = counted_native_factory(factory, physics_tick_limit=(400 + 128) * 128)()
+        env = counted_native_factory(factory, physics_tick_limit=physics_tick_limit)()
         reset = env.reset
 
         def recorded_reset(*args, **kwargs):
@@ -74,17 +75,21 @@ def native_class(original, owner):
                 self.env.close()
             self._flow_round += 1
             is_eval = bool(self.cfg.is_eval)
-            # Four fresh128-episode TRAIN banks per iteration; fixed64 eval.
-            offset = 0 if is_eval else owner._flow_iteration * 128 + self._flow_round * 32
-            self.env_seeds = [int(self.cfg.seed) + offset + owner._rank * self.num_envs + i
-                              for i in range(self.num_envs)]
+            contract = owner._flow_contract
+            # Fresh TRAIN episodes for every round of every iteration; one fixed eval bank.
+            if is_eval:
+                self.env_seeds = [contract['eval_seed'] + owner._rank * self.num_envs + i
+                                  for i in range(self.num_envs)]
+            else:
+                self.env_seeds = train_case_seeds(contract, iteration=owner._flow_iteration,
+                    round_index=self._flow_round, rank=owner._rank, local_envs=self.num_envs)
             self.task_ids = np.zeros(self.num_envs, dtype=np.int32)
             self._refresh_task_context()
             self._is_start = True
             from rlinf.envs.sim.robocasa.venv import RobocasaSubprocEnv
-            token = owner._flow_journal.begin(self.num_envs * 128,
+            token = owner._flow_journal.begin(self.num_envs * RESET_CONTROL_RESERVE,
                 phase=owner._flow_phase + '/native_constructor_reset')
-            self.env = RobocasaSubprocEnv([fresh_factory(fn, seed) for fn, seed in
+            self.env = RobocasaSubprocEnv([fresh_factory(fn, seed, contract['physics_tick_limit']) for fn, seed in
                 zip(super().get_env_fns(), self.env_seeds, strict=True)])
             observation, info = super().reset()
             counts = self.env.get_env_attr('_flora_accounting')
@@ -95,7 +100,8 @@ def native_class(original, owner):
             phase = owner._flow_phase
             self._flow_key = f'{phase}-i{owner._flow_iteration:03d}-round{self._flow_round:02d}'
             self._flow_root = Path(owner.cfg.native_pilot.output) / 'environment' / f'rank-{owner._rank:02d}'
-            case = dict(task='OpenDrawer', seeds=self.env_seeds, split='target', horizon=400)
+            case = dict(task=contract['task'], seeds=self.env_seeds, split=str(self.cfg.split),
+                        horizon=contract['horizon'])
             snapshot = public_snapshot(observation, case, self.env.get_env_attr('_flow_physical'))
             initial = self._flow_root / (self._flow_key + '-initial.pt')
             self._flow_initial = save_tensor(initial, snapshot)
@@ -115,11 +121,14 @@ def native_class(original, owner):
                 for i, succeeded in enumerate(self.success_once):
                     if succeeded and self._flow_first_success[i] is None:
                         self._flow_first_success[i] = self._flow_steps
-            if self._flow_steps == 400:
+            horizon = owner._flow_contract['horizon']
+            if self._flow_steps == horizon:
                 counts = self.env.get_env_attr('_flora_accounting')
-                assert all(c['controls'] - c['reset_controls'] == 400 for c in counts)
+                assert all(c['controls'] - c['reset_controls'] == horizon for c in counts)
                 finals = [bool(info.get('success', False)) for info in self.current_info_list]
-                rows = [dict(seed=seed, success_once=first is not None, first_success_control=first,
+                task = owner._flow_contract['task']
+                rows = [dict(episode_id=f'{task}/{seed}', seed=seed, success_once=first is not None,
+                    first_success_control=first,
                     success_at_end=final, native_counts=count) for seed, first, final, count in
                     zip(self.env_seeds, self._flow_first_success, finals, counts, strict=True)]
                 write(self._flow_root / (self._flow_key + '-episodes.json'),
@@ -135,14 +144,21 @@ def native_class(original, owner):
             before = self._flow_current
             result = super().chunk_step(actions)
             owner._flow_journal.finish(token, requested)
-            path = self._flow_root / (self._flow_key + f'-chunk{self._flow_steps // 50:02d}.pt.gz')
+            contract = owner._flow_contract
+            after = cpu_tree(result[0][-1])
+            last = self._flow_steps == contract['horizon']
+            path = self._flow_root / (self._flow_key + f'-chunk{self._flow_steps // contract["chunk"]:02d}.pt.gz')
             with gzip.open(path, 'xb', compresslevel=1) as stream:
                 torch.save(dict(phase=owner._flow_phase, iteration=owner._flow_iteration,
-                    round=self._flow_round, seeds=self.env_seeds, current_observation=before,
+                    round=self._flow_round, seeds=self.env_seeds,
+                    episode_ids=[f'{contract["task"]}/{seed}' for seed in self.env_seeds],
+                    current_observation=before, current_observation_sha256=tensor_hash(before),
                     decoded_actions=cpu_tree(actions), rewards=cpu_tree(result[1]),
                     terminations=cpu_tree(result[2]), truncations=cpu_tree(result[3]),
-                    final_info=cpu_tree(result[4][-1])), stream)
-            self._flow_current = cpu_tree(result[0][-1])
+                    final_info=cpu_tree(result[4][-1]),
+                    # The horizon observation is never a decision input; value targets need it.
+                    terminal_observation=after if last else None), stream)
+            self._flow_current = after
             return result
     return FlowRoboCasa
 
@@ -153,7 +169,8 @@ class FlowActor(PilotActor):
         before = self.optimizer_steps
         batch_shape = tuple(self.rollout_batch['prev_logprobs'].shape)
         metrics = EmbodiedFSDPActor.run_training(self)
-        assert self.optimizer_steps - before == 16, 'Global PPO optimizer schedule changed'
+        expected = flow_contract(self.cfg)['optimizer_steps_per_update']
+        assert self.optimizer_steps - before == expected, 'Global PPO optimizer schedule changed'
         losses = {k: float(v) for k, v in metrics.items() if 'loss' in k or 'grad_norm' in k}
         assert losses and all(np.isfinite(v) for v in losses.values()), losses
         unchanged = self._pilot_frozen_before == self._pilot_frozen_signature()
@@ -192,9 +209,11 @@ class FlowEnvironment(EnvWorker):
         mp.set_start_method('spawn', force=True)
         self._flow_phase = 'initialization'
         self._flow_iteration = 0
+        self._flow_contract = flow_contract(self.cfg)
         journal = GlobalActionJournal if self.cfg.native_pilot.get('global_action_escrow', False) else ActionJournal
         self._flow_journal = journal(self.cfg.native_pilot.accounting_root,
-            rank=self._rank, world=self._world_size, attempt=self.cfg.native_pilot.attempt)
+            rank=self._rank, world=self._world_size, attempt=self.cfg.native_pilot.attempt,
+            maximum_actions=self._flow_contract['maximum_actions'])
         return super().init_worker()
 
     def _setup_env_and_wrappers(self, env_cls, env_cfg, num_envs_per_stage):
@@ -262,7 +281,8 @@ class FlowRunner(PilotRunner):
         output = Path(self.cfg.native_pilot.output)
         requested = (output / 'CHECKPOINT_AND_EXIT').exists()
         first_after_restore = self.global_step == getattr(self, '_flow_resume_step', 0) + 1
-        if requested or first_after_restore or self.global_step % 6 == 0 or self.global_step == self.max_steps:
+        interval = flow_contract(self.cfg)['checkpoint_interval']
+        if requested or first_after_restore or self.global_step % interval == 0 or self.global_step == self.max_steps:
             self._capture_boundary()
         write(output / 'progress.json',
             dict(completed_iterations=self.global_step, target_iterations=self.max_steps,
@@ -277,14 +297,16 @@ class FlowRunner(PilotRunner):
 
     def run(self):
         self._flow_resume_step = self.global_step
+        contract = flow_contract(self.cfg)
         output = Path(self.cfg.native_pilot.output)
+        write(output / 'flow-contract.json', contract)
         write(output / 'resolved-config.json', OmegaConf.to_container(self.cfg, resolve=True))
         if self.cfg.runner.get('resume_dir'):
             reference_path = self.cfg.native_pilot.before_reference
             if not reference_path or sha(reference_path) != self.cfg.native_pilot.before_reference_sha256:
                 raise ValueError('Resume requires the verified original before panel')
             reference = json.loads(Path(reference_path).read_text())
-            assert reference['completed'] and reference['cases'] == 64
+            assert reference['completed'] and reference['cases'] == contract['eval_cases']
             assert Path(reference['checkpoint']) == Path(self.cfg.runner.resume_dir)
             assert .05 <= reference['metrics']['success_once'] <= .70
             for row in reference['episode_refs']:
@@ -311,11 +333,12 @@ class FlowRunner(PilotRunner):
                 group.pilot_rng(restore=True).wait()
         self.env.pilot_phase('training').wait()
         EmbodiedRunner.run(self)
-        assert self.global_step == 18
+        final = contract['iterations']
+        assert self.global_step == final
         self.update_rollout_weights()
         self.rollout.pilot_rng(restore=True).wait()
         self.env.pilot_rng(restore=True).wait()
-        self.env.pilot_phase('after', policy_iteration=18).wait()
-        self.rollout.pilot_evaluation_iteration(18).wait()
+        self.env.pilot_phase('after', policy_iteration=final).wait()
+        self.rollout.pilot_evaluation_iteration(final).wait()
         after = self.evaluate()
-        write(output / 'after-evaluation.json', dict(completed=True, global_step=18, metrics=json_metrics(after)))
+        write(output / 'after-evaluation.json', dict(completed=True, global_step=final, metrics=json_metrics(after)))

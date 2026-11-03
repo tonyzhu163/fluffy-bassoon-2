@@ -12,25 +12,29 @@ from rlinf.utils.placement import HybridComponentPlacement
 from fluffy_bassoon.meta_rl.rlinf_robocasa_flow_ppo_runtime import (
     FlowActor, FlowEnvironment, FlowRollout, FlowRunner,
 )
+from fluffy_bassoon.meta_rl.rlinf_robocasa_flow_ppo import flow_contract
 
 
 @hydra.main(version_base='1.1', config_path=str(Path(__file__).resolve().parents[1] /
-    'configs/native_ppo'), config_name='robocasa365_opendrawer_pi05_sim_ppo')
+    'configs/native_ppo'), config_name='robocasa365_pi05_flow_sde_10m')
 def main(cfg):
     cfg = validate_cfg(cfg)
     assert not cfg.runner.only_eval
-    assert cfg.runner.max_epochs == 18 and cfg.runner.max_steps in (-1, 18)
+    contract = flow_contract(cfg)  # task, horizon, seeds, schedule and action ceiling
+    assert cfg.runner.max_steps in (-1, contract['iterations'])
     assert not cfg.runner.use_training_pipeline and not cfg.runner.overlap_env_bootstrap
-    assert cfg.env.train.total_num_envs == 32 and cfg.env.eval.total_num_envs == 64
     assert cfg.actor.global_batch_size == 256 and cfg.algorithm.update_epoch == 4
     assert cfg.actor.model.openpi.train_expert_only and cfg.actor.model.openpi.noise_method == 'flow_sde'
     assert cfg.actor.model.openpi.noise_level == .3 and cfg.algorithm.gamma == .99
+    assert cfg.algorithm.kl_beta == 0, 'KL penalty is off for this campaign; KL is logged only'
     print(json.dumps(OmegaConf.to_container(cfg, resolve=True), indent=2), flush=True)
     cluster = Cluster(cluster_cfg=cfg.cluster, distributed_log_dir=cfg.runner.per_worker_log_path)
     placement = HybridComponentPlacement(cfg, cluster)
     assert placement.get_world_size('actor') == 2  # retain qualified rank-local reductions/Adam
     assert placement.get_world_size('env') == placement.get_world_size('rollout') == cfg.native_pilot.world_size
     assert cfg.native_pilot.world_size in (2, 8)
+    world = cfg.native_pilot.world_size
+    assert contract['train_envs'] % world == 0 and contract['eval_cases'] % world == 0
     actor = FlowActor.create_group(cfg).launch(cluster, name=cfg.actor.group_name,
         placement_strategy=placement.get_strategy('actor'))
     rollout = FlowRollout.create_group(cfg).launch(cluster, name=cfg.rollout.group_name,

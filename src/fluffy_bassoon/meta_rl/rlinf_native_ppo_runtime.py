@@ -143,7 +143,11 @@ class PilotActor(SidecarMixin, EmbodiedFSDPActor):
             optimizer_steps_before=self.optimizer_steps, rng_before_sgd=snapshot_rng(),
             rollout_epoch=int(self.cfg.env.train.rollout_epoch),
             layout='time-major [chunk_index, round_index * local_env_count + env_index, ...]; terminal bootstrap rows retained',
-            rollout_batch=cpu_tree(self.rollout_batch),
+            # Optional storage policy: drop listed fields (e.g. images the env
+            # chunk records already hold). Default keeps the complete batch.
+            rollout_batch=cpu_tree({key: value for key, value in self.rollout_batch.items()
+                                    if key not in set(self.cfg.native_pilot.get('actor_batch_drop', []) or [])}),
+            dropped_fields=sorted(set(self.cfg.native_pilot.get('actor_batch_drop', []) or [])),
             evaluation_data=False, source6_pretraining_admission=False)
         receipt = save_tensor(path, value)
         from .rlinf_native_ppo_data import FORMAT, shape_tree
@@ -261,6 +265,12 @@ class PilotRollout(SidecarMixin, MultiStepRolloutWorker):
             actions, result = super()._predict_rollout_actions(env_obs, mode=mode, **kwargs)
             after = snapshot_rng()
             inputs = result.get('forward_inputs', {})
+            # 'scalars' keeps log-probs/values/actions and drops the full flow
+            # chain and per-step Gaussian parameters (the largest fields).
+            policy = self.cfg.native_pilot.get('sampling_record', 'full')
+            if policy not in ('full', 'scalars'):
+                raise ValueError(f'Unknown sampling_record policy {policy!r}')
+            full = policy == 'full'
             policy_iteration = (self._pilot_eval_iteration if mode == 'eval'
                 else producing_iteration(self))
             record = dict(format='rlinf_native_ppo_actual_sampling_v1', mode=mode,
@@ -270,14 +280,15 @@ class PilotRollout(SidecarMixin, MultiStepRolloutWorker):
                 rank=self._rank, prediction_ordinal=self._pilot_prediction_ordinal,
                 public_observation_sha256=tensor_hash(env_obs),
                 actions_sha256=tensor_hash(actions), rng_before=before, rng_after=after,
-                actual_gaussian_parameters=self._pilot_sampling_steps,
+                sampling_record='full' if full else 'scalars',
+                actual_gaussian_parameters=self._pilot_sampling_steps if full else None,
                 forward_sampling_fields=cpu_tree({key: inputs[key] for key in
-                    ('chains', 'denoise_inds', 'action', 'model_action') if key in inputs}),
+                    (('chains',) if full else ()) + ('denoise_inds', 'action', 'model_action') if key in inputs}),
                 old_logprobs=cpu_tree(result.get('prev_logprobs')),
                 old_values=cpu_tree(result.get('prev_values')),
                 model_actions=cpu_tree(result.get('model_actions')),
                 processed_model_state=self._pilot_processed_state,
-                initial_gaussian_path='forward_sampling_fields.chains[:,0]',
+                initial_gaussian_path='forward_sampling_fields.chains[:,0]' if full else None,
                 noise_semantics='Actual mean/std objects and full realized chain; later Gaussian draws recoverable from saved sampler RNG/source, no RNG-consuming replay performed',
                 frozen_sft_steering_target_compatible=False)
             path = Path(self.cfg.native_pilot.output) / 'sampling' / f'rank-{self._rank:02d}' / (
