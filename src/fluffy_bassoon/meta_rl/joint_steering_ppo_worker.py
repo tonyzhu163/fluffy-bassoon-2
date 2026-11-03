@@ -4,7 +4,7 @@ Physical episodes always finish at their native horizon. PPO records end at
 first success; the remaining physical chunks stay in the separate raw history.
 The master owns budgets, optimization, request publication and retry decisions.
 """
-from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
+from concurrent.futures import ALL_COMPLETED, FIRST_COMPLETED, ThreadPoolExecutor, as_completed, wait
 from copy import copy, deepcopy
 import gzip
 import hashlib
@@ -12,6 +12,7 @@ import json
 import os
 from pathlib import Path
 import pickle
+import sys
 import time
 import traceback
 from types import SimpleNamespace
@@ -110,6 +111,15 @@ class _RecordingEnvironment(RoboCasaResidualEnvironment):
         if len(self.completed_commands) != 50:
             raise ValueError("A physical chunk must complete all50 native mapped dispatches")
         return result
+
+    def close(self):
+        try:
+            super().close()
+        finally:
+            # An encoder close error must not strand its native simulator.
+            if self.native is not None:
+                native, self.native = self.native, None
+                native.close()
 
 
 def _qualify_cached(motor, prepared, noise, spec, initial_std):
@@ -212,7 +222,11 @@ def collect_bank(policy, motor, environments, *, request, output, rank, deadline
     artifact, including invalid post-first-success suffixes.
     """
     cases, spec = request["cases"], InterfaceSpec(**request["spec"])
-    if (not cases or not environments or any(env.cases != cases or env.cursor for env in environments)
+    requested_lanes = request.get("lanes", len(environments))
+    barrier = request.get("synchronize_initial_lanes", False)
+    if (type(requested_lanes) is not int or requested_lanes < 1 or requested_lanes != len(environments)
+            or type(barrier) is not bool or not cases or not environments
+            or any(env.cases != cases or env.cursor for env in environments)
             or policy.config.residual_dim != spec.steering_dim):
         raise ValueError("Require fresh lane environments and steering-only policy dimensions")
     output = Path(output)
@@ -226,6 +240,8 @@ def collect_bank(policy, motor, environments, *, request, output, rank, deadline
     upcoming = iter(range(len(cases)))
     resetting, running = {}, {}
     qualification = None
+    initial_wave_pending = barrier
+    batch_sizes, peak_active_lanes = [], 0
 
     def start(lane, pool):
         slot = next(upcoming, None)
@@ -255,14 +271,28 @@ def collect_bank(policy, motor, environments, *, request, output, rank, deadline
             while resetting or running:
                 if time.time() >= deadline_unix:
                     raise TimeoutError("Worker deadline; preserve completed episodes and partial physical evidence")
-                if not running:
+                if not running or initial_wave_pending:
                     wait(resetting, timeout=min(1., max(0., deadline_unix - time.time())),
-                         return_when=FIRST_COMPLETED)
+                         return_when=ALL_COMPLETED if initial_wave_pending else FIRST_COMPLETED)
+                reset_errors = []
                 for future in [item for item in resetting if item.done()]:
-                    accept_reset(future)
+                    try:
+                        accept_reset(future)
+                    except Exception as error:
+                        reset_errors.append(error)
+                if reset_errors:
+                    raise reset_errors[0]  # Every successful sibling reset is already retained.
+                if initial_wave_pending:
+                    if resetting:
+                        continue
+                    if len(running) != min(requested_lanes, len(cases)):
+                        raise ValueError("Initial synchronized lane wave is incomplete")
+                    initial_wave_pending = False
                 if not running:
                     continue
                 lanes = sorted(running)
+                batch_sizes.append(len(lanes))
+                peak_active_lanes = max(peak_active_lanes, len(lanes))
                 states = [running[lane] for lane in lanes]
                 observation = combine_observations([state["observation"] for state in states])
                 features, prepared = motor.prepare_batch(observation)
@@ -316,21 +346,29 @@ def collect_bank(policy, motor, environments, *, request, output, rank, deadline
                     pending.append((lane, state, record, path))
                 futures = [pool.submit(environments[lane].step_chunk, chunks[row])
                            for row, lane in enumerate(lanes)]
-                outcomes, errors = [], []
-                for item, future in zip(pending, futures):
-                    try:
-                        outcomes.append((*item, future.result()))
-                    except Exception as error:
-                        lane, state, record, path = item
-                        env = environments[lane]
-                        record.update(status="failed_during_dispatch", error=repr(error),
-                            dispatched_commands=cpu_tree(getattr(env, "dispatched_commands", [])),
-                            executed_commands=cpu_tree(getattr(env, "completed_commands", [])),
-                            raw_next_observation=_raw(env))
-                        _save(path, record, compressed=True)
-                        errors.append(error)
-                completed_lanes = []
-                for lane, state, record, path, (next_observation, physical_done, info) in outcomes:
+                errors, completed_lanes = [], []
+                future_items = dict(zip(futures, pending))
+
+                def step_outcomes():
+                    # Persist ready siblings immediately; a later failed or
+                    # hung lane cannot hide an already completed episode.
+                    remaining = max(.001, deadline_unix - time.time())
+                    for future in as_completed(future_items, timeout=remaining):
+                        lane, state, record, path = future_items[future]
+                        try:
+                            outcome = future.result()
+                        except Exception as error:
+                            env = environments[lane]
+                            record.update(status="failed_during_dispatch", error=repr(error),
+                                dispatched_commands=cpu_tree(getattr(env, "dispatched_commands", [])),
+                                executed_commands=cpu_tree(getattr(env, "completed_commands", [])),
+                                raw_next_observation=_raw(env))
+                            _save(path, record, compressed=True)
+                            errors.append(error)
+                        else:
+                            yield lane, state, record, path, outcome
+
+                for lane, state, record, path, (next_observation, physical_done, info) in step_outcomes():
                     env, slot = environments[lane], state["slot"]
                     if bool(physical_done) != (env.steps == env.horizon):
                         record.update(status="invalid_native_boundary", physical_done=bool(physical_done),
@@ -380,6 +418,8 @@ def collect_bank(policy, motor, environments, *, request, output, rank, deadline
                     completed_episodes=len(episodes), requested_episodes=len(cases),
                     completed_physical_chunks=sum(len(item["chunks"]) for item in running.values()) +
                         sum(episode["physical_chunks"] for episode in episodes.values()),
+                    active_lanes=len(running), resetting_lanes=len(resetting),
+                    maximum_native_batch=max(batch_sizes), peak_active_lanes=peak_active_lanes,
                     last_progress_unix=time.time()))
                 if errors:
                     raise errors[0]  # Completed sibling evidence was published first.
@@ -388,10 +428,22 @@ def collect_bank(policy, motor, environments, *, request, output, rank, deadline
         if len(episodes) != len(cases):
             raise ValueError("Incomplete bank cannot enter PPO")
         return dict(records=[row for slot in range(len(cases)) for row in rows[slot]],
-                    episodes=[episodes[slot] for slot in range(len(cases))], qualification=qualification)
+                    episodes=[episodes[slot] for slot in range(len(cases))], qualification=qualification,
+                    execution=dict(requested_lanes=requested_lanes, peak_active_lanes=peak_active_lanes,
+                        initial_lane_barrier=barrier, native_batch_sizes=batch_sizes,
+                        maximum_native_batch=max(batch_sizes), minimum_native_batch=min(batch_sizes)))
     finally:
+        primary_error = sys.exc_info()[0] is not None
+        close_errors = []
         for env in environments:
-            env.close()
+            try:
+                env.close()
+            except Exception as error:
+                close_errors.append(repr(error))
+        if close_errors:
+            _json(output / "cleanup-errors.json", dict(errors=close_errors, all_lanes_attempted=True))
+            if not primary_error:
+                raise RuntimeError("Native lane cleanup failed; preserve all episode evidence")
 
 
 
@@ -426,7 +478,9 @@ def _versions(model):
 
 def _request_binding(request):
     fixed_spec = {key: value for key, value in request["spec"].items() if key != "fraction"}
-    return tensor_hash(dict(spec=fixed_spec, **{key: request[key] for key in (
+    return tensor_hash(dict(spec=fixed_spec, lanes=request["lanes"],
+        synchronize_initial_lanes=request.get("synchronize_initial_lanes", False),
+        **{key: request[key] for key in (
         "model_directory", "norm_path", "source_commit", "runtime_commit", "policy_config")}))
 
 
@@ -512,7 +566,8 @@ def run_worker(run: Path, rank: int, code: Path, deadline_unix: float):
             request = torch.load(path, map_location="cpu", weights_only=False)
             sequence = int(path.stem.split("-")[-1])
             if (request["sequence"] != sequence or last_sequence >= 0 and sequence != last_sequence + 1
-                    or request["phase"] not in ("calibrate", "train", "dev", "test_before", "test_after") or request["lanes"] != 4):
+                    or request["phase"] not in ("calibrate", "train", "dev", "test_before", "test_after")
+                    or type(request["lanes"]) is not int or request["lanes"] < 1):
                 raise ValueError("Unexpected worker request sequence/phase/lane contract")
             if request.get("deterministic") is not (request["phase"] != "train") or request.get("zero_steering") is not (request["phase"] == "test_before"):
                 raise ValueError("Train is stochastic; evaluation uses the mean; test_before is zero steering")
@@ -562,7 +617,7 @@ def run_worker(run: Path, rank: int, code: Path, deadline_unix: float):
                 canonical_root=request["canonical_root"], source=dict(rank=rank, sequence=sequence,
                     phase=request["phase"], iteration=request["iteration"],
                     source_commit=request["source_commit"], runtime_commit=request["runtime_commit"]))
-                for lane in range(1 if request["phase"] == "calibrate" else 4)]
+                for lane in range(1 if request["phase"] == "calibrate" else request["lanes"])]
             # Environment constructors create only directories; physical reset
             # starts only after a distinct evidence directory exists.
             if request["phase"] == "calibrate":

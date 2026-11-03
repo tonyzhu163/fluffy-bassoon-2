@@ -46,6 +46,7 @@ class ResidualPPOConfig:
     # Mean sampled KL(old || new), checked over the full rollout after each
     # optimization epoch. None preserves the historical fixed-epoch learner.
     target_kl: float | None = None
+    kl_check_cadence: str = "epoch"
 
     def __post_init__(self):
         counts = (self.feature_dim, self.residual_dim, self.width, self.layers, self.epochs, self.minibatch_size)
@@ -58,6 +59,8 @@ class ResidualPPOConfig:
         if self.target_kl is not None and (type(self.target_kl) not in (int, float)
                 or not math.isfinite(self.target_kl) or self.target_kl <= 0):
             raise ValueError("target_kl must be a finite positive number or None")
+        if self.kl_check_cadence not in ("epoch", "minibatch"):
+            raise ValueError("KL check cadence must be epoch or minibatch")
 
 
 def _mlp(input_dim, width, layers, output_dim):
@@ -154,12 +157,18 @@ def stack_records(records, device=None):
         raise ValueError("Require complete episodes")
     as_tensor = lambda key, dtype: torch.as_tensor(np.asarray([record[key] for record in records]),
                                                   dtype=dtype, device=device)
-    return dict(features=as_tensor("features", torch.float32)[:, None],
+    result = dict(features=as_tensor("features", torch.float32)[:, None],
                 controls=as_tensor("control", torch.float32)[:, None],
                 log_probs=as_tensor("log_prob", torch.float32)[:, None],
                 values=as_tensor("value", torch.float32)[:, None],
                 rewards=as_tensor("reward", torch.float32)[:, None],
                 ends=as_tensor("done", torch.bool)[:, None])
+    if any("steering_mean" in row or "steering_std" in row for row in records):
+        if not all("steering_mean" in row and "steering_std" in row for row in records):
+            raise ValueError("Every retained behavior Gaussian needs both mean and std")
+        result.update(behavior_mean=as_tensor("steering_mean", torch.float32)[:, None],
+                      behavior_std=as_tensor("steering_std", torch.float32)[:, None])
+    return result
 
 
 def update(policy, optimizer, rollout, *, generator=None, epoch_callback=None):
@@ -168,9 +177,11 @@ def update(policy, optimizer, rollout, *, generator=None, epoch_callback=None):
     Existing scalar loss/KL metrics remain sample-weighted averages of the
     pre-step optimization minibatches. initial_metrics, epoch_metrics and
     final_metrics instead evaluate a single policy on the entire rollout.
-    Stop both actor and critic after an epoch exceeds target_kl; the completed
-    epoch is retained, not rolled back. The target is a stopping threshold,
-    not a hard trust-region bound. No extra random draws enter diagnostics.
+    By default stop after a completed epoch. Optional minibatch cadence checks
+    after every actual step and retains the partial epoch. If behavior mean/std
+    are supplied, stopping uses the exact diagonal-Gaussian joint KL, summing
+    every action coordinate. The target is a stopping threshold, not a hard
+    trust-region bound. No extra random draws enter diagnostics.
     """
     started = time.perf_counter()
     config = policy.config
@@ -180,6 +191,17 @@ def update(policy, optimizer, rollout, *, generator=None, epoch_callback=None):
                 controls=rollout["controls"].reshape(-1, config.residual_dim),
                 log_probs=rollout["log_probs"].reshape(-1), values=rollout["values"].reshape(-1),
                 advantages=advantages.reshape(-1), returns=returns.reshape(-1))
+    if ("behavior_mean" in rollout) != ("behavior_std" in rollout):
+        raise ValueError("Require both behavior Gaussian parameters")
+    if "behavior_mean" in rollout:
+        flat.update(behavior_mean=rollout["behavior_mean"].reshape(-1, config.residual_dim),
+                    behavior_std=rollout["behavior_std"].reshape(-1, config.residual_dim))
+        if (flat["behavior_mean"].shape != flat["controls"].shape
+                or flat["behavior_std"].shape != flat["controls"].shape
+                or not torch.isfinite(flat["behavior_mean"]).all()
+                or not torch.isfinite(flat["behavior_std"]).all()
+                or not (flat["behavior_std"] > 0).all()):
+            raise ValueError("Invalid retained behavior Gaussian")
     advantage = flat["advantages"]
     advantage_mean, advantage_std = float(advantage.mean()), float(advantage.std(unbiased=False))
     flat["advantages"] = (advantage - advantage.mean()) / (advantage.std(unbiased=False) + 1e-8)
@@ -208,6 +230,10 @@ def update(policy, optimizer, rollout, *, generator=None, epoch_callback=None):
             _, metrics, value, log_ratio = losses(index)
             # expm1 avoids cancellation when the policies are almost equal.
             metrics["approximate_kl"] = (torch.expm1(log_ratio) - log_ratio).mean()
+            if "behavior_mean" in flat:
+                current, _ = policy._distribution(flat["features"][index])
+                old = Normal(flat["behavior_mean"][index], flat["behavior_std"][index])
+                metrics["joint_gaussian_kl"] = torch.distributions.kl_divergence(old, current).sum(-1).mean()
             weight = len(value)
             for key, metric in metrics.items():
                 scalar = float(metric)
@@ -221,17 +247,21 @@ def update(policy, optimizer, rollout, *, generator=None, epoch_callback=None):
             unbiased=False) / variance) if float(variance) > 0 else None)
         return result
 
+    kl_metric = "joint_gaussian_kl" if "behavior_mean" in flat else "approximate_kl"
+    def exceeds_target(metrics):
+        return config.target_kl is not None and metrics[kl_metric] > config.target_kl
+
     initial_metrics = full_rollout_metrics()
     final_metrics = initial_metrics
-    epoch_metrics, optimizer_steps = [], 0
-    early_stopped = config.target_kl is not None and initial_metrics["approximate_kl"] > config.target_kl
+    epoch_metrics, minibatch_kl_checks, optimizer_steps = [], [], 0
+    early_stopped = exceeds_target(initial_metrics)
     policy.train()
     for epoch in range(config.epochs):
         if early_stopped:
             break
         epoch_started = time.perf_counter()
         order = torch.randperm(size, generator=generator).to(advantage.device)
-        epoch_steps, gradient_norm_sum, gradient_norm_max = 0, 0., 0.
+        epoch_steps, epoch_samples, gradient_norm_sum, gradient_norm_max = 0, 0, 0., 0.
         for begin in range(0, size, config.minibatch_size):
             index = order[begin:begin + config.minibatch_size]
             loss, metrics, _, _ = losses(index)
@@ -249,10 +279,20 @@ def update(policy, optimizer, rollout, *, generator=None, epoch_callback=None):
             for key, metric in metrics.items():
                 totals[key] = totals.get(key, 0.) + float(metric.detach()) * len(index)
             count += len(index)
+            epoch_samples += len(index)
+            if config.kl_check_cadence == "minibatch" and config.target_kl is not None:
+                final_metrics = full_rollout_metrics()
+                minibatch_kl_checks.append(dict(optimizer_step=optimizer_steps, epoch=epoch + 1,
+                    kl_stop_metric=kl_metric, kl=final_metrics[kl_metric],
+                    approximate_kl=final_metrics["approximate_kl"]))
+                early_stopped = exceeds_target(final_metrics)
+                if early_stopped:
+                    break
         final_metrics = full_rollout_metrics()
-        early_stopped = config.target_kl is not None and final_metrics["approximate_kl"] > config.target_kl
+        early_stopped = exceeds_target(final_metrics)
         epoch_metrics.append(dict(epoch=epoch + 1, **final_metrics, optimizer_steps=epoch_steps,
-            cumulative_optimizer_steps=optimizer_steps, samples=size,
+            cumulative_optimizer_steps=optimizer_steps, samples=size, samples_processed=epoch_samples,
+            epoch_complete=epoch_samples == size,
             gradient_norm_mean=gradient_norm_sum / epoch_steps, gradient_norm_max=gradient_norm_max,
             elapsed_seconds=time.perf_counter() - epoch_started, kl_threshold_exceeded=early_stopped))
         if epoch_callback is not None:
@@ -261,12 +301,15 @@ def update(policy, optimizer, rollout, *, generator=None, epoch_callback=None):
     result = ({key: value / count for key, value in totals.items()} if count else
               {key: value for key, value in initial_metrics.items() if key != "explained_variance"})
     result.update(samples=size, samples_processed=count, epochs_requested=config.epochs,
-        epochs_completed=len(epoch_metrics), optimizer_steps=optimizer_steps, target_kl=config.target_kl,
+        epochs_completed=sum(row["epoch_complete"] for row in epoch_metrics), epochs_started=len(epoch_metrics),
+        optimizer_steps=optimizer_steps, target_kl=config.target_kl,
+        kl_check_cadence=config.kl_check_cadence, kl_stop_metric=kl_metric,
         early_stopped=early_stopped,
         stop_reason="target_kl" if early_stopped else "epochs_completed",
         advantage_mean=advantage_mean, advantage_std=advantage_std,
         return_mean=float(flat["returns"].mean()), return_std=float(flat["returns"].std(unbiased=False)),
         initial_metrics=initial_metrics, final_metrics=final_metrics, epoch_metrics=epoch_metrics,
+        minibatch_kl_checks=minibatch_kl_checks,
         elapsed_seconds=time.perf_counter() - started)
     return result
 
@@ -317,6 +360,8 @@ def ppo_config_record(config):
     result = asdict(config)
     if result["target_kl"] is None:
         del result["target_kl"]
+    if result["kl_check_cadence"] == "epoch":
+        del result["kl_check_cadence"]
     return result
 
 

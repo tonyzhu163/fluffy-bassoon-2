@@ -11,6 +11,7 @@ from dataclasses import asdict
 import fcntl
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import time
@@ -25,10 +26,19 @@ TASKS = ("OpenDrawer", "PickPlaceCounterToCabinet", "PickPlaceDrawerToCounter",
          "TurnOffStove", "CoffeeSetupMug")
 OOD_TASKS = ("CloseFridge", "OpenCabinet", "TurnOnMicrowave", "TurnOnSinkFaucet",
              "OpenStandMixerHead")
-TRAIN_LIMIT = 5_000_000
+TRAIN_LIMIT = 11_650_000
 EVAL_LIMIT = 1_200_000
-UPDATES = 103
-DEV_ROUNDS = (0, *range(5, 101, 5), 103)
+UPDATES = 50
+TRAIN_EPISODES = 384
+ROLLOUT_LANES = 48
+WORKER_COUNT = 8
+DEV_ROUNDS = tuple(range(0, UPDATES + 1, 5))
+
+# Frozen public-observation action sensitivity grid; rewards never select scale.
+SCALE_FRACTIONS = {
+    "velocity": (.025, .05, .1, .125, .15, .2, .3),
+    "kv_all_layers": (.01, .02, .25 / 6, .08, .16, .24, .32, .48, .64, .96, 1.28),
+}
 
 
 def write_json(path, value):
@@ -136,11 +146,17 @@ def cases_for(phase, iteration=0):
     if phase == "train":
         if type(iteration) is not int or not 1 <= iteration <= UPDATES:
             raise ValueError("Require an approved prospective training round")
-        banks = [[dict(bank="joint_steering_train", task=task, split="target",
-            native_seed=1_700_000 + task_index * 100_000 + (iteration - 1) * 16 + slot,
-            reset_ordinal=0, slot=(iteration - 1) * 16 + slot, counted=True,
-            layout_source="native_target_constructor_seed_first_reset") for slot in range(16)]
-            for task_index, task in enumerate(TASKS)]
+        # One task has76 cases, the other four77. Rotate the smaller task;
+        # consecutive per-task slots preserve every episode without planned holes.
+        prior = iteration - 1
+        banks = []
+        for task_index, task in enumerate(TASKS):
+            count = 76 if task_index == prior % len(TASKS) else 77
+            offset = prior * 77 - (prior + 4 - task_index) // len(TASKS)
+            banks.append([dict(bank="joint_steering_train", task=task, split="target",
+                native_seed=1_700_000 + task_index * 100_000 + offset + slot,
+                reset_ordinal=0, slot=offset + slot, counted=True,
+                layout_source="native_target_constructor_seed_first_reset") for slot in range(count)])
     elif phase == "dev":
         banks = [case_bank(task, "DEV", count=8) for task in TASKS]
     elif phase in ("test_before", "test_after"):
@@ -148,7 +164,7 @@ def cases_for(phase, iteration=0):
         banks += [case_bank(task, "OOD", count=50) for task in OOD_TASKS]
     else:
         raise ValueError("Unknown scientific collection phase")
-    return [bank[slot] for slot in range(len(banks[0])) for bank in banks]
+    return [bank[slot] for slot in range(max(map(len, banks))) for bank in banks if slot < len(bank)]
 
 
 def case_key(case):
@@ -200,9 +216,16 @@ def summarize_episodes(episodes):
         macro_OOD_success_at_end=macro(OOD_TASKS, "success_at_end"))
 
 
-def make_policy(arm, *, device="cpu", seed=1234):
+def make_policy(arm, *, device="cpu", seed=1234, optimizer_config=None):
+    settings = dict(learning_rate=3e-4 if arm == "velocity" else 3e-5,
+                    epochs=10, minibatch_size=32, target_kl=.02,
+                    kl_check_cadence="minibatch")
+    if optimizer_config is not None:
+        if set(optimizer_config) != set(settings):
+            raise ValueError("Bind the complete qualified steering optimizer configuration")
+        settings.update(optimizer_config)
     config = ResidualPPOConfig(feature_dim=2064, residual_dim=spec_arguments(arm)["steering_dim"],
-        gamma=.99, gae_lambda=.95, epochs=10, minibatch_size=32, target_kl=.02)
+        gamma=.99, gae_lambda=.95, **settings)
     with torch.random.fork_rng(devices=[]):
         torch.random.default_generator.manual_seed(seed)
         policy = ResidualActorCritic(config).to(device)
@@ -254,7 +277,7 @@ def native_scale_calibration(motor, observations, spec):
     from .robocasa_residual import public_observation
     if np.shape(observations["states"]) != (1, 25):
         raise ValueError("Calibrate one actual public TRAIN reset at a time")
-    fractions = (.025, .05, .1) if spec.kind == "velocity" else (.01, .02, .25 / 6, .08)
+    fractions = SCALE_FRACTIONS[spec.kind]
     generator = torch.Generator(device=motor.model.device).manual_seed(921002)
     noise = torch.randn((1, 50, 32), generator=generator, device=motor.model.device)
     original, _ = motor.model.predict_action_batch(public_observation(observations), mode="eval", noise=noise)
@@ -279,8 +302,101 @@ def native_scale_calibration(motor, observations, spec):
     if not any(row["normalized_action_rms"] > 0 for row in rows):
         raise ValueError("Steering has no measured effect on native actions")
     return dict(completed=True, zero_native_bitwise_equal=True, target_normalized_action_rms=target,
-        candidates=rows, selection="Parent selects nearest mean action RMS across the eight TRAIN resets",
+        candidates=rows, selection="Task-balanced public TRAIN action-RMS aggregation; bracket reference before selection",
         extra_policy_controls=0, reward_or_success_used=False)
+
+
+def qualify_learning_rates(arm, features, interface_spec, *, device):
+    """Bounded head-only numerical qualification, with no scientific labels.
+
+    Reuse public reset features; synthetic ends/rewards define a numerical
+    stress batch only. Compare correctly summed joint KL and next-Adam recovery
+    for every preregistered candidate. No live production learner is mutated.
+    """
+    from .residual_ppo import update
+    rates = (3e-4, 1e-4, 3e-5) if arm == "velocity" else (3e-5, 1e-5, 3e-6)
+    public = torch.as_tensor(features, dtype=torch.float32, device=device).reshape(-1, 2064)
+    if len(public) < 1 or not torch.isfinite(public).all():
+        raise ValueError("Require finite public TRAIN features for numerical qualification")
+    public = public.repeat(((24 + len(public) - 1) // len(public), 1))[:24]
+    trials = []
+    for rate in rates:
+        settings = dict(learning_rate=rate, epochs=10, minibatch_size=32,
+                        target_kl=.02, kl_check_cadence="minibatch")
+        policy = make_policy(arm, device=device, seed=921071, optimizer_config=settings)
+        policy.fit_feature_normalization(public)
+        adam = torch.optim.Adam(policy.parameters(), lr=rate)
+        generator = torch.Generator().manual_seed(921072)
+        noise = torch.randn((24, policy.config.residual_dim),
+                            generator=torch.Generator().manual_seed(921073)).to(device)
+        controls, logs, values = policy.act(public, action_noise=noise)
+        with torch.no_grad():
+            behavior, _ = policy._distribution(public)
+            means, stds = behavior.mean.clone(), behavior.stddev.clone()
+        ends = torch.tensor([False] * 5 + [True], device=device)[:, None].repeat(4, 1)
+        rollout = dict(features=public[:, None], controls=controls[:, None], log_probs=logs[:, None],
+            values=values[:, None], ends=ends, rewards=ends.float(),
+            behavior_mean=means[:, None], behavior_std=stds[:, None])
+        metrics = update(policy, adam, rollout, generator=generator)
+        recovery = qualify_optimizer_restore(policy, adam, generator, public,
+            arm=arm, interface_spec=interface_spec)
+        peak = max([metrics["final_metrics"]["joint_gaussian_kl"],
+                    recovery["final_metrics"]["joint_gaussian_kl"],
+                    *[row["kl"] for row in metrics["minibatch_kl_checks"]]])
+        passed = metrics["optimizer_steps"] >= 1 and math.isfinite(peak) and peak <= .03
+        trials.append(dict(optimizer_config=settings, passed=passed,
+            maximum_observed_joint_kl=peak, metrics=metrics, recovery=recovery))
+    passing = [row for row in trials if row["passed"]]
+    if not passing:
+        return dict(completed=True, passed=False, trials=trials,
+                    physical_controls=0, scientific_updates=0, reward_or_success_used=False)
+    return dict(completed=True, passed=True, selected_optimizer_config=passing[0]["optimizer_config"],
+        trials=trials, physical_controls=0, scientific_updates=0, reward_or_success_used=False,
+        selection="Largest preregistered LR with peak jointKL<=.03 and exact next-Adam restore; target stoppingKL=.02")
+
+
+def select_scale(receipts, *, selected_fraction=None):
+    """Select from a bracketing public-observation grid, without rewards.
+
+    Qualification supplies one receipt per TRAIN task, with equal task weight.
+    On production admission, a supplied fraction is the already qualified
+    binding; device-local fresh reset diagnostics do not tune it again.
+    """
+    if not receipts:
+        raise ValueError("Require public TRAIN calibration receipts")
+    receipts = [row.get("calibration", row) for row in receipts]
+    fractions = [row["fraction"] for row in receipts[0]["candidates"]]
+    if not fractions or any([row["fraction"] for row in receipt["candidates"]] != fractions
+                            for receipt in receipts):
+        raise ValueError("Every public reset must qualify the same declared fractions")
+    if not all(receipt["completed"] and receipt["zero_native_bitwise_equal"]
+               and not receipt["reward_or_success_used"] for receipt in receipts):
+        raise ValueError("Require original-native parity and reward-free calibration")
+    target = float(np.mean([receipt["target_normalized_action_rms"] for receipt in receipts]))
+    candidates = [dict(fraction=fraction, normalized_action_rms=float(np.mean([
+        receipt["candidates"][index]["normalized_action_rms"] for receipt in receipts])))
+        for index, fraction in enumerate(fractions)]
+    effects = [row["normalized_action_rms"] for row in candidates]
+    if not math.isfinite(target) or target <= 0 or not all(math.isfinite(x) and x >= 0 for x in effects):
+        raise ValueError("Require finite positive action-RMS reference and finite effects")
+    bracketed = min(effects) <= target <= max(effects)
+    if selected_fraction is None:
+        if not bracketed:
+            raise ValueError("Public TRAIN scale grid does not bracket the action-RMS reference")
+        chosen = min(candidates, key=lambda row: abs(row["normalized_action_rms"] - target))
+    else:
+        matches = [row for row in candidates if row["fraction"] == selected_fraction]
+        if len(matches) != 1:
+            raise ValueError("Qualified fraction is absent from the declared admission grid")
+        chosen = matches[0]
+    if chosen["normalized_action_rms"] <= 0:
+        raise ValueError("Qualified map has no finite measured action influence")
+    return dict(completed=True, selected_fraction=chosen["fraction"], candidates=candidates,
+        target_normalized_action_rms=target, selected_normalized_action_rms=chosen["normalized_action_rms"],
+        relative_RMS_error=abs(chosen["normalized_action_rms"] / target - 1),
+        reference_bracketed=bracketed, receipts=receipts, reward_or_success_used=False,
+        selection="Nearest equal-task mean public action RMS" if selected_fraction is None else
+                  "Previously qualified fraction retained; fresh device diagnostics only")
 
 
 def boundary_state(policy, optimizer, generator, *, arm, iteration, sequence, worker_states, escrow,
@@ -335,10 +451,12 @@ def qualify_optimizer_restore(policy, optimizer, generator, features, *, arm, in
                 noise = torch.randn((24, policy.config.residual_dim),
                     generator=torch.Generator().manual_seed(921019)).to(weight.device)
                 controls, logs, values = shadow.act(observations, action_noise=noise)
+                behavior, _ = shadow._distribution(observations)
                 ends = torch.tensor([False] * 5 + [True], device=weight.device)[:, None].repeat(4, 1)
                 rollout = dict(features=observations[:, None], controls=controls[:, None],
                     log_probs=logs[:, None], values=values[:, None], ends=ends,
-                    rewards=ends.to(weight.dtype))
+                    rewards=ends.to(weight.dtype), behavior_mean=behavior.mean.detach()[:, None],
+                    behavior_std=behavior.stddev.detach()[:, None])
             diagnostic = update(shadow, adam, rollout, generator=sampler)
             if diagnostic["optimizer_steps"] < 1:
                 raise ValueError("Shadow recovery check did not exercise an Adam step")

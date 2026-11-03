@@ -247,7 +247,8 @@ def test_native_scale_calibration_uses_only_one_reset_and_no_policy_controls(tmp
 
 
 @pytest.mark.parametrize("change", [None, "source", "weights"])
-def test_worker_restart_binds_saved_initializer_and_requalifies_new_allocation(tmp_path, monkeypatch, change):
+@pytest.mark.parametrize("lanes", [4, 48])
+def test_worker_restart_binds_saved_initializer_and_requalifies_new_allocation(tmp_path, monkeypatch, change, lanes):
     """A completed bank is never replayed or accepted under a different motor."""
     from dataclasses import asdict
     import fluffy_bassoon.meta_rl.joint_steering_ppo_worker as worker
@@ -256,7 +257,7 @@ def test_worker_restart_binds_saved_initializer_and_requalifies_new_allocation(t
     configuration = ResidualPPOConfig(2064, 32, width=8, layers=1, gamma=.99)
     actor = ResidualActorCritic(configuration)
     case = dict(task="OpenDrawer", native_seed=1700000)
-    previous_request = dict(sequence=1, phase="calibrate", iteration=0, lanes=4,
+    previous_request = dict(sequence=1, phase="calibrate", iteration=0, lanes=lanes,
         cases=[case], deterministic=True, zero_steering=False,
         policy_config=asdict(configuration), policy=actor.state_dict(),
         spec=dict(kind="velocity", steering_dim=32, fraction=.05), canonical_root=str(tmp_path / "canonical"),
@@ -290,6 +291,7 @@ def test_worker_restart_binds_saved_initializer_and_requalifies_new_allocation(t
 
     def collect(policy, motor, environments, **kwargs):
         collections.append(kwargs)
+        assert len(environments) == lanes
         receipt_path = kwargs["qualification_path"]
         assert receipt_path == directory / "qualification.json" and not receipt_path.exists()
         assert list(directory.glob("qualification-prior-*.json"))
@@ -351,3 +353,76 @@ def test_all_layer_cached_qualification_observes_every_consumed_key_and_value_wi
     after = np.random.get_state()
     assert numpy_rng[0] == after[0] and numpy_rng[2:] == after[2:]
     np.testing.assert_array_equal(numpy_rng[1], after[1])
+
+
+def test_48_synchronized_lanes_preserve_exact_rotating_case_order_and_every_physical_chunk(tmp_path):
+    cases = [dict(task=f"task-{(slot + 2) % 5}", native_seed=100 + slot,
+                  horizon=150 if slot % 7 == 0 else 100,
+                  **(dict(first_success=1) if slot % 3 == 0 else {})) for slot in range(48)]
+    environments = [Environment(cases, tmp_path, lane) for lane in range(48)]
+    motor = Motor()
+    specification = request(cases, lanes=48, synchronize_initial_lanes=True)
+    result = collect_bank(policy(), motor, environments, request=specification,
+        output=tmp_path / "history", rank=0, deadline_unix=time.time() + 60)
+    assert motor.batch_sizes[0] == 48 and result["execution"]["peak_active_lanes"] == 48
+    assert result["execution"]["requested_lanes"] == result["execution"]["maximum_native_batch"] == 48
+    assert result["execution"]["initial_lane_barrier"]
+    assert [episode["case"] for episode in result["episodes"]] == cases
+    assert [episode["physical_chunks"] for episode in result["episodes"]] == [case["horizon"] // 50 for case in cases]
+    for episode in result["episodes"]:
+        assert Path(episode["checkpoint"]["path"]).exists()
+        assert len(episode["chunks"]) == episode["horizon"] // 50
+    assert all(environment.closed for environment in environments)
+
+
+def test_ready_episode_is_checkpointed_before_waiting_for_a_later_failing_lane(tmp_path, monkeypatch):
+    import threading
+    import fluffy_bassoon.meta_rl.joint_steering_ppo_worker as worker
+    durable = threading.Event()
+    save = worker._save
+    def observed_save(path, value, **kwargs):
+        reference = save(path, value, **kwargs)
+        if str(path).endswith("episode-000001/checkpoint.pt"):
+            durable.set()
+        return reference
+    class DelayedFailure(Environment):
+        def step_chunk(self, chunk):
+            if self.case.get("fail_at") == self.steps + 50:
+                assert durable.wait(5), "Ready sibling evidence was held behind the failing future"
+            return super().step_chunk(chunk)
+    monkeypatch.setattr(worker, "_save", observed_save)
+    cases = [dict(task="bad", native_seed=1, horizon=100, fail_at=100),
+             dict(task="good", native_seed=2, horizon=100)]
+    environments = [DelayedFailure(cases, tmp_path, lane) for lane in range(2)]
+    with pytest.raises(RuntimeError, match="owned lane failed"):
+        collect_bank(policy(), Motor(), environments, request=request(cases, synchronize_initial_lanes=True),
+            output=tmp_path / "history", rank=0, deadline_unix=time.time() + 30)
+    assert durable.is_set() and (tmp_path / "history/episode-000001/checkpoint.pt").exists()
+
+
+def test_all_native_lanes_are_closed_even_when_one_close_fails(tmp_path):
+    class CloseFailure(Environment):
+        def close(self):
+            super().close()
+            raise RuntimeError("close failed")
+    cases = [dict(task="one", native_seed=1, horizon=100)]
+    environments = [CloseFailure(cases, tmp_path, 0), Environment(cases, tmp_path, 1)]
+    with pytest.raises(RuntimeError, match="Native lane cleanup failed"):
+        collect_bank(policy(), Motor(), environments, request=request(cases),
+            output=tmp_path / "history", rank=0, deadline_unix=time.time() + 30)
+    assert all(environment.closed for environment in environments)
+    assert (tmp_path / "history/episode-000000/checkpoint.pt").exists()
+
+
+def test_recording_environment_releases_native_child_after_encoder_close_failure():
+    from fluffy_bassoon.meta_rl.joint_steering_ppo_worker import _RecordingEnvironment
+    closed = []
+    def fail_encoder():
+        raise RuntimeError("encoder close failed")
+    env = object.__new__(_RecordingEnvironment)
+    env.active = True
+    env.writer = SimpleNamespace(close=fail_encoder)
+    env.native = SimpleNamespace(close=lambda: closed.append(True))
+    with pytest.raises(RuntimeError, match="encoder close failed"):
+        env.close()
+    assert closed == [True] and env.native is None

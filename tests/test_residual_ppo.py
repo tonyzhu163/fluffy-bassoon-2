@@ -175,6 +175,40 @@ def test_epoch_kl_stop_records_current_full_batch_and_keeps_completed_epoch():
     json.dumps(metrics, allow_nan=False)
 
 
+@pytest.mark.parametrize("dimension,expected_steps", [(32, 2), (1152, 1)])
+def test_minibatch_stop_uses_summed_joint_gaussian_kl(dimension, expected_steps):
+    policy = ResidualActorCritic(ResidualPPOConfig(2, dimension, width=8, epochs=10,
+        minibatch_size=3, target_kl=.02, kl_check_cadence="minibatch"))
+    batch = diagnostic_batch(policy)
+    with torch.no_grad():
+        old, _ = policy._distribution(batch["features"][:, 0])
+        batch.update(behavior_mean=old.mean.clone()[:, None], behavior_std=old.stddev.clone()[:, None])
+    optimizer = torch.optim.SGD(policy.parameters(), lr=0.)
+    def shift_mean():
+        with torch.no_grad():
+            policy.actor[-1].bias.add_(.01)
+    optimizer.step = shift_mean
+    metrics = update(policy, optimizer, batch, generator=torch.Generator().manual_seed(8))
+    expected_joint_kl = dimension * (.01 * expected_steps)**2 / (2 * .5**2)
+    assert metrics["optimizer_steps"] == expected_steps
+    assert metrics["epochs_completed"] == 0 and metrics["epochs_started"] == 1
+    assert metrics["samples_processed"] == expected_steps * 3
+    assert metrics["early_stopped"] and metrics["kl_stop_metric"] == "joint_gaussian_kl"
+    assert metrics["final_metrics"]["joint_gaussian_kl"] == pytest.approx(expected_joint_kl, rel=2e-4)
+    assert len(metrics["minibatch_kl_checks"]) == expected_steps
+    assert metrics["minibatch_kl_checks"][-1]["kl"] == metrics["final_metrics"]["joint_gaussian_kl"]
+    assert metrics["final_metrics"]["joint_gaussian_kl"] > .02
+    assert not metrics["epoch_metrics"][0]["epoch_complete"]
+
+
+def test_behavior_gaussian_requires_both_parameters():
+    policy = ResidualActorCritic(ResidualPPOConfig(2, 6, width=8))
+    batch = diagnostic_batch(policy)
+    batch["behavior_mean"] = torch.zeros_like(batch["controls"])
+    with pytest.raises(ValueError, match="both behavior"):
+        update(policy, torch.optim.Adam(policy.parameters()), batch)
+
+
 def test_disabled_and_unreached_kl_target_preserve_adam_and_rng():
     torch.manual_seed(4)
     policy = ResidualActorCritic(ResidualPPOConfig(2, 6, width=8, epochs=3, minibatch_size=3))

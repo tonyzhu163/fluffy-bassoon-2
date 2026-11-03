@@ -22,9 +22,9 @@ import numpy as np
 import torch
 
 from .joint_steering_ppo import (
-    DEV_ROUNDS, UPDATES, JointActionJournal, boundary_state, case_key, cases_for,
+    DEV_ROUNDS, UPDATES, ROLLOUT_LANES, TRAIN_EPISODES, JointActionJournal, boundary_state, case_key, cases_for,
     chronological_records, make_policy, normalize_first_bank, qualify_optimizer_restore, restore_boundary,
-    sha_file, spec_arguments, summarize_episodes, write_json,
+    sha_file, spec_arguments, summarize_episodes, write_json, select_scale,
 )
 from .joint_steering_ppo_worker import _save
 from .ppo import generalized_advantages
@@ -61,7 +61,7 @@ def dispatch(run, profile, policy, specification, *, sequence, phase, iteration,
         request = dict(sequence=sequence, phase=phase, iteration=iteration,
             policy_iteration=iteration - 1 if phase == "train" else iteration,
             cases=cases[rank::8], policy_config=asdict(policy.config), policy=state,
-            spec=specification, lanes=4, canonical_root=profile["canonical_root"],
+            spec=specification, lanes=profile["lanes_per_worker"], canonical_root=profile["canonical_root"],
             **{key: profile[key] for key in ("model_directory", "norm_path", "source_commit", "runtime_commit")},
             deterministic=phase != "train", zero_steering=phase == "test_before")
         if not request["cases"]:
@@ -108,25 +108,7 @@ def dispatch(run, profile, policy, specification, *, sequence, phase, iteration,
     return [results[rank] for rank in range(8)]
 
 
-def select_scale(results):
-    receipts = [row["calibration"] for row in results]
-    fractions = [row["fraction"] for row in receipts[0]["candidates"]]
-    if any([row["fraction"] for row in receipt["candidates"]] != fractions for receipt in receipts):
-        raise ValueError("Every device must qualify the same declared fractions")
-    target = float(np.mean([receipt["target_normalized_action_rms"] for receipt in receipts]))
-    candidates = [dict(fraction=fraction, normalized_action_rms=float(np.mean([
-        receipt["candidates"][index]["normalized_action_rms"] for receipt in receipts])))
-        for index, fraction in enumerate(fractions)]
-    chosen = min(candidates, key=lambda row: abs(row["normalized_action_rms"] - target))
-    if not all(receipt["completed"] and receipt["zero_native_bitwise_equal"] for receipt in receipts):
-        raise ValueError("Require actual original-native zero parity on all devices")
-    if not math.isfinite(chosen["normalized_action_rms"]) or chosen["normalized_action_rms"] <= 0:
-        raise ValueError("Chosen steering map has no finite measured action influence")
-    return dict(completed=True, selected_fraction=chosen["fraction"], candidates=candidates,
-                target_normalized_action_rms=target, receipts=receipts, reward_or_success_used=False)
-
-
-def _paired_readout(before, after):
+def _paired_readout(before, after, *, development=False):
     from scipy.stats import binomtest
     def comparison(tasks, metric):
         left = {case_key(row["case"]): row for row in before if row["case"]["task"] in tasks}
@@ -152,9 +134,14 @@ def _paired_readout(before, after):
             bootstrap_scope="Fixed task set, resampling paired cases within task; not held-out-task uncertainty")
     from .joint_steering_ppo import TASKS, OOD_TASKS
     return dict(ID={metric: comparison(TASKS, metric) for metric in ("success_once", "success_at_end")},
-        OOD={metric: comparison(OOD_TASKS, metric) for metric in ("success_once", "success_at_end")},
-        per_task={task: comparison((task,), "success_once") for task in (*TASKS, *OOD_TASKS)},
-        primary="ID macro first-success gain", fixed_final_checkpoint=True,
+        OOD={} if development else {metric: comparison(OOD_TASKS, metric)
+                                   for metric in ("success_once", "success_at_end")},
+        per_task={task: comparison((task,), "success_once")
+                  for task in (TASKS if development else (*TASKS, *OOD_TASKS))},
+        per_task_at_end={task: comparison((task,), "success_at_end")
+                        for task in (TASKS if development else (*TASKS, *OOD_TASKS))},
+        primary="ID macro first-success gain", fixed_final_checkpoint=not development,
+        exploratory_monitoring=development,
         multiple_arms="Two primary arm comparisons; report both raw and Holm-adjusted p-values across arms")
 
 
@@ -179,7 +166,7 @@ def start_workers(run, profile, deadline):
                 ROBOCASA_PI05_NATIVE_NORM=profile["norm_path"], RLINF_PATH=profile["runtime_path"],
                 PYTHONPATH=os.pathsep.join((str(Path(profile["code"]) / "src"), profile["runtime_path"],
                     environment.get("PYTHONPATH", ""))),
-                OMP_NUM_THREADS="4", MKL_NUM_THREADS="4", OPENBLAS_NUM_THREADS="4")
+                OMP_NUM_THREADS="1", MKL_NUM_THREADS="1", OPENBLAS_NUM_THREADS="1")
             children.append(subprocess.Popen([sys.executable, "-B", "-m",
                 "fluffy_bassoon.meta_rl.joint_steering_ppo_driver",
                 "--run", str(run), "--profile", str(run / "PROFILE.json"),
@@ -218,16 +205,30 @@ def stop_workers(run, children, streams):
 
 def run_master(run, profile, *, deadline, resume=False):
     run = Path(run)
-    # Each independent arm has 40 GPU-hours including prior attempts and release.
-    approved_gpu_seconds = APPROVED_ARM_GPU_HOURS * 3600
-    if (not 0 <= profile["prior_conservative_gpu_seconds"] < approved_gpu_seconds
+    if (profile["lanes_per_worker"] != ROLLOUT_LANES
+            or profile["episodes_per_update"] != TRAIN_EPISODES or profile["updates"] != UPDATES):
+        raise ValueError("Profile differs from the verified50-update/384-episode/48-lane recipe")
+    reference = profile["admission_reference"]
+    if sha_file(reference["path"]) != reference["sha256"]:
+        raise ValueError("Qualified production admission receipt changed")
+    admission = json.loads(Path(reference["path"]).read_text())
+    if not admission["completed"] or admission["worker_lanes"] != ROLLOUT_LANES:
+        raise ValueError("Actual48-lane steering/optimizer qualification is incomplete")
+    if any(admission[key] != profile[key] for key in
+           ("source_commit", "runtime_commit", "model_sha256", "norm_sha256")):
+        raise ValueError("Admission does not bind this exact source/runtime/frozen initializer")
+    qualified = admission["arms"][profile["arm"]]
+    if not qualified["passed"]:
+        raise ValueError("This independent steering arm is not qualified")
+    arm_budget_seconds = APPROVED_ARM_GPU_HOURS * 3600
+    if (not 0 <= profile["prior_conservative_gpu_seconds"] < arm_budget_seconds
             or not math.isfinite(profile["submitted_unix"]) or profile["submitted_unix"] > time.time()):
         raise ValueError("Require actual nonnegative prior-attempt GPU accounting")
-    remaining_gpu_seconds = approved_gpu_seconds - profile["prior_conservative_gpu_seconds"]
+    remaining_gpu_seconds = arm_budget_seconds - profile["prior_conservative_gpu_seconds"]
     hard_end = profile["submitted_unix"] + remaining_gpu_seconds / 8
     if (remaining_gpu_seconds <= 0 or not math.isfinite(deadline)
             or deadline > hard_end - 120 or deadline <= time.time()):
-        raise ValueError(f"Finite deadline must fit the remaining {APPROVED_ARM_GPU_HOURS} GPU-hour arm budget with release headroom")
+        raise ValueError("Finite deadline must fit the remaining40GPUh arm escrow with release headroom")
     checked_checkout(Path(profile["code"]), profile["source_commit"])
     checked_checkout(Path(profile["runtime_path"]), profile["runtime_commit"])
     if (sha_file(Path(profile["model_directory"]) / "model.safetensors") != profile["model_sha256"]
@@ -260,10 +261,14 @@ def run_master(run, profile, *, deadline, resume=False):
         if marker.exists():
             marker.replace(run / f"checkpoint-exit-consumed-{time.time_ns()}")
     arm = profile["arm"]
-    policy = make_policy(arm, device="cuda:0", seed=profile["seed"])
+    policy = make_policy(arm, device="cuda:0", seed=profile["seed"],
+                         optimizer_config=qualified["optimizer_config"])
     optimizer = torch.optim.Adam(policy.parameters(), lr=policy.config.learning_rate)
     generator = torch.Generator().manual_seed(profile["seed"] + 1)
-    specification, worker_states, cursor, iteration = spec_arguments(arm), {}, 0, 0
+    specification, worker_states, cursor, iteration = qualified["interface_spec"], {}, 0, 0
+    if {key: value for key, value in specification.items() if key != "fraction"} != {
+            key: value for key, value in spec_arguments(arm).items() if key != "fraction"}:
+        raise ValueError("Qualified interface differs from the agreed arm")
     journal = JointActionJournal(run / "accounting", rank=99, category="train", scope="master_read")
     profile_hash = tensor_hash(profile)
     measured_seconds = {}
@@ -310,8 +315,7 @@ def run_master(run, profile, *, deadline, resume=False):
             status = dict(phase=phase, sequence=event_index + 1, iteration=requested_iteration,
                           source_commit=profile["source_commit"], last_check_unix=time.time())
             if phase == "calibrate":
-                calibration = select_scale(results)
-                specification["fraction"] = calibration["selected_fraction"]
+                calibration = select_scale(results, selected_fraction=specification["fraction"])
                 write_json(run / "CALIBRATION.json", calibration)
                 status["calibrated_fraction"] = specification["fraction"]
             else:
@@ -345,6 +349,10 @@ def run_master(run, profile, *, deadline, resume=False):
                 else:
                     _save(run / "evaluations" / f"{phase}-{requested_iteration:03d}.pt",
                           dict(episodes=episodes, summary=status["summary"], policy_iteration=iteration))
+                    if phase == "dev":
+                        baseline = episodes if requested_iteration == 0 else torch.load(
+                            run / "evaluations/dev-000.pt", map_location="cpu", weights_only=False)["episodes"]
+                        status["paired_development"] = _paired_readout(baseline, episodes, development=True)
             escrow = journal.snapshot()
             if escrow["pending"]:
                 raise ValueError("Complete worker bank left unresolved physical-call reservations")
