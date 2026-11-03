@@ -1,6 +1,7 @@
 # RoboCasa365 atomic_seen native baseline sweep
 
-Proposed 2026-11-03 at the human's request. Not launched; needs a Baige owner.
+Authorized 2026-11-03: “pull coordination.md do the baseline sweep first.”
+Execution owner: chat `01a1a04a`; human subsequently selected **8 GPUs**.
 
 ## Question
 
@@ -68,3 +69,30 @@ This is a coarse screen (±~20 points per task). The human picks 5 ID + 5 OOD,
 balanced across open/close, pick-and-place and buttons/knobs; each chosen task
 not already at 50 episodes then gets a 50-episode qualification under the
 usual headroom rule before PPO.
+
+## Execution binding (2026-11-03)
+
+Use one exclusive Baige container with eight allocated GPUs, 168 CPUs,
+1024 GiB RAM and 192 GiB shared memory; four native simulator lanes per GPU.
+Each GPU loads the frozen model once. The eight workers partition the saved
+240-case list, preserve three raw RGB videos and simulator sidecars, and
+checkpoint every completed episode. No automatic retry or task substitution.
+The existing collector executes a deterministic zero-output residual; every
+saved H50 chunk must equal its native base chunk exactly. BF16 batched native
+inference can differ from singleton inference; report this execution detail.
+
+Native seed indices are zero-based in the table above. Motor noise seeds are
+`170000000 + 100000*task_index + 1000*case_slot + chunk_index`, saved before
+collection. Native registry horizons apply to these twelve tasks, including
+1050 for OpenCabinet; the five PPO tasks' separate 600-control migration is
+unchanged. Evaluation tasks are registered only inside this run's process.
+
+CPU checks run on the allocated Linux development container before launch;
+the unchanged qualified runtime gets an eight-device CUDA/PCI/PID probe in
+the actual job, then real native episodes. Check shared-PFS capacity, quota
+availability and a write probe; reserve 100 GiB for this run.
+
+Scheduler deadline: 3300 seconds, at most 26,400 GPU-seconds (7.333 GPU-hours);
+process deadline 3180 seconds, collection deadline 3120 seconds. Include
+startup/release overhead in final accounting and keep cumulative usage below
+8 GPU-hours. Report incomplete work rather than extending this ceiling.
