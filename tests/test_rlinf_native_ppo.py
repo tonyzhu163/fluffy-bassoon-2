@@ -177,7 +177,8 @@ def test_original_rollout_is_saved_before_official_training_shuffle(monkeypatch,
     import torch
     from fluffy_bassoon.meta_rl import rlinf_native_ppo_runtime as runtime
     actor = object.__new__(runtime.PilotActor)
-    actor.cfg = SimpleNamespace(native_pilot=SimpleNamespace(output=str(tmp_path)),
+    from omegaconf import OmegaConf
+    actor.cfg = SimpleNamespace(native_pilot=OmegaConf.create(dict(output=str(tmp_path))),
         env=SimpleNamespace(train=SimpleNamespace(rollout_epoch=4)))
     actor._rank = 0; actor.optimizer_steps = 0
     actor.model = SimpleNamespace(set_global_step=lambda step: None)
@@ -296,7 +297,8 @@ def test_native_history_multirank_episode_contract(monkeypatch, tmp_path):
             group_size=1)
         batch.update(gae)
         actor = object.__new__(runtime.PilotActor)
-        actor.cfg = SimpleNamespace(native_pilot=SimpleNamespace(output=str(tmp_path)),
+        from omegaconf import OmegaConf
+        actor.cfg = SimpleNamespace(native_pilot=OmegaConf.create(dict(output=str(tmp_path))),
             env=SimpleNamespace(train=SimpleNamespace(rollout_epoch=4)))
         actor._rank = rank; actor.optimizer_steps = 0
         actor.model = SimpleNamespace(set_global_step=lambda step: None)
