@@ -1,0 +1,101 @@
+{
+ "status": "ADOPTED_BY_HUMAN_2026-11-03",
+ "decision": "Human adopted the category-balanced 5 ID + 5 OOD split ('Yes, adopt it'), superseding the 2026-11-02 TASK-PORTFOLIO.json selection.",
+ "basis": "Every atomic_seen category (open/close 7, pick-and-place 6, buttons/knobs 4; NavigateKitchen excluded as a different family) appears in both sets; ID tasks need native 5-70% PPO headroom; OOD keeps a near (CloseFridge) and a far (OpenStandMixerHead) open/close transfer and one pick-and-place task. Rates are native first success: 50-case five-task qualification, CloseFridge matching eval50, otherwise the 20-case atomic sweep (coarse).",
+ "sources": [
+  "../robocasa-five-task-flora-ppo-20261102-r1/TASK-PORTFOLIO.json",
+  "../robocasa-atomic-baseline-sweep-20261103-r1/RESULT.md"
+ ],
+ "PPO_tasks": [
+  {
+   "task": "OpenDrawer",
+   "category": "open/close",
+   "native": "29/50 (58%), native horizon 750",
+   "ppo_horizon": 600,
+   "seed_number": 1,
+   "train_seed": 2100000,
+   "eval_seed": 610100
+  },
+  {
+   "task": "CloseToasterOvenDoor",
+   "category": "open/close",
+   "native": "5/20 (25%), native horizon 450",
+   "ppo_horizon": 600,
+   "seed_number": 7,
+   "train_seed": 2700000,
+   "eval_seed": 670100
+  },
+  {
+   "task": "PickPlaceDrawerToCounter",
+   "category": "pick-and-place",
+   "native": "23/50 (46%), native horizon 750",
+   "ppo_horizon": 600,
+   "seed_number": 3,
+   "train_seed": 2300000,
+   "eval_seed": 630100
+  },
+  {
+   "task": "CoffeeSetupMug",
+   "category": "pick-and-place",
+   "native": "17/50 (34%), native horizon 600",
+   "ppo_horizon": 600,
+   "seed_number": 5,
+   "train_seed": 2500000,
+   "eval_seed": 650100
+  },
+  {
+   "task": "TurnOffStove",
+   "category": "buttons/knobs",
+   "native": "7/50 (14%), native horizon 750",
+   "ppo_horizon": 600,
+   "seed_number": 4,
+   "train_seed": 2400000,
+   "eval_seed": 640100
+  }
+ ],
+ "OOD_tasks": [
+  {
+   "task": "CloseFridge",
+   "category": "open/close",
+   "native_horizon": 900,
+   "heldout_OOD_seed_start": 510100,
+   "native": "28/50 (56%)"
+  },
+  {
+   "task": "OpenStandMixerHead",
+   "category": "open/close",
+   "native_horizon": 450,
+   "heldout_OOD_seed_start": 550100,
+   "native": "13/20 (65%)"
+  },
+  {
+   "task": "PickPlaceCounterToStove",
+   "category": "pick-and-place",
+   "native_horizon": 600,
+   "heldout_OOD_seed_start": 560100,
+   "native": "10/20 (50%)"
+  },
+  {
+   "task": "TurnOnMicrowave",
+   "category": "buttons/knobs",
+   "native_horizon": 450,
+   "heldout_OOD_seed_start": 530100,
+   "native": "6/20 (30%)"
+  },
+  {
+   "task": "TurnOnSinkFaucet",
+   "category": "buttons/knobs",
+   "native_horizon": 600,
+   "heldout_OOD_seed_start": 540100,
+   "native": "10/20 (50%)"
+  }
+ ],
+ "removed": {
+  "PickPlaceCounterToCabinet": "37/50 (74%) fails PPO admission",
+  "OpenCabinet": "15/20 (75%), horizon 1050, near-duplicate of OpenDrawer; OOD seeds 520100 retired"
+ },
+ "qualification": {
+  "ID": "the runner's 64-case before panel at 600 controls; admission 5-70% stops the run",
+  "OOD": "fresh 50-case native panel per OOD task at its native horizon before any meta-learner readout"
+ }
+}

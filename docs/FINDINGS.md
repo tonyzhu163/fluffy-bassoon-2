@@ -690,6 +690,21 @@ and an improving matched frozen-motor teacher have not been established here.
 [Result and curves](../outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/RESULT.md),
 [history compatibility and gaps](../outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/HISTORY-AUDIT.md).
 
+### Native atomic task screen (2026-11-03)
+
+A native frozen pi0.5 sweep completed all 240 episodes on 12 previously
+unmeasured `atomic_seen` tasks (20 per task), 147,000 physical controls and
+zero SGD. PickPlaceCounterToStove scored 10/20 first and end success, providing
+one new pick-and-place candidate within the coarse 5–70% range; OpenCabinet
+and PickPlaceToasterToCounter scored 15/20, and PickPlaceSinkToCounter 19/20.
+SlideDishwasherRack scored 14 first / 13 end successes; TurnOnMicrowave 6 / 4,
+so first and terminal success must remain separate. All 720 videos and 2,940
+native chunk/noise schedules were independently audited. These single-bank
+point estimates need 50-case qualification for newly selected tasks; they do
+not establish learning or fix the final ID/OOD portfolio.
+[All twelve rates and Wilson intervals](../outputs/robocasa-atomic-baseline-sweep-20261103-r1/RESULT.md),
+[audit](../outputs/robocasa-atomic-baseline-sweep-20261103-r1/FINAL-AUDIT.json).
+
 ## LIBERO
 
 **Flora versus simulator PPO stopped before training (2026-11-01).** The

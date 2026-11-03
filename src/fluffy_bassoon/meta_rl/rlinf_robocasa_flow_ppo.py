@@ -58,9 +58,11 @@ class GlobalActionJournal:
         return self._change(resolve)
 
 
-# Portfolio task numbers (TASK-PORTFOLIO.json order). Replacements append.
+# Seed-range numbers; never renumber. 1-5 follow the 2026-11-02 portfolio,
+# later tasks append. PPO tasks: robocasa-flow-sde-10m-per-task TASK-PORTFOLIO.json.
 FLOW_TASK_NUMBERS = dict(OpenDrawer=1, PickPlaceCounterToCabinet=2, PickPlaceDrawerToCounter=3,
-                         TurnOffStove=4, CoffeeSetupMug=5)
+                         TurnOffStove=4, CoffeeSetupMug=5, PickPlaceCounterToStove=6,
+                         CloseToasterOvenDoor=7)
 RESET_CONTROL_RESERVE = 128  # counted_native_factory's per-episode reset reserve
 
 
