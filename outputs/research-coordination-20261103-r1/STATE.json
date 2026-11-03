@@ -2,7 +2,7 @@
   "run_id": "research-coordination-20261103-r1",
   "owner_thread": "01a19f33-dcb8-7b81-ac4c-b23c26b341de",
   "timezone": "Asia/Shanghai",
-  "status": "PRODUCTION_FIRST_UPDATES_VERIFIED_FLORA_AUTHORIZED",
+  "status": "PPO_UPDATE2_BUDGET_PAUSE_EXECUTION_DIAGNOSIS_FLORA_DIAGNOSTIC_FAILED",
   "automation_id": "coordinate-ppo-milestones-and-recoveries",
   "check_interval_minutes": 20,
   "human_authority": [
@@ -45,9 +45,9 @@
     "flora_reward": {
       "thread_id": "01a19bef-b16f-70e2-ad86-9140e3b360ed",
       "title": "Fix Flora reward and unblock gates",
-      "cursor": "520aa979-d22d-4944-a890-27bd974a6515:17",
-      "state": "RUNNING prepared40grade trial job-pb53j1e4jom1 onBaige, oneRPBZZZ6/32CPU128GiB16SHM,900GPU-s/autoretryOFF. ActualCUDA/UUIDprobepassed perownerreceipt, scorerinitializing. Human under8GPUh policy verifieddirectlybyowner; source1f29377b cleanfreshGPUworktree preserves all19CPU/40prompt scientificmigrations/audits. No labels/qualification/promotion claimed yet.",
-      "evidence": "outputs/research-coordination-20261103-r1/FLORA-FRAME-EDGE-VERIFICATION.json",
+      "cursor": "520aa979-d22d-4944-a890-27bd974a6515:19",
+      "state": "40grade trial complete/exit0; bothbase/frame-edge faildiagnosticgate:6/10negativeprefixesscore5,3falseacceptedepisodes each. Clausepostsuccessfull4\u21925/8,timely1\u21922/3but128stillmissed/216closedterminal1. All4anchorsmatch;19actualvLLMHF BF16refs match CPU and40rawinputsaudited; FP32notbyteequal, no encoder/LLMstates saved. Rootrecomputedpairedprefixcounts onallocatedLinuxCPU, no rewardpromotion. Process575GPU-s/0actions/0SGD; ownerreportsGPUreleased, copiedproof/finalschedulerchargepublicationpending. No automaticsame-panel wording loop absentnewsubstantivediagnosis.",
+      "evidence": "outputs/research-coordination-20261103-r1/FLORA-FRAME-EDGE-RESULT-REVIEW.json",
       "next_trial_GPU_seconds_ceiling_proposed": 900,
       "incremental_scoring_approval": {
         "status": "RESOLVED_HUMAN_POLICY_TRIAL_RUNNING",
@@ -66,13 +66,20 @@
       "scoring_job_id": "job-pb53j1e4jom1",
       "scoring_GPU_seconds_cap": 900,
       "scoring_source_commit": "1f29377b04cab278ce07137fc417f29c18f5cccd",
-      "actual_GPU_probe_passed_reported_by_owner": true
+      "actual_GPU_probe_passed_reported_by_owner": true,
+      "diagnostic_complete": true,
+      "development_screen_passed": false,
+      "production_reward_qualified": false,
+      "scoring_process_GPU_seconds": 575,
+      "scoring_scheduler_release_reported": true,
+      "live_processor_BF16_reference_match": true,
+      "live_processor_FP32_byte_equal": false
     },
     "steering_ppo": {
       "thread_id": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
       "title": "Pull PPO coordination updates",
-      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:77",
-      "state": "BothRUNNING8GPUs/arm,16disjointactualUUIDs and168CPU1664GiB384SHM/storagegatespassed. DEV0complete40episodes/5tasks. BothCOUNTEDupdate1 complete230400newcontrols/arm, checkpoint+exactnextAdamrestore/liveunchangedpass; no learnedDEVimprovementclaim. Firstphase355.3svelocity/388.1sKV; currentoldclockprojection47.13/50.73GPUh>40includingqueue; ownerdiagnosingactualallocation/steadybankcost beforeanyboundaryrecovery/budgetdecision. Activecontracts/remedyinactive preserved.",
+      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:81",
+      "state": "Bothr1attempts schedulerSUCCESS/released aftersafe measured-budget pause atCOUNTEDupdate2/50. RootverifiedcheckpointSHA andloadedfullpayload onallocatedLinuxCPU: actor/critic,Adam13states,privategenerator/globalPython/NumPy/Torch/8CUDA RNGs,8workerRNG/sequence/frozen-signatures,escrowpending{} present; migrationnotyetqualified. All16nativechildrenreleasedexit0. Spentselected27058GPU-s=7.5161GPUh inclprior2186once. Queue-discountedfull50projection95.91GPUh>80 beforefreshmigrationcost. Productionownerownsrelease/cost/exactmigration; existingcapacityownerassignedboundedread-onlyCPUdiagnosis ofnative/feature/IO/per-rank/concurrency performance, no GPUjoborresumeauthority. No DEV5;50updates/all10panels unchanged.",
       "scientific_job_ids": {
         "velocity": "job-bxhz4d41ll1k",
         "kv_all_layers": "job-khwsqhzct9v5"
@@ -106,7 +113,7 @@
       "qualification_job_id": "job-mdxdgd91xn8o",
       "qualification_job_status": "SUCCEEDED_RELEASED_RECEIPT_VERIFIED",
       "qualification_source_commit": "d3a861a6ac67f594902675cb36ddf0ee83608896",
-      "scientific_updates": 1,
+      "scientific_updates": 2,
       "velocity_controls_per_second": 58.8460842239662,
       "kv_controls_per_second": 60.058882417193374,
       "velocity_collection_only_GPU_hours": 54.37914930449592,
@@ -124,7 +131,7 @@
         "check_cadence": "minibatch",
         "scientific_updates": 0
       },
-      "evidence": "outputs/research-coordination-20261103-r1/TRAIN1-REVIEW.json",
+      "evidence": "outputs/research-coordination-20261103-r1/CHECK-20261103-1350.json",
       "qualification_GPU_seconds": 1331,
       "carried_preparation_GPU_seconds": 122,
       "qualification_successor_job_id": "job-m2qlxqjuh8ho",
@@ -151,21 +158,23 @@
       "production_attempts": {
         "velocity": {
           "job_id": "job-bxhz4d41ll1k",
-          "status": "RUNNING_FIRST_UPDATE1_VERIFIED",
+          "status": "SCHEDULER_TERMINAL_SAFE_BUDGET_PAUSE_AT2",
           "created_Shanghai": "2026-11-03T12:53:03+08:00",
           "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1",
-          "scientific_updates": 1,
+          "scientific_updates": 2,
           "allocation_verified": true,
-          "GPUs": 8
+          "GPUs": 8,
+          "allocation_released": true
         },
         "kv_all_layers": {
           "job_id": "job-khwsqhzct9v5",
-          "status": "RUNNING_FIRST_UPDATE1_VERIFIED",
+          "status": "SCHEDULER_TERMINAL_SAFE_BUDGET_PAUSE_AT2",
           "created_Shanghai": "2026-11-03T12:54:07+08:00",
           "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1",
-          "scientific_updates": 1,
+          "scientific_updates": 2,
           "allocation_verified": true,
-          "GPUs": 8
+          "GPUs": 8,
+          "allocation_released": true
         }
       },
       "launcher_source_commit": "ee0f40465e09d5968fd95c065c049f8b8d416334",
@@ -175,8 +184,8 @@
         "reason": "TASK_SUBMITTED_UNIX consumes unallocatedqueuewall time in the executiondeadline; distinguishactualGPUcharge andpreservefull50updates/80GPUh withoutmutatingqueuedcontracts orblindduplicates."
       },
       "scientific_updates_by_arm": {
-        "velocity": 1,
-        "kv_all_layers": 1
+        "velocity": 2,
+        "kv_all_layers": 2
       },
       "scientific_progress_qualified": true,
       "completed_scientific_sources_available": false,
@@ -309,13 +318,96 @@
         }
       },
       "budget_review": {
-        "status": "OWNER_DIAGNOSING_MEASURED_PROJECTION_AND_QUEUE_ACCOUNTING",
-        "projection_GPU_hours": {
-          "velocity": 47.12633220725589,
-          "kv_all_layers": 50.728926619953576
+        "status": "READ_ONLY_EXECUTION_AND_CORRECTED_COST_DIAGNOSIS",
+        "queue_inclusive_full50_projection_GPU_hours": {
+          "velocity": 49.3180866294437,
+          "kv_all_layers": 52.050028252071805
         },
-        "active_clock_unchanged": true,
-        "successor_clock_inactive": true
+        "allocation_discounted_combined_projection_GPU_hours": 95.91033710373773,
+        "current_combined_cap_GPU_hours": 80,
+        "actual_selected_spent_GPU_hours": 7.516111111111111,
+        "no_budget_change_made": true,
+        "serial8GPU_execution_hypothesis": "Evaluateonlyagainstbottleneck evidence; anycountedupdate3 requirescheckedfullstatemigration/no repeats."
+      },
+      "production_lifetime_selected_GPU_seconds": 27058,
+      "production_lifetime_selected_GPU_hours": 7.516111111111111,
+      "allocation_release_verified": true,
+      "remaining_target_updates_per_arm": 48,
+      "checkpoint_payload_present_verified_on_allocated_CPU": true,
+      "migrated_resume_qualified": false,
+      "TRAIN_trends": {
+        "velocity": [
+          {
+            "update": 1,
+            "unix": 1793683958.6992722,
+            "metrics": {
+              "runtime/elapsed_seconds": 355.3174088001251,
+              "runtime/physical_controls_this_event": 230400,
+              "runtime/projected_all_attempt_gpu_hours": 47.12633220725589,
+              "counters/train_physical_controls": 288000,
+              "counters/eval_physical_controls": 346500,
+              "counters/unresolved_calls": 0,
+              "train/macro_ID_success_once": 0.37036910457963085,
+              "train/macro_ID_success_at_end": 0.3520847573479152,
+              "train/current/approximate_kl": 0.025195350674065677,
+              "train/current/joint_gaussian_kl": 0.022436927471842085,
+              "train/current/clip_fraction": 0.3033766233804938
+            }
+          },
+          {
+            "update": 2,
+            "unix": 1793684334.174154,
+            "metrics": {
+              "runtime/elapsed_seconds": 375.4451651573181,
+              "runtime/physical_controls_this_event": 230400,
+              "runtime/projected_all_attempt_gpu_hours": 49.3180866294437,
+              "counters/train_physical_controls": 518400,
+              "counters/eval_physical_controls": 346500,
+              "counters/unresolved_calls": 0,
+              "train/macro_ID_success_once": 0.41196172248803825,
+              "train/macro_ID_success_at_end": 0.3963431305536569,
+              "train/current/approximate_kl": 0.021643217120284882,
+              "train/current/joint_gaussian_kl": 0.021021192517880594,
+              "train/current/clip_fraction": 0.2841544607507881
+            }
+          }
+        ],
+        "kv_all_layers": [
+          {
+            "update": 1,
+            "unix": 1793684019.884665,
+            "metrics": {
+              "runtime/elapsed_seconds": 388.0876042842865,
+              "runtime/physical_controls_this_event": 230400,
+              "runtime/projected_all_attempt_gpu_hours": 50.728926619953576,
+              "counters/train_physical_controls": 288000,
+              "counters/eval_physical_controls": 346500,
+              "counters/unresolved_calls": 0,
+              "train/macro_ID_success_once": 0.3756322624743677,
+              "train/macro_ID_success_at_end": 0.36004784688995206,
+              "train/current/approximate_kl": 0.2855645704835958,
+              "train/current/joint_gaussian_kl": 0.02002232765784264,
+              "train/current/clip_fraction": 0.615868028342084
+            }
+          },
+          {
+            "update": 2,
+            "unix": 1793684420.1316385,
+            "metrics": {
+              "runtime/elapsed_seconds": 400.2196035385132,
+              "runtime/physical_controls_this_event": 230400,
+              "runtime/projected_all_attempt_gpu_hours": 52.050028252071805,
+              "counters/train_physical_controls": 518400,
+              "counters/eval_physical_controls": 346500,
+              "counters/unresolved_calls": 0,
+              "train/macro_ID_success_once": 0.38858509911141487,
+              "train/macro_ID_success_at_end": 0.3859876965140122,
+              "train/current/approximate_kl": 0.1987860168962183,
+              "train/current/joint_gaussian_kl": 0.0200438126549712,
+              "train/current/clip_fraction": 0.5407251710492063
+            }
+          }
+        ]
       }
     },
     "downstream_histories": {
@@ -323,6 +415,11 @@
       "title": "Explain DPT context/query targets",
       "cursor": "5e721a0b-3229-4c1f-beee-e2194e124fbd:57",
       "state": "Native qualification advanced; no admitted completed scientificPPOsource yet, so downstream fit remains pending."
+    },
+    "capacity_diagnosis": {
+      "thread_id": "01a19d07-dc97-7682-9795-2c1f3a5b0e75",
+      "cursor": "a81db8c3-ebdb-4af2-80a7-f5c38403fffa:4",
+      "state": "Activeboundedread-onlyCPUreview. Preliminaryexecutiondifference: Q2startsall48lanestogether; productionstartsasresetsfinish, mayfragmentnativeinferencebatches. Actualtimings/batchhistograms,noise/baselinecomparability andcorrectedcost stillbeingchecked. No GPUjob/sourceedit/resumeauthorizedto capacityowner; productionownerretainsmigrationownership."
     }
   },
   "delivered_DEV_milestones": {
@@ -350,7 +447,9 @@
     "ppo_both_actual8GPU_first_advancement_and_DEV0_verified",
     "ppo_both_first_counted_update1_and_exact_Adam_restore_verified",
     "human_under8GPUh_policy_AGENTS_committed_Flora40grade_authorized",
-    "flora_frame_edge_job-pb53j1e4jom1_actual_GPU_trial_started"
+    "flora_frame_edge_job-pb53j1e4jom1_actual_GPU_trial_started",
+    "ppo_both_update2_safe_budget_pause_checkpoint_payload_release_and_cost_verified",
+    "flora_frame_edge40grades_failed_screen_live_BF16_inputs_verified"
   ],
   "wandb": {
     "status": "PRODUCTION_OFFLINE_RUNS_INITIALIZED_METRICS_ADVANCING_NO_ONLINE",
@@ -386,7 +485,7 @@
     "Flora repair does not gate simulator-reward steering PPO.",
     "Do not duplicate owner jobs, change their active worktrees, or expand scope/budgets silently."
   ],
-  "last_check_Shanghai": "2026-11-03T13:42:37+08:00",
+  "last_check_Shanghai": "2026-11-03T14:02:12+08:00",
   "last_quiet_check_reason": null,
   "human_resource_policy": {
     "human_quote": "dont ask me for approval below 8 gpu hours add to agents.md",

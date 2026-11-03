@@ -1,0 +1,55 @@
+{
+  "checked_unix": 1793685102.9678085,
+  "allocated_Linux_CPU_readback_and_reference_counts": true,
+  "job": "job-pb53j1e4jom1",
+  "completed": true,
+  "new_grades": 40,
+  "paired_prefixes": 18,
+  "negative_prefixes": 10,
+  "post_success_prefixes": 8,
+  "all4anchors_match": true,
+  "counts": {
+    "first_success_fixture_depth": {
+      "false_score5_negative_prefixes": 6,
+      "post_success_score5_prefixes": 4,
+      "timely_confirmed_episodes": 1,
+      "false_accepted_episodes": 3,
+      "passes_development_screen": false
+    },
+    "first_success_frame_edge": {
+      "false_score5_negative_prefixes": 6,
+      "post_success_score5_prefixes": 5,
+      "timely_confirmed_episodes": 2,
+      "false_accepted_episodes": 3,
+      "passes_development_screen": false
+    }
+  },
+  "processor_audit": {
+    "completed": true,
+    "unique_inputs": 19,
+    "all_bf16_equal": true,
+    "all_fp32_equal": false,
+    "limitation": "Actual vLLM HF processor outputs during these scoring calls; no learned encoder/LLM internal states saved"
+  },
+  "raw_inputs_audited": 40,
+  "source": "1f29377b04cab278ce07137fc417f29c18f5cccd",
+  "artifacts": {
+    "RESULT.json": "554530d07b1f3a8eedcf5855889e90a233367ac6113067b968a71561e2a03471",
+    "PAIRED-SAMPLE.json": "b851c1650709422908882ed0657905573cc969316670d261b2a847bed138fe3b",
+    "scoring/PROCESSOR-AUDIT.json": "930b2f05861a96c2cd1400592008783cd5bcad3bb53b90a27423faf599382cd4",
+    "scoring/COMPLETED.json": "3f9f5542315e41657bc2a73326622bd182a128c35e4a57ade7ea144c064da68e",
+    "terminal-charge.json": "fa55c44c82e6f65128c7c54c325ab77b83f4f2ae24183ed720fff3051d5e4879"
+  },
+  "process_charge": {
+    "source_commit": "1f29377b04cab278ce07137fc417f29c18f5cccd",
+    "start_unix": 1793684139,
+    "end_unix": 1793684714,
+    "exit_code": 0,
+    "gpus": 1,
+    "maximum_gpu_seconds": 900,
+    "robot_actions": 0,
+    "charged_gpu_seconds": 575
+  },
+  "scheduler_release_final_charge_pending": true,
+  "claim": "Frame-edge clause improves one successful timing case but leavesfalsepositivesandmissed128; failed diagnosticdevelopmentgate, no productionrewardqualification."
+}

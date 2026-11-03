@@ -1,0 +1,677 @@
+{
+  "checked_unix": 1793685295.5853248,
+  "allocated_Linux_CPU_payload_inspection": true,
+  "CUDA_initialized": false,
+  "arms": {
+    "velocity": {
+      "format": "joint_frozen_steering_boundary_v1",
+      "arm": "velocity",
+      "spec": {
+        "kind": "velocity",
+        "steering_dim": 32,
+        "fraction": 0.125
+      },
+      "interface": {
+        "kind": "velocity",
+        "motor_shape": {
+          "type": "list",
+          "length": 2
+        },
+        "steering_dim": 32,
+        "candidates": 8,
+        "fraction": 0.125
+      },
+      "policy_config": {
+        "feature_dim": 2064,
+        "residual_dim": 32,
+        "width": 256,
+        "layers": 2,
+        "initial_std": 0.5,
+        "learning_rate": 0.0003,
+        "epochs": 10,
+        "minibatch_size": 32,
+        "clip": 0.2,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "entropy_coef": 0,
+        "value_coef": 0.5,
+        "max_grad_norm": 1,
+        "target_kl": 0.02,
+        "kl_check_cadence": "minibatch"
+      },
+      "policy": {
+        "log_std": {
+          "type": "Tensor",
+          "shape": [
+            32
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "feature_mean": {
+          "type": "Tensor",
+          "shape": [
+            2064
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "feature_std": {
+          "type": "Tensor",
+          "shape": [
+            2064
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "actor.0.weight": {
+          "type": "Tensor",
+          "shape": [
+            256,
+            2064
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "actor.0.bias": {
+          "type": "Tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "actor.2.weight": {
+          "type": "Tensor",
+          "shape": [
+            256,
+            256
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "actor.2.bias": {
+          "type": "Tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "actor.4.weight": {
+          "type": "Tensor",
+          "shape": [
+            32,
+            256
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "actor.4.bias": {
+          "type": "Tensor",
+          "shape": [
+            32
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "critic.0.weight": {
+          "type": "Tensor",
+          "shape": [
+            256,
+            2064
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "critic.0.bias": {
+          "type": "Tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "critic.2.weight": {
+          "type": "Tensor",
+          "shape": [
+            256,
+            256
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "critic.2.bias": {
+          "type": "Tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "critic.4.weight": {
+          "type": "Tensor",
+          "shape": [
+            1,
+            256
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "critic.4.bias": {
+          "type": "Tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        }
+      },
+      "optimizer": {
+        "state": {
+          "mapping_keys": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ],
+          "entries": 13
+        },
+        "param_groups": {
+          "type": "list",
+          "length": 1
+        }
+      },
+      "generator": {
+        "type": "Tensor",
+        "shape": [
+          5056
+        ],
+        "dtype": "torch.uint8",
+        "device": "cpu"
+      },
+      "global_rng": {
+        "python": {
+          "type": "tuple",
+          "length": 3
+        },
+        "numpy": {
+          "type": "tuple",
+          "length": 5
+        },
+        "torch": {
+          "type": "Tensor",
+          "shape": [
+            5056
+          ],
+          "dtype": "torch.uint8",
+          "device": "cpu"
+        },
+        "cuda": {
+          "type": "list",
+          "length": 8
+        }
+      },
+      "iteration": 2,
+      "sequence": 5,
+      "worker_states": {
+        "0": {
+          "mapping_keys": [
+            "worker_rng",
+            "sequence",
+            "frozen_signature"
+          ],
+          "entries": 3
+        },
+        "1": {
+          "mapping_keys": [
+            "worker_rng",
+            "sequence",
+            "frozen_signature"
+          ],
+          "entries": 3
+        },
+        "2": {
+          "mapping_keys": [
+            "worker_rng",
+            "sequence",
+            "frozen_signature"
+          ],
+          "entries": 3
+        },
+        "3": {
+          "mapping_keys": [
+            "worker_rng",
+            "sequence",
+            "frozen_signature"
+          ],
+          "entries": 3
+        },
+        "4": {
+          "mapping_keys": [
+            "worker_rng",
+            "sequence",
+            "frozen_signature"
+          ],
+          "entries": 3
+        },
+        "5": {
+          "mapping_keys": [
+            "worker_rng",
+            "sequence",
+            "frozen_signature"
+          ],
+          "entries": 3
+        },
+        "6": {
+          "mapping_keys": [
+            "worker_rng",
+            "sequence",
+            "frozen_signature"
+          ],
+          "entries": 3
+        },
+        "7": {
+          "mapping_keys": [
+            "worker_rng",
+            "sequence",
+            "frozen_signature"
+          ],
+          "entries": 3
+        }
+      },
+      "escrow": {
+        "format": "joint_steering_action_escrow_v1",
+        "limits": {
+          "mapping_keys": [
+            "train",
+            "eval"
+          ],
+          "entries": 2
+        },
+        "charged": {
+          "mapping_keys": [
+            "train",
+            "eval"
+          ],
+          "entries": 2
+        },
+        "pending": {
+          "mapping_keys": [],
+          "entries": 0
+        }
+      },
+      "profile_sha256": "448a41813ae445eae19598f04fe1a33827ba2922af9d912c660f83aed19e0877",
+      "last_event": "train",
+      "measured_seconds": {
+        "calibrate": {
+          "type": "list",
+          "length": 1
+        },
+        "test_before": {
+          "type": "list",
+          "length": 1
+        },
+        "dev": {
+          "type": "list",
+          "length": 1
+        },
+        "train": {
+          "type": "list",
+          "length": 2
+        }
+      }
+    },
+    "kv_all_layers": {
+      "format": "joint_frozen_steering_boundary_v1",
+      "arm": "kv_all_layers",
+      "spec": {
+        "kind": "kv_all_layers",
+        "steering_dim": 1152,
+        "kv_layers": 18,
+        "fraction": 0.64
+      },
+      "interface": {
+        "kind": "kv_all_layers",
+        "motor_shape": {
+          "type": "list",
+          "length": 2
+        },
+        "steering_dim": 1152,
+        "candidates": 8,
+        "fraction": 0.64,
+        "kv_layers": 18,
+        "kv_map": {
+          "mapping_keys": [
+            "version",
+            "rank",
+            "targets",
+            "order",
+            "seed_base",
+            "seed",
+            "scale"
+          ],
+          "entries": 7
+        }
+      },
+      "policy_config": {
+        "feature_dim": 2064,
+        "residual_dim": 1152,
+        "width": 256,
+        "layers": 2,
+        "initial_std": 0.5,
+        "learning_rate": 0.00003,
+        "epochs": 10,
+        "minibatch_size": 32,
+        "clip": 0.2,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "entropy_coef": 0,
+        "value_coef": 0.5,
+        "max_grad_norm": 1,
+        "target_kl": 0.02,
+        "kl_check_cadence": "minibatch"
+      },
+      "policy": {
+        "log_std": {
+          "type": "Tensor",
+          "shape": [
+            1152
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "feature_mean": {
+          "type": "Tensor",
+          "shape": [
+            2064
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "feature_std": {
+          "type": "Tensor",
+          "shape": [
+            2064
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "actor.0.weight": {
+          "type": "Tensor",
+          "shape": [
+            256,
+            2064
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "actor.0.bias": {
+          "type": "Tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "actor.2.weight": {
+          "type": "Tensor",
+          "shape": [
+            256,
+            256
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "actor.2.bias": {
+          "type": "Tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "actor.4.weight": {
+          "type": "Tensor",
+          "shape": [
+            1152,
+            256
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "actor.4.bias": {
+          "type": "Tensor",
+          "shape": [
+            1152
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "critic.0.weight": {
+          "type": "Tensor",
+          "shape": [
+            256,
+            2064
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "critic.0.bias": {
+          "type": "Tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "critic.2.weight": {
+          "type": "Tensor",
+          "shape": [
+            256,
+            256
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "critic.2.bias": {
+          "type": "Tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "critic.4.weight": {
+          "type": "Tensor",
+          "shape": [
+            1,
+            256
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        },
+        "critic.4.bias": {
+          "type": "Tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32",
+          "device": "cpu"
+        }
+      },
+      "optimizer": {
+        "state": {
+          "mapping_keys": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ],
+          "entries": 13
+        },
+        "param_groups": {
+          "type": "list",
+          "length": 1
+        }
+      },
+      "generator": {
+        "type": "Tensor",
+        "shape": [
+          5056
+        ],
+        "dtype": "torch.uint8",
+        "device": "cpu"
+      },
+      "global_rng": {
+        "python": {
+          "type": "tuple",
+          "length": 3
+        },
+        "numpy": {
+          "type": "tuple",
+          "length": 5
+        },
+        "torch": {
+          "type": "Tensor",
+          "shape": [
+            5056
+          ],
+          "dtype": "torch.uint8",
+          "device": "cpu"
+        },
+        "cuda": {
+          "type": "list",
+          "length": 8
+        }
+      },
+      "iteration": 2,
+      "sequence": 5,
+      "worker_states": {
+        "0": {
+          "mapping_keys": [
+            "worker_rng",
+            "sequence",
+            "frozen_signature"
+          ],
+          "entries": 3
+        },
+        "1": {
+          "mapping_keys": [
+            "worker_rng",
+            "sequence",
+            "frozen_signature"
+          ],
+          "entries": 3
+        },
+        "2": {
+          "mapping_keys": [
+            "worker_rng",
+            "sequence",
+            "frozen_signature"
+          ],
+          "entries": 3
+        },
+        "3": {
+          "mapping_keys": [
+            "worker_rng",
+            "sequence",
+            "frozen_signature"
+          ],
+          "entries": 3
+        },
+        "4": {
+          "mapping_keys": [
+            "worker_rng",
+            "sequence",
+            "frozen_signature"
+          ],
+          "entries": 3
+        },
+        "5": {
+          "mapping_keys": [
+            "worker_rng",
+            "sequence",
+            "frozen_signature"
+          ],
+          "entries": 3
+        },
+        "6": {
+          "mapping_keys": [
+            "worker_rng",
+            "sequence",
+            "frozen_signature"
+          ],
+          "entries": 3
+        },
+        "7": {
+          "mapping_keys": [
+            "worker_rng",
+            "sequence",
+            "frozen_signature"
+          ],
+          "entries": 3
+        }
+      },
+      "escrow": {
+        "format": "joint_steering_action_escrow_v1",
+        "limits": {
+          "mapping_keys": [
+            "train",
+            "eval"
+          ],
+          "entries": 2
+        },
+        "charged": {
+          "mapping_keys": [
+            "train",
+            "eval"
+          ],
+          "entries": 2
+        },
+        "pending": {
+          "mapping_keys": [],
+          "entries": 0
+        }
+      },
+      "profile_sha256": "490605c3ebca94baae39a08bd74eed3271060e3b5af13519abd771ae457f611b",
+      "last_event": "train",
+      "measured_seconds": {
+        "calibrate": {
+          "type": "list",
+          "length": 1
+        },
+        "test_before": {
+          "type": "list",
+          "length": 1
+        },
+        "dev": {
+          "type": "list",
+          "length": 1
+        },
+        "train": {
+          "type": "list",
+          "length": 2
+        }
+      }
+    }
+  }
+}
