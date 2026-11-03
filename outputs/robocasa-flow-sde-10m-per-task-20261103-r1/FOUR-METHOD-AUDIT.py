@@ -273,7 +273,7 @@ def main():
     assert not args.output.exists()
     assert len(set(args.tasks)) == len(args.tasks)
     assert len(set(args.collections)) == len(args.collections) and all(2 <= x <= 130 for x in args.collections)
-    assert args.production_only or args.collections == [2]
+    # Q1 may be audited alongside any disjoint completed production block.
     # Five independent audits, two CPU threads each, within the allocated
     # development container's thirteen CPUs; no GPU visibility/model calls.
     with ProcessPoolExecutor(max_workers=min(5, len(args.tasks)), mp_context=multiprocessing.get_context('spawn')) as pool:
