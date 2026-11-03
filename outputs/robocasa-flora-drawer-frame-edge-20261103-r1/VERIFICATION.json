@@ -1,0 +1,33 @@
+{
+  "verified": true,
+  "labels": 40,
+  "raw_frame_input_audits": 40,
+  "batch_receipts": 7,
+  "live_processor_events": 19,
+  "unique_live_processor_inputs": 19,
+  "all_bf16_equal": true,
+  "all_fp32_equal": false,
+  "anchor_match": true,
+  "metrics": {
+    "first_success_fixture_depth": {
+      "false_full_scores": 6,
+      "post_success_full_scores": 4,
+      "correctly_timed_confirmed_episodes": 1,
+      "false_accepted_episodes": 3,
+      "closed_again_full_scores": 1,
+      "passes_development_screen": false
+    },
+    "first_success_frame_edge": {
+      "false_full_scores": 6,
+      "post_success_full_scores": 5,
+      "correctly_timed_confirmed_episodes": 2,
+      "false_accepted_episodes": 3,
+      "closed_again_full_scores": 1,
+      "passes_development_screen": false
+    }
+  },
+  "actual_processor_dtype": "torch.bfloat16",
+  "bf16_inputs_byte_exact": true,
+  "fp32_hash_comparison": "Actual bfloat16 expanded tofloat32 versus original unrounded CPUfloat32; not like-for-like",
+  "charged_gpu_seconds": 575
+}

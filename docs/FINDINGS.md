@@ -399,8 +399,8 @@ audit **r3**, source d565865a; r1/r2 remain failed attempts. 381.064 s audit
 wall / 402.652 s process wall, exit 0, no weights, model inference or GPU work.
 This reconstructed preprocessing stage does not erase the selected evidence;
 previous GPU tensors and learned semantic retention remain unverified. The
-128 opening lies near the lower image edge, motivating only one unlaunched,
-bounded framing comparison, with held-out qualification still required.
+128 opening lies near the lower image edge, motivating the bounded framing
+comparison reported below; held-out qualification is still required.
 [Passing receipt and limits](../outputs/robocasa-flora-drawer-processor-audit-20261103-r3/RESULT.md),
 [consolidated rubric evidence](../outputs/robocasa-flora-drawer-processor-audit-20261103-r3/RUBRIC-REVIEW.md).
 The successor frame-edge contrast has now passed CPU preparation on19 distinct
@@ -408,9 +408,23 @@ retained prefixes:1,216 raw RGB hashes,19 actual processor feature references,
 all four previous RGB/float32/bfloat16 references, and40 prepared message
 structures verify after download. Source43d9ca5d,426.152s CPU process,exit0,
 zero weights/inference/GPU. This qualifies inputs for the small comparison,
-not its framing hypothesis; no GPU scoring launched or reserved. The two
-fresh criteria share native fixture-depth and first-success semantics and
-isolate one frame-edge clause. [CPU evidence and pending comparison](../outputs/robocasa-flora-drawer-frame-edge-20261103-r1/CPU-RESULT.md).
+not its framing hypothesis. The two fresh criteria share native fixture-depth
+and first-success semantics and isolate one frame-edge clause.
+[CPU evidence](../outputs/robocasa-flora-drawer-frame-edge-20261103-r1/CPU-RESULT.md).
+The completed40-grade comparison rejects both: each gives6/10 negative
+prefixes score5 and falsely confirms3/4 never-success cases. The clause raises
+post-success score5 endpoints4→5/8 and timely two-probe detections1→2/3,
+but128 remains missed and216's later-closed prefix still scores1. All4 anchor
+repeats match. Actual vLLM processor outputs are bfloat16 and all19 feature
+hashes match CPU references after that same cast; unrounded CPUfloat32 is
+not a like-for-like comparison. All40 raw/message audits and54 exported file
+hashes verify. Offline first-success latching preserves recognized successes
+but neither one nor two score5 probes removes the same3 false episodes.
+No reward promotion, cutoff retuning or renewed lexical fitting follows.
+Baige job-pb53j1e4jom1 succeeded/released13:45:32 Shanghai,575workerGPU-s
+(590scheduler seconds), no robot actions/SGD. The documented prefix/chunk/
+clause/wording subtotal becomes7,925workerGPU-s, excluding earlier terminal
+video work. [Exact texts, all scores, input audits and next diagnostic boundary](../outputs/robocasa-flora-drawer-frame-edge-20261103-r1/RESULT.md).
 A subsequent CPU geometry audit finds all six selected targets at z=0.785,
 with no drawer above the target in its stack, and matching scene metadata.
 Thus an incorrectly assumed uppermost target does not explain the128/144

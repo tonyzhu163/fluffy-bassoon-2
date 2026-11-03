@@ -1,6 +1,6 @@
 # OpenDrawer frame-edge contrast
 
-Status: CPU qualification PASSED (source43d9ca5d). Direct human below-eight-GPU-hour rule authorizes this0.25GPU-hour test; preparing launch, no allocation yet. See HUMAN-AUTHORITY.json.
+Status: COMPLETE; both development screens FAILED.40 grades verified, GPU released,575 workerGPU-seconds. See RESULT.md.
 
 The four-prefix processor reconstruction passed in processor-audit-r3. All256
 sampled frames survived both float32 and bfloat16 reconstruction byte-exactly.
