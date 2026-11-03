@@ -16,8 +16,8 @@
     "memory_controls": {
       "thread_id": "01a19bef-232f-7960-ab6d-7ce1539b6685",
       "title": "Improve evaluation and training",
-      "cursor": "143ed4de-4086-4c7d-8526-8992e648a4bd:8",
-      "state": "Preparing one-GPU continuation for only 48 missing DPT/ID episodes; proposed two-GPU-hour ceiling.",
+      "cursor": "143ed4de-4086-4c7d-8526-8992e648a4bd:11",
+      "state": "Owner reports CPU qualification passed for all11 memory prefixes,48 missing episodes and1052 carried records; one-GPU continuation submission in progress, no verified launch or first episode yet.",
       "recovery_job_id": null,
       "verified_collected_endpoints": 1052,
       "required_collected_endpoints": 1100,
@@ -28,9 +28,9 @@
     "flora_reward": {
       "thread_id": "01a19bef-b16f-70e2-ad86-9140e3b360ed",
       "title": "Fix Flora reward and unblock gates",
-      "cursor": "520aa979-d22d-4944-a890-27bd974a6515:5",
-      "state": "CPU processor audit running in pinned allocated-Linux checkout; reconstruct four retained inputs before more wording trials.",
-      "evidence": "outputs/robocasa-flora-drawer-target-hints-20261103-r1/RESULT.md"
+      "cursor": "520aa979-d22d-4944-a890-27bd974a6515:8",
+      "state": "Bounded900-second CPU processor audit recovery executing; processor result pending. Review distinguishes ever-success from terminal failure labels; no candidate promoted.",
+      "evidence": "outputs/robocasa-flora-drawer-processor-audit-20261103-r2/PLAN.md"
     },
     "steering_ppo": {
       "thread_id": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
@@ -38,7 +38,10 @@
       "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:53",
       "state": "Owner reports 43 affected Linux tests and logger checks passed. Scale/optimizer and actual48-lane worker qualification still precede scientific launch; offline/local logging does not wait for W&B access.",
       "scientific_job_ids": {},
-      "arms": ["velocity", "kv_all_layers"],
+      "arms": [
+        "velocity",
+        "kv_all_layers"
+      ],
       "updates_per_arm": 50,
       "environments_per_GPU": 48,
       "GPUs_per_arm": 8,
@@ -46,21 +49,36 @@
       "horizon": 600,
       "combined_GPU_hour_cap": 80,
       "GPU_hour_cap_per_arm": 40,
-      "evaluation_updates": [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+      "evaluation_updates": [
+        0,
+        5,
+        10,
+        15,
+        20,
+        25,
+        30,
+        35,
+        40,
+        45,
+        50
+      ],
       "authority": "outputs/robocasa-rollout-capacity-3248-20261103-r1/BUDGET-INCREASE-20261103.json"
     },
     "downstream_histories": {
       "thread_id": "01a199fb-3586-7171-bd20-52fa70e5378c",
       "title": "Explain DPT context/query targets",
-      "cursor": "5e721a0b-3229-4c1f-beee-e2194e124fbd:51",
-      "state": "Final human recipe verified; own plan and monitor updated. Fits await completed qualified exact PPO histories."
+      "cursor": "5e721a0b-3229-4c1f-beee-e2194e124fbd:52",
+      "state": "Producer preparation continues; qualified completed exact PPO histories remain pending, so no downstream fit starts."
     }
   },
   "delivered_DEV_milestones": {
     "velocity": [],
     "kv_all_layers": []
   },
-  "delivered_status_events": ["wandb_project_verified", "wandb_baige_api403_offline_fallback"],
+  "delivered_status_events": [
+    "wandb_project_verified",
+    "wandb_baige_api403_offline_fallback"
+  ],
   "wandb": {
     "status": "BAIGE_API_HTTP403_LOCAL_OFFLINE_LOGGING_ACTIVE",
     "implementation_owner": "steering_ppo",
@@ -89,5 +107,6 @@
     "Memory-control recovery reuses completed endpoints and original historical protocol.",
     "Flora repair does not gate simulator-reward steering PPO.",
     "Do not duplicate owner jobs, change their active worktrees, or expand scope/budgets silently."
-  ]
+  ],
+  "last_check_Shanghai": "2026-11-03T11:06:14+08:00"
 }
