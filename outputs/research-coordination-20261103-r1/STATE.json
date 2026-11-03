@@ -2,7 +2,7 @@
   "run_id": "research-coordination-20261103-r1",
   "owner_thread": "01a19f33-dcb8-7b81-ac4c-b23c26b341de",
   "timezone": "Asia/Shanghai",
-  "status": "PRODUCTION_ATTEMPTS_QUEUED_MONITORING",
+  "status": "PRODUCTION_FIRST_UPDATES_VERIFIED_FLORA_AUTHORIZED",
   "automation_id": "coordinate-ppo-milestones-and-recoveries",
   "check_interval_minutes": 20,
   "human_authority": [
@@ -10,7 +10,8 @@
     "Explicit confirmation: yes can we do that then?",
     "Monitor both 48-environment workers and evaluate every five PPO iterations for ten visibility points.",
     "Assess connecting Weights & Biases.",
-    "User supplied a credential for the connection and selected project fluffy-bassoon-2; credential value is excluded from these records."
+    "User supplied a credential for the connection and selected project fluffy-bassoon-2; credential value is excluded from these records.",
+    "Human policy: dont ask me for approval below 8 gpu hours add to agents.md"
   ],
   "owners": {
     "memory_controls": {
@@ -44,27 +45,38 @@
     "flora_reward": {
       "thread_id": "01a19bef-b16f-70e2-ad86-9140e3b360ed",
       "title": "Fix Flora reward and unblock gates",
-      "cursor": "520aa979-d22d-4944-a890-27bd974a6515:16",
-      "state": "Frame-edge source43d9ca5d LinuxCPU input qualification passed. Coordinator independently verified8manifest files,1216RGBhashes/19processor refs/40official prompt structures/4priorrefs,0GPU. User presented one concrete40grade\u2264900GPU-s/noautomaticretry decision; pendingactualhumanapproval. No scoring launch. Prior900renewableinterpretationcorrected: thosecaps agent-authored, no numericremainingbalance established.",
+      "cursor": "520aa979-d22d-4944-a890-27bd974a6515:17",
+      "state": "RUNNING prepared40grade trial job-pb53j1e4jom1 onBaige, oneRPBZZZ6/32CPU128GiB16SHM,900GPU-s/autoretryOFF. ActualCUDA/UUIDprobepassed perownerreceipt, scorerinitializing. Human under8GPUh policy verifieddirectlybyowner; source1f29377b cleanfreshGPUworktree preserves all19CPU/40prompt scientificmigrations/audits. No labels/qualification/promotion claimed yet.",
       "evidence": "outputs/research-coordination-20261103-r1/FLORA-FRAME-EDGE-VERIFICATION.json",
       "next_trial_GPU_seconds_ceiling_proposed": 900,
       "incremental_scoring_approval": {
-        "status": "PENDING_HUMAN_RESPONSE",
+        "status": "RESOLVED_HUMAN_POLICY_TRIAL_RUNNING",
         "requested_Shanghai": "2026-11-03T12:28:00+08:00",
         "new_grades": 40,
         "GPU_seconds_cap": 900,
         "automatic_retry": false,
         "source_commit": "43d9ca5d3852df3810a8e44fb4c2fad89e1a8996",
         "reason": "No numeric remaining Flora campaign budget established; prior caps agent-authored.",
-        "request_already_presented_in_this_chat": true
-      }
+        "request_already_presented_in_this_chat": true,
+        "resolved_Shanghai": "2026-11-03T13:38:32+08:00",
+        "human_quote": "dont ask me for approval below 8 gpu hours add to agents.md",
+        "AGENTS_commit": "e14defda"
+      },
+      "next_trial_GPU_seconds_authorized": 900,
+      "scoring_job_id": "job-pb53j1e4jom1",
+      "scoring_GPU_seconds_cap": 900,
+      "scoring_source_commit": "1f29377b04cab278ce07137fc417f29c18f5cccd",
+      "actual_GPU_probe_passed_reported_by_owner": true
     },
     "steering_ppo": {
       "thread_id": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
       "title": "Pull PPO coordination updates",
-      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:73",
-      "state": "Bothuniqueproductionattemptssubmittedonce, QUEUED andnoallocation/updates. Velocityjob-bxhz4d41ll1k12:53:03;KVjob-khwsqhzct9v512:54:07,each8GPU168CPU1664GiB384SHM/295min/autoretryOFF. Coordinatorlive13:08bothfreshoutputpathsabsent. Actual8GPUfit/probes,beforeDEV0 andcountedupdate1/recovery pending; no scientificsourcesadmitted. Internalpreclickqueuewallclock versus actualGPUcharging/deadline review requested, no mutation/retry/cancellationauthorizedbythischeck.",
-      "scientific_job_ids": {},
+      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:77",
+      "state": "BothRUNNING8GPUs/arm,16disjointactualUUIDs and168CPU1664GiB384SHM/storagegatespassed. DEV0complete40episodes/5tasks. BothCOUNTEDupdate1 complete230400newcontrols/arm, checkpoint+exactnextAdamrestore/liveunchangedpass; no learnedDEVimprovementclaim. Firstphase355.3svelocity/388.1sKV; currentoldclockprojection47.13/50.73GPUh>40includingqueue; ownerdiagnosingactualallocation/steadybankcost beforeanyboundaryrecovery/budgetdecision. Activecontracts/remedyinactive preserved.",
+      "scientific_job_ids": {
+        "velocity": "job-bxhz4d41ll1k",
+        "kv_all_layers": "job-khwsqhzct9v5"
+      },
       "arms": [
         "velocity",
         "kv_all_layers"
@@ -94,7 +106,7 @@
       "qualification_job_id": "job-mdxdgd91xn8o",
       "qualification_job_status": "SUCCEEDED_RELEASED_RECEIPT_VERIFIED",
       "qualification_source_commit": "d3a861a6ac67f594902675cb36ddf0ee83608896",
-      "scientific_updates": 0,
+      "scientific_updates": 1,
       "velocity_controls_per_second": 58.8460842239662,
       "kv_controls_per_second": 60.058882417193374,
       "velocity_collection_only_GPU_hours": 54.37914930449592,
@@ -112,7 +124,7 @@
         "check_cadence": "minibatch",
         "scientific_updates": 0
       },
-      "evidence": "outputs/research-coordination-20261103-r1/CHECK-20261103-1310.json",
+      "evidence": "outputs/research-coordination-20261103-r1/TRAIN1-REVIEW.json",
       "qualification_GPU_seconds": 1331,
       "carried_preparation_GPU_seconds": 122,
       "qualification_successor_job_id": "job-m2qlxqjuh8ho",
@@ -139,19 +151,21 @@
       "production_attempts": {
         "velocity": {
           "job_id": "job-bxhz4d41ll1k",
-          "status": "QUEUED_NO_ALLOCATION",
+          "status": "RUNNING_FIRST_UPDATE1_VERIFIED",
           "created_Shanghai": "2026-11-03T12:53:03+08:00",
           "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1",
-          "scientific_updates": 0,
-          "allocation_verified": false
+          "scientific_updates": 1,
+          "allocation_verified": true,
+          "GPUs": 8
         },
         "kv_all_layers": {
           "job_id": "job-khwsqhzct9v5",
-          "status": "QUEUED_NO_ALLOCATION",
+          "status": "RUNNING_FIRST_UPDATE1_VERIFIED",
           "created_Shanghai": "2026-11-03T12:54:07+08:00",
           "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1",
-          "scientific_updates": 0,
-          "allocation_verified": false
+          "scientific_updates": 1,
+          "allocation_verified": true,
+          "GPUs": 8
         }
       },
       "launcher_source_commit": "ee0f40465e09d5968fd95c065c049f8b8d416334",
@@ -159,6 +173,149 @@
       "queued_clock_review": {
         "status": "REQUESTED_OWNER_DIAGNOSIS",
         "reason": "TASK_SUBMITTED_UNIX consumes unallocatedqueuewall time in the executiondeadline; distinguishactualGPUcharge andpreservefull50updates/80GPUh withoutmutatingqueuedcontracts orblindduplicates."
+      },
+      "scientific_updates_by_arm": {
+        "velocity": 1,
+        "kv_all_layers": 1
+      },
+      "scientific_progress_qualified": true,
+      "completed_scientific_sources_available": false,
+      "baseline_DEV0": {
+        "velocity": {
+          "episodes": 40,
+          "equal_weight_five_task_first_success": 0.425,
+          "equal_weight_five_task_end_success": 0.4,
+          "per_task": {
+            "dev/task/OpenDrawer/episodes": 8,
+            "dev/task/OpenDrawer/success_once": 0.75,
+            "dev/task/OpenDrawer/success_at_end": 0.75,
+            "dev/task/TurnOffStove/episodes": 8,
+            "dev/task/TurnOffStove/success_once": 0.125,
+            "dev/task/TurnOffStove/success_at_end": 0.125,
+            "dev/task/PickPlaceCounterToCabinet/episodes": 8,
+            "dev/task/PickPlaceCounterToCabinet/success_once": 0.375,
+            "dev/task/PickPlaceCounterToCabinet/success_at_end": 0.375,
+            "dev/task/CoffeeSetupMug/episodes": 8,
+            "dev/task/CoffeeSetupMug/success_once": 0.25,
+            "dev/task/CoffeeSetupMug/success_at_end": 0.25,
+            "dev/task/PickPlaceDrawerToCounter/episodes": 8,
+            "dev/task/PickPlaceDrawerToCounter/success_once": 0.625,
+            "dev/task/PickPlaceDrawerToCounter/success_at_end": 0.5
+          },
+          "checkpoint": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/checkpoints/event-003-dev-000.pt",
+            "sha256": "636c057a2d25af37a6b0df46cc3e6e176a88adabfd548118eea9b1eeaf46982f"
+          },
+          "reported_train_controls_including_carried": 57600,
+          "reported_eval_controls": 346500,
+          "post_baseline_visibility_points_remaining": 10
+        },
+        "kv_all_layers": {
+          "episodes": 40,
+          "equal_weight_five_task_first_success": 0.525,
+          "equal_weight_five_task_end_success": 0.475,
+          "per_task": {
+            "dev/task/OpenDrawer/episodes": 8,
+            "dev/task/OpenDrawer/success_once": 0.75,
+            "dev/task/OpenDrawer/success_at_end": 0.75,
+            "dev/task/TurnOffStove/episodes": 8,
+            "dev/task/TurnOffStove/success_once": 0.25,
+            "dev/task/TurnOffStove/success_at_end": 0.125,
+            "dev/task/PickPlaceCounterToCabinet/episodes": 8,
+            "dev/task/PickPlaceCounterToCabinet/success_once": 0.625,
+            "dev/task/PickPlaceCounterToCabinet/success_at_end": 0.625,
+            "dev/task/CoffeeSetupMug/episodes": 8,
+            "dev/task/CoffeeSetupMug/success_once": 0.375,
+            "dev/task/CoffeeSetupMug/success_at_end": 0.375,
+            "dev/task/PickPlaceDrawerToCounter/episodes": 8,
+            "dev/task/PickPlaceDrawerToCounter/success_once": 0.625,
+            "dev/task/PickPlaceDrawerToCounter/success_at_end": 0.5
+          },
+          "checkpoint": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/checkpoints/event-003-dev-000.pt",
+            "sha256": "4b3fd457b307d03c29b3fec73370578610bd9e2f11407eed321aa757276ceb44"
+          },
+          "reported_train_controls_including_carried": 57600,
+          "reported_eval_controls": 346500,
+          "post_baseline_visibility_points_remaining": 10
+        }
+      },
+      "TRAIN_update1": {
+        "velocity": {
+          "per_task": {
+            "train/task/OpenDrawer/episodes": 76,
+            "train/task/OpenDrawer/success_once": 0.5921052631578947,
+            "train/task/OpenDrawer/success_at_end": 0.5526315789473685,
+            "train/task/TurnOffStove/episodes": 77,
+            "train/task/TurnOffStove/success_once": 0.07792207792207792,
+            "train/task/TurnOffStove/success_at_end": 0.07792207792207792,
+            "train/task/PickPlaceCounterToCabinet/episodes": 77,
+            "train/task/PickPlaceCounterToCabinet/success_once": 0.5454545454545454,
+            "train/task/PickPlaceCounterToCabinet/success_at_end": 0.5324675324675324,
+            "train/task/CoffeeSetupMug/episodes": 77,
+            "train/task/CoffeeSetupMug/success_once": 0.24675324675324675,
+            "train/task/CoffeeSetupMug/success_at_end": 0.24675324675324675,
+            "train/task/PickPlaceDrawerToCounter/episodes": 77,
+            "train/task/PickPlaceDrawerToCounter/success_once": 0.38961038961038963,
+            "train/task/PickPlaceDrawerToCounter/success_at_end": 0.35064935064935066
+          },
+          "macro_first": 0.37036910457963085,
+          "macro_end": 0.3520847573479152,
+          "joint_KL": 0.022436927471842085,
+          "sample_approx_KL": 0.025195350674065677,
+          "clip_fraction": 0.3033766233804938,
+          "std_mean": 0.4998486638069153,
+          "loss": -0.12371439593178886,
+          "value_explained_variance": -0.4826192855834961,
+          "controls_this_update": 230400,
+          "checkpoint": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/checkpoints/event-004-train-001.pt",
+            "sha256": "6d4bb21f125f7ae49a82a40b5d6ab2ea7fa770fbc52d7f6346e4bcb3fc7e9d92"
+          },
+          "exact_next_Adam_restore_passed": true
+        },
+        "kv_all_layers": {
+          "per_task": {
+            "train/task/OpenDrawer/episodes": 76,
+            "train/task/OpenDrawer/success_once": 0.618421052631579,
+            "train/task/OpenDrawer/success_at_end": 0.618421052631579,
+            "train/task/TurnOffStove/episodes": 77,
+            "train/task/TurnOffStove/success_once": 0.14285714285714285,
+            "train/task/TurnOffStove/success_at_end": 0.11688311688311688,
+            "train/task/PickPlaceCounterToCabinet/episodes": 77,
+            "train/task/PickPlaceCounterToCabinet/success_once": 0.5194805194805194,
+            "train/task/PickPlaceCounterToCabinet/success_at_end": 0.5064935064935064,
+            "train/task/CoffeeSetupMug/episodes": 77,
+            "train/task/CoffeeSetupMug/success_once": 0.2727272727272727,
+            "train/task/CoffeeSetupMug/success_at_end": 0.2727272727272727,
+            "train/task/PickPlaceDrawerToCounter/episodes": 77,
+            "train/task/PickPlaceDrawerToCounter/success_once": 0.3246753246753247,
+            "train/task/PickPlaceDrawerToCounter/success_at_end": 0.2857142857142857
+          },
+          "macro_first": 0.3756322624743677,
+          "macro_end": 0.36004784688995206,
+          "joint_KL": 0.02002232765784264,
+          "sample_approx_KL": 0.2855645704835958,
+          "clip_fraction": 0.615868028342084,
+          "std_mean": 0.49998489022254944,
+          "loss": 0.061696028575127904,
+          "value_explained_variance": 0.19953572750091553,
+          "controls_this_update": 230400,
+          "checkpoint": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/checkpoints/event-004-train-001.pt",
+            "sha256": "585b78482338b50091c5f29fd44928572a97a5d1c602bed7cf52526b6ae25111"
+          },
+          "exact_next_Adam_restore_passed": true
+        }
+      },
+      "budget_review": {
+        "status": "OWNER_DIAGNOSING_MEASURED_PROJECTION_AND_QUEUE_ACCOUNTING",
+        "projection_GPU_hours": {
+          "velocity": 47.12633220725589,
+          "kv_all_layers": 50.728926619953576
+        },
+        "active_clock_unchanged": true,
+        "successor_clock_inactive": true
       }
     },
     "downstream_histories": {
@@ -169,8 +326,12 @@
     }
   },
   "delivered_DEV_milestones": {
-    "velocity": [],
-    "kv_all_layers": []
+    "velocity": [
+      0
+    ],
+    "kv_all_layers": [
+      0
+    ]
   },
   "delivered_status_events": [
     "wandb_project_verified",
@@ -185,10 +346,14 @@
     "ppo_io_q2_both48lane_pass_130controls_per_second",
     "memory_r4_all48missing_collected_1100verified_owner_monitor",
     "flora_frame_edge40grade_CPU_verified_900GPU_seconds_increment_decision_requested",
-    "memory_controls_complete_2000endpoints_no_established_gain_curves_cost_verified"
+    "memory_controls_complete_2000endpoints_no_established_gain_curves_cost_verified",
+    "ppo_both_actual8GPU_first_advancement_and_DEV0_verified",
+    "ppo_both_first_counted_update1_and_exact_Adam_restore_verified",
+    "human_under8GPUh_policy_AGENTS_committed_Flora40grade_authorized",
+    "flora_frame_edge_job-pb53j1e4jom1_actual_GPU_trial_started"
   ],
   "wandb": {
-    "status": "BAIGE_API_HTTP403_LOCAL_OFFLINE_LOGGING_ACTIVE",
+    "status": "PRODUCTION_OFFLINE_RUNS_INITIALIZED_METRICS_ADVANCING_NO_ONLINE",
     "implementation_owner": "steering_ppo",
     "entity": "tonyzoo-brown-university",
     "project": "fluffy-bassoon-2",
@@ -206,7 +371,12 @@
     "design": "One master-side metrics run per arm with a common group, explicit update/action axes, local durable metrics authoritative and remote logging nonfatal.",
     "uploads": "Allowlisted scalar metrics and non-secret configuration only; no automatic source, console, raw observations, video or model uploads.",
     "fallback": "Owner reports local/offline logging active; essential training does not wait for dashboard setup.",
-    "connection_evidence": "outputs/research-coordination-20261103-r1/WANDB-CONNECTION.json"
+    "connection_evidence": "outputs/research-coordination-20261103-r1/WANDB-CONNECTION.json",
+    "offline_run_ids": {
+      "velocity": "ca048b02fe37d8f6",
+      "kv_all_layers": "c0f5a10f3c47cfe8"
+    },
+    "comparison_group": "joint-steering-scale50-20261103-r1"
   },
   "notification_policy": "Report new verified five-update DEV milestones, first advancement, meaningful results, failure, genuine stalls, completion or required human action; remain quiet otherwise.",
   "invariants": [
@@ -216,6 +386,14 @@
     "Flora repair does not gate simulator-reward steering PPO.",
     "Do not duplicate owner jobs, change their active worktrees, or expand scope/budgets silently."
   ],
-  "last_check_Shanghai": "2026-11-03T13:09:49+08:00",
-  "last_quiet_check_reason": "BothPPOattemptsqueuedwithoutallocation; no new scientificmilestone. ExistingFloraapprovalrequestunchanged; no new useraction. Memorycompletealreadynotified."
+  "last_check_Shanghai": "2026-11-03T13:42:37+08:00",
+  "last_quiet_check_reason": null,
+  "human_resource_policy": {
+    "human_quote": "dont ask me for approval below 8 gpu hours add to agents.md",
+    "approval_free_below_GPU_hours": 8,
+    "strictly_below": true,
+    "scope": "Requested task; cumulative usage recorded; existing explicit user hard caps honored.",
+    "AGENTS_commit": "e14defda",
+    "recorded_Shanghai": "2026-11-03T13:38:32+08:00"
+  }
 }

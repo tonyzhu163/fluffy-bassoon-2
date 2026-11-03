@@ -1,0 +1,433 @@
+{
+  "train": {
+    "checked_unix": 1793684116.5889769,
+    "arms": {
+      "velocity": {
+        "latest_train": {
+          "phase": "train",
+          "unix": 1793683958.6992722,
+          "metrics": {
+            "ppo/update": 1,
+            "event/sequence": 4,
+            "train/behavior_policy_version": 0,
+            "runtime/elapsed_seconds": 355.3174088001251,
+            "runtime/collection_and_learning_seconds": 355.1694481372833,
+            "runtime/physical_controls_this_event": 230400,
+            "runtime/controls_per_second": 648.4343133595397,
+            "runtime/projected_all_attempt_gpu_hours": 47.12633220725589,
+            "runtime/remaining_gpu_hours": 34.38487479580773,
+            "runtime/learning_rate": 0.0003,
+            "runtime/steering_std_mean": 0.4998486638069153,
+            "runtime/steering_std_min": 0.4990648627281189,
+            "runtime/steering_std_max": 0.5005338191986084,
+            "counters/train_physical_controls": 288000,
+            "counters/eval_physical_controls": 346500,
+            "counters/physical_controls": 634500,
+            "counters/unresolved_calls": 0,
+            "train/episodes": 384,
+            "train/macro_ID_success_once": 0.37036910457963085,
+            "train/macro_ID_success_at_end": 0.3520847573479152,
+            "train/task/OpenDrawer/episodes": 76,
+            "train/task/OpenDrawer/success_once": 0.5921052631578947,
+            "train/task/OpenDrawer/success_at_end": 0.5526315789473685,
+            "train/task/TurnOffStove/episodes": 77,
+            "train/task/TurnOffStove/success_once": 0.07792207792207792,
+            "train/task/TurnOffStove/success_at_end": 0.07792207792207792,
+            "train/task/PickPlaceCounterToCabinet/episodes": 77,
+            "train/task/PickPlaceCounterToCabinet/success_once": 0.5454545454545454,
+            "train/task/PickPlaceCounterToCabinet/success_at_end": 0.5324675324675324,
+            "train/task/CoffeeSetupMug/episodes": 77,
+            "train/task/CoffeeSetupMug/success_once": 0.24675324675324675,
+            "train/task/CoffeeSetupMug/success_at_end": 0.24675324675324675,
+            "train/task/PickPlaceDrawerToCounter/episodes": 77,
+            "train/task/PickPlaceDrawerToCounter/success_once": 0.38961038961038963,
+            "train/task/PickPlaceDrawerToCounter/success_at_end": 0.35064935064935066,
+            "train/ppo/loss": -0.12371439593178886,
+            "train/ppo/actor_loss": -0.18441521855337278,
+            "train/ppo/critic_loss": 0.12140164630753654,
+            "train/ppo/entropy": 23.21867425101144,
+            "train/ppo/approximate_kl": 0.006133517782602992,
+            "train/ppo/clip_fraction": 0.08035714285714286,
+            "train/ppo/samples": 3850,
+            "train/ppo/samples_processed": 224,
+            "train/ppo/optimizer_steps": 7,
+            "train/ppo/epochs_completed": 0,
+            "train/ppo/epochs_started": 1,
+            "train/ppo/return_mean": 0.21148233115673065,
+            "train/ppo/return_std": 0.3625859022140503,
+            "train/ppo/advantage_mean": 0.1627717763185501,
+            "train/ppo/advantage_std": 0.3702341318130493,
+            "train/ppo/elapsed_seconds": 2.1348566031083465,
+            "train/ppo/coefficient_rms": 0.4992879331111908,
+            "train/ppo/coefficient_saturation_fraction": 0.00029220778378657997,
+            "train/ppo/positive_reward_count": 142,
+            "train/ppo/negative_reward_count": 0,
+            "train/current/loss": 0.07136070443438246,
+            "train/current/actor_loss": 0.01291485487640678,
+            "train/current/critic_loss": 0.11689169597799902,
+            "train/current/entropy": 23.215623860544973,
+            "train/current/approximate_kl": 0.025195350674065677,
+            "train/current/joint_gaussian_kl": 0.022436927471842085,
+            "train/current/clip_fraction": 0.3033766233804938,
+            "train/current/explained_variance": -0.4826192855834961,
+            "train/gradient_norm_max": 9.814993858337402,
+            "train/gradient_norm_mean": 8.85331916809082,
+            "train/valid_chunk_fraction": 0.8355034722222222,
+            "resources/container_RAM_GiB": 48.32291793823242,
+            "resources/container_peak_RAM_GiB": 1253.6020774841309,
+            "resources/storage_free_GiB": 873.94921875
+          }
+        },
+        "progress_keys": [
+          "phase",
+          "sequence",
+          "iteration",
+          "source_commit",
+          "last_check_unix",
+          "summary",
+          "ppo",
+          "gpu_recovery_qualification",
+          "steering_std_mean",
+          "steering_std_min",
+          "steering_std_max",
+          "learning_rate",
+          "checkpoint",
+          "escrow",
+          "elapsed_seconds",
+          "completed_events",
+          "total_events",
+          "resources",
+          "collection_and_learning_seconds",
+          "physical_controls_this_event",
+          "controls_per_second",
+          "remaining_gpu_hours",
+          "projected_remaining_seconds",
+          "projected_all_attempt_gpu_hours"
+        ],
+        "progress": {
+          "phase": "train",
+          "iteration": 1,
+          "sequence": 4,
+          "checkpoint": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/checkpoints/event-004-train-001.pt",
+            "sha256": "6d4bb21f125f7ae49a82a40b5d6ab2ea7fa770fbc52d7f6346e4bcb3fc7e9d92"
+          },
+          "escrow": {
+            "format": "joint_steering_action_escrow_v1",
+            "limits": {
+              "train": 11650000,
+              "eval": 1200000
+            },
+            "charged": {
+              "train": 288000,
+              "eval": 346500
+            },
+            "pending": {}
+          },
+          "last_check_unix": 1793683954.5429733
+        },
+        "recovery_files": [
+          "GPU-ADAM-RECOVERY.json"
+        ]
+      },
+      "kv_all_layers": {
+        "latest_train": {
+          "phase": "train",
+          "unix": 1793684019.884665,
+          "metrics": {
+            "ppo/update": 1,
+            "event/sequence": 4,
+            "train/behavior_policy_version": 0,
+            "runtime/elapsed_seconds": 388.0876042842865,
+            "runtime/collection_and_learning_seconds": 387.927702665329,
+            "runtime/physical_controls_this_event": 230400,
+            "runtime/controls_per_second": 593.6803893154615,
+            "runtime/projected_all_attempt_gpu_hours": 50.728926619953576,
+            "runtime/remaining_gpu_hours": 34.43335047880809,
+            "runtime/learning_rate": 0.00003,
+            "runtime/steering_std_mean": 0.49998489022254944,
+            "runtime/steering_std_min": 0.4994918406009674,
+            "runtime/steering_std_max": 0.500433623790741,
+            "counters/train_physical_controls": 288000,
+            "counters/eval_physical_controls": 346500,
+            "counters/physical_controls": 634500,
+            "counters/unresolved_calls": 0,
+            "train/episodes": 384,
+            "train/macro_ID_success_once": 0.3756322624743677,
+            "train/macro_ID_success_at_end": 0.36004784688995206,
+            "train/task/OpenDrawer/episodes": 76,
+            "train/task/OpenDrawer/success_once": 0.618421052631579,
+            "train/task/OpenDrawer/success_at_end": 0.618421052631579,
+            "train/task/TurnOffStove/episodes": 77,
+            "train/task/TurnOffStove/success_once": 0.14285714285714285,
+            "train/task/TurnOffStove/success_at_end": 0.11688311688311688,
+            "train/task/PickPlaceCounterToCabinet/episodes": 77,
+            "train/task/PickPlaceCounterToCabinet/success_once": 0.5194805194805194,
+            "train/task/PickPlaceCounterToCabinet/success_at_end": 0.5064935064935064,
+            "train/task/CoffeeSetupMug/episodes": 77,
+            "train/task/CoffeeSetupMug/success_once": 0.2727272727272727,
+            "train/task/CoffeeSetupMug/success_at_end": 0.2727272727272727,
+            "train/task/PickPlaceDrawerToCounter/episodes": 77,
+            "train/task/PickPlaceDrawerToCounter/success_once": 0.3246753246753247,
+            "train/task/PickPlaceDrawerToCounter/success_at_end": 0.2857142857142857,
+            "train/ppo/loss": 0.061696028575127904,
+            "train/ppo/actor_loss": 0.024183669625673185,
+            "train/ppo/critic_loss": 0.07502471818047207,
+            "train/ppo/entropy": 836.0840163120004,
+            "train/ppo/approximate_kl": 0.013465905821947165,
+            "train/ppo/clip_fraction": 0.1900436046511628,
+            "train/ppo/samples": 3819,
+            "train/ppo/samples_processed": 2752,
+            "train/ppo/optimizer_steps": 86,
+            "train/ppo/epochs_completed": 0,
+            "train/ppo/epochs_started": 1,
+            "train/ppo/return_mean": 0.19774022698402405,
+            "train/ppo/return_std": 0.36849308013916016,
+            "train/ppo/advantage_mean": 0.2244320511817932,
+            "train/ppo/advantage_std": 0.36953598260879517,
+            "train/ppo/elapsed_seconds": 13.810107946395874,
+            "train/ppo/coefficient_rms": 0.49986037611961365,
+            "train/ppo/coefficient_saturation_fraction": 0.00025639348314143717,
+            "train/ppo/positive_reward_count": 144,
+            "train/ppo/negative_reward_count": 0,
+            "train/current/loss": -0.06370415663213498,
+            "train/current/actor_loss": -0.0981291440588918,
+            "train/current/critic_loss": 0.06884997203662255,
+            "train/current/entropy": 836.0767215430096,
+            "train/current/approximate_kl": 0.2855645704835958,
+            "train/current/joint_gaussian_kl": 0.02002232765784264,
+            "train/current/clip_fraction": 0.615868028342084,
+            "train/current/explained_variance": 0.19953572750091553,
+            "train/gradient_norm_max": 59.41720962524414,
+            "train/gradient_norm_mean": 43.64310351083445,
+            "train/valid_chunk_fraction": 0.8287760416666666,
+            "resources/container_RAM_GiB": 48.31765365600586,
+            "resources/container_peak_RAM_GiB": 1263.9912414550781,
+            "resources/storage_free_GiB": 874.12890625
+          }
+        },
+        "progress_keys": [
+          "phase",
+          "sequence",
+          "iteration",
+          "source_commit",
+          "last_check_unix",
+          "summary",
+          "ppo",
+          "gpu_recovery_qualification",
+          "steering_std_mean",
+          "steering_std_min",
+          "steering_std_max",
+          "learning_rate",
+          "checkpoint",
+          "escrow",
+          "elapsed_seconds",
+          "completed_events",
+          "total_events",
+          "resources",
+          "collection_and_learning_seconds",
+          "physical_controls_this_event",
+          "controls_per_second",
+          "remaining_gpu_hours",
+          "projected_remaining_seconds",
+          "projected_all_attempt_gpu_hours"
+        ],
+        "progress": {
+          "phase": "train",
+          "iteration": 1,
+          "sequence": 4,
+          "checkpoint": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/checkpoints/event-004-train-001.pt",
+            "sha256": "585b78482338b50091c5f29fd44928572a97a5d1c602bed7cf52526b6ae25111"
+          },
+          "escrow": {
+            "format": "joint_steering_action_escrow_v1",
+            "limits": {
+              "train": 11650000,
+              "eval": 1200000
+            },
+            "charged": {
+              "train": 288000,
+              "eval": 346500
+            },
+            "pending": {}
+          },
+          "last_check_unix": 1793684003.7511742
+        },
+        "recovery_files": [
+          "GPU-ADAM-RECOVERY.json"
+        ]
+      }
+    }
+  },
+  "recovery": {
+    "checked_unix": 1793684215.804872,
+    "arms": {
+      "velocity": {
+        "GPU-ADAM-RECOVERY.json": {
+          "completed": true,
+          "device": "cuda:0",
+          "feature_dim": 2064,
+          "steering_dim": 32,
+          "next_update_exact": true,
+          "live_learner_unchanged": true,
+          "optimizer_steps_each": 3,
+          "final_metrics": {
+            "loss": -0.08811026811599731,
+            "actor_loss": -0.16794876754283905,
+            "critic_loss": 0.15967699885368347,
+            "entropy": 23.214406967163086,
+            "approximate_kl": 0.10176657140254974,
+            "clip_fraction": 0.7916666865348816,
+            "joint_gaussian_kl": 0.030451390892267227,
+            "explained_variance": -15.616308212280273
+          },
+          "state_sha256": "c4f1a2324359eb1cea51fc86c2c6311c020449ce683c32ddde6073b897cafc41",
+          "physical_controls": 0,
+          "scope": "Two discarded numerical shadow updates on synthetic rewards, outside scientific PPO"
+        },
+        "top_names": [],
+        "progress": {
+          "phase": "train",
+          "iteration": 1,
+          "gpu_recovery_qualification": {
+            "completed": true,
+            "device": "cuda:0",
+            "feature_dim": 2064,
+            "steering_dim": 32,
+            "next_update_exact": true,
+            "live_learner_unchanged": true,
+            "optimizer_steps_each": 3,
+            "final_metrics": {
+              "loss": -0.08811026811599731,
+              "actor_loss": -0.16794876754283905,
+              "critic_loss": 0.15967699885368347,
+              "entropy": 23.214406967163086,
+              "approximate_kl": 0.10176657140254974,
+              "clip_fraction": 0.7916666865348816,
+              "joint_gaussian_kl": 0.030451390892267227,
+              "explained_variance": -15.616308212280273
+            },
+            "state_sha256": "c4f1a2324359eb1cea51fc86c2c6311c020449ce683c32ddde6073b897cafc41",
+            "physical_controls": 0,
+            "scope": "Two discarded numerical shadow updates on synthetic rewards, outside scientific PPO"
+          },
+          "projected_all_attempt_gpu_hours": 47.12633220725589,
+          "remaining_gpu_hours": 34.38487479580773,
+          "checkpoint": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/checkpoints/event-004-train-001.pt",
+            "sha256": "6d4bb21f125f7ae49a82a40b5d6ab2ea7fa770fbc52d7f6346e4bcb3fc7e9d92"
+          }
+        }
+      },
+      "kv_all_layers": {
+        "GPU-ADAM-RECOVERY.json": {
+          "completed": true,
+          "device": "cuda:0",
+          "feature_dim": 2064,
+          "steering_dim": 1152,
+          "next_update_exact": true,
+          "live_learner_unchanged": true,
+          "optimizer_steps_each": 10,
+          "final_metrics": {
+            "loss": -0.06356574594974518,
+            "actor_loss": -0.16535013914108276,
+            "critic_loss": 0.20356878638267517,
+            "entropy": 836.0778198242188,
+            "approximate_kl": 1.4437412023544312,
+            "clip_fraction": 0.9583333730697632,
+            "joint_gaussian_kl": 0.004661431536078453,
+            "explained_variance": -4.792896747589111
+          },
+          "state_sha256": "efcf9f0c62273d929669fbf83e1f7772a3d4459e94f9a725a6acf8880f087c60",
+          "physical_controls": 0,
+          "scope": "Two discarded numerical shadow updates on synthetic rewards, outside scientific PPO"
+        },
+        "top_names": [],
+        "progress": {
+          "phase": "train",
+          "iteration": 1,
+          "gpu_recovery_qualification": {
+            "completed": true,
+            "device": "cuda:0",
+            "feature_dim": 2064,
+            "steering_dim": 1152,
+            "next_update_exact": true,
+            "live_learner_unchanged": true,
+            "optimizer_steps_each": 10,
+            "final_metrics": {
+              "loss": -0.06356574594974518,
+              "actor_loss": -0.16535013914108276,
+              "critic_loss": 0.20356878638267517,
+              "entropy": 836.0778198242188,
+              "approximate_kl": 1.4437412023544312,
+              "clip_fraction": 0.9583333730697632,
+              "joint_gaussian_kl": 0.004661431536078453,
+              "explained_variance": -4.792896747589111
+            },
+            "state_sha256": "efcf9f0c62273d929669fbf83e1f7772a3d4459e94f9a725a6acf8880f087c60",
+            "physical_controls": 0,
+            "scope": "Two discarded numerical shadow updates on synthetic rewards, outside scientific PPO"
+          },
+          "projected_all_attempt_gpu_hours": 50.728926619953576,
+          "remaining_gpu_hours": 34.43335047880809,
+          "checkpoint": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/checkpoints/event-004-train-001.pt",
+            "sha256": "585b78482338b50091c5f29fd44928572a97a5d1c602bed7cf52526b6ae25111"
+          }
+        }
+      }
+    }
+  },
+  "latest": {
+    "checked_unix": 1793684067.6201675,
+    "arms": {
+      "velocity": {
+        "metric_phases": [
+          [
+            "calibrate",
+            0
+          ],
+          [
+            "test_before",
+            0
+          ],
+          [
+            "dev",
+            0
+          ],
+          [
+            "train",
+            1
+          ]
+        ]
+      },
+      "kv_all_layers": {
+        "metric_phases": [
+          [
+            "calibrate",
+            0
+          ],
+          [
+            "test_before",
+            0
+          ],
+          [
+            "dev",
+            0
+          ],
+          [
+            "train",
+            1
+          ]
+        ]
+      }
+    }
+  },
+  "resource_policy": {
+    "human_quote": "dont ask me for approval below 8 gpu hours add to agents.md",
+    "threshold_GPU_hours": 8,
+    "strictly_below": true,
+    "AGENTS_commit": "e14defda"
+  }
+}
