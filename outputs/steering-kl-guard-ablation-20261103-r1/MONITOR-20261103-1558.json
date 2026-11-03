@@ -1,0 +1,1442 @@
+{
+  "checked_unix": 1793692711.8454795,
+  "progress": [
+    {
+      "path": "workers/rank-02/unguarded1/history/progress.json",
+      "sequence": 3,
+      "completed_episodes": 125,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1500,
+      "active_lanes": 0,
+      "resetting_lanes": 0,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793692289.721581
+    },
+    {
+      "path": "workers/rank-02/initial/history/progress.json",
+      "sequence": 1,
+      "completed_episodes": 125,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1500,
+      "active_lanes": 0,
+      "resetting_lanes": 0,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793691090.1682491
+    },
+    {
+      "path": "workers/rank-02/guarded1/history/progress.json",
+      "sequence": 2,
+      "completed_episodes": 125,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1500,
+      "active_lanes": 0,
+      "resetting_lanes": 0,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793691695.0706756
+    },
+    {
+      "path": "workers/rank-01/unguarded1/history/progress.json",
+      "sequence": 3,
+      "completed_episodes": 125,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1500,
+      "active_lanes": 0,
+      "resetting_lanes": 0,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793692264.1790345
+    },
+    {
+      "path": "workers/rank-01/initial/history/progress.json",
+      "sequence": 1,
+      "completed_episodes": 125,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1500,
+      "active_lanes": 0,
+      "resetting_lanes": 0,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793691084.4140627
+    },
+    {
+      "path": "workers/rank-01/guarded1/history/progress.json",
+      "sequence": 2,
+      "completed_episodes": 125,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1500,
+      "active_lanes": 0,
+      "resetting_lanes": 0,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793691668.0676396
+    },
+    {
+      "path": "workers/rank-03/unguarded1/history/progress.json",
+      "sequence": 3,
+      "completed_episodes": 125,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1500,
+      "active_lanes": 0,
+      "resetting_lanes": 0,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793692267.4861522
+    },
+    {
+      "path": "workers/rank-03/initial/history/progress.json",
+      "sequence": 1,
+      "completed_episodes": 125,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1500,
+      "active_lanes": 0,
+      "resetting_lanes": 0,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793691081.8409302
+    },
+    {
+      "path": "workers/rank-03/guarded1/history/progress.json",
+      "sequence": 2,
+      "completed_episodes": 125,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1500,
+      "active_lanes": 0,
+      "resetting_lanes": 0,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793691663.4149814
+    },
+    {
+      "path": "workers/rank-00/unguarded1/history/progress.json",
+      "sequence": 3,
+      "completed_episodes": 125,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1500,
+      "active_lanes": 0,
+      "resetting_lanes": 0,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793692277.6168718
+    },
+    {
+      "path": "workers/rank-00/initial/history/progress.json",
+      "sequence": 1,
+      "completed_episodes": 125,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1500,
+      "active_lanes": 0,
+      "resetting_lanes": 0,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793691093.402662
+    },
+    {
+      "path": "workers/rank-00/guarded1/history/progress.json",
+      "sequence": 2,
+      "completed_episodes": 125,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1500,
+      "active_lanes": 0,
+      "resetting_lanes": 0,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793691683.7784007
+    }
+  ],
+  "failures": [],
+  "workers": {
+    "rank-02": {
+      "completed": false,
+      "rank": 2,
+      "arm": "kv_all_layers",
+      "shard": 0,
+      "policies": {
+        "initial": {
+          "elapsed_seconds": 661.3865966796875,
+          "summary": {
+            "episodes": 125,
+            "per_task": {
+              "OpenDrawer": {
+                "episodes": 25,
+                "success_once": 17,
+                "success_at_end": 16
+              },
+              "PickPlaceDrawerToCounter": {
+                "episodes": 25,
+                "success_once": 13,
+                "success_at_end": 12
+              },
+              "CoffeeSetupMug": {
+                "episodes": 25,
+                "success_once": 7,
+                "success_at_end": 7
+              },
+              "PickPlaceCounterToCabinet": {
+                "episodes": 25,
+                "success_once": 13,
+                "success_at_end": 13
+              },
+              "TurnOffStove": {
+                "episodes": 25,
+                "success_once": 3,
+                "success_at_end": 2
+              }
+            },
+            "macro_ID_success_once": 0.42400000000000004,
+            "macro_ID_success_at_end": 0.4,
+            "macro_OOD_success_once": null,
+            "macro_OOD_success_at_end": null
+          },
+          "candidate_weights_unchanged": true,
+          "actual_policy_controls": 75000
+        },
+        "guarded1": {
+          "elapsed_seconds": 626.5713992118835,
+          "summary": {
+            "episodes": 125,
+            "per_task": {
+              "OpenDrawer": {
+                "episodes": 25,
+                "success_once": 17,
+                "success_at_end": 16
+              },
+              "PickPlaceDrawerToCounter": {
+                "episodes": 25,
+                "success_once": 7,
+                "success_at_end": 7
+              },
+              "CoffeeSetupMug": {
+                "episodes": 25,
+                "success_once": 10,
+                "success_at_end": 10
+              },
+              "PickPlaceCounterToCabinet": {
+                "episodes": 25,
+                "success_once": 12,
+                "success_at_end": 12
+              },
+              "TurnOffStove": {
+                "episodes": 25,
+                "success_once": 5,
+                "success_at_end": 4
+              }
+            },
+            "macro_ID_success_once": 0.40800000000000003,
+            "macro_ID_success_at_end": 0.392,
+            "macro_OOD_success_once": null,
+            "macro_OOD_success_at_end": null
+          },
+          "candidate_weights_unchanged": true,
+          "actual_policy_controls": 75000
+        },
+        "unguarded1": {
+          "elapsed_seconds": 566.78235912323,
+          "summary": {
+            "episodes": 125,
+            "per_task": {
+              "OpenDrawer": {
+                "episodes": 25,
+                "success_once": 16,
+                "success_at_end": 16
+              },
+              "PickPlaceDrawerToCounter": {
+                "episodes": 25,
+                "success_once": 10,
+                "success_at_end": 9
+              },
+              "CoffeeSetupMug": {
+                "episodes": 25,
+                "success_once": 11,
+                "success_at_end": 11
+              },
+              "PickPlaceCounterToCabinet": {
+                "episodes": 25,
+                "success_once": 11,
+                "success_at_end": 11
+              },
+              "TurnOffStove": {
+                "episodes": 25,
+                "success_once": 8,
+                "success_at_end": 8
+              }
+            },
+            "macro_ID_success_once": 0.44800000000000006,
+            "macro_ID_success_at_end": 0.44000000000000006,
+            "macro_OOD_success_once": null,
+            "macro_OOD_success_at_end": null
+          },
+          "candidate_weights_unchanged": true,
+          "actual_policy_controls": 75000
+        }
+      }
+    },
+    "rank-01": {
+      "completed": false,
+      "rank": 1,
+      "arm": "velocity",
+      "shard": 1,
+      "policies": {
+        "initial": {
+          "elapsed_seconds": 656.3364882469177,
+          "summary": {
+            "episodes": 125,
+            "per_task": {
+              "PickPlaceCounterToCabinet": {
+                "episodes": 25,
+                "success_once": 16,
+                "success_at_end": 16
+              },
+              "TurnOffStove": {
+                "episodes": 25,
+                "success_once": 5,
+                "success_at_end": 4
+              },
+              "OpenDrawer": {
+                "episodes": 25,
+                "success_once": 18,
+                "success_at_end": 17
+              },
+              "PickPlaceDrawerToCounter": {
+                "episodes": 25,
+                "success_once": 11,
+                "success_at_end": 11
+              },
+              "CoffeeSetupMug": {
+                "episodes": 25,
+                "success_once": 2,
+                "success_at_end": 2
+              }
+            },
+            "macro_ID_success_once": 0.4159999999999999,
+            "macro_ID_success_at_end": 0.4,
+            "macro_OOD_success_once": null,
+            "macro_OOD_success_at_end": null
+          },
+          "candidate_weights_unchanged": true,
+          "actual_policy_controls": 75000
+        },
+        "guarded1": {
+          "elapsed_seconds": 583.1335439682007,
+          "summary": {
+            "episodes": 125,
+            "per_task": {
+              "PickPlaceCounterToCabinet": {
+                "episodes": 25,
+                "success_once": 16,
+                "success_at_end": 16
+              },
+              "TurnOffStove": {
+                "episodes": 25,
+                "success_once": 5,
+                "success_at_end": 4
+              },
+              "OpenDrawer": {
+                "episodes": 25,
+                "success_once": 18,
+                "success_at_end": 16
+              },
+              "PickPlaceDrawerToCounter": {
+                "episodes": 25,
+                "success_once": 11,
+                "success_at_end": 10
+              },
+              "CoffeeSetupMug": {
+                "episodes": 25,
+                "success_once": 4,
+                "success_at_end": 4
+              }
+            },
+            "macro_ID_success_once": 0.43199999999999994,
+            "macro_ID_success_at_end": 0.4,
+            "macro_OOD_success_once": null,
+            "macro_OOD_success_at_end": null
+          },
+          "candidate_weights_unchanged": true,
+          "actual_policy_controls": 75000
+        },
+        "unguarded1": {
+          "elapsed_seconds": 596.9067025184631,
+          "summary": {
+            "episodes": 125,
+            "per_task": {
+              "PickPlaceCounterToCabinet": {
+                "episodes": 25,
+                "success_once": 13,
+                "success_at_end": 13
+              },
+              "TurnOffStove": {
+                "episodes": 25,
+                "success_once": 3,
+                "success_at_end": 2
+              },
+              "OpenDrawer": {
+                "episodes": 25,
+                "success_once": 18,
+                "success_at_end": 16
+              },
+              "PickPlaceDrawerToCounter": {
+                "episodes": 25,
+                "success_once": 7,
+                "success_at_end": 5
+              },
+              "CoffeeSetupMug": {
+                "episodes": 25,
+                "success_once": 2,
+                "success_at_end": 2
+              }
+            },
+            "macro_ID_success_once": 0.34400000000000003,
+            "macro_ID_success_at_end": 0.30400000000000005,
+            "macro_OOD_success_once": null,
+            "macro_OOD_success_at_end": null
+          },
+          "candidate_weights_unchanged": true,
+          "actual_policy_controls": 75000
+        }
+      }
+    },
+    "rank-03": {
+      "completed": false,
+      "rank": 3,
+      "arm": "kv_all_layers",
+      "shard": 1,
+      "policies": {
+        "initial": {
+          "elapsed_seconds": 653.4758956432343,
+          "summary": {
+            "episodes": 125,
+            "per_task": {
+              "PickPlaceCounterToCabinet": {
+                "episodes": 25,
+                "success_once": 16,
+                "success_at_end": 15
+              },
+              "TurnOffStove": {
+                "episodes": 25,
+                "success_once": 5,
+                "success_at_end": 5
+              },
+              "OpenDrawer": {
+                "episodes": 25,
+                "success_once": 19,
+                "success_at_end": 18
+              },
+              "PickPlaceDrawerToCounter": {
+                "episodes": 25,
+                "success_once": 13,
+                "success_at_end": 13
+              },
+              "CoffeeSetupMug": {
+                "episodes": 25,
+                "success_once": 4,
+                "success_at_end": 4
+              }
+            },
+            "macro_ID_success_once": 0.45600000000000007,
+            "macro_ID_success_at_end": 0.44000000000000006,
+            "macro_OOD_success_once": null,
+            "macro_OOD_success_at_end": null
+          },
+          "candidate_weights_unchanged": true,
+          "actual_policy_controls": 75000
+        },
+        "guarded1": {
+          "elapsed_seconds": 583.1390118598938,
+          "summary": {
+            "episodes": 125,
+            "per_task": {
+              "PickPlaceCounterToCabinet": {
+                "episodes": 25,
+                "success_once": 17,
+                "success_at_end": 17
+              },
+              "TurnOffStove": {
+                "episodes": 25,
+                "success_once": 3,
+                "success_at_end": 3
+              },
+              "OpenDrawer": {
+                "episodes": 25,
+                "success_once": 14,
+                "success_at_end": 12
+              },
+              "PickPlaceDrawerToCounter": {
+                "episodes": 25,
+                "success_once": 10,
+                "success_at_end": 8
+              },
+              "CoffeeSetupMug": {
+                "episodes": 25,
+                "success_once": 6,
+                "success_at_end": 6
+              }
+            },
+            "macro_ID_success_once": 0.4,
+            "macro_ID_success_at_end": 0.368,
+            "macro_OOD_success_once": null,
+            "macro_OOD_success_at_end": null
+          },
+          "candidate_weights_unchanged": true,
+          "actual_policy_controls": 75000
+        },
+        "unguarded1": {
+          "elapsed_seconds": 604.0723714828491,
+          "summary": {
+            "episodes": 125,
+            "per_task": {
+              "PickPlaceCounterToCabinet": {
+                "episodes": 25,
+                "success_once": 18,
+                "success_at_end": 18
+              },
+              "TurnOffStove": {
+                "episodes": 25,
+                "success_once": 7,
+                "success_at_end": 3
+              },
+              "OpenDrawer": {
+                "episodes": 25,
+                "success_once": 17,
+                "success_at_end": 16
+              },
+              "PickPlaceDrawerToCounter": {
+                "episodes": 25,
+                "success_once": 9,
+                "success_at_end": 9
+              },
+              "CoffeeSetupMug": {
+                "episodes": 25,
+                "success_once": 4,
+                "success_at_end": 4
+              }
+            },
+            "macro_ID_success_once": 0.44000000000000006,
+            "macro_ID_success_at_end": 0.39999999999999997,
+            "macro_OOD_success_once": null,
+            "macro_OOD_success_at_end": null
+          },
+          "candidate_weights_unchanged": true,
+          "actual_policy_controls": 75000
+        }
+      }
+    },
+    "rank-00": {
+      "completed": false,
+      "rank": 0,
+      "arm": "velocity",
+      "shard": 0,
+      "policies": {
+        "initial": {
+          "elapsed_seconds": 665.6632282733917,
+          "summary": {
+            "episodes": 125,
+            "per_task": {
+              "OpenDrawer": {
+                "episodes": 25,
+                "success_once": 18,
+                "success_at_end": 17
+              },
+              "PickPlaceDrawerToCounter": {
+                "episodes": 25,
+                "success_once": 13,
+                "success_at_end": 13
+              },
+              "CoffeeSetupMug": {
+                "episodes": 25,
+                "success_once": 11,
+                "success_at_end": 11
+              },
+              "PickPlaceCounterToCabinet": {
+                "episodes": 25,
+                "success_once": 12,
+                "success_at_end": 11
+              },
+              "TurnOffStove": {
+                "episodes": 25,
+                "success_once": 6,
+                "success_at_end": 6
+              }
+            },
+            "macro_ID_success_once": 0.48,
+            "macro_ID_success_at_end": 0.4640000000000001,
+            "macro_OOD_success_once": null,
+            "macro_OOD_success_at_end": null
+          },
+          "candidate_weights_unchanged": true,
+          "actual_policy_controls": 75000
+        },
+        "guarded1": {
+          "elapsed_seconds": 593.5786330699921,
+          "summary": {
+            "episodes": 125,
+            "per_task": {
+              "OpenDrawer": {
+                "episodes": 25,
+                "success_once": 16,
+                "success_at_end": 15
+              },
+              "PickPlaceDrawerToCounter": {
+                "episodes": 25,
+                "success_once": 11,
+                "success_at_end": 10
+              },
+              "CoffeeSetupMug": {
+                "episodes": 25,
+                "success_once": 10,
+                "success_at_end": 10
+              },
+              "PickPlaceCounterToCabinet": {
+                "episodes": 25,
+                "success_once": 10,
+                "success_at_end": 8
+              },
+              "TurnOffStove": {
+                "episodes": 25,
+                "success_once": 7,
+                "success_at_end": 6
+              }
+            },
+            "macro_ID_success_once": 0.43200000000000005,
+            "macro_ID_success_at_end": 0.392,
+            "macro_OOD_success_once": null,
+            "macro_OOD_success_at_end": null
+          },
+          "candidate_weights_unchanged": true,
+          "actual_policy_controls": 75000
+        },
+        "unguarded1": {
+          "elapsed_seconds": 588.6346640586853,
+          "summary": {
+            "episodes": 125,
+            "per_task": {
+              "OpenDrawer": {
+                "episodes": 25,
+                "success_once": 14,
+                "success_at_end": 13
+              },
+              "PickPlaceDrawerToCounter": {
+                "episodes": 25,
+                "success_once": 12,
+                "success_at_end": 12
+              },
+              "CoffeeSetupMug": {
+                "episodes": 25,
+                "success_once": 10,
+                "success_at_end": 10
+              },
+              "PickPlaceCounterToCabinet": {
+                "episodes": 25,
+                "success_once": 14,
+                "success_at_end": 14
+              },
+              "TurnOffStove": {
+                "episodes": 25,
+                "success_once": 8,
+                "success_at_end": 8
+              }
+            },
+            "macro_ID_success_once": 0.4640000000000001,
+            "macro_ID_success_at_end": 0.45600000000000007,
+            "macro_OOD_success_once": null,
+            "macro_OOD_success_at_end": null
+          },
+          "candidate_weights_unchanged": true,
+          "actual_policy_controls": 75000
+        }
+      }
+    }
+  },
+  "clock.json": {
+    "started_unix": 1793690279,
+    "finished_unix": 1793692337,
+    "allocated_gpus": 4,
+    "process_gpu_seconds": 8232,
+    "exit_code": 0,
+    "allocation_release_not_included": true
+  },
+  "RELEASED.json": {
+    "child_pids": [
+      641,
+      642,
+      643,
+      644
+    ],
+    "child_exit_codes": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "all_children_released": true,
+    "finished_unix": 1793692337.1261168
+  },
+  "RESULT.json": {
+    "completed": true,
+    "arms": {
+      "velocity": {
+        "summaries": {
+          "initial": {
+            "episodes": 250,
+            "per_task": {
+              "OpenDrawer": {
+                "episodes": 50,
+                "success_once": 36,
+                "success_at_end": 34
+              },
+              "PickPlaceDrawerToCounter": {
+                "episodes": 50,
+                "success_once": 24,
+                "success_at_end": 24
+              },
+              "CoffeeSetupMug": {
+                "episodes": 50,
+                "success_once": 13,
+                "success_at_end": 13
+              },
+              "PickPlaceCounterToCabinet": {
+                "episodes": 50,
+                "success_once": 28,
+                "success_at_end": 27
+              },
+              "TurnOffStove": {
+                "episodes": 50,
+                "success_once": 11,
+                "success_at_end": 10
+              }
+            },
+            "macro_ID_success_once": 0.44800000000000006,
+            "macro_ID_success_at_end": 0.43200000000000005,
+            "macro_OOD_success_once": null,
+            "macro_OOD_success_at_end": null
+          },
+          "guarded1": {
+            "episodes": 250,
+            "per_task": {
+              "OpenDrawer": {
+                "episodes": 50,
+                "success_once": 34,
+                "success_at_end": 31
+              },
+              "PickPlaceDrawerToCounter": {
+                "episodes": 50,
+                "success_once": 22,
+                "success_at_end": 20
+              },
+              "CoffeeSetupMug": {
+                "episodes": 50,
+                "success_once": 14,
+                "success_at_end": 14
+              },
+              "PickPlaceCounterToCabinet": {
+                "episodes": 50,
+                "success_once": 26,
+                "success_at_end": 24
+              },
+              "TurnOffStove": {
+                "episodes": 50,
+                "success_once": 12,
+                "success_at_end": 10
+              }
+            },
+            "macro_ID_success_once": 0.43200000000000005,
+            "macro_ID_success_at_end": 0.396,
+            "macro_OOD_success_once": null,
+            "macro_OOD_success_at_end": null
+          },
+          "unguarded1": {
+            "episodes": 250,
+            "per_task": {
+              "OpenDrawer": {
+                "episodes": 50,
+                "success_once": 32,
+                "success_at_end": 29
+              },
+              "PickPlaceDrawerToCounter": {
+                "episodes": 50,
+                "success_once": 19,
+                "success_at_end": 17
+              },
+              "CoffeeSetupMug": {
+                "episodes": 50,
+                "success_once": 12,
+                "success_at_end": 12
+              },
+              "PickPlaceCounterToCabinet": {
+                "episodes": 50,
+                "success_once": 27,
+                "success_at_end": 27
+              },
+              "TurnOffStove": {
+                "episodes": 50,
+                "success_once": 11,
+                "success_at_end": 10
+              }
+            },
+            "macro_ID_success_once": 0.404,
+            "macro_ID_success_at_end": 0.38,
+            "macro_OOD_success_once": null,
+            "macro_OOD_success_at_end": null
+          }
+        },
+        "paired_comparisons": {
+          "initial_to_guarded1": {
+            "success_once": {
+              "per_task": {
+                "OpenDrawer": {
+                  "cases": 50,
+                  "wins": 3,
+                  "losses": 5,
+                  "gain": -0.04
+                },
+                "PickPlaceCounterToCabinet": {
+                  "cases": 50,
+                  "wins": 5,
+                  "losses": 7,
+                  "gain": -0.04
+                },
+                "PickPlaceDrawerToCounter": {
+                  "cases": 50,
+                  "wins": 10,
+                  "losses": 12,
+                  "gain": -0.04
+                },
+                "TurnOffStove": {
+                  "cases": 50,
+                  "wins": 3,
+                  "losses": 2,
+                  "gain": 0.02
+                },
+                "CoffeeSetupMug": {
+                  "cases": 50,
+                  "wins": 3,
+                  "losses": 2,
+                  "gain": 0.02
+                }
+              },
+              "wins": 24,
+              "losses": 28,
+              "gain": -0.016,
+              "exact_p": 0.6778086391424605,
+              "paired_task_stratified_bootstrap_95ci": [
+                -0.07200000000000001,
+                0.04
+              ]
+            },
+            "success_at_end": {
+              "per_task": {
+                "OpenDrawer": {
+                  "cases": 50,
+                  "wins": 3,
+                  "losses": 6,
+                  "gain": -0.06
+                },
+                "PickPlaceCounterToCabinet": {
+                  "cases": 50,
+                  "wins": 5,
+                  "losses": 8,
+                  "gain": -0.06
+                },
+                "PickPlaceDrawerToCounter": {
+                  "cases": 50,
+                  "wins": 8,
+                  "losses": 12,
+                  "gain": -0.08
+                },
+                "TurnOffStove": {
+                  "cases": 50,
+                  "wins": 3,
+                  "losses": 3,
+                  "gain": 0.0
+                },
+                "CoffeeSetupMug": {
+                  "cases": 50,
+                  "wins": 3,
+                  "losses": 2,
+                  "gain": 0.02
+                }
+              },
+              "wins": 22,
+              "losses": 31,
+              "gain": -0.036,
+              "exact_p": 0.27167916606550335,
+              "paired_task_stratified_bootstrap_95ci": [
+                -0.092,
+                0.02
+              ]
+            }
+          },
+          "initial_to_unguarded1": {
+            "success_once": {
+              "per_task": {
+                "OpenDrawer": {
+                  "cases": 50,
+                  "wins": 5,
+                  "losses": 9,
+                  "gain": -0.08
+                },
+                "PickPlaceCounterToCabinet": {
+                  "cases": 50,
+                  "wins": 7,
+                  "losses": 8,
+                  "gain": -0.02
+                },
+                "PickPlaceDrawerToCounter": {
+                  "cases": 50,
+                  "wins": 9,
+                  "losses": 14,
+                  "gain": -0.1
+                },
+                "TurnOffStove": {
+                  "cases": 50,
+                  "wins": 3,
+                  "losses": 3,
+                  "gain": 0.0
+                },
+                "CoffeeSetupMug": {
+                  "cases": 50,
+                  "wins": 5,
+                  "losses": 6,
+                  "gain": -0.02
+                }
+              },
+              "wins": 29,
+              "losses": 40,
+              "gain": -0.044,
+              "exact_p": 0.22840022535329702,
+              "paired_task_stratified_bootstrap_95ci": [
+                -0.108,
+                0.02
+              ]
+            },
+            "success_at_end": {
+              "per_task": {
+                "OpenDrawer": {
+                  "cases": 50,
+                  "wins": 5,
+                  "losses": 10,
+                  "gain": -0.1
+                },
+                "PickPlaceCounterToCabinet": {
+                  "cases": 50,
+                  "wins": 8,
+                  "losses": 8,
+                  "gain": 0.0
+                },
+                "PickPlaceDrawerToCounter": {
+                  "cases": 50,
+                  "wins": 8,
+                  "losses": 15,
+                  "gain": -0.14
+                },
+                "TurnOffStove": {
+                  "cases": 50,
+                  "wins": 3,
+                  "losses": 3,
+                  "gain": 0.0
+                },
+                "CoffeeSetupMug": {
+                  "cases": 50,
+                  "wins": 5,
+                  "losses": 6,
+                  "gain": -0.02
+                }
+              },
+              "wins": 29,
+              "losses": 42,
+              "gain": -0.052,
+              "exact_p": 0.1539127693264563,
+              "paired_task_stratified_bootstrap_95ci": [
+                -0.116,
+                0.012000000000000004
+              ]
+            }
+          },
+          "guarded1_to_unguarded1": {
+            "success_once": {
+              "per_task": {
+                "OpenDrawer": {
+                  "cases": 50,
+                  "wins": 4,
+                  "losses": 6,
+                  "gain": -0.04
+                },
+                "PickPlaceCounterToCabinet": {
+                  "cases": 50,
+                  "wins": 5,
+                  "losses": 4,
+                  "gain": 0.02
+                },
+                "PickPlaceDrawerToCounter": {
+                  "cases": 50,
+                  "wins": 8,
+                  "losses": 11,
+                  "gain": -0.06
+                },
+                "TurnOffStove": {
+                  "cases": 50,
+                  "wins": 4,
+                  "losses": 5,
+                  "gain": -0.02
+                },
+                "CoffeeSetupMug": {
+                  "cases": 50,
+                  "wins": 6,
+                  "losses": 8,
+                  "gain": -0.04
+                }
+              },
+              "wins": 27,
+              "losses": 34,
+              "gain": -0.028,
+              "exact_p": 0.4426260049464714,
+              "paired_task_stratified_bootstrap_95ci": [
+                -0.08800000000000001,
+                0.03200000000000001
+              ]
+            },
+            "success_at_end": {
+              "per_task": {
+                "OpenDrawer": {
+                  "cases": 50,
+                  "wins": 4,
+                  "losses": 6,
+                  "gain": -0.04
+                },
+                "PickPlaceCounterToCabinet": {
+                  "cases": 50,
+                  "wins": 7,
+                  "losses": 4,
+                  "gain": 0.06
+                },
+                "PickPlaceDrawerToCounter": {
+                  "cases": 50,
+                  "wins": 7,
+                  "losses": 10,
+                  "gain": -0.06
+                },
+                "TurnOffStove": {
+                  "cases": 50,
+                  "wins": 5,
+                  "losses": 5,
+                  "gain": 0.0
+                },
+                "CoffeeSetupMug": {
+                  "cases": 50,
+                  "wins": 6,
+                  "losses": 8,
+                  "gain": -0.04
+                }
+              },
+              "wins": 29,
+              "losses": 33,
+              "gain": -0.016,
+              "exact_p": 0.7035366713552733,
+              "paired_task_stratified_bootstrap_95ci": [
+                -0.07600000000000001,
+                0.04400000000000001
+              ]
+            }
+          }
+        },
+        "interpretation": "Exploratory first-update diagnostic, no convergence or task-generalization claim"
+      },
+      "kv_all_layers": {
+        "summaries": {
+          "initial": {
+            "episodes": 250,
+            "per_task": {
+              "OpenDrawer": {
+                "episodes": 50,
+                "success_once": 36,
+                "success_at_end": 34
+              },
+              "PickPlaceDrawerToCounter": {
+                "episodes": 50,
+                "success_once": 26,
+                "success_at_end": 25
+              },
+              "CoffeeSetupMug": {
+                "episodes": 50,
+                "success_once": 11,
+                "success_at_end": 11
+              },
+              "PickPlaceCounterToCabinet": {
+                "episodes": 50,
+                "success_once": 29,
+                "success_at_end": 28
+              },
+              "TurnOffStove": {
+                "episodes": 50,
+                "success_once": 8,
+                "success_at_end": 7
+              }
+            },
+            "macro_ID_success_once": 0.43999999999999995,
+            "macro_ID_success_at_end": 0.4200000000000001,
+            "macro_OOD_success_once": null,
+            "macro_OOD_success_at_end": null
+          },
+          "guarded1": {
+            "episodes": 250,
+            "per_task": {
+              "OpenDrawer": {
+                "episodes": 50,
+                "success_once": 31,
+                "success_at_end": 28
+              },
+              "PickPlaceDrawerToCounter": {
+                "episodes": 50,
+                "success_once": 17,
+                "success_at_end": 15
+              },
+              "CoffeeSetupMug": {
+                "episodes": 50,
+                "success_once": 16,
+                "success_at_end": 16
+              },
+              "PickPlaceCounterToCabinet": {
+                "episodes": 50,
+                "success_once": 29,
+                "success_at_end": 29
+              },
+              "TurnOffStove": {
+                "episodes": 50,
+                "success_once": 8,
+                "success_at_end": 7
+              }
+            },
+            "macro_ID_success_once": 0.404,
+            "macro_ID_success_at_end": 0.38,
+            "macro_OOD_success_once": null,
+            "macro_OOD_success_at_end": null
+          },
+          "unguarded1": {
+            "episodes": 250,
+            "per_task": {
+              "OpenDrawer": {
+                "episodes": 50,
+                "success_once": 33,
+                "success_at_end": 32
+              },
+              "PickPlaceDrawerToCounter": {
+                "episodes": 50,
+                "success_once": 19,
+                "success_at_end": 18
+              },
+              "CoffeeSetupMug": {
+                "episodes": 50,
+                "success_once": 15,
+                "success_at_end": 15
+              },
+              "PickPlaceCounterToCabinet": {
+                "episodes": 50,
+                "success_once": 29,
+                "success_at_end": 29
+              },
+              "TurnOffStove": {
+                "episodes": 50,
+                "success_once": 15,
+                "success_at_end": 11
+              }
+            },
+            "macro_ID_success_once": 0.44400000000000006,
+            "macro_ID_success_at_end": 0.42000000000000004,
+            "macro_OOD_success_once": null,
+            "macro_OOD_success_at_end": null
+          }
+        },
+        "paired_comparisons": {
+          "initial_to_guarded1": {
+            "success_once": {
+              "per_task": {
+                "OpenDrawer": {
+                  "cases": 50,
+                  "wins": 1,
+                  "losses": 6,
+                  "gain": -0.1
+                },
+                "PickPlaceCounterToCabinet": {
+                  "cases": 50,
+                  "wins": 3,
+                  "losses": 3,
+                  "gain": 0.0
+                },
+                "PickPlaceDrawerToCounter": {
+                  "cases": 50,
+                  "wins": 7,
+                  "losses": 16,
+                  "gain": -0.18
+                },
+                "TurnOffStove": {
+                  "cases": 50,
+                  "wins": 4,
+                  "losses": 4,
+                  "gain": 0.0
+                },
+                "CoffeeSetupMug": {
+                  "cases": 50,
+                  "wins": 10,
+                  "losses": 5,
+                  "gain": 0.1
+                }
+              },
+              "wins": 25,
+              "losses": 34,
+              "gain": -0.036,
+              "exact_p": 0.2975952082844287,
+              "paired_task_stratified_bootstrap_95ci": [
+                -0.096,
+                0.024
+              ]
+            },
+            "success_at_end": {
+              "per_task": {
+                "OpenDrawer": {
+                  "cases": 50,
+                  "wins": 1,
+                  "losses": 7,
+                  "gain": -0.12
+                },
+                "PickPlaceCounterToCabinet": {
+                  "cases": 50,
+                  "wins": 4,
+                  "losses": 3,
+                  "gain": 0.02
+                },
+                "PickPlaceDrawerToCounter": {
+                  "cases": 50,
+                  "wins": 5,
+                  "losses": 15,
+                  "gain": -0.2
+                },
+                "TurnOffStove": {
+                  "cases": 50,
+                  "wins": 3,
+                  "losses": 3,
+                  "gain": 0.0
+                },
+                "CoffeeSetupMug": {
+                  "cases": 50,
+                  "wins": 10,
+                  "losses": 5,
+                  "gain": 0.1
+                }
+              },
+              "wins": 23,
+              "losses": 33,
+              "gain": -0.04,
+              "exact_p": 0.2288055412343561,
+              "paired_task_stratified_bootstrap_95ci": [
+                -0.096,
+                0.016000000000000007
+              ]
+            }
+          },
+          "initial_to_unguarded1": {
+            "success_once": {
+              "per_task": {
+                "OpenDrawer": {
+                  "cases": 50,
+                  "wins": 2,
+                  "losses": 5,
+                  "gain": -0.06
+                },
+                "PickPlaceCounterToCabinet": {
+                  "cases": 50,
+                  "wins": 5,
+                  "losses": 5,
+                  "gain": 0.0
+                },
+                "PickPlaceDrawerToCounter": {
+                  "cases": 50,
+                  "wins": 5,
+                  "losses": 12,
+                  "gain": -0.14
+                },
+                "TurnOffStove": {
+                  "cases": 50,
+                  "wins": 8,
+                  "losses": 1,
+                  "gain": 0.14
+                },
+                "CoffeeSetupMug": {
+                  "cases": 50,
+                  "wins": 8,
+                  "losses": 4,
+                  "gain": 0.08
+                }
+              },
+              "wins": 28,
+              "losses": 27,
+              "gain": 0.004,
+              "exact_p": 1.0,
+              "paired_task_stratified_bootstrap_95ci": [
+                -0.052000000000000005,
+                0.060000000000000005
+              ]
+            },
+            "success_at_end": {
+              "per_task": {
+                "OpenDrawer": {
+                  "cases": 50,
+                  "wins": 3,
+                  "losses": 5,
+                  "gain": -0.04
+                },
+                "PickPlaceCounterToCabinet": {
+                  "cases": 50,
+                  "wins": 6,
+                  "losses": 5,
+                  "gain": 0.02
+                },
+                "PickPlaceDrawerToCounter": {
+                  "cases": 50,
+                  "wins": 5,
+                  "losses": 12,
+                  "gain": -0.14
+                },
+                "TurnOffStove": {
+                  "cases": 50,
+                  "wins": 7,
+                  "losses": 3,
+                  "gain": 0.08
+                },
+                "CoffeeSetupMug": {
+                  "cases": 50,
+                  "wins": 8,
+                  "losses": 4,
+                  "gain": 0.08
+                }
+              },
+              "wins": 29,
+              "losses": 29,
+              "gain": 0.0,
+              "exact_p": 1.0,
+              "paired_task_stratified_bootstrap_95ci": [
+                -0.05600000000000001,
+                0.06
+              ]
+            }
+          },
+          "guarded1_to_unguarded1": {
+            "success_once": {
+              "per_task": {
+                "OpenDrawer": {
+                  "cases": 50,
+                  "wins": 5,
+                  "losses": 3,
+                  "gain": 0.04
+                },
+                "PickPlaceCounterToCabinet": {
+                  "cases": 50,
+                  "wins": 2,
+                  "losses": 2,
+                  "gain": 0.0
+                },
+                "PickPlaceDrawerToCounter": {
+                  "cases": 50,
+                  "wins": 11,
+                  "losses": 9,
+                  "gain": 0.04
+                },
+                "TurnOffStove": {
+                  "cases": 50,
+                  "wins": 8,
+                  "losses": 1,
+                  "gain": 0.14
+                },
+                "CoffeeSetupMug": {
+                  "cases": 50,
+                  "wins": 5,
+                  "losses": 6,
+                  "gain": -0.02
+                }
+              },
+              "wins": 31,
+              "losses": 21,
+              "gain": 0.04,
+              "exact_p": 0.21160856876151612,
+              "paired_task_stratified_bootstrap_95ci": [
+                -0.016,
+                0.096
+              ]
+            },
+            "success_at_end": {
+              "per_task": {
+                "OpenDrawer": {
+                  "cases": 50,
+                  "wins": 7,
+                  "losses": 3,
+                  "gain": 0.08
+                },
+                "PickPlaceCounterToCabinet": {
+                  "cases": 50,
+                  "wins": 2,
+                  "losses": 2,
+                  "gain": 0.0
+                },
+                "PickPlaceDrawerToCounter": {
+                  "cases": 50,
+                  "wins": 10,
+                  "losses": 7,
+                  "gain": 0.06
+                },
+                "TurnOffStove": {
+                  "cases": 50,
+                  "wins": 6,
+                  "losses": 2,
+                  "gain": 0.08
+                },
+                "CoffeeSetupMug": {
+                  "cases": 50,
+                  "wins": 5,
+                  "losses": 6,
+                  "gain": -0.02
+                }
+              },
+              "wins": 30,
+              "losses": 20,
+              "gain": 0.04,
+              "exact_p": 0.20263875106454066,
+              "paired_task_stratified_bootstrap_95ci": [
+                -0.016,
+                0.096
+              ]
+            }
+          }
+        },
+        "interpretation": "Exploratory first-update diagnostic, no convergence or task-generalization claim"
+      }
+    },
+    "scientific_source_updates": 0,
+    "new_training_episodes": 0,
+    "finished_unix": 1793692334.0945342,
+    "accounting": {
+      "format": "joint_steering_action_escrow_v1",
+      "limits": {
+        "train": 11650000,
+        "eval": 1200000
+      },
+      "charged": {
+        "train": 0,
+        "eval": 900000
+      },
+      "pending": {}
+    }
+  },
+  "accounting": {
+    "format": "joint_steering_action_escrow_v1",
+    "limits": {
+      "train": 11650000,
+      "eval": 1200000
+    },
+    "charged": {
+      "train": 0,
+      "eval": 900000
+    }
+  },
+  "pending_physical_calls": 0
+}

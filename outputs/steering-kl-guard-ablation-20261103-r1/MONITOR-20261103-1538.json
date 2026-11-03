@@ -1,0 +1,1426 @@
+{
+  "checked_unix": 1793691544.6018794,
+  "job_id": "job-1nds2rm4v2rp",
+  "progress": [
+    {
+      "path": "workers/rank-02/initial/history/progress.json",
+      "sequence": 1,
+      "completed_episodes": 125,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1500,
+      "active_lanes": 0,
+      "resetting_lanes": 0,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793691090.1682491
+    },
+    {
+      "path": "workers/rank-02/guarded1/history/progress.json",
+      "sequence": 2,
+      "completed_episodes": 48,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1009,
+      "active_lanes": 48,
+      "resetting_lanes": 0,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793691538.903123
+    },
+    {
+      "path": "workers/rank-01/initial/history/progress.json",
+      "sequence": 1,
+      "completed_episodes": 125,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1500,
+      "active_lanes": 0,
+      "resetting_lanes": 0,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793691084.4140627
+    },
+    {
+      "path": "workers/rank-01/guarded1/history/progress.json",
+      "sequence": 2,
+      "completed_episodes": 54,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1085,
+      "active_lanes": 42,
+      "resetting_lanes": 2,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793691538.8974152
+    },
+    {
+      "path": "workers/rank-03/initial/history/progress.json",
+      "sequence": 1,
+      "completed_episodes": 125,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1500,
+      "active_lanes": 0,
+      "resetting_lanes": 0,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793691081.8409302
+    },
+    {
+      "path": "workers/rank-03/guarded1/history/progress.json",
+      "sequence": 2,
+      "completed_episodes": 65,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1113,
+      "active_lanes": 31,
+      "resetting_lanes": 1,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793691542.409864
+    },
+    {
+      "path": "workers/rank-00/initial/history/progress.json",
+      "sequence": 1,
+      "completed_episodes": 125,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1500,
+      "active_lanes": 0,
+      "resetting_lanes": 0,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793691093.402662
+    },
+    {
+      "path": "workers/rank-00/guarded1/history/progress.json",
+      "sequence": 2,
+      "completed_episodes": 49,
+      "requested_episodes": 125,
+      "completed_physical_chunks": 1063,
+      "active_lanes": 47,
+      "resetting_lanes": 0,
+      "maximum_native_batch": 48,
+      "peak_active_lanes": 48,
+      "last_progress_unix": 1793691544.157147
+    }
+  ],
+  "failures": [],
+  "qualification": {
+    "rank-02": {
+      "completed": true,
+      "interface": {
+        "kind": "kv_all_layers",
+        "motor_shape": [
+          50,
+          32
+        ],
+        "steering_dim": 1152,
+        "candidates": 8,
+        "fraction": 0.64,
+        "kv_layers": 18,
+        "kv_map": {
+          "version": "independent_layer_kv_rademacher32_rms_v1",
+          "rank": 32,
+          "targets": [
+            "key",
+            "value"
+          ],
+          "order": "layer,key_or_value,coefficient",
+          "seed_base": 921003,
+          "seed": "921003 + 2 * layer_index + key_or_value_index",
+          "scale": "fraction * per_row_per_layer_per_tensor_RMS; tanh coefficients"
+        }
+      },
+      "batch_size": 48,
+      "zero_native_exact": true,
+      "prefix_reused": true,
+      "extra_physical_controls": 0,
+      "cache_targets": [
+        {
+          "layer": 0,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11829052,
+          "delta_rms": 0.3859362006187439,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 0,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11819831,
+          "delta_rms": 0.3657408654689789,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 1,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11822979,
+          "delta_rms": 0.36303576827049255,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 1,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11819904,
+          "delta_rms": 0.2432287037372589,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 2,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11809875,
+          "delta_rms": 0.40110164880752563,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 2,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11809584,
+          "delta_rms": 0.21194250881671906,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 3,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11820928,
+          "delta_rms": 0.374042272567749,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 3,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11821622,
+          "delta_rms": 0.19714121520519257,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 4,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11821561,
+          "delta_rms": 0.3841068744659424,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 4,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11822792,
+          "delta_rms": 0.21588881313800812,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 5,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11827571,
+          "delta_rms": 0.4066357910633087,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 5,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11821973,
+          "delta_rms": 0.20893611013889313,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 6,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11841611,
+          "delta_rms": 0.3954847455024719,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 6,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11812961,
+          "delta_rms": 0.2412482351064682,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 7,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11825466,
+          "delta_rms": 0.4276629388332367,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 7,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11820201,
+          "delta_rms": 0.24147509038448334,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 8,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11831568,
+          "delta_rms": 0.45863816142082214,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 8,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11820912,
+          "delta_rms": 0.28743019700050354,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 9,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11833935,
+          "delta_rms": 0.4860079288482666,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 9,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11807415,
+          "delta_rms": 0.2961556613445282,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 10,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11814118,
+          "delta_rms": 0.500507652759552,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 10,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11809971,
+          "delta_rms": 0.3337981700897217,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 11,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11836369,
+          "delta_rms": 0.5627580285072327,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 11,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11813301,
+          "delta_rms": 0.3840658664703369,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 12,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11834869,
+          "delta_rms": 0.48879849910736084,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 12,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11819009,
+          "delta_rms": 0.5832037329673767,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 13,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11822928,
+          "delta_rms": 0.48203930258750916,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 13,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11820961,
+          "delta_rms": 0.4788774251937866,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 14,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11828086,
+          "delta_rms": 0.5484511852264404,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 14,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11822604,
+          "delta_rms": 1.0433738231658936,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 15,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11829527,
+          "delta_rms": 0.6174067854881287,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 15,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11815155,
+          "delta_rms": 0.960969865322113,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 16,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11841506,
+          "delta_rms": 0.6951766610145569,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 16,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11806637,
+          "delta_rms": 1.047942876815796,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 17,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11834892,
+          "delta_rms": 0.8827909827232361,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 17,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11831379,
+          "delta_rms": 4.261804103851318,
+          "finite": true,
+          "original_cache_unchanged": true
+        }
+      ],
+      "consumed_cache_layers": 18,
+      "original_cache_unchanged": true,
+      "consumed_cache_observation": "existing nonzero prediction prefix hook; no additional model calls",
+      "probe_seed": 921117,
+      "probe_coefficient_std": 0.5,
+      "action_delta_rms": 0.02898363668777414,
+      "action_delta_max": 1.943809449672699,
+      "baseline_action_rms": 0.45586712587791156,
+      "binary_adapter": "unchanged native map_released_control_scores; dispatch observed separately",
+      "qualification": "identity and influence only; scale acceptance belongs to the master",
+      "allocation_id": "job-1nds2rm4v2rp-master-0-643",
+      "cuda_uuid": "d3906acd-847d-2d7c-a769-28df3cc5f67e",
+      "completed_unix": 1793690576.678096
+    },
+    "rank-01": {
+      "completed": true,
+      "interface": {
+        "kind": "velocity",
+        "motor_shape": [
+          50,
+          32
+        ],
+        "steering_dim": 32,
+        "candidates": 8,
+        "fraction": 0.125
+      },
+      "batch_size": 48,
+      "zero_native_exact": true,
+      "prefix_reused": true,
+      "extra_physical_controls": 0,
+      "cache_targets": [],
+      "consumed_cache_layers": null,
+      "original_cache_unchanged": null,
+      "consumed_cache_observation": null,
+      "probe_seed": 921117,
+      "probe_coefficient_std": 0.5,
+      "action_delta_rms": 0.024464886575118583,
+      "action_delta_max": 1.9164212942123413,
+      "baseline_action_rms": 0.46016728989615596,
+      "binary_adapter": "unchanged native map_released_control_scores; dispatch observed separately",
+      "qualification": "identity and influence only; scale acceptance belongs to the master",
+      "allocation_id": "job-1nds2rm4v2rp-master-0-642",
+      "cuda_uuid": "57db4654-7545-bc9a-ac24-16352d11bac9",
+      "completed_unix": 1793690576.6445255
+    },
+    "rank-03": {
+      "completed": true,
+      "interface": {
+        "kind": "kv_all_layers",
+        "motor_shape": [
+          50,
+          32
+        ],
+        "steering_dim": 1152,
+        "candidates": 8,
+        "fraction": 0.64,
+        "kv_layers": 18,
+        "kv_map": {
+          "version": "independent_layer_kv_rademacher32_rms_v1",
+          "rank": 32,
+          "targets": [
+            "key",
+            "value"
+          ],
+          "order": "layer,key_or_value,coefficient",
+          "seed_base": 921003,
+          "seed": "921003 + 2 * layer_index + key_or_value_index",
+          "scale": "fraction * per_row_per_layer_per_tensor_RMS; tanh coefficients"
+        }
+      },
+      "batch_size": 48,
+      "zero_native_exact": true,
+      "prefix_reused": true,
+      "extra_physical_controls": 0,
+      "cache_targets": [
+        {
+          "layer": 0,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11829279,
+          "delta_rms": 0.3862667679786682,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 0,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11818140,
+          "delta_rms": 0.36451151967048645,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 1,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11823153,
+          "delta_rms": 0.3643375039100647,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 1,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11816044,
+          "delta_rms": 0.2424686849117279,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 2,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11809709,
+          "delta_rms": 0.4031824767589569,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 2,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11809884,
+          "delta_rms": 0.21168558299541473,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 3,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11821472,
+          "delta_rms": 0.3757895529270172,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 3,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11821169,
+          "delta_rms": 0.19706261157989502,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 4,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11821194,
+          "delta_rms": 0.38567325472831726,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 4,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11821598,
+          "delta_rms": 0.21648627519607544,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 5,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11826657,
+          "delta_rms": 0.40752461552619934,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 5,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11822248,
+          "delta_rms": 0.20835961401462555,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 6,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11841067,
+          "delta_rms": 0.39522165060043335,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 6,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11812083,
+          "delta_rms": 0.24071861803531647,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 7,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11825132,
+          "delta_rms": 0.4279526472091675,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 7,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11819894,
+          "delta_rms": 0.24105331301689148,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 8,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11832405,
+          "delta_rms": 0.45863184332847595,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 8,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11822014,
+          "delta_rms": 0.286114364862442,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 9,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11834244,
+          "delta_rms": 0.48634636402130127,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 9,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11807468,
+          "delta_rms": 0.2957881987094879,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 10,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11814063,
+          "delta_rms": 0.5021346211433411,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 10,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11811943,
+          "delta_rms": 0.33295130729675293,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 11,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11835410,
+          "delta_rms": 0.5622791647911072,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 11,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11813404,
+          "delta_rms": 0.3797343969345093,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 12,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11835429,
+          "delta_rms": 0.48806899785995483,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 12,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11818933,
+          "delta_rms": 0.5807157158851624,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 13,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11822312,
+          "delta_rms": 0.4830871820449829,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 13,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11821904,
+          "delta_rms": 0.47688257694244385,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 14,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11828058,
+          "delta_rms": 0.5510890483856201,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 14,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11819174,
+          "delta_rms": 1.0436348915100098,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 15,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11829588,
+          "delta_rms": 0.6217578649520874,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 15,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11815716,
+          "delta_rms": 0.9665002822875977,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 16,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11841565,
+          "delta_rms": 0.7023544311523438,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 16,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11808224,
+          "delta_rms": 1.0733762979507446,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 17,
+          "target": "key",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11835443,
+          "delta_rms": 0.8925226926803589,
+          "finite": true,
+          "original_cache_unchanged": true
+        },
+        {
+          "layer": 17,
+          "target": "value",
+          "shape": [
+            48,
+            968,
+            1,
+            256
+          ],
+          "dtype": "torch.bfloat16",
+          "components": 11894784,
+          "differing_components": 11829709,
+          "delta_rms": 4.335325241088867,
+          "finite": true,
+          "original_cache_unchanged": true
+        }
+      ],
+      "consumed_cache_layers": 18,
+      "original_cache_unchanged": true,
+      "consumed_cache_observation": "existing nonzero prediction prefix hook; no additional model calls",
+      "probe_seed": 921117,
+      "probe_coefficient_std": 0.5,
+      "action_delta_rms": 0.06064952746138026,
+      "action_delta_max": 1.9745760560035706,
+      "baseline_action_rms": 0.46017299380901877,
+      "binary_adapter": "unchanged native map_released_control_scores; dispatch observed separately",
+      "qualification": "identity and influence only; scale acceptance belongs to the master",
+      "allocation_id": "job-1nds2rm4v2rp-master-0-644",
+      "cuda_uuid": "89a34197-b4bb-8465-64ad-435c70c69ebd",
+      "completed_unix": 1793690576.7106829
+    },
+    "rank-00": {
+      "completed": true,
+      "interface": {
+        "kind": "velocity",
+        "motor_shape": [
+          50,
+          32
+        ],
+        "steering_dim": 32,
+        "candidates": 8,
+        "fraction": 0.125
+      },
+      "batch_size": 48,
+      "zero_native_exact": true,
+      "prefix_reused": true,
+      "extra_physical_controls": 0,
+      "cache_targets": [],
+      "consumed_cache_layers": null,
+      "original_cache_unchanged": null,
+      "consumed_cache_observation": null,
+      "probe_seed": 921117,
+      "probe_coefficient_std": 0.5,
+      "action_delta_rms": 0.013324399972784416,
+      "action_delta_max": 0.0815686322748661,
+      "baseline_action_rms": 0.45588635148982176,
+      "binary_adapter": "unchanged native map_released_control_scores; dispatch observed separately",
+      "qualification": "identity and influence only; scale acceptance belongs to the master",
+      "allocation_id": "job-1nds2rm4v2rp-master-0-641",
+      "cuda_uuid": "30db9d9e-b51d-c632-d712-d2c21678fde2",
+      "completed_unix": 1793690576.6327255
+    }
+  },
+  "accounting": {
+    "format": "joint_steering_action_escrow_v1",
+    "limits": {
+      "train": 11650000,
+      "eval": 1200000
+    },
+    "charged": {
+      "train": 0,
+      "eval": 520738
+    }
+  },
+  "pending_physical_calls": 112,
+  "completed_episodes": 716,
+  "completed_physical_chunks": 10270,
+  "process_GPU_seconds_so_far": 5064.132373809814,
+  "cumulative_charge_so_far_upper_before_scheduler_overhead": 5264.132373809814,
+  "full_production_hold": "update2/50 until human KL review"
+}

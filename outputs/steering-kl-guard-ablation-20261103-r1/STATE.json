@@ -12,8 +12,8 @@
     "completed": false,
     "job_id": "job-1nds2rm4v2rp",
     "name": "mwj_1103_steering_kl_guard_native_1x4_r2",
-    "last_verified_status": "ALLOCATED; four-device probe PASSED; native loading",
-    "last_direct_PFS_check_unix": 1793690306.5160246,
+    "last_verified_status": "RUNNING; initial500 episodes complete; guarded panels advancing",
+    "last_direct_PFS_check_unix": 1793691544.6018794,
     "output_directory_existed_at_that_check": true,
     "source_commit": "12d1f24189a6b8308675fb3efbeb2dacfd0e3880",
     "source_checkout": "/mowenjie/fluffy-bassoon-2/worktrees/steering-kl-native-eval-20261103-r2",
@@ -43,7 +43,10 @@
     "process_started_unix": 1793690279,
     "deadline_unix": 1793695449,
     "probe_evidence": "GPU-R2-PROBE.json",
-    "resource_evidence": "GPU-R2-PROFILE.json"
+    "resource_evidence": "GPU-R2-PROFILE.json",
+    "last_progress_evidence": "MONITOR-20261103-1538.json",
+    "completed_episodes_at_last_check": 716,
+    "full_source_updates_advanced": 0
   },
   "monitor": {
     "automation_id": "kl-guard-paired-diagnostic",
@@ -62,7 +65,7 @@
     "preserve": "All original policies, Adam/sampler/RNG checkpoints, banks, before/DEV0 panels and cost ledgers"
   },
   "remaining": [
-    "Verify advancing complete native episodes after actual four-device probe passed",
+    "Complete all paired native panels; initial500 complete and all four guarded panels advancing",
     "Complete all paired native panels or diagnose a bounded failure with partial costs preserved",
     "Audit cases, noise schedules, frozen weights, videos, physical calls, scheduler exit and cumulative GPU charge",
     "Publish guarded versus unguarded true-success comparison and limits",
