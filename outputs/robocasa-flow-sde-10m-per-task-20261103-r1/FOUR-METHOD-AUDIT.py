@@ -68,7 +68,55 @@ def observation(value):
         assert image.shape[-3:] == (256, 256, 3)
 
 
-def audit(root, collection, tag):
+
+def index_sampling(root, collections):
+    """One ordered pass; success-dependent terminal-value calls vary in count."""
+    completed = json.loads((root / 'progress.json').read_text())['completed_iterations']
+    closed = (root / 'clock.json').exists() and json.loads((root / 'clock.json').read_text())['exit_code'] == 0
+    assert completed >= max(collections)
+    assert closed or completed > max(collections), 'Require a following complete update to avoid reading live files'
+    indexed = {collection: [] for collection in collections}
+    for rank in range(8):
+        previous = -1
+        for path in sorted((root / 'sampling' / f'rank-{rank:02d}').glob('*.pt.gz')):
+            value = load(path)
+            assert value['rank'] == rank and value['prediction_ordinal'] == int(path.name.split('.')[0])
+            if value['mode'] != 'train':
+                if previous >= max(collections):
+                    break
+                continue
+            collection = value['collection_iteration']
+            assert collection >= previous
+            previous = collection
+            if collection > max(collections):
+                break
+            assert value['producing_policy_iteration'] == collection - 1
+            if collection not in indexed:
+                continue
+            row = dict(path=str(path), file=FILE_HASHES[str(path)].copy(), rank=rank,
+                       prediction_ordinal=value['prediction_ordinal'],
+                       terminal_value_only=bool(value['terminal_value_only']))
+            if not row['terminal_value_only']:
+                assert value['sampling_record'] == 'full'
+                assert value['rng_before'] is not None and value['rng_after'] is not None
+                assert value['processed_model_state'].shape == (16, 32)
+                assert value['model_actions'].shape == (16, 50, 32)
+                assert torch.isfinite(value['model_actions']).all()
+                fields = value['forward_sampling_fields']
+                assert fields['chains'].shape == (16, 11, 50, 32)
+                assert torch.isfinite(fields['chains']).all()
+                assert len(value['actual_gaussian_parameters']) == 10
+                row.update(environment=value['public_observation_sha256'],
+                    model_hashes=row_hashes(fields['model_action']),
+                    logprob_hashes=row_hashes(value['old_logprobs']))
+            indexed[collection].append(row)
+    for collection, rows in indexed.items():
+        assert all(sum(not row['terminal_value_only'] and row['rank'] == rank for row in rows) == 12
+                   for rank in range(8)), 'Every target batch needs twelve actual decisions per rank'
+    return indexed
+
+
+def audit(root, collection, tag, sampling):
     FILE_HASHES.clear()
     producing = collection - 1
     contract = json.loads(payload(root / 'flow-contract.json'))
@@ -121,57 +169,24 @@ def audit(root, collection, tag):
     for path in initial_paths:
         payload(path)
     sampling_index, sampling_records, sampled_env = {}, 0, set()
-    rank_records = {}
-    indexed = root.name == 'production-r1'
     terminal_records = 0
-    if indexed:
-        assert 2 <= collection <= 130
-        # This immutable segment resumes update1 with prediction ordinal0.
-        # Check every selected record's actual metadata, including bootstrap.
-        ordinal = 13 * (collection - 2)
-        sampling_paths = [root / 'sampling' / f'rank-{rank:02d}' / f'{ordinal + offset:05d}.pt.gz'
-                          for rank in range(8) for offset in range(13)]
-    else:
-        sampling_paths = sorted((root / 'sampling').glob('*/*.pt.gz'))
-    for path in sampling_paths:
-        # Once a rank's complete target batch is joined, avoid reading later
-        # updates that may still be writing while this audit runs.
-        if not indexed and rank_records.get(path.parent, 0) == 12:
+    rank_records = {}
+    for record in sampling:
+        FILE_HASHES[record['path']] = record['file']
+        terminal_records += int(record['terminal_value_only'])
+        if record['terminal_value_only']:
             continue
-        value = load(path)
-        if indexed:
-            offset = int(path.name.split('.')[0]) - ordinal
-            assert value['rank'] == int(path.parent.name.split('-')[1])
-            assert value['prediction_ordinal'] == ordinal + offset
-            assert value['collection_iteration'] == collection and value['mode'] == 'train'
-            assert bool(value['terminal_value_only']) == (offset == 12)
-            terminal_records += int(value['terminal_value_only'])
-        if (value['mode'] != 'train' or value['terminal_value_only'] or
-                value['collection_iteration'] != collection):
-            continue
-        assert value['producing_policy_iteration'] == producing
-        assert value['sampling_record'] == 'full'
-        assert value['rng_before'] is not None and value['rng_after'] is not None
-        assert value['processed_model_state'].shape == (16, 32)
-        assert value['model_actions'].shape == (16, 50, 32)
-        assert torch.isfinite(value['model_actions']).all()
-        fields = value['forward_sampling_fields']
-        assert fields['chains'].shape == (16, 11, 50, 32)
-        assert torch.isfinite(fields['chains']).all()
-        assert len(value['actual_gaussian_parameters']) == 10
-        environment = value['public_observation_sha256']
+        path = Path(record['path'])
+        environment = record['environment']
         assert environment in env_index and environment not in sampled_env
         sampled_env.add(environment)
         env_path, episode_ids, chunk = env_index[environment]
-        model_hashes = row_hashes(fields['model_action'])
-        logprob_hashes = row_hashes(value['old_logprobs'])
-        for lane, signature in enumerate(zip(model_hashes, logprob_hashes, strict=True)):
+        for lane, signature in enumerate(zip(record['model_hashes'], record['logprob_hashes'], strict=True)):
             assert signature not in sampling_index, 'Ambiguous native target/logprob signature'
             sampling_index[signature] = dict(episode_id=episode_ids[lane], chunk=chunk,
                 environment_record=str(env_path), sampling_record=str(path), sampling_lane=lane)
         sampling_records += 1
         rank_records[path.parent] = rank_records.get(path.parent, 0) + 1
-    assert not indexed or terminal_records == 8
     assert len(rank_records) == 8 and set(rank_records.values()) == {12}
     assert sampled_env == set(env_index) and sampling_records == 96 and len(sampling_index) == 1536
     joins = []
@@ -223,7 +238,8 @@ def audit(root, collection, tag):
         raw_file_manifest=str(manifest_path), raw_files=len(FILE_HASHES),
         raw_file_manifest_sha256=hashlib.sha256(manifest_path.read_bytes()).hexdigest(),
         raw_bytes=sum(row['bytes'] for row in FILE_HASHES.values()),
-        sampling_index='Verified thirteen-prediction ordinal stride' if indexed else 'Full scan')
+        terminal_value_sampling_records=terminal_records,
+        sampling_index='Single monotonic metadata pass; variable terminal-value predictions retained')
 
 
 def audit_task(arguments):
@@ -231,13 +247,15 @@ def audit_task(arguments):
     torch.set_num_threads(2)
     torch.set_num_interop_threads(1)
     stage = 'q1-r2' if task == 'OpenDrawer' else 'q1-r1'
-    rows = [] if production_only else [audit(root / task / stage, 1, tag)]
+    rows = []
+    if not production_only:
+        q1 = root / task / stage
+        rows.append(audit(q1, 1, tag, index_sampling(q1, [1])[1]))
     production = root / task / 'production-r1'
     if (production / 'progress.json').exists():
-        completed = json.loads((production / 'progress.json').read_text())['completed_iterations']
+        indexed = index_sampling(production, collections)
         for collection in collections:
-            assert completed >= collection, 'Requested batch is not complete yet'
-            rows.append(audit(production, collection, tag))
+            rows.append(audit(production, collection, tag, indexed[collection]))
     assert rows, 'Requested production batch is not complete yet'
     print(json.dumps(dict(task=task, completed=True, segments=len(rows))), flush=True)
     return rows
