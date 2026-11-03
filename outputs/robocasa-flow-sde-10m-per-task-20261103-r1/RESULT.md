@@ -45,8 +45,8 @@ in BOS; final 130 checkpoints stay on PFS. OpenDrawer, Toaster and
 Drawer→Counter full corpus archives, QC metadata, readbacks and reclaims are
 complete; Coffee and Stove follow serially. OpenDrawer's interrupted cleanup
 was recovered with exact archive and inventory checks, preserving all data. The offline mean log-ratio
-to initial is complete for all 16 OpenDrawer checkpoints; the other tasks
-are still running. The first two reporting attempts made no
+to initial is complete for all 16 checkpoints each of OpenDrawer, Toaster and
+Drawer→Counter; Coffee and Stove reporting is still running. The first two reporting attempts made no
 simulator actions, SGD or likelihood forwards.
 
 Evidence: [all 650 joins](COMPLETE-CORPUS-JOINS-R1.json), each task's
