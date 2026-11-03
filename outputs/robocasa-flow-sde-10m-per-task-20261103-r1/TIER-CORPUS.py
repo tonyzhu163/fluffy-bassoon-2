@@ -114,6 +114,21 @@ def audit_inputs(paths, task, source=None, require_full=False):
                 snapshots=snapshots, through=max(versions))
 
 
+def prefix_candidates(root, task_root, known):
+    result = []
+    for name in known:
+        path = Path(name)
+        assert path.is_relative_to(task_root)
+        relative = path.relative_to(root)
+        if not (path.name.endswith('.pt') or path.name.endswith('.pt.gz')):
+            continue
+        if 'environment' not in relative.parts and 'training-rollouts' not in relative.parts:
+            continue
+        assert 'sampling' not in relative.parts and 'checkpoints' not in relative.parts
+        result.append(str(relative))
+    return sorted(result)
+
+
 def validate_closed(task_root, source, qualification):
     stage = source if qualification else task_root / 'production-r1'
     clock = json.loads((stage / 'clock.json').read_text())
@@ -213,7 +228,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--root', type=Path, required=True)
     parser.add_argument('--task', choices=TASKS, required=True)
-    parser.add_argument('--mode', choices=['prepare', 'reclaim'], required=True)
+    parser.add_argument('--mode', choices=['prepare', 'reclaim-prefix', 'reclaim'], required=True)
     parser.add_argument('--audits', type=Path, nargs='+', required=True)
     parser.add_argument('--record', type=Path, required=True)
     parser.add_argument('--archive', type=Path)
@@ -237,6 +252,10 @@ def main():
             qualification_only=args.qualification_source is not None, checkpoint=checkpoint)
         archive = stream_archive(root, source, inventory, audit['known'], args.archive, proof)
         assert native_inventory(root, task_root, source) == inventory
+        candidates = prefix_candidates(root, task_root, audit['known'])
+        archive['audited_environment_actor_candidates'] = len(candidates)
+        archive['audited_environment_actor_bytes'] = sum(inventory[name]['bytes'] for name in candidates)
+        archive['audited_environment_actor_names_sha256'] = hashlib.sha256(json.dumps(candidates).encode()).hexdigest()
         if args.restore_probe:
             probe = args.restore_probe
             assert args.qualification_source and probe.resolve().parent == (root / 'restore-probes').resolve()
@@ -262,7 +281,7 @@ def main():
     assert prepared['completed'] and not prepared['qualification_only'] and prepared['task'] == args.task
     assert prepared['source'] == str(task_root) and prepared['full_object_readback'] and prepared['all_archive_members_hash_compared']
     checkpoint = validate_closed(task_root, task_root, False)
-    audit = audit_inputs(args.audits, args.task, require_full=True)
+    audit = audit_inputs(args.audits, args.task, require_full=args.mode == 'reclaim')
     archive = Path(prepared['archive'])
     assert archive.resolve().is_relative_to(BOS.resolve())
     assert archive.stat().st_size == prepared['archive_bytes'] and archive.stat().st_mtime_ns == prepared['archive_mtime_ns']
@@ -271,10 +290,49 @@ def main():
     manifest = json.loads(manifest_path.read_text())
     files = manifest['files']
     expected_inventory = {name: {k: row[k] for k in ['bytes', 'mtime_ns', 'mode']} for name, row in files.items()}
-    assert native_inventory(root, task_root, task_root) == expected_inventory
+    prefix_cold = task_root / 'CORPUS-PREFIX-COLD-STORAGE.json'
+    removed = set()
+    if prefix_cold.exists():
+        prefix = json.loads(prefix_cold.read_text())
+        assert args.mode == 'reclaim' and prefix['reclaim_complete']
+        assert prefix['prepared_sha256'] == args.prepared_sha256
+        removed = set(prefix['reclaimed_names'])
+        assert removed <= set(files)
+        for name in removed:
+            assert 'sampling' not in Path(name).parts and 'checkpoints' not in Path(name).parts
+            assert 'environment' in Path(name).parts or 'training-rollouts' in Path(name).parts
+    assert native_inventory(root, task_root, task_root) == {
+        name: row for name, row in expected_inventory.items() if name not in removed}
     for name, row in audit['known'].items():
         relative = str(Path(name).relative_to(root))
         assert relative in files and dict(bytes=files[relative]['bytes'], sha256=files[relative]['sha256']) == row
+    if args.mode == 'reclaim-prefix':
+        assert audit['through'] < 130 and not prefix_cold.exists()
+        names = prefix_candidates(root, task_root, audit['known'])
+        assert names
+        receipt = dict(completed=True, task=args.task, prepared_receipt=str(args.prepared_receipt),
+            prepared_sha256=args.prepared_sha256, archive=prepared['archive'],
+            archive_sha256=prepared['archive_sha256'], manifest=prepared['manifest'],
+            manifest_sha256=prepared['manifest_sha256'], audit_through=audit['through'],
+            audit_refs=audit['refs'], audit_input_snapshots=audit['snapshots'],
+            checkpoint=checkpoint, sampling_retained_for_continuing_audit=True,
+            reclaim_complete=False, planned_names=names, verified_unix=time.time(),
+            restore=['tar', '--no-same-owner', '-xf', prepared['archive'], '-C', str(root)])
+        atomic_json(prefix_cold, receipt)
+        reclaimed = 0
+        for name in names:
+            path, row = root / name, files[name]
+            assert not path.is_symlink() and path.stat().st_size == row['bytes']
+            assert path.stat().st_mtime_ns == row['mtime_ns']
+            path.unlink()
+            reclaimed += row['bytes']
+        receipt.update(reclaim_complete=True, reclaimed_names=names, reclaimed_bytes=reclaimed)
+        atomic_json(prefix_cold, receipt)
+        atomic_json(args.record, receipt)
+        print(json.dumps(dict(completed=True, mode='reclaimed-audited-prefix', task=args.task,
+            audit_through=audit['through'], reclaimed_bytes=reclaimed, files=len(names),
+            sampling_retained=True)), flush=True)
+        return
     # Preserve the completed numerical audit itself in a separately verified
     # small metadata tar before reclaiming native Torch payloads.
     metadata_inventory = {}
@@ -301,6 +359,8 @@ def main():
     reclaimed, count = 0, 0
     for name, row in files.items():
         path = root / name
+        if name in removed:
+            continue
         if not (path.name.endswith('.pt') or path.name.endswith('.pt.gz')):
             continue
         assert 'checkpoints' not in path.relative_to(root).parts and not path.is_symlink()
@@ -309,7 +369,8 @@ def main():
         reclaimed += row['bytes']
         count += 1
     assert Path(checkpoint['path']).is_dir() and not (Path(checkpoint['path']) / 'COLD-STORAGE.json').exists()
-    receipt.update(reclaim_complete=True, reclaimed_bytes=reclaimed, reclaimed_files=count)
+    receipt.update(reclaim_complete=True, reclaimed_bytes=reclaimed, reclaimed_files=count,
+        previously_reclaimed_prefix_files=len(removed))
     atomic_json(cold, receipt)
     atomic_json(args.record, receipt)
     print(json.dumps(receipt), flush=True)
