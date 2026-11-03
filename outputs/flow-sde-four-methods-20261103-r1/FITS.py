@@ -4,6 +4,7 @@ Each learner is a separate process with its own actor/critic/Adam/sampler/RNG.
 The invocation boundary saves full state; only validation plateaus mean done.
 """
 import argparse
+import fcntl
 import json
 import os
 from pathlib import Path
@@ -36,6 +37,13 @@ def main():
             or binding.get("source_physical_horizons") != [400]):
         raise ValueError("Require the complete qualified Flow direct-action corpus")
     a.output.mkdir(parents=True, exist_ok=True)
+    master_lock = (a.output / ".fit-master.lock").open("a")
+    fcntl.flock(master_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    for prior in a.output.glob("allocation-*.json"):
+        prior_attempt = prior.stem.removeprefix("allocation-")
+        release = a.output / ("RELEASED-" + prior_attempt + ".json")
+        if not release.exists() or not json.loads(release.read_text()).get("all_children_released"):
+            raise ValueError("Verify exact old child/allocation release before a fresh continuation")
     probe = a.output / ("allocation-" + a.attempt + ".json")
     if probe.exists():
         raise ValueError("Never repeat an allocation attempt identity")
@@ -74,6 +82,9 @@ def main():
             log = (a.output / (objective + "-" + a.attempt + ".log")).open("x")
             process = subprocess.Popen(cmd, stdout=log, stderr=subprocess.STDOUT)
             processes[objective] = (process, log)
+        (a.output / ("CHILDREN-" + a.attempt + ".json")).write_text(json.dumps(dict(
+            hostname=a.expected_hostname, attempt=a.attempt, source_commit=a.source_commit,
+            children={name: process.pid for name, (process, _) in processes.items()}), indent=2) + "\n")
         while any(process.poll() is None for process, _ in processes.values()):
             progress = {}
             for objective in ("ad", "dpt", "dit", "ic_iql"):
@@ -95,7 +106,8 @@ def main():
             source_assembly=dict(path=str(a.assembly), sha256=file_sha256(a.assembly)),
             methods=completed, all_converged=all(row.get("converged") for row in completed.values()),
             candidate_checkpoints={method: dict(path=str(a.output / method / "candidate.pt"),
-                sha256=file_sha256(a.output / method / "candidate.pt")) for method in completed})
+                sha256=file_sha256(a.output / method / "candidate.pt")) for method in completed
+                if (a.output / method / "candidate.pt").exists()})
         (a.output / ("RESULT-" + a.attempt + ".json")).write_text(json.dumps(result, indent=2) + "\n")
         print(json.dumps(result), flush=True)
     finally:
@@ -103,6 +115,11 @@ def main():
         # wait for those complete boundaries, rather than killing valid fits.
         for process, log in processes.values():
             process.wait(); log.close()
+        (a.output / ("RELEASED-" + a.attempt + ".json")).write_text(json.dumps(dict(
+            hostname=a.expected_hostname, source_commit=a.source_commit, ended_unix=time.time(),
+            all_children_released=all(process.poll() is not None for process, _ in processes.values()),
+            exit_codes={name: process.returncode for name, (process, _) in processes.items()}), indent=2) + "\n")
+        master_lock.close()
 
 
 if __name__ == "__main__":
