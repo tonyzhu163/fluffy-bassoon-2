@@ -108,6 +108,21 @@ The 2026-11-03 capacity extension completed the same32fresh five-task cases at60
 
 The node-compatible follow-up used22CPUs/208GiB RAM per GPU. **32and48lanes both completed**, at150.86and155.97controls/s respectively; the cohorts contain32and48episodes with the first32cases shared, so this is not a controlled speedup ratio. The48-lane peak was75.97GiB VRAM and175.37GiB host RAM, leaving19.63GiB VRAM and32.63GiB host RAM on the allocation. All80episodes have601-frame clocks and600physical controls, all48,000intents resolved, zeroSGD and scheduler success. Two eight-GPU jobs fit the advertised node resources at176CPUs/1664GiB each, but actual eight-GPU scaling and the velocity/KV history writer remain unqualified. Initial batch/single action differences reached0.11414; paired comparisons need matched actual production batching. Both capacity jobs together charge at most1217GPU-s, below1800. [48-lane audit](../outputs/robocasa-rollout-capacity-3248-20261103-r1/RESULT-SUMMARY.json).
 
+A read-only audit of both 500-case velocity/KV zero-steering before panels found
+**278 different first action chunks and 65 different first-success outcomes**.
+All case descriptors, native noise tensors and zero steering vectors match;
+170 first chunks differ despite identical images, public state and instruction.
+The BF16 collectors have different asynchronous batch schedules on all eight
+rank pairs, exposing the motor's previously measured batch sensitivity; the
+within-batch zero/native check does not qualify cross-run reproducibility.
+All 250 ID initial physical fingerprints match, but 19 OOD fingerprints differ,
+including four different compiled scenes. Separate per-arm canonical roots
+missed those cross-arm mismatches. Future paired comparisons need a fixed actual
+batch plan and common physical case validation. The exact upstream causes of
+the reset differences and the contribution of each mechanism to all outcome
+flips remain unisolated. No new GPU/model/simulator work or active-run edits
+were performed. [Baseline reproducibility audit](../outputs/robocasa-zero-steering-baseline-audit-20261103-r1/RESULT.md).
+
 With one persistent official Flora TP1 engine (batch limit8, utilization.78), a four-lane worker completed ten mixed-task episodes and7,200 controls with all ten grades streamed before the final request and zero SGD. Collection from the first reset intent through the final complete video took147.65seconds (48.77controls/s/GPU); including native model loading it took183.02seconds (39.34controls/s). Sampled peak combined VRAM was88.01GiB. The first continuous-refill attempt exposed a forked reset child retaining another lane's FFmpeg pipe and blocking video EOF; spawned resets repaired it, with57/57 affected Linux core tests and a regression that fails on the old code. [Audited colocation measurement](../outputs/robocasa-joint-lane-qualification-20261102-r4/PARENT-REVIEW.json), [pipe evidence](../outputs/robocasa-joint-lane-qualification-20261102-r3/DEADLOCK-EVIDENCE.json).
 
 This is one GPU's physical measurement, not an eight-GPU joint PPO iteration. After the real Flora warmup only20,664MiB was free: below the8-lane27,408MiB requirement and1,309MiB below the4-lane21,973MiB production requirement, which includes an8GiB operating reserve. At that pin the four-lane production reserve remained unmet. Sixteen native lanes have not been measured; eight was the largest and fastest standalone setting tested. That native-horizon measurement does not qualify the later600-control protocol.

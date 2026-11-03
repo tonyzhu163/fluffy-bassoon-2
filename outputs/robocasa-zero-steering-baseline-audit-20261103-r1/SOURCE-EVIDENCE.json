@@ -1,0 +1,71 @@
+[
+  {
+    "path": "/mowenjie/fluffy-bassoon-2/worktrees/joint-steering-scale50-gpu-20261103-r3/src/fluffy_bassoon/meta_rl/joint_steering_ppo_worker.py",
+    "sha256": "5b8df48bf96ec432602f5bb4583ba6c941bb8228744e30270bc7744a1963d413",
+    "excerpts": [
+      {
+        "start": 68,
+        "end": 78,
+        "source": "def draw_seed(case, chunk, stream):\n    \"\"\"Stable per-case/chunk streams, independent of lanes, ranks and completion order.\"\"\"\n    identity = dict(version=\"joint_steering_draw_v1\", case=case, chunk=int(chunk), stream=stream)\n    encoded = json.dumps(identity, sort_keys=True, separators=(\",\", \":\")).encode()\n    return int.from_bytes(hashlib.sha256(encoded).digest()[:8], \"little\") % (2**63 - 1)\n\n\ndef _normal(shape, seed):\n    # CPU torch law is identical for every allocated worker/device. Both the\n    # actual FP32 draw and its seed/version are saved, so replay needs no guess.\n    return torch.randn(shape, generator=torch.Generator().manual_seed(seed), dtype=torch.float32)"
+      },
+      {
+        "start": 142,
+        "end": 157,
+        "source": "        model.build_prefix_cache = lambda *args, **kwargs: prepared[\"prefix\"]\n        baseline, _ = model.predict_action_batch(prepared[\"observation\"], mode=\"eval\",\n                                                  noise=torch.as_tensor(noise, device=model.device))\n        baseline = np.asarray(cpu_tree(baseline), dtype=np.float32)\n    finally:\n        model.build_prefix_cache = original\n    # The original motor's single-use token remains pending for the real draw.\n    # A shallow qualification port consumes only its private token reference;\n    # all calls reuse the exact captured prefix and restore native hooks.\n    probe = copy(motor)\n    probe._prepared = prepared\n    zero = probe.execute_batch(prepared, noise=noise,\n        steering=np.zeros((len(noise), spec.steering_dim), np.float32), spec=spec)\n    if not np.array_equal(zero, baseline):\n        raise ValueError(\"Zero steering differs from the identical cached native draw\")\n    generator = np.random.default_rng(921117)"
+      },
+      {
+        "start": 232,
+        "end": 243,
+        "source": "    barrier = request.get(\"synchronize_initial_lanes\", False)\n    if (type(requested_lanes) is not int or requested_lanes < 1 or requested_lanes != len(environments)\n            or type(barrier) is not bool or not cases or not environments\n            or any(env.cases != cases or env.cursor for env in environments)\n            or policy.config.residual_dim != spec.steering_dim):\n        raise ValueError(\"Require fresh lane environments and steering-only policy dimensions\")\n    output = Path(output)\n    output.mkdir(parents=True, exist_ok=False)\n    reference = next(policy.parameters())\n    deterministic = request.get(\"deterministic\", request[\"phase\"] != \"train\")\n    zero_steering = request.get(\"zero_steering\", request[\"phase\"] == \"test_before\")\n    if type(deterministic) is not bool or type(zero_steering) is not bool:"
+      },
+      {
+        "start": 273,
+        "end": 308,
+        "source": "    try:\n        with ThreadPoolExecutor(max_workers=len(environments)) as pool:\n            for lane in range(min(len(environments), len(cases))):\n                start(lane, pool)\n            while resetting or running:\n                if time.time() >= deadline_unix:\n                    raise TimeoutError(\"Worker deadline; preserve completed episodes and partial physical evidence\")\n                if not running or initial_wave_pending:\n                    wait(resetting, timeout=min(1., max(0., deadline_unix - time.time())),\n                         return_when=ALL_COMPLETED if initial_wave_pending else FIRST_COMPLETED)\n                reset_errors = []\n                for future in [item for item in resetting if item.done()]:\n                    try:\n                        accept_reset(future)\n                    except Exception as error:\n                        reset_errors.append(error)\n                if reset_errors:\n                    raise reset_errors[0]  # Every successful sibling reset is already retained.\n                if initial_wave_pending:\n                    if resetting:\n                        continue\n                    if len(running) != min(requested_lanes, len(cases)):\n                        raise ValueError(\"Initial synchronized lane wave is incomplete\")\n                    initial_wave_pending = False\n                if not running:\n                    continue\n                lanes = sorted(running)\n                batch_sizes.append(len(lanes))\n                peak_active_lanes = max(peak_active_lanes, len(lanes))\n                states = [running[lane] for lane in lanes]\n                observation = combine_observations([state[\"observation\"] for state in states])\n                features, prepared = motor.prepare_batch(observation)\n                if features.shape != (len(lanes), policy.config.feature_dim) or not np.isfinite(features).all():\n                    raise ValueError(\"Require finite public pre-action feature rows\")\n                seeds = [draw_seed(cases[state[\"slot\"]], state[\"chunk\"], \"native_gaussian\") for state in states]\n                native_noise = torch.stack([_normal((50, 32), seed) for seed in seeds])"
+      },
+      {
+        "start": 318,
+        "end": 328,
+        "source": "                actor_noise = (None if deterministic or zero_steering else\n                    torch.stack([_normal((spec.steering_dim,), seed) for seed in actor_seeds]))\n                control, log_prob, value = policy.act(feature_tensor, deterministic=deterministic or zero_steering,\n                    **({} if actor_noise is None else dict(action_noise=actor_noise)))\n                if zero_steering:\n                    control = torch.zeros_like(control)\n                    log_prob = distribution.log_prob(control).sum(-1)\n                if any(not torch.isfinite(item).all() for item in (\n                        distribution.mean, distribution.stddev, control, log_prob, value)):\n                    raise FloatingPointError(\"Nonfinite actor/value output before physical dispatch\")\n                chunks = motor.execute_batch(prepared, noise=native_noise, steering=control, spec=spec)"
+      },
+      {
+        "start": 619,
+        "end": 636,
+        "source": "            environments = [_RecordingEnvironment(factory, request[\"cases\"], horizon=None,\n                output=output / \"videos\" / f\"lane-{lane:02d}\",\n                monitoring_root=output / \"monitoring\" / f\"lane-{lane:02d}\",\n                journal=journal, writer_factory=native_video_writer, rank=rank,\n                episode_id_prefix=f\"q{sequence:06d}-lane{lane:02d}-\",\n                canonical_root=request[\"canonical_root\"], source=dict(rank=rank, sequence=sequence,\n                    phase=request[\"phase\"], iteration=request[\"iteration\"],\n                    source_commit=request[\"source_commit\"], runtime_commit=request[\"runtime_commit\"]))\n                for lane in range(1 if request[\"phase\"] == \"calibrate\" else request[\"lanes\"])]\n            # Environment constructors create only directories; physical reset\n            # starts only after a distinct evidence directory exists.\n            if request[\"phase\"] == \"calibrate\":\n                result = _calibrate_request(motor, environments[0], request=request, output=output / \"calibration\")\n            else:\n                policy = ResidualActorCritic(configuration).to(motor.model.device).eval()\n                policy.load_state_dict(request[\"policy\"], strict=True)\n                qualification_path = directory / \"qualification.json\" if fresh_qualification else None\n                if qualification_path is not None and qualification_path.exists():"
+      }
+    ]
+  },
+  {
+    "path": "/mowenjie/fluffy-bassoon-2/worktrees/joint-steering-scale50-gpu-20261103-r3/src/fluffy_bassoon/meta_rl/joint_steering_ppo_driver.py",
+    "sha256": "baf411294b5d7f5d25e4bc52333df99d757ccdd0f0691f8f2c8e645020b14db4",
+    "excerpts": [
+      {
+        "start": 55,
+        "end": 68,
+        "source": "def dispatch(run, profile, policy, specification, *, sequence, phase, iteration,\n             children, deadline):\n    cases = cases_for(\"train\", 1)[:8] if phase == \"calibrate\" else cases_for(phase, iteration)\n    state = cpu_tree(policy.state_dict())\n    requests = []\n    for rank in range(8):\n        directory = run / \"workers\" / f\"rank-{rank:02d}\"\n        request = dict(sequence=sequence, phase=phase, iteration=iteration,\n            policy_iteration=iteration - 1 if phase == \"train\" else iteration,\n            cases=cases[rank::8], policy_config=asdict(policy.config), policy=state,\n            spec=specification, lanes=profile[\"lanes_per_worker\"], canonical_root=profile[\"canonical_root\"],\n            **{key: profile[key] for key in (\"model_directory\", \"norm_path\", \"source_commit\", \"runtime_commit\")},\n            deterministic=phase != \"train\", zero_steering=phase == \"test_before\")\n        if not request[\"cases\"]:"
+      }
+    ]
+  },
+  {
+    "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/fixtures/counter.py",
+    "sha256": "77f992d01aa1ae5f21ed7f170d0aab9c303c32148f4b427651c04912be8ce68a",
+    "excerpts": [
+      {
+        "start": 809,
+        "end": 819,
+        "source": "            geom_i = 0\n\n            if len(valid_geoms) > 0:\n                # remove duplicates as needed\n                valid_geoms = list(set(valid_geoms))\n\n            for g in valid_geoms:\n                top_pos = s2a(g.get(\"pos\"))\n                top_half_size = s2a(g.get(\"size\"))\n                offset = [top_pos[0], top_pos[1], self.size[2] / 2]\n                size = [top_half_size[0] * 2, top_half_size[1] * 2]"
+      }
+    ]
+  },
+  {
+    "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/models/fixtures/fixture.py",
+    "sha256": "6945428028acdcf39b0e139f2cbc95709460ad962d23b9964fbf32563f967c57",
+    "excerpts": [
+      {
+        "start": 353,
+        "end": 383,
+        "source": "        if fixture_is_type(self, FixtureType.DINING_COUNTER):\n            all_regions_dict = self.get_reset_regions(\n                *args, **kwargs, ref_rot_flag=ref_rot_flag\n            )\n        else:\n            all_regions_dict = self.get_reset_regions(*args, **kwargs)\n\n        valid_regions = []\n        for reg_name, reg_dict in all_regions_dict.items():\n            reg_height = reg_dict.get(\"height\", None)\n            reg_size = reg_dict[\"size\"]\n            if min_size is not None:\n                if min_size[0] > max(reg_size) and min_size[1] > max(reg_size):\n                    # object cannot fit plane\n                    continue\n                if (\n                    reg_height is not None\n                    and len(min_size) == 3\n                    and min_size[2] > reg_height\n                ):\n                    # object cannot fit height of region\n                    continue\n            reg_dict_copy = deepcopy(reg_dict)\n            reg_dict_copy[\"name\"] = reg_name\n            valid_regions.append(reg_dict_copy)\n\n        if len(valid_regions) < 1:\n            raise SamplingError(\n                f\"Could not find suitable region to sample from for {self.name}\"\n            )\n        return self.rng.choice(valid_regions)"
+      }
+    ]
+  }
+]

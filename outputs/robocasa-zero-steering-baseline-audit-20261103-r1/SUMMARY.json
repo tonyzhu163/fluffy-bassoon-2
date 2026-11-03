@@ -1,0 +1,1889 @@
+{
+  "summary": {
+    "pairs": 500,
+    "verified_initial_and_first_chunk_references": 2000,
+    "same_cases": 500,
+    "exact_initial_physical_fingerprints": 481,
+    "exact_initial_public_states": 489,
+    "exact_native_noise_seeds": 500,
+    "exact_native_noise_tensors": 500,
+    "zero_steering_pairs": 500,
+    "maximum_initial_public_state_difference": 1.7167999744415283,
+    "exact_initial_pixels": 388,
+    "first_chunk_action_disagreements": 278,
+    "action_disagreements_with_identical_pixels": 170,
+    "action_disagreements_with_identical_pixels_and_features": 137,
+    "maximum_first_chunk_command_difference": 2.005386471748352,
+    "maximum_initial_pixel_difference": 244.0,
+    "different_batch_schedules": 8,
+    "any_initial_lane_barrier": false,
+    "first_success_outcome_disagreements": 65,
+    "end_success_outcome_disagreements": 72,
+    "new_physical_controls": 0,
+    "new_optimizer_updates": 0,
+    "new_GPU_model_calls": 0,
+    "elapsed_seconds": 99.33894562721252,
+    "action_disagreements_with_identical_initial_states_pixels_noise": 170,
+    "initial_compiled_scene_differences": 4,
+    "initial_public_states_differing_more_than_1e_6": 6,
+    "ID_initial_physical_fingerprints_exact": 250,
+    "initial_physics_mismatch_tasks": {
+      "TurnOnSinkFaucet": 17,
+      "OpenStandMixerHead": 2
+    },
+    "identical_images_state_noise_instruction_action_disagreements": 170
+  },
+  "by_task": {
+    "OpenDrawer": {
+      "episodes": 50,
+      "velocity_first": 27,
+      "kv_first": 30,
+      "velocity_end": 23,
+      "kv_end": 27,
+      "first_disagreements": 5,
+      "end_disagreements": 4,
+      "velocity_only_first": 1,
+      "kv_only_first": 4
+    },
+    "TurnOnSinkFaucet": {
+      "episodes": 50,
+      "velocity_first": 21,
+      "kv_first": 21,
+      "velocity_end": 21,
+      "kv_end": 21,
+      "first_disagreements": 4,
+      "end_disagreements": 4,
+      "velocity_only_first": 2,
+      "kv_only_first": 2
+    },
+    "OpenCabinet": {
+      "episodes": 50,
+      "velocity_first": 32,
+      "kv_first": 34,
+      "velocity_end": 32,
+      "kv_end": 34,
+      "first_disagreements": 8,
+      "end_disagreements": 8,
+      "velocity_only_first": 3,
+      "kv_only_first": 5
+    },
+    "CoffeeSetupMug": {
+      "episodes": 50,
+      "velocity_first": 22,
+      "kv_first": 17,
+      "velocity_end": 22,
+      "kv_end": 16,
+      "first_disagreements": 13,
+      "end_disagreements": 14,
+      "velocity_only_first": 9,
+      "kv_only_first": 4
+    },
+    "PickPlaceDrawerToCounter": {
+      "episodes": 50,
+      "velocity_first": 26,
+      "kv_first": 26,
+      "velocity_end": 24,
+      "kv_end": 24,
+      "first_disagreements": 10,
+      "end_disagreements": 10,
+      "velocity_only_first": 5,
+      "kv_only_first": 5
+    },
+    "PickPlaceCounterToCabinet": {
+      "episodes": 50,
+      "velocity_first": 28,
+      "kv_first": 29,
+      "velocity_end": 28,
+      "kv_end": 29,
+      "first_disagreements": 5,
+      "end_disagreements": 5,
+      "velocity_only_first": 2,
+      "kv_only_first": 3
+    },
+    "OpenStandMixerHead": {
+      "episodes": 50,
+      "velocity_first": 32,
+      "kv_first": 32,
+      "velocity_end": 30,
+      "kv_end": 30,
+      "first_disagreements": 2,
+      "end_disagreements": 2,
+      "velocity_only_first": 1,
+      "kv_only_first": 1
+    },
+    "TurnOnMicrowave": {
+      "episodes": 50,
+      "velocity_first": 13,
+      "kv_first": 15,
+      "velocity_end": 13,
+      "kv_end": 12,
+      "first_disagreements": 4,
+      "end_disagreements": 5,
+      "velocity_only_first": 1,
+      "kv_only_first": 3
+    },
+    "CloseFridge": {
+      "episodes": 50,
+      "velocity_first": 36,
+      "kv_first": 39,
+      "velocity_end": 32,
+      "kv_end": 38,
+      "first_disagreements": 11,
+      "end_disagreements": 16,
+      "velocity_only_first": 4,
+      "kv_only_first": 7
+    },
+    "TurnOffStove": {
+      "episodes": 50,
+      "velocity_first": 7,
+      "kv_first": 6,
+      "velocity_end": 7,
+      "kv_end": 5,
+      "first_disagreements": 3,
+      "end_disagreements": 4,
+      "velocity_only_first": 2,
+      "kv_only_first": 1
+    }
+  },
+  "executions": [
+    {
+      "rank": 0,
+      "velocity": {
+        "requested_lanes": 48,
+        "peak_active_lanes": 48,
+        "initial_lane_barrier": false,
+        "native_batch_sizes": [
+          1,
+          2,
+          15,
+          24,
+          26,
+          38,
+          44,
+          47,
+          48,
+          48,
+          48,
+          48,
+          47,
+          47,
+          37,
+          30,
+          37,
+          32,
+          29,
+          26,
+          25,
+          25,
+          24,
+          22,
+          20,
+          20,
+          16,
+          14,
+          7,
+          4,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          1
+        ],
+        "maximum_native_batch": 48,
+        "minimum_native_batch": 1
+      },
+      "kv": {
+        "requested_lanes": 48,
+        "peak_active_lanes": 48,
+        "initial_lane_barrier": false,
+        "native_batch_sizes": [
+          1,
+          4,
+          28,
+          45,
+          45,
+          45,
+          45,
+          47,
+          48,
+          48,
+          48,
+          48,
+          47,
+          44,
+          27,
+          17,
+          19,
+          25,
+          28,
+          26,
+          25,
+          25,
+          25,
+          19,
+          15,
+          15,
+          14,
+          11,
+          9,
+          6,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "maximum_native_batch": 48,
+        "minimum_native_batch": 1
+      }
+    },
+    {
+      "rank": 1,
+      "velocity": {
+        "requested_lanes": 48,
+        "peak_active_lanes": 48,
+        "initial_lane_barrier": false,
+        "native_batch_sizes": [
+          1,
+          23,
+          46,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          37,
+          28,
+          34,
+          34,
+          26,
+          24,
+          24,
+          24,
+          24,
+          20,
+          15,
+          12,
+          10,
+          9,
+          6,
+          3,
+          3,
+          3,
+          3,
+          3,
+          2
+        ],
+        "maximum_native_batch": 48,
+        "minimum_native_batch": 1
+      },
+      "kv": {
+        "requested_lanes": 48,
+        "peak_active_lanes": 48,
+        "initial_lane_barrier": false,
+        "native_batch_sizes": [
+          1,
+          2,
+          9,
+          20,
+          38,
+          44,
+          46,
+          47,
+          48,
+          47,
+          47,
+          46,
+          40,
+          33,
+          34,
+          33,
+          30,
+          27,
+          26,
+          25,
+          22,
+          21,
+          16,
+          12,
+          11,
+          7,
+          5,
+          3,
+          3,
+          2,
+          2,
+          2,
+          1
+        ],
+        "maximum_native_batch": 48,
+        "minimum_native_batch": 1
+      }
+    },
+    {
+      "rank": 2,
+      "velocity": {
+        "requested_lanes": 48,
+        "peak_active_lanes": 48,
+        "initial_lane_barrier": false,
+        "native_batch_sizes": [
+          1,
+          1,
+          1,
+          2,
+          2,
+          3,
+          4,
+          19,
+          25,
+          37,
+          42,
+          48,
+          47,
+          47,
+          48,
+          47,
+          47,
+          48,
+          47,
+          33,
+          30,
+          28,
+          28,
+          24,
+          24,
+          24,
+          23,
+          23,
+          22,
+          19,
+          17,
+          16,
+          13,
+          6,
+          3,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          1
+        ],
+        "maximum_native_batch": 48,
+        "minimum_native_batch": 1
+      },
+      "kv": {
+        "requested_lanes": 48,
+        "peak_active_lanes": 48,
+        "initial_lane_barrier": false,
+        "native_batch_sizes": [
+          1,
+          1,
+          2,
+          2,
+          2,
+          3,
+          3,
+          4,
+          5,
+          7,
+          9,
+          12,
+          11,
+          13,
+          19,
+          28,
+          35,
+          41,
+          46,
+          48,
+          47,
+          45,
+          44,
+          43,
+          45,
+          46,
+          40,
+          35,
+          32,
+          26,
+          22,
+          21,
+          21,
+          21,
+          20,
+          18,
+          14,
+          9,
+          8,
+          5,
+          2,
+          2,
+          2,
+          2,
+          1,
+          1
+        ],
+        "maximum_native_batch": 48,
+        "minimum_native_batch": 1
+      }
+    },
+    {
+      "rank": 3,
+      "velocity": {
+        "requested_lanes": 48,
+        "peak_active_lanes": 48,
+        "initial_lane_barrier": false,
+        "native_batch_sizes": [
+          1,
+          1,
+          2,
+          3,
+          5,
+          8,
+          9,
+          18,
+          40,
+          47,
+          48,
+          47,
+          45,
+          45,
+          46,
+          46,
+          42,
+          33,
+          37,
+          37,
+          30,
+          25,
+          23,
+          22,
+          22,
+          20,
+          12,
+          8,
+          7,
+          7,
+          5,
+          3,
+          2,
+          2,
+          2,
+          2,
+          1
+        ],
+        "maximum_native_batch": 48,
+        "minimum_native_batch": 1
+      },
+      "kv": {
+        "requested_lanes": 48,
+        "peak_active_lanes": 48,
+        "initial_lane_barrier": false,
+        "native_batch_sizes": [
+          1,
+          1,
+          2,
+          6,
+          8,
+          26,
+          40,
+          48,
+          48,
+          48,
+          48,
+          47,
+          43,
+          42,
+          39,
+          37,
+          41,
+          34,
+          28,
+          24,
+          24,
+          24,
+          23,
+          19,
+          13,
+          10,
+          7,
+          7,
+          3,
+          3,
+          3,
+          3,
+          2,
+          1
+        ],
+        "maximum_native_batch": 48,
+        "minimum_native_batch": 1
+      }
+    },
+    {
+      "rank": 4,
+      "velocity": {
+        "requested_lanes": 48,
+        "peak_active_lanes": 48,
+        "initial_lane_barrier": false,
+        "native_batch_sizes": [
+          1,
+          2,
+          10,
+          35,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          47,
+          46,
+          41,
+          22,
+          16,
+          17,
+          23,
+          23,
+          23,
+          23,
+          23,
+          21,
+          16,
+          14,
+          13,
+          13,
+          9,
+          8,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1
+        ],
+        "maximum_native_batch": 48,
+        "minimum_native_batch": 1
+      },
+      "kv": {
+        "requested_lanes": 48,
+        "peak_active_lanes": 48,
+        "initial_lane_barrier": false,
+        "native_batch_sizes": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          3,
+          6,
+          6,
+          6,
+          6,
+          13,
+          24,
+          35,
+          40,
+          47,
+          48,
+          48,
+          46,
+          44,
+          46,
+          47,
+          47,
+          42,
+          35,
+          31,
+          30,
+          23,
+          21,
+          21,
+          21,
+          21,
+          19,
+          13,
+          12,
+          9,
+          9,
+          5,
+          3,
+          3,
+          3,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "maximum_native_batch": 48,
+        "minimum_native_batch": 1
+      }
+    },
+    {
+      "rank": 5,
+      "velocity": {
+        "requested_lanes": 48,
+        "peak_active_lanes": 48,
+        "initial_lane_barrier": false,
+        "native_batch_sizes": [
+          1,
+          6,
+          13,
+          36,
+          48,
+          48,
+          48,
+          48,
+          48,
+          47,
+          44,
+          41,
+          37,
+          36,
+          38,
+          28,
+          24,
+          24,
+          24,
+          24,
+          23,
+          17,
+          10,
+          8,
+          7,
+          6,
+          4,
+          3,
+          3,
+          3,
+          2,
+          1
+        ],
+        "maximum_native_batch": 48,
+        "minimum_native_batch": 1
+      },
+      "kv": {
+        "requested_lanes": 48,
+        "peak_active_lanes": 48,
+        "initial_lane_barrier": false,
+        "native_batch_sizes": [
+          1,
+          4,
+          4,
+          7,
+          12,
+          29,
+          48,
+          48,
+          48,
+          47,
+          45,
+          46,
+          47,
+          43,
+          37,
+          35,
+          39,
+          31,
+          24,
+          24,
+          23,
+          22,
+          22,
+          20,
+          10,
+          8,
+          7,
+          6,
+          3,
+          3,
+          2,
+          2,
+          2,
+          1
+        ],
+        "maximum_native_batch": 48,
+        "minimum_native_batch": 1
+      }
+    },
+    {
+      "rank": 6,
+      "velocity": {
+        "requested_lanes": 48,
+        "peak_active_lanes": 48,
+        "initial_lane_barrier": false,
+        "native_batch_sizes": [
+          1,
+          3,
+          11,
+          37,
+          44,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          47,
+          46,
+          41,
+          22,
+          21,
+          18,
+          24,
+          24,
+          24,
+          24,
+          23,
+          21,
+          15,
+          15,
+          13,
+          12,
+          8,
+          8,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          1,
+          1
+        ],
+        "maximum_native_batch": 48,
+        "minimum_native_batch": 1
+      },
+      "kv": {
+        "requested_lanes": 48,
+        "peak_active_lanes": 48,
+        "initial_lane_barrier": false,
+        "native_batch_sizes": [
+          1,
+          1,
+          1,
+          1,
+          2,
+          4,
+          4,
+          7,
+          8,
+          18,
+          27,
+          36,
+          47,
+          47,
+          48,
+          48,
+          48,
+          46,
+          46,
+          45,
+          45,
+          40,
+          34,
+          35,
+          24,
+          23,
+          22,
+          22,
+          22,
+          21,
+          19,
+          15,
+          13,
+          9,
+          9,
+          3,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          2,
+          2
+        ],
+        "maximum_native_batch": 48,
+        "minimum_native_batch": 1
+      }
+    },
+    {
+      "rank": 7,
+      "velocity": {
+        "requested_lanes": 48,
+        "peak_active_lanes": 48,
+        "initial_lane_barrier": false,
+        "native_batch_sizes": [
+          1,
+          1,
+          10,
+          27,
+          48,
+          48,
+          48,
+          48,
+          48,
+          47,
+          47,
+          44,
+          36,
+          34,
+          39,
+          33,
+          24,
+          24,
+          24,
+          24,
+          22,
+          20,
+          12,
+          7,
+          7,
+          6,
+          3,
+          3,
+          3,
+          3,
+          3,
+          2,
+          1
+        ],
+        "maximum_native_batch": 48,
+        "minimum_native_batch": 1
+      },
+      "kv": {
+        "requested_lanes": 48,
+        "peak_active_lanes": 48,
+        "initial_lane_barrier": false,
+        "native_batch_sizes": [
+          1,
+          5,
+          7,
+          12,
+          20,
+          40,
+          48,
+          48,
+          48,
+          47,
+          45,
+          45,
+          44,
+          40,
+          35,
+          38,
+          37,
+          29,
+          24,
+          23,
+          23,
+          20,
+          19,
+          12,
+          8,
+          7,
+          5,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          1
+        ],
+        "maximum_native_batch": 48,
+        "minimum_native_batch": 1
+      }
+    }
+  ],
+  "provenance": {
+    "audit_script_sha256": "681a35c8361f43aaded7f0ea84cbac42c42425a2acb719ed7c5fa979fdafaca1",
+    "raw_audit_sha256": "b94fcc5fccc14ff360fa6ea9dd1a8e4271ee06382672c8b5a8f480106ac5adb3",
+    "raw_audit_bytes": 1909871,
+    "raw_audit_local_file": "/Users/mowenjie/fluffy-bassoon-2/outputs/robocasa-zero-steering-baseline-audit-20261103-r1/SAVED-BASELINE-AUDIT.json",
+    "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+    "runtime_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+    "initializer_sha256": [
+      "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5"
+    ],
+    "execution": "Baige development SSH endpoint; read-only CPU deserialization with CUDA hidden; no model or simulator calls",
+    "instructions_followup": "IDENTICAL-INPUT-INSTRUCTIONS.json"
+  },
+  "examples": [
+    {
+      "case": {
+        "bank": "OOD",
+        "task": "TurnOnSinkFaucet",
+        "split": "target",
+        "native_seed": 540100,
+        "reset_ordinal": 0,
+        "slot": 0,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "rank": 0,
+      "case_slot": 1,
+      "initial_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-00/bank-000002/history/episode-000001/initial.pt",
+          "sha256": "4a4de68aa3749edcf792c8e9ce3a30caaa39a5e449e7505d080dd53a6c060b07"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-00/bank-000002/history/episode-000001/initial.pt",
+          "sha256": "9c07b5c6042f8d0fcb30149678b18c97c3c101f6ed21dc35a71caa973f4abd96"
+        }
+      ],
+      "first_chunk_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-00/bank-000002/history/episode-000001/chunk-0000.pkl.gz",
+          "sha256": "b0c905f97c11dd6c80331e0c308a2d182be0264273dc137e9d595fe125859ff9"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-00/bank-000002/history/episode-000001/chunk-0000.pkl.gz",
+          "sha256": "3814e734e6980d1411a4afc860e22643f8072117672034c34dfd1eb4733390c8"
+        }
+      ],
+      "physical_exact": true,
+      "physical_differing_fields": [],
+      "observations": {
+        "states": {
+          "exact": true,
+          "maximum_absolute_delta": 0.0,
+          "mean_absolute_delta": 0.0,
+          "differing_components": 0,
+          "total_components": 25
+        },
+        "main_images": {
+          "exact": true,
+          "maximum_absolute_delta": 0.0,
+          "mean_absolute_delta": 0.0,
+          "differing_components": 0,
+          "total_components": 196608
+        },
+        "wrist_images": {
+          "exact": true,
+          "maximum_absolute_delta": 0.0,
+          "mean_absolute_delta": 0.0,
+          "differing_components": 0,
+          "total_components": 196608
+        },
+        "extra_view_images": {
+          "exact": true,
+          "maximum_absolute_delta": 0.0,
+          "mean_absolute_delta": 0.0,
+          "differing_components": 0,
+          "total_components": 196608
+        }
+      },
+      "pixels_exact": true,
+      "noise_seed_exact": true,
+      "noise": {
+        "exact": true,
+        "maximum_absolute_delta": 0.0,
+        "mean_absolute_delta": 0.0,
+        "differing_components": 0,
+        "total_components": 1600
+      },
+      "controls_zero": [
+        true,
+        true
+      ],
+      "features": {
+        "exact": true,
+        "maximum_absolute_delta": 0.0,
+        "mean_absolute_delta": 0.0,
+        "differing_components": 0,
+        "total_components": 2064
+      },
+      "requested_commands": {
+        "exact": false,
+        "maximum_absolute_delta": 0.0027397871017456055,
+        "mean_absolute_delta": 0.0002254959177306832,
+        "differing_components": 600,
+        "total_components": 600
+      },
+      "executed_commands": {
+        "exact": false,
+        "maximum_absolute_delta": 0.0015071108937263489,
+        "mean_absolute_delta": 0.0001304810475639046,
+        "differing_components": 500,
+        "total_components": 600
+      },
+      "outcomes": {
+        "success_once": [
+          false,
+          false
+        ],
+        "success_at_end": [
+          false,
+          false
+        ],
+        "first_success_step": [
+          null,
+          null
+        ],
+        "horizon": [
+          600,
+          600
+        ]
+      }
+    },
+    {
+      "case": {
+        "bank": "ID",
+        "task": "CoffeeSetupMug",
+        "split": "target",
+        "native_seed": 450102,
+        "reset_ordinal": 0,
+        "slot": 2,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "rank": 0,
+      "case_slot": 3,
+      "initial_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-00/bank-000002/history/episode-000003/initial.pt",
+          "sha256": "13a846f4d0581ef4de0a9c2b6472407062e30008abbc5cb0e1a3167e736624aa"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-00/bank-000002/history/episode-000003/initial.pt",
+          "sha256": "0609cea65f6ffbc94272d50fb0e88b0d93c0e2cc89abc281e76a90f7d33aba69"
+        }
+      ],
+      "first_chunk_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-00/bank-000002/history/episode-000003/chunk-0000.pkl.gz",
+          "sha256": "234bbb75abd632a381fc9f3163098c9e224aead0c227490f7c555155d56dad33"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-00/bank-000002/history/episode-000003/chunk-0000.pkl.gz",
+          "sha256": "356b3493b333989a41bd66d404898e7a920f832c6a4898affc69824464511603"
+        }
+      ],
+      "physical_exact": true,
+      "physical_differing_fields": [],
+      "observations": {
+        "states": {
+          "exact": true,
+          "maximum_absolute_delta": 0.0,
+          "mean_absolute_delta": 0.0,
+          "differing_components": 0,
+          "total_components": 25
+        },
+        "main_images": {
+          "exact": true,
+          "maximum_absolute_delta": 0.0,
+          "mean_absolute_delta": 0.0,
+          "differing_components": 0,
+          "total_components": 196608
+        },
+        "wrist_images": {
+          "exact": true,
+          "maximum_absolute_delta": 0.0,
+          "mean_absolute_delta": 0.0,
+          "differing_components": 0,
+          "total_components": 196608
+        },
+        "extra_view_images": {
+          "exact": true,
+          "maximum_absolute_delta": 0.0,
+          "mean_absolute_delta": 0.0,
+          "differing_components": 0,
+          "total_components": 196608
+        }
+      },
+      "pixels_exact": true,
+      "noise_seed_exact": true,
+      "noise": {
+        "exact": true,
+        "maximum_absolute_delta": 0.0,
+        "mean_absolute_delta": 0.0,
+        "differing_components": 0,
+        "total_components": 1600
+      },
+      "controls_zero": [
+        true,
+        true
+      ],
+      "features": {
+        "exact": true,
+        "maximum_absolute_delta": 0.0,
+        "mean_absolute_delta": 0.0,
+        "differing_components": 0,
+        "total_components": 2064
+      },
+      "requested_commands": {
+        "exact": false,
+        "maximum_absolute_delta": 0.0029384493827819824,
+        "mean_absolute_delta": 0.00022057825116727307,
+        "differing_components": 600,
+        "total_components": 600
+      },
+      "executed_commands": {
+        "exact": false,
+        "maximum_absolute_delta": 0.0011744201183319092,
+        "mean_absolute_delta": 0.0001258418340326702,
+        "differing_components": 500,
+        "total_components": 600
+      },
+      "outcomes": {
+        "success_once": [
+          false,
+          false
+        ],
+        "success_at_end": [
+          false,
+          false
+        ],
+        "first_success_step": [
+          null,
+          null
+        ],
+        "horizon": [
+          600,
+          600
+        ]
+      }
+    },
+    {
+      "case": {
+        "bank": "ID",
+        "task": "OpenDrawer",
+        "split": "target",
+        "native_seed": 410104,
+        "reset_ordinal": 0,
+        "slot": 4,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "rank": 0,
+      "case_slot": 5,
+      "initial_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-00/bank-000002/history/episode-000005/initial.pt",
+          "sha256": "950d234ec960ecb2f92946670bc7c5a9730a8ecf474464ff063a27e01fd42584"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-00/bank-000002/history/episode-000005/initial.pt",
+          "sha256": "c37281529a4f4e3da015dfce8a494382173e42a8e59f544427b3c15eef2dd95b"
+        }
+      ],
+      "first_chunk_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-00/bank-000002/history/episode-000005/chunk-0000.pkl.gz",
+          "sha256": "19a5a6eeb73a6b98c114aa361797769a9939b13b3db12390eb1e69af484f24cb"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-00/bank-000002/history/episode-000005/chunk-0000.pkl.gz",
+          "sha256": "f8c4f3a455547122294ec2085cb3500bfe0d0d057de67275447d535f339d380c"
+        }
+      ],
+      "physical_exact": true,
+      "physical_differing_fields": [],
+      "observations": {
+        "states": {
+          "exact": true,
+          "maximum_absolute_delta": 0.0,
+          "mean_absolute_delta": 0.0,
+          "differing_components": 0,
+          "total_components": 25
+        },
+        "main_images": {
+          "exact": true,
+          "maximum_absolute_delta": 0.0,
+          "mean_absolute_delta": 0.0,
+          "differing_components": 0,
+          "total_components": 196608
+        },
+        "wrist_images": {
+          "exact": true,
+          "maximum_absolute_delta": 0.0,
+          "mean_absolute_delta": 0.0,
+          "differing_components": 0,
+          "total_components": 196608
+        },
+        "extra_view_images": {
+          "exact": true,
+          "maximum_absolute_delta": 0.0,
+          "mean_absolute_delta": 0.0,
+          "differing_components": 0,
+          "total_components": 196608
+        }
+      },
+      "pixels_exact": true,
+      "noise_seed_exact": true,
+      "noise": {
+        "exact": true,
+        "maximum_absolute_delta": 0.0,
+        "mean_absolute_delta": 0.0,
+        "differing_components": 0,
+        "total_components": 1600
+      },
+      "controls_zero": [
+        true,
+        true
+      ],
+      "features": {
+        "exact": true,
+        "maximum_absolute_delta": 0.0,
+        "mean_absolute_delta": 0.0,
+        "differing_components": 0,
+        "total_components": 2064
+      },
+      "requested_commands": {
+        "exact": false,
+        "maximum_absolute_delta": 0.0021592378616333008,
+        "mean_absolute_delta": 0.00023894509623339805,
+        "differing_components": 600,
+        "total_components": 600
+      },
+      "executed_commands": {
+        "exact": false,
+        "maximum_absolute_delta": 0.001197516918182373,
+        "mean_absolute_delta": 0.00014327020396680666,
+        "differing_components": 500,
+        "total_components": 600
+      },
+      "outcomes": {
+        "success_once": [
+          false,
+          false
+        ],
+        "success_at_end": [
+          false,
+          false
+        ],
+        "first_success_step": [
+          null,
+          null
+        ],
+        "horizon": [
+          600,
+          600
+        ]
+      }
+    },
+    {
+      "case": {
+        "bank": "OOD",
+        "task": "TurnOnSinkFaucet",
+        "split": "target",
+        "native_seed": 540104,
+        "reset_ordinal": 0,
+        "slot": 4,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "rank": 0,
+      "case_slot": 6,
+      "initial_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-00/bank-000002/history/episode-000006/initial.pt",
+          "sha256": "f30bf88107a66a7c1e92b258985451b41822025330ab27f1458e0642ca6cad61"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-00/bank-000002/history/episode-000006/initial.pt",
+          "sha256": "d267eb650163c1656c10fc354a6eed835e9480500ed1383fc8ca47335e0def81"
+        }
+      ],
+      "first_chunk_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-00/bank-000002/history/episode-000006/chunk-0000.pkl.gz",
+          "sha256": "9126eeada2e3d6ba791181b40422399b1116990c51938ffd1f49603148dde51e"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-00/bank-000002/history/episode-000006/chunk-0000.pkl.gz",
+          "sha256": "f508d37c48d37ea3484b7b8cd6f0a5a4901f39d7b72a942f022513afe416df36"
+        }
+      ],
+      "physical_exact": true,
+      "physical_differing_fields": [],
+      "observations": {
+        "states": {
+          "exact": true,
+          "maximum_absolute_delta": 0.0,
+          "mean_absolute_delta": 0.0,
+          "differing_components": 0,
+          "total_components": 25
+        },
+        "main_images": {
+          "exact": true,
+          "maximum_absolute_delta": 0.0,
+          "mean_absolute_delta": 0.0,
+          "differing_components": 0,
+          "total_components": 196608
+        },
+        "wrist_images": {
+          "exact": true,
+          "maximum_absolute_delta": 0.0,
+          "mean_absolute_delta": 0.0,
+          "differing_components": 0,
+          "total_components": 196608
+        },
+        "extra_view_images": {
+          "exact": true,
+          "maximum_absolute_delta": 0.0,
+          "mean_absolute_delta": 0.0,
+          "differing_components": 0,
+          "total_components": 196608
+        }
+      },
+      "pixels_exact": true,
+      "noise_seed_exact": true,
+      "noise": {
+        "exact": true,
+        "maximum_absolute_delta": 0.0,
+        "mean_absolute_delta": 0.0,
+        "differing_components": 0,
+        "total_components": 1600
+      },
+      "controls_zero": [
+        true,
+        true
+      ],
+      "features": {
+        "exact": true,
+        "maximum_absolute_delta": 0.0,
+        "mean_absolute_delta": 0.0,
+        "differing_components": 0,
+        "total_components": 2064
+      },
+      "requested_commands": {
+        "exact": false,
+        "maximum_absolute_delta": 0.0020711421966552734,
+        "mean_absolute_delta": 0.00017751739980384845,
+        "differing_components": 600,
+        "total_components": 600
+      },
+      "executed_commands": {
+        "exact": false,
+        "maximum_absolute_delta": 0.0009748637676239014,
+        "mean_absolute_delta": 9.724295697217325e-05,
+        "differing_components": 500,
+        "total_components": 600
+      },
+      "outcomes": {
+        "success_once": [
+          false,
+          false
+        ],
+        "success_at_end": [
+          false,
+          false
+        ],
+        "first_success_step": [
+          null,
+          null
+        ],
+        "horizon": [
+          600,
+          600
+        ]
+      }
+    },
+    {
+      "case": {
+        "bank": "OOD",
+        "task": "OpenStandMixerHead",
+        "split": "target",
+        "native_seed": 550136,
+        "reset_ordinal": 0,
+        "slot": 36,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "rank": 1,
+      "case_slot": 46,
+      "initial_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-01/bank-000002/history/episode-000046/initial.pt",
+          "sha256": "fe4cf38bc8be651e92758ef72a6211ca14f9b11a861f3b15a5ac8cf15177181f"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-01/bank-000002/history/episode-000046/initial.pt",
+          "sha256": "65de3f18926410221fd891a8222e150010a80fae42a85173a7a9506ebb868b72"
+        }
+      ],
+      "first_chunk_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-01/bank-000002/history/episode-000046/chunk-0000.pkl.gz",
+          "sha256": "f44ac305b016fbf1a85467f3c3da0f239e3fec610f2e41a7c6d405c23b24d4de"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-01/bank-000002/history/episode-000046/chunk-0000.pkl.gz",
+          "sha256": "f818b42629f113914f82588ac4ecb6f4a8518daf7433576ed67489f8d64e6491"
+        }
+      ],
+      "physical_exact": false,
+      "physical_differing_fields": [
+        ""
+      ],
+      "observations": {
+        "states": {
+          "exact": false,
+          "maximum_absolute_delta": 1.7167999744415283,
+          "mean_absolute_delta": 0.13735671997070312,
+          "differing_components": 4,
+          "total_components": 25
+        },
+        "main_images": {
+          "exact": false,
+          "maximum_absolute_delta": 220.0,
+          "mean_absolute_delta": 18.095296223958332,
+          "differing_components": 114789,
+          "total_components": 196608
+        },
+        "wrist_images": {
+          "exact": false,
+          "maximum_absolute_delta": 176.0,
+          "mean_absolute_delta": 7.422678629557292,
+          "differing_components": 28274,
+          "total_components": 196608
+        },
+        "extra_view_images": {
+          "exact": false,
+          "maximum_absolute_delta": 141.0,
+          "mean_absolute_delta": 15.235529581705729,
+          "differing_components": 83582,
+          "total_components": 196608
+        }
+      },
+      "pixels_exact": false,
+      "noise_seed_exact": true,
+      "noise": {
+        "exact": true,
+        "maximum_absolute_delta": 0.0,
+        "mean_absolute_delta": 0.0,
+        "differing_components": 0,
+        "total_components": 1600
+      },
+      "controls_zero": [
+        true,
+        true
+      ],
+      "features": {
+        "exact": false,
+        "maximum_absolute_delta": 1.025925725698471,
+        "mean_absolute_delta": 0.03664736599803785,
+        "differing_components": 2050,
+        "total_components": 2064
+      },
+      "requested_commands": {
+        "exact": false,
+        "maximum_absolute_delta": 2.005386471748352,
+        "mean_absolute_delta": 0.12346812753816967,
+        "differing_components": 600,
+        "total_components": 600
+      },
+      "executed_commands": {
+        "exact": false,
+        "maximum_absolute_delta": 2.0,
+        "mean_absolute_delta": 0.12358810801248277,
+        "differing_components": 522,
+        "total_components": 600
+      },
+      "outcomes": {
+        "success_once": [
+          true,
+          true
+        ],
+        "success_at_end": [
+          true,
+          true
+        ],
+        "first_success_step": [
+          127,
+          142
+        ],
+        "horizon": [
+          450,
+          450
+        ]
+      }
+    },
+    {
+      "case": {
+        "bank": "OOD",
+        "task": "TurnOnSinkFaucet",
+        "split": "target",
+        "native_seed": 540109,
+        "reset_ordinal": 0,
+        "slot": 9,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "rank": 2,
+      "case_slot": 12,
+      "initial_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-02/bank-000002/history/episode-000012/initial.pt",
+          "sha256": "0bdd2729b4bc90b14a4c31c56375514b3cdfe0363d7a84391fc1fc6548d29910"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-02/bank-000002/history/episode-000012/initial.pt",
+          "sha256": "d1d78ae7b5ca16816f953d429386e652b2a038ef5643bf9e2cee8ef8cdcdbd83"
+        }
+      ],
+      "first_chunk_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-02/bank-000002/history/episode-000012/chunk-0000.pkl.gz",
+          "sha256": "40c4b6fd858e9f7756a95d601eb0258ce1020b8b581fbce7573792f8a9f7e768"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-02/bank-000002/history/episode-000012/chunk-0000.pkl.gz",
+          "sha256": "634f9c335aab272094e44cffbb8413ce6c30d3af094962816d62614089eef1f1"
+        }
+      ],
+      "physical_exact": false,
+      "physical_differing_fields": [
+        ""
+      ],
+      "observations": {
+        "states": {
+          "exact": false,
+          "maximum_absolute_delta": 0.05860733985900879,
+          "mean_absolute_delta": 0.010563835623906925,
+          "differing_components": 20,
+          "total_components": 25
+        },
+        "main_images": {
+          "exact": false,
+          "maximum_absolute_delta": 217.0,
+          "mean_absolute_delta": 15.3370361328125,
+          "differing_components": 106892,
+          "total_components": 196608
+        },
+        "wrist_images": {
+          "exact": false,
+          "maximum_absolute_delta": 201.0,
+          "mean_absolute_delta": 13.17333984375,
+          "differing_components": 137263,
+          "total_components": 196608
+        },
+        "extra_view_images": {
+          "exact": false,
+          "maximum_absolute_delta": 224.0,
+          "mean_absolute_delta": 16.219350179036457,
+          "differing_components": 108278,
+          "total_components": 196608
+        }
+      },
+      "pixels_exact": false,
+      "noise_seed_exact": true,
+      "noise": {
+        "exact": true,
+        "maximum_absolute_delta": 0.0,
+        "mean_absolute_delta": 0.0,
+        "differing_components": 0,
+        "total_components": 1600
+      },
+      "controls_zero": [
+        true,
+        true
+      ],
+      "features": {
+        "exact": false,
+        "maximum_absolute_delta": 2.543853759765625,
+        "mean_absolute_delta": 0.05296629702161579,
+        "differing_components": 2059,
+        "total_components": 2064
+      },
+      "requested_commands": {
+        "exact": false,
+        "maximum_absolute_delta": 0.1390618085861206,
+        "mean_absolute_delta": 0.008727139525607214,
+        "differing_components": 600,
+        "total_components": 600
+      },
+      "executed_commands": {
+        "exact": false,
+        "maximum_absolute_delta": 0.1390618085861206,
+        "mean_absolute_delta": 0.008554046941791956,
+        "differing_components": 500,
+        "total_components": 600
+      },
+      "outcomes": {
+        "success_once": [
+          false,
+          false
+        ],
+        "success_at_end": [
+          false,
+          false
+        ],
+        "first_success_step": [
+          null,
+          null
+        ],
+        "horizon": [
+          600,
+          600
+        ]
+      }
+    },
+    {
+      "case": {
+        "bank": "OOD",
+        "task": "OpenStandMixerHead",
+        "split": "target",
+        "native_seed": 550109,
+        "reset_ordinal": 0,
+        "slot": 9,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "rank": 3,
+      "case_slot": 12,
+      "initial_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-03/bank-000002/history/episode-000012/initial.pt",
+          "sha256": "d98caa25765e1de7a83957b451179245ea6a19f85f0208d87c12219afa1f4138"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-03/bank-000002/history/episode-000012/initial.pt",
+          "sha256": "fda0c64bb961fd53b5d94105e5204a7f88f4dbf2e787be51d52fe64b970d5551"
+        }
+      ],
+      "first_chunk_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-03/bank-000002/history/episode-000012/chunk-0000.pkl.gz",
+          "sha256": "bc4dafdafb829d9401ea851d152bf8cee4569323b634178d790e3f58927300b3"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-03/bank-000002/history/episode-000012/chunk-0000.pkl.gz",
+          "sha256": "87b1fd291edfcf37bdb67464b2478fdfeca2aa3235f481a0fa8e57e418ee9117"
+        }
+      ],
+      "physical_exact": false,
+      "physical_differing_fields": [
+        ""
+      ],
+      "observations": {
+        "states": {
+          "exact": false,
+          "maximum_absolute_delta": 1.6511013507843018,
+          "mean_absolute_delta": 0.13210032463073731,
+          "differing_components": 4,
+          "total_components": 25
+        },
+        "main_images": {
+          "exact": false,
+          "maximum_absolute_delta": 185.0,
+          "mean_absolute_delta": 26.59198506673177,
+          "differing_components": 134599,
+          "total_components": 196608
+        },
+        "wrist_images": {
+          "exact": false,
+          "maximum_absolute_delta": 189.0,
+          "mean_absolute_delta": 19.366200764973957,
+          "differing_components": 60712,
+          "total_components": 196608
+        },
+        "extra_view_images": {
+          "exact": false,
+          "maximum_absolute_delta": 170.0,
+          "mean_absolute_delta": 17.475865681966145,
+          "differing_components": 106194,
+          "total_components": 196608
+        }
+      },
+      "pixels_exact": false,
+      "noise_seed_exact": true,
+      "noise": {
+        "exact": true,
+        "maximum_absolute_delta": 0.0,
+        "mean_absolute_delta": 0.0,
+        "differing_components": 0,
+        "total_components": 1600
+      },
+      "controls_zero": [
+        true,
+        true
+      ],
+      "features": {
+        "exact": false,
+        "maximum_absolute_delta": 3.6798534393310547,
+        "mean_absolute_delta": 0.07631273312550942,
+        "differing_components": 2050,
+        "total_components": 2064
+      },
+      "requested_commands": {
+        "exact": false,
+        "maximum_absolute_delta": 0.12442892789840698,
+        "mean_absolute_delta": 0.008602840078558953,
+        "differing_components": 600,
+        "total_components": 600
+      },
+      "executed_commands": {
+        "exact": false,
+        "maximum_absolute_delta": 0.12442892789840698,
+        "mean_absolute_delta": 0.008352570903983147,
+        "differing_components": 500,
+        "total_components": 600
+      },
+      "outcomes": {
+        "success_once": [
+          true,
+          true
+        ],
+        "success_at_end": [
+          true,
+          true
+        ],
+        "first_success_step": [
+          243,
+          134
+        ],
+        "horizon": [
+          450,
+          450
+        ]
+      }
+    },
+    {
+      "case": {
+        "bank": "OOD",
+        "task": "TurnOnSinkFaucet",
+        "split": "target",
+        "native_seed": 540107,
+        "reset_ordinal": 0,
+        "slot": 7,
+        "counted": true,
+        "layout_source": "native_target_constructor_seed_first_reset"
+      },
+      "rank": 6,
+      "case_slot": 9,
+      "initial_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-06/bank-000002/history/episode-000009/initial.pt",
+          "sha256": "74e04ccde07e5de914d1c46575ffbb4021225c98416a1b1817fa4ee9c8ba252f"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-06/bank-000002/history/episode-000009/initial.pt",
+          "sha256": "4e33bf35e1c72bf111bbfc728c0abe0a8f995369ad7118229efd4cb5aa8f5b29"
+        }
+      ],
+      "first_chunk_refs": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-06/bank-000002/history/episode-000009/chunk-0000.pkl.gz",
+          "sha256": "7cdae263f43fa34adaf066fc22e0896f911ffc37330e4bd1cb3ed29f6e589726"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-06/bank-000002/history/episode-000009/chunk-0000.pkl.gz",
+          "sha256": "3cbec65308b3b678501b1f8dc14bdf358098a7928fa0dee1d1a9b8e2069ff140"
+        }
+      ],
+      "physical_exact": false,
+      "physical_differing_fields": [
+        ""
+      ],
+      "observations": {
+        "states": {
+          "exact": false,
+          "maximum_absolute_delta": 0.09233367443084717,
+          "mean_absolute_delta": 0.01825711048208177,
+          "differing_components": 21,
+          "total_components": 25
+        },
+        "main_images": {
+          "exact": false,
+          "maximum_absolute_delta": 219.0,
+          "mean_absolute_delta": 34.663187662760414,
+          "differing_components": 163281,
+          "total_components": 196608
+        },
+        "wrist_images": {
+          "exact": false,
+          "maximum_absolute_delta": 220.0,
+          "mean_absolute_delta": 42.063140869140625,
+          "differing_components": 136414,
+          "total_components": 196608
+        },
+        "extra_view_images": {
+          "exact": false,
+          "maximum_absolute_delta": 220.0,
+          "mean_absolute_delta": 31.768107096354168,
+          "differing_components": 157518,
+          "total_components": 196608
+        }
+      },
+      "pixels_exact": false,
+      "noise_seed_exact": true,
+      "noise": {
+        "exact": true,
+        "maximum_absolute_delta": 0.0,
+        "mean_absolute_delta": 0.0,
+        "differing_components": 0,
+        "total_components": 1600
+      },
+      "controls_zero": [
+        true,
+        true
+      ],
+      "features": {
+        "exact": false,
+        "maximum_absolute_delta": 1.6503677368164062,
+        "mean_absolute_delta": 0.0472297149964501,
+        "differing_components": 2060,
+        "total_components": 2064
+      },
+      "requested_commands": {
+        "exact": false,
+        "maximum_absolute_delta": 0.0741138196317479,
+        "mean_absolute_delta": 0.008994345445609403,
+        "differing_components": 600,
+        "total_components": 600
+      },
+      "executed_commands": {
+        "exact": false,
+        "maximum_absolute_delta": 0.0741138196317479,
+        "mean_absolute_delta": 0.008771712858653379,
+        "differing_components": 500,
+        "total_components": 600
+      },
+      "outcomes": {
+        "success_once": [
+          false,
+          false
+        ],
+        "success_at_end": [
+          false,
+          false
+        ],
+        "first_success_step": [
+          null,
+          null
+        ],
+        "horizon": [
+          600,
+          600
+        ]
+      }
+    }
+  ]
+}
