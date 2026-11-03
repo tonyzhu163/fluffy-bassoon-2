@@ -63,3 +63,13 @@ case/noise, physical/public/pixel pairing and memory checks:1058/1100,
 The20-minute heartbeat is active. Native Chrome input has been released;
 subsequent status/artifact access uses the existing authenticated development
 connection, whose routing/authentication stay machine-local.
+
+
+Completed: all48 missing episodes collected; GPU scheduler SUCCEEDED and sole
+instance terminal. Final independent audit passes1100collected+900reused
+control endpoints and1000original full-history references. Derived paired
+results and plot are published in RESULT.md/RESULT.json/FINAL-AUDIT.json;
+analysis source a5cd4a1c, evaluation source03f26b7c remains immutable/clean.
+Conservative final charge65556/86400GPU-s. No established memory gain;
+AD OOD window64 recovery remains exploratory after multiplicity correction.
+The monitor is removed after publication; no further allocation is authorized.

@@ -516,14 +516,13 @@ AD's ID attempt5-versus1 comparison has16 paired wins,2 losses and32 ties
 (unadjusted exact p=.0013123); its OOD comparison has9/16 wins/losses
 (p=.2295). DPT's endpoint change is+1 ID and0 OOD. This is an exploratory
 ID attempt association for AD, not an established learning or memory effect.
-The motor stream changes with attempt number (matched across models), so a
-same-weight memory-reset comparison on the same streams is still needed to
-isolate a causal memory contribution. The separately scored PPO/static p0
+The motor stream changes with attempt number (matched across models). The
+matched reset comparison below controls that source of variation. Separately scored PPO/static p0
 controls cannot substitute for that repeated-attempt control. These curves
 measure success on each actual attempt, not cumulative ever-success;75 ID/90
 OOD tokens exceed the64-token training window while fitting128-token capacity.
-That mismatch is a possible contributor to the late OOD drop, not a tested
-explanation; new fits use a128-token training window.
+The matched64-token intervention below tests this concern; new fits use a128-token
+training window.
 The single-source-task/fit-seed and renderer qualifications above still apply.
 
 The curves reuse546 complete practices and collect454 new episodes, charging
@@ -546,14 +545,49 @@ oracle best-of8 recovery is a diagnostic, not an ICRL ceiling. This makes
 matched empty-memory motor streams essential before claiming memory gains.
 [Per-case estimates and uncertainty](../outputs/opendrawer-memory-controls-20261102-r1/NOISE.md).
 
-The matched reset/window64 continuation was interrupted by a driver barrier
-error on November 3, before completing the comparison. Independent CPU
-verification retains 1052/1100 collected endpoints (785 new plus267 carried);
-48 DPT/ID episodes remain missing. The completed records passed original
-case/stream, source, truth/hash, native pairing, horizon and cache checks.
-All eight allocations are terminal, and the future barrier call is corrected;
-no automatic retry or final memory-effect claim follows from these partial
-data. [Failure diagnosis and preserved coverage](../outputs/opendrawer-memory-controls-20261102-r2/TERMINAL.md).
+**Matched memory/context controls completed (2026-11-03).** Frozen AD/DPT now
+have matched reset and64-token raw-history controls on the same50 ID and50 OOD
+cases and p1–p5 motor streams. All1100 collected endpoints (267r1+785r2+48r4)
+and900 reused control endpoints are verified, with all1000 original full-history
+episodes independently checked. Reset clears previous feedback and state before
+each episode. Window64 rebuilds the last64 raw input tokens, including the query,
+after eviction. Weights, native resets and historical750/900 horizons stay fixed.
+
+| Attempt5 final successes /50 | Full memory | Reset each episode | Window64 |
+| --- | ---: | ---: | ---: |
+| AD / OpenDrawer ID |38|31|36|
+| AD / CloseFridge OOD |28|35|37|
+| DPT / OpenDrawer ID |31|33|33|
+| DPT / CloseFridge OOD |36|32|35|
+
+There is **no established memory gain** in these exploratory cohorts. Across
+all five streams, full-minus-reset effects in percentage points (paired
+case-bootstrap95% intervals) are AD ID+3.6[-1.2,8.4], AD OOD−2.0[-7.6,3.6],
+DPT ID+0.8[-2.8,4.4], DPT OOD+0.8[-5.2,6.8]. Each interval includes zero.
+AD's ID attempt5 advantage is7/50 (10 paired wins/3 losses; raw exact
+p=.0923, Holm p=1). Its original attempt1→5 rise therefore does not by itself
+establish learning from memory. The attempt5-minus1 difference in differences
+is the same14percentage points because attempt1 is shared by construction.
+
+The clearest context diagnostic is AD OOD attempt5: window64 scores37/50
+versus28/50 with full history,10 paired wins/1 loss; window-minus-full is
+18percentage points with case-bootstrap95% interval[6,30]. Raw exact p=.01172,
+but Holm p=.46875 across the40 declared per-attempt comparisons. No comparison
+survives that correction. This supports investigating long/older-history harm
+for this checkpoint and panel; truncation also removes older feedback, so it
+does not isolate positional extrapolation as the cause. DPT shows no clear
+window64 benefit. Fifty case clusters, repeated streams and one source task/fit
+seed remain the limits; a larger confirmatory cohort is needed for a claim.
+
+The final one-GPU recovery succeeded and released its allocation at12:28:22
+Shanghai, collecting only the missing48 episodes/36000 controls. All eight
+logical workers completed with unchanged weights. The conservative full-campaign
+GPU charge, including failed attempts, is65556/86400GPU-seconds (18.21/24GPU-h);
+all original checkpoints, failed artifacts and immutable worktrees are retained.
+[Full per-attempt curves and paired statistics](../outputs/opendrawer-memory-controls-20261103-r4/RESULT.json),
+[readable curves](../outputs/opendrawer-memory-controls-20261103-r4/RESULT.md),
+[figure](../outputs/opendrawer-memory-controls-20261103-r4/attempt-curves.png),
+[independent audit and allocation reconciliation](../outputs/opendrawer-memory-controls-20261103-r4/FINAL-AUDIT.json).
 
 **RoboCasa Stage 0 interface screen completed (2026-11-02).** On 20 TRAIN
 cases/task selected by an independent native failure anchor, eight new draws
