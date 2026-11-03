@@ -5,10 +5,10 @@
   "producer_observation": {
     "path": "/Users/mowenjie/.codex/worktrees/joint-steering-ppo/fluffy-bassoon-2/outputs/robocasa-joint-steering-5m-20261102-r1/PLAN.json",
     "sha256": "de5e7bc07a9c54d3e1a0bda70778a05112bff1a352435da3ebd52ac13ba52c39",
-    "status": "BOTH_SOURCES_CHECKPOINTED_AFTER_TWO_UPDATES_MEASURED_BUDGET_GUARD",
+    "status": "EXPLICIT_HUMAN_KL_REVIEW_HOLD_AT_UPDATE2",
     "immutable_source": false,
-    "last_live_check_UTC": "2026-11-03 05:45:43 UTC",
-    "producer_cursor": "18018959-3992-4b70-ad1f-11a754359cf0:78",
+    "last_live_check_UTC": "2026-11-03 06:49:08 UTC",
+    "producer_cursor": "18018959-3992-4b70-ad1f-11a754359cf0:91",
     "driver_reference_commit": "dd3e51334fda9b839f37b777d68ffb79f66d638c",
     "CPU_tests_passed": 80,
     "evidence": "outputs/robocasa-joint-steering-5m-20261102-r1/qualification/CPU-QUALIFICATION.md",
@@ -39,7 +39,8 @@
     "native_qualification_observation": "NATIVE-QUALIFICATION-COMPLETE-20261103-r1.json",
     "prospective_attempts": "PROSPECTIVE-SOURCE-ATTEMPTS-20261103-r1.json",
     "actual_startup": "SOURCE-RUNTIME-STARTUP-20261103-r1.json",
-    "source_pause": "SOURCE-BUDGET-PAUSE-20261103-r1.json"
+    "source_pause": "SOURCE-BUDGET-PAUSE-20261103-r1.json",
+    "KL_review_hold": "KL-REVIEW-HOLD-OBSERVATION-20261103-r1.json"
   },
   "campaigns": {
     "stage1_pilot": {
@@ -69,7 +70,7 @@
         "dit",
         "ic_iql"
       ],
-      "state": "incomplete_sources_checkpointed_at_update2_budget_guard_owner_diagnosing_recovery",
+      "state": "human_KL_review_hold_at_update2_no_recovery_recipe_selected",
       "source_binding": null,
       "fits": {},
       "evaluations": {},
@@ -112,7 +113,7 @@
     5
   ],
   "status_evidence": "Direct human recipe/budget messages verified; source owner active on reconciliation, no completed PPO histories, student fit or new native curve.",
-  "next_action": "Use published human60GPUh/arm120combined lifetime-source authority and qualified budget60 code for source-owner exact-state recovery from update2 under fresh attempt identities/new budget-aware launcher. Verify old release/full inherited recovery, actual resumed updates and complete50source before student fitting.",
+  "next_action": "Respect direct human KL-review recovery hold;monitor actual review/recipe/release and current source-owner evidence.60GPUh/arm budget remains approved but does not release hold. Preserve all state/data;no inferred restart or student fits on partial histories.",
   "monitor_automation_id": "monitor-steering-ppo-and-ad-dpt",
   "adapter": "src/fluffy_bassoon/meta_rl/frozen_steering_history.py",
   "core_qualification_source": "3babb92b31c596f04759621177c8704c60c7c293",
@@ -230,7 +231,7 @@
   },
   "batched_native_backend": "src/fluffy_bassoon/meta_rl/steering_history_batch.py",
   "batch_readout_receipt": "BATCH-READOUT-QUALIFICATION.json",
-  "goal_execution_status": "waiting_for_source_recovery_and_intended50_update_completion",
+  "goal_execution_status": "waiting_for_explicit_human_KL_review_and_source_recovery_recipe",
   "blocking_audit": "GOAL-BLOCKED-AUDIT-20261103-r1.json",
   "recipe_reconciliation": "RECIPE-RECONCILIATION-20261103-r1.json",
   "requested_meta_learning_methods": {
@@ -261,5 +262,6 @@
     "lifetime_including_prior": true
   },
   "source_budget_validation": "SOURCE-BUDGET-60PERARM-VALIDATION-20261103-r1.json",
-  "qualified_budget60_source": "221e08ab9498c243407dd91b1d92032c8c04d375"
+  "qualified_budget60_source": "221e08ab9498c243407dd91b1d92032c8c04d375",
+  "current_source_hold": "KL-REVIEW-HOLD-OBSERVATION-20261103-r1.json"
 }
