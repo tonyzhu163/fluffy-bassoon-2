@@ -16,8 +16,8 @@
     "memory_controls": {
       "thread_id": "01a19bef-232f-7960-ab6d-7ce1539b6685",
       "title": "Improve evaluation and training",
-      "cursor": "143ed4de-4086-4c7d-8526-8992e648a4bd:17",
-      "state": "r4 actual GPU probe passed and saved episodes are advancing. Owner audited6new records (4reset,2window64),1058/1100collected; later coordinator live receipt shows9saved, pending endpoint audit. Continue missing48 only; full2000comparison still pending.",
+      "cursor": "143ed4de-4086-4c7d-8526-8992e648a4bd:18",
+      "state": "r4 actual GPU probe passed and saved episodes advancing. Last owner audit6new records/1058total remains verified floor; live coordinator12:08receipt shows24new saved (rank1=11,rank2=13), later records pending audit. Owner requested to reconcile count at next bounded check; no worker change/retry. Full1100collected+900original comparison remains pending.",
       "recovery_job_id": "job-oizm929rf0oo",
       "verified_collected_endpoints": 1058,
       "required_collected_endpoints": 1100,
@@ -28,23 +28,23 @@
       "conservative_GPU_seconds_charged": 62967,
       "next_run": "opendrawer-memory-controls-20261103-r4",
       "new_recovery_endpoints_verified": 6,
-      "new_recovery_episodes_saved_at_live_check": 9,
+      "new_recovery_episodes_saved_at_live_check": 24,
       "recovery_source_commit": "03f26b7c3cf6890c89b2691020dfa09ebeac6336",
       "recovery_GPU_seconds_ceiling": 7200
     },
     "flora_reward": {
       "thread_id": "01a19bef-b16f-70e2-ad86-9140e3b360ed",
       "title": "Fix Flora reward and unblock gates",
-      "cursor": "520aa979-d22d-4944-a890-27bd974a6515:13",
-      "state": "r3 CPU official-processor reconstruction complete; coordinator independently verified6manifest hashes and256recorded raw/roundtrip RGB hash pairs, including bfloat16 reconstruction. Previous actual GPU tensors were not saved; semantics/reward remain unqualified. Owner preparing one bounded40grade framing comparison and CPU input audit, no fresh GPU launch verified.",
+      "cursor": "520aa979-d22d-4944-a890-27bd974a6515:14",
+      "state": "Published r3 CPU reconstruction/hash verification passed, no semantic/reward qualification. Owner active preparing bounded40grade framing comparison, qualifying official messages and19distinct retained video-prefix inputs on LinuxCPU before any scoring; no new trajectories, GPU launch not verified.",
       "evidence": "outputs/research-coordination-20261103-r1/FLORA-PROCESSOR-VERIFICATION.json",
       "next_trial_GPU_seconds_ceiling_reported_by_owner": 900
     },
     "steering_ppo": {
       "thread_id": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
       "title": "Pull PPO coordination updates",
-      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:67",
-      "state": "NativeQ1 calibration and both48lane full600control/history banks passed; no scientificPPOupdates orDEV panels. Full-history collection59-60controls/s exceeds40GPUh/arm cap before overhead. Q1 terminal/release receipt verified,1331GPU-s conservativecharge plus122carried prep accounted separately. Execution-only losslessI/O candidate passed45Linux tests; freshQ2 job-m2qlxqjuh8ho RUNNING at11:56 with GPUprobe passed per owner receipt,17min/1020GPU-s maximum within remaining1069of original2400GPU-s qualification campaign allowance.",
+      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:69",
+      "state": "Q2 both48lane/full600/history banks completed: velocity129.594456/KV130.181569controls/s, over2xQ1, projected collection24.69/24.58GPUh perarm. Source8b9e1bbb calibration and actualGPUprobes passed. No scientificPPOupdates/DEVpanels. Complete loading/optimization/evaluation/recovery/storage budget and actual8GPU fit admission checks remain with owner; Q2 final charge/release pending.",
       "scientific_job_ids": {},
       "arms": [
         "velocity",
@@ -93,18 +93,24 @@
         "check_cadence": "minibatch",
         "scientific_updates": 0
       },
-      "evidence": "outputs/research-coordination-20261103-r1/CHECK-20261103-1154.json",
+      "evidence": "outputs/research-coordination-20261103-r1/CHECK-20261103-1208.json",
       "qualification_GPU_seconds": 1331,
       "carried_preparation_GPU_seconds": 122,
       "qualification_successor_job_id": "job-m2qlxqjuh8ho",
       "qualification_successor_source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
-      "qualification_successor_status": "RUNNING_CALIBRATION_MODEL_LOAD_PROBE_PASSED_IN_OWNER_RECEIPT",
-      "qualification_successor_max_GPU_seconds": 1020
+      "qualification_successor_status": "BOTH_48LANE_FULL600_HISTORY_BANKS_COMPLETE_TERMINAL_RECEIPT_PENDING",
+      "qualification_successor_max_GPU_seconds": 1020,
+      "qualified_IO_velocity_controls_per_second": 129.5944564226656,
+      "qualified_IO_kv_controls_per_second": 130.1815689451306,
+      "qualified_IO_collection_only_GPU_hours": {
+        "velocity": 24.692414230770538,
+        "kv_all_layers": 24.5810526476966
+      }
     },
     "downstream_histories": {
       "thread_id": "01a199fb-3586-7171-bd20-52fa70e5378c",
       "title": "Explain DPT context/query targets",
-      "cursor": "5e721a0b-3229-4c1f-beee-e2194e124fbd:54",
+      "cursor": "5e721a0b-3229-4c1f-beee-e2194e124fbd:55",
       "state": "Native qualification advanced; no admitted completed scientificPPOsource yet, so downstream fit remains pending."
     }
   },
@@ -121,7 +127,8 @@
     "ppo_q1_calibration_both48lane_fullhistory_pass",
     "ppo_fullhistory_throughput_budget_constraint_IO_qualification",
     "flora_r3_256frame_processor_reconstruction_independently_hash_verified",
-    "ppo_io_q2_job-m2qlxqjuh8ho_launch_probe_receipt"
+    "ppo_io_q2_job-m2qlxqjuh8ho_launch_probe_receipt",
+    "ppo_io_q2_both48lane_pass_130controls_per_second"
   ],
   "wandb": {
     "status": "BAIGE_API_HTTP403_LOCAL_OFFLINE_LOGGING_ACTIVE",
@@ -152,5 +159,5 @@
     "Flora repair does not gate simulator-reward steering PPO.",
     "Do not duplicate owner jobs, change their active worktrees, or expand scope/budgets silently."
   ],
-  "last_check_Shanghai": "2026-11-03T12:00:26+08:00"
+  "last_check_Shanghai": "2026-11-03T12:09:21+08:00"
 }
