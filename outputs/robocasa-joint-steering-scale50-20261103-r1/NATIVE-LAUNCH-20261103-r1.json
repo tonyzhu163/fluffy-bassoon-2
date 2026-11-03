@@ -5,7 +5,7 @@
   "submitted_Shanghai": "2026-11-03T11:32:20+08:00",
   "running_Shanghai": "2026-11-03T11:32:41+08:00",
   "checked_Shanghai": "2026-11-03T11:35:11.652407+08:00",
-  "status": "RUNNING_CALIBRATION_MODEL_LOAD",
+  "status": "CALIBRATION_PASS_VELOCITY48_PASS_KV48_RUNNING",
   "scientific_PPO_jobs": 0,
   "scientific_PPO_updates": 0,
   "source_commit": "d3a861a6ac67f594902675cb36ddf0ee83608896",
@@ -34,11 +34,49 @@
   "carried_velocity_GPU_seconds": 122,
   "final_allocation_cost_pending": true,
   "scope": "Five public TRAIN reset-only calibration observations, both interfaces and synthetic next-Adam numerical checks;48 full600-control episodes/arm; no scientific SGD.",
-  "cleanup_fix": "Each arm releases all48 native/render/video children before constructing the next bank; all close attempts retained on failure.",
+  "cleanup_fix": "Collector already closes all48 lanes at bank exit; qualification now also explicitly records that existing boundary before next arm.",
   "logging": {
     "local_JSONL": true,
     "offline_WandB_qualified": true,
     "online_WandB_403_not_blocking": true
   },
-  "next_action": "Verify bracketing scale/LR calibration, then actual48-live collection/history/throughput/memory and release. Construct admission only after all evidence passes."
+  "next_action": "Verify bracketing scale/LR calibration, then actual48-live collection/history/throughput/memory and release. Construct admission only after all evidence passes.",
+  "calibration_choices": {
+    "velocity": {
+      "fraction": 0.125,
+      "action_RMS": 0.08100743144750595,
+      "optimizer": {
+        "learning_rate": 0.0003,
+        "epochs": 10,
+        "minibatch_size": 32,
+        "target_kl": 0.02,
+        "kl_check_cadence": "minibatch"
+      }
+    },
+    "kv_all_layers": {
+      "fraction": 0.64,
+      "action_RMS": 0.07450713217258453,
+      "optimizer": {
+        "learning_rate": 3e-05,
+        "epochs": 10,
+        "minibatch_size": 32,
+        "target_kl": 0.02,
+        "kl_check_cadence": "minibatch"
+      }
+    }
+  },
+  "velocity_bank": {
+    "episodes": 48,
+    "policy_controls": 28800,
+    "elapsed_seconds": 489.41234374046326,
+    "controls_per_second": 58.8460842239662,
+    "sampled_peaks": {
+      "samples": 196,
+      "peak_gpu_memory_mib": 73801.0,
+      "peak_fd_count": 491,
+      "peak_descendants": 193
+    }
+  },
+  "scientific_admission": false,
+  "admission_reason": "Current full-observability collection time exceeds40GPUh/arm; execution-only optimization candidate requires fresh bounded native qualification."
 }

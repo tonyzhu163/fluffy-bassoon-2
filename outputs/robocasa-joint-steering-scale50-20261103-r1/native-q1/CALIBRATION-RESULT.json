@@ -1,0 +1,310 @@
+{
+  "format": "joint_scale50_single_gpu_qualification_v1",
+  "completed": true,
+  "status": "passed",
+  "phase": "calibrate",
+  "arm": "both",
+  "hostname": "job-mdxdgd91xn8o-master-0",
+  "pid": 440,
+  "started_unix": 1793676772.4525201,
+  "scientific_updates": 0,
+  "policy_episodes_admitted_to_PPO": 0,
+  "input_hashes": {
+    "script": "af870ef43ed223010db7d220fdc4836255caf80c5b4795f7a55ca29e384fe528",
+    "profile": "1a9c3aec6f096817a60eb94edbd263ee78fe4b4089ca56b565501daef2dc3408"
+  },
+  "arms": {},
+  "partial_artifacts_retained": true,
+  "bindings": {
+    "code": "/mowenjie/fluffy-bassoon-2/worktrees/joint-steering-scale50-gpu-20261103-r2",
+    "source_commit": "d3a861a6ac67f594902675cb36ddf0ee83608896",
+    "runtime_path": "/mowenjie/fluffy-bassoon-2/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf",
+    "runtime_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+    "model_directory": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
+    "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+    "model_config_sha256": "1c85bc28303a2144a1cc3af492b1b6d91f9cdcd94b30f04212505ffb5118f1b0",
+    "norm_path": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json",
+    "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee"
+  },
+  "storage_before": {
+    "total_bytes": 2199023255552,
+    "free_bytes": 900588371968
+  },
+  "stage": "reset_only/CoffeeSetupMug",
+  "native_model_frozen_signature": {
+    "model_directory": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
+    "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+    "model_config_sha256": "1c85bc28303a2144a1cc3af492b1b6d91f9cdcd94b30f04212505ffb5118f1b0",
+    "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+    "source_commit": "d3a861a6ac67f594902675cb36ddf0ee83608896",
+    "runtime_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+    "parameter_count": 3353433872,
+    "cuda_uuid": "30db9d9e-b51d-c632-d712-d2c21678fde2",
+    "scheduler_uuid": "GPU-ce254fea-0983-4d4e-439e-458de37cf1e1",
+    "device_name": "NVIDIA RPBZZZ6",
+    "all_parameters_frozen": true,
+    "parameter_versions_sha256": "a2dfa470179d52480a23bffc2b87edf316f172e82a50e42fd749425ff7d4b7c9"
+  },
+  "resources_before_environments": {
+    "cgroup": {
+      "cpu.max": "2100000 100000",
+      "memory.max": "223338299392",
+      "memory.current": "17562308608",
+      "memory.peak": "29300957184",
+      "pids.current": "42",
+      "pids.max": "629145",
+      "pids.peak": "54"
+    },
+    "fd_count": 45,
+    "nofile_limit": [
+      1048576,
+      1048576
+    ],
+    "shm_total_bytes": 51539607552,
+    "shm_free_bytes": 51539607552,
+    "descendants": [],
+    "maxrss_kib": 27095048
+  },
+  "new_reset_calls": 5,
+  "physical_policy_controls": 0,
+  "native_versions_unchanged": true,
+  "resource_peaks": {
+    "by_phase": {
+      "load_original_native_once": {
+        "samples": 44,
+        "peak_gpu_memory_mib": 7225.0,
+        "peak_fd_count": 46,
+        "peak_descendants": 0
+      },
+      "reset_only/OpenDrawer": {
+        "samples": 12,
+        "peak_gpu_memory_mib": 8544.0,
+        "peak_fd_count": 56,
+        "peak_descendants": 5
+      },
+      "reset_only/PickPlaceCounterToCabinet": {
+        "samples": 11,
+        "peak_gpu_memory_mib": 8994.0,
+        "peak_fd_count": 59,
+        "peak_descendants": 5
+      },
+      "reset_only/PickPlaceDrawerToCounter": {
+        "samples": 13,
+        "peak_gpu_memory_mib": 8540.0,
+        "peak_fd_count": 62,
+        "peak_descendants": 5
+      },
+      "reset_only/TurnOffStove": {
+        "samples": 10,
+        "peak_gpu_memory_mib": 9100.0,
+        "peak_fd_count": 65,
+        "peak_descendants": 5
+      },
+      "reset_only/CoffeeSetupMug": {
+        "samples": 17,
+        "peak_gpu_memory_mib": 9100.0,
+        "peak_fd_count": 65,
+        "peak_descendants": 5
+      }
+    },
+    "owned_children": {
+      "1865": {
+        "pid": 1865,
+        "name": "python",
+        "start_ticks": 518181484,
+        "interpreter_helper": true
+      },
+      "1866": {
+        "pid": 1866,
+        "name": "python",
+        "start_ticks": 518181484,
+        "interpreter_helper": false
+      },
+      "1975": {
+        "pid": 1975,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518182768,
+        "interpreter_helper": false
+      },
+      "2010": {
+        "pid": 2010,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518182776,
+        "interpreter_helper": false
+      },
+      "2065": {
+        "pid": 2065,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518182781,
+        "interpreter_helper": false
+      },
+      "2225": {
+        "pid": 2225,
+        "name": "python",
+        "start_ticks": 518183644,
+        "interpreter_helper": false
+      },
+      "2333": {
+        "pid": 2333,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518185006,
+        "interpreter_helper": false
+      },
+      "2378": {
+        "pid": 2378,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518185013,
+        "interpreter_helper": false
+      },
+      "2423": {
+        "pid": 2423,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518185018,
+        "interpreter_helper": false
+      },
+      "2575": {
+        "pid": 2575,
+        "name": "python",
+        "start_ticks": 518185759,
+        "interpreter_helper": false
+      },
+      "2730": {
+        "pid": 2730,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518187684,
+        "interpreter_helper": false
+      },
+      "2775": {
+        "pid": 2775,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518187691,
+        "interpreter_helper": false
+      },
+      "2820": {
+        "pid": 2820,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518187699,
+        "interpreter_helper": false
+      },
+      "2971": {
+        "pid": 2971,
+        "name": "python",
+        "start_ticks": 518188444,
+        "interpreter_helper": false
+      },
+      "3081": {
+        "pid": 3081,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518189826,
+        "interpreter_helper": false
+      },
+      "3126": {
+        "pid": 3126,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518189836,
+        "interpreter_helper": false
+      },
+      "3178": {
+        "pid": 3178,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518189845,
+        "interpreter_helper": false
+      },
+      "3320": {
+        "pid": 3320,
+        "name": "python",
+        "start_ticks": 518190596,
+        "interpreter_helper": false
+      },
+      "3429": {
+        "pid": 3429,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518191946,
+        "interpreter_helper": false
+      },
+      "3481": {
+        "pid": 3481,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518191953,
+        "interpreter_helper": false
+      },
+      "3526": {
+        "pid": 3526,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518191959,
+        "interpreter_helper": false
+      }
+    },
+    "samples": 107,
+    "gpu_samples": 107,
+    "peak_gpu_memory_mib": 9100.0,
+    "peak_fd_count": 65,
+    "peak_descendants": 5,
+    "peak_cgroup_memory_bytes": 28037419008
+  },
+  "resource_log": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-native-qualification-20261103-r1/calibrate/resources.jsonl",
+    "sha256": "d30cdbab215c7b683941eaa50924a6dbb1b36383226e0d381ae8b2de80127a61"
+  },
+  "escrow": {
+    "format": "joint_steering_action_escrow_v1",
+    "limits": {
+      "train": 11650000,
+      "eval": 1200000
+    },
+    "charged": {
+      "train": 0,
+      "eval": 0
+    },
+    "pending": {}
+  },
+  "charged_controls": 0,
+  "child_release": {
+    "all_native_video_children_released": true,
+    "remaining": [
+      {
+        "pid": 1865,
+        "name": "python",
+        "start_ticks": 518181484,
+        "interpreter_helper": true
+      }
+    ],
+    "interpreter_helpers_exit_with_process": true
+  },
+  "resources_final": {
+    "cgroup": {
+      "cpu.max": "2100000 100000",
+      "memory.max": "223338299392",
+      "memory.current": "17902243840",
+      "memory.peak": "29300957184",
+      "pids.current": "43",
+      "pids.max": "629145",
+      "pids.peak": "182"
+    },
+    "fd_count": 55,
+    "nofile_limit": [
+      1048576,
+      1048576
+    ],
+    "shm_total_bytes": 51539607552,
+    "shm_free_bytes": 51539607552,
+    "descendants": [
+      {
+        "pid": 1865,
+        "name": "python",
+        "start_ticks": 518181484,
+        "interpreter_helper": true
+      }
+    ],
+    "maxrss_kib": 27095048
+  },
+  "ended_unix": 1793677014.3827138,
+  "process_gpu_seconds": 241.93019366264343,
+  "allocated_gpu_seconds_through_check": 256.38271379470825,
+  "qualification_campaign_gpu_seconds_upper": 257,
+  "calibration": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-native-qualification-20261103-r1/calibrate/CALIBRATION.json",
+    "sha256": "8853d631ac6886d6829101c3e2fe3048ff03d3480a177a89ec133e35a86ce9e4"
+  },
+  "allocation_release_not_included": true
+}
