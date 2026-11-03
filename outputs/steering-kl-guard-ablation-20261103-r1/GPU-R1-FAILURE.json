@@ -1,0 +1,18 @@
+{
+  "job_id": "job-voaelvgv4mqi",
+  "scheduler_status": "FAILED",
+  "restart_count": 0,
+  "scheduler_pod_created_Shanghai": "2026-11-03T14:46:51+08:00",
+  "scheduler_pod_finished_Shanghai": "2026-11-03T14:47:28+08:00",
+  "scheduler_job_terminal_Shanghai": "2026-11-03T14:47:40+08:00",
+  "scheduler_lifetime_GPU_seconds_upper": 196,
+  "selected_cumulative_charge_GPU_seconds": 200,
+  "process_GPU_seconds": 4,
+  "process_exit_code": 1,
+  "failure": "GPU probe requires CUDA_VISIBLE_DEVICES; the exclusive scheduler container exposed exactly four assigned GPUs through NVML but left that variable unset, and the launcher omitted its namespace-index fallback.",
+  "model_loaded": false,
+  "new_simulator_episodes": 0,
+  "new_physical_controls": 0,
+  "repair": "Preserve nonempty scheduler visibility. If unset, require NVML inventory of exactly four assigned devices before declaring CUDA indices0,1,2,3. Run the unchanged real-device probe. Bind a fresh source/output and subtract the carried200GPU-seconds from the same21600ceiling.",
+  "production_recovery": "HUMAN HOLD atupdate2; no scientific source changed"
+}

@@ -75,3 +75,20 @@ interface, with the same48lanes/GPU and exactly the same1500episode panel.
 This shortens elapsed time without changing data volume, policy weights,
 pairing, or the6GPU-hour cumulative ceiling. Request84CPU/832GiB/192GiBSHM
 on one node; the inspected queue has RPBZZZ6 nodes with175CPU/1800GiB limits.
+
+## Diagnosed launcher correction before the second GPU attempt
+
+R1job-voaelvgv4mqi failed the visibility probe before loading any model or
+dispatching any reset/control. Its exclusive scheduler container exposed
+exactly four GPUs through NVML but did not set CUDA_VISIBLE_DEVICES. The
+launcher omitted the default namespace binding used by the qualified source
+launcher. Correct the omission only when NVML exposes exactly four assigned
+devices; preserve a nonempty scheduler CUDA setting. This adds no device
+namespace and does not change the six candidates or case/noise schedules.
+
+The scheduler pod was created14:46:51 and the job was terminal14:47:40,
+49seconds x4=196GPU-seconds conservative upper; process clock was4GPU-seconds.
+Charge200GPU-seconds once to the6GPU-hour campaign ceiling. Use freshgpu-r2,
+an89-minute scheduler limit, and a process deadline derived from the remaining
+budget with180seconds reserved. R1artifacts stay immutable. The successor is
+a diagnosed operational repair, not an automatic retry or budget renewal.

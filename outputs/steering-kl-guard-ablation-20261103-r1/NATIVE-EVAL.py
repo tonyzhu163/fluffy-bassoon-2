@@ -187,8 +187,9 @@ def main():
     devices = mapping()
     if len(devices) != 4 or torch.cuda.device_count() != 4:
         raise RuntimeError("Require exactly four attested allocated GPUs")
-    if not time.time() < args.deadline_unix <= profile["process_started_unix"] + 5280:
-        raise ValueError("Leave120seconds cleanup within the6GPU-hour four-GPU ceiling")
+    latest_deadline = profile["process_started_unix"] + (profile["budget_GPU_seconds"]-profile["prior_GPU_seconds"])//4-180
+    if not time.time() < args.deadline_unix <= latest_deadline:
+        raise ValueError("Carry prior allocation costs and leave180seconds within the6GPU-hour ceiling")
     args.output.mkdir(parents=True, exist_ok=True)
     children, streams = [], []
     try:
