@@ -1,0 +1,108 @@
+{
+  "status": "PROPOSED_NOT_LAUNCHED",
+  "basis": "Passing CPU reconstruction and visible lower-frame cropping of128; no claim that this caused its grade",
+  "base": {
+    "criteria_id": "first_success_fixture_depth",
+    "task_template": "Open the very top drawer directly underneath the countertop on the {side} of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The task is complete as soon as that target drawer has slid out by at least 52.25% of the cabinet fixture's front-to-back depth, just over half. Maximum extension is not required. Holding the handle is allowed. Later closing or occlusion does not undo that first success. The three synchronized views show the same scene. Use the clearest available view of the target; the drawer need not be visible in every view. Left/right refers to the robot at the start, not the current image edge.",
+    "qualified": false,
+    "episode_simulator_state_in_prompt": false,
+    "native_instruction_rewrite": "Deterministic side extraction only; explicit native target and terminal predicate",
+    "previous_criteria_id": "revision1_10",
+    "change": "Make cabinet-fixture depth the explicit geometric reference; same native52.25% predicate"
+  },
+  "candidate": {
+    "criteria_id": "first_success_frame_edge",
+    "task_template": "Open the very top drawer directly underneath the countertop on the {side} of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The task is complete as soon as that target drawer has slid out by at least 52.25% of the cabinet fixture's front-to-back depth, just over half. Maximum extension is not required. Holding the handle is allowed. Later closing or occlusion does not undo that first success. The three synchronized views show the same scene. Use the clearest available view of the target; the drawer need not be visible in every view. Left/right refers to the robot at the start, not the current image edge. The target drawer's front may move partly out of frame as it is pulled out. Use the visible drawer box and its motion relative to the cabinet to judge its opening; a cropped or occluded front is not evidence that it stayed shut.",
+    "qualified": false,
+    "episode_simulator_state_in_prompt": false,
+    "native_instruction_rewrite": "Deterministic side extraction only; explicit native target and terminal predicate",
+    "previous_criteria_id": "first_success_fixture_depth",
+    "change": "Append only the explicit frame-edge evidence clause; shared task criteria unchanged"
+  },
+  "append_only_clause": "The target drawer's front may move partly out of frame as it is pulled out. Use the visible drawer box and its motion relative to the cabinet to judge its opening; a cropped or occluded front is not evidence that it stayed shut.",
+  "selection": {
+    "000112": [
+      300,
+      350
+    ],
+    "000256": [
+      700,
+      750
+    ],
+    "000336": [
+      700,
+      750
+    ],
+    "000376": [
+      700,
+      750
+    ],
+    "000064": [
+      500,
+      550,
+      600,
+      750
+    ],
+    "000128": [
+      350,
+      400,
+      450
+    ],
+    "000216": [
+      250,
+      300,
+      750
+    ]
+  },
+  "negative_prefixes": 10,
+  "post_success_prefixes": 8,
+  "never_success_cases": 4,
+  "ever_success_cases": 3,
+  "new_grades": 40,
+  "grades_by_arm": 18,
+  "reference_repeats": 4,
+  "repeats": [
+    [
+      "000112",
+      300
+    ],
+    [
+      "000128",
+      400
+    ],
+    [
+      "000144",
+      250
+    ],
+    [
+      "000064",
+      550
+    ]
+  ],
+  "same_model": true,
+  "same_video_bytes": true,
+  "same_sampler": true,
+  "same_official_messages": true,
+  "production_change": false,
+  "remaining_campaign_gpu_authorization": "No pooled campaign balance is established by these local records; none is borrowed or claimed.",
+  "existing_per_allocation_ceiling_gpu_seconds": 900,
+  "new_gpu_seconds_reserved": 0,
+  "source_revision1_10": {
+    "criteria_id": "revision1_10",
+    "task_template": "Open the very top drawer directly underneath the countertop on the {side} of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The task is complete as soon as that target drawer has slid out by at least 52.25% of its front-to-back depth, just over half. Maximum extension is not required. Holding the handle is allowed. Later closing or occlusion does not undo that first success. The three synchronized views show the same scene. Use the clearest available view of the target; the drawer need not be visible in every view. Left/right refers to the robot at the start, not the current image edge.",
+    "qualified": false,
+    "episode_simulator_state_in_prompt": false,
+    "native_instruction_rewrite": "Deterministic side extraction only; explicit native target and terminal predicate",
+    "previous_criteria_id": "revision1_9",
+    "change": "View clarification plus source-correct sufficient opening and first-success predicate; not a single-clause attribution."
+  },
+  "unit_reference_clarification": "Both fresh arms explicitly use cabinet-fixture depth, the native divisor reference, so their contrast isolates the frame-edge clause; no claim this noun change explains previous grades.",
+  "candidate_videos": 7,
+  "total_videos_including_reference_only_case": 8,
+  "unique_prefix_inputs_including_repeats": 19,
+  "batches": 7,
+  "directly_authorized_next_trial_remaining_gpu_seconds": null,
+  "next_trial_gpu_seconds_spent": 0,
+  "authorization_basis": "Human requested repeated small failure-focused rubric iterations. Retrieved direct human messages establish scope, but contain no numeric campaign balance. The900GPU-s proposal is an agent-set allocation cap, not evidence of an unused human budget.",
+  "launch_status": "CPU qualification authorized; no GPU scoring launched or reserved. Resolve one concrete launch decision after CPU evidence and cost are ready."
+}

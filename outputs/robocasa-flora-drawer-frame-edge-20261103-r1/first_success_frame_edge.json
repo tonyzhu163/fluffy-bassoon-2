@@ -1,0 +1,9 @@
+{
+  "criteria_id": "first_success_frame_edge",
+  "task_template": "Open the very top drawer directly underneath the countertop on the {side} of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The task is complete as soon as that target drawer has slid out by at least 52.25% of the cabinet fixture's front-to-back depth, just over half. Maximum extension is not required. Holding the handle is allowed. Later closing or occlusion does not undo that first success. The three synchronized views show the same scene. Use the clearest available view of the target; the drawer need not be visible in every view. Left/right refers to the robot at the start, not the current image edge. The target drawer's front may move partly out of frame as it is pulled out. Use the visible drawer box and its motion relative to the cabinet to judge its opening; a cropped or occluded front is not evidence that it stayed shut.",
+  "qualified": false,
+  "episode_simulator_state_in_prompt": false,
+  "native_instruction_rewrite": "Deterministic side extraction only; explicit native target and terminal predicate",
+  "previous_criteria_id": "first_success_fixture_depth",
+  "change": "Append only the explicit frame-edge evidence clause; shared task criteria unchanged"
+}
