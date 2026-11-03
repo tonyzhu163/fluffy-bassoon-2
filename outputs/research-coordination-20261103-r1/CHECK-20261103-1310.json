@@ -1,0 +1,80 @@
+{
+  "checked_unix": 1793682538.9955902,
+  "cluster": "Baige",
+  "arms": {
+    "velocity": {
+      "job_id": "job-bxhz4d41ll1k",
+      "output_exists": false
+    },
+    "kv_all_layers": {
+      "job_id": "job-khwsqhzct9v5",
+      "output_exists": false
+    }
+  },
+  "launch_receipt_sha256": "cbaf5cc6500271c4aed2721cb8d91587d1ff8f71f3f4a173cfe0629a71d440c9",
+  "launch_receipt": {
+    "checked_Shanghai": "2026-11-03T12:56:00+08:00",
+    "cluster": "Baige Pro6K / \u7b97\u6cd5Z\u7ec4",
+    "status": "TWO_UNIQUE_ATTEMPTS_SUBMITTED_ONCE_AND_QUEUED",
+    "native_source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+    "launcher_source_commit": "ee0f40465e09d5968fd95c065c049f8b8d416334",
+    "launcher_directory": "/mowenjie/fluffy-bassoon-2/worktrees/joint-steering-launch-20261103-r1",
+    "native_directory": "/mowenjie/fluffy-bassoon-2/worktrees/joint-steering-scale50-gpu-20261103-r3",
+    "admission_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-production-admission-20261103-r1/ADMISSION.json",
+    "admission_sha256": "40b63fafb463d5b105f469e2bbc24aeefdf340758f62ba8d34f3ea61f85d2f19",
+    "resource_request_each": {
+      "workers": 1,
+      "accelerators": 8,
+      "accelerator_type": "NVIDIA RPBZZZ6",
+      "CPU_cores": 168,
+      "RAM_GiB": 1664,
+      "SHM_GiB": 384,
+      "maximum_runtime_minutes": 295,
+      "priority": "low",
+      "medium_priority_option_disabled": true,
+      "automatic_retry": false,
+      "idle_resources": false,
+      "PFS_mount": "/mowenjie"
+    },
+    "arms": {
+      "velocity": {
+        "name": "mwj_1103_joint_steering_velocity_1x8_r1",
+        "job_id": "job-bxhz4d41ll1k",
+        "created_Shanghai": "2026-11-03T12:53:03+08:00",
+        "preclick_epoch": 1793681577,
+        "status": "QUEUED",
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1",
+        "prior_conservative_GPU_seconds": 1161,
+        "prior_TRAIN_controls": 57600,
+        "new_scientific_updates": 0
+      },
+      "kv_all_layers": {
+        "name": "mwj_1103_joint_steering_kv_1x8_r1",
+        "job_id": "job-khwsqhzct9v5",
+        "created_Shanghai": "2026-11-03T12:54:07+08:00",
+        "preclick_epoch": 1793681643,
+        "status": "QUEUED",
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1",
+        "prior_conservative_GPU_seconds": 1025,
+        "prior_TRAIN_controls": 57600,
+        "new_scientific_updates": 0
+      }
+    },
+    "submission_verification": {
+      "unique_names_and_job_ids_independently_visible_in_task_list": true,
+      "full_command_verified_from_editor_clipboard_before_submit": true,
+      "K_V_persisted_command_and_resources_verified_in_job_detail": true,
+      "no_eight_GPU_allocation_or_probe_claimed": true,
+      "PFS_check_125422": "Neither fresh output directory existed; no process had started.",
+      "queue_snapshot": "6 free accelerators before velocity; 5 before K/V, below either 8-GPU request.",
+      "UI_caveat": "A cannot-schedule-now diagnostic does not reject submission. Copy-submit asynchronously creates the new job and redirects to the OLD source detail. Root initially described it as rejected, then corrected the statement after verifying the unique queued job. Never resubmit from the diagnostic, old URL or timeout.",
+      "low_priority_policy": "Only low priority is available; the form warns low utilization may trigger automatic stop. Complete checkpoints and exact recovery remain required; no priority/security/account change attempted."
+    },
+    "scientific_source_admitted": false,
+    "scientific_progress": "Pending actual eight-GPU resource/probe qualification, fresh paired before-panels and DEV0, first counted update and shadow next-Adam restoration.",
+    "metrics": "METRICS-CONTRACT.json; per-update losses/KL/entropy/value diagnostics and resource/accounting metrics, DEV every five; durable local JSONL and offline W&B, online access unresolved and nonblocking.",
+    "budget": "40 GPUh per arm / 80 combined including permanently selected 2064 qualification upper plus 122 carried = 2186 GPU-s. The pre-click timestamp conservatively consumes the fixed deadline while queued; no automatic retry/extension.",
+    "next_action": "Monitor exact queued handles and fresh output paths. After allocation verify actual 8 GPUs, effective 168 CPU/1664 GiB/384 SHM, 900 GiB storage and SHA-bound native source before collection; observe before/DEV0 then first counted update. Preserve complete state on any fit, budget, storage or scheduler stop."
+  },
+  "interpretation": "Both unique8GPUattempts queued per latestowner13:00snapshot; fresh outputpathsabsent atcoordinator13:08livecheck, so no allocatedworker/GPUprobe/scientificupdate/DEVpanel. ExistingFloraapprovalpending; routinequeue is quiet/nonactionable. Coordinatorrequestedpreclickqueuewallclock versus actualGPUaccounting correctnessreview without anyjob mutation/resubmit."
+}

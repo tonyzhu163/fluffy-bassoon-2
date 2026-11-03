@@ -2,7 +2,7 @@
   "run_id": "research-coordination-20261103-r1",
   "owner_thread": "01a19f33-dcb8-7b81-ac4c-b23c26b341de",
   "timezone": "Asia/Shanghai",
-  "status": "EXECUTION_AUTHORIZED_OWNERS_ACTIVE",
+  "status": "PRODUCTION_ATTEMPTS_QUEUED_MONITORING",
   "automation_id": "coordinate-ppo-milestones-and-recoveries",
   "check_interval_minutes": 20,
   "human_authority": [
@@ -62,8 +62,8 @@
     "steering_ppo": {
       "thread_id": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
       "title": "Pull PPO coordination updates",
-      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:72",
-      "state": "Nativehistory/video audits passed; ownedclosed77.6GiB coldcopy/readbackcomplete,~912GiB freshfree. ConcreteADMISSIONforecast38.8403velocity/38.6458KV GPUh each within40, storage900GiB required includingreserves. Actual8GPU168CPU1664GiB384SHM probe/fit,beforepanels andfirstcountedupdate/recovery stillpending. No scientificjobs/updates/DEVpanels. Phaseclockoriginreconciled andlarger2064campaign+122carried=2186prepGPU-s permanentlyselected.",
+      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:73",
+      "state": "Bothuniqueproductionattemptssubmittedonce, QUEUED andnoallocation/updates. Velocityjob-bxhz4d41ll1k12:53:03;KVjob-khwsqhzct9v512:54:07,each8GPU168CPU1664GiB384SHM/295min/autoretryOFF. Coordinatorlive13:08bothfreshoutputpathsabsent. Actual8GPUfit/probes,beforeDEV0 andcountedupdate1/recovery pending; no scientificsourcesadmitted. Internalpreclickqueuewallclock versus actualGPUcharging/deadline review requested, no mutation/retry/cancellationauthorizedbythischeck.",
       "scientific_job_ids": {},
       "arms": [
         "velocity",
@@ -112,7 +112,7 @@
         "check_cadence": "minibatch",
         "scientific_updates": 0
       },
-      "evidence": "outputs/research-coordination-20261103-r1/CHECK-20261103-1250.json",
+      "evidence": "outputs/research-coordination-20261103-r1/CHECK-20261103-1310.json",
       "qualification_GPU_seconds": 1331,
       "carried_preparation_GPU_seconds": 122,
       "qualification_successor_job_id": "job-m2qlxqjuh8ho",
@@ -135,7 +135,31 @@
         "velocity": 38.8403449648122,
         "kv_all_layers": 38.64579095836315
       },
-      "qualification_scheduler_Q1_Q2_GPU_seconds": 2052
+      "qualification_scheduler_Q1_Q2_GPU_seconds": 2052,
+      "production_attempts": {
+        "velocity": {
+          "job_id": "job-bxhz4d41ll1k",
+          "status": "QUEUED_NO_ALLOCATION",
+          "created_Shanghai": "2026-11-03T12:53:03+08:00",
+          "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1",
+          "scientific_updates": 0,
+          "allocation_verified": false
+        },
+        "kv_all_layers": {
+          "job_id": "job-khwsqhzct9v5",
+          "status": "QUEUED_NO_ALLOCATION",
+          "created_Shanghai": "2026-11-03T12:54:07+08:00",
+          "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1",
+          "scientific_updates": 0,
+          "allocation_verified": false
+        }
+      },
+      "launcher_source_commit": "ee0f40465e09d5968fd95c065c049f8b8d416334",
+      "production_source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+      "queued_clock_review": {
+        "status": "REQUESTED_OWNER_DIAGNOSIS",
+        "reason": "TASK_SUBMITTED_UNIX consumes unallocatedqueuewall time in the executiondeadline; distinguishactualGPUcharge andpreservefull50updates/80GPUh withoutmutatingqueuedcontracts orblindduplicates."
+      }
     },
     "downstream_histories": {
       "thread_id": "01a199fb-3586-7171-bd20-52fa70e5378c",
@@ -192,5 +216,6 @@
     "Flora repair does not gate simulator-reward steering PPO.",
     "Do not duplicate owner jobs, change their active worktrees, or expand scope/budgets silently."
   ],
-  "last_check_Shanghai": "2026-11-03T12:51:38+08:00"
+  "last_check_Shanghai": "2026-11-03T13:09:49+08:00",
+  "last_quiet_check_reason": "BothPPOattemptsqueuedwithoutallocation; no new scientificmilestone. ExistingFloraapprovalrequestunchanged; no new useraction. Memorycompletealreadynotified."
 }
