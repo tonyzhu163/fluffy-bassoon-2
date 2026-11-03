@@ -403,6 +403,14 @@ previous GPU tensors and learned semantic retention remain unverified. The
 bounded framing comparison, with held-out qualification still required.
 [Passing receipt and limits](../outputs/robocasa-flora-drawer-processor-audit-20261103-r3/RESULT.md),
 [consolidated rubric evidence](../outputs/robocasa-flora-drawer-processor-audit-20261103-r3/RUBRIC-REVIEW.md).
+The successor frame-edge contrast has now passed CPU preparation on19 distinct
+retained prefixes:1,216 raw RGB hashes,19 actual processor feature references,
+all four previous RGB/float32/bfloat16 references, and40 prepared message
+structures verify after download. Source43d9ca5d,426.152s CPU process,exit0,
+zero weights/inference/GPU. This qualifies inputs for the small comparison,
+not its framing hypothesis; no GPU scoring launched or reserved. The two
+fresh criteria share native fixture-depth and first-success semantics and
+isolate one frame-edge clause. [CPU evidence and pending comparison](../outputs/robocasa-flora-drawer-frame-edge-20261103-r1/CPU-RESULT.md).
 A subsequent CPU geometry audit finds all six selected targets at z=0.785,
 with no drawer above the target in its stack, and matching scene metadata.
 Thus an incorrectly assumed uppermost target does not explain the128/144

@@ -13,6 +13,7 @@ assert checks['completed'] and receipt['exit_code']==0 and receipt['gpu_seconds'
 assert checks['new_outputs']==40 and checks['actual_cpu_processor_calls']==19
 assert checks['previous_processor_audit_matches']==4
 assert checks['model_weight_loads']==checks['motor_calls']==checks['optimizer_steps']==0
+for arm,value in checks['criteria_sha256'].items():assert sha(out/(arm+'.json'))==value
 for name,key in [('PUBLIC-JOBS.json','public_sha256'),('RECOVERED.json','recovered_sha256'),
     ('PREPARED-PROMPTS.json','prompts_sha256'),('FRAME-REFERENCE.json','frame_reference_sha256'),
     ('PROCESSOR-REFERENCE.json','processor_reference_sha256')]:
@@ -34,6 +35,16 @@ for item in items:
     assert feature['dtype']=='torch.float32'
     assert len(feature['fp32_sha256'])==len(feature['bf16_sha256'])==64
 assert len({p['id'] for p in prompts})==40
+previous=read(out.parent/'robocasa-flora-drawer-processor-audit-20261103-r3/RECEIPT.json')['cases']
+assert len(previous)==4
+for ref in previous:
+    uid=ref['id']
+    assert frames[uid]['rgb_sha256']==ref['raw_rgb_sha256']
+    assert features[uid]['fp32_sha256']==ref['feature_sha256']
+    assert features[uid]['bf16_sha256']==ref['bf16_feature_sha256']
+anchors=read(out/'RECOVERED.json')['rows']
+expected={('000112',300):1,('000064',550):5,('000128',400):1,('000144',250):4}
+assert {(r['id'].split('-case-')[1][:6],r['observed_through']):r['score'] for r in anchors}==expected
 print(json.dumps(dict(verified=True,source_commit=receipt['source_commit'],
     cpu_seconds=receipt['seconds'],gpu_seconds=0,distinct_inputs=19,raw_frame_hashes=1216,
     processor_references=19,prompts=40,negative_prefixes=10,post_success_prefixes=8)))

@@ -1,6 +1,6 @@
 # OpenDrawer frame-edge contrast
 
-Status: CPU qualification only; no inference allocation launched or reserved.
+Status: CPU qualification PASSED (source43d9ca5d); no inference allocation launched or reserved. See CPU-RESULT.md.
 
 The four-prefix processor reconstruction passed in processor-audit-r3. All256
 sampled frames survived both float32 and bfloat16 reconstruction byte-exactly.
