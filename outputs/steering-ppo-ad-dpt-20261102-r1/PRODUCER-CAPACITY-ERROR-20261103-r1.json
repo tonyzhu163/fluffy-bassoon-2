@@ -1,0 +1,27 @@
+{
+  "format": "producer_chat_failure_observation_v1",
+  "observed_UTC": "2026-11-03T03:24:48+00:00",
+  "thread": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
+  "title": "Pull PPO coordination updates",
+  "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:54",
+  "thread_status": "systemError",
+  "failed_turns": [
+    "01a19f36-d85f-7441-91ad-3df82d70c385",
+    "01a19f67-d4dc-76c2-89da-a3baae91a41b"
+  ],
+  "error": "Selected model is at capacity. Please try a different model.",
+  "scope": "Chat model execution failed. This is not evidence of a scheduler/GPU job failure or scientific PPO performance.",
+  "published_source_authority": {
+    "path": "outputs/robocasa-joint-steering-scale50-20261103-r1/AUTHORITY.json",
+    "sha256": "19e3b55e351d1ec5f8aaaafb7dcf6936a224a84cd54b7a8165d842e6a8073110",
+    "scientific_jobs_submitted": 0,
+    "scientific_admission": false
+  },
+  "published_native_qualification_status": "BOUNDED_QUALIFICATION_PLAN_NOT_SUBMITTED",
+  "producer_last_observed_action": "Git bundle creation failed exit128 after committing/pushing CPU qualification and optional metrics. Preserve owner changes; no downstream takeover or duplicate launch.",
+  "recipe_and_budget_unchanged": true,
+  "source_binding": null,
+  "student_fits": {},
+  "native_curves": {},
+  "response": "Notify once of chat capacity failure; owner retry/model choice can restore producer execution. Keep this monitor active; quiet if the same error persists, observe actual recovery/admission/source completion. No message, model override, job launch, test or owner file modification by this monitoring chat."
+}
