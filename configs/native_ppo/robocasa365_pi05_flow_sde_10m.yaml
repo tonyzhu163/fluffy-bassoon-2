@@ -1,0 +1,225 @@
+# Per-task RLinf flow_sde PPO on frozen-VLM pi0.5 Human300, simulator
+# first-success reward, about 10M controls per task on 8 GPUs. Same recipe as
+# robocasa365_opendrawer_pi05_sim_ppo.yaml (the 18-update OpenDrawer run);
+# only horizon, iteration count, execution layout, checkpoint interval and the
+# action ceiling differ. Task and seeds come from the environment and are
+# checked against flow_seeds() by flow_contract(). Run contract:
+# outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PLAN.md
+defaults:
+  - env/robocasa365@env.train
+  - env/robocasa365@env.eval
+  - model/pi0_5@actor.model
+  - weight_syncer/patch_syncer@weight_syncer
+  - hybrid_engines/fsdp@actor.fsdp_config
+  - override hydra/job_logging: stdout
+  - _self_
+
+hydra:
+  run:
+    dir: .
+  output_subdir: null
+  searchpath:
+    - file://${oc.env:RLINF_PATH}/examples/embodiment/config/
+
+cluster:
+  num_nodes: 1
+  component_placement:
+    actor: ${oc.env:ROBOCASA_SIM_PPO_ACTOR_PLACEMENT,0-1}
+    env,rollout: ${oc.env:ROBOCASA_SIM_PPO_ROLLOUT_PLACEMENT,0-7}
+
+runner:
+  task_type: embodied
+  logger:
+    log_path: ${oc.env:ROBOCASA_SIM_PPO_OUTPUT}
+    project_name: robocasa365_flow_sde_10m
+    experiment_name: ${oc.env:ROBOCASA_FLOW_TASK}
+    logger_backends: [tensorboard]
+  # 130 x 128 episodes x 600 = 9,984,000 TRAIN + 2 x 64 x 600 eval controls.
+  max_epochs: 130
+  max_steps: -1
+  use_training_pipeline: false
+  overlap_env_bootstrap: false
+  weight_sync_interval: 1
+  only_eval: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_ONLY_EVAL,false}}
+  val_check_interval: 130
+  save_interval: 10
+  resume_dir: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_RESUME,null}}
+  ckpt_path: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_CKPT,null}}
+
+algorithm:
+  normalize_advantages: true
+  kl_penalty: kl
+  group_size: 1
+  reward_coef: 1.0
+  reward_type: chunk_level
+  logprob_type: chunk_level
+  entropy_type: token_level
+  update_epoch: 4
+  adv_type: gae
+  loss_type: actor_critic
+  loss_agg_func: token-mean
+  kl_beta: 0.0
+  entropy_bonus: 0
+  clip_ratio_high: 0.2
+  clip_ratio_low: 0.2
+  clip_ratio_c: 3.0
+  value_clip: 0.2
+  huber_delta: 10.0
+  gamma: 0.99
+  gae_lambda: 0.95
+  filter_rewards: false
+  rewards_lower_bound: 0.1
+  rewards_upper_bound: 0.9
+
+env:
+  group_name: EnvGroup
+  train:
+    # 128 episodes per policy version, as the recipe's 32 x 4. Envs per GPU and
+    # rounds are execution only (flow_contract derives seeds for any layout).
+    rollout_epoch: ${oc.decode:${oc.env:ROBOCASA_FLOW_ROUNDS,1}}
+    total_num_envs: ${oc.decode:${oc.env:ROBOCASA_FLOW_TRAIN_ENVS,128}}
+    seed: ${oc.decode:${oc.env:ROBOCASA_FLOW_TRAIN_SEED}}
+    split: target
+    task_soup: atomic_seen
+    task_filter: ['${oc.env:ROBOCASA_FLOW_TASK}']
+    task_mode: atomic
+    task_sampling_strategy: random
+    # First success: terminate at success, +1 on that step (use_rel_reward),
+    # later chunks masked by RLinf. All envs still step the full 600.
+    auto_reset: false
+    ignore_terminations: false
+    use_rel_reward: true
+    episode_horizon_source: max_episode_steps
+    max_episode_steps: 600
+    max_steps_per_rollout_epoch: 600
+    reward_coef: ${algorithm.reward_coef}
+    group_size: ${algorithm.group_size}
+    action_space:
+      env_action_dim: 12
+      gripper_index: 6
+      base_mode_index: 11
+      binarize_gripper_control: true
+      binarize_base_mode_control: true
+    init_params:
+      camera_heights: 256
+      camera_widths: 256
+  eval:
+    rollout_epoch: 1
+    total_num_envs: 64
+    seed: ${oc.decode:${oc.env:ROBOCASA_FLOW_EVAL_SEED}}
+    split: target
+    task_soup: atomic_seen
+    task_filter: ['${oc.env:ROBOCASA_FLOW_TASK}']
+    task_mode: atomic
+    task_sampling_strategy: ordered
+    use_fixed_reset_state_ids: true
+    auto_reset: false
+    # Full 600 steps so both success_once and success_at_end are logged.
+    ignore_terminations: true
+    episode_horizon_source: max_episode_steps
+    max_episode_steps: 600
+    max_steps_per_rollout_epoch: 600
+    group_size: 1
+    is_eval: true
+    action_space:
+      env_action_dim: 12
+      gripper_index: 6
+      base_mode_index: 11
+      binarize_gripper_control: true
+      binarize_base_mode_control: true
+    init_params:
+      camera_heights: 256
+      camera_widths: 256
+    video_cfg:
+      save_video: true
+      info_on_video: false
+      video_base_dir: ${runner.logger.log_path}/video/eval
+
+rollout:
+  group_name: RolloutGroup
+  generation_backend: huggingface
+  recompute_logprobs: false
+  enable_offload: false
+  pipeline_stage_num: 1
+  model: ${actor.model}
+
+actor:
+  group_name: ActorGroup
+  training_backend: fsdp
+  # 128 episodes x 12 H50 chunks = 1,536 samples/iteration:
+  # 6 minibatches x 4 epochs = 24 optimizer steps.
+  micro_batch_size: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_MICRO_BATCH,16}}
+  global_batch_size: 256
+  seed: 1234
+  enable_offload: false
+  model:
+    model_path: ${oc.env:ROBOCASA_PI05_TORCH_MODEL}
+    pi05: true
+    precision: null
+    num_action_chunks: 50
+    action_dim: 12
+    num_steps: 10
+    add_value_head: true
+    openpi:
+      task: rl
+      config_name: pi05_robocasa365_pretrain_human300
+      action_horizon: 50
+      action_chunk: 50
+      noise_method: flow_sde
+      noise_level: 0.3
+      train_expert_only: true
+      detach_critic_input: true
+      value_after_vlm: false
+      model_action_dim: 32
+      action_env_dim: 12
+      num_images_in_input: 3
+      discrete_state_input: true
+      max_token_len: 200
+      torch_compile: false
+    openpi_data:
+      norm_stats_path: ${oc.env:ROBOCASA_PI05_NATIVE_NORM}
+      state_space: 16d
+      image_space: 3views
+      action_space: 12d
+      extra_delta_transform: false
+      use_quantile_norm: false
+      pad_before_normalization: true
+  optim:
+    lr: 5.0e-6
+    value_lr: 1.0e-4
+    adam_beta1: 0.9
+    adam_beta2: 0.95
+    adam_eps: 1.0e-8
+    weight_decay: 0.01
+    clip_grad: 1.0
+    critic_warmup_steps: 0
+  fsdp_config:
+    strategy: fsdp
+    sharding_strategy: no_shard
+    gradient_checkpointing: false
+    mixed_precision:
+      param_dtype: null
+      reduce_dtype: null
+      buffer_dtype: null
+
+reward:
+  use_reward_model: false
+critic:
+  use_critic_model: false
+
+# Boundary/history sidecars for the unmodified native PPO/Flow-SDE learner.
+native_pilot:
+  output: ${oc.env:ROBOCASA_SIM_PPO_OUTPUT}
+  accounting_root: ${oc.env:ROBOCASA_SIM_PPO_ACCOUNTING}
+  world_size: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_WORLD_SIZE,8}}
+  # Nominal 10,060,800 policy controls + 2,146,304 reset reserve; checked by
+  # flow_contract. A retry under the same accounting root shares this ceiling.
+  maximum_actions: 12210000
+  # Storage policy (PLAN F7): full | scalars; actor batch fields to drop.
+  sampling_record: ${oc.env:ROBOCASA_FLOW_SAMPLING_RECORD,full}
+  actor_batch_drop: []
+  global_action_escrow: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_GLOBAL_ESCROW,false}}
+  attempt: ${oc.env:TASK_ATTEMPT}
+  deadline_unix: ${oc.decode:${oc.env:TASK_DEADLINE}}
+  before_reference: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_BEFORE_REFERENCE,null}}
+  before_reference_sha256: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_BEFORE_SHA256,null}}

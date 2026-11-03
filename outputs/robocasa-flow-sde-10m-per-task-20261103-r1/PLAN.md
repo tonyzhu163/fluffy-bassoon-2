@@ -67,14 +67,34 @@ unless the row says otherwise.
 | Horizon | **600** (was 400) → 1,536 chunk samples/iteration, global batch 256, 4 epochs = **24** optimizer steps/iteration (was 16) |
 | Iterations | **130** → 16,640 TRAIN episodes, 9,984,000 TRAIN controls |
 | Eval | same 64 fixed cases per task before and after, flow ODE, full 600 controls (76,800 controls) |
-| Execution layout | 8 env/rollout ranks; envs per GPU chosen by the Q1 capacity check without changing 128 episodes/iteration |
+| Execution layout | 8 env/rollout ranks, default **16 envs/GPU × 1 rollout epoch** (128 × 1); 64 × 2 and 32 × 4 are the same science (see Layout) |
 | Actor ranks | 2, the qualified rank-local GAE normalization (moving to 8 changes advantage normalization; not adopted) |
 | Checkpoints | full DCP + worker sidecars every **10** iterations and at 130 (~0.7 GB each) |
-| Seeds | TRAIN `210100 + task_index·100000 + global episode index`; eval `410100 + task_index·1000` (disjoint, recorded) |
+| Seeds | portfolio task number x (OpenDrawer 1 … CoffeeSetupMug 5): TRAIN `2,000,000 + 100,000·x + episode index`, before/after eval `600100 + 10,000·x` (`flow_seeds`); disjoint from the 1x/4x/5x/7x panels |
 
-Per task: about 10.06M controls, about 15 h wall and about 120 GPU-h.
-That projects from the prior 8-GPU iteration (~270 s per 51,200 controls), so
-re-measure it in Q1. Five tasks are about 600 GPU-h. No action cap applies (human,
+Per task: about 10.06M controls. At the old 4 envs/GPU layout this would be
+~15 h wall / ~120 GPU-h. The 16-env layout should roughly halve that (see
+Layout); Q1 measures it. Five tasks: ~300–600 GPU-h.
+
+## Layout: why 128 episodes per update, and rollout epochs 1/2/4
+
+Episodes per policy version = total envs × rollout epochs. RLinf collects all
+rollout epochs with one policy and then updates once, so 128 × 1, 64 × 2 and
+32 × 4 are the same batch from the same policy; only wall time differs. The
+seed formula now gives the same 16,640 TRAIN cases for all three (tested).
+One round of 16 envs/GPU is fastest: measured single-GPU collection was
+83/139/151/156 controls/s at 8/16/32/48 lanes, against ~35/s per GPU at the
+old 4 lanes. Those numbers come from our batched collector, not the native
+RLinf workers, so Q1 re-measures them.
+
+48 envs × 8 GPUs = 384 episodes per update would be a recipe change, not a
+speed-up. It gives ~12% more throughput than 16/GPU, but only 43 policy
+versions at 10M instead of 130, which is coarser learning histories for AD.
+It also needs 72 SGD steps per batch at the fixed minibatch of 256 (more
+off-policy) or a 3× larger minibatch (one third of the optimizer steps).
+And it does not fit memory: 48 lanes peaked at ~76 GiB, while the actor
+colocated on GPUs 0–1 already peaks at ~35 GiB, against 96 GiB per card.
+16 lanes peaked at ~29 GiB, which fits beside the actor. No action cap applies (human,
 2026-11-03); the journal still charges every control.
 
 ## Data retained per task
@@ -89,6 +109,23 @@ re-measure it in Q1. Five tasks are about 600 GPU-h. No action cap applies (huma
 | DPT | final teacher checkpoint; labels queried offline later | saved at 130 |
 | diagnostics | old log-prob, value, advantage, return, mask per sample | saved in actor batch |
 | optional | full 11-state flow chain, actor-batch images | saved, duplicated; see storage |
+
+## Fix status (2026-11-03)
+
+F1–F6 are fixed on `main` and covered by CPU tests in
+`tests/test_robocasa_flow_ppo.py`. The new config is
+[`robocasa365_pi05_flow_sde_10m.yaml`](../../configs/native_ppo/robocasa365_pi05_flow_sde_10m.yaml);
+`flow_contract()` derives the horizon, schedule, seeds, step count and action
+ceiling from it, and the driver refuses `kl_beta != 0`. For F7, the storage
+switches exist (`sampling_record: full|scalars`, `actor_batch_drop`); their
+defaults keep everything until Q1 measures the bytes. F8 is open: the wall
+clock is set by the launch command, and the resume path is generalized but not
+yet exercised. Still to do: run the RLinf-dependent tests on allocated Linux,
+and the GPU checks C1–C3.
+
+Launch per task: `ROBOCASA_FLOW_TASK=<task>`, plus
+`ROBOCASA_FLOW_TRAIN_SEED` / `ROBOCASA_FLOW_EVAL_SEED` from `flow_seeds(task)`.
+Use a fresh `ROBOCASA_SIM_PPO_ACCOUNTING` root per task.
 
 ## Pre-launch static audit
 
@@ -174,8 +211,8 @@ read it there.
    reviewer reads the diff.
 2. **Q1 per task, on its 8 GPUs.** GPU probe in the job step; 64-case before
    panel (admission 5–70%); one training iteration with C1–C3; bytes per
-   component. On the first task only, measure throughput at 4/8/16 envs per
-   GPU and pick the layout.
+   component. Use the 16 envs/GPU default; if memory or CPU fails, fall back
+   to 64 × 2 (same science).
 3. **Q2 audit.** Read the Q1 artifacts, fix the storage policy, then launch.
    Each Q1 iteration counts as iteration 1 of its run; there is never an extra
    iteration.
