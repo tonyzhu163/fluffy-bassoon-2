@@ -1,0 +1,77 @@
+{
+  "status": "IMPLEMENTED_LINUX_OFFLINE_QUALIFIED_ONLINE_ACCESS_PENDING",
+  "checked_Shanghai": "2026-11-03T11:10:29+08:00",
+  "one_run_per_independent_arm": true,
+  "shared_group": "joint-steering-scale50-20261103-r1",
+  "training_every_update": [
+    "actor_loss",
+    "critic_loss",
+    "total_loss",
+    "entropy",
+    "steering_std_mean/min/max",
+    "analytic_old_behavior_joint_gaussian_KL_summed_across_all_coefficients",
+    "sampled_approximate_KL",
+    "clip_fraction",
+    "explained_variance",
+    "return_mean/std",
+    "advantage_mean/std",
+    "gradient_norm_mean/max",
+    "learning_rate",
+    "actual_optimizer_steps",
+    "epochs_started/completed",
+    "samples_processed",
+    "valid_chunk_fraction",
+    "coefficient_RMS/saturation",
+    "positive/negative_reward_counts",
+    "producer_policy_version"
+  ],
+  "DEV_updates": [
+    0,
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50
+  ],
+  "DEV_metrics": [
+    "per_task_first_success_and_final_success",
+    "equal_weight_five_task_macro",
+    "paired_baseline_change",
+    "task_stratified_paired_bootstrap_CI",
+    "exploratory_exact_p_value"
+  ],
+  "resource_metrics": [
+    "complete_boundary_throughput",
+    "collection_plus_learning_seconds",
+    "GPU_memory_and_utilization_per_allocated_device",
+    "container_RAM_current/peak",
+    "PFS_free_storage",
+    "actual_train/eval_physical_controls",
+    "unresolved_call_count",
+    "remaining_GPU_hours",
+    "measured_total_GPU_hour_projection"
+  ],
+  "training_curve_semantics": "TRAIN success at updatek describes the stochastic behavior policyk-1; DEV at updatek evaluates deterministic checkpointk. DEVpvalues are exploratory repeated monitoring, final fixedcheckpoint50 TEST separate.",
+  "KL_semantics": "Exact diagonal-Gaussian KL(old behavior||current), summed across32/1152coordinates. It is per-update behavior drift, not cumulative drift from the original frozen motor.",
+  "local_authority": [
+    "checkpoints",
+    "metrics/event-*.json",
+    "PROGRESS.json",
+    "metrics.jsonl"
+  ],
+  "WandB": {
+    "entity": "tonyzoo-brown-university",
+    "project": "fluffy-bassoon-2",
+    "online_backend_verified": false,
+    "current_mode": "offline",
+    "backend_issue": "Both authenticated GraphQL and unauthenticated publicGET returnHTTP403HTML on Baige; key validity is unresolved. No routing/security changes or alternate-host guessing.",
+    "privacy": "Explicit scalar/config allowlist; no source/checkpoints/videos/observations/native_env/credentials exported. Machine-local credential read only in CPU exporter process when online is explicitly admitted.",
+    "resume": "Stable persisted runID; local JSONL remains independent of SDK delivery.",
+    "failure": "Exporter failures are nonfatal and cannot replay/stop scientific training."
+  }
+}

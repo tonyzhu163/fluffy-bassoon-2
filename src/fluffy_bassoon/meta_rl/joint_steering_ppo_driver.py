@@ -381,7 +381,7 @@ def run_master(run, profile, *, deadline, resume=False):
             reference = _save(path, saved)
             _save(run / "checkpoint-latest.pt", saved)
             status.update(checkpoint=reference, escrow=escrow, elapsed_seconds=elapsed,
-                          completed_events=cursor, total_events=len(schedule), resources=resource_snapshot())
+                          completed_events=cursor, total_events=len(schedule), resources=resource_snapshot(run))
             status["collection_and_learning_seconds"] = elapsed
             status["elapsed_seconds"] = time.time() - started
             measured_seconds[phase][-1] = status["elapsed_seconds"]

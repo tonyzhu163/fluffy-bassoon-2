@@ -29,6 +29,8 @@ def scalar_metrics(status):
     """An explicit scalar allowlist; no recursive export of an arbitrary profile."""
     phase = status["phase"]
     result = {"ppo/update": status["iteration"], "event/sequence": status["sequence"]}
+    if phase == "train":
+        result["train/behavior_policy_version"] = status["iteration"] - 1
     def add(name, value):
         if isinstance(value, (int, float)) and math.isfinite(value):
             result[name] = value
@@ -76,7 +78,7 @@ def scalar_metrics(status):
         for name, value in zip(("ci_low", "ci_high"), row.get("paired_task_stratified_bootstrap_95ci", [])):
             add("dev/paired/" + metric + "/" + name, value)
     resources = status.get("resources", {})
-    for name in ("container_RAM_GiB", "container_peak_RAM_GiB"):
+    for name in ("container_RAM_GiB", "container_peak_RAM_GiB", "storage_free_GiB"):
         add("resources/" + name, resources.get(name))
     for index, row in enumerate(resources.get("GPUs", [])):
         for key in ("memory_used_MiB", "utilization_percent"):
@@ -84,8 +86,13 @@ def scalar_metrics(status):
     return result
 
 
-def resource_snapshot():
+def resource_snapshot(directory):
     result = {}
+    try:
+        storage = os.statvfs(directory)
+        result["storage_free_GiB"] = storage.f_bavail * storage.f_frsize / 2**30
+    except OSError:
+        pass
     for filename, name in (("memory.current", "container_RAM_GiB"),
                            ("memory.peak", "container_peak_RAM_GiB")):
         try:
