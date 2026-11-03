@@ -16,27 +16,30 @@
     "memory_controls": {
       "thread_id": "01a19bef-232f-7960-ab6d-7ce1539b6685",
       "title": "Improve evaluation and training",
-      "cursor": "143ed4de-4086-4c7d-8526-8992e648a4bd:11",
-      "state": "Owner reports CPU qualification passed for all11 memory prefixes,48 missing episodes and1052 carried records; one-GPU continuation submission in progress, no verified launch or first episode yet.",
+      "cursor": "143ed4de-4086-4c7d-8526-8992e648a4bd:14",
+      "state": "r3 failed before worker/simulator execution because CUDA selector was omitted;1052 endpoints intact. Coordinator reviewed diagnosis and authorized scoped fresh r4 correction under existing human task; owner proceeding after CPU preflight, no r4 launch verified yet.",
       "recovery_job_id": null,
       "verified_collected_endpoints": 1052,
       "required_collected_endpoints": 1100,
       "required_combined_endpoints": 2000,
-      "remaining_GPU_seconds": 23520,
-      "evidence": "outputs/opendrawer-memory-controls-20261102-r2/TERMINAL.md"
+      "remaining_GPU_seconds": 23433,
+      "evidence": "outputs/opendrawer-memory-controls-20261103-r3/TERMINAL.md",
+      "failed_recovery_job_id": "job-tjh32aj7mv5x",
+      "conservative_GPU_seconds_charged": 62967,
+      "next_run": "opendrawer-memory-controls-20261103-r4"
     },
     "flora_reward": {
       "thread_id": "01a19bef-b16f-70e2-ad86-9140e3b360ed",
       "title": "Fix Flora reward and unblock gates",
-      "cursor": "520aa979-d22d-4944-a890-27bd974a6515:8",
-      "state": "Bounded900-second CPU processor audit recovery executing; processor result pending. Review distinguishes ever-success from terminal failure labels; no candidate promoted.",
-      "evidence": "outputs/robocasa-flora-drawer-processor-audit-20261103-r2/PLAN.md"
+      "cursor": "520aa979-d22d-4944-a890-27bd974a6515:9",
+      "state": "Owner reports fresh r3 CPU processor audit passed256frame byte round trips includingbfloat16; passing export/hash verification and result publication requested, still pending independent coordinator verification. Failed r2 normalizer tuple assertion preserved; no reward promoted.",
+      "evidence": "outputs/robocasa-flora-drawer-processor-audit-20261103-r2/FAILURE.json"
     },
     "steering_ppo": {
       "thread_id": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
       "title": "Pull PPO coordination updates",
-      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:53",
-      "state": "Owner reports 43 affected Linux tests and logger checks passed. Scale/optimizer and actual48-lane worker qualification still precede scientific launch; offline/local logging does not wait for W&B access.",
+      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:60",
+      "state": "Model-service capacity interrupted owner before qualification launch. Same-model continuation accepted; owner active again, resuming bounded native qualification.43Linux tests/logger checks preserved; no scientific job/update or DEV milestone yet.",
       "scientific_job_ids": {},
       "arms": [
         "velocity",
@@ -62,12 +65,13 @@
         45,
         50
       ],
-      "authority": "outputs/robocasa-rollout-capacity-3248-20261103-r1/BUDGET-INCREASE-20261103.json"
+      "authority": "outputs/robocasa-rollout-capacity-3248-20261103-r1/BUDGET-INCREASE-20261103.json",
+      "model_capacity_interruption_recovered": true
     },
     "downstream_histories": {
       "thread_id": "01a199fb-3586-7171-bd20-52fa70e5378c",
       "title": "Explain DPT context/query targets",
-      "cursor": "5e721a0b-3229-4c1f-beee-e2194e124fbd:52",
+      "cursor": "5e721a0b-3229-4c1f-beee-e2194e124fbd:53",
       "state": "Producer preparation continues; qualified completed exact PPO histories remain pending, so no downstream fit starts."
     }
   },
@@ -77,7 +81,9 @@
   },
   "delivered_status_events": [
     "wandb_project_verified",
-    "wandb_baige_api403_offline_fallback"
+    "wandb_baige_api403_offline_fallback",
+    "memory_r3_startup_failure_job-tjh32aj7mv5x_reviewed_r4",
+    "producer_model_capacity_interruption_resumed"
   ],
   "wandb": {
     "status": "BAIGE_API_HTTP403_LOCAL_OFFLINE_LOGGING_ACTIVE",
@@ -108,5 +114,5 @@
     "Flora repair does not gate simulator-reward steering PPO.",
     "Do not duplicate owner jobs, change their active worktrees, or expand scope/budgets silently."
   ],
-  "last_check_Shanghai": "2026-11-03T11:06:14+08:00"
+  "last_check_Shanghai": "2026-11-03T11:30:14+08:00"
 }
