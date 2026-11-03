@@ -9,7 +9,8 @@
     "Coordinate memory-control recovery and full results, Flora reward diagnosis, and velocity/all-layer KV execution.",
     "Explicit confirmation: yes can we do that then?",
     "Monitor both 48-environment workers and evaluate every five PPO iterations for ten visibility points.",
-    "Assess connecting Weights & Biases."
+    "Assess connecting Weights & Biases.",
+    "User supplied a credential for the connection and selected project fluffy-bassoon-2; credential value is excluded from these records."
   ],
   "owners": {
     "memory_controls": {
@@ -34,8 +35,8 @@
     "steering_ppo": {
       "thread_id": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
       "title": "Pull PPO coordination updates",
-      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:47",
-      "state": "Reconciling old four-lane/80-episode runner with finalized recipe; scale, optimizer and actual-worker qualification precede scientific launch.",
+      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:53",
+      "state": "Owner reports 43 affected Linux tests and logger checks passed. Scale/optimizer and actual48-lane worker qualification still precede scientific launch; offline/local logging does not wait for W&B access.",
       "scientific_job_ids": {},
       "arms": ["velocity", "kv_all_layers"],
       "updates_per_arm": 50,
@@ -59,13 +60,27 @@
     "velocity": [],
     "kv_all_layers": []
   },
+  "delivered_status_events": ["wandb_project_verified", "wandb_baige_api403_offline_fallback"],
   "wandb": {
-    "status": "OWNER_IMPLEMENTING_OPTIONAL_LOGGER_RUNTIME_AND_ACCOUNT_CHECK_PENDING",
+    "status": "BAIGE_API_HTTP403_LOCAL_OFFLINE_LOGGING_ACTIVE",
     "implementation_owner": "steering_ppo",
+    "entity": "tonyzoo-brown-university",
+    "project": "fluffy-bassoon-2",
+    "project_url": "https://forge.coreweave.com/wandb/tonyzoo-brown-university/fluffy-bassoon-2",
+    "browser_project_access_verified": true,
+    "credential_installed_on_Baige_mode0600": true,
+    "temporary_local_transfer_copy_removed": true,
+    "SDK_version_on_Baige": "0.25.0",
+    "backend": "https://api.wandb.ai",
+    "authenticated_GraphQL_HTTP_status": 403,
+    "public_unauthenticated_HTTP_status_reported_by_owner": 403,
+    "key_validity": "Not determined; the public endpoint is also denied.",
+    "online_logging_verified": false,
     "online_run_urls": {},
     "design": "One master-side metrics run per arm with a common group, explicit update/action axes, local durable metrics authoritative and remote logging nonfatal.",
     "uploads": "Allowlisted scalar metrics and non-secret configuration only; no automatic source, console, raw observations, video or model uploads.",
-    "fallback": "Offline logging if no configured authorized account/project or outbound access; essential training does not wait for dashboard setup."
+    "fallback": "Owner reports local/offline logging active; essential training does not wait for dashboard setup.",
+    "connection_evidence": "outputs/research-coordination-20261103-r1/WANDB-CONNECTION.json"
   },
   "notification_policy": "Report new verified five-update DEV milestones, first advancement, meaningful results, failure, genuine stalls, completion or required human action; remain quiet otherwise.",
   "invariants": [
