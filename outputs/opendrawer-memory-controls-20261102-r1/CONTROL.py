@@ -49,6 +49,16 @@ def reusable(arm, cohort, attempt):
     return attempt == 1 if arm == 'reset' else attempt <= (4 if cohort == 'ID' else 3)
 
 
+def pending_keys(binding, rank=None, family=None, case=None):
+    """Keep original logical ranks and streams even on a smaller recovery allocation."""
+    cases = TASKS if rank is None else TASKS[rank::WORLD]
+    return [recovery_key(f, a, c, i, k)
+        for f in binding['models'] if family is None or f == family
+        for c, i in cases if case is None or (c, i) == case
+        for a in binding['arms'] for k in range(1, 6)
+        if not reusable(a, c, k) and recovery_key(f, a, c, i, k) not in binding['recovered']]
+
+
 def bind():
     import torch
     assert sys.platform == 'linux' and not torch.cuda.is_available()
@@ -83,16 +93,31 @@ def bind():
             pairing=b['pairing'], episodes=episodes)
     assert models['ad']['pairing'] == models['dpt']['pairing']
     assert models['ad']['assembly'] == models['dpt']['assembly']
-    recovered = {}; recovered_binding = None; recovered_controls = 0
+    recovered = {}; recovered_binding = None; recovered_controls = 0; recovered_sources = {}
     if os.environ.get('TASK_MEMORY_REUSE'):
         previous = Path(os.environ['TASK_MEMORY_REUSE'])
         assert previous.resolve() != OUT.resolve()
         recovered_binding = ref(previous/'binding.json')
         prior = read_ref(recovered_binding)
         assert prior['models'] == models and prior['cases'] == [list(x) for x in TASKS]
+        recovered_sources.update(prior.get('recovered_sources', {}))
+        if prior.get('recovered_binding'):
+            ancestor = read_ref(prior['recovered_binding'])
+            recovered_sources[ancestor['source']] = prior['recovered_binding']
+        recovered_sources[prior['source']] = recovered_binding
+        for source, reference in recovered_sources.items():
+            assert read_ref(reference)['source'] == source
+        candidates = dict(prior.get('recovered', {}))
         for path in sorted(previous.glob('episodes/*/*/*/*/*/result.json')):
-            r = json.loads(path.read_text()); f, a, c, i, k = (r[x] for x in ('family','arm','cohort','index','attempt'))
-            assert r['complete'] and r['source'] == prior['source'] and not reusable(a, c, k)
+            row = json.loads(path.read_text())
+            key = recovery_key(*(row[x] for x in ('family','arm','cohort','index','attempt')))
+            assert key not in candidates, 'Never replace a carried endpoint'
+            assert row['source'] == prior['source']
+            candidates[key] = ref(path)
+        for key, reference in candidates.items():
+            r = read_ref(reference); f, a, c, i, k = (r[x] for x in ('family','arm','cohort','index','attempt'))
+            assert key == recovery_key(f, a, c, i, k)
+            assert r['complete'] and r['source'] in recovered_sources and not reusable(a, c, k)
             assert r['candidate'] == models[f]['selected']['candidate']
             old = read_ref(models[f]['episodes'][f'{c}-{i:03d}'][str(k)])
             assert r['original'] == models[f]['episodes'][f'{c}-{i:03d}'][str(k)]
@@ -100,13 +125,13 @@ def bind():
             assert sha(r['records']['path']) == r['records']['sha256']
             assert int(read_ref(r['truth'])['simulator_final_success']) == r['success']
             assert r['initial_pairing']['report']['matched']
-            recovered[recovery_key(f, a, c, i, k)] = ref(path)
+            recovered[key] = reference
             recovered_controls += horizon(c)
     assert BASE['clean'](CODE)
     write(OUT / 'binding.json', dict(source=BASE['head'](CODE), models=models, cases=TASKS,
         world=WORLD, arms=['reset', 'window64'], fresh_episodes=1100-len(recovered),
         fresh_policy_controls=915000-recovered_controls, recovered=recovered,
-        recovered_binding=recovered_binding, historical_horizons=horizons,
+        recovered_binding=recovered_binding, recovered_sources=recovered_sources, historical_horizons=horizons,
         reused_endpoints=900, evaluation_endpoints=2000, optimizer=None,
         original_runtime_core=OLD['CORE_PIN'], training_window=64,
         memory_window='64 raw input tokens, including the current query; recompute after eviction'))
@@ -115,6 +140,11 @@ def bind():
 
 
 def worker(rank, binding, deadline):
+    if not pending_keys(binding, rank):
+        write(OUT / 'workers' / f'rank-{rank:02d}.json', dict(complete=True, rank=rank,
+            new_episodes=0, binding=ref(OUT / 'binding.json'), weights_unchanged=True,
+            charged_actions=0, scope='All assigned endpoints verified and carried; no model or simulator loaded'))
+        return
     import multiprocessing as mp
     import imageio.v2 as imageio
     import torch
@@ -146,11 +176,15 @@ def worker(rank, binding, deadline):
     journal = ActionJournal(OUT / 'actions', rank=rank, world=WORLD, attempt=OUT.name, maximum_actions=None)
     completed = 0
     for family, mb in binding['models'].items():
+        if not pending_keys(binding, rank, family):
+            continue
         policy, _ = load_policy(mb['selected']['candidate']['path'],
             expected_sha256=mb['selected']['candidate']['sha256'], device='cuda')
         assert policy.config.context_length == 128
         weights = tensor_hash(policy.state_dict())
         for c, i in TASKS[rank::WORLD]:
+            if not pending_keys(binding, rank, family, (c, i)):
+                continue
             for arm in binding['arms']:
                 actor = HistoryResidualActor(policy, reset_each_episode=arm == 'reset',
                     max_context=64 if arm == 'window64' else None)

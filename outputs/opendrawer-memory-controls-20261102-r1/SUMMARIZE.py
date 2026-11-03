@@ -51,8 +51,13 @@ for family, model in b['models'].items():
                         path = OUT / 'episodes' / family / arm / c / f'case-{i:03d}' / f'p{k}' / 'result.json'
                         r = read_ref(previous) if previous else json.loads(path.read_text())
                         assert r['complete'] and r['family'] == family and r['arm'] == arm
-                        expected_source = read_ref(b['recovered_binding'])['source'] if previous else b['source']
-                        assert r['source'] == expected_source and r['candidate'] == model['selected']['candidate']
+                        if previous:
+                            allowed = b.get('recovered_sources') or {
+                                read_ref(b['recovered_binding'])['source']: b['recovered_binding']}
+                            assert r['source'] in allowed and read_ref(allowed[r['source']])['source'] == r['source']
+                        else:
+                            assert r['source'] == b['source']
+                        assert r['candidate'] == model['selected']['candidate']
                         assert r['original'] == model['episodes'][f'{c}-{i:03d}'][str(k)]
                         assert r['native_case'] == old['native_case'] and r['motor_seeds'] == old['motor_seeds']
                         assert sha(r['records']['path']) == r['records']['sha256']
