@@ -1,0 +1,310 @@
+{
+  "format": "source_budget_guard_pause_observation_v1",
+  "observed_UTC": "2026-11-03 05:45:43 UTC",
+  "producer_cursor": "18018959-3992-4b70-ad1f-11a754359cf0:78",
+  "producer_thread": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
+  "jobs": {
+    "velocity": "job-bxhz4d41ll1k",
+    "kv_all_layers": "job-khwsqhzct9v5"
+  },
+  "readback": [
+    {
+      "arm": "velocity",
+      "top_files": [
+        ".master.lock",
+        "CALIBRATION.json",
+        "CARRIED-ACTION-ACCOUNTING.json",
+        "GPU-ADAM-RECOVERY.json",
+        "GPU-PROBE.json",
+        "METRICS-EXPORT-STATUS.json",
+        "METRICS-EXPORT-STOP",
+        "METRICS-EXPORT.json",
+        "METRICS-EXPORTED.json",
+        "METRICS-IDENTITY.json",
+        "PAUSED.json",
+        "PROFILE.json",
+        "PROGRESS.json",
+        "RELEASED.json",
+        "STOP",
+        "accounting",
+        "banks",
+        "canonical",
+        "checkpoint-latest.pt",
+        "checkpoints",
+        "clock.json",
+        "deadline-unix.txt",
+        "evaluations",
+        "job-console.log",
+        "metrics",
+        "metrics-exporter-console.log",
+        "metrics.jsonl",
+        "optimizer-progress.json",
+        "released-1793684337205547103.json",
+        "wandb",
+        "workers"
+      ],
+      "PROGRESS.json": {
+        "sha256": "456352e90148b101ad54c441ed70ecfe9846659764118a4eac27683e82957574",
+        "data": {
+          "phase": "train",
+          "iteration": 2,
+          "sequence": 5,
+          "last_check_unix": 1793684331.3994033,
+          "checkpoint": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/checkpoints/event-005-train-002.pt",
+            "sha256": "38d665ba6244a8bd1a5017045b1903a6206999515974c6a6d90eefd38b0dc27a"
+          },
+          "escrow": {
+            "format": "joint_steering_action_escrow_v1",
+            "limits": {
+              "train": 11650000,
+              "eval": 1200000
+            },
+            "charged": {
+              "train": 518400,
+              "eval": 346500
+            },
+            "pending": {}
+          },
+          "projected_remaining_seconds": 19170.857728004456,
+          "projected_all_attempt_gpu_hours": 49.3180866294437,
+          "remaining_gpu_hours": 33.55048687299092
+        }
+      },
+      "PAUSED.json": {
+        "sha256": "dbe3f47a5c1088973ff15dd96d3dc3b96f2f32af36e0ec268fa6cd674d6dedd7",
+        "data": {
+          "completed": false,
+          "reason": "measured_budget_decision",
+          "iteration": 2,
+          "sequence": 5,
+          "checkpoint": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/checkpoints/event-005-train-002.pt",
+            "sha256": "38d665ba6244a8bd1a5017045b1903a6206999515974c6a6d90eefd38b0dc27a"
+          },
+          "projected_all_attempt_gpu_hours": 49.3180866294437,
+          "approved_arm_gpu_hours": 40,
+          "no_automatic_retry": true
+        }
+      }
+    },
+    {
+      "arm": "kv",
+      "top_files": [
+        ".master.lock",
+        "CALIBRATION.json",
+        "CARRIED-ACTION-ACCOUNTING.json",
+        "GPU-ADAM-RECOVERY.json",
+        "GPU-PROBE.json",
+        "METRICS-EXPORT-STATUS.json",
+        "METRICS-EXPORT-STOP",
+        "METRICS-EXPORT.json",
+        "METRICS-EXPORTED.json",
+        "METRICS-IDENTITY.json",
+        "PAUSED.json",
+        "PROFILE.json",
+        "PROGRESS.json",
+        "RELEASED.json",
+        "STOP",
+        "accounting",
+        "banks",
+        "canonical",
+        "checkpoint-latest.pt",
+        "checkpoints",
+        "clock.json",
+        "deadline-unix.txt",
+        "evaluations",
+        "job-console.log",
+        "metrics",
+        "metrics-exporter-console.log",
+        "metrics.jsonl",
+        "optimizer-progress.json",
+        "released-1793684423162596052.json",
+        "wandb",
+        "workers"
+      ],
+      "PROGRESS.json": {
+        "sha256": "3eca7b2e2df93c902388db87ce30770dae5e8b102bb790de5d2b12efa549f146",
+        "data": {
+          "phase": "train",
+          "iteration": 2,
+          "sequence": 5,
+          "last_check_unix": 1793684407.5767052,
+          "checkpoint": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/checkpoints/event-005-train-002.pt",
+            "sha256": "b4c1d873a4b6d694ee80e538f93a357570db30eddfd7d3ec78175cec6e5653f4"
+          },
+          "escrow": {
+            "format": "joint_steering_action_escrow_v1",
+            "limits": {
+              "train": 11650000,
+              "eval": 1200000
+            },
+            "charged": {
+              "train": 518400,
+              "eval": 346500
+            },
+            "pending": {}
+          },
+          "projected_remaining_seconds": 20397.27271413803,
+          "projected_all_attempt_gpu_hours": 52.050028252071805,
+          "remaining_gpu_hours": 33.54391193654802
+        }
+      },
+      "PAUSED.json": {
+        "sha256": "035e524cec6372455bd9d0927e8268200bff6354851a86889b18a1bca73c05c5",
+        "data": {
+          "completed": false,
+          "reason": "measured_budget_decision",
+          "iteration": 2,
+          "sequence": 5,
+          "checkpoint": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/checkpoints/event-005-train-002.pt",
+            "sha256": "b4c1d873a4b6d694ee80e538f93a357570db30eddfd7d3ec78175cec6e5653f4"
+          },
+          "projected_all_attempt_gpu_hours": 52.050028252071805,
+          "approved_arm_gpu_hours": 40,
+          "no_automatic_retry": true
+        }
+      }
+    }
+  ],
+  "shadow_and_release_receipts": [
+    {
+      "arm": "velocity",
+      "GPU-ADAM-RECOVERY.json": {
+        "sha256": "3a60029961a5be4915bfdbb9ca710bdede36cb894ef03ca630b9bc418aa41998",
+        "data": {
+          "completed": true,
+          "device": "cuda:0",
+          "feature_dim": 2064,
+          "steering_dim": 32,
+          "next_update_exact": true,
+          "live_learner_unchanged": true,
+          "optimizer_steps_each": 3,
+          "final_metrics": {
+            "loss": -0.08811026811599731,
+            "actor_loss": -0.16794876754283905,
+            "critic_loss": 0.15967699885368347,
+            "entropy": 23.214406967163086,
+            "approximate_kl": 0.10176657140254974,
+            "clip_fraction": 0.7916666865348816,
+            "joint_gaussian_kl": 0.030451390892267227,
+            "explained_variance": -15.616308212280273
+          },
+          "state_sha256": "c4f1a2324359eb1cea51fc86c2c6311c020449ce683c32ddde6073b897cafc41",
+          "physical_controls": 0,
+          "scope": "Two discarded numerical shadow updates on synthetic rewards, outside scientific PPO"
+        }
+      },
+      "RELEASED.json": {
+        "sha256": "dfb7a246c9e19c4761a21c10d028d3bf732e10aa75c8ce826c8e74ab5da9eca9",
+        "data": {
+          "hostname": "job-bxhz4d41ll1k-master-0",
+          "all_children_released": true,
+          "child_exit_codes": {
+            "846": 0,
+            "847": 0,
+            "848": 0,
+            "849": 0,
+            "850": 0,
+            "851": 0,
+            "852": 0,
+            "853": 0
+          },
+          "profile_sha256": "448a41813ae445eae19598f04fe1a33827ba2922af9d912c660f83aed19e0877",
+          "ended_unix": 1793684337.2055442
+        }
+      },
+      "clock.json": {
+        "sha256": "1af46a80545341553ebf971e12ddf2793999e1b14dd623511eb0ed30f2273caf",
+        "data": {
+          "started_unix": 1793682851,
+          "finished_unix": 1793684339,
+          "allocated_gpus": 8,
+          "process_gpu_seconds": 11904,
+          "exit_code": 0,
+          "allocation_release_not_included": true
+        }
+      }
+    },
+    {
+      "arm": "kv",
+      "GPU-ADAM-RECOVERY.json": {
+        "sha256": "975d90571d1a00ccd270f02f64fabaefe99d95172631ad81a6cef29477e5969e",
+        "data": {
+          "completed": true,
+          "device": "cuda:0",
+          "feature_dim": 2064,
+          "steering_dim": 1152,
+          "next_update_exact": true,
+          "live_learner_unchanged": true,
+          "optimizer_steps_each": 10,
+          "final_metrics": {
+            "loss": -0.06356574594974518,
+            "actor_loss": -0.16535013914108276,
+            "critic_loss": 0.20356878638267517,
+            "entropy": 836.0778198242188,
+            "approximate_kl": 1.4437412023544312,
+            "clip_fraction": 0.9583333730697632,
+            "joint_gaussian_kl": 0.004661431536078453,
+            "explained_variance": -4.792896747589111
+          },
+          "state_sha256": "efcf9f0c62273d929669fbf83e1f7772a3d4459e94f9a725a6acf8880f087c60",
+          "physical_controls": 0,
+          "scope": "Two discarded numerical shadow updates on synthetic rewards, outside scientific PPO"
+        }
+      },
+      "RELEASED.json": {
+        "sha256": "b5895926b316970984e6184b961853f4eb57294bb590f9be87d22003e30122b5",
+        "data": {
+          "hostname": "job-khwsqhzct9v5-master-0",
+          "all_children_released": true,
+          "child_exit_codes": {
+            "897": 0,
+            "898": 0,
+            "899": 0,
+            "900": 0,
+            "901": 0,
+            "902": 0,
+            "903": 0,
+            "904": 0
+          },
+          "profile_sha256": "490605c3ebca94baae39a08bd74eed3271060e3b5af13519abd771ae457f611b",
+          "ended_unix": 1793684423.1625931
+        }
+      },
+      "clock.json": {
+        "sha256": "35817a17ac70315056ec29a55c014eae72e500e4597ddfff3d3eaca869b6a200",
+        "data": {
+          "started_unix": 1793682847,
+          "finished_unix": 1793684426,
+          "allocated_gpus": 8,
+          "process_gpu_seconds": 12632,
+          "exit_code": 0,
+          "allocation_release_not_included": true
+        }
+      }
+    }
+  ],
+  "scientific_updates_completed_each": 2,
+  "train_episodes_completed_each": 768,
+  "planned_updates_each": 50,
+  "source_complete": false,
+  "source_binding": null,
+  "student_fits": {},
+  "native_student_curves": {},
+  "pause_reason": "measured_budget_decision",
+  "projected_full_source_GPU_hours": {
+    "velocity": 49.3180866294437,
+    "kv_all_layers": 52.050028252071805
+  },
+  "source_budget_GPU_hours_per_arm": 40,
+  "wrapper_and_native_children_release_verified": true,
+  "scheduler_terminal_allocation_receipt_pending": true,
+  "checkpoint_full_payload_verification_pending_owner": true,
+  "known_recovery_qualification": "Both original source jobs have completed CUDA next-update-exact discarded shadow Adam recovery, with live learner unchanged and zero extra physical controls.",
+  "claim_boundary": "Two actual counted source PPO updates and checkpointed pause; not convergence,not intended50-update source completion,not evidence of held-out improvement.",
+  "next_action": "Observe producer-owned full checkpoint/RNG/sampler/Adam/cost/release diagnosis and any explicitly recorded exact-source migration. Do not stop/restart/mutate the owned jobs or shorten source/student goals. Keep all source checkpoints/episodes; await complete scientific sources before student fitting.",
+  "scope_boundary": "A separately discussed1M Flow/direct-action history is a different source/interface and is not substituted into this steering-source goal."
+}
