@@ -1,5 +1,7 @@
 # Current-state recognition before another reward revision
 
+Status: CPU input-closure failure before output creation or model loading. See FAILURE.json; corrected continuation has a new r2 identity.
+
 Owner: chat `01a1a006-2d76-7b13-8660-399c625aee67`.
 Human instruction: “keep fixing these”, following review of the five-task
 Flora-versus-simulator ROC curves and the recommendation to separate native
