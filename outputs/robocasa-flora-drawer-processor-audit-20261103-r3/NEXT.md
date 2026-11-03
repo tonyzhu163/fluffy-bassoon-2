@@ -1,12 +1,15 @@
 # One proposed framing comparison, not another unbounded rewrite search
 
-Status: **not launched; zero new GPU seconds reserved.** The existing directly
-documented ceiling is one GPU for 900 seconds per scoring allocation. It is
-not a remaining campaign balance. Local records preserve a 7,350 worker
-GPU-second prefix/chunk/clause/wording subtotal, excluding earlier terminal
-replays. They do not establish a remaining campaign authorization. Resolve
-that directly authorized replay amount before launching; do not borrow unused
-time from closed allocations or another chat's prefix/factorial budget.
+Status: **not launched; zero new GPU seconds reserved or spent.** Retained
+human authorization covers repeated small failure-focused rubric iterations
+at the existing ceiling of one GPU for 900 seconds per scoring allocation.
+The next trial therefore has a 900 GPU-second maximum, currently unspent;
+this is not a pooled campaign balance. The local 7,350 worker GPU-second
+prefix/chunk/clause/wording subtotal excludes earlier terminal replays and
+is not a statement of whole-campaign spending or remaining funds. Do not
+borrow unused time from closed allocations or another chat's prefix/factorial
+budget. A larger trial, new trajectories, or other expanded scope needs
+separate human authority.
 
 The CPU reconstruction preserves all sampled pixels. The inspected 128
 opening lies near the lower image edge, with its front partly or fully
@@ -61,8 +64,8 @@ vLLM processor output hashes against CPU references during the same scoring
 calls; CPU reconstruction alone did not check old GPU tensors or runtime
 cache reuse. Any mismatch stops the comparison and prevents a rubric claim.
 Check current Baige queue/device/storage and use the in-step GPU probe,
-32CPU/128GiB RAM/16GiB SHM, 15-minute limit and no automatic retry. Do not
-launch with an unresolved remaining replay authorization.
+32CPU/128GiB RAM/16GiB SHM, 15-minute limit and no automatic retry. Keep the next allocation within the existing 900-second small-replay
+authorization; do not infer authority for a larger budget or scope.
 
 A pass only earns the next small validation stage: complete the entire
 45-prefix, ten-video development panel, including the successful cases

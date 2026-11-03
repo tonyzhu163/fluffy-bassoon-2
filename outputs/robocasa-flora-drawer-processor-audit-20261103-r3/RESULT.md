@@ -106,9 +106,11 @@ It retains explicit first-success target/extent criteria and tests only the
 additional claim that a drawer front may move out of frame. Prior generic
 view clarification failed, so this is a hypothesis to falsify, not an expected
 fix. There is no additional GPU launch or reserved GPU budget in this audit.
-The remaining directly authorized campaign replay amount is not established
-by the local records; the existing 900 GPU-second per-allocation ceiling is
-not a pooled balance. Resolve that amount before launching the proposal.
+The next small trial remains within the retained human authorization for
+failure-focused rubric iterations: at most 900 GPU-seconds for that allocation,
+with zero spent or allocated to the proposal so far. Local records establish
+no pooled campaign balance, and none is borrowed from closed allocations or
+another experiment. A larger trial or scope would require separate authority.
 
 Evidence: [passing CPU receipt](RECEIPT.json), [process exit](PROCESS-EXIT.json), [effective processor config](PROCESSOR.json),
 [independent artifact checks](COPIED-HASHES.json), [source hashes](SOURCE-SURVEY.json),
