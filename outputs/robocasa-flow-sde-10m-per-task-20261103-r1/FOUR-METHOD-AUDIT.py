@@ -1,8 +1,10 @@
 """Audit actual saved source payloads on allocated Linux CPU, without model calls."""
 import argparse
+from concurrent.futures import ProcessPoolExecutor
 import gzip
 import hashlib
 import json
+import multiprocessing
 from pathlib import Path
 import time
 
@@ -55,7 +57,7 @@ def observation(value):
         assert image.shape[-3:] == (256, 256, 3)
 
 
-def audit(root, collection):
+def audit(root, collection, tag):
     producing = collection - 1
     contract = json.loads((root / 'flow-contract.json').read_text())
     assert contract['horizon'] == 600
@@ -149,7 +151,8 @@ def audit(root, collection):
         for name in ['advantages', 'returns', 'loss_mask', 'prev_values', 'dones']:
             assert name in batch
     assert len(joins) == 1536 and {(row['episode_id'], row['chunk']) for row in joins} == identities
-    join_path = root.parent / f'FOUR-METHOD-JOIN-{root.name}-i{collection:03d}.json'
+    join_path = root.parent / f'{tag}-JOIN-{root.name}-i{collection:03d}.json'
+    assert not join_path.exists()
     join_path.write_text(json.dumps(dict(completed=True, rows=joins), indent=2) + '\n')
     return dict(task=contract['task'], root=str(root), collection_iteration=collection,
         episodes=128, chunk_samples=1536, post_success_suffix_retained=True,
@@ -161,19 +164,31 @@ def audit(root, collection):
         join_sha256=hashlib.sha256(join_path.read_bytes()).hexdigest())
 
 
+def audit_task(arguments):
+    root, task, tag = arguments
+    torch.set_num_threads(2)
+    torch.set_num_interop_threads(1)
+    stage = 'q1-r2' if task == 'OpenDrawer' else 'q1-r1'
+    rows = [audit(root / task / stage, 1, tag)]
+    production = root / task / 'production-r1'
+    if (production / 'progress.json').exists() and json.loads((production / 'progress.json').read_text())['completed_iterations'] >= 2:
+        rows.append(audit(production, 2, tag))
+    print(json.dumps(dict(task=task, completed=True, segments=len(rows))), flush=True)
+    return rows
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--root', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     assert not args.output.exists()
-    rows = []
-    for task in ['OpenDrawer', 'CloseToasterOvenDoor', 'PickPlaceDrawerToCounter', 'CoffeeSetupMug', 'TurnOffStove']:
-        stage = 'q1-r2' if task == 'OpenDrawer' else 'q1-r1'
-        rows.append(audit(args.root / task / stage, 1))
-        production = args.root / task / 'production-r1'
-        if (production / 'progress.json').exists() and json.loads((production / 'progress.json').read_text())['completed_iterations'] >= 2:
-            rows.append(audit(production, 2))
+    tasks = ['OpenDrawer', 'CloseToasterOvenDoor', 'PickPlaceDrawerToCounter', 'CoffeeSetupMug', 'TurnOffStove']
+    # Five independent audits, two CPU threads each, within the allocated
+    # development container's thirteen CPUs; no GPU visibility/model calls.
+    with ProcessPoolExecutor(max_workers=5, mp_context=multiprocessing.get_context('spawn')) as pool:
+        groups = list(pool.map(audit_task, [(args.root, task, args.output.stem) for task in tasks]))
+    rows = [row for group in groups for row in group]
     result = dict(completed=True, checked_unix=time.time(), audits=rows, new_controls=0, SGD=0,
         ready_methods=['AD', 'DPT', 'DIT', 'in-context IQL'],
         remaining=['Finish and audit all 130 source versions per task',
