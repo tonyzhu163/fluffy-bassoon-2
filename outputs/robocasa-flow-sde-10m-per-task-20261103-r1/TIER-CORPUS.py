@@ -236,7 +236,9 @@ def main():
     parser.add_argument('--restore-probe', type=Path)
     parser.add_argument('--prepared-receipt', type=Path)
     parser.add_argument('--prepared-sha256')
+    parser.add_argument('--resume-reclaim', action='store_true')
     args = parser.parse_args()
+    assert not args.resume_reclaim or args.mode == 'reclaim'
     root, task_root = args.root, args.root / args.task
     assert root.resolve() == Path('/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1')
     assert args.record.resolve().is_relative_to(root.resolve()) and not args.record.exists()
@@ -292,15 +294,51 @@ def main():
     expected_inventory = {name: {k: row[k] for k in ['bytes', 'mtime_ns', 'mode']} for name, row in files.items()}
     prefix_cold = task_root / 'CORPUS-PREFIX-COLD-STORAGE.json'
     removed = set()
+    prefix_removed_count = 0
+    interrupted = None
+    cold = task_root / 'CORPUS-COLD-STORAGE.json'
     if prefix_cold.exists():
         prefix = json.loads(prefix_cold.read_text())
         assert args.mode == 'reclaim' and prefix['reclaim_complete']
         assert prefix['prepared_sha256'] == args.prepared_sha256
         removed = set(prefix['reclaimed_names'])
+        prefix_removed_count = len(removed)
         assert removed <= set(files)
         for name in removed:
             assert 'sampling' not in Path(name).parts and 'checkpoints' not in Path(name).parts
             assert 'environment' in Path(name).parts or 'training-rollouts' in Path(name).parts
+    if args.resume_reclaim:
+        assert args.mode == 'reclaim' and cold.exists()
+        interrupted = json.loads(cold.read_text())
+        assert interrupted['completed'] and not interrupted['reclaim_complete']
+        assert interrupted['prepared_sha256'] == args.prepared_sha256
+        assert interrupted['archive_sha256'] == prepared['archive_sha256']
+        assert interrupted['manifest_sha256'] == prepared['manifest_sha256']
+        assert interrupted['full_corpus_audit_through'] == 130
+        assert interrupted['full_audit_refs'] == audit['refs']
+        # Only already-authorized Torch removals may be absent. Every surviving
+        # native file, including every JSON/journal, still matches its inventory.
+        for name in files:
+            if name in removed or (root / name).exists():
+                continue
+            path = Path(name)
+            assert path.name.endswith(('.pt', '.pt.gz')) and 'checkpoints' not in path.parts
+            removed.add(name)
+        qc = interrupted['qc_archive']
+        assert Path(qc['archive']).resolve().is_relative_to(BOS.resolve())
+        assert Path(qc['manifest']).resolve().is_relative_to(BOS.resolve())
+        assert qc['full_object_readback'] and qc['all_archive_members_hash_compared']
+        assert Path(qc['archive']).stat().st_size == qc['archive_bytes']
+        assert sha(qc['archive']) == qc['archive_sha256']
+        assert sha(qc['manifest']) == qc['manifest_sha256']
+        qc_manifest = json.loads(Path(qc['manifest']).read_text())
+        expected_metadata = {str(p.relative_to(root)) for p in audit['metadata']}
+        assert set(qc_manifest['files']) == expected_metadata
+        for name, item in qc_manifest['files'].items():
+            assert (root / name).stat().st_size == item['bytes']
+            assert sha(root / name) == item['sha256']
+    else:
+        assert not cold.exists(), 'Existing full-reclaim marker requires explicit recovery'
     assert native_inventory(root, task_root, task_root) == {
         name: row for name, row in expected_inventory.items() if name not in removed}
     for name, row in audit['known'].items():
@@ -343,9 +381,12 @@ def main():
         metadata_inventory[str(path.relative_to(root))] = dict(bytes=info.st_size,
             mtime_ns=info.st_mtime_ns, mode=stat.S_IMODE(info.st_mode))
         metadata_known[str(path)] = dict(bytes=info.st_size, sha256=sha(path))
-    qc_path = archive.parent / (args.record.stem + '.qc.tar')
-    qc = stream_archive(root, task_root, metadata_inventory, metadata_known, qc_path,
-                        dict(task=args.task, full_corpus_audit_through=130, refs=audit['refs']))
+    if interrupted is None:
+        qc_path = archive.parent / (args.record.stem + '.qc.tar')
+        qc = stream_archive(root, task_root, metadata_inventory, metadata_known, qc_path,
+                            dict(task=args.task, full_corpus_audit_through=130, refs=audit['refs']))
+    else:
+        qc = interrupted['qc_archive']
     receipt = dict(completed=True, task=args.task, prepared_receipt=str(args.prepared_receipt),
         prepared_sha256=args.prepared_sha256, archive=prepared['archive'],
         archive_sha256=prepared['archive_sha256'], manifest=prepared['manifest'],
@@ -353,8 +394,12 @@ def main():
         full_corpus_audit_through=130, checkpoint=checkpoint, qc_archive=qc,
         restore=['tar', '--no-same-owner', '-xf', prepared['archive'], '-C', str(root)],
         reclaim_complete=False, verified_unix=time.time())
-    cold = task_root / 'CORPUS-COLD-STORAGE.json'
-    assert not cold.exists()
+    if interrupted is not None:
+        receipt.update(resumed_interrupted_reclaim=True,
+            prior_incomplete_receipt_sha256=sha(cold),
+            already_reclaimed_files=len(removed),
+            already_reclaimed_bytes=sum(files[name]['bytes'] for name in removed),
+            recovery_script_sha256=sha(Path(__file__)))
     atomic_json(cold, receipt)
     reclaimed, count = 0, 0
     for name, row in files.items():
@@ -370,7 +415,7 @@ def main():
         count += 1
     assert Path(checkpoint['path']).is_dir() and not (Path(checkpoint['path']) / 'COLD-STORAGE.json').exists()
     receipt.update(reclaim_complete=True, reclaimed_bytes=reclaimed, reclaimed_files=count,
-        previously_reclaimed_prefix_files=len(removed))
+        previously_reclaimed_prefix_files=prefix_removed_count)
     atomic_json(cold, receipt)
     atomic_json(args.record, receipt)
     print(json.dumps(receipt), flush=True)
