@@ -42,3 +42,24 @@ prefixes passed (cases16,24,31,32,33,39,40,41,47,48,49). Full report is
 selector defaults0, existing selector is preserved, and explicitly empty
 visibility remains empty for the probe to reject. No GPU allocation or new
 simulator episode was started. Coordinator review confirms execution under the existing human authorization.
+
+Before launch the inactive worktree migrated from962b6682 to latest reviewed
+main `03f26b7c3cf6890c89b2691020dfa09ebeac6336`. The preceding binding and
+CPU report remain as `binding-962b6682.json` and
+`CPU-PREFLIGHT-962b6682.json` in shared output. Relevant source comparison
+only adds objective names/validation for other methods; frozen AD/DPT model
+loading, controller, worker, probe and simulator path are unchanged.
+Final CPU preflight at11:42:44Shanghai again verified1052 carried/48missing
+and all11 prefixes; current binding SHA256 is
+`00bd9d8c37c5c3f79484cf17ae069aa99d4f9c183c1b47e67f8bcdee38f173e7`.
+
+Submitted `mwj_1103_memory_controls_1x1_r4`, Baige Pro6K / 算法Z组
+`job-oizm929rf0oo`, with the specified oneGPU/32CPU/128GiB/32GiB/120min
+and all scheduler retry/fault/hang settings off. At11:51:49Shanghai the
+actual allocated CUDA/count/UUID probe passed and6new records (4reset,
+2window64) passed independent record/truth hashes, checkpoint/source,
+case/noise, physical/public/pixel pairing and memory checks:1058/1100,
+42remaining. [MONITOR.json](MONITOR.json) records the exact saved-record check.
+The20-minute heartbeat is active. Native Chrome input has been released;
+subsequent status/artifact access uses the existing authenticated development
+connection, whose routing/authentication stay machine-local.

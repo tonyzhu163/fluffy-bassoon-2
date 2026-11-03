@@ -1,0 +1,19 @@
+{"status": "failed", "error_type": "ValueError", "error": "CUDA_VISIBLE_DEVICES must list distinct allocated GPU indices/UUIDs", "hostname": "job-tjh32aj7mv5x-master-0", "probe_pid": 813, "environment": {"CUDA_VISIBLE_DEVICES": null, "SLURM_JOB_ID": null, "SLURM_STEP_ID": null, "SLURM_JOB_GPUS": null, "SLURM_STEP_GPUS": null, "SLURM_GPUS_ON_NODE": null}, "nvml_inventory": [{"index": 0, "uuid": "GPU-ffc87f1b-c636-4503-c571-04317bd67401", "name": "NVIDIA RPBZZZ6", "memory_total_mib": 97887.0, "memory_used_mib": 0.0, "utilization_percent": 0.0, "pci_bus_id": "00000000:62:00.0"}]}
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/worktrees/opendrawer-memory-controls-20261103-r3/scripts/[train]gpu_probe.py", line 606, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/worktrees/opendrawer-memory-controls-20261103-r3/scripts/[train]gpu_probe.py", line 584, in main
+    result = (run_baige_probe(args.expected_count, args.max_idle_memory_mib, args.purpose,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/worktrees/opendrawer-memory-controls-20261103-r3/scripts/[train]gpu_probe.py", line 495, in run_baige_probe
+    tokens = visible_tokens(os.environ)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/worktrees/opendrawer-memory-controls-20261103-r3/scripts/[train]gpu_probe.py", line 24, in visible_tokens
+    raise ValueError("CUDA_VISIBLE_DEVICES must list distinct allocated GPU indices/UUIDs")
+ValueError: CUDA_VISIBLE_DEVICES must list distinct allocated GPU indices/UUIDs
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/worktrees/opendrawer-memory-controls-20261103-r3/outputs/opendrawer-memory-controls-20261103-r3/RECOVER.py", line 25, in <module>
+    subprocess.run([sys.executable, '-B', str(m['CODE'] / 'scripts/[train]gpu_probe.py'),
+  File "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/cache/pythons/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python', '-B', '/mowenjie/fluffy-bassoon-2/worktrees/opendrawer-memory-controls-20261103-r3/scripts/[train]gpu_probe.py', '--expected-count', '1', '--purpose', 'evaluation', '--baige-container', '--output', '/mowenjie/fluffy-bassoon-2/outputs/opendrawer-memory-controls-20261103-r3/job/gpu-probe.json']' returned non-zero exit status 1.
