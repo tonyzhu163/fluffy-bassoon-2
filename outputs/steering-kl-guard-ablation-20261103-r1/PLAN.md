@@ -57,7 +57,7 @@ old eight-GPU baselines are descriptive only.
 
 Use existing allocated development CPUs for optimizer replay, with CUDA hidden
 and four Torch threads. Native evaluation has a separate cumulative ceiling
-of21,600allocated GPU-seconds (6GPU-hours), at most2GPUs, including startup,
+of21,600allocated GPU-seconds (6GPU-hours), at most4GPUs, including startup,
 cleanup and any failed attempt. User/repository authority permits incremental
 compute below8GPU-hours. Check queue, actual devices and resource fit before
 launch; run the required probe inside the actual allocation. No automatic
@@ -69,3 +69,9 @@ declared prospective training run. Changing the production optimizer contract
 requires a fresh output identity and clean scientific initializer; preserve
 the old update-2 checkpoints, bank files, baseline panels and accounting.
 The human hold remains in force until review.
+
+Execution choice before any GPU launch: use four GPUs, two case shards per
+interface, with the same48lanes/GPU and exactly the same1500episode panel.
+This shortens elapsed time without changing data volume, policy weights,
+pairing, or the6GPU-hour cumulative ceiling. Request84CPU/832GiB/192GiBSHM
+on one node; the inspected queue has RPBZZZ6 nodes with175CPU/1800GiB limits.
