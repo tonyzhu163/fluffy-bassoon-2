@@ -1,0 +1,87 @@
+{
+  "format": "prospective_scientific_source_attempts_v1",
+  "observed_UTC": "2026-11-03 05:05:15 UTC",
+  "producer_thread": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
+  "producer_cursor": "18018959-3992-4b70-ad1f-11a754359cf0:73",
+  "producer_status": "idle_last_monitor_confirms_both_queued",
+  "native_source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+  "launcher_source_commit": "ee0f40465e09d5968fd95c065c049f8b8d416334",
+  "arms": {
+    "velocity": {
+      "job": "job-bxhz4d41ll1k",
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1",
+      "status": "QUEUED"
+    },
+    "kv_all_layers": {
+      "job": "job-khwsqhzct9v5",
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1",
+      "status": "QUEUED"
+    }
+  },
+  "readback": {
+    "output_observations": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1",
+        "exists": false,
+        "top_level": []
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1",
+        "exists": false,
+        "top_level": []
+      }
+    ],
+    "admission_sha256": "40b63fafb463d5b105f469e2bbc24aeefdf340758f62ba8d34f3ea61f85d2f19"
+  },
+  "resources_requested_per_arm": {
+    "GPUs": 8,
+    "CPU": 168,
+    "RAM_GiB": 1664,
+    "SHM_GiB": 384,
+    "maximum_minutes": 295,
+    "automatic_retry": false
+  },
+  "source_history_contract": {
+    "updates": 50,
+    "episodes_per_update": 384,
+    "horizon": 600,
+    "episodes_per_task_per_update": null,
+    "schedule": "frozen_steering_episode_schedule_v1; prospective rotating76/77; retain every actual request hash",
+    "checkpoints_DEV": [
+      0,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50
+    ],
+    "frozen_base_and_expert": true,
+    "velocity_fraction": 0.125,
+    "kv_fraction": 0.64
+  },
+  "source_preparation_cost": {
+    "qualification_scheduler_sum_GPU_seconds": 2052,
+    "conservative_qualification_upper_selected_GPU_seconds": 2064,
+    "carried_original_native_GPU_seconds": 122,
+    "total_source_preparation_charge_GPU_seconds": 2186,
+    "charge_velocity": 1161,
+    "charge_KV": 1025,
+    "explanation": "Published ADMISSION permanently selects larger qualification upper2064. Earlier122 charged once; process clocks are subsets."
+  },
+  "reference_paths": [
+    "outputs/robocasa-joint-steering-scale50-20261103-r1/PRODUCTION-LAUNCH-20261103-r1.json",
+    "outputs/robocasa-joint-steering-scale50-20261103-r1/ADMISSION.json"
+  ],
+  "source_binding": null,
+  "actual_GPU_allocation_verified": false,
+  "scientific_updates_verified": 0,
+  "student_fits": {},
+  "native_student_curves": {},
+  "next_action": "Monitor these exact handles, never duplicate from queue/UI/observation timeout. After allocation require eight-device and effective-resource checks, fresh paired before/DEV0, first counted update and shadow next-Adam recovery. Build datasets/fit only after exact scientific source truly completes.",
+  "claim_boundary": "Prospective job metadata and bounded preparation admission only; queued jobs and absent fresh output folders are not scientific runtime or source completion."
+}
