@@ -27,7 +27,7 @@ export OPENPI_DATA_HOME=$TASK_ROOT/setups/robocasa365-native-20261101-r1/cache/.
 export FLUFFY_GPU_EXECUTION=baige MUJOCO_GL=egl PYOPENGL_PLATFORM=egl NCCL_P2P_DISABLE=1
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false
 export PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1
-if test -z "${CUDA_VISIBLE_DEVICES:-}"; then
+if test -z "${CUDA_VISIBLE_DEVICES+x}"; then
   # This exclusive scheduler container exposes only its four assigned GPUs.
   # Bind those existing namespace indices; never infer physical host indices.
   TASK_VISIBLE_GPU_COUNT=$(nvidia-smi --query-gpu=uuid --format=csv,noheader | wc -l)

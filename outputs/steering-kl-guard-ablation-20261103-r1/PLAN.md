@@ -83,7 +83,8 @@ dispatching any reset/control. Its exclusive scheduler container exposed
 exactly four GPUs through NVML but did not set CUDA_VISIBLE_DEVICES. The
 launcher omitted the default namespace binding used by the qualified source
 launcher. Correct the omission only when NVML exposes exactly four assigned
-devices; preserve a nonempty scheduler CUDA setting. This adds no device
+devices; preserve every explicitly provided scheduler CUDA setting, including
+an explicitly empty value (which must fail the unchanged probe). This adds no device
 namespace and does not change the six candidates or case/noise schedules.
 
 The scheduler pod was created14:46:51 and the job was terminal14:47:40,
