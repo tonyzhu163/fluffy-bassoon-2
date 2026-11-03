@@ -1,0 +1,3576 @@
+{
+  "format": "paused_scale50_readonly_performance_v1",
+  "recorded_UTC": "2026-11-03T06:19:30.796409+00:00",
+  "hostname": "aibox-rffe453e3884-5f96c78b88-rtvhb",
+  "python": "3.11.14",
+  "torch": "2.11.0+cu128",
+  "CUDA_VISIBLE_DEVICES": "",
+  "actual_new_episodes": 0,
+  "new_optimizer_steps": 0,
+  "GPU_jobs_launched_or_modified": 0,
+  "scheduler_accounting_owned_elsewhere": true,
+  "qualification": {
+    "bindings": {
+      "code": "/mowenjie/fluffy-bassoon-2/worktrees/joint-steering-scale50-gpu-20261103-r3",
+      "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+      "runtime_path": "/mowenjie/fluffy-bassoon-2/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf",
+      "runtime_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+      "model_directory": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
+      "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+      "model_config_sha256": "1c85bc28303a2144a1cc3af492b1b6d91f9cdcd94b30f04212505ffb5118f1b0",
+      "norm_path": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json",
+      "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee"
+    },
+    "arms": {
+      "velocity": {
+        "elapsed_seconds": 222.23172807693481,
+        "execution": {
+          "requested_lanes": 48,
+          "peak_active_lanes": 48,
+          "initial_lane_barrier": true,
+          "native_batch_sizes": [
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48
+          ],
+          "maximum_native_batch": 48,
+          "minimum_native_batch": 48
+        },
+        "controls_per_second": 129.5944564226656,
+        "optimizer_config": {
+          "feature_dim": 2064,
+          "residual_dim": 32,
+          "width": 256,
+          "layers": 2,
+          "initial_std": 0.5,
+          "learning_rate": 0.0003,
+          "epochs": 10,
+          "minibatch_size": 32,
+          "clip": 0.2,
+          "gamma": 0.99,
+          "gae_lambda": 0.95,
+          "entropy_coef": 0.0,
+          "value_coef": 0.5,
+          "max_grad_norm": 1.0,
+          "target_kl": 0.02,
+          "kl_check_cadence": "minibatch"
+        },
+        "interface": {
+          "kind": "velocity",
+          "motor_shape": [
+            50,
+            32
+          ],
+          "steering_dim": 32,
+          "candidates": 8,
+          "fraction": 0.125
+        },
+        "sampled_phase_peaks": {
+          "samples": 94,
+          "peak_gpu_memory_mib": 73802.0,
+          "peak_fd_count": 519,
+          "peak_descendants": 193
+        }
+      },
+      "kv_all_layers": {
+        "elapsed_seconds": 221.2294738292694,
+        "execution": {
+          "requested_lanes": 48,
+          "peak_active_lanes": 48,
+          "initial_lane_barrier": true,
+          "native_batch_sizes": [
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48
+          ],
+          "maximum_native_batch": 48,
+          "minimum_native_batch": 48
+        },
+        "controls_per_second": 130.1815689451306,
+        "optimizer_config": {
+          "feature_dim": 2064,
+          "residual_dim": 1152,
+          "width": 256,
+          "layers": 2,
+          "initial_std": 0.5,
+          "learning_rate": 3e-05,
+          "epochs": 10,
+          "minibatch_size": 32,
+          "clip": 0.2,
+          "gamma": 0.99,
+          "gae_lambda": 0.95,
+          "entropy_coef": 0.0,
+          "value_coef": 0.5,
+          "max_grad_norm": 1.0,
+          "target_kl": 0.02,
+          "kl_check_cadence": "minibatch"
+        },
+        "interface": {
+          "kind": "kv_all_layers",
+          "motor_shape": [
+            50,
+            32
+          ],
+          "steering_dim": 1152,
+          "candidates": 8,
+          "fraction": 0.64,
+          "kv_layers": 18,
+          "kv_map": {
+            "version": "independent_layer_kv_rademacher32_rms_v1",
+            "rank": 32,
+            "targets": [
+              "key",
+              "value"
+            ],
+            "order": "layer,key_or_value,coefficient",
+            "seed_base": 921003,
+            "seed": "921003 + 2 * layer_index + key_or_value_index",
+            "scale": "fraction * per_row_per_layer_per_tensor_RMS; tanh coefficients"
+          }
+        },
+        "sampled_phase_peaks": {
+          "samples": 90,
+          "peak_gpu_memory_mib": 73719.0,
+          "peak_fd_count": 624,
+          "peak_descendants": 193
+        }
+      }
+    },
+    "dispatch_journals": "Not rescanned: bounded audit uses completed bank metadata.",
+    "resource_summaries": {
+      "stress_48_live/velocity": {
+        "samples": 94,
+        "GPU_utilization_percent": {
+          "count": 94,
+          "minimum": 0.0,
+          "median": 0.0,
+          "mean": 14.595744680851064,
+          "p90": 26.0,
+          "maximum": 100.0
+        },
+        "CPU_quota": "2100000 100000",
+        "memory_limit": "223338299392"
+      },
+      "stress_48_live/kv_all_layers": {
+        "samples": 90,
+        "GPU_utilization_percent": {
+          "count": 90,
+          "minimum": 0.0,
+          "median": 0.0,
+          "mean": 12.544444444444444,
+          "p90": 25.0,
+          "maximum": 100.0
+        },
+        "CPU_quota": "2100000 100000",
+        "memory_limit": "223338299392"
+      }
+    }
+  },
+  "arms": {
+    "velocity": {
+      "profile": {
+        "code": "/mowenjie/fluffy-bassoon-2/worktrees/joint-steering-scale50-gpu-20261103-r3",
+        "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+        "runtime_path": "/mowenjie/fluffy-bassoon-2/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf",
+        "runtime_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+        "model_directory": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
+        "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+        "model_config_sha256": "1c85bc28303a2144a1cc3af492b1b6d91f9cdcd94b30f04212505ffb5118f1b0",
+        "norm_path": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json",
+        "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+        "arm": "velocity",
+        "seed": 921801,
+        "updates": 50,
+        "episodes_per_update": 384,
+        "lanes_per_worker": 48,
+        "submitted_unix": 1793681577.0,
+        "prior_conservative_gpu_seconds": 1161,
+        "native_env": {
+          "RLINF_PATH": "/mowenjie/fluffy-bassoon-2/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf",
+          "ROBOCASA_ASSETS_PATH": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/assets",
+          "OPENPI_DATA_HOME": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/cache/.cache/openpi",
+          "MUJOCO_GL": "egl",
+          "PYOPENGL_PLATFORM": "egl",
+          "NCCL_P2P_DISABLE": "1"
+        },
+        "canonical_root": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/canonical",
+        "admission_reference": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-production-admission-20261103-r1/ADMISSION.json",
+          "sha256": "40b63fafb463d5b105f469e2bbc24aeefdf340758f62ba8d34f3ea61f85d2f19"
+        },
+        "launcher": {
+          "path": "/mowenjie/fluffy-bassoon-2/worktrees/joint-steering-launch-20261103-r1/outputs/robocasa-joint-steering-scale50-20261103-r1/PRODUCTION-COMMAND.sh",
+          "sha256": "8bb80c247d9ea0561c6d2802994a4348e9fdb6fae947984cab96f9394c72ef52"
+        },
+        "wandb": {
+          "enabled": true,
+          "entity": "tonyzoo-brown-university",
+          "project": "fluffy-bassoon-2",
+          "group": "joint-steering-scale50-20261103-r1",
+          "online_authorized": false
+        }
+      },
+      "clock": {
+        "started_unix": 1793682851,
+        "finished_unix": 1793684339,
+        "allocated_gpus": 8,
+        "process_gpu_seconds": 11904,
+        "exit_code": 0,
+        "allocation_release_not_included": true
+      },
+      "pause": {
+        "completed": false,
+        "reason": "measured_budget_decision",
+        "iteration": 2,
+        "sequence": 5,
+        "checkpoint": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/checkpoints/event-005-train-002.pt",
+          "sha256": "38d665ba6244a8bd1a5017045b1903a6206999515974c6a6d90eefd38b0dc27a"
+        },
+        "projected_all_attempt_gpu_hours": 49.3180866294437,
+        "approved_arm_gpu_hours": 40,
+        "no_automatic_retry": true
+      },
+      "phases": [
+        {
+          "phase": "calibrate",
+          "iteration": 0,
+          "sequence": 1,
+          "last_check_unix": 1793683066.9949892,
+          "elapsed_seconds": 166.63922023773193,
+          "collection_and_learning_seconds": 166.40644431114197,
+          "physical_controls_this_event": 0,
+          "projected_remaining_seconds": null,
+          "projected_all_attempt_gpu_hours": null,
+          "optimizer_seconds": null,
+          "optimizer_steps": null,
+          "resources": {
+            "storage_free_GiB": 911.75390625,
+            "container_RAM_GiB": 37.887149810791016,
+            "container_peak_RAM_GiB": 124.32642364501953,
+            "GPUs": [
+              {
+                "memory_used_MiB": 8312.0,
+                "utilization_percent": 1.0
+              },
+              {
+                "memory_used_MiB": 7641.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 7641.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 7641.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 7641.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 7641.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 7641.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 7641.0,
+                "utilization_percent": 0.0
+              }
+            ]
+          }
+        },
+        {
+          "phase": "test_before",
+          "iteration": 0,
+          "sequence": 2,
+          "last_check_unix": 1793683534.970931,
+          "elapsed_seconds": 467.93214988708496,
+          "collection_and_learning_seconds": 467.7859170436859,
+          "physical_controls_this_event": 322500,
+          "projected_remaining_seconds": null,
+          "projected_all_attempt_gpu_hours": null,
+          "optimizer_seconds": null,
+          "optimizer_steps": null,
+          "resources": {
+            "storage_free_GiB": 892.08203125,
+            "container_RAM_GiB": 46.379974365234375,
+            "container_peak_RAM_GiB": 1253.6020774841309,
+            "GPUs": [
+              {
+                "memory_used_MiB": 24591.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 29190.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 17374.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 41402.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 28226.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 29922.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 37986.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 26190.0,
+                "utilization_percent": 0.0
+              }
+            ]
+          }
+        },
+        {
+          "phase": "dev",
+          "iteration": 0,
+          "sequence": 3,
+          "last_check_unix": 1793683602.566699,
+          "elapsed_seconds": 68.15576505661011,
+          "collection_and_learning_seconds": 68.02446413040161,
+          "physical_controls_this_event": 24000,
+          "projected_remaining_seconds": null,
+          "projected_all_attempt_gpu_hours": null,
+          "optimizer_seconds": null,
+          "optimizer_steps": null,
+          "resources": {
+            "storage_free_GiB": 890.3125,
+            "container_RAM_GiB": 46.50523376464844,
+            "container_peak_RAM_GiB": 1253.6020774841309,
+            "GPUs": [
+              {
+                "memory_used_MiB": 24591.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 29190.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 17374.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 41402.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 28226.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 29924.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 38018.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 26190.0,
+                "utilization_percent": 0.0
+              }
+            ]
+          }
+        },
+        {
+          "phase": "train",
+          "iteration": 1,
+          "sequence": 4,
+          "last_check_unix": 1793683954.5429733,
+          "elapsed_seconds": 355.3174088001251,
+          "collection_and_learning_seconds": 355.1694481372833,
+          "physical_controls_this_event": 230400,
+          "projected_remaining_seconds": 18560.042831659317,
+          "projected_all_attempt_gpu_hours": 47.12633220725589,
+          "optimizer_seconds": 2.1348566031083465,
+          "optimizer_steps": 7,
+          "resources": {
+            "storage_free_GiB": 873.94921875,
+            "container_RAM_GiB": 48.32291793823242,
+            "container_peak_RAM_GiB": 1253.6020774841309,
+            "GPUs": [
+              {
+                "memory_used_MiB": 25061.0,
+                "utilization_percent": 10.0
+              },
+              {
+                "memory_used_MiB": 29190.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 18676.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 41402.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 28226.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 29924.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 38018.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 26192.0,
+                "utilization_percent": 0.0
+              }
+            ]
+          }
+        },
+        {
+          "phase": "train",
+          "iteration": 2,
+          "sequence": 5,
+          "last_check_unix": 1793684331.3994033,
+          "elapsed_seconds": 375.4451651573181,
+          "collection_and_learning_seconds": 375.2740843296051,
+          "physical_controls_this_event": 230400,
+          "projected_remaining_seconds": 19170.857728004456,
+          "projected_all_attempt_gpu_hours": 49.3180866294437,
+          "optimizer_seconds": 1.3812369219958782,
+          "optimizer_steps": 5,
+          "resources": {
+            "storage_free_GiB": 857.86328125,
+            "container_RAM_GiB": 48.770816802978516,
+            "container_peak_RAM_GiB": 1253.6020774841309,
+            "GPUs": [
+              {
+                "memory_used_MiB": 25061.0,
+                "utilization_percent": 22.0
+              },
+              {
+                "memory_used_MiB": 29190.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 20008.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 41402.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 28226.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 29926.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 38020.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 26192.0,
+                "utilization_percent": 0.0
+              }
+            ]
+          }
+        }
+      ],
+      "rank_banks": [
+        {
+          "rank": 0,
+          "iteration": 1,
+          "request_mtime": 1793683603.3698392,
+          "completed_unix": 1793683925.207585,
+          "result_mtime": 1793683925.3255014,
+          "worker_seconds": 321.8377459049225,
+          "initial_barrier": false,
+          "native_calls": 21,
+          "average_native_batch": 27.428571428571427,
+          "full_48_calls": 3,
+          "batches": [
+            1,
+            7,
+            38,
+            42,
+            44,
+            46,
+            46,
+            47,
+            47,
+            48,
+            48,
+            48,
+            47,
+            41,
+            10,
+            6,
+            4,
+            2,
+            2,
+            1,
+            1
+          ],
+          "task_counts": {
+            "OpenDrawer": 10,
+            "TurnOffStove": 10,
+            "PickPlaceCounterToCabinet": 10,
+            "CoffeeSetupMug": 9,
+            "PickPlaceDrawerToCounter": 9
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "velocity",
+            "steering_dim": 32,
+            "fraction": 0.125
+          },
+          "native_device_name": "NVIDIA RPBZZZ6"
+        },
+        {
+          "rank": 1,
+          "iteration": 1,
+          "request_mtime": 1793683603.3919904,
+          "completed_unix": 1793683954.278845,
+          "result_mtime": 1793683954.3903189,
+          "worker_seconds": 350.8868546485901,
+          "initial_barrier": false,
+          "native_calls": 18,
+          "average_native_batch": 32,
+          "full_48_calls": 6,
+          "batches": [
+            1,
+            1,
+            1,
+            2,
+            8,
+            27,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            47,
+            47,
+            47,
+            46,
+            40,
+            21
+          ],
+          "task_counts": {
+            "PickPlaceCounterToCabinet": 10,
+            "CoffeeSetupMug": 10,
+            "PickPlaceDrawerToCounter": 10,
+            "OpenDrawer": 9,
+            "TurnOffStove": 9
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "velocity",
+            "steering_dim": 32,
+            "fraction": 0.125
+          },
+          "native_device_name": "NVIDIA RPBZZZ6"
+        },
+        {
+          "rank": 2,
+          "iteration": 1,
+          "request_mtime": 1793683603.413888,
+          "completed_unix": 1793683941.533982,
+          "result_mtime": 1793683941.647654,
+          "worker_seconds": 338.1200940608978,
+          "initial_barrier": false,
+          "native_calls": 33,
+          "average_native_batch": 17.454545454545453,
+          "full_48_calls": 0,
+          "batches": [
+            1,
+            1,
+            1,
+            2,
+            2,
+            2,
+            2,
+            4,
+            4,
+            5,
+            6,
+            7,
+            6,
+            7,
+            11,
+            12,
+            12,
+            14,
+            16,
+            16,
+            30,
+            43,
+            42,
+            41,
+            41,
+            40,
+            36,
+            34,
+            34,
+            32,
+            30,
+            28,
+            14
+          ],
+          "task_counts": {
+            "PickPlaceDrawerToCounter": 10,
+            "OpenDrawer": 10,
+            "TurnOffStove": 10,
+            "PickPlaceCounterToCabinet": 9,
+            "CoffeeSetupMug": 9
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "velocity",
+            "steering_dim": 32,
+            "fraction": 0.125
+          },
+          "native_device_name": "NVIDIA RPBZZZ6"
+        },
+        {
+          "rank": 3,
+          "iteration": 1,
+          "request_mtime": 1793683603.426712,
+          "completed_unix": 1793683942.581527,
+          "result_mtime": 1793683942.706178,
+          "worker_seconds": 339.1548149585724,
+          "initial_barrier": false,
+          "native_calls": 28,
+          "average_native_batch": 20.571428571428573,
+          "full_48_calls": 0,
+          "batches": [
+            1,
+            1,
+            4,
+            5,
+            5,
+            5,
+            5,
+            6,
+            7,
+            9,
+            12,
+            17,
+            18,
+            24,
+            26,
+            34,
+            43,
+            43,
+            43,
+            42,
+            41,
+            39,
+            36,
+            31,
+            29,
+            23,
+            18,
+            9
+          ],
+          "task_counts": {
+            "TurnOffStove": 10,
+            "PickPlaceCounterToCabinet": 10,
+            "CoffeeSetupMug": 10,
+            "PickPlaceDrawerToCounter": 9,
+            "OpenDrawer": 9
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "velocity",
+            "steering_dim": 32,
+            "fraction": 0.125
+          },
+          "native_device_name": "NVIDIA RPBZZZ6"
+        },
+        {
+          "rank": 4,
+          "iteration": 1,
+          "request_mtime": 1793683603.4501278,
+          "completed_unix": 1793683943.1485605,
+          "result_mtime": 1793683943.2602258,
+          "worker_seconds": 339.6984326839447,
+          "initial_barrier": false,
+          "native_calls": 28,
+          "average_native_batch": 20.571428571428573,
+          "full_48_calls": 0,
+          "batches": [
+            1,
+            2,
+            3,
+            3,
+            3,
+            4,
+            6,
+            7,
+            8,
+            12,
+            13,
+            13,
+            14,
+            23,
+            36,
+            42,
+            45,
+            44,
+            42,
+            41,
+            40,
+            36,
+            35,
+            35,
+            33,
+            23,
+            9,
+            3
+          ],
+          "task_counts": {
+            "CoffeeSetupMug": 10,
+            "PickPlaceDrawerToCounter": 10,
+            "OpenDrawer": 9,
+            "TurnOffStove": 9,
+            "PickPlaceCounterToCabinet": 10
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "velocity",
+            "steering_dim": 32,
+            "fraction": 0.125
+          },
+          "native_device_name": "NVIDIA RPBZZZ6"
+        },
+        {
+          "rank": 5,
+          "iteration": 1,
+          "request_mtime": 1793683603.4629304,
+          "completed_unix": 1793683941.0160193,
+          "result_mtime": 1793683941.1401594,
+          "worker_seconds": 337.5530889034271,
+          "initial_barrier": false,
+          "native_calls": 30,
+          "average_native_batch": 19.2,
+          "full_48_calls": 0,
+          "batches": [
+            1,
+            1,
+            1,
+            2,
+            2,
+            3,
+            3,
+            3,
+            3,
+            5,
+            5,
+            8,
+            15,
+            22,
+            24,
+            29,
+            40,
+            42,
+            45,
+            45,
+            45,
+            43,
+            43,
+            40,
+            32,
+            25,
+            23,
+            17,
+            6,
+            3
+          ],
+          "task_counts": {
+            "OpenDrawer": 10,
+            "TurnOffStove": 10,
+            "PickPlaceCounterToCabinet": 9,
+            "CoffeeSetupMug": 9,
+            "PickPlaceDrawerToCounter": 10
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "velocity",
+            "steering_dim": 32,
+            "fraction": 0.125
+          },
+          "native_device_name": "NVIDIA RPBZZZ6"
+        },
+        {
+          "rank": 6,
+          "iteration": 1,
+          "request_mtime": 1793683603.4850988,
+          "completed_unix": 1793683939.4224389,
+          "result_mtime": 1793683939.5334017,
+          "worker_seconds": 335.9373400211334,
+          "initial_barrier": false,
+          "native_calls": 28,
+          "average_native_batch": 20.571428571428573,
+          "full_48_calls": 0,
+          "batches": [
+            1,
+            1,
+            3,
+            8,
+            8,
+            9,
+            10,
+            10,
+            10,
+            11,
+            12,
+            12,
+            13,
+            24,
+            33,
+            33,
+            40,
+            39,
+            38,
+            38,
+            38,
+            37,
+            36,
+            36,
+            34,
+            23,
+            12,
+            7
+          ],
+          "task_counts": {
+            "PickPlaceCounterToCabinet": 10,
+            "CoffeeSetupMug": 10,
+            "PickPlaceDrawerToCounter": 9,
+            "OpenDrawer": 9,
+            "TurnOffStove": 10
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "velocity",
+            "steering_dim": 32,
+            "fraction": 0.125
+          },
+          "native_device_name": "NVIDIA RPBZZZ6"
+        },
+        {
+          "rank": 7,
+          "iteration": 1,
+          "request_mtime": 1793683603.4970124,
+          "completed_unix": 1793683953.6981454,
+          "result_mtime": 1793683953.8194828,
+          "worker_seconds": 350.2011330127716,
+          "initial_barrier": false,
+          "native_calls": 24,
+          "average_native_batch": 24,
+          "full_48_calls": 0,
+          "batches": [
+            1,
+            1,
+            1,
+            2,
+            2,
+            2,
+            2,
+            6,
+            7,
+            10,
+            23,
+            39,
+            47,
+            47,
+            47,
+            46,
+            46,
+            46,
+            46,
+            42,
+            41,
+            38,
+            25,
+            9
+          ],
+          "task_counts": {
+            "PickPlaceDrawerToCounter": 10,
+            "OpenDrawer": 10,
+            "TurnOffStove": 9,
+            "PickPlaceCounterToCabinet": 9,
+            "CoffeeSetupMug": 10
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "velocity",
+            "steering_dim": 32,
+            "fraction": 0.125
+          },
+          "native_device_name": "NVIDIA RPBZZZ6"
+        },
+        {
+          "rank": 0,
+          "iteration": 2,
+          "request_mtime": 1793683958.7259703,
+          "completed_unix": 1793684292.0773752,
+          "result_mtime": 1793684292.1942837,
+          "worker_seconds": 333.3514049053192,
+          "initial_barrier": false,
+          "native_calls": 19,
+          "average_native_batch": 30.31578947368421,
+          "full_48_calls": 5,
+          "batches": [
+            1,
+            28,
+            44,
+            44,
+            46,
+            46,
+            47,
+            48,
+            48,
+            48,
+            48,
+            48,
+            47,
+            20,
+            4,
+            4,
+            2,
+            2,
+            1
+          ],
+          "task_counts": {
+            "OpenDrawer": 10,
+            "TurnOffStove": 10,
+            "PickPlaceCounterToCabinet": 10,
+            "CoffeeSetupMug": 9,
+            "PickPlaceDrawerToCounter": 9
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "velocity",
+            "steering_dim": 32,
+            "fraction": 0.125
+          },
+          "native_device_name": "NVIDIA RPBZZZ6",
+          "one_raw_chunk_size_sample_bytes": 786553
+        },
+        {
+          "rank": 1,
+          "iteration": 2,
+          "request_mtime": 1793683958.7386346,
+          "completed_unix": 1793684292.1122541,
+          "result_mtime": 1793684292.2225223,
+          "worker_seconds": 333.373619556427,
+          "initial_barrier": false,
+          "native_calls": 20,
+          "average_native_batch": 28.8,
+          "full_48_calls": 4,
+          "batches": [
+            1,
+            8,
+            25,
+            30,
+            34,
+            34,
+            39,
+            42,
+            48,
+            48,
+            48,
+            48,
+            47,
+            40,
+            23,
+            18,
+            14,
+            14,
+            9,
+            6
+          ],
+          "task_counts": {
+            "PickPlaceCounterToCabinet": 10,
+            "CoffeeSetupMug": 10,
+            "PickPlaceDrawerToCounter": 10,
+            "OpenDrawer": 9,
+            "TurnOffStove": 9
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "velocity",
+            "steering_dim": 32,
+            "fraction": 0.125
+          },
+          "native_device_name": "NVIDIA RPBZZZ6",
+          "one_raw_chunk_size_sample_bytes": 924244
+        },
+        {
+          "rank": 2,
+          "iteration": 2,
+          "request_mtime": 1793683958.750316,
+          "completed_unix": 1793684311.10444,
+          "result_mtime": 1793684311.2203383,
+          "worker_seconds": 352.35412406921387,
+          "initial_barrier": false,
+          "native_calls": 31,
+          "average_native_batch": 18.580645161290324,
+          "full_48_calls": 0,
+          "batches": [
+            1,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            5,
+            5,
+            11,
+            15,
+            19,
+            30,
+            36,
+            44,
+            44,
+            44,
+            44,
+            44,
+            43,
+            42,
+            35,
+            31,
+            27,
+            15,
+            9,
+            1
+          ],
+          "task_counts": {
+            "PickPlaceDrawerToCounter": 10,
+            "OpenDrawer": 10,
+            "TurnOffStove": 10,
+            "PickPlaceCounterToCabinet": 9,
+            "CoffeeSetupMug": 9
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "velocity",
+            "steering_dim": 32,
+            "fraction": 0.125
+          },
+          "native_device_name": "NVIDIA RPBZZZ6",
+          "one_raw_chunk_size_sample_bytes": 808139
+        },
+        {
+          "rank": 3,
+          "iteration": 2,
+          "request_mtime": 1793683958.761899,
+          "completed_unix": 1793684330.8433785,
+          "result_mtime": 1793684330.9811118,
+          "worker_seconds": 372.08147954940796,
+          "initial_barrier": false,
+          "native_calls": 17,
+          "average_native_batch": 33.88235294117647,
+          "full_48_calls": 7,
+          "batches": [
+            1,
+            1,
+            6,
+            15,
+            40,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            47,
+            47,
+            42,
+            33,
+            8
+          ],
+          "task_counts": {
+            "TurnOffStove": 10,
+            "PickPlaceCounterToCabinet": 10,
+            "CoffeeSetupMug": 10,
+            "PickPlaceDrawerToCounter": 9,
+            "OpenDrawer": 9
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "velocity",
+            "steering_dim": 32,
+            "fraction": 0.125
+          },
+          "native_device_name": "NVIDIA RPBZZZ6",
+          "one_raw_chunk_size_sample_bytes": 753529
+        },
+        {
+          "rank": 4,
+          "iteration": 2,
+          "request_mtime": 1793683958.7739272,
+          "completed_unix": 1793684326.084952,
+          "result_mtime": 1793684326.2060118,
+          "worker_seconds": 367.3110249042511,
+          "initial_barrier": false,
+          "native_calls": 17,
+          "average_native_batch": 33.88235294117647,
+          "full_48_calls": 7,
+          "batches": [
+            1,
+            2,
+            7,
+            8,
+            21,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            47,
+            46,
+            41,
+            40,
+            27
+          ],
+          "task_counts": {
+            "CoffeeSetupMug": 10,
+            "PickPlaceDrawerToCounter": 10,
+            "OpenDrawer": 10,
+            "TurnOffStove": 9,
+            "PickPlaceCounterToCabinet": 9
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "velocity",
+            "steering_dim": 32,
+            "fraction": 0.125
+          },
+          "native_device_name": "NVIDIA RPBZZZ6",
+          "one_raw_chunk_size_sample_bytes": 787334
+        },
+        {
+          "rank": 5,
+          "iteration": 2,
+          "request_mtime": 1793683958.7880065,
+          "completed_unix": 1793684327.5124695,
+          "result_mtime": 1793684327.618101,
+          "worker_seconds": 368.72446298599243,
+          "initial_barrier": false,
+          "native_calls": 25,
+          "average_native_batch": 23.04,
+          "full_48_calls": 0,
+          "batches": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2,
+            2,
+            4,
+            5,
+            13,
+            34,
+            46,
+            47,
+            47,
+            47,
+            47,
+            47,
+            46,
+            46,
+            44,
+            43,
+            35,
+            14,
+            1
+          ],
+          "task_counts": {
+            "OpenDrawer": 10,
+            "TurnOffStove": 10,
+            "PickPlaceCounterToCabinet": 9,
+            "CoffeeSetupMug": 9,
+            "PickPlaceDrawerToCounter": 10
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "velocity",
+            "steering_dim": 32,
+            "fraction": 0.125
+          },
+          "native_device_name": "NVIDIA RPBZZZ6",
+          "one_raw_chunk_size_sample_bytes": 770268
+        },
+        {
+          "rank": 6,
+          "iteration": 2,
+          "request_mtime": 1793683958.800473,
+          "completed_unix": 1793684328.1724524,
+          "result_mtime": 1793684328.2855556,
+          "worker_seconds": 369.37197947502136,
+          "initial_barrier": false,
+          "native_calls": 18,
+          "average_native_batch": 32,
+          "full_48_calls": 6,
+          "batches": [
+            1,
+            2,
+            7,
+            12,
+            30,
+            45,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            47,
+            46,
+            41,
+            36,
+            18,
+            3
+          ],
+          "task_counts": {
+            "PickPlaceCounterToCabinet": 10,
+            "CoffeeSetupMug": 10,
+            "PickPlaceDrawerToCounter": 9,
+            "OpenDrawer": 9,
+            "TurnOffStove": 10
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "velocity",
+            "steering_dim": 32,
+            "fraction": 0.125
+          },
+          "native_device_name": "NVIDIA RPBZZZ6",
+          "one_raw_chunk_size_sample_bytes": 789409
+        },
+        {
+          "rank": 7,
+          "iteration": 2,
+          "request_mtime": 1793683958.8124719,
+          "completed_unix": 1793684310.0085611,
+          "result_mtime": 1793684310.1639047,
+          "worker_seconds": 351.1960892677307,
+          "initial_barrier": false,
+          "native_calls": 23,
+          "average_native_batch": 25.043478260869566,
+          "full_48_calls": 1,
+          "batches": [
+            1,
+            4,
+            7,
+            7,
+            12,
+            12,
+            13,
+            17,
+            21,
+            36,
+            42,
+            48,
+            47,
+            44,
+            41,
+            41,
+            36,
+            36,
+            35,
+            31,
+            27,
+            12,
+            6
+          ],
+          "task_counts": {
+            "PickPlaceDrawerToCounter": 10,
+            "OpenDrawer": 10,
+            "TurnOffStove": 9,
+            "PickPlaceCounterToCabinet": 9,
+            "CoffeeSetupMug": 10
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "velocity",
+            "steering_dim": 32,
+            "fraction": 0.125
+          },
+          "native_device_name": "NVIDIA RPBZZZ6",
+          "one_raw_chunk_size_sample_bytes": 956688
+        }
+      ],
+      "dispatch_journals": "Not rescanned: uninstrumented historic lock/IO time cannot be recovered from file walks.",
+      "cost_sensitivity": {
+        "allocation_start_assumption_unix": 1793682840,
+        "terminal_scheduler_release_charge_pending_owner": true,
+        "provisional_spent_through_wrapper_exit_GPU_hours": 3.653611111111111,
+        "wrongly_charged_zero_GPU_queue_seconds": 1263.0,
+        "wrongly_charged_queue_GPU_hours": 2.8066666666666666,
+        "recorded_guard_projection_GPU_hours": 49.3180866294437,
+        "allocation_corrected_guard_projection_GPU_hours": 46.51141996277703,
+        "remaining_train_updates": 48,
+        "remaining_DEV_panels": 10,
+        "remaining_final_panels": 1,
+        "remaining_train_GPU_hours": 40.04748428344727,
+        "remaining_DEV_and_final_GPU_hours": 2.554421778784858,
+        "remaining_work_GPU_hours_before_restart": 42.601906062232125,
+        "train_update_seconds_to_fit_with_240s_restart_and_120s_release": 309.2996916572253,
+        "scenarios": [
+          {
+            "train_update_seconds": 222,
+            "total_with_240s_restart_and_120s_release_GPU_hours": 30.68803288989597
+          },
+          {
+            "train_update_seconds": 250,
+            "total_with_240s_restart_and_120s_release_GPU_hours": 33.674699556562636
+          },
+          {
+            "train_update_seconds": 275,
+            "total_with_240s_restart_and_120s_release_GPU_hours": 36.3413662232293
+          },
+          {
+            "train_update_seconds": 300,
+            "total_with_240s_restart_and_120s_release_GPU_hours": 39.00803288989597
+          },
+          {
+            "train_update_seconds": 310,
+            "total_with_240s_restart_and_120s_release_GPU_hours": 40.074699556562635
+          },
+          {
+            "train_update_seconds": 315,
+            "total_with_240s_restart_and_120s_release_GPU_hours": 40.608032889895966
+          },
+          {
+            "train_update_seconds": 325,
+            "total_with_240s_restart_and_120s_release_GPU_hours": 41.674699556562636
+          },
+          {
+            "train_update_seconds": 375.4451651573181,
+            "total_with_240s_restart_and_120s_release_GPU_hours": 47.05551717334323
+          }
+        ]
+      }
+    },
+    "kv_all_layers": {
+      "profile": {
+        "code": "/mowenjie/fluffy-bassoon-2/worktrees/joint-steering-scale50-gpu-20261103-r3",
+        "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+        "runtime_path": "/mowenjie/fluffy-bassoon-2/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf",
+        "runtime_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+        "model_directory": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
+        "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+        "model_config_sha256": "1c85bc28303a2144a1cc3af492b1b6d91f9cdcd94b30f04212505ffb5118f1b0",
+        "norm_path": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json",
+        "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+        "arm": "kv_all_layers",
+        "seed": 921901,
+        "updates": 50,
+        "episodes_per_update": 384,
+        "lanes_per_worker": 48,
+        "submitted_unix": 1793681643.0,
+        "prior_conservative_gpu_seconds": 1025,
+        "native_env": {
+          "RLINF_PATH": "/mowenjie/fluffy-bassoon-2/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf",
+          "ROBOCASA_ASSETS_PATH": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/assets",
+          "OPENPI_DATA_HOME": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/cache/.cache/openpi",
+          "MUJOCO_GL": "egl",
+          "PYOPENGL_PLATFORM": "egl",
+          "NCCL_P2P_DISABLE": "1"
+        },
+        "canonical_root": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/canonical",
+        "admission_reference": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-production-admission-20261103-r1/ADMISSION.json",
+          "sha256": "40b63fafb463d5b105f469e2bbc24aeefdf340758f62ba8d34f3ea61f85d2f19"
+        },
+        "launcher": {
+          "path": "/mowenjie/fluffy-bassoon-2/worktrees/joint-steering-launch-20261103-r1/outputs/robocasa-joint-steering-scale50-20261103-r1/PRODUCTION-COMMAND.sh",
+          "sha256": "8bb80c247d9ea0561c6d2802994a4348e9fdb6fae947984cab96f9394c72ef52"
+        },
+        "wandb": {
+          "enabled": true,
+          "entity": "tonyzoo-brown-university",
+          "project": "fluffy-bassoon-2",
+          "group": "joint-steering-scale50-20261103-r1",
+          "online_authorized": false
+        }
+      },
+      "clock": {
+        "started_unix": 1793682847,
+        "finished_unix": 1793684426,
+        "allocated_gpus": 8,
+        "process_gpu_seconds": 12632,
+        "exit_code": 0,
+        "allocation_release_not_included": true
+      },
+      "pause": {
+        "completed": false,
+        "reason": "measured_budget_decision",
+        "iteration": 2,
+        "sequence": 5,
+        "checkpoint": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/checkpoints/event-005-train-002.pt",
+          "sha256": "b4c1d873a4b6d694ee80e538f93a357570db30eddfd7d3ec78175cec6e5653f4"
+        },
+        "projected_all_attempt_gpu_hours": 52.050028252071805,
+        "approved_arm_gpu_hours": 40,
+        "no_automatic_retry": true
+      },
+      "phases": [
+        {
+          "phase": "calibrate",
+          "iteration": 0,
+          "sequence": 1,
+          "last_check_unix": 1793683068.0506458,
+          "elapsed_seconds": 167.6658637523651,
+          "collection_and_learning_seconds": 167.46164512634277,
+          "physical_controls_this_event": 0,
+          "projected_remaining_seconds": null,
+          "projected_all_attempt_gpu_hours": null,
+          "optimizer_seconds": null,
+          "optimizer_steps": null,
+          "resources": {
+            "storage_free_GiB": 911.75390625,
+            "container_RAM_GiB": 38.00197982788086,
+            "container_peak_RAM_GiB": 126.37431335449219,
+            "GPUs": [
+              {
+                "memory_used_MiB": 8326.0,
+                "utilization_percent": 1.0
+              },
+              {
+                "memory_used_MiB": 7655.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 7655.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 7655.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 7655.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 7655.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 7655.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 7655.0,
+                "utilization_percent": 0.0
+              }
+            ]
+          }
+        },
+        {
+          "phase": "test_before",
+          "iteration": 0,
+          "sequence": 2,
+          "last_check_unix": 1793683562.3206205,
+          "elapsed_seconds": 494.23377084732056,
+          "collection_and_learning_seconds": 494.1042296886444,
+          "physical_controls_this_event": 322500,
+          "projected_remaining_seconds": null,
+          "projected_all_attempt_gpu_hours": null,
+          "optimizer_seconds": null,
+          "optimizer_steps": null,
+          "resources": {
+            "storage_free_GiB": 891.76171875,
+            "container_RAM_GiB": 46.52964782714844,
+            "container_peak_RAM_GiB": 1263.9912414550781,
+            "GPUs": [
+              {
+                "memory_used_MiB": 36905.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 19992.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 27124.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 35064.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 20688.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 28880.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 18174.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 35206.0,
+                "utilization_percent": 0.0
+              }
+            ]
+          }
+        },
+        {
+          "phase": "dev",
+          "iteration": 0,
+          "sequence": 3,
+          "last_check_unix": 1793683630.9195235,
+          "elapsed_seconds": 69.24979734420776,
+          "collection_and_learning_seconds": 69.11655163764954,
+          "physical_controls_this_event": 24000,
+          "projected_remaining_seconds": null,
+          "projected_all_attempt_gpu_hours": null,
+          "optimizer_seconds": null,
+          "optimizer_steps": null,
+          "resources": {
+            "storage_free_GiB": 890.23046875,
+            "container_RAM_GiB": 46.67490768432617,
+            "container_peak_RAM_GiB": 1263.9912414550781,
+            "GPUs": [
+              {
+                "memory_used_MiB": 36905.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 19992.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 27124.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 35064.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 20688.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 28880.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 18174.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 35206.0,
+                "utilization_percent": 0.0
+              }
+            ]
+          }
+        },
+        {
+          "phase": "train",
+          "iteration": 1,
+          "sequence": 4,
+          "last_check_unix": 1793684003.7511742,
+          "elapsed_seconds": 388.0876042842865,
+          "collection_and_learning_seconds": 387.927702665329,
+          "physical_controls_this_event": 230400,
+          "projected_remaining_seconds": 20203.024354219437,
+          "projected_all_attempt_gpu_hours": 50.728926619953576,
+          "optimizer_seconds": 13.810107946395874,
+          "optimizer_steps": 86,
+          "resources": {
+            "storage_free_GiB": 874.12890625,
+            "container_RAM_GiB": 48.31765365600586,
+            "container_peak_RAM_GiB": 1263.9912414550781,
+            "GPUs": [
+              {
+                "memory_used_MiB": 37403.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 20024.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 27124.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 35082.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 20720.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 28900.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 18206.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 35224.0,
+                "utilization_percent": 0.0
+              }
+            ]
+          }
+        },
+        {
+          "phase": "train",
+          "iteration": 2,
+          "sequence": 5,
+          "last_check_unix": 1793684407.5767052,
+          "elapsed_seconds": 400.2196035385132,
+          "collection_and_learning_seconds": 400.0361566543579,
+          "physical_controls_this_event": 230400,
+          "projected_remaining_seconds": 20397.27271413803,
+          "projected_all_attempt_gpu_hours": 52.050028252071805,
+          "optimizer_seconds": 10.90864417143166,
+          "optimizer_steps": 69,
+          "resources": {
+            "storage_free_GiB": 857.84765625,
+            "container_RAM_GiB": 48.64181900024414,
+            "container_peak_RAM_GiB": 1263.9912414550781,
+            "GPUs": [
+              {
+                "memory_used_MiB": 37403.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 21356.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 27124.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 35082.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 20720.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 28900.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 18206.0,
+                "utilization_percent": 0.0
+              },
+              {
+                "memory_used_MiB": 35224.0,
+                "utilization_percent": 0.0
+              }
+            ]
+          }
+        }
+      ],
+      "rank_banks": [
+        {
+          "rank": 0,
+          "iteration": 1,
+          "request_mtime": 1793683631.7865465,
+          "completed_unix": 1793683975.028266,
+          "result_mtime": 1793683975.15972,
+          "worker_seconds": 343.2417194843292,
+          "initial_barrier": false,
+          "native_calls": 21,
+          "average_native_batch": 27.428571428571427,
+          "full_48_calls": 3,
+          "batches": [
+            1,
+            2,
+            19,
+            30,
+            30,
+            35,
+            45,
+            45,
+            46,
+            48,
+            48,
+            48,
+            47,
+            46,
+            29,
+            18,
+            18,
+            13,
+            3,
+            3,
+            2
+          ],
+          "task_counts": {
+            "OpenDrawer": 10,
+            "TurnOffStove": 10,
+            "PickPlaceCounterToCabinet": 10,
+            "CoffeeSetupMug": 9,
+            "PickPlaceDrawerToCounter": 9
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "kv_all_layers",
+            "steering_dim": 1152,
+            "kv_layers": 18,
+            "fraction": 0.64
+          },
+          "native_device_name": "NVIDIA RPBZZZ6"
+        },
+        {
+          "rank": 1,
+          "iteration": 1,
+          "request_mtime": 1793683631.8101494,
+          "completed_unix": 1793683970.8818548,
+          "result_mtime": 1793683971.0097115,
+          "worker_seconds": 339.0717053413391,
+          "initial_barrier": false,
+          "native_calls": 20,
+          "average_native_batch": 28.8,
+          "full_48_calls": 4,
+          "batches": [
+            1,
+            1,
+            20,
+            34,
+            38,
+            46,
+            47,
+            47,
+            48,
+            48,
+            48,
+            48,
+            47,
+            47,
+            28,
+            14,
+            10,
+            2,
+            1,
+            1
+          ],
+          "task_counts": {
+            "PickPlaceCounterToCabinet": 10,
+            "CoffeeSetupMug": 10,
+            "PickPlaceDrawerToCounter": 10,
+            "OpenDrawer": 9,
+            "TurnOffStove": 9
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "kv_all_layers",
+            "steering_dim": 1152,
+            "kv_layers": 18,
+            "fraction": 0.64
+          },
+          "native_device_name": "NVIDIA RPBZZZ6"
+        },
+        {
+          "rank": 2,
+          "iteration": 1,
+          "request_mtime": 1793683631.8240216,
+          "completed_unix": 1793683979.3551414,
+          "result_mtime": 1793683979.4730453,
+          "worker_seconds": 347.5311198234558,
+          "initial_barrier": false,
+          "native_calls": 21,
+          "average_native_batch": 27.428571428571427,
+          "full_48_calls": 3,
+          "batches": [
+            1,
+            7,
+            12,
+            14,
+            14,
+            31,
+            42,
+            45,
+            47,
+            48,
+            48,
+            48,
+            47,
+            41,
+            36,
+            34,
+            34,
+            17,
+            6,
+            3,
+            1
+          ],
+          "task_counts": {
+            "PickPlaceDrawerToCounter": 10,
+            "OpenDrawer": 10,
+            "TurnOffStove": 10,
+            "PickPlaceCounterToCabinet": 9,
+            "CoffeeSetupMug": 9
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "kv_all_layers",
+            "steering_dim": 1152,
+            "kv_layers": 18,
+            "fraction": 0.64
+          },
+          "native_device_name": "NVIDIA RPBZZZ6"
+        },
+        {
+          "rank": 3,
+          "iteration": 1,
+          "request_mtime": 1793683631.838995,
+          "completed_unix": 1793683998.4461427,
+          "result_mtime": 1793683998.5713043,
+          "worker_seconds": 366.60714769363403,
+          "initial_barrier": false,
+          "native_calls": 21,
+          "average_native_batch": 27.428571428571427,
+          "full_48_calls": 3,
+          "batches": [
+            1,
+            1,
+            2,
+            4,
+            5,
+            8,
+            9,
+            18,
+            32,
+            48,
+            48,
+            48,
+            47,
+            47,
+            46,
+            44,
+            43,
+            40,
+            39,
+            30,
+            16
+          ],
+          "task_counts": {
+            "TurnOffStove": 10,
+            "PickPlaceCounterToCabinet": 10,
+            "CoffeeSetupMug": 10,
+            "PickPlaceDrawerToCounter": 9,
+            "OpenDrawer": 9
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "kv_all_layers",
+            "steering_dim": 1152,
+            "kv_layers": 18,
+            "fraction": 0.64
+          },
+          "native_device_name": "NVIDIA RPBZZZ6"
+        },
+        {
+          "rank": 4,
+          "iteration": 1,
+          "request_mtime": 1793683631.861775,
+          "completed_unix": 1793684002.5867972,
+          "result_mtime": 1793684002.7097611,
+          "worker_seconds": 370.725022315979,
+          "initial_barrier": false,
+          "native_calls": 19,
+          "average_native_batch": 30.31578947368421,
+          "full_48_calls": 5,
+          "batches": [
+            1,
+            2,
+            6,
+            8,
+            10,
+            23,
+            46,
+            48,
+            48,
+            48,
+            48,
+            48,
+            47,
+            46,
+            42,
+            40,
+            38,
+            25,
+            2
+          ],
+          "task_counts": {
+            "CoffeeSetupMug": 10,
+            "PickPlaceDrawerToCounter": 10,
+            "OpenDrawer": 9,
+            "TurnOffStove": 9,
+            "PickPlaceCounterToCabinet": 10
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "kv_all_layers",
+            "steering_dim": 1152,
+            "kv_layers": 18,
+            "fraction": 0.64
+          },
+          "native_device_name": "NVIDIA RPBZZZ6"
+        },
+        {
+          "rank": 5,
+          "iteration": 1,
+          "request_mtime": 1793683631.8751547,
+          "completed_unix": 1793683990.0926964,
+          "result_mtime": 1793683990.2063944,
+          "worker_seconds": 358.2175416946411,
+          "initial_barrier": false,
+          "native_calls": 28,
+          "average_native_batch": 20.571428571428573,
+          "full_48_calls": 0,
+          "batches": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2,
+            3,
+            6,
+            10,
+            11,
+            12,
+            18,
+            28,
+            39,
+            47,
+            47,
+            47,
+            46,
+            45,
+            42,
+            38,
+            37,
+            35,
+            29,
+            19,
+            8
+          ],
+          "task_counts": {
+            "OpenDrawer": 10,
+            "TurnOffStove": 10,
+            "PickPlaceCounterToCabinet": 9,
+            "CoffeeSetupMug": 9,
+            "PickPlaceDrawerToCounter": 10
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "kv_all_layers",
+            "steering_dim": 1152,
+            "kv_layers": 18,
+            "fraction": 0.64
+          },
+          "native_device_name": "NVIDIA RPBZZZ6"
+        },
+        {
+          "rank": 6,
+          "iteration": 1,
+          "request_mtime": 1793683631.9017744,
+          "completed_unix": 1793684003.0900602,
+          "result_mtime": 1793684003.2197082,
+          "worker_seconds": 371.1882858276367,
+          "initial_barrier": false,
+          "native_calls": 17,
+          "average_native_batch": 33.88235294117647,
+          "full_48_calls": 7,
+          "batches": [
+            1,
+            2,
+            7,
+            15,
+            31,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            47,
+            46,
+            41,
+            33,
+            17
+          ],
+          "task_counts": {
+            "PickPlaceCounterToCabinet": 10,
+            "CoffeeSetupMug": 10,
+            "PickPlaceDrawerToCounter": 9,
+            "OpenDrawer": 9,
+            "TurnOffStove": 10
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "kv_all_layers",
+            "steering_dim": 1152,
+            "kv_layers": 18,
+            "fraction": 0.64
+          },
+          "native_device_name": "NVIDIA RPBZZZ6"
+        },
+        {
+          "rank": 7,
+          "iteration": 1,
+          "request_mtime": 1793683631.9156373,
+          "completed_unix": 1793684001.8244865,
+          "result_mtime": 1793684001.949114,
+          "worker_seconds": 369.90884923934937,
+          "initial_barrier": false,
+          "native_calls": 22,
+          "average_native_batch": 26.181818181818183,
+          "full_48_calls": 2,
+          "batches": [
+            1,
+            1,
+            2,
+            2,
+            2,
+            4,
+            4,
+            6,
+            21,
+            37,
+            48,
+            48,
+            47,
+            47,
+            46,
+            46,
+            46,
+            44,
+            44,
+            42,
+            27,
+            11
+          ],
+          "task_counts": {
+            "PickPlaceDrawerToCounter": 10,
+            "OpenDrawer": 10,
+            "TurnOffStove": 9,
+            "PickPlaceCounterToCabinet": 9,
+            "CoffeeSetupMug": 10
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "kv_all_layers",
+            "steering_dim": 1152,
+            "kv_layers": 18,
+            "fraction": 0.64
+          },
+          "native_device_name": "NVIDIA RPBZZZ6"
+        },
+        {
+          "rank": 0,
+          "iteration": 2,
+          "request_mtime": 1793684019.901512,
+          "completed_unix": 1793684363.381955,
+          "result_mtime": 1793684363.5042326,
+          "worker_seconds": 343.48044300079346,
+          "initial_barrier": false,
+          "native_calls": 23,
+          "average_native_batch": 25.043478260869566,
+          "full_48_calls": 1,
+          "batches": [
+            1,
+            3,
+            19,
+            28,
+            28,
+            30,
+            31,
+            32,
+            33,
+            42,
+            47,
+            48,
+            47,
+            45,
+            29,
+            20,
+            20,
+            18,
+            17,
+            16,
+            15,
+            6,
+            1
+          ],
+          "task_counts": {
+            "OpenDrawer": 10,
+            "TurnOffStove": 10,
+            "PickPlaceCounterToCabinet": 10,
+            "CoffeeSetupMug": 9,
+            "PickPlaceDrawerToCounter": 9
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "kv_all_layers",
+            "steering_dim": 1152,
+            "kv_layers": 18,
+            "fraction": 0.64
+          },
+          "native_device_name": "NVIDIA RPBZZZ6",
+          "one_raw_chunk_size_sample_bytes": 802438
+        },
+        {
+          "rank": 1,
+          "iteration": 2,
+          "request_mtime": 1793684019.9163556,
+          "completed_unix": 1793684390.4139638,
+          "result_mtime": 1793684390.5289207,
+          "worker_seconds": 370.49760818481445,
+          "initial_barrier": false,
+          "native_calls": 31,
+          "average_native_batch": 18.580645161290324,
+          "full_48_calls": 0,
+          "batches": [
+            1,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            5,
+            5,
+            3,
+            4,
+            4,
+            13,
+            32,
+            39,
+            44,
+            44,
+            44,
+            44,
+            43,
+            42,
+            42,
+            41,
+            41,
+            31,
+            12,
+            5
+          ],
+          "task_counts": {
+            "PickPlaceCounterToCabinet": 10,
+            "CoffeeSetupMug": 10,
+            "PickPlaceDrawerToCounter": 10,
+            "OpenDrawer": 9,
+            "TurnOffStove": 9
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "kv_all_layers",
+            "steering_dim": 1152,
+            "kv_layers": 18,
+            "fraction": 0.64
+          },
+          "native_device_name": "NVIDIA RPBZZZ6",
+          "one_raw_chunk_size_sample_bytes": 940546
+        },
+        {
+          "rank": 2,
+          "iteration": 2,
+          "request_mtime": 1793684019.9414072,
+          "completed_unix": 1793684391.9180572,
+          "result_mtime": 1793684392.026312,
+          "worker_seconds": 371.97664999961853,
+          "initial_barrier": false,
+          "native_calls": 20,
+          "average_native_batch": 28.8,
+          "full_48_calls": 4,
+          "batches": [
+            1,
+            3,
+            5,
+            6,
+            7,
+            10,
+            23,
+            34,
+            48,
+            48,
+            48,
+            48,
+            47,
+            45,
+            43,
+            42,
+            41,
+            38,
+            25,
+            14
+          ],
+          "task_counts": {
+            "PickPlaceDrawerToCounter": 10,
+            "OpenDrawer": 10,
+            "TurnOffStove": 10,
+            "PickPlaceCounterToCabinet": 9,
+            "CoffeeSetupMug": 9
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "kv_all_layers",
+            "steering_dim": 1152,
+            "kv_layers": 18,
+            "fraction": 0.64
+          },
+          "native_device_name": "NVIDIA RPBZZZ6",
+          "one_raw_chunk_size_sample_bytes": 845656
+        },
+        {
+          "rank": 3,
+          "iteration": 2,
+          "request_mtime": 1793684019.9556437,
+          "completed_unix": 1793684371.3623772,
+          "result_mtime": 1793684371.4814546,
+          "worker_seconds": 351.4067335128784,
+          "initial_barrier": false,
+          "native_calls": 23,
+          "average_native_batch": 25.043478260869566,
+          "full_48_calls": 1,
+          "batches": [
+            1,
+            2,
+            17,
+            33,
+            33,
+            34,
+            35,
+            37,
+            39,
+            43,
+            45,
+            48,
+            47,
+            46,
+            31,
+            15,
+            15,
+            14,
+            13,
+            11,
+            9,
+            5,
+            3
+          ],
+          "task_counts": {
+            "TurnOffStove": 10,
+            "PickPlaceCounterToCabinet": 10,
+            "CoffeeSetupMug": 10,
+            "PickPlaceDrawerToCounter": 9,
+            "OpenDrawer": 9
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "kv_all_layers",
+            "steering_dim": 1152,
+            "kv_layers": 18,
+            "fraction": 0.64
+          },
+          "native_device_name": "NVIDIA RPBZZZ6",
+          "one_raw_chunk_size_sample_bytes": 772090
+        },
+        {
+          "rank": 4,
+          "iteration": 2,
+          "request_mtime": 1793684019.969704,
+          "completed_unix": 1793684399.247404,
+          "result_mtime": 1793684399.3759425,
+          "worker_seconds": 379.27770018577576,
+          "initial_barrier": false,
+          "native_calls": 22,
+          "average_native_batch": 26.181818181818183,
+          "full_48_calls": 2,
+          "batches": [
+            1,
+            1,
+            2,
+            3,
+            4,
+            5,
+            5,
+            10,
+            23,
+            43,
+            48,
+            48,
+            47,
+            47,
+            46,
+            45,
+            44,
+            43,
+            43,
+            38,
+            25,
+            5
+          ],
+          "task_counts": {
+            "CoffeeSetupMug": 10,
+            "PickPlaceDrawerToCounter": 10,
+            "OpenDrawer": 10,
+            "TurnOffStove": 9,
+            "PickPlaceCounterToCabinet": 9
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "kv_all_layers",
+            "steering_dim": 1152,
+            "kv_layers": 18,
+            "fraction": 0.64
+          },
+          "native_device_name": "NVIDIA RPBZZZ6",
+          "one_raw_chunk_size_sample_bytes": 805221
+        },
+        {
+          "rank": 5,
+          "iteration": 2,
+          "request_mtime": 1793684019.983786,
+          "completed_unix": 1793684384.109025,
+          "result_mtime": 1793684384.224336,
+          "worker_seconds": 364.12523889541626,
+          "initial_barrier": false,
+          "native_calls": 30,
+          "average_native_batch": 19.2,
+          "full_48_calls": 0,
+          "batches": [
+            1,
+            1,
+            3,
+            4,
+            7,
+            8,
+            8,
+            8,
+            9,
+            10,
+            10,
+            10,
+            10,
+            12,
+            20,
+            30,
+            34,
+            39,
+            40,
+            40,
+            39,
+            38,
+            38,
+            38,
+            37,
+            35,
+            25,
+            14,
+            7,
+            1
+          ],
+          "task_counts": {
+            "OpenDrawer": 10,
+            "TurnOffStove": 10,
+            "PickPlaceCounterToCabinet": 9,
+            "CoffeeSetupMug": 9,
+            "PickPlaceDrawerToCounter": 10
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "kv_all_layers",
+            "steering_dim": 1152,
+            "kv_layers": 18,
+            "fraction": 0.64
+          },
+          "native_device_name": "NVIDIA RPBZZZ6",
+          "one_raw_chunk_size_sample_bytes": 785859
+        },
+        {
+          "rank": 6,
+          "iteration": 2,
+          "request_mtime": 1793684019.9969716,
+          "completed_unix": 1793684385.4198756,
+          "result_mtime": 1793684385.5545456,
+          "worker_seconds": 365.4229040145874,
+          "initial_barrier": false,
+          "native_calls": 29,
+          "average_native_batch": 19.862068965517242,
+          "full_48_calls": 0,
+          "batches": [
+            1,
+            4,
+            5,
+            5,
+            5,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            9,
+            10,
+            12,
+            23,
+            29,
+            40,
+            41,
+            41,
+            41,
+            41,
+            41,
+            41,
+            39,
+            37,
+            32,
+            20,
+            14,
+            3
+          ],
+          "task_counts": {
+            "PickPlaceCounterToCabinet": 10,
+            "CoffeeSetupMug": 10,
+            "PickPlaceDrawerToCounter": 9,
+            "OpenDrawer": 9,
+            "TurnOffStove": 10
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "kv_all_layers",
+            "steering_dim": 1152,
+            "kv_layers": 18,
+            "fraction": 0.64
+          },
+          "native_device_name": "NVIDIA RPBZZZ6",
+          "one_raw_chunk_size_sample_bytes": 805274
+        },
+        {
+          "rank": 7,
+          "iteration": 2,
+          "request_mtime": 1793684020.01133,
+          "completed_unix": 1793684406.9790921,
+          "result_mtime": 1793684407.1112247,
+          "worker_seconds": 386.9677622318268,
+          "initial_barrier": false,
+          "native_calls": 15,
+          "average_native_batch": 38.4,
+          "full_48_calls": 9,
+          "batches": [
+            1,
+            11,
+            28,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            48,
+            47,
+            37,
+            20
+          ],
+          "task_counts": {
+            "PickPlaceDrawerToCounter": 10,
+            "OpenDrawer": 10,
+            "TurnOffStove": 9,
+            "PickPlaceCounterToCabinet": 9,
+            "CoffeeSetupMug": 10
+          },
+          "policy_config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "interface": {
+            "kind": "kv_all_layers",
+            "steering_dim": 1152,
+            "kv_layers": 18,
+            "fraction": 0.64
+          },
+          "native_device_name": "NVIDIA RPBZZZ6",
+          "one_raw_chunk_size_sample_bytes": 970013
+        }
+      ],
+      "dispatch_journals": "Not rescanned: uninstrumented historic lock/IO time cannot be recovered from file walks.",
+      "cost_sensitivity": {
+        "allocation_start_assumption_unix": 1793682840,
+        "terminal_scheduler_release_charge_pending_owner": true,
+        "provisional_spent_through_wrapper_exit_GPU_hours": 3.8091666666666666,
+        "wrongly_charged_zero_GPU_queue_seconds": 1197.0,
+        "wrongly_charged_queue_GPU_hours": 2.66,
+        "recorded_guard_projection_GPU_hours": 52.050028252071805,
+        "allocation_corrected_guard_projection_GPU_hours": 49.3900282520718,
+        "remaining_train_updates": 48,
+        "remaining_DEV_panels": 10,
+        "remaining_final_panels": 1,
+        "remaining_train_GPU_hours": 42.69009104410807,
+        "remaining_DEV_and_final_GPU_hours": 2.6371816539764406,
+        "remaining_work_GPU_hours_before_restart": 45.32727269808451,
+        "train_update_seconds_to_fit_with_240s_restart_and_120s_release": 307.06548449397087,
+        "scenarios": [
+          {
+            "train_update_seconds": 222,
+            "total_with_240s_restart_and_120s_release_GPU_hours": 30.926348320643108
+          },
+          {
+            "train_update_seconds": 250,
+            "total_with_240s_restart_and_120s_release_GPU_hours": 33.91301498730977
+          },
+          {
+            "train_update_seconds": 275,
+            "total_with_240s_restart_and_120s_release_GPU_hours": 36.579681653976444
+          },
+          {
+            "train_update_seconds": 300,
+            "total_with_240s_restart_and_120s_release_GPU_hours": 39.24634832064311
+          },
+          {
+            "train_update_seconds": 310,
+            "total_with_240s_restart_and_120s_release_GPU_hours": 40.31301498730977
+          },
+          {
+            "train_update_seconds": 315,
+            "total_with_240s_restart_and_120s_release_GPU_hours": 40.84634832064311
+          },
+          {
+            "train_update_seconds": 325,
+            "total_with_240s_restart_and_120s_release_GPU_hours": 41.91301498730977
+          },
+          {
+            "train_update_seconds": 400.2196035385132,
+            "total_with_240s_restart_and_120s_release_GPU_hours": 49.93643936475118
+          }
+        ]
+      }
+    }
+  },
+  "references": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-native-qualification-20261103-r2/stress/RESULT.json",
+      "bytes": 70529,
+      "sha256": "1539823bfb2dd14cb7211e42cd83b74b5c8cb0fb12e2abb87b2123d9c6b67787"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-native-qualification-20261103-r2/stress/resources.jsonl",
+      "bytes": 2464178,
+      "sha256": "ff59746be9380ad5bb8b31e4ad72ff199902198bd483e39add5ba6b89e281188"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/PROFILE.json",
+      "bytes": 2262,
+      "sha256": "7893c071cd0569a11c423560090e0261c8ffe25fb7081c995bd5015eef43167b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/clock.json",
+      "bytes": 155,
+      "sha256": "1af46a80545341553ebf971e12ddf2793999e1b14dd623511eb0ed30f2273caf"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/PAUSED.json",
+      "bytes": 459,
+      "sha256": "dbe3f47a5c1088973ff15dd96d3dc3b96f2f32af36e0ec268fa6cd674d6dedd7"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/metrics/event-001.json",
+      "bytes": 1897,
+      "sha256": "6e74b96a789b9ee57a0e496f7dbd571448237f7809b7faede01cf4ab5c507fb1"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/metrics/event-002.json",
+      "bytes": 3314,
+      "sha256": "dcdbc1ebae376a1aff3579a6e9bb8fdba0c76eab3bcc796e84d721299baa10df"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/metrics/event-003.json",
+      "bytes": 8001,
+      "sha256": "53538fbf8885bff2d3302b1372e3dab883325e73c45a58981860688210fc9872"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/metrics/event-004.json",
+      "bytes": 7513,
+      "sha256": "898821d3609908619d99a5334fb038795452dca55bea015b5f7ca896b94a8bb0"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/metrics/event-005.json",
+      "bytes": 6310,
+      "sha256": "456352e90148b101ad54c441ed70ecfe9846659764118a4eac27683e82957574"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-00/result-000004.pt",
+      "bytes": 6804664,
+      "sha256": "742432078555b2b259129667199b6655da54ba751a1711a4a8bc213b1e049599"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-00/request-000004.pt",
+      "bytes": 4814070,
+      "sha256": "c0ae149b0867bb2dae24566a3f6da2dff57d7eb034f76f8d83b53e03d164d2be"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-01/result-000004.pt",
+      "bytes": 6941978,
+      "sha256": "b696ddd5ac4c1c4cbb3fb08cd9ac18aa7907ffa136e6e71bf5e4abc2e534bd95"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-01/request-000004.pt",
+      "bytes": 4814070,
+      "sha256": "5502e89777854971a88c7cd3211e6add28b361d9a5f2aa1b12a47fe002deba43"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-02/result-000004.pt",
+      "bytes": 6901923,
+      "sha256": "2399961061bd5d2e67305c65f2714ed253bdb1e770ba500eac09163a3ece8d9b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-02/request-000004.pt",
+      "bytes": 4814070,
+      "sha256": "01d7f5082db66a7d40450674739abc0bfd8cedbf702e4777c0ffb302a59a2bba"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-03/result-000004.pt",
+      "bytes": 6572011,
+      "sha256": "9cd9af334d79bcce49ef7db5ea544df27eba7d5a7b297e29eff5a60dbd040df3"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-03/request-000004.pt",
+      "bytes": 4814070,
+      "sha256": "7d193a0830740a1c35cc62ce071de6b372a6c76ee60f80df5e18db79aaa976d6"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-04/result-000004.pt",
+      "bytes": 6556526,
+      "sha256": "209eb84ced3bebd4ce87a27594d7e42952c034579c6d154dd4a24d7e4c69473f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-04/request-000004.pt",
+      "bytes": 4814070,
+      "sha256": "75145ba05edd418a2b9e53825be46bf2510b0dad788c7e66b7ba6f0c7651d67c"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-05/result-000004.pt",
+      "bytes": 6967060,
+      "sha256": "a946d4548b731c4a177e8a0807c8fade3907a6888254a6bb191f545f6f5c23ba"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-05/request-000004.pt",
+      "bytes": 4814070,
+      "sha256": "3ce07a8d635b404cc45ed1da36582e5eddea2dd716dfdfe663804895334c834b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-06/result-000004.pt",
+      "bytes": 6723082,
+      "sha256": "3b3522c2ae3dac25f4803453c807ddb2fbbde727f3a240af8949c954687f8925"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-06/request-000004.pt",
+      "bytes": 4814070,
+      "sha256": "f017e1e1590a9ade254e9ad9b263d1f805032e6243a7a6a74d3db871da60fba1"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-07/result-000004.pt",
+      "bytes": 7216542,
+      "sha256": "a82ba48617542950b206f8173b1763363de1531a302f013ac7cd4116146f142b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-07/request-000004.pt",
+      "bytes": 4814070,
+      "sha256": "7e4425649411585e18630eb361be25b48d161b3f9aaccd4ae517ef1d9ba4f49d"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-00/result-000005.pt",
+      "bytes": 6446854,
+      "sha256": "6170f667aa8218a44560f12e56e5259aa53ca94d6f3a8f6d887eeda20c059020"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-00/request-000005.pt",
+      "bytes": 4814070,
+      "sha256": "20c69ee05484e1a9017a0175855570b4b013fbb2f5205703397ab5fdcc445036"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-01/result-000005.pt",
+      "bytes": 6213369,
+      "sha256": "8f148624e283b2529796a158dbb1366799a0a19c0b3cafe21d99274c040cb0b7"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-01/request-000005.pt",
+      "bytes": 4814070,
+      "sha256": "cb60fd145ac37059774b360aa9145a4df36f8b5a8c6163b9a9f2e5b47d451ba6"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-02/result-000005.pt",
+      "bytes": 6914144,
+      "sha256": "9644adf0c659da54ef1887d8054f6a950e8f7c18288e0e62916ad60b3bcb181e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-02/request-000005.pt",
+      "bytes": 4814070,
+      "sha256": "3c24f6b4657144d88c7c39f50b38b716ff01c030a07cdd93caa5d4665cba3000"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-03/result-000005.pt",
+      "bytes": 6653913,
+      "sha256": "82077adaa2a8f84dcf5d7168b495dbae941de4edc75fb5b9bc8e7e9cf4db3e84"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-03/request-000005.pt",
+      "bytes": 4814070,
+      "sha256": "a74e7a14c34726661a57fa5c348e6b1e7b6da563df5abcbaa2a1aa4ad459aa82"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-04/result-000005.pt",
+      "bytes": 6832050,
+      "sha256": "748d46d71d4b6de3ea2cde37e5f7824b4dd87476c3a6738156cf2f08c3550038"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-04/request-000005.pt",
+      "bytes": 4814070,
+      "sha256": "2964c69278d89e0c81ca0d6d68a82bf55147523b0aee75686a09716a0e9dd796"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-05/result-000005.pt",
+      "bytes": 6460995,
+      "sha256": "e3ce2450ae3cf7f482e085a41e33f91b8bed4e83764127f352237f3c0566a0cb"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-05/request-000005.pt",
+      "bytes": 4814070,
+      "sha256": "ca1da64d706daceb5af9a9e736cc1bdc3ea073ac2c8629c42598a10520db2776"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-06/result-000005.pt",
+      "bytes": 7269842,
+      "sha256": "9f1d573006e0c9822486f56e09abf7b09741e3b83bc0bb66c9168c7501773fed"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-06/request-000005.pt",
+      "bytes": 4814070,
+      "sha256": "ecfab342b45c0d704461dc28adf9bc3be7c8e897260bf025b820c5b8537df6ff"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-07/result-000005.pt",
+      "bytes": 6585000,
+      "sha256": "b389942513c2fbffe5b1cee4ce5c0896aad02ddd52519268ec937c8c88c06b67"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/workers/rank-07/request-000005.pt",
+      "bytes": 4814070,
+      "sha256": "9bb5b9580c3965272d18233ad57d66ce652a57259b75c67f779b307953007882"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/PROFILE.json",
+      "bytes": 2261,
+      "sha256": "3124a490e0cb91139b3958ea5c05877c14ade2035ec590587f7b34f0b3afc8ea"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/clock.json",
+      "bytes": 155,
+      "sha256": "35817a17ac70315056ec29a55c014eae72e500e4597ddfff3d3eaca869b6a200"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/PAUSED.json",
+      "bytes": 455,
+      "sha256": "035e524cec6372455bd9d0927e8268200bff6354851a86889b18a1bca73c05c5"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/metrics/event-001.json",
+      "bytes": 1887,
+      "sha256": "92686a0c1819065dd3e5cf94d0702be2852e2196496726cea74d8fa67b4ae375"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/metrics/event-002.json",
+      "bytes": 3306,
+      "sha256": "25562c963b3589a61cfed100d3ef8ad25f3becfc1b5c3b1d0b92914f6213bd4f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/metrics/event-003.json",
+      "bytes": 8000,
+      "sha256": "7396568de319cde06d090764fb5a8487a335bd3a7863eab9615e0326a2ab6706"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/metrics/event-004.json",
+      "bytes": 22953,
+      "sha256": "6160a93e5d09a6d21ef1519ee47e219b7d70608b45e144ef5dc284b783cee77b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/metrics/event-005.json",
+      "bytes": 18860,
+      "sha256": "3eca7b2e2df93c902388db87ce30770dae5e8b102bb790de5d2b12efa549f146"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-00/result-000004.pt",
+      "bytes": 13484381,
+      "sha256": "682c7155c823474204d7212b7682c3994a9adec254f12eb30fb5d61126df89aa"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-00/request-000004.pt",
+      "bytes": 5969910,
+      "sha256": "78866a68ded5f3d0d0875b694dc475ab9be3c90e99d43c360db355314333f0d3"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-01/result-000004.pt",
+      "bytes": 13701893,
+      "sha256": "c5084f8e518ca52aab4e4089434abd76511b94c76d2cb7c526cd570e31acc436"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-01/request-000004.pt",
+      "bytes": 5969910,
+      "sha256": "f60297c6a3e1a53e2ce5b368a558b56c5eac642008272d5bc2a98f0e1086d5f3"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-02/result-000004.pt",
+      "bytes": 12777259,
+      "sha256": "83ee0e2782245edc49fbeceb518c98551f1801a83f31bdd729f98e28a1300614"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-02/request-000004.pt",
+      "bytes": 5969910,
+      "sha256": "7e5143c48ab414a6ea11e0901c14d7f3470387b697d71c2cc521ce30cd4ed91f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-03/result-000004.pt",
+      "bytes": 12967574,
+      "sha256": "49c08b4603eebd9c69498f2f5941b07edf540ce4c931851c174bbe697bbf00d6"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-03/request-000004.pt",
+      "bytes": 5969910,
+      "sha256": "4d8c0f271eaa5698e57ba965c71aec669e9d0d6291d6bcbb5570d0cd6eeec6ae"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-04/result-000004.pt",
+      "bytes": 13566548,
+      "sha256": "7cde365b6a318be8aa3e98b3eedc27c4e75edb53fdef6a6b6c3631ad38bb3351"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-04/request-000004.pt",
+      "bytes": 5969910,
+      "sha256": "283ad7343adaa73b92280c06d120cf894685c0f4a4f7ab20ff7c873145aa7895"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-05/result-000004.pt",
+      "bytes": 12831589,
+      "sha256": "4d65266d79a3f462f09bbfc490fb5a2ab3f2ed775f3db02630c47f3ff5fda251"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-05/request-000004.pt",
+      "bytes": 5969910,
+      "sha256": "fc3280f13e9b4838c14cb9925d40e1470180a270210491b376b33f8b18f04a79"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-06/result-000004.pt",
+      "bytes": 13267445,
+      "sha256": "e76cf4838d1ac6bfc37023cc47f06a0bb1e55f5d14793108447ccf365c56446f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-06/request-000004.pt",
+      "bytes": 5969910,
+      "sha256": "88d839c9405da9f605218511419b7d537177edb318e7d70b2bb455935963894e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-07/result-000004.pt",
+      "bytes": 12968086,
+      "sha256": "26eed81a690e78a0d112ec79b7f8743348ed9a1a8a274c2e4f61b5574b1a1366"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-07/request-000004.pt",
+      "bytes": 5969910,
+      "sha256": "67d8eb7de92009b289536c0b7c37d7820cc0a2a73fc11f0cfeb657bc92af1b0f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-00/result-000005.pt",
+      "bytes": 13265333,
+      "sha256": "84e37021264a02c0309c02bda3b820d2185dc38bc659f3c324c5efa39dd29369"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-00/request-000005.pt",
+      "bytes": 5969910,
+      "sha256": "097c7f832c156e777b6daa7e62811fb0feab9f3fabcebeeaf7b296e39f533a53"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-01/result-000005.pt",
+      "bytes": 12288609,
+      "sha256": "bbee7aae2fbf88cbc77459879d4092b2a87947c448724349edcb1ad649cafb3e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-01/request-000005.pt",
+      "bytes": 5969910,
+      "sha256": "0c21be3ab25cc84153dc672446bf82d47982c0ace1ed82eee1a7de77f1205178"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-02/result-000005.pt",
+      "bytes": 12206378,
+      "sha256": "965cfe44971c51fca0b129d6065fcae9d9b23fd9c5196f39940e11ae7e599c42"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-02/request-000005.pt",
+      "bytes": 5969910,
+      "sha256": "d98af7d03d01354d40171d58f871fcdbf4f7813914da082ab023bbebb47c9f0b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-03/result-000005.pt",
+      "bytes": 13566996,
+      "sha256": "461e5839b53db807e0c2ea91406bd07949e267b8a1c9692a7143f78661c66834"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-03/request-000005.pt",
+      "bytes": 5969910,
+      "sha256": "533d393590deb14c890be3ad1db89a01d750f8d21113035d510b32f01124c516"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-04/result-000005.pt",
+      "bytes": 13457632,
+      "sha256": "6b12fdae30f89939140ceaa8bca924cb7c809ad3647bf869de7b033aa56d1d89"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-04/request-000005.pt",
+      "bytes": 5969910,
+      "sha256": "ef3fdc209ac565963a8f572b67f4ecb48de09f7449b9f4ed111dd53f73704dba"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-05/result-000005.pt",
+      "bytes": 13375849,
+      "sha256": "fc13282c0ad0900475df44ec9aa40f3071111da0d07413657f88c9bb792f31cd"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-05/request-000005.pt",
+      "bytes": 5969910,
+      "sha256": "842ddb9f9b4e66cdba938a39e15200b5705d00373247a822b0bb30de7f327900"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-06/result-000005.pt",
+      "bytes": 13458656,
+      "sha256": "57b9426d7253888800aea859062fe8cd60c1e045991a2f93a680429ea449ef2e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-06/request-000005.pt",
+      "bytes": 5969910,
+      "sha256": "773755f5f0b74975196297d5db300e9b8a66e94306e40600034db36da80731ca"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-07/result-000005.pt",
+      "bytes": 13594065,
+      "sha256": "0b073003c1cf6ee3a61a9ece39137add7d2116adb387de2985297231bc20f8cc"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/workers/rank-07/request-000005.pt",
+      "bytes": 5969910,
+      "sha256": "c25a3d7f9b370a17de359c2e080292a4e598b90ea079e65d67874ab293db13b8"
+    }
+  ],
+  "elapsed_seconds": 5.698136368766427
+}

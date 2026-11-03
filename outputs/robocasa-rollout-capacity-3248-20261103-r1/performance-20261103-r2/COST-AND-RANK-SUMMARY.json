@@ -1,0 +1,238 @@
+{
+  "recorded_UTC": "2026-11-03T06:22:11.258431+00:00",
+  "formula": "spent_selected + 8*(48*train_seconds + 10*DEV_seconds + final_seconds + restart_seconds + release_seconds); divide by3600",
+  "selected_spend_source": "Source-owner scheduler closeout; no duplicated overlapping process-clock charges",
+  "budget": {
+    "per_arm": 60,
+    "combined": 120
+  },
+  "restart_allowance_wall_seconds": 240,
+  "release_allowance_wall_seconds": 120,
+  "arms": {
+    "velocity": {
+      "selected_spent_GPU_hours": 3.671388888888889,
+      "remaining_work_GPU_hours": 42.601906062232125,
+      "total_forecast_with_restart_and_release_GPU_hours": 47.073294951121014,
+      "headroom_to60_GPU_hours": 12.926705048878986,
+      "legacy40_train_seconds_limit": 309.1330249905586,
+      "current60_train_seconds_limit": 496.6330249905586,
+      "observed_train_update_seconds": 375.4451651573181,
+      "DEV_seconds": 68.15576505661011,
+      "final_panel_proxy_seconds": 467.93214988708496,
+      "ranks": {
+        "1": {
+          "worker_seconds": [
+            321.8377459049225,
+            350.8868546485901,
+            338.1200940608978,
+            339.1548149585724,
+            339.6984326839447,
+            337.5530889034271,
+            335.9373400211334,
+            350.2011330127716
+          ],
+          "native_calls": [
+            21,
+            18,
+            33,
+            28,
+            28,
+            30,
+            28,
+            24
+          ],
+          "average_batch": [
+            27.428571428571427,
+            32,
+            17.454545454545453,
+            20.571428571428573,
+            20.571428571428573,
+            19.2,
+            20.571428571428573,
+            24
+          ],
+          "full_48_calls": [
+            3,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "total_calls": 210,
+          "aggregate_average_batch": 21.942857142857143,
+          "worker_range": [
+            321.8377459049225,
+            350.8868546485901
+          ]
+        },
+        "2": {
+          "worker_seconds": [
+            333.3514049053192,
+            333.373619556427,
+            352.35412406921387,
+            372.08147954940796,
+            367.3110249042511,
+            368.72446298599243,
+            369.37197947502136,
+            351.1960892677307
+          ],
+          "native_calls": [
+            19,
+            20,
+            31,
+            17,
+            17,
+            25,
+            18,
+            23
+          ],
+          "average_batch": [
+            30.31578947368421,
+            28.8,
+            18.580645161290324,
+            33.88235294117647,
+            33.88235294117647,
+            23.04,
+            32,
+            25.043478260869566
+          ],
+          "full_48_calls": [
+            5,
+            4,
+            0,
+            7,
+            7,
+            0,
+            6,
+            1
+          ],
+          "total_calls": 170,
+          "aggregate_average_batch": 27.105882352941176,
+          "worker_range": [
+            333.3514049053192,
+            372.08147954940796
+          ]
+        }
+      }
+    },
+    "kv_all_layers": {
+      "selected_spent_GPU_hours": 3.8447222222222224,
+      "remaining_work_GPU_hours": 45.32727269808451,
+      "total_forecast_with_restart_and_release_GPU_hours": 49.971994920306734,
+      "headroom_to60_GPU_hours": 10.028005079693266,
+      "legacy40_train_seconds_limit": 306.73215116063756,
+      "current60_train_seconds_limit": 494.23215116063756,
+      "observed_train_update_seconds": 400.2196035385132,
+      "DEV_seconds": 69.24979734420776,
+      "final_panel_proxy_seconds": 494.23377084732056,
+      "ranks": {
+        "1": {
+          "worker_seconds": [
+            343.2417194843292,
+            339.0717053413391,
+            347.5311198234558,
+            366.60714769363403,
+            370.725022315979,
+            358.2175416946411,
+            371.1882858276367,
+            369.90884923934937
+          ],
+          "native_calls": [
+            21,
+            20,
+            21,
+            21,
+            19,
+            28,
+            17,
+            22
+          ],
+          "average_batch": [
+            27.428571428571427,
+            28.8,
+            27.428571428571427,
+            27.428571428571427,
+            30.31578947368421,
+            20.571428571428573,
+            33.88235294117647,
+            26.181818181818183
+          ],
+          "full_48_calls": [
+            3,
+            4,
+            3,
+            3,
+            5,
+            0,
+            7,
+            2
+          ],
+          "total_calls": 169,
+          "aggregate_average_batch": 27.266272189349113,
+          "worker_range": [
+            339.0717053413391,
+            371.1882858276367
+          ]
+        },
+        "2": {
+          "worker_seconds": [
+            343.48044300079346,
+            370.49760818481445,
+            371.97664999961853,
+            351.4067335128784,
+            379.27770018577576,
+            364.12523889541626,
+            365.4229040145874,
+            386.9677622318268
+          ],
+          "native_calls": [
+            23,
+            31,
+            20,
+            23,
+            22,
+            30,
+            29,
+            15
+          ],
+          "average_batch": [
+            25.043478260869566,
+            18.580645161290324,
+            28.8,
+            25.043478260869566,
+            26.181818181818183,
+            19.2,
+            19.862068965517242,
+            38.4
+          ],
+          "full_48_calls": [
+            1,
+            0,
+            4,
+            1,
+            2,
+            0,
+            0,
+            9
+          ],
+          "total_calls": 193,
+          "aggregate_average_batch": 23.875647668393782,
+          "worker_range": [
+            343.48044300079346,
+            386.9677622318268
+          ]
+        }
+      }
+    }
+  },
+  "combined_forecast_GPU_hours": 97.04528987142774,
+  "combined_headroom_GPU_hours": 22.95471012857226,
+  "references": {
+    "AUDIT.json": "03a83d9e13bd4e1b4aeaa45e0cd8549f18e0f1c39c85a5daf3b1b27ddfdf830c",
+    "UPDATE2-SCHEDULER-CLOSEOUT.json": "933d50fd5f9207608402d5b78f4a9859ac6fb97b9409796c3f02a158d3883b2f",
+    "SOURCE-BUDGET-60PERARM-20261103-r1.json": "fdd52573e8e2c295c2ae88cfda775e3fd77990bc73c00b82b955dab8a68b499f"
+  }
+}
