@@ -1,0 +1,27 @@
+.......................................                                  [100%]
+=============================== warnings summary ===============================
+tests/test_robocasa_flow_ppo.py::test_flow_factory_stabilizes_native_regions_before_constructor
+tests/test_robocasa_flow_ppo.py::test_flow_factory_stabilizes_native_regions_before_constructor
+  /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/torch/jit/_script.py:1488: DeprecationWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+tests/test_robocasa_flow_ppo.py: 14 warnings
+  /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+tests/test_rlinf_native_ppo.py::test_published_batch_and_h400_compose
+tests/test_rlinf_native_ppo.py::test_four_rank_preserves_sixtyfour_microbatch_weights
+tests/test_rlinf_native_ppo.py::test_rejects_scientific_recipe_drift[actor.global_batch_size-1024]
+tests/test_rlinf_native_ppo.py::test_rejects_scientific_recipe_drift[env.train.max_episode_steps-200]
+tests/test_rlinf_native_ppo.py::test_rejects_scientific_recipe_drift[actor.model.openpi.train_expert_only-False]
+tests/test_rlinf_native_ppo.py::test_rejects_scientific_recipe_drift[actor.optim.lr_scheduler-cosine]
+tests/test_rlinf_native_ppo.py::test_rejects_scientific_recipe_drift[runner.only_eval-True]
+  /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/hydra/_internal/defaults_list.py:262: UserWarning: In 'adjust_bottle_published_batch_two': Defaults list is missing `_self_`. See https://hydra.cc/docs/1.2/upgrades/1.0_to_1.1/default_composition_order for more information
+    warnings.warn(msg, UserWarning)
+
+tests/test_robocasa_native_clock.py::test_clock_is_read_from_initialized_native_reset_not_constructor
+  /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/robosuite/__init__.py:45: DeprecationWarning: invalid escape sequence '\ '
+    __logo__ = """
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+39 passed, 24 warnings in 242.73s (0:04:02)

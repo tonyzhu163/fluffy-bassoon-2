@@ -23,8 +23,8 @@ and original model weights. It makes no simulator calls or optimizer steps.
 R1 (`job-h6vnge2o397b`, source `fa16fbb3`) established the first two rows.
 R2 (`job-crl6vl8lx7a3`, source `090cd7d5`) reproduced them and qualified the
 third row. [Full R1](PARITY-REPLAY-R1.json), [full R2](PARITY-REPLAY-R2.json).
-This qualifies the sampled likelihood comparisons, not optimizer convergence
-or a complete PPO update. Native FSDP qualification follows on eight GPUs.
+This replay qualifies the sampled likelihood comparisons. Subsequent native
+eight-GPU qualification passed for all five tasks, as recorded below.
 
 The frozen image encoder contains PyTorch `nn.MultiheadAttention`. Its eval
 flag affects forward-path selection even under `no_grad`; freezing parameter
@@ -64,9 +64,20 @@ step-zero actor/value/Adam/sampler/RNG checkpoint. The immutable
 [before reference](BEFORE-RETRY0.json) reuses all64original before cases;
 no second before collection is needed. The failed TRAIN bank is excluded
 from learning and remains charged in the same task accounting root. Retry
-output and journal identities are new. Full source production and the other
-four Q1 jobs require the corrected native update, duplication/storage audit
-and complete boundary.
+output and journal identities are new. All five corrected Q1 jobs have now
+succeeded and released their allocations. Each completed24optimizer steps,
+passed the pre-backward likelihood check on both actor ranks with zero error,
+kept the frozen VLM unchanged, and saved a complete eighteen-worker boundary.
+The allocated-Linux audit verified all128TRAIN episodes and1536actor samples
+per task, unique environment episode joins, exact camera/chain duplication,
+and all checkpoint file hashes. Per-task `Q1-AUDIT.json` receipts and the
+verified before/resume references are retained here.
+
+All five production jobs resume the qualified step-one boundaries under the
+same `0988b5f9` runtime. Their identities and live progress are in
+[EXECUTION.json](EXECUTION.json); active worktrees are immutable. Fixed batch
+layout remains16TRAIN envs/GPU,8EVAL envs/GPU,one collection round and two
+actor ranks. Bitwise deterministic kernels are not required or enabled.
 
 The first full boundary actually occupies about15GiB, exceeding the plan's
 0.7GB estimate. Production will tier superseded complete checkpoints to the

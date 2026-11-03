@@ -1,0 +1,159 @@
+{
+  "completed": true,
+  "checked_unix": 1793698350.152777,
+  "task": "CloseToasterOvenDoor",
+  "source": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
+  "before": {
+    "episode_len": 600.0,
+    "reward": 0.0005468750605359674,
+    "return": 0.328125,
+    "success_at_end": 0.328125,
+    "success_once": 0.328125,
+    "num_trajectories": 64
+  },
+  "train_episodes": 128,
+  "train_chunk_samples": 1536,
+  "updates": [
+    {
+      "completed": true,
+      "rank": 0,
+      "producing_policy_iteration": 0,
+      "optimizer_steps_before": 0,
+      "optimizer_steps_after": 24,
+      "batch_shape": [
+        12,
+        64,
+        50,
+        12
+      ],
+      "losses": {
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 37.8598518371582,
+        "actor/policy_loss": -0.3566453158855438,
+        "actor/policy_loss_abs": 1.0664548873901367,
+        "actor/total_loss": -0.032187119126319885,
+        "critic/value_loss": 0.09914837777614594
+      },
+      "metrics": {
+        "actor/approx_kl": 0.1059764176607132,
+        "actor/clip_fraction": 0.2242155224084854,
+        "actor/clipped_ratio": 0.9854923486709595,
+        "actor/dual_cliped_ratio": 0.0,
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 37.8598518371582,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/policy_loss": -0.3566453158855438,
+        "actor/policy_loss_abs": 1.0664548873901367,
+        "actor/ratio": 1.1747467517852783,
+        "actor/ratio_abs": 0.39650511741638184,
+        "actor/total_loss": -0.032187119126319885,
+        "critic/lr": 9.999999747378752e-05,
+        "critic/value_clip_ratio": 0.2803697884082794,
+        "critic/value_loss": 0.09914837777614594,
+        "critic/explained_variance": -0.006354689598083496
+      },
+      "training_seconds": 116.28909404948354,
+      "cuda_peak_allocated_bytes": 17083303424,
+      "cuda_peak_reserved_bytes": 19675480064,
+      "frozen_vlm_unchanged": true
+    },
+    {
+      "completed": true,
+      "rank": 1,
+      "producing_policy_iteration": 0,
+      "optimizer_steps_before": 0,
+      "optimizer_steps_after": 24,
+      "batch_shape": [
+        12,
+        64,
+        50,
+        12
+      ],
+      "losses": {
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 37.8598518371582,
+        "actor/policy_loss": -0.3566453158855438,
+        "actor/policy_loss_abs": 1.0664548873901367,
+        "actor/total_loss": -0.032187119126319885,
+        "critic/value_loss": 0.09914837777614594
+      },
+      "metrics": {
+        "actor/approx_kl": 0.1059764176607132,
+        "actor/clip_fraction": 0.2242155224084854,
+        "actor/clipped_ratio": 0.9854923486709595,
+        "actor/dual_cliped_ratio": 0.0,
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 37.8598518371582,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/policy_loss": -0.3566453158855438,
+        "actor/policy_loss_abs": 1.0664548873901367,
+        "actor/ratio": 1.1747467517852783,
+        "actor/ratio_abs": 0.39650511741638184,
+        "actor/total_loss": -0.032187119126319885,
+        "critic/lr": 9.999999747378752e-05,
+        "critic/value_clip_ratio": 0.2803697884082794,
+        "critic/value_loss": 0.09914837777614594,
+        "critic/explained_variance": -0.006354689598083496
+      },
+      "training_seconds": 116.2721573067829,
+      "cuda_peak_allocated_bytes": 17083303424,
+      "cuda_peak_reserved_bytes": 19675480064,
+      "frozen_vlm_unchanged": true
+    }
+  ],
+  "parity": [
+    {
+      "passed": true,
+      "finite": true,
+      "shape": [
+        16,
+        50,
+        12
+      ],
+      "action_dim": 12,
+      "tolerance": 0.001,
+      "max_abs_chunk_log_ratio": 0.0,
+      "max_abs_coordinate_log_ratio": 0.0,
+      "mean_abs_chunk_log_ratio": 0.0,
+      "optimizer_steps": 0,
+      "before_backward": true
+    },
+    {
+      "passed": true,
+      "finite": true,
+      "shape": [
+        16,
+        50,
+        12
+      ],
+      "action_dim": 12,
+      "tolerance": 0.001,
+      "max_abs_chunk_log_ratio": 0.0,
+      "max_abs_coordinate_log_ratio": 0.0,
+      "mean_abs_chunk_log_ratio": 0.0,
+      "optimizer_steps": 0,
+      "before_backward": true
+    }
+  ],
+  "actor_images_equal_environment": true,
+  "actor_chains_equal_sampling": true,
+  "full_actor_environment_join": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/ACTOR-EPISODE-JOIN.json",
+    "sha256": "b4e8347902577f9cc412522f791e24909316c50c70d8f533dae022b9cb1ace86",
+    "samples": 1536
+  },
+  "actor_duplicate_uncompressed_bytes": 1014104064,
+  "component_bytes": {
+    "environment": 650166258,
+    "sampling": 386436822,
+    "training-rollouts": 1043285742,
+    "CloseToasterOvenDoor": 33247327610
+  },
+  "full_boundary_verified": true,
+  "before_reference": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/BEFORE-RESUME.json",
+    "sha256": "16205284b7c70e22d13ac8c6407fc7e2cbc5139987bcfc43d1f8bd760f0d35d3"
+  },
+  "new_controls": 0,
+  "SGD": 0
+}

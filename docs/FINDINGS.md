@@ -702,7 +702,12 @@ conclusion are not a qualified test of the intended PPO recipe. Preserve its
 observed success counts and histories as reference data; downstream fits using
 those histories retain that source limitation. The separate velocity/KV
 steering workers explicitly keep the motor in eval mode. Corrected source
-`0988b5f9` passes39Linux tests; full eight-GPU qualification is still pending.
+`0988b5f9` passes39Linux tests and all five native eight-GPU first updates:
+zero initial likelihood error on both actor ranks,24optimizer steps per task,
+finite losses, unchanged frozen VLM, and complete resumable boundaries.
+Each task's1536actor samples join uniquely to saved environment episodes;
+all three camera tensors and flow chains have byte-exact retained copies.
+This qualifies execution and retention, not teacher improvement at10M.
 [Diagnosis and scope](../outputs/robocasa-flow-sde-10m-per-task-20261103-r1/VISION-MODE-BUG.md),
 [GPU replay](../outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PARITY-REPLAY-R2.json).
 

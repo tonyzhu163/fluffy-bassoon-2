@@ -1,0 +1,159 @@
+{
+  "completed": true,
+  "checked_unix": 1793698949.8403807,
+  "task": "CoffeeSetupMug",
+  "source": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
+  "before": {
+    "success_once": 0.3125,
+    "reward": 0.0005208333022892475,
+    "return": 0.3125,
+    "success_at_end": 0.3125,
+    "episode_len": 600.0,
+    "num_trajectories": 64
+  },
+  "train_episodes": 128,
+  "train_chunk_samples": 1536,
+  "updates": [
+    {
+      "completed": true,
+      "rank": 0,
+      "producing_policy_iteration": 0,
+      "optimizer_steps_before": 0,
+      "optimizer_steps_after": 24,
+      "batch_shape": [
+        12,
+        64,
+        50,
+        12
+      ],
+      "losses": {
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 37.90217971801758,
+        "actor/policy_loss": -0.37744832038879395,
+        "actor/policy_loss_abs": 1.0221972465515137,
+        "actor/total_loss": -0.03559959679841995,
+        "critic/value_loss": 0.09265153110027313
+      },
+      "metrics": {
+        "actor/approx_kl": 0.19911307096481323,
+        "actor/clip_fraction": 0.2589099407196045,
+        "actor/clipped_ratio": 0.9841365814208984,
+        "actor/dual_cliped_ratio": 0.0,
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 37.90217971801758,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/policy_loss": -0.37744832038879395,
+        "actor/policy_loss_abs": 1.0221972465515137,
+        "actor/ratio": 1.2194464206695557,
+        "actor/ratio_abs": 0.4814109206199646,
+        "actor/total_loss": -0.03559959679841995,
+        "critic/lr": 9.999999747378752e-05,
+        "critic/value_clip_ratio": 0.3031274378299713,
+        "critic/value_loss": 0.09265153110027313,
+        "critic/explained_variance": -0.02006220817565918
+      },
+      "training_seconds": 115.72614041063935,
+      "cuda_peak_allocated_bytes": 17083303424,
+      "cuda_peak_reserved_bytes": 19675480064,
+      "frozen_vlm_unchanged": true
+    },
+    {
+      "completed": true,
+      "rank": 1,
+      "producing_policy_iteration": 0,
+      "optimizer_steps_before": 0,
+      "optimizer_steps_after": 24,
+      "batch_shape": [
+        12,
+        64,
+        50,
+        12
+      ],
+      "losses": {
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 37.90217971801758,
+        "actor/policy_loss": -0.37744832038879395,
+        "actor/policy_loss_abs": 1.0221972465515137,
+        "actor/total_loss": -0.03559959679841995,
+        "critic/value_loss": 0.09265153110027313
+      },
+      "metrics": {
+        "actor/approx_kl": 0.19911307096481323,
+        "actor/clip_fraction": 0.2589099407196045,
+        "actor/clipped_ratio": 0.9841365814208984,
+        "actor/dual_cliped_ratio": 0.0,
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 37.90217971801758,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/policy_loss": -0.37744832038879395,
+        "actor/policy_loss_abs": 1.0221972465515137,
+        "actor/ratio": 1.2194464206695557,
+        "actor/ratio_abs": 0.4814109206199646,
+        "actor/total_loss": -0.03559959679841995,
+        "critic/lr": 9.999999747378752e-05,
+        "critic/value_clip_ratio": 0.3031274378299713,
+        "critic/value_loss": 0.09265153110027313,
+        "critic/explained_variance": -0.02006220817565918
+      },
+      "training_seconds": 115.56606159452349,
+      "cuda_peak_allocated_bytes": 17083303424,
+      "cuda_peak_reserved_bytes": 19675480064,
+      "frozen_vlm_unchanged": true
+    }
+  ],
+  "parity": [
+    {
+      "passed": true,
+      "finite": true,
+      "shape": [
+        16,
+        50,
+        12
+      ],
+      "action_dim": 12,
+      "tolerance": 0.001,
+      "max_abs_chunk_log_ratio": 0.0,
+      "max_abs_coordinate_log_ratio": 0.0,
+      "mean_abs_chunk_log_ratio": 0.0,
+      "optimizer_steps": 0,
+      "before_backward": true
+    },
+    {
+      "passed": true,
+      "finite": true,
+      "shape": [
+        16,
+        50,
+        12
+      ],
+      "action_dim": 12,
+      "tolerance": 0.001,
+      "max_abs_chunk_log_ratio": 0.0,
+      "max_abs_coordinate_log_ratio": 0.0,
+      "mean_abs_chunk_log_ratio": 0.0,
+      "optimizer_steps": 0,
+      "before_backward": true
+    }
+  ],
+  "actor_images_equal_environment": true,
+  "actor_chains_equal_sampling": true,
+  "full_actor_environment_join": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CoffeeSetupMug/ACTOR-EPISODE-JOIN.json",
+    "sha256": "b19753d24b09b8bf392ef3bfc5d22d75c578320b5083ed552403793a4f18a9a0",
+    "samples": 1536
+  },
+  "actor_duplicate_uncompressed_bytes": 1014104064,
+  "component_bytes": {
+    "environment": 722572090,
+    "sampling": 370493827,
+    "training-rollouts": 1043285782,
+    "CoffeeSetupMug": 17145286461
+  },
+  "full_boundary_verified": true,
+  "before_reference": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CoffeeSetupMug/BEFORE-RESUME.json",
+    "sha256": "c88f80d4e7061c1995a0303d1b7db4111a2b899d0948b16cbd1d46f228b11195"
+  },
+  "new_controls": 0,
+  "SGD": 0
+}

@@ -1,7 +1,8 @@
 # Per-task Flow-SDE PPO teachers, about 10M controls per task
 
-2026-11-03. **Plan and static audit only; nothing launched.** Needs a Baige
-owner after the pre-launch fixes below land on `main`. Governing decision:
+2026-11-03. **Adopted contract; all five Q1 qualifications passed and five
+production resumes submitted.** Live receipts: [EXECUTION.json](EXECUTION.json).
+Governing decision:
 [PAPER.md source campaign (2026-11-03)](../../docs/PAPER.md#agreed-design).
 Live status: [coordination](../coordination.md).
 
@@ -139,9 +140,9 @@ colocated on GPUs 0–1 already peaks at ~35 GiB, against 96 GiB per card.
 | all students | decision observation (3 RGB views, state, instruction) per chunk | saved, `environment/…-chunkNN.pt.gz` |
 | all students | executed 50×12 command, reward, termination, truncation | saved |
 | AD ordering | producing policy version per episode | saved (collection iteration) |
-| DIT / IQL | next observation after the last chunk, or explicit terminal flag | **missing**, fix F5 |
-| joins | explicit global episode ID in env, sampling and actor records | **missing**, fix F6 |
-| DPT | final teacher checkpoint; labels queried offline later | saved at 130 |
+| DIT / IQL | next observation after the last chunk, or explicit terminal flag | saved: post-horizon observation, primitive boundary arrays and full physical suffix; Q1 verified |
+| joins | global episode identity across env, sampling and actor records | env has explicit task/seed IDs; audited external manifests bind actor/sampling rows to those IDs |
+| DPT | final teacher checkpoint; labels queried offline later | final checkpoint required at130; pending run completion |
 | diagnostics | old log-prob, value, advantage, return, mask per sample | saved in actor batch |
 | optional | full 11-state flow chain, actor-batch images | saved, duplicated; see storage |
 

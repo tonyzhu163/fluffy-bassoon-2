@@ -1,0 +1,709 @@
+{
+  "checked_shanghai": "2026-11-03 17:58:09",
+  "tasks": {
+    "OpenDrawer": {
+      "q1-r2": {
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/q1-r2",
+        "exists": true,
+        "manifest.json": {
+          "hostname": "job-8vyx98mauo07-master-0",
+          "source": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
+          "runtime": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+          "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+          "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+          "allocated_gpus": 8,
+          "CPU": 168,
+          "RAM_GiB": 1280,
+          "SHM_GiB": 32,
+          "free_bytes": 864890650624,
+          "quota": "Shared PFS2TiB; no per-project quota interface exposed",
+          "started_unix": 1793696506.475439,
+          "task": "OpenDrawer",
+          "segment": "q1",
+          "batch_layout": {
+            "world": 8,
+            "train_envs_per_rank": 16,
+            "eval_envs_per_rank": 8,
+            "actor_ranks": 2
+          },
+          "nominal_controls_source": "flow-contract.json"
+        },
+        "progress.json": {
+          "completed_iterations": 1,
+          "target_iterations": 130,
+          "checked_unix": 1793696968.4969678,
+          "operator_checkpoint_exit": true
+        },
+        "clock.json": {
+          "started_unix": 1793696490,
+          "finished_unix": 1793696980,
+          "allocated_gpus": 8,
+          "observed_gpu_seconds": 3920,
+          "exit_code": 0
+        },
+        "latest_update": {
+          "completed": true,
+          "rank": 1,
+          "producing_policy_iteration": 0,
+          "optimizer_steps_before": 0,
+          "optimizer_steps_after": 24,
+          "batch_shape": [
+            12,
+            64,
+            50,
+            12
+          ],
+          "losses": {
+            "actor/entropy_loss": 0.0,
+            "actor/grad_norm": 65.10877227783203,
+            "actor/policy_loss": -0.4628939628601074,
+            "actor/policy_loss_abs": 1.0669867992401123,
+            "actor/total_loss": -0.036993756890296936,
+            "critic/value_loss": 0.16694387793540955
+          },
+          "metrics": {
+            "actor/approx_kl": 0.151259183883667,
+            "actor/clip_fraction": 0.2623195946216583,
+            "actor/clipped_ratio": 0.9879714250564575,
+            "actor/dual_cliped_ratio": 0.0,
+            "actor/entropy_loss": 0.0,
+            "actor/grad_norm": 65.10877227783203,
+            "actor/lr": 4.999999873689376e-06,
+            "actor/policy_loss": -0.4628939628601074,
+            "actor/policy_loss_abs": 1.0669867992401123,
+            "actor/ratio": 1.1996889114379883,
+            "actor/ratio_abs": 0.47183796763420105,
+            "actor/total_loss": -0.036993756890296936,
+            "critic/lr": 9.999999747378752e-05,
+            "critic/value_clip_ratio": 0.5507107973098755,
+            "critic/value_loss": 0.16694387793540955,
+            "critic/explained_variance": 0.02983468770980835
+          },
+          "training_seconds": 116.1409014351666,
+          "cuda_peak_allocated_bytes": 17083950592,
+          "cuda_peak_reserved_bytes": 19887292416,
+          "frozen_vlm_unchanged": true
+        },
+        "gpu_probe_passed": true,
+        "local_full_checkpoints": [
+          "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/q1-r2/OpenDrawer/checkpoints/global_step_1"
+        ]
+      },
+      "production-r1": {
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1",
+        "exists": true,
+        "manifest.json": {
+          "hostname": "job-9j5eqjo0dfzj-master-0",
+          "source": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
+          "runtime": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+          "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+          "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+          "allocated_gpus": 8,
+          "CPU": 168,
+          "RAM_GiB": 1280,
+          "SHM_GiB": 32,
+          "free_bytes": 744119861248,
+          "quota": "Shared PFS2TiB; no per-project quota interface exposed",
+          "started_unix": 1793698448.4278507,
+          "task": "OpenDrawer",
+          "segment": "production",
+          "batch_layout": {
+            "world": 8,
+            "train_envs_per_rank": 16,
+            "eval_envs_per_rank": 8,
+            "actor_ranks": 2
+          },
+          "nominal_controls_source": "flow-contract.json"
+        },
+        "progress.json": {
+          "completed_iterations": 5,
+          "target_iterations": 130,
+          "checked_unix": 1793699674.9585247,
+          "operator_checkpoint_exit": false
+        },
+        "latest_update": {
+          "completed": true,
+          "rank": 1,
+          "producing_policy_iteration": 4,
+          "optimizer_steps_before": 96,
+          "optimizer_steps_after": 120,
+          "batch_shape": [
+            12,
+            64,
+            50,
+            12
+          ],
+          "losses": {
+            "actor/entropy_loss": 0.0,
+            "actor/grad_norm": 52.38612365722656,
+            "actor/policy_loss": -0.40984421968460083,
+            "actor/policy_loss_abs": 0.9103989005088806,
+            "actor/total_loss": -0.044957514852285385,
+            "critic/value_loss": 0.05018409341573715
+          },
+          "metrics": {
+            "actor/approx_kl": 0.054412681609392166,
+            "actor/clip_fraction": 0.20517055690288544,
+            "actor/clipped_ratio": 0.9961440563201904,
+            "actor/dual_cliped_ratio": 0.0,
+            "actor/entropy_loss": 0.0,
+            "actor/grad_norm": 52.38612365722656,
+            "actor/lr": 4.999999873689376e-06,
+            "actor/policy_loss": -0.40984421968460083,
+            "actor/policy_loss_abs": 0.9103989005088806,
+            "actor/ratio": 1.059633731842041,
+            "actor/ratio_abs": 0.2435404360294342,
+            "actor/total_loss": -0.044957514852285385,
+            "critic/lr": 9.999999747378752e-05,
+            "critic/value_clip_ratio": 0.015525353141129017,
+            "critic/value_loss": 0.05018409341573715,
+            "critic/explained_variance": 0.3522225618362427
+          },
+          "training_seconds": 115.19602604117244,
+          "cuda_peak_allocated_bytes": 17083950592,
+          "cuda_peak_reserved_bytes": 21497905152,
+          "frozen_vlm_unchanged": true
+        },
+        "gpu_probe_passed": true,
+        "local_full_checkpoints": [
+          "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints/global_step_2"
+        ]
+      },
+      "q1_audit": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/Q1-R2-AUDIT.json",
+      "accounting_files": [
+        "accounting/rank-02/opendrawer-q1-r2.json",
+        "accounting/rank-02/opendrawer-production-r1.json",
+        "accounting/rank-02/opendrawer-q1-r1.json",
+        "accounting/rank-04/opendrawer-q1-r2.json",
+        "accounting/rank-04/opendrawer-production-r1.json",
+        "accounting/rank-04/opendrawer-q1-r1.json",
+        "accounting/rank-06/opendrawer-q1-r2.json",
+        "accounting/rank-06/opendrawer-production-r1.json",
+        "accounting/rank-06/opendrawer-q1-r1.json",
+        "accounting/rank-01/opendrawer-q1-r2.json",
+        "accounting/rank-01/opendrawer-production-r1.json",
+        "accounting/rank-01/opendrawer-q1-r1.json",
+        "accounting/rank-03/opendrawer-q1-r2.json",
+        "accounting/rank-03/opendrawer-production-r1.json",
+        "accounting/rank-03/opendrawer-q1-r1.json",
+        "accounting/rank-05/opendrawer-q1-r2.json",
+        "accounting/rank-05/opendrawer-production-r1.json",
+        "accounting/rank-05/opendrawer-q1-r1.json",
+        "accounting/rank-07/opendrawer-q1-r2.json",
+        "accounting/rank-07/opendrawer-production-r1.json",
+        "accounting/rank-07/opendrawer-q1-r1.json",
+        "accounting/rank-00/opendrawer-q1-r2.json",
+        "accounting/rank-00/opendrawer-production-r1.json",
+        "accounting/rank-00/opendrawer-q1-r1.json"
+      ]
+    },
+    "CloseToasterOvenDoor": {
+      "q1-r1": {
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/q1-r1",
+        "exists": true,
+        "manifest.json": {
+          "hostname": "job-8cm9cs78hbnl-master-0",
+          "source": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
+          "runtime": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+          "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+          "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+          "allocated_gpus": 8,
+          "CPU": 168,
+          "RAM_GiB": 1280,
+          "SHM_GiB": 32,
+          "free_bytes": 845814956032,
+          "quota": "Shared PFS2TiB; no per-project quota interface exposed",
+          "started_unix": 1793697284.6864786,
+          "task": "CloseToasterOvenDoor",
+          "segment": "q1",
+          "batch_layout": {
+            "world": 8,
+            "train_envs_per_rank": 16,
+            "eval_envs_per_rank": 8,
+            "actor_ranks": 2
+          },
+          "nominal_controls_source": "flow-contract.json"
+        },
+        "progress.json": {
+          "completed_iterations": 1,
+          "target_iterations": 130,
+          "checked_unix": 1793697824.5309029,
+          "operator_checkpoint_exit": true
+        },
+        "clock.json": {
+          "started_unix": 1793697273,
+          "finished_unix": 1793697842,
+          "allocated_gpus": 8,
+          "observed_gpu_seconds": 4552,
+          "exit_code": 0
+        },
+        "latest_update": {
+          "completed": true,
+          "rank": 1,
+          "producing_policy_iteration": 0,
+          "optimizer_steps_before": 0,
+          "optimizer_steps_after": 24,
+          "batch_shape": [
+            12,
+            64,
+            50,
+            12
+          ],
+          "losses": {
+            "actor/entropy_loss": 0.0,
+            "actor/grad_norm": 37.8598518371582,
+            "actor/policy_loss": -0.3566453158855438,
+            "actor/policy_loss_abs": 1.0664548873901367,
+            "actor/total_loss": -0.032187119126319885,
+            "critic/value_loss": 0.09914837777614594
+          },
+          "metrics": {
+            "actor/approx_kl": 0.1059764176607132,
+            "actor/clip_fraction": 0.2242155224084854,
+            "actor/clipped_ratio": 0.9854923486709595,
+            "actor/dual_cliped_ratio": 0.0,
+            "actor/entropy_loss": 0.0,
+            "actor/grad_norm": 37.8598518371582,
+            "actor/lr": 4.999999873689376e-06,
+            "actor/policy_loss": -0.3566453158855438,
+            "actor/policy_loss_abs": 1.0664548873901367,
+            "actor/ratio": 1.1747467517852783,
+            "actor/ratio_abs": 0.39650511741638184,
+            "actor/total_loss": -0.032187119126319885,
+            "critic/lr": 9.999999747378752e-05,
+            "critic/value_clip_ratio": 0.2803697884082794,
+            "critic/value_loss": 0.09914837777614594,
+            "critic/explained_variance": -0.006354689598083496
+          },
+          "training_seconds": 116.2721573067829,
+          "cuda_peak_allocated_bytes": 17083303424,
+          "cuda_peak_reserved_bytes": 19675480064,
+          "frozen_vlm_unchanged": true
+        },
+        "gpu_probe_passed": true,
+        "local_full_checkpoints": [
+          "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/q1-r1/CloseToasterOvenDoor/checkpoints/global_step_1"
+        ]
+      },
+      "production-r1": {
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/production-r1",
+        "exists": true,
+        "manifest.json": {
+          "hostname": "job-jpfh2j0xelgo-master-0",
+          "source": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
+          "runtime": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+          "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+          "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+          "allocated_gpus": 8,
+          "CPU": 168,
+          "RAM_GiB": 1280,
+          "SHM_GiB": 32,
+          "free_bytes": 783797977088,
+          "quota": "Shared PFS2TiB; no per-project quota interface exposed",
+          "started_unix": 1793698877.2618265,
+          "task": "CloseToasterOvenDoor",
+          "segment": "production",
+          "batch_layout": {
+            "world": 8,
+            "train_envs_per_rank": 16,
+            "eval_envs_per_rank": 8,
+            "actor_ranks": 2
+          },
+          "nominal_controls_source": "flow-contract.json"
+        },
+        "progress.json": {
+          "completed_iterations": 4,
+          "target_iterations": 130,
+          "checked_unix": 1793699852.9954429,
+          "operator_checkpoint_exit": false
+        },
+        "latest_update": {
+          "completed": true,
+          "rank": 1,
+          "producing_policy_iteration": 3,
+          "optimizer_steps_before": 72,
+          "optimizer_steps_after": 96,
+          "batch_shape": [
+            12,
+            64,
+            50,
+            12
+          ],
+          "losses": {
+            "actor/entropy_loss": 0.0,
+            "actor/grad_norm": 47.66939926147461,
+            "actor/policy_loss": -0.3171567916870117,
+            "actor/policy_loss_abs": 1.0184953212738037,
+            "actor/total_loss": -0.030454035848379135,
+            "critic/value_loss": 0.07352450489997864
+          },
+          "metrics": {
+            "actor/approx_kl": 0.04791092127561569,
+            "actor/clip_fraction": 0.1627526730298996,
+            "actor/clipped_ratio": 0.992059588432312,
+            "actor/dual_cliped_ratio": 0.0,
+            "actor/entropy_loss": 0.0,
+            "actor/grad_norm": 47.66939926147461,
+            "actor/lr": 4.999999873689376e-06,
+            "actor/policy_loss": -0.3171567916870117,
+            "actor/policy_loss_abs": 1.0184953212738037,
+            "actor/ratio": 1.0628507137298584,
+            "actor/ratio_abs": 0.22273173928260803,
+            "actor/total_loss": -0.030454035848379135,
+            "critic/lr": 9.999999747378752e-05,
+            "critic/value_clip_ratio": 0.0037998894695192575,
+            "critic/value_loss": 0.07352450489997864,
+            "critic/explained_variance": 0.08941733837127686
+          },
+          "training_seconds": 116.37584218010306,
+          "cuda_peak_allocated_bytes": 17083950592,
+          "cuda_peak_reserved_bytes": 21497905152,
+          "frozen_vlm_unchanged": true
+        },
+        "gpu_probe_passed": true,
+        "local_full_checkpoints": [
+          "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/production-r1/CloseToasterOvenDoor/checkpoints/global_step_2"
+        ]
+      },
+      "q1_audit": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/Q1-AUDIT.json",
+      "accounting_files": [
+        "accounting/rank-02/closetoaster-q1-r1.json",
+        "accounting/rank-02/closetoaster-production-r1.json",
+        "accounting/rank-04/closetoaster-q1-r1.json",
+        "accounting/rank-04/closetoaster-production-r1.json",
+        "accounting/rank-06/closetoaster-q1-r1.json",
+        "accounting/rank-06/closetoaster-production-r1.json",
+        "accounting/rank-01/closetoaster-q1-r1.json",
+        "accounting/rank-01/closetoaster-production-r1.json",
+        "accounting/rank-03/closetoaster-q1-r1.json",
+        "accounting/rank-03/closetoaster-production-r1.json",
+        "accounting/rank-05/closetoaster-q1-r1.json",
+        "accounting/rank-05/closetoaster-production-r1.json",
+        "accounting/rank-07/closetoaster-q1-r1.json",
+        "accounting/rank-07/closetoaster-production-r1.json",
+        "accounting/rank-00/closetoaster-q1-r1.json",
+        "accounting/rank-00/closetoaster-production-r1.json"
+      ]
+    },
+    "PickPlaceDrawerToCounter": {
+      "q1-r1": {
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/q1-r1",
+        "exists": true,
+        "manifest.json": {
+          "hostname": "job-7pwpvv01cj4q-master-0",
+          "source": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
+          "runtime": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+          "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+          "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+          "allocated_gpus": 8,
+          "CPU": 168,
+          "RAM_GiB": 1280,
+          "SHM_GiB": 32,
+          "free_bytes": 845810761728,
+          "quota": "Shared PFS2TiB; no per-project quota interface exposed",
+          "started_unix": 1793697355.4907682,
+          "task": "PickPlaceDrawerToCounter",
+          "segment": "q1",
+          "batch_layout": {
+            "world": 8,
+            "train_envs_per_rank": 16,
+            "eval_envs_per_rank": 8,
+            "actor_ranks": 2
+          },
+          "nominal_controls_source": "flow-contract.json"
+        },
+        "progress.json": {
+          "completed_iterations": 1,
+          "target_iterations": 130,
+          "checked_unix": 1793697914.699799,
+          "operator_checkpoint_exit": true
+        },
+        "clock.json": {
+          "started_unix": 1793697342,
+          "finished_unix": 1793697931,
+          "allocated_gpus": 8,
+          "observed_gpu_seconds": 4712,
+          "exit_code": 0
+        },
+        "latest_update": {
+          "completed": true,
+          "rank": 1,
+          "producing_policy_iteration": 0,
+          "optimizer_steps_before": 0,
+          "optimizer_steps_after": 24,
+          "batch_shape": [
+            12,
+            64,
+            50,
+            12
+          ],
+          "losses": {
+            "actor/entropy_loss": 0.0,
+            "actor/grad_norm": 44.63636016845703,
+            "actor/policy_loss": -0.21203112602233887,
+            "actor/policy_loss_abs": 0.9453721046447754,
+            "actor/total_loss": -0.012252772226929665,
+            "critic/value_loss": 0.11400895565748215
+          },
+          "metrics": {
+            "actor/approx_kl": 0.2739359438419342,
+            "actor/clip_fraction": 0.28765541315078735,
+            "actor/clipped_ratio": 0.9733976721763611,
+            "actor/dual_cliped_ratio": 0.0,
+            "actor/entropy_loss": 0.0,
+            "actor/grad_norm": 44.63636016845703,
+            "actor/lr": 4.999999873689376e-06,
+            "actor/policy_loss": -0.21203112602233887,
+            "actor/policy_loss_abs": 0.9453721046447754,
+            "actor/ratio": 1.3268508911132812,
+            "actor/ratio_abs": 0.646679162979126,
+            "actor/total_loss": -0.012252772226929665,
+            "critic/lr": 9.999999747378752e-05,
+            "critic/value_clip_ratio": 0.552604079246521,
+            "critic/value_loss": 0.11400895565748215,
+            "critic/explained_variance": -0.0807267427444458
+          },
+          "training_seconds": 116.64803168084472,
+          "cuda_peak_allocated_bytes": 17083303424,
+          "cuda_peak_reserved_bytes": 19675480064,
+          "frozen_vlm_unchanged": true
+        },
+        "gpu_probe_passed": true,
+        "local_full_checkpoints": [
+          "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/q1-r1/PickPlaceDrawerToCounter/checkpoints/global_step_1"
+        ]
+      },
+      "production-r1": {
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/production-r1",
+        "exists": false,
+        "gpu_probe_passed": false,
+        "local_full_checkpoints": []
+      },
+      "q1_audit": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/Q1-AUDIT.json",
+      "accounting_files": [
+        "accounting/rank-02/drawer2counter-q1-r1.json",
+        "accounting/rank-04/drawer2counter-q1-r1.json",
+        "accounting/rank-06/drawer2counter-q1-r1.json",
+        "accounting/rank-01/drawer2counter-q1-r1.json",
+        "accounting/rank-03/drawer2counter-q1-r1.json",
+        "accounting/rank-05/drawer2counter-q1-r1.json",
+        "accounting/rank-07/drawer2counter-q1-r1.json",
+        "accounting/rank-00/drawer2counter-q1-r1.json"
+      ]
+    },
+    "CoffeeSetupMug": {
+      "q1-r1": {
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CoffeeSetupMug/q1-r1",
+        "exists": true,
+        "manifest.json": {
+          "hostname": "job-pruilnx533ri-master-0",
+          "source": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
+          "runtime": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+          "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+          "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+          "allocated_gpus": 8,
+          "CPU": 168,
+          "RAM_GiB": 1280,
+          "SHM_GiB": 32,
+          "free_bytes": 792136253440,
+          "quota": "Shared PFS2TiB; no per-project quota interface exposed",
+          "started_unix": 1793697866.2536445,
+          "task": "CoffeeSetupMug",
+          "segment": "q1",
+          "batch_layout": {
+            "world": 8,
+            "train_envs_per_rank": 16,
+            "eval_envs_per_rank": 8,
+            "actor_ranks": 2
+          },
+          "nominal_controls_source": "flow-contract.json"
+        },
+        "progress.json": {
+          "completed_iterations": 1,
+          "target_iterations": 130,
+          "checked_unix": 1793698391.8567965,
+          "operator_checkpoint_exit": true
+        },
+        "clock.json": {
+          "started_unix": 1793697855,
+          "finished_unix": 1793698409,
+          "allocated_gpus": 8,
+          "observed_gpu_seconds": 4432,
+          "exit_code": 0
+        },
+        "latest_update": {
+          "completed": true,
+          "rank": 1,
+          "producing_policy_iteration": 0,
+          "optimizer_steps_before": 0,
+          "optimizer_steps_after": 24,
+          "batch_shape": [
+            12,
+            64,
+            50,
+            12
+          ],
+          "losses": {
+            "actor/entropy_loss": 0.0,
+            "actor/grad_norm": 37.90217971801758,
+            "actor/policy_loss": -0.37744832038879395,
+            "actor/policy_loss_abs": 1.0221972465515137,
+            "actor/total_loss": -0.03559959679841995,
+            "critic/value_loss": 0.09265153110027313
+          },
+          "metrics": {
+            "actor/approx_kl": 0.19911307096481323,
+            "actor/clip_fraction": 0.2589099407196045,
+            "actor/clipped_ratio": 0.9841365814208984,
+            "actor/dual_cliped_ratio": 0.0,
+            "actor/entropy_loss": 0.0,
+            "actor/grad_norm": 37.90217971801758,
+            "actor/lr": 4.999999873689376e-06,
+            "actor/policy_loss": -0.37744832038879395,
+            "actor/policy_loss_abs": 1.0221972465515137,
+            "actor/ratio": 1.2194464206695557,
+            "actor/ratio_abs": 0.4814109206199646,
+            "actor/total_loss": -0.03559959679841995,
+            "critic/lr": 9.999999747378752e-05,
+            "critic/value_clip_ratio": 0.3031274378299713,
+            "critic/value_loss": 0.09265153110027313,
+            "critic/explained_variance": -0.02006220817565918
+          },
+          "training_seconds": 115.56606159452349,
+          "cuda_peak_allocated_bytes": 17083303424,
+          "cuda_peak_reserved_bytes": 19675480064,
+          "frozen_vlm_unchanged": true
+        },
+        "gpu_probe_passed": true,
+        "local_full_checkpoints": [
+          "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CoffeeSetupMug/q1-r1/CoffeeSetupMug/checkpoints/global_step_1"
+        ]
+      },
+      "production-r1": {
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CoffeeSetupMug/production-r1",
+        "exists": false,
+        "gpu_probe_passed": false,
+        "local_full_checkpoints": []
+      },
+      "q1_audit": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CoffeeSetupMug/Q1-AUDIT.json",
+      "accounting_files": [
+        "accounting/rank-02/coffee-q1-r1.json",
+        "accounting/rank-04/coffee-q1-r1.json",
+        "accounting/rank-06/coffee-q1-r1.json",
+        "accounting/rank-01/coffee-q1-r1.json",
+        "accounting/rank-03/coffee-q1-r1.json",
+        "accounting/rank-05/coffee-q1-r1.json",
+        "accounting/rank-07/coffee-q1-r1.json",
+        "accounting/rank-00/coffee-q1-r1.json"
+      ]
+    },
+    "TurnOffStove": {
+      "q1-r1": {
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TurnOffStove/q1-r1",
+        "exists": true,
+        "manifest.json": {
+          "hostname": "job-w1dhlhsep5eq-master-0",
+          "source": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
+          "runtime": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+          "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+          "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+          "allocated_gpus": 8,
+          "CPU": 168,
+          "RAM_GiB": 1280,
+          "SHM_GiB": 32,
+          "free_bytes": 774998327296,
+          "quota": "Shared PFS2TiB; no per-project quota interface exposed",
+          "started_unix": 1793697976.1591947,
+          "task": "TurnOffStove",
+          "segment": "q1",
+          "batch_layout": {
+            "world": 8,
+            "train_envs_per_rank": 16,
+            "eval_envs_per_rank": 8,
+            "actor_ranks": 2
+          },
+          "nominal_controls_source": "flow-contract.json"
+        },
+        "progress.json": {
+          "completed_iterations": 1,
+          "target_iterations": 130,
+          "checked_unix": 1793698473.8967423,
+          "operator_checkpoint_exit": true
+        },
+        "clock.json": {
+          "started_unix": 1793697964,
+          "finished_unix": 1793698490,
+          "allocated_gpus": 8,
+          "observed_gpu_seconds": 4208,
+          "exit_code": 0
+        },
+        "latest_update": {
+          "completed": true,
+          "rank": 1,
+          "producing_policy_iteration": 0,
+          "optimizer_steps_before": 0,
+          "optimizer_steps_after": 24,
+          "batch_shape": [
+            12,
+            64,
+            50,
+            12
+          ],
+          "losses": {
+            "actor/entropy_loss": 0.0,
+            "actor/grad_norm": 45.22774124145508,
+            "actor/policy_loss": -0.28702157735824585,
+            "actor/policy_loss_abs": 0.8437048196792603,
+            "actor/total_loss": -0.027834471315145493,
+            "critic/value_loss": 0.06434579193592072
+          },
+          "metrics": {
+            "actor/approx_kl": 0.1148943156003952,
+            "actor/clip_fraction": 0.20748233795166016,
+            "actor/clipped_ratio": 0.9817675352096558,
+            "actor/dual_cliped_ratio": 0.0,
+            "actor/entropy_loss": 0.0,
+            "actor/grad_norm": 45.22774124145508,
+            "actor/lr": 4.999999873689376e-06,
+            "actor/policy_loss": -0.28702157735824585,
+            "actor/policy_loss_abs": 0.8437048196792603,
+            "actor/ratio": 1.1475085020065308,
+            "actor/ratio_abs": 0.372333288192749,
+            "actor/total_loss": -0.027834471315145493,
+            "critic/lr": 9.999999747378752e-05,
+            "critic/value_clip_ratio": 0.20843373239040375,
+            "critic/value_loss": 0.06434579193592072,
+            "critic/explained_variance": -0.0348278284072876
+          },
+          "training_seconds": 117.44238393008709,
+          "cuda_peak_allocated_bytes": 17083303424,
+          "cuda_peak_reserved_bytes": 19675480064,
+          "frozen_vlm_unchanged": true
+        },
+        "gpu_probe_passed": true,
+        "local_full_checkpoints": [
+          "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TurnOffStove/q1-r1/TurnOffStove/checkpoints/global_step_1"
+        ]
+      },
+      "production-r1": {
+        "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TurnOffStove/production-r1",
+        "exists": false,
+        "gpu_probe_passed": false,
+        "local_full_checkpoints": []
+      },
+      "q1_audit": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TurnOffStove/Q1-AUDIT.json",
+      "accounting_files": [
+        "accounting/rank-02/stove-q1-r1.json",
+        "accounting/rank-04/stove-q1-r1.json",
+        "accounting/rank-06/stove-q1-r1.json",
+        "accounting/rank-01/stove-q1-r1.json",
+        "accounting/rank-03/stove-q1-r1.json",
+        "accounting/rank-05/stove-q1-r1.json",
+        "accounting/rank-07/stove-q1-r1.json",
+        "accounting/rank-00/stove-q1-r1.json"
+      ]
+    }
+  },
+  "pfs_free_GiB": 692.359375,
+  "completed_clock_GPU_seconds": 26176
+}
