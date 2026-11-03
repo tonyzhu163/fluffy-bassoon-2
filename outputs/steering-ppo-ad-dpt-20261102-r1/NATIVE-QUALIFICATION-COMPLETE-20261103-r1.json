@@ -1,0 +1,125 @@
+{
+  "format": "native_qualification_completion_observation_v1",
+  "observed_UTC": "2026-11-03 04:25:04 UTC",
+  "job": "job-m2qlxqjuh8ho",
+  "source": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+  "source_output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-native-qualification-20261103-r2",
+  "readback": {
+    "top_files": [
+      ".write-probe",
+      "PROFILE.json",
+      "STRESS-PROFILE.json",
+      "calibrate",
+      "clock.json",
+      "job-console.log",
+      "stress"
+    ],
+    "receipts": [
+      {
+        "file": "calibrate/RESULT.json",
+        "sha256": "df0b52ad1334d1b8122d8c7c461104cb617de41fd76ae1af631368f1e78aea63",
+        "data": {
+          "completed": true,
+          "status": "passed",
+          "phase": "calibrate",
+          "scientific_updates": 0,
+          "policy_episodes_admitted_to_PPO": 0,
+          "charged_controls": 0,
+          "ended_unix": 1793678355.3123171,
+          "process_gpu_seconds": 194.21514177322388,
+          "allocated_gpu_seconds_through_check": 223.31231713294983,
+          "qualification_campaign_gpu_seconds_upper": 1555,
+          "allocation_release_not_included": true,
+          "arms": {}
+        }
+      },
+      {
+        "file": "stress/RESULT.json",
+        "sha256": "1539823bfb2dd14cb7211e42cd83b74b5c8cb0fb12e2abb87b2123d9c6b67787",
+        "data": {
+          "completed": true,
+          "status": "passed",
+          "phase": "stress",
+          "scientific_updates": 0,
+          "policy_episodes_admitted_to_PPO": 0,
+          "charged_controls": 57600,
+          "ended_unix": 1793678864.0096018,
+          "process_gpu_seconds": 507.1545670032501,
+          "allocated_gpu_seconds_through_check": 732.0096018314362,
+          "qualification_campaign_gpu_seconds_upper": 2064,
+          "allocation_release_not_included": true,
+          "arms": {
+            "velocity": {
+              "completed": true,
+              "physical_policy_controls": 28800,
+              "elapsed_seconds": 222.23172807693481,
+              "controls_per_second": 129.5944564226656,
+              "lanes_closed_before_next_arm": true
+            },
+            "kv_all_layers": {
+              "completed": true,
+              "physical_policy_controls": 28800,
+              "elapsed_seconds": 221.2294738292694,
+              "controls_per_second": 130.1815689451306,
+              "lanes_closed_before_next_arm": true
+            }
+          }
+        }
+      },
+      {
+        "file": "stress/velocity/history/progress.json",
+        "sha256": "192fd51ae9c2c9525c681ef8ccd165e477955740ca941e8c3ae4d558c6a2e16a",
+        "data": {
+          "completed_episodes": 48,
+          "requested_episodes": 48,
+          "completed_physical_chunks": 576,
+          "active_lanes": 0,
+          "last_progress_unix": 1793678608.655027
+        }
+      },
+      {
+        "file": "stress/kv_all_layers/history/progress.json",
+        "sha256": "39e2f8f7a6bbd1d14650050c7c53fe3ff789d04ce196c56b1238be3c58aad6e4",
+        "data": {
+          "completed_episodes": 48,
+          "requested_episodes": 48,
+          "completed_physical_chunks": 576,
+          "active_lanes": 0,
+          "last_progress_unix": 1793678830.02392
+        }
+      }
+    ]
+  },
+  "clock": {
+    "file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-native-qualification-20261103-r2/clock.json",
+    "sha256": "1e901ec1b3ff49a97eece83c3d90d3d8a26d449608b2b94a8d728f04a85d11dd",
+    "data": {
+      "started_unix": 1793678158,
+      "finished_unix": 1793678865,
+      "allocated_gpus": 1,
+      "process_gpu_seconds": 707,
+      "exit_code": 0,
+      "allocation_release_not_included": true
+    }
+  },
+  "producer_cursor": "18018959-3992-4b70-ad1f-11a754359cf0:70",
+  "producer_reports": {
+    "allocation_released": true,
+    "q1_and_q2_GPU_seconds": 2052,
+    "storage_headroom_preparation_in_progress": true
+  },
+  "accounting_qualification": "Native phase file gives conservative cumulative campaign upper2064 GPU-seconds before release; owner reports terminal2052. Retain both labels pending final source-ledger terminal receipt. Neither contains the separately carried earlier122GPU-s. Process clocks are subsets, never add them again.",
+  "scientific_updates": 0,
+  "qualification_physical_episodes": 96,
+  "qualification_policy_controls": 57600,
+  "source_binding": null,
+  "student_fits": {},
+  "student_native_curves": {},
+  "remaining_dependencies": [
+    "Full production storage/headroom admission",
+    "Actual eight-GPU resources and complete measured cost admission",
+    "Compatible before-panels",
+    "Scientific PPO collection/learning/completion and exact final-source manifests"
+  ],
+  "claim_boundary": "Both native48-lane full600-control banks pass; roughly130controls/s is a qualification measurement, not student or learned PPO performance. No qualification episode is admitted as scientific source."
+}
