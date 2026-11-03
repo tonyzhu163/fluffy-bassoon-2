@@ -91,11 +91,12 @@ def sample_value_batch(trials, policy, rng, *, batch_size, max_episodes, discoun
     length = max(len(row["tokens"]) for row in windows)
     if length > policy.config.context_length:
         raise ValueError("Complete physical episode windows exceed model context capacity")
-    device = next(policy.parameters()).device
+    reference = next(policy.parameters())
+    device = reference.device
     shapes = dict(tokens=(policy.core.input_dim,), actions=(policy.config.noise_dim,),
                   rewards=(), dones=(), starts=(), returns=(), valid=())
     result = {key: torch.zeros((length, batch_size, *shape), device=device,
-        dtype=torch.bool if key in ("dones", "starts", "valid") else torch.float32)
+        dtype=torch.bool if key in ("dones", "starts", "valid") else reference.dtype)
         for key, shape in shapes.items()}
     for lane, window in enumerate(windows):
         count = len(window["tokens"])

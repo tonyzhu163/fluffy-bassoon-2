@@ -107,9 +107,10 @@ def test_iql_td_and_dit_mc_match_constant_critic_reference(objective):
 
 @pytest.mark.parametrize("objective", ["dit", "ic_iql"])
 @pytest.mark.parametrize("phase", ["value", "actor"])
-def test_execution_batches_preserve_logical_loss_and_update(objective, phase):
+@pytest.mark.parametrize("dtype", [torch.float32, torch.float64])
+def test_execution_batches_preserve_logical_loss_and_update(objective, phase, dtype):
     torch.manual_seed(17)
-    left = learner(objective); right = deepcopy(left)
+    left = learner(objective).to(dtype=dtype); right = deepcopy(left)
     parameters = lambda model: [*model.q.parameters(), *model.v.parameters()] if phase == "value" else model.actor.parameters()
     a = torch.optim.AdamW(parameters(left), lr=1e-3, weight_decay=0.)
     b = torch.optim.AdamW(parameters(right), lr=1e-3, weight_decay=0.)
@@ -118,7 +119,14 @@ def test_execution_batches_preserve_logical_loss_and_update(objective, phase):
     split = learning_step(right, b, data, phase=phase, execution_batch_size=1)
     assert full["loss"] == pytest.approx(split["loss"], rel=1e-5)
     for x, y in zip(left.parameters(), right.parameters(), strict=True):
-        torch.testing.assert_close(x, y, atol=2e-6, rtol=2e-5)
+        if x.grad is not None:
+            torch.testing.assert_close(x.grad, y.grad,
+                atol=1e-7 if dtype==torch.float32 else 1e-12,
+                rtol=1e-5 if dtype==torch.float32 else 1e-10)
+        # Float32 reduction roundoff near zero gradients is amplified by Adam's
+        # epsilon; double precision separately qualifies the mathematical update.
+        torch.testing.assert_close(x, y, atol=1e-5 if dtype==torch.float32 else 1e-10,
+                                   rtol=2e-5 if dtype==torch.float32 else 1e-9)
 
 
 @pytest.mark.parametrize("objective", ["dit", "ic_iql"])

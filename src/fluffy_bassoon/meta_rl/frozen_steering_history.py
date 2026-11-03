@@ -282,7 +282,7 @@ def load_final_teacher(reference, source):
 
 
 def save_corpus(directory, streams, source, *, teacher_reference, provenance):
-    """Write both objectives with identical history and held-out identities."""
+    """Write all four objectives with identical histories and held-out identities."""
     teacher, final_update = load_final_teacher(teacher_reference, source)
     identities = {partition: [identity for identity, _ in streams[partition]]
                   for partition in ("train", "validation")}
