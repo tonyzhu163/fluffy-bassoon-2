@@ -1,0 +1,101 @@
+{
+  "format": "source_runtime_startup_observation_v1",
+  "observed_UTC": "2026-11-03 05:25:18 UTC",
+  "producer_cursor": "18018959-3992-4b70-ad1f-11a754359cf0:74",
+  "producer_thread": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
+  "jobs": {
+    "velocity": "job-bxhz4d41ll1k",
+    "kv_all_layers": "job-khwsqhzct9v5"
+  },
+  "published_startup": "outputs/robocasa-joint-steering-scale50-20261103-r1/PRODUCTION-STARTUP-20261103-r1.json",
+  "published_actual_resource_gate": "8GPUs/168CPU1664GiB384SHM each;16distinct allocated UUIDs;storage gate passed",
+  "independent_readback": [
+    {
+      "arm": "velocity",
+      "GPU-PROBE.json": {
+        "sha256": "162f69247d0355d7c319a3071e60ff50fd14ad40871c650676cb0177584198f1",
+        "data": {
+          "status": "passed",
+          "hostname": "job-bxhz4d41ll1k-master-0"
+        }
+      },
+      "PROFILE.json": {
+        "sha256": "7893c071cd0569a11c423560090e0261c8ffe25fb7081c995bd5015eef43167b",
+        "data": {
+          "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+          "runtime_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+          "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+          "model_config_sha256": "1c85bc28303a2144a1cc3af492b1b6d91f9cdcd94b30f04212505ffb5118f1b0",
+          "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+          "arm": "velocity",
+          "episodes_per_update": 384
+        }
+      },
+      "PROGRESS.json": {
+        "sha256": "6e74b96a789b9ee57a0e496f7dbd571448237f7809b7faede01cf4ab5c507fb1",
+        "data": {
+          "phase": "calibrate",
+          "sequence": 1,
+          "iteration": 0,
+          "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+          "last_check_unix": 1793683066.9949892,
+          "checkpoint": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/checkpoints/event-001-calibrate-000.pt",
+            "sha256": "dcf19c59189f38c39dd8cd4b33a04d381ee579179250f3f47c0b1491755d3705"
+          },
+          "completed_events": 1,
+          "total_events": 64,
+          "physical_controls_this_event": 0
+        }
+      }
+    },
+    {
+      "arm": "kv",
+      "GPU-PROBE.json": {
+        "sha256": "5048e7f24dc259ac216e14a8224a72ef8f9d64f7cecbc906d861933df9124b83",
+        "data": {
+          "status": "passed",
+          "hostname": "job-khwsqhzct9v5-master-0"
+        }
+      },
+      "PROFILE.json": {
+        "sha256": "3124a490e0cb91139b3958ea5c05877c14ade2035ec590587f7b34f0b3afc8ea",
+        "data": {
+          "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+          "runtime_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+          "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+          "model_config_sha256": "1c85bc28303a2144a1cc3af492b1b6d91f9cdcd94b30f04212505ffb5118f1b0",
+          "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+          "arm": "kv_all_layers",
+          "episodes_per_update": 384
+        }
+      },
+      "PROGRESS.json": {
+        "sha256": "92686a0c1819065dd3e5cf94d0702be2852e2196496726cea74d8fa67b4ae375",
+        "data": {
+          "phase": "calibrate",
+          "sequence": 1,
+          "iteration": 0,
+          "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+          "last_check_unix": 1793683068.0506458,
+          "checkpoint": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/checkpoints/event-001-calibrate-000.pt",
+            "sha256": "000217aac9355f5762259d13703ae5aa9fdd144be12ed904e4fc23d660dba232"
+          },
+          "completed_events": 1,
+          "total_events": 64,
+          "physical_controls_this_event": 0
+        }
+      }
+    }
+  ],
+  "actual_probe_hashes_match_published": true,
+  "source_runtime_norm_base_hashes_match": true,
+  "scientific_updates_verified": 0,
+  "phase": "Both calibration checkpoints complete; before-panels/DEV0 and first counted update/recovery pending",
+  "queue_clock_limitation": "Live profiles still conservatively charge submission/queue time to fixed deadline. Producer preserves live source/profile and is evaluating measured full50-update feasibility. Allocation-clock successor is inactive; no stop/migration/extension authorized by this observation.",
+  "source_binding": null,
+  "student_fits": {},
+  "student_native_curves": {},
+  "next_action": "Observe actual before/DEV0 native endpoints,first counted updates and exact shadow next-Adam restoration; then advancing source histories to full intended completion. No queue resubmission,active-source mutation or student fit on partial histories."
+}
