@@ -1,0 +1,141 @@
+{
+  "checked_unix": 1793684779.268972,
+  "velocity": {
+    "PAUSED.json": {
+      "completed": false,
+      "reason": "measured_budget_decision",
+      "iteration": 2,
+      "sequence": 5,
+      "checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/checkpoints/event-005-train-002.pt",
+        "sha256": "38d665ba6244a8bd1a5017045b1903a6206999515974c6a6d90eefd38b0dc27a"
+      },
+      "projected_all_attempt_gpu_hours": 49.3180866294437,
+      "approved_arm_gpu_hours": 40,
+      "no_automatic_retry": true
+    },
+    "RELEASED.json": {
+      "hostname": "job-bxhz4d41ll1k-master-0",
+      "all_children_released": true,
+      "child_exit_codes": {
+        "846": 0,
+        "847": 0,
+        "848": 0,
+        "849": 0,
+        "850": 0,
+        "851": 0,
+        "852": 0,
+        "853": 0
+      },
+      "profile_sha256": "448a41813ae445eae19598f04fe1a33827ba2922af9d912c660f83aed19e0877",
+      "ended_unix": 1793684337.2055442
+    },
+    "clock.json": {
+      "started_unix": 1793682851,
+      "finished_unix": 1793684339,
+      "allocated_gpus": 8,
+      "process_gpu_seconds": 11904,
+      "exit_code": 0,
+      "allocation_release_not_included": true
+    },
+    "last_complete": {
+      "phase": "train",
+      "iteration": 2,
+      "sequence": 5,
+      "checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/checkpoints/event-005-train-002.pt",
+        "sha256": "38d665ba6244a8bd1a5017045b1903a6206999515974c6a6d90eefd38b0dc27a"
+      },
+      "escrow": {
+        "format": "joint_steering_action_escrow_v1",
+        "limits": {
+          "train": 11650000,
+          "eval": 1200000
+        },
+        "charged": {
+          "train": 518400,
+          "eval": 346500
+        },
+        "pending": {}
+      },
+      "elapsed_seconds": 375.4451651573181,
+      "projected_all_attempt_gpu_hours": 49.3180866294437
+    },
+    "losses": {
+      "loss": -0.04425840154290199,
+      "actor_loss": -0.09658697098493577,
+      "critic_loss": 0.1046571433544159,
+      "optimizer_steps": 5,
+      "stop_reason": "target_kl"
+    }
+  },
+  "kv": {
+    "PAUSED.json": {
+      "completed": false,
+      "reason": "measured_budget_decision",
+      "iteration": 2,
+      "sequence": 5,
+      "checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/checkpoints/event-005-train-002.pt",
+        "sha256": "b4c1d873a4b6d694ee80e538f93a357570db30eddfd7d3ec78175cec6e5653f4"
+      },
+      "projected_all_attempt_gpu_hours": 52.050028252071805,
+      "approved_arm_gpu_hours": 40,
+      "no_automatic_retry": true
+    },
+    "RELEASED.json": {
+      "hostname": "job-khwsqhzct9v5-master-0",
+      "all_children_released": true,
+      "child_exit_codes": {
+        "897": 0,
+        "898": 0,
+        "899": 0,
+        "900": 0,
+        "901": 0,
+        "902": 0,
+        "903": 0,
+        "904": 0
+      },
+      "profile_sha256": "490605c3ebca94baae39a08bd74eed3271060e3b5af13519abd771ae457f611b",
+      "ended_unix": 1793684423.1625931
+    },
+    "clock.json": {
+      "started_unix": 1793682847,
+      "finished_unix": 1793684426,
+      "allocated_gpus": 8,
+      "process_gpu_seconds": 12632,
+      "exit_code": 0,
+      "allocation_release_not_included": true
+    },
+    "last_complete": {
+      "phase": "train",
+      "iteration": 2,
+      "sequence": 5,
+      "checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/checkpoints/event-005-train-002.pt",
+        "sha256": "b4c1d873a4b6d694ee80e538f93a357570db30eddfd7d3ec78175cec6e5653f4"
+      },
+      "escrow": {
+        "format": "joint_steering_action_escrow_v1",
+        "limits": {
+          "train": 11650000,
+          "eval": 1200000
+        },
+        "charged": {
+          "train": 518400,
+          "eval": 346500
+        },
+        "pending": {}
+      },
+      "elapsed_seconds": 400.2196035385132,
+      "projected_all_attempt_gpu_hours": 52.050028252071805
+    },
+    "losses": {
+      "loss": 0.04844688562055429,
+      "actor_loss": 0.017308169031056805,
+      "critic_loss": 0.06227743381337411,
+      "optimizer_steps": 69,
+      "stop_reason": "target_kl"
+    }
+  }
+}
