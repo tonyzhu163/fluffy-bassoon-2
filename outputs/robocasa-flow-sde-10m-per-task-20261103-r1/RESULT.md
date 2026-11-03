@@ -37,17 +37,27 @@ all 18 worker sidecars were hash verified. Physical/public state and case
 identities match across paired evaluation; small rendering differences remain
 diagnostic.
 
-Native all-attempt compute totals 372.7102778 GPU-hours, including failed Q1
-and earlier diagnostic upper bounds. Later offline reporting attempts are
-additional and listed in EXECUTION and monitor evidence. Campaign archival and
-reporting closeout remains in progress: 75 superseded checkpoints are verified
-in BOS; final 130 checkpoints stay on PFS. OpenDrawer, Toaster and
-Drawer→Counter full corpus archives, QC metadata, readbacks and reclaims are
-complete; Coffee and Stove follow serially. OpenDrawer's interrupted cleanup
-was recovered with exact archive and inventory checks, preserving all data. The offline mean log-ratio
-to initial is complete for all 16 checkpoints each of OpenDrawer, Toaster and
-Drawer→Counter; Coffee and Stove reporting is still running. The first two reporting attempts made no
-simulator actions, SGD or likelihood forwards.
+All GPU work is complete. The [cost closeout](GPU-COST-CLOSEOUT-R1.json)
+accounts for **373.9338889 GPU-hours**, including every source, qualification
+and reporting attempt. Native work accounts for 372.7102778 hours; the remainder
+covers reporting. The ledger distinguishes process clocks from preserved
+scheduler upper bounds; it is not a currency bill.
+
+All 80 retained-checkpoint fixed B16 readouts are complete (16 per task), with
+zero initial-policy replay error for every task. These signed conditional
+transition log ratios use one saved original cohort per task; they are not
+full-action marginal KL or teacher-performance gates. Download the verified
+[650-row training table](result-tables-r1/training.csv),
+[80-row likelihood table](result-tables-r1/initial-policy-log-ratios.csv), and
+[five-source summary](result-tables-r1/source-summary.csv).
+
+Campaign archival closeout remains in progress: 75 superseded checkpoints are
+verified in BOS; final 130 checkpoints stay on PFS. Full corpus archives,
+QC metadata, readbacks and reclaims are complete for OpenDrawer, Toaster,
+Drawer→Counter and Coffee; Stove is last. OpenDrawer's interrupted cleanup was
+recovered with exact archive and inventory checks, preserving all data. The
+first two reporting attempts made no simulator actions, SGD or likelihood
+forwards.
 
 Evidence: [all 650 joins](COMPLETE-CORPUS-JOINS-R1.json), each task's
 FINAL-READOUT-R1.json and FINAL-ACTION-ACCOUNTING-R1.json, and

@@ -40,13 +40,22 @@
       "reclaim_sha256": "fcceb87b7a7bb04c270ec264850bf340c0931f845963982b48c989b85f9f0e24"
     },
     "CoffeeSetupMug": {
-      "state": "copy-and-full-object-readback",
+      "state": "CLOSED_AND_TIERED",
       "readout": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CoffeeSetupMug/FINAL-READOUT-R1.json",
       "readout_sha256": "12178f77e8e91ef2f660185257442408b8dfc2fbe1a1154dd5416bcd9b9d8324",
-      "started_phase_unix": 1793738790.8093143
+      "started_phase_unix": 1793741017.5861924,
+      "prepared": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-CoffeeSetupMug-R1-PREPARED.json",
+      "prepared_sha256": "f9474e04c21f4a8708ae75e077b8f238dc95e90019266d600f4637d3da1a2842",
+      "native_closed": true,
+      "full_reclaimed": true,
+      "reclaim": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-CoffeeSetupMug-R1-RECLAIMED.json",
+      "reclaim_sha256": "c62cbf3d0c3c9fdc05b907b6a54efdc1c99d400b9ac46b92d3dfe6c4761bdc72"
     },
     "TurnOffStove": {
-      "state": "WAITING_NATIVE_CLOSURE"
+      "state": "copy-and-full-object-readback",
+      "readout": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TurnOffStove/FINAL-READOUT-R1.json",
+      "readout_sha256": "ecc832821a03f7dfa35a49664217787b3e27895ec78d47a5414c0c46060fb65d",
+      "started_phase_unix": 1793741386.1820552
     }
   },
   "CPU_workers": 1,
@@ -65,6 +74,6 @@
     ]
   },
   "scope": "Native final gates plus corpus archive/reclaim only; full joins, initial-ratio GPU reporting and campaign results closeout remain required before fitting.",
-  "checked_unix": 1793738790.740151,
-  "PFS_free_GiB": 528.4765625
+  "checked_unix": 1793741386.1412535,
+  "PFS_free_GiB": 637.71484375
 }

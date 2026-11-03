@@ -13,8 +13,9 @@ sampler chain and actor/sampling/environment join passes. However, all five
 sources failed both registered improvement gates. They remain reference data;
 none is an admitted improving teacher. DPT labels and student fits have not
 been generated. See [complete joins](COMPLETE-CORPUS-JOINS-R1.json) and
-[native results](RESULT.md). Final archival and offline likelihood reporting
-are still running.
+[native results](RESULT.md). All 80 fixed-batch checkpoint likelihood reports are complete with zero
+initial-policy replay error on all five tasks. Final Stove archival and
+campaign closeout are still running.
 
 ## Saved inputs
 
