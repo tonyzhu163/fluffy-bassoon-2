@@ -150,7 +150,44 @@ def obtain_weights(row, output):
              extracted_member=member, extracted_model_sha256=row['sha256'])
 
 
-def run(prepared, task, output):
+def stage(root, output, result_root):
+    """Bridge the dev-only BOS mount with one private model file at a time."""
+    assert output.resolve().is_relative_to(root.resolve())
+    assert result_root.resolve().is_relative_to(root.resolve())
+    output.mkdir(parents=True, exist_ok=False)
+    receipts = []
+    for task in TASKS:
+        for row in checkpoint_catalog(root, task):
+            directory = output / task / str(row['step'])
+            directory.mkdir(parents=True, exist_ok=False)
+            path, temporary, storage = obtain_weights(row, directory)
+            ready = dict(completed=True, task=task, checkpoint=row, path=str(path),
+                         temporary=temporary, storage=storage, result_root=str(result_root),
+                         script_sha256=sha(__file__))
+            write(directory / 'READY.json', ready)
+            consumed = result_root / task / f"CONSUMED-{row['step']}.json"
+            deadline = time.monotonic() + 6 * 3600
+            while not consumed.exists():
+                if time.monotonic() > deadline:
+                    raise TimeoutError('GPU consumption receipt absent; private model retained')
+                time.sleep(5)
+            receipt = json.loads(consumed.read_text())
+            assert receipt['task'] == task and receipt['step'] == row['step']
+            assert receipt['model_sha256'] == row['sha256'] and receipt['strict_load_passed']
+            assert receipt['ready_sha256'] == sha(directory / 'READY.json')
+            if temporary:
+                assert path.parent == directory and path.name == 'extracted-full_weights.pt'
+                assert sha(path) == row['sha256']
+                path.unlink()
+            receipts.append(dict(task=task, step=row['step'], ready_sha256=sha(directory / 'READY.json'),
+                                 consumed_sha256=sha(consumed), private_copy_reclaimed=temporary))
+            write(output / 'PROGRESS.json', dict(completed=False, receipts=receipts,
+                  new_controls=0, SGD=0, model_calls=0))
+    write(output / 'PROGRESS.json', dict(completed=True, receipts=receipts,
+          new_controls=0, SGD=0, model_calls=0))
+
+
+def run(prepared, task, output, staging=None):
     import torch
     from omegaconf import OmegaConf
     from rlinf.models.embodiment.openpi import get_model
@@ -189,11 +226,33 @@ def run(prepared, task, output):
     rows = []
     for row in catalog:
         tick = time.monotonic()
-        path, temporary, storage = obtain_weights(row, output)
+        if staging is None:
+            path, temporary, storage = obtain_weights(row, output)
+        else:
+            ready_path = staging / task / str(row['step']) / 'READY.json'
+            deadline = time.monotonic() + 4 * 3600
+            while not ready_path.exists():
+                if time.monotonic() > deadline:
+                    raise TimeoutError('Verified PFS model staging is not ready')
+                time.sleep(5)
+            ready = json.loads(ready_path.read_text())
+            assert ready['completed'] and ready['task'] == task and ready['checkpoint'] == row
+            assert ready['script_sha256'] == sha(__file__)
+            assert Path(ready['result_root']) == output.parent
+            path = Path(ready['path'])
+            assert path == Path(row['path']) or (path.parent == ready_path.parent and
+                                               path.name == 'extracted-full_weights.pt')
+            assert sha(path) == row['sha256']
+            temporary, storage = False, dict(ready['storage'], ready=str(ready_path),
+                                             ready_sha256=sha(ready_path))
         state = _convert_official_openpi_keys(_normalize_state_dict(as_state_dict(
             torch.load(path, map_location='cpu', weights_only=False))), path)
         model.load_state_dict(state, strict=True)
         del state
+        if staging is not None:
+            write(output / f"CONSUMED-{row['step']}.json", dict(task=task, step=row['step'],
+                  model_sha256=row['sha256'], strict_load_passed=True,
+                  ready_sha256=sha(ready_path)))
         if temporary:
             path.unlink()
         gc.collect()
@@ -233,15 +292,22 @@ def main():
     p = sub.add_parser('prepare')
     p.add_argument('--root', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True)
+    p = sub.add_parser('stage')
+    p.add_argument('--root', type=Path, required=True)
+    p.add_argument('--output', type=Path, required=True)
+    p.add_argument('--result-root', type=Path, required=True)
     p = sub.add_parser('run')
     p.add_argument('--prepared', type=Path, required=True)
     p.add_argument('--task', choices=TASKS, required=True)
     p.add_argument('--output', type=Path, required=True)
+    p.add_argument('--staging', type=Path)
     args = parser.parse_args()
     if args.mode == 'prepare':
         prepare(args.root, args.output)
+    elif args.mode == 'stage':
+        stage(args.root, args.output, args.result_root)
     else:
-        run(args.prepared, args.task, args.output)
+        run(args.prepared, args.task, args.output, args.staging)
 
 
 if __name__ == '__main__':

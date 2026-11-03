@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
-: "${TASK_META:?}" "${TASK_CODE_PIN:?}" "${TASK_OUTPUT:?}" "${TASK_PREPARED:?}"
+: "${TASK_META:?}" "${TASK_CODE_PIN:?}" "${TASK_OUTPUT:?}" "${TASK_PREPARED:?}" "${TASK_STAGING:?}"
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_RUNTIME=$TASK_ROOT/sources/flow10m-0988b5f9
 TASK_PY=$TASK_ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
@@ -38,5 +38,5 @@ for TASK_NAME in OpenDrawer CloseToasterOvenDoor PickPlaceDrawerToCounter Coffee
  TASK_REMAINING=$((TASK_DEADLINE-$(date +%s)))
  test "$TASK_REMAINING" -gt 60
  timeout --signal=TERM --kill-after=30s "$TASK_REMAINING" "$TASK_PY" -B "$TASK_SCRIPT" run \
-  --prepared "$TASK_PREPARED" --task "$TASK_NAME" --output "$TASK_OUTPUT/$TASK_NAME"
+  --prepared "$TASK_PREPARED" --task "$TASK_NAME" --output "$TASK_OUTPUT/$TASK_NAME" --staging "$TASK_STAGING"
 done
