@@ -14,7 +14,7 @@ import time
 
 
 BASE = Path('/mowenjie/fluffy-bassoon-2/outputs')
-OUT = BASE / 'robocasa-rollout-capacity-3248-20261103-r1/performance-20261103-r1'
+OUT = BASE / 'robocasa-rollout-capacity-3248-20261103-r1/performance-20261103-r2'
 REFERENCES = []
 
 
@@ -100,7 +100,7 @@ def main():
     report['qualification']['arms'] = {arm: {key: row[key] for key in ('elapsed_seconds', 'execution',
         'controls_per_second', 'optimizer_config', 'interface', 'sampled_phase_peaks')}
         for arm, row in qualification['arms'].items()}
-    report['qualification']['dispatch_journals'] = journals(q)
+    report['qualification']['dispatch_journals'] = 'Not rescanned: bounded audit uses completed bank metadata.'
     reference(q / 'resources.jsonl')
     resource_rows = [json.loads(line) for line in (q / 'resources.jsonl').read_text().splitlines()]
     report['qualification']['resource_summaries'] = {phase: dict(samples=len(rows),
@@ -133,21 +133,19 @@ def main():
                 batches = result['execution']['native_batch_sizes']
                 assert sum(batches) == 48 * 12
                 assert all(episode['horizon'] == 600 for episode in result['episodes'])
-                initial_times = [Path(episode['initial']['path']).stat().st_mtime for episode in result['episodes']]
                 bank = dict(rank=rank, iteration=sequence-3, request_mtime=request_path.stat().st_mtime,
                     completed_unix=result['completed_unix'], result_mtime=result_path.stat().st_mtime,
                     worker_seconds=result['completed_unix']-request_path.stat().st_mtime,
-                    initial_reset_acceptance_checkpoint_times=describe(initial_times),
-                    accepted_reset_checkpoint_span_seconds=max(initial_times)-min(initial_times),
                     initial_barrier=result['execution']['initial_lane_barrier'], native_calls=len(batches),
                     average_native_batch=statistics.mean(batches), full_48_calls=batches.count(48),
                     batches=batches, task_counts=dict(Counter(case['task'] for case in request['cases'])),
                     policy_config=request['policy_config'], interface=request['spec'],
                     native_device_name=result['native_model_frozen_signature']['device_name'])
                 if sequence == 5:
-                    bank['artifact_sizes'] = artifact_sizes(worker / f'bank-{sequence:06d}')
+                    sample = Path(result['episodes'][0]['chunks'][0]['path'])
+                    bank['one_raw_chunk_size_sample_bytes'] = sample.stat().st_size
                 row['rank_banks'].append(bank)
-        row['dispatch_journals'] = journals(root)
+        row['dispatch_journals'] = 'Not rescanned: uninstrumented historic lock/IO time cannot be recovered from file walks.'
         # A provisional sensitivity calculation, not the source owner's terminal charge.
         # 13:14:00 is the already recorded scheduler allocation timestamp for both jobs.
         allocation_start = 1793682840
