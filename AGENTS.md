@@ -45,8 +45,11 @@ runs per the [retention policy](README.md#artifact-retention).
   logs. Protect shared data and checkpoints needed by active jobs.
 - Launch accelerator jobs within the user-approved task scope as soon as verified code
   and allocated resources are ready; no repeated launch confirmation is needed.
-  Ask before expanding the scientific scope or a materially larger resource
-  budget. CPU tests and static checks need no ask.
+  Do not ask for approval for compute allocations or incremental budgets below
+  8 GPU-hours within the requested task; proceed and record cumulative usage.
+  Ask before unapproved budgets of 8 GPU-hours or more, scientific-scope
+  expansion, or exceeding an explicit user hard cap. CPU tests and static
+  checks need no ask.
 
 ## Environment access
 
