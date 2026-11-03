@@ -183,9 +183,9 @@ F1–F6 are fixed on `main` and covered by CPU tests in
 ceiling from it, and the driver refuses `kl_beta != 0`. For F7, the storage
 switches exist (`sampling_record: full|scalars`, `actor_batch_drop`); their
 defaults kept everything until Q1 measured the bytes and verified duplicate
-camera/chain coverage. F8 is qualified: actual full-state resumes have advanced
-on OpenDrawer, Toaster and Drawer-to-Counter; the other two production jobs
-are submitted and await allocation. All39required allocated-Linux tests and
+camera/chain coverage. F8 is qualified: all five actual full-state production
+resumes have advanced with unchanged VLM and the expected optimizer schedule.
+All39required allocated-Linux tests and
 all five Q1 C1–C3 checks passed. See EXECUTION.json and per-task Q1-AUDIT.json
 for measured evidence. These are execution/retention clarifications; the
 active runtime and scientific schedule remain unchanged.
