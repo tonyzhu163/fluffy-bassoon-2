@@ -159,6 +159,8 @@ def main(argv=None):
         raise ValueError("Require the exact clean reviewed source commit")
     train, train_manifest = load_dataset(args.train_data, expected_sha256=args.train_sha256)
     validation, validation_manifest = load_dataset(args.validation_data, expected_sha256=args.validation_sha256)
+    if train_manifest["objective"] in ("dit", "ic_iql"):
+        raise ValueError("Value objectives require history_value_train, not unweighted imitation")
     if (args.train_sha256 == args.validation_sha256
             or (train_manifest["observation_dim"], train_manifest["noise_dim"], train_manifest["objective"])
             != (validation_manifest["observation_dim"], validation_manifest["noise_dim"], validation_manifest["objective"])):

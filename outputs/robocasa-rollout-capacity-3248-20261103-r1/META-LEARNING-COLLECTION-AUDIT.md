@@ -69,3 +69,5 @@ Only the AD/DPT pipeline is currently implemented and synthetically qualified;
 claiming all four are already ready would be unsupported. No extra simulator
 collection should be needed solely to obtain the missing schema fields, but
 actual consumer round-trip qualification is still pending.
+
+Implementation update: the user subsequently requested fixing the pipeline. DIT and in-context IQL exporters/trainers are now implemented, and all four methods passed the allocated-Linux CPU qualification on both interface widths. See [result](../steering-four-method-pipeline-20261103-r1/RESULT.md). The earlier implementation gaps above describe the audit before that fix; actual scientific sources and native GPU resource admission remain required.

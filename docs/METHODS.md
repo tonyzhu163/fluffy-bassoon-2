@@ -82,6 +82,7 @@ Keep original policy observations and retain per-episode pairing evidence.
 | Path | Contents |
 | --- | --- |
 | `src/fluffy_bassoon/meta_rl/` | Trial environments, PPO/SAC, DSRL drivers (`vla_target_online_dsrl*`, `dsrl_pi0_replication`), headroom screen (`vla_headroom_screen`), RLinf motor (`vla_rlinf_libero`), RLinf native PPO (`rlinf_native_ppo*`), source40 pipeline (`vla_source40_*`), RoboTwin (`robotwin_*`), Meta-World (`metaworld_*`) |
+| `src/fluffy_bassoon/meta_rl/frozen_steering_history.py`, `history_value.py`, `history_value_train.py` | Matched AD/DPT/DIT/in-context IQL corpora; causal Q/V objectives and two-stage value/policy fits with full recovery. DPT alone changes query labels; the other three use executed steering actions. Frozen inference uses the common history controller. |
 | `src/fluffy_bassoon/rl/` | pi0.5 feature bridge and residual hooks, LIBERO goal/variant helpers, RoboTwin runtime, ManiSkill motor |
 | `src/lerobot_policy_ctm/` | Recurrent cores: persistent CTM, CMM, looped Transformer, Sakana CTM reference |
 | `scripts/diagnostics/` | One launcher per experiment (`vla_*.sh`, `robotwin_*.py`, `dsrl_pi0_replication.sh`) |

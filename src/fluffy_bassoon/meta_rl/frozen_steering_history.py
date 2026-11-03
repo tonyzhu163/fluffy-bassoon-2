@@ -282,7 +282,7 @@ def load_final_teacher(reference, source):
 
 
 def save_corpus(directory, streams, source, *, teacher_reference, provenance):
-    """Write both objectives with identical history and held-out identities."""
+    """Write all four objectives with identical histories and held-out identities."""
     teacher, final_update = load_final_teacher(teacher_reference, source)
     identities = {partition: [identity for identity, _ in streams[partition]]
                   for partition in ("train", "validation")}
@@ -303,7 +303,7 @@ def save_corpus(directory, streams, source, *, teacher_reference, provenance):
     for partition in ("train", "validation"):
         identities, actual = zip(*streams[partition], strict=True)
         labeled = relabel_teacher(actual, teacher, deterministic=True)
-        for objective, trials in (("ad", actual), ("dpt", labeled)):
+        for objective, trials in (("ad", actual), ("dpt", labeled), ("dit", actual), ("ic_iql", actual)):
             metadata = dict(provenance, trial_ids=list(identities), source_tasks=list(source.tasks),
                 motor_sha256=source.motor_sha256, normalization_sha256=source.normalization_sha256,
                 feature_contract=dict(dimension=source.feature_dim, port="source pre-steering public features"),
@@ -315,6 +315,13 @@ def save_corpus(directory, streams, source, *, teacher_reference, provenance):
                 physical_suffix="actual post-success controls included; no reward is moved or invented",
                 streams="same task/declared collection slot across scheduled versions; source scenes may change",
                 validation="student imitation only; source PPO saw all source states")
+            if objective in ("dit", "ic_iql"):
+                metadata["validation"] = "held-out offline value/policy objective; source PPO saw all source states"
+                metadata["value_contract"] = dict(discount=.99, discount_unit="one H50 steering decision",
+                    boundary="physical_done", rewards="observed first-success once; physical suffix retained",
+                    next_observation="next row within the same physical episode; terminal bootstrap zero",
+                    targets="executed steering actions; no final-teacher relabels",
+                    returns="complete observed episode, before sampling windows; critic supervision only")
             path = output / f"{objective}-{partition}.npz"
             manifests[f"{objective}_{partition}"] = save_dataset(path, list(trials), objective=objective,
                                                                  metadata=metadata)

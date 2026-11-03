@@ -1,0 +1,108 @@
+.......FFFF............................................                                                                                     [100%]
+==================================================================== FAILURES =====================================================================
+_______________________________________ test_execution_batches_preserve_logical_loss_and_update[value-dit] ________________________________________
+
+objective = 'dit', phase = 'value'
+
+    @pytest.mark.parametrize("objective", ["dit", "ic_iql"])
+    @pytest.mark.parametrize("phase", ["value", "actor"])
+    def test_execution_batches_preserve_logical_loss_and_update(objective, phase):
+        torch.manual_seed(17)
+        left = learner(objective); right = deepcopy(left)
+        parameters = lambda model: [*model.q.parameters(), *model.v.parameters()] if phase == "value" else model.actor.parameters()
+        a = torch.optim.AdamW(parameters(left), lr=1e-3, weight_decay=0.)
+        b = torch.optim.AdamW(parameters(right), lr=1e-3, weight_decay=0.)
+        data = batch(left)
+        full = learning_step(left, a, data, phase=phase)
+        split = learning_step(right, b, data, phase=phase, execution_batch_size=1)
+        assert full["loss"] == pytest.approx(split["loss"], rel=1e-5)
+        for x, y in zip(left.parameters(), right.parameters(), strict=True):
+>           torch.testing.assert_close(x, y, atol=2e-6, rtol=2e-5)
+E           AssertionError: Tensor-likes are not close!
+E           
+E           Mismatched elements: 3 / 16 (18.8%)
+E           Greatest absolute difference: 3.840029239654541e-05 at index (4,) (up to 2e-06 allowed)
+E           Greatest relative difference: 0.0005178403225727379 at index (7,) (up to 2e-05 allowed)
+
+tests/test_history_value.py:110: AssertionError
+______________________________________ test_execution_batches_preserve_logical_loss_and_update[value-ic_iql] ______________________________________
+
+objective = 'ic_iql', phase = 'value'
+
+    @pytest.mark.parametrize("objective", ["dit", "ic_iql"])
+    @pytest.mark.parametrize("phase", ["value", "actor"])
+    def test_execution_batches_preserve_logical_loss_and_update(objective, phase):
+        torch.manual_seed(17)
+        left = learner(objective); right = deepcopy(left)
+        parameters = lambda model: [*model.q.parameters(), *model.v.parameters()] if phase == "value" else model.actor.parameters()
+        a = torch.optim.AdamW(parameters(left), lr=1e-3, weight_decay=0.)
+        b = torch.optim.AdamW(parameters(right), lr=1e-3, weight_decay=0.)
+        data = batch(left)
+        full = learning_step(left, a, data, phase=phase)
+        split = learning_step(right, b, data, phase=phase, execution_batch_size=1)
+        assert full["loss"] == pytest.approx(split["loss"], rel=1e-5)
+        for x, y in zip(left.parameters(), right.parameters(), strict=True):
+>           torch.testing.assert_close(x, y, atol=2e-6, rtol=2e-5)
+E           AssertionError: Tensor-likes are not close!
+E           
+E           Mismatched elements: 3 / 16 (18.8%)
+E           Greatest absolute difference: 9.842216968536377e-05 at index (4,) (up to 2e-06 allowed)
+E           Greatest relative difference: 0.0014126907335594296 at index (7,) (up to 2e-05 allowed)
+
+tests/test_history_value.py:110: AssertionError
+_______________________________________ test_execution_batches_preserve_logical_loss_and_update[actor-dit] ________________________________________
+
+objective = 'dit', phase = 'actor'
+
+    @pytest.mark.parametrize("objective", ["dit", "ic_iql"])
+    @pytest.mark.parametrize("phase", ["value", "actor"])
+    def test_execution_batches_preserve_logical_loss_and_update(objective, phase):
+        torch.manual_seed(17)
+        left = learner(objective); right = deepcopy(left)
+        parameters = lambda model: [*model.q.parameters(), *model.v.parameters()] if phase == "value" else model.actor.parameters()
+        a = torch.optim.AdamW(parameters(left), lr=1e-3, weight_decay=0.)
+        b = torch.optim.AdamW(parameters(right), lr=1e-3, weight_decay=0.)
+        data = batch(left)
+        full = learning_step(left, a, data, phase=phase)
+        split = learning_step(right, b, data, phase=phase, execution_batch_size=1)
+        assert full["loss"] == pytest.approx(split["loss"], rel=1e-5)
+        for x, y in zip(left.parameters(), right.parameters(), strict=True):
+>           torch.testing.assert_close(x, y, atol=2e-6, rtol=2e-5)
+E           AssertionError: Tensor-likes are not close!
+E           
+E           Mismatched elements: 4 / 16 (25.0%)
+E           Greatest absolute difference: 0.00011283159255981445 at index (2,) (up to 2e-06 allowed)
+E           Greatest relative difference: 0.0006791601772420108 at index (2,) (up to 2e-05 allowed)
+
+tests/test_history_value.py:110: AssertionError
+______________________________________ test_execution_batches_preserve_logical_loss_and_update[actor-ic_iql] ______________________________________
+
+objective = 'ic_iql', phase = 'actor'
+
+    @pytest.mark.parametrize("objective", ["dit", "ic_iql"])
+    @pytest.mark.parametrize("phase", ["value", "actor"])
+    def test_execution_batches_preserve_logical_loss_and_update(objective, phase):
+        torch.manual_seed(17)
+        left = learner(objective); right = deepcopy(left)
+        parameters = lambda model: [*model.q.parameters(), *model.v.parameters()] if phase == "value" else model.actor.parameters()
+        a = torch.optim.AdamW(parameters(left), lr=1e-3, weight_decay=0.)
+        b = torch.optim.AdamW(parameters(right), lr=1e-3, weight_decay=0.)
+        data = batch(left)
+        full = learning_step(left, a, data, phase=phase)
+        split = learning_step(right, b, data, phase=phase, execution_batch_size=1)
+        assert full["loss"] == pytest.approx(split["loss"], rel=1e-5)
+        for x, y in zip(left.parameters(), right.parameters(), strict=True):
+>           torch.testing.assert_close(x, y, atol=2e-6, rtol=2e-5)
+E           AssertionError: Tensor-likes are not close!
+E           
+E           Mismatched elements: 4 / 16 (25.0%)
+E           Greatest absolute difference: 0.00011283159255981445 at index (2,) (up to 2e-06 allowed)
+E           Greatest relative difference: 0.0006791601772420108 at index (2,) (up to 2e-05 allowed)
+
+tests/test_history_value.py:110: AssertionError
+============================================================= short test summary info =============================================================
+FAILED tests/test_history_value.py::test_execution_batches_preserve_logical_loss_and_update[value-dit] - AssertionError: Tensor-likes are not cl...
+FAILED tests/test_history_value.py::test_execution_batches_preserve_logical_loss_and_update[value-ic_iql] - AssertionError: Tensor-likes are not...
+FAILED tests/test_history_value.py::test_execution_batches_preserve_logical_loss_and_update[actor-dit] - AssertionError: Tensor-likes are not cl...
+FAILED tests/test_history_value.py::test_execution_batches_preserve_logical_loss_and_update[actor-ic_iql] - AssertionError: Tensor-likes are not...
+4 failed, 51 passed in 75.47s (0:01:15)

@@ -1,4 +1,4 @@
-"""Compile a verified terminal PPO source into separate steering AD/DPT views."""
+"""Compile a verified PPO source into AD/DPT/DIT/in-context IQL views."""
 import argparse
 from dataclasses import asdict
 import json
