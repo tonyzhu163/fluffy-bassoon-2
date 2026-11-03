@@ -65,8 +65,12 @@ def main():
     try:
         pin = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=args.code, text=True).strip()
         root = Path("/mowenjie/fluffy-bassoon-2")
-        native = root / "outputs/robocasa-joint-steering-scale50-20261103-r1/production-velocity/PROFILE.json"
+        native = args.code / "outputs/robocasa-deterministic-eval-fix-20261103-r1/PUBLIC-MOTOR.json"
         profile = json.loads(native.read_text())
+        for path in (Path(profile["model_directory"]) / "model.safetensors",
+                     Path(profile["model_directory"]) / "config.json", Path(profile["norm_path"])):
+            if not path.is_file():
+                raise FileNotFoundError(f"Pinned public motor input is missing: {path}")
         wanted = [("OpenDrawer", 410100), ("TurnOnSinkFaucet", 540107),
                   ("TurnOnSinkFaucet", 540109), ("OpenStandMixerHead", 550109),
                   ("OpenStandMixerHead", 550136)]
@@ -77,6 +81,7 @@ def main():
         motor, factory, signature = _load_native(base_request, args.code)
         assert signature["all_parameters_frozen"]
         assert signature["model_sha256"] == profile["model_sha256"]
+        assert signature["norm_sha256"] == profile["norm_sha256"]
         result.update(source_commit=pin, native_signature=signature, cases=cases)
         collections = []
         for arm in ("velocity", "kv_all_layers"):
