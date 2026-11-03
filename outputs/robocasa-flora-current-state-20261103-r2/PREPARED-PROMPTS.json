@@ -1,0 +1,1978 @@
+[
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-300/reference",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a terminal-success reward model for robot trajectories.\nGiven the task instruction and the complete trajectory video, predict a score from 1 to 5.\nA complete failure is 1. A complete success is 5.\nJudge only what is visible in the trajectory and follow the requested output format exactly.\nDo not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.\n\nComplete trajectory video:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Evaluate the terminal success of the task."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-300/prefix_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-300/anchors_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-300/prefix_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-300/anchors_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-350/prefix_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-350/anchors_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-350/prefix_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000112-rank-06-episode-000001/prefix-350/anchors_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-500/prefix_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-500/anchors_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-500/prefix_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-500/anchors_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-550/reference",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a terminal-success reward model for robot trajectories.\nGiven the task instruction and the complete trajectory video, predict a score from 1 to 5.\nA complete failure is 1. A complete success is 5.\nJudge only what is visible in the trajectory and follow the requested output format exactly.\nDo not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.\n\nComplete trajectory video:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Evaluate the terminal success of the task."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-550/prefix_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-550/anchors_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-550/prefix_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-550/anchors_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-600/prefix_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-600/anchors_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-600/prefix_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-600/anchors_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-750/prefix_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-750/anchors_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-750/prefix_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000064-rank-00-episode-000001/prefix-750/anchors_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-350/prefix_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-350/anchors_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-350/prefix_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-350/anchors_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-400/reference",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a terminal-success reward model for robot trajectories.\nGiven the task instruction and the complete trajectory video, predict a score from 1 to 5.\nA complete failure is 1. A complete success is 5.\nJudge only what is visible in the trajectory and follow the requested output format exactly.\nDo not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the very top drawer directly underneath the countertop on the left of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.\n\nComplete trajectory video:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Evaluate the terminal success of the task."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-400/prefix_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-400/anchors_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-400/prefix_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-400/anchors_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-450/prefix_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-450/anchors_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-450/prefix_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000128-rank-00-episode-000006/prefix-450/anchors_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000144-rank-02-episode-000004/prefix-250/reference",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a terminal-success reward model for robot trajectories.\nGiven the task instruction and the complete trajectory video, predict a score from 1 to 5.\nA complete failure is 1. A complete success is 5.\nJudge only what is visible in the trajectory and follow the requested output format exactly.\nDo not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the very top drawer directly underneath the countertop on the right of the robot's starting position. This is the highest drawer in that stack, above every other drawer. Pulling out a lower drawer while the top drawer stays shut is failure. The target must finish open by roughly half its front-to-back depth. Holding the handle is allowed.\n\nComplete trajectory video:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Evaluate the terminal success of the task."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-250/prefix_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-250/anchors_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-250/prefix_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-250/anchors_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-300/prefix_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-300/anchors_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-300/prefix_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-300/anchors_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-750/prefix_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-750/anchors_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-750/prefix_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000216-rank-03-episode-000001/prefix-750/anchors_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000256-rank-00-episode-000002/prefix-700/prefix_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000256-rank-00-episode-000002/prefix-700/anchors_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000256-rank-00-episode-000002/prefix-700/prefix_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000256-rank-00-episode-000002/prefix-700/anchors_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000256-rank-00-episode-000002/prefix-750/prefix_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000256-rank-00-episode-000002/prefix-750/anchors_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000256-rank-00-episode-000002/prefix-750/prefix_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000256-rank-00-episode-000002/prefix-750/anchors_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000336-rank-02-episode-000000/prefix-700/prefix_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000336-rank-02-episode-000000/prefix-700/anchors_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000336-rank-02-episode-000000/prefix-700/prefix_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000336-rank-02-episode-000000/prefix-700/anchors_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000336-rank-02-episode-000000/prefix-750/prefix_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000336-rank-02-episode-000000/prefix-750/anchors_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000336-rank-02-episode-000000/prefix-750/prefix_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000336-rank-02-episode-000000/prefix-750/anchors_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the left of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the left drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000376-rank-07-episode-000005/prefix-700/prefix_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000376-rank-07-episode-000005/prefix-700/anchors_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000376-rank-07-episode-000005/prefix-700/prefix_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000376-rank-07-episode-000005/prefix-700/anchors_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000376-rank-07-episode-000005/prefix-750/prefix_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000376-rank-07-episode-000005/prefix-750/anchors_grade",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport a score from 1 to 5. A complete current failure is 1. Score 5 requires that the requested drawer meets the complete opening condition at the last visible time. Do not provide a rationale. Return exactly:\nScore: <1-5>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000376-rank-07-episode-000005/prefix-750/prefix_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "TRAIN/OpenDrawer/flora-single-case-000376-rank-07-episode-000005/prefix-750/anchors_conditions",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are evaluating the CURRENT state of the requested drawer, not the best earlier state. Use the initial scene to identify the target on the right of the robot's starting position and keep that physical target fixed across synchronized views. For these inspected layouts the target is the uppermost drawer directly below the counter on that side; opening a lower drawer does not count. Judge only the LAST visible time. The same target drawer must have slid outward from its closed position by at least 52.25% of the cabinet fixture's front-to-back depth. A visible gap or exposed interior alone does not establish this condition. Maximum extension is not required, and holding the handle is allowed. Earlier opening that has been undone does not make the CURRENT state complete. Judge visible evidence, not the robot's effort, and do not invent additional requirements.\n\nReport two concise judgments, without a rationale. Target is identified only when you can confidently locate the requested physical drawer in the current evidence using the initial scene. Otherwise use uncertain. Opening concerns that SAME requested drawer at the last visible time: meets means its outward displacement satisfies the stated condition, short means it does not, and uncertain means the visible evidence does not resolve it. If Target is uncertain, Opening must also be uncertain. Return exactly these two lines:\nTarget: <identified|uncertain>\nOpening: <meets|short|uncertain>"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Task: Open the right drawer.\n\nObserved causal video evidence:"
+          },
+          {
+            "type": "video",
+            "video": "__video__"
+          },
+          {
+            "type": "text",
+            "text": "Judge the requested drawer at the LAST visible time only."
+          }
+        ]
+      }
+    ]
+  }
+]
