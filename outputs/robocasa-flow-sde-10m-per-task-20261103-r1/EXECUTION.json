@@ -1,0 +1,46 @@
+{
+  "owner_chat": "01a1a077-e5ab-7982-840d-de8a81d4321a",
+  "checked_shanghai": "2026-11-03 16:29",
+  "source_commit": "686d26194c4b382736b34bec4ca59d9c8a51e499",
+  "phase": "OpenDrawer Q1 submitted",
+  "cluster": "Baige Pro6K",
+  "queue": "\u7b97\u6cd5Z\u7ec4",
+  "jobs": [
+    {
+      "task": "OpenDrawer",
+      "stage": "q1",
+      "job_id": "job-2z7heniyxam3",
+      "job_name": "mwj_1103_flow10m_opendrawer_q1_1x8_r1",
+      "submitted_shanghai": "2026-11-03 16:28:48",
+      "state": "CREATED",
+      "gpus": 8,
+      "cpus": 168,
+      "ram_gib": 1280,
+      "shm_gib": 32,
+      "max_minutes": 90,
+      "automatic_retry": false,
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/q1-r1"
+    }
+  ],
+  "next_action": "Verify OpenDrawer before-panel, first update, C1-C3, bytes and full checkpoint; then remaining four Q1 allocations and qualified resumes",
+  "fixed_batch_layout": {
+    "train_envs_per_gpu": 16,
+    "rollout_rounds": 1,
+    "eval_envs_per_gpu": 8,
+    "env_rollout_ranks": 8,
+    "actor_ranks": 2,
+    "deterministic_kernels_required": false
+  },
+  "qualification": {
+    "linux_tests_passed": 38,
+    "config_validation": "full validate_cfg inside actual eight-GPU job before model construction"
+  },
+  "approved_scope": {
+    "tasks": 5,
+    "gpus_per_task": 8,
+    "train_controls_per_task": 9984000,
+    "train_iterations": 130,
+    "kl_beta": 0,
+    "student_fitting": "after all complete audited corpora"
+  }
+}
