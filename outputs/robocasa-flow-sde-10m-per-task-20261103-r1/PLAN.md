@@ -84,6 +84,33 @@ Per task: about 10.06M controls. At the old 4 envs/GPU layout this would be
 ~15 h wall / ~120 GPU-h. The 16-env layout should roughly halve that (see
 Layout); Q1 measures it. Five tasks: ~300–600 GPU-h.
 
+## Schedule at a glance (reviewed with the human, 2026-11-03)
+
+Framework: RLinf's own embodied PPO (patched RoboCasa365 copy, `8a1233c3`)
+with an FSDP actor; our wrapper only records sidecars, checkpoints and the
+action journal. No other RL framework is involved.
+
+| Unit | Per task |
+| --- | --- |
+| Decision (PPO sample) | one H50 chunk = 50 controls of 12-D commands; 10 flow steps, one Flow-SDE step (noise 0.3) |
+| Episode | 600 controls = 12 decisions |
+| Iteration | 128 episodes = 1,536 decisions = 76,800 controls, one policy version |
+| Update | 4 PPO epochs × 6 minibatches of 256 decisions = 24 optimizer steps; 2 actor GPUs × 8 micro-batches of 16 |
+| Run | 130 iterations = 16,640 episodes = 199,680 decisions = 9,984,000 controls; 3,120 optimizer steps; 13 checkpoints |
+| Eval | 64 fixed cases before and after, 600 controls each; total 10,060,800 controls |
+
+`rollout_epoch` and `update_epoch` are different knobs. `rollout_epoch` is
+the number of back-to-back collection rounds per iteration with the same
+weights. RLinf's recipe uses 32 envs × 4 rounds; we use 128 envs × 1 round.
+Both give 128 episodes per update; the prior run's saved batches show all
+rounds of an iteration in one batch. `update_epoch` is the number of SGD
+passes over that batch and stays at the recipe's 4.
+
+Compared with the flat OpenDrawer run (18 iterations, 1,024 decisions,
+16 steps/iteration, 288 steps, ~0.97M controls), every hyperparameter is
+unchanged. Only the horizon (400→600) and the scale (~11× the optimizer
+steps) change.
+
 ## Layout: why 128 episodes per update, and rollout epochs 1/2/4
 
 Episodes per policy version = total envs × rollout epochs. RLinf collects all
