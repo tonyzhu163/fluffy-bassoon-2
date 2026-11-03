@@ -26,3 +26,16 @@ incremental scoring is40 grades in one allocation capped at900GPU-seconds
 (15GPU-minutes), with no automatic retry. The cumulative resource boundary
 needs one concrete launch decision after qualification, rather than treating
 each prior agent-set cap as renewable human approval.
+
+## Resolved by direct human steering
+
+The coordinator's user turn01a19fdf-51a9-7031-b790-43a9748b54c4 answers the
+exact40-grade/900GPU-second proposal:
+
+> dont ask me for approval below 8 gpu hours add to agents.md
+
+This was independently read from the human message, not inferred from an
+agent summary. It authorizes proceeding without another approval question
+for this0.25GPU-hour test. Keep its900GPU-second limit, no automatic retry,
+retained cases,40 grades and fixed rejection rules. It does not redefine a
+pooled campaign balance. The coordinator is adding the durable AGENTS.md rule.
