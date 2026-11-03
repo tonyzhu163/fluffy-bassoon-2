@@ -4,14 +4,24 @@ The five independent PPOs are source learners. Their task-pure histories are
 combined for one shared student per method after every source corpus closes
 and passes its full audit. Source improvement and student transfer are
 separate qualifications. All runs use the original frozen VLA receipt during
-student fitting/deployment; a task's final PPO expert is a DPT label teacher.
+student fitting/deployment; a qualified final PPO expert would supply DPT labels.
+
+All five sources have now finished 130 updates. The complete Linux audit and
+subsequent hash recheck cover all 650 distinct cohorts, 83,200 episodes and
+998,400 decision samples: every camera, continuous target, physical transition,
+sampler chain and actor/sampling/environment join passes. However, all five
+sources failed both registered improvement gates. They remain reference data;
+none is an admitted improving teacher. DPT labels and student fits have not
+been generated. See [complete joins](COMPLETE-CORPUS-JOINS-R1.json) and
+[native results](RESULT.md). Final archival and offline likelihood reporting
+are still running.
 
 ## Saved inputs
 
 | Method | Required source information | Retention |
 | --- | --- | --- |
 | AD | Observation, actual behavior action, feedback, boundaries, learning order | Three raw RGB views, public state25, instruction, executed H50x12 controls, primitive rewards/boundaries, task/seed IDs and producing policy version are saved for every chunk, including failures and post-success physical suffixes. |
-| DPT | Same actual context, saved query observation, qualified final teacher | All query observations are retained. Final step130 checkpoint and offline teacher queries remain pending; historical actions/rewards will stay unchanged. |
+| DPT | Same actual context, saved query observation, qualified final teacher | All query observations and full step130 checkpoints are retained. No final teacher passed the improvement gates; offline labels have not been generated. Historical actions/rewards stay unchanged. |
 | DIT | Actual actions/rewards and complete physical episodes for value targets | The next saved query supplies nonterminal next observation; all128 horizon observations/update and primitive termination/truncation arrays are retained. Logical PPO success masks are distinct from physical episode ends. |
 | In-context IQL | Actual transitions, reward, next observation and physical boundary for Q/V and advantage weights | Same complete physical corpus as DIT, without substituting PPO advantages for the student's fitted values. Behavior log probabilities are also retained for diagnostics. |
 
@@ -38,9 +48,11 @@ and stopped read-only; the corrected audit checks that routing explicitly.
 R3 runs independent task audits concurrently within the allocated CPU quota;
 the sequential R2 was stopped without simulator calls or SGD.
 
-Still required before fitting: finish all130versions per task, audit all
-corpora/splits and final teachers, query DPT labels, and qualify each reactive
-adapter's teacher imitation before fitting histories. The existing direct
+All 130 versions per task and their numerical corpus joins are now verified.
+The failed source improvement gates prevent teacher admission under this
+contract. Any later fitting plan must address that scientific result, query
+qualified DPT labels and qualify each reactive adapter before history fits.
+The existing direct
 exporter is hard-coded to the old18-update source and needs adapting to this
 campaign; data readiness does not mean the new fitting pipeline is complete.
 The saved decision RGB is sufficient for these four students; it is not a
@@ -52,7 +64,7 @@ five Q1 corpora and the first production update of OpenDrawer, Toaster and
 Drawer-to-Counter:1,024episodes/12,288chunk records. All native continuous
 targets, physical rewards/suffixes, horizon observations and unique
 actor/sampling/environment joins pass. This samples the running campaign;
-the complete130-update closeout remains required.
+this was an early qualification; complete coverage is recorded above.
 
 ## Held-out evaluation
 
@@ -82,4 +94,4 @@ must be qualified explicitly rather than silently inheriting the source's
 The [production-only R4 audit](FOUR-METHOD-AUDIT-R4.json) also passed Coffee
 and Stove after their allocations started. Combined R3/R4 qualification now
 covers every task's Q1 and first resumed production batch:1,280episodes and
-15,360chunks. Complete130-update closeout remains outstanding.
+15,360chunks. The later full 650-cohort audit supersedes that sampled coverage.

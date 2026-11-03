@@ -1,0 +1,14 @@
+{
+  "started_unix": 1793734789.9673126,
+  "completed": false,
+  "paused_controller": 2044160,
+  "start_ticks": "433339997",
+  "CPU_budget": "Only2 numerical tasks remain (<=4CPU); checkpoint tier2 + continuing Toaster copy1 + early task1 <=8 of13CPU",
+  "GPU_jobs": 0,
+  "new_controls": 0,
+  "SGD": 0,
+  "model_calls": 0,
+  "error": "Traceback (most recent call last):\n  File \"<stdin>\", line 22, in <module>\n  File \"/root/miniforge/lib/python3.12/subprocess.py\", line 550, in run\n    stdout, stderr = process.communicate(input, timeout=timeout)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/miniforge/lib/python3.12/subprocess.py\", line 1209, in communicate\n    stdout, stderr = self._communicate(input, endtime, timeout)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/miniforge/lib/python3.12/subprocess.py\", line 2141, in _communicate\n    self.wait(timeout=self._remaining_time(endtime))\n  File \"/root/miniforge/lib/python3.12/subprocess.py\", line 1264, in wait\n    return self._wait(timeout=timeout)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/miniforge/lib/python3.12/subprocess.py\", line 2045, in _wait\n    raise TimeoutExpired(self.args, timeout)\nsubprocess.TimeoutExpired: Command '['/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python', '-B', '/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/tools/1aa840ac-TIER-CORPUS.py', '--root', '/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1', '--task', 'OpenDrawer', '--mode', 'reclaim', '--audits', '/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/INDEXED-AUDIT-QUALIFICATION-R2.json', '/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-AUDIT-Q1-AND-021-040.json', '/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-AUDIT-041-060.json', '/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/CORPUS-AUDIT-WATCH-061-130-LATEST.json', '--prepared-receipt', '/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-OpenDrawer-R1-PREPARED.json', '--prepared-sha256', '12055d1ca468333971884470a5ea411ea3e511907b8bc6a5dc7b78eeef3c66e8', '--record', '/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-OpenDrawer-R1-RECLAIMED.json']' timed out after 179.99998811259866 seconds\n",
+  "finished_unix": 1793735021.2704017,
+  "controller_resumed": true
+}

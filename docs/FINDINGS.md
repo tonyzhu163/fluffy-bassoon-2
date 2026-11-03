@@ -16,6 +16,17 @@ implementation and numerical checks, with zero real simulator episodes or
 scientific student fits; IC-IQL omits S-ICQL's world-model prompt. See the
 [qualification](../outputs/steering-four-method-pipeline-20261103-r1/RESULT.md).
 
+The Nov4 five-task Flow-SDE PPO sources each completed 130 updates and
+9,984,000 TRAIN robot controls. None passed either preregistered teacher gate:
+TRAIN first-to-last-window gains were +4.61, +8.91, +1.56, +4.84 and −0.08
+percentage points for OpenDrawer, Toaster, Drawer→Counter, Coffee and Stove;
+their paired 64-case McNemar p-values were .167, .523, .115, .701 and .754.
+All five remain reference sources. The full 650-cohort numerical corpus audit
+passed, with zero initial likelihood gaps, finite losses and unchanged frozen
+VLMs. These are source-learning results; no student or OOD adaptation result
+is claimed. Archival and offline initial-policy likelihood reporting are still
+being closed out. [Native results and evidence](../outputs/robocasa-flow-sde-10m-per-task-20261103-r1/RESULT.md).
+
 ## Headline
 
 - **No experiment so far shows in-context adaptation or a memory benefit**, on

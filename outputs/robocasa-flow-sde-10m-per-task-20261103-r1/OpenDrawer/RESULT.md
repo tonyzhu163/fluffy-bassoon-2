@@ -29,10 +29,10 @@ The final full checkpoint's model files and all 18 worker sidecars were hash
 verified. All 64 before/after cases matched in identity, native physical state,
 camera/asset bank and public state; image differences remain diagnostic.
 
-The full numerical corpus join was through 118/130 at 02:54 Shanghai. BOS corpus
-copy/readback, final remaining joins, action-journal closeout and the offline
-fixed-batch original-policy log-ratio report remain pending. No student fitting
-has started; all five full corpora and joins must close first.
-
-Evidence: [final readout](FINAL-READOUT-R1.json), [campaign execution](../EXECUTION.json),
-[preregistered gate](../PLAN.md#readout-per-task), [runtime defect and prior-run limits](../VISION-MODE-BUG.md).
+All 130 numerical corpus cohorts and their joins and raw-file manifest hashes
+now pass. The full source corpus and QC metadata are verified in BOS;
+interrupted cleanup was completed using the guarded recovery receipt. Final
+130 remains fully resumable on PFS. See [campaign results](../RESULT.md),
+[readout](FINAL-READOUT-R1.json), [action ledger](FINAL-ACTION-ACCOUNTING-R1.json)
+and [archive recovery](../CORPUS-ARCHIVE-OpenDrawer-R1-RECLAIMED.json). Offline
+initial-policy likelihood reporting remains pending.

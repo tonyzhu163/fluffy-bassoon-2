@@ -1,0 +1,31 @@
+{
+  "checked_shanghai": "2026-11-04 04:22:12",
+  "cluster": "Baige Pro6K",
+  "job_id": "job-ffnpgrgzlswu",
+  "job_name": "mwj_1104_flow10m_initial_ratio_1x1_r2",
+  "submitted_shanghai": "2026-11-04 04:20:37",
+  "state": "RUNNING_GPU_PROBE_PASSED",
+  "source": "01c63eabfa838f202f77095bd1ee49f4d522f145",
+  "wrapper_sha256": "6461bf435ecf15d60b7fc8f9f335453686b66717d4e219a2e4165984007f2171",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/offline-initial-ratio-gpu-r2",
+  "GPUs": 1,
+  "CPUs": 16,
+  "RAM_GiB": 224,
+  "SHM_GiB": 8,
+  "max_minutes": 240,
+  "worker_deadline_minutes": 230,
+  "automatic_retry": false,
+  "new_controls": 0,
+  "SGD": 0,
+  "purpose": "Read-only initial-policy fixed B16 likelihood report at all retained checkpoints; no new simulator data or student fitting.",
+  "probe": "gpu-probe.json",
+  "previous_attempt": {
+    "job_id": "job-dlymgtlupe0c",
+    "source": "eb28b087eaad09c852aaaf2cde54b4ecb4f8d9bb",
+    "exit_code": 1,
+    "process_GPU_seconds": 10,
+    "scheduler_GPU_seconds_upper": 49,
+    "diagnosis": "Baige omitted CUDA_VISIBLE_DEVICES. Strict probe rejected before any model call. Use the already-qualified campaign fallback to allocation-local ordinal0 only when absent, then retain full scheduler UUID/PCI/PID/CUDA proof.",
+    "evidence": "offline-initial-ratio-gpu-r1/clock.json"
+  }
+}
