@@ -1,0 +1,2756 @@
+{
+  "format": "joint_scale50_single_gpu_qualification_v1",
+  "completed": true,
+  "status": "passed",
+  "phase": "stress",
+  "arm": "both",
+  "hostname": "job-m2qlxqjuh8ho-master-0",
+  "pid": 2628,
+  "started_unix": 1793678356.8550348,
+  "scientific_updates": 0,
+  "policy_episodes_admitted_to_PPO": 0,
+  "input_hashes": {
+    "script": "dde6f0e410eae2665c18c060bd9ddcc2ffaf6811c187f186a7b39c1beab6de63",
+    "profile": "6f0ec15bad4c23f7563247cb7e232959733f140f7fa12045a11987b8b35dea2d"
+  },
+  "arms": {
+    "velocity": {
+      "completed": true,
+      "arm": "velocity",
+      "scientific_updates": 0,
+      "physical_policy_controls": 28800,
+      "elapsed_seconds": 222.23172807693481,
+      "controls_per_second": 129.5944564226656,
+      "execution": {
+        "requested_lanes": 48,
+        "peak_active_lanes": 48,
+        "initial_lane_barrier": true,
+        "native_batch_sizes": [
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48
+        ],
+        "maximum_native_batch": 48,
+        "minimum_native_batch": 48
+      },
+      "interface": {
+        "kind": "velocity",
+        "motor_shape": [
+          50,
+          32
+        ],
+        "steering_dim": 32,
+        "candidates": 8,
+        "fraction": 0.125
+      },
+      "optimizer_config": {
+        "feature_dim": 2064,
+        "residual_dim": 32,
+        "width": 256,
+        "layers": 2,
+        "initial_std": 0.5,
+        "learning_rate": 0.0003,
+        "epochs": 10,
+        "minibatch_size": 32,
+        "clip": 0.2,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "max_grad_norm": 1.0,
+        "target_kl": 0.02,
+        "kl_check_cadence": "minibatch"
+      },
+      "history": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-native-qualification-20261103-r2/stress/velocity/collection.pt",
+        "sha256": "148a7d3d0fec70a89eab2c614b56ed548bce8eb794e8ca9c3985e147cca36a77"
+      },
+      "resources_after": {
+        "cgroup": {
+          "cpu.max": "2100000 100000",
+          "memory.max": "223338299392",
+          "memory.current": "5245181952",
+          "memory.peak": "163594600448",
+          "pids.current": "49",
+          "pids.max": "629145",
+          "pids.peak": "1015"
+        },
+        "fd_count": 191,
+        "nofile_limit": [
+          1048576,
+          1048576
+        ],
+        "shm_total_bytes": 51539607552,
+        "shm_free_bytes": 51539607552,
+        "descendants": [
+          {
+            "pid": 3289,
+            "name": "python",
+            "start_ticks": 518334709,
+            "interpreter_helper": true
+          }
+        ],
+        "maxrss_kib": 27108052
+      },
+      "sampled_phase_peaks": {
+        "samples": 94,
+        "peak_gpu_memory_mib": 73802.0,
+        "peak_fd_count": 519,
+        "peak_descendants": 193
+      },
+      "torch_peak_allocated_bytes": 16248506880,
+      "torch_peak_reserved_bytes": 22389194752,
+      "resources_after_lane_release": {
+        "cgroup": {
+          "cpu.max": "2100000 100000",
+          "memory.max": "223338299392",
+          "memory.current": "5245181952",
+          "memory.peak": "163594600448",
+          "pids.current": "49",
+          "pids.max": "629145",
+          "pids.peak": "1015"
+        },
+        "fd_count": 191,
+        "nofile_limit": [
+          1048576,
+          1048576
+        ],
+        "shm_total_bytes": 51539607552,
+        "shm_free_bytes": 51539607552,
+        "descendants": [
+          {
+            "pid": 3289,
+            "name": "python",
+            "start_ticks": 518334709,
+            "interpreter_helper": true
+          }
+        ],
+        "maxrss_kib": 27108052
+      },
+      "lanes_closed_before_next_arm": true
+    },
+    "kv_all_layers": {
+      "completed": true,
+      "arm": "kv_all_layers",
+      "scientific_updates": 0,
+      "physical_policy_controls": 28800,
+      "elapsed_seconds": 221.2294738292694,
+      "controls_per_second": 130.1815689451306,
+      "execution": {
+        "requested_lanes": 48,
+        "peak_active_lanes": 48,
+        "initial_lane_barrier": true,
+        "native_batch_sizes": [
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48
+        ],
+        "maximum_native_batch": 48,
+        "minimum_native_batch": 48
+      },
+      "interface": {
+        "kind": "kv_all_layers",
+        "motor_shape": [
+          50,
+          32
+        ],
+        "steering_dim": 1152,
+        "candidates": 8,
+        "fraction": 0.64,
+        "kv_layers": 18,
+        "kv_map": {
+          "version": "independent_layer_kv_rademacher32_rms_v1",
+          "rank": 32,
+          "targets": [
+            "key",
+            "value"
+          ],
+          "order": "layer,key_or_value,coefficient",
+          "seed_base": 921003,
+          "seed": "921003 + 2 * layer_index + key_or_value_index",
+          "scale": "fraction * per_row_per_layer_per_tensor_RMS; tanh coefficients"
+        }
+      },
+      "optimizer_config": {
+        "feature_dim": 2064,
+        "residual_dim": 1152,
+        "width": 256,
+        "layers": 2,
+        "initial_std": 0.5,
+        "learning_rate": 3e-05,
+        "epochs": 10,
+        "minibatch_size": 32,
+        "clip": 0.2,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "max_grad_norm": 1.0,
+        "target_kl": 0.02,
+        "kl_check_cadence": "minibatch"
+      },
+      "history": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-native-qualification-20261103-r2/stress/kv_all_layers/collection.pt",
+        "sha256": "88760227650f72713cb55ec26193020dd2d11117161d82d44ab2a46ab9ab78c3"
+      },
+      "resources_after": {
+        "cgroup": {
+          "cpu.max": "2100000 100000",
+          "memory.max": "223338299392",
+          "memory.current": "5367345152",
+          "memory.peak": "163594600448",
+          "pids.current": "51",
+          "pids.max": "629145",
+          "pids.peak": "1018"
+        },
+        "fd_count": 191,
+        "nofile_limit": [
+          1048576,
+          1048576
+        ],
+        "shm_total_bytes": 51539607552,
+        "shm_free_bytes": 51539607552,
+        "descendants": [
+          {
+            "pid": 3289,
+            "name": "python",
+            "start_ticks": 518334709,
+            "interpreter_helper": true
+          }
+        ],
+        "maxrss_kib": 27108052
+      },
+      "sampled_phase_peaks": {
+        "samples": 90,
+        "peak_gpu_memory_mib": 73719.0,
+        "peak_fd_count": 624,
+        "peak_descendants": 193
+      },
+      "torch_peak_allocated_bytes": 16250866176,
+      "torch_peak_reserved_bytes": 22303211520,
+      "resources_after_lane_release": {
+        "cgroup": {
+          "cpu.max": "2100000 100000",
+          "memory.max": "223338299392",
+          "memory.current": "5367316480",
+          "memory.peak": "163594600448",
+          "pids.current": "51",
+          "pids.max": "629145",
+          "pids.peak": "1018"
+        },
+        "fd_count": 191,
+        "nofile_limit": [
+          1048576,
+          1048576
+        ],
+        "shm_total_bytes": 51539607552,
+        "shm_free_bytes": 51539607552,
+        "descendants": [
+          {
+            "pid": 3289,
+            "name": "python",
+            "start_ticks": 518334709,
+            "interpreter_helper": true
+          }
+        ],
+        "maxrss_kib": 27108052
+      },
+      "lanes_closed_before_next_arm": true
+    }
+  },
+  "partial_artifacts_retained": true,
+  "bindings": {
+    "code": "/mowenjie/fluffy-bassoon-2/worktrees/joint-steering-scale50-gpu-20261103-r3",
+    "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+    "runtime_path": "/mowenjie/fluffy-bassoon-2/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf",
+    "runtime_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+    "model_directory": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
+    "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+    "model_config_sha256": "1c85bc28303a2144a1cc3af492b1b6d91f9cdcd94b30f04212505ffb5118f1b0",
+    "norm_path": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json",
+    "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee"
+  },
+  "storage_before": {
+    "total_bytes": 2199023255552,
+    "free_bytes": 898382168064
+  },
+  "stage": "stress_48_live/kv_all_layers",
+  "native_model_frozen_signature": {
+    "model_directory": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
+    "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+    "model_config_sha256": "1c85bc28303a2144a1cc3af492b1b6d91f9cdcd94b30f04212505ffb5118f1b0",
+    "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+    "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+    "runtime_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+    "parameter_count": 3353433872,
+    "cuda_uuid": "30db9d9e-b51d-c632-d712-d2c21678fde2",
+    "scheduler_uuid": "GPU-ce254fea-0983-4d4e-439e-458de37cf1e1",
+    "device_name": "NVIDIA RPBZZZ6",
+    "all_parameters_frozen": true,
+    "parameter_versions_sha256": "a2dfa470179d52480a23bffc2b87edf316f172e82a50e42fd749425ff7d4b7c9"
+  },
+  "resources_before_environments": {
+    "cgroup": {
+      "cpu.max": "2100000 100000",
+      "memory.max": "223338299392",
+      "memory.current": "3963883520",
+      "memory.peak": "15721951232",
+      "pids.current": "42",
+      "pids.max": "629145",
+      "pids.peak": "66"
+    },
+    "fd_count": 45,
+    "nofile_limit": [
+      1048576,
+      1048576
+    ],
+    "shm_total_bytes": 51539607552,
+    "shm_free_bytes": 51539607552,
+    "descendants": [],
+    "maxrss_kib": 27108052
+  },
+  "calibration_reference": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-native-qualification-20261103-r2/calibrate/CALIBRATION.json",
+    "sha256": "57634d1a758116520d4c0f35a222f803dbbc0f33977d15e9dec6ca4a2d4a313a"
+  },
+  "new_reset_calls": 96,
+  "physical_policy_controls": 57600,
+  "native_versions_unchanged": true,
+  "resource_peaks": {
+    "by_phase": {
+      "load_original_native_once": {
+        "samples": 24,
+        "peak_gpu_memory_mib": 7225.0,
+        "peak_fd_count": 46,
+        "peak_descendants": 0
+      },
+      "stress_48_live/velocity": {
+        "samples": 94,
+        "peak_gpu_memory_mib": 73802.0,
+        "peak_fd_count": 519,
+        "peak_descendants": 193
+      },
+      "stress_48_live/kv_all_layers": {
+        "samples": 90,
+        "peak_gpu_memory_mib": 73719.0,
+        "peak_fd_count": 624,
+        "peak_descendants": 193
+      }
+    },
+    "owned_children": {
+      "3289": {
+        "pid": 3289,
+        "name": "python",
+        "start_ticks": 518334709,
+        "interpreter_helper": true
+      },
+      "3290": {
+        "pid": 3290,
+        "name": "python",
+        "start_ticks": 518334710,
+        "interpreter_helper": false
+      },
+      "3300": {
+        "pid": 3300,
+        "name": "python",
+        "start_ticks": 518334716,
+        "interpreter_helper": false
+      },
+      "3324": {
+        "pid": 3324,
+        "name": "python",
+        "start_ticks": 518334718,
+        "interpreter_helper": false
+      },
+      "3313": {
+        "pid": 3313,
+        "name": "python",
+        "start_ticks": 518334717,
+        "interpreter_helper": false
+      },
+      "3301": {
+        "pid": 3301,
+        "name": "python",
+        "start_ticks": 518334716,
+        "interpreter_helper": false
+      },
+      "3303": {
+        "pid": 3303,
+        "name": "python",
+        "start_ticks": 518334716,
+        "interpreter_helper": false
+      },
+      "3298": {
+        "pid": 3298,
+        "name": "python",
+        "start_ticks": 518334715,
+        "interpreter_helper": false
+      },
+      "3297": {
+        "pid": 3297,
+        "name": "python",
+        "start_ticks": 518334715,
+        "interpreter_helper": false
+      },
+      "3321": {
+        "pid": 3321,
+        "name": "python",
+        "start_ticks": 518334718,
+        "interpreter_helper": false
+      },
+      "3319": {
+        "pid": 3319,
+        "name": "python",
+        "start_ticks": 518334718,
+        "interpreter_helper": false
+      },
+      "3320": {
+        "pid": 3320,
+        "name": "python",
+        "start_ticks": 518334718,
+        "interpreter_helper": false
+      },
+      "3316": {
+        "pid": 3316,
+        "name": "python",
+        "start_ticks": 518334718,
+        "interpreter_helper": false
+      },
+      "3318": {
+        "pid": 3318,
+        "name": "python",
+        "start_ticks": 518334718,
+        "interpreter_helper": false
+      },
+      "3291": {
+        "pid": 3291,
+        "name": "python",
+        "start_ticks": 518334713,
+        "interpreter_helper": false
+      },
+      "3322": {
+        "pid": 3322,
+        "name": "python",
+        "start_ticks": 518334718,
+        "interpreter_helper": false
+      },
+      "3296": {
+        "pid": 3296,
+        "name": "python",
+        "start_ticks": 518334715,
+        "interpreter_helper": false
+      },
+      "3294": {
+        "pid": 3294,
+        "name": "python",
+        "start_ticks": 518334715,
+        "interpreter_helper": false
+      },
+      "3293": {
+        "pid": 3293,
+        "name": "python",
+        "start_ticks": 518334715,
+        "interpreter_helper": false
+      },
+      "3302": {
+        "pid": 3302,
+        "name": "python",
+        "start_ticks": 518334716,
+        "interpreter_helper": false
+      },
+      "3332": {
+        "pid": 3332,
+        "name": "python",
+        "start_ticks": 518334720,
+        "interpreter_helper": false
+      },
+      "3304": {
+        "pid": 3304,
+        "name": "python",
+        "start_ticks": 518334716,
+        "interpreter_helper": false
+      },
+      "3310": {
+        "pid": 3310,
+        "name": "python",
+        "start_ticks": 518334717,
+        "interpreter_helper": false
+      },
+      "3334": {
+        "pid": 3334,
+        "name": "python",
+        "start_ticks": 518334720,
+        "interpreter_helper": false
+      },
+      "3327": {
+        "pid": 3327,
+        "name": "python",
+        "start_ticks": 518334719,
+        "interpreter_helper": false
+      },
+      "3335": {
+        "pid": 3335,
+        "name": "python",
+        "start_ticks": 518334720,
+        "interpreter_helper": false
+      },
+      "3309": {
+        "pid": 3309,
+        "name": "python",
+        "start_ticks": 518334717,
+        "interpreter_helper": false
+      },
+      "3325": {
+        "pid": 3325,
+        "name": "python",
+        "start_ticks": 518334718,
+        "interpreter_helper": false
+      },
+      "3326": {
+        "pid": 3326,
+        "name": "python",
+        "start_ticks": 518334719,
+        "interpreter_helper": false
+      },
+      "3311": {
+        "pid": 3311,
+        "name": "python",
+        "start_ticks": 518334717,
+        "interpreter_helper": false
+      },
+      "3305": {
+        "pid": 3305,
+        "name": "python",
+        "start_ticks": 518334716,
+        "interpreter_helper": false
+      },
+      "3295": {
+        "pid": 3295,
+        "name": "python",
+        "start_ticks": 518334715,
+        "interpreter_helper": false
+      },
+      "3314": {
+        "pid": 3314,
+        "name": "python",
+        "start_ticks": 518334717,
+        "interpreter_helper": false
+      },
+      "3307": {
+        "pid": 3307,
+        "name": "python",
+        "start_ticks": 518334717,
+        "interpreter_helper": false
+      },
+      "3336": {
+        "pid": 3336,
+        "name": "python",
+        "start_ticks": 518334720,
+        "interpreter_helper": false
+      },
+      "3329": {
+        "pid": 3329,
+        "name": "python",
+        "start_ticks": 518334719,
+        "interpreter_helper": false
+      },
+      "3312": {
+        "pid": 3312,
+        "name": "python",
+        "start_ticks": 518334717,
+        "interpreter_helper": false
+      },
+      "3292": {
+        "pid": 3292,
+        "name": "python",
+        "start_ticks": 518334715,
+        "interpreter_helper": false
+      },
+      "3323": {
+        "pid": 3323,
+        "name": "python",
+        "start_ticks": 518334718,
+        "interpreter_helper": false
+      },
+      "3328": {
+        "pid": 3328,
+        "name": "python",
+        "start_ticks": 518334719,
+        "interpreter_helper": false
+      },
+      "3299": {
+        "pid": 3299,
+        "name": "python",
+        "start_ticks": 518334716,
+        "interpreter_helper": false
+      },
+      "3331": {
+        "pid": 3331,
+        "name": "python",
+        "start_ticks": 518334720,
+        "interpreter_helper": false
+      },
+      "3333": {
+        "pid": 3333,
+        "name": "python",
+        "start_ticks": 518334720,
+        "interpreter_helper": false
+      },
+      "3315": {
+        "pid": 3315,
+        "name": "python",
+        "start_ticks": 518334718,
+        "interpreter_helper": false
+      },
+      "3306": {
+        "pid": 3306,
+        "name": "python",
+        "start_ticks": 518334717,
+        "interpreter_helper": false
+      },
+      "3337": {
+        "pid": 3337,
+        "name": "python",
+        "start_ticks": 518334720,
+        "interpreter_helper": false
+      },
+      "3330": {
+        "pid": 3330,
+        "name": "python",
+        "start_ticks": 518334719,
+        "interpreter_helper": false
+      },
+      "3308": {
+        "pid": 3308,
+        "name": "python",
+        "start_ticks": 518334717,
+        "interpreter_helper": false
+      },
+      "3317": {
+        "pid": 3317,
+        "name": "python",
+        "start_ticks": 518334718,
+        "interpreter_helper": false
+      },
+      "3646": {
+        "pid": 3646,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337300,
+        "interpreter_helper": false
+      },
+      "3676": {
+        "pid": 3676,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337323,
+        "interpreter_helper": false
+      },
+      "3688": {
+        "pid": 3688,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337341,
+        "interpreter_helper": false
+      },
+      "3694": {
+        "pid": 3694,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337351,
+        "interpreter_helper": false
+      },
+      "3706": {
+        "pid": 3706,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337366,
+        "interpreter_helper": false
+      },
+      "3718": {
+        "pid": 3718,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337377,
+        "interpreter_helper": false
+      },
+      "3700": {
+        "pid": 3700,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337361,
+        "interpreter_helper": false
+      },
+      "3712": {
+        "pid": 3712,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337373,
+        "interpreter_helper": false
+      },
+      "3730": {
+        "pid": 3730,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337388,
+        "interpreter_helper": false
+      },
+      "3724": {
+        "pid": 3724,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337383,
+        "interpreter_helper": false
+      },
+      "3736": {
+        "pid": 3736,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337393,
+        "interpreter_helper": false
+      },
+      "3754": {
+        "pid": 3754,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337403,
+        "interpreter_helper": false
+      },
+      "3638": {
+        "pid": 3638,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337279,
+        "interpreter_helper": false
+      },
+      "3645": {
+        "pid": 3645,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337291,
+        "interpreter_helper": false
+      },
+      "3665": {
+        "pid": 3665,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337313,
+        "interpreter_helper": false
+      },
+      "3639": {
+        "pid": 3639,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337283,
+        "interpreter_helper": false
+      },
+      "3664": {
+        "pid": 3664,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337304,
+        "interpreter_helper": false
+      },
+      "3682": {
+        "pid": 3682,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337331,
+        "interpreter_helper": false
+      },
+      "3763": {
+        "pid": 3763,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337473,
+        "interpreter_helper": false
+      },
+      "3775": {
+        "pid": 3775,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337485,
+        "interpreter_helper": false
+      },
+      "3787": {
+        "pid": 3787,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337495,
+        "interpreter_helper": false
+      },
+      "3836": {
+        "pid": 3836,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337547,
+        "interpreter_helper": false
+      },
+      "3848": {
+        "pid": 3848,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337561,
+        "interpreter_helper": false
+      },
+      "3860": {
+        "pid": 3860,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337570,
+        "interpreter_helper": false
+      },
+      "3878": {
+        "pid": 3878,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337587,
+        "interpreter_helper": false
+      },
+      "3890": {
+        "pid": 3890,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337598,
+        "interpreter_helper": false
+      },
+      "3909": {
+        "pid": 3909,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337608,
+        "interpreter_helper": false
+      },
+      "3806": {
+        "pid": 3806,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337517,
+        "interpreter_helper": false
+      },
+      "3818": {
+        "pid": 3818,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337526,
+        "interpreter_helper": false
+      },
+      "3830": {
+        "pid": 3830,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337542,
+        "interpreter_helper": false
+      },
+      "3915": {
+        "pid": 3915,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337613,
+        "interpreter_helper": false
+      },
+      "3927": {
+        "pid": 3927,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337625,
+        "interpreter_helper": false
+      },
+      "3939": {
+        "pid": 3939,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337635,
+        "interpreter_helper": false
+      },
+      "3921": {
+        "pid": 3921,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337620,
+        "interpreter_helper": false
+      },
+      "3933": {
+        "pid": 3933,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337630,
+        "interpreter_helper": false
+      },
+      "3945": {
+        "pid": 3945,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337641,
+        "interpreter_helper": false
+      },
+      "3805": {
+        "pid": 3805,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337513,
+        "interpreter_helper": false
+      },
+      "3812": {
+        "pid": 3812,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337522,
+        "interpreter_helper": false
+      },
+      "3824": {
+        "pid": 3824,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337533,
+        "interpreter_helper": false
+      },
+      "3867": {
+        "pid": 3867,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337579,
+        "interpreter_helper": false
+      },
+      "3884": {
+        "pid": 3884,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337592,
+        "interpreter_helper": false
+      },
+      "3903": {
+        "pid": 3903,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337603,
+        "interpreter_helper": false
+      },
+      "3762": {
+        "pid": 3762,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337467,
+        "interpreter_helper": false
+      },
+      "3769": {
+        "pid": 3769,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337480,
+        "interpreter_helper": false
+      },
+      "3781": {
+        "pid": 3781,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337491,
+        "interpreter_helper": false
+      },
+      "3842": {
+        "pid": 3842,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337555,
+        "interpreter_helper": false
+      },
+      "3854": {
+        "pid": 3854,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337566,
+        "interpreter_helper": false
+      },
+      "3866": {
+        "pid": 3866,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337574,
+        "interpreter_helper": false
+      },
+      "4146": {
+        "pid": 4146,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337864,
+        "interpreter_helper": false
+      },
+      "4159": {
+        "pid": 4159,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337879,
+        "interpreter_helper": false
+      },
+      "4171": {
+        "pid": 4171,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337889,
+        "interpreter_helper": false
+      },
+      "4262": {
+        "pid": 4262,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337962,
+        "interpreter_helper": false
+      },
+      "4062": {
+        "pid": 4062,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337803,
+        "interpreter_helper": false
+      },
+      "4081": {
+        "pid": 4081,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337814,
+        "interpreter_helper": false
+      },
+      "4093": {
+        "pid": 4093,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337826,
+        "interpreter_helper": false
+      },
+      "4087": {
+        "pid": 4087,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337821,
+        "interpreter_helper": false
+      },
+      "4099": {
+        "pid": 4099,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337831,
+        "interpreter_helper": false
+      },
+      "4111": {
+        "pid": 4111,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337843,
+        "interpreter_helper": false
+      },
+      "4153": {
+        "pid": 4153,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337874,
+        "interpreter_helper": false
+      },
+      "4165": {
+        "pid": 4165,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337885,
+        "interpreter_helper": false
+      },
+      "4177": {
+        "pid": 4177,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337893,
+        "interpreter_helper": false
+      },
+      "4365": {
+        "pid": 4365,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338036,
+        "interpreter_helper": false
+      },
+      "4377": {
+        "pid": 4377,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338045,
+        "interpreter_helper": false
+      },
+      "4395": {
+        "pid": 4395,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338060,
+        "interpreter_helper": false
+      },
+      "4304": {
+        "pid": 4304,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337995,
+        "interpreter_helper": false
+      },
+      "4319": {
+        "pid": 4319,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338004,
+        "interpreter_helper": false
+      },
+      "4341": {
+        "pid": 4341,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338017,
+        "interpreter_helper": false
+      },
+      "4214": {
+        "pid": 4214,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337922,
+        "interpreter_helper": false
+      },
+      "4238": {
+        "pid": 4238,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337941,
+        "interpreter_helper": false
+      },
+      "4250": {
+        "pid": 4250,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337951,
+        "interpreter_helper": false
+      },
+      "4425": {
+        "pid": 4425,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338087,
+        "interpreter_helper": false
+      },
+      "4437": {
+        "pid": 4437,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338096,
+        "interpreter_helper": false
+      },
+      "4456": {
+        "pid": 4456,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338107,
+        "interpreter_helper": false
+      },
+      "4196": {
+        "pid": 4196,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337904,
+        "interpreter_helper": false
+      },
+      "4208": {
+        "pid": 4208,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337917,
+        "interpreter_helper": false
+      },
+      "4221": {
+        "pid": 4221,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337931,
+        "interpreter_helper": false
+      },
+      "3958": {
+        "pid": 3958,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337682,
+        "interpreter_helper": false
+      },
+      "3964": {
+        "pid": 3964,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337693,
+        "interpreter_helper": false
+      },
+      "3977": {
+        "pid": 3977,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337704,
+        "interpreter_helper": false
+      },
+      "4268": {
+        "pid": 4268,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337968,
+        "interpreter_helper": false
+      },
+      "4280": {
+        "pid": 4280,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337976,
+        "interpreter_helper": false
+      },
+      "4292": {
+        "pid": 4292,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337982,
+        "interpreter_helper": false
+      },
+      "4353": {
+        "pid": 4353,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338027,
+        "interpreter_helper": false
+      },
+      "4371": {
+        "pid": 4371,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338039,
+        "interpreter_helper": false
+      },
+      "4383": {
+        "pid": 4383,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338050,
+        "interpreter_helper": false
+      },
+      "4329": {
+        "pid": 4329,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338008,
+        "interpreter_helper": false
+      },
+      "4342": {
+        "pid": 4342,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338022,
+        "interpreter_helper": false
+      },
+      "4359": {
+        "pid": 4359,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338031,
+        "interpreter_helper": false
+      },
+      "4443": {
+        "pid": 4443,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338102,
+        "interpreter_helper": false
+      },
+      "4462": {
+        "pid": 4462,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338112,
+        "interpreter_helper": false
+      },
+      "4474": {
+        "pid": 4474,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338126,
+        "interpreter_helper": false
+      },
+      "4522": {
+        "pid": 4522,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338165,
+        "interpreter_helper": false
+      },
+      "4534": {
+        "pid": 4534,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338173,
+        "interpreter_helper": false
+      },
+      "4546": {
+        "pid": 4546,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338184,
+        "interpreter_helper": false
+      },
+      "4468": {
+        "pid": 4468,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338120,
+        "interpreter_helper": false
+      },
+      "4480": {
+        "pid": 4480,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338131,
+        "interpreter_helper": false
+      },
+      "4492": {
+        "pid": 4492,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338142,
+        "interpreter_helper": false
+      },
+      "4020": {
+        "pid": 4020,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337763,
+        "interpreter_helper": false
+      },
+      "4032": {
+        "pid": 4032,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337775,
+        "interpreter_helper": false
+      },
+      "4050": {
+        "pid": 4050,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337792,
+        "interpreter_helper": false
+      },
+      "4486": {
+        "pid": 4486,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338137,
+        "interpreter_helper": false
+      },
+      "4498": {
+        "pid": 4498,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338146,
+        "interpreter_helper": false
+      },
+      "4510": {
+        "pid": 4510,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338157,
+        "interpreter_helper": false
+      },
+      "3984": {
+        "pid": 3984,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337726,
+        "interpreter_helper": false
+      },
+      "3996": {
+        "pid": 3996,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337739,
+        "interpreter_helper": false
+      },
+      "4008": {
+        "pid": 4008,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337750,
+        "interpreter_helper": false
+      },
+      "3983": {
+        "pid": 3983,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337720,
+        "interpreter_helper": false
+      },
+      "3990": {
+        "pid": 3990,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337733,
+        "interpreter_helper": false
+      },
+      "4002": {
+        "pid": 4002,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337744,
+        "interpreter_helper": false
+      },
+      "4504": {
+        "pid": 4504,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338152,
+        "interpreter_helper": false
+      },
+      "4516": {
+        "pid": 4516,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338161,
+        "interpreter_helper": false
+      },
+      "4528": {
+        "pid": 4528,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338168,
+        "interpreter_helper": false
+      },
+      "4298": {
+        "pid": 4298,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337989,
+        "interpreter_helper": false
+      },
+      "4310": {
+        "pid": 4310,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337999,
+        "interpreter_helper": false
+      },
+      "4335": {
+        "pid": 4335,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338013,
+        "interpreter_helper": false
+      },
+      "4044": {
+        "pid": 4044,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337786,
+        "interpreter_helper": false
+      },
+      "4056": {
+        "pid": 4056,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337797,
+        "interpreter_helper": false
+      },
+      "4075": {
+        "pid": 4075,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337809,
+        "interpreter_helper": false
+      },
+      "4178": {
+        "pid": 4178,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337897,
+        "interpreter_helper": false
+      },
+      "4202": {
+        "pid": 4202,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337909,
+        "interpreter_helper": false
+      },
+      "4215": {
+        "pid": 4215,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337926,
+        "interpreter_helper": false
+      },
+      "4105": {
+        "pid": 4105,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337837,
+        "interpreter_helper": false
+      },
+      "4117": {
+        "pid": 4117,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337848,
+        "interpreter_helper": false
+      },
+      "4129": {
+        "pid": 4129,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337855,
+        "interpreter_helper": false
+      },
+      "4123": {
+        "pid": 4123,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337852,
+        "interpreter_helper": false
+      },
+      "4135": {
+        "pid": 4135,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337858,
+        "interpreter_helper": false
+      },
+      "4147": {
+        "pid": 4147,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337869,
+        "interpreter_helper": false
+      },
+      "4009": {
+        "pid": 4009,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337755,
+        "interpreter_helper": false
+      },
+      "4026": {
+        "pid": 4026,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337768,
+        "interpreter_helper": false
+      },
+      "4038": {
+        "pid": 4038,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337780,
+        "interpreter_helper": false
+      },
+      "4389": {
+        "pid": 4389,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338056,
+        "interpreter_helper": false
+      },
+      "4401": {
+        "pid": 4401,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338066,
+        "interpreter_helper": false
+      },
+      "4413": {
+        "pid": 4413,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338077,
+        "interpreter_helper": false
+      },
+      "4227": {
+        "pid": 4227,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337936,
+        "interpreter_helper": false
+      },
+      "4244": {
+        "pid": 4244,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337946,
+        "interpreter_helper": false
+      },
+      "4256": {
+        "pid": 4256,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337956,
+        "interpreter_helper": false
+      },
+      "4540": {
+        "pid": 4540,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338179,
+        "interpreter_helper": false
+      },
+      "4552": {
+        "pid": 4552,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338189,
+        "interpreter_helper": false
+      },
+      "4563": {
+        "pid": 4563,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338199,
+        "interpreter_helper": false
+      },
+      "4407": {
+        "pid": 4407,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338071,
+        "interpreter_helper": false
+      },
+      "4419": {
+        "pid": 4419,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338082,
+        "interpreter_helper": false
+      },
+      "4431": {
+        "pid": 4431,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518338093,
+        "interpreter_helper": false
+      },
+      "4274": {
+        "pid": 4274,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337972,
+        "interpreter_helper": false
+      },
+      "4286": {
+        "pid": 4286,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518337978,
+        "interpreter_helper": false
+      },
+      "6288": {
+        "pid": 6288,
+        "name": "python",
+        "start_ticks": 518356750,
+        "interpreter_helper": false
+      },
+      "6304": {
+        "pid": 6304,
+        "name": "python",
+        "start_ticks": 518356752,
+        "interpreter_helper": false
+      },
+      "6311": {
+        "pid": 6311,
+        "name": "python",
+        "start_ticks": 518356753,
+        "interpreter_helper": false
+      },
+      "6312": {
+        "pid": 6312,
+        "name": "python",
+        "start_ticks": 518356754,
+        "interpreter_helper": false
+      },
+      "6313": {
+        "pid": 6313,
+        "name": "python",
+        "start_ticks": 518356755,
+        "interpreter_helper": false
+      },
+      "6314": {
+        "pid": 6314,
+        "name": "python",
+        "start_ticks": 518356757,
+        "interpreter_helper": false
+      },
+      "6315": {
+        "pid": 6315,
+        "name": "python",
+        "start_ticks": 518356758,
+        "interpreter_helper": false
+      },
+      "6316": {
+        "pid": 6316,
+        "name": "python",
+        "start_ticks": 518356759,
+        "interpreter_helper": false
+      },
+      "6317": {
+        "pid": 6317,
+        "name": "python",
+        "start_ticks": 518356760,
+        "interpreter_helper": false
+      },
+      "6318": {
+        "pid": 6318,
+        "name": "python",
+        "start_ticks": 518356762,
+        "interpreter_helper": false
+      },
+      "6319": {
+        "pid": 6319,
+        "name": "python",
+        "start_ticks": 518356763,
+        "interpreter_helper": false
+      },
+      "6320": {
+        "pid": 6320,
+        "name": "python",
+        "start_ticks": 518356764,
+        "interpreter_helper": false
+      },
+      "6321": {
+        "pid": 6321,
+        "name": "python",
+        "start_ticks": 518356766,
+        "interpreter_helper": false
+      },
+      "6322": {
+        "pid": 6322,
+        "name": "python",
+        "start_ticks": 518356767,
+        "interpreter_helper": false
+      },
+      "6323": {
+        "pid": 6323,
+        "name": "python",
+        "start_ticks": 518356769,
+        "interpreter_helper": false
+      },
+      "6324": {
+        "pid": 6324,
+        "name": "python",
+        "start_ticks": 518356770,
+        "interpreter_helper": false
+      },
+      "6325": {
+        "pid": 6325,
+        "name": "python",
+        "start_ticks": 518356771,
+        "interpreter_helper": false
+      },
+      "6326": {
+        "pid": 6326,
+        "name": "python",
+        "start_ticks": 518356773,
+        "interpreter_helper": false
+      },
+      "6327": {
+        "pid": 6327,
+        "name": "python",
+        "start_ticks": 518356774,
+        "interpreter_helper": false
+      },
+      "6328": {
+        "pid": 6328,
+        "name": "python",
+        "start_ticks": 518356775,
+        "interpreter_helper": false
+      },
+      "6329": {
+        "pid": 6329,
+        "name": "python",
+        "start_ticks": 518356777,
+        "interpreter_helper": false
+      },
+      "6330": {
+        "pid": 6330,
+        "name": "python",
+        "start_ticks": 518356778,
+        "interpreter_helper": false
+      },
+      "6331": {
+        "pid": 6331,
+        "name": "python",
+        "start_ticks": 518356779,
+        "interpreter_helper": false
+      },
+      "6332": {
+        "pid": 6332,
+        "name": "python",
+        "start_ticks": 518356781,
+        "interpreter_helper": false
+      },
+      "6333": {
+        "pid": 6333,
+        "name": "python",
+        "start_ticks": 518356782,
+        "interpreter_helper": false
+      },
+      "6334": {
+        "pid": 6334,
+        "name": "python",
+        "start_ticks": 518356783,
+        "interpreter_helper": false
+      },
+      "6335": {
+        "pid": 6335,
+        "name": "python",
+        "start_ticks": 518356785,
+        "interpreter_helper": false
+      },
+      "6336": {
+        "pid": 6336,
+        "name": "python",
+        "start_ticks": 518356786,
+        "interpreter_helper": false
+      },
+      "6337": {
+        "pid": 6337,
+        "name": "python",
+        "start_ticks": 518356789,
+        "interpreter_helper": false
+      },
+      "6338": {
+        "pid": 6338,
+        "name": "python",
+        "start_ticks": 518356790,
+        "interpreter_helper": false
+      },
+      "6339": {
+        "pid": 6339,
+        "name": "python",
+        "start_ticks": 518356792,
+        "interpreter_helper": false
+      },
+      "6340": {
+        "pid": 6340,
+        "name": "python",
+        "start_ticks": 518356793,
+        "interpreter_helper": false
+      },
+      "6341": {
+        "pid": 6341,
+        "name": "python",
+        "start_ticks": 518356794,
+        "interpreter_helper": false
+      },
+      "6342": {
+        "pid": 6342,
+        "name": "python",
+        "start_ticks": 518356799,
+        "interpreter_helper": false
+      },
+      "6343": {
+        "pid": 6343,
+        "name": "python",
+        "start_ticks": 518356800,
+        "interpreter_helper": false
+      },
+      "6344": {
+        "pid": 6344,
+        "name": "python",
+        "start_ticks": 518356802,
+        "interpreter_helper": false
+      },
+      "6345": {
+        "pid": 6345,
+        "name": "python",
+        "start_ticks": 518356803,
+        "interpreter_helper": false
+      },
+      "6346": {
+        "pid": 6346,
+        "name": "python",
+        "start_ticks": 518356809,
+        "interpreter_helper": false
+      },
+      "6347": {
+        "pid": 6347,
+        "name": "python",
+        "start_ticks": 518356811,
+        "interpreter_helper": false
+      },
+      "6348": {
+        "pid": 6348,
+        "name": "python",
+        "start_ticks": 518356812,
+        "interpreter_helper": false
+      },
+      "6349": {
+        "pid": 6349,
+        "name": "python",
+        "start_ticks": 518356814,
+        "interpreter_helper": false
+      },
+      "6350": {
+        "pid": 6350,
+        "name": "python",
+        "start_ticks": 518356819,
+        "interpreter_helper": false
+      },
+      "6351": {
+        "pid": 6351,
+        "name": "python",
+        "start_ticks": 518356821,
+        "interpreter_helper": false
+      },
+      "6352": {
+        "pid": 6352,
+        "name": "python",
+        "start_ticks": 518356822,
+        "interpreter_helper": false
+      },
+      "6353": {
+        "pid": 6353,
+        "name": "python",
+        "start_ticks": 518356824,
+        "interpreter_helper": false
+      },
+      "6357": {
+        "pid": 6357,
+        "name": "python",
+        "start_ticks": 518356830,
+        "interpreter_helper": false
+      },
+      "6362": {
+        "pid": 6362,
+        "name": "python",
+        "start_ticks": 518356831,
+        "interpreter_helper": false
+      },
+      "6363": {
+        "pid": 6363,
+        "name": "python",
+        "start_ticks": 518356833,
+        "interpreter_helper": false
+      },
+      "6426": {
+        "pid": 6426,
+        "name": "python",
+        "start_ticks": 518357249,
+        "interpreter_helper": false
+      },
+      "6427": {
+        "pid": 6427,
+        "name": "python",
+        "start_ticks": 518357249,
+        "interpreter_helper": false
+      },
+      "6425": {
+        "pid": 6425,
+        "name": "python",
+        "start_ticks": 518357242,
+        "interpreter_helper": false
+      },
+      "6708": {
+        "pid": 6708,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359311,
+        "interpreter_helper": false
+      },
+      "6725": {
+        "pid": 6725,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359324,
+        "interpreter_helper": false
+      },
+      "6695": {
+        "pid": 6695,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359283,
+        "interpreter_helper": false
+      },
+      "6707": {
+        "pid": 6707,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359302,
+        "interpreter_helper": false
+      },
+      "6719": {
+        "pid": 6719,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359316,
+        "interpreter_helper": false
+      },
+      "6645": {
+        "pid": 6645,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359191,
+        "interpreter_helper": false
+      },
+      "6652": {
+        "pid": 6652,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359219,
+        "interpreter_helper": false
+      },
+      "6664": {
+        "pid": 6664,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359241,
+        "interpreter_helper": false
+      },
+      "6646": {
+        "pid": 6646,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359210,
+        "interpreter_helper": false
+      },
+      "6658": {
+        "pid": 6658,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359231,
+        "interpreter_helper": false
+      },
+      "6683": {
+        "pid": 6683,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359262,
+        "interpreter_helper": false
+      },
+      "6672": {
+        "pid": 6672,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359252,
+        "interpreter_helper": false
+      },
+      "6689": {
+        "pid": 6689,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359273,
+        "interpreter_helper": false
+      },
+      "6701": {
+        "pid": 6701,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359293,
+        "interpreter_helper": false
+      },
+      "6783": {
+        "pid": 6783,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359406,
+        "interpreter_helper": false
+      },
+      "6806": {
+        "pid": 6806,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359429,
+        "interpreter_helper": false
+      },
+      "6819": {
+        "pid": 6819,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359449,
+        "interpreter_helper": false
+      },
+      "6738": {
+        "pid": 6738,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359336,
+        "interpreter_helper": false
+      },
+      "6758": {
+        "pid": 6758,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359367,
+        "interpreter_helper": false
+      },
+      "6770": {
+        "pid": 6770,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359382,
+        "interpreter_helper": false
+      },
+      "6782": {
+        "pid": 6782,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359400,
+        "interpreter_helper": false
+      },
+      "6874": {
+        "pid": 6874,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359520,
+        "interpreter_helper": false
+      },
+      "6891": {
+        "pid": 6891,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359539,
+        "interpreter_helper": false
+      },
+      "6910": {
+        "pid": 6910,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359559,
+        "interpreter_helper": false
+      },
+      "6875": {
+        "pid": 6875,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359531,
+        "interpreter_helper": false
+      },
+      "6897": {
+        "pid": 6897,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359549,
+        "interpreter_helper": false
+      },
+      "6916": {
+        "pid": 6916,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359566,
+        "interpreter_helper": false
+      },
+      "7142": {
+        "pid": 7142,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359821,
+        "interpreter_helper": false
+      },
+      "7159": {
+        "pid": 7159,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359830,
+        "interpreter_helper": false
+      },
+      "7171": {
+        "pid": 7171,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359837,
+        "interpreter_helper": false
+      },
+      "6928": {
+        "pid": 6928,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359585,
+        "interpreter_helper": false
+      },
+      "6940": {
+        "pid": 6940,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359606,
+        "interpreter_helper": false
+      },
+      "6958": {
+        "pid": 6958,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359633,
+        "interpreter_helper": false
+      },
+      "7233": {
+        "pid": 7233,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359883,
+        "interpreter_helper": false
+      },
+      "6849": {
+        "pid": 6849,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359473,
+        "interpreter_helper": false
+      },
+      "6861": {
+        "pid": 6861,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359491,
+        "interpreter_helper": false
+      },
+      "6873": {
+        "pid": 6873,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359511,
+        "interpreter_helper": false
+      },
+      "6739": {
+        "pid": 6739,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359345,
+        "interpreter_helper": false
+      },
+      "6757": {
+        "pid": 6757,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359362,
+        "interpreter_helper": false
+      },
+      "6764": {
+        "pid": 6764,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359374,
+        "interpreter_helper": false
+      },
+      "7062": {
+        "pid": 7062,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359747,
+        "interpreter_helper": false
+      },
+      "7081": {
+        "pid": 7081,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359760,
+        "interpreter_helper": false
+      },
+      "7100": {
+        "pid": 7100,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359782,
+        "interpreter_helper": false
+      },
+      "7184": {
+        "pid": 7184,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359852,
+        "interpreter_helper": false
+      },
+      "7209": {
+        "pid": 7209,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359865,
+        "interpreter_helper": false
+      },
+      "7227": {
+        "pid": 7227,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359877,
+        "interpreter_helper": false
+      },
+      "7275": {
+        "pid": 7275,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359916,
+        "interpreter_helper": false
+      },
+      "7292": {
+        "pid": 7292,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359928,
+        "interpreter_helper": false
+      },
+      "7304": {
+        "pid": 7304,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359940,
+        "interpreter_helper": false
+      },
+      "6832": {
+        "pid": 6832,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359457,
+        "interpreter_helper": false
+      },
+      "6855": {
+        "pid": 6855,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359483,
+        "interpreter_helper": false
+      },
+      "6867": {
+        "pid": 6867,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359503,
+        "interpreter_helper": false
+      },
+      "7056": {
+        "pid": 7056,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359739,
+        "interpreter_helper": false
+      },
+      "7068": {
+        "pid": 7068,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359753,
+        "interpreter_helper": false
+      },
+      "7088": {
+        "pid": 7088,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359771,
+        "interpreter_helper": false
+      },
+      "7106": {
+        "pid": 7106,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359788,
+        "interpreter_helper": false
+      },
+      "7123": {
+        "pid": 7123,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359800,
+        "interpreter_helper": false
+      },
+      "7135": {
+        "pid": 7135,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359813,
+        "interpreter_helper": false
+      },
+      "7026": {
+        "pid": 7026,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359704,
+        "interpreter_helper": false
+      },
+      "7038": {
+        "pid": 7038,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359720,
+        "interpreter_helper": false
+      },
+      "7050": {
+        "pid": 7050,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359732,
+        "interpreter_helper": false
+      },
+      "6922": {
+        "pid": 6922,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359576,
+        "interpreter_helper": false
+      },
+      "6934": {
+        "pid": 6934,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359596,
+        "interpreter_helper": false
+      },
+      "6952": {
+        "pid": 6952,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359625,
+        "interpreter_helper": false
+      },
+      "7535": {
+        "pid": 7535,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360142,
+        "interpreter_helper": false
+      },
+      "7082": {
+        "pid": 7082,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359765,
+        "interpreter_helper": false
+      },
+      "7099": {
+        "pid": 7099,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359777,
+        "interpreter_helper": false
+      },
+      "7112": {
+        "pid": 7112,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359794,
+        "interpreter_helper": false
+      },
+      "6946": {
+        "pid": 6946,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359615,
+        "interpreter_helper": false
+      },
+      "6959": {
+        "pid": 6959,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359640,
+        "interpreter_helper": false
+      },
+      "6983": {
+        "pid": 6983,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359660,
+        "interpreter_helper": false
+      },
+      "6977": {
+        "pid": 6977,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359654,
+        "interpreter_helper": false
+      },
+      "6990": {
+        "pid": 6990,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359672,
+        "interpreter_helper": false
+      },
+      "7008": {
+        "pid": 7008,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359685,
+        "interpreter_helper": false
+      },
+      "7438": {
+        "pid": 7438,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360059,
+        "interpreter_helper": false
+      },
+      "7450": {
+        "pid": 7450,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360071,
+        "interpreter_helper": false
+      },
+      "7462": {
+        "pid": 7462,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360079,
+        "interpreter_helper": false
+      },
+      "7245": {
+        "pid": 7245,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359893,
+        "interpreter_helper": false
+      },
+      "7263": {
+        "pid": 7263,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359905,
+        "interpreter_helper": false
+      },
+      "7281": {
+        "pid": 7281,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359922,
+        "interpreter_helper": false
+      },
+      "6776": {
+        "pid": 6776,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359393,
+        "interpreter_helper": false
+      },
+      "6794": {
+        "pid": 6794,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359414,
+        "interpreter_helper": false
+      },
+      "6807": {
+        "pid": 6807,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359435,
+        "interpreter_helper": false
+      },
+      "7129": {
+        "pid": 7129,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359808,
+        "interpreter_helper": false
+      },
+      "7141": {
+        "pid": 7141,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359818,
+        "interpreter_helper": false
+      },
+      "7153": {
+        "pid": 7153,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359826,
+        "interpreter_helper": false
+      },
+      "7020": {
+        "pid": 7020,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359696,
+        "interpreter_helper": false
+      },
+      "7032": {
+        "pid": 7032,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359711,
+        "interpreter_helper": false
+      },
+      "7044": {
+        "pid": 7044,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359726,
+        "interpreter_helper": false
+      },
+      "7172": {
+        "pid": 7172,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359842,
+        "interpreter_helper": false
+      },
+      "7202": {
+        "pid": 7202,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359856,
+        "interpreter_helper": false
+      },
+      "7220": {
+        "pid": 7220,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359868,
+        "interpreter_helper": false
+      },
+      "6795": {
+        "pid": 6795,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359422,
+        "interpreter_helper": false
+      },
+      "6813": {
+        "pid": 6813,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359442,
+        "interpreter_helper": false
+      },
+      "6843": {
+        "pid": 6843,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359464,
+        "interpreter_helper": false
+      },
+      "6989": {
+        "pid": 6989,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359667,
+        "interpreter_helper": false
+      },
+      "7002": {
+        "pid": 7002,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359680,
+        "interpreter_helper": false
+      },
+      "7014": {
+        "pid": 7014,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359691,
+        "interpreter_helper": false
+      },
+      "7165": {
+        "pid": 7165,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359834,
+        "interpreter_helper": false
+      },
+      "7183": {
+        "pid": 7183,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359846,
+        "interpreter_helper": false
+      },
+      "7203": {
+        "pid": 7203,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359861,
+        "interpreter_helper": false
+      },
+      "7221": {
+        "pid": 7221,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359874,
+        "interpreter_helper": false
+      },
+      "7244": {
+        "pid": 7244,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359887,
+        "interpreter_helper": false
+      },
+      "7257": {
+        "pid": 7257,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359899,
+        "interpreter_helper": false
+      },
+      "7311": {
+        "pid": 7311,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359950,
+        "interpreter_helper": false
+      },
+      "7335": {
+        "pid": 7335,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359962,
+        "interpreter_helper": false
+      },
+      "7347": {
+        "pid": 7347,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359976,
+        "interpreter_helper": false
+      },
+      "7341": {
+        "pid": 7341,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359971,
+        "interpreter_helper": false
+      },
+      "7353": {
+        "pid": 7353,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359983,
+        "interpreter_helper": false
+      },
+      "7365": {
+        "pid": 7365,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359995,
+        "interpreter_helper": false
+      },
+      "7456": {
+        "pid": 7456,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360075,
+        "interpreter_helper": false
+      },
+      "7468": {
+        "pid": 7468,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360083,
+        "interpreter_helper": false
+      },
+      "7480": {
+        "pid": 7480,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360095,
+        "interpreter_helper": false
+      },
+      "7372": {
+        "pid": 7372,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360006,
+        "interpreter_helper": false
+      },
+      "7389": {
+        "pid": 7389,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360016,
+        "interpreter_helper": false
+      },
+      "7401": {
+        "pid": 7401,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360028,
+        "interpreter_helper": false
+      },
+      "7359": {
+        "pid": 7359,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359989,
+        "interpreter_helper": false
+      },
+      "7371": {
+        "pid": 7371,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360000,
+        "interpreter_helper": false
+      },
+      "7383": {
+        "pid": 7383,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360011,
+        "interpreter_helper": false
+      },
+      "7395": {
+        "pid": 7395,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360022,
+        "interpreter_helper": false
+      },
+      "7407": {
+        "pid": 7407,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360033,
+        "interpreter_helper": false
+      },
+      "7419": {
+        "pid": 7419,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360048,
+        "interpreter_helper": false
+      },
+      "7298": {
+        "pid": 7298,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359934,
+        "interpreter_helper": false
+      },
+      "7310": {
+        "pid": 7310,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359944,
+        "interpreter_helper": false
+      },
+      "7329": {
+        "pid": 7329,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359956,
+        "interpreter_helper": false
+      },
+      "7523": {
+        "pid": 7523,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360132,
+        "interpreter_helper": false
+      },
+      "7541": {
+        "pid": 7541,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360145,
+        "interpreter_helper": false
+      },
+      "7565": {
+        "pid": 7565,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360158,
+        "interpreter_helper": false
+      },
+      "7256": {
+        "pid": 7256,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359896,
+        "interpreter_helper": false
+      },
+      "7274": {
+        "pid": 7274,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518359912,
+        "interpreter_helper": false
+      },
+      "7413": {
+        "pid": 7413,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360042,
+        "interpreter_helper": false
+      },
+      "7425": {
+        "pid": 7425,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360053,
+        "interpreter_helper": false
+      },
+      "7444": {
+        "pid": 7444,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360065,
+        "interpreter_helper": false
+      },
+      "7474": {
+        "pid": 7474,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360089,
+        "interpreter_helper": false
+      },
+      "7486": {
+        "pid": 7486,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360102,
+        "interpreter_helper": false
+      },
+      "7498": {
+        "pid": 7498,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360112,
+        "interpreter_helper": false
+      },
+      "7492": {
+        "pid": 7492,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360108,
+        "interpreter_helper": false
+      },
+      "7504": {
+        "pid": 7504,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360116,
+        "interpreter_helper": false
+      },
+      "7516": {
+        "pid": 7516,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360123,
+        "interpreter_helper": false
+      },
+      "7510": {
+        "pid": 7510,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360120,
+        "interpreter_helper": false
+      },
+      "7522": {
+        "pid": 7522,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360126,
+        "interpreter_helper": false
+      },
+      "7534": {
+        "pid": 7534,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360136,
+        "interpreter_helper": false
+      },
+      "7552": {
+        "pid": 7552,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360151,
+        "interpreter_helper": false
+      },
+      "7571": {
+        "pid": 7571,
+        "name": "ffmpeg-linux-x8",
+        "start_ticks": 518360165,
+        "interpreter_helper": false
+      }
+    },
+    "samples": 208,
+    "gpu_samples": 208,
+    "peak_gpu_memory_mib": 73802.0,
+    "peak_fd_count": 624,
+    "peak_descendants": 193,
+    "peak_cgroup_memory_bytes": 163578380288
+  },
+  "resource_log": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-native-qualification-20261103-r2/stress/resources.jsonl",
+    "sha256": "ff59746be9380ad5bb8b31e4ad72ff199902198bd483e39add5ba6b89e281188"
+  },
+  "escrow": {
+    "format": "joint_steering_action_escrow_v1",
+    "limits": {
+      "train": 11650000,
+      "eval": 1200000
+    },
+    "charged": {
+      "train": 57600,
+      "eval": 0
+    },
+    "pending": {}
+  },
+  "charged_controls": 57600,
+  "child_release": {
+    "all_native_video_children_released": true,
+    "remaining": [
+      {
+        "pid": 3289,
+        "name": "python",
+        "start_ticks": 518334709,
+        "interpreter_helper": true
+      }
+    ],
+    "interpreter_helpers_exit_with_process": true
+  },
+  "resources_final": {
+    "cgroup": {
+      "cpu.max": "2100000 100000",
+      "memory.max": "223338299392",
+      "memory.current": "5367545856",
+      "memory.peak": "163594600448",
+      "pids.current": "50",
+      "pids.max": "629145",
+      "pids.peak": "1018"
+    },
+    "fd_count": 190,
+    "nofile_limit": [
+      1048576,
+      1048576
+    ],
+    "shm_total_bytes": 51539607552,
+    "shm_free_bytes": 51539607552,
+    "descendants": [
+      {
+        "pid": 3289,
+        "name": "python",
+        "start_ticks": 518334709,
+        "interpreter_helper": true
+      }
+    ],
+    "maxrss_kib": 27108052
+  },
+  "ended_unix": 1793678864.0096018,
+  "process_gpu_seconds": 507.1545670032501,
+  "allocated_gpu_seconds_through_check": 732.0096018314362,
+  "qualification_campaign_gpu_seconds_upper": 2064,
+  "allocation_release_not_included": true
+}
