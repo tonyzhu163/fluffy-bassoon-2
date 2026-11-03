@@ -1,15 +1,15 @@
 # One proposed framing comparison, not another unbounded rewrite search
 
-Status: **not launched; zero new GPU seconds reserved or spent.** Retained
-human authorization covers repeated small failure-focused rubric iterations
-at the existing ceiling of one GPU for 900 seconds per scoring allocation.
-The next trial therefore has a 900 GPU-second maximum, currently unspent;
-this is not a pooled campaign balance. The local 7,350 worker GPU-second
-prefix/chunk/clause/wording subtotal excludes earlier terminal replays and
-is not a statement of whole-campaign spending or remaining funds. Do not
-borrow unused time from closed allocations or another chat's prefix/factorial
-budget. A larger trial, new trajectories, or other expanded scope needs
-separate human authority.
+Status: **not launched; zero new GPU seconds reserved or spent.** The concrete
+successor is `../robocasa-flora-drawer-frame-edge-20261103-r1/PLAN.md`.
+A subsequent direct-human-history audit found authorization for small
+failure-focused iterations, but no numeric remaining campaign balance.
+The prior interpretation of900GPU-seconds as renewable authorization was
+an agent inference, not an explicit human resource grant.900 is the proposed
+single-allocation cap. The7,350workerGPU-second prefix/chunk/clause/wording
+subtotal excludes earlier terminal replays and is not whole-campaign spending
+or remaining funds. See the successor's AUTHORITY.md. CPU qualification
+continues; scoring needs one concrete incremental resource decision.
 
 The CPU reconstruction preserves all sampled pixels. The inspected 128
 opening lies near the lower image edge, with its front partly or fully
@@ -64,8 +64,7 @@ vLLM processor output hashes against CPU references during the same scoring
 calls; CPU reconstruction alone did not check old GPU tensors or runtime
 cache reuse. Any mismatch stops the comparison and prevents a rubric claim.
 Check current Baige queue/device/storage and use the in-step GPU probe,
-32CPU/128GiB RAM/16GiB SHM, 15-minute limit and no automatic retry. Keep the next allocation within the existing 900-second small-replay
-authorization; do not infer authority for a larger budget or scope.
+32CPU/128GiB RAM/16GiB SHM, 15-minute limit and no automatic retry. The proposed next allocation is capped at900GPU-seconds, with its incremental resource decision resolved before launch.
 
 A pass only earns the next small validation stage: complete the entire
 45-prefix, ten-video development panel, including the successful cases
