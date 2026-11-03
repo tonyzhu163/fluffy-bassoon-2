@@ -27,6 +27,7 @@ from .joint_steering_ppo import (
     sha_file, spec_arguments, summarize_episodes, write_json, select_scale,
 )
 from .joint_steering_ppo_worker import _save
+from .joint_steering_metrics import MetricPublisher, resource_snapshot
 from .ppo import generalized_advantages
 from .residual_ppo import stack_records, update
 from .rlinf_native_ppo import checked_checkout, cpu_tree, tensor_hash
@@ -215,7 +216,7 @@ def run_master(run, profile, *, deadline, resume=False):
     if not admission["completed"] or admission["worker_lanes"] != ROLLOUT_LANES:
         raise ValueError("Actual48-lane steering/optimizer qualification is incomplete")
     if any(admission[key] != profile[key] for key in
-           ("source_commit", "runtime_commit", "model_sha256", "norm_sha256")):
+           ("source_commit", "runtime_commit", "model_sha256", "model_config_sha256", "norm_sha256")):
         raise ValueError("Admission does not bind this exact source/runtime/frozen initializer")
     qualified = admission["arms"][profile["arm"]]
     if not qualified["passed"]:
@@ -290,6 +291,7 @@ def run_master(run, profile, *, deadline, resume=False):
             if any(current["charged"][key] < saved["escrow"]["charged"][key] for key in ("train", "eval")):
                 raise ValueError("Recovery cannot discard consumed or unresolved controls")
     children = streams = []
+    publisher = MetricPublisher(run, profile)
     try:
         children, streams = start_workers(run, profile, deadline)
         schedule = events()
@@ -308,6 +310,7 @@ def run_master(run, profile, *, deadline, resume=False):
                     checkpoint=str(run / "checkpoint-latest.pt"), no_automatic_retry=True))
                 return
             started = time.time()
+            charged_before = sum(journal.snapshot()["charged"].values())
             results = dispatch(run, profile, policy, specification, sequence=event_index + 1,
                 phase=phase, iteration=requested_iteration, children=children, deadline=deadline)
             if len({row["native_model_frozen_signature"]["cuda_uuid"] for row in results}) != 8:
@@ -326,6 +329,8 @@ def run_master(run, profile, *, deadline, resume=False):
                     if requested_iteration == 1:
                         records = normalize_first_bank(policy, records)
                     rollout = stack_records(records, device="cuda:0")
+                    if "behavior_mean" not in rollout or "behavior_std" not in rollout:
+                        raise ValueError("Joint steering PPO requires actual retained behavior Gaussian parameters")
                     advantages, returns = generalized_advantages(rollout["rewards"], rollout["values"],
                         rollout["ends"], gamma=policy.config.gamma, gae_lambda=policy.config.gae_lambda)
                     _save(run / "banks" / f"round-{requested_iteration:03d}-before-sgd.pt", dict(
@@ -338,6 +343,10 @@ def run_master(run, profile, *, deadline, resume=False):
                     status["ppo"] = update(policy, optimizer, rollout, generator=generator,
                         epoch_callback=lambda row: write_json(run / "optimizer-progress.json",
                             dict(iteration=requested_iteration, **row)))
+                    status["ppo"].update(coefficient_rms=float(rollout["controls"].square().mean().sqrt()),
+                        coefficient_saturation_fraction=float((rollout["controls"].tanh().abs() > .95).float().mean()),
+                        positive_reward_count=int((rollout["rewards"] > 0).sum()),
+                        negative_reward_count=int((rollout["rewards"] < 0).sum()))
                     if status["ppo"]["optimizer_steps"] < 1:
                         raise ValueError("No optimizer update occurred; diagnose behavior likelihoods before advancing the round")
                     iteration = requested_iteration
@@ -361,6 +370,10 @@ def run_master(run, profile, *, deadline, resume=False):
             cursor = event_index + 1
             elapsed = time.time() - started
             measured_seconds.setdefault(phase, []).append(elapsed)
+            with torch.no_grad():
+                std = policy.log_std.clamp(-5, 2).exp()
+                status.update(steering_std_mean=float(std.mean()), steering_std_min=float(std.min()),
+                    steering_std_max=float(std.max()), learning_rate=optimizer.param_groups[0]["lr"])
             saved = boundary_state(policy, optimizer, generator, arm=arm, iteration=iteration,
                 sequence=cursor, worker_states=worker_states, escrow=escrow, interface_spec=specification)
             saved.update(profile_sha256=profile_hash, last_event=phase, measured_seconds=measured_seconds)
@@ -368,7 +381,14 @@ def run_master(run, profile, *, deadline, resume=False):
             reference = _save(path, saved)
             _save(run / "checkpoint-latest.pt", saved)
             status.update(checkpoint=reference, escrow=escrow, elapsed_seconds=elapsed,
-                          completed_events=cursor, total_events=len(schedule))
+                          completed_events=cursor, total_events=len(schedule), resources=resource_snapshot())
+            status["collection_and_learning_seconds"] = elapsed
+            status["elapsed_seconds"] = time.time() - started
+            measured_seconds[phase][-1] = status["elapsed_seconds"]
+            status["physical_controls_this_event"] = sum(escrow["charged"].values()) - charged_before
+            status["controls_per_second"] = status["physical_controls_this_event"] / max(status["elapsed_seconds"], 1e-9)
+            status["remaining_gpu_hours"] = max(0., APPROVED_ARM_GPU_HOURS -
+                (profile["prior_conservative_gpu_seconds"] + 8 * (time.time() - profile["submitted_unix"])) / 3600)
             if phase == "train":
                 future = schedule[cursor:]
                 def estimate_phase(name):
@@ -381,6 +401,7 @@ def run_master(run, profile, *, deadline, resume=False):
                     8 * (time.time() - profile["submitted_unix"] + projected_remaining + 120)) / 3600
             write_json(run / "metrics" / f"event-{cursor:03d}.json", status)
             write_json(run / "PROGRESS.json", status)
+            publisher.publish(status)
             if (phase == "train" and iteration >= 2
                     and status["projected_all_attempt_gpu_hours"] > APPROVED_ARM_GPU_HOURS):
                 write_json(run / "PAUSED.json", dict(completed=False, reason="measured_budget_decision",
@@ -399,7 +420,10 @@ def run_master(run, profile, *, deadline, resume=False):
             iteration=iteration, sequence=cursor, escrow=journal.snapshot(), retry=False))
         raise
     finally:
-        stop_workers(run, children, streams)
+        try:
+            stop_workers(run, children, streams)
+        finally:
+            publisher.close()
 
 
 def main():

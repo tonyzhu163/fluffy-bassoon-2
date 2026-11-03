@@ -390,6 +390,7 @@ def collect_bank(policy, motor, environments, *, request, output, rank, deadline
                     if valid:
                         state["valid"].append({key: deepcopy(record[key]) for key in (
                             "features", "control", "log_prob", "value", "reward", "done", "episode_start",
+                            "steering_mean", "steering_std",
                             "executed_controls", "case", "case_slot", "chunk_index", "episode_id",
                             "policy_iteration", "first_success_step")})
                     state["ppo_done"] = state["ppo_done"] or first_now or bool(physical_done)

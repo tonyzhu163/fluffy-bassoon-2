@@ -12,7 +12,7 @@ import torch
 
 from fluffy_bassoon.meta_rl.interface_ppo import InterfaceSpec
 from fluffy_bassoon.meta_rl.joint_steering_ppo_worker import collect_bank, draw_seed, _qualify_cached, _calibrate_request
-from fluffy_bassoon.meta_rl.residual_ppo import ResidualActorCritic, ResidualPPOConfig
+from fluffy_bassoon.meta_rl.residual_ppo import ResidualActorCritic, ResidualPPOConfig, stack_records
 from fluffy_bassoon.meta_rl.robocasa_interface import FrozenRoboCasaInterface
 
 
@@ -135,6 +135,11 @@ def test_full_physical_horizon_and_first_success_only_ppo_records_are_retained(t
     assert [row["episode_start"] for row in rows] == [True, False, True, False, True]
     assert [episode["physical_chunks"] for episode in result["episodes"]] == [3, 2, 2]
     assert [episode["success_at_end"] for episode in result["episodes"]] == [False, False, True]
+    rollout = stack_records(rows)
+    assert rollout["behavior_mean"].shape == rollout["behavior_std"].shape == rollout["controls"].shape
+    reference = torch.distributions.Normal(rollout["behavior_mean"], rollout["behavior_std"])
+    torch.testing.assert_close(reference.log_prob(rollout["controls"]).sum(-1), rollout["log_probs"],
+                               rtol=1e-6, atol=1e-6)
     for episode in result["episodes"]:
         checkpoint = torch.load(episode["checkpoint"]["path"], weights_only=False)
         assert len(checkpoint["records"]) == episode["valid_ppo_chunks"]
