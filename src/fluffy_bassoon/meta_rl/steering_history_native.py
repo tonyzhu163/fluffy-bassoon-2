@@ -56,7 +56,7 @@ class _ThreadJournal:
 class NativeAttemptBackend:
     def __init__(self, *, output, canonical_root, motor, spec, native_factory, journal,
                  writer_factory, binding, maximum_rgb_delta,
-                 rank=0, environment_type=_RecordingEnvironment):
+                 rank=0, environment_type=_RecordingEnvironment, memory_mode="full"):
         if (not binding or maximum_rgb_delta is not None
                 and (type(maximum_rgb_delta) is not int or maximum_rgb_delta < 0)
                 or maximum_rgb_delta is None and binding.get("render_contract") != "diagnostic_only"):
@@ -68,6 +68,11 @@ class NativeAttemptBackend:
             maximum_rgb_delta=maximum_rgb_delta, actual_attempts=5,
             feedback="Observed first-success once; full physical boundary",
             noise="frozen_steering_actual_attempt_noise_v1")
+        if memory_mode not in ("full", "episode"):
+            raise ValueError("Require full memory or a declared per-attempt reset control")
+        self.memory_mode = memory_mode
+        if memory_mode != "full":
+            protocol["memory_mode"] = memory_mode
         if "native_attempt_protocol" in self.binding and self.binding["native_attempt_protocol"] != protocol:
             raise ValueError("Do not change a bound native attempt protocol")
         self.binding["native_attempt_protocol"] = protocol
@@ -216,7 +221,7 @@ class NativeAttemptBackend:
             result = collect_case_attempts(policy, self.spec, case, horizon=horizon,
                 environment_factory=factory, motor=self.motor if motor is None else motor, noise_for=attempt_noise,
                 before_dispatch=before, after_dispatch=self._after, completed_attempt=self._completed,
-                attempts=attempts, completed_prefix=prefix)
+                attempts=attempts, completed_prefix=prefix, controller_mode=self.memory_mode)
         except BaseException as error:
             if on_error is not None:
                 on_error(error)
