@@ -1,0 +1,50 @@
+{
+  "objective": "Compare the KL-guarded and unguarded first PPO update on identical real data and paired native cases",
+  "owner_thread": "01a19fe9-1842-7533-80d1-e24db386a023",
+  "CPU_replay": {
+    "completed": true,
+    "allocated_Linux_only": true,
+    "source_files_unchanged": true,
+    "report": "CPU-RESULT.md",
+    "evidence": "CPU-RESULT.json"
+  },
+  "native_evaluation": {
+    "completed": false,
+    "job_id": "job-voaelvgv4mqi",
+    "name": "mwj_1103_steering_kl_guard_native_1x4_r1",
+    "last_verified_status": "QUEUED",
+    "last_direct_PFS_check_unix": 1793688224.3554962,
+    "output_directory_existed_at_that_check": false,
+    "source_commit": "a31757296742b815bf77b2cef6b94ada7d638d49",
+    "source_checkout": "/mowenjie/fluffy-bassoon-2/worktrees/steering-kl-native-eval-20261103-r1",
+    "remote_output": "/mowenjie/fluffy-bassoon-2/outputs/steering-kl-guard-ablation-20261103-r1/gpu-r1",
+    "lifetime_GPU_seconds_ceiling": 21600,
+    "actual_device_qualification_pending": true,
+    "panel": "Three deterministic policies per interface, two125-case shards per policy, five tasks,600controls;1500episodes total",
+    "test_panel": "Fresh diagnostic seeds; production final TEST untouched"
+  },
+  "monitor": {
+    "automation_id": "kl-guard-paired-diagnostic",
+    "kind": "thread heartbeat",
+    "interval_minutes": 20,
+    "notify": "Meaningful milestone, completion, failure, budget issue or required user action; quiet while unchanged"
+  },
+  "production_recovery": {
+    "status": "HUMAN HOLD",
+    "last_complete_update": 2,
+    "human_instruction": "Hold recovery until the KL test is reviewed",
+    "relayed_to_production_and_coordination_owners": true,
+    "direct_verification": "../research-coordination-20261103-r1/HUMAN-HOLD-KL-REVIEW.json",
+    "release_automatically_on_test_completion": false,
+    "new_recipe_or_restart_authorized": false,
+    "preserve": "All original policies, Adam/sampler/RNG checkpoints, banks, before/DEV0 panels and cost ledgers"
+  },
+  "remaining": [
+    "Actual native allocation, four-device probe and advancing episode evidence",
+    "Complete all paired native panels or diagnose a bounded failure with partial costs preserved",
+    "Audit cases, noise schedules, frozen weights, videos, physical calls, scheduler exit and cumulative GPU charge",
+    "Publish guarded versus unguarded true-success comparison and limits",
+    "Remove heartbeat after the diagnostic is fully audited and reported",
+    "Keep scientific recovery held until human review"
+  ]
+}
