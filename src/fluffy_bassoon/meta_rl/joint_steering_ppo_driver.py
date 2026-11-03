@@ -33,7 +33,7 @@ from .residual_ppo import stack_records, update
 from .rlinf_native_ppo import checked_checkout, cpu_tree, tensor_hash
 
 
-APPROVED_ARM_GPU_HOURS = 40
+APPROVED_ARM_GPU_HOURS = 60
 
 
 def events():
@@ -229,7 +229,9 @@ def run_master(run, profile, *, deadline, resume=False):
     hard_end = profile["submitted_unix"] + remaining_gpu_seconds / 8
     if (remaining_gpu_seconds <= 0 or not math.isfinite(deadline)
             or deadline > hard_end - 120 or deadline <= time.time()):
-        raise ValueError("Finite deadline must fit the remaining40GPUh arm escrow with release headroom")
+        raise ValueError(
+            f"Finite deadline must fit the remaining{APPROVED_ARM_GPU_HOURS}GPUh arm escrow "
+            "with release headroom")
     checked_checkout(Path(profile["code"]), profile["source_commit"])
     checked_checkout(Path(profile["runtime_path"]), profile["runtime_commit"])
     if (sha_file(Path(profile["model_directory"]) / "model.safetensors") != profile["model_sha256"]

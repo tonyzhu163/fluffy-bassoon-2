@@ -1,0 +1,53 @@
+{
+  "format": "human_source_budget_authority_v1",
+  "recorded_UTC": "2026-11-03T05:56:56+00:00",
+  "recorded_Shanghai": "2026-11-03T13:56:56+08:00",
+  "human_authority": {
+    "thread": "01a199fb-3586-7171-bd20-52fa70e5378c",
+    "question_tool_call": "call_33ec64172c5f473eaef250d1ad697dee",
+    "question": "Should I raise the source budget to 60 GPU-hours per arm (120 combined)? That covers the current 49\u201352-hour projections with some headroom. The existing limit is 40 per arm, 80 combined.",
+    "answer": "60 GPU-hours per arm (120 total)"
+  },
+  "scope": [
+    "Independent five-task frozen velocity PPO source",
+    "Independent five-task frozen all-layer K+V PPO source"
+  ],
+  "previous_GPU_hour_limits": {
+    "per_arm": 40,
+    "combined": 80
+  },
+  "approved_GPU_hour_limits": {
+    "per_arm": 60,
+    "combined": 120
+  },
+  "accounting": "Lifetime source cost across original preparation,completed/failed/paused allocations,collection,optimization,before/DEV/after evaluation,recovery,allocated startup/receipt wait/release. This is not60additional hours per arm and not a student fit/convergence cap. Queue-only waiting is recorded separately from actual allocated GPU cost; any adopted clock correction needs explicit qualified migration.",
+  "planned_source_updates_per_arm": 50,
+  "episodes_per_update": 384,
+  "horizon": 600,
+  "save_and_DEV_every_updates": 5,
+  "scientific_settings_unchanged": true,
+  "resume_from_update_each": 2,
+  "existing_sources": {
+    "velocity": {
+      "job": "job-bxhz4d41ll1k",
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1",
+      "checkpoint_sha256": "38d665ba6244a8bd1a5017045b1903a6206999515974c6a6d90eefd38b0dc27a"
+    },
+    "kv_all_layers": {
+      "job": "job-khwsqhzct9v5",
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1",
+      "checkpoint_sha256": "b4c1d873a4b6d694ee80e538f93a357570db30eddfd7d3ec78175cec6e5653f4"
+    }
+  },
+  "implementation": "joint_steering_ppo_driver.APPROVED_ARM_GPU_HOURS=60; new deadline error reflects that constant. Existing pinned source8b9e1bbb and original launch/profile remain immutable at historical40; future recovery must pin the verified new code and new budget-aware launcher.",
+  "recovery_requirements": [
+    "Source owner verifies exact old jobs terminal/released and full model/Adam/sampler/Python-NumPy-Torch-CUDA RNG/worker state",
+    "Create fresh attempt identity and explicit migration binding inherited output/checkpoint/source/request schedule and all prior costs",
+    "Resume next event/train update3; retain completed before/DEV0 and768TRAIN episodes/arm,never redo completed source work or reset learner",
+    "Fresh allocation actual8GPU/effective-resource/storage probe and resumed exact-state qualification; no old active worktree/profile edits or duplicate executors",
+    "Preserve50update objective; independently release completed sources/readouts"
+  ],
+  "source_binding": null,
+  "student_fits_started": false,
+  "status": "HUMAN_BUDGET_APPROVED_CODE_CHANGE_CPU_VALIDATION_PENDING_NO_RESUME_CLAIM"
+}
