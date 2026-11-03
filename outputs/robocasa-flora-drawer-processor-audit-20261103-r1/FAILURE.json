@@ -1,0 +1,16 @@
+{
+  "completed": false,
+  "source_commit": "03b51bff883fdc19b98743c262cd464e89271df7",
+  "stage": "CPU audit subprocess before runtime output-directory creation",
+  "timeout_seconds": 240,
+  "parent_exit_code": 1,
+  "linux_output_created": false,
+  "model_inference_calls": 0,
+  "gpu_seconds": 0,
+  "frame_reconstruction_completed": false,
+  "reason": "Transformers import calls importlib.metadata.packages_distributions; Python3.12.15 repeatedly stats installed RECORD entries on shared storage",
+  "next_action": "Fresh r2 with unbuffered stage logs and900-second CPU-only ceiling, unchanged processor/model/source inputs",
+  "startup_diagnostic_seconds": 90,
+  "clean_startup_diagnostic_seconds": 120,
+  "user_site_isolation_alone_did_not_finish_within_120_seconds": true
+}
