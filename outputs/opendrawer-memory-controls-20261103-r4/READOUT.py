@@ -20,6 +20,7 @@ assert result['new_episodes_this_allocation'] == 48 and result['recovered_episod
 
 originals = 0
 reused = 0
+legacy_empty_first_attempts = 0
 for family, model in b['models'].items():
     full = result['models'][family]['full']
     controls = result['models'][family]['controls']
@@ -45,7 +46,15 @@ for family, model in b['models'].items():
             records = torch.load(row['records']['path'], map_location='cpu', weights_only=False)
             assert len(records) == m['horizon'](cohort) // 50
             assert records[-1]['done'] and records[-1]['reward'] == row['success']
-            assert row['memory_entry']['cache_length'] == (attempt - 1) * m['horizon'](cohort) // 50
+            if 'memory_entry' in row:
+                assert row['memory_entry']['cache_length'] == (attempt - 1) * m['horizon'](cohort) // 50
+            else:
+                # The original K1/support writer creates a fresh controller
+                # for each case but predates the later cache-entry field.
+                assert attempt == 1 and row['shot'] == 'K1' and row['kind'] == 'support'
+                assert row['method'] == f'{family}_full'
+                assert row['training_source'] == b['original_runtime_core']
+                legacy_empty_first_attempts += 1
             assert full[cohort]['attempt_cases'][str(attempt)][index] == row['success']
             originals += 1
             for arm in b['arms']:
@@ -53,7 +62,7 @@ for family, model in b['models'].items():
                     assert controls[arm][cohort][str(attempt)][index] == row['success']
                     reused += 1
     print('ORIGINAL_REFERENCE_AUDIT', family, originals, reused, flush=True)
-assert originals == 1000 and reused == 900
+assert originals == 1000 and reused == 900 and legacy_empty_first_attempts == 200
 
 workers = [json.loads((out / 'workers' / f'rank-{rank:02d}.json').read_text()) for rank in range(8)]
 assert all(w['complete'] and w['weights_unchanged'] and w['binding'] == result['binding'] for w in workers)
@@ -104,6 +113,7 @@ p5 = [r for r in result['comparisons'] if r['attempt'] == 5]
 audit = dict(complete=True, checked_unix=time.time(), source=b['source'],
     analysis_commit=os.environ['TASK_ANALYSIS_PIN'], analysis_script_sha256=m['sha'](__file__),
     result=m['ref'](out / 'RESULT.json'), original_unique_episodes_verified=originals,
+    legacy_first_attempts_qualified_by_original_fresh_controller_writer=legacy_empty_first_attempts,
     reused_control_endpoints_verified=reused, collected_control_endpoints_verified=1100,
     total_control_endpoints_verified=2000, new_this_allocation=48, carried=1052,
     new_policy_controls=36000, all_workers_complete_and_weights_unchanged=True,
