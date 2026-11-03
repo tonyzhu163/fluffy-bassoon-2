@@ -1,0 +1,1216 @@
+{
+  "checked_unix": 1793684101.904872,
+  "velocity": {
+    "event": {
+      "phase": "train",
+      "sequence": 4,
+      "iteration": 1,
+      "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+      "last_check_unix": 1793683954.5429733,
+      "summary": {
+        "episodes": 384,
+        "per_task": {
+          "OpenDrawer": {
+            "episodes": 76,
+            "success_once": 45,
+            "success_at_end": 42
+          },
+          "TurnOffStove": {
+            "episodes": 77,
+            "success_once": 6,
+            "success_at_end": 6
+          },
+          "PickPlaceCounterToCabinet": {
+            "episodes": 77,
+            "success_once": 42,
+            "success_at_end": 41
+          },
+          "CoffeeSetupMug": {
+            "episodes": 77,
+            "success_once": 19,
+            "success_at_end": 19
+          },
+          "PickPlaceDrawerToCounter": {
+            "episodes": 77,
+            "success_once": 30,
+            "success_at_end": 27
+          }
+        },
+        "macro_ID_success_once": 0.37036910457963085,
+        "macro_ID_success_at_end": 0.3520847573479152,
+        "macro_OOD_success_once": null,
+        "macro_OOD_success_at_end": null
+      },
+      "ppo": {
+        "loss": -0.12371439593178886,
+        "actor_loss": -0.18441521855337278,
+        "critic_loss": 0.12140164630753654,
+        "entropy": 23.21867425101144,
+        "approximate_kl": 0.006133517782602992,
+        "clip_fraction": 0.08035714285714286,
+        "samples": 3850,
+        "samples_processed": 224,
+        "epochs_requested": 10,
+        "epochs_completed": 0,
+        "epochs_started": 1,
+        "optimizer_steps": 7,
+        "target_kl": 0.02,
+        "kl_check_cadence": "minibatch",
+        "kl_stop_metric": "joint_gaussian_kl",
+        "early_stopped": true,
+        "stop_reason": "target_kl",
+        "advantage_mean": 0.1627717763185501,
+        "advantage_std": 0.3702341318130493,
+        "return_mean": 0.21148233115673065,
+        "return_std": 0.3625859022140503,
+        "initial_metrics": {
+          "loss": 0.04089191401159609,
+          "actor_loss": -7.435872957303926e-08,
+          "critic_loss": 0.08178397831543313,
+          "entropy": 23.225322723388672,
+          "approximate_kl": 0.0,
+          "clip_fraction": 0.0,
+          "joint_gaussian_kl": 0.0,
+          "explained_variance": -0.042632102966308594
+        },
+        "final_metrics": {
+          "loss": 0.07136070443438246,
+          "actor_loss": 0.01291485487640678,
+          "critic_loss": 0.11689169597799902,
+          "entropy": 23.215623860544973,
+          "approximate_kl": 0.025195350674065677,
+          "clip_fraction": 0.3033766233804938,
+          "joint_gaussian_kl": 0.022436927471842085,
+          "explained_variance": -0.4826192855834961
+        },
+        "epoch_metrics": [
+          {
+            "epoch": 1,
+            "loss": 0.07136070443438246,
+            "actor_loss": 0.01291485487640678,
+            "critic_loss": 0.11689169597799902,
+            "entropy": 23.215623860544973,
+            "approximate_kl": 0.025195350674065677,
+            "clip_fraction": 0.3033766233804938,
+            "joint_gaussian_kl": 0.022436927471842085,
+            "explained_variance": -0.4826192855834961,
+            "optimizer_steps": 7,
+            "cumulative_optimizer_steps": 7,
+            "samples": 3850,
+            "samples_processed": 224,
+            "epoch_complete": false,
+            "gradient_norm_mean": 8.85331916809082,
+            "gradient_norm_max": 9.814993858337402,
+            "elapsed_seconds": 1.6020631939172745,
+            "kl_threshold_exceeded": true
+          }
+        ],
+        "minibatch_kl_checks": [
+          {
+            "optimizer_step": 1,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.0009987391467968171,
+            "approximate_kl": 0.001134432254951786
+          },
+          {
+            "optimizer_step": 2,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.002802864627961021,
+            "approximate_kl": 0.0031786743479224476
+          },
+          {
+            "optimizer_step": 3,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.006999974162257337,
+            "approximate_kl": 0.007765199995490831
+          },
+          {
+            "optimizer_step": 4,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.010837398697319743,
+            "approximate_kl": 0.01196007500608246
+          },
+          {
+            "optimizer_step": 5,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.014860513404785813,
+            "approximate_kl": 0.016457848320533704
+          },
+          {
+            "optimizer_step": 6,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.01942980839737824,
+            "approximate_kl": 0.021593869678289086
+          },
+          {
+            "optimizer_step": 7,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.022436927471842085,
+            "approximate_kl": 0.025195350674065677
+          }
+        ],
+        "elapsed_seconds": 2.1348566031083465,
+        "coefficient_rms": 0.4992879331111908,
+        "coefficient_saturation_fraction": 0.00029220778378657997,
+        "positive_reward_count": 142,
+        "negative_reward_count": 0
+      },
+      "gpu_recovery_qualification": {
+        "completed": true,
+        "device": "cuda:0",
+        "feature_dim": 2064,
+        "steering_dim": 32,
+        "next_update_exact": true,
+        "live_learner_unchanged": true,
+        "optimizer_steps_each": 3,
+        "final_metrics": {
+          "loss": -0.08811026811599731,
+          "actor_loss": -0.16794876754283905,
+          "critic_loss": 0.15967699885368347,
+          "entropy": 23.214406967163086,
+          "approximate_kl": 0.10176657140254974,
+          "clip_fraction": 0.7916666865348816,
+          "joint_gaussian_kl": 0.030451390892267227,
+          "explained_variance": -15.616308212280273
+        },
+        "state_sha256": "c4f1a2324359eb1cea51fc86c2c6311c020449ce683c32ddde6073b897cafc41",
+        "physical_controls": 0,
+        "scope": "Two discarded numerical shadow updates on synthetic rewards, outside scientific PPO"
+      },
+      "steering_std_mean": 0.4998486638069153,
+      "steering_std_min": 0.4990648627281189,
+      "steering_std_max": 0.5005338191986084,
+      "learning_rate": 0.0003,
+      "checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/checkpoints/event-004-train-001.pt",
+        "sha256": "6d4bb21f125f7ae49a82a40b5d6ab2ea7fa770fbc52d7f6346e4bcb3fc7e9d92"
+      },
+      "escrow": {
+        "format": "joint_steering_action_escrow_v1",
+        "limits": {
+          "train": 11650000,
+          "eval": 1200000
+        },
+        "charged": {
+          "train": 288000,
+          "eval": 346500
+        },
+        "pending": {}
+      },
+      "elapsed_seconds": 355.3174088001251,
+      "completed_events": 4,
+      "total_events": 64,
+      "resources": {
+        "storage_free_GiB": 873.94921875,
+        "container_RAM_GiB": 48.32291793823242,
+        "container_peak_RAM_GiB": 1253.6020774841309,
+        "GPUs": [
+          {
+            "memory_used_MiB": 25061.0,
+            "utilization_percent": 10.0
+          },
+          {
+            "memory_used_MiB": 29190.0,
+            "utilization_percent": 0.0
+          },
+          {
+            "memory_used_MiB": 18676.0,
+            "utilization_percent": 0.0
+          },
+          {
+            "memory_used_MiB": 41402.0,
+            "utilization_percent": 0.0
+          },
+          {
+            "memory_used_MiB": 28226.0,
+            "utilization_percent": 0.0
+          },
+          {
+            "memory_used_MiB": 29924.0,
+            "utilization_percent": 0.0
+          },
+          {
+            "memory_used_MiB": 38018.0,
+            "utilization_percent": 0.0
+          },
+          {
+            "memory_used_MiB": 26192.0,
+            "utilization_percent": 0.0
+          }
+        ]
+      },
+      "collection_and_learning_seconds": 355.1694481372833,
+      "physical_controls_this_event": 230400,
+      "controls_per_second": 648.4343133595397,
+      "remaining_gpu_hours": 34.38487479580773,
+      "projected_remaining_seconds": 18560.042831659317,
+      "projected_all_attempt_gpu_hours": 47.12633220725589
+    },
+    "recovery": {
+      "completed": true,
+      "device": "cuda:0",
+      "feature_dim": 2064,
+      "steering_dim": 32,
+      "next_update_exact": true,
+      "live_learner_unchanged": true,
+      "optimizer_steps_each": 3,
+      "final_metrics": {
+        "loss": -0.08811026811599731,
+        "actor_loss": -0.16794876754283905,
+        "critic_loss": 0.15967699885368347,
+        "entropy": 23.214406967163086,
+        "approximate_kl": 0.10176657140254974,
+        "clip_fraction": 0.7916666865348816,
+        "joint_gaussian_kl": 0.030451390892267227,
+        "explained_variance": -15.616308212280273
+      },
+      "state_sha256": "c4f1a2324359eb1cea51fc86c2c6311c020449ce683c32ddde6073b897cafc41",
+      "physical_controls": 0,
+      "scope": "Two discarded numerical shadow updates on synthetic rewards, outside scientific PPO"
+    },
+    "times": {
+      "0": {
+        "physical_done_unix": 1793683876.7490537,
+        "result_mtime": 1793683925.3255014,
+        "result_bytes": 6804664
+      },
+      "1": {
+        "physical_done_unix": 1793683917.1856074,
+        "result_mtime": 1793683954.3903189,
+        "result_bytes": 6941978
+      },
+      "2": {
+        "physical_done_unix": 1793683900.354954,
+        "result_mtime": 1793683941.647654,
+        "result_bytes": 6901923
+      },
+      "3": {
+        "physical_done_unix": 1793683900.7981763,
+        "result_mtime": 1793683942.706178,
+        "result_bytes": 6572011
+      },
+      "4": {
+        "physical_done_unix": 1793683901.6442957,
+        "result_mtime": 1793683943.2602258,
+        "result_bytes": 6556526
+      },
+      "5": {
+        "physical_done_unix": 1793683899.6083086,
+        "result_mtime": 1793683941.1401594,
+        "result_bytes": 6967060
+      },
+      "6": {
+        "physical_done_unix": 1793683896.7056644,
+        "result_mtime": 1793683939.5334017,
+        "result_bytes": 6723082
+      },
+      "7": {
+        "physical_done_unix": 1793683916.2333279,
+        "result_mtime": 1793683953.8194828,
+        "result_bytes": 7216542
+      },
+      "banks/round-001-before-sgd.pt": {
+        "mtime": 1793683956.1567972,
+        "bytes": 93126151
+      },
+      "checkpoint-latest.pt": {
+        "mtime": 1793683958.588196,
+        "bytes": 14536499
+      },
+      "metrics/event-004.json": {
+        "mtime": 1793683958.692139,
+        "bytes": 7513
+      }
+    }
+  },
+  "kv": {
+    "event": {
+      "phase": "train",
+      "sequence": 4,
+      "iteration": 1,
+      "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+      "last_check_unix": 1793684003.7511742,
+      "summary": {
+        "episodes": 384,
+        "per_task": {
+          "OpenDrawer": {
+            "episodes": 76,
+            "success_once": 47,
+            "success_at_end": 47
+          },
+          "TurnOffStove": {
+            "episodes": 77,
+            "success_once": 11,
+            "success_at_end": 9
+          },
+          "PickPlaceCounterToCabinet": {
+            "episodes": 77,
+            "success_once": 40,
+            "success_at_end": 39
+          },
+          "CoffeeSetupMug": {
+            "episodes": 77,
+            "success_once": 21,
+            "success_at_end": 21
+          },
+          "PickPlaceDrawerToCounter": {
+            "episodes": 77,
+            "success_once": 25,
+            "success_at_end": 22
+          }
+        },
+        "macro_ID_success_once": 0.3756322624743677,
+        "macro_ID_success_at_end": 0.36004784688995206,
+        "macro_OOD_success_once": null,
+        "macro_OOD_success_at_end": null
+      },
+      "ppo": {
+        "loss": 0.061696028575127904,
+        "actor_loss": 0.024183669625673185,
+        "critic_loss": 0.07502471818047207,
+        "entropy": 836.0840163120004,
+        "approximate_kl": 0.013465905821947165,
+        "clip_fraction": 0.1900436046511628,
+        "samples": 3819,
+        "samples_processed": 2752,
+        "epochs_requested": 10,
+        "epochs_completed": 0,
+        "epochs_started": 1,
+        "optimizer_steps": 86,
+        "target_kl": 0.02,
+        "kl_check_cadence": "minibatch",
+        "kl_stop_metric": "joint_gaussian_kl",
+        "early_stopped": true,
+        "stop_reason": "target_kl",
+        "advantage_mean": 0.2244320511817932,
+        "advantage_std": 0.36953598260879517,
+        "return_mean": 0.19774022698402405,
+        "return_std": 0.36849308013916016,
+        "initial_metrics": {
+          "loss": 0.046731347171821404,
+          "actor_loss": -3.014724583612059e-07,
+          "critic_loss": 0.09346329825822997,
+          "entropy": 836.1116943359375,
+          "approximate_kl": 2.7312942792214466e-11,
+          "clip_fraction": 0.0,
+          "joint_gaussian_kl": 0.0,
+          "explained_variance": -0.005668282508850098
+        },
+        "final_metrics": {
+          "loss": -0.06370415663213498,
+          "actor_loss": -0.0981291440588918,
+          "critic_loss": 0.06884997203662255,
+          "entropy": 836.0767215430096,
+          "approximate_kl": 0.2855645704835958,
+          "clip_fraction": 0.615868028342084,
+          "joint_gaussian_kl": 0.02002232765784264,
+          "explained_variance": 0.19953572750091553
+        },
+        "epoch_metrics": [
+          {
+            "epoch": 1,
+            "loss": -0.06370415663213498,
+            "actor_loss": -0.0981291440588918,
+            "critic_loss": 0.06884997203662255,
+            "entropy": 836.0767215430096,
+            "approximate_kl": 0.2855645704835958,
+            "clip_fraction": 0.615868028342084,
+            "joint_gaussian_kl": 0.02002232765784264,
+            "explained_variance": 0.19953572750091553,
+            "optimizer_steps": 86,
+            "cumulative_optimizer_steps": 86,
+            "samples": 3819,
+            "samples_processed": 2752,
+            "epoch_complete": false,
+            "gradient_norm_mean": 43.64310351083445,
+            "gradient_norm_max": 59.41720962524414,
+            "elapsed_seconds": 13.297765391878784,
+            "kl_threshold_exceeded": true
+          }
+        ],
+        "minibatch_kl_checks": [
+          {
+            "optimizer_step": 1,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.0003971258896895562,
+            "approximate_kl": 0.0029105274524367114
+          },
+          {
+            "optimizer_step": 2,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.0009959412056284036,
+            "approximate_kl": 0.009742579102962388
+          },
+          {
+            "optimizer_step": 3,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.0017344565595029267,
+            "approximate_kl": 0.020586347948763087
+          },
+          {
+            "optimizer_step": 4,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.00258871849798106,
+            "approximate_kl": 0.036436665196121217
+          },
+          {
+            "optimizer_step": 5,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.0034822658386933036,
+            "approximate_kl": 0.055962546012927904
+          },
+          {
+            "optimizer_step": 6,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.004339836115279933,
+            "approximate_kl": 0.07752110693913097
+          },
+          {
+            "optimizer_step": 7,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.005145691786962214,
+            "approximate_kl": 0.10023317125413257
+          },
+          {
+            "optimizer_step": 8,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.00594339776511296,
+            "approximate_kl": 0.12345686274646257
+          },
+          {
+            "optimizer_step": 9,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.006698162742905293,
+            "approximate_kl": 0.14588845300708383
+          },
+          {
+            "optimizer_step": 10,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.00741340264236117,
+            "approximate_kl": 0.16669799556112408
+          },
+          {
+            "optimizer_step": 11,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.008007610564976814,
+            "approximate_kl": 0.1836172370949741
+          },
+          {
+            "optimizer_step": 12,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.008575945614019429,
+            "approximate_kl": 0.1974080226609191
+          },
+          {
+            "optimizer_step": 13,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.009065893963130513,
+            "approximate_kl": 0.21066643046051786
+          },
+          {
+            "optimizer_step": 14,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.009604741713121381,
+            "approximate_kl": 0.22475634941562492
+          },
+          {
+            "optimizer_step": 15,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.010122348537971467,
+            "approximate_kl": 0.23647491323987704
+          },
+          {
+            "optimizer_step": 16,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.010694129894501948,
+            "approximate_kl": 0.252231606390814
+          },
+          {
+            "optimizer_step": 17,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.011125684003476136,
+            "approximate_kl": 0.26288421525595296
+          },
+          {
+            "optimizer_step": 18,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.011520049836033964,
+            "approximate_kl": 0.27280328845159957
+          },
+          {
+            "optimizer_step": 19,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.012009804555280541,
+            "approximate_kl": 0.2827432396450758
+          },
+          {
+            "optimizer_step": 20,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.012360199058048464,
+            "approximate_kl": 0.28707795726824537
+          },
+          {
+            "optimizer_step": 21,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.012699676596621282,
+            "approximate_kl": 0.2900053107972996
+          },
+          {
+            "optimizer_step": 22,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.01304611784332115,
+            "approximate_kl": 0.29307536429375153
+          },
+          {
+            "optimizer_step": 23,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.013310429352840677,
+            "approximate_kl": 0.293915151480637
+          },
+          {
+            "optimizer_step": 24,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.013602183253825506,
+            "approximate_kl": 0.2965023723987189
+          },
+          {
+            "optimizer_step": 25,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.013877091245029758,
+            "approximate_kl": 0.2988996586261713
+          },
+          {
+            "optimizer_step": 26,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.014126716704239753,
+            "approximate_kl": 0.3009744746857802
+          },
+          {
+            "optimizer_step": 27,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.014385706407578166,
+            "approximate_kl": 0.30251342743736626
+          },
+          {
+            "optimizer_step": 28,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.01459856207659807,
+            "approximate_kl": 0.3022984986221035
+          },
+          {
+            "optimizer_step": 29,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.014671831053022503,
+            "approximate_kl": 0.29957170854609155
+          },
+          {
+            "optimizer_step": 30,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.014786313770279877,
+            "approximate_kl": 0.2973242225635111
+          },
+          {
+            "optimizer_step": 31,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.014817546661694454,
+            "approximate_kl": 0.2926125413879389
+          },
+          {
+            "optimizer_step": 32,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.01471249900371008,
+            "approximate_kl": 0.28456246922717854
+          },
+          {
+            "optimizer_step": 33,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.014597146145357577,
+            "approximate_kl": 0.2773070388082654
+          },
+          {
+            "optimizer_step": 34,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.01433611116205001,
+            "approximate_kl": 0.26791310073326446
+          },
+          {
+            "optimizer_step": 35,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.014072876929374508,
+            "approximate_kl": 0.258685920774765
+          },
+          {
+            "optimizer_step": 36,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.01382667777592106,
+            "approximate_kl": 0.2512478809935412
+          },
+          {
+            "optimizer_step": 37,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.01362554342823718,
+            "approximate_kl": 0.24441428412689406
+          },
+          {
+            "optimizer_step": 38,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.013508188775290631,
+            "approximate_kl": 0.24039845672124155
+          },
+          {
+            "optimizer_step": 39,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.013467262316866832,
+            "approximate_kl": 0.23733088772321564
+          },
+          {
+            "optimizer_step": 40,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.01339592411309387,
+            "approximate_kl": 0.2336429555684086
+          },
+          {
+            "optimizer_step": 41,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.013328533989342447,
+            "approximate_kl": 0.23026914004374
+          },
+          {
+            "optimizer_step": 42,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.013346248693592529,
+            "approximate_kl": 0.22826714110400984
+          },
+          {
+            "optimizer_step": 43,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.013358689483931143,
+            "approximate_kl": 0.22594810739787782
+          },
+          {
+            "optimizer_step": 44,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.013331432806088462,
+            "approximate_kl": 0.2236945115753605
+          },
+          {
+            "optimizer_step": 45,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.013303231708139657,
+            "approximate_kl": 0.22162129207528614
+          },
+          {
+            "optimizer_step": 46,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.013280299468037656,
+            "approximate_kl": 0.21967514844683958
+          },
+          {
+            "optimizer_step": 47,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.013287589525592737,
+            "approximate_kl": 0.21853584378692423
+          },
+          {
+            "optimizer_step": 48,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.013345789168206583,
+            "approximate_kl": 0.21804664798254553
+          },
+          {
+            "optimizer_step": 49,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.013389190574793345,
+            "approximate_kl": 0.21691676436231597
+          },
+          {
+            "optimizer_step": 50,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.01345916537718682,
+            "approximate_kl": 0.21624320584126686
+          },
+          {
+            "optimizer_step": 51,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.013590946699180241,
+            "approximate_kl": 0.2167579721104384
+          },
+          {
+            "optimizer_step": 52,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.013651683885612923,
+            "approximate_kl": 0.21684997047108173
+          },
+          {
+            "optimizer_step": 53,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.013757347618479649,
+            "approximate_kl": 0.21803713007360642
+          },
+          {
+            "optimizer_step": 54,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.013788615154655045,
+            "approximate_kl": 0.21772898928318138
+          },
+          {
+            "optimizer_step": 55,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.0139123610805883,
+            "approximate_kl": 0.21850751784614755
+          },
+          {
+            "optimizer_step": 56,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.014017327018491836,
+            "approximate_kl": 0.21897699631034595
+          },
+          {
+            "optimizer_step": 57,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.014140002342913047,
+            "approximate_kl": 0.22004084736811114
+          },
+          {
+            "optimizer_step": 58,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.014278622043693867,
+            "approximate_kl": 0.22175167038603646
+          },
+          {
+            "optimizer_step": 59,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.014477604355113876,
+            "approximate_kl": 0.22422595295989722
+          },
+          {
+            "optimizer_step": 60,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.014676625194853748,
+            "approximate_kl": 0.2264956714564451
+          },
+          {
+            "optimizer_step": 61,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.014876201622281735,
+            "approximate_kl": 0.2289452705786908
+          },
+          {
+            "optimizer_step": 62,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.015079474315616934,
+            "approximate_kl": 0.23128369557284723
+          },
+          {
+            "optimizer_step": 63,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.015338725183362984,
+            "approximate_kl": 0.23408077674390884
+          },
+          {
+            "optimizer_step": 64,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.015615983690571943,
+            "approximate_kl": 0.23708626110341793
+          },
+          {
+            "optimizer_step": 65,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.015904116979818455,
+            "approximate_kl": 0.24033178634498717
+          },
+          {
+            "optimizer_step": 66,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.016138676639073694,
+            "approximate_kl": 0.2429852874261386
+          },
+          {
+            "optimizer_step": 67,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.016420496469175795,
+            "approximate_kl": 0.24643571917713858
+          },
+          {
+            "optimizer_step": 68,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.016713963568641757,
+            "approximate_kl": 0.2500185187682646
+          },
+          {
+            "optimizer_step": 69,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.016955945960266266,
+            "approximate_kl": 0.2531662119538349
+          },
+          {
+            "optimizer_step": 70,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.017236983575244853,
+            "approximate_kl": 0.2564550302893462
+          },
+          {
+            "optimizer_step": 71,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.017470589856480343,
+            "approximate_kl": 0.2591222108120567
+          },
+          {
+            "optimizer_step": 72,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.017683989051353887,
+            "approximate_kl": 0.2617982691863533
+          },
+          {
+            "optimizer_step": 73,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.017898288305968818,
+            "approximate_kl": 0.2643164107978391
+          },
+          {
+            "optimizer_step": 74,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.018087012376992312,
+            "approximate_kl": 0.2665469468880711
+          },
+          {
+            "optimizer_step": 75,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.018277031607276235,
+            "approximate_kl": 0.26874905954592826
+          },
+          {
+            "optimizer_step": 76,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.018373754363225123,
+            "approximate_kl": 0.2700029878610558
+          },
+          {
+            "optimizer_step": 77,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.01848806512331613,
+            "approximate_kl": 0.2714203088035849
+          },
+          {
+            "optimizer_step": 78,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.018629253432974044,
+            "approximate_kl": 0.27297811033206637
+          },
+          {
+            "optimizer_step": 79,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.018794064907272718,
+            "approximate_kl": 0.27489515062315234
+          },
+          {
+            "optimizer_step": 80,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.01892533703553767,
+            "approximate_kl": 0.27625332668552416
+          },
+          {
+            "optimizer_step": 81,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.0191069961000945,
+            "approximate_kl": 0.27802130092412397
+          },
+          {
+            "optimizer_step": 82,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.019311444753399066,
+            "approximate_kl": 0.27993936203449427
+          },
+          {
+            "optimizer_step": 83,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.01948507673966226,
+            "approximate_kl": 0.28143778397684854
+          },
+          {
+            "optimizer_step": 84,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.019667870048789587,
+            "approximate_kl": 0.2828824000853024
+          },
+          {
+            "optimizer_step": 85,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.019855240077993795,
+            "approximate_kl": 0.28421086793398165
+          },
+          {
+            "optimizer_step": 86,
+            "epoch": 1,
+            "kl_stop_metric": "joint_gaussian_kl",
+            "kl": 0.02002232765784264,
+            "approximate_kl": 0.2855645704835958
+          }
+        ],
+        "elapsed_seconds": 13.810107946395874,
+        "coefficient_rms": 0.49986037611961365,
+        "coefficient_saturation_fraction": 0.00025639348314143717,
+        "positive_reward_count": 144,
+        "negative_reward_count": 0
+      },
+      "gpu_recovery_qualification": {
+        "completed": true,
+        "device": "cuda:0",
+        "feature_dim": 2064,
+        "steering_dim": 1152,
+        "next_update_exact": true,
+        "live_learner_unchanged": true,
+        "optimizer_steps_each": 10,
+        "final_metrics": {
+          "loss": -0.06356574594974518,
+          "actor_loss": -0.16535013914108276,
+          "critic_loss": 0.20356878638267517,
+          "entropy": 836.0778198242188,
+          "approximate_kl": 1.4437412023544312,
+          "clip_fraction": 0.9583333730697632,
+          "joint_gaussian_kl": 0.004661431536078453,
+          "explained_variance": -4.792896747589111
+        },
+        "state_sha256": "efcf9f0c62273d929669fbf83e1f7772a3d4459e94f9a725a6acf8880f087c60",
+        "physical_controls": 0,
+        "scope": "Two discarded numerical shadow updates on synthetic rewards, outside scientific PPO"
+      },
+      "steering_std_mean": 0.49998489022254944,
+      "steering_std_min": 0.4994918406009674,
+      "steering_std_max": 0.500433623790741,
+      "learning_rate": 3e-05,
+      "checkpoint": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/checkpoints/event-004-train-001.pt",
+        "sha256": "585b78482338b50091c5f29fd44928572a97a5d1c602bed7cf52526b6ae25111"
+      },
+      "escrow": {
+        "format": "joint_steering_action_escrow_v1",
+        "limits": {
+          "train": 11650000,
+          "eval": 1200000
+        },
+        "charged": {
+          "train": 288000,
+          "eval": 346500
+        },
+        "pending": {}
+      },
+      "elapsed_seconds": 388.0876042842865,
+      "completed_events": 4,
+      "total_events": 64,
+      "resources": {
+        "storage_free_GiB": 874.12890625,
+        "container_RAM_GiB": 48.31765365600586,
+        "container_peak_RAM_GiB": 1263.9912414550781,
+        "GPUs": [
+          {
+            "memory_used_MiB": 37403.0,
+            "utilization_percent": 0.0
+          },
+          {
+            "memory_used_MiB": 20024.0,
+            "utilization_percent": 0.0
+          },
+          {
+            "memory_used_MiB": 27124.0,
+            "utilization_percent": 0.0
+          },
+          {
+            "memory_used_MiB": 35082.0,
+            "utilization_percent": 0.0
+          },
+          {
+            "memory_used_MiB": 20720.0,
+            "utilization_percent": 0.0
+          },
+          {
+            "memory_used_MiB": 28900.0,
+            "utilization_percent": 0.0
+          },
+          {
+            "memory_used_MiB": 18206.0,
+            "utilization_percent": 0.0
+          },
+          {
+            "memory_used_MiB": 35224.0,
+            "utilization_percent": 0.0
+          }
+        ]
+      },
+      "collection_and_learning_seconds": 387.927702665329,
+      "physical_controls_this_event": 230400,
+      "controls_per_second": 593.6803893154615,
+      "remaining_gpu_hours": 34.43335047880809,
+      "projected_remaining_seconds": 20203.024354219437,
+      "projected_all_attempt_gpu_hours": 50.728926619953576
+    },
+    "recovery": {
+      "completed": true,
+      "device": "cuda:0",
+      "feature_dim": 2064,
+      "steering_dim": 1152,
+      "next_update_exact": true,
+      "live_learner_unchanged": true,
+      "optimizer_steps_each": 10,
+      "final_metrics": {
+        "loss": -0.06356574594974518,
+        "actor_loss": -0.16535013914108276,
+        "critic_loss": 0.20356878638267517,
+        "entropy": 836.0778198242188,
+        "approximate_kl": 1.4437412023544312,
+        "clip_fraction": 0.9583333730697632,
+        "joint_gaussian_kl": 0.004661431536078453,
+        "explained_variance": -4.792896747589111
+      },
+      "state_sha256": "efcf9f0c62273d929669fbf83e1f7772a3d4459e94f9a725a6acf8880f087c60",
+      "physical_controls": 0,
+      "scope": "Two discarded numerical shadow updates on synthetic rewards, outside scientific PPO"
+    },
+    "times": {
+      "0": {
+        "physical_done_unix": 1793683926.8705378,
+        "result_mtime": 1793683975.15972,
+        "result_bytes": 13484381
+      },
+      "1": {
+        "physical_done_unix": 1793683919.7605171,
+        "result_mtime": 1793683971.0097115,
+        "result_bytes": 13701893
+      },
+      "2": {
+        "physical_done_unix": 1793683930.989345,
+        "result_mtime": 1793683979.4730453,
+        "result_bytes": 12777259
+      },
+      "3": {
+        "physical_done_unix": 1793683961.186957,
+        "result_mtime": 1793683998.5713043,
+        "result_bytes": 12967574
+      },
+      "4": {
+        "physical_done_unix": 1793683966.274177,
+        "result_mtime": 1793684002.7097611,
+        "result_bytes": 13566548
+      },
+      "5": {
+        "physical_done_unix": 1793683951.426451,
+        "result_mtime": 1793683990.2063944,
+        "result_bytes": 12831589
+      },
+      "6": {
+        "physical_done_unix": 1793683967.3988433,
+        "result_mtime": 1793684003.2197082,
+        "result_bytes": 13267445
+      },
+      "7": {
+        "physical_done_unix": 1793683965.4261112,
+        "result_mtime": 1793684001.949114,
+        "result_bytes": 12968086
+      },
+      "banks/round-001-before-sgd.pt": {
+        "mtime": 1793684005.476985,
+        "bytes": 196218119
+      },
+      "checkpoint-latest.pt": {
+        "mtime": 1793684019.7704291,
+        "bytes": 18004467
+      },
+      "metrics/event-004.json": {
+        "mtime": 1793684019.877378,
+        "bytes": 22953
+      }
+    }
+  }
+}

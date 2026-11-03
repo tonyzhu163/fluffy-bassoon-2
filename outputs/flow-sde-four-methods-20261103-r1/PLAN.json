@@ -1,7 +1,12 @@
 {
-  "status": "SOURCE_PREPARATION_ONLY_NO_STUDENT_FITS_OR_GPU_JOBS",
+  "status": "CPU_SOURCE_AUDIT_PASSED_FEATURES_LABELS_AND_DIRECT_ACTION_ADAPTER_PENDING",
   "human_request": "wait do should we try training the four meta learning methods on the 1m flow sde run and evaluating?",
-  "methods": ["AD", "DPT", "DIT", "in-context IQL"],
+  "methods": [
+    "AD",
+    "DPT",
+    "DIT",
+    "in-context IQL"
+  ],
   "source": "Completed OpenDrawer Flow-SDE PPO:18updates,2304complete TRAINepisodes,921600TRAINcontrols,18432H50decisions;975200all-in charged controls includes evaluations/failures and is not the training corpus size.",
   "distinction": "The existing converged AD/DPT used S8-r2 six-update6-D action-residual histories:384episodes,288000controls,5760H50decisions. Flow-SDE trained the action expert and retains50x12 physical action chunks. A four-method follow-up is a separate direct-action experiment, not a relabelled velocity/KV source or a clean data-size-only ablation.",
   "source_policy_quality": "Final paired first-success35to43/64,p=.18493; TRAIN first/last3banks+0.78percentage points. An improving teacher was not established. Preserve this limitation; it does not prohibit an explicitly requested reference experiment.",
@@ -16,5 +21,15 @@
   ],
   "first_action": "Allocated Linux CPU source audit and raw corpus indexing only; no model, simulator or accelerator computation.",
   "budget_policy": "Current AGENTS permits requested-task allocations/increments below8GPUh without repeated approval, with cumulative accounting. No budget for a larger complete four-fit/readout campaign is inferred here. Prepare actual qualification timings and a concrete capped complete plan before any8GPUh-or-larger unapproved budget; do not split an aggregate budget to bypass the threshold.",
-  "isolation": "No existing PPO run/profile/source is modified or restarted. The two steering arms' complete update2 checkpoints and accounting remain separate. No duplicate user-owned downstream chat, launcher or fit is created."
+  "isolation": "No existing PPO run/profile/source is modified or restarted. The two steering arms' complete update2 checkpoints and accounting remain separate. No duplicate user-owned downstream chat, launcher or fit is created.",
+  "source_audit": {
+    "receipt": "SOURCE-AUDIT.json",
+    "complete_episodes": 2304,
+    "H50_decisions": 18432,
+    "training_controls": 921600,
+    "chunk_files": 3456,
+    "corpus_sha256": "5bf7c71056ca84b37f1d23589696b834c1a3401bbbe61e75f0b6eb5249498eb6",
+    "model_simulator_or_GPU_calls": 0,
+    "student_fit_ready": false
+  }
 }
