@@ -25,6 +25,10 @@ test -z "$(git -C "$TASK_RUNTIME" status --porcelain)"
 export PYTHONPATH=$TASK_RUNTIME/src:$TASK_ROOT/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf
 export OPENPI_DATA_HOME=$TASK_ROOT/setups/robocasa365-native-20261101-r1/cache/.cache/openpi
 export NCCL_P2P_DISABLE=1 FLUFFY_GPU_EXECUTION=baige
+# Match the qualified campaign launcher: Baige may omit this variable while
+# restricting the container to its scheduler-assigned devices. Keep any
+# existing selection; the probe still checks the exact assigned UUID and PCI.
+export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
 "$TASK_PY" -B "$TASK_RUNTIME/scripts/[train]gpu_probe.py" --expected-count 1 --purpose training \
  --baige-container --baige-exclusive-training --output "$TASK_OUTPUT/gpu-probe.json"
