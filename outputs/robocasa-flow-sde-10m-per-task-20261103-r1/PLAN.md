@@ -1,0 +1,211 @@
+# Per-task Flow-SDE PPO teachers, about 10M controls per task
+
+2026-11-03. **Plan and static audit only; nothing launched.** Needs a Baige
+owner after the pre-launch fixes below land on `main`. Governing decision:
+[PAPER.md source campaign (2026-11-03)](../../docs/PAPER.md#agreed-design).
+Live status: [coordination](../coordination.md).
+
+## Human decisions (2026-11-03)
+
+- Simulator first-success reward for these runs. No Flora reward here.
+- One independent full action-expert Flow-SDE PPO run per task, **8 GPUs
+  each**, all tasks in parallel, about **10M environment controls per task**.
+- **KL off**: `kl_beta=0`, no KL early stopping. Keep logging approximate KL,
+  clip fraction and the other PPO metrics.
+- Collect and audit the complete PPO corpus of every task before any
+  meta-learner (AD, DPT, DIT, value-based offline ICRL) or steering adapter
+  is fit.
+- Design and audit this before launch.
+
+## Why this design
+
+The only completed run of this recipe
+([OpenDrawer, 18 updates](../robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/RESULT.md))
+failed its gate: TRAIN 221→224/384, paired held-out 35→43/64 (p=.18). It had
+288 optimizer steps. At 10M controls the same recipe gets about 3,100
+optimizer steps per task. **Scale is the only intended scientific change.**
+Everything else stays at the qualified recipe, so a flat curve at 10M points
+at the recipe, not at a new change. The four fixes this plan adds are needed
+to generalize from OpenDrawer, to keep the full data and to check the log-ratio.
+They are not recipe changes.
+
+## Tasks
+
+| Task | Native first success | Status |
+| --- | ---: | --- |
+| OpenDrawer | 29/50 (58%) | include |
+| PickPlaceDrawerToCounter | 23/50 (46%) | include |
+| CoffeeSetupMug | 17/50 (34%) | include |
+| TurnOffStove | 7/50 (14%) | include |
+| fifth task | — | **human decision**: PickPlaceCounterToCabinet (37/50, 74%) fails the 5–70% admission check, which the runner enforces |
+
+Sources: [five-task qualification](../../docs/FINDINGS.md) and the
+[atomic_seen sweep proposal](../robocasa-atomic-baseline-sweep-20261103-r1/PLAN.md),
+which would supply 5–70% replacements. CloseFridge (28/50) is the
+OpenDrawer OOD panel, so using it as a source task removes that panel.
+The four admitted tasks need not wait for the fifth.
+
+**Horizon 600 controls for every task** (12 H50 chunks), the human's
+2026-11-02 selection. Observed first-success maxima were 279/538/538/317/524
+([timing](../robocasa-pi05-success-timing-20261102-r3/RESULT.md)). OpenDrawer
+moves from 400 to 600, so its before panel is new rather than reused.
+
+## Contract per task
+
+Unchanged from [`robocasa365_opendrawer_pi05_sim_ppo.yaml`](../../configs/native_ppo/robocasa365_opendrawer_pi05_sim_ppo.yaml)
+unless the row says otherwise.
+
+| Item | Setting |
+| --- | --- |
+| Motor | public pi0.5 Human300 c484/75000 torch conversion, 10 flow steps, 3 views (same hashes as the prior run) |
+| Trained | action expert + value head; VLM frozen, hash-checked every update |
+| Exploration | `flow_sde`, noise 0.3, one stochastic denoise step |
+| Reward | +1 at first success, γ 0.99, λ 0.95, chunk-level; later chunks masked |
+| Loss | clip 0.2, dual clip 3.0, value clip 0.2, Huber 10, entropy 0, **kl_beta 0, no KL stop** |
+| Optimizer | AdamW, actor 5e-6 / value 1e-4, betas (0.9, 0.95), wd 0.01, grad clip 1.0 |
+| Episodes per iteration | 128 (scientific batch, unchanged) |
+| Horizon | **600** (was 400) → 1,536 chunk samples/iteration, global batch 256, 4 epochs = **24** optimizer steps/iteration (was 16) |
+| Iterations | **130** → 16,640 TRAIN episodes, 9,984,000 TRAIN controls |
+| Eval | same 64 fixed cases per task before and after, flow ODE, full 600 controls (76,800 controls) |
+| Execution layout | 8 env/rollout ranks; envs per GPU chosen by the Q1 capacity check without changing 128 episodes/iteration |
+| Actor ranks | 2, the qualified rank-local GAE normalization (moving to 8 changes advantage normalization; not adopted) |
+| Checkpoints | full DCP + worker sidecars every **10** iterations and at 130 (~0.7 GB each) |
+| Seeds | TRAIN `210100 + task_index·100000 + global episode index`; eval `410100 + task_index·1000` (disjoint, recorded) |
+
+Per task: about 10.06M controls, about 15 h wall and about 120 GPU-h.
+That projects from the prior 8-GPU iteration (~270 s per 51,200 controls), so
+re-measure it in Q1. Five tasks are about 600 GPU-h. No action cap applies (human,
+2026-11-03); the journal still charges every control.
+
+## Data retained per task
+
+| Needed by | Field | Current state |
+| --- | --- | --- |
+| all students | decision observation (3 RGB views, state, instruction) per chunk | saved, `environment/…-chunkNN.pt.gz` |
+| all students | executed 50×12 command, reward, termination, truncation | saved |
+| AD ordering | producing policy version per episode | saved (collection iteration) |
+| DIT / IQL | next observation after the last chunk, or explicit terminal flag | **missing**, fix F5 |
+| joins | explicit global episode ID in env, sampling and actor records | **missing**, fix F6 |
+| DPT | final teacher checkpoint; labels queried offline later | saved at 130 |
+| diagnostics | old log-prob, value, advantage, return, mask per sample | saved in actor batch |
+| optional | full 11-state flow chain, actor-batch images | saved, duplicated; see storage |
+
+## Pre-launch static audit
+
+The audit read [`rlinf_robocasa_flow_ppo_runtime.py`](../../src/fluffy_bassoon/meta_rl/rlinf_robocasa_flow_ppo_runtime.py),
+[`rlinf_native_ppo_runtime.py`](../../src/fluffy_bassoon/meta_rl/rlinf_native_ppo_runtime.py),
+[`rlinf_native_ppo.py`](../../src/fluffy_bassoon/meta_rl/rlinf_native_ppo.py),
+[`rlinf_robocasa_flow_ppo.py`](../../src/fluffy_bassoon/meta_rl/rlinf_robocasa_flow_ppo.py),
+the driver and the config. RLinf itself is only on Baige; checks C1–C2 must
+read it there.
+
+### Blockers: these would crash or corrupt a 10M multi-task run
+
+- **F1 action ceiling.** `ActionJournal` and `GlobalActionJournal` default to
+  `maximum_actions=1000000` (`rlinf_native_ppo.py:105`, split per rank;
+  `rlinf_robocasa_flow_ppo.py:8`). A 10M run aborts near 1M. Pass an explicit
+  per-run ceiling (10.2M) from config and record it.
+- **F2 OpenDrawer/400/18 hard-coded.** `physics_tick_limit=(400+128)*128`
+  (runtime `:46`); case metadata `task='OpenDrawer', horizon=400` (`:98`,
+  which would mislabel every other task's history); `episodes.json` written
+  and 400 controls asserted only at step 400 (`:118–120`, so a 600 horizon
+  never writes outcomes); boundary every 6 (`:265`); `global_step == 18` and
+  after-eval at 18 (`:314–321`). The driver asserts
+  `max_epochs == 18`, 32/64 envs and world size 2/8. Read all of these from the
+  config, with one config per task.
+- **F3 seed formula.** `offset = iteration·128 + round·32` (`:78`) assumes
+  32 envs × 4 rounds. Any other execution layout repeats or skips cases. Use
+  `iteration·E·R + round·E + rank·n + i` with E envs, R rounds, and a CPU test
+  that TRAIN seeds over 130 iterations are unique and disjoint from eval.
+- **F4 optimizer-step assertion.** `FlowActor` asserts 16 steps per update
+  (`:156`); H600 gives 24. Derive the value from the batch arithmetic.
+- **F7 storage.** The prior run's PFS free space fell 805→717 GB over ~1M
+  controls. That is not an exclusive measurement, but it points to ~0.9 TB per
+  10M task and ~4.4 TB for five, against ~843 GiB PFS free after tiering.
+  The same images are stored in three places: env chunk records, sampling
+  records with full flow chains, and actor batches. Q1 measures bytes per
+  component. Before launch, choose either to keep env records plus per-sample
+  scalars and drop chains/images from the other two, or to keep everything and
+  move each completed 10-iteration block to BOS during the run. Target ≤150 GB
+  per task on PFS.
+- **F8 wall clock.** `TASK_WALL_SECONDS=28200` (7.8 h) is shorter than ~15 h.
+  Either request a longer allocation or run qualified resumable segments. The
+  resume path asserts a 64-case before reference and copies its canonical eval;
+  test it on CPU for the new configs.
+
+### Needed for the corpus
+
+- **F5** Save the post-chunk observation for the last chunk of each episode, or
+  record that the horizon is terminal for value targets. Value-based methods
+  need one or the other.
+- **F6** Write a global episode ID `(task, iteration, round, rank, env)` into
+  env, sampling and actor records. The prior full-corpus join is still pending
+  ([history audit](../robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/HISTORY-AUDIT.md)).
+
+### Checks that must pass on GPU in Q1
+
+- **C1 log-ratio at the first micro-batch.** Iteration 1 of the prior run had
+  clip fraction 0.238, and approx KL reached 0.13 at lr 5e-6.
+  `recompute_logprobs=false`, so before any SGD the actor's log-prob must equal
+  the rollout's old log-prob on the same samples (|log ratio| ≤ 1e-3). A
+  mismatch is a bug and blocks launch.
+- **C2 log-prob dimensions.** Read the RLinf source to see whether the
+  chunk-level log-prob sums the 50×32 padded model dims or the 50×12 env dims.
+  Padded dims never reach the robot. If they enter the ratio, it gets noise
+  with no reward signal. If so, report back; any change is a recipe change and
+  needs the human.
+- **C3** VLM hash unchanged and losses finite; 24 optimizer steps; 128
+  episodes and 1,536 samples; peak memory and seconds per iteration measured.
+
+### Kept as is, with the reason recorded
+
+- Episodes keep stepping to the horizon after first success. That cost 23.6%
+  of controls before and will cost more at 600. It is the qualified
+  accounting path; changing it needs a new qualification.
+- Before-panel admission 5–70% stays a hard stop.
+- The eval panel is never used to select a checkpoint. Only the final teacher
+  is used for DPT labels.
+
+## Stages
+
+1. **Q0 code (CPU).** F1–F8 on `main` and core tests on allocated Linux:
+   seed uniqueness, journal ceiling, horizon-generic episode records,
+   step-count derivation, resume. Write one config per task. An independent
+   reviewer reads the diff.
+2. **Q1 per task, on its 8 GPUs.** GPU probe in the job step; 64-case before
+   panel (admission 5–70%); one training iteration with C1–C3; bytes per
+   component. On the first task only, measure throughput at 4/8/16 envs per
+   GPU and pick the layout.
+3. **Q2 audit.** Read the Q1 artifacts, fix the storage policy, then launch.
+   Each Q1 iteration counts as iteration 1 of its run; there is never an extra
+   iteration.
+4. **Full runs.** All admitted tasks in parallel to 130 iterations. Monitor
+   every 20 minutes. Stop only for faults: non-finite loss, VLM changed, C1
+   regression, journal mismatch, or PFS below 200 GB. There is no scientific
+   early stop.
+5. **Corpus close-out.** Per-task export, a full join audit (F6), byte and hash
+   manifests, then BOS tiering. Meta-learners start only after all tasks close.
+   They get their own plan.
+
+## Readout per task
+
+- Log per iteration: TRAIN first success and success at end (128 episodes),
+  approx KL, clip fraction, explained variance, value loss, grad norm, optimizer
+  steps, seconds.
+- **KL to the original policy, offline.** From the saved checkpoints, compute
+  the mean log-ratio to iteration 0 on one fixed batch of saved samples. This
+  is reporting only and needs no learner change.
+- **Gate:** TRAIN first success over iterations 121–130 beats 1–10 by
+  ≥10 points (1,280 vs 1,280 episodes). The paired 64-case after panel must
+  also beat the before panel (exact McNemar, p<.05). Report success at end as
+  well. A task that fails either part keeps its corpus as reference data but
+  is not an admitted teacher.
+- Optional, after the run: evaluate checkpoints 10…130 on the same 64 cases
+  offline, to show the curve without changing the learner.
+
+## Open decisions for the human
+
+1. Fifth task (see Tasks).
+2. Storage policy after Q1 (F7): drop duplicate chains/images, or keep all
+   and tier during the run.
+3. Wall clock (F8): one long allocation per task, or resumable segments.

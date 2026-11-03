@@ -35,13 +35,13 @@ resource wrappers are `2816e43f`. Root independently checked saved case metadata
 frame clocks, declared byte hashes and worker-clock totals. Root did not load models
 or numerical arrays, decode videos, restore a checkpoint or replay remote journals.
 See [parent review](BASELINE64-PARENT-REVIEW.json) and
-[exact owner terminal packet](../flora-ppo-runtime-readiness-20261101-r1/baseline64-terminal-c9f2e8c6/BASELINE64-FINAL-RECEIPT.json).
+[exact owner terminal packet](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/a5bc35893d2b156a1612784c1ac59bcac9ddcca6/outputs/flora-ppo-runtime-readiness-20261101-r1/baseline64-terminal-c9f2e8c6/BASELINE64-FINAL-RECEIPT.json).
 
 ## Subsequent human steering
 
 After this result, the human explicitly requested a headroom search within LIBERO90,
 with RoboTwin or RoboCasa as conditional alternatives. The separately charged
-[prospective search](../flora-ppo-libero90-headroom-search-20261101-r1/PROTOCOL.json)
+[prospective search](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/a5bc35893d2b156a1612784c1ac59bcac9ddcca6/outputs/flora-ppo-libero90-headroom-search-20261101-r1/PROTOCOL.json)
 uses the same45cc checkpoint, fixed screening/confirmation rules and no PPO. It
 does not change task44 results, refill its spent preparation budget, or select
 a new task from Flora scores. No new task or benchmark has been selected yet.
@@ -65,4 +65,4 @@ The unlaunched LIBERO search is held with zero charge. Existing RoboTwin code
 and archived results are present; native PPO/common-policy, video-clock and
 finite runtime bindings remain to be prepared. The cached Motus policy saw both
 clean and randomized demonstrations, so this is not an unseen-domain claim.
-[Restoration scope](../robotwin-flora-six-task-restore-20261101-r1/AUTHORITY.json).
+[Restoration scope](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/a5bc35893d2b156a1612784c1ac59bcac9ddcca6/outputs/robotwin-flora-six-task-restore-20261101-r1/AUTHORITY.json).

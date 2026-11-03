@@ -378,10 +378,16 @@ is semantically unseen.
   Stage 1 PPO arms and their label rule.
   - Teacher: full action-expert Flow-SDE PPO with the VLM frozen, one
     independent run per source task, launched in parallel under one shared
-    contract (commit, PPO config, reward, update count). Each task's teacher
-    must pass its own improvement gate; a failing task is dropped or
-    replaced, not pooled. Prefer tasks with native success roughly 20–70%.
-    Diagnose the failed OpenDrawer gate on one task before launching all.
+    contract (commit, PPO config, reward, update count). RoboCasa simulation
+    teachers use simulator first-success reward, about 10M controls and 8
+    GPUs per task, KL penalty and KL stopping off with KL still logged
+    (human, 2026-11-03); the full corpus of every task is collected and
+    audited before any meta-learner. Contract: [per-task 10M
+    plan](../outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PLAN.md).
+    Each task's teacher must pass its own improvement gate; a failing task
+    is dropped or replaced, not pooled. Prefer tasks with native success
+    roughly 20–70%. Every task passes a one-iteration GPU qualification and
+    a static audit before its full run.
   - Students read actual (observation, executed action chunk, reward,
     boundary) histories in update order and are supervised on actions with
     flow matching through the frozen expert, as in VLRLA-bridge. No
