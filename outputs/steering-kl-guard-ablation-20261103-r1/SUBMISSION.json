@@ -1,0 +1,33 @@
+{
+  "cluster": "Baige Pro6K / 算法Z组",
+  "queue_id": "aihcq-rh0wwk9muei4",
+  "job_id": "job-voaelvgv4mqi",
+  "name": "mwj_1103_steering_kl_guard_native_1x4_r1",
+  "created_Shanghai": "2026-11-03T14:32:54+08:00",
+  "last_verified_status": "QUEUED",
+  "source_commit": "a31757296742b815bf77b2cef6b94ada7d638d49",
+  "source_checkout": "/mowenjie/fluffy-bassoon-2/worktrees/steering-kl-native-eval-20261103-r1",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/steering-kl-guard-ablation-20261103-r1/gpu-r1",
+  "CPU_replay_source": "1cb0d35a650f1cb219c7883d7023c01128ce28f8",
+  "CPU_replay_completed": true,
+  "native_CPU_preflight_candidates": 6,
+  "resource_request": {
+    "workers": 1,
+    "accelerators": 4,
+    "accelerator_type": "NVIDIA RPBZZZ6",
+    "CPU_cores": 84,
+    "RAM_GiB": 832,
+    "SHM_GiB": 192,
+    "maximum_runtime_minutes": 90,
+    "priority": "low",
+    "automatic_retry": false,
+    "idle_resources": false,
+    "PFS_mount": "/mowenjie"
+  },
+  "lifetime_GPU_second_ceiling": 21600,
+  "new_scientific_training_updates": 0,
+  "diagnostic_policy_controls": 900000,
+  "episodes": 1500,
+  "production_recovery": "HUMAN HOLD until KL test review; both original source runs preserved at update2",
+  "submission_verification": "Unique new name and job ID visibly verified in task list after one copy-submit; copy-submit redirected to old job detail, which was not mistaken for the new job. Full command and resource values read back before submission. Actual allocated-device probe and completed native episodes still pending."
+}

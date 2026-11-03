@@ -1,0 +1,29 @@
+{
+  "pid": 2001104,
+  "hostname": "aibox-rffe453e3884-5f96c78b88-rtvhb",
+  "started_unix": 1793686984.1835117,
+  "source_commit": "1cb0d35a650f1cb219c7883d7023c01128ce28f8",
+  "code": "/mowenjie/fluffy-bassoon-2/worktrees/steering-kl-guard-ablation-20261103-r1",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/steering-kl-guard-ablation-20261103-r1/cpu-r1",
+  "CPU_only": true,
+  "new_GPU_allocation": false,
+  "command": [
+    "timeout",
+    "--signal=TERM",
+    "--kill-after=15s",
+    "900",
+    "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+    "-B",
+    "/mowenjie/fluffy-bassoon-2/worktrees/steering-kl-guard-ablation-20261103-r1/outputs/steering-kl-guard-ablation-20261103-r1/CPU-REPLAY.py",
+    "--code",
+    "/mowenjie/fluffy-bassoon-2/worktrees/steering-kl-guard-ablation-20261103-r1",
+    "--expected-source",
+    "1cb0d35a650f1cb219c7883d7023c01128ce28f8",
+    "--sources",
+    "/mowenjie/fluffy-bassoon-2/outputs",
+    "--output",
+    "/mowenjie/fluffy-bassoon-2/outputs/steering-kl-guard-ablation-20261103-r1/cpu-r1",
+    "--expected-hostname",
+    "aibox-rffe453e3884-5f96c78b88-rtvhb"
+  ]
+}

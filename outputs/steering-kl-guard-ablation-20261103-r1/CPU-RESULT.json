@@ -1,0 +1,2062 @@
+{
+  "format": "real_first_bank_kl_ablation_v1",
+  "completed": true,
+  "hostname": "aibox-rffe453e3884-5f96c78b88-rtvhb",
+  "pid": 2001105,
+  "source_commit": "1cb0d35a650f1cb219c7883d7023c01128ce28f8",
+  "script_sha256": "2754fffbac25a8329a732c89485a735a637f23c7d3b8121e7e14335c4c94608a",
+  "started_unix": 1793686988.0625646,
+  "torch_version": "2.11.0+cu128",
+  "CUDA_visible_devices": "",
+  "device": "cpu",
+  "cpu_threads": 4,
+  "new_simulator_controls": 0,
+  "scientific_source_updates": 0,
+  "resource": {
+    "cpu_max": "1300000 100000",
+    "memory_max": "120259084288",
+    "storage_free_GiB": 857.40625
+  },
+  "arms": {
+    "velocity": {
+      "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1",
+      "source_hashes": {
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/banks/round-001-before-sgd.pt": "fd40859178d808cce44311694b31b16538e2d6479498fba57739e212907058fa",
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/checkpoints/event-003-dev-000.pt": "636c057a2d25af37a6b0df46cc3e6e176a88adabfd548118eea9b1eeaf46982f",
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/checkpoints/event-005-train-002.pt": "38d665ba6244a8bd1a5017045b1903a6206999515974c6a6d90eefd38b0dc27a"
+      },
+      "policy_version": 0,
+      "original_config": {
+        "feature_dim": 2064,
+        "residual_dim": 32,
+        "width": 256,
+        "layers": 2,
+        "initial_std": 0.5,
+        "learning_rate": 0.0003,
+        "epochs": 10,
+        "minibatch_size": 32,
+        "clip": 0.2,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "max_grad_norm": 1.0,
+        "target_kl": 0.02,
+        "kl_check_cadence": "minibatch"
+      },
+      "valid_chunk_samples": 3850,
+      "episodes": 384,
+      "positive_rewards": 142,
+      "normalized_initial_policy_sha256": "b71df80775814a2608059d723a65a5079544848b2f2a0eb46d696fdf275eac56",
+      "variants": {
+        "guarded1": {
+          "config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 1,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "metrics": {
+            "loss": -0.12371439167431422,
+            "actor_loss": -0.18441521855337278,
+            "critic_loss": 0.12140165375811714,
+            "entropy": 23.21867506844657,
+            "approximate_kl": 0.006133539602160454,
+            "clip_fraction": 0.08035714285714286,
+            "samples": 3850,
+            "samples_processed": 224,
+            "epochs_requested": 1,
+            "epochs_completed": 0,
+            "epochs_started": 1,
+            "optimizer_steps": 7,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch",
+            "kl_stop_metric": "joint_gaussian_kl",
+            "early_stopped": true,
+            "stop_reason": "target_kl",
+            "advantage_mean": 0.1627718061208725,
+            "advantage_std": 0.37023410201072693,
+            "return_mean": 0.21148234605789185,
+            "return_std": 0.3625859320163727,
+            "initial_metrics": {
+              "loss": 0.040892029520753145,
+              "actor_loss": 4.125879956530286e-08,
+              "critic_loss": 0.08178397832946344,
+              "entropy": 23.225324630737305,
+              "approximate_kl": 1.052179065375746e-12,
+              "clip_fraction": 0.0,
+              "joint_gaussian_kl": 0.0,
+              "explained_variance": -0.04263186454772949
+            },
+            "final_metrics": {
+              "loss": 0.07136082739024967,
+              "actor_loss": 0.012914967993637184,
+              "critic_loss": 0.11689171726246933,
+              "entropy": 23.21562385559082,
+              "approximate_kl": 0.025195369600233705,
+              "clip_fraction": 0.3033766233804938,
+              "joint_gaussian_kl": 0.02243694660919053,
+              "explained_variance": -0.4826192855834961
+            },
+            "epoch_metrics": [
+              {
+                "epoch": 1,
+                "loss": 0.07136082739024967,
+                "actor_loss": 0.012914967993637184,
+                "critic_loss": 0.11689171726246933,
+                "entropy": 23.21562385559082,
+                "approximate_kl": 0.025195369600233705,
+                "clip_fraction": 0.3033766233804938,
+                "joint_gaussian_kl": 0.02243694660919053,
+                "explained_variance": -0.4826192855834961,
+                "optimizer_steps": 7,
+                "cumulative_optimizer_steps": 7,
+                "samples": 3850,
+                "samples_processed": 224,
+                "epoch_complete": false,
+                "gradient_norm_mean": 8.853320530482701,
+                "gradient_norm_max": 9.814987182617188,
+                "elapsed_seconds": 1.0461316276341677,
+                "kl_threshold_exceeded": true
+              }
+            ],
+            "minibatch_kl_checks": [
+              {
+                "optimizer_step": 1,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.0009987391125072132,
+                "approximate_kl": 0.0011344318119385704
+              },
+              {
+                "optimizer_step": 2,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.0028028659214108407,
+                "approximate_kl": 0.003178677986823506
+              },
+              {
+                "optimizer_step": 3,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.006999979897994887,
+                "approximate_kl": 0.007765202562433559
+              },
+              {
+                "optimizer_step": 4,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01083740904346689,
+                "approximate_kl": 0.011960082925106218
+              },
+              {
+                "optimizer_step": 5,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014860531745792983,
+                "approximate_kl": 0.016457867962731555
+              },
+              {
+                "optimizer_step": 6,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.019429830087276247,
+                "approximate_kl": 0.021593887088457487
+              },
+              {
+                "optimizer_step": 7,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.02243694660919053,
+                "approximate_kl": 0.025195369600233705
+              }
+            ],
+            "elapsed_seconds": 1.3002693951129913
+          },
+          "policy_shift": {
+            "mean_delta_RMS": 0.018708903342485428,
+            "mean_delta_RMS_in_behavior_std": 0.037417806684970856,
+            "final_std_min": 0.4990648329257965,
+            "final_std_mean": 0.49984756112098694,
+            "final_std_max": 0.5005338191986084,
+            "deterministic_tanh_mean_delta_RMS": 0.01870007999241352
+          },
+          "initial_model_sha256": "b71df80775814a2608059d723a65a5079544848b2f2a0eb46d696fdf275eac56",
+          "initial_adam_sha256": "66463902c2a389544fd4435b8687276fd10ce3130165b16eb2647bf30e3d89c7",
+          "initial_sampler_sha256": "803eff0c4f9bde8545652a64c9da77425234b2db8a4460783432bce7b43060f3",
+          "final_model_sha256": "36c509e8f47e78de0a0486d2aa130cd09b7fb454457526f1d99c1368d9599222",
+          "final_adam_sha256": "4532e7aea7e96bb8efd6ae94534cce3a1b92af455287c33d06408caff0a472e8",
+          "final_sampler_sha256": "e563ba2967306d7dc27fdc2c63ff6dcfd97ff71b3f1b9884275372b717b77e0e",
+          "artifact": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/steering-kl-guard-ablation-20261103-r1/cpu-r1/velocity/guarded1.pt",
+            "sha256": "badf35cdd4f6fc871445f9e1cbe0996813fa403f5f37e4851dbbe22e42718e25"
+          },
+          "gradient_sample_fraction": 0.05818181818181818
+        },
+        "unguarded1": {
+          "config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 1,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": null,
+            "kl_check_cadence": "minibatch"
+          },
+          "metrics": {
+            "loss": 0.08476847893231874,
+            "actor_loss": 0.051459654616071035,
+            "critic_loss": 0.06661764858605025,
+            "entropy": 23.218774241658,
+            "approximate_kl": 0.05682474994040155,
+            "clip_fraction": 0.5049350649660284,
+            "samples": 3850,
+            "samples_processed": 3850,
+            "epochs_requested": 1,
+            "epochs_completed": 1,
+            "epochs_started": 1,
+            "optimizer_steps": 121,
+            "target_kl": null,
+            "kl_check_cadence": "minibatch",
+            "kl_stop_metric": "joint_gaussian_kl",
+            "early_stopped": false,
+            "stop_reason": "epochs_completed",
+            "advantage_mean": 0.1627718061208725,
+            "advantage_std": 0.37023410201072693,
+            "return_mean": 0.21148234605789185,
+            "return_std": 0.3625859320163727,
+            "initial_metrics": {
+              "loss": 0.040892029520753145,
+              "actor_loss": 4.125879956530286e-08,
+              "critic_loss": 0.08178397832946344,
+              "entropy": 23.225324630737305,
+              "approximate_kl": 1.052179065375746e-12,
+              "clip_fraction": 0.0,
+              "joint_gaussian_kl": 0.0,
+              "explained_variance": -0.04263186454772949
+            },
+            "final_metrics": {
+              "loss": 0.019009676026059436,
+              "actor_loss": -0.00918735170519197,
+              "critic_loss": 0.05639405768993613,
+              "entropy": 23.219135284423828,
+              "approximate_kl": 0.07556668337676432,
+              "clip_fraction": 0.5937662338281606,
+              "joint_gaussian_kl": 0.06921244175016106,
+              "explained_variance": 0.30059099197387695
+            },
+            "epoch_metrics": [
+              {
+                "epoch": 1,
+                "loss": 0.019009676026059436,
+                "actor_loss": -0.00918735170519197,
+                "critic_loss": 0.05639405768993613,
+                "entropy": 23.219135284423828,
+                "approximate_kl": 0.07556668337676432,
+                "clip_fraction": 0.5937662338281606,
+                "joint_gaussian_kl": 0.06921244175016106,
+                "explained_variance": 0.30059099197387695,
+                "optimizer_steps": 121,
+                "cumulative_optimizer_steps": 121,
+                "samples": 3850,
+                "samples_processed": 3850,
+                "epoch_complete": true,
+                "gradient_norm_mean": 9.405235097428,
+                "gradient_norm_max": 19.73042106628418,
+                "elapsed_seconds": 0.8319339519366622,
+                "kl_threshold_exceeded": false
+              }
+            ],
+            "minibatch_kl_checks": [],
+            "elapsed_seconds": 1.0704414183273911
+          },
+          "policy_shift": {
+            "mean_delta_RMS": 0.032823774963617325,
+            "mean_delta_RMS_in_behavior_std": 0.06564754992723465,
+            "final_std_min": 0.49636247754096985,
+            "final_std_mean": 0.4999080002307892,
+            "final_std_max": 0.5026759505271912,
+            "deterministic_tanh_mean_delta_RMS": 0.03278566524386406
+          },
+          "initial_model_sha256": "b71df80775814a2608059d723a65a5079544848b2f2a0eb46d696fdf275eac56",
+          "initial_adam_sha256": "66463902c2a389544fd4435b8687276fd10ce3130165b16eb2647bf30e3d89c7",
+          "initial_sampler_sha256": "803eff0c4f9bde8545652a64c9da77425234b2db8a4460783432bce7b43060f3",
+          "final_model_sha256": "e17fed9666d3ab814428b77463291f3ec1adb47a927bc2bdcf485a8b524200bf",
+          "final_adam_sha256": "ff40c162f44bd99e5720cd8699bae709d27e127228556cf95bc6ad02e62df577",
+          "final_sampler_sha256": "e563ba2967306d7dc27fdc2c63ff6dcfd97ff71b3f1b9884275372b717b77e0e",
+          "artifact": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/steering-kl-guard-ablation-20261103-r1/cpu-r1/velocity/unguarded1.pt",
+            "sha256": "0b17ec60360ed267447852db122d1c3ae9f5f1e81bf7420adb7008f817ffa571"
+          },
+          "gradient_sample_fraction": 1.0
+        },
+        "guarded10_reference": {
+          "config": {
+            "feature_dim": 2064,
+            "residual_dim": 32,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 0.0003,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "metrics": {
+            "loss": -0.12371439167431422,
+            "actor_loss": -0.18441521855337278,
+            "critic_loss": 0.12140165375811714,
+            "entropy": 23.21867506844657,
+            "approximate_kl": 0.006133539602160454,
+            "clip_fraction": 0.08035714285714286,
+            "samples": 3850,
+            "samples_processed": 224,
+            "epochs_requested": 10,
+            "epochs_completed": 0,
+            "epochs_started": 1,
+            "optimizer_steps": 7,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch",
+            "kl_stop_metric": "joint_gaussian_kl",
+            "early_stopped": true,
+            "stop_reason": "target_kl",
+            "advantage_mean": 0.1627718061208725,
+            "advantage_std": 0.37023410201072693,
+            "return_mean": 0.21148234605789185,
+            "return_std": 0.3625859320163727,
+            "initial_metrics": {
+              "loss": 0.040892029520753145,
+              "actor_loss": 4.125879956530286e-08,
+              "critic_loss": 0.08178397832946344,
+              "entropy": 23.225324630737305,
+              "approximate_kl": 1.052179065375746e-12,
+              "clip_fraction": 0.0,
+              "joint_gaussian_kl": 0.0,
+              "explained_variance": -0.04263186454772949
+            },
+            "final_metrics": {
+              "loss": 0.07136082739024967,
+              "actor_loss": 0.012914967993637184,
+              "critic_loss": 0.11689171726246933,
+              "entropy": 23.21562385559082,
+              "approximate_kl": 0.025195369600233705,
+              "clip_fraction": 0.3033766233804938,
+              "joint_gaussian_kl": 0.02243694660919053,
+              "explained_variance": -0.4826192855834961
+            },
+            "epoch_metrics": [
+              {
+                "epoch": 1,
+                "loss": 0.07136082739024967,
+                "actor_loss": 0.012914967993637184,
+                "critic_loss": 0.11689171726246933,
+                "entropy": 23.21562385559082,
+                "approximate_kl": 0.025195369600233705,
+                "clip_fraction": 0.3033766233804938,
+                "joint_gaussian_kl": 0.02243694660919053,
+                "explained_variance": -0.4826192855834961,
+                "optimizer_steps": 7,
+                "cumulative_optimizer_steps": 7,
+                "samples": 3850,
+                "samples_processed": 224,
+                "epoch_complete": false,
+                "gradient_norm_mean": 8.853320530482701,
+                "gradient_norm_max": 9.814987182617188,
+                "elapsed_seconds": 1.1648244755342603,
+                "kl_threshold_exceeded": true
+              }
+            ],
+            "minibatch_kl_checks": [
+              {
+                "optimizer_step": 1,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.0009987391125072132,
+                "approximate_kl": 0.0011344318119385704
+              },
+              {
+                "optimizer_step": 2,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.0028028659214108407,
+                "approximate_kl": 0.003178677986823506
+              },
+              {
+                "optimizer_step": 3,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.006999979897994887,
+                "approximate_kl": 0.007765202562433559
+              },
+              {
+                "optimizer_step": 4,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01083740904346689,
+                "approximate_kl": 0.011960082925106218
+              },
+              {
+                "optimizer_step": 5,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014860531745792983,
+                "approximate_kl": 0.016457867962731555
+              },
+              {
+                "optimizer_step": 6,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.019429830087276247,
+                "approximate_kl": 0.021593887088457487
+              },
+              {
+                "optimizer_step": 7,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.02243694660919053,
+                "approximate_kl": 0.025195369600233705
+              }
+            ],
+            "elapsed_seconds": 1.4147199969738722
+          },
+          "policy_shift": {
+            "mean_delta_RMS": 0.018708903342485428,
+            "mean_delta_RMS_in_behavior_std": 0.037417806684970856,
+            "final_std_min": 0.4990648329257965,
+            "final_std_mean": 0.49984756112098694,
+            "final_std_max": 0.5005338191986084,
+            "deterministic_tanh_mean_delta_RMS": 0.01870007999241352
+          },
+          "initial_model_sha256": "b71df80775814a2608059d723a65a5079544848b2f2a0eb46d696fdf275eac56",
+          "initial_adam_sha256": "66463902c2a389544fd4435b8687276fd10ce3130165b16eb2647bf30e3d89c7",
+          "initial_sampler_sha256": "803eff0c4f9bde8545652a64c9da77425234b2db8a4460783432bce7b43060f3",
+          "final_model_sha256": "36c509e8f47e78de0a0486d2aa130cd09b7fb454457526f1d99c1368d9599222",
+          "final_adam_sha256": "4532e7aea7e96bb8efd6ae94534cce3a1b92af455287c33d06408caff0a472e8",
+          "final_sampler_sha256": "e563ba2967306d7dc27fdc2c63ff6dcfd97ff71b3f1b9884275372b717b77e0e",
+          "artifact": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/steering-kl-guard-ablation-20261103-r1/cpu-r1/velocity/guarded10_reference.pt",
+            "sha256": "bf68c60c449623ad0f3394122fc0e45fd901b425924ac1c95fc6e9e5bbc18e0e"
+          },
+          "gradient_sample_fraction": 0.05818181818181818
+        }
+      },
+      "guarded_epoch_limit_equivalence": {
+        "stopped_during_first_epoch": true,
+        "model_exact": true,
+        "adam_exact": true,
+        "sampler_exact": true
+      },
+      "initial_artifact": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/steering-kl-guard-ablation-20261103-r1/cpu-r1/velocity/initial.pt",
+        "sha256": "46aeabed865f28d06fb5cd78bd3762926fb7a313620b0e678e116d85e9379127"
+      }
+    },
+    "kv_all_layers": {
+      "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1",
+      "source_hashes": {
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/banks/round-001-before-sgd.pt": "477b95c1ecdb0796ad693abf76060b13cfdba5da686a709e862f5ecac6f30b68",
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/checkpoints/event-003-dev-000.pt": "4b3fd457b307d03c29b3fec73370578610bd9e2f11407eed321aa757276ceb44",
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/checkpoints/event-005-train-002.pt": "b4c1d873a4b6d694ee80e538f93a357570db30eddfd7d3ec78175cec6e5653f4"
+      },
+      "policy_version": 0,
+      "original_config": {
+        "feature_dim": 2064,
+        "residual_dim": 1152,
+        "width": 256,
+        "layers": 2,
+        "initial_std": 0.5,
+        "learning_rate": 3e-05,
+        "epochs": 10,
+        "minibatch_size": 32,
+        "clip": 0.2,
+        "gamma": 0.99,
+        "gae_lambda": 0.95,
+        "entropy_coef": 0.0,
+        "value_coef": 0.5,
+        "max_grad_norm": 1.0,
+        "target_kl": 0.02,
+        "kl_check_cadence": "minibatch"
+      },
+      "valid_chunk_samples": 3819,
+      "episodes": 384,
+      "positive_rewards": 144,
+      "normalized_initial_policy_sha256": "5068a94778d18104537e6bb6df9b0137d3c94bf61fcfa546cf9029c24016bc8f",
+      "variants": {
+        "guarded1": {
+          "config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 1,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "metrics": {
+            "loss": 0.06169512319963339,
+            "actor_loss": 0.024182769838114116,
+            "critic_loss": 0.07502470691796652,
+            "entropy": 836.0839914721112,
+            "approximate_kl": 0.013464531233144362,
+            "clip_fraction": 0.1900436046511628,
+            "samples": 3819,
+            "samples_processed": 2752,
+            "epochs_requested": 1,
+            "epochs_completed": 0,
+            "epochs_started": 1,
+            "optimizer_steps": 86,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch",
+            "kl_stop_metric": "joint_gaussian_kl",
+            "early_stopped": true,
+            "stop_reason": "target_kl",
+            "advantage_mean": 0.22443203628063202,
+            "advantage_std": 0.36953598260879517,
+            "return_mean": 0.19774022698402405,
+            "return_std": 0.36849308013916016,
+            "initial_metrics": {
+              "loss": 0.04673202751381418,
+              "actor_loss": 3.795562598305118e-07,
+              "critic_loss": 0.09346329898677833,
+              "entropy": 836.1113891601562,
+              "approximate_kl": 1.191527127378949e-09,
+              "clip_fraction": 0.0,
+              "joint_gaussian_kl": 0.0,
+              "explained_variance": -0.0056684017181396484
+            },
+            "final_metrics": {
+              "loss": -0.06370290916419898,
+              "actor_loss": -0.09812788741380701,
+              "critic_loss": 0.0688499585923142,
+              "entropy": 836.0766603320517,
+              "approximate_kl": 0.28556125799721216,
+              "clip_fraction": 0.6156061796906045,
+              "joint_gaussian_kl": 0.02002296546285347,
+              "explained_variance": 0.19953757524490356
+            },
+            "epoch_metrics": [
+              {
+                "epoch": 1,
+                "loss": -0.06370290916419898,
+                "actor_loss": -0.09812788741380701,
+                "critic_loss": 0.0688499585923142,
+                "entropy": 836.0766603320517,
+                "approximate_kl": 0.28556125799721216,
+                "clip_fraction": 0.6156061796906045,
+                "joint_gaussian_kl": 0.02002296546285347,
+                "explained_variance": 0.19953757524490356,
+                "optimizer_steps": 86,
+                "cumulative_optimizer_steps": 86,
+                "samples": 3819,
+                "samples_processed": 2752,
+                "epoch_complete": false,
+                "gradient_norm_mean": 43.6425844902216,
+                "gradient_norm_max": 59.41816329956055,
+                "elapsed_seconds": 19.571897118352354,
+                "kl_threshold_exceeded": true
+              }
+            ],
+            "minibatch_kl_checks": [
+              {
+                "optimizer_step": 1,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.00039710447518407987,
+                "approximate_kl": 0.0029104549041434045
+              },
+              {
+                "optimizer_step": 2,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.0009958955025551322,
+                "approximate_kl": 0.009741943145964773
+              },
+              {
+                "optimizer_step": 3,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.0017343076639405118,
+                "approximate_kl": 0.020584869722065226
+              },
+              {
+                "optimizer_step": 4,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.0025884361634517204,
+                "approximate_kl": 0.03643155355021637
+              },
+              {
+                "optimizer_step": 5,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.003481861387173889,
+                "approximate_kl": 0.05595759468758028
+              },
+              {
+                "optimizer_step": 6,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.004339312652063037,
+                "approximate_kl": 0.07751035434547514
+              },
+              {
+                "optimizer_step": 7,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.005145035915354252,
+                "approximate_kl": 0.10021501408673338
+              },
+              {
+                "optimizer_step": 8,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.005942594682291524,
+                "approximate_kl": 0.12343957841456811
+              },
+              {
+                "optimizer_step": 9,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.006697195231413133,
+                "approximate_kl": 0.14587306826072788
+              },
+              {
+                "optimizer_step": 10,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.007412235973181916,
+                "approximate_kl": 0.166665833485592
+              },
+              {
+                "optimizer_step": 11,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.00800624854619312,
+                "approximate_kl": 0.18359021115638405
+              },
+              {
+                "optimizer_step": 12,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.008574410820875875,
+                "approximate_kl": 0.19736393287623777
+              },
+              {
+                "optimizer_step": 13,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.00906421630378714,
+                "approximate_kl": 0.21062731230399798
+              },
+              {
+                "optimizer_step": 14,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.00960292852037172,
+                "approximate_kl": 0.2247066883476118
+              },
+              {
+                "optimizer_step": 15,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.010120413223323936,
+                "approximate_kl": 0.23642952084925653
+              },
+              {
+                "optimizer_step": 16,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01069203560718787,
+                "approximate_kl": 0.25217263297253206
+              },
+              {
+                "optimizer_step": 17,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.011123481637872142,
+                "approximate_kl": 0.26284441297362227
+              },
+              {
+                "optimizer_step": 18,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.011517751248273925,
+                "approximate_kl": 0.2727524783949042
+              },
+              {
+                "optimizer_step": 19,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.012007399712613378,
+                "approximate_kl": 0.2826812456309031
+              },
+              {
+                "optimizer_step": 20,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01235772584352577,
+                "approximate_kl": 0.2870137813186717
+              },
+              {
+                "optimizer_step": 21,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.012697155115983036,
+                "approximate_kl": 0.2899420065480975
+              },
+              {
+                "optimizer_step": 22,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013043494565882087,
+                "approximate_kl": 0.293012689239155
+              },
+              {
+                "optimizer_step": 23,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013307727131486313,
+                "approximate_kl": 0.293845195990445
+              },
+              {
+                "optimizer_step": 24,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013599410604828938,
+                "approximate_kl": 0.2964488935124487
+              },
+              {
+                "optimizer_step": 25,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013874253902645768,
+                "approximate_kl": 0.29883851117275717
+              },
+              {
+                "optimizer_step": 26,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014123823233026817,
+                "approximate_kl": 0.3009107210616083
+              },
+              {
+                "optimizer_step": 27,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014382729877706332,
+                "approximate_kl": 0.30246159594684535
+              },
+              {
+                "optimizer_step": 28,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01459551684613993,
+                "approximate_kl": 0.30223705012738533
+              },
+              {
+                "optimizer_step": 29,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01466872403434736,
+                "approximate_kl": 0.299521562903066
+              },
+              {
+                "optimizer_step": 30,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014783137114574676,
+                "approximate_kl": 0.29727329552938375
+              },
+              {
+                "optimizer_step": 31,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014814355361862359,
+                "approximate_kl": 0.2925574864531787
+              },
+              {
+                "optimizer_step": 32,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014709351927678008,
+                "approximate_kl": 0.2845102522690966
+              },
+              {
+                "optimizer_step": 33,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01459401145915916,
+                "approximate_kl": 0.27724656785937557
+              },
+              {
+                "optimizer_step": 34,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014333063734363171,
+                "approximate_kl": 0.2678608841380545
+              },
+              {
+                "optimizer_step": 35,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014069901489093997,
+                "approximate_kl": 0.25864494381836806
+              },
+              {
+                "optimizer_step": 36,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01382381326130475,
+                "approximate_kl": 0.25121089660409673
+              },
+              {
+                "optimizer_step": 37,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013622796854077912,
+                "approximate_kl": 0.2443693980075171
+              },
+              {
+                "optimizer_step": 38,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013505575726304762,
+                "approximate_kl": 0.24035987896495042
+              },
+              {
+                "optimizer_step": 39,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013464717249551597,
+                "approximate_kl": 0.23729139273782837
+              },
+              {
+                "optimizer_step": 40,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013393502520764567,
+                "approximate_kl": 0.23360621895027522
+              },
+              {
+                "optimizer_step": 41,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013326242510995087,
+                "approximate_kl": 0.23023050296959
+              },
+              {
+                "optimizer_step": 42,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013344052834443614,
+                "approximate_kl": 0.22823093343222756
+              },
+              {
+                "optimizer_step": 43,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.0133565158923904,
+                "approximate_kl": 0.2259119063377786
+              },
+              {
+                "optimizer_step": 44,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013329330291603913,
+                "approximate_kl": 0.22366492274068794
+              },
+              {
+                "optimizer_step": 45,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013301203150275834,
+                "approximate_kl": 0.22158933578009815
+              },
+              {
+                "optimizer_step": 46,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013278382977372721,
+                "approximate_kl": 0.2196456191992535
+              },
+              {
+                "optimizer_step": 47,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013285756233809396,
+                "approximate_kl": 0.21850174928045485
+              },
+              {
+                "optimizer_step": 48,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013344042107529215,
+                "approximate_kl": 0.21801568050172573
+              },
+              {
+                "optimizer_step": 49,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013387534796165433,
+                "approximate_kl": 0.21688895453861104
+              },
+              {
+                "optimizer_step": 50,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013457610582311949,
+                "approximate_kl": 0.2162125789899107
+              },
+              {
+                "optimizer_step": 51,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013589478023233183,
+                "approximate_kl": 0.21673142534645792
+              },
+              {
+                "optimizer_step": 52,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01365033755287173,
+                "approximate_kl": 0.21682963258279309
+              },
+              {
+                "optimizer_step": 53,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013756084880657722,
+                "approximate_kl": 0.21800987775973793
+              },
+              {
+                "optimizer_step": 54,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013787472479652129,
+                "approximate_kl": 0.21770814929521343
+              },
+              {
+                "optimizer_step": 55,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013911295339560736,
+                "approximate_kl": 0.21848783246211026
+              },
+              {
+                "optimizer_step": 56,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014016358028442784,
+                "approximate_kl": 0.21895854049841437
+              },
+              {
+                "optimizer_step": 57,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01413913516844246,
+                "approximate_kl": 0.2200208708495643
+              },
+              {
+                "optimizer_step": 58,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014277839776139261,
+                "approximate_kl": 0.2217359554747319
+              },
+              {
+                "optimizer_step": 59,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01447683854385114,
+                "approximate_kl": 0.2242112033601736
+              },
+              {
+                "optimizer_step": 60,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014675929343011342,
+                "approximate_kl": 0.2264808252684013
+              },
+              {
+                "optimizer_step": 61,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014875583512341283,
+                "approximate_kl": 0.22892839711283353
+              },
+              {
+                "optimizer_step": 62,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.015078935628299877,
+                "approximate_kl": 0.23126698092394832
+              },
+              {
+                "optimizer_step": 63,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.015338242230300395,
+                "approximate_kl": 0.23406805486290766
+              },
+              {
+                "optimizer_step": 64,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01561551498437925,
+                "approximate_kl": 0.23707305775571474
+              },
+              {
+                "optimizer_step": 65,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.015903625932126325,
+                "approximate_kl": 0.24031837120492222
+              },
+              {
+                "optimizer_step": 66,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.016138167679456163,
+                "approximate_kl": 0.24296941794113638
+              },
+              {
+                "optimizer_step": 67,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.016419948121612297,
+                "approximate_kl": 0.24642146283745547
+              },
+              {
+                "optimizer_step": 68,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.016713349369573294,
+                "approximate_kl": 0.25000550890349693
+              },
+              {
+                "optimizer_step": 69,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.016955367574318522,
+                "approximate_kl": 0.2531526377939154
+              },
+              {
+                "optimizer_step": 70,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.017236397188799674,
+                "approximate_kl": 0.2564405864229
+              },
+              {
+                "optimizer_step": 71,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.0174699787396287,
+                "approximate_kl": 0.2591069713820179
+              },
+              {
+                "optimizer_step": 72,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01768342037027998,
+                "approximate_kl": 0.2617853774012899
+              },
+              {
+                "optimizer_step": 73,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01789768072833805,
+                "approximate_kl": 0.2643014196268424
+              },
+              {
+                "optimizer_step": 74,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.018086439797483554,
+                "approximate_kl": 0.26653577031094106
+              },
+              {
+                "optimizer_step": 75,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01827653803801421,
+                "approximate_kl": 0.2687379994233824
+              },
+              {
+                "optimizer_step": 76,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.018373374550906454,
+                "approximate_kl": 0.2699923770617802
+              },
+              {
+                "optimizer_step": 77,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.018487814428544726,
+                "approximate_kl": 0.2714121843658682
+              },
+              {
+                "optimizer_step": 78,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.018629102710889064,
+                "approximate_kl": 0.27297012735588383
+              },
+              {
+                "optimizer_step": 79,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01879399911624641,
+                "approximate_kl": 0.27488726903846605
+              },
+              {
+                "optimizer_step": 80,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.018925426469817777,
+                "approximate_kl": 0.2762444802808899
+              },
+              {
+                "optimizer_step": 81,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01910717135944442,
+                "approximate_kl": 0.2780123964092531
+              },
+              {
+                "optimizer_step": 82,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01931168697189133,
+                "approximate_kl": 0.27993328142818524
+              },
+              {
+                "optimizer_step": 83,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.019485409078184582,
+                "approximate_kl": 0.28143280372511315
+              },
+              {
+                "optimizer_step": 84,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01966831428063465,
+                "approximate_kl": 0.2828741756646569
+              },
+              {
+                "optimizer_step": 85,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.019855807438047966,
+                "approximate_kl": 0.284207166130863
+              },
+              {
+                "optimizer_step": 86,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.02002296546285347,
+                "approximate_kl": 0.28556125799721216
+              }
+            ],
+            "elapsed_seconds": 19.940077337436378
+          },
+          "policy_shift": {
+            "mean_delta_RMS": 0.002940288046374917,
+            "mean_delta_RMS_in_behavior_std": 0.005880576092749834,
+            "final_std_min": 0.4994918704032898,
+            "final_std_mean": 0.49998044967651367,
+            "final_std_max": 0.500433623790741,
+            "deterministic_tanh_mean_delta_RMS": 0.0029402580112218857
+          },
+          "initial_model_sha256": "5068a94778d18104537e6bb6df9b0137d3c94bf61fcfa546cf9029c24016bc8f",
+          "initial_adam_sha256": "0e408c733531be1a4e32c7fa6dcc625e8d6a62bebf269e5f5517879cb5430fef",
+          "initial_sampler_sha256": "13370460c562efabd28fe821c74b8cec14eee97673a1e1cafbbd9211077cab86",
+          "final_model_sha256": "0fd90e95e613ff66557e8ec433216b82da68605d2fd757272011636bb1901143",
+          "final_adam_sha256": "e26ebcd527b53d2b83d2183ac5b017d8f04c0b0d93d0237413f7cfccd41018fd",
+          "final_sampler_sha256": "92f459c775906cd20c2f5b2ec49ccf8c59e0f8bf132d8c3f3adde65a874eba50",
+          "artifact": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/steering-kl-guard-ablation-20261103-r1/cpu-r1/kv_all_layers/guarded1.pt",
+            "sha256": "cdbae8d71aed000040a6341fc967b7a45afff7c1a9b30e80cf8cc2a835b43314"
+          },
+          "gradient_sample_fraction": 0.7206074888714323
+        },
+        "unguarded1": {
+          "config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 1,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": null,
+            "kl_check_cadence": "minibatch"
+          },
+          "metrics": {
+            "loss": 0.04958403060853123,
+            "actor_loss": 0.011637408581898143,
+            "critic_loss": 0.07589324399083658,
+            "entropy": 836.0813582970478,
+            "approximate_kl": 0.016125300083173824,
+            "clip_fraction": 0.2257135376064963,
+            "samples": 3819,
+            "samples_processed": 3819,
+            "epochs_requested": 1,
+            "epochs_completed": 1,
+            "epochs_started": 1,
+            "optimizer_steps": 120,
+            "target_kl": null,
+            "kl_check_cadence": "minibatch",
+            "kl_stop_metric": "joint_gaussian_kl",
+            "early_stopped": false,
+            "stop_reason": "epochs_completed",
+            "advantage_mean": 0.22443203628063202,
+            "advantage_std": 0.36953598260879517,
+            "return_mean": 0.19774022698402405,
+            "return_std": 0.36849308013916016,
+            "initial_metrics": {
+              "loss": 0.04673202751381418,
+              "actor_loss": 3.795562598305118e-07,
+              "critic_loss": 0.09346329898677833,
+              "entropy": 836.1113891601562,
+              "approximate_kl": 1.191527127378949e-09,
+              "clip_fraction": 0.0,
+              "joint_gaussian_kl": 0.0,
+              "explained_variance": -0.0056684017181396484
+            },
+            "final_metrics": {
+              "loss": -0.10943321791204616,
+              "actor_loss": -0.1428304429171628,
+              "critic_loss": 0.06679445008802637,
+              "entropy": 836.0728759765625,
+              "approximate_kl": 0.3229298397087089,
+              "clip_fraction": 0.748363445990683,
+              "joint_gaussian_kl": 0.025052334417294663,
+              "explained_variance": 0.2325211763381958
+            },
+            "epoch_metrics": [
+              {
+                "epoch": 1,
+                "loss": -0.10943321791204616,
+                "actor_loss": -0.1428304429171628,
+                "critic_loss": 0.06679445008802637,
+                "entropy": 836.0728759765625,
+                "approximate_kl": 0.3229298397087089,
+                "clip_fraction": 0.748363445990683,
+                "joint_gaussian_kl": 0.025052334417294663,
+                "explained_variance": 0.2325211763381958,
+                "optimizer_steps": 120,
+                "cumulative_optimizer_steps": 120,
+                "samples": 3819,
+                "samples_processed": 3819,
+                "epoch_complete": true,
+                "gradient_norm_mean": 43.66008451779683,
+                "gradient_norm_max": 80.11640167236328,
+                "elapsed_seconds": 0.7984824944287539,
+                "kl_threshold_exceeded": false
+              }
+            ],
+            "minibatch_kl_checks": [],
+            "elapsed_seconds": 1.1268188999965787
+          },
+          "policy_shift": {
+            "mean_delta_RMS": 0.003288161475211382,
+            "mean_delta_RMS_in_behavior_std": 0.006576322950422764,
+            "final_std_min": 0.49944087862968445,
+            "final_std_mean": 0.49998021125793457,
+            "final_std_max": 0.5005322694778442,
+            "deterministic_tanh_mean_delta_RMS": 0.003288119798526168
+          },
+          "initial_model_sha256": "5068a94778d18104537e6bb6df9b0137d3c94bf61fcfa546cf9029c24016bc8f",
+          "initial_adam_sha256": "0e408c733531be1a4e32c7fa6dcc625e8d6a62bebf269e5f5517879cb5430fef",
+          "initial_sampler_sha256": "13370460c562efabd28fe821c74b8cec14eee97673a1e1cafbbd9211077cab86",
+          "final_model_sha256": "f9e1a5040348f90cfefde0dc43f793c20bcdb4c7d497c60649d3b6522b3cd010",
+          "final_adam_sha256": "31f38db1291dc64b317bb3613b3aca1fca21ee2a1dcafb7f73c98da92c868bd3",
+          "final_sampler_sha256": "92f459c775906cd20c2f5b2ec49ccf8c59e0f8bf132d8c3f3adde65a874eba50",
+          "artifact": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/steering-kl-guard-ablation-20261103-r1/cpu-r1/kv_all_layers/unguarded1.pt",
+            "sha256": "2d1e38555444f4b12b9c90a7a3977910fbd51087f5c14480b69ba891b67ddb81"
+          },
+          "gradient_sample_fraction": 1.0
+        },
+        "guarded10_reference": {
+          "config": {
+            "feature_dim": 2064,
+            "residual_dim": 1152,
+            "width": 256,
+            "layers": 2,
+            "initial_std": 0.5,
+            "learning_rate": 3e-05,
+            "epochs": 10,
+            "minibatch_size": 32,
+            "clip": 0.2,
+            "gamma": 0.99,
+            "gae_lambda": 0.95,
+            "entropy_coef": 0.0,
+            "value_coef": 0.5,
+            "max_grad_norm": 1.0,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch"
+          },
+          "metrics": {
+            "loss": 0.06169512319963339,
+            "actor_loss": 0.024182769838114116,
+            "critic_loss": 0.07502470691796652,
+            "entropy": 836.0839914721112,
+            "approximate_kl": 0.013464531233144362,
+            "clip_fraction": 0.1900436046511628,
+            "samples": 3819,
+            "samples_processed": 2752,
+            "epochs_requested": 10,
+            "epochs_completed": 0,
+            "epochs_started": 1,
+            "optimizer_steps": 86,
+            "target_kl": 0.02,
+            "kl_check_cadence": "minibatch",
+            "kl_stop_metric": "joint_gaussian_kl",
+            "early_stopped": true,
+            "stop_reason": "target_kl",
+            "advantage_mean": 0.22443203628063202,
+            "advantage_std": 0.36953598260879517,
+            "return_mean": 0.19774022698402405,
+            "return_std": 0.36849308013916016,
+            "initial_metrics": {
+              "loss": 0.04673202751381418,
+              "actor_loss": 3.795562598305118e-07,
+              "critic_loss": 0.09346329898677833,
+              "entropy": 836.1113891601562,
+              "approximate_kl": 1.191527127378949e-09,
+              "clip_fraction": 0.0,
+              "joint_gaussian_kl": 0.0,
+              "explained_variance": -0.0056684017181396484
+            },
+            "final_metrics": {
+              "loss": -0.06370290916419898,
+              "actor_loss": -0.09812788741380701,
+              "critic_loss": 0.0688499585923142,
+              "entropy": 836.0766603320517,
+              "approximate_kl": 0.28556125799721216,
+              "clip_fraction": 0.6156061796906045,
+              "joint_gaussian_kl": 0.02002296546285347,
+              "explained_variance": 0.19953757524490356
+            },
+            "epoch_metrics": [
+              {
+                "epoch": 1,
+                "loss": -0.06370290916419898,
+                "actor_loss": -0.09812788741380701,
+                "critic_loss": 0.0688499585923142,
+                "entropy": 836.0766603320517,
+                "approximate_kl": 0.28556125799721216,
+                "clip_fraction": 0.6156061796906045,
+                "joint_gaussian_kl": 0.02002296546285347,
+                "explained_variance": 0.19953757524490356,
+                "optimizer_steps": 86,
+                "cumulative_optimizer_steps": 86,
+                "samples": 3819,
+                "samples_processed": 2752,
+                "epoch_complete": false,
+                "gradient_norm_mean": 43.6425844902216,
+                "gradient_norm_max": 59.41816329956055,
+                "elapsed_seconds": 18.473139494657516,
+                "kl_threshold_exceeded": true
+              }
+            ],
+            "minibatch_kl_checks": [
+              {
+                "optimizer_step": 1,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.00039710447518407987,
+                "approximate_kl": 0.0029104549041434045
+              },
+              {
+                "optimizer_step": 2,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.0009958955025551322,
+                "approximate_kl": 0.009741943145964773
+              },
+              {
+                "optimizer_step": 3,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.0017343076639405118,
+                "approximate_kl": 0.020584869722065226
+              },
+              {
+                "optimizer_step": 4,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.0025884361634517204,
+                "approximate_kl": 0.03643155355021637
+              },
+              {
+                "optimizer_step": 5,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.003481861387173889,
+                "approximate_kl": 0.05595759468758028
+              },
+              {
+                "optimizer_step": 6,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.004339312652063037,
+                "approximate_kl": 0.07751035434547514
+              },
+              {
+                "optimizer_step": 7,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.005145035915354252,
+                "approximate_kl": 0.10021501408673338
+              },
+              {
+                "optimizer_step": 8,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.005942594682291524,
+                "approximate_kl": 0.12343957841456811
+              },
+              {
+                "optimizer_step": 9,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.006697195231413133,
+                "approximate_kl": 0.14587306826072788
+              },
+              {
+                "optimizer_step": 10,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.007412235973181916,
+                "approximate_kl": 0.166665833485592
+              },
+              {
+                "optimizer_step": 11,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.00800624854619312,
+                "approximate_kl": 0.18359021115638405
+              },
+              {
+                "optimizer_step": 12,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.008574410820875875,
+                "approximate_kl": 0.19736393287623777
+              },
+              {
+                "optimizer_step": 13,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.00906421630378714,
+                "approximate_kl": 0.21062731230399798
+              },
+              {
+                "optimizer_step": 14,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.00960292852037172,
+                "approximate_kl": 0.2247066883476118
+              },
+              {
+                "optimizer_step": 15,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.010120413223323936,
+                "approximate_kl": 0.23642952084925653
+              },
+              {
+                "optimizer_step": 16,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01069203560718787,
+                "approximate_kl": 0.25217263297253206
+              },
+              {
+                "optimizer_step": 17,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.011123481637872142,
+                "approximate_kl": 0.26284441297362227
+              },
+              {
+                "optimizer_step": 18,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.011517751248273925,
+                "approximate_kl": 0.2727524783949042
+              },
+              {
+                "optimizer_step": 19,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.012007399712613378,
+                "approximate_kl": 0.2826812456309031
+              },
+              {
+                "optimizer_step": 20,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01235772584352577,
+                "approximate_kl": 0.2870137813186717
+              },
+              {
+                "optimizer_step": 21,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.012697155115983036,
+                "approximate_kl": 0.2899420065480975
+              },
+              {
+                "optimizer_step": 22,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013043494565882087,
+                "approximate_kl": 0.293012689239155
+              },
+              {
+                "optimizer_step": 23,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013307727131486313,
+                "approximate_kl": 0.293845195990445
+              },
+              {
+                "optimizer_step": 24,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013599410604828938,
+                "approximate_kl": 0.2964488935124487
+              },
+              {
+                "optimizer_step": 25,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013874253902645768,
+                "approximate_kl": 0.29883851117275717
+              },
+              {
+                "optimizer_step": 26,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014123823233026817,
+                "approximate_kl": 0.3009107210616083
+              },
+              {
+                "optimizer_step": 27,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014382729877706332,
+                "approximate_kl": 0.30246159594684535
+              },
+              {
+                "optimizer_step": 28,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01459551684613993,
+                "approximate_kl": 0.30223705012738533
+              },
+              {
+                "optimizer_step": 29,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01466872403434736,
+                "approximate_kl": 0.299521562903066
+              },
+              {
+                "optimizer_step": 30,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014783137114574676,
+                "approximate_kl": 0.29727329552938375
+              },
+              {
+                "optimizer_step": 31,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014814355361862359,
+                "approximate_kl": 0.2925574864531787
+              },
+              {
+                "optimizer_step": 32,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014709351927678008,
+                "approximate_kl": 0.2845102522690966
+              },
+              {
+                "optimizer_step": 33,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01459401145915916,
+                "approximate_kl": 0.27724656785937557
+              },
+              {
+                "optimizer_step": 34,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014333063734363171,
+                "approximate_kl": 0.2678608841380545
+              },
+              {
+                "optimizer_step": 35,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014069901489093997,
+                "approximate_kl": 0.25864494381836806
+              },
+              {
+                "optimizer_step": 36,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01382381326130475,
+                "approximate_kl": 0.25121089660409673
+              },
+              {
+                "optimizer_step": 37,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013622796854077912,
+                "approximate_kl": 0.2443693980075171
+              },
+              {
+                "optimizer_step": 38,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013505575726304762,
+                "approximate_kl": 0.24035987896495042
+              },
+              {
+                "optimizer_step": 39,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013464717249551597,
+                "approximate_kl": 0.23729139273782837
+              },
+              {
+                "optimizer_step": 40,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013393502520764567,
+                "approximate_kl": 0.23360621895027522
+              },
+              {
+                "optimizer_step": 41,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013326242510995087,
+                "approximate_kl": 0.23023050296959
+              },
+              {
+                "optimizer_step": 42,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013344052834443614,
+                "approximate_kl": 0.22823093343222756
+              },
+              {
+                "optimizer_step": 43,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.0133565158923904,
+                "approximate_kl": 0.2259119063377786
+              },
+              {
+                "optimizer_step": 44,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013329330291603913,
+                "approximate_kl": 0.22366492274068794
+              },
+              {
+                "optimizer_step": 45,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013301203150275834,
+                "approximate_kl": 0.22158933578009815
+              },
+              {
+                "optimizer_step": 46,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013278382977372721,
+                "approximate_kl": 0.2196456191992535
+              },
+              {
+                "optimizer_step": 47,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013285756233809396,
+                "approximate_kl": 0.21850174928045485
+              },
+              {
+                "optimizer_step": 48,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013344042107529215,
+                "approximate_kl": 0.21801568050172573
+              },
+              {
+                "optimizer_step": 49,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013387534796165433,
+                "approximate_kl": 0.21688895453861104
+              },
+              {
+                "optimizer_step": 50,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013457610582311949,
+                "approximate_kl": 0.2162125789899107
+              },
+              {
+                "optimizer_step": 51,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013589478023233183,
+                "approximate_kl": 0.21673142534645792
+              },
+              {
+                "optimizer_step": 52,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01365033755287173,
+                "approximate_kl": 0.21682963258279309
+              },
+              {
+                "optimizer_step": 53,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013756084880657722,
+                "approximate_kl": 0.21800987775973793
+              },
+              {
+                "optimizer_step": 54,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013787472479652129,
+                "approximate_kl": 0.21770814929521343
+              },
+              {
+                "optimizer_step": 55,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.013911295339560736,
+                "approximate_kl": 0.21848783246211026
+              },
+              {
+                "optimizer_step": 56,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014016358028442784,
+                "approximate_kl": 0.21895854049841437
+              },
+              {
+                "optimizer_step": 57,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01413913516844246,
+                "approximate_kl": 0.2200208708495643
+              },
+              {
+                "optimizer_step": 58,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014277839776139261,
+                "approximate_kl": 0.2217359554747319
+              },
+              {
+                "optimizer_step": 59,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01447683854385114,
+                "approximate_kl": 0.2242112033601736
+              },
+              {
+                "optimizer_step": 60,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014675929343011342,
+                "approximate_kl": 0.2264808252684013
+              },
+              {
+                "optimizer_step": 61,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.014875583512341283,
+                "approximate_kl": 0.22892839711283353
+              },
+              {
+                "optimizer_step": 62,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.015078935628299877,
+                "approximate_kl": 0.23126698092394832
+              },
+              {
+                "optimizer_step": 63,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.015338242230300395,
+                "approximate_kl": 0.23406805486290766
+              },
+              {
+                "optimizer_step": 64,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01561551498437925,
+                "approximate_kl": 0.23707305775571474
+              },
+              {
+                "optimizer_step": 65,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.015903625932126325,
+                "approximate_kl": 0.24031837120492222
+              },
+              {
+                "optimizer_step": 66,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.016138167679456163,
+                "approximate_kl": 0.24296941794113638
+              },
+              {
+                "optimizer_step": 67,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.016419948121612297,
+                "approximate_kl": 0.24642146283745547
+              },
+              {
+                "optimizer_step": 68,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.016713349369573294,
+                "approximate_kl": 0.25000550890349693
+              },
+              {
+                "optimizer_step": 69,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.016955367574318522,
+                "approximate_kl": 0.2531526377939154
+              },
+              {
+                "optimizer_step": 70,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.017236397188799674,
+                "approximate_kl": 0.2564405864229
+              },
+              {
+                "optimizer_step": 71,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.0174699787396287,
+                "approximate_kl": 0.2591069713820179
+              },
+              {
+                "optimizer_step": 72,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01768342037027998,
+                "approximate_kl": 0.2617853774012899
+              },
+              {
+                "optimizer_step": 73,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01789768072833805,
+                "approximate_kl": 0.2643014196268424
+              },
+              {
+                "optimizer_step": 74,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.018086439797483554,
+                "approximate_kl": 0.26653577031094106
+              },
+              {
+                "optimizer_step": 75,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01827653803801421,
+                "approximate_kl": 0.2687379994233824
+              },
+              {
+                "optimizer_step": 76,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.018373374550906454,
+                "approximate_kl": 0.2699923770617802
+              },
+              {
+                "optimizer_step": 77,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.018487814428544726,
+                "approximate_kl": 0.2714121843658682
+              },
+              {
+                "optimizer_step": 78,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.018629102710889064,
+                "approximate_kl": 0.27297012735588383
+              },
+              {
+                "optimizer_step": 79,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01879399911624641,
+                "approximate_kl": 0.27488726903846605
+              },
+              {
+                "optimizer_step": 80,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.018925426469817777,
+                "approximate_kl": 0.2762444802808899
+              },
+              {
+                "optimizer_step": 81,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01910717135944442,
+                "approximate_kl": 0.2780123964092531
+              },
+              {
+                "optimizer_step": 82,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01931168697189133,
+                "approximate_kl": 0.27993328142818524
+              },
+              {
+                "optimizer_step": 83,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.019485409078184582,
+                "approximate_kl": 0.28143280372511315
+              },
+              {
+                "optimizer_step": 84,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.01966831428063465,
+                "approximate_kl": 0.2828741756646569
+              },
+              {
+                "optimizer_step": 85,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.019855807438047966,
+                "approximate_kl": 0.284207166130863
+              },
+              {
+                "optimizer_step": 86,
+                "epoch": 1,
+                "kl_stop_metric": "joint_gaussian_kl",
+                "kl": 0.02002296546285347,
+                "approximate_kl": 0.28556125799721216
+              }
+            ],
+            "elapsed_seconds": 18.80249442625791
+          },
+          "policy_shift": {
+            "mean_delta_RMS": 0.002940288046374917,
+            "mean_delta_RMS_in_behavior_std": 0.005880576092749834,
+            "final_std_min": 0.4994918704032898,
+            "final_std_mean": 0.49998044967651367,
+            "final_std_max": 0.500433623790741,
+            "deterministic_tanh_mean_delta_RMS": 0.0029402580112218857
+          },
+          "initial_model_sha256": "5068a94778d18104537e6bb6df9b0137d3c94bf61fcfa546cf9029c24016bc8f",
+          "initial_adam_sha256": "0e408c733531be1a4e32c7fa6dcc625e8d6a62bebf269e5f5517879cb5430fef",
+          "initial_sampler_sha256": "13370460c562efabd28fe821c74b8cec14eee97673a1e1cafbbd9211077cab86",
+          "final_model_sha256": "0fd90e95e613ff66557e8ec433216b82da68605d2fd757272011636bb1901143",
+          "final_adam_sha256": "e26ebcd527b53d2b83d2183ac5b017d8f04c0b0d93d0237413f7cfccd41018fd",
+          "final_sampler_sha256": "92f459c775906cd20c2f5b2ec49ccf8c59e0f8bf132d8c3f3adde65a874eba50",
+          "artifact": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/steering-kl-guard-ablation-20261103-r1/cpu-r1/kv_all_layers/guarded10_reference.pt",
+            "sha256": "bb984fea901b62e9d4df62c1ce4863980597b4d640dfb3b44c057ab6cf2608b5"
+          },
+          "gradient_sample_fraction": 0.7206074888714323
+        }
+      },
+      "guarded_epoch_limit_equivalence": {
+        "stopped_during_first_epoch": true,
+        "model_exact": true,
+        "adam_exact": true,
+        "sampler_exact": true
+      },
+      "initial_artifact": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/steering-kl-guard-ablation-20261103-r1/cpu-r1/kv_all_layers/initial.pt",
+        "sha256": "54b9f943e6908a1c54d9a0529386637a9fccd9bf1f885b6c54f8d5b51c563020"
+      }
+    }
+  },
+  "elapsed_seconds": 52.728498458862305,
+  "source_files_unchanged": true,
+  "source_hashes_before_and_after": {
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/banks/round-001-before-sgd.pt": "fd40859178d808cce44311694b31b16538e2d6479498fba57739e212907058fa",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/checkpoints/event-003-dev-000.pt": "636c057a2d25af37a6b0df46cc3e6e176a88adabfd548118eea9b1eeaf46982f",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/checkpoints/event-005-train-002.pt": "38d665ba6244a8bd1a5017045b1903a6206999515974c6a6d90eefd38b0dc27a",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/banks/round-001-before-sgd.pt": "477b95c1ecdb0796ad693abf76060b13cfdba5da686a709e862f5ecac6f30b68",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/checkpoints/event-003-dev-000.pt": "4b3fd457b307d03c29b3fec73370578610bd9e2f11407eed321aa757276ceb44",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/checkpoints/event-005-train-002.pt": "b4c1d873a4b6d694ee80e538f93a357570db30eddfd7d3ec78175cec6e5653f4"
+  },
+  "finished_unix": 1793687041.488031,
+  "interpretation": "Numerical optimizer diagnostic only; native success evaluation is separate"
+}
