@@ -3,6 +3,7 @@ import argparse
 from concurrent.futures import ProcessPoolExecutor
 import gzip
 import hashlib
+import io
 import json
 import multiprocessing
 from pathlib import Path
@@ -12,11 +13,21 @@ import torch
 import numpy as np
 
 
+FILE_HASHES = {}
+
+
+def payload(path):
+    data = Path(path).read_bytes()
+    FILE_HASHES[str(path)] = dict(bytes=len(data), sha256=hashlib.sha256(data).hexdigest())
+    return data
+
+
 def load(path):
+    data = io.BytesIO(payload(path))
     if str(path).endswith('.gz'):
-        with gzip.open(path, 'rb') as stream:
+        with gzip.GzipFile(fileobj=data, mode='rb') as stream:
             return torch.load(stream, map_location='cpu', weights_only=False)
-    return torch.load(path, map_location='cpu', weights_only=False)
+    return torch.load(data, map_location='cpu', weights_only=False)
 
 
 def row_hashes(value):
@@ -58,8 +69,9 @@ def observation(value):
 
 
 def audit(root, collection, tag):
+    FILE_HASHES.clear()
     producing = collection - 1
-    contract = json.loads((root / 'flow-contract.json').read_text())
+    contract = json.loads(payload(root / 'flow-contract.json'))
     assert contract['horizon'] == 600
     expected_seed = contract['train_seed'] + producing * 128
     env_index, identities, successes = {}, set(), {}
@@ -96,7 +108,7 @@ def audit(root, collection, tag):
     episode_paths = sorted((root / 'environment').glob(f'*/training-i{producing:03d}-*-episodes.json'))
     assert len(episode_paths) == 8
     for path in episode_paths:
-        value = json.loads(path.read_text())
+        value = json.loads(payload(path))
         assert value['completed'] and value['iteration'] == producing
         for row in value['rows']:
             counts = row['native_counts']
@@ -104,14 +116,36 @@ def audit(root, collection, tag):
             successes[row['episode_id']] = row['success_once']
     assert len(identities) == 1536 and len(successes) == len(reward_totals) == 128
     assert all(reward_totals[key] == float(successes[key]) for key in successes)
+    initial_paths = sorted((root / 'environment').glob(f'*/training-i{producing:03d}-*-initial.pt'))
+    assert len(initial_paths) == 8
+    for path in initial_paths:
+        payload(path)
     sampling_index, sampling_records, sampled_env = {}, 0, set()
     rank_records = {}
-    for path in sorted((root / 'sampling').glob('*/*.pt.gz')):
+    indexed = root.name == 'production-r1'
+    terminal_records = 0
+    if indexed:
+        assert 2 <= collection <= 130
+        # This immutable segment resumes update1 with prediction ordinal0.
+        # Check every selected record's actual metadata, including bootstrap.
+        ordinal = 13 * (collection - 2)
+        sampling_paths = [root / 'sampling' / f'rank-{rank:02d}' / f'{ordinal + offset:05d}.pt.gz'
+                          for rank in range(8) for offset in range(13)]
+    else:
+        sampling_paths = sorted((root / 'sampling').glob('*/*.pt.gz'))
+    for path in sampling_paths:
         # Once a rank's complete target batch is joined, avoid reading later
         # updates that may still be writing while this audit runs.
-        if rank_records.get(path.parent, 0) == 12:
+        if not indexed and rank_records.get(path.parent, 0) == 12:
             continue
         value = load(path)
+        if indexed:
+            offset = int(path.name.split('.')[0]) - ordinal
+            assert value['rank'] == int(path.parent.name.split('-')[1])
+            assert value['prediction_ordinal'] == ordinal + offset
+            assert value['collection_iteration'] == collection and value['mode'] == 'train'
+            assert bool(value['terminal_value_only']) == (offset == 12)
+            terminal_records += int(value['terminal_value_only'])
         if (value['mode'] != 'train' or value['terminal_value_only'] or
                 value['collection_iteration'] != collection):
             continue
@@ -137,6 +171,7 @@ def audit(root, collection, tag):
                 environment_record=str(env_path), sampling_record=str(path), sampling_lane=lane)
         sampling_records += 1
         rank_records[path.parent] = rank_records.get(path.parent, 0) + 1
+    assert not indexed or terminal_records == 8
     assert len(rank_records) == 8 and set(rank_records.values()) == {12}
     assert sampled_env == set(env_index) and sampling_records == 96 and len(sampling_index) == 1536
     joins = []
@@ -161,6 +196,22 @@ def audit(root, collection, tag):
     join_path = root.parent / f'{tag}-JOIN-{root.name}-i{collection:03d}.json'
     assert not join_path.exists()
     join_path.write_text(json.dumps(dict(completed=True, rows=joins), indent=2) + '\n')
+    join_digest = hashlib.sha256(join_path.read_bytes()).hexdigest()
+    reference = None
+    if collection == 2:
+        candidates = []
+        for reference_path in [root.parents[1] / 'FOUR-METHOD-AUDIT-R3.json',
+                               root.parents[1] / 'FOUR-METHOD-AUDIT-R4.json']:
+            if reference_path.exists():
+                candidates.extend((reference_path, row) for row in json.loads(reference_path.read_text())['audits']
+                                  if row['root'] == str(root) and row['collection_iteration'] == 2)
+        assert len(candidates) == 1, 'Require the already qualified first production join reference'
+        reference_path, reference_row = candidates[0]
+        assert join_digest == reference_row['join_sha256'], 'Indexed join differs from full-scan reference'
+        reference = dict(path=str(reference_path), join_sha256=join_digest, byte_identical_join=True)
+    manifest_path = root.parent / f'{tag}-FILES-{root.name}-i{collection:03d}.json'
+    assert not manifest_path.exists()
+    manifest_path.write_text(json.dumps(dict(completed=True, files=dict(sorted(FILE_HASHES.items()))), indent=2) + '\n')
     return dict(task=contract['task'], root=str(root), collection_iteration=collection,
         episodes=128, chunk_samples=1536, post_success_suffix_retained=True,
         raw_three_view_RGB_state_instruction=True, primitive_actions_rewards_boundaries=True,
@@ -168,18 +219,25 @@ def audit(root, collection, tag):
         full_sampling_chain_and_RNG=True, producing_policy_version=True,
         actor_sampling_environment_join=str(join_path),
         observation_join='Exact native payload hash; only environment-only task_metadata excluded',
-        join_sha256=hashlib.sha256(join_path.read_bytes()).hexdigest())
+        join_sha256=join_digest, first_batch_reference=reference,
+        raw_file_manifest=str(manifest_path), raw_files=len(FILE_HASHES),
+        raw_file_manifest_sha256=hashlib.sha256(manifest_path.read_bytes()).hexdigest(),
+        raw_bytes=sum(row['bytes'] for row in FILE_HASHES.values()),
+        sampling_index='Verified thirteen-prediction ordinal stride' if indexed else 'Full scan')
 
 
 def audit_task(arguments):
-    root, task, tag, production_only = arguments
+    root, task, tag, production_only, collections = arguments
     torch.set_num_threads(2)
     torch.set_num_interop_threads(1)
     stage = 'q1-r2' if task == 'OpenDrawer' else 'q1-r1'
     rows = [] if production_only else [audit(root / task / stage, 1, tag)]
     production = root / task / 'production-r1'
-    if (production / 'progress.json').exists() and json.loads((production / 'progress.json').read_text())['completed_iterations'] >= 2:
-        rows.append(audit(production, 2, tag))
+    if (production / 'progress.json').exists():
+        completed = json.loads((production / 'progress.json').read_text())['completed_iterations']
+        for collection in collections:
+            assert completed >= collection, 'Requested batch is not complete yet'
+            rows.append(audit(production, collection, tag))
     assert rows, 'Requested production batch is not complete yet'
     print(json.dumps(dict(task=task, completed=True, segments=len(rows))), flush=True)
     return rows
@@ -192,13 +250,16 @@ def main():
     tasks = ['OpenDrawer', 'CloseToasterOvenDoor', 'PickPlaceDrawerToCounter', 'CoffeeSetupMug', 'TurnOffStove']
     parser.add_argument('--tasks', choices=tasks, nargs='+', default=tasks)
     parser.add_argument('--production-only', action='store_true')
+    parser.add_argument('--collections', type=int, nargs='+', default=[2])
     args = parser.parse_args()
     assert not args.output.exists()
     assert len(set(args.tasks)) == len(args.tasks)
+    assert len(set(args.collections)) == len(args.collections) and all(2 <= x <= 130 for x in args.collections)
+    assert args.production_only or args.collections == [2]
     # Five independent audits, two CPU threads each, within the allocated
     # development container's thirteen CPUs; no GPU visibility/model calls.
     with ProcessPoolExecutor(max_workers=min(5, len(args.tasks)), mp_context=multiprocessing.get_context('spawn')) as pool:
-        groups = list(pool.map(audit_task, [(args.root, task, args.output.stem, args.production_only) for task in args.tasks]))
+        groups = list(pool.map(audit_task, [(args.root, task, args.output.stem, args.production_only, sorted(args.collections)) for task in args.tasks]))
     rows = [row for group in groups for row in group]
     result = dict(completed=True, checked_unix=time.time(), audits=rows, new_controls=0, SGD=0,
         ready_methods=['AD', 'DPT', 'DIT', 'in-context IQL'],
