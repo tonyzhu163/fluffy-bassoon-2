@@ -83,9 +83,10 @@ def _raw(environment):
 
 
 class _RecordingEnvironment(RoboCasaResidualEnvironment):
-    def __init__(self, *args, canonical_root, source, **kwargs):
+    def __init__(self, *args, canonical_root, source, strict_pairing=False, **kwargs):
         super().__init__(*args, **kwargs)
         self.canonical_root, self.source = Path(canonical_root), source
+        self.strict_pairing = strict_pairing
         self.dispatched_commands, self.completed_commands = [], []
 
     def reset(self):
@@ -94,7 +95,8 @@ class _RecordingEnvironment(RoboCasaResidualEnvironment):
         snapshot = public_snapshot(observation, self.case, physical)
         directory = self.canonical_root / self.case["task"] / str(self.case["native_seed"])
         marker, report = canonical_case(directory, snapshot, save=lambda p, v: _save(p, v),
-            load=lambda p: torch.load(p, map_location="cpu", weights_only=False), source=self.source)
+            load=lambda p: torch.load(p, map_location="cpu", weights_only=False), source=self.source,
+            require_images_exact=self.strict_pairing)
         self.initial_evidence = dict(snapshot=snapshot, canonical=str(marker), pairing=report,
                                      raw=_raw(self), native_counts=self._counts())
         dispatch = self.native.env.step
@@ -230,6 +232,10 @@ def collect_bank(policy, motor, environments, *, request, output, rank, deadline
     cases, spec = request["cases"], InterfaceSpec(**request["spec"])
     requested_lanes = request.get("lanes", len(environments))
     barrier = request.get("synchronize_initial_lanes", False)
+    batch_mode = request.get("batch_mode", "async")
+    if batch_mode not in ("async", "fixed_waves_v1"):
+        raise ValueError("Unknown inference batch schedule")
+    fixed_batches = batch_mode == "fixed_waves_v1"
     if (type(requested_lanes) is not int or requested_lanes < 1 or requested_lanes != len(environments)
             or type(barrier) is not bool or not cases or not environments
             or any(env.cases != cases or env.cursor for env in environments)
@@ -246,8 +252,10 @@ def collect_bank(policy, motor, environments, *, request, output, rank, deadline
     upcoming = iter(range(len(cases)))
     resetting, running = {}, {}
     qualification = None
-    initial_wave_pending = barrier
+    initial_wave_pending = barrier or fixed_batches
     batch_sizes, peak_active_lanes = [], 0
+    inference_batches, wave_slots, padding_observations = [], {}, {}
+    wave = 0
 
     def start(lane, pool):
         slot = next(upcoming, None)
@@ -256,6 +264,8 @@ def collect_bank(policy, motor, environments, *, request, output, rank, deadline
                 raise TimeoutError("Worker deadline before a new native episode")
             environment = environments[lane]
             environment.seek(slot)
+            if fixed_batches:
+                wave_slots[lane] = slot
             resetting[pool.submit(environment.reset)] = (lane, slot)
 
     def accept_reset(future):
@@ -269,6 +279,8 @@ def collect_bank(policy, motor, environments, *, request, output, rank, deadline
         initial_ref = _save(directory / "initial.pt", initial)
         running[lane] = dict(slot=slot, chunk=0, observation=observation,
             ppo_done=False, directory=directory, initial=initial_ref, chunks=[], valid=[])
+        if fixed_batches:
+            padding_observations[lane] = deepcopy(observation)
 
     try:
         with ThreadPoolExecutor(max_workers=len(environments)) as pool:
@@ -291,20 +303,41 @@ def collect_bank(policy, motor, environments, *, request, output, rank, deadline
                 if initial_wave_pending:
                     if resetting:
                         continue
-                    if len(running) != min(requested_lanes, len(cases)):
+                    expected = len(wave_slots) if fixed_batches else min(requested_lanes, len(cases))
+                    if len(running) != expected:
                         raise ValueError("Initial synchronized lane wave is incomplete")
                     initial_wave_pending = False
                 if not running:
                     continue
                 lanes = sorted(running)
-                batch_sizes.append(len(lanes))
                 peak_active_lanes = max(peak_active_lanes, len(lanes))
                 states = [running[lane] for lane in lanes]
-                observation = combine_observations([state["observation"] for state in states])
+                if fixed_batches:
+                    # Keep the same row positions and width after short episodes
+                    # finish and in the final partial wave. Padding never steps
+                    # a simulator, enters PPO, or replaces a live observation.
+                    first_lane = min(wave_slots)
+                    batch_slots = [wave_slots.get(lane, wave_slots[first_lane])
+                                   for lane in range(requested_lanes)]
+                    observation = combine_observations([
+                        running[lane]["observation"] if lane in running else
+                        padding_observations.get(lane, padding_observations[first_lane])
+                        for lane in range(requested_lanes)])
+                    chunk_indices = [states[0]["chunk"]] * requested_lanes
+                else:
+                    batch_slots = [state["slot"] for state in states]
+                    observation = combine_observations([state["observation"] for state in states])
+                    chunk_indices = [state["chunk"] for state in states]
+                batch_width = len(batch_slots)
+                batch_sizes.append(batch_width)
+                inference_batches.append(dict(wave=wave, case_slots=batch_slots,
+                    live_rows=lanes if fixed_batches else list(range(len(lanes))),
+                    chunk_indices=chunk_indices))
                 features, prepared = motor.prepare_batch(observation)
-                if features.shape != (len(lanes), policy.config.feature_dim) or not np.isfinite(features).all():
+                if features.shape != (batch_width, policy.config.feature_dim) or not np.isfinite(features).all():
                     raise ValueError("Require finite public pre-action feature rows")
-                seeds = [draw_seed(cases[state["slot"]], state["chunk"], "native_gaussian") for state in states]
+                seeds = [draw_seed(cases[slot], chunk, "native_gaussian")
+                         for slot, chunk in zip(batch_slots, chunk_indices)]
                 native_noise = torch.stack([_normal((50, 32), seed) for seed in seeds])
                 if qualification_path is not None and qualification is None:
                     qualification = _qualify_cached(motor, prepared, native_noise, spec, policy.config.initial_std)
@@ -313,8 +346,8 @@ def collect_bank(policy, motor, environments, *, request, output, rank, deadline
                     _json(qualification_path, qualification)
                 feature_tensor = torch.as_tensor(features, device=reference.device, dtype=reference.dtype)
                 distribution, _ = policy._distribution(feature_tensor)
-                actor_seeds = [draw_seed(cases[state["slot"]], state["chunk"], "actor_standard_normal")
-                               for state in states]
+                actor_seeds = [draw_seed(cases[slot], chunk, "actor_standard_normal")
+                               for slot, chunk in zip(batch_slots, chunk_indices)]
                 actor_noise = (None if deterministic or zero_steering else
                     torch.stack([_normal((spec.steering_dim,), seed) for seed in actor_seeds]))
                 control, log_prob, value = policy.act(feature_tensor, deterministic=deterministic or zero_steering,
@@ -322,10 +355,21 @@ def collect_bank(policy, motor, environments, *, request, output, rank, deadline
                 if zero_steering:
                     control = torch.zeros_like(control)
                     log_prob = distribution.log_prob(control).sum(-1)
+                elif fixed_batches:
+                    dummy = [lane for lane in range(requested_lanes) if lane not in running]
+                    control[dummy] = 0
                 if any(not torch.isfinite(item).all() for item in (
                         distribution.mean, distribution.stddev, control, log_prob, value)):
                     raise FloatingPointError("Nonfinite actor/value output before physical dispatch")
                 chunks = motor.execute_batch(prepared, noise=native_noise, steering=control, spec=spec)
+                if fixed_batches:
+                    features, chunks = features[lanes], chunks[lanes]
+                    native_noise, control, log_prob, value = (item[lanes] for item in (
+                        native_noise, control, log_prob, value))
+                    distribution = torch.distributions.Normal(distribution.mean[lanes], distribution.stddev[lanes])
+                    seeds, actor_seeds = ([values[lane] for lane in lanes] for values in (seeds, actor_seeds))
+                    if actor_noise is not None:
+                        actor_noise = actor_noise[lanes]
                 pending = []
                 for row, (lane, state) in enumerate(zip(lanes, states)):
                     slot, chunk = state["slot"], state["chunk"]
@@ -346,6 +390,9 @@ def collect_bank(policy, motor, environments, *, request, output, rank, deadline
                         steering_mean=cpu_tree(distribution.mean[row]), steering_std=cpu_tree(distribution.stddev[row]),
                         control=cpu_tree(control[row]), log_prob=float(log_prob[row]), value=float(value[row]),
                         deterministic=deterministic, zero_steering=zero_steering,
+                        inference_batch_index=len(batch_sizes) - 1,
+                        inference_batch_row=lane if fixed_batches else row,
+                        inference_batch_size=batch_width,
                         requested_commands=np.array(chunks[row], copy=True), valid_ppo=not state["ppo_done"])
                     path = state["directory"] / f"chunk-{chunk:04d}.pkl.gz"
                     _save(path, record, compressed=True)  # Durable before any control dispatch.
@@ -430,14 +477,24 @@ def collect_bank(policy, motor, environments, *, request, output, rank, deadline
                     last_progress_unix=time.time()))
                 if errors:
                     raise errors[0]  # Completed sibling evidence was published first.
-                for lane in completed_lanes:
-                    start(lane, pool)
+                if fixed_batches:
+                    if not running:
+                        wave += 1
+                        wave_slots.clear()
+                        padding_observations.clear()
+                        for lane in range(requested_lanes):
+                            start(lane, pool)
+                        initial_wave_pending = bool(resetting)
+                else:
+                    for lane in completed_lanes:
+                        start(lane, pool)
         if len(episodes) != len(cases):
             raise ValueError("Incomplete bank cannot enter PPO")
         return dict(records=[row for slot in range(len(cases)) for row in rows[slot]],
                     episodes=[episodes[slot] for slot in range(len(cases))], qualification=qualification,
                     execution=dict(requested_lanes=requested_lanes, peak_active_lanes=peak_active_lanes,
-                        initial_lane_barrier=barrier, native_batch_sizes=batch_sizes,
+                        batch_mode=batch_mode, initial_lane_barrier=barrier or fixed_batches,
+                        inference_batches=inference_batches, native_batch_sizes=batch_sizes,
                         maximum_native_batch=max(batch_sizes), minimum_native_batch=min(batch_sizes)))
     finally:
         primary_error = sys.exc_info()[0] is not None
@@ -485,10 +542,14 @@ def _versions(model):
 
 def _request_binding(request):
     fixed_spec = {key: value for key, value in request["spec"].items() if key != "fraction"}
-    return tensor_hash(dict(spec=fixed_spec, lanes=request["lanes"],
+    value = dict(spec=fixed_spec, lanes=request["lanes"],
         synchronize_initial_lanes=request.get("synchronize_initial_lanes", False),
         **{key: request[key] for key in (
-        "model_directory", "norm_path", "source_commit", "runtime_commit", "policy_config")}))
+        "model_directory", "norm_path", "source_commit", "runtime_commit", "policy_config")})
+    if "evaluation_protocol" in request:
+        value.update(evaluation_protocol=request["evaluation_protocol"],
+                     evaluation_case_root=request["evaluation_case_root"])
+    return tensor_hash(value)
 
 
 def _initializer_identity(signature):
@@ -531,7 +592,9 @@ def _load_native(request, code):
         cuda_uuid=str(device.uuid), scheduler_uuid=scheduler_uuid, device_name=device.name,
         all_parameters_frozen=all(not parameter.requires_grad for parameter in model.parameters()),
         parameter_versions_sha256=tensor_hash(_versions(model)))
-    return motor, pairing_native_factory(cfg.env.eval), signature
+    factory = pairing_native_factory(cfg.env.eval)
+    factory.paired = pairing_native_factory(cfg.env.eval, stable_regions=True)
+    return motor, factory, signature
 
 
 def run_worker(run: Path, rank: int, code: Path, deadline_unix: float):
@@ -578,6 +641,15 @@ def run_worker(run: Path, rank: int, code: Path, deadline_unix: float):
                 raise ValueError("Unexpected worker request sequence/phase/lane contract")
             if request.get("deterministic") is not (request["phase"] != "train") or request.get("zero_steering") is not (request["phase"] == "test_before"):
                 raise ValueError("Train is stochastic; evaluation uses the mean; test_before is zero steering")
+            paired = request["phase"] in ("dev", "test_before", "test_after")
+            protocol = request.get("evaluation_protocol")
+            if protocol is not None:
+                if (protocol != "fixed_batches_shared_scenes_v2"
+                        or request.get("strict_pairing") is not paired
+                        or request.get("batch_mode") != ("fixed_waves_v1" if paired else "async")
+                        or not Path(request["evaluation_case_root"]).is_absolute()
+                        or request["evaluation_case_root"] == request["canonical_root"]):
+                    raise ValueError("Paired evaluation requires a fixed batch plan and shared scene bank")
             if request["phase"] in ("train", "calibrate", "dev"):
                 from .joint_steering_ppo import TASKS as train_tasks
                 if any(case["task"] not in train_tasks for case in request["cases"]):
@@ -616,12 +688,18 @@ def run_worker(run: Path, rank: int, code: Path, deadline_unix: float):
                 category="train" if request["phase"] in ("train", "calibrate") else "eval",
                 scope=f"{request['phase']}-{request['iteration']:03d}")
             output = directory / f"bank-{sequence:06d}"
-            environments = [_RecordingEnvironment(factory, request["cases"], horizon=None,
+            strict_pairing = protocol is not None and paired
+            if strict_pairing and not callable(getattr(factory, "paired", None)):
+                raise ValueError("Paired evaluation requires the stable native placement factory")
+            environment_factory = factory.paired if strict_pairing else factory
+            canonical_root = request["evaluation_case_root"] if strict_pairing else request["canonical_root"]
+            environments = [_RecordingEnvironment(environment_factory, request["cases"], horizon=None,
                 output=output / "videos" / f"lane-{lane:02d}",
                 monitoring_root=output / "monitoring" / f"lane-{lane:02d}",
                 journal=journal, writer_factory=native_video_writer, rank=rank,
                 episode_id_prefix=f"q{sequence:06d}-lane{lane:02d}-",
-                canonical_root=request["canonical_root"], source=dict(rank=rank, sequence=sequence,
+                canonical_root=canonical_root, strict_pairing=strict_pairing,
+                source=dict(rank=rank, sequence=sequence,
                     phase=request["phase"], iteration=request["iteration"],
                     source_commit=request["source_commit"], runtime_commit=request["runtime_commit"]))
                 for lane in range(1 if request["phase"] == "calibrate" else request["lanes"])]

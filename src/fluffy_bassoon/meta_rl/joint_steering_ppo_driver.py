@@ -52,10 +52,27 @@ def _same_request(left, right):
         raise ValueError("Existing request differs from the complete-boundary recovery")
 
 
+def evaluation_case_root(profile):
+    """Both arms and attempt folders must resolve the same new scene bank."""
+    explicit = profile.get("evaluation_case_root")
+    if explicit is not None:
+        root = Path(explicit)
+    else:
+        group = profile.get("comparison_id") or profile.get("wandb", {}).get("group")
+        if not isinstance(group, str) or not group or Path(group).name != group or group in (".", ".."):
+            raise ValueError("Paired evaluation requires an explicit shared case root or comparison_id")
+        root = Path(profile["canonical_root"]).parents[1] / (group + "-paired-eval-v2")
+    if not root.is_absolute() or root == Path(profile["canonical_root"]):
+        raise ValueError("Paired evaluation case root must be shared and distinct from the old arm-local bank")
+    return str(root)
+
+
 def dispatch(run, profile, policy, specification, *, sequence, phase, iteration,
              children, deadline):
     cases = cases_for("train", 1)[:8] if phase == "calibrate" else cases_for(phase, iteration)
     state = cpu_tree(policy.state_dict())
+    paired_root = evaluation_case_root(profile)
+    paired = phase in ("dev", "test_before", "test_after")
     requests = []
     for rank in range(8):
         directory = run / "workers" / f"rank-{rank:02d}"
@@ -63,6 +80,8 @@ def dispatch(run, profile, policy, specification, *, sequence, phase, iteration,
             policy_iteration=iteration - 1 if phase == "train" else iteration,
             cases=cases[rank::8], policy_config=asdict(policy.config), policy=state,
             spec=specification, lanes=profile["lanes_per_worker"], canonical_root=profile["canonical_root"],
+            evaluation_protocol="fixed_batches_shared_scenes_v2", evaluation_case_root=paired_root,
+            batch_mode="fixed_waves_v1" if paired else "async", strict_pairing=paired,
             **{key: profile[key] for key in ("model_directory", "norm_path", "source_commit", "runtime_commit")},
             deterministic=phase != "train", zero_steering=phase == "test_before")
         if not request["cases"]:

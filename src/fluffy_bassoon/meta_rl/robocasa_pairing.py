@@ -4,6 +4,7 @@ The simulator and motor receive their original observations. This module only
 records and verifies them; a transformer feature hash is not a scene identity.
 """
 from copy import deepcopy
+from functools import wraps
 import hashlib
 import json
 from pathlib import Path
@@ -46,7 +47,7 @@ def public_snapshot(observation, case, physical):
                 images={key: array(observation.get(key)) for key in IMAGE_KEYS})
 
 
-def compare_native_pair(reference, current):
+def compare_native_pair(reference, current, *, require_images_exact=False):
     for key in ('format', 'case', 'physical', 'task_descriptions'):
         if reference[key] != current[key]:
             raise ValueError(f'Native paired case differs: {key}')
@@ -74,13 +75,46 @@ def compare_native_pair(reference, current):
     # Renderer arithmetic can vary across processes/GPUs even when those match.
     # Preserve the actual policy pixels and report their differences, rather
     # than aborting a paired experiment on a maximum-pixel threshold.
+    images_exact = all(value['max_absolute_delta'] == 0 for value in report.values())
+    if require_images_exact and not images_exact:
+        raise ValueError('Native paired initial camera pixels differ; preserve both snapshots')
     return dict(matched=True, physical_state_exact=True, public_state_exact=True,
-                image_comparison='diagnostic_only',
-                images_exact=all(value['max_absolute_delta'] == 0 for value in report.values()),
+                image_comparison='exact_required' if require_images_exact else 'diagnostic_only',
+                images_exact=images_exact,
                 images=report, observations_modified=False)
 
 
-def pairing_native_factory(cfg):
+def stable_counter_regions(counter_class=None):
+    """Canonicalize Counter region candidates before its seeded region choice.
+
+    Upstream enumerates XML geometry objects through a set. Object identity
+    hashes make region order process-dependent even with seeded RNGs. Sort the
+    geometric candidates and renumber only generated geom_N names; retain all
+    regions and leave the RNG untouched. No vendor file is modified.
+    """
+    if counter_class is None:
+        from robocasa.models.fixtures.counter import Counter
+        counter_class = Counter
+    original = counter_class.get_reset_regions
+    if getattr(original, '_stable_region_order', False):
+        return
+
+    @wraps(original)
+    def ordered(self, *args, **kwargs):
+        regions = original(self, *args, **kwargs)
+        def key(item):
+            return json.dumps(item[1], sort_keys=True, separators=(',', ':'),
+                              default=lambda value: np.asarray(value).tolist(), allow_nan=False)
+        candidates = sorted(regions.items(), key=key)
+        if all(name.startswith('geom_') and name[5:].isdigit() for name in regions):
+            return {f'geom_{i}': value for i, (_, value) in enumerate(candidates)}
+        return dict(candidates)
+
+    ordered._stable_region_order = True
+    counter_class.get_reset_regions = ordered
+
+
+def pairing_native_factory(cfg, *, stable_regions=False):
     """Original native case routing plus an observation-only fingerprint.
 
     Seed global RNGs in the child as well as the native environment RNG. Native
@@ -99,11 +133,15 @@ def pairing_native_factory(cfg):
                 import random
                 random.seed(int(case['native_seed']))
                 np.random.seed(int(case['native_seed']))
+                if stable_regions:
+                    stable_counter_regions()
                 env = original()
                 reset = env.reset
                 def observe_reset(*args, **kwargs):
                     result = reset(*args, **kwargs)
                     env._native_pairing = native_fingerprint(env)
+                    if stable_regions:
+                        env._native_pairing['placement_protocol'] = 'stable_counter_regions_v1'
                     return result
                 env.reset = observe_reset
                 return env
@@ -127,7 +165,7 @@ def pairing_native_factory(cfg):
     return factory
 
 
-def canonical_case(directory, snapshot, *, save, load, source):
+def canonical_case(directory, snapshot, *, save, load, source, require_images_exact=False):
     """Publish once; concurrent model phases share the same fixed case bank."""
     compare_native_pair(snapshot, snapshot)
     directory = Path(directory)
@@ -157,4 +195,9 @@ def canonical_case(directory, snapshot, *, save, load, source):
             or hashlib.sha256((directory / 'initial.pt').read_bytes()).hexdigest() != value['snapshot_sha256']):
         raise ValueError('Canonical native case integrity differs')
     reference = load(directory / 'initial.pt')
-    return marker, compare_native_pair(reference, snapshot)
+    try:
+        comparison = compare_native_pair(reference, snapshot, require_images_exact=require_images_exact)
+    except ValueError:
+        save(directory / f'mismatch-{time.time_ns()}.pt', dict(snapshot=snapshot, source=source))
+        raise
+    return marker, comparison

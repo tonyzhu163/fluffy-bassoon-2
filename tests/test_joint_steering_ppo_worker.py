@@ -179,6 +179,76 @@ def test_case_draws_and_controls_are_independent_of_lane_arrival_order(tmp_path)
     assert draw_seed(cases[0], 0, "native_gaussian") != draw_seed(cases[0], 0, "actor_standard_normal")
 
 
+def test_fixed_batches_preserve_rows_and_tail_padding_across_opposite_reset_delays(tmp_path):
+    class DelayedEnvironment(Environment):
+        def reset(self):
+            time.sleep(.04 if self.cursor % 2 == self.delayed_parity else 0)
+            return super().reset()
+
+    class BatchSensitiveMotor(Motor):
+        def execute_batch(self, *args, **kwargs):
+            chunks = super().execute_batch(*args, **kwargs)
+            return chunks + .01 * len(chunks) + np.arange(len(chunks))[:, None, None] * .001
+
+    cases = [dict(task="one", native_seed=i + 1, horizon=horizon)
+             for i, horizon in enumerate((100, 50, 150, 50, 100))]
+    actor = policy()
+    results = []
+    for parity in (0, 1):
+        root = tmp_path / str(parity)
+        envs = [DelayedEnvironment(cases, root, lane) for lane in range(2)]
+        for env in envs:
+            env.delayed_parity = parity
+        result = collect_bank(actor, BatchSensitiveMotor(), envs,
+            request=dict(request(cases, deterministic=True, zero_steering=True, batch_mode="fixed_waves_v1"),
+                         phase="test_before"),
+            output=root / "history", rank=0, deadline_unix=time.time() + 30)
+        assert all(env.closed for env in envs)
+        assert result["execution"]["native_batch_sizes"] == [2] * 7
+        assert [row["case_slots"] for row in result["execution"]["inference_batches"]] == [
+            [0, 1], [0, 1], [2, 3], [2, 3], [2, 3], [4, 4], [4, 4]]
+        assert [row["live_rows"] for row in result["execution"]["inference_batches"]] == [
+            [0, 1], [0], [0, 1], [0], [0], [0], [0]]
+        assert sum(episode["physical_chunks"] for episode in result["episodes"]) == 9
+        results.append(result)
+    assert results[0]["execution"] == results[1]["execution"]
+    for left, right in zip(results[0]["episodes"], results[1]["episodes"]):
+        for a, b in zip(left["chunks"], right["chunks"]):
+            a, b = load_gz(a["path"]), load_gz(b["path"])
+            np.testing.assert_array_equal(a["native_noise"], b["native_noise"])
+            np.testing.assert_array_equal(a["requested_commands"], b["requested_commands"])
+            assert a["inference_batch_size"] == b["inference_batch_size"] == 2
+            assert a["inference_batch_row"] == b["inference_batch_row"]
+
+
+def test_fixed_evaluation_recomputes_observation_conditioned_controls_without_changing_noise(tmp_path):
+    cases = [dict(task="one", native_seed=1, horizon=100)]
+    actor = policy()
+    with torch.no_grad():
+        actor.actor[0].weight.zero_()
+        actor.actor[0].bias.zero_()
+        actor.actor[0].weight[0, 1] = .01
+        actor.actor[-1].weight.zero_()
+        actor.actor[-1].weight[0, 0] = .3
+    flags = dict(deterministic=True, zero_steering=False, batch_mode="fixed_waves_v1")
+    envs = [Environment(cases, tmp_path / "live", lane) for lane in range(2)]
+    result = collect_bank(actor, Motor(), envs,
+        request=dict(request(cases, **flags), phase="test_after"), output=tmp_path / "live/history",
+        rank=0, deadline_unix=time.time() + 30)
+    assert result["records"][0]["control"][0] == 0
+    assert result["records"][1]["control"][0] > .1
+    with torch.no_grad():
+        actor.actor[-1].bias[0] = .5
+    envs = [Environment(cases, tmp_path / "changed", lane) for lane in range(2)]
+    changed = collect_bank(actor, Motor(), envs,
+        request=dict(request(cases, **flags), phase="test_after"), output=tmp_path / "changed/history",
+        rank=0, deadline_unix=time.time() + 30)
+    a = load_gz(result["episodes"][0]["chunks"][0]["path"])
+    b = load_gz(changed["episodes"][0]["chunks"][0]["path"])
+    np.testing.assert_array_equal(a["native_noise"], b["native_noise"])
+    assert not np.array_equal(a["requested_commands"], b["requested_commands"])
+
+
 def test_completed_sibling_checkpoint_survives_another_lane_failure(tmp_path):
     cases = [dict(task="good", native_seed=1, horizon=100),
              dict(task="bad", native_seed=2, horizon=100, fail_at=100)]
