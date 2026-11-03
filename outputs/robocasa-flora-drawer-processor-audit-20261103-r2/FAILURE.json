@@ -1,0 +1,19 @@
+{
+  "completed": false,
+  "source_commit": "9f96a80b8a201e0398526463ae1172efb36a3255",
+  "stage": "Normalization precondition, after processor loaded and before frame loop",
+  "audit_start_unix": 1793674433.7047503,
+  "torch_import_unix": 1793674476.267904,
+  "transformers_import_unix": 1793674786.6799283,
+  "processor_ready_unix": 1793674800.9769654,
+  "processor_startup_wall_seconds": 367.27221512794495,
+  "frame_reconstruction_completed": false,
+  "model_inference_calls": 0,
+  "gpu_seconds": 0,
+  "reason": "Assertion comparing processor mean/std attributes directly to a Python list; actual values/types must be recorded before deciding whether this is representation-only or a numerical discrepancy",
+  "log_path": "/root/workspace/drawer-processor-audit-r2.log",
+  "log_download": "Blocked by organization policy; retained on Baige, do not bypass",
+  "next_action": "Fresh r3 records actual config and compares numerical channel values without changing normalization",
+  "log_sha256": "d258899dafb348cb67441f923532888b3725eaeb1161665b69a28eb47f38e77d",
+  "log_bytes": 24543
+}
