@@ -146,6 +146,13 @@ def test_dpt_changes_only_query_targets_and_preserves_actual_history(tmp_path, a
                     np.testing.assert_array_equal(actual[key], labeled[key])
             np.testing.assert_allclose(labeled["target_noise"], .75)
             np.testing.assert_array_equal(trial_tokens(actual), trial_tokens(labeled))
+        for objective in ("dit", "ic_iql"):
+            value_trials, vm = load_dataset(tmp_path / "corpus" / f"{objective}-{partition}.npz")
+            assert vm["metadata"]["trial_ids"] == am["metadata"]["trial_ids"]
+            assert vm["metadata"]["value_contract"]["boundary"] == "physical_done"
+            for actual, value_trial in zip(ad, value_trials, strict=True):
+                for key in actual:
+                    np.testing.assert_array_equal(actual[key], value_trial[key])
 
 
 def test_value_only_teacher_is_not_velocity_or_full_kv(tmp_path):
@@ -182,13 +189,16 @@ def test_source_mapping_and_final_teacher_version_cannot_be_reinterpreted(tmp_pa
                     provenance=dict(fixture=True))
 
 
-def test_real_producer_serialization_has_zero_based_behavior_and_post_update_teacher(tmp_path):
+@pytest.mark.parametrize("arm", ["velocity", "kv_all_layers"])
+def test_real_producer_serialization_has_zero_based_behavior_and_post_update_teacher(tmp_path, arm):
     """Use producer execution, not a mirrored serialization fixture."""
     import time
     from test_joint_steering_ppo_worker import Environment, Motor, policy, request
     from fluffy_bassoon.meta_rl.joint_steering_ppo_worker import collect_bank
-    spec = SteeringSource("velocity", "source", "runtime", "motor", "norm", ("A", "B"),
-        InterfaceSpec(kind="velocity", steering_dim=32).record(),
+    dimension = 32 if arm == "velocity" else 1152
+    arguments = dict(kind=arm, steering_dim=dimension, **({"kv_layers": 18} if arm == "kv_all_layers" else {}))
+    spec = SteeringSource(arm, "source", "runtime", "motor", "norm", ("A", "B"),
+        InterfaceSpec(**arguments).record(),
         episodes_per_task_per_update=3, feature_dim=2)
     loaded = []
     for version in (0, 1):
@@ -197,9 +207,11 @@ def test_real_producer_serialization_has_zero_based_behavior_and_post_update_tea
                  for task in spec.tasks for slot in range(3)]
         root = tmp_path / f"round-{version + 1}"
         specification = request(cases)
+        specification["spec"] = arguments
         specification["iteration"] = version + 1
         environment = Environment(cases, root, 0)
-        result = collect_bank(policy(), Motor(), [environment], request=specification,
+        actor = ResidualActorCritic(ResidualPPOConfig(2, dimension, width=8, layers=1, gamma=.99))
+        result = collect_bank(actor, Motor(), [environment], request=specification,
             output=root / "history", rank=0, deadline_unix=time.time() + 30)
         loaded.extend(load_episode(item["checkpoint"], spec) for item in result["episodes"])
     streams = split_streams(loaded, spec, validation_slots=[2], expected_updates=(0, 1))
@@ -207,6 +219,8 @@ def test_real_producer_serialization_has_zero_based_behavior_and_post_update_tea
     manifests = save_corpus(tmp_path / "corpus", streams, spec, teacher_reference=teacher,
                             provenance=dict(synthetic_producer=True))
     assert manifests["ad_train"]["transitions"] == manifests["dpt_train"]["transitions"] == 16
+    assert set(manifests) == {method + "_" + split for method in ("ad", "dpt", "dit", "ic_iql")
+                              for split in ("train", "validation")}
     ad, _ = load_dataset(tmp_path / "corpus/ad-train.npz")
     dpt, _ = load_dataset(tmp_path / "corpus/dpt-train.npz")
     np.testing.assert_array_equal(ad[0]["teacher_steps"], [0, 0, 1, 1])

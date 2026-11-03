@@ -11,7 +11,7 @@ import sys
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--assembly',type=Path,required=True)
-    p.add_argument('--objective',choices=('ad','dpt'),required=True);p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--objective',choices=('ad','dpt','dit','ic_iql'),required=True);p.add_argument('--output',type=Path,required=True)
     p.add_argument('--source-commit',required=True);p.add_argument('--attempt',required=True)
     p.add_argument('--context-length',type=int,default=300)
     p.add_argument('--max-eval-horizon',type=int,default=1050);a=p.parse_args()
@@ -46,7 +46,8 @@ def main():
     if probe.exists():raise ValueError('Never reuse an allocation attempt identity')
     subprocess.run([sys.executable,'-B',str(code/'scripts/[train]gpu_probe.py'),
         '--expected-count','1','--baige-container','--purpose','training','--output',str(probe)],check=True)
-    args=[sys.executable,'-B','-m','fluffy_bassoon.meta_rl.vla_history_train',
+    trainer='history_value_train' if a.objective in ('dit','ic_iql') else 'vla_history_train'
+    args=[sys.executable,'-B','-m','fluffy_bassoon.meta_rl.'+trainer,
         '--train-data',train['path'],'--train-sha256',train['sha256'],
         '--validation-data',validation['path'],'--validation-sha256',validation['sha256'],
         '--output-dir',str(a.output),'--mode','full','--width','128','--layers','2','--heads','4',
@@ -56,6 +57,7 @@ def main():
         '--until-converged','--minimum-updates','1000','--validation-patience','10',
         '--validation-relative-delta','0.001','--max-elapsed-seconds','12000',
         '--source-commit',a.source_commit,'--expected-hostname',socket.gethostname()]
+    if a.objective in ('dit','ic_iql'):args+=['--objective',a.objective]
     if (a.output/'latest.pt').exists():args+=['--resume',str(a.output/'latest.pt')]
     subprocess.run(args,check=True)
     state=json.loads(status.read_text())
