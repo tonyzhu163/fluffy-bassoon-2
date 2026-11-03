@@ -5,10 +5,10 @@
   "producer_observation": {
     "path": "/Users/mowenjie/.codex/worktrees/joint-steering-ppo/fluffy-bassoon-2/outputs/robocasa-joint-steering-5m-20261102-r1/PLAN.json",
     "sha256": "de5e7bc07a9c54d3e1a0bda70778a05112bff1a352435da3ebd52ac13ba52c39",
-    "status": "HUMAN_HOLD_ACKNOWLEDGED_ZERO_SCIENTIFIC_JOBS",
+    "status": "ACTIVE_RECONCILING_FINALIZED_HUMAN_RECIPE_NO_SCIENTIFIC_SOURCE",
     "immutable_source": false,
-    "last_live_check_UTC": "2026-11-02T18:10:46Z",
-    "producer_cursor": "18018959-3992-4b70-ad1f-11a754359cf0:20",
+    "last_live_check_UTC": "2026-11-03T02:25:38+00:00",
+    "producer_cursor": "18018959-3992-4b70-ad1f-11a754359cf0:40",
     "driver_reference_commit": "dd3e51334fda9b839f37b777d68ffb79f66d638c",
     "CPU_tests_passed": 80,
     "evidence": "outputs/robocasa-joint-steering-5m-20261102-r1/qualification/CPU-QUALIFICATION.md",
@@ -59,7 +59,7 @@
         "ad",
         "dpt"
       ],
-      "state": "human_hold_until_iterations_and_envs_per_gpu_finalized",
+      "state": "human_recipe_specified_waiting_for_producer_admission_and_completed_sources",
       "source_binding": null,
       "fits": {},
       "evaluations": {}
@@ -87,8 +87,8 @@
     4,
     5
   ],
-  "status_evidence": "Producer thread was confirmed active by wait_threads; no launched source job or terminal dataset claimed",
-  "next_action": "Monitor confirmed hold and finalization every20minutes. No actual fits/readouts can start until finalized real PPO sources exist; original full convergence and per-task curves remain required.",
+  "status_evidence": "Direct human recipe/budget messages verified; source owner active on reconciliation, no completed PPO histories, student fit or new native curve.",
+  "next_action": "Observe source-owner production qualification/admission and actual source completion. Bind exact source manifests/schedule/request hashes before AD/DPT fitting; retain independent convergence/readout and original full curve objective.",
   "monitor_automation_id": "monitor-steering-ppo-and-ad-dpt",
   "adapter": "src/fluffy_bassoon/meta_rl/frozen_steering_history.py",
   "core_qualification_source": "3babb92b31c596f04759621177c8704c60c7c293",
@@ -143,26 +143,56 @@
         "commit": "4b2ca5d0"
       }
     },
-    "goal_disposition": "Remain active; monitor hold and finalization, no stale-recipe launches"
+    "goal_disposition": "Remain active; monitor hold and finalization, no stale-recipe launches",
+    "current_disposition_reference": "RECIPE-RECONCILIATION-20261103-r1.json",
+    "historical_record_preserved": true
   },
   "latest_affected_core_qualification_source": "2c7e02557a37214e6d26897b0558ecea6658c8cb",
   "latest_affected_CPU_tests_passed": 21,
   "latest_affected_CPU_receipt": "NATIVE-BACKEND-R2-VALIDATION.json",
   "capacity_observation": "CAPACITY-OBSERVATION-20261103-r1.json",
   "recipe_observation": {
-    "finalized": false,
-    "current_candidate_reference": "outputs/robocasa-rollout-capacity-3248-20261103-r1/PLAN.json",
-    "proposed_iterations": 50,
-    "proposed_envs_per_gpu": 48,
-    "proposed_episodes_per_update": 384,
-    "rollout_gpus_per_arm": 8,
+    "human_iterations_envs_and_budget_specified": true,
+    "production_source_binding_finalized": false,
+    "reference": "RECIPE-RECONCILIATION-20261103-r1.json",
+    "independent_arms": [
+      "velocity",
+      "kv_all_layers"
+    ],
+    "updates_per_arm": 50,
+    "envs_per_GPU": 48,
+    "GPUs_per_arm": 8,
+    "episodes_per_update": 384,
+    "horizon": 600,
+    "save_and_DEV_updates": [
+      0,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50
+    ],
     "policy_controls_per_arm": 11520000,
-    "authority": "Candidate observed in capacity-owner plan; does not release the direct human launch hold",
-    "caveats": [
-      "Single-GPU native capacity only; velocity/full-KV production history writer and optimizer overhead unqualified",
-      "Source/RMS/LR/resource/calibration and final source case schedule must be bound before scientific launch",
-      "384 or256 episodes across five tasks requires varying task counts; never silently drop extras or reuse uniform16-slot grouping"
-    ]
+    "task_counts_per_update": [
+      76,
+      77,
+      77,
+      77,
+      77
+    ],
+    "task_rotation": "Rotate the 76-episode task; 3840 episodes per task over 50 updates.",
+    "source_budget": {
+      "combined_GPU_hours": 80,
+      "per_arm_GPU_hours": 40,
+      "exact_number_selected_by": "Capacity owner under direct human authorization to increase the cap; human did not specify 80.",
+      "accounting": "Lifetime allocated source-arm GPU hours including carried qualification, PPO collection/optimization/evaluation and diagnosed recovery; no automatic retry. Separate capacity benchmark ceiling and downstream costs remain separately accounted."
+    },
+    "authority": "Verified direct human turns in capacity-owner chat; published target and budget hashes retained. Producer production qualification/admission remains pending."
   },
   "schedule_qualification": "SCHEDULE-QUALIFICATION.json",
   "source_adapter_state": "Synthetic-qualified uniform and rotating task counts; no actual finalized source admitted",
@@ -176,6 +206,7 @@
   },
   "batched_native_backend": "src/fluffy_bassoon/meta_rl/steering_history_batch.py",
   "batch_readout_receipt": "BATCH-READOUT-QUALIFICATION.json",
-  "goal_execution_status": "blocked_waiting_for_final_recipe_and_real_PPO_source",
-  "blocking_audit": "GOAL-BLOCKED-AUDIT-20261103-r1.json"
+  "goal_execution_status": "blocked_waiting_for_producer_admission_and_complete_PPO_sources",
+  "blocking_audit": "GOAL-BLOCKED-AUDIT-20261103-r1.json",
+  "recipe_reconciliation": "RECIPE-RECONCILIATION-20261103-r1.json"
 }

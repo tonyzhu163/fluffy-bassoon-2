@@ -1,0 +1,109 @@
+{
+  "format": "steering_recipe_reconciliation_v1",
+  "observed_UTC": "2026-11-03T02:25:38+00:00",
+  "upstream_commit": "b32d7d37201aa76c29a03c29e0acdf6698deb2c9",
+  "source_owner": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
+  "human_authority_thread": "01a19d07-dc97-7682-9795-2c1f3a5b0e75",
+  "verified_direct_human_messages": [
+    {
+      "turn": "01a19d08-1be8-7a60-b02a-0b05f6b19236",
+      "message": "01a19d24-4968-7fa3-8429-a8872540ff81",
+      "text": "48 envs"
+    },
+    {
+      "turn": "01a19d08-1be8-7a60-b02a-0b05f6b19236",
+      "message": "01a19d26-1ae4-7ea2-ad47-bb6d39f0e749",
+      "text": "yes increase the cpu and memory allocation for 48"
+    },
+    {
+      "turn": "01a19d08-1be8-7a60-b02a-0b05f6b19236",
+      "message": "01a19d26-4da7-7bd0-8315-e2bcca6151e4",
+      "text": "and then lets do 50 iterations"
+    },
+    {
+      "turn": "01a19d08-1be8-7a60-b02a-0b05f6b19236",
+      "message": "01a19d18-889e-73e1-ac8f-dc0fc759f2ef",
+      "text": "also we should save and evaluate every 5 updates then"
+    },
+    {
+      "turn": "01a19f33-11a6-7b41-8000-de40f43ab26d",
+      "message": "01a19f33-15f1-7731-93cc-a2bfb3de954e",
+      "text": "move the cap up"
+    }
+  ],
+  "recipe": {
+    "independent_arms": [
+      "velocity",
+      "kv_all_layers"
+    ],
+    "updates_per_arm": 50,
+    "envs_per_GPU": 48,
+    "GPUs_per_arm": 8,
+    "episodes_per_update": 384,
+    "horizon": 600,
+    "save_and_DEV_updates": [
+      0,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50
+    ],
+    "policy_controls_per_arm": 11520000,
+    "task_counts_per_update": [
+      76,
+      77,
+      77,
+      77,
+      77
+    ],
+    "task_rotation": "Rotate the 76-episode task; 3840 episodes per task over 50 updates."
+  },
+  "source_budget": {
+    "combined_GPU_hours": 80,
+    "per_arm_GPU_hours": 40,
+    "exact_number_selected_by": "Capacity owner under direct human authorization to increase the cap; human did not specify 80.",
+    "accounting": "Lifetime allocated source-arm GPU hours including carried qualification, PPO collection/optimization/evaluation and diagnosed recovery; no automatic retry. Separate capacity benchmark ceiling and downstream costs remain separately accounted."
+  },
+  "published_references": {
+    "TARGET-RECIPE.json": {
+      "path": "outputs/robocasa-rollout-capacity-3248-20261103-r1/TARGET-RECIPE.json",
+      "sha256": "c4022f35882f8cdeeb47ff5b3d1dd3d40769a50f06f41677833d26c79b520203"
+    },
+    "BUDGET-INCREASE-20261103.json": {
+      "path": "outputs/robocasa-rollout-capacity-3248-20261103-r1/BUDGET-INCREASE-20261103.json",
+      "sha256": "613fefe4b3a85de151949e68bacb15a04ac72e27076c55575f4de2e9be9e55b5"
+    }
+  },
+  "disposition": "Human iteration/env and budget choices are now specified. Source owner must reconcile its historical hold and bind/qualify the actual production recipe; do not keep waiting for the historical 103x80/5M/20GPUh choices. No source dataset is admitted.",
+  "remaining_source_dependencies": [
+    "Exact immutable production recipe and native worker admission",
+    "Scale/LR/KL guard qualification",
+    "Actual 48-lane history/memory/optimizer/recovery qualification and resources",
+    "Compatible production before-panels",
+    "Completed actual PPO histories/final teacher and terminal source evidence"
+  ],
+  "consumer_status": {
+    "source_binding": null,
+    "fits": {},
+    "native_curves": {},
+    "CPU_core_tests_passed_previously": 42,
+    "new_computation_tests_or_jobs": 0
+  },
+  "source_owner_observation": {
+    "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:40",
+    "status": "active",
+    "turn": "01a19f36-d85f-7441-91ad-3df82d70c385",
+    "scientific_jobs_confirmed": 0
+  },
+  "preserved_prior_evidence": [
+    "LAUNCH-HOLD-20261103-r1.json",
+    "GOAL-BLOCKED-AUDIT-20261103-r1.json"
+  ],
+  "downstream_objective_unchanged": "AD/full and DPT/full on each completed source to original validation plateau; 50 cases/task, actual attempts 1..5 on 5 ID + 5 OOD; independent readouts and full costs. No duplicate source/student job, extra architecture, query curve or memory-control reassignment."
+}
