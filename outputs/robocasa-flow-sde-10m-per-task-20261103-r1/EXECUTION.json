@@ -434,15 +434,14 @@
     "latest_full_checkpoint_retained": true,
     "bos": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1",
     "tiering_in_progress": {
-      "pid": 2042515,
-      "started_unix": 1793728871.4402037,
+      "pid": 2043568,
+      "started_unix": 1793729671.8659315,
       "tool_commit": "475e1c5d",
       "script_sha256": "88a12eaf79e18bfd527f22870085414505eb473737773230b364c3b790bc3b97",
-      "receipt": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TIER-20261104-0200.json",
-      "log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/tier-20261104-0200.log",
-      "state": "COMPLETED",
-      "next_action": "At next20minute check tier any newly superseded boundaries; preserve newest and all corpus",
-      "verified_receipts": 3
+      "receipt": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TIER-20261104-0214.json",
+      "log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/tier-20261104-0214.log",
+      "state": "RUNNING",
+      "next_action": "Check exact PID/result before new tier; keep newest full boundary and all corpus"
     },
     "corpus_projection": {
       "measured_production_GiB_per_collection": 0.7842823384035574,
@@ -906,7 +905,7 @@
       "GPU_execution": "Not launched. Await CPU fixture checks and actual native closure, then one serial1GPU job with240min scheduler limit/230min worker deadline (under4GPUh). Runtime imports pinned0988b5f9; no controls, sampling or SGD.",
       "GPU_admission": "All five successful native130/after64/clock0; validate exact fixture/model hashes, strict state loading, initial-policy parity<=1e-3, finite16x50x12 logprobs and no namespace override. Final cold corpus moves preserve fixtures outside native stage directories.",
       "static_checks": "macOS Python AST and bash -n passed; actual saved-data CPU preparation pending; GPU numerical qualification pending.",
-      "state": "PREPARING_FIXED_INPUTS_CPU_ONLY",
+      "state": "FIXED_INPUTS_PREPARED_GPU_PARITY_PENDING",
       "previous_attempts": [
         {
           "pid": 2043071,
@@ -930,7 +929,20 @@
           "failure_log": "OFFLINE-INITIAL-RATIO-PREPARE-R1.log"
         }
       ],
-      "selection": "First intact original B16 cohort whose full chains and all old logprobs match retained Q1 actor-rank00 inputs, regardless of rollout-rank ownership; rank and hashes retained. CPU-only fixture verification pending, GPU parity remains required."
+      "selection": "First intact original B16 cohort whose full chains and all old logprobs match retained Q1 actor-rank00 inputs, regardless of rollout-rank ownership; rank and hashes retained. CPU-only fixture verification pending, GPU parity remains required.",
+      "result": "OFFLINE-INITIAL-RATIO-PREPARED-R2.json",
+      "result_sha256": "295f24646cd868c187a7703edb7c3302f18e604beeee51df982bc4acc9db6ecb",
+      "tasks": 5,
+      "fixed_samples": 80,
+      "rollout_rank_by_task": {
+        "OpenDrawer": 1,
+        "CloseToasterOvenDoor": 0,
+        "PickPlaceDrawerToCounter": 2,
+        "CoffeeSetupMug": 1,
+        "TurnOffStove": 2
+      },
+      "last_checked_shanghai": "2026-11-04 02:14:18",
+      "qualification": "All5 original B16 cohorts exactly chain/logprob joined on allocated Linux CPU and per-tensor/raw-fixture/config/manifest hashes sealed. Original actor-rank00 ownership spans different rollout ranks, confirming R1 search restriction. No model calls; initial GPU parity and checkpoint curve still pending actual source closure."
     }
   }
 }
