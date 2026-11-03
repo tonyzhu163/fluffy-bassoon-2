@@ -44,7 +44,7 @@
       "thread_id": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
       "title": "Pull PPO coordination updates",
       "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:67",
-      "state": "NativeQ1 calibration and both48lane full600control/history banks passed; no scientificPPOupdates orDEV panels. Full-history collection59-60controls/s exceeds40GPUh/arm cap before overhead. Owner reportsQ1 terminal/released with1331GPU-s conservativecharge; execution-only losslessI/O candidate passed45Linux tests and fresh qualification is preparing under remaining original2400GPU-s allowance.",
+      "state": "NativeQ1 calibration and both48lane full600control/history banks passed; no scientificPPOupdates orDEV panels. Full-history collection59-60controls/s exceeds40GPUh/arm cap before overhead. Q1 terminal/release receipt verified,1331GPU-s conservativecharge plus122carried prep accounted separately. Execution-only losslessI/O candidate passed45Linux tests; freshQ2 job-m2qlxqjuh8ho RUNNING at11:56 with GPUprobe passed per owner receipt,17min/1020GPU-s maximum within remaining1069of original2400GPU-s qualification campaign allowance.",
       "scientific_job_ids": {},
       "arms": [
         "velocity",
@@ -73,9 +73,8 @@
       "authority": "outputs/robocasa-rollout-capacity-3248-20261103-r1/BUDGET-INCREASE-20261103.json",
       "model_capacity_interruption_recovered": true,
       "qualification_job_id": "job-mdxdgd91xn8o",
-      "qualification_job_status": "terminal_released_reported_by_owner",
+      "qualification_job_status": "SUCCEEDED_RELEASED_RECEIPT_VERIFIED",
       "qualification_source_commit": "d3a861a6ac67f594902675cb36ddf0ee83608896",
-      "qualification_GPU_seconds_reported_by_owner": 1331,
       "scientific_updates": 0,
       "velocity_controls_per_second": 58.8460842239662,
       "kv_controls_per_second": 60.058882417193374,
@@ -94,7 +93,13 @@
         "check_cadence": "minibatch",
         "scientific_updates": 0
       },
-      "evidence": "outputs/research-coordination-20261103-r1/CHECK-20261103-1154.json"
+      "evidence": "outputs/research-coordination-20261103-r1/CHECK-20261103-1154.json",
+      "qualification_GPU_seconds": 1331,
+      "carried_preparation_GPU_seconds": 122,
+      "qualification_successor_job_id": "job-m2qlxqjuh8ho",
+      "qualification_successor_source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+      "qualification_successor_status": "RUNNING_CALIBRATION_MODEL_LOAD_PROBE_PASSED_IN_OWNER_RECEIPT",
+      "qualification_successor_max_GPU_seconds": 1020
     },
     "downstream_histories": {
       "thread_id": "01a199fb-3586-7171-bd20-52fa70e5378c",
@@ -115,7 +120,8 @@
     "memory_r4_job-oizm929rf0oo_first_saved_and_audited_episodes",
     "ppo_q1_calibration_both48lane_fullhistory_pass",
     "ppo_fullhistory_throughput_budget_constraint_IO_qualification",
-    "flora_r3_256frame_processor_reconstruction_independently_hash_verified"
+    "flora_r3_256frame_processor_reconstruction_independently_hash_verified",
+    "ppo_io_q2_job-m2qlxqjuh8ho_launch_probe_receipt"
   ],
   "wandb": {
     "status": "BAIGE_API_HTTP403_LOCAL_OFFLINE_LOGGING_ACTIVE",
@@ -146,5 +152,5 @@
     "Flora repair does not gate simulator-reward steering PPO.",
     "Do not duplicate owner jobs, change their active worktrees, or expand scope/budgets silently."
   ],
-  "last_check_Shanghai": "2026-11-03T11:58:37+08:00"
+  "last_check_Shanghai": "2026-11-03T12:00:26+08:00"
 }

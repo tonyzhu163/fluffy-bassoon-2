@@ -34,7 +34,7 @@
         },
         "optimizer_passed": true,
         "optimizer": {
-          "learning_rate": 0.00003,
+          "learning_rate": 3e-05,
           "epochs": 10,
           "minibatch_size": 32,
           "target_kl": 0.02,
@@ -117,5 +117,81 @@
   },
   "velocity_collection_only_GPU_hours": 54.37914930449592,
   "remaining_arm_GPU_hours_before_qualification_eval_overhead": 40,
-  "interpretation": "Native qualification only; no scientific PPO update. Projected velocity collection alone exceeds its40GPUh cap at this measured complete-history rate; execution optimization is being qualified without changing scientific batch or retained data."
+  "interpretation": "Native qualification only; no scientific PPO update. Projected velocity collection alone exceeds its40GPUh cap at this measured complete-history rate; execution optimization is being qualified without changing scientific batch or retained data.",
+  "later_published_Q1_closeout": {
+    "job_id": "job-mdxdgd91xn8o",
+    "status": "SUCCEEDED",
+    "pod_finished_Shanghai": "2026-11-03T11:54:11+08:00",
+    "task_finished_Shanghai": "2026-11-03T11:54:31+08:00",
+    "created_Shanghai": "2026-11-03T11:32:20+08:00",
+    "restarts": 0,
+    "allocated_GPUs": 1,
+    "allocation_released": true,
+    "conservative_creation_to_terminal_GPU_seconds": 1331,
+    "process_GPU_seconds": 1293,
+    "prior_native_velocity_GPU_seconds": 122,
+    "qualification_campaign_remaining_GPU_seconds": 1069,
+    "physical_policy_controls": 57600,
+    "scientific_PPO_updates": 0,
+    "numerical_native_qualification": "passed",
+    "scientific_admission": false,
+    "reason": "Both full48lane600control banks pass functionally, but measured collection time alone exceeds40GPUh/arm.",
+    "arms": {
+      "velocity": {
+        "elapsed_seconds": 489.41234374046326,
+        "controls_per_second": 58.8460842239662,
+        "torch_peak_allocated_bytes": 16248506880,
+        "sampled_phase_peaks": {
+          "samples": 196,
+          "peak_gpu_memory_mib": 73801.0,
+          "peak_fd_count": 491,
+          "peak_descendants": 193
+        }
+      },
+      "kv_all_layers": {
+        "elapsed_seconds": 479.52940249443054,
+        "controls_per_second": 60.058882417193374,
+        "torch_peak_allocated_bytes": 16250866176,
+        "sampled_phase_peaks": {
+          "samples": 192,
+          "peak_gpu_memory_mib": 73720.0,
+          "peak_fd_count": 624,
+          "peak_descendants": 193
+        }
+      }
+    },
+    "next": "At most one fresh I/O candidate qualification; prior1331 deducted from unchanged2400GPU-s campaign cap,17min schedulermaximum, include fresh startup/queue/release. Scientific50x384 held pending optimized throughput/storage/cost admission."
+  },
+  "later_published_Q2_launch": {
+    "cluster": "Baige",
+    "job_id": "job-m2qlxqjuh8ho",
+    "name": "mwj_1103_joint_steering_48env_io_1x1_q2",
+    "status": "RUNNING_CALIBRATION_MODEL_LOAD",
+    "created_Shanghai": "2026-11-03T11:55:50+08:00",
+    "running_Shanghai": "2026-11-03T11:56:01+08:00",
+    "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+    "source_path": "/mowenjie/fluffy-bassoon-2/worktrees/joint-steering-scale50-gpu-20261103-r3",
+    "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-native-qualification-20261103-r2",
+    "resources": {
+      "GPUs": 1,
+      "CPU": 21,
+      "RAM_GiB": 208,
+      "SHM_GiB": 48,
+      "maximum_minutes": 17,
+      "automatic_retry": false
+    },
+    "actual_probe": {
+      "status": "passed",
+      "hostname": "job-m2qlxqjuh8ho-master-0"
+    },
+    "prior_qualification_GPU_seconds": 1331,
+    "qualification_campaign_cap_GPU_seconds": 2400,
+    "remaining_at_submit_GPU_seconds": 1069,
+    "source_validation": "45 allocated-Linux CPU core/video tests passed23.73s; identical core after rebase onto current main.",
+    "scientific_jobs": 0,
+    "scientific_updates": 0,
+    "admission": false,
+    "changes": "One FFmpeg encoding thread/camera;gzip1 preserves decompressed history data. Every physical frame/horizon/batch/reward/optimizer unchanged.",
+    "next": "Verify current calibration, both48full600banks/history/physical calls/recovery/release; measure complete cost/storage projection before scientific admission."
+  }
 }
