@@ -40,11 +40,20 @@ def main():
     torch.set_num_threads(2)
     variants = [m+"-"+mode for m in ("ad", "dpt", "dit", "ic_iql") for mode in ("full", "episode")]
     variants += ["native_initial-full", "native_final-full"]
+    assembly_path=Path("/mowenjie/fluffy-bassoon-2/outputs/flow-four-method-source-gpu-20261103-r2/preparation/ASSEMBLY.json")
+    if sha(assembly_path)!="12433cf163c03a7874f6028e8bdc2a662f25fdc964e9fd972b7ac4d4f2b1760c":
+        raise ValueError("Audited source identity changed")
+    interface=json.loads(assembly_path.read_text())["codec"]
     outcomes, end_outcomes, audit = {}, {}, []
     prospective = None
     for variant in variants:
         directory = a.readout / variant
         binding = json.loads((directory / "BINDING.json").read_text())
+        protocol=dict(version="frozen_steering_actual_attempt_v1",interface=interface,
+            maximum_rgb_delta=None,actual_attempts=5,
+            feedback="Observed first-success once; full physical boundary",
+            noise="frozen_steering_actual_attempt_noise_v1")
+        if variant.endswith("-episode"):protocol["memory_mode"]="episode"
         rows, refs, case_definitions = {}, [], {}
         for marker in sorted(directory.glob("complete-bank-*.json")):
             bank = json.loads(marker.read_text())
@@ -66,7 +75,12 @@ def main():
             if sha(ref["path"]) != ref["sha256"]: raise ValueError("Attempt artifact changed")
             saved = torch.load(ref["path"], map_location="cpu", weights_only=False)
             key = saved["case"]["task"], saved["case"]["slot"], saved["attempt"]
-            if key in seen or saved["binding"] != binding: raise ValueError("Duplicate/mixed physical provenance")
+            if (key in seen or any(saved["binding"].get(k)!=v for k,v in binding.items())
+                    or saved["binding"].get("native_attempt_protocol")!=protocol
+                    or saved["interface"]!=interface
+                    or saved["policy_weights_sha256"]!=binding["policy_weights_sha256"]
+                    or saved["case"]!=rows[key]["case"]):
+                raise ValueError("Duplicate/mixed physical provenance")
             seen.add(key)
             for name in ("truth", "video", "initial"):
                 if sha(saved[name]["path"]) != saved[name]["sha256"]: raise ValueError("Native evidence changed")
