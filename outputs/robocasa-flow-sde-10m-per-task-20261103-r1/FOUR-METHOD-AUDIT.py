@@ -7,6 +7,7 @@ from pathlib import Path
 import time
 
 import torch
+import numpy as np
 
 
 def load(path):
@@ -21,6 +22,27 @@ def row_hashes(value):
     return [hashlib.sha256(str(tuple(row.shape)).encode() + str(row.dtype).encode() +
         row.contiguous().reshape(-1).view(torch.uint8).numpy().tobytes()).hexdigest()
         for row in value]
+
+
+def observation_hash(value):
+    digest = hashlib.sha256()
+    def visit(item):
+        if isinstance(item, dict):
+            for key in sorted(item):
+                digest.update(str(key).encode())
+                visit(item[key])
+        elif isinstance(item, (tuple, list)):
+            for child in item:
+                visit(child)
+        elif torch.is_tensor(item) or isinstance(item, np.ndarray):
+            array = item.detach().cpu().numpy() if torch.is_tensor(item) else item
+            digest.update(str(array.dtype).encode())
+            digest.update(str(array.shape).encode())
+            digest.update(array.tobytes())
+        else:
+            digest.update(repr(item).encode())
+    visit(value)
+    return digest.hexdigest()
 
 
 def observation(value):
@@ -53,7 +75,11 @@ def audit(root, collection):
         assert value['rewards'].shape == value['terminations'].shape == value['truncations'].shape == (16, 50)
         assert torch.isfinite(value['rewards']).all()
         assert set(value['rewards'].unique().tolist()) <= {0., 1.}
-        key = value['current_observation_sha256']
+        assert observation_hash(value['current_observation']) == value['current_observation_sha256']
+        # Native environment routing removes diagnostic task_metadata before
+        # sending observations to rollout. Images/state/instruction are intact.
+        key = observation_hash({k: v for k, v in value['current_observation'].items()
+                                if k != 'task_metadata'})
         assert key not in env_index, 'Ambiguous environment observation batch'
         env_index[key] = (path, value['episode_ids'], chunk)
         for lane, (identity, seed) in enumerate(zip(value['episode_ids'], value['seeds'], strict=True)):
@@ -131,6 +157,7 @@ def audit(root, collection):
         horizon_terminal_observations=128, native_continuous_model_targets=True,
         full_sampling_chain_and_RNG=True, producing_policy_version=True,
         actor_sampling_environment_join=str(join_path),
+        observation_join='Exact native payload hash; only environment-only task_metadata excluded',
         join_sha256=hashlib.sha256(join_path.read_bytes()).hexdigest())
 
 
