@@ -105,7 +105,12 @@ def audit(root, collection, tag):
     assert len(identities) == 1536 and len(successes) == len(reward_totals) == 128
     assert all(reward_totals[key] == float(successes[key]) for key in successes)
     sampling_index, sampling_records, sampled_env = {}, 0, set()
+    rank_records = {}
     for path in sorted((root / 'sampling').glob('*/*.pt.gz')):
+        # Once a rank's complete target batch is joined, avoid reading later
+        # updates that may still be writing while this audit runs.
+        if rank_records.get(path.parent, 0) == 12:
+            continue
         value = load(path)
         if (value['mode'] != 'train' or value['terminal_value_only'] or
                 value['collection_iteration'] != collection):
@@ -131,6 +136,8 @@ def audit(root, collection, tag):
             sampling_index[signature] = dict(episode_id=episode_ids[lane], chunk=chunk,
                 environment_record=str(env_path), sampling_record=str(path), sampling_lane=lane)
         sampling_records += 1
+        rank_records[path.parent] = rank_records.get(path.parent, 0) + 1
+    assert len(rank_records) == 8 and set(rank_records.values()) == {12}
     assert sampled_env == set(env_index) and sampling_records == 96 and len(sampling_index) == 1536
     joins = []
     actor_paths = sorted((root / 'training-rollouts').glob(f'iteration-{collection:04d}-*.pt'))
@@ -165,14 +172,15 @@ def audit(root, collection, tag):
 
 
 def audit_task(arguments):
-    root, task, tag = arguments
+    root, task, tag, production_only = arguments
     torch.set_num_threads(2)
     torch.set_num_interop_threads(1)
     stage = 'q1-r2' if task == 'OpenDrawer' else 'q1-r1'
-    rows = [audit(root / task / stage, 1, tag)]
+    rows = [] if production_only else [audit(root / task / stage, 1, tag)]
     production = root / task / 'production-r1'
     if (production / 'progress.json').exists() and json.loads((production / 'progress.json').read_text())['completed_iterations'] >= 2:
         rows.append(audit(production, 2, tag))
+    assert rows, 'Requested production batch is not complete yet'
     print(json.dumps(dict(task=task, completed=True, segments=len(rows))), flush=True)
     return rows
 
@@ -181,13 +189,16 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--root', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    tasks = ['OpenDrawer', 'CloseToasterOvenDoor', 'PickPlaceDrawerToCounter', 'CoffeeSetupMug', 'TurnOffStove']
+    parser.add_argument('--tasks', choices=tasks, nargs='+', default=tasks)
+    parser.add_argument('--production-only', action='store_true')
     args = parser.parse_args()
     assert not args.output.exists()
-    tasks = ['OpenDrawer', 'CloseToasterOvenDoor', 'PickPlaceDrawerToCounter', 'CoffeeSetupMug', 'TurnOffStove']
+    assert len(set(args.tasks)) == len(args.tasks)
     # Five independent audits, two CPU threads each, within the allocated
     # development container's thirteen CPUs; no GPU visibility/model calls.
-    with ProcessPoolExecutor(max_workers=5, mp_context=multiprocessing.get_context('spawn')) as pool:
-        groups = list(pool.map(audit_task, [(args.root, task, args.output.stem) for task in tasks]))
+    with ProcessPoolExecutor(max_workers=min(5, len(args.tasks)), mp_context=multiprocessing.get_context('spawn')) as pool:
+        groups = list(pool.map(audit_task, [(args.root, task, args.output.stem, args.production_only) for task in args.tasks]))
     rows = [row for group in groups for row in group]
     result = dict(completed=True, checked_unix=time.time(), audits=rows, new_controls=0, SGD=0,
         ready_methods=['AD', 'DPT', 'DIT', 'in-context IQL'],
