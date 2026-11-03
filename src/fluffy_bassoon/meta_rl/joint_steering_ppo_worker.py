@@ -37,7 +37,7 @@ def _save(path, value, *, compressed=False):
     temporary = path.with_name(path.name + ".tmp")
     with temporary.open("wb") as stream:
         if compressed:
-            with gzip.GzipFile(fileobj=stream, mode="wb", mtime=0) as zipped:
+            with gzip.GzipFile(fileobj=stream, mode="wb", mtime=0, compresslevel=1) as zipped:
                 pickle.dump(cpu_tree(value), zipped, protocol=5)
         else:
             torch.save(cpu_tree(value), stream)
@@ -57,6 +57,12 @@ def _json(path, value):
         stream.flush()
         os.fsync(stream.fileno())
     temporary.replace(path)
+
+
+def native_video_writer(path, **options):
+    """One encoding thread per camera; preserve every frame/codec/quality."""
+    import imageio.v2 as imageio
+    return imageio.get_writer(path, **options, ffmpeg_params=["-threads", "1"])
 
 
 def draw_seed(case, chunk, stream):
@@ -613,7 +619,7 @@ def run_worker(run: Path, rank: int, code: Path, deadline_unix: float):
             environments = [_RecordingEnvironment(factory, request["cases"], horizon=None,
                 output=output / "videos" / f"lane-{lane:02d}",
                 monitoring_root=output / "monitoring" / f"lane-{lane:02d}",
-                journal=journal, writer_factory=imageio.get_writer, rank=rank,
+                journal=journal, writer_factory=native_video_writer, rank=rank,
                 episode_id_prefix=f"q{sequence:06d}-lane{lane:02d}-",
                 canonical_root=request["canonical_root"], source=dict(rank=rank, sequence=sequence,
                     phase=request["phase"], iteration=request["iteration"],
