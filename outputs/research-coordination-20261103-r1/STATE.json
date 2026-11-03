@@ -16,27 +16,35 @@
     "memory_controls": {
       "thread_id": "01a19bef-232f-7960-ab6d-7ce1539b6685",
       "title": "Improve evaluation and training",
-      "cursor": "143ed4de-4086-4c7d-8526-8992e648a4bd:20",
-      "state": "r4 COLLECTED complete48new+1052carried; all8worker receipts complete withunchangedweights/binding,36000chargedactions. Live owner MONITOR reports48new individuallyverified (37reset,11window64),1100collected. Full900original/2000endpoint independent summary, matched curves/paired uncertainty and final schedulerrelease/GPUcharge pending with owner.",
+      "cursor": "143ed4de-4086-4c7d-8526-8992e648a4bd:23",
+      "state": "COMPLETE_RESULTS_VERIFIED: full2000controlendpoints and1000originalreferenceepisodes independentaudit passed; finalresult/PNG hashes match Linuxreceipt. Forty paired exact/Holm values independently reproduced on allocatedLinuxCPU. No established memorygain in exploratory50case cohorts; minimumcorrectedp.46875. Allocationreleased12:28:22,65556/86400GPU-s inclfailures,36000r4controls. Ownerpublishingfindings/figure andremovingownmonitor; no furthercompute/monitoringneeded for this task.",
       "recovery_job_id": "job-oizm929rf0oo",
       "verified_collected_endpoints": 1100,
       "required_collected_endpoints": 1100,
       "required_combined_endpoints": 2000,
-      "remaining_GPU_seconds": 23433,
-      "evidence": "outputs/research-coordination-20261103-r1/CHECK-20261103-1230.json",
+      "remaining_GPU_seconds": 20844,
+      "evidence": "outputs/opendrawer-memory-controls-20261103-r4/FINAL-AUDIT.json",
       "failed_recovery_job_id": "job-tjh32aj7mv5x",
-      "conservative_GPU_seconds_charged": 62967,
+      "conservative_GPU_seconds_charged": 65556,
       "next_run": "opendrawer-memory-controls-20261103-r4",
       "new_recovery_endpoints_verified": 48,
       "new_recovery_episodes_saved_at_live_check": 48,
       "recovery_source_commit": "03f26b7c3cf6890c89b2691020dfa09ebeac6336",
       "recovery_GPU_seconds_ceiling": 7200,
-      "recovery_charged_policy_actions": 36000
+      "recovery_charged_policy_actions": 36000,
+      "monitoring_required": false,
+      "verified_combined_control_endpoints": 2000,
+      "verified_original_reference_episodes": 1000,
+      "recovery_conservative_GPU_seconds": 2589,
+      "allocation_released": true,
+      "result_review": "outputs/research-coordination-20261103-r1/MEMORY-RESULT-REVIEW.json",
+      "result_conclusion": "No established memorygain; all40Holm-adjustedtests >=.46875.",
+      "figure": "outputs/opendrawer-memory-controls-20261103-r4/attempt-curves.png"
     },
     "flora_reward": {
       "thread_id": "01a19bef-b16f-70e2-ad86-9140e3b360ed",
       "title": "Fix Flora reward and unblock gates",
-      "cursor": "520aa979-d22d-4944-a890-27bd974a6515:15",
+      "cursor": "520aa979-d22d-4944-a890-27bd974a6515:16",
       "state": "Frame-edge source43d9ca5d LinuxCPU input qualification passed. Coordinator independently verified8manifest files,1216RGBhashes/19processor refs/40official prompt structures/4priorrefs,0GPU. User presented one concrete40grade\u2264900GPU-s/noautomaticretry decision; pendingactualhumanapproval. No scoring launch. Prior900renewableinterpretationcorrected: thosecaps agent-authored, no numericremainingbalance established.",
       "evidence": "outputs/research-coordination-20261103-r1/FLORA-FRAME-EDGE-VERIFICATION.json",
       "next_trial_GPU_seconds_ceiling_proposed": 900,
@@ -54,8 +62,8 @@
     "steering_ppo": {
       "thread_id": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
       "title": "Pull PPO coordination updates",
-      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:71",
-      "state": "Q2 SUCCEEDED/released,721GPU-s; Q1+Q22052/2400, carried122separate (2174prep total), phase-ledger conservative2186upper retained pendingclockoriginreconcile. Bothfull48/600/historybanks alreadyverified130controls/s; no scientificupdates/DEVpanels. Owner preparing77.6GiB coldcopy of onlyowned closed Flow checkpoints withfullSHAreadback beforeduplicate reclaim/readablepointers, allartifacts preserved, then freshstorage/cost/actual8GPUadmission.",
+      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:72",
+      "state": "Nativehistory/video audits passed; ownedclosed77.6GiB coldcopy/readbackcomplete,~912GiB freshfree. ConcreteADMISSIONforecast38.8403velocity/38.6458KV GPUh each within40, storage900GiB required includingreserves. Actual8GPU168CPU1664GiB384SHM probe/fit,beforepanels andfirstcountedupdate/recovery stillpending. No scientificjobs/updates/DEVpanels. Phaseclockoriginreconciled andlarger2064campaign+122carried=2186prepGPU-s permanentlyselected.",
       "scientific_job_ids": {},
       "arms": [
         "velocity",
@@ -104,7 +112,7 @@
         "check_cadence": "minibatch",
         "scientific_updates": 0
       },
-      "evidence": "outputs/robocasa-joint-steering-scale50-20261103-r1/native-q2/SCHEDULER-CLOSEOUT.json",
+      "evidence": "outputs/research-coordination-20261103-r1/CHECK-20261103-1250.json",
       "qualification_GPU_seconds": 1331,
       "carried_preparation_GPU_seconds": 122,
       "qualification_successor_job_id": "job-m2qlxqjuh8ho",
@@ -119,14 +127,19 @@
       },
       "qualification_successor_GPU_seconds": 721,
       "qualification_campaign_GPU_seconds": 2052,
-      "total_preparation_GPU_seconds": 2174,
+      "total_preparation_GPU_seconds": 2186,
       "total_preparation_conservative_upper_GPU_seconds": 2186,
-      "storage_preparation": "Owned closed Flow checkpoints only;77.6GiB estimated reclaim, private existing BOS, fullreadback/sourceunchanged before duplicate reclaim; active final/rawdata staywarm."
+      "storage_preparation": "Complete77.6GiB ownedclosedcheckpoint archive/fullSHAreadback; artifacts preserved,~912GiB freshfree vs900GiB required.",
+      "clock_reconciliation_resolved": true,
+      "GPU_hour_forecast_per_arm": {
+        "velocity": 38.8403449648122,
+        "kv_all_layers": 38.64579095836315
+      }
     },
     "downstream_histories": {
       "thread_id": "01a199fb-3586-7171-bd20-52fa70e5378c",
       "title": "Explain DPT context/query targets",
-      "cursor": "5e721a0b-3229-4c1f-beee-e2194e124fbd:56",
+      "cursor": "5e721a0b-3229-4c1f-beee-e2194e124fbd:57",
       "state": "Native qualification advanced; no admitted completed scientificPPOsource yet, so downstream fit remains pending."
     }
   },
@@ -146,7 +159,8 @@
     "ppo_io_q2_job-m2qlxqjuh8ho_launch_probe_receipt",
     "ppo_io_q2_both48lane_pass_130controls_per_second",
     "memory_r4_all48missing_collected_1100verified_owner_monitor",
-    "flora_frame_edge40grade_CPU_verified_900GPU_seconds_increment_decision_requested"
+    "flora_frame_edge40grade_CPU_verified_900GPU_seconds_increment_decision_requested",
+    "memory_controls_complete_2000endpoints_no_established_gain_curves_cost_verified"
   ],
   "wandb": {
     "status": "BAIGE_API_HTTP403_LOCAL_OFFLINE_LOGGING_ACTIVE",
@@ -177,5 +191,5 @@
     "Flora repair does not gate simulator-reward steering PPO.",
     "Do not duplicate owner jobs, change their active worktrees, or expand scope/budgets silently."
   ],
-  "last_check_Shanghai": "2026-11-03T12:30:59+08:00"
+  "last_check_Shanghai": "2026-11-03T12:51:38+08:00"
 }

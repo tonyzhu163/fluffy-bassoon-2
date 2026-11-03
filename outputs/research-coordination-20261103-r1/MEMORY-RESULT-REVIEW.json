@@ -1,0 +1,255 @@
+{
+  "completed": true,
+  "allocated_Linux_CPU_reference_check": true,
+  "GPU_seconds": 0,
+  "model_computation": false,
+  "checked_unix": 1793681379.5518367,
+  "result_sha256": "20293f13d5ebea0902ce786db8ecf18d4ca2bd2cfe9021db626b8751552190ca",
+  "reported_control_endpoints": 2000,
+  "reported_collected_endpoints": 1100,
+  "matched_comparisons_numerically_checked": 40,
+  "exact_p_reference": "Two-sided binomial paired-discordance probability; integer combinatorial sum",
+  "Holm_reference": "Sorted raw p, cumulative maximum of (40-rank)*p, capped at1",
+  "minimum_raw_p": 0.01171875,
+  "minimum_Holm_p": 0.46875,
+  "p5_results": [
+    {
+      "family": "ad",
+      "cohort": "ID",
+      "control": "reset",
+      "attempt": 5,
+      "full_successes": 38,
+      "control_successes": 31,
+      "full_wins": 10,
+      "full_losses": 3,
+      "full_minus_control": {
+        "mean": 0.14,
+        "case_bootstrap95": [
+          0,
+          0.28
+        ]
+      },
+      "exact_p": 0.09228515625,
+      "holm_p_40_comparisons": 1
+    },
+    {
+      "family": "ad",
+      "cohort": "OOD",
+      "control": "reset",
+      "attempt": 5,
+      "full_successes": 28,
+      "control_successes": 35,
+      "full_wins": 3,
+      "full_losses": 10,
+      "full_minus_control": {
+        "mean": -0.14,
+        "case_bootstrap95": [
+          -0.28,
+          0
+        ]
+      },
+      "exact_p": 0.09228515625,
+      "holm_p_40_comparisons": 1
+    },
+    {
+      "family": "ad",
+      "cohort": "ID",
+      "control": "window64",
+      "attempt": 5,
+      "full_successes": 38,
+      "control_successes": 36,
+      "full_wins": 3,
+      "full_losses": 1,
+      "full_minus_control": {
+        "mean": 0.04,
+        "case_bootstrap95": [
+          -0.04,
+          0.12
+        ]
+      },
+      "exact_p": 0.625,
+      "holm_p_40_comparisons": 1
+    },
+    {
+      "family": "ad",
+      "cohort": "OOD",
+      "control": "window64",
+      "attempt": 5,
+      "full_successes": 28,
+      "control_successes": 37,
+      "full_wins": 1,
+      "full_losses": 10,
+      "full_minus_control": {
+        "mean": -0.18,
+        "case_bootstrap95": [
+          -0.3,
+          -0.06
+        ]
+      },
+      "exact_p": 0.01171875,
+      "holm_p_40_comparisons": 0.46875
+    },
+    {
+      "family": "dpt",
+      "cohort": "ID",
+      "control": "reset",
+      "attempt": 5,
+      "full_successes": 31,
+      "control_successes": 33,
+      "full_wins": 0,
+      "full_losses": 2,
+      "full_minus_control": {
+        "mean": -0.04,
+        "case_bootstrap95": [
+          -0.1,
+          0
+        ]
+      },
+      "exact_p": 0.5,
+      "holm_p_40_comparisons": 1
+    },
+    {
+      "family": "dpt",
+      "cohort": "OOD",
+      "control": "reset",
+      "attempt": 5,
+      "full_successes": 36,
+      "control_successes": 32,
+      "full_wins": 12,
+      "full_losses": 8,
+      "full_minus_control": {
+        "mean": 0.08,
+        "case_bootstrap95": [
+          -0.1,
+          0.26
+        ]
+      },
+      "exact_p": 0.5034446716308594,
+      "holm_p_40_comparisons": 1
+    },
+    {
+      "family": "dpt",
+      "cohort": "ID",
+      "control": "window64",
+      "attempt": 5,
+      "full_successes": 31,
+      "control_successes": 33,
+      "full_wins": 0,
+      "full_losses": 2,
+      "full_minus_control": {
+        "mean": -0.04,
+        "case_bootstrap95": [
+          -0.1,
+          0
+        ]
+      },
+      "exact_p": 0.5,
+      "holm_p_40_comparisons": 1
+    },
+    {
+      "family": "dpt",
+      "cohort": "OOD",
+      "control": "window64",
+      "attempt": 5,
+      "full_successes": 36,
+      "control_successes": 35,
+      "full_wins": 6,
+      "full_losses": 5,
+      "full_minus_control": {
+        "mean": 0.02,
+        "case_bootstrap95": [
+          -0.1,
+          0.14
+        ]
+      },
+      "exact_p": 1,
+      "holm_p_40_comparisons": 1
+    }
+  ],
+  "memory_effects": {
+    "ad": {
+      "ID": {
+        "attempt5_minus1_difference_in_differences": {
+          "mean": 0.14,
+          "case_bootstrap95": [
+            0,
+            0.28
+          ]
+        },
+        "difference_in_differences_exact_p": 0.09228515625,
+        "across_five_streams_full_minus_reset": {
+          "mean": 0.036000000000000004,
+          "case_bootstrap95": [
+            -0.012000000000000004,
+            0.084
+          ]
+        }
+      },
+      "OOD": {
+        "attempt5_minus1_difference_in_differences": {
+          "mean": -0.14,
+          "case_bootstrap95": [
+            -0.28,
+            0
+          ]
+        },
+        "difference_in_differences_exact_p": 0.09228515625,
+        "across_five_streams_full_minus_reset": {
+          "mean": -0.02,
+          "case_bootstrap95": [
+            -0.07600000000000001,
+            0.036000000000000004
+          ]
+        }
+      }
+    },
+    "dpt": {
+      "ID": {
+        "attempt5_minus1_difference_in_differences": {
+          "mean": -0.04,
+          "case_bootstrap95": [
+            -0.1,
+            0
+          ]
+        },
+        "difference_in_differences_exact_p": 0.5,
+        "across_five_streams_full_minus_reset": {
+          "mean": 0.007999999999999998,
+          "case_bootstrap95": [
+            -0.028000000000000004,
+            0.044000000000000004
+          ]
+        }
+      },
+      "OOD": {
+        "attempt5_minus1_difference_in_differences": {
+          "mean": 0.08,
+          "case_bootstrap95": [
+            -0.1,
+            0.26
+          ]
+        },
+        "difference_in_differences_exact_p": 0.5034446716308594,
+        "across_five_streams_full_minus_reset": {
+          "mean": 0.008000000000000004,
+          "case_bootstrap95": [
+            -0.052000000000000005,
+            0.068
+          ]
+        }
+      }
+    }
+  },
+  "claim": "No established memory benefit across declared40paired comparisons; exploratory50case cohorts",
+  "final_audit_sha256": "4a656345e9f4399536ac655698a86e1a2c73b9112906199198f367bcebf0290d",
+  "final_audit_result_and_figure_hashes_verified": true,
+  "total_control_endpoints_independently_audited": 2000,
+  "original_unique_reference_episodes_independently_audited": 1000,
+  "allocation_released": true,
+  "cumulative_conservative_GPU_seconds": 65556,
+  "original_GPU_seconds_ceiling": 86400,
+  "new_recovery_policy_controls": 36000,
+  "figure_visual_inspection": "Passed; four model/cohort panels match saved per-attempt counts; descriptive final-success curves, uncertainty in RESULT.json.",
+  "figure_sha256": "69c05084297077855588c46e7e4ced30f4a0edced399876fe4a510bd6e205c1b",
+  "figure": "outputs/opendrawer-memory-controls-20261103-r4/attempt-curves.png"
+}

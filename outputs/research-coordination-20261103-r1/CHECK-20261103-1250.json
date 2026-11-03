@@ -1,0 +1,73 @@
+{
+  "checked_Shanghai": "2026-11-03T12:51:38+08:00",
+  "memory_final_audit": {
+    "local_path": "outputs/opendrawer-memory-controls-20261103-r4/FINAL-AUDIT.json",
+    "sha256": "4a656345e9f4399536ac655698a86e1a2c73b9112906199198f367bcebf0290d",
+    "complete": true,
+    "result_sha256": "20293f13d5ebea0902ce786db8ecf18d4ca2bd2cfe9021db626b8751552190ca",
+    "controls_verified": 2000,
+    "original_reference_episodes_verified": 1000,
+    "recovery_controls": 36000,
+    "GPU_seconds": 65556,
+    "GPU_seconds_cap": 86400,
+    "allocation_released": true,
+    "minimum_Holm_p": 0.46875,
+    "figure_sha256": "69c05084297077855588c46e7e4ced30f4a0edced399876fe4a510bd6e205c1b"
+  },
+  "independent_reference_review": "MEMORY-RESULT-REVIEW.json",
+  "production_admission_observation": {
+    "sha256": "40b63fafb463d5b105f469e2bbc24aeefdf340758f62ba8d34f3ea61f85d2f19",
+    "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+    "scientific_source_admitted": false,
+    "scientific_updates": 0,
+    "GPU_budget_forecast": {
+      "velocity": {
+        "observed_bank_seconds": 222.23172807693481,
+        "observed_controls_per_second": 129.5944564226656,
+        "measured_collection_only_GPU_hours": 24.692414230770535,
+        "allowances_not_eight_GPU_measurements": {
+          "collection_25percent_margin": 6.173103557692634,
+          "evaluation_twice_measured_per_control": 3.896771620793475,
+          "optimizer_20seconds_per_update": 2.2222222222222223,
+          "startup_calibration_probes_release_240wallseconds": 0.5333333333333333,
+          "recovery_reserve_GPU_hours": 1.0,
+          "prior_preparation_GPU_hours": 0.3225
+        },
+        "forecast_total_GPU_hours": 38.8403449648122,
+        "cap_GPU_hours": 40
+      },
+      "kv_all_layers": {
+        "observed_bank_seconds": 221.2294738292694,
+        "observed_controls_per_second": 130.1815689451306,
+        "measured_collection_only_GPU_hours": 24.581052647696602,
+        "allowances_not_eight_GPU_measurements": {
+          "collection_25percent_margin": 6.1452631619241505,
+          "evaluation_twice_measured_per_control": 3.87919737096462,
+          "optimizer_20seconds_per_update": 2.2222222222222223,
+          "startup_calibration_probes_release_240wallseconds": 0.5333333333333333,
+          "recovery_reserve_GPU_hours": 1.0,
+          "prior_preparation_GPU_hours": 0.2847222222222222
+        },
+        "forecast_total_GPU_hours": 38.64579095836315,
+        "cap_GPU_hours": 40
+      }
+    },
+    "clock_reconciliation": {
+      "scheduler_creation_to_terminal_Q1": 1331,
+      "scheduler_creation_to_terminal_Q2": 721,
+      "scheduler_sum": 2052,
+      "phase_campaign_upper": 2064,
+      "conservative_campaign_charge_selected": 2064,
+      "carried_original_native_velocity": 122,
+      "total_preparation_charge": 2186,
+      "explanation": "Q2 planning stamp11:55:32 precedes scheduler creation11:55:50 by18s; final phase end12:07:44.009 precedes taskterminal12:07:51 by6.991s. Ceil produces12s higher planning-clock bound. Keep both labels and use larger2064 permanently;122charged once to velocity."
+    },
+    "required_free_storage_bytes_at_launch": 966367641600,
+    "fresh_free_bytes": 979298680832,
+    "write_read_fsync_probe_passed": true,
+    "actual_eight_GPU_fit": "Pending startup8deviceGPUprobe and effective168CPU/1664GiB/384SHMchecks; firstcountedupdate recovery required before source progress admission.",
+    "cold_copy_completed": true,
+    "cold_copy_result_sha256": "d06cc47d8f810ee789768aaad8607fde630b037ba1af02874d557033af98832b"
+  },
+  "Flora_scoring": "Unchanged; single40grade<=900GPU-s resource decision pending, no repeat question or inference launch."
+}
