@@ -71,14 +71,26 @@ def main():
               'observation/extra_view_image': 'extra_view_images'}
     env_hashes = {name: Counter() for name in fields}
     actor_hashes = {name: Counter() for name in fields}
+    env_identity = {}
+    actor_joins = []
     sampling_chains, actor_chains = Counter(), Counter()
     env_chunks = sorted((root / 'environment').glob('*/training-i000-*-chunk*.pt.gz'))
     assert len(env_chunks) == 8 * 12
     for path in env_chunks:
         value = load(path)
         assert len(value['episode_ids']) == len(value['seeds']) == 16
+        image_rows = {}
         for name, env_name in fields.items():
-            env_hashes[name].update(hashes(value['current_observation'][env_name]))
+            image_rows[name] = hashes(value['current_observation'][env_name])
+            env_hashes[name].update(image_rows[name])
+        states = hashes(value['current_observation']['states'])
+        actions = hashes(value['decoded_actions'].reshape(16, 600))
+        chunk = int(path.name.split('-chunk')[1].split('.')[0])
+        for lane in range(16):
+            key = tuple(image_rows[name][lane] for name in fields) + (states[lane], actions[lane])
+            assert key not in env_identity, 'Ambiguous full observation/action identity'
+            env_identity[key] = dict(episode_id=value['episode_ids'][lane], chunk=chunk,
+                environment_record=str(path), local_lane=lane)
         if path.name.endswith('chunk12.pt.gz'):
             assert value['terminal_observation'] is not None
     for path in sorted((root / 'sampling').glob('*/*.pt.gz')):
@@ -95,16 +107,29 @@ def main():
         inputs = batch['forward_inputs']
         time_count, lanes = batch['prev_logprobs'].shape[:2]
         assert time_count == 12 and lanes == 64
+        image_rows = {}
         for name in fields:
             tensor = inputs[name]
-            actor_hashes[name].update(hashes(tensor.reshape(time_count * lanes, *tensor.shape[2:])))
+            image_rows[name] = hashes(tensor.reshape(time_count * lanes, *tensor.shape[2:]))
+            actor_hashes[name].update(image_rows[name])
             dropped_uncompressed_bytes += tensor.numel() * tensor.element_size()
+        states = hashes(inputs['observation/state'].reshape(time_count * lanes, -1))
+        actions = hashes(batch['actions'].reshape(time_count * lanes, 600))
+        for index in range(time_count * lanes):
+            key = tuple(image_rows[name][index] for name in fields) + (states[index], actions[index])
+            assert key in env_identity, 'Actor sample has no exact environment observation/action join'
+            actor_joins.append(dict(actor_record=str(path), time_index=index // lanes,
+                local_batch_index=index % lanes, **env_identity[key]))
         tensor = inputs['chains']
         actor_chains.update(hashes(tensor.reshape(time_count * lanes, *tensor.shape[2:])))
         dropped_uncompressed_bytes += tensor.numel() * tensor.element_size()
     assert all(actor_hashes[name] == env_hashes[name] and sum(actor_hashes[name].values()) == 1536
                for name in fields), 'Actor images are not byte-for-byte covered by the environment corpus'
     assert actor_chains == sampling_chains and sum(actor_chains.values()) == 1536
+    assert len(actor_joins) == len(env_identity) == 1536
+    assert len({(row['episode_id'], row['chunk']) for row in actor_joins}) == 1536
+    join_path = args.output.with_name('ACTOR-EPISODE-JOIN.json')
+    join_path.write_text(json.dumps(dict(completed=True, samples=1536, rows=actor_joins), indent=2) + '\n')
     checkpoint = root / contract['task'] / 'checkpoints/global_step_1'
     boundary = read(checkpoint / 'pilot-boundary.json')
     assert boundary['completed'] and boundary['global_step'] == 1 and len(boundary['workers']) == 18
@@ -123,6 +148,7 @@ def main():
         source=read(root / 'manifest.json')['source'], before=before['metrics'],
         train_episodes=128, train_chunk_samples=1536, updates=updates, parity=parity,
         actor_images_equal_environment=True, actor_chains_equal_sampling=True,
+        full_actor_environment_join=dict(path=str(join_path), sha256=digest(join_path), samples=1536),
         actor_duplicate_uncompressed_bytes=dropped_uncompressed_bytes,
         component_bytes=components, full_boundary_verified=True,
         before_reference=dict(path=str(reference_path), sha256=digest(reference_path)),
