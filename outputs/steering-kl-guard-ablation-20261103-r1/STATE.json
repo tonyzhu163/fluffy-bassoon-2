@@ -12,14 +12,14 @@
     "completed": false,
     "job_id": "job-1nds2rm4v2rp",
     "name": "mwj_1103_steering_kl_guard_native_1x4_r2",
-    "last_verified_status": "QUEUED",
-    "last_direct_PFS_check_unix": 1793690067.6419497,
-    "output_directory_existed_at_that_check": false,
+    "last_verified_status": "ALLOCATED; four-device probe PASSED; native loading",
+    "last_direct_PFS_check_unix": 1793690306.5160246,
+    "output_directory_existed_at_that_check": true,
     "source_commit": "12d1f24189a6b8308675fb3efbeb2dacfd0e3880",
     "source_checkout": "/mowenjie/fluffy-bassoon-2/worktrees/steering-kl-native-eval-20261103-r2",
     "remote_output": "/mowenjie/fluffy-bassoon-2/outputs/steering-kl-guard-ablation-20261103-r1/gpu-r2",
     "lifetime_GPU_seconds_ceiling": 21600,
-    "actual_device_qualification_pending": true,
+    "actual_device_qualification_pending": false,
     "panel": "Three deterministic policies per interface, two125-case shards per policy, five tasks,600controls;1500episodes total",
     "test_panel": "Fresh diagnostic seeds; production final TEST untouched",
     "last_console_check_Shanghai": "2026-11-03T15:12:10+08:00",
@@ -34,12 +34,16 @@
       },
       {
         "job_id": "job-1nds2rm4v2rp",
-        "status": "QUEUED",
+        "status": "ALLOCATED; four-device probe PASSED",
         "submission": "SUBMISSION-r2.json"
       }
     ],
     "submission": "SUBMISSION-r2.json",
-    "console_receipt": "JOB-R2-QUEUED.png"
+    "console_receipt": "JOB-R2-QUEUED.png",
+    "process_started_unix": 1793690279,
+    "deadline_unix": 1793695449,
+    "probe_evidence": "GPU-R2-PROBE.json",
+    "resource_evidence": "GPU-R2-PROFILE.json"
   },
   "monitor": {
     "automation_id": "kl-guard-paired-diagnostic",
@@ -58,7 +62,7 @@
     "preserve": "All original policies, Adam/sampler/RNG checkpoints, banks, before/DEV0 panels and cost ledgers"
   },
   "remaining": [
-    "Actual native allocation, four-device probe and advancing episode evidence",
+    "Verify advancing complete native episodes after actual four-device probe passed",
     "Complete all paired native panels or diagnose a bounded failure with partial costs preserved",
     "Audit cases, noise schedules, frozen weights, videos, physical calls, scheduler exit and cumulative GPU charge",
     "Publish guarded versus unguarded true-success comparison and limits",
