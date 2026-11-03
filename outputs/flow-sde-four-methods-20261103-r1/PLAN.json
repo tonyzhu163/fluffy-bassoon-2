@@ -1,5 +1,5 @@
 {
-  "status": "CPU_SOURCE_AUDIT_PASSED_FEATURES_LABELS_AND_DIRECT_ACTION_ADAPTER_PENDING",
+  "status": "ADAPTER_CPU_QUALIFIED_GPU_SOURCE_PREPARATION_PENDING",
   "human_request": "wait do should we try training the four meta learning methods on the 1m flow sde run and evaluating?",
   "methods": [
     "AD",
@@ -31,5 +31,14 @@
     "corpus_sha256": "5bf7c71056ca84b37f1d23589696b834c1a3401bbbe61e75f0b6eb5249498eb6",
     "model_simulator_or_GPU_calls": 0,
     "student_fit_ready": false
+  },
+  "human_execution_request": "can you train those and eval it?",
+  "preparation_budget": {
+    "GPU_count": 1,
+    "scheduler_max_minutes": 45,
+    "maximum_GPU_hours": 0.75,
+    "script_seconds": 2300,
+    "scope": "Frozen visual features and fixed final18 teacher queries, source export only. No PPO rerun, simulator actions or student fits in this allocation.",
+    "full_campaign_budget": "Not yet fixed; qualify learner and native readout timings before any new unapproved aggregate>=8GPUh."
   }
 }

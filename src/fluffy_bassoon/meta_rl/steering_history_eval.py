@@ -54,12 +54,12 @@ def replay_physical_attempt(controller, rows, *, horizon):
         control = controller.act(row["features"], deterministic=True)
         if not np.array_equal(control, np.asarray(row["control"], np.float32)):
             raise ValueError("Recovered deterministic controller differs from saved executed steering")
-        controller.observe(row["control"], row["reward"], row["done"])
+        controller.observe(row.get("executed_control", row["control"]), row["reward"], row["done"])
 
 
 def collect_case_attempts(policy, spec, case, *, horizon, environment_factory, motor,
                           noise_for, before_dispatch, after_dispatch, completed_attempt,
-                          attempts=5, completed_prefix=()):
+                          attempts=5, completed_prefix=(), controller_mode="full"):
     """Collect a case with isolated memory and same-case physical resets.
 
     ``noise_for(case, attempt, chunk)`` returns explicit FP32 native noise and
@@ -74,12 +74,16 @@ def collect_case_attempts(policy, spec, case, *, horizon, environment_factory, m
             or attempts * (horizon // 50) > policy.config.context_length):
         raise ValueError("Bind matching steering dimensions and complete attempts within memory capacity")
     frozen = weights_digest(policy)
-    controller = FrozenHistoryController(policy, mode="full")
+    controller = FrozenHistoryController(policy, mode=controller_mode)
     results = []
     for attempt, previous in enumerate(completed_prefix, 1):
         if (previous["case"] != case or previous["attempt"] != attempt
                 or previous["horizon"] != horizon or not previous["completed"]):
             raise ValueError("Recovery prefix changed physical case or attempt identity")
+        if hasattr(spec, "feedback_control") and any(not np.array_equal(
+                spec.feedback_control(row["requested_commands"]), row.get("executed_control"))
+                for row in previous["records"]):
+            raise ValueError("Recovered physical-action feedback differs from the dispatched command")
         if previous["memory_entry"] != memory_signature(controller):
             raise ValueError("Recovered attempt entry memory differs")
         replay_physical_attempt(controller, previous["records"], horizon=horizon)
@@ -126,10 +130,13 @@ def collect_case_attempts(policy, spec, case, *, horizon, environment_factory, m
                 seen = bool(environment.success_steps)
                 reward = float(seen and not first_seen)
                 first_seen = first_seen or seen
-                controller.observe(control, reward, bool(done))
+                executed_control = spec.feedback_control(commands) if hasattr(spec, "feedback_control") else control
+                controller.observe(executed_control, reward, bool(done))
                 record = dict(intent, reward=reward, done=bool(done),
                               episode_start=chunk == 0, executed_controls=50,
                               next_observation=deepcopy(observation))
+                if hasattr(spec, "feedback_control"):
+                    record["executed_control"] = executed_control.copy()
                 after_dispatch(record, environment)
                 records.append(record)
             first = environment.success_steps[0] if environment.success_steps else None
