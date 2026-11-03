@@ -78,3 +78,8 @@ a few support attempts. Target PPO runs and any GRPO comparator are separate
 experiments, not launched by this source campaign. Small-budget PPO settings
 must be qualified explicitly rather than silently inheriting the source's
 128-episode update batch.
+
+The [production-only R4 audit](FOUR-METHOD-AUDIT-R4.json) also passed Coffee
+and Stove after their allocations started. Combined R3/R4 qualification now
+covers every task's Q1 and first resumed production batch:1,280episodes and
+15,360chunks. Complete130-update closeout remains outstanding.

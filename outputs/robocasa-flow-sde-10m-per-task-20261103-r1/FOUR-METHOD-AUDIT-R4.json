@@ -1,0 +1,54 @@
+{
+  "completed": true,
+  "checked_unix": 1793704251.1460683,
+  "audits": [
+    {
+      "task": "CoffeeSetupMug",
+      "root": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CoffeeSetupMug/production-r1",
+      "collection_iteration": 2,
+      "episodes": 128,
+      "chunk_samples": 1536,
+      "post_success_suffix_retained": true,
+      "raw_three_view_RGB_state_instruction": true,
+      "primitive_actions_rewards_boundaries": true,
+      "horizon_terminal_observations": 128,
+      "native_continuous_model_targets": true,
+      "full_sampling_chain_and_RNG": true,
+      "producing_policy_version": true,
+      "actor_sampling_environment_join": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CoffeeSetupMug/FOUR-METHOD-AUDIT-R4-JOIN-production-r1-i002.json",
+      "observation_join": "Exact native payload hash; only environment-only task_metadata excluded",
+      "join_sha256": "ffa156f08223343c8e8bae4d5de7f881a7c96b89da2aa55331ef3abfa6b513ed"
+    },
+    {
+      "task": "TurnOffStove",
+      "root": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TurnOffStove/production-r1",
+      "collection_iteration": 2,
+      "episodes": 128,
+      "chunk_samples": 1536,
+      "post_success_suffix_retained": true,
+      "raw_three_view_RGB_state_instruction": true,
+      "primitive_actions_rewards_boundaries": true,
+      "horizon_terminal_observations": 128,
+      "native_continuous_model_targets": true,
+      "full_sampling_chain_and_RNG": true,
+      "producing_policy_version": true,
+      "actor_sampling_environment_join": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TurnOffStove/FOUR-METHOD-AUDIT-R4-JOIN-production-r1-i002.json",
+      "observation_join": "Exact native payload hash; only environment-only task_metadata excluded",
+      "join_sha256": "ea2a357ff7f7543cb33cc2802bcfae4c7d123093ce62356e1192a4fbf23923e9"
+    }
+  ],
+  "new_controls": 0,
+  "SGD": 0,
+  "ready_methods": [
+    "AD",
+    "DPT",
+    "DIT",
+    "in-context IQL"
+  ],
+  "remaining": [
+    "Finish and audit all 130 source versions per task",
+    "Retain and qualify each final teacher; query DPT labels offline",
+    "Adapt corpus export/fitting to this five-task 130-update contract; legacy exporter is 18-update-specific",
+    "Fit and qualify reactive interface before history fits; preserve native action encoding/mask"
+  ]
+}
