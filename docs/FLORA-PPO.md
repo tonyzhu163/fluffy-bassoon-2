@@ -94,28 +94,32 @@ before the next:
    as well as native sampling.
 1. **Gate 1: reward positive control.** Ordinary PPO or DSRL must improve true success with
    simulator reward and with Flora reward. If only the simulator arm
-   improves, the reward is the problem, not the method. The RLinf action-expert
-   scale-up covers only this gate's simulator-reward half. Its result cannot
-   establish improvement by a frozen-motor controller.
-2. **Gate 2: matched frozen-motor learner.** Qualify ordinary interface PPO
-   on the interface selected by gate 0, with sampling noise inside the policy,
-   first-success returns and chunk discounting. Use the same deterministic
-   steering map for the baseline, history source and meta-learner.
+   improves, investigate reward validity before claiming a method failure.
+   The primary source is action-expert Flow-SDE PPO with a frozen VLM. Its
+   simulator-reward gain qualifies source learning, not a frozen student.
+2. **Gate 2: frozen-expert bridge qualification.** Freeze the original VLM
+   and action expert. Fit a learned KV adapter using source action targets
+   and flow-matching loss through the frozen expert. Verify zero-output native
+   parity, a real adapter gradient with unchanged expert weights, correct
+   model/action transforms, and teacher imitation on held-out source cases.
+   This stage does not require PPO on the adapter or inverse steering labels.
 3. **Gate 3: collect histories** with Flora reward only, from learners that
    improve. Plan source histories across OpenDrawer, DrawerToCounter,
    CoffeeSetupMug and TurnOffStove; hold out whole source streams for validation
    and use separate held-out-task folds to test task generalization.
-4. **Gate 4: steering interface and meta-learner.** The meta-learner is a standard
-   plain causal decoder (AD/DPT/Vintix); architecture is not a tested axis
-   ([PAPER.md](PAPER.md)). The agreed steering interfaces are **velocity
-   residual and KV conditioning**, as two separate arms retaining the frozen
-   vision-language backbone and action expert. The ordinary RL
-   baseline and the history-generating learner use the same interface as the
-   meta-learner ([review](literature/vla-steering-review.md)). The
-   sample-efficiency claim is query success per robot episode against that
-   ordinary Flora-reward learner at equal interactions, with reset and
-   reward-blind controls. Full-weight PPO is a reward check, not that
-   baseline.
+4. **Gate 4: history-to-KV meta-learner.** Use a plain causal decoder and a
+   learned KV adapter, with the original VLM and action expert frozen
+   ([PAPER.md](PAPER.md)). One improving full-expert source supplies both
+   students: AD predicts actual chronological source actions; DPT-style
+   fitting predicts qualified final-teacher query actions on those same
+   contexts. Train through the expert with action-derived flow targets;
+   deployment executes the expert with history-conditioned KV edits. Compare
+   actual own-history attempts against reset and reward-blind controls.
+   Full-expert PPO is the source and a strong online comparison. Use online
+   PPO on the same learned bridge for claims that isolate the learner at a
+   fixed interface. Separate velocity/KV steering-PPO sources are optional
+   comparisons, not a prerequisite for this route. See the
+   [implementation contract](../outputs/flow-sde-kv-bridge-20261103-r1/PLAN.md).
 
 New PPO contracts evaluate a fixed development panel before training and
 **every five PPO rounds**, saving the corresponding policy checkpoints and
@@ -123,9 +127,12 @@ per-task success curves. Reserve these evaluation controls in the run budget
 before launch. Keep a separate fixed test panel for the final paired readout;
 development checks do not replace that test. Historical before/after-only
 runs retain their original contracts and are not described as having periodic
-evaluation. Multi-task source histories must retain each task's policy-update
-order and use the selected velocity/KV steering labels; a full action-expert
-teacher corpus does not supply those labels automatically.
+evaluation. Multi-task source histories retain each task's policy-update
+order, actual observations/actions/rewards/boundaries, and the exact action
+transforms needed for flow-matching targets. Full-expert teachers need not
+provide steering codes. AD/DPT share contexts and splits; only query targets
+change. Existing simulator histories can qualify plumbing, while the main
+learned-reward claim still requires qualified Flora-source histories.
 
 Prospective comparisons share the case/noise/attempt schedule in
 `paired_evaluation.py`: 200 canonical cases per task by default, paired motor

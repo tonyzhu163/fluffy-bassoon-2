@@ -16,10 +16,48 @@ git history before that date. RoboTwin docs are in
 
 pi0.5 interface: 10-action chunks, 32 initial-noise coordinates, 10 Euler flow
 steps, decoding 7 LIBERO control coordinates. Inputs are two RGB views, 8 robot
-state coordinates and the instruction. The whole motor stays frozen. Check the
-parameter signature before and after every run.
+state coordinates and the instruction. During steering, the whole motor stays
+frozen. Check the parameter signature before and after every run.
 
 ## Steering interface and DSRL
+
+The primary source/student route is **full-action-expert Flow-SDE PPO →
+action histories → supervised AD/DPT learned-KV bridge**. Source PPO updates
+the action expert and value head with the VLM frozen. Student fitting freezes
+the original VLM and action expert; only the causal history model and learned
+KV adapter update. Deployment freezes all weights.
+
+History contains actual observation/action/reward/boundary tuples. AD targets
+the actual source action at each chronological decision; DPT-style fitting
+queries the qualified final teacher on the same saved observations, preserving
+the executed context and feedback. No historical KV codes are invented. Both
+students use action-derived flow-matching supervision:
+
+\[
+x_\tau=(1-\tau)a^*+\tau\epsilon,\qquad
+\mathcal L=\mathbb E\|v_{\bar\theta,\psi}(x_\tau,\tau,o,H)
+                         -(\epsilon-a^*)\|^2.
+\]
+
+The action target must use the native model's qualified encoding and active
+loss mask. Decoded binary commands do not uniquely recover pre-decoding
+continuous model outputs. Gradients traverse the frozen suffix into the
+learned adapter; training cannot wrap that suffix in `no_grad` or detach its
+output. Masked, token-local low-rank KV edits have zero-initialized output
+bases. Their layer/K/V coverage, rank and scale are run-bound; the earlier
+fixed random rank32 map is a distinct interface. Native identity, frozen
+weights, gradient flow and held-out imitation need numerical/native checks
+before own-history evaluation. See the
+[implementation contract](../outputs/flow-sde-kv-bridge-20261103-r1/PLAN.md).
+
+Full-expert source learning and frozen student controllability are separate
+questions. Full-expert PPO is a strong online comparison; matched online
+learned-bridge PPO is needed when a claim holds trainable capacity fixed.
+Shared source interactions count once across AD/DPT, with each student's
+fitting and deployment cost reported separately. A direct-action student
+bypasses the expert and remains a separate baseline.
+
+The following noise-steering recipe remains the DSRL comparison:
 
 - **Native:** independent H10×32 Gaussian noise per chunk.
 - **Tied noise:** one 32D vector per chunk, tiled over H10. Untrained tied

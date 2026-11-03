@@ -11,19 +11,22 @@ moved to FINDINGS) and `paper/DECISIONS.md`. The originals are in
 FINDINGS, run plans in `outputs/<run-id>/`, live state in
 [coordination](../outputs/coordination.md).
 
-Current design: **official OpenPI pi0.5 LIBERO40 motor; source histories only
-from LIBERO40; one-support-episode adaptation on full LIBERO90, LIBERO-Plus and
-LIBERO-Pro.** This is full-suite transfer, not a claim that every LIBERO90 goal
-is semantically unseen.
+Current source/student route: **action-expert Flow-SDE PPO → actual learning
+histories → AD/DPT action supervision → learned KV bridge through a frozen
+original VLA**. Source learning prioritizes a stronger PPO policy; it need not
+use the student's steering coordinates. Benchmark order and reward gates are
+in [FLORA-PPO.md](FLORA-PPO.md). The LIBERO40/90/Plus/Pro protocol below remains
+the specification for that benchmark arm, not a replacement for the current
+RoboCasa qualification.
 
 ## Abstract scaffold
 
 - Question: can a reusable steering controller turn a few deployment episodes
   into high robot success while a pretrained VLA stays frozen?
-- Approach: causal history → expert-preserving steering (velocity residual
-  and KV conditioning arms; alternatives in Agreed design) → frozen π₀.₅;
-  pretrain using actual source-policy learning histories; compare data construction,
-  supervision and direct meta-RL.
+- Approach: improve the source action expert with Flow-SDE PPO; train a causal
+  history model and learned KV adapter through a frozen original π₀.₅ using
+  action-space supervision. Compare actual AD targets with paired final-teacher
+  DPT-style targets. Velocity steering remains an optional interface comparison.
 - Evaluation: full-suite transfer to all 90 LIBERO90 tasks plus LIBERO-Plus
   and LIBERO-Pro. One actual support episode → a separate query episode,
   fixed motor/controller weights; compare query success and full cost against
@@ -53,8 +56,8 @@ is semantically unseen.
 | --- | --- | --- |
 | [DSRL](https://arxiv.org/abs/2506.15799), [official π₀ implementation](https://github.com/nakamotoo/dsrl_pi0) | RL over the noise input of a frozen diffusion/flow policy | A reusable history-conditioned steering process; held-out-task deployment cost and final success |
 | [Vintix](https://arxiv.org/abs/2501.19400) | Cross-domain action modeling through ICRL; noise-distillation motivation | Apply the data-generation idea in VLA steering coordinates; verify robot outcomes rather than infer transfer |
-| [DPT](https://arxiv.org/abs/2306.14892) | Expert/optimal query-action supervision conditioned on interaction data | Paired expert labels on exactly the same actual noisy steering histories |
-| [Algorithm Distillation](https://arxiv.org/abs/2210.14215) | Causal prediction over a source RL algorithm's learning histories | Real improving steering-policy checkpoints; separate from fixed-teacher noise schedules |
+| [DPT](https://arxiv.org/abs/2306.14892) | Expert/optimal query-action supervision conditioned on interaction data | Paired final-teacher action labels on the same actual full-expert learning histories |
+| [Algorithm Distillation](https://arxiv.org/abs/2210.14215) | Causal prediction over a source RL algorithm's learning histories | Actual full-expert learning histories distilled into a frozen-expert bridge |
 | [RL²](https://arxiv.org/abs/1611.02779) | An outer-trained recurrent policy whose state carries within-task learning | Direct meta-RL over the same frozen motor interface; optimizer choice recorded separately |
 | [VLRLA](https://arxiv.org/html/2610.19517v1) | VLA ICRL with fixed deployment parameters; bridge variant retains a frozen action expert and changes its KV conditioning | Direct precedent. Compare latent-noise steering, history/label construction, robotic performance and cost; further related-work audit pending |
 
@@ -65,6 +68,10 @@ is semantically unseen.
   art comparison and controlled experiments.
 
 ## 3. Problem and frozen steering interface
+
+The feature/motor dimensions below specify the LIBERO arm. RoboCasa source
+and bridge runs bind their native checkpoint, transforms and dimensions in
+their own contracts; the source/student construction is shared.
 
 - Task \(m\); public instruction \(\ell\); observation \(o_t\): two RGB views
   and eight robot-proprioceptive coordinates. No object-state oracle.
@@ -82,23 +89,26 @@ is semantically unseen.
   also measure 2/4/8 support episodes. New trial → empty history. A query is
   never counted as its own support; query success is reported separately.
 - Completed interaction history:
-  \(H_t=\{(o_i,z_i,r_i,d_i)\}_{i<t}\). Current reward and target unavailable
-  at query \(t\).
+  \(H_t=\{(o_i,a_i,r_i,d_i)\}_{i<t}\), with actual executed action chunks.
+  Current reward and target are unavailable at query \(t\). Full-expert source
+  histories contain physical actions, not invented historical steering codes.
 - Frozen shared feature encoder \(x_t=\phi_{\bar\theta}(o_t,\ell)\).
   Intended shared interface: visual mean 2048 + instruction mean 2048 + public
   state 8 = 4104 dimensions; mask-aware float32 pooling of materialized native
   prefix hidden states. Requalify the OpenPI40 backend and bind its exact
   feature/normalization receipt across all tasks. RLinf130 coordinates and
   student checkpoints cannot be reused as though the motor were unchanged.
-- Token \(u_t=[x_t,z_{t-1},r_{t-1},d_{t-1},b_t]\); \(b_t\): episode start.
+- Token \(u_t=[x_t,\operatorname{embed}(a_{t-1}),r_{t-1},d_{t-1},b_t]\);
+  \(b_t\): episode start.
   Previous feedback zero only at a new trial; retained across episode resets.
-- Controller state and proposal:
-  \((h_t,\tilde z_t)=f_\psi(u_t,h_{t-1})\);
-  \(z_t=g(\tilde z_t)\in[-1,1]^{32}\), with the adapter \(g\) fixed and
-  recorded. Supervised Gaussian/clipped and PPO squashed-Gaussian variants
-  have distinct likelihood contracts.
+- Controller state and adapter:
+  \((h_t,c_t)=f_\psi(u_t,h_{t-1})\);
+  \(\mathrm{KV}'_t=\mathrm{KV}_{\bar\theta}(o_t,\ell)
+  +g_\psi(\mathrm{KV}_{\bar\theta},c_t)\). The learned low-rank adapter starts
+  with zero output, masks padding and declares its layer/K/V coverage. It is
+  not the fixed random projection used by the earlier steering-PPO arms.
 - Motor:
-  \(a_{t:t+H}=\pi_{\bar\theta}(o_t,\ell;\operatorname{repeat}_H(z_t))\).
+  \(a_{t:t+H}\sim\pi_{\bar\theta}(o_t,\ell;\mathrm{KV}'_t)\).
   Primary motor: official OpenPI `gs://openpi-assets/checkpoints/pi05_libero`,
   config `pi05_libero`, native horizon ten. Already staged checkpoint receipt
   `ec064cce32f5003e2e3979c5712d7d6385018f6bfcc59cb2161105881e70d170`;
@@ -147,8 +157,8 @@ is semantically unseen.
 | Route | Behavior used to collect context | Query target / outer objective | Interpretation |
 | --- | --- | --- | --- |
 | CND | Fixed competent teacher mixed with annealed bounded uniform noise | Actually executed mixture | Vintix-inspired noise distillation in steering space; not an improving teacher |
-| Paired DPT | Same actual CND or steering-PPO histories; identify the source route | Qualified teacher/final actor's query coordinate | Change supervision while preserving all executed context/outcomes bitwise; candidate labels are not assumed expert |
-| AD | Successive real steering-PPO policy checkpoints, updates between complete episodes | Original executed coordinate | Distill a source learning trajectory; a collection clock is not a teacher-update identity |
+| Paired DPT | Same actual full-action-expert PPO histories as AD | Qualified final teacher's action chunk at the recorded query observation | Change supervision while preserving executed context/outcomes; final teacher is not automatically optimal |
+| AD | Successive real full-action-expert PPO policy versions, updates between complete episodes | Actual source action chunk | Distill chronological learning histories using a frozen-expert KV bridge and flow-matching supervision |
 | Direct RL² | Student's own complete multi-episode trials | Trial return, PPO in the present implementation | Meta-learn steering directly; compare additional interaction cost |
 
 - CND mixture:
@@ -161,10 +171,14 @@ is semantically unseen.
   task/checkpoint/interface. Source qualification criteria and sample size
   must be declared for this arm; older pilot defaults are not an adopted
   collection budget or proof of expert quality.
-- DPT labels cannot rewrite historical executed noise or its actual reward.
-  Same source data and collection cost shared across CND/DPT.
-- Planned first source route: actual advancing velocity/KV steering-PPO histories with
-  paired AD and DPT-style query labels, preserving executed contexts bitwise.
+- DPT labels cannot rewrite historical executed actions or their actual rewards.
+  AD/DPT share source data, source collection cost and whole-stream splits.
+- Planned first source route: improving action-expert Flow-SDE PPO histories,
+  followed by separate supervised AD and DPT learned-KV-bridge fits. Flow
+  matching uses action targets; gradients pass through the frozen expert into
+  the bridge without updating the expert. No inverse steering-code labels or
+  additional steering-PPO source campaign are required. Exact action encoding,
+  active loss coordinates and source expertise must be qualified.
   Source teacher learning may require many more episodes than the deployment
   shot budget. Published π₀ DSRL uses batch 256, replay warmup >500 query chunks
   and UTD20; our earlier warmup 0/batch 32/K4 smoke is not that recipe.
@@ -173,7 +187,7 @@ is semantically unseen.
 - DPT is not observation-only BC by definition. In this particular dataset a
   student may ignore context; test that possibility against trained static
   policies rather than assume the answer from the objective name.
-- GTrXL is the current causal controller. Width/depth/context/data scale and
+- A plain causal decoder is the current history controller. Width/depth/context/data scale and
   pretraining duration: validation-selected, **final settings TBD**.
 - Normalize using global training observations only; whole-trial partition
   precedes windows. Loss diagnostics do not replace own-history robot tests.
@@ -368,50 +382,34 @@ is semantically unseen.
   The [source/target protocol](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/libero40-meta90-20261029-r1/PROTOCOL.md)
   governs this arm. The RLinf130 motor, its source data and earlier data-arm
   comparisons do not carry into it.
-- **Steering interface (human, 2026-11-02): velocity residual and KV
-  conditioning, as two separate Stage 1 PPO arms.** This supersedes the
-  2026-11-01 action-residual choice. Both keep the vision-language backbone
-  and original action expert frozen and reproduce native π₀.₅ exactly at
-  zero output, so the PPO
-  head starts at identity with a zero-initialized final layer. In the
-  RoboCasa Stage 0 screen they were the only perturbations at or above
-  native resampling on every task (velocity 84/49/53/20, conditioning
-  89/44/47/20, native 79/43/44/16 of 160), though no gain reached p<.05
-  and random perturbations do not show what PPO can learn
-  ([FINDINGS](FINDINGS.md), [screen](../outputs/robocasa-interface-screen-20261102-r3/RESULT.md)).
-  Action residual 0.25 was flat and 0.5 degraded. A combined
-  velocity+conditioning arm was not screened. Each arm's matched baseline
-  is PPO on that same interface; the meta-learner labels its own codes.
-  Each arm declares its hook, steering coordinates, scale and label schema
-  before launch. \(z_t\) denotes that arm's steering output. The
-  [steering scoping review](literature/vla-steering-review.md) maps the
-  options.
-  - Label rule: the meta-learner's output must be something its source
-    histories can label. Retain actual velocity/KV steering outputs and
-    their executed outcomes in policy-update order for AD. DPT-style labels
-    come from a separately qualified teacher using the same steering map
-    on the recorded query inputs; they never replace historical actions or
-    feedback. Full action-expert PPO does not directly label velocity/KV
-    steering. Any conversion requires its own qualified mapping.
-  - Matched baseline rule: the ordinary RL baseline and the
-    history-generating learner use the same interface as the meta-learner,
-    so the sample-efficiency comparison changes only the learner. For the
-    selected velocity/KV arm, qualify ordinary PPO with the same frozen
-    expert and steering map used by the history learner. Full action-expert
-    PPO stays a reward check and reference, not the matched baseline.
-  - Bounded output-action residuals, initial-noise steering, direct action
-    heads and sample-and-select remain comparison interfaces. A direct head
-    bypasses the action expert and is not evidence of steering it. The
-    existing restricted conditioning/velocity screen is not a qualification
-    of every learned KV/velocity adapter or of PPO improvement.
+- **Primary route: full-action-expert Flow-SDE PPO source and learned KV
+  bridge student.** Train the source action expert and value head with the
+  VLM frozen, then train a plain causal history decoder plus a learned KV
+  adapter through the frozen original expert using flow-matching loss. At
+  deployment, all model weights are frozen and only causal history changes.
+  [Implementation contract](../outputs/flow-sde-kv-bridge-20261103-r1/PLAN.md).
+  - AD uses actual source action targets in policy-update order. DPT-style
+    fitting uses a qualified final teacher's query actions on the same actual
+    contexts. Neither requires the full-expert teacher to emit KV codes.
+  - Source-policy improvement and the bridge's ability to reproduce the
+    teacher are separate qualifications. Zero initialization preserves native
+    deterministic behavior but does not establish either qualification.
+  - Full-expert PPO is both a source and a strong online adaptation comparison.
+    An online bridge-PPO comparison is required for a claim that holds the
+    trainable interface fixed; it is not a prerequisite for supervised bridge
+    fitting. Report differences in trainable capacity and all source costs.
+  - Earlier velocity32/KV1152 code-supervision pipelines retain their immutable
+    contracts as interface comparisons. Their fixed random projections are
+    not the learned adapter. A joint velocity+KV controller is optional, not
+    required to train the primary source. Direct-action students remain a
+    separate baseline because they bypass the action expert.
 - One frozen motor/tokenizer/normalization/feature receipt across all tasks.
   Requalify the OpenPI40 backend on the actual allocation. RLinf4104 features
   and learned controllers are incompatible receipts, not reusable coordinates.
-- Planned source route: actual advancing PPO histories on the selected
-  velocity/KV interface, with paired AD and DPT-style final-query labels.
-  Historical executed steering outputs, actions and feedback stay
-  actual. Source improvement and final-actor expertise require independent
-  evaluation; update counts alone prove neither.
+- One qualified full-expert PPO source can supply both AD and DPT bridge
+  students. Historical executed actions and feedback stay actual. Source
+  improvement, final-teacher expertise and own-history student adaptation
+  each require independent evaluation; update counts alone prove none.
 - <a id="oracle-free-reward"></a>**Oracle-free reward (2026-11-01).** The
   claim is sample-efficient RL on real robots, which have no success checker.
   A learner that reads simulator success anywhere cannot demonstrate that, so
