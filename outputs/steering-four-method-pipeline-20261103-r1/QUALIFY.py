@@ -23,6 +23,9 @@ def main():
     root = Path(__file__).resolve().parents[2]
     sys.path.insert(0, str(root/'tests'))
     from test_frozen_steering_history import source, all_episodes, teacher_file
+    from test_steering_history_eval import Environment, Motor
+    from fluffy_bassoon.meta_rl.steering_history_eval import collect_case_attempts
+    from types import SimpleNamespace
     args.output.mkdir(parents=True, exist_ok=False)
     commit = subprocess.check_output(['git','rev-parse','HEAD'], cwd=root, text=True).strip()
     if subprocess.check_output(['git','status','--porcelain'], cwd=root, text=True).strip():
@@ -68,8 +71,22 @@ def main():
             proposal = controller.act(np.ones(spec.feature_dim,np.float32),deterministic=True)
             assert proposal.shape==(spec.steering_dim,) and np.isfinite(proposal).all()
             controller.observe(proposal,1.,True)
+            class FeatureEnvironment(Environment):
+                def reset(self):
+                    return np.ones(spec.feature_dim,np.float32)
+                def step_chunk(self, commands):
+                    _,done,info=super().step_chunk(commands)
+                    return np.ones(spec.feature_dim,np.float32),done,info
+            case=dict(task='synthetic_readout',seed=17)
+            completed=collect_case_attempts(policy,SimpleNamespace(steering_dim=spec.steering_dim),case,
+                horizon=100,environment_factory=lambda c,a:FeatureEnvironment(c,a),motor=Motor(),
+                noise_for=lambda c,a,t:(np.zeros((50,32),np.float32),dict(synthetic=True,attempt=a,chunk=t)),
+                before_dispatch=lambda row,env:None,after_dispatch=lambda row,env:None,
+                completed_attempt=lambda result,controller:None)
+            assert len(completed)==5 and completed[-1]['memory_tokens']==10
             row = dict(arm=arm,method=method,converged=True,candidate_sha256=file_sha256(candidate),
-                action_dimension=spec.steering_dim,actual_simulator_episodes=0)
+                action_dimension=spec.steering_dim,actual_simulator_episodes=0,
+                synthetic_five_attempt_readout=True)
             if method in ('dit','ic_iql'):
                 recovery = target/(method+'-resumed')
                 fit(recovery, 1e-9)

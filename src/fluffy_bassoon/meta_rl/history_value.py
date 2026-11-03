@@ -225,6 +225,16 @@ def learning_step(learner, optimizer, batch, *, phase, mode="full", execution_ba
         for key, value in dict(loss=loss.detach(), **extra).items():
             metrics[key] = metrics.get(key, 0.) + float(value) * weight
     parameters = list(learner.q.parameters()) + list(learner.v.parameters()) if phase == "value" else list(learner.actor.parameters())
+    # A key bias adds the same constant to every valid attention score, so
+    # softmax cancels it exactly. FP32 cancellation can leave ~1e-9 gradients
+    # that Adam amplifies differently for different execution batches. Enforce
+    # the analytic zero on this redundant coordinate before norm/Adam updates.
+    models = (learner.q, learner.v) if phase == "value" else (learner.actor,)
+    for model in models:
+        for block in model.core.layers:
+            bias = block.key_value.bias
+            if bias.grad is not None:
+                bias.grad[:bias.numel() // 2].zero_()
     metrics["gradient_norm"] = float(nn.utils.clip_grad_norm_(parameters, 1., error_if_nonfinite=True))
     optimizer.step()
     if any(not torch.isfinite(value).all() for value in learner.parameters()):

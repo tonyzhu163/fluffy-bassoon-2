@@ -5,7 +5,6 @@ interactions. The operational time limit checkpoints both stages; it does not
 stand in for validation convergence. Inference exports use the existing frozen
 history controller, with no value updates or teacher labels at deployment.
 """
-from copy import deepcopy
 from dataclasses import asdict
 import json
 import math

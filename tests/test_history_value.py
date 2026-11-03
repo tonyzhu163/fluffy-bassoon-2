@@ -75,6 +75,17 @@ def test_sampled_windows_finish_at_real_boundaries_and_returns_are_not_actor_inp
     torch.testing.assert_close(left, right, rtol=0, atol=0)
 
 
+def test_actor_loss_matches_weighted_behavior_action_likelihood():
+    model = learner()
+    for critic, value in ((model.q, .3), (model.v, .1)):
+        for parameter in critic.parameters():
+            parameter.data.zero_()
+        critic.head[-1].bias.data.fill_(value)
+    data = batch(model)
+    reference = model.actor.sequence_nll(data["tokens"], data["actions"], data["valid"], data["starts"])
+    torch.testing.assert_close(model.actor_loss(data)[0], reference * np.exp(.2))
+
+
 @pytest.mark.parametrize("objective", ["dit", "ic_iql"])
 def test_iql_td_and_dit_mc_match_constant_critic_reference(objective):
     model = learner(objective)

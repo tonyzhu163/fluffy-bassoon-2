@@ -57,7 +57,9 @@
       ],
       "objectives": [
         "ad",
-        "dpt"
+        "dpt",
+        "dit",
+        "ic_iql"
       ],
       "state": "human_recipe_specified_waiting_for_producer_admission_and_completed_sources",
       "source_binding": null,
@@ -88,7 +90,7 @@
     5
   ],
   "status_evidence": "Direct human recipe/budget messages verified; source owner active on reconciliation, no completed PPO histories, student fit or new native curve.",
-  "next_action": "Observe source-owner production qualification/admission and actual source completion. Bind exact source manifests/schedule/request hashes before AD/DPT fitting; retain independent convergence/readout and original full curve objective.",
+  "next_action": "Admit actual completed PPO sources, then independently fit AD/DPT/DIT/ic_iql for each interface with exact source/splits/reward bindings. No scientific fits or native evaluation allocations are launched by the pipeline implementation qualification.",
   "monitor_automation_id": "monitor-steering-ppo-and-ad-dpt",
   "adapter": "src/fluffy_bassoon/meta_rl/frozen_steering_history.py",
   "core_qualification_source": "3babb92b31c596f04759621177c8704c60c7c293",
@@ -105,7 +107,7 @@
   "native_backend": "src/fluffy_bassoon/meta_rl/steering_history_native.py",
   "native_backend_receipt": "NATIVE-BACKEND-VALIDATION.json",
   "primary_policy_controls_per_model_interface": 1612500,
-  "primary_policy_controls_all_models_interfaces": 6450000,
+  "primary_policy_controls_all_models_interfaces": 12900000,
   "launch_hold": {
     "status": "ACTIVE_HUMAN_LAUNCH_HOLD",
     "issued_UTC": "2026-11-02T16:46:33Z",
@@ -208,5 +210,13 @@
   "batch_readout_receipt": "BATCH-READOUT-QUALIFICATION.json",
   "goal_execution_status": "blocked_waiting_for_producer_admission_and_complete_PPO_sources",
   "blocking_audit": "GOAL-BLOCKED-AUDIT-20261103-r1.json",
-  "recipe_reconciliation": "RECIPE-RECONCILIATION-20261103-r1.json"
+  "recipe_reconciliation": "RECIPE-RECONCILIATION-20261103-r1.json",
+  "requested_meta_learning_methods": {
+    "authority": "Direct human confirmation of AD, DPT, DIT and value-based offline ICRL, followed by \"yes so fix the pipeline\" on2026-11-03",
+    "independent_fits_per_interface": 4,
+    "total_joint_fits": 8,
+    "implementation_reference": "outputs/steering-four-method-pipeline-20261103-r1/PLAN.md",
+    "value_trainer": "src/fluffy_bassoon/meta_rl/history_value_train.py",
+    "state": "implementation_under_Linux_qualification; no completed scientific source or new fit dispatch"
+  }
 }

@@ -316,6 +316,7 @@ def save_corpus(directory, streams, source, *, teacher_reference, provenance):
                 streams="same task/declared collection slot across scheduled versions; source scenes may change",
                 validation="student imitation only; source PPO saw all source states")
             if objective in ("dit", "ic_iql"):
+                metadata["validation"] = "held-out offline value/policy objective; source PPO saw all source states"
                 metadata["value_contract"] = dict(discount=.99, discount_unit="one H50 steering decision",
                     boundary="physical_done", rewards="observed first-success once; physical suffix retained",
                     next_observation="next row within the same physical episode; terminal bootstrap zero",
