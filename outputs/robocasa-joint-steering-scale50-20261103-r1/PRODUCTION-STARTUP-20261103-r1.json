@@ -1,0 +1,298 @@
+{
+  "checked_unix": 1793683151.3129997,
+  "native_source_unchanged": true,
+  "no_active_profile_or_source_mutation": true,
+  "no_cancellation_replacement_or_duplicate": true,
+  "arms": {
+    "velocity": {
+      "job_id": "job-bxhz4d41ll1k",
+      "hostname": "job-bxhz4d41ll1k-master-0",
+      "GPU_probe_sha256": "162f69247d0355d7c319a3071e60ff50fd14ad40871c650676cb0177584198f1",
+      "GPU_UUIDs": [
+        "GPU-09e90324-e0db-a47b-afc4-76bfad9c0924",
+        "GPU-c83ceec5-31db-8c6c-f2ce-d749485cbab8",
+        "GPU-446d2c29-da5e-494b-4c66-b02f5d6a7f75",
+        "GPU-0a019279-9974-9432-9100-9c926141e294",
+        "GPU-0f48a081-728a-acae-79b8-5bbb8daf2752",
+        "GPU-34e1b6c4-c79a-6c15-7848-8d8f27ebc43b",
+        "GPU-312e52af-e304-2410-6af5-a60db798100d",
+        "GPU-07690508-4502-b24a-612d-6f04cf4e2568"
+      ],
+      "scheduler_pod_created_Shanghai": "2026-11-03T13:14:00+08:00",
+      "actual_cost_observation_basis": "Earliest observed pod creation minus2seconds; terminal release still pending",
+      "allocation_accounting_lower_bound_unix": 1793682838.0,
+      "prior_GPU_seconds": 1161,
+      "old_submission_clock_unix": 1793681577.0,
+      "old_deadline_unix": 1793699281,
+      "queue_only_GPU_seconds_in_old_conservative_window": 10088.0,
+      "old_live_profile_not_modified": true,
+      "resource_gate_evidence": "PROFILE exists only after launcher asserts effective168CPU,1664GiBRAM,384GiBSHM,900GiBfree and8deviceprobe",
+      "offline_WandB_status": {
+        "mode": "offline",
+        "SDK_version": "0.25.0",
+        "run_id": "ca048b02fe37d8f6",
+        "initialized": true,
+        "nonfatal": true
+      },
+      "completed_worker_results": {
+        "rank-00": 1,
+        "rank-01": 1,
+        "rank-02": 1,
+        "rank-03": 1,
+        "rank-04": 1,
+        "rank-05": 1,
+        "rank-06": 1,
+        "rank-07": 1
+      },
+      "worker_errors": {},
+      "master_errors": {},
+      "PROGRESS.json": {
+        "phase": "calibrate",
+        "sequence": 1,
+        "iteration": 0,
+        "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+        "last_check_unix": 1793683066.9949892,
+        "calibrated_fraction": 0.125,
+        "steering_std_mean": 0.5,
+        "steering_std_min": 0.5,
+        "steering_std_max": 0.5,
+        "learning_rate": 0.0003,
+        "checkpoint": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/checkpoints/event-001-calibrate-000.pt",
+          "sha256": "dcf19c59189f38c39dd8cd4b33a04d381ee579179250f3f47c0b1491755d3705"
+        },
+        "escrow": {
+          "format": "joint_steering_action_escrow_v1",
+          "limits": {
+            "train": 11650000,
+            "eval": 1200000
+          },
+          "charged": {
+            "train": 57600,
+            "eval": 0
+          },
+          "pending": {}
+        },
+        "elapsed_seconds": 166.63922023773193,
+        "completed_events": 1,
+        "total_events": 64,
+        "resources": {
+          "storage_free_GiB": 911.75390625,
+          "container_RAM_GiB": 37.887149810791016,
+          "container_peak_RAM_GiB": 124.32642364501953,
+          "GPUs": [
+            {
+              "memory_used_MiB": 8312.0,
+              "utilization_percent": 1.0
+            },
+            {
+              "memory_used_MiB": 7641.0,
+              "utilization_percent": 0.0
+            },
+            {
+              "memory_used_MiB": 7641.0,
+              "utilization_percent": 0.0
+            },
+            {
+              "memory_used_MiB": 7641.0,
+              "utilization_percent": 0.0
+            },
+            {
+              "memory_used_MiB": 7641.0,
+              "utilization_percent": 0.0
+            },
+            {
+              "memory_used_MiB": 7641.0,
+              "utilization_percent": 0.0
+            },
+            {
+              "memory_used_MiB": 7641.0,
+              "utilization_percent": 0.0
+            },
+            {
+              "memory_used_MiB": 7641.0,
+              "utilization_percent": 0.0
+            }
+          ]
+        },
+        "collection_and_learning_seconds": 166.40644431114197,
+        "physical_controls_this_event": 0,
+        "controls_per_second": 0.0,
+        "remaining_gpu_hours": 36.36587614801195
+      },
+      "worker_last_log_line": {
+        "rank-02": [
+          "[robosuite INFO] Loading controller configuration from: /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/robosuite/controllers/config/robots/default_pandaomron.json (composite_controller_factory.py:121)"
+        ],
+        "rank-04": [
+          "[robosuite INFO] Loading controller configuration from: /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/robosuite/controllers/config/robots/default_pandaomron.json (composite_controller_factory.py:121)"
+        ],
+        "rank-06": [
+          "[robosuite INFO] Loading controller configuration from: /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/robosuite/controllers/config/robots/default_pandaomron.json (composite_controller_factory.py:121)"
+        ],
+        "rank-01": [
+          "[robosuite INFO] Loading controller configuration from: /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/robosuite/controllers/config/robots/default_pandaomron.json (composite_controller_factory.py:121)"
+        ],
+        "rank-03": [
+          "[robosuite INFO] Loading controller configuration from: /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/robosuite/controllers/config/robots/default_pandaomron.json (composite_controller_factory.py:121)"
+        ],
+        "rank-05": [
+          "[robosuite INFO] Loading controller configuration from: /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/robosuite/controllers/config/robots/default_pandaomron.json (composite_controller_factory.py:121)"
+        ],
+        "rank-07": [
+          "[robosuite INFO] Loading controller configuration from: /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/robosuite/controllers/config/robots/default_pandaomron.json (composite_controller_factory.py:121)"
+        ],
+        "rank-00": [
+          "[robosuite INFO] Loading controller configuration from: /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/robosuite/controllers/config/robots/default_pandaomron.json (composite_controller_factory.py:121)"
+        ]
+      },
+      "allocated_GPU_seconds_conservative_monitor": 2506.509864807129
+    },
+    "kv": {
+      "job_id": "job-khwsqhzct9v5",
+      "hostname": "job-khwsqhzct9v5-master-0",
+      "GPU_probe_sha256": "5048e7f24dc259ac216e14a8224a72ef8f9d64f7cecbc906d861933df9124b83",
+      "GPU_UUIDs": [
+        "GPU-91b9c89f-10d0-3837-943f-7b81765e3111",
+        "GPU-972e78fd-e8c3-f6d8-6e7a-61ddae6661ed",
+        "GPU-f9513006-3d8c-9c5b-2966-787ffc58c87d",
+        "GPU-4d848d48-9088-3b5a-660c-8a480df4a6bb",
+        "GPU-3f91b0e3-48b0-d9a8-76c4-6baab75817b0",
+        "GPU-2988cf66-6850-545d-d8e0-a7f27f45f2dd",
+        "GPU-0ed34bcc-b240-03dd-c88f-fea7463eb309",
+        "GPU-ed112610-622c-8100-143d-b8c508166236"
+      ],
+      "scheduler_pod_created_Shanghai": "2026-11-03T13:14:00+08:00",
+      "actual_cost_observation_basis": "Earliest observed pod creation minus2seconds; terminal release still pending",
+      "allocation_accounting_lower_bound_unix": 1793682838.0,
+      "prior_GPU_seconds": 1025,
+      "old_submission_clock_unix": 1793681643.0,
+      "old_deadline_unix": 1793699364,
+      "queue_only_GPU_seconds_in_old_conservative_window": 9560.0,
+      "old_live_profile_not_modified": true,
+      "resource_gate_evidence": "PROFILE exists only after launcher asserts effective168CPU,1664GiBRAM,384GiBSHM,900GiBfree and8deviceprobe",
+      "offline_WandB_status": {
+        "mode": "offline",
+        "SDK_version": "0.25.0",
+        "run_id": "c0f5a10f3c47cfe8",
+        "initialized": true,
+        "nonfatal": true
+      },
+      "completed_worker_results": {
+        "rank-00": 1,
+        "rank-01": 1,
+        "rank-02": 1,
+        "rank-03": 1,
+        "rank-04": 1,
+        "rank-05": 1,
+        "rank-06": 1,
+        "rank-07": 1
+      },
+      "worker_errors": {},
+      "master_errors": {},
+      "PROGRESS.json": {
+        "phase": "calibrate",
+        "sequence": 1,
+        "iteration": 0,
+        "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+        "last_check_unix": 1793683068.0506458,
+        "calibrated_fraction": 0.64,
+        "steering_std_mean": 0.5,
+        "steering_std_min": 0.5,
+        "steering_std_max": 0.5,
+        "learning_rate": 3e-05,
+        "checkpoint": {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-kv-scale50-20261103-r1/checkpoints/event-001-calibrate-000.pt",
+          "sha256": "000217aac9355f5762259d13703ae5aa9fdd144be12ed904e4fc23d660dba232"
+        },
+        "escrow": {
+          "format": "joint_steering_action_escrow_v1",
+          "limits": {
+            "train": 11650000,
+            "eval": 1200000
+          },
+          "charged": {
+            "train": 57600,
+            "eval": 0
+          },
+          "pending": {}
+        },
+        "elapsed_seconds": 167.6658637523651,
+        "completed_events": 1,
+        "total_events": 64,
+        "resources": {
+          "storage_free_GiB": 911.75390625,
+          "container_RAM_GiB": 38.00197982788086,
+          "container_peak_RAM_GiB": 126.37431335449219,
+          "GPUs": [
+            {
+              "memory_used_MiB": 8326.0,
+              "utilization_percent": 1.0
+            },
+            {
+              "memory_used_MiB": 7655.0,
+              "utilization_percent": 0.0
+            },
+            {
+              "memory_used_MiB": 7655.0,
+              "utilization_percent": 0.0
+            },
+            {
+              "memory_used_MiB": 7655.0,
+              "utilization_percent": 0.0
+            },
+            {
+              "memory_used_MiB": 7655.0,
+              "utilization_percent": 0.0
+            },
+            {
+              "memory_used_MiB": 7655.0,
+              "utilization_percent": 0.0
+            },
+            {
+              "memory_used_MiB": 7655.0,
+              "utilization_percent": 0.0
+            },
+            {
+              "memory_used_MiB": 7655.0,
+              "utilization_percent": 0.0
+            }
+          ]
+        },
+        "collection_and_learning_seconds": 167.46164512634277,
+        "physical_controls_this_event": 0,
+        "controls_per_second": 0.0,
+        "remaining_gpu_hours": 36.54803859286838
+      },
+      "worker_last_log_line": {
+        "rank-02": [
+          "[robosuite INFO] Loading controller configuration from: /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/robosuite/controllers/config/robots/default_pandaomron.json (composite_controller_factory.py:121)"
+        ],
+        "rank-04": [
+          "  __logo__ = \"\"\""
+        ],
+        "rank-06": [
+          "[robosuite INFO] Loading controller configuration from: /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/robosuite/controllers/config/robots/default_pandaomron.json (composite_controller_factory.py:121)"
+        ],
+        "rank-01": [
+          "[robosuite INFO] Loading controller configuration from: /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/robosuite/controllers/config/robots/default_pandaomron.json (composite_controller_factory.py:121)"
+        ],
+        "rank-03": [
+          "  __logo__ = \"\"\""
+        ],
+        "rank-05": [
+          "  __logo__ = \"\"\""
+        ],
+        "rank-07": [
+          "  __logo__ = \"\"\""
+        ],
+        "rank-00": [
+          "[robosuite INFO] Loading controller configuration from: /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/robosuite/controllers/config/robots/default_pandaomron.json (composite_controller_factory.py:121)"
+        ]
+      },
+      "allocated_GPU_seconds_conservative_monitor": 2513.3605556488037
+    }
+  },
+  "sixteen_distinct_allocated_GPU_UUIDs_verified": true,
+  "cost_clock_note": "Observed pod creation minus2seconds gives a conservative monitor of actual allocation time; final scheduler release and any earlier reservation event must be reconciled. Existing live profiles still use the older conservative submission clock and are unchanged."
+}
