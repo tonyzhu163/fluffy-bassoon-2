@@ -36,6 +36,22 @@ def test_pre_sgd_parity_uses_executed_chunk_sum_and_rejects_padded_dims():
         flow_logprob_parity(torch.zeros(2, 50, 32), torch.zeros(2, 50, 32))
 
 
+def test_flow_factory_stabilizes_native_regions_before_constructor(monkeypatch):
+    from types import SimpleNamespace
+    from fluffy_bassoon.meta_rl import rlinf_robocasa_flow_ppo_runtime as runtime
+    calls = []
+    monkeypatch.setattr(runtime, 'stable_counter_regions', lambda: calls.append('regions'))
+    monkeypatch.setattr(runtime, 'counted_native_factory', lambda factory, **kwargs: factory)
+    monkeypatch.setattr(runtime, 'native_fingerprint', lambda env: {'physical': 'recorded'})
+    def construct():
+        calls.append('constructor')
+        return SimpleNamespace(reset=lambda: 'live observation')
+    env = runtime.fresh_factory(construct, 123, 999)()
+    assert calls == ['regions', 'constructor']
+    assert env.reset() == 'live observation'
+    assert env._flow_physical == {'physical': 'recorded'}
+
+
 def flow_config(task='TurnOffStove', envs=128, rounds=1, maximum=12210000, **seeds):
     train_seed, eval_seed = flow_seeds(task)
     horizon = dict(max_episode_steps=600, max_steps_per_rollout_epoch=600, task_filter=[task])

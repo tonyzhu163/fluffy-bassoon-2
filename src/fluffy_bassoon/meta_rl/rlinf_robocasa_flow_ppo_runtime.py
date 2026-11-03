@@ -26,7 +26,7 @@ from .rlinf_native_ppo_runtime import PilotActor, PilotRollout, PilotRunner, sav
 from .rlinf_robocasa_flow_ppo import (GlobalActionJournal, RESET_CONTROL_RESERVE, first_success_reward,
     flow_contract, flow_logprob_parity, train_case_seeds)
 from .rlinf_robocasa_ppo_env import counted_native_factory
-from .robocasa_pairing import canonical_case, native_fingerprint, public_snapshot
+from .robocasa_pairing import canonical_case, native_fingerprint, public_snapshot, stable_counter_regions
 
 
 def unwrapped(env):
@@ -44,6 +44,7 @@ def fresh_factory(factory, seed, physics_tick_limit):
     def create():
         random.seed(seed)
         np.random.seed(seed)
+        stable_counter_regions()
         env = counted_native_factory(factory, physics_tick_limit=physics_tick_limit)()
         reset = env.reset
 
