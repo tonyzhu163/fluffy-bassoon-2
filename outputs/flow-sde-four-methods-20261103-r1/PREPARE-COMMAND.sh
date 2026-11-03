@@ -5,7 +5,7 @@ test "$RANK" = 0
 test "$WORLD_SIZE" = 1
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_PY=$TASK_ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
-TASK_OUT=$TASK_ROOT/outputs/flow-four-method-source-gpu-20261103-r1
+TASK_OUT=$TASK_ROOT/outputs/flow-four-method-source-gpu-20261103-r2
 TASK_STARTED=$(date +%s)
 test ! -e "$TASK_OUT"
 mkdir -p "$TASK_OUT"
@@ -26,6 +26,10 @@ export OPENPI_DATA_HOME=$TASK_ROOT/setups/robocasa365-native-20261101-r1/cache/.
 export FLUFFY_GPU_EXECUTION=baige MUJOCO_GL=egl PYOPENGL_PLATFORM=egl NCCL_P2P_DISABLE=1
 export OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false
 export PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1 WANDB_MODE=disabled
+# Baige exposes this scheduled container's sole accelerator at CUDA index0.
+# Keep an explicit scheduler selection when present; the native probe still
+# checks expected-count, exclusive ownership, CUDA/PCI/UUID/PID agreement.
+export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
 timeout --signal=TERM --kill-after=20s 2350s "$TASK_PY" -B \
   "$TASK_FLOW_CODE/outputs/flow-sde-four-methods-20261103-r1/PREPARE.py" \
   --code "$TASK_FLOW_CODE" --source-commit "$TASK_CODE_PIN" --output "$TASK_OUT/preparation" \

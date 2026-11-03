@@ -36,9 +36,11 @@
   "preparation_budget": {
     "GPU_count": 1,
     "scheduler_max_minutes": 45,
-    "maximum_GPU_hours": 0.75,
+    "maximum_GPU_hours": 0.8,
     "script_seconds": 2300,
     "scope": "Frozen visual features and fixed final18 teacher queries, source export only. No PPO rerun, simulator actions or student fits in this allocation.",
-    "full_campaign_budget": "Not yet fixed; qualify learner and native readout timings before any new unapproved aggregate>=8GPUh."
+    "full_campaign_budget": "Not yet fixed; qualify learner and native readout timings before any new unapproved aggregate>=8GPUh.",
+    "carried_failed_GPU_seconds": 64,
+    "failure": "r1 missing explicit CUDA_VISIBLE_DEVICES; probe rejected before model/labels/physicalcontrols; source output identity preserved"
   }
 }

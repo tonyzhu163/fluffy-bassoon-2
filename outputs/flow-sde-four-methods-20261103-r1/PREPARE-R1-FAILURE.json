@@ -1,0 +1,12 @@
+{
+  "job": "job-nefmv5rn14r9",
+  "status": "FAILED_SCHEDULER_TERMINAL",
+  "created_Shanghai": "2026-11-03T14:15:04+08:00",
+  "terminal_Shanghai": "2026-11-03T14:16:08+08:00",
+  "selected_creation_to_terminal_GPU_seconds": 64,
+  "process_GPU_seconds_subset": 15,
+  "native_probe": "Rejected unset CUDA_VISIBLE_DEVICES; visible NVML inventory exactly one NVIDIA RPBZZZ6,0MiB used. No model load/query/fit/simulator call followed.",
+  "source_commit": "c0b237ec7bbba2f1a3138a6de0fc9a6111bf2ce6",
+  "remedy": "Fresh r2 source/output; retain explicit scheduler CUDA visibility if set, otherwise container-local index0 as the previously qualified Baige launcher convention; native exclusivity/PCI/PID probe unchanged.",
+  "no_automatic_retry": true
+}
