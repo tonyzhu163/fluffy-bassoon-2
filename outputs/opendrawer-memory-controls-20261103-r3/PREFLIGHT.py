@@ -9,7 +9,7 @@ import torch
 
 root = Path('/mowenjie/fluffy-bassoon-2')
 code = Path(os.environ['TASK_CODE'])
-out = root / 'outputs/opendrawer-memory-controls-20261103-r3'
+out = Path(os.environ.get('TASK_MEMORY_OUTPUT', root / 'outputs/opendrawer-memory-controls-20261103-r3'))
 torch.set_num_threads(4)
 assert not torch.cuda.is_available()
 m = runpy.run_path(str(code / 'outputs/opendrawer-memory-controls-20261102-r1/CONTROL.py'))

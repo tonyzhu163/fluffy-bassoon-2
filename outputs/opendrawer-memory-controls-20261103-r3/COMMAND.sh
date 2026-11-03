@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 : "${TASK_CODE:?}" "${TASK_PIN:?}"
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
-export TASK_MEMORY_OUTPUT=$TASK_ROOT/outputs/opendrawer-memory-controls-20261103-r3
+export TASK_MEMORY_OUTPUT=${TASK_MEMORY_OUTPUT:-$TASK_ROOT/outputs/opendrawer-memory-controls-20261103-r3}
 export TASK_MEMORY_REUSE=$TASK_ROOT/outputs/opendrawer-memory-controls-20261102-r2
 TASK_PY=$TASK_ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
 TASK_STARTED=$(date +%s)
@@ -15,6 +15,10 @@ export ROBOCASA_NATIVE_OUTPUT=$TASK_MEMORY_OUTPUT/native
 export ROBOCASA_PI05_TORCH_MODEL=$TASK_ROOT/inputs/robocasa365-public-pi05-c484-torch-20261101-r2
 export ROBOCASA_PI05_NATIVE_NORM=$TASK_ROOT/inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json
 export FLUFFY_GPU_EXECUTION=baige NCCL_P2P_DISABLE=1 MUJOCO_GL=egl PYOPENGL_PLATFORM=egl
+# Baige may expose the sole container GPU without setting this variable.
+# Preserve any scheduler selector; use container-local ordinal zero only
+# when absent. RECOVER still requires exactly one GPU and runs the full probe.
+export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES-0}
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 TOKENIZERS_PARALLELISM=false
 export PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1 WANDB_MODE=disabled
 test "$(git -C "$TASK_CODE" rev-parse HEAD)" = "$TASK_PIN"
