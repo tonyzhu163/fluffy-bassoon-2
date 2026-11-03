@@ -21,8 +21,9 @@ is semantically unseen.
 - Question: can a reusable steering controller turn a few deployment episodes
   into high robot success while a pretrained VLA stays frozen?
 - Approach: causal history → expert-preserving steering (velocity residual
-  and KV conditioning arms; alternatives in Agreed design) → frozen π₀.₅;
-  pretrain using actual source-policy learning histories; compare data construction,
+  or KV conditioning; alternatives in Agreed design) → frozen π₀.₅;
+  pretrain with action supervision on one full action-expert PPO teacher
+  corpus; compare data construction,
   supervision and direct meta-RL.
 - Evaluation: full-suite transfer to all 90 LIBERO90 tasks plus LIBERO-Plus
   and LIBERO-Pro. One actual support episode → a separate query episode,
@@ -91,6 +92,9 @@ is semantically unseen.
   feature/normalization receipt across all tasks. RLinf130 coordinates and
   student checkpoints cannot be reused as though the motor were unchanged.
 - Token \(u_t=[x_t,z_{t-1},r_{t-1},d_{t-1},b_t]\); \(b_t\): episode start.
+  Under the 2026-11-03 source-campaign decision, history tokens carry the
+  executed action chunk \(a_{t-1}\) in place of \(z_{t-1}\); \(z_t\) remains the
+  student's own steering output.
   Previous feedback zero only at a new trial; retained across episode resets.
 - Controller state and proposal:
   \((h_t,\tilde z_t)=f_\psi(u_t,h_{t-1})\);
@@ -368,37 +372,41 @@ is semantically unseen.
   The [source/target protocol](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/libero40-meta90-20261029-r1/PROTOCOL.md)
   governs this arm. The RLinf130 motor, its source data and earlier data-arm
   comparisons do not carry into it.
-- **Steering interface (human, 2026-11-02): velocity residual and KV
-  conditioning, as two separate Stage 1 PPO arms.** This supersedes the
-  2026-11-01 action-residual choice. Both keep the vision-language backbone
-  and original action expert frozen and reproduce native π₀.₅ exactly at
-  zero output, so the PPO
-  head starts at identity with a zero-initialized final layer. In the
-  RoboCasa Stage 0 screen they were the only perturbations at or above
-  native resampling on every task (velocity 84/49/53/20, conditioning
-  89/44/47/20, native 79/43/44/16 of 160), though no gain reached p<.05
-  and random perturbations do not show what PPO can learn
-  ([FINDINGS](FINDINGS.md), [screen](../outputs/robocasa-interface-screen-20261102-r3/RESULT.md)).
-  Action residual 0.25 was flat and 0.5 degraded. A combined
-  velocity+conditioning arm was not screened. Each arm's matched baseline
-  is PPO on that same interface; the meta-learner labels its own codes.
-  Each arm declares its hook, steering coordinates, scale and label schema
-  before launch. \(z_t\) denotes that arm's steering output. The
-  [steering scoping review](literature/vla-steering-review.md) maps the
-  options.
-  - Label rule: the meta-learner's output must be something its source
-    histories can label. Retain actual velocity/KV steering outputs and
-    their executed outcomes in policy-update order for AD. DPT-style labels
-    come from a separately qualified teacher using the same steering map
-    on the recorded query inputs; they never replace historical actions or
-    feedback. Full action-expert PPO does not directly label velocity/KV
-    steering. Any conversion requires its own qualified mapping.
-  - Matched baseline rule: the ordinary RL baseline and the
-    history-generating learner use the same interface as the meta-learner,
-    so the sample-efficiency comparison changes only the learner. For the
-    selected velocity/KV arm, qualify ordinary PPO with the same frozen
-    expert and steering map used by the history learner. Full action-expert
-    PPO stays a reward check and reference, not the matched baseline.
+- **Source campaign (human, 2026-11-03): one action-supervised teacher
+  corpus serves every meta-learner and steering interface.** This supersedes
+  the 2026-11-02 choice of separate velocity-residual and KV-conditioning
+  Stage 1 PPO arms and their label rule.
+  - Teacher: full action-expert Flow-SDE PPO with the VLM frozen, one
+    independent run per source task, launched in parallel under one shared
+    contract (commit, PPO config, reward, update count). Each task's teacher
+    must pass its own improvement gate; a failing task is dropped or
+    replaced, not pooled. Prefer tasks with native success roughly 20–70%.
+    Diagnose the failed OpenDrawer gate on one task before launching all.
+  - Students read actual (observation, executed action chunk, reward,
+    boundary) histories in update order and are supervised on actions with
+    flow matching through the frozen expert, as in VLRLA-bridge. No
+    teacher-provided velocity or KV codes are needed. The velocity residual
+    and KV conditioning stay the two steering interfaces, now compared as
+    supervised student ablations on the same corpus.
+  - Meta-learners on this corpus: AD (behavior-action targets), DPT (final
+    teacher relabels queried offline on saved query observations; historical
+    actions and feedback unchanged), DIT and value-based offline ICRL
+    (behavior actions with advantage weights from in-context value
+    estimates). None needs behavior log-probabilities or steering codes.
+  - Retain for every run: policy version per episode, every update-boundary
+    checkpoint (at least the final teacher for DPT), explicit case/episode
+    IDs, and enough raw RGB to rescore episodes with Flora-Rewarder offline.
+  - Before fitting any history model, fit a reactive (history-free) adapter
+    on each interface to the final teacher's actions. An interface that
+    cannot reproduce the teacher is dropped; this measures the gap between
+    weight-space teacher and frozen-expert student.
+  - Not served by this corpus: direct meta-RL (RL²), CND/Vintix-style
+    fixed-teacher noise histories, and the ordinary online steering baseline
+    (DSRL-style, on the deployment tasks). Each needs its own runs.
+  - The 2026-11-02 RoboCasa Stage 0 screen motivated the two interfaces
+    (velocity 84/49/53/20, conditioning 89/44/47/20, native 79/43/44/16 of
+    160; no gain p<.05) ([screen](../outputs/robocasa-interface-screen-20261102-r3/RESULT.md)).
+    Both start at exact native identity with zero-initialized output.
   - Bounded output-action residuals, initial-noise steering, direct action
     heads and sample-and-select remain comparison interfaces. A direct head
     bypasses the action expert and is not evidence of steering it. The
@@ -407,10 +415,8 @@ is semantically unseen.
 - One frozen motor/tokenizer/normalization/feature receipt across all tasks.
   Requalify the OpenPI40 backend on the actual allocation. RLinf4104 features
   and learned controllers are incompatible receipts, not reusable coordinates.
-- Planned source route: actual advancing PPO histories on the selected
-  velocity/KV interface, with paired AD and DPT-style final-query labels.
-  Historical executed steering outputs, actions and feedback stay
-  actual. Source improvement and final-actor expertise require independent
+- Planned source route: see the 2026-11-03 source-campaign decision above.
+  Source improvement and final-actor expertise require independent
   evaluation; update counts alone prove neither.
 - <a id="oracle-free-reward"></a>**Oracle-free reward (2026-11-01).** The
   claim is sample-efficient RL on real robots, which have no success checker.

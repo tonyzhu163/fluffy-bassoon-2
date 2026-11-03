@@ -489,7 +489,8 @@ checked against the frozen-steering collector on 3 November 2026; see the
    Tarasov et al. report about 30% over AD across more than 150 GridWorld and
    MuJoCo datasets and about 2× on XLand-MiniGrid; conservatism helped almost
    everywhere. The four intended methods are AD, DPT, DIT and value-based
-   offline ICRL. They can share each interface's raw corpus, while using
+   offline ICRL. They share one teacher corpus (PAPER.md, 2026-11-03 source-campaign
+   decision), while using
    different labels and value objectives; this is not a literal 2×2 of AD/DPT
    labels and weighting. S-ICQL also learns a world-model prompt, so an IQL
    objective on the existing decoder should be identified as an adaptation
