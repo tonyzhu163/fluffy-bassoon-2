@@ -24,7 +24,7 @@ from .rlinf_native_ppo import ActionJournal, cpu_tree, restore_rng, snapshot_rng
 from .rlinf_native_ppo import sha
 from .rlinf_native_ppo_runtime import PilotActor, PilotRollout, PilotRunner, save_tensor
 from .rlinf_robocasa_flow_ppo import (GlobalActionJournal, RESET_CONTROL_RESERVE, first_success_reward,
-    flow_contract, train_case_seeds)
+    flow_contract, flow_logprob_parity, train_case_seeds)
 from .rlinf_robocasa_ppo_env import counted_native_factory
 from .robocasa_pairing import canonical_case, native_fingerprint, public_snapshot
 
@@ -164,9 +164,30 @@ def native_class(original, owner):
 
 
 class FlowActor(PilotActor):
+    def train_micro_batch(self, micro_batch, metrics, *, is_last):
+        if self._flow_first_micro_checked:
+            return super().train_micro_batch(micro_batch, metrics, is_last=is_last)
+
+        def check(module, inputs, output):
+            report = flow_logprob_parity(output['logprobs'], micro_batch['prev_logprobs'],
+                action_dim=int(self.cfg.actor.model.action_dim))
+            write(Path(self.cfg.native_pilot.output) / 'logprob-parity' /
+                f'iteration-{self.version + 1:03d}-rank-{self._rank:02d}.json',
+                dict(report, optimizer_steps=self.optimizer_steps, before_backward=True))
+            self._flow_first_micro_checked = True
+            if not report['passed']:
+                raise RuntimeError(f'Unchanged-policy logprob parity failed before SGD: {report}')
+
+        hook = self.model.register_forward_hook(check)
+        try:
+            return super().train_micro_batch(micro_batch, metrics, is_last=is_last)
+        finally:
+            hook.remove()
+
     def run_training(self):
         started = time.monotonic()
         before = self.optimizer_steps
+        self._flow_first_micro_checked = False
         batch_shape = tuple(self.rollout_batch['prev_logprobs'].shape)
         metrics = EmbodiedFSDPActor.run_training(self)
         expected = flow_contract(self.cfg)['optimizer_steps_per_update']

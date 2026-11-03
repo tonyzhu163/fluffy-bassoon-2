@@ -66,6 +66,27 @@ FLOW_TASK_NUMBERS = dict(OpenDrawer=1, PickPlaceCounterToCabinet=2, PickPlaceDra
 RESET_CONTROL_RESERVE = 128  # counted_native_factory's per-episode reset reserve
 
 
+def flow_logprob_parity(logprobs, old_logprobs, *, action_dim=12, tolerance=1e-3):
+    """Audit the unchanged policy's actual chunk ratio before its first SGD.
+
+    RLinf sums all H50 x 12 executed coordinates for its chunk-level ratio.
+    Read detached tensors only; do not recompute or replace rollout targets.
+    """
+    import torch
+    new, old = logprobs.detach().float(), old_logprobs.detach().to(logprobs.device).float()
+    if new.shape != old.shape or new.ndim != 3 or new.shape[-1] != action_dim:
+        raise ValueError('Flow logprobs must match [batch, chunk, executed action dimensions]')
+    delta = new - old
+    finite = bool(torch.isfinite(delta).all().item())
+    joint = new.sum(dim=(1, 2)) - old.sum(dim=(1, 2))
+    maximum = float(joint.abs().max().item())
+    return dict(passed=finite and maximum <= tolerance, finite=finite,
+        shape=list(new.shape), action_dim=action_dim, tolerance=tolerance,
+        max_abs_chunk_log_ratio=maximum,
+        max_abs_coordinate_log_ratio=float(delta.abs().max().item()),
+        mean_abs_chunk_log_ratio=float(joint.abs().mean().item()))
+
+
 def flow_seeds(task):
     """Per-task disjoint ranges: TRAIN 2,x00,000+; before/after eval 6x0100."""
     number = FLOW_TASK_NUMBERS[task]

@@ -22,7 +22,18 @@ def test_first_success_rejects_a_broadcast_latch():
 
 
 from fluffy_bassoon.meta_rl.rlinf_robocasa_flow_ppo import (
-    GlobalActionJournal, flow_contract, flow_seeds, train_case_seeds)
+    GlobalActionJournal, flow_contract, flow_logprob_parity, flow_seeds, train_case_seeds)
+
+
+def test_pre_sgd_parity_uses_executed_chunk_sum_and_rejects_padded_dims():
+    import torch
+    old = torch.zeros(2, 50, 12)
+    assert flow_logprob_parity(old.clone(), old)['passed']
+    # Individually tiny errors can corrupt the joint PPO ratio.
+    assert not flow_logprob_parity(old + 1e-5, old)['passed']
+    assert not flow_logprob_parity(old + float('nan'), old)['passed']
+    with pytest.raises(ValueError, match='executed action'):
+        flow_logprob_parity(torch.zeros(2, 50, 32), torch.zeros(2, 50, 32))
 
 
 def flow_config(task='TurnOffStove', envs=128, rounds=1, maximum=12210000, **seeds):
