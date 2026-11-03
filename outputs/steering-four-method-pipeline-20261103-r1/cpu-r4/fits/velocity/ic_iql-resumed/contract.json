@@ -1,0 +1,149 @@
+{
+  "source_commit": "44f08c9964056b8bca04bfeb6d49bb19a49f0e69",
+  "config": {
+    "observation_dim": 4,
+    "noise_dim": 32,
+    "width": 8,
+    "layers": 1,
+    "heads": 2,
+    "context_length": 16,
+    "initial_std": 0.5,
+    "backbone": "decoder"
+  },
+  "value_config": {
+    "objective": "ic_iql",
+    "discount": 0.99,
+    "expectile": 0.7,
+    "temperature": 1.0,
+    "maximum_weight": 100.0,
+    "target_tau": 0.005,
+    "bellman_weight": 0.1
+  },
+  "mode": "full",
+  "objective": "ic_iql",
+  "train_sha256": "a12b45a71bca99e0ea0a3a49bce132b8939d4f719cfecee4652bde0deb2e339e",
+  "validation_sha256": "56cf7006f16fda45d4cb6aeffa6170860149e3e8a08bacbda0a0619e1dc3be92",
+  "train_metadata": {
+    "synthetic_qualification": true,
+    "trial_ids": [
+      "A:slot-000",
+      "A:slot-001",
+      "B:slot-000",
+      "B:slot-001"
+    ],
+    "source_tasks": [
+      "A",
+      "B"
+    ],
+    "motor_sha256": "motor",
+    "normalization_sha256": "norm",
+    "feature_contract": {
+      "dimension": 4,
+      "port": "source pre-steering public features"
+    },
+    "noise_contract": {
+      "meaning": "actual pre-tanh steering coefficients only",
+      "interface": {
+        "kind": "velocity",
+        "motor_shape": [
+          50,
+          32
+        ],
+        "steering_dim": 32,
+        "candidates": 8,
+        "fraction": 0.05
+      },
+      "native_Gaussian": "exogenous; retained in source receipts, never a steering target"
+    },
+    "source_commit": "source",
+    "runtime_commit": "runtime",
+    "teacher": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/steering-four-method-pipeline-20261103-r1/cpu-r4/fits/velocity/teacher.pt",
+      "sha256": "f8b51eec32e870775670f0e25bef89ef3d8cd40e3f0ab519ca4d993d1fb957e8"
+    },
+    "logical_boundary": "source PPO first-success prefix retained separately",
+    "physical_boundary": "actual native physical_done; full physical episodes for history",
+    "physical_suffix": "actual post-success controls included; no reward is moved or invented",
+    "streams": "same task/declared collection slot across scheduled versions; source scenes may change",
+    "validation": "held-out offline value/policy objective; source PPO saw all source states",
+    "value_contract": {
+      "discount": 0.99,
+      "discount_unit": "one H50 steering decision",
+      "boundary": "physical_done",
+      "rewards": "observed first-success once; physical suffix retained",
+      "next_observation": "next row within the same physical episode; terminal bootstrap zero",
+      "targets": "executed steering actions; no final-teacher relabels",
+      "returns": "complete observed episode, before sampling windows; critic supervision only"
+    }
+  },
+  "validation_metadata": {
+    "synthetic_qualification": true,
+    "trial_ids": [
+      "A:slot-002",
+      "B:slot-002"
+    ],
+    "source_tasks": [
+      "A",
+      "B"
+    ],
+    "motor_sha256": "motor",
+    "normalization_sha256": "norm",
+    "feature_contract": {
+      "dimension": 4,
+      "port": "source pre-steering public features"
+    },
+    "noise_contract": {
+      "meaning": "actual pre-tanh steering coefficients only",
+      "interface": {
+        "kind": "velocity",
+        "motor_shape": [
+          50,
+          32
+        ],
+        "steering_dim": 32,
+        "candidates": 8,
+        "fraction": 0.05
+      },
+      "native_Gaussian": "exogenous; retained in source receipts, never a steering target"
+    },
+    "source_commit": "source",
+    "runtime_commit": "runtime",
+    "teacher": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/steering-four-method-pipeline-20261103-r1/cpu-r4/fits/velocity/teacher.pt",
+      "sha256": "f8b51eec32e870775670f0e25bef89ef3d8cd40e3f0ab519ca4d993d1fb957e8"
+    },
+    "logical_boundary": "source PPO first-success prefix retained separately",
+    "physical_boundary": "actual native physical_done; full physical episodes for history",
+    "physical_suffix": "actual post-success controls included; no reward is moved or invented",
+    "streams": "same task/declared collection slot across scheduled versions; source scenes may change",
+    "validation": "held-out offline value/policy objective; source PPO saw all source states",
+    "value_contract": {
+      "discount": 0.99,
+      "discount_unit": "one H50 steering decision",
+      "boundary": "physical_done",
+      "rewards": "observed first-success once; physical suffix retained",
+      "next_observation": "next row within the same physical episode; terminal bootstrap zero",
+      "targets": "executed steering actions; no final-teacher relabels",
+      "returns": "complete observed episode, before sampling windows; critic supervision only"
+    }
+  },
+  "seed": 31,
+  "batch_size": 2,
+  "max_context": null,
+  "max_episodes_per_window": 2,
+  "learning_rate": 0.0003,
+  "schedule": {
+    "updates": null,
+    "critic_updates": null,
+    "eval_every": 1,
+    "validation_batches": 1,
+    "checkpoint_selection": "validation-nll",
+    "until_converged": true,
+    "minimum_updates": 1,
+    "validation_patience": 1,
+    "validation_relative_delta": 1000.0
+  },
+  "value_scheme": "independent causal Q/V fit, then frozen-value weighted policy extraction",
+  "method": "in-context IQL decoder adaptation; no S-ICQL world-model prompt",
+  "status": "candidate; held-out offline loss does not establish robot success"
+}

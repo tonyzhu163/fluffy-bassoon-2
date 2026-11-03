@@ -1,0 +1,60 @@
+{
+  "format": "frozen_vla_history_dataset_v1",
+  "objective": "ic_iql",
+  "trials": 2,
+  "transitions": 8,
+  "observation_dim": 4,
+  "noise_dim": 32,
+  "metadata": {
+    "synthetic_qualification": true,
+    "trial_ids": [
+      "A:slot-002",
+      "B:slot-002"
+    ],
+    "source_tasks": [
+      "A",
+      "B"
+    ],
+    "motor_sha256": "motor",
+    "normalization_sha256": "norm",
+    "feature_contract": {
+      "dimension": 4,
+      "port": "source pre-steering public features"
+    },
+    "noise_contract": {
+      "meaning": "actual pre-tanh steering coefficients only",
+      "interface": {
+        "kind": "velocity",
+        "motor_shape": [
+          50,
+          32
+        ],
+        "steering_dim": 32,
+        "candidates": 8,
+        "fraction": 0.05
+      },
+      "native_Gaussian": "exogenous; retained in source receipts, never a steering target"
+    },
+    "source_commit": "source",
+    "runtime_commit": "runtime",
+    "teacher": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/steering-four-method-pipeline-20261103-r1/cpu-r4/fits/velocity/teacher.pt",
+      "sha256": "f8b51eec32e870775670f0e25bef89ef3d8cd40e3f0ab519ca4d993d1fb957e8"
+    },
+    "logical_boundary": "source PPO first-success prefix retained separately",
+    "physical_boundary": "actual native physical_done; full physical episodes for history",
+    "physical_suffix": "actual post-success controls included; no reward is moved or invented",
+    "streams": "same task/declared collection slot across scheduled versions; source scenes may change",
+    "validation": "held-out offline value/policy objective; source PPO saw all source states",
+    "value_contract": {
+      "discount": 0.99,
+      "discount_unit": "one H50 steering decision",
+      "boundary": "physical_done",
+      "rewards": "observed first-success once; physical suffix retained",
+      "next_observation": "next row within the same physical episode; terminal bootstrap zero",
+      "targets": "executed steering actions; no final-teacher relabels",
+      "returns": "complete observed episode, before sampling windows; critic supervision only"
+    }
+  },
+  "sha256": "56cf7006f16fda45d4cb6aeffa6170860149e3e8a08bacbda0a0619e1dc3be92"
+}
