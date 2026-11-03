@@ -1,9 +1,56 @@
 {
-  "status": "FOUR_FITS_RUNNING_EVALUATION_PENDING",
-  "last_actual_metrics_check": "2026-11-03T15:29:50+08:00",
+  "status": "FOUR_FITS_FULL_STATE_R2_RESUME_RUNNING",
+  "last_actual_metrics_check": "2026-11-03T15:45:10+08:00",
   "cluster": "Baige Pro6K / \u7b97\u6cd5Z\u7ec4",
   "queue": "aihcq-rh0wwk9muei4",
-  "fit": {
+  "metrics_snapshot": {
+    "ad": {
+      "update": 4700,
+      "validation_nll": 115.44542789459229,
+      "converged": false
+    },
+    "dpt": {
+      "update": 4700,
+      "validation_nll": 111.94492292404175,
+      "converged": false
+    },
+    "dit": {
+      "value_updates": 1900,
+      "actor_update": 1500,
+      "validation_weighted_nll": 169.76093292236328,
+      "converged": false
+    },
+    "ic_iql": {
+      "value_updates": 1900,
+      "actor_update": 1400,
+      "validation_weighted_nll": 189.3219404220581,
+      "converged": false
+    }
+  },
+  "monitoring": "Use metrics.jsonl/latest.pt for actual progress. AD/DPT status appears only at invocation exit. The 3000-second invocation cap is not convergence. Resume full state only after exact child and allocation release.",
+  "GPU_budget": {
+    "whole_campaign_operational_ceiling_GPU_hours": 7.5,
+    "selected_preparation_GPU_seconds": 1021,
+    "live_fit_GPU_cost": "Reconcile terminal allocation/release; four process clocks overlap and are not additive.",
+    "selected_fit_r1_GPU_seconds": 3069,
+    "lifetime_selected_before_r2_GPU_seconds": 4090
+  },
+  "native_evaluation": {
+    "status": "PREPARED_CPU_STATIC_ONLY_NOT_GPU_QUALIFIED_OR_LAUNCHED",
+    "prepared_source_commit": "ae1cb3439c89f3a164d7c1a4fc05dc9bf5101f0c",
+    "Linux_worktree": "/mowenjie/fluffy-bassoon-2/worktrees/flow-four-method-readout-20261103-r1",
+    "cases_per_task": 50,
+    "tasks": {
+      "OpenDrawer": 400,
+      "CloseFridge": 900
+    },
+    "attempts_per_case": 5,
+    "conditions": "Four students full/episode-reset plus original/final18 native anchors",
+    "first_qualification": "First16 prospective balanced cases count once if actual selected-student qualification passes. Existing BOS mount and complete-scope remaining-budget forecast required."
+  },
+  "proof_screenshot": "/Users/mowenjie/.codex/visualizations/2026/11/02/01a19b74-8734-7dc0-8177-d43ff6553fd0/flow-four-methods-fitting-20261103.png",
+  "scientific_claim": "No convergence, native score or meta-learning gain established.",
+  "previous_fit_r1": {
     "job_id": "job-abquwhnpmlmv",
     "name": "mwj_1103_flow_four_methods_fit_1x1_r1",
     "created": "2026-11-03T14:47:38+08:00",
@@ -24,51 +71,43 @@
     "independent_learners": 4,
     "parameter_sharing": false
   },
-  "metrics_snapshot": {
-    "ad": {
-      "update": 3700,
-      "validation_nll": 124.19497346878052,
-      "stale_checks": 1,
-      "converged": false
+  "fit_continuation": {
+    "status": "RUNNING_FULL_STATE_RESUME_ADVANCING",
+    "job_id": "job-qbxwsy8jjdsb",
+    "name": "mwj_1103_flow_four_methods_fit_1x1_r2",
+    "created": "2026-11-03T15:42:09+08:00",
+    "attempt": "r2",
+    "continuation_of": "job-abquwhnpmlmv",
+    "source_commit": "e7ead0eefc8198d72f72100d46c8abfc1d190fdd",
+    "native_source_unchanged": true,
+    "resources": {
+      "worker": 1,
+      "GPU": 1,
+      "accelerator": "NVIDIA RPBZZZ6",
+      "CPU": 16,
+      "RAM_GiB": 64,
+      "SHM_GiB": 8,
+      "scheduler_max_minutes": 65,
+      "automatic_retry": false,
+      "idle_resources": false
     },
-    "dpt": {
-      "update": 3700,
-      "validation_nll": 124.02980041503906,
-      "stale_checks": 0,
-      "converged": false
-    },
-    "dit": {
-      "value_updates": 1900,
-      "actor_update": 800,
-      "validation_weighted_nll": 202.28589344024658,
-      "converged": false
-    },
-    "ic_iql": {
-      "value_updates": 1900,
-      "actor_update": 800,
-      "validation_weighted_nll": 220.55425357818604,
-      "converged": false
+    "admission": "FIT-R2-ADMISSION.json",
+    "old_terminal": "2026-11-03T15:38:47+08:00",
+    "old_selected_GPU_seconds": 3069,
+    "lifetime_selected_before_r2_GPU_seconds": 4090,
+    "allocation_and_advancement_verified": true,
+    "next": "Continue validation-plateau training; no convergence or native evaluation result yet.",
+    "last_scheduler_check": "2026-11-03T15:45:10+08:00",
+    "proof_screenshot": "/Users/mowenjie/.codex/visualizations/2026/11/02/01a19b74-8734-7dc0-8177-d43ff6553fd0/flow-four-methods-continuation-r2-20261103.png",
+    "hostname": "job-qbxwsy8jjdsb-master-0",
+    "physical_GPU_UUID": "GPU-cb666425-37b8-aecb-e638-28c951ced1ef",
+    "physical_GPU_PCI": "A4:00.0",
+    "GPU_probe": "passed",
+    "advancing_updates": {
+      "ad": 4700,
+      "dpt": 4700,
+      "dit_actor": 1500,
+      "ic_iql_actor": 1400
     }
-  },
-  "monitoring": "Use metrics.jsonl/latest.pt for actual progress. AD/DPT status appears only at invocation exit. The 3000-second invocation cap is not convergence. Resume full state only after exact child and allocation release.",
-  "GPU_budget": {
-    "whole_campaign_operational_ceiling_GPU_hours": 7.5,
-    "selected_preparation_GPU_seconds": 1021,
-    "live_fit_GPU_cost": "Reconcile terminal allocation/release; four process clocks overlap and are not additive."
-  },
-  "native_evaluation": {
-    "status": "PREPARED_CPU_STATIC_ONLY_NOT_GPU_QUALIFIED_OR_LAUNCHED",
-    "prepared_source_commit": "ae1cb3439c89f3a164d7c1a4fc05dc9bf5101f0c",
-    "Linux_worktree": "/mowenjie/fluffy-bassoon-2/worktrees/flow-four-method-readout-20261103-r1",
-    "cases_per_task": 50,
-    "tasks": {
-      "OpenDrawer": 400,
-      "CloseFridge": 900
-    },
-    "attempts_per_case": 5,
-    "conditions": "Four students full/episode-reset plus original/final18 native anchors",
-    "first_qualification": "First16 prospective balanced cases count once if actual selected-student qualification passes. Existing BOS mount and complete-scope remaining-budget forecast required."
-  },
-  "proof_screenshot": "/Users/mowenjie/.codex/visualizations/2026/11/02/01a19b74-8734-7dc0-8177-d43ff6553fd0/flow-four-methods-fitting-20261103.png",
-  "scientific_claim": "No convergence, native score or meta-learning gain established."
+  }
 }

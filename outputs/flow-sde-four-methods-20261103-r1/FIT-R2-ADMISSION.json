@@ -1,0 +1,61 @@
+{
+  "status": "QUALIFIED_FULL_STATE_CONTINUATION_READY",
+  "declared": "2026-11-03T15:42:00+08:00",
+  "prior_job": "job-abquwhnpmlmv",
+  "prior_scheduler_terminal": "SUCCEEDED 2026-11-03T15:38:47+08:00",
+  "prior_all_children_exit_codes": {
+    "ad": 0,
+    "dpt": 0,
+    "dit": 0,
+    "ic_iql": 0
+  },
+  "single_master_lock_available": true,
+  "source_commit": "e7ead0eefc8198d72f72100d46c8abfc1d190fdd",
+  "latest_main_reviewed": "42cefb77daec997df5b6bd178aaf8e4bdfb3b089",
+  "latest_main_fit_core_and_launcher_bytes_identical": true,
+  "reason_for_retained_pin": "Exact same incomplete learner/source/checkpoint contract; fresh allocation attempt r2, no source/parameter/schedule change.",
+  "latest_resume_sha256": {
+    "ad": "70384d027294aa7e2ec92e2864c34fb10905e5f48e05bc8a3ca3f3f99b962b52",
+    "dpt": "d0ee6a8c30506dcb9da8fbfff7bb8b3bd9a23fea1813b62784cea0681bc1684e",
+    "dit": "60aeeb3c7dcadce64bd365c70574beb4950dcb96d676833966a7b5f9604c9338",
+    "ic_iql": "3e182a3869d635a170d683b9c767a4734ee2dc7b274d40c5577f5a959d287e47"
+  },
+  "full_state_CPU_audit": {
+    "hostname": "aibox-rffe453e3884-5f96c78b88-rtvhb",
+    "CUDA_hidden": true,
+    "all_checkpoint_contracts_exact": true,
+    "ad_dpt": "policy,optimizer,rng,sampler in rng,plateau,best,update,elapsed",
+    "dit_iql": "learner including value/targetQ/actor,optimizers,rng/sampler,phase/updates,plateaus,best_value_state"
+  },
+  "continuation": {
+    "attempt": "r2",
+    "name": "mwj_1103_flow_four_methods_fit_1x1_r2",
+    "GPU": 1,
+    "CPU": 16,
+    "RAM_GiB": 64,
+    "SHM_GiB": 8,
+    "max_scheduler_minutes": 65,
+    "automatic_retry": false,
+    "from_updates": {
+      "ad": 4578,
+      "dpt": 4610,
+      "dit_actor": 1405,
+      "ic_iql_actor": 1373,
+      "value": 1900
+    }
+  },
+  "budget": {
+    "lifetime_operational_ceiling_GPU_seconds": 27000,
+    "selected_preparation": 1021,
+    "selected_fit_r1": 3069,
+    "charged_upper_bound_before_r2": 4090,
+    "reserved_r2_max": 3900,
+    "evaluation_allowance": 15480,
+    "recovery_allowance": 1440,
+    "total_with_reservations": 24910,
+    "within_ceiling": true,
+    "remaining_after_reservations": 2090,
+    "forecast_caveat": "Evaluation allowance remains provisional until actual selected-student native qualification; no full-readout admission yet."
+  },
+  "scientific_status": "No method converged; invocation cap was operational, no native evaluation yet."
+}

@@ -1,0 +1,83 @@
+{
+  "attempt": "r1",
+  "source_commit": "e7ead0eefc8198d72f72100d46c8abfc1d190fdd",
+  "source_assembly": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/flow-four-method-source-gpu-20261103-r2/preparation/ASSEMBLY.json",
+    "sha256": "12433cf163c03a7874f6028e8bdc2a662f25fdc964e9fd972b7ac4d4f2b1760c"
+  },
+  "methods": {
+    "ad": {
+      "converged": false,
+      "update": 4578,
+      "best_validation_nll": 114.31318759918213,
+      "plateau": {
+        "reference": 114.31318759918213,
+        "stale_checks": 1,
+        "converged": false
+      },
+      "elapsed_seconds": 3000.493225833401,
+      "stop_reason": "operational_checkpoint"
+    },
+    "dpt": {
+      "converged": false,
+      "update": 4610,
+      "best_validation_nll": 116.42269325256348,
+      "plateau": {
+        "reference": 116.42269325256348,
+        "stale_checks": 1,
+        "converged": false
+      },
+      "elapsed_seconds": 3000.2682843264192,
+      "stop_reason": "operational_checkpoint"
+    },
+    "dit": {
+      "converged": false,
+      "phase": "actor",
+      "update": 1405,
+      "updates": {
+        "value": 1900,
+        "actor": 1405
+      },
+      "best_validation_loss": {
+        "value": 0.22193235903978348,
+        "actor": 174.83913898468018
+      },
+      "elapsed_seconds": 3007.952212139033,
+      "stop_reason": "operational_checkpoint"
+    },
+    "ic_iql": {
+      "converged": false,
+      "phase": "actor",
+      "update": 1373,
+      "updates": {
+        "value": 1900,
+        "actor": 1373
+      },
+      "best_validation_loss": {
+        "value": 0.021124947059433907,
+        "actor": 190.02809619903564
+      },
+      "elapsed_seconds": 3008.3131554350257,
+      "stop_reason": "operational_checkpoint"
+    }
+  },
+  "all_converged": false,
+  "candidate_checkpoints": {
+    "ad": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/flow-four-method-fits-20261103-r1/ad/candidate.pt",
+      "sha256": "c5d4be79803f34612faba3e748eef80c7cecacd7fd6b4b32c7621895cdb673cd"
+    },
+    "dpt": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/flow-four-method-fits-20261103-r1/dpt/candidate.pt",
+      "sha256": "8461b4d8f5c6542916858f111f52505d978ae3f596d644293732c9d7a7d2122b"
+    },
+    "dit": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/flow-four-method-fits-20261103-r1/dit/candidate.pt",
+      "sha256": "91b8f98834828af810c28cd2336b7ce143b87353a401c048c59b84d61389fa9f"
+    },
+    "ic_iql": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/flow-four-method-fits-20261103-r1/ic_iql/candidate.pt",
+      "sha256": "40ad851e8229b810e6e2ba6c4fb7f2b3ce514ad98db1bf91c3c50d7dd96c1418"
+    }
+  }
+}
