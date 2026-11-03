@@ -1,0 +1,44 @@
+{
+  "cluster": "Baige",
+  "job_id": "job-mdxdgd91xn8o",
+  "name": "mwj_1103_joint_steering_48env_1x1_q1",
+  "submitted_Shanghai": "2026-11-03T11:32:20+08:00",
+  "running_Shanghai": "2026-11-03T11:32:41+08:00",
+  "checked_Shanghai": "2026-11-03T11:35:11.652407+08:00",
+  "status": "RUNNING_CALIBRATION_MODEL_LOAD",
+  "scientific_PPO_jobs": 0,
+  "scientific_PPO_updates": 0,
+  "source_commit": "d3a861a6ac67f594902675cb36ddf0ee83608896",
+  "source_path": "/mowenjie/fluffy-bassoon-2/worktrees/joint-steering-scale50-gpu-20261103-r2",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-native-qualification-20261103-r1",
+  "runtime_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+  "resources": {
+    "GPUs": 1,
+    "CPU": 21,
+    "RAM_GiB": 208,
+    "SHM_GiB": 48,
+    "scheduler_max_minutes": 40,
+    "automatic_retry": false
+  },
+  "actual_probe": {
+    "status": "passed",
+    "hostname": "job-mdxdgd91xn8o-master-0",
+    "GPU_UUID": "GPU-ce254fea-0983-4d4e-439e-458de37cf1e1",
+    "PCI": "0000:61:00.0",
+    "total_memory_MiB": 97887,
+    "own_PID_and_actual_CUDA_allocation": true
+  },
+  "first_advancement": "Actual exclusive one-device CUDA/PID/PCI probe passed; loading frozen original native model at11:33:17.932",
+  "source_validation": "43 allocated-Linux core tests at861900ef; helper/learner/worker bytes unchanged. Later scalar/wrapper/48-lane bank cleanup changes AST/bash checked.",
+  "preparation_gpu_seconds_ceiling": 2400,
+  "carried_velocity_GPU_seconds": 122,
+  "final_allocation_cost_pending": true,
+  "scope": "Five public TRAIN reset-only calibration observations, both interfaces and synthetic next-Adam numerical checks;48 full600-control episodes/arm; no scientific SGD.",
+  "cleanup_fix": "Each arm releases all48 native/render/video children before constructing the next bank; all close attempts retained on failure.",
+  "logging": {
+    "local_JSONL": true,
+    "offline_WandB_qualified": true,
+    "online_WandB_403_not_blocking": true
+  },
+  "next_action": "Verify bracketing scale/LR calibration, then actual48-live collection/history/throughput/memory and release. Construct admission only after all evidence passes."
+}
