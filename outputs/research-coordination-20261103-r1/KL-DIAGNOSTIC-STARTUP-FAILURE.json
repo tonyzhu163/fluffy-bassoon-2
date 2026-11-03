@@ -1,0 +1,71 @@
+{
+  "checked_unix": 1793688983.5597155,
+  "job": "job-voaelvgv4mqi",
+  "output_exists": true,
+  "files": [
+    "GPU-PROBE.json",
+    "clock.json",
+    "console.log"
+  ],
+  "GPU-PROBE.json": {
+    "status": "failed",
+    "error_type": "ValueError",
+    "error": "CUDA_VISIBLE_DEVICES must list distinct allocated GPU indices/UUIDs",
+    "hostname": "job-voaelvgv4mqi-master-0",
+    "probe_pid": 105,
+    "environment": {
+      "CUDA_VISIBLE_DEVICES": null,
+      "SLURM_JOB_ID": null,
+      "SLURM_STEP_ID": null,
+      "SLURM_JOB_GPUS": null,
+      "SLURM_STEP_GPUS": null,
+      "SLURM_GPUS_ON_NODE": null
+    },
+    "nvml_inventory": [
+      {
+        "index": 0,
+        "uuid": "GPU-ce254fea-0983-4d4e-439e-458de37cf1e1",
+        "name": "NVIDIA RPBZZZ6",
+        "memory_total_mib": 97887,
+        "memory_used_mib": 0,
+        "utilization_percent": 0,
+        "pci_bus_id": "00000000:61:00.0"
+      },
+      {
+        "index": 1,
+        "uuid": "GPU-ffc87f1b-c636-4503-c571-04317bd67401",
+        "name": "NVIDIA RPBZZZ6",
+        "memory_total_mib": 97887,
+        "memory_used_mib": 0,
+        "utilization_percent": 0,
+        "pci_bus_id": "00000000:62:00.0"
+      },
+      {
+        "index": 2,
+        "uuid": "GPU-ce971dbc-33e4-7583-64db-b1dc76796786",
+        "name": "NVIDIA RPBZZZ6",
+        "memory_total_mib": 97887,
+        "memory_used_mib": 0,
+        "utilization_percent": 0,
+        "pci_bus_id": "00000000:63:00.0"
+      },
+      {
+        "index": 3,
+        "uuid": "GPU-215ef98a-7dd5-ae04-189b-d9e4e960edb8",
+        "name": "NVIDIA RPBZZZ6",
+        "memory_total_mib": 97887,
+        "memory_used_mib": 0,
+        "utilization_percent": 0,
+        "pci_bus_id": "00000000:64:00.0"
+      }
+    ]
+  },
+  "clock.json": {
+    "started_unix": 1793688427,
+    "finished_unix": 1793688428,
+    "allocated_gpus": 4,
+    "process_gpu_seconds": 4,
+    "exit_code": 1,
+    "allocation_release_not_included": true
+  }
+}

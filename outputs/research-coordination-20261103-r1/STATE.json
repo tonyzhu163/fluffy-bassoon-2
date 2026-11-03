@@ -2,7 +2,7 @@
   "run_id": "research-coordination-20261103-r1",
   "owner_thread": "01a19f33-dcb8-7b81-ac4c-b23c26b341de",
   "timezone": "Asia/Shanghai",
-  "status": "EXPLICIT_HUMAN_HOLD_PPO_RECOVERY_PENDING_KL_REVIEW",
+  "status": "PPO_HUMAN_HOLD_KL_DIAGNOSTIC_STARTUP_FAILURE_CORRECTION_PENDING",
   "automation_id": "coordinate-ppo-milestones-and-recoveries",
   "check_interval_minutes": 20,
   "human_authority": [
@@ -47,7 +47,7 @@
     "flora_reward": {
       "thread_id": "01a19bef-b16f-70e2-ad86-9140e3b360ed",
       "title": "Fix Flora reward and unblock gates",
-      "cursor": "520aa979-d22d-4944-a890-27bd974a6515:19",
+      "cursor": "520aa979-d22d-4944-a890-27bd974a6515:20",
       "state": "Frame-edgetrialCOMPLETE/released13:45:32,all40grades/7batches/40raw+messageaudits/19liveBF16inputs/54exportfilehashesverify. Bothbase/candidatefail:6/10negativefullscores,3falseacceptedepisodes;timely1\u21922/3,128stillmissed,216closedterminal1. AllactualHFoutputsalreadyBF16andmatchCPUcast19/19; expandedFP32differsfromunroundedref(notlikewithlike),no semantic/encoderstateclaim. Costs575worker/590scheduler/605creationupperGPU-s,0robot/SGD. Same-panellexicalfittingends; ownerconsolidatednextsubstantivediagnosticcurrentstate recognitionvshistoryaggregation,nonewGPUrun/promotion.",
       "evidence": "outputs/research-coordination-20261103-r1/FLORA-FRAME-EDGE-RESULT-REVIEW.json",
       "next_trial_GPU_seconds_ceiling_proposed": 900,
@@ -87,7 +87,7 @@
     "steering_ppo": {
       "thread_id": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
       "title": "Pull PPO coordination updates",
-      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:89",
+      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:92",
       "state": "DIRECTHUMANHOLD:fullvelocity/KVrecoveryheldatupdate2 untilKLtestreviewed; rootverifiedactualhumanreply01a1a00f andrelayedhold, supersedingearlierpriorityresumemessage. Approved60GPUh/arm120combinedremainsvalidbutdoesnotwaivehold. Preserveoldcheckpoints/banks/Adam/RNG/panels/cost; no full-source executor/resume/newinitializer/recipechange untilreview/release. BoundedKLownerworks fromcopiedpreupdate1+realfirstbanks, notsourcecheckpointmutation. SeparateFlowfourmethod/Floraworkunaffected.",
       "scientific_job_ids": {
         "velocity": "job-bxhz4d41ll1k",
@@ -461,8 +461,17 @@
     "KL_guard_review": {
       "thread_id": "01a19fe9-1842-7533-80d1-e24db386a023",
       "title": "Check stage 0 and 1 tests",
-      "cursor": "df3f8704-f3bd-4226-9f29-e6160d5e8d5b:2",
-      "state": "Copiedbankoptimizer/candidatechecks passed onallocatedLinuxCPU. Ownerpreparing/submitting separate4GPU native diagnostic with6GPUh totalceiling, initial/guarded/unguarded policies on250newcases/interface(1500episodes). No actualjob/probe/advancement verifiedbycoordinator yet; productionTEST/sourcecheckpoint/holdunchanged."
+      "cursor": "df3f8704-f3bd-4226-9f29-e6160d5e8d5b:3",
+      "state": "Diagnosticr1job-voaelvgv4mqi allocated4GPUs but mandatoryGPUprobe failedbecauseCUDA_VISIBLE_DEVICESunset. Rootreadrawprobe/clock:4NVMLdevices exposed, no CUDAqualification/model/episodes; process1s\u00d74GPU=4GPU-s exit1. Ownerdiagnosedselectorwrappercorrection andfreshoutputidentity withinSAME6GPUhcap afterterminal/release/cost+CPUpreflight; no blindretry or probeweakening. Fullsourceheldat2untilreview, originalsourcesunchanged.",
+      "failed_diagnostic_job_id": "job-voaelvgv4mqi",
+      "failed_diagnostic_source": "a31757296742b815bf77b2cef6b94ada7d638d49",
+      "failed_process_GPU_seconds": 4,
+      "failed_scheduler_final_charge_pending": true,
+      "failed_model_or_episode_calls": 0,
+      "diagnostic_lifetime_GPU_seconds_cap": 21600,
+      "corrected_job_id": null,
+      "actual_diagnostic_native_progress_verified": false,
+      "evidence": "outputs/research-coordination-20261103-r1/KL-DIAGNOSTIC-STARTUP-FAILURE.json"
     }
   },
   "delivered_DEV_milestones": {
@@ -494,7 +503,8 @@
     "ppo_both_update2_safe_budget_pause_checkpoint_payload_release_and_cost_verified",
     "flora_frame_edge40grades_failed_screen_live_BF16_inputs_verified",
     "human_explicit_budget60perarm120total_verified_no_repeat_approval",
-    "direct_human_hold_full_PPO_recovery_until_KL_review_verified_and_relayed"
+    "direct_human_hold_full_PPO_recovery_until_KL_review_verified_and_relayed",
+    "KL_diag_r1_job-voaelvgv4mqi_GPU_visibility_failure_zero_episodes"
   ],
   "wandb": {
     "status": "PRODUCTION_OFFLINE_RUNS_INITIALIZED_METRICS_ADVANCING_NO_ONLINE",
@@ -530,8 +540,8 @@
     "Flora repair does not gate simulator-reward steering PPO.",
     "Do not duplicate owner jobs, change their active worktrees, or expand scope/budgets silently."
   ],
-  "last_check_Shanghai": "2026-11-03T14:42:10+08:00",
-  "last_quiet_check_reason": "ExplicitfullsourceKLreviewholdunchangedatupdate2; boundednativediagnosticpendingverifiedlaunch/advancement. No newmilestone or newhumanrequest.",
+  "last_check_Shanghai": "2026-11-03T15:03:21+08:00",
+  "last_quiet_check_reason": null,
   "human_resource_policy": {
     "human_quote": "dont ask me for approval below 8 gpu hours add to agents.md",
     "approval_free_below_GPU_hours": 8,
