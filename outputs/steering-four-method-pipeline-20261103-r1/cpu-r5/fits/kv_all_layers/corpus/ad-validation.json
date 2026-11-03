@@ -1,0 +1,64 @@
+{
+  "format": "frozen_vla_history_dataset_v1",
+  "objective": "ad",
+  "trials": 2,
+  "transitions": 8,
+  "observation_dim": 4,
+  "noise_dim": 1152,
+  "metadata": {
+    "synthetic_qualification": true,
+    "trial_ids": [
+      "A:slot-002",
+      "B:slot-002"
+    ],
+    "source_tasks": [
+      "A",
+      "B"
+    ],
+    "motor_sha256": "motor",
+    "normalization_sha256": "norm",
+    "feature_contract": {
+      "dimension": 4,
+      "port": "source pre-steering public features"
+    },
+    "noise_contract": {
+      "meaning": "actual pre-tanh steering coefficients only",
+      "interface": {
+        "kind": "kv_all_layers",
+        "motor_shape": [
+          50,
+          32
+        ],
+        "steering_dim": 1152,
+        "candidates": 8,
+        "fraction": 0.05,
+        "kv_layers": 18,
+        "kv_map": {
+          "version": "independent_layer_kv_rademacher32_rms_v1",
+          "rank": 32,
+          "targets": [
+            "key",
+            "value"
+          ],
+          "order": "layer,key_or_value,coefficient",
+          "seed_base": 921003,
+          "seed": "921003 + 2 * layer_index + key_or_value_index",
+          "scale": "fraction * per_row_per_layer_per_tensor_RMS; tanh coefficients"
+        }
+      },
+      "native_Gaussian": "exogenous; retained in source receipts, never a steering target"
+    },
+    "source_commit": "source",
+    "runtime_commit": "runtime",
+    "teacher": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/steering-four-method-pipeline-20261103-r1/cpu-r5/fits/kv_all_layers/teacher.pt",
+      "sha256": "1d0cf8bfc10851235d9468331266fdd9c6e3cf70a25979334260f6cd8004c6ba"
+    },
+    "logical_boundary": "source PPO first-success prefix retained separately",
+    "physical_boundary": "actual native physical_done; full physical episodes for history",
+    "physical_suffix": "actual post-success controls included; no reward is moved or invented",
+    "streams": "same task/declared collection slot across scheduled versions; source scenes may change",
+    "validation": "student imitation only; source PPO saw all source states"
+  },
+  "sha256": "d389a641fb18d33ded2131544f823aa5adbf7922902da371e8bc0b653678dd1d"
+}

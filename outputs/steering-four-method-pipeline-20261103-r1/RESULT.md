@@ -47,3 +47,16 @@ Evidence: [validation](cpu-r4/VALIDATION.json), [core log](cpu-r4/pytest.log),
 `fc83115b3b5f6d83ce2268644e77ad95e89621bbea43949e74f6880fa62e5909`,
 verified after authenticated browser download. Synthetic checkpoints and raw
 qualification outputs remain on Baige under the same run identity.
+
+The final merged integration at
+`414ab5d9005e65f6c8a973bc8731c21e7fc7dfcb` also passed: **98 core tests in
+45.83s**, including the current collector and residual PPO tests, **eight
+fit/export/readout combinations**, and **four exact interrupted value-stage
+recoveries**. This includes the concurrent source-owner collector and PPO
+changes merged after the first numerical qualification. The fits took 51.25s;
+the test-and-fit child processes took 127.39s in the same allocated CPU runtime.
+No GPU computation or real simulator episode was performed. See the final
+[validation](cpu-r5/VALIDATION.json), [test log](cpu-r5/pytest.log) and
+[eight fit results](cpu-r5/fits/RESULT.json). The downloaded evidence archive is
+54,335 bytes with verified SHA256
+`53f801a95184747b9328af311200a214c1e4b19ae1cf896cea8168854506f8ff`.

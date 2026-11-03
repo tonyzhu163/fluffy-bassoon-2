@@ -9,8 +9,9 @@ descriptive, and none establishes a CTM, memory or in-context-RL advantage.
 
 The frozen-steering history pipeline now exports and fits AD, DPT, DIT and
 in-context IQL separately for velocity and all-layer K/V. Allocated-Linux CPU
-qualification passed60core cases, all8synthetic fit/export/five-attempt routes
-and4exact interrupted value-stage recoveries at source44f08c99. These are
+qualification passed 98 core cases, all eight synthetic fit/export/five-attempt
+routes and four exact interrupted value-stage recoveries at merged source
+`414ab5d9`. These are
 implementation and numerical checks, with zero real simulator episodes or
 scientific student fits; IC-IQL omits S-ICQL's world-model prompt. See the
 [qualification](../outputs/steering-four-method-pipeline-20261103-r1/RESULT.md).

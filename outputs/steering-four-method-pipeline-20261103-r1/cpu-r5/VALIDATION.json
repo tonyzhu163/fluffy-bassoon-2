@@ -1,0 +1,130 @@
+{
+  "source_commit": "414ab5d9005e65f6c8a973bc8731c21e7fc7dfcb",
+  "tests_exit_code": 0,
+  "actual_simulator_episodes": 0,
+  "gpu_work": false,
+  "fits_exit_code": 0,
+  "elapsed_seconds": 127.39421411696821,
+  "passed": true,
+  "hostname": "aibox-rffe453e3884-5f96c78b88-rtvhb",
+  "python": "3.11.14 (main, Oct 14 2025, 21:26:53) [Clang 20.1.4 ]",
+  "torch": "2.11.0+cu128",
+  "device": "cpu",
+  "cpu_quota": "1300000 100000",
+  "memory_max_bytes": 120259084288,
+  "tests": [
+    "test_history_value.py",
+    "test_vla_history.py",
+    "test_frozen_steering_history.py",
+    "test_steering_history_eval.py",
+    "test_steering_history_native.py",
+    "test_joint_steering_ppo_worker.py",
+    "test_residual_ppo.py"
+  ],
+  "core_log_sha256": "c75e0aa266080d15382d6f780a3c4cc96a147982c2f153a11cd6d7c541cbf5b3",
+  "end_to_end": {
+    "passed": true,
+    "source_commit": "414ab5d9005e65f6c8a973bc8731c21e7fc7dfcb",
+    "hostname": "aibox-rffe453e3884-5f96c78b88-rtvhb",
+    "device": "cpu",
+    "elapsed_seconds": 51.24682345800102,
+    "actual_simulator_episodes": 0,
+    "results": [
+      {
+        "arm": "velocity",
+        "method": "ad",
+        "converged": true,
+        "candidate_sha256": "d984bbd3b88da3941a369164674f45de2a2b83975392b03afe2403b60b995d48",
+        "action_dimension": 32,
+        "actual_simulator_episodes": 0,
+        "synthetic_five_attempt_readout": true
+      },
+      {
+        "arm": "velocity",
+        "method": "dpt",
+        "converged": true,
+        "candidate_sha256": "33a507cd956f7de9c9d250de491a0cc6b37857ea1d604e3ab0a3497458996bc9",
+        "action_dimension": 32,
+        "actual_simulator_episodes": 0,
+        "synthetic_five_attempt_readout": true
+      },
+      {
+        "arm": "velocity",
+        "method": "dit",
+        "converged": true,
+        "candidate_sha256": "35a602092bb2ca39032a292869b4b47a5fcda980b159b14aa4d984b51c109d09",
+        "action_dimension": 32,
+        "actual_simulator_episodes": 0,
+        "synthetic_five_attempt_readout": true,
+        "interrupted_value_stage_resume_all_weights_exact": true,
+        "updates": {
+          "value": 2,
+          "actor": 2
+        }
+      },
+      {
+        "arm": "velocity",
+        "method": "ic_iql",
+        "converged": true,
+        "candidate_sha256": "163dd664a6dc52061f63fcea99884abca2b521a321d89188c2ff8d92e07d0d31",
+        "action_dimension": 32,
+        "actual_simulator_episodes": 0,
+        "synthetic_five_attempt_readout": true,
+        "interrupted_value_stage_resume_all_weights_exact": true,
+        "updates": {
+          "value": 2,
+          "actor": 2
+        }
+      },
+      {
+        "arm": "kv_all_layers",
+        "method": "ad",
+        "converged": true,
+        "candidate_sha256": "fd2db3298cf25622825a18119e3b9c043587cef5412f38d8f12376e5fc42e700",
+        "action_dimension": 1152,
+        "actual_simulator_episodes": 0,
+        "synthetic_five_attempt_readout": true
+      },
+      {
+        "arm": "kv_all_layers",
+        "method": "dpt",
+        "converged": true,
+        "candidate_sha256": "8cdac034a38c32a87aafe367711530c064178ddc0af694d9e806f8c4e446bce6",
+        "action_dimension": 1152,
+        "actual_simulator_episodes": 0,
+        "synthetic_five_attempt_readout": true
+      },
+      {
+        "arm": "kv_all_layers",
+        "method": "dit",
+        "converged": true,
+        "candidate_sha256": "d845a7414fe17f0945674236f0b926139f08c338acdf842fabe070db910ab787",
+        "action_dimension": 1152,
+        "actual_simulator_episodes": 0,
+        "synthetic_five_attempt_readout": true,
+        "interrupted_value_stage_resume_all_weights_exact": true,
+        "updates": {
+          "value": 2,
+          "actor": 2
+        }
+      },
+      {
+        "arm": "kv_all_layers",
+        "method": "ic_iql",
+        "converged": true,
+        "candidate_sha256": "166998322f0e240502319c68b6d521b98c6267aa1befd81c0651bdc3dfbdbdf3",
+        "action_dimension": 1152,
+        "actual_simulator_episodes": 0,
+        "synthetic_five_attempt_readout": true,
+        "interrupted_value_stage_resume_all_weights_exact": true,
+        "updates": {
+          "value": 2,
+          "actor": 2
+        }
+      }
+    ],
+    "interpretation": "Synthetic fit/serialization/resume qualification only; not robot performance or converged scientific students"
+  },
+  "recorded_UTC": "2026-11-03T03:32:11.537206+00:00",
+  "short_synthetic_plateau_is_not_scientific_convergence": true
+}
