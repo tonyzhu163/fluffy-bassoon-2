@@ -15,7 +15,7 @@ from rlinf.workers.actor.embodied_fsdp_actor_worker import EmbodiedFSDPActor
 from rlinf.workers.env.env_worker import EnvWorker
 from rlinf.workers.rollout.hf.huggingface_worker import MultiStepRolloutWorker
 
-from .rlinf_native_ppo import (ActionJournal, cpu_tree, restore_rng, sha,
+from .rlinf_native_ppo import (ActionJournal, cpu_tree, retained_batch, restore_rng, sha,
     snapshot_rng, tensor_hash, validate_recipe, write)
 
 
@@ -143,11 +143,11 @@ class PilotActor(SidecarMixin, EmbodiedFSDPActor):
             optimizer_steps_before=self.optimizer_steps, rng_before_sgd=snapshot_rng(),
             rollout_epoch=int(self.cfg.env.train.rollout_epoch),
             layout='time-major [chunk_index, round_index * local_env_count + env_index, ...]; terminal bootstrap rows retained',
-            # Optional storage policy: drop listed fields (e.g. images the env
-            # chunk records already hold). Default keeps the complete batch.
-            rollout_batch=cpu_tree({key: value for key, value in self.rollout_batch.items()
-                                    if key not in set(self.cfg.native_pilot.get('actor_batch_drop', []) or [])}),
-            dropped_fields=sorted(set(self.cfg.native_pilot.get('actor_batch_drop', []) or [])),
+            # Optional storage policy: drop listed fields, 'key' or 'key.subkey'
+            # (e.g. images the env chunk records already hold). Default keeps all.
+            rollout_batch=cpu_tree(retained_batch(self.rollout_batch,
+                                                  self.cfg.native_pilot.get('actor_batch_drop', []))),
+            dropped_fields=sorted(self.cfg.native_pilot.get('actor_batch_drop', []) or []),
             evaluation_data=False, source6_pretraining_admission=False)
         receipt = save_tensor(path, value)
         from .rlinf_native_ppo_data import FORMAT, shape_tree

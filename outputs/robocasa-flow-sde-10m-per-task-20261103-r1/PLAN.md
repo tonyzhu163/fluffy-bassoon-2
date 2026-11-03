@@ -37,13 +37,17 @@ They are not recipe changes.
 | PickPlaceDrawerToCounter | 23/50 (46%) | include |
 | CoffeeSetupMug | 17/50 (34%) | include |
 | TurnOffStove | 7/50 (14%) | include |
-| fifth task | — | **human decision**: PickPlaceCounterToCabinet (37/50, 74%) fails the 5–70% admission check, which the runner enforces |
+| PickPlaceCounterToStove | 10/20 (50%; Wilson 30–70%) | include (decided 2026-11-03, replaces CounterToCabinet) |
 
 Sources: [five-task qualification](../../docs/FINDINGS.md) and the
-[atomic_seen sweep proposal](../robocasa-atomic-baseline-sweep-20261103-r1/PLAN.md),
-which would supply 5–70% replacements. CloseFridge (28/50) is the
-OpenDrawer OOD panel, so using it as a source task removes that panel.
-The four admitted tasks need not wait for the fifth.
+[atomic_seen sweep](../robocasa-atomic-baseline-sweep-20261103-r1/RESULT.md).
+PickPlaceCounterToCabinet (37/50, 74%) fails the 5–70% admission check that
+the runner enforces. PickPlaceCounterToStove replaces it because it is the
+only newly screened pick-and-place task in range, it keeps the portfolio at
+two pick-and-place tasks, and its native horizon is already 600. Its 20-case
+screen is coarse; the runner's 64-case before panel at 600 controls is the
+qualification, and admission stops the run outside 5–70%. TurnOnSinkFaucet
+(10/20, 600) is the backup.
 
 **Horizon 600 controls for every task** (12 H50 chunks), the human's
 2026-11-02 selection. Observed first-success maxima were 279/538/538/317/524
@@ -109,6 +113,34 @@ colocated on GPUs 0–1 already peaks at ~35 GiB, against 96 GiB per card.
 | DPT | final teacher checkpoint; labels queried offline later | saved at 130 |
 | diagnostics | old log-prob, value, advantage, return, mask per sample | saved in actor batch |
 | optional | full 11-state flow chain, actor-batch images | saved, duplicated; see storage |
+
+## Decisions (2026-11-03, delegated by the human)
+
+- **Fifth task:** PickPlaceCounterToStove (see Tasks).
+- **Storage:** keep the env chunk records (the student corpus) and the full
+  sampling records (chains, Gaussian parameters, RNG). Drop from the actor
+  batch only what those already hold: `forward_inputs.observation/image`,
+  `forward_inputs.observation/wrist_image`,
+  `forward_inputs.observation/extra_view_image` and `forward_inputs.chains`.
+  The batch then keeps tokens, state, actions, log-probs, values,
+  advantages, returns and masks. At 199,680 samples per task the uncompressed
+  actor images alone would be ~118 GB. The estimate after the drop is
+  ~120 GB/task, ~600 GB for five, so Q1 must measure it. Q1 keeps everything and checks the
+  dropped actor tensors byte-for-byte against the env/sampling records
+  before the production segment enables the drop
+  (`ROBOCASA_FLOW_ACTOR_BATCH_DROP`). Each closed task moves to BOS.
+- **Time limit:** two segments per task. Q1 runs the before panel and
+  iteration 1 with a pre-placed `CHECKPOINT_AND_EXIT` marker, which saves a
+  full boundary and exits. Production resumes from that boundary with the
+  drop enabled and `TASK_WALL_SECONDS=86400` (24 h vs ~8–15 h expected).
+  That exercises the resume path (F8) before the long run. If the projected
+  finish nears the deadline, the owner places the marker again and resumes
+  from the next update; the 180 s deadline guard is the last resort and
+  loses up to 9 iterations back to the last 10-iteration checkpoint. The
+  resume needs a before-panel reference JSON bound to the resumed checkpoint
+  (the prior run's `BEFORE-RECOVERY.json` format).
+- **C2 settled from saved data:** the prior run's `old_logprobs` are
+  `[…, 50, 12]`, so the ratio uses the 12 robot dimensions and no padded ones.
 
 ## Fix status (2026-11-03)
 
@@ -186,7 +218,7 @@ read it there.
   `recompute_logprobs=false`, so before any SGD the actor's log-prob must equal
   the rollout's old log-prob on the same samples (|log ratio| ≤ 1e-3). A
   mismatch is a bug and blocks launch.
-- **C2 log-prob dimensions.** Read the RLinf source to see whether the
+- **C2 log-prob dimensions (settled, see Decisions).** Read the RLinf source to see whether the
   chunk-level log-prob sums the 50×32 padded model dims or the 50×12 env dims.
   Padded dims never reach the robot. If they enter the ratio, it gets noise
   with no reward signal. If so, report back; any change is a recipe change and
@@ -240,9 +272,7 @@ read it there.
 - Optional, after the run: evaluate checkpoints 10…130 on the same 64 cases
   offline, to show the curve without changing the learner.
 
-## Open decisions for the human
+## Open decisions
 
-1. Fifth task (see Tasks).
-2. Storage policy after Q1 (F7): drop duplicate chains/images, or keep all
-   and tier during the run.
-3. Wall clock (F8): one long allocation per task, or resumable segments.
+None for launch. The five tasks need roughly 20 GPU-h of Q1 plus
+~300–600 GPU-h of production, within the human's 8-GPUs-per-task, 10M scope.

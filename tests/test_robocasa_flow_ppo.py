@@ -77,3 +77,13 @@ def test_global_journal_records_without_a_ceiling(tmp_path):
     journal = GlobalActionJournal(tmp_path, rank=0, world=8, attempt='a', maximum_actions=None)
     journal.finish(journal.begin(50, phase='training'), 50)
     assert journal.charged() == 50
+
+
+def test_actor_batch_drop_removes_only_named_duplicates():
+    from fluffy_bassoon.meta_rl.rlinf_native_ppo import retained_batch
+    batch = dict(prev_logprobs=1, forward_inputs={'observation/image': 2, 'chains': 3, 'action': 4})
+    kept = retained_batch(batch, ['forward_inputs.observation/image', 'forward_inputs.chains'])
+    assert kept == dict(prev_logprobs=1, forward_inputs={'action': 4})
+    assert retained_batch(batch, []) == batch
+    with pytest.raises(ValueError, match='absent'):
+        retained_batch(batch, ['forward_inputs.observation/images'])

@@ -94,6 +94,18 @@ def validate_recipe(cfg):
         maximum_aggregate_gpu_seconds=21600)
 
 
+def retained_batch(batch, drop):
+    """Batch copy without the listed 'key' or 'key.subkey' fields; unknown names fail."""
+    drop = set(drop or [])
+    present = {key for key in batch} | {f'{key}.{sub}' for key, value in batch.items()
+                                       if isinstance(value, dict) for sub in value}
+    if drop - present:
+        raise ValueError(f'actor_batch_drop names absent fields: {sorted(drop - present)}')
+    return {key: ({sub: item for sub, item in value.items() if f'{key}.{sub}' not in drop}
+                  if isinstance(value, dict) else value)
+            for key, value in batch.items() if key not in drop}
+
+
 class ActionJournal:
     """Rank partitions share a strict ceiling (1M by default; None records actions
     without a ceiling), including unresolved RPC intents.

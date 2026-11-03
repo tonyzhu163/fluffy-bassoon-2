@@ -60,7 +60,7 @@ class GlobalActionJournal:
 
 # Portfolio task numbers (TASK-PORTFOLIO.json order). Replacements append.
 FLOW_TASK_NUMBERS = dict(OpenDrawer=1, PickPlaceCounterToCabinet=2, PickPlaceDrawerToCounter=3,
-                         TurnOffStove=4, CoffeeSetupMug=5)
+                         TurnOffStove=4, CoffeeSetupMug=5, PickPlaceCounterToStove=6)
 RESET_CONTROL_RESERVE = 128  # counted_native_factory's per-episode reset reserve
 
 
