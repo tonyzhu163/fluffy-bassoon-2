@@ -263,6 +263,15 @@ read it there.
   of controls before and will cost more at 600. It is the qualified
   accounting path; changing it needs a new qualification.
 - Before-panel admission 5–70% stays a hard stop.
+- Batching: fixed layout, not bitwise-deterministic kernels. Native RLinf
+  steps all envs of a rank in lockstep to the horizon, so each policy call
+  always has the same envs; there is no dynamic batching. Keep the same
+  envs per GPU and world size in both segments of a task, and the same eval
+  layout (8 cases per rank) before and after. Batched inference is not
+  bitwise equal to singleton inference (up to 0.11 action difference in our
+  collector), so later offline relabels and evals should use the same batch
+  layout. `torch.use_deterministic_algorithms` is not enabled: sampling noise
+  is reproducible from the saved RNG, and C1 bounds the rollout/actor gap.
 - The eval panel is never used to select a checkpoint. Only the final teacher
   is used for DPT labels.
 
