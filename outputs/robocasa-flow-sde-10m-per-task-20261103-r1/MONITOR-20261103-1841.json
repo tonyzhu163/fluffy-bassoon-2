@@ -1,0 +1,912 @@
+{
+  "checked_shanghai": "2026-11-03 18:41:40",
+  "checked_unix": 1793702500.183519,
+  "tasks": {
+    "OpenDrawer": {
+      "output_exists": true,
+      "progress.json": {
+        "completed_iterations": 15,
+        "target_iterations": 130,
+        "checked_unix": 1793702252.189519,
+        "operator_checkpoint_exit": false
+      },
+      "manifest.json": {
+        "hostname": "job-9j5eqjo0dfzj-master-0",
+        "source": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
+        "runtime": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+        "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+        "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+        "allocated_gpus": 8,
+        "CPU": 168,
+        "RAM_GiB": 1280,
+        "SHM_GiB": 32,
+        "free_bytes": 744119861248,
+        "quota": "Shared PFS2TiB; no per-project quota interface exposed",
+        "started_unix": 1793698448.4278507,
+        "task": "OpenDrawer",
+        "segment": "production",
+        "batch_layout": {
+          "world": 8,
+          "train_envs_per_rank": 16,
+          "eval_envs_per_rank": 8,
+          "actor_ranks": 2
+        },
+        "nominal_controls_source": "flow-contract.json"
+      },
+      "latest_update": {
+        "completed": true,
+        "rank": 0,
+        "producing_policy_iteration": 15,
+        "optimizer_steps_before": 360,
+        "optimizer_steps_after": 384,
+        "batch_shape": [
+          12,
+          64,
+          50,
+          12
+        ],
+        "losses": {
+          "actor/entropy_loss": 0.0,
+          "actor/grad_norm": 55.662994384765625,
+          "actor/policy_loss": -0.35848498344421387,
+          "actor/policy_loss_abs": 0.8906055688858032,
+          "actor/total_loss": -0.03799391910433769,
+          "critic/value_loss": 0.05453360825777054
+        },
+        "metrics": {
+          "actor/approx_kl": 0.039003901183605194,
+          "actor/clip_fraction": 0.20996396243572235,
+          "actor/clipped_ratio": 0.9976807832717896,
+          "actor/dual_cliped_ratio": 0.0,
+          "actor/entropy_loss": 0.0,
+          "actor/grad_norm": 55.662994384765625,
+          "actor/lr": 4.999999873689376e-06,
+          "actor/policy_loss": -0.35848498344421387,
+          "actor/policy_loss_abs": 0.8906055688858032,
+          "actor/ratio": 1.0555143356323242,
+          "actor/ratio_abs": 0.2387864738702774,
+          "actor/total_loss": -0.03799391910433769,
+          "critic/lr": 9.999999747378752e-05,
+          "critic/value_clip_ratio": 0.022863348945975304,
+          "critic/value_loss": 0.05453360825777054,
+          "critic/explained_variance": 0.3854936957359314
+        },
+        "training_seconds": 115.2524947989732,
+        "cuda_peak_allocated_bytes": 20251212800,
+        "cuda_peak_reserved_bytes": 25631391744,
+        "frozen_vlm_unchanged": true
+      },
+      "latest_parity": {
+        "passed": true,
+        "finite": true,
+        "shape": [
+          16,
+          50,
+          12
+        ],
+        "action_dim": 12,
+        "tolerance": 0.001,
+        "max_abs_chunk_log_ratio": 0.0,
+        "max_abs_coordinate_log_ratio": 0.0,
+        "mean_abs_chunk_log_ratio": 0.0,
+        "optimizer_steps": 360,
+        "before_backward": true
+      },
+      "full_boundaries": [
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints/global_step_10"
+      ],
+      "probe": {
+        "status": "passed",
+        "count": 8
+      }
+    },
+    "CloseToasterOvenDoor": {
+      "output_exists": true,
+      "progress.json": {
+        "completed_iterations": 14,
+        "target_iterations": 130,
+        "checked_unix": 1793702423.4758174,
+        "operator_checkpoint_exit": false
+      },
+      "manifest.json": {
+        "hostname": "job-jpfh2j0xelgo-master-0",
+        "source": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
+        "runtime": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+        "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+        "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+        "allocated_gpus": 8,
+        "CPU": 168,
+        "RAM_GiB": 1280,
+        "SHM_GiB": 32,
+        "free_bytes": 783797977088,
+        "quota": "Shared PFS2TiB; no per-project quota interface exposed",
+        "started_unix": 1793698877.2618265,
+        "task": "CloseToasterOvenDoor",
+        "segment": "production",
+        "batch_layout": {
+          "world": 8,
+          "train_envs_per_rank": 16,
+          "eval_envs_per_rank": 8,
+          "actor_ranks": 2
+        },
+        "nominal_controls_source": "flow-contract.json"
+      },
+      "latest_update": {
+        "completed": true,
+        "rank": 0,
+        "producing_policy_iteration": 13,
+        "optimizer_steps_before": 312,
+        "optimizer_steps_after": 336,
+        "batch_shape": [
+          12,
+          64,
+          50,
+          12
+        ],
+        "losses": {
+          "actor/entropy_loss": 0.0,
+          "actor/grad_norm": 35.39030456542969,
+          "actor/policy_loss": -0.29242900013923645,
+          "actor/policy_loss_abs": 0.9304356575012207,
+          "actor/total_loss": -0.028893310576677322,
+          "critic/value_loss": 0.06128251552581787
+        },
+        "metrics": {
+          "actor/approx_kl": 0.055870696902275085,
+          "actor/clip_fraction": 0.1735135316848755,
+          "actor/clipped_ratio": 0.9896364212036133,
+          "actor/dual_cliped_ratio": 0.0,
+          "actor/entropy_loss": 0.0,
+          "actor/grad_norm": 35.39030456542969,
+          "actor/lr": 4.999999873689376e-06,
+          "actor/policy_loss": -0.29242900013923645,
+          "actor/policy_loss_abs": 0.9304356575012207,
+          "actor/ratio": 1.018176555633545,
+          "actor/ratio_abs": 0.18886801600456238,
+          "actor/total_loss": -0.028893310576677322,
+          "critic/lr": 9.999999747378752e-05,
+          "critic/value_clip_ratio": 0.020105523988604546,
+          "critic/value_loss": 0.06128251552581787,
+          "critic/explained_variance": 0.1728811264038086
+        },
+        "training_seconds": 116.33588629215956,
+        "cuda_peak_allocated_bytes": 20250686976,
+        "cuda_peak_reserved_bytes": 25639780352,
+        "frozen_vlm_unchanged": true
+      },
+      "latest_parity": {
+        "passed": true,
+        "finite": true,
+        "shape": [
+          16,
+          50,
+          12
+        ],
+        "action_dim": 12,
+        "tolerance": 0.001,
+        "max_abs_chunk_log_ratio": 0.0,
+        "max_abs_coordinate_log_ratio": 0.0,
+        "mean_abs_chunk_log_ratio": 0.0,
+        "optimizer_steps": 312,
+        "before_backward": true
+      },
+      "full_boundaries": [
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/production-r1/CloseToasterOvenDoor/checkpoints/global_step_10"
+      ],
+      "probe": {
+        "status": "passed",
+        "count": 8
+      }
+    },
+    "PickPlaceDrawerToCounter": {
+      "output_exists": true,
+      "progress.json": {
+        "completed_iterations": 10,
+        "target_iterations": 130,
+        "checked_unix": 1793702500.3372154,
+        "operator_checkpoint_exit": false
+      },
+      "manifest.json": {
+        "hostname": "job-zqn304j2b9lw-master-0",
+        "source": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
+        "runtime": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+        "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+        "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+        "allocated_gpus": 8,
+        "CPU": 168,
+        "RAM_GiB": 1280,
+        "SHM_GiB": 32,
+        "free_bytes": 743415218176,
+        "quota": "Shared PFS2TiB; no per-project quota interface exposed",
+        "started_unix": 1793699930.1640632,
+        "task": "PickPlaceDrawerToCounter",
+        "segment": "production",
+        "batch_layout": {
+          "world": 8,
+          "train_envs_per_rank": 16,
+          "eval_envs_per_rank": 8,
+          "actor_ranks": 2
+        },
+        "nominal_controls_source": "flow-contract.json"
+      },
+      "latest_update": {
+        "completed": true,
+        "rank": 0,
+        "producing_policy_iteration": 9,
+        "optimizer_steps_before": 216,
+        "optimizer_steps_after": 240,
+        "batch_shape": [
+          12,
+          64,
+          50,
+          12
+        ],
+        "losses": {
+          "actor/entropy_loss": 0.0,
+          "actor/grad_norm": 43.45930099487305,
+          "actor/policy_loss": -0.22390201687812805,
+          "actor/policy_loss_abs": 0.9538109302520752,
+          "actor/total_loss": -0.01987764984369278,
+          "critic/value_loss": 0.06488082557916641
+        },
+        "metrics": {
+          "actor/approx_kl": 0.08352839946746826,
+          "actor/clip_fraction": 0.17928001284599304,
+          "actor/clipped_ratio": 0.9900750517845154,
+          "actor/dual_cliped_ratio": 0.0,
+          "actor/entropy_loss": 0.0,
+          "actor/grad_norm": 43.45930099487305,
+          "actor/lr": 4.999999873689376e-06,
+          "actor/policy_loss": -0.22390201687812805,
+          "actor/policy_loss_abs": 0.9538109302520752,
+          "actor/ratio": 1.0376304388046265,
+          "actor/ratio_abs": 0.22291360795497894,
+          "actor/total_loss": -0.01987764984369278,
+          "critic/lr": 9.999999747378752e-05,
+          "critic/value_clip_ratio": 0.009353894740343094,
+          "critic/value_loss": 0.06488082557916641,
+          "critic/explained_variance": 0.21014195680618286
+        },
+        "training_seconds": 115.4442182360217,
+        "cuda_peak_allocated_bytes": 20251830272,
+        "cuda_peak_reserved_bytes": 25631391744,
+        "frozen_vlm_unchanged": true
+      },
+      "latest_parity": {
+        "passed": true,
+        "finite": true,
+        "shape": [
+          16,
+          50,
+          12
+        ],
+        "action_dim": 12,
+        "tolerance": 0.001,
+        "max_abs_chunk_log_ratio": 0.0,
+        "max_abs_coordinate_log_ratio": 0.0,
+        "mean_abs_chunk_log_ratio": 0.0,
+        "optimizer_steps": 216,
+        "before_backward": true
+      },
+      "full_boundaries": [
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/production-r1/PickPlaceDrawerToCounter/checkpoints/global_step_10",
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/production-r1/PickPlaceDrawerToCounter/checkpoints/global_step_2"
+      ],
+      "probe": {
+        "status": "passed",
+        "count": 8
+      }
+    },
+    "CoffeeSetupMug": {
+      "output_exists": false,
+      "full_boundaries": []
+    },
+    "TurnOffStove": {
+      "output_exists": false,
+      "full_boundaries": []
+    }
+  },
+  "PFS_free_GiB": 685.21875,
+  "live_production_GPU_seconds": 81957.57452964783,
+  "completed_Q1_GPU_seconds": 21824,
+  "failed_Q1_GPU_seconds": 4352,
+  "diagnostic_GPU_seconds_upper": 213,
+  "cumulative_GPU_hours": 30.096270702679952,
+  "tiering_receipt": {
+    "completed": true,
+    "receipts": [
+      {
+        "task": "OpenDrawer",
+        "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/q1-r2/OpenDrawer/checkpoints/global_step_1",
+        "source_bytes": 17145279212,
+        "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1/OpenDrawer--q1-r2--global_step_1.tar.zst",
+        "archive_bytes": 13367436772,
+        "sha256": "df3be80853da442afe7514e4b2eb53b00ac815153ec92278b0fd2d887a9f44d5",
+        "newer_full_checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints/global_step_10",
+        "newer_global_step": 10,
+        "source_inventory": {
+          "pilot-boundary.json": [
+            6200,
+            1793696968488969000
+          ],
+          "actor/dcp_checkpoint/__1_0.distcp": [
+            4575742267,
+            1793696949950943721
+          ],
+          "actor/dcp_checkpoint/.metadata": [
+            513794,
+            1793696949987407000
+          ],
+          "actor/dcp_checkpoint/__0_0.distcp": [
+            4575995929,
+            1793696949942845477
+          ],
+          "actor/model_state_dict/full_weights.pt": [
+            6949286402,
+            1793696954939869996
+          ],
+          "pilot/env-03.pt": [
+            28341,
+            1793696955725609606
+          ],
+          "pilot/rollout-05.pt": [
+            28121,
+            1793696955710829451
+          ],
+          "pilot/env-00.pt": [
+            28341,
+            1793696955724693333
+          ],
+          "pilot/env-07.pt": [
+            28405,
+            1793696955729294730
+          ],
+          "pilot/env-05.pt": [
+            28341,
+            1793696955725228256
+          ],
+          "pilot/env-04.pt": [
+            28405,
+            1793696955728982265
+          ],
+          "pilot/env-01.pt": [
+            28405,
+            1793696955724940016
+          ],
+          "pilot/actor-00.pt": [
+            521641110,
+            1793696955280985753
+          ],
+          "pilot/rollout-04.pt": [
+            28185,
+            1793696955710096925
+          ],
+          "pilot/rollout-00.pt": [
+            28185,
+            1793696955706688490
+          ],
+          "pilot/env-02.pt": [
+            28341,
+            1793696955729906569
+          ],
+          "pilot/env-06.pt": [
+            28469,
+            1793696955729532937
+          ],
+          "pilot/rollout-06.pt": [
+            28185,
+            1793696955714394827
+          ],
+          "pilot/rollout-01.pt": [
+            28185,
+            1793696955714118187
+          ],
+          "pilot/rollout-02.pt": [
+            28057,
+            1793696955710764010
+          ],
+          "pilot/rollout-03.pt": [
+            28185,
+            1793696955710301641
+          ],
+          "pilot/rollout-07.pt": [
+            28121,
+            1793696955714687456
+          ],
+          "pilot/actor-01.pt": [
+            521641238,
+            1793696955276104180
+          ]
+        },
+        "tar_compare": true,
+        "full_BOS_readback": true,
+        "verified_unix": 1793701474.839363,
+        "restore": [
+          "tar",
+          "-I",
+          "zstd",
+          "-xf",
+          "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1/OpenDrawer--q1-r2--global_step_1.tar.zst",
+          "-C",
+          "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/q1-r2/OpenDrawer/checkpoints"
+        ]
+      },
+      {
+        "task": "OpenDrawer",
+        "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints/global_step_2",
+        "source_bytes": 17145279396,
+        "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1/OpenDrawer--production-r1--global_step_2.tar.zst",
+        "archive_bytes": 13362761686,
+        "sha256": "7709d72308be4a4c040241a69dcecce631666f08f2c7908d8cf7e98bc0a2f03f",
+        "newer_full_checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints/global_step_10",
+        "newer_global_step": 10,
+        "source_inventory": {
+          "pilot-boundary.json": [
+            6376,
+            1793698898054920000
+          ],
+          "actor/dcp_checkpoint/__1_0.distcp": [
+            4575742267,
+            1793698879448605702
+          ],
+          "actor/dcp_checkpoint/.metadata": [
+            513802,
+            1793698879476822000
+          ],
+          "actor/dcp_checkpoint/__0_0.distcp": [
+            4575995929,
+            1793698879446484791
+          ],
+          "actor/model_state_dict/full_weights.pt": [
+            6949286402,
+            1793698884476858438
+          ],
+          "pilot/env-03.pt": [
+            28341,
+            1793698885251122022
+          ],
+          "pilot/rollout-05.pt": [
+            28121,
+            1793698885237197240
+          ],
+          "pilot/env-00.pt": [
+            28341,
+            1793698885243391275
+          ],
+          "pilot/env-07.pt": [
+            28405,
+            1793698885251438130
+          ],
+          "pilot/env-05.pt": [
+            28341,
+            1793698885250538771
+          ],
+          "pilot/env-04.pt": [
+            28405,
+            1793698885251129296
+          ],
+          "pilot/env-01.pt": [
+            28405,
+            1793698885243722546
+          ],
+          "pilot/actor-00.pt": [
+            521641110,
+            1793698884810009199
+          ],
+          "pilot/rollout-04.pt": [
+            28185,
+            1793698885236682292
+          ],
+          "pilot/rollout-00.pt": [
+            28185,
+            1793698885235329577
+          ],
+          "pilot/env-02.pt": [
+            28341,
+            1793698885249936051
+          ],
+          "pilot/env-06.pt": [
+            28469,
+            1793698885250337118
+          ],
+          "pilot/rollout-06.pt": [
+            28185,
+            1793698885237682183
+          ],
+          "pilot/rollout-01.pt": [
+            28185,
+            1793698885235615968
+          ],
+          "pilot/rollout-02.pt": [
+            28057,
+            1793698885235931455
+          ],
+          "pilot/rollout-03.pt": [
+            28185,
+            1793698885236247634
+          ],
+          "pilot/rollout-07.pt": [
+            28121,
+            1793698885237115598
+          ],
+          "pilot/actor-01.pt": [
+            521641238,
+            1793698884808072360
+          ]
+        },
+        "tar_compare": true,
+        "full_BOS_readback": true,
+        "verified_unix": 1793701586.4167967,
+        "restore": [
+          "tar",
+          "-I",
+          "zstd",
+          "-xf",
+          "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1/OpenDrawer--production-r1--global_step_2.tar.zst",
+          "-C",
+          "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints"
+        ]
+      },
+      {
+        "task": "CloseToasterOvenDoor",
+        "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/q1-r1/CloseToasterOvenDoor/checkpoints/global_step_1",
+        "source_bytes": 17145276590,
+        "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1/CloseToasterOvenDoor--q1-r1--global_step_1.tar.zst",
+        "archive_bytes": 13349282317,
+        "sha256": "747835de5dab07893a0dc901e3684aa659a98184476836ae061125963bf558b5",
+        "newer_full_checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/production-r1/CloseToasterOvenDoor/checkpoints/global_step_10",
+        "newer_global_step": 10,
+        "source_inventory": {
+          "pilot-boundary.json": [
+            6640,
+            1793697824530543000
+          ],
+          "actor/dcp_checkpoint/__1_0.distcp": [
+            4575742267,
+            1793697806203972181
+          ],
+          "actor/dcp_checkpoint/.metadata": [
+            513804,
+            1793697806307364000
+          ],
+          "actor/dcp_checkpoint/__0_0.distcp": [
+            4575995737,
+            1793697806280417588
+          ],
+          "actor/model_state_dict/full_weights.pt": [
+            6949286402,
+            1793697811031302072
+          ],
+          "pilot/env-03.pt": [
+            28213,
+            1793697811812692227
+          ],
+          "pilot/rollout-05.pt": [
+            27993,
+            1793697811800434240
+          ],
+          "pilot/env-00.pt": [
+            28213,
+            1793697811806268940
+          ],
+          "pilot/env-07.pt": [
+            28213,
+            1793697811811896460
+          ],
+          "pilot/env-05.pt": [
+            28277,
+            1793697811811154510
+          ],
+          "pilot/env-04.pt": [
+            28213,
+            1793697811806572825
+          ],
+          "pilot/env-01.pt": [
+            28213,
+            1793697811808359587
+          ],
+          "pilot/actor-00.pt": [
+            521640790,
+            1793697811369283762
+          ],
+          "pilot/rollout-04.pt": [
+            28057,
+            1793697811800122082
+          ],
+          "pilot/rollout-00.pt": [
+            28121,
+            1793697811799724715
+          ],
+          "pilot/env-02.pt": [
+            28277,
+            1793697811811510060
+          ],
+          "pilot/env-06.pt": [
+            28149,
+            1793697811811692130
+          ],
+          "pilot/rollout-06.pt": [
+            28057,
+            1793697811799818718
+          ],
+          "pilot/rollout-01.pt": [
+            28057,
+            1793697811796086285
+          ],
+          "pilot/rollout-02.pt": [
+            27929,
+            1793697811799331619
+          ],
+          "pilot/rollout-03.pt": [
+            28057,
+            1793697811797934305
+          ],
+          "pilot/rollout-07.pt": [
+            27993,
+            1793697811800664430
+          ],
+          "pilot/actor-01.pt": [
+            521640918,
+            1793697811372570600
+          ]
+        },
+        "tar_compare": true,
+        "full_BOS_readback": true,
+        "verified_unix": 1793701714.325834,
+        "restore": [
+          "tar",
+          "-I",
+          "zstd",
+          "-xf",
+          "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1/CloseToasterOvenDoor--q1-r1--global_step_1.tar.zst",
+          "-C",
+          "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/q1-r1/CloseToasterOvenDoor/checkpoints"
+        ]
+      },
+      {
+        "task": "CloseToasterOvenDoor",
+        "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/production-r1/CloseToasterOvenDoor/checkpoints/global_step_2",
+        "source_bytes": 17145278630,
+        "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1/CloseToasterOvenDoor--production-r1--global_step_2.tar.zst",
+        "archive_bytes": 13367543736,
+        "sha256": "93acd22d0ed42a59a680b0b37e4c702ee3004aadf10cd25e045a98c70309b1a2",
+        "newer_full_checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/production-r1/CloseToasterOvenDoor/checkpoints/global_step_10",
+        "newer_global_step": 10,
+        "source_inventory": {
+          "pilot-boundary.json": [
+            6816,
+            1793699337736747000
+          ],
+          "actor/dcp_checkpoint/__1_0.distcp": [
+            4575742267,
+            1793699319243843561
+          ],
+          "actor/dcp_checkpoint/.metadata": [
+            513812,
+            1793699319293342000
+          ],
+          "actor/dcp_checkpoint/__0_0.distcp": [
+            4575995737,
+            1793699319266345966
+          ],
+          "actor/model_state_dict/full_weights.pt": [
+            6949286402,
+            1793699324246295960
+          ],
+          "pilot/env-03.pt": [
+            28341,
+            1793699325026840181
+          ],
+          "pilot/rollout-05.pt": [
+            28057,
+            1793699325017856716
+          ],
+          "pilot/env-00.pt": [
+            28341,
+            1793699325026040177
+          ],
+          "pilot/env-07.pt": [
+            28341,
+            1793699325028207119
+          ],
+          "pilot/env-05.pt": [
+            28405,
+            1793699325026524864
+          ],
+          "pilot/env-04.pt": [
+            28341,
+            1793699325027904692
+          ],
+          "pilot/env-01.pt": [
+            28341,
+            1793699325027555181
+          ],
+          "pilot/actor-00.pt": [
+            521640918,
+            1793699324587060450
+          ],
+          "pilot/rollout-04.pt": [
+            28185,
+            1793699325017631211
+          ],
+          "pilot/rollout-00.pt": [
+            28185,
+            1793699325016731649
+          ],
+          "pilot/env-02.pt": [
+            28341,
+            1793699325026288576
+          ],
+          "pilot/env-06.pt": [
+            28277,
+            1793699325027427176
+          ],
+          "pilot/rollout-06.pt": [
+            28121,
+            1793699325018166330
+          ],
+          "pilot/rollout-01.pt": [
+            28121,
+            1793699325016468249
+          ],
+          "pilot/rollout-02.pt": [
+            28057,
+            1793699325017121644
+          ],
+          "pilot/rollout-03.pt": [
+            28185,
+            1793699325017322496
+          ],
+          "pilot/rollout-07.pt": [
+            28057,
+            1793699325018597145
+          ],
+          "pilot/actor-01.pt": [
+            521640982,
+            1793699324584938550
+          ]
+        },
+        "tar_compare": true,
+        "full_BOS_readback": true,
+        "verified_unix": 1793701824.928656,
+        "restore": [
+          "tar",
+          "-I",
+          "zstd",
+          "-xf",
+          "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1/CloseToasterOvenDoor--production-r1--global_step_2.tar.zst",
+          "-C",
+          "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/production-r1/CloseToasterOvenDoor/checkpoints"
+        ]
+      },
+      {
+        "task": "PickPlaceDrawerToCounter",
+        "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/q1-r1/PickPlaceDrawerToCounter/checkpoints/global_step_1",
+        "source_bytes": 17145277346,
+        "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1/PickPlaceDrawerToCounter--q1-r1--global_step_1.tar.zst",
+        "archive_bytes": 13391387488,
+        "sha256": "30fb4ebb1ef1d50335152dc2710af7207d7682bb30de6ba6fe32bece03e9180f",
+        "newer_full_checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/production-r1/PickPlaceDrawerToCounter/checkpoints/global_step_2",
+        "newer_global_step": 2,
+        "source_inventory": {
+          "pilot-boundary.json": [
+            6816,
+            1793697914698781000
+          ],
+          "actor/dcp_checkpoint/__1_0.distcp": [
+            4575742267,
+            1793697896479301925
+          ],
+          "actor/dcp_checkpoint/.metadata": [
+            513808,
+            1793697896507747000
+          ],
+          "actor/dcp_checkpoint/__0_0.distcp": [
+            4575995865,
+            1793697896463234432
+          ],
+          "actor/model_state_dict/full_weights.pt": [
+            6949286402,
+            1793697901142899216
+          ],
+          "pilot/env-03.pt": [
+            28149,
+            1793697901911005442
+          ],
+          "pilot/rollout-05.pt": [
+            27993,
+            1793697901901986147
+          ],
+          "pilot/env-00.pt": [
+            28149,
+            1793697901910370641
+          ],
+          "pilot/env-07.pt": [
+            28277,
+            1793697901911786233
+          ],
+          "pilot/env-05.pt": [
+            28277,
+            1793697901912264809
+          ],
+          "pilot/env-04.pt": [
+            28277,
+            1793697901911210311
+          ],
+          "pilot/env-01.pt": [
+            28149,
+            1793697901910679272
+          ],
+          "pilot/actor-00.pt": [
+            521640918,
+            1793697901471390288
+          ],
+          "pilot/rollout-04.pt": [
+            28057,
+            1793697901902203159
+          ],
+          "pilot/rollout-00.pt": [
+            27993,
+            1793697901898479374
+          ],
+          "pilot/env-02.pt": [
+            28277,
+            1793697901912590542
+          ],
+          "pilot/env-06.pt": [
+            28213,
+            1793697901912533142
+          ],
+          "pilot/rollout-06.pt": [
+            28185,
+            1793697901902583147
+          ],
+          "pilot/rollout-01.pt": [
+            27993,
+            1793697901903083454
+          ],
+          "pilot/rollout-02.pt": [
+            28057,
+            1793697901900294899
+          ],
+          "pilot/rollout-03.pt": [
+            28185,
+            1793697901898877786
+          ],
+          "pilot/rollout-07.pt": [
+            28057,
+            1793697901899833140
+          ],
+          "pilot/actor-01.pt": [
+            521640982,
+            1793697901478150596
+          ]
+        },
+        "tar_compare": true,
+        "full_BOS_readback": true,
+        "verified_unix": 1793701951.5062044,
+        "restore": [
+          "tar",
+          "-I",
+          "zstd",
+          "-xf",
+          "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1/PickPlaceDrawerToCounter--q1-r1--global_step_1.tar.zst",
+          "-C",
+          "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/q1-r1/PickPlaceDrawerToCounter/checkpoints"
+        ]
+      }
+    ],
+    "latest_full_boundaries_preserved": true
+  },
+  "tier_process_alive": false,
+  "scheduler_check": "Browser inventory visible, but scheduler tab control reports debugger unattached; configured bcecmd supports BOS only. Queued task outputs absent; retry scheduler access next check.",
+  "next_tiering": {
+    "state": "RUNNING",
+    "pid": 2025852,
+    "tool_commit": "475e1c5d",
+    "script_sha256": "88a12eaf79e18bfd527f22870085414505eb473737773230b364c3b790bc3b97",
+    "receipt": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TIER-20261103-1841.json",
+    "log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/tier-20261103-1841.log",
+    "next_action": "Check receipt and exact PID/command before another tier invocation; newest full checkpoints and all corpora retained"
+  }
+}

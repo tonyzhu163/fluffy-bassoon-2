@@ -78,7 +78,7 @@ unless the row says otherwise.
 | Eval | same 64 fixed cases per task before and after, flow ODE, full 600 controls (76,800 controls) |
 | Execution layout | 8 env/rollout ranks, default **16 envs/GPU × 1 rollout epoch** (128 × 1); 64 × 2 and 32 × 4 are the same science (see Layout) |
 | Actor ranks | 2, the qualified rank-local GAE normalization (moving to 8 changes advantage normalization; not adopted) |
-| Checkpoints | full DCP + worker sidecars every **10** iterations and at 130 (~0.7 GB each) |
+| Checkpoints | full DCP +18worker sidecars at qualification1, first resumed update2, then every **10** iterations through130; measured ~16GiB each, with verified BOS tiering of older boundaries |
 | Seeds | portfolio task number x (OpenDrawer 1 … CoffeeSetupMug 5): TRAIN `2,000,000 + 100,000·x + episode index`, before/after eval `600100 + 10,000·x` (`flow_seeds`); disjoint from the 1x/4x/5x/7x panels |
 
 Per task: about 10.06M controls. At the old 4 envs/GPU layout this would be
@@ -97,7 +97,7 @@ action journal. No other RL framework is involved.
 | Episode | 600 controls = 12 decisions |
 | Iteration | 128 episodes = 1,536 decisions = 76,800 controls, one policy version |
 | Update | 4 PPO epochs × 6 minibatches of 256 decisions = 24 optimizer steps; 2 actor GPUs × 8 micro-batches of 16 |
-| Run | 130 iterations = 16,640 episodes = 199,680 decisions = 9,984,000 controls; 3,120 optimizer steps; 13 checkpoints |
+| Run | 130 iterations = 16,640 episodes = 199,680 decisions = 9,984,000 controls; 3,120 optimizer steps;13regular checkpoints plus qualification/resume boundaries |
 | Eval | 64 fixed cases before and after, 600 controls each; total 10,060,800 controls |
 
 `rollout_epoch` and `update_epoch` are different knobs. `rollout_epoch` is
@@ -182,10 +182,13 @@ F1–F6 are fixed on `main` and covered by CPU tests in
 `flow_contract()` derives the horizon, schedule, seeds, step count and action
 ceiling from it, and the driver refuses `kl_beta != 0`. For F7, the storage
 switches exist (`sampling_record: full|scalars`, `actor_batch_drop`); their
-defaults keep everything until Q1 measures the bytes. F8 is open: the wall
-clock is set by the launch command, and the resume path is generalized but not
-yet exercised. Still to do: run the RLinf-dependent tests on allocated Linux,
-and the GPU checks C1–C3.
+defaults kept everything until Q1 measured the bytes and verified duplicate
+camera/chain coverage. F8 is qualified: actual full-state resumes have advanced
+on OpenDrawer, Toaster and Drawer-to-Counter; the other two production jobs
+are submitted and await allocation. All39required allocated-Linux tests and
+all five Q1 C1–C3 checks passed. See EXECUTION.json and per-task Q1-AUDIT.json
+for measured evidence. These are execution/retention clarifications; the
+active runtime and scientific schedule remain unchanged.
 
 Launch per task: `ROBOCASA_FLOW_TASK=<task>`, plus
 `ROBOCASA_FLOW_TRAIN_SEED` / `ROBOCASA_FLOW_EVAL_SEED` from `flow_seeds(task)`.

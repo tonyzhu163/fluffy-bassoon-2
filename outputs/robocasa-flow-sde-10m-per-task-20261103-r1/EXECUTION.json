@@ -1,6 +1,6 @@
 {
   "owner_chat": "01a1a077-e5ab-7982-840d-de8a81d4321a",
-  "checked_shanghai": "2026-11-03 18:21:56",
+  "checked_shanghai": "2026-11-03 18:45:09",
   "source_commit": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
   "phase": "All five Q1 audits passed; three production runs advancing, two queued",
   "cluster": "Baige Pro6K",
@@ -63,9 +63,9 @@
       "max_minutes": 1440,
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1",
       "resume": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/q1-r2/OpenDrawer/checkpoints/global_step_1",
-      "completed_iterations": 11,
+      "completed_iterations": 16,
       "target_iterations": 130,
-      "optimizer_steps": 264,
+      "optimizer_steps": 384,
       "frozen_vlm_unchanged": true,
       "gpu_probe_passed": true,
       "before_reference": "OpenDrawer/BEFORE-RESUME.json",
@@ -74,10 +74,11 @@
       "ETA_remaining_hours": 8.72,
       "ETA_finish_shanghai": "2026-11-04T02:52:48.586972",
       "local_complete_boundaries": [
-        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints/global_step_10",
-        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints/global_step_2"
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints/global_step_10"
       ],
-      "latest_C1_passed": true
+      "latest_C1_passed": true,
+      "latest_complete_train_controls": 76800,
+      "latest_complete_train_episodes": 128
     },
     {
       "task": "CloseToasterOvenDoor",
@@ -115,9 +116,9 @@
       "max_minutes": 1440,
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/production-r1",
       "resume": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/q1-r1/CloseToasterOvenDoor/checkpoints/global_step_1",
-      "completed_iterations": 9,
+      "completed_iterations": 15,
       "target_iterations": 130,
-      "optimizer_steps": 216,
+      "optimizer_steps": 360,
       "frozen_vlm_unchanged": true,
       "gpu_probe_passed": true,
       "before_reference": "CloseToasterOvenDoor/BEFORE-RESUME.json",
@@ -126,9 +127,11 @@
       "ETA_remaining_hours": 8.87,
       "ETA_finish_shanghai": "2026-11-04T03:02:04.766972",
       "local_complete_boundaries": [
-        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/production-r1/CloseToasterOvenDoor/checkpoints/global_step_2"
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/production-r1/CloseToasterOvenDoor/checkpoints/global_step_10"
       ],
-      "latest_C1_passed": true
+      "latest_C1_passed": true,
+      "latest_complete_train_controls": 76800,
+      "latest_complete_train_episodes": 128
     },
     {
       "task": "PickPlaceDrawerToCounter",
@@ -166,17 +169,20 @@
       "max_minutes": 1440,
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/production-r1",
       "resume": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/q1-r1/PickPlaceDrawerToCounter/checkpoints/global_step_1",
-      "completed_iterations": 5,
+      "completed_iterations": 10,
       "target_iterations": 130,
-      "optimizer_steps": 120,
+      "optimizer_steps": 240,
       "frozen_vlm_unchanged": true,
       "gpu_probe_passed": true,
       "before_reference": "PickPlaceDrawerToCounter/BEFORE-RESUME.json",
       "before_reference_sha256": "2c7c34db08f73f0b0673521fbd160a054a87ebac86bb6e4d58989575fbadddca",
       "local_complete_boundaries": [
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/production-r1/PickPlaceDrawerToCounter/checkpoints/global_step_10",
         "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/production-r1/PickPlaceDrawerToCounter/checkpoints/global_step_2"
       ],
-      "latest_C1_passed": true
+      "latest_C1_passed": true,
+      "latest_complete_train_controls": 76800,
+      "latest_complete_train_episodes": 128
     },
     {
       "task": "CoffeeSetupMug",
@@ -210,7 +216,7 @@
       "job_id": "job-wv3zgiuj05j8",
       "job_name": "mwj_1103_flow10m_coffee_prod_1x8_r1",
       "submitted_shanghai": "2026-11-03 17:53:44",
-      "state": "QUEUED",
+      "state": "QUEUED_LAST_CONFIRMED_OUTPUT_NOT_STARTED",
       "max_minutes": 1440,
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CoffeeSetupMug/production-r1",
       "resume": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CoffeeSetupMug/q1-r1/CoffeeSetupMug/checkpoints/global_step_1",
@@ -220,7 +226,8 @@
       "frozen_vlm_unchanged": null,
       "gpu_probe_passed": false,
       "before_reference": "CoffeeSetupMug/BEFORE-RESUME.json",
-      "before_reference_sha256": "c88f80d4e7061c1995a0303d1b7db4111a2b899d0948b16cbd1d46f228b11195"
+      "before_reference_sha256": "c88f80d4e7061c1995a0303d1b7db4111a2b899d0948b16cbd1d46f228b11195",
+      "scheduler_state_fresh": false
     },
     {
       "task": "TurnOffStove",
@@ -254,7 +261,7 @@
       "job_id": "job-z60s3hh8cn7w",
       "job_name": "mwj_1103_flow10m_stove_prod_1x8_r1",
       "submitted_shanghai": "2026-11-03 17:56:02",
-      "state": "QUEUED",
+      "state": "QUEUED_LAST_CONFIRMED_OUTPUT_NOT_STARTED",
       "max_minutes": 1440,
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TurnOffStove/production-r1",
       "resume": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TurnOffStove/q1-r1/TurnOffStove/checkpoints/global_step_1",
@@ -264,7 +271,8 @@
       "frozen_vlm_unchanged": null,
       "gpu_probe_passed": false,
       "before_reference": "TurnOffStove/BEFORE-RESUME.json",
-      "before_reference_sha256": "c7f0c522996048ecf8459833cd0deff265e727d9207164819ffb11a184394e9b"
+      "before_reference_sha256": "c7f0c522996048ecf8459833cd0deff265e727d9207164819ffb11a184394e9b",
+      "scheduler_state_fresh": false
     }
   ],
   "next_action": "Monitor three advancing productions and two queued jobs; complete source corpora/final teachers and all joins before any student fits",
@@ -350,39 +358,37 @@
     "automation_id": "monitor-five-task-10m-ppo-campaign",
     "cadence_minutes": 20,
     "status": "ACTIVE",
-    "next_action": "Verify advancing updates and queued starts; inspect in-progress tier receipt/PID before any new tier process; preserve fixed contract and quiet routine health",
-    "last_check_shanghai": "2026-11-03 18:21:56",
-    "next_check_shanghai": "2026-11-03 18:42 Shanghai",
-    "scheduler_check": "Native browser-control pipe unavailable; advancing running jobs verified through actual output records. Queued outputs still absent; retry console next check."
+    "next_action": "Verify advancing updates and queued starts; inspect running checkpoint tier receipt/PID before another invocation; preserve fixed contract and quiet routine health",
+    "last_check_shanghai": "2026-11-03 18:45:09",
+    "next_check_shanghai": "2026-11-03 19:02 Shanghai",
+    "scheduler_check": "Browser inventory visible, but scheduler tab control reports debugger unattached; configured bcecmd supports BOS only. Queued task outputs absent; retry scheduler access next check."
   },
   "storage": {
-    "pfs_free_GiB": 647.75,
+    "pfs_free_GiB": 685.21875,
     "stop_floor_GiB": 200,
-    "tier_receipt": "TIER-FIRST.json",
-    "tiered_superseded_boundaries": 5,
+    "tier_receipt": "TIER-20261103-1821.json",
+    "tiered_superseded_boundaries": 10,
     "latest_full_checkpoint_retained": true,
     "bos": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1",
     "tiering_in_progress": {
       "state": "RUNNING",
-      "pid": 2024977,
+      "pid": 2025852,
       "tool_commit": "475e1c5d",
       "script_sha256": "88a12eaf79e18bfd527f22870085414505eb473737773230b364c3b790bc3b97",
-      "receipt": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TIER-20261103-1821.json",
-      "log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/tier-20261103-1821.log",
-      "verified_tool_matches_git": true,
-      "observed_stage": "OpenDrawer--q1-r2--global_step_1.tar.zst >13GB",
+      "receipt": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TIER-20261103-1841.json",
+      "log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/tier-20261103-1841.log",
       "next_action": "Check receipt and exact PID/command before another tier invocation; newest full checkpoints and all corpora retained"
     }
   },
   "usage_snapshot": {
-    "checked_shanghai": "2026-11-03 18:21:56",
+    "checked_shanghai": "2026-11-03 18:41:40",
     "valid_Q1_process_GPU_seconds": 21824,
     "failed_Q1_process_GPU_seconds": 4352,
     "diagnostics_scheduler_GPU_seconds_upper": 213,
-    "live_production_GPU_seconds_to_snapshot": 53539,
-    "cumulative_GPU_hours_using_diagnostic_upper": 22.202,
+    "live_production_GPU_seconds_to_snapshot": 81958,
+    "cumulative_GPU_hours_using_diagnostic_upper": 30.096,
     "active_jobs_accruing": true,
-    "evidence": "MONITOR-20261103-1821.json"
+    "evidence": "MONITOR-20261103-1841.json"
   },
   "data_readiness": "DATA-READINESS.md",
   "control_steps": {
