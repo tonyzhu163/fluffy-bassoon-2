@@ -49,11 +49,16 @@ shuffled_indices = torch.randperm(T * B, generator=generator)[:16]
 model = get_model(cfg.actor.model, torch_dtype=torch.bfloat16).to('cuda:0')
 model.set_global_step(0)
 results = []
-for name, indexes, gradient in [('original_cohort_eval', original_indices, False),
-        ('original_cohort_train_grad', original_indices, True),
-        ('shuffled_cohort_eval', shuffled_indices, False),
-        ('shuffled_cohort_train_grad', shuffled_indices, True)]:
+for name, indexes, gradient, frozen_image_eval in [('original_cohort_eval', original_indices, False, False),
+        ('original_cohort_train_grad', original_indices, True, False),
+        ('shuffled_cohort_eval', shuffled_indices, False, False),
+        ('shuffled_cohort_train_grad', shuffled_indices, True, False),
+        ('original_cohort_train_frozen_image_eval', original_indices, True, True),
+        ('shuffled_cohort_train_frozen_image_eval', shuffled_indices, True, True)]:
     model.train(gradient)
+    if frozen_image_eval:
+        assert not any(parameter.requires_grad for parameter in model.img.parameters())
+        model.img.eval()
     selected = {key: value[indexes].to('cuda:0') for key, value in flat.items()}
     tick = time.monotonic()
     with torch.set_grad_enabled(gradient):
