@@ -26,5 +26,6 @@ export PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1 WANDB_MOD
 timeout --signal=TERM --kill-after=30s 3500s "$TASK_PY" -B \
   "$TASK_FLOW_CODE/outputs/flow-sde-four-methods-20261103-r1/FITS.py" \
   --assembly "$TASK_ROOT/outputs/flow-four-method-source-gpu-20261103-r2/preparation/ASSEMBLY.json" \
+  --assembly-sha256 12433cf163c03a7874f6028e8bdc2a662f25fdc964e9fd972b7ac4d4f2b1760c \
   --output "$TASK_FITS" --source-commit "$TASK_CODE_PIN" --expected-hostname "$MASTER_ADDR" \
   --attempt "$TASK_FIT_ATTEMPT"

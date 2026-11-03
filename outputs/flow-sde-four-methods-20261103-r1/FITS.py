@@ -17,6 +17,7 @@ import time
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--assembly", type=Path, required=True)
+    p.add_argument("--assembly-sha256", required=True)
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--source-commit", required=True)
     p.add_argument("--expected-hostname", required=True)
@@ -31,6 +32,8 @@ def main():
     checked_checkout(code, a.source_commit)
     if torch.cuda.device_count() != 1:
         raise ValueError("All four independent learners share exactly one exclusive GPU")
+    if file_sha256(a.assembly) != a.assembly_sha256:
+        raise ValueError("The independently audited source assembly changed")
     binding = json.loads(a.assembly.read_text())
     if (binding.get("completed") is not True or not binding.get("student_fit_ready")
             or binding.get("source_TRAIN_controls") != 921600 or binding.get("action_dim") != 600
