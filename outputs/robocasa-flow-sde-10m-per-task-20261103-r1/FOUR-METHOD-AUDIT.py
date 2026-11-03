@@ -269,10 +269,13 @@ def audit(root, collection, tag, sampling):
         sampling_index='Single monotonic metadata pass; variable terminal-value predictions retained')
 
 
-def audit_task(arguments):
-    root, task, tag, production_only, collections, previous_audit, reference_audit, threads = arguments
+def initialize_worker(threads):
     torch.set_num_threads(threads)
     torch.set_num_interop_threads(1)
+
+
+def audit_task(arguments):
+    root, task, tag, production_only, collections, previous_audit, reference_audit = arguments
     stage = 'q1-r2' if task == 'OpenDrawer' else 'q1-r1'
     rows = []
     if not production_only:
@@ -322,9 +325,11 @@ def main():
     # Q1 may be audited alongside any disjoint completed production block.
     # Five independent audits, two CPU threads each, within the allocated
     # development container's thirteen CPUs; no GPU visibility/model calls.
-    with ProcessPoolExecutor(max_workers=min(args.workers, len(args.tasks)), mp_context=multiprocessing.get_context('spawn')) as pool:
+    with ProcessPoolExecutor(max_workers=min(args.workers, len(args.tasks)),
+            mp_context=multiprocessing.get_context('spawn'),
+            initializer=initialize_worker, initargs=(args.threads,)) as pool:
         groups = list(pool.map(audit_task, [(args.root, task, args.output.stem, args.production_only,
-            sorted(args.collections), args.previous_audit, args.reference_audit, args.threads) for task in args.tasks]))
+            sorted(args.collections), args.previous_audit, args.reference_audit) for task in args.tasks]))
     rows = [row for group in groups for row in group]
     result = dict(completed=True, checked_unix=time.time(), audits=rows, new_controls=0, SGD=0,
         ready_methods=['AD', 'DPT', 'DIT', 'in-context IQL'],
