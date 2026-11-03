@@ -1,6 +1,6 @@
 {
   "owner_chat": "01a1a077-e5ab-7982-840d-de8a81d4321a",
-  "checked_shanghai": "2026-11-04 04:29:21",
+  "checked_shanghai": "2026-11-04 04:32:20",
   "source_commit": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
   "phase": "All5 native130/after64/clocks0 and schedulerSUCCESS;650full corpus audits/joins verified;0/5 admitted teachers; BOS closeout/reporting remain",
   "cluster": "Baige Pro6K",
@@ -561,7 +561,37 @@
       "new_controls": 0,
       "SGD": 0,
       "checked_shanghai": "2026-11-04 04:29:20",
-      "remaining": "16checkpoint readouts/task,80total, all5initial parity gates, complete clocks and archive closeout"
+      "remaining": "16checkpoint readouts/task,80total, all5initial parity gates, complete clocks and archive closeout",
+      "last_checked_shanghai": "2026-11-04 04:32:20",
+      "progress": {
+        "clock": null,
+        "GPU_seconds": 311.3551061153412,
+        "cost_basis": "scheduler creation age upper bound",
+        "probe_passed": true,
+        "results": [
+          {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/offline-initial-ratio-gpu-r3/OpenDrawer/RESULT.json",
+            "task": "OpenDrawer",
+            "completed": false,
+            "checkpoints": 5,
+            "latest_step": 20,
+            "initial_parity": {
+              "passed": true,
+              "finite": true,
+              "shape": [
+                16,
+                50,
+                12
+              ],
+              "action_dim": 12,
+              "tolerance": 0.001,
+              "max_abs_chunk_log_ratio": 0.0,
+              "max_abs_coordinate_log_ratio": 0.0,
+              "mean_abs_chunk_log_ratio": 0.0
+            }
+          }
+        ]
+      }
     }
   ],
   "submission_corrections": [
@@ -583,12 +613,12 @@
     "cadence_minutes": 20,
     "status": "ACTIVE",
     "next_action": "Finish sequential verified BOS corpus archives and read-only initial-policy fixed B16 checkpoint likelihood reporting; publish final archive/cost/results closeout and end monitor. Keep reference corpora and no student fitting.",
-    "last_check_shanghai": "2026-11-04 04:29:21",
-    "next_check_shanghai": "20min after this check",
+    "last_check_shanghai": "2026-11-04 04:32:20",
+    "next_check_shanghai": "2026-11-04 04:52 Shanghai",
     "scheduler_check": "All5nativeSucceeded; reportingR1/R2Failed with clocks andR3Running1GPU,240min limit/noautoretry; actualprobe passed and OpenDrawer initial parity zero."
   },
   "storage": {
-    "pfs_free_GiB": 427.9609375,
+    "pfs_free_GiB": 433.3046875,
     "stop_floor_GiB": 200,
     "tier_receipt": "TIER-CHECKPOINT-WATCH-R1-003.json",
     "tiered_superseded_boundaries": 75,
@@ -776,22 +806,34 @@
       "result_sha256": "b559883bd9d91742bf8e36b58ee08a8689c2a0f78fccc2e4b6ca89a550431f8e",
       "resumed_interrupted_reclaim": true,
       "checks": "Original archive/manifest/QC hashes, all audit refs, current inventory exact-minus-authorized deletedTorch and newest130model+18workers rechecked before cleanup."
+    },
+    "latest_verified_corpus_archive_receipts": {
+      "OpenDrawer": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-OpenDrawer-R1-RECLAIMED.json",
+        "sha256": "b559883bd9d91742bf8e36b58ee08a8689c2a0f78fccc2e4b6ca89a550431f8e",
+        "completed": true
+      },
+      "CloseToasterOvenDoor": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-CloseToasterOvenDoor-R1-RECLAIMED.json",
+        "sha256": "3bbfbfb0daa59adbc27ba9da80c11446b8b2df0daef467cccfe4346d61a11129",
+        "completed": true
+      }
     }
   },
   "usage_snapshot": {
-    "checked_shanghai": "2026-11-04 04:29:21",
+    "checked_shanghai": "2026-11-04 04:32:20",
     "valid_Q1_process_GPU_seconds": 21824,
     "failed_Q1_process_GPU_seconds": 4352,
     "diagnostics_scheduler_GPU_seconds_upper": 262,
     "live_production_GPU_seconds_to_snapshot": 1315368,
-    "cumulative_GPU_hours_using_diagnostic_upper": 372.78036082042587,
-    "active_jobs_accruing": false,
-    "evidence": "MONITOR-20261104-042920.json",
+    "cumulative_GPU_hours_using_diagnostic_upper": 372.8300986405876,
+    "active_jobs_accruing": true,
+    "evidence": "MONITOR-20261104-043219.json",
     "active_native_source_processes": 0,
     "active_native_source_GPUs": 0,
     "native_source_all_attempt_GPU_hours": 372.7102777777778,
     "reporting_note": "R1 rejected before model10processGPU-s/49schedulerGPU-s upper;R2 failed on missing BOS mount71processGPU-s. Later reporting separately included in cumulative monitor; no new controls/SGD.",
-    "reporting_GPU_seconds_at_snapshot": 203.2989535331726,
+    "reporting_GPU_seconds_at_snapshot": 382.3551061153412,
     "reporting_includes_live_upper_bound": true,
     "active_reporting_GPUs": 1
   },
@@ -1346,7 +1388,51 @@
         "PFS_floor_GiB": 200
       },
       "stage_first_ready_sha256": "890df4ac285a611640e942acff85534ea893143fdb25b54c47e57a643493fe4a",
-      "actual_GPU_bridge_qualification": "OFFLINE-INITIAL-RATIO-STAGE-GPU-QUALIFICATION-R3.json"
+      "actual_GPU_bridge_qualification": "OFFLINE-INITIAL-RATIO-STAGE-GPU-QUALIFICATION-R3.json",
+      "last_monitor_progress": {
+        "job-ffnpgrgzlswu": {
+          "clock": {
+            "started_unix": 1793737250,
+            "finished_unix": 1793737321,
+            "allocated_gpus": 1,
+            "observed_gpu_seconds": 71,
+            "exit_code": 1
+          },
+          "GPU_seconds": 71,
+          "cost_basis": "process clock",
+          "probe_passed": true,
+          "results": []
+        },
+        "job-yt5p9got8ntn": {
+          "clock": null,
+          "GPU_seconds": 311.3551061153412,
+          "cost_basis": "scheduler creation age upper bound",
+          "probe_passed": true,
+          "results": [
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/offline-initial-ratio-gpu-r3/OpenDrawer/RESULT.json",
+              "task": "OpenDrawer",
+              "completed": false,
+              "checkpoints": 5,
+              "latest_step": 20,
+              "initial_parity": {
+                "passed": true,
+                "finite": true,
+                "shape": [
+                  16,
+                  50,
+                  12
+                ],
+                "action_dim": 12,
+                "tolerance": 0.001,
+                "max_abs_chunk_log_ratio": 0.0,
+                "max_abs_coordinate_log_ratio": 0.0,
+                "mean_abs_chunk_log_ratio": 0.0
+              }
+            }
+          ]
+        }
+      }
     },
     "native_closeout_watch": {
       "pid": 2044160,
@@ -1369,7 +1455,7 @@
       "gates": "Exact expected eight-GPU manifests; successful130, after64 and clock0+60s before pinned FINAL-READOUT41ce8d78 and TIER-CORPUS1aa840ac. Serial prepare streams directly to BOS and verifies all members/full-object readback. Optional prefix only below240GiB and only fully audited ENV/actor files; all sampling/JSON remain for continuing QA. Full reclaim requires all1..130 exact audits, QC archive and retained18-worker full130 boundary.",
       "ownership": "This worker owns Task/FINAL-READOUT-R1.json and CORPUS-ARCHIVE-Task-R1-{PREPARED,PREFIX,RECLAIMED}.json; do not run duplicate closeout commands. Inspect its ERROR/PID before a new attempt.",
       "qualification": "AST/help plus actual all-five manifest/fixture-hash admission passed with zero model calls, new controls or SGD. Real closed-source branches remain gated on actual native closure; existing pinned readout/archive guards unchanged.",
-      "last_checked_shanghai": "2026-11-04 04:26:05",
+      "last_checked_shanghai": "2026-11-04 04:32:20",
       "last_result": {
         "completed": false,
         "started_unix": 1793730572.5006053,
