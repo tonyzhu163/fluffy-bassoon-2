@@ -1,6 +1,6 @@
 {
   "owner_chat": "01a1a077-e5ab-7982-840d-de8a81d4321a",
-  "checked_shanghai": "2026-11-04 04:34:16",
+  "checked_shanghai": "2026-11-04 04:54:05",
   "source_commit": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
   "phase": "All5 native130/after64/clocks0 and schedulerSUCCESS;650full corpus audits/joins verified;0/5 admitted teachers; BOS closeout/reporting remain",
   "cluster": "Baige Pro6K",
@@ -562,19 +562,40 @@
       "SGD": 0,
       "checked_shanghai": "2026-11-04 04:29:20",
       "remaining": "16checkpoint readouts/task,80total, all5initial parity gates, complete clocks and archive closeout",
-      "last_checked_shanghai": "2026-11-04 04:34:16",
+      "last_checked_shanghai": "2026-11-04 04:54:05",
       "progress": {
         "clock": null,
-        "GPU_seconds": 427.07943987846375,
+        "GPU_seconds": 1616.080206155777,
         "cost_basis": "scheduler creation age upper bound",
         "probe_passed": true,
         "results": [
           {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/offline-initial-ratio-gpu-r3/CloseToasterOvenDoor/RESULT.json",
+            "task": "CloseToasterOvenDoor",
+            "completed": false,
+            "checkpoints": 13,
+            "latest_step": 100,
+            "initial_parity": {
+              "passed": true,
+              "finite": true,
+              "shape": [
+                16,
+                50,
+                12
+              ],
+              "action_dim": 12,
+              "tolerance": 0.001,
+              "max_abs_chunk_log_ratio": 0.0,
+              "max_abs_coordinate_log_ratio": 0.0,
+              "mean_abs_chunk_log_ratio": 0.0
+            }
+          },
+          {
             "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/offline-initial-ratio-gpu-r3/OpenDrawer/RESULT.json",
             "task": "OpenDrawer",
-            "completed": false,
-            "checkpoints": 7,
-            "latest_step": 40,
+            "completed": true,
+            "checkpoints": 16,
+            "latest_step": 130,
             "initial_parity": {
               "passed": true,
               "finite": true,
@@ -613,12 +634,12 @@
     "cadence_minutes": 20,
     "status": "ACTIVE",
     "next_action": "Finish sequential verified BOS corpus archives and read-only initial-policy fixed B16 checkpoint likelihood reporting; publish final archive/cost/results closeout and end monitor. Keep reference corpora and no student fitting.",
-    "last_check_shanghai": "2026-11-04 04:34:16",
-    "next_check_shanghai": "2026-11-04 04:54 Shanghai",
-    "scheduler_check": "Existing Baige console confirms job-yt5p9got8ntn Running,1GPU,240min limit; actual fixed-B16 replay advancing without error. All5native sources already successful/released."
+    "last_check_shanghai": "2026-11-04 04:54:05",
+    "next_check_shanghai": "2026-11-04 05:14 Shanghai",
+    "scheduler_check": "Existing Baige console confirms reporting job-yt5p9got8ntn Running; OpenDrawer full16 report complete, Toaster initial parity zero and advancing. No source allocations or new controls."
   },
   "storage": {
-    "pfs_free_GiB": 426.8359375,
+    "pfs_free_GiB": 536.0,
     "stop_floor_GiB": 200,
     "tier_receipt": "TIER-CHECKPOINT-WATCH-R1-003.json",
     "tiered_superseded_boundaries": 75,
@@ -789,8 +810,8 @@
     "corpus_closeout_status": {
       "OpenDrawer": "Full archive/readback/QC verified and full reclaim completed after guarded timeout recovery",
       "CloseToasterOvenDoor": "Full archive/readback/QC verified and full reclaim completed",
-      "PickPlaceDrawerToCounter": "Serial BOS copy/readback active",
-      "CoffeeSetupMug": "Native closed; waiting for serial archive",
+      "PickPlaceDrawerToCounter": "Full archive/readback/QC verified and full reclaim completed",
+      "CoffeeSetupMug": "Serial BOS copy/readback active",
       "TurnOffStove": "Native closed; waiting for serial archive",
       "floor_GiB": 200,
       "all_original_data_retained": true
@@ -817,23 +838,28 @@
         "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-CloseToasterOvenDoor-R1-RECLAIMED.json",
         "sha256": "3bbfbfb0daa59adbc27ba9da80c11446b8b2df0daef467cccfe4346d61a11129",
         "completed": true
+      },
+      "PickPlaceDrawerToCounter": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-PickPlaceDrawerToCounter-R1-RECLAIMED.json",
+        "sha256": "fcceb87b7a7bb04c270ec264850bf340c0931f845963982b48c989b85f9f0e24",
+        "completed": true
       }
     }
   },
   "usage_snapshot": {
-    "checked_shanghai": "2026-11-04 04:34:16",
+    "checked_shanghai": "2026-11-04 04:54:05",
     "valid_Q1_process_GPU_seconds": 21824,
     "failed_Q1_process_GPU_seconds": 4352,
     "diagnostics_scheduler_GPU_seconds_upper": 262,
     "live_production_GPU_seconds_to_snapshot": 1315368,
-    "cumulative_GPU_hours_using_diagnostic_upper": 372.86224428885515,
+    "cumulative_GPU_hours_using_diagnostic_upper": 373.1925222794877,
     "active_jobs_accruing": true,
-    "evidence": "MONITOR-20261104-043415.json",
+    "evidence": "MONITOR-20261104-045404.json",
     "active_native_source_processes": 0,
     "active_native_source_GPUs": 0,
     "native_source_all_attempt_GPU_hours": 372.7102777777778,
     "reporting_note": "R1 rejected before model10processGPU-s/49schedulerGPU-s upper;R2 failed on missing BOS mount71processGPU-s. Later reporting separately included in cumulative monitor; no new controls/SGD.",
-    "reporting_GPU_seconds_at_snapshot": 498.07943987846375,
+    "reporting_GPU_seconds_at_snapshot": 1687.080206155777,
     "reporting_includes_live_upper_bound": true,
     "active_reporting_GPUs": 1
   },
@@ -1405,16 +1431,37 @@
         },
         "job-yt5p9got8ntn": {
           "clock": null,
-          "GPU_seconds": 427.07943987846375,
+          "GPU_seconds": 1616.080206155777,
           "cost_basis": "scheduler creation age upper bound",
           "probe_passed": true,
           "results": [
             {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/offline-initial-ratio-gpu-r3/CloseToasterOvenDoor/RESULT.json",
+              "task": "CloseToasterOvenDoor",
+              "completed": false,
+              "checkpoints": 13,
+              "latest_step": 100,
+              "initial_parity": {
+                "passed": true,
+                "finite": true,
+                "shape": [
+                  16,
+                  50,
+                  12
+                ],
+                "action_dim": 12,
+                "tolerance": 0.001,
+                "max_abs_chunk_log_ratio": 0.0,
+                "max_abs_coordinate_log_ratio": 0.0,
+                "mean_abs_chunk_log_ratio": 0.0
+              }
+            },
+            {
               "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/offline-initial-ratio-gpu-r3/OpenDrawer/RESULT.json",
               "task": "OpenDrawer",
-              "completed": false,
-              "checkpoints": 7,
-              "latest_step": 40,
+              "completed": true,
+              "checkpoints": 16,
+              "latest_step": 130,
               "initial_parity": {
                 "passed": true,
                 "finite": true,
@@ -1431,6 +1478,35 @@
               }
             }
           ]
+        }
+      },
+      "completed_task_reports": {
+        "OpenDrawer": {
+          "completed": true,
+          "checked_shanghai": "2026-11-04 04:54:05",
+          "task": "OpenDrawer",
+          "report": "offline-initial-ratio-gpu-r3/OpenDrawer/RESULT.json",
+          "report_sha256": "3d6aca7e18169a24e90928341824904955dece2f23afda23753113bad00f4597",
+          "checkpoints": 16,
+          "initial_parity": {
+            "passed": true,
+            "finite": true,
+            "shape": [
+              16,
+              50,
+              12
+            ],
+            "action_dim": 12,
+            "tolerance": 0.001,
+            "max_abs_chunk_log_ratio": 0.0,
+            "max_abs_coordinate_log_ratio": 0.0,
+            "mean_abs_chunk_log_ratio": 0.0
+          },
+          "final_checkpoint_bound_to_native_readout": true,
+          "final_mean_chunk_log_ratio_to_initial": -0.3402960328385234,
+          "scope": "Fixed originalB16 saved-chain conditional likelihood reporting; not a full-action marginal KL or teacher-performance gate. All5 reporting and corpus closeout not yet finished.",
+          "new_controls": 0,
+          "SGD": 0
         }
       }
     },
@@ -1455,7 +1531,7 @@
       "gates": "Exact expected eight-GPU manifests; successful130, after64 and clock0+60s before pinned FINAL-READOUT41ce8d78 and TIER-CORPUS1aa840ac. Serial prepare streams directly to BOS and verifies all members/full-object readback. Optional prefix only below240GiB and only fully audited ENV/actor files; all sampling/JSON remain for continuing QA. Full reclaim requires all1..130 exact audits, QC archive and retained18-worker full130 boundary.",
       "ownership": "This worker owns Task/FINAL-READOUT-R1.json and CORPUS-ARCHIVE-Task-R1-{PREPARED,PREFIX,RECLAIMED}.json; do not run duplicate closeout commands. Inspect its ERROR/PID before a new attempt.",
       "qualification": "AST/help plus actual all-five manifest/fixture-hash admission passed with zero model calls, new controls or SGD. Real closed-source branches remain gated on actual native closure; existing pinned readout/archive guards unchanged.",
-      "last_checked_shanghai": "2026-11-04 04:34:16",
+      "last_checked_shanghai": "2026-11-04 04:54:05",
       "last_result": {
         "completed": false,
         "started_unix": 1793730572.5006053,
@@ -1486,13 +1562,22 @@
             "reclaim_sha256": "3bbfbfb0daa59adbc27ba9da80c11446b8b2df0daef467cccfe4346d61a11129"
           },
           "PickPlaceDrawerToCounter": {
-            "state": "copy-and-full-object-readback",
+            "state": "CLOSED_AND_TIERED",
             "readout": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/FINAL-READOUT-R1.json",
             "readout_sha256": "531c9f492c4472344624dbce7ebb669aad263d6def76244c67a3597576ce0671",
-            "started_phase_unix": 1793736293.6532013
+            "started_phase_unix": 1793738422.4592295,
+            "prepared": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-PickPlaceDrawerToCounter-R1-PREPARED.json",
+            "prepared_sha256": "bbf9780ef9b5db229f4b705fd73ecea1cf85b64ecc1cf834e3d0446c7d459315",
+            "native_closed": true,
+            "full_reclaimed": true,
+            "reclaim": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-PickPlaceDrawerToCounter-R1-RECLAIMED.json",
+            "reclaim_sha256": "fcceb87b7a7bb04c270ec264850bf340c0931f845963982b48c989b85f9f0e24"
           },
           "CoffeeSetupMug": {
-            "state": "WAITING_NATIVE_CLOSURE"
+            "state": "copy-and-full-object-readback",
+            "readout": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CoffeeSetupMug/FINAL-READOUT-R1.json",
+            "readout_sha256": "12178f77e8e91ef2f660185257442408b8dfc2fbe1a1154dd5416bcd9b9d8324",
+            "started_phase_unix": 1793738790.8093143
           },
           "TurnOffStove": {
             "state": "WAITING_NATIVE_CLOSURE"
@@ -1514,10 +1599,10 @@
           ]
         },
         "scope": "Native final gates plus corpus archive/reclaim only; full joins, initial-ratio GPU reporting and campaign results closeout remain required before fitting.",
-        "checked_unix": 1793736293.6410198,
-        "PFS_free_GiB": 433.8671875
+        "checked_unix": 1793738790.740151,
+        "PFS_free_GiB": 528.4765625
       },
-      "last_process_check": "Authoritative per-task archive/reclaim receipts override stale OpenDrawer cached prefix state; guarded recovery complete. Serial worker now archives Drawer."
+      "last_process_check": "OpenDrawer full recovery and Toaster/Drawer corpus receipts complete; Coffee archive active, Stove next."
     },
     "final_teacher_readouts": {
       "OpenDrawer": {

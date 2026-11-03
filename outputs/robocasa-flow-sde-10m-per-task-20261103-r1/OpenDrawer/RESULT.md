@@ -35,4 +35,5 @@ interrupted cleanup was completed using the guarded recovery receipt. Final
 130 remains fully resumable on PFS. See [campaign results](../RESULT.md),
 [readout](FINAL-READOUT-R1.json), [action ledger](FINAL-ACTION-ACCOUNTING-R1.json)
 and [archive recovery](../CORPUS-ARCHIVE-OpenDrawer-R1-RECLAIMED.json). Offline
-initial-policy likelihood reporting remains pending.
+initial-policy likelihood reporting now passes all 16 retained checkpoints
+with zero initial B16 error; see its [complete report](../offline-initial-ratio-gpu-r3/OpenDrawer/RESULT.json).

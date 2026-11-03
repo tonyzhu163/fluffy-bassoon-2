@@ -41,11 +41,12 @@ Native all-attempt compute totals 372.7102778 GPU-hours, including failed Q1
 and earlier diagnostic upper bounds. Later offline reporting attempts are
 additional and listed in EXECUTION and monitor evidence. Campaign archival and
 reporting closeout remains in progress: 75 superseded checkpoints are verified
-in BOS; final 130 checkpoints stay on PFS. OpenDrawer and Toaster full corpus
-archives, QC metadata, readbacks and reclaims are complete; the other three
-follow serially. OpenDrawer's interrupted cleanup was recovered with exact
-archive and inventory checks, preserving all data. The offline mean log-ratio
-to initial still needs its GPU result; the first two reporting attempts made no
+in BOS; final 130 checkpoints stay on PFS. OpenDrawer, Toaster and
+Drawer→Counter full corpus archives, QC metadata, readbacks and reclaims are
+complete; Coffee and Stove follow serially. OpenDrawer's interrupted cleanup
+was recovered with exact archive and inventory checks, preserving all data. The offline mean log-ratio
+to initial is complete for all 16 OpenDrawer checkpoints; the other tasks
+are still running. The first two reporting attempts made no
 simulator actions, SGD or likelihood forwards.
 
 Evidence: [all 650 joins](COMPLETE-CORPUS-JOINS-R1.json), each task's
