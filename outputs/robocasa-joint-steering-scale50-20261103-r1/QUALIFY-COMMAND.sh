@@ -6,6 +6,11 @@ test "$WORLD_SIZE" = 1
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_PY=$TASK_ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
 export TASK_QUAL_STARTED=$(date +%s)
+export TASK_PRIOR_QUAL_GPU_SECONDS=${TASK_PRIOR_QUAL_GPU_SECONDS:-0}
+export TASK_QUAL_SUBMITTED_UNIX=${TASK_QUAL_SUBMITTED_UNIX:-$TASK_QUAL_STARTED}
+TASK_QUAL_CAMPAIGN_END=$((TASK_QUAL_SUBMITTED_UNIX+2400-TASK_PRIOR_QUAL_GPU_SECONDS))
+test "$TASK_PRIOR_QUAL_GPU_SECONDS" -ge 0
+test "$TASK_QUAL_CAMPAIGN_END" -gt "$((TASK_QUAL_STARTED+90))"
 test ! -e "$TASK_QUAL_RUN"
 mkdir -p "$TASK_QUAL_RUN"
 exec > >(tee "$TASK_QUAL_RUN/job-console.log") 2>&1
@@ -45,7 +50,8 @@ profile = dict(code=str(code), source_commit=os.environ['TASK_CODE_PIN'],
     model_config_sha256='1c85bc28303a2144a1cc3af492b1b6d91f9cdcd94b30f04212505ffb5118f1b0',
     norm_path=str(root/'inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json'),
     norm_sha256='4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee',
-    allocated_start_unix=int(os.environ['TASK_QUAL_STARTED']), prior_qualification_gpu_seconds=0,
+    allocated_start_unix=int(os.environ['TASK_QUAL_SUBMITTED_UNIX']),
+    prior_qualification_gpu_seconds=int(os.environ['TASK_PRIOR_QUAL_GPU_SECONDS']),
     calibration_cases=calibration, stress_cases=stress)
 pathlib.Path(sys.argv[1]).write_text(json.dumps(profile, indent=2)+'\n')
 PY
@@ -53,11 +59,11 @@ TASK_QUAL_SCRIPT=$TASK_META/outputs/robocasa-joint-steering-scale50-20261103-r1/
 run_phase() {
   TASK_PHASE=$1
   TASK_PROFILE=$2
-  TASK_LEFT=$((TASK_QUAL_STARTED+2370-$(date +%s)))
+  TASK_LEFT=$((TASK_QUAL_CAMPAIGN_END-30-$(date +%s)))
   test "$TASK_LEFT" -gt 30
   timeout --signal=TERM --kill-after=15s "${TASK_LEFT}s" "$TASK_PY" -B "$TASK_QUAL_SCRIPT" \
     --phase "$TASK_PHASE" --arm both --profile "$TASK_PROFILE" --output "$TASK_QUAL_RUN/$TASK_PHASE" \
-    --expected-hostname "$MASTER_ADDR" --deadline-unix "$((TASK_QUAL_STARTED+2340))"
+    --expected-hostname "$MASTER_ADDR" --deadline-unix "$((TASK_QUAL_CAMPAIGN_END-60))"
 }
 run_phase calibrate "$TASK_QUAL_RUN/PROFILE.json"
 "$TASK_PY" -B - "$TASK_QUAL_RUN" <<'PY'

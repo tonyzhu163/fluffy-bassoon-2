@@ -1,0 +1,124 @@
+{
+  "completed": true,
+  "arm": "velocity",
+  "scientific_updates": 0,
+  "physical_policy_controls": 28800,
+  "elapsed_seconds": 489.41234374046326,
+  "controls_per_second": 58.8460842239662,
+  "execution": {
+    "requested_lanes": 48,
+    "peak_active_lanes": 48,
+    "initial_lane_barrier": true,
+    "native_batch_sizes": [
+      48,
+      48,
+      48,
+      48,
+      48,
+      48,
+      48,
+      48,
+      48,
+      48,
+      48,
+      48
+    ],
+    "maximum_native_batch": 48,
+    "minimum_native_batch": 48
+  },
+  "interface": {
+    "kind": "velocity",
+    "motor_shape": [
+      50,
+      32
+    ],
+    "steering_dim": 32,
+    "candidates": 8,
+    "fraction": 0.125
+  },
+  "optimizer_config": {
+    "feature_dim": 2064,
+    "residual_dim": 32,
+    "width": 256,
+    "layers": 2,
+    "initial_std": 0.5,
+    "learning_rate": 0.0003,
+    "epochs": 10,
+    "minibatch_size": 32,
+    "clip": 0.2,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "entropy_coef": 0.0,
+    "value_coef": 0.5,
+    "max_grad_norm": 1.0,
+    "target_kl": 0.02,
+    "kl_check_cadence": "minibatch"
+  },
+  "history": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-native-qualification-20261103-r1/stress/velocity/collection.pt",
+    "sha256": "31019bb7e75fc3413d7e2152c18597c3fac3a9ec4de214b10d5f3f6b0b26ea8a"
+  },
+  "resources_after": {
+    "cgroup": {
+      "cpu.max": "2100000 100000",
+      "memory.max": "223338299392",
+      "memory.current": "18782322688",
+      "memory.peak": "179140681728",
+      "pids.current": "52",
+      "pids.max": "629145",
+      "pids.peak": "6636"
+    },
+    "fd_count": 191,
+    "nofile_limit": [
+      1048576,
+      1048576
+    ],
+    "shm_total_bytes": 51539607552,
+    "shm_free_bytes": 51539607552,
+    "descendants": [
+      {
+        "pid": 4543,
+        "name": "python",
+        "start_ticks": 518200734,
+        "interpreter_helper": true
+      }
+    ],
+    "maxrss_kib": 27108680
+  },
+  "sampled_phase_peaks": {
+    "samples": 196,
+    "peak_gpu_memory_mib": 73801.0,
+    "peak_fd_count": 491,
+    "peak_descendants": 193
+  },
+  "torch_peak_allocated_bytes": 16248506880,
+  "torch_peak_reserved_bytes": 22389194752,
+  "resources_after_lane_release": {
+    "cgroup": {
+      "cpu.max": "2100000 100000",
+      "memory.max": "223338299392",
+      "memory.current": "18782322688",
+      "memory.peak": "179140681728",
+      "pids.current": "52",
+      "pids.max": "629145",
+      "pids.peak": "6636"
+    },
+    "fd_count": 191,
+    "nofile_limit": [
+      1048576,
+      1048576
+    ],
+    "shm_total_bytes": 51539607552,
+    "shm_free_bytes": 51539607552,
+    "descendants": [
+      {
+        "pid": 4543,
+        "name": "python",
+        "start_ticks": 518200734,
+        "interpreter_helper": true
+      }
+    ],
+    "maxrss_kib": 27108680
+  },
+  "lanes_closed_before_next_arm": true
+}

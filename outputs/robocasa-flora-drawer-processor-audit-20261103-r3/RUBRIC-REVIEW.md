@@ -57,11 +57,14 @@ Primary run evidence:
 ## The input question being tested now
 
 The actual RGB reads in the latest scoring run match CPU references exactly.
-128@450 includes ten post-native opening frames. The current processor audit
-tests whether the official preprocessing stage preserves that information;
-its result is pending until the receipt and images are verified. Even an exact
-CPU reconstruction cannot prove semantic retention through learned visual
-embeddings or match previous GPU tensors that were never saved.
+128@450 includes ten post-native opening frames. The passing r3 audit now
+reconstructs all 256 frames byte for byte from the official CPU processor,
+including after the bfloat16 input conversion. Its six exported artifact
+hashes and all source-frame hashes verify, and the actual 0.5 normalizer
+matches the saved config. This reconstructed preprocessing stage preserves
+the sampled pixels. It cannot prove semantic retention through learned visual
+embeddings, runtime cache correctness, or equality to earlier GPU tensors
+that were never saved. See [the passing result](RESULT.md).
 
 The next scoring decision must follow that result. Do not launch another
 combined wording change merely because the previous one failed. A new

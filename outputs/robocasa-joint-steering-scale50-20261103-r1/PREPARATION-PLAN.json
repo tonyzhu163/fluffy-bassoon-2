@@ -1,5 +1,5 @@
 {
-  "status": "BOUNDED_QUALIFICATION_PLAN_NOT_SUBMITTED",
+  "status": "Q1_RUNNING_FUNCTIONAL_VELOCITY_PASS_THROUGHPUT_OVER_BUDGET_SUCCESSOR_PREPARING",
   "maximum_GPU_seconds": 2400,
   "maximum_GPUs": 1,
   "proposed_resources": {
@@ -11,7 +11,7 @@
     "velocity",
     "kv_all_layers"
   ],
-  "maximum_physical_qualification_episodes_per_arm": 48,
+  "maximum_physical_qualification_episodes_per_arm": 96,
   "horizon": 600,
   "policy_controls_per_arm": 28800,
   "reset_controls": "Charge every actual reset,failed/unresolved call; historical3/reset is a projection only.",
@@ -48,5 +48,15 @@
     "no scientific update or teacher admitted from numerical qualification"
   ],
   "cost_accounting": "Actual common loading/qualification overhead and per-arm phase clocks charge once; combine with carried122GPU-s, preserve failed attempts. Both production arms remain within80GPUh lifetime total.",
-  "next_after_pass": "Merge qualified code to main; fresh pinned source/output, actual8GPU probes and resource fit, compatible before-panels, counted update1 plus complete recovery. Then verify advancing updates and monitor20min."
+  "next_after_pass": "Merge qualified code to main; fresh pinned source/output, actual8GPU probes and resource fit, compatible before-panels, counted update1 plus complete recovery. Then verify advancing updates and monitor20min.",
+  "amendment": {
+    "reason": "Full history/video velocity bank489.412s for28800controls=58.846controls/s.50such banks\u00d78GPUs=54.379GPUh/arm collection alone, so scientific admission remains false.",
+    "candidate_source": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+    "candidate_GPU_job_submitted": false,
+    "execution_only_changes": "gzip compression level1 preserves decompressed bytes; FFmpeg threads1 preserves source frames/codec/quality; no batch/horizon/reward/loss/optimizer or scientific update count change.",
+    "resource_scope": "At most one sequential successor after Q1 terminal/released; ORIGINAL2400GPU-second qualification campaign cap is unchanged. Deduct Q1 actual conservative cost before setting successor deadline. Up to96qualification episodes/arm remains57600policy controls/arm under130000TRAIN reserve.",
+    "original_scope_retained": true,
+    "old_source_and_outputs_immutable": true,
+    "qualification_before_admission": "45CPUtests passed. Fresh actual native calibration and both48lane full600banks, artifacts/memory/time/storage/cost qualification still required for changed I/O source."
+  }
 }

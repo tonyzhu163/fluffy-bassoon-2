@@ -224,7 +224,7 @@ def main():
         from fluffy_bassoon.meta_rl.joint_steering_ppo import (TASKS, JointActionJournal, cases_for,
             make_policy, native_scale_calibration, qualify_learning_rates, select_scale, spec_arguments)
         from fluffy_bassoon.meta_rl.joint_steering_ppo_worker import (_load_native, _RecordingEnvironment,
-            _qualify_cached, _save, _versions, collect_bank)
+            _qualify_cached, _save, _versions, collect_bank, native_video_writer)
         from fluffy_bassoon.meta_rl.rlinf_native_ppo import cpu_tree, snapshot_rng, tensor_hash
         import imageio.v2 as imageio
         watch = ResourceWatch(output, device["uuid"])
@@ -241,7 +241,7 @@ def main():
         def make_environments(cases, root, lanes, label):
             rows = [_RecordingEnvironment(factory, cases, horizon=None, output=root / "videos" / f"lane-{lane:02d}",
                 monitoring_root=root / "monitoring" / f"lane-{lane:02d}", journal=journal,
-                writer_factory=imageio.get_writer, rank=0, episode_id_prefix=label + f"-l{lane:02d}-",
+                writer_factory=native_video_writer, rank=0, episode_id_prefix=label + f"-l{lane:02d}-",
                 canonical_root=canonical, source=dict(phase="qualification", scientific_updates=0,
                     source_commit=binding["source_commit"], runtime_commit=binding["runtime_commit"])) for lane in range(lanes)]
             environments.extend(rows)
