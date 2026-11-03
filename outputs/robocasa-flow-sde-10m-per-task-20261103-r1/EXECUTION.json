@@ -1,8 +1,8 @@
 {
   "owner_chat": "01a1a077-e5ab-7982-840d-de8a81d4321a",
-  "checked_shanghai": "2026-11-03 16:29",
+  "checked_shanghai": "2026-11-03 16:40",
   "source_commit": "686d26194c4b382736b34bec4ca59d9c8a51e499",
-  "phase": "OpenDrawer Q1 submitted",
+  "phase": "Q1 numerical qualification fault; no SGD; diagnose before other tasks",
   "cluster": "Baige Pro6K",
   "queue": "\u7b97\u6cd5Z\u7ec4",
   "jobs": [
@@ -12,17 +12,21 @@
       "job_id": "job-2z7heniyxam3",
       "job_name": "mwj_1103_flow10m_opendrawer_q1_1x8_r1",
       "submitted_shanghai": "2026-11-03 16:28:48",
-      "state": "CREATED",
+      "state": "FAILED",
       "gpus": 8,
       "cpus": 168,
       "ram_gib": 1280,
       "shm_gib": 32,
       "max_minutes": 90,
       "automatic_retry": false,
-      "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/q1-r1"
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/q1-r1",
+      "before_success": "40/64",
+      "train_episodes": 128,
+      "optimizer_steps": 0,
+      "process_gpu_seconds": 4352
     }
   ],
-  "next_action": "Verify OpenDrawer before-panel, first update, C1-C3, bytes and full checkpoint; then remaining four Q1 allocations and qualified resumes",
+  "next_action": "Replay saved samples on one GPU to isolate cohort layout, forward mode and likelihood mismatch; no further simulator collection before diagnosis",
   "fixed_batch_layout": {
     "train_envs_per_gpu": 16,
     "rollout_rounds": 1,
