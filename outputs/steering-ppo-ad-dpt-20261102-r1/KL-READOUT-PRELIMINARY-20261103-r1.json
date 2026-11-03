@@ -1,0 +1,235 @@
+{
+  "format": "KL_native_preliminary_observation_v1",
+  "observed_UTC": "2026-11-03 08:09:56 UTC",
+  "diagnostic_owner": "01a19fe9-1842-7533-80d1-e24db386a023",
+  "owner_cursor": "df3f8704-f3bd-4226-9f29-e6160d5e8d5b:9",
+  "job": "job-1nds2rm4v2rp",
+  "source": "12d1f24189a6b8308675fb3efbeb2dacfd0e3880",
+  "remote_result": "/mowenjie/fluffy-bassoon-2/outputs/steering-kl-guard-ablation-20261103-r1/gpu-r2/RESULT.json",
+  "result_sha256": "5bc17afbeb69174aeb241231631a4a355fe429e9fed3f81ba4364e7040e51f59",
+  "native_panel_completed": true,
+  "expected_complete_episodes": 1500,
+  "physical_eval_controls": 900000,
+  "pending_physical_calls": {},
+  "arms": {
+    "velocity": {
+      "summaries": {
+        "initial": {
+          "episodes": 250,
+          "success_once": 0.44800000000000006,
+          "success_at_end": 0.43200000000000005
+        },
+        "guarded1": {
+          "episodes": 250,
+          "success_once": 0.43200000000000005,
+          "success_at_end": 0.396
+        },
+        "unguarded1": {
+          "episodes": 250,
+          "success_once": 0.404,
+          "success_at_end": 0.38
+        }
+      },
+      "guarded_to_unguarded": {
+        "success_once": {
+          "per_task": {
+            "OpenDrawer": {
+              "cases": 50,
+              "wins": 4,
+              "losses": 6,
+              "gain": -0.04
+            },
+            "PickPlaceCounterToCabinet": {
+              "cases": 50,
+              "wins": 5,
+              "losses": 4,
+              "gain": 0.02
+            },
+            "PickPlaceDrawerToCounter": {
+              "cases": 50,
+              "wins": 8,
+              "losses": 11,
+              "gain": -0.06
+            },
+            "TurnOffStove": {
+              "cases": 50,
+              "wins": 4,
+              "losses": 5,
+              "gain": -0.02
+            },
+            "CoffeeSetupMug": {
+              "cases": 50,
+              "wins": 6,
+              "losses": 8,
+              "gain": -0.04
+            }
+          },
+          "wins": 27,
+          "losses": 34,
+          "gain": -0.028,
+          "exact_p": 0.4426260049464714,
+          "paired_task_stratified_bootstrap_95ci": [
+            -0.08800000000000001,
+            0.03200000000000001
+          ]
+        },
+        "success_at_end": {
+          "per_task": {
+            "OpenDrawer": {
+              "cases": 50,
+              "wins": 4,
+              "losses": 6,
+              "gain": -0.04
+            },
+            "PickPlaceCounterToCabinet": {
+              "cases": 50,
+              "wins": 7,
+              "losses": 4,
+              "gain": 0.06
+            },
+            "PickPlaceDrawerToCounter": {
+              "cases": 50,
+              "wins": 7,
+              "losses": 10,
+              "gain": -0.06
+            },
+            "TurnOffStove": {
+              "cases": 50,
+              "wins": 5,
+              "losses": 5,
+              "gain": 0
+            },
+            "CoffeeSetupMug": {
+              "cases": 50,
+              "wins": 6,
+              "losses": 8,
+              "gain": -0.04
+            }
+          },
+          "wins": 29,
+          "losses": 33,
+          "gain": -0.016,
+          "exact_p": 0.7035366713552733,
+          "paired_task_stratified_bootstrap_95ci": [
+            -0.07600000000000001,
+            0.04400000000000001
+          ]
+        }
+      },
+      "interpretation": "Exploratory first-update diagnostic, no convergence or task-generalization claim"
+    },
+    "kv_all_layers": {
+      "summaries": {
+        "initial": {
+          "episodes": 250,
+          "success_once": 0.43999999999999995,
+          "success_at_end": 0.4200000000000001
+        },
+        "guarded1": {
+          "episodes": 250,
+          "success_once": 0.404,
+          "success_at_end": 0.38
+        },
+        "unguarded1": {
+          "episodes": 250,
+          "success_once": 0.44400000000000006,
+          "success_at_end": 0.42000000000000004
+        }
+      },
+      "guarded_to_unguarded": {
+        "success_once": {
+          "per_task": {
+            "OpenDrawer": {
+              "cases": 50,
+              "wins": 5,
+              "losses": 3,
+              "gain": 0.04
+            },
+            "PickPlaceCounterToCabinet": {
+              "cases": 50,
+              "wins": 2,
+              "losses": 2,
+              "gain": 0
+            },
+            "PickPlaceDrawerToCounter": {
+              "cases": 50,
+              "wins": 11,
+              "losses": 9,
+              "gain": 0.04
+            },
+            "TurnOffStove": {
+              "cases": 50,
+              "wins": 8,
+              "losses": 1,
+              "gain": 0.14
+            },
+            "CoffeeSetupMug": {
+              "cases": 50,
+              "wins": 5,
+              "losses": 6,
+              "gain": -0.02
+            }
+          },
+          "wins": 31,
+          "losses": 21,
+          "gain": 0.04,
+          "exact_p": 0.21160856876151612,
+          "paired_task_stratified_bootstrap_95ci": [
+            -0.016,
+            0.096
+          ]
+        },
+        "success_at_end": {
+          "per_task": {
+            "OpenDrawer": {
+              "cases": 50,
+              "wins": 7,
+              "losses": 3,
+              "gain": 0.08
+            },
+            "PickPlaceCounterToCabinet": {
+              "cases": 50,
+              "wins": 2,
+              "losses": 2,
+              "gain": 0
+            },
+            "PickPlaceDrawerToCounter": {
+              "cases": 50,
+              "wins": 10,
+              "losses": 7,
+              "gain": 0.06
+            },
+            "TurnOffStove": {
+              "cases": 50,
+              "wins": 6,
+              "losses": 2,
+              "gain": 0.08
+            },
+            "CoffeeSetupMug": {
+              "cases": 50,
+              "wins": 5,
+              "losses": 6,
+              "gain": -0.02
+            }
+          },
+          "wins": 30,
+          "losses": 20,
+          "gain": 0.04,
+          "exact_p": 0.20263875106454066,
+          "paired_task_stratified_bootstrap_95ci": [
+            -0.016,
+            0.096
+          ]
+        }
+      },
+      "interpretation": "Exploratory first-update diagnostic, no convergence or task-generalization claim"
+    }
+  },
+  "artifact_audit_completed_by_owner": false,
+  "terminal_scheduler_cost_audit_pending": true,
+  "interpretation": "Both first-success paired intervals include zero; no conclusive benefit from removing the guard in this exploratory first-update/one-epoch five-ID-task comparison. Pending final artifact audit; no50-update or OOD/generalization claim.",
+  "production_hold_still_in_force": true,
+  "source_binding": null,
+  "student_fits": {},
+  "next_action": "Observe owner's final artifact/terminal audit and explicit human KL review/recipe/release; no source recovery or student launch from this preliminary result alone."
+}
