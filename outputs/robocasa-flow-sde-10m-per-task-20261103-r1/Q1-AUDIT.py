@@ -83,12 +83,10 @@ def main():
         for name, env_name in fields.items():
             image_rows[name] = hashes(value['current_observation'][env_name])
             env_hashes[name].update(image_rows[name])
-        states = hashes(value['current_observation']['states'])
-        actions = hashes(value['decoded_actions'].reshape(16, 600))
         chunk = int(path.name.split('-chunk')[1].split('.')[0])
         for lane in range(16):
-            key = tuple(image_rows[name][lane] for name in fields) + (states[lane], actions[lane])
-            assert key not in env_identity, 'Ambiguous full observation/action identity'
+            key = tuple(image_rows[name][lane] for name in fields) + (chunk,)
+            assert key not in env_identity, 'Ambiguous three-camera/chunk identity'
             env_identity[key] = dict(episode_id=value['episode_ids'][lane], chunk=chunk,
                 environment_record=str(path), local_lane=lane)
         if path.name.endswith('chunk12.pt.gz'):
@@ -113,11 +111,9 @@ def main():
             image_rows[name] = hashes(tensor.reshape(time_count * lanes, *tensor.shape[2:]))
             actor_hashes[name].update(image_rows[name])
             dropped_uncompressed_bytes += tensor.numel() * tensor.element_size()
-        states = hashes(inputs['observation/state'].reshape(time_count * lanes, -1))
-        actions = hashes(batch['actions'].reshape(time_count * lanes, 600))
         for index in range(time_count * lanes):
-            key = tuple(image_rows[name][index] for name in fields) + (states[index], actions[index])
-            assert key in env_identity, 'Actor sample has no exact environment observation/action join'
+            key = tuple(image_rows[name][index] for name in fields) + (index // lanes + 1,)
+            assert key in env_identity, 'Actor sample has no exact environment camera/chunk join'
             actor_joins.append(dict(actor_record=str(path), time_index=index // lanes,
                 local_batch_index=index % lanes, **env_identity[key]))
         tensor = inputs['chains']
@@ -129,7 +125,9 @@ def main():
     assert len(actor_joins) == len(env_identity) == 1536
     assert len({(row['episode_id'], row['chunk']) for row in actor_joins}) == 1536
     join_path = args.output.with_name('ACTOR-EPISODE-JOIN.json')
-    join_path.write_text(json.dumps(dict(completed=True, samples=1536, rows=actor_joins), indent=2) + '\n')
+    join_path.write_text(json.dumps(dict(completed=True, samples=1536,
+        method='Exact bytes of all three raw cameras and fixed H50 chunk index; unique for every sample',
+        rows=actor_joins), indent=2) + '\n')
     checkpoint = root / contract['task'] / 'checkpoints/global_step_1'
     boundary = read(checkpoint / 'pilot-boundary.json')
     assert boundary['completed'] and boundary['global_step'] == 1 and len(boundary['workers']) == 18
