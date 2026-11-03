@@ -387,6 +387,22 @@ receipts,82 prompt/RGB audits,4 repeated anchors and67 exported hashes verify;
 674 workerGPU-s,0 new controls/SGD. No candidate is promoted. Next cheap
 step: inspect the official processor path before more wording changes.
 [Exact texts and per-case results](../outputs/robocasa-flora-drawer-target-hints-20261103-r1/RESULT.md).
+A pinned CPU processor reconstruction now preserves all 256 sampled frames
+for 112@350, 256@750, 376@750 and 128@450 byte for byte, including after the
+bfloat16 input conversion. The full HF path and direct video processor agree:
+64 original 320×960 frames become a 32×20×60 grid with 38,400×1,536 feature
+values; temporal pairs are packed, not averaged. The actual mean/std are
+0.5 tuples, matching the saved config; a failed audit guard had compared them
+with a list. Six artifact hashes, all source-frame hashes and four previous
+rendered prompts verify after download. The passing identity is processor-
+audit **r3**, source d565865a; r1/r2 remain failed attempts. 381.064 s audit
+wall / 402.652 s process wall, exit 0, no weights, model inference or GPU work.
+This reconstructed preprocessing stage does not erase the selected evidence;
+previous GPU tensors and learned semantic retention remain unverified. The
+128 opening lies near the lower image edge, motivating only one unlaunched,
+bounded framing comparison, with held-out qualification still required.
+[Passing receipt and limits](../outputs/robocasa-flora-drawer-processor-audit-20261103-r3/RESULT.md),
+[consolidated rubric evidence](../outputs/robocasa-flora-drawer-processor-audit-20261103-r3/RUBRIC-REVIEW.md).
 A subsequent CPU geometry audit finds all six selected targets at z=0.785,
 with no drawer above the target in its stack, and matching scene metadata.
 Thus an incorrectly assumed uppermost target does not explain the128/144
