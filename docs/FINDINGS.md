@@ -364,6 +364,20 @@ human52.25% boundary measurement.32 lossless pages/33 hashes verify;19.590CPU-s,
 0 model/simulator calls. Three untested minimal texts now separate an exact1.6
 boundary from initial-target tracking and a conditional shallow-drawer hint.
 No reward promotion. [Sampled-frame evidence and next screen](../outputs/robocasa-flora-drawer-sampled-frames-20261103-r1/RESULT.md).
+A subsequent26-prefix/10-video screen isolates exact native extent and two
+minimal target hints. Exact1.6 boundary alone gives0/14 false full scores but
+only3/12 post-success full scores and0/6 timely confirmed detections. Adding
+initial-target tracking raises true full scores to6 and raw timely detections
+to5/6, but falsely scores wrong-drawer376@700 as5; only1/6 confirms. The
+shallow-target hint produces2 false full scores and1/6 confirmed successes.
+128 remains1 at350/400/450 under all3 fresh texts. All82 actual raw RGB inputs
+match CPU references, including the audited128 sequence; different decoded
+frames therefore do not explain this run's miss. Post-processor information
+and model internals remain unaudited. All82 new grades,104 paired labels,13
+receipts,82 prompt/RGB audits,4 repeated anchors and67 exported hashes verify;
+674 workerGPU-s,0 new controls/SGD. No candidate is promoted. Next cheap
+step: inspect the official processor path before more wording changes.
+[Exact texts and per-case results](../outputs/robocasa-flora-drawer-target-hints-20261103-r1/RESULT.md).
 A subsequent CPU geometry audit finds all six selected targets at z=0.785,
 with no drawer above the target in its stack, and matching scene metadata.
 Thus an incorrectly assumed uppermost target does not explain the128/144
