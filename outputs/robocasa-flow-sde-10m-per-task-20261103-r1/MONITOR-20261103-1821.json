@@ -1,0 +1,327 @@
+{
+  "checked_shanghai": "2026-11-03 18:21:56",
+  "checked_unix": 1793701316.0926845,
+  "tasks": {
+    "OpenDrawer": {
+      "output_exists": true,
+      "progress.json": {
+        "completed_iterations": 11,
+        "target_iterations": 130,
+        "checked_unix": 1793701240.7527165,
+        "operator_checkpoint_exit": false
+      },
+      "manifest.json": {
+        "hostname": "job-9j5eqjo0dfzj-master-0",
+        "source": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
+        "runtime": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+        "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+        "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+        "allocated_gpus": 8,
+        "CPU": 168,
+        "RAM_GiB": 1280,
+        "SHM_GiB": 32,
+        "free_bytes": 744119861248,
+        "quota": "Shared PFS2TiB; no per-project quota interface exposed",
+        "started_unix": 1793698448.4278507,
+        "task": "OpenDrawer",
+        "segment": "production",
+        "batch_layout": {
+          "world": 8,
+          "train_envs_per_rank": 16,
+          "eval_envs_per_rank": 8,
+          "actor_ranks": 2
+        },
+        "nominal_controls_source": "flow-contract.json"
+      },
+      "latest_update": {
+        "completed": true,
+        "rank": 0,
+        "producing_policy_iteration": 10,
+        "optimizer_steps_before": 240,
+        "optimizer_steps_after": 264,
+        "batch_shape": [
+          12,
+          64,
+          50,
+          12
+        ],
+        "losses": {
+          "actor/entropy_loss": 0.0,
+          "actor/grad_norm": 33.501102447509766,
+          "actor/policy_loss": -0.31860435009002686,
+          "actor/policy_loss_abs": 0.8303852677345276,
+          "actor/total_loss": -0.033428922295570374,
+          "critic/value_loss": 0.051172949373722076
+        },
+        "metrics": {
+          "actor/approx_kl": 0.030825572088360786,
+          "actor/clip_fraction": 0.15998613834381104,
+          "actor/clipped_ratio": 0.999076247215271,
+          "actor/dual_cliped_ratio": 0.0,
+          "actor/entropy_loss": 0.0,
+          "actor/grad_norm": 33.501102447509766,
+          "actor/lr": 4.999999873689376e-06,
+          "actor/policy_loss": -0.31860435009002686,
+          "actor/policy_loss_abs": 0.8303852677345276,
+          "actor/ratio": 1.0404610633850098,
+          "actor/ratio_abs": 0.18365901708602905,
+          "actor/total_loss": -0.033428922295570374,
+          "critic/lr": 9.999999747378752e-05,
+          "critic/value_clip_ratio": 0.016560588032007217,
+          "critic/value_loss": 0.051172949373722076,
+          "critic/explained_variance": 0.36888641119003296
+        },
+        "training_seconds": 115.42046535760164,
+        "cuda_peak_allocated_bytes": 20251212800,
+        "cuda_peak_reserved_bytes": 25631391744,
+        "frozen_vlm_unchanged": true
+      },
+      "latest_parity": {
+        "passed": true,
+        "finite": true,
+        "shape": [
+          16,
+          50,
+          12
+        ],
+        "action_dim": 12,
+        "tolerance": 0.001,
+        "max_abs_chunk_log_ratio": 0.0,
+        "max_abs_coordinate_log_ratio": 0.0,
+        "mean_abs_chunk_log_ratio": 0.0,
+        "optimizer_steps": 240,
+        "before_backward": true
+      },
+      "full_boundaries": [
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints/global_step_10",
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints/global_step_2"
+      ],
+      "probe": {
+        "status": "passed",
+        "count": 8
+      }
+    },
+    "CloseToasterOvenDoor": {
+      "output_exists": true,
+      "progress.json": {
+        "completed_iterations": 9,
+        "target_iterations": 130,
+        "checked_unix": 1793701130.0671484,
+        "operator_checkpoint_exit": false
+      },
+      "manifest.json": {
+        "hostname": "job-jpfh2j0xelgo-master-0",
+        "source": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
+        "runtime": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+        "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+        "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+        "allocated_gpus": 8,
+        "CPU": 168,
+        "RAM_GiB": 1280,
+        "SHM_GiB": 32,
+        "free_bytes": 783797977088,
+        "quota": "Shared PFS2TiB; no per-project quota interface exposed",
+        "started_unix": 1793698877.2618265,
+        "task": "CloseToasterOvenDoor",
+        "segment": "production",
+        "batch_layout": {
+          "world": 8,
+          "train_envs_per_rank": 16,
+          "eval_envs_per_rank": 8,
+          "actor_ranks": 2
+        },
+        "nominal_controls_source": "flow-contract.json"
+      },
+      "latest_update": {
+        "completed": true,
+        "rank": 0,
+        "producing_policy_iteration": 8,
+        "optimizer_steps_before": 192,
+        "optimizer_steps_after": 216,
+        "batch_shape": [
+          12,
+          64,
+          50,
+          12
+        ],
+        "losses": {
+          "actor/entropy_loss": 0.0,
+          "actor/grad_norm": 42.778263092041016,
+          "actor/policy_loss": -0.24303093552589417,
+          "actor/policy_loss_abs": 0.9037382006645203,
+          "actor/total_loss": -0.0229524914175272,
+          "critic/value_loss": 0.059411004185676575
+        },
+        "metrics": {
+          "actor/approx_kl": 0.06276130676269531,
+          "actor/clip_fraction": 0.14437028765678406,
+          "actor/clipped_ratio": 0.9889209270477295,
+          "actor/dual_cliped_ratio": 0.0,
+          "actor/entropy_loss": 0.0,
+          "actor/grad_norm": 42.778263092041016,
+          "actor/lr": 4.999999873689376e-06,
+          "actor/policy_loss": -0.24303093552589417,
+          "actor/policy_loss_abs": 0.9037382006645203,
+          "actor/ratio": 1.0284252166748047,
+          "actor/ratio_abs": 0.1943199634552002,
+          "actor/total_loss": -0.0229524914175272,
+          "critic/lr": 9.999999747378752e-05,
+          "critic/value_clip_ratio": 0.007679310627281666,
+          "critic/value_loss": 0.059411004185676575,
+          "critic/explained_variance": 0.0870864987373352
+        },
+        "training_seconds": 116.18198148347437,
+        "cuda_peak_allocated_bytes": 20250686976,
+        "cuda_peak_reserved_bytes": 25635586048,
+        "frozen_vlm_unchanged": true
+      },
+      "latest_parity": {
+        "passed": true,
+        "finite": true,
+        "shape": [
+          16,
+          50,
+          12
+        ],
+        "action_dim": 12,
+        "tolerance": 0.001,
+        "max_abs_chunk_log_ratio": 0.0,
+        "max_abs_coordinate_log_ratio": 0.0,
+        "mean_abs_chunk_log_ratio": 0.0,
+        "optimizer_steps": 216,
+        "before_backward": true
+      },
+      "full_boundaries": [
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/production-r1/CloseToasterOvenDoor/checkpoints/global_step_2"
+      ],
+      "probe": {
+        "status": "passed",
+        "count": 8
+      }
+    },
+    "PickPlaceDrawerToCounter": {
+      "output_exists": true,
+      "progress.json": {
+        "completed_iterations": 5,
+        "target_iterations": 130,
+        "checked_unix": 1793701176.614055,
+        "operator_checkpoint_exit": false
+      },
+      "manifest.json": {
+        "hostname": "job-zqn304j2b9lw-master-0",
+        "source": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
+        "runtime": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+        "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+        "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+        "allocated_gpus": 8,
+        "CPU": 168,
+        "RAM_GiB": 1280,
+        "SHM_GiB": 32,
+        "free_bytes": 743415218176,
+        "quota": "Shared PFS2TiB; no per-project quota interface exposed",
+        "started_unix": 1793699930.1640632,
+        "task": "PickPlaceDrawerToCounter",
+        "segment": "production",
+        "batch_layout": {
+          "world": 8,
+          "train_envs_per_rank": 16,
+          "eval_envs_per_rank": 8,
+          "actor_ranks": 2
+        },
+        "nominal_controls_source": "flow-contract.json"
+      },
+      "latest_update": {
+        "completed": true,
+        "rank": 0,
+        "producing_policy_iteration": 4,
+        "optimizer_steps_before": 96,
+        "optimizer_steps_after": 120,
+        "batch_shape": [
+          12,
+          64,
+          50,
+          12
+        ],
+        "losses": {
+          "actor/entropy_loss": 0.0,
+          "actor/grad_norm": 52.966163635253906,
+          "actor/policy_loss": -0.2266719937324524,
+          "actor/policy_loss_abs": 0.9716441631317139,
+          "actor/total_loss": -0.020118292421102524,
+          "critic/value_loss": 0.06572563946247101
+        },
+        "metrics": {
+          "actor/approx_kl": 0.11905153095722198,
+          "actor/clip_fraction": 0.2102491408586502,
+          "actor/clipped_ratio": 0.9851442575454712,
+          "actor/dual_cliped_ratio": 0.0,
+          "actor/entropy_loss": 0.0,
+          "actor/grad_norm": 52.966163635253906,
+          "actor/lr": 4.999999873689376e-06,
+          "actor/policy_loss": -0.2266719937324524,
+          "actor/policy_loss_abs": 0.9716441631317139,
+          "actor/ratio": 1.0143946409225464,
+          "actor/ratio_abs": 0.23261603713035583,
+          "actor/total_loss": -0.020118292421102524,
+          "critic/lr": 9.999999747378752e-05,
+          "critic/value_clip_ratio": 0.0023293220438063145,
+          "critic/value_loss": 0.06572563946247101,
+          "critic/explained_variance": 0.1523417830467224
+        },
+        "training_seconds": 115.47604926303029,
+        "cuda_peak_allocated_bytes": 20251830272,
+        "cuda_peak_reserved_bytes": 25631391744,
+        "frozen_vlm_unchanged": true
+      },
+      "latest_parity": {
+        "passed": true,
+        "finite": true,
+        "shape": [
+          16,
+          50,
+          12
+        ],
+        "action_dim": 12,
+        "tolerance": 0.001,
+        "max_abs_chunk_log_ratio": 0.0,
+        "max_abs_coordinate_log_ratio": 0.0,
+        "mean_abs_chunk_log_ratio": 0.0,
+        "optimizer_steps": 96,
+        "before_backward": true
+      },
+      "full_boundaries": [
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/production-r1/PickPlaceDrawerToCounter/checkpoints/global_step_2"
+      ],
+      "probe": {
+        "status": "passed",
+        "count": 8
+      }
+    },
+    "CoffeeSetupMug": {
+      "output_exists": false,
+      "full_boundaries": []
+    },
+    "TurnOffStove": {
+      "output_exists": false,
+      "full_boundaries": []
+    }
+  },
+  "PFS_free_GiB": 647.75,
+  "live_production_GPU_seconds": 53539.39450454712,
+  "completed_Q1_GPU_seconds": 21824,
+  "failed_Q1_GPU_seconds": 4352,
+  "diagnostic_GPU_seconds_upper": 213,
+  "cumulative_GPU_hours": 22.202331806818645,
+  "scheduler_check": "Native browser-control pipe unavailable; advancing running jobs verified through actual output records. Queued outputs still absent; retry console next check.",
+  "checkpoint_tiering": {
+    "state": "RUNNING",
+    "pid": 2024977,
+    "tool_commit": "475e1c5d",
+    "script_sha256": "88a12eaf79e18bfd527f22870085414505eb473737773230b364c3b790bc3b97",
+    "receipt": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TIER-20261103-1821.json",
+    "log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/tier-20261103-1821.log",
+    "verified_tool_matches_git": true,
+    "observed_stage": "OpenDrawer--q1-r2--global_step_1.tar.zst >13GB",
+    "next_action": "Check receipt and exact PID/command before another tier invocation; newest full checkpoints and all corpora retained"
+  }
+}
