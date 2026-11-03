@@ -83,12 +83,13 @@ def native_inventory(root, task_root, source):
 
 
 def audit_inputs(paths, task, source=None, require_full=False):
-    rows, refs, known, metadata = [], [], {}, set()
+    rows, refs, known, metadata, snapshots = [], [], {}, set(), {}
     for path in paths:
         data = path.read_bytes()
         value = json.loads(data)
         assert value['completed']
         refs.append(dict(path=str(path), sha256=hashlib.sha256(data).hexdigest()))
+        snapshots[str(path)] = data.decode('utf-8')
         metadata.add(path)
         rows.extend(row for row in value['audits'] if row['task'] == task
                     and (source is None or row['root'] == str(source)))
@@ -109,7 +110,8 @@ def audit_inputs(paths, task, source=None, require_full=False):
             if name in known:
                 assert known[name] == item
             known[name] = item
-    return dict(rows=rows, refs=refs, known=known, metadata=metadata, through=max(versions))
+    return dict(rows=rows, refs=refs, known=known, metadata=metadata,
+                snapshots=snapshots, through=max(versions))
 
 
 def validate_closed(task_root, source, qualification):
@@ -231,6 +233,7 @@ def main():
         inventory = native_inventory(root, task_root, source)
         assert args.archive and args.archive.resolve().is_relative_to(BOS.resolve())
         proof = dict(task=args.task, audit_through=audit['through'], audit_refs=audit['refs'],
+            audit_input_snapshots=audit['snapshots'],
             qualification_only=args.qualification_source is not None, checkpoint=checkpoint)
         archive = stream_archive(root, source, inventory, audit['known'], args.archive, proof)
         assert native_inventory(root, task_root, source) == inventory
