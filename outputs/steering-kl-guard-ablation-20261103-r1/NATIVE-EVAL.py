@@ -158,6 +158,10 @@ def child(args, profile):
 
 def main():
     args = parse()
+    def interrupted(signum, frame):
+        raise TimeoutError(f"Finite diagnostic interrupted by signal{signum}")
+    for sig in (signal.SIGTERM, signal.SIGINT):
+        signal.signal(sig, interrupted)
     profile = json.loads(args.profile.read_text())
     sys.path.insert(0, str(Path(profile["code"]) / "src"))
     import torch
