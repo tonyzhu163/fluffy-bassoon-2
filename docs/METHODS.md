@@ -117,6 +117,16 @@ actions. Qualify and record backend numerical tolerances using unchanged-input
 replays; transformed feature hashes alone are not physical case identifiers.
 Keep original policy observations and retain per-episode pairing evidence.
 
+New joint-steering readouts use `fixed_batches_shared_scenes_v2`: fixed-width
+waves retain case order and model row positions, including after short episodes
+finish. Padding rows make no simulator steps and contribute no learner samples.
+Both arms share a canonical scene bank and reject unequal native geometry,
+initial state or initial camera pixels before acting. Counter placement regions
+are sorted geometrically before the seeded choice to remove process-dependent
+set iteration. Native Gaussian draws remain keyed by case and chunk; live
+observations still determine the learned steering mean at every chunk. Historical
+commit-pinned runs retain their original protocol.
+
 | Path | Contents |
 | --- | --- |
 | `src/fluffy_bassoon/meta_rl/` | Trial environments, PPO/SAC, DSRL drivers (`vla_target_online_dsrl*`, `dsrl_pi0_replication`), headroom screen (`vla_headroom_screen`), RLinf motor (`vla_rlinf_libero`), RLinf native PPO (`rlinf_native_ppo*`), source40 pipeline (`vla_source40_*`), RoboTwin (`robotwin_*`), Meta-World (`metaworld_*`) |
