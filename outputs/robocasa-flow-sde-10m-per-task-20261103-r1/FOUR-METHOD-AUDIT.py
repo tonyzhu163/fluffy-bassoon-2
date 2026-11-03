@@ -8,6 +8,7 @@ import json
 import multiprocessing
 from pathlib import Path
 import time
+import traceback
 
 import torch
 import numpy as np
@@ -274,8 +275,48 @@ def initialize_worker(threads):
     torch.set_num_interop_threads(1)
 
 
+def atomic_json(path, value):
+    temporary = path.with_suffix(path.suffix + '.tmp')
+    temporary.write_text(json.dumps(value, indent=2) + '\n')
+    temporary.replace(path)
+
+
+def watch_production(production, task, tag, start, stop, previous_audit):
+    """Audit immutable completed collections as each task makes them available."""
+    latest = production.parent / f'{tag}-LATEST.json'
+    assert not latest.exists()
+    rows = []
+    collection = start
+    try:
+        for collection in range(start, stop + 1):
+            while True:
+                progress = json.loads((production / 'progress.json').read_text())
+                completed = progress['completed_iterations']
+                clock_path = production / 'clock.json'
+                clock = json.loads(clock_path.read_text()) if clock_path.exists() else None
+                if clock is not None:
+                    assert clock['exit_code'] == 0, 'Source segment failed; diagnose before continuing'
+                    assert completed >= collection, 'Source segment closed early; resume explicitly'
+                if completed > collection or (clock is not None and completed >= collection):
+                    break
+                time.sleep(15)
+            sampling = index_sampling(production, [collection], previous_audit)[collection]
+            rows.append(audit(production, collection, tag, sampling))
+            atomic_json(latest, dict(completed=True, task=task, audits=rows,
+                through_collection=collection, target_collection=stop,
+                requested_range_finished=collection == stop, checked_unix=time.time(),
+                new_controls=0, SGD=0))
+            previous_audit = latest
+    except Exception:
+        atomic_json(production.parent / f'{tag}-ERROR.json', dict(completed=False,
+            task=task, failed_collection=collection, checked_unix=time.time(),
+            traceback=traceback.format_exc(), new_controls=0, SGD=0))
+        raise
+    return rows
+
+
 def audit_task(arguments):
-    root, task, tag, production_only, collections, previous_audit, reference_audit = arguments
+    root, task, tag, production_only, collections, previous_audit, reference_audit, watch_through = arguments
     stage = 'q1-r2' if task == 'OpenDrawer' else 'q1-r1'
     rows = []
     if not production_only:
@@ -283,9 +324,12 @@ def audit_task(arguments):
         rows.append(audit(q1, 1, tag, index_sampling(q1, [1])[1]))
     production = root / task / 'production-r1'
     if (production / 'progress.json').exists():
-        indexed = index_sampling(production, collections, previous_audit)
-        for collection in collections:
-            rows.append(audit(production, collection, tag, indexed[collection]))
+        if watch_through is not None:
+            rows.extend(watch_production(production, task, tag, collections[0], watch_through, previous_audit))
+        else:
+            indexed = index_sampling(production, collections, previous_audit)
+            for collection in collections:
+                rows.append(audit(production, collection, tag, indexed[collection]))
     assert rows, 'Requested production batch is not complete yet'
     if reference_audit is not None:
         reference = json.loads(reference_audit.read_text())
@@ -316,12 +360,17 @@ def main():
                         help='Qualification only: require identical joins and raw-file manifests')
     parser.add_argument('--workers', type=int, default=5)
     parser.add_argument('--threads', type=int, default=2)
+    parser.add_argument('--watch-through', type=int,
+                        help='Follow each task independently through this collection; preserve the next-update/closed-segment gate')
     args = parser.parse_args()
     assert not args.output.exists()
     assert len(set(args.tasks)) == len(args.tasks)
     assert len(set(args.collections)) == len(args.collections) and all(2 <= x <= 130 for x in args.collections)
     assert 1 <= args.workers <= 5 and 1 <= args.threads <= 2
     assert args.workers * args.threads <= 10
+    if args.watch_through is not None:
+        assert args.production_only and args.previous_audit is not None and len(args.collections) == 1
+        assert args.collections[0] <= args.watch_through <= 130
     # Q1 may be audited alongside any disjoint completed production block.
     # Five independent audits, two CPU threads each, within the allocated
     # development container's thirteen CPUs; no GPU visibility/model calls.
@@ -329,7 +378,7 @@ def main():
             mp_context=multiprocessing.get_context('spawn'),
             initializer=initialize_worker, initargs=(args.threads,)) as pool:
         groups = list(pool.map(audit_task, [(args.root, task, args.output.stem, args.production_only,
-            sorted(args.collections), args.previous_audit, args.reference_audit) for task in args.tasks]))
+            sorted(args.collections), args.previous_audit, args.reference_audit, args.watch_through) for task in args.tasks]))
     rows = [row for group in groups for row in group]
     result = dict(completed=True, checked_unix=time.time(), audits=rows, new_controls=0, SGD=0,
         ready_methods=['AD', 'DPT', 'DIT', 'in-context IQL'],
