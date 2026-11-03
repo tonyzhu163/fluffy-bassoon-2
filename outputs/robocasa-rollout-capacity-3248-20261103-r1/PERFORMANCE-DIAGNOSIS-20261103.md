@@ -15,7 +15,7 @@ audit does not duplicate or supersede their accounting.
 ## What differs from qualification
 
 Qualification and production use native source `8b9e1bbb`, runtime `8a1233c3`,
-the same model/config/normalization hashes, original H50/10-step/12D motor,
+the same model/config/motor-normalization-asset hashes, original H50/10-step/12D motor,
 2,064 pre-action features and width256/two-layer steering/value heads. Steering
 widths remain 32 for velocity and 1,152 for all-layer K+V. Fractions .125/.64,
 learning rates .0003/.00003, minibatch32, ten requested epochs and exact joint
@@ -30,12 +30,16 @@ worker defaults to false. Q2 therefore made 12 native B48 calls for each
 arrive and drains staggered episode tails. Each rank still serves exactly
 576 physical chunks and reaches the same prescribed episode boundaries.
 
-| Arm / update | Native calls across eight ranks | Average native batch | Per-rank elapsed range | Complete phase |
+| Arm / update | Native calls across eight ranks | Average native batch | Request→completion proxy | Complete phase |
 | --- | ---: | ---: | ---: | ---: |
 | Velocity / 1 | 210 | 21.94 | 321.84–350.89s | 355.32s |
 | Velocity / 2 | 170 | 27.11 | 333.35–372.08s | 375.45s |
 | All-layer KV / 1 | 169 | 27.27 | 339.07–371.19s | 388.09s |
 | All-layer KV / 2 | 193 | 23.88 | 343.48–386.97s | 400.22s |
+
+Per-rank time subtracts request-file mtime from the worker's recorded completion
+time. It includes waiting and reset work, uses filesystem/worker wall clocks,
+and is not a separately instrumented inference or kernel duration.
 
 Q2 needed 222.23s / 221.23s for velocity / KV, with twelve B48 calls on one
 GPU and the arms run sequentially. Across production ranks there are 15–33
