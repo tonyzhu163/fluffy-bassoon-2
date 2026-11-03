@@ -690,6 +690,22 @@ and an improving matched frozen-motor teacher have not been established here.
 [Result and curves](../outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/RESULT.md),
 [history compatibility and gaps](../outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/HISTORY-AUDIT.md).
 
+**Flow-SDE training-mode correction (2026-11-03).** The first 10M qualification
+found an unchanged-policy likelihood mismatch before SGD: maximum chunk log
+ratios were0.1243/0.2874 on the two actor ranks. GPU replay reproduces saved
+likelihoods exactly in eval mode, including shuffled batches; training mode
+changes the frozen SigLIP image encoder's attention path. Keeping only that
+frozen encoder in eval mode restores exact likelihoods with expert gradients
+enabled on both tested batches. This applies to the eighteen-update teacher's
+same native training path, so its KL/clip diagnostics and source-learning
+conclusion are not a qualified test of the intended PPO recipe. Preserve its
+observed success counts and histories as reference data; downstream fits using
+those histories retain that source limitation. The separate velocity/KV
+steering workers explicitly keep the motor in eval mode. Corrected source
+`0988b5f9` passes39Linux tests; full eight-GPU qualification is still pending.
+[Diagnosis and scope](../outputs/robocasa-flow-sde-10m-per-task-20261103-r1/VISION-MODE-BUG.md),
+[GPU replay](../outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PARITY-REPLAY-R2.json).
+
 ### Native atomic task screen (2026-11-03)
 
 A native frozen pi0.5 sweep completed all 240 episodes on 12 previously

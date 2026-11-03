@@ -50,6 +50,9 @@ def main():
     before = read(root / 'before-evaluation.json')
     assert before['completed'] and .05 <= before['metrics']['success_once'] <= .70
     before_files = sorted((root / 'environment').glob('*/before-*-episodes.json'))
+    if not before_files and before.get('reused_reference'):
+        reused = read(before['reused_reference']['path'])
+        before_files = [Path(row['path']) for row in reused['episode_refs']]
     before_rows = [row for path in before_files for row in read(path)['rows']]
     train_files = sorted((root / 'environment').glob('*/training-i000-*-episodes.json'))
     train_rows = [row for path in train_files for row in read(path)['rows']]

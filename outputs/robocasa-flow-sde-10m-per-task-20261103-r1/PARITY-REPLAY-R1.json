@@ -1,0 +1,159 @@
+{
+  "completed": true,
+  "results": [
+    {
+      "name": "original_cohort_eval",
+      "report": {
+        "passed": true,
+        "finite": true,
+        "shape": [
+          16,
+          50,
+          12
+        ],
+        "action_dim": 12,
+        "tolerance": 0.001,
+        "max_abs_chunk_log_ratio": 0.0,
+        "max_abs_coordinate_log_ratio": 0.0,
+        "mean_abs_chunk_log_ratio": 0.0
+      },
+      "seconds": 1.9396086260676384,
+      "indices": [
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63
+      ],
+      "tf32": true,
+      "matmul_precision": "high"
+    },
+    {
+      "name": "original_cohort_train_grad",
+      "report": {
+        "passed": false,
+        "finite": true,
+        "shape": [
+          16,
+          50,
+          12
+        ],
+        "action_dim": 12,
+        "tolerance": 0.001,
+        "max_abs_chunk_log_ratio": 1.6353759765625,
+        "max_abs_coordinate_log_ratio": 0.22375845909118652,
+        "mean_abs_chunk_log_ratio": 0.6794357299804688
+      },
+      "seconds": 0.4685243139974773,
+      "indices": [
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63
+      ],
+      "tf32": true,
+      "matmul_precision": "high"
+    },
+    {
+      "name": "shuffled_cohort_eval",
+      "report": {
+        "passed": true,
+        "finite": true,
+        "shape": [
+          16,
+          50,
+          12
+        ],
+        "action_dim": 12,
+        "tolerance": 0.001,
+        "max_abs_chunk_log_ratio": 0.0,
+        "max_abs_coordinate_log_ratio": 0.0,
+        "mean_abs_chunk_log_ratio": 0.0
+      },
+      "seconds": 0.4404058479703963,
+      "indices": [
+        303,
+        417,
+        120,
+        68,
+        332,
+        139,
+        426,
+        75,
+        23,
+        705,
+        631,
+        204,
+        370,
+        280,
+        645,
+        561
+      ],
+      "tf32": true,
+      "matmul_precision": "high"
+    },
+    {
+      "name": "shuffled_cohort_train_grad",
+      "report": {
+        "passed": false,
+        "finite": true,
+        "shape": [
+          16,
+          50,
+          12
+        ],
+        "action_dim": 12,
+        "tolerance": 0.001,
+        "max_abs_chunk_log_ratio": 0.12432861328125,
+        "max_abs_coordinate_log_ratio": 0.04770326614379883,
+        "mean_abs_chunk_log_ratio": 0.039370059967041016
+      },
+      "seconds": 0.4504434179980308,
+      "indices": [
+        303,
+        417,
+        120,
+        68,
+        332,
+        139,
+        426,
+        75,
+        23,
+        705,
+        631,
+        204,
+        370,
+        280,
+        645,
+        561
+      ],
+      "tf32": true,
+      "matmul_precision": "high"
+    }
+  ],
+  "SGD": 0,
+  "new_controls": 0
+}
