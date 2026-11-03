@@ -119,6 +119,8 @@ update.
 
 | Baige storage tiering | Complete; Baige development CPU only; all archive/reclaim workers stopped | **Nov3 06:08 Shanghai:**26/26 historical project/data/runtime groups cold-moved to BOS;1,562,959 entries,218.16GiB compressed archives. PFS580.80→842.85GiB free (**+262.05GiB observed net**; concurrent work can change usage). Full GNU tar comparison, full BOS SHA256 readback, unchanged-source and final pointer reconciliation passed;0 held sources or unresolved reclaim failures. Both Fluffy roots/current RL data stay warm; all13 retained interpreter targets rechecked. [Manifest and per-source restore commands](baige-storage-tiering-20261103-r1/MANIFEST.json), [protection](baige-storage-tiering-20261103-r1/PROTECTION.json), [final checks](baige-storage-tiering-20261103-r1/POSTCHECK.json). |
 
+| Research execution / five-update visibility | Coordinator chat `01a19f33`; owner jobs remain with their existing chats; 20-minute heartbeat active | **Nov3 10:34 Shanghai:** direct human go-ahead relayed for missing48 memory-control recovery, Flora processor-first audit and finalized50×384 steering PPO qualification→launch under80GPUh combined. Memory owner prepares1GPU/≤2GPUh continuation; PPO owner is replacing old4lane/80episode bindings before actual48lane qualification. Require DEV0/5/.../50 per independent arm and report every newly verified panel; W&B master-side scalar logging recommended, runtime/account check pending. No scientific job is claimed launched here. [State and owners](research-coordination-20261103-r1/STATE.json), [visibility and W&B](research-coordination-20261103-r1/MONITORING.md). |
+
 ### Needs owner refresh
 
 - Native VLRLA-recipe PPO pilot: last recorded 2026-10-31 14:06 Shanghai as

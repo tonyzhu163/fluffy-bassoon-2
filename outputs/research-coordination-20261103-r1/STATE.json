@@ -1,0 +1,78 @@
+{
+  "run_id": "research-coordination-20261103-r1",
+  "owner_thread": "01a19f33-dcb8-7b81-ac4c-b23c26b341de",
+  "timezone": "Asia/Shanghai",
+  "status": "EXECUTION_AUTHORIZED_OWNERS_ACTIVE",
+  "automation_id": "coordinate-ppo-milestones-and-recoveries",
+  "check_interval_minutes": 20,
+  "human_authority": [
+    "Coordinate memory-control recovery and full results, Flora reward diagnosis, and velocity/all-layer KV execution.",
+    "Explicit confirmation: yes can we do that then?",
+    "Monitor both 48-environment workers and evaluate every five PPO iterations for ten visibility points.",
+    "Assess connecting Weights & Biases."
+  ],
+  "owners": {
+    "memory_controls": {
+      "thread_id": "01a19bef-232f-7960-ab6d-7ce1539b6685",
+      "title": "Improve evaluation and training",
+      "cursor": "143ed4de-4086-4c7d-8526-8992e648a4bd:8",
+      "state": "Preparing one-GPU continuation for only 48 missing DPT/ID episodes; proposed two-GPU-hour ceiling.",
+      "recovery_job_id": null,
+      "verified_collected_endpoints": 1052,
+      "required_collected_endpoints": 1100,
+      "required_combined_endpoints": 2000,
+      "remaining_GPU_seconds": 23520,
+      "evidence": "outputs/opendrawer-memory-controls-20261102-r2/TERMINAL.md"
+    },
+    "flora_reward": {
+      "thread_id": "01a19bef-b16f-70e2-ad86-9140e3b360ed",
+      "title": "Fix Flora reward and unblock gates",
+      "cursor": "520aa979-d22d-4944-a890-27bd974a6515:5",
+      "state": "CPU processor audit running in pinned allocated-Linux checkout; reconstruct four retained inputs before more wording trials.",
+      "evidence": "outputs/robocasa-flora-drawer-target-hints-20261103-r1/RESULT.md"
+    },
+    "steering_ppo": {
+      "thread_id": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
+      "title": "Pull PPO coordination updates",
+      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:47",
+      "state": "Reconciling old four-lane/80-episode runner with finalized recipe; scale, optimizer and actual-worker qualification precede scientific launch.",
+      "scientific_job_ids": {},
+      "arms": ["velocity", "kv_all_layers"],
+      "updates_per_arm": 50,
+      "environments_per_GPU": 48,
+      "GPUs_per_arm": 8,
+      "episodes_per_update": 384,
+      "horizon": 600,
+      "combined_GPU_hour_cap": 80,
+      "GPU_hour_cap_per_arm": 40,
+      "evaluation_updates": [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+      "authority": "outputs/robocasa-rollout-capacity-3248-20261103-r1/BUDGET-INCREASE-20261103.json"
+    },
+    "downstream_histories": {
+      "thread_id": "01a199fb-3586-7171-bd20-52fa70e5378c",
+      "title": "Explain DPT context/query targets",
+      "cursor": "5e721a0b-3229-4c1f-beee-e2194e124fbd:51",
+      "state": "Final human recipe verified; own plan and monitor updated. Fits await completed qualified exact PPO histories."
+    }
+  },
+  "delivered_DEV_milestones": {
+    "velocity": [],
+    "kv_all_layers": []
+  },
+  "wandb": {
+    "status": "OWNER_IMPLEMENTING_OPTIONAL_LOGGER_RUNTIME_AND_ACCOUNT_CHECK_PENDING",
+    "implementation_owner": "steering_ppo",
+    "online_run_urls": {},
+    "design": "One master-side metrics run per arm with a common group, explicit update/action axes, local durable metrics authoritative and remote logging nonfatal.",
+    "uploads": "Allowlisted scalar metrics and non-secret configuration only; no automatic source, console, raw observations, video or model uploads.",
+    "fallback": "Offline logging if no configured authorized account/project or outbound access; essential training does not wait for dashboard setup."
+  },
+  "notification_policy": "Report new verified five-update DEV milestones, first advancement, meaningful results, failure, genuine stalls, completion or required human action; remain quiet otherwise.",
+  "invariants": [
+    "Historical human recipe hold is superseded by verified final recipe and the direct execution confirmation.",
+    "Qualification is distinct from scientific training and no launch is claimed without an actual scheduler job and advancement.",
+    "Memory-control recovery reuses completed endpoints and original historical protocol.",
+    "Flora repair does not gate simulator-reward steering PPO.",
+    "Do not duplicate owner jobs, change their active worktrees, or expand scope/budgets silently."
+  ]
+}
