@@ -1,0 +1,38 @@
+{
+  "format": "budget60_existing_core_validation_v1",
+  "tested_source": "221e08ab9498c243407dd91b1d92032c8c04d375",
+  "allocated_Linux_CPU": {
+    "endpoint": "configured development allocation",
+    "cpu_max": "1300000 100000",
+    "memory_max": "120259084288",
+    "CUDA_VISIBLE_DEVICES": "",
+    "OMP_NUM_THREADS": 4,
+    "MKL_NUM_THREADS": 4
+  },
+  "remote_worktree": "/mowenjie/fluffy-bassoon-2/worktrees/joint-steering-budget60-20261103-r1",
+  "remote_outputs": "/mowenjie/fluffy-bassoon-2/outputs/joint-steering-budget60-cpu-20261103-r1",
+  "test_files": [
+    "tests/test_joint_steering_ppo.py",
+    "tests/test_joint_steering_ppo_worker.py"
+  ],
+  "test_result": {
+    "tests": 24,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0
+  },
+  "elapsed_test_seconds": 63.7,
+  "driver_sha256": "33b8e8d339dfc44807d0252b26e1dec9460df2269c8d275ab613d0041f0d5404",
+  "log_sha256": "1550590887e8855cd024d512b0efde376e47e1a1d13fe64c1976c5ca704ae094",
+  "xml_sha256": "c9e4ac89afd5295e30dc99b0aaba0898ba8a5d07f107127b5e40b3a43a738f75",
+  "scientific_core_bytes_equal_qualified_8b9e1bbb": {
+    "residual_ppo.py": true,
+    "joint_steering_ppo.py": true,
+    "joint_steering_ppo_worker.py": true
+  },
+  "change": "Approved source budget constant40\u219260 GPUh/arm; deadline error text reads the same constant. No scientific learner/worker change.",
+  "new_GPU_allocations": 0,
+  "new_scientific_updates": 0,
+  "new_physical_controls": 0,
+  "recovery_status": "Budget code and authority qualified for source-owner fresh-attempt migration; no resume/allocation claim. Existing old-run profiles/launchers remain historical40 and immutable."
+}
