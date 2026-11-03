@@ -440,6 +440,21 @@ Baige job-pb53j1e4jom1 succeeded/released13:45:32 Shanghai,575workerGPU-s
 (590scheduler seconds), no robot actions/SGD. The documented prefix/chunk/
 clause/wording subtotal becomes7,925workerGPU-s, excluding earlier terminal
 video work. [Exact texts, all scores, input audits and next diagnostic boundary](../outputs/robocasa-flora-drawer-frame-edge-20261103-r1/RESULT.md).
+A current-state recognition diagnostic on18 reused endpoints rejects all four
+variants:64-frame current-state grading accepts7/12 negatives and5/6 positives;
+its condition checklist accepts10/12 negatives and6/6 positives. Reset/current
+pairs reject all18 under either reporting contract. Grade AUROC is0.4167 for
+prefixes and0.4444 for pairs, under current-state labels, not the earlier
+ever-success or H600 terminal labels. All4 reference grades reproduce and all37
+actual bfloat16 processor inputs match CPU references. These input checks do not
+qualify learned recognition or the altered reporting protocol. Baige
+job-6zq2cpuq1c7c succeeds/releases15:30:24 Shanghai,1,003wrapper GPU-s
+(1,010scheduler seconds),0new controls/SGD. Raw receipts remain on Baige after
+the organization blocked the archive download; aggregate evidence was inspected
+there, not independently hash-verified locally. No candidate or cutoff promoted.
+The next bounded audit concerns the official per-step rubric/thinking interface
+and causal per-camera evidence, whose CLI defaults differ from terminal scoring.
+[Results and evidence limits](../outputs/robocasa-flora-current-state-20261103-r2/RESULT.md).
 A subsequent CPU geometry audit finds all six selected targets at z=0.785,
 with no drawer above the target in its stack, and matching scene metadata.
 Thus an incorrectly assumed uppermost target does not explain the128/144

@@ -1,0 +1,80 @@
+{
+  "observation": "Read-only Baige terminal and scheduler inspection; raw result archive download blocked by organization policy; no local raw-result hash verification claimed.",
+  "source_commit": "db2ef630a8cb7e2e5d2b8e2b047427841b3c2806",
+  "job_id": "job-6zq2cpuq1c7c",
+  "runtime_root": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-current-state-20261103-r2",
+  "completed": true,
+  "labels": 76,
+  "current_negative": 12,
+  "current_positive": 6,
+  "reference_expected": [
+    1,
+    5,
+    1,
+    4
+  ],
+  "reference_actual": [
+    1,
+    5,
+    1,
+    4
+  ],
+  "processor_audit": {
+    "unique_rgb_inputs": 37,
+    "expected_input_keys": 37,
+    "all_bf16_equal": true,
+    "learned_states_inspected": false
+  },
+  "metrics": {
+    "prefix_grade": {
+      "tp": 5,
+      "fp": 7,
+      "tn": 5,
+      "fn": 1,
+      "uncertain": 0,
+      "AUROC": 0.4166666666666667
+    },
+    "anchors_grade": {
+      "tp": 0,
+      "fp": 0,
+      "tn": 12,
+      "fn": 6,
+      "uncertain": 0,
+      "AUROC": 0.4444444444444444
+    },
+    "prefix_conditions": {
+      "tp": 6,
+      "fp": 10,
+      "tn": 2,
+      "fn": 0,
+      "uncertain": 0,
+      "AUROC": null
+    },
+    "anchors_conditions": {
+      "tp": 0,
+      "fp": 0,
+      "tn": 12,
+      "fn": 6,
+      "uncertain": 0,
+      "AUROC": null
+    }
+  },
+  "all_development_pass": false,
+  "production_qualified": false,
+  "held_out_validation": false,
+  "model_load_count": 1,
+  "worker_charged_gpu_seconds": 1003,
+  "scheduler_run_seconds": 1010,
+  "scoring_worker_seconds": 941.7917954921722,
+  "policy_controls": 0,
+  "optimizer_steps": 0,
+  "private_truth_read_by_worker": false,
+  "archive": {
+    "remote_path": "/root/workspace/flora-current-state-r2-results.zip",
+    "files": 55,
+    "bytes": 111177,
+    "sha256_observed": "19e6b1e38492a26a9966137f8cd43279a33086492798178a773f896585610d4c",
+    "local_download": "BLOCKED_BY_ORGANIZATION",
+    "bypass_attempted": false
+  }
+}
