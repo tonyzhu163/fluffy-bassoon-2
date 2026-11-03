@@ -137,10 +137,10 @@
     "existing_aggregate_experiment_gpu_ceiling": 40,
     "automatic_retry": false,
     "admission": "Actual allocated probes, storage/write/capacity, zero-output native parity, all-layer K/V influence, one counted PPO update and complete recovery qualification",
-    "combined_gpu_hour_cap": 20,
-    "cap_source": "Existing Stage 1 human-approved handoff; no larger GPU-hour budget is inferred from approval of 5M controls per arm.",
-    "throughput_qualification": "Measure one counted update and before/evaluation throughput within the existing cap; complete checkpoints and seek a concrete budget decision if the approved data target cannot fit.",
-    "maximum_gpu_hours_per_arm_initial_reservation": 10
+    "combined_gpu_hour_cap": 80,
+    "cap_source": "Direct human request on2026-11-03: \"move the cap up\" following the41.03GPUh collection estimate. Revised ceiling80GPUh combined/40per arm; amount selected by assistant. Authority: outputs/robocasa-rollout-capacity-3248-20261103-r1/BUDGET-INCREASE-20261103.json",
+    "throughput_qualification": "Measure actual steering-worker update and evaluation throughput; include prior charges and overhead in the40GPUh-per-arm/80GPUh-combined projection. Preserve complete-boundary checkpoint-and-pause if the measured target exceeds the revised cap. Recipe and native48lane qualification remain required.",
+    "maximum_gpu_hours_per_arm_initial_reservation": 40
   },
   "retention": [
     "raw current and next decision observations",

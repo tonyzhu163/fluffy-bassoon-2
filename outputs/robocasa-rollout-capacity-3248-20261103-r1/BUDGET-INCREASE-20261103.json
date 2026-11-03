@@ -1,0 +1,44 @@
+{
+  "recorded_Shanghai": "2026-11-03T10:20:34+08:00",
+  "human_authorization_quote": "move the cap up",
+  "authorization_context": "Direct reply to the reported 41.03 GPU-hour collection-only projection exceeding the previous 20 GPU-hour cap.",
+  "amount_selection": "Assistant selected 80 GPU-hours combined, 40 per independent arm, under the human-authorized increase; the human did not specify this exact number.",
+  "previous_combined_GPU_hour_cap": 20,
+  "combined_GPU_hour_cap": 80,
+  "GPU_hour_cap_per_arm": 40,
+  "accounting": "Lifetime allocated GPU-hours for both scientific arms, including carried prior charges, native steering qualification, collection, optimization, evaluation and any separately diagnosed recovery attempt. Capacity benchmarks remain under their separately closed 1800 GPU-second ceiling. No automatic retry.",
+  "approved_target_reference": "outputs/robocasa-rollout-capacity-3248-20261103-r1/TARGET-RECIPE.json",
+  "target": {
+    "independent_arms": [
+      "velocity",
+      "kv_all_layers"
+    ],
+    "updates_per_arm": 50,
+    "environments_per_GPU": 48,
+    "GPUs_per_arm": 8,
+    "episodes_per_update": 384,
+    "horizon": 600,
+    "checkpoint_and_DEV_updates": [
+      0,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50
+    ]
+  },
+  "training_policy_controls_per_arm": 11520000,
+  "training_policy_controls_both_arms": 23040000,
+  "evaluation_reset_and_qualification_controls_additional": true,
+  "collection_only_projected_GPU_hours_both_arms": 41.033676356698074,
+  "remaining_GPU_hours_beyond_collection_projection": 38.966323643301926,
+  "budget_is_ceiling_not_spending_target": true,
+  "remaining_before_launch": "Bind the final 50-update/384-episode production recipe, qualify actual 48-lane velocity/all-layer KV worker history/memory and optimizer behavior, and bind compatible before-panels. This budget edit does not by itself release the separately recorded recipe hold.",
+  "runtime_change": "joint_steering_ppo_driver.APPROVED_ARM_GPU_HOURS=40; full-boundary checkpoint-and-pause on an over-cap measured projection remains enabled.",
+  "validation": "macOS static AST/JSON consistency checks only; no GPU allocation or scientific launch for this budget edit. Production runtime still requires allocated-Linux qualification before launch."
+}

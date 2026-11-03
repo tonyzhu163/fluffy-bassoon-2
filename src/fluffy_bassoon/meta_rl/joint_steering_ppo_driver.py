@@ -32,6 +32,9 @@ from .residual_ppo import stack_records, update
 from .rlinf_native_ppo import checked_checkout, cpu_tree, tensor_hash
 
 
+APPROVED_ARM_GPU_HOURS = 40
+
+
 def events():
     result = [("calibrate", 0), ("test_before", 0), ("dev", 0)]
     for iteration in range(1, UPDATES + 1):
@@ -370,11 +373,12 @@ def run_master(run, profile, *, deadline, resume=False):
                     8 * (time.time() - profile["submitted_unix"] + projected_remaining + 120)) / 3600
             write_json(run / "metrics" / f"event-{cursor:03d}.json", status)
             write_json(run / "PROGRESS.json", status)
-            if phase == "train" and iteration >= 2 and status["projected_all_attempt_gpu_hours"] > 10:
+            if (phase == "train" and iteration >= 2
+                    and status["projected_all_attempt_gpu_hours"] > APPROVED_ARM_GPU_HOURS):
                 write_json(run / "PAUSED.json", dict(completed=False, reason="measured_budget_decision",
                     iteration=iteration, sequence=cursor, checkpoint=reference,
                     projected_all_attempt_gpu_hours=status["projected_all_attempt_gpu_hours"],
-                    approved_arm_gpu_hours=10, no_automatic_retry=True))
+                    approved_arm_gpu_hours=APPROVED_ARM_GPU_HOURS, no_automatic_retry=True))
                 return
         before = torch.load(run / "evaluations/test_before-000.pt", map_location="cpu", weights_only=False)
         after = torch.load(run / "evaluations" / f"test_after-{UPDATES:03d}.pt", map_location="cpu", weights_only=False)
