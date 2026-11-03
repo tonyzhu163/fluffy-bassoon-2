@@ -1,8 +1,8 @@
 {
   "owner_chat": "01a1a077-e5ab-7982-840d-de8a81d4321a",
-  "checked_shanghai": "2026-11-04 02:44:31",
+  "checked_shanghai": "2026-11-04 02:54:12",
   "source_commit": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
-  "phase": "OpenDrawer reached130/130 and final checkpoint; successful native exit and teacher gate readout pending, other four sources advancing",
+  "phase": "OpenDrawer and Toaster native130/after64/clocks0 complete; OpenDrawer fails both preregistered teacher gates and remains reference data; other3 sources advancing",
   "cluster": "Baige Pro6K",
   "queue": "\u7b97\u6cd5Z\u7ec4",
   "jobs": [
@@ -59,7 +59,7 @@
       "job_id": "job-9j5eqjo0dfzj",
       "job_name": "mwj_1103_flow10m_opendrawer_prod_1x8_r1",
       "submitted_shanghai": "2026-11-03 17:27:53",
-      "state": "RUNNING",
+      "state": "SUCCEEDED_NATIVE",
       "max_minutes": 1440,
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1",
       "resume": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/q1-r2/OpenDrawer/checkpoints/global_step_1",
@@ -72,9 +72,8 @@
       "before_reference_sha256": "656f627fd5c9d24b6305a5b0dfe523186104c81709316eac6d000698415f7224",
       "median_update_seconds": 260.7389974594116,
       "ETA_remaining_hours": 0.0,
-      "ETA_finish_shanghai": "2026-11-04T02:44:31.975930+08:00",
+      "ETA_finish_shanghai": "2026-11-04T02:54:12.969661+08:00",
       "local_complete_boundaries": [
-        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints/global_step_120",
         "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints/global_step_130"
       ],
       "latest_C1_passed": true,
@@ -83,9 +82,22 @@
       "production_started_unix": 1793698448.4278507,
       "actual_hostname": "job-9j5eqjo0dfzj-master-0",
       "scheduler_state_fresh": false,
-      "state_evidence": "Actual allocated-job manifest/probe, both actor updates/C1 and advancing progress",
-      "progress_age_seconds": 119.3,
-      "ETA_scope": "Remaining native updates; final checkpoint/after64, successful shell closure and corpus audits add time."
+      "state_evidence": "Successful actual shellclock0, all130 native updates and after64 complete; scheduler release has not been newly checked.",
+      "progress_age_seconds": 700.3,
+      "ETA_scope": "Remaining native updates; final checkpoint/after64, successful shell closure and corpus audits add time.",
+      "process_gpu_seconds": 264088,
+      "native_clock": {
+        "started_unix": 1793698437,
+        "finished_unix": 1793731448,
+        "allocated_gpus": 8,
+        "observed_gpu_seconds": 264088,
+        "exit_code": 0
+      },
+      "final_readout": "OpenDrawer/FINAL-READOUT-R1.json",
+      "final_readout_sha256": "dfc288a93eca880773ec1023326916011a7109258eac2d3f7df4ab750dc3fc70",
+      "admitted_teacher": false,
+      "corpus_role": "reference_source",
+      "verified_TRAIN_controls": 9984000
     },
     {
       "task": "CloseToasterOvenDoor",
@@ -119,22 +131,22 @@
       "job_id": "job-jpfh2j0xelgo",
       "job_name": "mwj_1103_flow10m_closetoaster_prod_1x8_r1",
       "submitted_shanghai": "2026-11-03 17:40:49",
-      "state": "RUNNING",
+      "state": "SUCCEEDED_NATIVE",
       "max_minutes": 1440,
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/production-r1",
       "resume": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/q1-r1/CloseToasterOvenDoor/checkpoints/global_step_1",
-      "completed_iterations": 129,
+      "completed_iterations": 130,
       "target_iterations": 130,
-      "optimizer_steps": 3096,
+      "optimizer_steps": 3120,
       "frozen_vlm_unchanged": true,
       "gpu_probe_passed": true,
       "before_reference": "CloseToasterOvenDoor/BEFORE-RESUME.json",
       "before_reference_sha256": "16205284b7c70e22d13ac8c6407fc7e2cbc5139987bcfc43d1f8bd760f0d35d3",
       "median_update_seconds": 252.5951006412506,
-      "ETA_remaining_hours": 0.07016530573368072,
-      "ETA_finish_shanghai": "2026-11-04T02:48:44.571031+08:00",
+      "ETA_remaining_hours": 0.0,
+      "ETA_finish_shanghai": "2026-11-04T02:54:12.969661+08:00",
       "local_complete_boundaries": [
-        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/production-r1/CloseToasterOvenDoor/checkpoints/global_step_120"
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/production-r1/CloseToasterOvenDoor/checkpoints/global_step_130"
       ],
       "latest_C1_passed": true,
       "latest_complete_train_controls": 76800,
@@ -142,9 +154,17 @@
       "production_started_unix": 1793698877.2618265,
       "actual_hostname": "job-jpfh2j0xelgo-master-0",
       "scheduler_state_fresh": false,
-      "state_evidence": "Actual allocated-job manifest/probe, both actor updates/C1 and advancing progress",
-      "progress_age_seconds": 151.6,
-      "ETA_scope": "Remaining native updates; final checkpoint/after64, successful shell closure and corpus audits add time."
+      "state_evidence": "Successful actual shellclock0, all130 native updates and after64 complete; scheduler release has not been newly checked.",
+      "progress_age_seconds": 466.5,
+      "ETA_scope": "Remaining native updates; final checkpoint/after64, successful shell closure and corpus audits add time.",
+      "process_gpu_seconds": 262536,
+      "native_clock": {
+        "started_unix": 1793698864,
+        "finished_unix": 1793731681,
+        "allocated_gpus": 8,
+        "observed_gpu_seconds": 262536,
+        "exit_code": 0
+      }
     },
     {
       "task": "PickPlaceDrawerToCounter",
@@ -182,9 +202,9 @@
       "max_minutes": 1440,
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/production-r1",
       "resume": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/q1-r1/PickPlaceDrawerToCounter/checkpoints/global_step_1",
-      "completed_iterations": 122,
+      "completed_iterations": 124,
       "target_iterations": 130,
-      "optimizer_steps": 2928,
+      "optimizer_steps": 2976,
       "frozen_vlm_unchanged": true,
       "gpu_probe_passed": true,
       "before_reference": "PickPlaceDrawerToCounter/BEFORE-RESUME.json",
@@ -200,9 +220,9 @@
       "scheduler_state_fresh": false,
       "state_evidence": "Actual allocated-job manifest/probe, both actor updates/C1 and advancing progress",
       "median_update_seconds": 257.7862548828125,
-      "ETA_remaining_hours": 0.5728583441840278,
-      "progress_age_seconds": 35.9,
-      "ETA_finish_shanghai": "2026-11-04T03:18:54.265969+08:00",
+      "ETA_remaining_hours": 0.42964375813802086,
+      "progress_age_seconds": 111.4,
+      "ETA_finish_shanghai": "2026-11-04T03:19:59.687190+08:00",
       "ETA_scope": "Remaining native updates; final checkpoint/after64, successful shell closure and corpus audits add time."
     },
     {
@@ -241,9 +261,9 @@
       "max_minutes": 1440,
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CoffeeSetupMug/production-r1",
       "resume": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CoffeeSetupMug/q1-r1/CoffeeSetupMug/checkpoints/global_step_1",
-      "completed_iterations": 113,
+      "completed_iterations": 115,
       "target_iterations": 130,
-      "optimizer_steps": 2712,
+      "optimizer_steps": 2760,
       "frozen_vlm_unchanged": true,
       "gpu_probe_passed": true,
       "before_reference": "CoffeeSetupMug/BEFORE-RESUME.json",
@@ -259,9 +279,9 @@
       "actual_hostname": "job-wv3zgiuj05j8-master-0",
       "state_evidence": "Actual allocated-job manifest/probe, both actor updates/C1 and advancing progress",
       "median_update_seconds": 269.4340178966522,
-      "ETA_remaining_hours": 1.2723273067341911,
-      "progress_age_seconds": 58.5,
-      "ETA_finish_shanghai": "2026-11-04T04:00:52.354234+08:00",
+      "ETA_remaining_hours": 1.122641741236051,
+      "progress_age_seconds": 150.7,
+      "ETA_finish_shanghai": "2026-11-04T04:01:34.479929+08:00",
       "ETA_scope": "Remaining native updates; final checkpoint/after64, successful shell closure and corpus audits add time."
     },
     {
@@ -300,9 +320,9 @@
       "max_minutes": 1440,
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TurnOffStove/production-r1",
       "resume": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TurnOffStove/q1-r1/TurnOffStove/checkpoints/global_step_1",
-      "completed_iterations": 116,
+      "completed_iterations": 118,
       "target_iterations": 130,
-      "optimizer_steps": 2784,
+      "optimizer_steps": 2832,
       "frozen_vlm_unchanged": true,
       "gpu_probe_passed": true,
       "before_reference": "TurnOffStove/BEFORE-RESUME.json",
@@ -318,9 +338,9 @@
       "actual_hostname": "job-z60s3hh8cn7w-master-0",
       "state_evidence": "Actual allocated-job manifest/probe, both actor updates/C1 and advancing progress",
       "median_update_seconds": 265.18482637405396,
-      "ETA_remaining_hours": 1.0312743247879876,
-      "progress_age_seconds": 18.8,
-      "ETA_finish_shanghai": "2026-11-04T03:46:24.563499+08:00",
+      "ETA_remaining_hours": 0.8839494212468465,
+      "progress_age_seconds": 115.7,
+      "ETA_finish_shanghai": "2026-11-04T03:47:15.187577+08:00",
       "ETA_scope": "Remaining native updates; final checkpoint/after64, successful shell closure and corpus audits add time."
     }
   ],
@@ -432,10 +452,10 @@
     "scheduler_check": "All five actual job containers verified through manifests, eight-device probes and advancing native artifacts. Browser DOM unavailable; native Chrome accessibility works; previous user tab restored after read-only access attempt."
   },
   "storage": {
-    "pfs_free_GiB": 224.1328125,
+    "pfs_free_GiB": 245.79296875,
     "stop_floor_GiB": 200,
-    "tier_receipt": "TIER-CHECKPOINT-WATCH-R1-001.json",
-    "tiered_superseded_boundaries": 68,
+    "tier_receipt": "TIER-CHECKPOINT-WATCH-R1-003.json",
+    "tiered_superseded_boundaries": 70,
     "latest_full_checkpoint_retained": true,
     "bos": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1",
     "tiering_in_progress": {
@@ -451,12 +471,12 @@
     },
     "corpus_projection": {
       "measured_production_GiB_per_collection": 0.7842823384035574,
-      "remaining_valid_collections_at_snapshot": 40,
-      "estimated_remaining_corpus_GiB": 31.371293536142296,
-      "older_full_boundaries_at_snapshot": 1,
-      "estimated_terminal_free_GiB_after_tiering_current_older_boundaries": 221.16957381112795,
+      "remaining_valid_collections_at_snapshot": 33,
+      "estimated_remaining_corpus_GiB": 25.881317167317395,
+      "older_full_boundaries_at_snapshot": 0,
+      "estimated_terminal_free_GiB_after_tiering_current_older_boundaries": 219.9116515826826,
       "limitations": "Approximate corpus-only forecast; checkpoint/archive staging and other shared-PFS writes vary. Refresh every check; preserve200GiB floor and archive closed verified task corpora to BOS as planned.",
-      "checkpoint_staging_GiB": 12.440269766375422,
+      "checkpoint_staging_GiB": 0.0,
       "staging_recovery_included": true
     },
     "closed_corpus_archive_preparation": "Qualified TIER-CORPUS.py1aa840ac: PREPARE directly to BOS after whole native task closes130+after-panel+clock0+60s and full130 checkpoint hashes. No large PFS staging; seal source/audit snapshots and compare every member plus full object readback. Before tail audit finishes, optional reclaim-prefix releases ONLY already fully audited ENV/actor Torch files matching the immutable archive; retain ALL sampling and JSON so the watch continues. Native task must already be closed130; no active source data moved. Prefix receipt enumerates removals. Final reclaim checks complete1..130 audit, exact remaining inventory plus declared prefix holes, all archived raw hashes, QC tar and retained final checkpoint; then remaining Torch payloads may tier. First closed source copy is priority for PFS headroom.",
@@ -486,7 +506,7 @@
       "prefix_environment_actor_bytes": 1490975833,
       "source_reclaimed": false
     },
-    "checkpoint_staging_GiB": 12.440269766375422,
+    "checkpoint_staging_GiB": 0.0,
     "previous_corpus_archive_qualifications": [
       {
         "pid": 2040119,
@@ -534,7 +554,7 @@
       "admission_result": "CHECKPOINT-TIER-WATCH-R1-ADMISSION.json",
       "admission_result_sha256": "e879a037e627544c7ab08fceede5c021ae1e783b5021ac74c86b427ea267acc3",
       "first_two_boundaries_verified": true,
-      "last_checked_shanghai": "2026-11-04 02:44:31",
+      "last_checked_shanghai": "2026-11-04 02:54:12",
       "last_result": {
         "completed": false,
         "pid": 2044520,
@@ -547,29 +567,42 @@
             "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TIER-CHECKPOINT-WATCH-R1-001.json",
             "sha256": "7b588b39681d554ad9af7267c5b6b9b6caa2a7febd1c29c822d978f4e8710ef3",
             "boundaries": 2
+          },
+          {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TIER-CHECKPOINT-WATCH-R1-002.json",
+            "sha256": "d42a39c789985996f1c4fdce18f23ea3e21b4a34026c9e671979599ff5fde16b",
+            "boundaries": 1
+          },
+          {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TIER-CHECKPOINT-WATCH-R1-003.json",
+            "sha256": "bb274c1c53dec49fe2843aa65da332c0ee4ddad345f10932dd1384a5c2fe2dbf",
+            "boundaries": 1
           }
         ],
         "new_controls": 0,
         "SGD": 0,
         "GPU_jobs": 0,
-        "checked_unix": 1793731353.953228,
-        "native_closed": [],
-        "eligible": [
-          "OpenDrawer"
-        ]
+        "checked_unix": 1793732028.7805076,
+        "native_closed": [
+          "OpenDrawer",
+          "CloseToasterOvenDoor"
+        ],
+        "eligible": []
       },
-      "last_process_check": "First fresh watch batch verified2 additional boundaries; next boundary tier active; no errors."
+      "last_process_check": "First3 fresh batches verified4 additional boundaries including superseded leading120s; waiting for next complete boundary, no errors."
     }
   },
   "usage_snapshot": {
-    "checked_shanghai": "2026-11-04 02:44:31",
+    "checked_shanghai": "2026-11-04 02:54:12",
     "valid_Q1_process_GPU_seconds": 21824,
     "failed_Q1_process_GPU_seconds": 4352,
     "diagnostics_scheduler_GPU_seconds_upper": 213,
-    "live_production_GPU_seconds_to_snapshot": 1234087.3696537018,
-    "cumulative_GPU_hours_using_diagnostic_upper": 350.132324903806,
+    "live_production_GPU_seconds_to_snapshot": 1249809.5063495636,
+    "cumulative_GPU_hours_using_diagnostic_upper": 354.499585097101,
     "active_jobs_accruing": true,
-    "evidence": "MONITOR-20261104-0244.json"
+    "evidence": "MONITOR-202611040254-CLOSE.json",
+    "active_native_source_processes": 3,
+    "active_native_source_GPUs": 24
   },
   "data_readiness": "DATA-READINESS.md",
   "control_steps": {
@@ -881,57 +914,57 @@
       "new_controls": 0,
       "SGD": 0,
       "state": "RUNNING",
-      "last_checked_shanghai": "2026-11-04 02:44:31",
+      "last_checked_shanghai": "2026-11-04 02:54:12",
       "per_task_latest": {
         "OpenDrawer": {
           "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/CORPUS-AUDIT-WATCH-061-130-LATEST.json",
-          "sha256": "7f0187d0c4aac312f384de1f78adad6271ed881f21f67bc56834dcc3b4a810b3",
-          "through_collection": 114,
+          "sha256": "091cd03101eb5df8d0fc745574e3b5ff92eb5c4429819052ae211fbeea8ac770",
+          "through_collection": 118,
           "target_collection": 130,
           "requested_range_finished": false,
-          "checked_unix": 1793731419.255056
+          "checked_unix": 1793732029.6367707
         },
         "CloseToasterOvenDoor": {
           "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/CORPUS-AUDIT-WATCH-061-130-LATEST.json",
-          "sha256": "638bcfd432f613940dcedda1e9d28e3fca00d3c7afca099bc99e4fa04ecedacf",
-          "through_collection": 115,
+          "sha256": "ddc053cf2fa61d6a201db374339a0ec1ce2a5de8dee1787690bda22d258e9c54",
+          "through_collection": 119,
           "target_collection": 130,
           "requested_range_finished": false,
-          "checked_unix": 1793731360.6359608
+          "checked_unix": 1793731969.137729
         },
         "PickPlaceDrawerToCounter": {
           "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/CORPUS-AUDIT-WATCH-061-130-LATEST.json",
-          "sha256": "f4a3200ba0bc4dd5945ba173610ff3cd26e0acd885c2f154962f5d47e15fe9bc",
-          "through_collection": 115,
+          "sha256": "08a6f509059e84c02b399999d36bdf8131f76737dcb0aa267beb760808e4ac98",
+          "through_collection": 119,
           "target_collection": 130,
           "requested_range_finished": false,
-          "checked_unix": 1793731376.6187096
+          "checked_unix": 1793731985.155481
         },
         "CoffeeSetupMug": {
           "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CoffeeSetupMug/CORPUS-AUDIT-WATCH-061-130-LATEST.json",
-          "sha256": "8f05d152c1e6a52a78ab3eb34858e917c5452f5a28ab33ce94514656d8c326d3",
-          "through_collection": 111,
+          "sha256": "5de2823927b8e06a710b2779f0afa0b65df479a18d5db30917e53c94c82b6916",
+          "through_collection": 113,
           "target_collection": 130,
           "requested_range_finished": false,
-          "checked_unix": 1793731342.7260938
+          "checked_unix": 1793731828.7488012
         },
         "TurnOffStove": {
           "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TurnOffStove/CORPUS-AUDIT-WATCH-061-130-LATEST.json",
-          "sha256": "6a4ac9904f9db63ab34967f311674f21d4f00d241ac376541bf3f8f18067b498",
-          "through_collection": 114,
+          "sha256": "f5c84cd34eaaade283b1cd44a9eb0188a85b0f8d1a6da42f43fd235291ea6148",
+          "through_collection": 116,
           "target_collection": 130,
           "requested_range_finished": false,
-          "checked_unix": 1793731371.417853
+          "checked_unix": 1793731846.76591
         }
       },
-      "last_process_check": "All5 prefixes advancing through114/115/115/111/114; no errors."
+      "last_process_check": "All5 prefixes advancing through118/119/119/113/116; no errors."
     },
     "rolling_verified_through_by_task": {
-      "OpenDrawer": 114,
-      "CloseToasterOvenDoor": 115,
-      "PickPlaceDrawerToCounter": 115,
-      "CoffeeSetupMug": 111,
-      "TurnOffStove": 114
+      "OpenDrawer": 118,
+      "CloseToasterOvenDoor": 119,
+      "PickPlaceDrawerToCounter": 119,
+      "CoffeeSetupMug": 113,
+      "TurnOffStove": 116
     },
     "final_readout_preparation": {
       "source": "41ce8d78d2a96081594af01fdca0163412c8c7bf",
@@ -940,7 +973,11 @@
       "help_passed": true,
       "executed": false,
       "admission": "Actual successful native130, after64 and clock0 required; no fake final-state qualification, no simulator controls/SGD/model calls.",
-      "checks": "Every130 TRAIN cohort and both actor updates/C1; 1280-episode early/late gate, 64 physically exact matched before/after cases, exact McNemar, all18worker and final model hashes. Actual native completion required; offline initial-policy fixed-batch log-ratio remains separate pending report."
+      "checks": "Every130 TRAIN cohort and both actor updates/C1; 1280-episode early/late gate, 64 physically exact matched before/after cases, exact McNemar, all18worker and final model hashes. Actual native completion required; offline initial-policy fixed-batch log-ratio remains separate pending report.",
+      "executed_tasks": [
+        "OpenDrawer"
+      ],
+      "execution_note": "Actual successful Native130 OpenDrawer run readout completed; all-update, exact paired-case and18-worker/model checks passed. Science gates failed; no bypass or additional training."
     },
     "offline_initial_ratio": {
       "pid": 2043384,
@@ -1013,20 +1050,23 @@
       "SGD": 0,
       "CPU_budget": "watch10 + checkpoint tier2 + serial closer1 <= actual13CPU quota",
       "help_passed": true,
-      "state": "WAITING_NATIVE_CLOSURE",
+      "state": "OPEN_DRAWER_ARCHIVE_IN_PROGRESS",
       "admission": "CLOSED-CORPUS-WATCH-R1-ADMISSION.json",
       "admission_sha256": "671df8863e8a28f0224c75a7ec174c271f6a4fcdc4f8898d75192c9c62bfbc55",
       "gates": "Exact expected eight-GPU manifests; successful130, after64 and clock0+60s before pinned FINAL-READOUT41ce8d78 and TIER-CORPUS1aa840ac. Serial prepare streams directly to BOS and verifies all members/full-object readback. Optional prefix only below240GiB and only fully audited ENV/actor files; all sampling/JSON remain for continuing QA. Full reclaim requires all1..130 exact audits, QC archive and retained18-worker full130 boundary.",
       "ownership": "This worker owns Task/FINAL-READOUT-R1.json and CORPUS-ARCHIVE-Task-R1-{PREPARED,PREFIX,RECLAIMED}.json; do not run duplicate closeout commands. Inspect its ERROR/PID before a new attempt.",
       "qualification": "AST/help plus actual all-five manifest/fixture-hash admission passed with zero model calls, new controls or SGD. Real closed-source branches remain gated on actual native closure; existing pinned readout/archive guards unchanged.",
-      "last_checked_shanghai": "2026-11-04 02:44:31",
+      "last_checked_shanghai": "2026-11-04 02:54:12",
       "last_result": {
         "completed": false,
         "started_unix": 1793730572.5006053,
         "pid": 2044160,
         "tasks": {
           "OpenDrawer": {
-            "state": "WAITING_NATIVE_CLOSURE"
+            "state": "copy-and-full-object-readback",
+            "started_phase_unix": 1793731582.3318503,
+            "readout": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/FINAL-READOUT-R1.json",
+            "readout_sha256": "dfc288a93eca880773ec1023326916011a7109258eac2d3f7df4ab750dc3fc70"
           },
           "CloseToasterOvenDoor": {
             "state": "WAITING_NATIVE_CLOSURE"
@@ -1057,10 +1097,59 @@
           ]
         },
         "scope": "Native final gates plus corpus archive/reclaim only; full joins, initial-ratio GPU reporting and campaign results closeout remain required before fitting.",
-        "checked_unix": 1793731473.229922,
-        "PFS_free_GiB": 224.1328125
+        "checked_unix": 1793731503.2412856,
+        "PFS_free_GiB": 252.27734375
       },
-      "last_process_check": "All5 sources still waiting for successful native clock0+60s at snapshot; no model/GPU work or source reclaim performed by this worker."
+      "last_process_check": "OpenDrawer actual full130/paired gate readout passed structural checks, but both performance gates fail; source retained as reference. Serial BOS copy/readback active. Toaster native exit0 complete; its readout follows this copy. No reclaim yet."
+    },
+    "final_teacher_readouts": {
+      "OpenDrawer": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/FINAL-READOUT-R1.json",
+        "sha256": "dfc288a93eca880773ec1023326916011a7109258eac2d3f7df4ab750dc3fc70",
+        "training": {
+          "iterations": 130,
+          "episodes": 16640,
+          "controls": 9984000,
+          "optimizer_steps": 3120,
+          "first10_successes": 823,
+          "last10_successes": 882,
+          "window_episodes": 1280,
+          "improvement_percentage_points": 4.609375,
+          "required_percentage_points": 10,
+          "passed": false
+        },
+        "paired_evaluation": {
+          "cases": 64,
+          "controls_per_panel": 38400,
+          "before": {
+            "successes": 40,
+            "episodes": 64,
+            "rate": 0.625
+          },
+          "after": {
+            "successes": 47,
+            "episodes": 64,
+            "rate": 0.734375
+          },
+          "before_success_at_end": {
+            "successes": 37,
+            "episodes": 64,
+            "rate": 0.578125
+          },
+          "after_success_at_end": {
+            "successes": 43,
+            "episodes": 64,
+            "rate": 0.671875
+          },
+          "improved_cases": 13,
+          "regressed_cases": 6,
+          "exact_two_sided_mcnemar_p": 0.1670684814453125,
+          "passed": false
+        },
+        "admitted_teacher": false,
+        "corpus_role": "reference_source",
+        "final_checkpoint_hashes_verified": true
+      }
     }
   }
 }
