@@ -1,18 +1,28 @@
 {
-  "status": "AUTHORIZED_PREPARATION_AND_TEST",
+  "status": "SUPERSEDED_INITIAL_CONTRACT_NOT_SUBMITTED",
   "owner": "parent chat 01a19b74-8734-7dc0-8177-d43ff6553fd0",
   "direct_human_instructions": [
     "yes lets test that",
     "no im down for 5m controls per arm",
     "the kv needs to be all layer kv"
   ],
-  "arms": ["velocity", "kv_all_layers"],
-  "training_tasks": ["OpenDrawer", "PickPlaceCounterToCabinet", "PickPlaceDrawerToCounter", "TurnOffStove", "CoffeeSetupMug"],
+  "arms": [
+    "velocity",
+    "kv_all_layers"
+  ],
+  "training_tasks": [
+    "OpenDrawer",
+    "PickPlaceCounterToCabinet",
+    "PickPlaceDrawerToCounter",
+    "TurnOffStove",
+    "CoffeeSetupMug"
+  ],
   "training_control_allowance_per_arm": 5000000,
   "evaluation_controls": "Separately reserved in PLAN.json, as proposed before the human accepted 5M training controls per arm",
   "base": "Original public Human300 c484/75000; VLM and action expert frozen; fresh steering/value policies and optimizers",
   "evaluation_cadence": "Fixed development panel before training and every five PPO rounds; separate final ID/OOD panels",
   "primary_aggregation": "Equally weighted five-task average; individual task improvement is not required",
   "baseline_priority": "Verify the original pi0.5 on five ID and five OOD tasks, 50 cases each, before training",
-  "execution": "Qualify on allocated Linux and launch within this scope without repeated permission; no Flora or action-expert training"
+  "execution": "Qualify on allocated Linux and launch within this scope without repeated permission; no Flora or action-expert training",
+  "superseded_by": "outputs/robocasa-joint-steering-scale50-20261103-r1/AUTHORITY.json"
 }

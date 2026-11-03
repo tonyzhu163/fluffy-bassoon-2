@@ -1,0 +1,169 @@
+{
+  "status": "PREPARATION_QUALIFICATION_PENDING_NOT_SUBMITTED",
+  "scientific_scope": "Two independent frozen-VLM/frozen-action-expert joint five-task steering PPO sources; complete histories retained for later AD/DPT/DIT/value-based offline ICRL. No student fit here.",
+  "arms": {
+    "velocity": {
+      "kind": "velocity",
+      "steering_dim": 32,
+      "fraction": 0.05
+    },
+    "kv_all_layers": {
+      "kind": "kv_all_layers",
+      "kv_layers": 18,
+      "rank_per_layer_target": 32,
+      "steering_dim": 1152,
+      "targets": [
+        "key",
+        "value"
+      ],
+      "fraction": 0.041666666666666664,
+      "qualification": "New all-layer map; old last-layer-value Stage 0 qualification does not carry over"
+    }
+  },
+  "initializer": {
+    "repository": "robocasa/robocasa365_checkpoints",
+    "revision": "c484448aba1a9b60a04c9b0ca117241518ea69f3",
+    "prefix": "pi05_pretrain_human300/multitask_learning/75000",
+    "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+    "normalization_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+    "reuse_trained_flow_checkpoint_18": false,
+    "frozen": [
+      "vision_language_backbone",
+      "action_expert"
+    ],
+    "trainable": [
+      "steering_coefficient_distribution",
+      "value_head"
+    ],
+    "source_runtime_binding": "Exact latest reviewed Git/runtime hashes bound after qualification; no Flowstep18 warmstart."
+  },
+  "training": {
+    "tasks": [
+      "OpenDrawer",
+      "PickPlaceCounterToCabinet",
+      "PickPlaceDrawerToCounter",
+      "TurnOffStove",
+      "CoffeeSetupMug"
+    ],
+    "horizon": 600,
+    "chunk_horizon": 50,
+    "flow_steps": 10,
+    "episodes_per_update": 384,
+    "episodes_per_task_per_update": {
+      "rotation": "76 on one task and77 on the other four; rotate the76-task every update",
+      "episodes_per_task_over50_updates": 3840
+    },
+    "updates": 50,
+    "planned_training_controls": 11520000,
+    "training_and_qualification_ceiling": 11650000,
+    "episode_schedule": "Balanced interleaving of all five tasks in every round; fresh native instances; preserve task and global policy-version identities",
+    "reward": "Simulator first success, +1 in its H50 chunk; later chunks physically execute to full horizon but are excluded from PPO loss",
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "native_noise": "Explicit recorded native iid Gaussian, fixed law; only steering coefficients are learned. Native nuisance-noise density cancels in the PPO ratio",
+    "policy": "Fresh zero-mean Gaussian steering actor and value MLP on the same pre-action public feature port; 2064 feature coordinates",
+    "optimizer": {
+      "learning_rate": 0.0003,
+      "epochs": 10,
+      "minibatch_size": 32,
+      "clip": 0.2,
+      "target_kl": 0.02,
+      "initial_steering_std": 0.5,
+      "max_grad_norm": 1.0,
+      "qualification_status": "LR and KL-check cadence must be selected and frozen by allocated-GPU numerical qualification before scientific update1; old3e-4 is not admitted for KV1152."
+    },
+    "stop": "Fixed round count, except numerical/runtime/resource failure; development performance is monitoring, not an automatic performance stop",
+    "reset_and_qualification_reserve": 130000,
+    "accounting": "Exactly50 scientific collections/updates. All actual resets, numerical/worker qualification physical calls, failures and unresolved calls charge against11.65M TRAIN ceiling per arm; no silent extra scientific update.",
+    "environments_per_GPU": 48,
+    "GPUs_per_arm": 8
+  },
+  "evaluation": {
+    "baseline": "Fresh matched production-batch zero-steering before-panels,500cases per arm; old singleton/four-lane baseline is descriptive only.",
+    "development_cases_per_training_task": 8,
+    "development_rounds": [
+      0,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50
+    ],
+    "development_control_ceiling": 264000,
+    "ID_cases_per_task": 50,
+    "OOD_cases_per_task": 50,
+    "OOD_tasks": [
+      "CloseFridge",
+      "OpenCabinet",
+      "TurnOnMicrowave",
+      "TurnOnSinkFaucet",
+      "OpenStandMixerHead"
+    ],
+    "OOD_horizons": [
+      900,
+      1050,
+      450,
+      600,
+      450
+    ],
+    "before_and_after_ID_OOD_control_ceiling": 645000,
+    "total_evaluation_control_ceiling": 1200000,
+    "per_arm_all_in_control_ceiling": 12850000,
+    "primary": "Macro-average ID first-success gain over the original zero-steering policy on paired cases; report paired uncertainty and exact tests",
+    "secondary": [
+      "ID success at end",
+      "OOD macro-average first-success and success at end",
+      "all ten task-level changes",
+      "ten-task descriptive macro-average"
+    ],
+    "individual_task_pass_required": false,
+    "selection": "Fixed final checkpoint for confirmatory evaluation; development results do not select a final test checkpoint",
+    "policy_controls_planned": 909000,
+    "reset_and_qualification_reserve": 291000
+  },
+  "resources": {
+    "cluster": "Baige",
+    "maximum_gpus_per_arm": 8,
+    "maximum_concurrent_arm_gpus": 16,
+    "existing_aggregate_experiment_gpu_ceiling": 40,
+    "automatic_retry": false,
+    "admission": "Actual allocated probes, storage/write/capacity, zero-output native parity, all-layer K/V influence, one counted PPO update and complete recovery qualification",
+    "combined_gpu_hour_cap": 80,
+    "cap_source": "Direct human request on2026-11-03: \"move the cap up\" following the41.03GPUh collection estimate. Revised ceiling80GPUh combined/40per arm; amount selected by assistant. Authority: outputs/robocasa-rollout-capacity-3248-20261103-r1/BUDGET-INCREASE-20261103.json",
+    "throughput_qualification": "Measure actual steering-worker update and evaluation throughput; include prior charges and overhead in the40GPUh-per-arm/80GPUh-combined projection. Preserve complete-boundary checkpoint-and-pause if the measured target exceeds the revised cap. Recipe and native48lane qualification remain required.",
+    "maximum_gpu_hours_per_arm_initial_reservation": 40,
+    "proposed_node_CPU": 168,
+    "proposed_node_RAM_GiB": 1664,
+    "proposed_node_SHM_GiB": 384,
+    "resource_fit_status": "Unadmitted: verify actual Baige node limits and qualify21CPU/208GiB per GPU. Do not request176CPU when the actual node limit is175.",
+    "carried_native_qualification_GPU_seconds": 122
+  },
+  "retention": [
+    "raw current and next decision observations",
+    "actual pre-action features",
+    "native Gaussian seeds",
+    "steering coefficients and behavior mean/std/log-probabilities",
+    "executed commands",
+    "primitive rewards and episode boundaries",
+    "task/case/native seed/physical snapshots",
+    "every chronological pre-SGD bank",
+    "actor/value/Adam/RNG/sampler/worker boundary recoveries",
+    "full native three-view videos and action accounting",
+    "separate per-arm learner, optimizer, buffer and checkpoints",
+    "all50 chronological behavior-policy versions0..49 and final teacher50",
+    "four-algorithm source compatibility audit before any downstream data-readiness claim"
+  ],
+  "other_work": "Closed Flow and Stage 0 remain immutable; the older single-task four-learner warm-start proposal is not duplicated; no Flora, student fit or new scientific task expansion",
+  "recipe_status": "HUMAN_50x384_RECIPE_VERIFIED",
+  "launch_hold": {
+    "hold": false,
+    "status": "RECIPE_VERIFIED_QUALIFICATION_REQUIRED",
+    "authority": "outputs/robocasa-joint-steering-scale50-20261103-r1/AUTHORITY.json",
+    "scientific_admission": false
+  }
+}

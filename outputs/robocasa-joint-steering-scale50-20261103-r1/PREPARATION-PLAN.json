@@ -1,0 +1,52 @@
+{
+  "status": "BOUNDED_QUALIFICATION_PLAN_NOT_SUBMITTED",
+  "maximum_GPU_seconds": 2400,
+  "maximum_GPUs": 1,
+  "proposed_resources": {
+    "CPU": 21,
+    "RAM_GiB": 208,
+    "SHM_GiB": 48
+  },
+  "sequential_arms": [
+    "velocity",
+    "kv_all_layers"
+  ],
+  "maximum_physical_qualification_episodes_per_arm": 48,
+  "horizon": 600,
+  "policy_controls_per_arm": 28800,
+  "reset_controls": "Charge every actual reset,failed/unresolved call; historical3/reset is a projection only.",
+  "total_policy_controls_both_arms": 57600,
+  "scientific_PPO_updates": 0,
+  "synthetic_updates": "Head-only numerical LR/next-Adam qualification; keep separate from scientificSGD and do not update any production learner.",
+  "scale_selection": {
+    "data": "Only public TRAIN observations across all5ID tasks; no rewards/success used to tune amplitude.",
+    "criterion": "Bracket declared action-RMS reference and select closest candidate after task-balanced aggregation; retain all measured candidates.",
+    "candidate_grid_status": "Frozen in code/receipt before actual qualification; expand old too-small grids without using robot success."
+  },
+  "optimizer_selection": {
+    "joint_log_probability": "Correct sum across all32/1152Gaussian coordinates.",
+    "candidate_LRs": {
+      "velocity": [
+        0.0003,
+        0.0001,
+        3e-05
+      ],
+      "kv_all_layers": [
+        3e-05,
+        1e-05,
+        3e-06
+      ]
+    },
+    "criterion": "Finite loss/gradient and Adam/RNG next-update restore; dimension-aware LR with minibatch-level joint old-behavior KL monitoring near declared target.02; freeze qualified setting before scientificSGD."
+  },
+  "actual_worker_checks": [
+    "all48liveenvironments full600controls with canonical history/video/action writer",
+    "actual device binding and frozen native model hash",
+    "original-native zero-code parity and all36K/Vtarget influence",
+    "memory/throughput under21CPU allocation",
+    "complete child release, durable history and physical action escrow",
+    "no scientific update or teacher admitted from numerical qualification"
+  ],
+  "cost_accounting": "Actual common loading/qualification overhead and per-arm phase clocks charge once; combine with carried122GPU-s, preserve failed attempts. Both production arms remain within80GPUh lifetime total.",
+  "next_after_pass": "Merge qualified code to main; fresh pinned source/output, actual8GPU probes and resource fit, compatible before-panels, counted update1 plus complete recovery. Then verify advancing updates and monitor20min."
+}
