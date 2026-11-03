@@ -382,34 +382,68 @@ their own contracts; the source/student construction is shared.
   The [source/target protocol](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/outputs/libero40-meta90-20261029-r1/PROTOCOL.md)
   governs this arm. The RLinf130 motor, its source data and earlier data-arm
   comparisons do not carry into it.
-- **Primary route: full-action-expert Flow-SDE PPO source and learned KV
-  bridge student.** Train the source action expert and value head with the
-  VLM frozen, then train a plain causal history decoder plus a learned KV
-  adapter through the frozen original expert using flow-matching loss. At
-  deployment, all model weights are frozen and only causal history changes.
-  [Implementation contract](../outputs/flow-sde-kv-bridge-20261103-r1/PLAN.md).
-  - AD uses actual source action targets in policy-update order. DPT-style
-    fitting uses a qualified final teacher's query actions on the same actual
-    contexts. Neither requires the full-expert teacher to emit KV codes.
-  - Source-policy improvement and the bridge's ability to reproduce the
-    teacher are separate qualifications. Zero initialization preserves native
-    deterministic behavior but does not establish either qualification.
-  - Full-expert PPO is both a source and a strong online adaptation comparison.
-    An online bridge-PPO comparison is required for a claim that holds the
-    trainable interface fixed; it is not a prerequisite for supervised bridge
-    fitting. Report differences in trainable capacity and all source costs.
-  - Earlier velocity32/KV1152 code-supervision pipelines retain their immutable
-    contracts as interface comparisons. Their fixed random projections are
-    not the learned adapter. A joint velocity+KV controller is optional, not
-    required to train the primary source. Direct-action students remain a
-    separate baseline because they bypass the action expert.
+- **Source campaign (human, 2026-11-03): one action-supervised teacher
+  corpus serves every meta-learner and steering interface.** This supersedes
+  the 2026-11-02 choice of separate velocity-residual and KV-conditioning
+  Stage 1 PPO arms and their label rule.
+  - Teacher: full action-expert Flow-SDE PPO with the VLM frozen, one
+    independent run per source task, launched in parallel under one shared
+    contract (commit, PPO config, reward, update count). RoboCasa simulation
+    teachers use simulator first-success reward, about 10M controls and 8
+    GPUs per task, KL penalty and KL stopping off with KL still logged
+    (human, 2026-11-03); the full corpus of every task is collected and
+    audited before any meta-learner. Contract: [per-task 10M
+    plan](../outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PLAN.md).
+    Each task's teacher must pass its own improvement gate; a failing task
+    is dropped or replaced, not pooled. Prefer tasks with native success
+    roughly 20–70%. Every task passes a one-iteration GPU qualification and
+    a static audit before its full run.
+  - Students read actual (observation, executed action chunk, reward,
+    boundary) histories in update order and are supervised on actions with
+    flow matching through the frozen expert, as in VLRLA-bridge. No
+    teacher-provided velocity or KV codes are needed. The velocity residual
+    and KV conditioning stay the two steering interfaces, now compared as
+    supervised student ablations on the same corpus.
+  - Meta-learners on this corpus: AD (behavior-action targets), DPT (final
+    teacher relabels queried offline on saved query observations; historical
+    actions and feedback unchanged), DIT and value-based offline ICRL
+    (behavior actions with advantage weights from in-context value
+    estimates). None needs behavior log-probabilities or steering codes.
+  - Retain for every run: policy version per episode, every update-boundary
+    checkpoint (at least the final teacher for DPT), explicit case/episode
+    IDs, and enough raw RGB to rescore episodes with Flora-Rewarder offline.
+  - Before fitting any history model, fit a reactive (history-free) adapter
+    on each interface to the final teacher's actions. An interface that
+    cannot reproduce the teacher is dropped; this measures the gap between
+    weight-space teacher and frozen-expert student.
+  - Not served by this corpus: direct meta-RL (RL²), CND/Vintix-style
+    fixed-teacher noise histories, and the ordinary online steering baseline
+    (DSRL-style, on the deployment tasks). Each needs its own runs.
+  - The 2026-11-02 RoboCasa Stage 0 screen motivated the two interfaces
+    (velocity 84/49/53/20, conditioning 89/44/47/20, native 79/43/44/16 of
+    160; no gain p<.05) ([screen](../outputs/robocasa-interface-screen-20261102-r3/RESULT.md)).
+    Both start at exact native identity with zero-initialized output.
+  - Bounded output-action residuals, initial-noise steering, direct action
+    heads and sample-and-select remain comparison interfaces. A direct head
+    bypasses the action expert and is not evidence of steering it. The
+    existing restricted conditioning/velocity screen is not a qualification
+    of every learned KV/velocity adapter or of PPO improvement.
+  - Primary bridge implementation: a plain causal history decoder plus a
+    learned, padding-masked, token-local low-rank KV adapter with zero
+    output initialization. The fixed random projection of the earlier
+    KV1152 source is a different interface. Gradients pass through the
+    frozen original expert into the bridge. Qualify native action encoding,
+    active loss masks and own-history robot performance separately.
+    [Bridge contract](../outputs/flow-sde-kv-bridge-20261103-r1/PLAN.md).
+  - Full-expert PPO is a strong online adaptation comparison. Online PPO
+    on the same learned bridge is additionally needed for a claim that
+    holds trainable capacity fixed; it is not a source-data prerequisite.
 - One frozen motor/tokenizer/normalization/feature receipt across all tasks.
   Requalify the OpenPI40 backend on the actual allocation. RLinf4104 features
   and learned controllers are incompatible receipts, not reusable coordinates.
-- One qualified full-expert PPO source can supply both AD and DPT bridge
-  students. Historical executed actions and feedback stay actual. Source
-  improvement, final-teacher expertise and own-history student adaptation
-  each require independent evaluation; update counts alone prove none.
+- Planned source route: see the 2026-11-03 source-campaign decision above.
+  Source improvement and final-actor expertise require independent
+  evaluation; update counts alone prove neither.
 - <a id="oracle-free-reward"></a>**Oracle-free reward (2026-11-01).** The
   claim is sample-efficient RL on real robots, which have no success checker.
   A learner that reads simulator success anywhere cannot demonstrate that, so

@@ -1,0 +1,102 @@
+{
+  "completed": true,
+  "producer_recipe": {
+    "finalized": true,
+    "iterations": 18,
+    "source": "completed Flow-SDE",
+    "physical_controls": 921600
+  },
+  "source_physical_horizons": [
+    400
+  ],
+  "datasets": {
+    "ad_train": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/flow-four-method-source-gpu-20261103-r2/preparation/corpus/ad-train.npz",
+      "sha256": "5e2adeb490208b7ae56303855995b5b1cc7135752d21c31ab093d9fdea462ebe"
+    },
+    "dpt_train": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/flow-four-method-source-gpu-20261103-r2/preparation/corpus/dpt-train.npz",
+      "sha256": "0f52f4496e0bc48d605590b2ac47d64384778d62b66db03bcdc94705671d0770"
+    },
+    "dit_train": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/flow-four-method-source-gpu-20261103-r2/preparation/corpus/dit-train.npz",
+      "sha256": "5e2adeb490208b7ae56303855995b5b1cc7135752d21c31ab093d9fdea462ebe"
+    },
+    "ic_iql_train": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/flow-four-method-source-gpu-20261103-r2/preparation/corpus/ic_iql-train.npz",
+      "sha256": "5e2adeb490208b7ae56303855995b5b1cc7135752d21c31ab093d9fdea462ebe"
+    },
+    "ad_validation": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/flow-four-method-source-gpu-20261103-r2/preparation/corpus/ad-validation.npz",
+      "sha256": "cd90a287294982ebfb395eea27e963593305223be3c1ed7c6c910610b89948ae"
+    },
+    "dpt_validation": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/flow-four-method-source-gpu-20261103-r2/preparation/corpus/dpt-validation.npz",
+      "sha256": "824f97df2d86e90aac9b844794c58e0da6c0eb6737aa2b07724fdb653ab4cd10"
+    },
+    "dit_validation": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/flow-four-method-source-gpu-20261103-r2/preparation/corpus/dit-validation.npz",
+      "sha256": "cd90a287294982ebfb395eea27e963593305223be3c1ed7c6c910610b89948ae"
+    },
+    "ic_iql_validation": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/flow-four-method-source-gpu-20261103-r2/preparation/corpus/ic_iql-validation.npz",
+      "sha256": "cd90a287294982ebfb395eea27e963593305223be3c1ed7c6c910610b89948ae"
+    }
+  },
+  "provenance": {
+    "motor_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+    "raw_corpus_sha256": "5bf7c71056ca84b37f1d23589696b834c1a3401bbbe61e75f0b6eb5249498eb6",
+    "source_commit": "59dbeab6b6036fcaf2c5458f1817c975a15d0182",
+    "runtime_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+    "teacher": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-flow-sde-20261102-r4/opendrawer_flow_sde/checkpoints/global_step_18/actor/model_state_dict/full_weights.pt",
+      "sha256": "7e65e25408ed653d4c635a7f23b788ac621e8ff9909e866cec88173f519eff61",
+      "iteration": 18,
+      "sampling": "native eval ODE10; fixed independent per-source-query PCG64 initial Gaussian"
+    },
+    "teacher_label_kind": "single stochastic final-teacher action sample; not analytic mean",
+    "source_quality": "paired35to43/64 p=.18493; source improvement not established"
+  },
+  "codec": {
+    "kind": "flow_physical_action",
+    "steering_dim": 600,
+    "mean": [
+      0.00630647037178278,
+      -0.004275198560208082,
+      -0.038552429527044296,
+      0.0021012206561863422,
+      -0.010011998936533928,
+      0.0008334461017511785,
+      0.0,
+      0.03817916288971901,
+      0.0035834098234772682,
+      0.0007685691234655678,
+      0.0,
+      0.0
+    ],
+    "std": [
+      0.37416529655456543,
+      0.3163819909095764,
+      0.32647767663002014,
+      0.08450452238321304,
+      0.10373636335134506,
+      0.09780381619930267,
+      1.0,
+      0.2287949025630951,
+      0.19417312741279602,
+      0.1452745497226715,
+      9.999999974752427e-07,
+      1.0
+    ],
+    "labels": "actual mapped physical H50x12; binary coordinates -1/+1",
+    "deployment": "continuous inverse normalization; binary sign to native 0/1 input before native +/-1 map",
+    "native_gaussian": "not used by direct-action student"
+  },
+  "feature_dim": 2073,
+  "action_dim": 600,
+  "teacher_queries": 18432,
+  "source_episodes": 2304,
+  "source_TRAIN_controls": 921600,
+  "student_fit_ready": true,
+  "native_readout_ready": false
+}

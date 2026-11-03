@@ -103,10 +103,14 @@ before the next:
    parity, a real adapter gradient with unchanged expert weights, correct
    model/action transforms, and teacher imitation on held-out source cases.
    This stage does not require PPO on the adapter or inverse steering labels.
-3. **Gate 3: collect histories** with Flora reward only, from learners that
-   improve. Plan source histories across OpenDrawer, DrawerToCounter,
-   CoffeeSetupMug and TurnOffStove; hold out whole source streams for validation
-   and use separate held-out-task folds to test task generalization.
+3. **Gate 3: collect histories** from learners that improve. The approved
+   simulation source uses simulator first-success reward, with raw RGB kept
+   for offline Flora scoring; a learned-reward source claim requires separate
+   qualified Flora-driven training. Follow the
+   [per-task source plan](../outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PLAN.md)
+   for task selection and collect/audit its full corpus before primary fits.
+   Hold out whole source streams for validation and separate whole tasks for
+   task-generalization claims.
 4. **Gate 4: history-to-KV meta-learner.** Use a plain causal decoder and a
    learned KV adapter, with the original VLM and action expert frozen
    ([PAPER.md](PAPER.md)). One improving full-expert source supplies both

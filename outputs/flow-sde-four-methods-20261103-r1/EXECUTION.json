@@ -1,0 +1,74 @@
+{
+  "status": "FOUR_FITS_RUNNING_EVALUATION_PENDING",
+  "last_actual_metrics_check": "2026-11-03T15:29:50+08:00",
+  "cluster": "Baige Pro6K / \u7b97\u6cd5Z\u7ec4",
+  "queue": "aihcq-rh0wwk9muei4",
+  "fit": {
+    "job_id": "job-abquwhnpmlmv",
+    "name": "mwj_1103_flow_four_methods_fit_1x1_r1",
+    "created": "2026-11-03T14:47:38+08:00",
+    "source_commit": "e7ead0eefc8198d72f72100d46c8abfc1d190fdd",
+    "source_worktree": "/mowenjie/fluffy-bassoon-2/worktrees/flow-four-method-training-20261103-r2",
+    "hostname": "job-abquwhnpmlmv-master-0",
+    "accelerators": 1,
+    "accelerator_type": "NVIDIA RPBZZZ6",
+    "CPU": 16,
+    "RAM_GiB": 64,
+    "SHM_GiB": 8,
+    "scheduler_max_minutes": 65,
+    "automatic_retry": false,
+    "GPU_probe": "PASSED",
+    "physical_GPU_UUID": "GPU-c0d2e906-c69e-b9ed-ab6e-304cee158af4",
+    "physical_GPU_PCI": "A3:00.0",
+    "output": "/mowenjie/fluffy-bassoon-2/outputs/flow-four-method-fits-20261103-r1",
+    "independent_learners": 4,
+    "parameter_sharing": false
+  },
+  "metrics_snapshot": {
+    "ad": {
+      "update": 3700,
+      "validation_nll": 124.19497346878052,
+      "stale_checks": 1,
+      "converged": false
+    },
+    "dpt": {
+      "update": 3700,
+      "validation_nll": 124.02980041503906,
+      "stale_checks": 0,
+      "converged": false
+    },
+    "dit": {
+      "value_updates": 1900,
+      "actor_update": 800,
+      "validation_weighted_nll": 202.28589344024658,
+      "converged": false
+    },
+    "ic_iql": {
+      "value_updates": 1900,
+      "actor_update": 800,
+      "validation_weighted_nll": 220.55425357818604,
+      "converged": false
+    }
+  },
+  "monitoring": "Use metrics.jsonl/latest.pt for actual progress. AD/DPT status appears only at invocation exit. The 3000-second invocation cap is not convergence. Resume full state only after exact child and allocation release.",
+  "GPU_budget": {
+    "whole_campaign_operational_ceiling_GPU_hours": 7.5,
+    "selected_preparation_GPU_seconds": 1021,
+    "live_fit_GPU_cost": "Reconcile terminal allocation/release; four process clocks overlap and are not additive."
+  },
+  "native_evaluation": {
+    "status": "PREPARED_CPU_STATIC_ONLY_NOT_GPU_QUALIFIED_OR_LAUNCHED",
+    "prepared_source_commit": "ae1cb3439c89f3a164d7c1a4fc05dc9bf5101f0c",
+    "Linux_worktree": "/mowenjie/fluffy-bassoon-2/worktrees/flow-four-method-readout-20261103-r1",
+    "cases_per_task": 50,
+    "tasks": {
+      "OpenDrawer": 400,
+      "CloseFridge": 900
+    },
+    "attempts_per_case": 5,
+    "conditions": "Four students full/episode-reset plus original/final18 native anchors",
+    "first_qualification": "First16 prospective balanced cases count once if actual selected-student qualification passes. Existing BOS mount and complete-scope remaining-budget forecast required."
+  },
+  "proof_screenshot": "/Users/mowenjie/.codex/visualizations/2026/11/02/01a19b74-8734-7dc0-8177-d43ff6553fd0/flow-four-methods-fitting-20261103.png",
+  "scientific_claim": "No convergence, native score or meta-learning gain established."
+}

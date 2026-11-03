@@ -1,5 +1,5 @@
 {
-  "status": "ADAPTER_CPU_QUALIFIED_GPU_SOURCE_PREPARATION_PENDING",
+  "status": "FOUR_INDEPENDENT_FITS_RUNNING_NATIVE_EVALUATION_PENDING",
   "human_request": "wait do should we try training the four meta learning methods on the 1m flow sde run and evaluating?",
   "methods": [
     "AD",
@@ -30,7 +30,7 @@
     "chunk_files": 3456,
     "corpus_sha256": "5bf7c71056ca84b37f1d23589696b834c1a3401bbbe61e75f0b6eb5249498eb6",
     "model_simulator_or_GPU_calls": 0,
-    "student_fit_ready": false
+    "student_fit_ready": true
   },
   "human_execution_request": "can you train those and eval it?",
   "preparation_budget": {
@@ -42,5 +42,8 @@
     "full_campaign_budget": "Not yet fixed; qualify learner and native readout timings before any new unapproved aggregate>=8GPUh.",
     "carried_failed_GPU_seconds": 64,
     "failure": "r1 missing explicit CUDA_VISIBLE_DEVICES; probe rejected before model/labels/physicalcontrols; source output identity preserved"
-  }
+  },
+  "execution_receipt": "EXECUTION.json",
+  "campaign": "CAMPAIGN.json",
+  "current_stage": "Complete source/independent data audit; four actual fits advancing, no convergence/native score claimed."
 }

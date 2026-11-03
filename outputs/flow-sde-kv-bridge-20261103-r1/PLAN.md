@@ -19,6 +19,15 @@ qualification remain governed by `docs/FLORA-PPO.md`. Existing live/held runs,
 their contracts, checkpoints and cost ledgers remain immutable. The older
 velocity32/KV1152 steering-code routes are separate comparisons.
 
+Source scheduling is owned by the existing
+[per-task Flow-SDE campaign](../robocasa-flow-sde-10m-per-task-20261103-r1/PLAN.md),
+which was reconciled from concurrent `origin/main` decisions during this
+adoption. Its independent per-task runs contribute one shared action corpus,
+also usable by DIT/value-based students and supervised velocity comparisons.
+This bridge record does not duplicate those source jobs, change their scope
+or move their budget. This chat's implementation focus is the learned KV
+AD/DPT path.
+
 ## Source and student are different policies
 
 Source: `pi_theta(o)`, trained action expert plus value head, frozen VLM.
@@ -117,6 +126,8 @@ bridge optimizer.
 4. **AD/DPT fitting:** share the exact source/split/encoder and train each
    student to its declared validation stopping rule. Use an admitted improving
    source for learning claims; label non-improving-source fits as plumbing.
+   Audit the full declared source-task corpus before the campaign's primary
+   fits, as required by the source plan; do not silently pool failing tasks.
 5. **Own-history robot evaluation:** execute paired native cases/streams with
    memory carried across attempts. Compare same-weight reset and reward-blind
    controls, original motor and final teacher. Report first-attempt strength
