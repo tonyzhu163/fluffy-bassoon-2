@@ -2,7 +2,7 @@
   "run_id": "research-coordination-20261103-r1",
   "owner_thread": "01a19f33-dcb8-7b81-ac4c-b23c26b341de",
   "timezone": "Asia/Shanghai",
-  "status": "PPO_HUMAN_HOLD_KL_DIAGNOSTIC_STARTUP_FAILURE_CORRECTION_PENDING",
+  "status": "PPO_HUMAN_HOLD_KL_DIAGNOSTIC_R2_QUEUED",
   "automation_id": "coordinate-ppo-milestones-and-recoveries",
   "check_interval_minutes": 20,
   "human_authority": [
@@ -87,7 +87,7 @@
     "steering_ppo": {
       "thread_id": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
       "title": "Pull PPO coordination updates",
-      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:92",
+      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:94",
       "state": "DIRECTHUMANHOLD:fullvelocity/KVrecoveryheldatupdate2 untilKLtestreviewed; rootverifiedactualhumanreply01a1a00f andrelayedhold, supersedingearlierpriorityresumemessage. Approved60GPUh/arm120combinedremainsvalidbutdoesnotwaivehold. Preserveoldcheckpoints/banks/Adam/RNG/panels/cost; no full-source executor/resume/newinitializer/recipechange untilreview/release. BoundedKLownerworks fromcopiedpreupdate1+realfirstbanks, notsourcecheckpointmutation. SeparateFlowfourmethod/Floraworkunaffected.",
       "scientific_job_ids": {
         "velocity": "job-bxhz4d41ll1k",
@@ -461,18 +461,26 @@
     "KL_guard_review": {
       "thread_id": "01a19fe9-1842-7533-80d1-e24db386a023",
       "title": "Check stage 0 and 1 tests",
-      "cursor": "df3f8704-f3bd-4226-9f29-e6160d5e8d5b:5",
-      "state": "Diagnosticr1job-voaelvgv4mqi allocated4GPUs but mandatoryGPUprobe failedbecauseCUDA_VISIBLE_DEVICESunset. Rootreadrawprobe/clock:4NVMLdevices exposed, no CUDAqualification/model/episodes; process1s\u00d74GPU=4GPU-s exit1. Ownerdiagnosedselectorwrappercorrection andfreshoutputidentity withinSAME6GPUhcap afterterminal/release/cost+CPUpreflight; no blindretry or probeweakening. Fullsourceheldat2untilreview, originalsourcesunchanged.",
+      "cursor": "df3f8704-f3bd-4226-9f29-e6160d5e8d5b:6",
+      "state": "Corrected diagnostic R2 job-1nds2rm4v2rp submitted once15:11:56Shanghai on freshsource12d1f241/outputgpu-r2, QUEUED4RPBZZZ6/84CPU832GiB192SHM/89min/autoretryoff. Root independently inspected queue screenshot and remote output absence15:15; no actual GPUprobe/model/episode verified yet. R1 terminal failed, owner selected conservative200GPU-s inclrelease; carries within same21600GPU-s totalcap,21400remaining. Fullsource HUMANHOLD at2 pending review unchanged.",
       "failed_diagnostic_job_id": "job-voaelvgv4mqi",
       "failed_diagnostic_source": "a31757296742b815bf77b2cef6b94ada7d638d49",
       "failed_process_GPU_seconds": 4,
       "failed_scheduler_final_charge_pending": true,
       "failed_model_or_episode_calls": 0,
       "diagnostic_lifetime_GPU_seconds_cap": 21600,
-      "corrected_job_id": null,
+      "corrected_job_id": "job-1nds2rm4v2rp",
       "actual_diagnostic_native_progress_verified": false,
-      "evidence": "outputs/research-coordination-20261103-r1/KL-DIAGNOSTIC-STARTUP-FAILURE.json",
-      "latest_owner_report": "Corrected launcher CPU preflight passed; replacement submission being checked, no fresh handle/allocation/episodes verified. Full source remains held at update2."
+      "evidence": "outputs/research-coordination-20261103-r1/CHECK-20261103-1515.json",
+      "latest_owner_report": "Fresh R2 queue receipt, source/profile/CPUpreflight and R1 terminal charge published; actual allocation/probe/episodes pending.",
+      "corrected_job_status": "QUEUED_NO_ACTUAL_DEVICE_PROBE_YET",
+      "corrected_source_commit": "12d1f24189a6b8308675fb3efbeb2dacfd0e3880",
+      "failed_r1_conservative_GPU_seconds": 200,
+      "failed_r1_process_GPU_seconds": 4,
+      "failed_r1_scheduler_terminal_reported": true,
+      "remaining_diagnostic_GPU_seconds": 21400,
+      "corrected_requested_GPUs": 4,
+      "corrected_max_scheduler_minutes": 89
     }
   },
   "delivered_DEV_milestones": {
@@ -541,8 +549,8 @@
     "Flora repair does not gate simulator-reward steering PPO.",
     "Do not duplicate owner jobs, change their active worktrees, or expand scope/budgets silently."
   ],
-  "last_check_Shanghai": "2026-11-03T15:11:14+08:00",
-  "last_quiet_check_reason": null,
+  "last_check_Shanghai": "2026-11-03T15:15:37+08:00",
+  "last_quiet_check_reason": "Corrected KL diagnostic routinequeued; fullPPO hold andDEV0/2update state unchanged. Separate Flowfit updates do not release fullsource hold.",
   "human_resource_policy": {
     "human_quote": "dont ask me for approval below 8 gpu hours add to agents.md",
     "approval_free_below_GPU_hours": 8,
