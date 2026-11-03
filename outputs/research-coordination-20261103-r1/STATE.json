@@ -16,30 +16,35 @@
     "memory_controls": {
       "thread_id": "01a19bef-232f-7960-ab6d-7ce1539b6685",
       "title": "Improve evaluation and training",
-      "cursor": "143ed4de-4086-4c7d-8526-8992e648a4bd:14",
-      "state": "r3 failed before worker/simulator execution because CUDA selector was omitted;1052 endpoints intact. Coordinator reviewed diagnosis and authorized scoped fresh r4 correction under existing human task; owner proceeding after CPU preflight, no r4 launch verified yet.",
-      "recovery_job_id": null,
-      "verified_collected_endpoints": 1052,
+      "cursor": "143ed4de-4086-4c7d-8526-8992e648a4bd:17",
+      "state": "r4 actual GPU probe passed and saved episodes are advancing. Owner audited6new records (4reset,2window64),1058/1100collected; later coordinator live receipt shows9saved, pending endpoint audit. Continue missing48 only; full2000comparison still pending.",
+      "recovery_job_id": "job-oizm929rf0oo",
+      "verified_collected_endpoints": 1058,
       "required_collected_endpoints": 1100,
       "required_combined_endpoints": 2000,
       "remaining_GPU_seconds": 23433,
-      "evidence": "outputs/opendrawer-memory-controls-20261103-r3/TERMINAL.md",
+      "evidence": "outputs/opendrawer-memory-controls-20261103-r4/MONITOR.json",
       "failed_recovery_job_id": "job-tjh32aj7mv5x",
       "conservative_GPU_seconds_charged": 62967,
-      "next_run": "opendrawer-memory-controls-20261103-r4"
+      "next_run": "opendrawer-memory-controls-20261103-r4",
+      "new_recovery_endpoints_verified": 6,
+      "new_recovery_episodes_saved_at_live_check": 9,
+      "recovery_source_commit": "03f26b7c3cf6890c89b2691020dfa09ebeac6336",
+      "recovery_GPU_seconds_ceiling": 7200
     },
     "flora_reward": {
       "thread_id": "01a19bef-b16f-70e2-ad86-9140e3b360ed",
       "title": "Fix Flora reward and unblock gates",
-      "cursor": "520aa979-d22d-4944-a890-27bd974a6515:9",
-      "state": "Owner reports fresh r3 CPU processor audit passed256frame byte round trips includingbfloat16; passing export/hash verification and result publication requested, still pending independent coordinator verification. Failed r2 normalizer tuple assertion preserved; no reward promoted.",
-      "evidence": "outputs/robocasa-flora-drawer-processor-audit-20261103-r2/FAILURE.json"
+      "cursor": "520aa979-d22d-4944-a890-27bd974a6515:13",
+      "state": "r3 CPU official-processor reconstruction complete; coordinator independently verified6manifest hashes and256recorded raw/roundtrip RGB hash pairs, including bfloat16 reconstruction. Previous actual GPU tensors were not saved; semantics/reward remain unqualified. Owner preparing one bounded40grade framing comparison and CPU input audit, no fresh GPU launch verified.",
+      "evidence": "outputs/research-coordination-20261103-r1/FLORA-PROCESSOR-VERIFICATION.json",
+      "next_trial_GPU_seconds_ceiling_reported_by_owner": 900
     },
     "steering_ppo": {
       "thread_id": "01a19b74-8734-7dc0-8177-d43ff6553fd0",
       "title": "Pull PPO coordination updates",
-      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:60",
-      "state": "Model-service capacity interrupted owner before qualification launch. Same-model continuation accepted; owner active again, resuming bounded native qualification.43Linux tests/logger checks preserved; no scientific job/update or DEV milestone yet.",
+      "cursor": "18018959-3992-4b70-ad1f-11a754359cf0:67",
+      "state": "NativeQ1 calibration and both48lane full600control/history banks passed; no scientificPPOupdates orDEV panels. Full-history collection59-60controls/s exceeds40GPUh/arm cap before overhead. Owner reportsQ1 terminal/released with1331GPU-s conservativecharge; execution-only losslessI/O candidate passed45Linux tests and fresh qualification is preparing under remaining original2400GPU-s allowance.",
       "scientific_job_ids": {},
       "arms": [
         "velocity",
@@ -66,13 +71,36 @@
         50
       ],
       "authority": "outputs/robocasa-rollout-capacity-3248-20261103-r1/BUDGET-INCREASE-20261103.json",
-      "model_capacity_interruption_recovered": true
+      "model_capacity_interruption_recovered": true,
+      "qualification_job_id": "job-mdxdgd91xn8o",
+      "qualification_job_status": "terminal_released_reported_by_owner",
+      "qualification_source_commit": "d3a861a6ac67f594902675cb36ddf0ee83608896",
+      "qualification_GPU_seconds_reported_by_owner": 1331,
+      "scientific_updates": 0,
+      "velocity_controls_per_second": 58.8460842239662,
+      "kv_controls_per_second": 60.058882417193374,
+      "velocity_collection_only_GPU_hours": 54.37914930449592,
+      "kv_collection_only_GPU_hours": 53.281044721603394,
+      "calibration": {
+        "velocity": {
+          "scale_fraction": 0.125,
+          "learning_rate": 0.0003
+        },
+        "kv_all_layers": {
+          "scale_fraction": 0.64,
+          "learning_rate": 3e-05
+        },
+        "target_joint_KL": 0.02,
+        "check_cadence": "minibatch",
+        "scientific_updates": 0
+      },
+      "evidence": "outputs/research-coordination-20261103-r1/CHECK-20261103-1154.json"
     },
     "downstream_histories": {
       "thread_id": "01a199fb-3586-7171-bd20-52fa70e5378c",
       "title": "Explain DPT context/query targets",
-      "cursor": "5e721a0b-3229-4c1f-beee-e2194e124fbd:53",
-      "state": "Producer preparation continues; qualified completed exact PPO histories remain pending, so no downstream fit starts."
+      "cursor": "5e721a0b-3229-4c1f-beee-e2194e124fbd:54",
+      "state": "Native qualification advanced; no admitted completed scientificPPOsource yet, so downstream fit remains pending."
     }
   },
   "delivered_DEV_milestones": {
@@ -83,7 +111,11 @@
     "wandb_project_verified",
     "wandb_baige_api403_offline_fallback",
     "memory_r3_startup_failure_job-tjh32aj7mv5x_reviewed_r4",
-    "producer_model_capacity_interruption_resumed"
+    "producer_model_capacity_interruption_resumed",
+    "memory_r4_job-oizm929rf0oo_first_saved_and_audited_episodes",
+    "ppo_q1_calibration_both48lane_fullhistory_pass",
+    "ppo_fullhistory_throughput_budget_constraint_IO_qualification",
+    "flora_r3_256frame_processor_reconstruction_independently_hash_verified"
   ],
   "wandb": {
     "status": "BAIGE_API_HTTP403_LOCAL_OFFLINE_LOGGING_ACTIVE",
@@ -114,5 +146,5 @@
     "Flora repair does not gate simulator-reward steering PPO.",
     "Do not duplicate owner jobs, change their active worktrees, or expand scope/budgets silently."
   ],
-  "last_check_Shanghai": "2026-11-03T11:30:14+08:00"
+  "last_check_Shanghai": "2026-11-03T11:58:37+08:00"
 }

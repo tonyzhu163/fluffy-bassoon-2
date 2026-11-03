@@ -1,0 +1,121 @@
+{
+  "checked_unix": 1793678077.0406604,
+  "cluster": "Baige",
+  "qualification_job": "job-mdxdgd91xn8o",
+  "scientific_PPO_updates": 0,
+  "calibration": {
+    "completed": true,
+    "source_commit": "d3a861a6ac67f594902675cb36ddf0ee83608896",
+    "arms": {
+      "velocity": {
+        "scale": {
+          "selected_fraction": 0.125,
+          "target_normalized_action_rms": 0.08495954424142838,
+          "selected_normalized_action_rms": 0.08100743144750595,
+          "reference_bracketed": true,
+          "reward_or_success_used": false
+        },
+        "optimizer_passed": true,
+        "optimizer": {
+          "learning_rate": 0.0003,
+          "epochs": 10,
+          "minibatch_size": 32,
+          "target_kl": 0.02,
+          "kl_check_cadence": "minibatch"
+        }
+      },
+      "kv_all_layers": {
+        "scale": {
+          "selected_fraction": 0.64,
+          "target_normalized_action_rms": 0.08495954424142838,
+          "selected_normalized_action_rms": 0.07450713217258453,
+          "reference_bracketed": true,
+          "reward_or_success_used": false
+        },
+        "optimizer_passed": true,
+        "optimizer": {
+          "learning_rate": 0.00003,
+          "epochs": 10,
+          "minibatch_size": 32,
+          "target_kl": 0.02,
+          "kl_check_cadence": "minibatch"
+        }
+      }
+    }
+  },
+  "stress": {
+    "velocity": {
+      "completed": true,
+      "scientific_updates": 0,
+      "physical_policy_controls": 28800,
+      "elapsed_seconds": 489.41234374046326,
+      "controls_per_second": 58.8460842239662,
+      "torch_peak_allocated_bytes": 16248506880,
+      "sampled_phase_peaks": {
+        "samples": 196,
+        "peak_gpu_memory_mib": 73801,
+        "peak_fd_count": 491,
+        "peak_descendants": 193
+      },
+      "lanes_closed_before_next_arm": true,
+      "history": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-native-qualification-20261103-r1/stress/velocity/collection.pt",
+        "sha256": "31019bb7e75fc3413d7e2152c18597c3fac3a9ec4de214b10d5f3f6b0b26ea8a"
+      }
+    },
+    "kv_all_layers": {
+      "completed": true,
+      "scientific_updates": 0,
+      "physical_policy_controls": 28800,
+      "elapsed_seconds": 479.52940249443054,
+      "controls_per_second": 60.058882417193374,
+      "torch_peak_allocated_bytes": 16250866176,
+      "sampled_phase_peaks": {
+        "samples": 192,
+        "peak_gpu_memory_mib": 73720,
+        "peak_fd_count": 624,
+        "peak_descendants": 193
+      },
+      "lanes_closed_before_next_arm": true,
+      "history": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-native-qualification-20261103-r1/stress/kv_all_layers/collection.pt",
+        "sha256": "25d1ba9389d4c3d2a9ab6022956da078cf810dbebce3d23e697ec7b91b722de3"
+      }
+    }
+  },
+  "stress_progress": {
+    "stage": "stress_48_live/kv_all_layers",
+    "last_check_unix": 1793677570.156493,
+    "completed": false
+  },
+  "memory": {
+    "job_id": "job-oizm929rf0oo",
+    "probe": {
+      "status": "passed",
+      "purpose": "evaluation",
+      "hostname": "job-oizm929rf0oo-master-0",
+      "created_at_utc": "2026-11-03T03:45:35.464135+00:00",
+      "gpu_identity_mapping": {
+        "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+        "assigned_nvml_uuids": [
+          "GPU-5b10ecf1-8d29-d756-eb68-7860cc6c9136"
+        ]
+      }
+    },
+    "progress": [
+      {
+        "rank": 1,
+        "new_episodes": 9,
+        "family": "dpt",
+        "arm": "reset",
+        "cohort": "ID",
+        "index": 47,
+        "attempt": 4,
+        "updated_unix": 1793678048.5698802
+      }
+    ]
+  },
+  "velocity_collection_only_GPU_hours": 54.37914930449592,
+  "remaining_arm_GPU_hours_before_qualification_eval_overhead": 40,
+  "interpretation": "Native qualification only; no scientific PPO update. Projected velocity collection alone exceeds its40GPUh cap at this measured complete-history rate; execution optimization is being qualified without changing scientific batch or retained data."
+}
