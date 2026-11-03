@@ -1,11 +1,12 @@
 {
-  "status": "PREPARATION_QUALIFICATION_PENDING_NOT_SUBMITTED",
+  "status": "NATIVE_SOURCE_QUALIFIED_BOUNDED_PRODUCTION_LAUNCH_READY_ACTUAL8GPU_GATE_AT_STARTUP",
   "scientific_scope": "Two independent frozen-VLM/frozen-action-expert joint five-task steering PPO sources; complete histories retained for later AD/DPT/DIT/value-based offline ICRL. No student fit here.",
   "arms": {
     "velocity": {
       "kind": "velocity",
       "steering_dim": 32,
-      "fraction": 0.05
+      "fraction": 0.125,
+      "qualification": "Q2actual48lane/native/Adam/history/video audit passed; source8b9e1bbb"
     },
     "kv_all_layers": {
       "kind": "kv_all_layers",
@@ -16,8 +17,8 @@
         "key",
         "value"
       ],
-      "fraction": 0.041666666666666664,
-      "qualification": "New all-layer map; old last-layer-value Stage 0 qualification does not carry over"
+      "fraction": 0.64,
+      "qualification": "Q2actual48lane/native/Adam/history/video audit passed; source8b9e1bbb"
     }
   },
   "initializer": {
@@ -63,14 +64,18 @@
     "native_noise": "Explicit recorded native iid Gaussian, fixed law; only steering coefficients are learned. Native nuisance-noise density cancels in the PPO ratio",
     "policy": "Fresh zero-mean Gaussian steering actor and value MLP on the same pre-action public feature port; 2064 feature coordinates",
     "optimizer": {
-      "learning_rate": 0.0003,
       "epochs": 10,
       "minibatch_size": 32,
       "clip": 0.2,
       "target_kl": 0.02,
       "initial_steering_std": 0.5,
       "max_grad_norm": 1.0,
-      "qualification_status": "LR and KL-check cadence must be selected and frozen by allocated-GPU numerical qualification before scientific update1; old3e-4 is not admitted for KV1152."
+      "qualification_status": "Selectedbyreward-freefive-tasknativeGPUqualification;exactjointGaussianKL/nextAdam recoverypassed.",
+      "learning_rates_by_arm": {
+        "velocity": 0.0003,
+        "kv_all_layers": 3e-05
+      },
+      "kl_check_cadence": "minibatch"
     },
     "stop": "Fixed round count, except numerical/runtime/resource failure; development performance is monitoring, not an automatic performance stop",
     "reset_and_qualification_reserve": 130000,
@@ -130,7 +135,6 @@
     "cluster": "Baige",
     "maximum_gpus_per_arm": 8,
     "maximum_concurrent_arm_gpus": 16,
-    "existing_aggregate_experiment_gpu_ceiling": 40,
     "automatic_retry": false,
     "admission": "Actual allocated probes, storage/write/capacity, zero-output native parity, all-layer K/V influence, one counted PPO update and complete recovery qualification",
     "combined_gpu_hour_cap": 80,
@@ -141,7 +145,15 @@
     "proposed_node_RAM_GiB": 1664,
     "proposed_node_SHM_GiB": 384,
     "resource_fit_status": "Unadmitted: verify actual Baige node limits and qualify21CPU/208GiB per GPU. Do not request176CPU when the actual node limit is175.",
-    "carried_native_qualification_GPU_seconds": 122
+    "carried_native_qualification_GPU_seconds": 122,
+    "per_arm_gpu_hour_cap": 40,
+    "qualified_source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+    "admission_reference": "ADMISSION.json",
+    "full_cost_forecast_GPU_hours": {
+      "velocity": 38.8403449648122,
+      "kv_all_layers": 38.64579095836315
+    },
+    "storage_free_required_GiB": 900.0
   },
   "retention": [
     "raw current and next decision observations",

@@ -1,0 +1,133 @@
+{
+  "completed": true,
+  "scope": "Native single-GPU48lane source qualification and bounded launch admission; actual8GPU fit/probe enforced before collection.",
+  "scientific_source_admitted": false,
+  "scientific_updates": 0,
+  "worker_lanes": 48,
+  "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+  "runtime_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+  "model_directory": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
+  "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+  "model_config_sha256": "1c85bc28303a2144a1cc3af492b1b6d91f9cdcd94b30f04212505ffb5118f1b0",
+  "norm_path": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json",
+  "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+  "arms": {
+    "velocity": {
+      "passed": true,
+      "interface_spec": {
+        "kind": "velocity",
+        "steering_dim": 32,
+        "fraction": 0.125
+      },
+      "optimizer_config": {
+        "learning_rate": 0.0003,
+        "epochs": 10,
+        "minibatch_size": 32,
+        "target_kl": 0.02,
+        "kl_check_cadence": "minibatch"
+      },
+      "prior_conservative_GPU_seconds": 1161,
+      "prior_train_controls": 57600,
+      "prior_eval_controls": 0
+    },
+    "kv_all_layers": {
+      "passed": true,
+      "interface_spec": {
+        "kind": "kv_all_layers",
+        "steering_dim": 1152,
+        "kv_layers": 18,
+        "fraction": 0.64
+      },
+      "optimizer_config": {
+        "learning_rate": 3e-05,
+        "epochs": 10,
+        "minibatch_size": 32,
+        "target_kl": 0.02,
+        "kl_check_cadence": "minibatch"
+      },
+      "prior_conservative_GPU_seconds": 1025,
+      "prior_train_controls": 57600,
+      "prior_eval_controls": 0
+    }
+  },
+  "qualification_reference": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-native-qualification-20261103-r2/stress/RESULT.json",
+    "sha256": "1539823bfb2dd14cb7211e42cd83b74b5c8cb0fb12e2abb87b2123d9c6b67787"
+  },
+  "calibration_reference": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-scale50-native-qualification-20261103-r2/calibrate/CALIBRATION.json",
+    "sha256": "57634d1a758116520d4c0f35a222f803dbbc0f33977d15e9dec6ca4a2d4a313a"
+  },
+  "artifact_audit": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/joint-steering-native-audit-20261103-r1/RESULT.json",
+    "sha256": "be7b6a6189bc449cbcd3eee10cf5456de7a513bd59285b6994032cbbdae01b33"
+  },
+  "clock_reconciliation": {
+    "scheduler_creation_to_terminal_Q1": 1331,
+    "scheduler_creation_to_terminal_Q2": 721,
+    "scheduler_sum": 2052,
+    "phase_campaign_upper": 2064,
+    "conservative_campaign_charge_selected": 2064,
+    "carried_original_native_velocity": 122,
+    "total_preparation_charge": 2186,
+    "explanation": "Q2 planning stamp11:55:32 precedes scheduler creation11:55:50 by18s; final phase end12:07:44.009 precedes taskterminal12:07:51 by6.991s. Ceil produces12s higher planning-clock bound. Keep both labels and use larger2064 permanently;122charged once to velocity."
+  },
+  "GPU_budget_forecast": {
+    "velocity": {
+      "observed_bank_seconds": 222.23172807693481,
+      "observed_controls_per_second": 129.5944564226656,
+      "measured_collection_only_GPU_hours": 24.692414230770535,
+      "allowances_not_eight_GPU_measurements": {
+        "collection_25percent_margin": 6.173103557692634,
+        "evaluation_twice_measured_per_control": 3.896771620793475,
+        "optimizer_20seconds_per_update": 2.2222222222222223,
+        "startup_calibration_probes_release_240wallseconds": 0.5333333333333333,
+        "recovery_reserve_GPU_hours": 1.0,
+        "prior_preparation_GPU_hours": 0.3225
+      },
+      "forecast_total_GPU_hours": 38.8403449648122,
+      "cap_GPU_hours": 40
+    },
+    "kv_all_layers": {
+      "observed_bank_seconds": 221.2294738292694,
+      "observed_controls_per_second": 130.1815689451306,
+      "measured_collection_only_GPU_hours": 24.581052647696602,
+      "allowances_not_eight_GPU_measurements": {
+        "collection_25percent_margin": 6.1452631619241505,
+        "evaluation_twice_measured_per_control": 3.87919737096462,
+        "optimizer_20seconds_per_update": 2.2222222222222223,
+        "startup_calibration_probes_release_240wallseconds": 0.5333333333333333,
+        "recovery_reserve_GPU_hours": 1.0,
+        "prior_preparation_GPU_hours": 0.2847222222222222
+      },
+      "forecast_total_GPU_hours": 38.64579095836315,
+      "cap_GPU_hours": 40
+    }
+  },
+  "combined_cap_GPU_hours": 80,
+  "required_free_storage_bytes_at_launch": 966367641600,
+  "storage": {
+    "measured_arm_bank_bytes": {
+      "velocity": 928935936,
+      "kv_all_layers": 983829504
+    },
+    "expected_train_bytes": 765106176000,
+    "expected_eval_bytes": 60371659200.0,
+    "expected_canonical_bytes": 34258112000.0,
+    "master_bank_checkpoint_reserve_bytes": 21474836480,
+    "misc_reserve_bytes": 2147483648,
+    "ten_percent_physical_history_growth_reserve_bytes": 82547783520.0,
+    "required_free_bytes": 966367641600,
+    "fresh_free_bytes": 979298680832,
+    "PFS_volume_bytes": 2199023255552,
+    "write_read_fsync_probe_passed": true,
+    "private_cold_copy_receipt": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/joint-steering-storage-prep-20261103-r1/RESULT.json",
+      "sha256": "d06cc47d8f810ee789768aaad8607fde630b037ba1af02874d557033af98832b"
+    },
+    "concurrency": "Combined projection reserves both simultaneous arms.32GiBglobalfreeguard requests existing complete-bank checkpoint exit if concurrent growth consumes headroom; preserves data and fixed50update objective.",
+    "limits": "Based on real48case banks; fresh beforepanels/firstcountedupdate and periodicfree-space/remainingcost checks update forecast. No raw-data/frame reduction permitted."
+  },
+  "actual_eight_GPU_fit": "Pending startup8deviceGPUprobe and effective168CPU/1664GiB/384SHMchecks; firstcountedupdate recovery required before source progress admission.",
+  "generated_unix": 1793680994.3527648
+}
