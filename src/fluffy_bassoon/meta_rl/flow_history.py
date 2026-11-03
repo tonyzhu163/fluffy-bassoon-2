@@ -118,6 +118,46 @@ class FlowDirectMotor:
         return self.execute_batch(prepared, noise=noise, steering=np.asarray(steering)[None], spec=spec)[0]
 
 
+class FlowReferenceMotor(FlowDirectMotor):
+    """Original/final frozen Flow policy with the same exogenous native draws."""
+    def __init__(self, native, codec, reference):
+        super().__init__(native, codec)
+        self.reference = reference.eval().requires_grad_(False)
+
+    @torch.no_grad()
+    def execute_batch(self, prepared, *, noise, steering, spec):
+        if prepared is not self.native._prepared or spec.record() != self.codec.record():
+            raise ValueError("Reference must consume the current original frozen VLM prefix")
+        draw = torch.as_tensor(noise, dtype=torch.float32, device=self.reference.device)
+        if draw.shape != (prepared["batch_size"], 50, 32) or not torch.isfinite(draw).all():
+            raise ValueError("Use the prospective common native draw for every reference query")
+        original = self.reference.build_prefix_cache
+        try:
+            self.reference.build_prefix_cache = lambda *args, **kwargs: prepared["prefix"]
+            commands, _ = self.reference.predict_action_batch(prepared["observation"], mode="eval", noise=draw)
+            commands = commands.detach().float().cpu().numpy()
+            if commands.shape != (prepared["batch_size"], 50, 12) or not np.isfinite(commands).all():
+                raise ValueError("Require complete finite native reference commands")
+            return commands
+        finally:
+            self.reference.build_prefix_cache = original
+            self.native._prepared = None
+
+
+class ReferencePlaceholder(torch.nn.Module):
+    """Protocol state only; the native motor supplies all anchor commands."""
+    def __init__(self):
+        from .vla_history import HistoryConfig
+        super().__init__()
+        self.config = HistoryConfig(FEATURE_DIM, ACTION_DIM, context_length=128)
+        self.register_buffer("protocol_identity", torch.zeros(1))
+        self.anchor_parameter = torch.nn.Parameter(torch.zeros(1), requires_grad=False)
+
+    def step(self, token, state=None, **kwargs):
+        length = torch.zeros(len(token), dtype=torch.long, device=token.device) if state is None else state["length"]
+        return torch.zeros((len(token), ACTION_DIM), device=token.device), torch.zeros(len(token), device=token.device), dict(length=length+1)
+
+
 def export_corpus(output, raw, features, teacher_actions, codec, *, provenance, validation_slots=tuple(range(112, 128))):
     """Identical complete chronological streams for all four methods."""
     states, actions = raw["public_states"], raw["physical_actions"]

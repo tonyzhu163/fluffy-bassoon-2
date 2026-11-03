@@ -48,6 +48,33 @@ def test_direct_motor_uses_all_public_state_and_consumes_prefix_without_denoisin
         motor.execute_batch(prepared, noise=None, steering=np.zeros((2, 600), np.float32), spec=spec)
 
 
+def test_native_reference_uses_saved_draw_and_restores_hooks_on_failure():
+    from fluffy_bassoon.meta_rl.flow_history import FlowReferenceMotor
+    class Reference(torch.nn.Module):
+        device = "cpu"
+        def build_prefix_cache(self):
+            return "original"
+        def predict_action_batch(self, observation, *, mode, noise):
+            assert self.build_prefix_cache() == "captured" and mode == "eval"
+            np.testing.assert_array_equal(noise.numpy(), observation["noise"])
+            return torch.ones((len(noise), 50, 12)) * .75, {}
+    native = SimpleNamespace(model=object(), _prepared=None)
+    reference = Reference()
+    spec = codec()
+    motor = FlowReferenceMotor(native, spec, reference)
+    noise = teacher_noise("ab"*32, 3)[None]
+    prepared = dict(batch_size=1, prefix="captured", observation=dict(noise=noise))
+    native._prepared = prepared
+    actual = motor.execute_batch(prepared, noise=noise, steering=np.zeros((1, 600)), spec=spec)
+    assert actual.shape == (1, 50, 12) and native._prepared is None
+    assert reference.build_prefix_cache() == "original"
+    prepared["observation"]["noise"] = np.zeros_like(noise)
+    native._prepared = prepared
+    with pytest.raises(AssertionError):
+        motor.execute_batch(prepared, noise=noise, steering=np.zeros((1, 600)), spec=spec)
+    assert reference.build_prefix_cache() == "original" and native._prepared is None
+
+
 @pytest.mark.parametrize("mode", ["full", "episode"])
 def test_mapped_feedback_and_reset_memory_resume_match_uninterrupted(mode):
     from test_steering_history_eval import collect

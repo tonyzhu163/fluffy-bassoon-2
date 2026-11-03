@@ -1,0 +1,118 @@
+{
+  "status": "REQUESTED_EXECUTION_SOURCE_PREPARATION_RUNNING",
+  "human_request": "can you train those and eval it?",
+  "owner": "parent01a19b74",
+  "methods": [
+    "ad",
+    "dpt",
+    "dit",
+    "ic_iql"
+  ],
+  "source": {
+    "complete_episodes": 2304,
+    "TRAIN_controls": 921600,
+    "H50_decisions": 18432,
+    "behavior_versions": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "final_DPT_teacher": 18,
+    "feature_contract": "original frozen VLM prefix2048 RMS plus all25 public state coordinates",
+    "action_contract": "600 normalized direct physical action coordinates; binary6/11 sign mapping; actual mapped commands fed back"
+  },
+  "GPU_budget": {
+    "lifetime_operational_ceiling_hours": 7.5,
+    "standing_authority": "Human-requested task plus AGENTS allocations/increments below8GPUh;7.5 is an owner-selected ceiling, not an exact human quote",
+    "includes": [
+      "both preparation attempts and any failures",
+      "all four independent fits and full-state recovery",
+      "native selected-student qualification",
+      "all matched evaluation variants and original/final anchors",
+      "startup,release and cold-copy idle time"
+    ],
+    "carried_failed_GPU_seconds": 64,
+    "planning_allowances_GPU_hours": {
+      "source_preparation": 0.8,
+      "four_fits": 2.0,
+      "matched_native_evaluation": 4.3,
+      "recovery": 0.4
+    },
+    "no_automatic_retry": true,
+    "decision_rule": "Actual timing/storage and full objective must fit remaining lifetime allowance before admission. If not, checkpoint and present a complete costed decision; do not silently reduce cases/attempts/methods, claim convergence from a timeout, or split a larger planned budget."
+  },
+  "training": {
+    "partition": "128 chronological collection slots;112TRAIN/16heldout, identical across all methods; source PPO saw all source states",
+    "architecture": {
+      "backbone": "plain causal decoder",
+      "width": 128,
+      "layers": 2,
+      "heads": 4,
+      "context_length": 128,
+      "output_dimensions": 600
+    },
+    "optimizer": "independent AdamW3e-4, batch8, seed0, complete-episode windows1..12 (up to96source decisions); observation normalization fit on TRAIN only",
+    "validation": "16 fixed windows each100updates; min1000updates/stage;10 stale checks at material .001*max(1,abs(reference loss)); select best validation objective",
+    "value_methods": "DIT: actual actions/complete MC returns+TD regularization;IC-IQL: Bellman Q/upper-expectile V followed by frozen-value weighted policy extraction",
+    "recovery": "Complete actor/value/targetQ/Adam/sampler/PythonNumPyTorchCUDA RNG/stage/best candidate/plateau; invocation limits are operational, not convergence"
+  },
+  "evaluation": {
+    "tasks": {
+      "OpenDrawer": 400,
+      "CloseFridge": 900
+    },
+    "cases_per_task": 50,
+    "attempts_per_case": 5,
+    "student_modes": [
+      "full",
+      "episode_reset"
+    ],
+    "reference_policies": [
+      "original Human300 native sampler",
+      "final Flow checkpoint18 native sampler"
+    ],
+    "total_complete_episodes": 5000,
+    "policy_controls": 3250000,
+    "prospective_native_seed_bases": {
+      "OpenDrawer": 2700000,
+      "CloseFridge": 2800000
+    },
+    "pairing": "same native constructor case/physical state/cameras/public state; actual pixels retained and render differences reported; explicit common independent Gaussian per attempt for native anchors, unused by direct students",
+    "weights": "Frozen throughout evaluation; memory across actual prior attempts only, cleared between cases and in episode_reset control",
+    "metrics": [
+      "per-attempt first-success and success-at-end",
+      "cumulative-ever-success through actualattempt1..5",
+      "Wilson95% intervals per50-case cohort",
+      "paired full-minus-reset changes/uncertainty; exploratory tests with8-comparison correction",
+      "original/final native anchor curves"
+    ],
+    "admission": "Actual selected-student native resource/protocol qualification and measured complete-campaign budget/storage fit first; first prospective complete cases may count once if qualification passes; never duplicate them"
+  },
+  "storage": {
+    "protect_existing_steering_history_reservation": true,
+    "maximum_additional_warm_PFS_GiB": 8,
+    "cold_destination_proposed": "existing private /mnt/bos/adgfyl/strong-plant-archives/20261103-flow-four-method-readout-r1",
+    "cold_rule": "Only this new campaign own completed physical case payloads; full byte/SHA readback before atomic symlink. Active/partial case data, source, fit checkpoints and current recovery stay warm. Actual GPU readout must mount existing BOS or restore cold references before any recovery. No other-owner data moved."
+  },
+  "limitations": [
+    "Flow source paired improvement35to43/64,p=.18493 did not establish a better teacher",
+    "Different direct-action interface/source horizon from older288kresidual dataset; not a data-size-only ablation",
+    "OOD relative to OpenDrawer source, not necessarily foundation pretraining",
+    "No completed fit/readout is claimed from CPU tests or source-label preparation"
+  ]
+}
