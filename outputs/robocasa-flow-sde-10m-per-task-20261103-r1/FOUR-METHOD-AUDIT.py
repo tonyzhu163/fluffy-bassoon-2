@@ -69,16 +69,43 @@ def observation(value):
 
 
 
-def index_sampling(root, collections):
+def index_sampling(root, collections, previous_audit=None):
     """One ordered pass; success-dependent terminal-value calls vary in count."""
     completed = json.loads((root / 'progress.json').read_text())['completed_iterations']
     closed = (root / 'clock.json').exists() and json.loads((root / 'clock.json').read_text())['exit_code'] == 0
     assert completed >= max(collections)
     assert closed or completed > max(collections), 'Require a following complete update to avoid reading live files'
     indexed = {collection: [] for collection in collections}
+    anchors = {}
+    if previous_audit is not None:
+        prior = json.loads(previous_audit.read_text())
+        assert prior['completed']
+        candidates = [row for row in prior['audits'] if row['root'] == str(root)
+                      and row['collection_iteration'] == min(collections) - 1]
+        assert len(candidates) == 1, 'Require the immediately preceding audited collection'
+        reference = candidates[0]
+        manifest_bytes = Path(reference['raw_file_manifest']).read_bytes()
+        assert hashlib.sha256(manifest_bytes).hexdigest() == reference['raw_file_manifest_sha256']
+        manifest = json.loads(manifest_bytes)
+        assert manifest['completed']
+        for rank in range(8):
+            directory = root / 'sampling' / f'rank-{rank:02d}'
+            files = [(Path(name), record) for name, record in manifest['files'].items()
+                     if Path(name).parent == directory]
+            assert files, 'No sampling boundary in previous raw-file manifest'
+            path, record = max(files, key=lambda item: int(item[0].name.split('.')[0]))
+            value = load(path)
+            assert FILE_HASHES[str(path)] == record, 'Previous sampling anchor changed'
+            ordinal = int(path.name.split('.')[0])
+            assert value['rank'] == rank and value['prediction_ordinal'] == ordinal
+            assert value['mode'] == 'train' and value['collection_iteration'] == min(collections) - 1
+            assert value['producing_policy_iteration'] == min(collections) - 2
+            anchors[rank] = ordinal
     for rank in range(8):
-        previous = -1
+        previous = min(collections) - 1 if anchors else -1
         for path in sorted((root / 'sampling' / f'rank-{rank:02d}').glob('*.pt.gz')):
+            if rank in anchors and int(path.name.split('.')[0]) <= anchors[rank]:
+                continue
             value = load(path)
             assert value['rank'] == rank and value['prediction_ordinal'] == int(path.name.split('.')[0])
             if value['mode'] != 'train':
@@ -243,8 +270,8 @@ def audit(root, collection, tag, sampling):
 
 
 def audit_task(arguments):
-    root, task, tag, production_only, collections = arguments
-    torch.set_num_threads(2)
+    root, task, tag, production_only, collections, previous_audit, reference_audit, threads = arguments
+    torch.set_num_threads(threads)
     torch.set_num_interop_threads(1)
     stage = 'q1-r2' if task == 'OpenDrawer' else 'q1-r1'
     rows = []
@@ -253,10 +280,21 @@ def audit_task(arguments):
         rows.append(audit(q1, 1, tag, index_sampling(q1, [1])[1]))
     production = root / task / 'production-r1'
     if (production / 'progress.json').exists():
-        indexed = index_sampling(production, collections)
+        indexed = index_sampling(production, collections, previous_audit)
         for collection in collections:
             rows.append(audit(production, collection, tag, indexed[collection]))
     assert rows, 'Requested production batch is not complete yet'
+    if reference_audit is not None:
+        reference = json.loads(reference_audit.read_text())
+        assert reference['completed']
+        for row in rows:
+            matches = [item for item in reference['audits'] if item['root'] == row['root']
+                       and item['collection_iteration'] == row['collection_iteration']]
+            assert len(matches) == 1
+            for key in ['join_sha256', 'raw_file_manifest_sha256', 'raw_files', 'raw_bytes',
+                        'episodes', 'chunk_samples', 'terminal_value_sampling_records']:
+                assert row[key] == matches[0][key], f'Reference mismatch: {task} {key}'
+            row['qualification_reference'] = str(reference_audit)
     print(json.dumps(dict(task=task, completed=True, segments=len(rows))), flush=True)
     return rows
 
@@ -269,15 +307,24 @@ def main():
     parser.add_argument('--tasks', choices=tasks, nargs='+', default=tasks)
     parser.add_argument('--production-only', action='store_true')
     parser.add_argument('--collections', type=int, nargs='+', default=[2])
+    parser.add_argument('--previous-audit', type=Path,
+                        help='Reuse an audited prefix; verify its last sampling record on each rank')
+    parser.add_argument('--reference-audit', type=Path,
+                        help='Qualification only: require identical joins and raw-file manifests')
+    parser.add_argument('--workers', type=int, default=5)
+    parser.add_argument('--threads', type=int, default=2)
     args = parser.parse_args()
     assert not args.output.exists()
     assert len(set(args.tasks)) == len(args.tasks)
     assert len(set(args.collections)) == len(args.collections) and all(2 <= x <= 130 for x in args.collections)
+    assert 1 <= args.workers <= 5 and 1 <= args.threads <= 2
+    assert args.workers * args.threads <= 10
     # Q1 may be audited alongside any disjoint completed production block.
     # Five independent audits, two CPU threads each, within the allocated
     # development container's thirteen CPUs; no GPU visibility/model calls.
-    with ProcessPoolExecutor(max_workers=min(5, len(args.tasks)), mp_context=multiprocessing.get_context('spawn')) as pool:
-        groups = list(pool.map(audit_task, [(args.root, task, args.output.stem, args.production_only, sorted(args.collections)) for task in args.tasks]))
+    with ProcessPoolExecutor(max_workers=min(args.workers, len(args.tasks)), mp_context=multiprocessing.get_context('spawn')) as pool:
+        groups = list(pool.map(audit_task, [(args.root, task, args.output.stem, args.production_only,
+            sorted(args.collections), args.previous_audit, args.reference_audit, args.threads) for task in args.tasks]))
     rows = [row for group in groups for row in group]
     result = dict(completed=True, checked_unix=time.time(), audits=rows, new_controls=0, SGD=0,
         ready_methods=['AD', 'DPT', 'DIT', 'in-context IQL'],
