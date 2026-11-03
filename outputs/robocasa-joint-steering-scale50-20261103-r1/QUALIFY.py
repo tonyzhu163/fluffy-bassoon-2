@@ -357,6 +357,19 @@ def main():
                     sampled_phase_peaks=dict(watch.summary["by_phase"].get("stress_48_live/" + arm, {})),
                     torch_peak_allocated_bytes=torch.cuda.max_memory_allocated(0),
                     torch_peak_reserved_bytes=torch.cuda.max_memory_reserved(0))
+                # The single-GPU allocation qualifies the two arms sequentially.
+                # Release all48 native/render/video children before constructing
+                # the next arm; retaining both banks would test96 live simulators.
+                arm_cleanup_errors = []
+                for environment in live:
+                    try:
+                        environment.close()
+                    except BaseException as error:
+                        arm_cleanup_errors.append(repr(error))
+                if arm_cleanup_errors:
+                    raise RuntimeError("Arm cleanup failed before the next bank: " + repr(arm_cleanup_errors))
+                record["resources_after_lane_release"] = process_resources()
+                record["lanes_closed_before_next_arm"] = True
                 write_json(root / "RESULT.json", record)
                 result["arms"][arm] = record
                 del policy, collection
