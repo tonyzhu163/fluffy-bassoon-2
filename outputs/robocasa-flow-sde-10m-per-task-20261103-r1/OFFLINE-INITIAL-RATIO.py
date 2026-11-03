@@ -65,7 +65,9 @@ def prepare(root, output):
         chain_index = {tensor_sha(row): i for i, row in enumerate(flat['chains'])}
         assert len(chain_index) == T * B
         found = None
-        for sampling_path in sorted((q1 / 'sampling/rank-00').glob('*.pt.gz')):
+        # Native actor rank0 may own rollout ranks other than rollout rank0.
+        # Recover an actual intact B16 cohort by exact chain/logprob joins.
+        for sampling_path in sorted((q1 / 'sampling').glob('*/*.pt.gz')):
             with gzip.open(sampling_path, 'rb') as f:
                 record = torch.load(f, map_location='cpu', weights_only=False)
             if record['mode'] != 'train' or record['terminal_value_only']:
@@ -91,6 +93,7 @@ def prepare(root, output):
                    actor_batch=str(batch_path), actor_batch_sha256=batch_hash,
                    sampling=str(sampling_path), sampling_sha256=sha(sampling_path),
                    collection=1, producing_policy=0, batch_size=16,
+                   rollout_rank=record['rank'],
                    fixed_original_rollout_cohort=True)
         rows.append(row)
         write(output / 'PREPARED.json', dict(completed=False, root=str(root), runtime=RUNTIME,
