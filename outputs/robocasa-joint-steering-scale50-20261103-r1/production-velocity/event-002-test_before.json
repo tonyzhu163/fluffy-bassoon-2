@@ -1,0 +1,132 @@
+{
+  "phase": "test_before",
+  "sequence": 2,
+  "iteration": 0,
+  "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+  "last_check_unix": 1793683534.970931,
+  "summary": {
+    "episodes": 500,
+    "per_task": {
+      "OpenDrawer": {
+        "episodes": 50,
+        "success_once": 27,
+        "success_at_end": 23
+      },
+      "TurnOnSinkFaucet": {
+        "episodes": 50,
+        "success_once": 21,
+        "success_at_end": 21
+      },
+      "OpenCabinet": {
+        "episodes": 50,
+        "success_once": 32,
+        "success_at_end": 32
+      },
+      "CoffeeSetupMug": {
+        "episodes": 50,
+        "success_once": 22,
+        "success_at_end": 22
+      },
+      "PickPlaceDrawerToCounter": {
+        "episodes": 50,
+        "success_once": 26,
+        "success_at_end": 24
+      },
+      "PickPlaceCounterToCabinet": {
+        "episodes": 50,
+        "success_once": 28,
+        "success_at_end": 28
+      },
+      "OpenStandMixerHead": {
+        "episodes": 50,
+        "success_once": 32,
+        "success_at_end": 30
+      },
+      "TurnOnMicrowave": {
+        "episodes": 50,
+        "success_once": 13,
+        "success_at_end": 13
+      },
+      "CloseFridge": {
+        "episodes": 50,
+        "success_once": 36,
+        "success_at_end": 32
+      },
+      "TurnOffStove": {
+        "episodes": 50,
+        "success_once": 7,
+        "success_at_end": 7
+      }
+    },
+    "macro_ID_success_once": 0.44000000000000006,
+    "macro_ID_success_at_end": 0.41600000000000004,
+    "macro_OOD_success_once": 0.536,
+    "macro_OOD_success_at_end": 0.512
+  },
+  "steering_std_mean": 0.5,
+  "steering_std_min": 0.5,
+  "steering_std_max": 0.5,
+  "learning_rate": 0.0003,
+  "checkpoint": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-steering-velocity-scale50-20261103-r1/checkpoints/event-002-test_before-000.pt",
+    "sha256": "44e5f786e7be04e2db4779688ea5241f7adc08beb7a08b217226ac6b1ac14bfc"
+  },
+  "escrow": {
+    "format": "joint_steering_action_escrow_v1",
+    "limits": {
+      "train": 11650000,
+      "eval": 1200000
+    },
+    "charged": {
+      "train": 57600,
+      "eval": 322500
+    },
+    "pending": {}
+  },
+  "elapsed_seconds": 467.93214988708496,
+  "completed_events": 2,
+  "total_events": 64,
+  "resources": {
+    "storage_free_GiB": 892.08203125,
+    "container_RAM_GiB": 46.379974365234375,
+    "container_peak_RAM_GiB": 1253.6020774841309,
+    "GPUs": [
+      {
+        "memory_used_MiB": 24591.0,
+        "utilization_percent": 0.0
+      },
+      {
+        "memory_used_MiB": 29190.0,
+        "utilization_percent": 0.0
+      },
+      {
+        "memory_used_MiB": 17374.0,
+        "utilization_percent": 0.0
+      },
+      {
+        "memory_used_MiB": 41402.0,
+        "utilization_percent": 0.0
+      },
+      {
+        "memory_used_MiB": 28226.0,
+        "utilization_percent": 0.0
+      },
+      {
+        "memory_used_MiB": 29922.0,
+        "utilization_percent": 0.0
+      },
+      {
+        "memory_used_MiB": 37986.0,
+        "utilization_percent": 0.0
+      },
+      {
+        "memory_used_MiB": 26190.0,
+        "utilization_percent": 0.0
+      }
+    ]
+  },
+  "collection_and_learning_seconds": 467.7859170436859,
+  "physical_controls_this_event": 322500,
+  "controls_per_second": 689.202483902466,
+  "remaining_gpu_hours": 35.32601821528541
+}
