@@ -10,18 +10,34 @@
   },
   "native_evaluation": {
     "completed": false,
-    "job_id": "job-voaelvgv4mqi",
-    "name": "mwj_1103_steering_kl_guard_native_1x4_r1",
+    "job_id": "job-1nds2rm4v2rp",
+    "name": "mwj_1103_steering_kl_guard_native_1x4_r2",
     "last_verified_status": "QUEUED",
     "last_direct_PFS_check_unix": 1793688224.3554962,
     "output_directory_existed_at_that_check": false,
-    "source_commit": "a31757296742b815bf77b2cef6b94ada7d638d49",
-    "source_checkout": "/mowenjie/fluffy-bassoon-2/worktrees/steering-kl-native-eval-20261103-r1",
-    "remote_output": "/mowenjie/fluffy-bassoon-2/outputs/steering-kl-guard-ablation-20261103-r1/gpu-r1",
+    "source_commit": "12d1f24189a6b8308675fb3efbeb2dacfd0e3880",
+    "source_checkout": "/mowenjie/fluffy-bassoon-2/worktrees/steering-kl-native-eval-20261103-r2",
+    "remote_output": "/mowenjie/fluffy-bassoon-2/outputs/steering-kl-guard-ablation-20261103-r1/gpu-r2",
     "lifetime_GPU_seconds_ceiling": 21600,
     "actual_device_qualification_pending": true,
     "panel": "Three deterministic policies per interface, two125-case shards per policy, five tasks,600controls;1500episodes total",
-    "test_panel": "Fresh diagnostic seeds; production final TEST untouched"
+    "test_panel": "Fresh diagnostic seeds; production final TEST untouched",
+    "last_console_check_Shanghai": "2026-11-03T15:12:10+08:00",
+    "prior_GPU_seconds": 200,
+    "remaining_GPU_seconds": 21400,
+    "attempts": [
+      {
+        "job_id": "job-voaelvgv4mqi",
+        "status": "FAILED before model/simulator",
+        "charge_GPU_seconds": 200,
+        "evidence": "GPU-R1-FAILURE.json"
+      },
+      {
+        "job_id": "job-1nds2rm4v2rp",
+        "status": "QUEUED",
+        "submission": "SUBMISSION-r2.json"
+      }
+    ]
   },
   "monitor": {
     "automation_id": "kl-guard-paired-diagnostic",
