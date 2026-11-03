@@ -47,6 +47,13 @@ The saved decision RGB is sufficient for these four students; it is not a
 claim that full-rate episode videos or arbitrary future reward-model inputs
 were recorded.
 
+The [completed allocated-CPU audit](FOUR-METHOD-AUDIT-R3.json) passed all
+five Q1 corpora and the first production update of OpenDrawer, Toaster and
+Drawer-to-Counter:1,024episodes/12,288chunk records. All native continuous
+targets, physical rewards/suffixes, horizon observations and unique
+actor/sampling/environment joins pass. This samples the running campaign;
+the complete130-update closeout remains required.
+
 ## Held-out evaluation
 
 Student training uses only OpenDrawer, CloseToasterOvenDoor,

@@ -1,0 +1,327 @@
+{
+  "checked_shanghai": "2026-11-03T18:09:35.546973",
+  "tasks": {
+    "OpenDrawer": {
+      "progress": {
+        "completed_iterations": 8,
+        "target_iterations": 130,
+        "checked_unix": 1793700443.6711354,
+        "operator_checkpoint_exit": false
+      },
+      "update_intervals": [
+        {
+          "between": [
+            2,
+            3
+          ],
+          "seconds": 285.17
+        },
+        {
+          "between": [
+            3,
+            4
+          ],
+          "seconds": 258.17
+        },
+        {
+          "between": [
+            4,
+            5
+          ],
+          "seconds": 257.32
+        },
+        {
+          "between": [
+            5,
+            6
+          ],
+          "seconds": 256.19
+        },
+        {
+          "between": [
+            6,
+            7
+          ],
+          "seconds": 254.37
+        },
+        {
+          "between": [
+            7,
+            8
+          ],
+          "seconds": 258.16
+        }
+      ],
+      "median_update_seconds": 257.32,
+      "remaining_updates": 122,
+      "remaining_hours_at_median": 8.72,
+      "estimated_finish_shanghai": "2026-11-04T02:52:48.586972",
+      "latest_update": {
+        "completed": true,
+        "rank": 0,
+        "producing_policy_iteration": 7,
+        "optimizer_steps_before": 168,
+        "optimizer_steps_after": 192,
+        "batch_shape": [
+          12,
+          64,
+          50,
+          12
+        ],
+        "losses": {
+          "actor/entropy_loss": 0.0,
+          "actor/grad_norm": 42.54050827026367,
+          "actor/policy_loss": -0.3378256559371948,
+          "actor/policy_loss_abs": 0.8603629469871521,
+          "actor/total_loss": -0.03563903272151947,
+          "critic/value_loss": 0.052713386714458466
+        },
+        "metrics": {
+          "actor/approx_kl": 0.033453091979026794,
+          "actor/clip_fraction": 0.17455774545669556,
+          "actor/clipped_ratio": 0.9992412328720093,
+          "actor/dual_cliped_ratio": 0.0,
+          "actor/entropy_loss": 0.0,
+          "actor/grad_norm": 42.54050827026367,
+          "actor/lr": 4.999999873689376e-06,
+          "actor/policy_loss": -0.3378256559371948,
+          "actor/policy_loss_abs": 0.8603629469871521,
+          "actor/ratio": 1.0614893436431885,
+          "actor/ratio_abs": 0.2173347771167755,
+          "actor/total_loss": -0.03563903272151947,
+          "critic/lr": 9.999999747378752e-05,
+          "critic/value_clip_ratio": 0.00734653091058135,
+          "critic/value_loss": 0.052713386714458466,
+          "critic/explained_variance": 0.3728790283203125
+        },
+        "training_seconds": 115.34140330459923,
+        "cuda_peak_allocated_bytes": 20251212800,
+        "cuda_peak_reserved_bytes": 25631391744,
+        "frozen_vlm_unchanged": true
+      },
+      "contract": {
+        "horizon": 600,
+        "chunk": 50,
+        "chunks_per_episode": 12,
+        "train_envs": 128,
+        "rounds": 1,
+        "episodes_per_iteration": 128,
+        "iterations": 130,
+        "nominal_policy_controls": 10060800,
+        "reset_reserve_controls": 2146304
+      },
+      "Q1_verified_episodes": 128,
+      "Q1_verified_train_controls": 76800,
+      "unique_per_episode_controls": [
+        600
+      ]
+    },
+    "CloseToasterOvenDoor": {
+      "progress": {
+        "completed_iterations": 6,
+        "target_iterations": 130,
+        "checked_unix": 1793700363.553231,
+        "operator_checkpoint_exit": false
+      },
+      "update_intervals": [
+        {
+          "between": [
+            2,
+            3
+          ],
+          "seconds": 280.71
+        },
+        {
+          "between": [
+            3,
+            4
+          ],
+          "seconds": 258.12
+        },
+        {
+          "between": [
+            4,
+            5
+          ],
+          "seconds": 257.19
+        },
+        {
+          "between": [
+            5,
+            6
+          ],
+          "seconds": 253.36
+        }
+      ],
+      "median_update_seconds": 257.655,
+      "remaining_updates": 124,
+      "remaining_hours_at_median": 8.87,
+      "estimated_finish_shanghai": "2026-11-04T03:02:04.766972",
+      "latest_update": {
+        "completed": true,
+        "rank": 0,
+        "producing_policy_iteration": 5,
+        "optimizer_steps_before": 120,
+        "optimizer_steps_after": 144,
+        "batch_shape": [
+          12,
+          64,
+          50,
+          12
+        ],
+        "losses": {
+          "actor/entropy_loss": 0.0,
+          "actor/grad_norm": 70.22232055664062,
+          "actor/policy_loss": -0.2814621925354004,
+          "actor/policy_loss_abs": 0.9711862802505493,
+          "actor/total_loss": -0.0269850455224514,
+          "critic/value_loss": 0.06558185815811157
+        },
+        "metrics": {
+          "actor/approx_kl": 0.06820014119148254,
+          "actor/clip_fraction": 0.1607125997543335,
+          "actor/clipped_ratio": 0.989093542098999,
+          "actor/dual_cliped_ratio": 0.0,
+          "actor/entropy_loss": 0.0,
+          "actor/grad_norm": 70.22232055664062,
+          "actor/lr": 4.999999873689376e-06,
+          "actor/policy_loss": -0.2814621925354004,
+          "actor/policy_loss_abs": 0.9711862802505493,
+          "actor/ratio": 1.0404835939407349,
+          "actor/ratio_abs": 0.21994486451148987,
+          "actor/total_loss": -0.0269850455224514,
+          "critic/lr": 9.999999747378752e-05,
+          "critic/value_clip_ratio": 0.0040805768221616745,
+          "critic/value_loss": 0.06558185815811157,
+          "critic/explained_variance": 0.09366804361343384
+        },
+        "training_seconds": 116.35576822888106,
+        "cuda_peak_allocated_bytes": 20250686976,
+        "cuda_peak_reserved_bytes": 25635586048,
+        "frozen_vlm_unchanged": true
+      },
+      "contract": {
+        "horizon": 600,
+        "chunk": 50,
+        "chunks_per_episode": 12,
+        "train_envs": 128,
+        "rounds": 1,
+        "episodes_per_iteration": 128,
+        "iterations": 130,
+        "nominal_policy_controls": 10060800,
+        "reset_reserve_controls": 2146304
+      },
+      "Q1_verified_episodes": 128,
+      "Q1_verified_train_controls": 76800,
+      "unique_per_episode_controls": [
+        600
+      ]
+    },
+    "PickPlaceDrawerToCounter": {
+      "progress": {
+        "completed_iterations": 2,
+        "target_iterations": 130,
+        "checked_unix": 1793700396.4085906,
+        "operator_checkpoint_exit": false
+      },
+      "update_intervals": [],
+      "latest_update": {
+        "completed": true,
+        "rank": 0,
+        "producing_policy_iteration": 1,
+        "optimizer_steps_before": 24,
+        "optimizer_steps_after": 48,
+        "batch_shape": [
+          12,
+          64,
+          50,
+          12
+        ],
+        "losses": {
+          "actor/entropy_loss": 0.0,
+          "actor/grad_norm": 44.16914749145508,
+          "actor/policy_loss": -0.25277870893478394,
+          "actor/policy_loss_abs": 1.0426602363586426,
+          "actor/total_loss": -0.016850542277097702,
+          "critic/value_loss": 0.11797437071800232
+        },
+        "metrics": {
+          "actor/approx_kl": 0.06268758326768875,
+          "actor/clip_fraction": 0.18230020999908447,
+          "actor/clipped_ratio": 0.9929672479629517,
+          "actor/dual_cliped_ratio": 0.0,
+          "actor/entropy_loss": 0.0,
+          "actor/grad_norm": 44.16914749145508,
+          "actor/lr": 4.999999873689376e-06,
+          "actor/policy_loss": -0.25277870893478394,
+          "actor/policy_loss_abs": 1.0426602363586426,
+          "actor/ratio": 1.1190333366394043,
+          "actor/ratio_abs": 0.29235178232192993,
+          "actor/total_loss": -0.016850542277097702,
+          "critic/lr": 9.999999747378752e-05,
+          "critic/value_clip_ratio": 0.42350488901138306,
+          "critic/value_loss": 0.11797437071800232,
+          "critic/explained_variance": -0.017645716667175293
+        },
+        "training_seconds": 116.57752045430243,
+        "cuda_peak_allocated_bytes": 17083950592,
+        "cuda_peak_reserved_bytes": 19887292416,
+        "frozen_vlm_unchanged": true
+      },
+      "contract": {
+        "horizon": 600,
+        "chunk": 50,
+        "chunks_per_episode": 12,
+        "train_envs": 128,
+        "rounds": 1,
+        "episodes_per_iteration": 128,
+        "iterations": 130,
+        "nominal_policy_controls": 10060800,
+        "reset_reserve_controls": 2146304
+      },
+      "Q1_verified_episodes": 128,
+      "Q1_verified_train_controls": 76800,
+      "unique_per_episode_controls": [
+        600
+      ]
+    },
+    "CoffeeSetupMug": {
+      "contract": {
+        "horizon": 600,
+        "chunk": 50,
+        "chunks_per_episode": 12,
+        "train_envs": 128,
+        "rounds": 1,
+        "episodes_per_iteration": 128,
+        "iterations": 130,
+        "nominal_policy_controls": 10060800,
+        "reset_reserve_controls": 2146304
+      },
+      "Q1_verified_episodes": 128,
+      "Q1_verified_train_controls": 76800,
+      "unique_per_episode_controls": [
+        600
+      ]
+    },
+    "TurnOffStove": {
+      "contract": {
+        "horizon": 600,
+        "chunk": 50,
+        "chunks_per_episode": 12,
+        "train_envs": 128,
+        "rounds": 1,
+        "episodes_per_iteration": 128,
+        "iterations": 130,
+        "nominal_policy_controls": 10060800,
+        "reset_reserve_controls": 2146304
+      },
+      "Q1_verified_episodes": 128,
+      "Q1_verified_train_controls": 76800,
+      "unique_per_episode_controls": [
+        600
+      ]
+    }
+  },
+  "training_total_per_task": 9984000,
+  "five_task_training_total": 49920000
+}

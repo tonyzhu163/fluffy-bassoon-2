@@ -1,8 +1,8 @@
 {
   "owner_chat": "01a1a077-e5ab-7982-840d-de8a81d4321a",
-  "checked_shanghai": "2026-11-03 17:58:09",
+  "checked_shanghai": "2026-11-03 18:18:00",
   "source_commit": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
-  "phase": "All five Q1 audits passed; two production runs advancing, three queued",
+  "phase": "All five Q1 audits passed; three production runs advancing, two queued",
   "cluster": "Baige Pro6K",
   "queue": "\u7b97\u6cd5Z\u7ec4",
   "jobs": [
@@ -63,13 +63,20 @@
       "max_minutes": 1440,
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1",
       "resume": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/q1-r2/OpenDrawer/checkpoints/global_step_1",
-      "completed_iterations": 5,
+      "completed_iterations": 10,
       "target_iterations": 130,
-      "optimizer_steps": 120,
+      "optimizer_steps": 240,
       "frozen_vlm_unchanged": true,
       "gpu_probe_passed": true,
       "before_reference": "OpenDrawer/BEFORE-RESUME.json",
-      "before_reference_sha256": "656f627fd5c9d24b6305a5b0dfe523186104c81709316eac6d000698415f7224"
+      "before_reference_sha256": "656f627fd5c9d24b6305a5b0dfe523186104c81709316eac6d000698415f7224",
+      "median_update_seconds": 257.32,
+      "ETA_remaining_hours": 8.72,
+      "ETA_finish_shanghai": "2026-11-04T02:52:48.586972",
+      "local_complete_boundaries": [
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints/global_step_10",
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints/global_step_2"
+      ]
     },
     {
       "task": "CloseToasterOvenDoor",
@@ -107,13 +114,19 @@
       "max_minutes": 1440,
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/production-r1",
       "resume": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/q1-r1/CloseToasterOvenDoor/checkpoints/global_step_1",
-      "completed_iterations": 4,
+      "completed_iterations": 8,
       "target_iterations": 130,
-      "optimizer_steps": 96,
+      "optimizer_steps": 192,
       "frozen_vlm_unchanged": true,
       "gpu_probe_passed": true,
       "before_reference": "CloseToasterOvenDoor/BEFORE-RESUME.json",
-      "before_reference_sha256": "16205284b7c70e22d13ac8c6407fc7e2cbc5139987bcfc43d1f8bd760f0d35d3"
+      "before_reference_sha256": "16205284b7c70e22d13ac8c6407fc7e2cbc5139987bcfc43d1f8bd760f0d35d3",
+      "median_update_seconds": 257.655,
+      "ETA_remaining_hours": 8.87,
+      "ETA_finish_shanghai": "2026-11-04T03:02:04.766972",
+      "local_complete_boundaries": [
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/production-r1/CloseToasterOvenDoor/checkpoints/global_step_2"
+      ]
     },
     {
       "task": "PickPlaceDrawerToCounter",
@@ -147,17 +160,20 @@
       "job_id": "job-zqn304j2b9lw",
       "job_name": "mwj_1103_flow10m_drawer2counter_prod_1x8_r1",
       "submitted_shanghai": "2026-11-03 17:50:52",
-      "state": "QUEUED",
+      "state": "RUNNING",
       "max_minutes": 1440,
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/production-r1",
       "resume": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/q1-r1/PickPlaceDrawerToCounter/checkpoints/global_step_1",
-      "completed_iterations": 1,
+      "completed_iterations": 4,
       "target_iterations": 130,
-      "optimizer_steps": 24,
-      "frozen_vlm_unchanged": null,
-      "gpu_probe_passed": false,
+      "optimizer_steps": 96,
+      "frozen_vlm_unchanged": true,
+      "gpu_probe_passed": true,
       "before_reference": "PickPlaceDrawerToCounter/BEFORE-RESUME.json",
-      "before_reference_sha256": "2c7c34db08f73f0b0673521fbd160a054a87ebac86bb6e4d58989575fbadddca"
+      "before_reference_sha256": "2c7c34db08f73f0b0673521fbd160a054a87ebac86bb6e4d58989575fbadddca",
+      "local_complete_boundaries": [
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/production-r1/PickPlaceDrawerToCounter/checkpoints/global_step_2"
+      ]
     },
     {
       "task": "CoffeeSetupMug",
@@ -248,7 +264,7 @@
       "before_reference_sha256": "c7f0c522996048ecf8459833cd0deff265e727d9207164819ffb11a184394e9b"
     }
   ],
-  "next_action": "Monitor two advancing productions and three queued jobs; finish allocated CPU four-method payload audit, then all130updates/finalteacher/corpus closeout before any student fitting",
+  "next_action": "Monitor three advancing productions and two queued jobs; complete source corpora/final teachers and all joins before any student fits",
   "fixed_batch_layout": {
     "train_envs_per_gpu": 16,
     "rollout_rounds": 1,
@@ -266,7 +282,7 @@
     "test_evidence": "Q0-VISION-TESTS.txt",
     "four_method_payload_audit": {
       "source": "3996c58e",
-      "state": "running five independent allocated Linux CPU audits",
+      "state": "PASSED",
       "result": "FOUR-METHOD-AUDIT-R3.json",
       "previous_read_only_attempt": "FOUR-METHOD-AUDIT-R1.log",
       "new_controls": 0,
@@ -274,7 +290,14 @@
       "previous_attempts": [
         "FOUR-METHOD-AUDIT-R1.log",
         "FOUR-METHOD-AUDIT-R2-STOP.json"
-      ]
+      ],
+      "segments": 8,
+      "episodes": 1024,
+      "chunk_samples": 12288,
+      "scope": "All five Q1 corpora plus the first resumed production update of each of the three running tasks",
+      "all_actor_sampling_environment_joins_unique": true,
+      "native_continuous_targets_preserved": true,
+      "remaining": "Full130source versions/finalteacher/DPToffline labels/exporter adaptation/interface qualification before fitting"
     }
   },
   "approved_scope": {
@@ -325,11 +348,11 @@
     "cadence_minutes": 20,
     "status": "ACTIVE",
     "next_action": "Check all production jobs, advancing updates/retention/free space; diagnose faults before new identity; quiet unless meaningful change",
-    "last_check_shanghai": "2026-11-03 17:58:09",
-    "next_check_shanghai": "2026-11-03 18:18 Shanghai"
+    "last_check_shanghai": "2026-11-03 18:18:00",
+    "next_check_shanghai": "2026-11-03 18:38 Shanghai"
   },
   "storage": {
-    "pfs_free_GiB": 692.359375,
+    "pfs_free_GiB": 649.8046875,
     "stop_floor_GiB": 200,
     "tier_receipt": "TIER-FIRST.json",
     "tiered_superseded_boundaries": 5,
@@ -337,14 +360,32 @@
     "bos": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1"
   },
   "usage_snapshot": {
-    "checked_shanghai": "2026-11-03 17:58:09",
+    "checked_shanghai": "2026-11-03 18:18:00",
     "valid_Q1_process_GPU_seconds": 21824,
     "failed_Q1_process_GPU_seconds": 4352,
     "diagnostics_scheduler_GPU_seconds_upper": 213,
-    "live_production_GPU_seconds_to_snapshot": 19618,
-    "cumulative_GPU_hours_using_diagnostic_upper": 12.78,
+    "live_production_GPU_seconds_to_snapshot": 47893,
+    "cumulative_GPU_hours_using_diagnostic_upper": 20.634,
     "active_jobs_accruing": true,
-    "queue_wait_not_charged_as_allocated_GPU_time": true
+    "queue_wait_not_charged_as_allocated_GPU_time": true,
+    "evidence": "STATUS-20261103-1818.json"
   },
-  "data_readiness": "DATA-READINESS.md"
+  "data_readiness": "DATA-READINESS.md",
+  "control_steps": {
+    "training_steps_per_task": 9984000,
+    "five_task_training_steps": 49920000,
+    "evaluation_steps_per_task": 76800,
+    "policy_controls_including_evaluation": 10060800,
+    "unit": "Executed simulator robot controls; not denoising steps, action coordinates or chunks",
+    "actual_qualification_verified": "Every task has 128 complete episodes x600 controls =76800 controls/update",
+    "failed_attempt_and_reset_controls": "Accounted separately in per-task global journals",
+    "evidence": "ETA-20261103-1810.json"
+  },
+  "ETA": {
+    "measured_update_seconds": "about257sec, including collection and optimizer; checkpoint saves add occasional overhead",
+    "running_job_finish_shanghai": "about03:00 Nov4 for OpenDrawer/Toaster, with checkpoint/evaluation margin",
+    "queued_job_finish": "about9-10hours after allocation; queue time unknown",
+    "evidence": "ETA-20261103-1810.json"
+  },
+  "performance_units_and_old_run_comparison": "PERFORMANCE-NOTE.md"
 }
