@@ -260,6 +260,33 @@ read it there.
    manifests, then BOS tiering. Meta-learners start only after all tasks close.
    They get their own plan.
 
+## Handoff checklist for the Baige owner
+
+Code pin: latest `main` at or after `9b89b7d2`; record the exact commit.
+
+1. **Q0, Linux CPU:** run the RoboCasa/RLinf core tests in the native
+   environment (`tests/test_robocasa_flow_ppo.py`, `test_rlinf_native_ppo.py`,
+   `test_robocasa_pairing.py`, `test_robocasa_native_clock.py`). Resolve the
+   10M config with `validate_cfg` for each ID task.
+2. **Launch command:** write `COMMAND.sh` in this folder, adapted from the
+   [prior run's](../robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/COMMAND.sh)
+   (same model/norm hashes, probe, telemetry). It needs a fresh
+   output and accounting root per task and attempt, `TASK_GPUS=8`, the
+   `ROBOCASA_FLOW_TASK` / seed variables from `flow_seeds`, and
+   `ROBOCASA_SIM_PPO_ROLLOUT_PLACEMENT=0-7`. Before the Q1 segment, write
+   `CHECKPOINT_AND_EXIT` in the output directory. The old
+   `nominal_policy_controls`/1M manifest fields must come from `flow-contract.json`.
+3. **Q1, one task first (OpenDrawer), then the other four in parallel:**
+   check C1 (first-micro-batch log-ratio), C3, bytes per component, the
+   byte-equality of actor images/chains with env/sampling records, seconds
+   per iteration and peak memory at 16 envs/GPU.
+4. **Resume reference:** build the before-panel reference JSON (`completed`,
+   `cases`, `checkpoint` = resume dir, `metrics`, `episode_refs` with SHA-256,
+   `canonical_directory`) as in the prior run's `BEFORE-RECOVERY.json`. Then
+   resume with `ROBOCASA_FLOW_ACTOR_BATCH_DROP` set to the four fields in
+   Decisions and `TASK_WALL_SECONDS=86400`.
+5. Monitor every 20 minutes; record in this folder and the coordination row.
+
 ## Readout per task
 
 - Log per iteration: TRAIN first success and success at end (128 episodes),
