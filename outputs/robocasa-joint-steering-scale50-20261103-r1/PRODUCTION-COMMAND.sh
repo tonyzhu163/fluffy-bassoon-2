@@ -11,12 +11,18 @@ case "$TASK_ARM" in velocity|kv_all_layers) ;; *) exit 2 ;; esac
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_PY=$TASK_ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
 export TASK_PROCESS_STARTED=$(date +%s)
+export TASK_WRAPPER_SOURCE=${BASH_SOURCE[0]}
+TASK_STORAGE_WATCH_PID=
 test ! -e "$TASK_RUN"
-mkdir -p "$TASK_RUN"
+mkdir "$TASK_RUN"
 exec > >(tee "$TASK_RUN/job-console.log") 2>&1
 finish() {
   TASK_EXIT_CODE=$?
   trap - EXIT
+  if test -n "$TASK_STORAGE_WATCH_PID"; then
+    kill "$TASK_STORAGE_WATCH_PID" 2>/dev/null || true
+    wait "$TASK_STORAGE_WATCH_PID" 2>/dev/null || true
+  fi
   TASK_FINISHED=$(date +%s)
   printf '{"started_unix":%s,"finished_unix":%s,"allocated_gpus":8,"process_gpu_seconds":%s,"exit_code":%s,"allocation_release_not_included":true}\n' \
     "$TASK_PROCESS_STARTED" "$TASK_FINISHED" "$((8*(TASK_FINISHED-TASK_PROCESS_STARTED)))" "$TASK_EXIT_CODE" > "$TASK_RUN/clock.json"
@@ -35,7 +41,7 @@ export WANDB_MODE=offline WANDB_CONSOLE=off WANDB_DISABLE_GIT=true WANDB_DISABLE
 # No credential is needed or serialized for the qualified offline exporter.
 unset WANDB_API_KEY WANDB_ACCESS_TOKEN WANDB_IDENTITY_TOKEN_FILE
 export LYCO_BAIGE_GPU_MAP=$TASK_RUN/GPU-PROBE.json
-"$TASK_PY" -B "$TASK_META/scripts/[train]gpu_probe.py" --expected-count 8 \
+timeout --signal=TERM --kill-after=15s 120s "$TASK_PY" -B "$TASK_META/scripts/[train]gpu_probe.py" --expected-count 8 \
   --output "$LYCO_BAIGE_GPU_MAP" --baige-container --purpose training --baige-exclusive-training
 "$TASK_PY" -B - "$TASK_RUN" <<'PY'
 import hashlib,json,math,os,pathlib,socket,subprocess,time
@@ -70,6 +76,8 @@ profile=dict(code=str(code),source_commit=a['source_commit'],runtime_path=os.env
  arm=arm,seed=921801 if arm=='velocity' else 921901,updates=50,episodes_per_update=384,lanes_per_worker=48,
  submitted_unix=submitted,prior_conservative_gpu_seconds=prior,native_env=native_env,
  canonical_root=str(run/'canonical'),admission_reference=dict(path=str(admission_path),sha256=os.environ['TASK_ADMISSION_SHA256']),
+ launcher=dict(path=os.environ['TASK_WRAPPER_SOURCE'],
+ sha256=hashlib.sha256(pathlib.Path(os.environ['TASK_WRAPPER_SOURCE']).read_bytes()).hexdigest()),
  wandb=dict(enabled=True,entity='tonyzoo-brown-university',project='fluffy-bassoon-2',
  group='joint-steering-scale50-20261103-r1',online_authorized=False))
 (run/'PROFILE.json').write_text(json.dumps(profile,indent=2)+'\n')
@@ -86,6 +94,22 @@ if prior_controls:
  scientific_updates=0,new_physical_dispatch=False,source=a['qualification_reference'],
  source_arm=arm,allocation_GPU_seconds=prior),indent=2)+'\n')
 PY
+# Stop only at the driver's existing complete-bank checkpoint boundary if
+# concurrent PFS use consumes the reserved room. No physical bank is abandoned.
+"$TASK_PY" -B - "$TASK_RUN" <<'PY' &
+import json,os,pathlib,sys,time
+root=pathlib.Path(sys.argv[1]); threshold=32*2**30
+while not (root/'RELEASED.json').exists():
+ free=os.statvfs(root).f_bavail*os.statvfs(root).f_frsize
+ if free<threshold:
+  (root/'STORAGE-PAUSE.json').write_text(json.dumps(dict(free_bytes=free,
+   threshold_bytes=threshold,reason='Concurrent storage growth; finish current bank and preserve checkpoint',
+   checked_unix=time.time()))+'\n')
+  (root/'CHECKPOINT_AND_EXIT').touch()
+  break
+ time.sleep(15)
+PY
+TASK_STORAGE_WATCH_PID=$!
 TASK_DEADLINE=$(cat "$TASK_RUN/deadline-unix.txt")
 TASK_REMAINING=$((TASK_DEADLINE+90-$(date +%s)))
 test "$TASK_REMAINING" -gt 90

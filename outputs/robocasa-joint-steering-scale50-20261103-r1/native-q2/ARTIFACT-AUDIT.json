@@ -1,0 +1,98 @@
+{
+  "completed": true,
+  "GPU_seconds": 0,
+  "scientific_updates": 0,
+  "source_commit": "8b9e1bbb3a73d55eda9bd9acdb30a85fee79d151",
+  "source_clean": true,
+  "physical_chunk_hashes": 1152,
+  "Gaussian_draws_and_summed_logps": 1152,
+  "arms": {
+    "velocity": {
+      "episodes": 48,
+      "policy_controls": 28800,
+      "physical_chunks": 576,
+      "native_batch_sizes": [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "interface_spec": {
+        "kind": "velocity",
+        "steering_dim": 32,
+        "fraction": 0.125
+      },
+      "optimizer_config": {
+        "learning_rate": 0.0003,
+        "epochs": 10,
+        "minibatch_size": 32,
+        "target_kl": 0.02,
+        "kl_check_cadence": "minibatch"
+      },
+      "fraction": 0.125,
+      "action_RMS": 0.08100743144750595,
+      "elapsed_seconds": 222.23172807693481,
+      "controls_per_second": 129.5944564226656,
+      "all36_KV_targets_verified": false,
+      "next_Adam_exact": true
+    },
+    "kv_all_layers": {
+      "episodes": 48,
+      "policy_controls": 28800,
+      "physical_chunks": 576,
+      "native_batch_sizes": [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "interface_spec": {
+        "kind": "kv_all_layers",
+        "steering_dim": 1152,
+        "kv_layers": 18,
+        "fraction": 0.64
+      },
+      "optimizer_config": {
+        "learning_rate": 3e-05,
+        "epochs": 10,
+        "minibatch_size": 32,
+        "target_kl": 0.02,
+        "kl_check_cadence": "minibatch"
+      },
+      "fraction": 0.64,
+      "action_RMS": 0.07450713217258453,
+      "elapsed_seconds": 221.2294738292694,
+      "controls_per_second": 130.1815689451306,
+      "all36_KV_targets_verified": true,
+      "next_Adam_exact": true
+    }
+  },
+  "started_unix": 1793679955.0629303,
+  "input_hashes": {
+    "calibrate/CALIBRATION.json": "57634d1a758116520d4c0f35a222f803dbbc0f33977d15e9dec6ca4a2d4a313a",
+    "calibrate/RESULT.json": "df0b52ad1334d1b8122d8c7c461104cb617de41fd76ae1af631368f1e78aea63",
+    "stress/RESULT.json": "1539823bfb2dd14cb7211e42cd83b74b5c8cb0fb12e2abb87b2123d9c6b67787",
+    "clock.json": "1e901ec1b3ff49a97eece83c3d90d3d8a26d449608b2b94a8d728f04a85d11dd"
+  },
+  "video_files": 288,
+  "total_encoded_frames": 173088,
+  "video_receipt_sha256": "42e7019ced6cfb4014b2f7dee972c09ddb7b1b74a0eacbc576acf3caff3445b1",
+  "finished_unix": 1793680080.2173398,
+  "elapsed_seconds": 125.1544098854065
+}
