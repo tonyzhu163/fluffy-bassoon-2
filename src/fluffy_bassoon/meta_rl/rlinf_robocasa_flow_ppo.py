@@ -66,6 +66,18 @@ FLOW_TASK_NUMBERS = dict(OpenDrawer=1, PickPlaceCounterToCabinet=2, PickPlaceDra
 RESET_CONTROL_RESERVE = 128  # counted_native_factory's per-episode reset reserve
 
 
+def keep_frozen_image_encoder_in_eval(model):
+    """Retain the rollout vision path while the action expert trains.
+
+    PyTorch MultiheadAttention selects a different forward path in train mode,
+    even under no_grad. Freezing weights alone does not preserve that path.
+    """
+    image = model.img
+    if any(parameter.requires_grad for parameter in image.parameters()):
+        raise ValueError('Flow PPO expects a frozen image encoder')
+    image.eval()
+
+
 def flow_logprob_parity(logprobs, old_logprobs, *, action_dim=12, tolerance=1e-3):
     """Audit the unchanged policy's actual chunk ratio before its first SGD.
 

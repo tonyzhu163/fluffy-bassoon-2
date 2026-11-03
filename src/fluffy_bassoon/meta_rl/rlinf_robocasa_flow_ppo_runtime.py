@@ -24,7 +24,7 @@ from .rlinf_native_ppo import ActionJournal, cpu_tree, restore_rng, snapshot_rng
 from .rlinf_native_ppo import sha
 from .rlinf_native_ppo_runtime import PilotActor, PilotRollout, PilotRunner, save_tensor
 from .rlinf_robocasa_flow_ppo import (GlobalActionJournal, RESET_CONTROL_RESERVE, first_success_reward,
-    flow_contract, flow_logprob_parity, train_case_seeds)
+    flow_contract, flow_logprob_parity, keep_frozen_image_encoder_in_eval, train_case_seeds)
 from .rlinf_robocasa_ppo_env import counted_native_factory
 from .robocasa_pairing import canonical_case, native_fingerprint, public_snapshot, stable_counter_regions
 
@@ -168,6 +168,7 @@ class FlowActor(PilotActor):
     def train_micro_batch(self, micro_batch, metrics, *, is_last):
         if self._flow_first_micro_checked:
             return super().train_micro_batch(micro_batch, metrics, is_last=is_last)
+        keep_frozen_image_encoder_in_eval(self.model)
 
         def check(module, inputs, output):
             report = flow_logprob_parity(output['logprobs'], micro_batch['prev_logprobs'],

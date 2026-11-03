@@ -22,7 +22,24 @@ def test_first_success_rejects_a_broadcast_latch():
 
 
 from fluffy_bassoon.meta_rl.rlinf_robocasa_flow_ppo import (
-    GlobalActionJournal, flow_contract, flow_logprob_parity, flow_seeds, train_case_seeds)
+    GlobalActionJournal, flow_contract, flow_logprob_parity, flow_seeds,
+    keep_frozen_image_encoder_in_eval, train_case_seeds)
+
+
+def test_frozen_image_mode_is_preserved_without_changing_expert_training():
+    import torch
+    model = torch.nn.Module()
+    model.img = torch.nn.Sequential(torch.nn.Linear(4, 4), torch.nn.Dropout(.1))
+    model.expert = torch.nn.Linear(4, 4)
+    model.img.requires_grad_(False)
+    model.train()
+    keep_frozen_image_encoder_in_eval(model)
+    assert model.training and model.expert.training and not model.img.training
+    assert all(not child.training for child in model.img.modules())
+    assert all(parameter.requires_grad for parameter in model.expert.parameters())
+    model.img[0].weight.requires_grad_(True)
+    with pytest.raises(ValueError, match='frozen image'):
+        keep_frozen_image_encoder_in_eval(model)
 
 
 def test_pre_sgd_parity_uses_executed_chunk_sum_and_rejects_padded_dims():
