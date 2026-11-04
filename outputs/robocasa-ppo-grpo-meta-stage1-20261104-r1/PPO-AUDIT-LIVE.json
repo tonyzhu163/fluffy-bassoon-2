@@ -1,6 +1,6 @@
 {
-  "completed": false,
-  "checked_unix": 1793783972.9500995,
+  "completed": true,
+  "checked_unix": 1793786813.3428557,
   "root": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01",
   "source": "d9a1c61616443f7f88c71f91da4567d85b1f4253",
   "contract": {
@@ -34,15 +34,15 @@
     "physics_tick_limit": 93184
   },
   "progress": {
-    "completed_iterations": 25,
+    "completed_iterations": 40,
     "target_iterations": 40,
-    "checked_unix": 1793783818.5230374,
+    "checked_unix": 1793786561.80971,
     "operator_checkpoint_exit": false
   },
-  "completed_update_rank_pairs": 50,
-  "parity_receipts": 52,
+  "completed_update_rank_pairs": 80,
+  "parity_receipts": 80,
   "max_approx_kl": 0.020878616720438004,
-  "max_clip_fraction": 0.07574737071990967,
+  "max_clip_fraction": 0.08253401517868042,
   "TRAIN": [
     {
       "phase": "training",
@@ -251,6 +251,118 @@
       "successes": 79,
       "end_successes": 79,
       "success_rate": 0.6171875
+    },
+    {
+      "phase": "training",
+      "policy_iteration": 26,
+      "episodes": 128,
+      "successes": 80,
+      "end_successes": 73,
+      "success_rate": 0.625
+    },
+    {
+      "phase": "training",
+      "policy_iteration": 27,
+      "episodes": 128,
+      "successes": 80,
+      "end_successes": 78,
+      "success_rate": 0.625
+    },
+    {
+      "phase": "training",
+      "policy_iteration": 28,
+      "episodes": 128,
+      "successes": 82,
+      "end_successes": 78,
+      "success_rate": 0.640625
+    },
+    {
+      "phase": "training",
+      "policy_iteration": 29,
+      "episodes": 128,
+      "successes": 81,
+      "end_successes": 76,
+      "success_rate": 0.6328125
+    },
+    {
+      "phase": "training",
+      "policy_iteration": 30,
+      "episodes": 128,
+      "successes": 91,
+      "end_successes": 89,
+      "success_rate": 0.7109375
+    },
+    {
+      "phase": "training",
+      "policy_iteration": 31,
+      "episodes": 128,
+      "successes": 79,
+      "end_successes": 74,
+      "success_rate": 0.6171875
+    },
+    {
+      "phase": "training",
+      "policy_iteration": 32,
+      "episodes": 128,
+      "successes": 80,
+      "end_successes": 74,
+      "success_rate": 0.625
+    },
+    {
+      "phase": "training",
+      "policy_iteration": 33,
+      "episodes": 128,
+      "successes": 94,
+      "end_successes": 90,
+      "success_rate": 0.734375
+    },
+    {
+      "phase": "training",
+      "policy_iteration": 34,
+      "episodes": 128,
+      "successes": 78,
+      "end_successes": 76,
+      "success_rate": 0.609375
+    },
+    {
+      "phase": "training",
+      "policy_iteration": 35,
+      "episodes": 128,
+      "successes": 83,
+      "end_successes": 81,
+      "success_rate": 0.6484375
+    },
+    {
+      "phase": "training",
+      "policy_iteration": 36,
+      "episodes": 128,
+      "successes": 85,
+      "end_successes": 81,
+      "success_rate": 0.6640625
+    },
+    {
+      "phase": "training",
+      "policy_iteration": 37,
+      "episodes": 128,
+      "successes": 75,
+      "end_successes": 70,
+      "success_rate": 0.5859375
+    },
+    {
+      "phase": "training",
+      "policy_iteration": 38,
+      "episodes": 128,
+      "successes": 77,
+      "end_successes": 75,
+      "success_rate": 0.6015625
+    },
+    {
+      "phase": "training",
+      "policy_iteration": 39,
+      "episodes": 128,
+      "successes": 83,
+      "end_successes": 82,
+      "success_rate": 0.6484375
     }
   ],
   "DEV64": [
@@ -285,16 +397,46 @@
       "paired_losses": 7,
       "exact_two_sided_McNemar_p": 0.803619384765625,
       "gain_pp": 3.125
+    },
+    {
+      "phase": "eval_step_030",
+      "policy_iteration": 30,
+      "episodes": 64,
+      "successes": 34,
+      "end_successes": 30,
+      "success_rate": 0.53125,
+      "paired_wins": 7,
+      "paired_losses": 7,
+      "exact_two_sided_McNemar_p": 1.0,
+      "gain_pp": 0.0
+    },
+    {
+      "phase": "after",
+      "policy_iteration": 40,
+      "episodes": 64,
+      "successes": 26,
+      "end_successes": 23,
+      "success_rate": 0.40625,
+      "paired_wins": 5,
+      "paired_losses": 13,
+      "exact_two_sided_McNemar_p": 0.09625244140625,
+      "gain_pp": -12.5
     }
   ],
   "training_first10_rate": 0.63203125,
-  "training_last10_rate": null,
-  "training_gain_pp": null,
-  "final_DEV_gain_pp": null,
+  "training_last10_rate": 0.64453125,
+  "training_gain_pp": 1.2499999999999956,
+  "final_DEV_gain_pp": -12.5,
   "DEV_peak_successes": 36,
-  "physical_reset_receipts": 24,
+  "physical_reset_receipts": 40,
   "GRPO_raw_group_snapshots_rechecked": 0,
-  "clock": null,
+  "clock": {
+    "started_unix": 1793778976,
+    "finished_unix": 1793786662,
+    "allocated_gpus": 8,
+    "observed_gpu_seconds": 61488,
+    "exit_code": 0
+  },
   "references": [
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/flow-contract.json",
@@ -306,7 +448,7 @@
     },
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/progress.json",
-      "sha256": "ef7f73a06167fbd8aa58101f0df29d7e083d9dac5ad50e93fe25169f7eb237f3"
+      "sha256": "1a320836095a9e2498c70f7618aaba533d79a8ab93c71f2f4cded3c555f5fdaf"
     },
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/gpu-probe.json",
@@ -511,6 +653,126 @@
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-025-rank-01.json",
       "sha256": "b8bef09f54b9dccc93a907e1f3f790f6bb28e1308967e37277fa75ff9e4b2b70"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-026-rank-00.json",
+      "sha256": "6229627727b49d5e50b73987a8664c0d5fa9103c7392d2b1ace4c07e85866ff7"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-026-rank-01.json",
+      "sha256": "1e5c55013e3379e6f9b09b51cf68576038854390a7d91b81aff7e290a03e202d"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-027-rank-00.json",
+      "sha256": "0c8f58d7c2cb0f7ee65ea15494d6786a271e5c61a260678b96f8a0bc9e520db8"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-027-rank-01.json",
+      "sha256": "0f3a1b45b943325223b0dec33719e23d6102bdc152a6e22a39efe622c3e67ee2"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-028-rank-00.json",
+      "sha256": "1d1181ff84c8b3057bf5c253432c3fbb45bc352a8d7cf382bbbf9d2236e71f0f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-028-rank-01.json",
+      "sha256": "f1e4b974a98fb4ec874276e46ef09346fc9f9e8a2be182b3d8018509b689869d"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-029-rank-00.json",
+      "sha256": "0bf59adf3d36607e0c1f8dce907a34fd7dd2ec3f1cf1a2377626d50568dcdbf6"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-029-rank-01.json",
+      "sha256": "63e453f071bd977189c5d781ae08ad552dfeef429e1934df14602889255e86a9"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-030-rank-00.json",
+      "sha256": "b12b699f47658aa44f8103b0588f9a264535008651849bb029b36930c459c88d"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-030-rank-01.json",
+      "sha256": "7bc1b33d1ebe6609db274958cb0a5582c022c22f11db6f2c8aac1c3b6e5cf062"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-031-rank-00.json",
+      "sha256": "cd9f3dd20d5852ecf496cb54ba1aeb51e300c3062ee8eb135a2df0164c4a4321"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-031-rank-01.json",
+      "sha256": "6268c5a33a4314ffd8e3323797733400d2726b4ef2f6fb93b2b30cee483a39c5"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-032-rank-00.json",
+      "sha256": "3d1601b9485defde8437b2d6a93b1b08bc6be9b7446acfe8991b9292b37bb0de"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-032-rank-01.json",
+      "sha256": "82eee4db7af5ba872433fbf56863e8d222f6c63fee30b46471086725a6af801d"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-033-rank-00.json",
+      "sha256": "378108fb51a8ad3bee6f2bb17eeb2ed5f35a19a6cfc5cdd876ba6893a608480f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-033-rank-01.json",
+      "sha256": "63e222e62811a3be43e0097f0ff20591da41bd4432f3796004df60b21db3c214"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-034-rank-00.json",
+      "sha256": "edc81caebb29217de899479900ff7113b854e6bb39c0e6e17aebc0f0e568145e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-034-rank-01.json",
+      "sha256": "62fd10ecde82ff4f036223eac97eae649ebc6a18c587a07b304b64a988fa2f17"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-035-rank-00.json",
+      "sha256": "071e4f9ef18a079f233a9cf06e4778f6e606da200b28ec974116694f53dfa523"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-035-rank-01.json",
+      "sha256": "3a89154e6dd39690862d3b1e3ac569ad93c37426f14372b57b60836e04365a9c"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-036-rank-00.json",
+      "sha256": "a4d8b89dd6f74aa34ee594390f21a5ca93d80d28a0cf941d83dbea330ddb7c7f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-036-rank-01.json",
+      "sha256": "be2b27bc09fcd40edda965b57ec8efb430691ebd345ef6e5fd78280ae0960c6a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-037-rank-00.json",
+      "sha256": "79024af6c40b20cbcbed3dd579944d8f4f61119d90ffe4dba82d9302d43dc707"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-037-rank-01.json",
+      "sha256": "0b03fa84be4152862062cf2394aaa6f53145b22f9be846354a39f245cbd3102d"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-038-rank-00.json",
+      "sha256": "2d89dd7d81491bcfd0ba2c823a788d0a61ed6c8a67bf26b1fe298c6faa58aff4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-038-rank-01.json",
+      "sha256": "30dc28f2a6170554d8f3481cfec41fb216a01352459bce422435b61a9d4ef644"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-039-rank-00.json",
+      "sha256": "27bdf401b73bd6f51053224162b8df5eb66e4daaa1051794b0739bafafa5d991"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-039-rank-01.json",
+      "sha256": "2e2bad141e20638588769ac7a15eed83de512dbf84926aeb77a29b55e2cc1664"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-040-rank-00.json",
+      "sha256": "51b3dbc908b2f6064ad1865f9bb163ee7e938005665d876661bb56a2b30094ba"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/updates/iteration-040-rank-01.json",
+      "sha256": "d1df217a7e12c067d84f9d0c922e9eac4705364aa9ba7d6146e5cb8464bdf78a"
     },
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-001-rank-00.json",
@@ -721,6 +983,122 @@
       "sha256": "106765823835b86b66f0e67674a237ddf59ffd4a4ce5cec74115f2d667162fc7"
     },
     {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-027-rank-00.json",
+      "sha256": "1a7f2e25acd45656bc382b391ec864873a4ee91cab81436ea0cede26114dfb77"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-027-rank-01.json",
+      "sha256": "1a7f2e25acd45656bc382b391ec864873a4ee91cab81436ea0cede26114dfb77"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-028-rank-00.json",
+      "sha256": "7f5fa7fc5a26ba01923b36a6d3863bf0e673385a1cfb85969a6669f5a1a8cc48"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-028-rank-01.json",
+      "sha256": "7f5fa7fc5a26ba01923b36a6d3863bf0e673385a1cfb85969a6669f5a1a8cc48"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-029-rank-00.json",
+      "sha256": "3c1448c738426d611c7143dc51331d42b27dbea61d9c03e9794b5f0713e9467e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-029-rank-01.json",
+      "sha256": "3c1448c738426d611c7143dc51331d42b27dbea61d9c03e9794b5f0713e9467e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-030-rank-00.json",
+      "sha256": "26b3f91639ec4c303da7449815b5b1d46009a05b6d729dcf5da37d6a5c22ccd2"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-030-rank-01.json",
+      "sha256": "26b3f91639ec4c303da7449815b5b1d46009a05b6d729dcf5da37d6a5c22ccd2"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-031-rank-00.json",
+      "sha256": "c5a0e000fd50b23b1d6a5188ff44640a734e851eb5af58472ef63a105d2b70a4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-031-rank-01.json",
+      "sha256": "c5a0e000fd50b23b1d6a5188ff44640a734e851eb5af58472ef63a105d2b70a4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-032-rank-00.json",
+      "sha256": "0dc2212b2e5bbfd3aab1b2dddce783227ebfb15b1a3aac0c78598e791c841502"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-032-rank-01.json",
+      "sha256": "0dc2212b2e5bbfd3aab1b2dddce783227ebfb15b1a3aac0c78598e791c841502"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-033-rank-00.json",
+      "sha256": "e0d726b780602bed397a0d44e899ce2b64a3836a42b19afe0c774a02edcb18e1"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-033-rank-01.json",
+      "sha256": "e0d726b780602bed397a0d44e899ce2b64a3836a42b19afe0c774a02edcb18e1"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-034-rank-00.json",
+      "sha256": "b7c66041d1de91056a32d12a5a6aa586846a6eea9a9f510c9df4e62aedfeece2"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-034-rank-01.json",
+      "sha256": "b7c66041d1de91056a32d12a5a6aa586846a6eea9a9f510c9df4e62aedfeece2"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-035-rank-00.json",
+      "sha256": "5eae96088435d4bd1362f2fecb064c27ab2176f01d95ea714ad8a4c050c56e59"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-035-rank-01.json",
+      "sha256": "5eae96088435d4bd1362f2fecb064c27ab2176f01d95ea714ad8a4c050c56e59"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-036-rank-00.json",
+      "sha256": "91eb7e346439e05105b36f49614243f8498c621ee3e90aecbdf6e821ddb33358"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-036-rank-01.json",
+      "sha256": "91eb7e346439e05105b36f49614243f8498c621ee3e90aecbdf6e821ddb33358"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-037-rank-00.json",
+      "sha256": "8f766cfeebff85d2fede872971049bf7e9d0a58fd611028c0acfbf5b4ed3cb66"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-037-rank-01.json",
+      "sha256": "8f766cfeebff85d2fede872971049bf7e9d0a58fd611028c0acfbf5b4ed3cb66"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-038-rank-00.json",
+      "sha256": "305d9f2fe7d2272169ee48d4683886506b3c3d77e9968c115234c448db3c742b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-038-rank-01.json",
+      "sha256": "305d9f2fe7d2272169ee48d4683886506b3c3d77e9968c115234c448db3c742b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-039-rank-00.json",
+      "sha256": "b2a3ab1c2531e983049979c49ec5a24bce776f05ee5505aea948e76eee449dd9"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-039-rank-01.json",
+      "sha256": "b2a3ab1c2531e983049979c49ec5a24bce776f05ee5505aea948e76eee449dd9"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-040-rank-00.json",
+      "sha256": "f0a95471f49337984d3e3a855e80b88d479be682cc659b0c1198f42ebfdf111a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/logprob-parity/iteration-040-rank-01.json",
+      "sha256": "f0a95471f49337984d3e3a855e80b88d479be682cc659b0c1198f42ebfdf111a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/after-i040-round00-episodes.json",
+      "sha256": "439dd8ce421f0f4ed141f728498dcb72890f2b656dc21c182a2ee3310f43a4e3"
+    },
+    {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/before-i000-round00-episodes.json",
       "sha256": "f33a154fe9c6a2bb01c9c16271308215570fdc459a0c51ae0741159847c68be3"
     },
@@ -731,6 +1109,10 @@
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/eval_step_020-i020-round00-episodes.json",
       "sha256": "5e627344024d71187b4f4cbb175c9989593d35d33335bc3ae26f604f69d6b30c"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/eval_step_030-i030-round00-episodes.json",
+      "sha256": "cc41e25439d76b2b5368c84b9f6e9ffeb2834b88a7cf114a8c1417c4b08867f9"
     },
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/training-i000-round00-episodes.json",
@@ -837,6 +1219,66 @@
       "sha256": "c9ec7daed80e20ff31c3a86708439cecfafccdea8b06fb1a171030efbffc6ee0"
     },
     {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/training-i026-round00-episodes.json",
+      "sha256": "25acdc14257dba38147b9fa155bcdcd73804d2f733c4984cc2d09d622b9fb1ec"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/training-i027-round00-episodes.json",
+      "sha256": "c086079f36532165de5c328f9ce44886ede7ef72d3f01cfe01c4306fbb182776"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/training-i028-round00-episodes.json",
+      "sha256": "d847f885eb3d0004c031d71c870d4450a71818b6766f725e8808acd870921443"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/training-i029-round00-episodes.json",
+      "sha256": "ca9560fcb4b0a294e7887b97727905c944e7c159ba48abd3b2a2a31aaace5f88"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/training-i030-round00-episodes.json",
+      "sha256": "b2cdcc2edeacab6ca9b016790f8ef2c1275106ac54d87004433f7200bd1a445b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/training-i031-round00-episodes.json",
+      "sha256": "88114f52410d2e4a48e19a34ce92512ffc2e18628c72e6b0deff4049ffa47690"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/training-i032-round00-episodes.json",
+      "sha256": "770d486224479ee3de9f212b261af588649b2f674daa2d5a332531f3c222f47e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/training-i033-round00-episodes.json",
+      "sha256": "a574728470bf8e8a93df1469b0187c882921bc464b5678a1be21d3d4eefaf4b7"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/training-i034-round00-episodes.json",
+      "sha256": "2745f70bfd96d7b44d6ae0ab76af682c96ba3b8f7fd2367a425e4580a9fc8b0a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/training-i035-round00-episodes.json",
+      "sha256": "390d9fded60cc1c6cadbdfefb0257dd96ff7e5aeb74e8abd72e30b59a9cace96"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/training-i036-round00-episodes.json",
+      "sha256": "92495b97d3228f74654b21c531df1f8e73546a9e47490c734bb566f59707585b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/training-i037-round00-episodes.json",
+      "sha256": "97e5f39abb5a44a878e33553be9db90fed10f1cebd1d92e8f2af9ea7b97a518b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/training-i038-round00-episodes.json",
+      "sha256": "9d83d11651135e02b5994fbfdc5e102f7a1bd7834ed2b7f3385d7c99264bdbb6"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/training-i039-round00-episodes.json",
+      "sha256": "fdbdd00204a9d84bbb913ca5dca20e6ca189903a6d7507bf914bdb58e861eca3"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/after-i040-round00-episodes.json",
+      "sha256": "25e982eea5f0911733225c72878608e80d2b17baeeb763d67ac958c4897e25fc"
+    },
+    {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/before-i000-round00-episodes.json",
       "sha256": "7c437b669ff8667334c52dbaad8d6925c67a5edc69135d8fd1194d6b18542237"
     },
@@ -847,6 +1289,10 @@
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/eval_step_020-i020-round00-episodes.json",
       "sha256": "43a2eafeacae0f4fd406854dfc24e2086a3a9d131ec60227ebc02497b9faf57a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/eval_step_030-i030-round00-episodes.json",
+      "sha256": "51d25d64caa7ac7735b0d55404963dff9a314fce8b8b6b79a11829b4e445ae29"
     },
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/training-i000-round00-episodes.json",
@@ -953,6 +1399,66 @@
       "sha256": "beade9c0a6493cf3a25efaa39d86ab33c48216b89ac3aaef39376c8a8e5fa419"
     },
     {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/training-i026-round00-episodes.json",
+      "sha256": "7351750e38ee74526ac4e2bd763bd7cf561951ae503d6bc2fe3d6ec8eb23a2b8"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/training-i027-round00-episodes.json",
+      "sha256": "c39c3e1cb38e6252f306e32395d376207033144395341b0431f4744ace3db76c"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/training-i028-round00-episodes.json",
+      "sha256": "55ce729fcc6ace2873dcca57820ad0df38e5a6ce01920034d9e5904a0e94fc53"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/training-i029-round00-episodes.json",
+      "sha256": "5a2998d7f8d65c80f5aea0e0d06802845a998c1166d31c60dd71019c531f65a1"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/training-i030-round00-episodes.json",
+      "sha256": "d242732a3dcb968bb6d0c4df77ea64c83edfbe801ad2d35976f2510306da5fd4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/training-i031-round00-episodes.json",
+      "sha256": "c4cb1b04ad4836c9fdcb25d16a89b0d75dccd9d86f6f5d7a6e4f0b1f6b4c1fcb"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/training-i032-round00-episodes.json",
+      "sha256": "ebae7584b2535a19aa90df2bdde57219742cf39ce77d41f0ead5630d31120a4b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/training-i033-round00-episodes.json",
+      "sha256": "11c27ec998cc72106f584fdfe8e17ccc94109fdbeceaa192d30315f4ad9acf26"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/training-i034-round00-episodes.json",
+      "sha256": "7ac587fffe40e59f8054f7472bdd252d5f53e19828f65f9750a9dd83c8409974"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/training-i035-round00-episodes.json",
+      "sha256": "91ca23e5e9ded16c7ed7e64f197e5f18e04cd91bed52924cf7cc5802951974cf"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/training-i036-round00-episodes.json",
+      "sha256": "9529a278f7a161b589a05fe66c1caca1c9f9b25cd04339b973977a9e4c2f1f56"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/training-i037-round00-episodes.json",
+      "sha256": "30cbced65895614d69d8f574538eef148b687c73d8741886aac33769890f812a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/training-i038-round00-episodes.json",
+      "sha256": "351fb6a587611f4245c6973705abe82d1c4ae23aad12973ddca9656056ecc3b7"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/training-i039-round00-episodes.json",
+      "sha256": "624a995fda38a9e409416445fb0c0e037163ffe374eff5c1c987038b51d2f86f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/after-i040-round00-episodes.json",
+      "sha256": "d98f6742c137492eeb55c7d26dcf172e4629cdd1843647ef160ab69bf1f80ca8"
+    },
+    {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/before-i000-round00-episodes.json",
       "sha256": "f0f4f324ffb22099d34065af2f9ad7d0dd9894279ec08beada0d19bd26b2a33f"
     },
@@ -963,6 +1469,10 @@
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/eval_step_020-i020-round00-episodes.json",
       "sha256": "3195a12adcfc84907454ae0a646e2d1a78a79277706127f0e22482df62a0b9dd"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/eval_step_030-i030-round00-episodes.json",
+      "sha256": "688dc90f4e89ea507eba1950be2e430cb5aa6442b7b1fc1471cda4736025f21d"
     },
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/training-i000-round00-episodes.json",
@@ -1069,6 +1579,66 @@
       "sha256": "71579889b8a22ec820dc07baf9742cd9abe57f9e95716405967a4a6e5a213944"
     },
     {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/training-i026-round00-episodes.json",
+      "sha256": "95f9d862e801c84ad65b47c069265008edb0b0a1cd5b993007ae7549d8d4ecb4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/training-i027-round00-episodes.json",
+      "sha256": "391840cc0ed394640c78c58b0c0f0afa2044f20017842418bd1abc2ea7812265"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/training-i028-round00-episodes.json",
+      "sha256": "4902f4478478bb387a45400d8ab6979300bcb65a887f40257c54c1963c8680e7"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/training-i029-round00-episodes.json",
+      "sha256": "3c59501b03a9ba51d2577243a910c8822f3d1862d2a728963281e2a2ded617ca"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/training-i030-round00-episodes.json",
+      "sha256": "e56908807f301eeded4c79ae252415abeac2653520b4834a8fce0d5e1e432e11"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/training-i031-round00-episodes.json",
+      "sha256": "e32961880e004e5704e07cfa8063ff86e3f9b420fece162c0ed7bd6177b4a122"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/training-i032-round00-episodes.json",
+      "sha256": "107b41c9bd23a2a74fdf566ca1b4b943c39826a7e2720fcb15946386055ca3e6"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/training-i033-round00-episodes.json",
+      "sha256": "93849c914fbfbe157615a849655a416e8a5743b38a1584b1bd349e55d1e0265c"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/training-i034-round00-episodes.json",
+      "sha256": "a6f3e4c29c57cfbd44bb8c9d77e669aef895ef37d1fb0d739ae5d583896cf2ae"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/training-i035-round00-episodes.json",
+      "sha256": "1213e5ffe522bda2b29a61c8cc5d1160d57f74c211c020cf22d64d8ac8ce6583"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/training-i036-round00-episodes.json",
+      "sha256": "cde510c359b06ee2c1e3a297b979ea731312a61edc64d679c2d61b4a7586011c"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/training-i037-round00-episodes.json",
+      "sha256": "718355aa7c747da3874a859b3b18d125da2cdf78469aa8a30869878e6ac795a5"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/training-i038-round00-episodes.json",
+      "sha256": "f6a01ea5b904d9f5fbeceb41ae9a547f81c8c538c31ac887ed248c536e21d442"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/training-i039-round00-episodes.json",
+      "sha256": "90beba12e22221ac8ce932c16b1cf4371d5117b86af5412596f07c521bb48103"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/after-i040-round00-episodes.json",
+      "sha256": "98dea9f09850f9735b20758ea6ec7cd8bb4e237b85ef9743834d022ffa1cdd47"
+    },
+    {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/before-i000-round00-episodes.json",
       "sha256": "e870f2370b52545faf4da41cd5e51642d3eeedda4d8ee956dde56bcbad7fb5d5"
     },
@@ -1079,6 +1649,10 @@
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/eval_step_020-i020-round00-episodes.json",
       "sha256": "d20909ee922b6d72421862df31dc92ff6576b8951bc46ba6868a9f59a648ecfc"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/eval_step_030-i030-round00-episodes.json",
+      "sha256": "7a0995484e5677f56e860a65ee78ffcef2464c7c58035b6ded64e1a5f72b2968"
     },
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/training-i000-round00-episodes.json",
@@ -1185,6 +1759,66 @@
       "sha256": "6775d5cb567c727d687d97378defa1c2ae33fe11fba18a5e0eb3847d15a99aec"
     },
     {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/training-i026-round00-episodes.json",
+      "sha256": "120cea1dcc6fa326e8af9744683dcca046615c6e00b536e5788369f0d7e54ab1"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/training-i027-round00-episodes.json",
+      "sha256": "b0941eff391932cce789e1324448749be72f0049f175b7dd378a159df910bc57"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/training-i028-round00-episodes.json",
+      "sha256": "d57fa8fb32150d2daac563c2b096b730fe3215e23df0390651cc61e459853b55"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/training-i029-round00-episodes.json",
+      "sha256": "f946154a56fe29f8ddc04a917e509d338eebb9854b7e684e4f64daa000eafb85"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/training-i030-round00-episodes.json",
+      "sha256": "12a5dd93c969593581b57c904d1b6fcaafc5b420f0b48e77ac5859cb635ca14f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/training-i031-round00-episodes.json",
+      "sha256": "1f4f59ee5765ae78f429249509b1599689d4787487ca5ba710bdcbe31b96068a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/training-i032-round00-episodes.json",
+      "sha256": "c429297019e589c2ae7e0f96530369fb0f3a7129d264a8dc69b4880b2b8ef789"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/training-i033-round00-episodes.json",
+      "sha256": "7c3bb775d02603bae5b8f1d36c043efee3a92fc5f171cbbefd47fda415d695d7"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/training-i034-round00-episodes.json",
+      "sha256": "2be5b8f540acec02c3ac888bd9c0872f52f2f9aa68e400e36e13c01144554bf4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/training-i035-round00-episodes.json",
+      "sha256": "d1fe6e225722bc47fa98640c411c95b65a6e8789372a9d776a32ecb523e46bcb"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/training-i036-round00-episodes.json",
+      "sha256": "a443c1b835a478167e34ddc09bb2f46929d3db53891226742eebebb0bf7d2d71"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/training-i037-round00-episodes.json",
+      "sha256": "c6c655da298d7ba87f552c2c8f7bbc6f306b68c39a06258d55413c9408bcab25"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/training-i038-round00-episodes.json",
+      "sha256": "c4cf1a008c354ef1de9ceab668eae235b1694517da6d34a38e5f641abc621538"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/training-i039-round00-episodes.json",
+      "sha256": "e945622297a1c35cd455788571892d231ba9b2bfca1794459f4bd6de4d999a68"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/after-i040-round00-episodes.json",
+      "sha256": "5cc69087f5c314fc4517feb9333bb4639671d8113b073966c2a4d5ac06a3b10c"
+    },
+    {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/before-i000-round00-episodes.json",
       "sha256": "7e884bf4d098d6dcb7e655521f57f4fbc3d8f6414fea41e0f1da2ed1ed3c28ca"
     },
@@ -1195,6 +1829,10 @@
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/eval_step_020-i020-round00-episodes.json",
       "sha256": "78f7823493d76333fc9eccf2117f0bab4358d66abc1c725692440ac60a5e9556"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/eval_step_030-i030-round00-episodes.json",
+      "sha256": "e1f35bfd2b1c915ae5b8b17b97e13fb3a57bd183fe21357b1454ab290580ad71"
     },
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/training-i000-round00-episodes.json",
@@ -1301,6 +1939,66 @@
       "sha256": "684fa8f42ba5533f49d1b59357de232e458254c7254d36b92374b3bb2894a8b4"
     },
     {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/training-i026-round00-episodes.json",
+      "sha256": "eae296a69a97de64371374d4ce2c80a3e288f27607ee58ff5bcda07566f114ce"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/training-i027-round00-episodes.json",
+      "sha256": "7b95820962801584792a32e4cd0de4918b66f83148e349c0e2440067839849ec"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/training-i028-round00-episodes.json",
+      "sha256": "9f2ad18c1e3aa4a166e33d2268cb6df7d5513d9a3e570f83472ea6d120c1e34c"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/training-i029-round00-episodes.json",
+      "sha256": "f160ceaf34a1f29f6d50e1a28617e317c75902e9279ea40725545e1d0b4e7314"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/training-i030-round00-episodes.json",
+      "sha256": "440c6bcf5ff63c12399141ffad570d3d2bbfa096c33df6b25a33d569bf84d2dd"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/training-i031-round00-episodes.json",
+      "sha256": "92d322e425a19728ccfb21f65c5976f2b98c2664ab387ce51c1e5df61618e32e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/training-i032-round00-episodes.json",
+      "sha256": "c69590b7e9a59e88f9f617f9b5b2a5363900f1fe14dfb9366dc28150e6621757"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/training-i033-round00-episodes.json",
+      "sha256": "e1e13442100df23b8ad1b255d52ce32fbcf650cbc771840c1d7d8c8c98455c59"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/training-i034-round00-episodes.json",
+      "sha256": "bd7a22f5d96ebe754be59ccc0ced41a389e3f1e7d0b0be85bb28e5eb313b757d"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/training-i035-round00-episodes.json",
+      "sha256": "8ec3b2506af6b86171e699ae06640271a1b4353f72df61a7d22161e854c1d48d"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/training-i036-round00-episodes.json",
+      "sha256": "942742dac81926ac01644ea44c419529dc58ff2f32718f7e084d2c1e847a3a9e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/training-i037-round00-episodes.json",
+      "sha256": "dc742e7c32db8a4b1838e332a369a28386d8f3ebeb5676dd1e5149e0fd630768"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/training-i038-round00-episodes.json",
+      "sha256": "333155854589246daf46ada34c6d15356da9990edc1aa74f9b3e689bbd4e2f12"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/training-i039-round00-episodes.json",
+      "sha256": "8f79582aaa5d0cc146ad9109336af9a6ff0cb5073fc28489b9c3f36c97ae27c1"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/after-i040-round00-episodes.json",
+      "sha256": "79c661a1809ffe2dc3684550b68b9b90ad5b01110883df7a36f4f0b8d79623a1"
+    },
+    {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/before-i000-round00-episodes.json",
       "sha256": "e226475a59632e42b4867f8dc2e078b29f9e938dd7094dce63822e74f1ffcc8a"
     },
@@ -1311,6 +2009,10 @@
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/eval_step_020-i020-round00-episodes.json",
       "sha256": "684c11d52f7ca3fd3e85a613a5969d61a5db8f6db05d5ecfd376432d7602409f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/eval_step_030-i030-round00-episodes.json",
+      "sha256": "1fcd8c95301233678abaf6c62ad2b4840fcf2ea92ccff03fe67de17b69a7069c"
     },
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/training-i000-round00-episodes.json",
@@ -1417,6 +2119,66 @@
       "sha256": "e1299b2ded450e7b70aada5a095d316d0b26a5c1f9c7ea8428ab8901cde834f6"
     },
     {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/training-i026-round00-episodes.json",
+      "sha256": "11b0b338cb7aa87f9d5b8e4130b300ec29f834f7ccccf555f6d6c3c047f17bdd"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/training-i027-round00-episodes.json",
+      "sha256": "f4f81be300dc66ee4cf5c8368c1bef61f24e7790443cfbf88159e7c0bc753b7a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/training-i028-round00-episodes.json",
+      "sha256": "f685da5657355256ca7e59701be5393b438439e6b5e1f15a74ca832396d03915"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/training-i029-round00-episodes.json",
+      "sha256": "e0e7629d5976e6f15bbe913f69ecf4eedddad3531ecaf142443a95a95d0366e3"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/training-i030-round00-episodes.json",
+      "sha256": "5e0fb0388f51b5fd319ed67567d08b18aa85d6297f1f4fd08a6253b1d699d762"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/training-i031-round00-episodes.json",
+      "sha256": "433c80dcbd3453d46769f075cf8e3ee025682d6d21fde3da39906f090f515261"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/training-i032-round00-episodes.json",
+      "sha256": "76a475f3908b3939035ea61458124e5089ed7436337e487ddcad809d8a0eee57"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/training-i033-round00-episodes.json",
+      "sha256": "5f301c80111c7ddfc3616dd3cc8ac22ce095a446a97ec78c563d34bb0b2e2b35"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/training-i034-round00-episodes.json",
+      "sha256": "003fb5dc7efe60155753e37103d24bdec183df2d198c838ef43202f05f8352f3"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/training-i035-round00-episodes.json",
+      "sha256": "454154a95ad2b54677ec6ef05300c735809ccb178dcbdd99965286bc1a02da84"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/training-i036-round00-episodes.json",
+      "sha256": "29dcceab9c3dea6d841cc5af0268c6bf81bfb68636dec8d2b806b282e81f1cdb"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/training-i037-round00-episodes.json",
+      "sha256": "a88ab579e8eba539a7d2cb93aa88e7f612f7df2fbce5e6c1b25e744c3ad1a886"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/training-i038-round00-episodes.json",
+      "sha256": "8a9ae955b934be0edacf1ef3247607d193d7a8e7b24fe2f5e3c4eb75441dd44e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/training-i039-round00-episodes.json",
+      "sha256": "5d07d96caf51aecc544b129b045b8b115a6a72e8d95ab7c885190f71ff0b7371"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/after-i040-round00-episodes.json",
+      "sha256": "b8c07a05565e787f590a20b0a88c07b05c388b8e133fc552c791938c4c0225fe"
+    },
+    {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/before-i000-round00-episodes.json",
       "sha256": "9fa0219d65e40bda3a922fbc854ff5e4726543df845f8c93f60bca5516038cbe"
     },
@@ -1427,6 +2189,10 @@
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/eval_step_020-i020-round00-episodes.json",
       "sha256": "5409604e341b5a095b1bc5acea7c30e4f91789ab23218aefb4b4b5f65df5e279"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/eval_step_030-i030-round00-episodes.json",
+      "sha256": "07de7be8b6d1ad02be5cd71b90845af15b41560f4de4855e50ab706ad8619892"
     },
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/training-i000-round00-episodes.json",
@@ -1533,6 +2299,66 @@
       "sha256": "4e18cd34c7a5a3871f425da59ff2409cabebd31346636c022a5331c5261f5308"
     },
     {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/training-i026-round00-episodes.json",
+      "sha256": "ccb0a1403b5f849af1ff84a0bdb78c969ab14b3c233f0a59ffdfcc94b88870b5"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/training-i027-round00-episodes.json",
+      "sha256": "c58aaecc7e018e099cf336df8c610edc03666fb133c74866586b89aa70e969b0"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/training-i028-round00-episodes.json",
+      "sha256": "16b9c7b5302f1c074306fa1c69ec7a263140488abc60164b66b428e26f4ac9fa"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/training-i029-round00-episodes.json",
+      "sha256": "42692e5c235dd21d65cefe041aeadc42f8900a5f963238634f7c49f618f1b6e7"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/training-i030-round00-episodes.json",
+      "sha256": "c9886e2ef55cd70ca339b9fafef271a2f1cba4b21cb911b737559fd0efe5da6f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/training-i031-round00-episodes.json",
+      "sha256": "90f8952d3577b5013284743757902a5d08cb6b2376854700fc00809f463db1d2"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/training-i032-round00-episodes.json",
+      "sha256": "5b98ca1c66e20797b41e9e7197161ea6dc7178f3ed2e3a358dbd9626c8339e9b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/training-i033-round00-episodes.json",
+      "sha256": "0f90671a684a466eba1b5c6ca44526ddcf5d924fb12eb6cbede3fd14144fda65"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/training-i034-round00-episodes.json",
+      "sha256": "082215ceceda99687ea4b238e735e9e2516abfbf355025349ea2d5154d55538f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/training-i035-round00-episodes.json",
+      "sha256": "98a46416f516a6463d50e3e1cf37898d0ecb73c8b950348f5c40dc7167cf6688"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/training-i036-round00-episodes.json",
+      "sha256": "4fae926d1bee7385ddceb6d33ef2c06b0a63dad2ae14c1d8be7f1bbac5c8b1af"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/training-i037-round00-episodes.json",
+      "sha256": "3fd799d54deefd66c26f21a7e113b20cdc11d64be2e88463f7acaee6e7c4ebb6"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/training-i038-round00-episodes.json",
+      "sha256": "463c0b6e2e6c66e67c9e77bed776e32eb17bdbb951d5f50d445052ad8ac26412"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/training-i039-round00-episodes.json",
+      "sha256": "8dcc577552c343812f56a8f1643978c5ed40b11e49e06799b618690a59cabf70"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/after-i040-round00-episodes.json",
+      "sha256": "9f9636f55ee9ada199497438f2a228a77927d2859e69561276f620e46ae564d0"
+    },
+    {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/before-i000-round00-episodes.json",
       "sha256": "b84831f71aa2d81e1a17f8e216c9f38b7a27597663377c1d9bd7eccb34ca108d"
     },
@@ -1543,6 +2369,10 @@
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/eval_step_020-i020-round00-episodes.json",
       "sha256": "6439c2e3d7443f74433d836c74f24911b57121f76bb489870cba0f6b3c5decbf"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/eval_step_030-i030-round00-episodes.json",
+      "sha256": "fda15d2cffc0321182ae27d54d3098bd7c39049818eb31f2b09b93cfd8754488"
     },
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/training-i000-round00-episodes.json",
@@ -1649,6 +2479,66 @@
       "sha256": "33770096092039fc708349ca9a0784f1fd840fe9bbb40a850abefabdc694b1ff"
     },
     {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/training-i026-round00-episodes.json",
+      "sha256": "096d2a7deebd16144ef007c8a03ed848b0420e5ca756a0ab631e7ee86f26e14e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/training-i027-round00-episodes.json",
+      "sha256": "5c511e637573e798fb2220ed9e89f57d036a037380b6af2d1419f82af6f67877"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/training-i028-round00-episodes.json",
+      "sha256": "e4294ba0d0a4bd62c71a0c826ec3b60f1df2c42013dd6e412a20705eb5a32346"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/training-i029-round00-episodes.json",
+      "sha256": "a839c7e3a8bd1fe0578475337d74ab360cb0acc7fff0719faf6fc09ef09c00b2"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/training-i030-round00-episodes.json",
+      "sha256": "a15b29498ecfbc361f4ef25462ac84f8bb2c94ffe941553573ffc8af4cbc1d49"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/training-i031-round00-episodes.json",
+      "sha256": "dba0227fb07df2470f51d47d8e2bba88fc391d920b99c393631ac5c438aa0ce5"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/training-i032-round00-episodes.json",
+      "sha256": "87551f294e68fd4ba2f8557d87d18c01cafaed9637dfd2dff1059b65c65ed500"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/training-i033-round00-episodes.json",
+      "sha256": "1d22884d1aeb262f5e554758b98eac06c5b876b69ac6ea1730f1076d4b421902"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/training-i034-round00-episodes.json",
+      "sha256": "7c657c9b827d90445f38b94979fe9875cfd0bd14f05701b2b99eb8d6ec8b0f0e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/training-i035-round00-episodes.json",
+      "sha256": "99aaa9bfff5a48cf5c734806ace2a182878ca225e8dd8c74badd4359ac6bd502"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/training-i036-round00-episodes.json",
+      "sha256": "4cc300473c98550dcc62a77a6b9bde347d1988d2dc4dc2b588144e191a6f02c6"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/training-i037-round00-episodes.json",
+      "sha256": "2d934ceb11a84ea613fdd3cd3b78a3ce02a9cf6fe1be71ec41e84440de3b2b97"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/training-i038-round00-episodes.json",
+      "sha256": "7ff45403e8dd9b7fb21058f53a9af0fb981922006332ea2cdf525f87fb7815b4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/training-i039-round00-episodes.json",
+      "sha256": "489e90e49deb48787f2d6d099eb5680e2b2e2f4b1cdb833d32c9424762baaaeb"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/after-i040-round00-initial.json",
+      "sha256": "7e1510f9c98f97a150097f0713065e6ac6b0e3578cd69f6c4d4600cb6b9ddc55"
+    },
+    {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/before-i000-round00-initial.json",
       "sha256": "fb967fc77bca9d1806a763d9e91c75778e989317197bab2b81b4b96317d5ff6d"
     },
@@ -1659,6 +2549,14 @@
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/eval_step_020-i020-round00-initial.json",
       "sha256": "562cddc17d0e963411918c86101b46daef1a08fbb63352efe2de06495e874bb4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/eval_step_030-i030-round00-initial.json",
+      "sha256": "459c8897c0916b3aab52c12f79b7e5f719a9a1880fbb68a58450093c35f29b7d"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/after-i040-round00-initial.json",
+      "sha256": "c94b28dda2dd96af4b0206e7def53bc821eef966ce70117e80bf0b757e46ec6f"
     },
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/before-i000-round00-initial.json",
@@ -1673,6 +2571,14 @@
       "sha256": "4aea04d8422ee941bd27952ed11e0d837745f9bc831a49a99d3eeaa199e6e70d"
     },
     {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-01/eval_step_030-i030-round00-initial.json",
+      "sha256": "7a87c74cfc3e62fc3de77d762045e51e3a460886eeeb9f7807de4437e7e1a9af"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/after-i040-round00-initial.json",
+      "sha256": "00ee5c506f30267ae49f01572537d41252e302e37e9e7c2a4b96daf6eb8fee61"
+    },
+    {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/before-i000-round00-initial.json",
       "sha256": "b3f249745d00d205c4878ec48137877893991db13c1fcab1669754ec8ad8607e"
     },
@@ -1683,6 +2589,14 @@
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/eval_step_020-i020-round00-initial.json",
       "sha256": "94c5ac38a25806720c1aeec4c0543e2ec434bcc08137be15756246f134e424c4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-02/eval_step_030-i030-round00-initial.json",
+      "sha256": "cc99ed00a388cf5a25e353500c679d7d6131bc96df58667ce77bd3e1de5d08c0"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/after-i040-round00-initial.json",
+      "sha256": "4fcb42d6177f48aa4bf1dec35db732650dc01b0d6972d0eab5a770248219e362"
     },
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/before-i000-round00-initial.json",
@@ -1697,6 +2611,14 @@
       "sha256": "3970e25a50f6e10be9f23e60d65591aa4302379e855915ffa02683b5d3903ce2"
     },
     {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-03/eval_step_030-i030-round00-initial.json",
+      "sha256": "51f93d83052e42a14e11e900b961a18074c539b989fc8e0b4d72447c01d588b5"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/after-i040-round00-initial.json",
+      "sha256": "733be638162d3fc6c884357af6a38bcf67d90ef0539424350bb3b2a29ae0bdda"
+    },
+    {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/before-i000-round00-initial.json",
       "sha256": "2d0723ecf5c985e38ee69224805e91f39c90345b6e09dcfdbedaecee17cf7e20"
     },
@@ -1707,6 +2629,14 @@
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/eval_step_020-i020-round00-initial.json",
       "sha256": "37fbeea6f1a36e6cecba8b2b332d8116a36c9e5ca7370d533ef9cfd99f14f2c5"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-04/eval_step_030-i030-round00-initial.json",
+      "sha256": "fa715327888c9995a09b1ce44f74ff5446a3920a3f6820de366d1684b644df19"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/after-i040-round00-initial.json",
+      "sha256": "328c6f5e50df6b47dab7670a40f2c072261ca386ae367700b27fa82b06d8b363"
     },
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/before-i000-round00-initial.json",
@@ -1721,6 +2651,14 @@
       "sha256": "c6db326ec229d8d00b08ce3bb255bbab7c87485ee31f8bdc7d80a380a8fc6d1e"
     },
     {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-05/eval_step_030-i030-round00-initial.json",
+      "sha256": "8a47fe135308c88b0d78861620c9481b2531a80fb416eab6f7345550224be639"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/after-i040-round00-initial.json",
+      "sha256": "80268a129155617056a874932d4e261398c29a03689f39d86758c0a8ca013912"
+    },
+    {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/before-i000-round00-initial.json",
       "sha256": "1910ca1651d868543ced908f36004fd4aab79d3409f0998e2c4d026c91ec41ad"
     },
@@ -1733,6 +2671,14 @@
       "sha256": "3b5768d1c338bfdb16cfc3a36eda4bf1a9b908333d4e6ee4bd986537b0703d8f"
     },
     {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-06/eval_step_030-i030-round00-initial.json",
+      "sha256": "4a870e91cbad8a2e5bda0a5ae428d46465dd1501b01c4f30996b552c0cf26662"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/after-i040-round00-initial.json",
+      "sha256": "52518340aa70cd4182b4d7bf10eb048ea353e9e142362e842761cd13bfd8d74c"
+    },
+    {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/before-i000-round00-initial.json",
       "sha256": "a814a519bc960f51901912948908d08a433286cbdd8b387cdc17ca3e06053c12"
     },
@@ -1743,6 +2689,14 @@
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/eval_step_020-i020-round00-initial.json",
       "sha256": "162690060e94cdef458af738e6a0868ef1e9ff4fcc00dbc59f3f6b408e506e84"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-07/eval_step_030-i030-round00-initial.json",
+      "sha256": "f0ec1a4e489d2c9bc1e06829c3d612b0defb5e583a4b5a028aa524071ee1a279"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/clock.json",
+      "sha256": "27234d815f226012050c4da4b61a11afafd12eba5d438df98b40ff672d076d50"
     }
   ],
   "interpretation": "Exploratory Stage 1 gate; full curves still require collapse/clipping review. No independent TEST or student admission is implied."

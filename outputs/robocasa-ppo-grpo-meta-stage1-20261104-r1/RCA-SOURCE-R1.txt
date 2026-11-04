@@ -1,0 +1,265 @@
+FILE rlinf/hybrid_engines/fsdp/strategy/fsdp.py
+349:     @torch.no_grad()
+350:     def clip_grad_norm_(
+351:         self,
+352:         model: FSDP,
+353:         norm_type: Union[float, int] = 2.0,
+354:     ) -> float:
+355:         """
+356:         Clip the gradients of the model parameters to a maximum norm specified in the configuration.
+357: 
+358:         Args:
+359:             - model (FSDP): The FSDP wrapped model.
+360:             - norm_type (Union[float, int]): The type of the used p-norm.
+361: 
+362:         Returns:
+363:             - float: The total norm of the gradients before clipping.
+364:         """
+365:         device = torch.device(f"{Worker.torch_device_type}:{os.environ['LOCAL_RANK']}")
+366:         max_norm = float(self.cfg.optim.clip_grad)
+367:         norm_type = float(norm_type)
+368:         debug_nan_checks = self.cfg.get("debug_nan_checks", False)
+369:         all_handles = getattr(model, "_all_handles", None)
+370:         if all_handles is None:
+371:             raise RuntimeError("Expected FSDP root module with `_all_handles`.")
+372: 
+373:         all_no_shard = all(not handle.uses_sharded_strategy for handle in all_handles)
+374:         if all_no_shard:
+375:             return (
+376:                 torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm, norm_type)
+377:                 .cpu()
+378:                 .item()
+379:             )
+380:         sharded_params_set, nonsharded_params_set = set(), set()
+FILE rlinf/hybrid_engines/fsdp/fsdp_model_manager.py
+540:             model: The model to optimize, can be nn.Module, FSDPModule (used in FSDP2) or FSDP.
+541:             enable_critic_warmup: Whether to enable critic warmup used for value network.
+542: 
+543:         Returns:
+544:             Optimizer: The constructed optimizer.
+545:         """
+546:         betas = (self._cfg.optim.adam_beta1, self._cfg.optim.adam_beta2)
+547:         adam_eps = self._cfg.optim.get("adam_eps", 1e-8)
+548:         weight_decay = self._cfg.optim.get("weight_decay", 1e-2)
+549: 
+550:         params_actor = []
+551:         params_critic = []
+552:         actor_params_names = []
+553: 
+554:         if enable_critic_warmup:
+555:             self._logger.info("[FSDP] Enable critic warmup for value head.")
+556:             for name, param in model.named_parameters():
+557:                 if param.requires_grad:
+558:                     self.store_requires_grad_param_name.append(name)
+559:                     if "value_head" in name or "model.value_head" in name:
+560:                         params_critic.append(param)
+561:                         continue
+562:                     param.requires_grad = False
+563: 
+564:         else:
+565:             for name, param in model.named_parameters():
+566:                 if name in self.store_requires_grad_param_name:
+567:                     param.requires_grad = True
+568:                 if param.requires_grad:
+569:                     if "value_head" in name or "model.value_head" in name:
+570:                         params_critic.append(param)
+571:                     else:
+572:                         params_actor.append(param)
+573:                         actor_params_names.append(name)
+574: 
+575:         lr_multipliers = getattr(model, "lr_multipliers", None)
+576: 
+577:         param_groups = []
+578:         if lr_multipliers:
+579:             base_lr = self._cfg.optim.lr
+580:             grouped: dict[float, list] = {}
+581:             for name, param in zip(actor_params_names, params_actor):
+582:                 mult = 1.0
+583:                 for pattern, value in lr_multipliers.items():
+584:                     if pattern in name:
+585:                         mult = float(value)
+586:                         break
+587:                 grouped.setdefault(base_lr * mult, []).append(param)
+588:             for lr_value, params in sorted(grouped.items()):
+589:                 param_groups.append({"params": params, "lr": lr_value, "betas": betas})
+590:             self._logger.info(
+591:                 f"[FSDP] Applied lr_multipliers={dict(lr_multipliers)} -> "
+592:                 f"{len(param_groups)} actor param group(s): "
+593:                 f"{sorted(grouped.keys())}"
+594:             )
+595:         elif len(params_actor) > 0:
+596:             param_groups.append(
+597:                 {
+598:                     "params": params_actor,
+599:                     "lr": self._cfg.optim.lr,
+600:                     "betas": betas,
+601:                 }
+602:             )
+603:         if len(params_critic) > 0:
+604:             param_groups.append(
+605:                 {
+606:                     "params": params_critic,
+607:                     "lr": self._cfg.optim.value_lr,
+608:                     "betas": betas,
+609:                 }
+610:             )
+611: 
+612:         use_fp32_master_params = self._cfg.optim.get("use_fp32_master_params", False)
+613:         validate_adam_mixed_precision(
+614:             model, use_fp32_master_params=use_fp32_master_params
+615:         )
+616: 
+617:         # Fused AdamW avoids a large foreach temp buffer during optimizer warmup
+618:         # for NO_SHARD models. Sharded scalar parameters cannot use this path.
+619:         all_params = [p for group in param_groups for p in group["params"]]
+620:         use_fused_adamw = (
+FILE rlinf/models/embodiment/openpi/tasks/rl.py
+281:         log_probs_stacked = torch.stack(log_probs, dim=1)
+282:         log_probs_stacked = log_probs_stacked[
+283:             :, :, : self.action_chunk, : self.action_env_dim
+284:         ]
+285:         if rl_cfg.joint_logprob:
+286:             log_probs_picked = log_probs_stacked.mean(dim=1)
+287:         else:
+288:             log_probs_picked = log_probs_stacked[
+289:                 torch.arange(B, device=device), denoise_inds[:, 0]
+290:             ]
+291:         log_probs_picked = log_probs_picked.float().contiguous()
+292: 
+293:         if vlm_value is not None:
+294:             prev_values = vlm_value[:, None].float().contiguous()
+295:         elif suffix_values:
+296:             suffix_values_stacked = torch.stack(suffix_values, dim=1)
+297:             if rl_cfg.joint_logprob or rl_cfg.is_nft:
+298:                 prev_values = suffix_values_stacked.mean(dim=1, keepdim=True)
+299:             else:
+300:                 # PPO replay evaluates this same pre-transition suffix state.
+301:                 prev_values = suffix_values_stacked[
+302:                     torch.arange(B, device=device), denoise_inds[:, 0]
+303:                 ][:, None].float().contiguous()
+304:         else:
+305:             prev_values = torch.zeros((B, 1), device=device, dtype=torch.float32)
+306: 
+307:         actions = self.decode_actions(x_0, observation.state)
+308: 
+OPTIM {'lr': 5e-06, 'value_lr': 0.0001, 'adam_beta1': 0.9, 'adam_beta2': 0.95, 'adam_eps': 1e-08, 'weight_decay': 0.01, 'clip_grad': 1.0, 'critic_warmup_steps': 0}
+INITIAL /mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/before-i000-round00-initial.json {
+  "canonical": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/canonical-eval/rank-00/complete.json",
+  "report": {
+    "matched": true,
+    "physical_state_exact": true,
+    "public_state_exact": true,
+    "image_comparison": "diagnostic_only",
+    "images_exact": true,
+    "images": {
+      "main_images": {
+        "max_absolute_delta": 0,
+        "differing_components": 0,
+        "total_components": 1572864,
+        "mean_absolute_delta": 0.0
+      },
+      "wrist_images": {
+        "max_absolute_delta": 0,
+        "differing_components": 0,
+        "total_components": 1572864,
+        "mean_absolute_delta": 0.0
+      },
+      "extra_view_images": {
+        "max_absolute_delta": 0,
+        "differing_components": 0,
+        "total_components": 1572864,
+        "mean_absolute_delta": 0.0
+      }
+    },
+    "observations_modified": false
+  },
+  "initial": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/environment/rank-00/before-i000-round00-initial.pt",
+    "sha256": "020f080a5e63ae11f5d3889363936fd7b2f78d1e6c56be4054d5fd6c9db94246"
+  }
+}
+
+INITIAL /mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/q1-r1/environment/rank-00/before-i000-round00-initial.json {
+  "canonical": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/q1-r1/canonical-eval/rank-00/complete.json",
+  "report": {
+    "matched": true,
+    "physical_state_exact": true,
+    "public_state_exact": true,
+    "image_comparison": "diagnostic_only",
+    "images_exact": true,
+    "images": {
+      "main_images": {
+        "max_absolute_delta": 0,
+        "differing_components": 0,
+        "total_components": 1572864,
+        "mean_absolute_delta": 0.0
+      },
+      "wrist_images": {
+        "max_absolute_delta": 0,
+        "differing_components": 0,
+        "total_components": 1572864,
+        "mean_absolute_delta": 0.0
+      },
+      "extra_view_images": {
+        "max_absolute_delta": 0,
+        "differing_components": 0,
+        "total_components": 1572864,
+        "mean_absolute_delta": 0.0
+      }
+    },
+    "observations_modified": false
+  },
+  "initial": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/q1-r1/environment/rank-00/before-i000-round00-initial.pt",
+    "sha256": "020f080a5e63ae11f5d3889363936fd7b2f78d1e6c56be4054d5fd6c9db94246"
+  }
+}
+
+CKPT /mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/OpenDrawer/checkpoints/global_step_40
+pilot-boundary.json
+pilot/env-03.pt
+pilot/rollout-05.pt
+pilot/env-00.pt
+pilot/env-07.pt
+pilot/env-05.pt
+pilot/env-04.pt
+pilot/env-01.pt
+pilot/actor-00.pt
+pilot/rollout-04.pt
+pilot/rollout-00.pt
+pilot/env-02.pt
+pilot/env-06.pt
+pilot/rollout-06.pt
+pilot/rollout-01.pt
+pilot/rollout-02.pt
+pilot/rollout-03.pt
+pilot/rollout-07.pt
+pilot/actor-01.pt
+actor/dcp_checkpoint/__1_0.distcp
+actor/dcp_checkpoint/.metadata
+actor/dcp_checkpoint/__0_0.distcp
+actor/model_state_dict/full_weights.pt
+CKPT /mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/OpenDrawer/checkpoints/global_step_0
+pilot-boundary.json
+pilot/env-03.pt
+pilot/rollout-05.pt
+pilot/env-00.pt
+pilot/env-07.pt
+pilot/env-05.pt
+pilot/env-04.pt
+pilot/env-01.pt
+pilot/actor-00.pt
+pilot/rollout-04.pt
+pilot/rollout-00.pt
+pilot/env-02.pt
+pilot/env-06.pt
+pilot/rollout-06.pt
+pilot/rollout-01.pt
+pilot/rollout-02.pt
+pilot/rollout-03.pt
+pilot/rollout-07.pt
+pilot/actor-01.pt
+actor/dcp_checkpoint/__1_0.distcp
+actor/dcp_checkpoint/.metadata
+actor/dcp_checkpoint/__0_0.distcp
+actor/model_state_dict/full_weights.pt

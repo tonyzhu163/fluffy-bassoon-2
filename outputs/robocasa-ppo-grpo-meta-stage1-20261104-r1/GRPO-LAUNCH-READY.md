@@ -18,10 +18,9 @@ Command:
 TASK_META=/mowenjie/fluffy-bassoon-2/sources/stage1-grpo-013c2f10 TASK_CODE_PIN=013c2f10c84b22db834dfe533907bb8a01737768 bash /mowenjie/fluffy-bassoon-2/sources/stage1-grpo-013c2f10/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/LAUNCH.sh grpo
 ```
 
-The clean Git-bundle deployment records the pending publication commit above.
-GitHub publication is currently blocked: the connector rejects blob creation
-with403, local SSH authentication fails, and local HTTPS has no credential.
-Do not describe this commit as pushed until verified.
+The immutable Git-bundle deployment records the source commit above.
+The in-job manifest verifies that pin. See the [execution record](EXECUTION.json)
+for the current publication state.
 
 The launcher explicitly retains two actor ranks and microbatch16; the full
 sampling and actor-batch records are kept. Latest upstream changes since

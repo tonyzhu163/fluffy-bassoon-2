@@ -97,7 +97,7 @@ def keep_frozen_image_encoder_in_eval(model):
 def flow_logprob_parity(logprobs, old_logprobs, *, action_dim=12, tolerance=1e-3):
     """Audit the unchanged policy's actual chunk ratio before its first SGD.
 
-    RLinf sums all H50 x 12 executed coordinates for its chunk-level ratio.
+    RLinf sums all executed chunk x action coordinates for its chunk-level ratio.
     Read detached tensors only; do not recompute or replace rollout targets.
     """
     import torch
@@ -169,6 +169,20 @@ def flow_contract(cfg):
         raise ValueError('Flow PPO trains and evaluates exactly one task')
     task = tasks[0]
     horizon, chunk = int(train['max_episode_steps']), int(_get(cfg, 'actor.model.num_action_chunks'))
+    prediction_horizon = int(_get(cfg, 'actor.model.openpi.action_horizon', chunk))
+    if chunk < 1 or prediction_horizon < chunk:
+        raise ValueError('Executed chunk must be positive and fit the predicted action horizon')
+    if (int(_get(cfg, 'actor.model.openpi.action_chunk', chunk)) != chunk
+            or int(_get(cfg, 'rollout.model.num_action_chunks', chunk)) != chunk
+            or int(_get(cfg, 'rollout.model.openpi.action_chunk', chunk)) != chunk):
+        raise ValueError('Actor/rollout executed chunks and likelihood slices must agree')
+    denoising_steps = int(_get(cfg, 'actor.model.num_steps', 10))
+    ignore_last = bool(_get(cfg, 'actor.model.openpi.ignore_last', False))
+    if denoising_steps < (2 if ignore_last else 1):
+        raise ValueError('Denoising steps must leave a selectable stochastic transition')
+    if (int(_get(cfg, 'actor.model.openpi.num_steps', denoising_steps)) != denoising_steps
+            or int(_get(cfg, 'rollout.model.num_steps', denoising_steps)) != denoising_steps):
+        raise ValueError('Actor/rollout denoising steps must agree')
     if (horizon != int(train['max_steps_per_rollout_epoch']) or horizon != int(evaluation['max_episode_steps'])
             or horizon != int(evaluation['max_steps_per_rollout_epoch']) or horizon % chunk):
         raise ValueError('Train/eval horizons must agree and be a whole number of chunks')
@@ -194,9 +208,16 @@ def flow_contract(cfg):
     scenes_per_iteration = episodes // group_size
     samples = episodes * (horizon // chunk)
     batch, epochs = int(_get(cfg, 'actor.global_batch_size')), int(_get(cfg, 'algorithm.update_epoch'))
+    if envs < 1 or rounds < 1 or batch < 1 or epochs < 1:
+        raise ValueError('Episodes, rollout rounds, global batch and epochs must be positive')
     if samples % batch:
         raise ValueError('Chunk samples per iteration must fill whole global minibatches')
     iterations, eval_cases = int(_get(cfg, 'runner.max_epochs')), int(evaluation['total_num_envs'])
+    optimizer_steps_per_update = samples // batch * epochs
+    total_optimizer_steps = iterations * optimizer_steps_per_update
+    warmup = int(_get(cfg, 'actor.optim.critic_warmup_steps', 0))
+    if warmup < 0 or warmup >= total_optimizer_steps or (warmup and not value_head):
+        raise ValueError('Critic warmup requires a value head and must leave actor optimizer steps')
     if int(evaluation['rollout_epoch']) != 1:
         raise ValueError('Before/after panels are one fixed case bank')
     train_seed, eval_seed = int(train['seed']), int(evaluation['seed'])
@@ -223,12 +244,21 @@ def flow_contract(cfg):
                 adv_type=adv_type, loss_type=loss_type, group_size=group_size,
                 add_value_head=value_head,
                 value_after_vlm=bool(_get(cfg, 'actor.model.openpi.value_after_vlm', False)),
-                ignore_last=bool(_get(cfg, 'actor.model.openpi.ignore_last', False)),
+                ignore_last=ignore_last, predicted_action_horizon=prediction_horizon,
+                denoising_steps=denoising_steps,
+                likelihood_coordinates=chunk * int(_get(cfg, 'actor.model.action_dim', 12)),
                 noise_level=noise_level, update_epochs=epochs,
                 train_envs=envs, rounds=rounds, episodes_per_iteration=episodes,
                 scenes_per_iteration=scenes_per_iteration, iterations=iterations,
                 eval_cases=eval_cases, eval_interval=eval_interval, eval_panels=eval_panels,
-                optimizer_steps_per_update=samples // batch * epochs,
+                optimizer_steps_per_update=optimizer_steps_per_update,
+                total_optimizer_steps=total_optimizer_steps,
+                critic_only_optimizer_steps=warmup,
+                actor_optimizer_steps=total_optimizer_steps - warmup,
+                global_minibatch_chunks=batch,
+                TRAIN_policy_controls=iterations * episodes * horizon,
+                gamma_per_decision=float(_get(cfg, 'algorithm.gamma', .99)),
+                gae_lambda_per_decision=float(_get(cfg, 'algorithm.gae_lambda', .95)),
                 train_seed=train_seed, eval_seed=eval_seed, checkpoint_interval=interval,
                 nominal_policy_controls=policy, reset_reserve_controls=resets,
                 maximum_actions=None if maximum is None else int(maximum),

@@ -1,5 +1,4 @@
 """Bind evaluation weights and restore the historical PPO40 from its verified archive."""
-import json
 import os
 from pathlib import Path
 import subprocess
@@ -63,6 +62,10 @@ def main(staging):
             path = staging / (label + '.pt')
             with path.open('xb') as stream:
                 subprocess.run(['tar','-I','zstd','-xOf',str(archive),member],stdout=stream,check=True)
+        if path.parent != staging:
+            private = staging / (label + '.pt')
+            os.link(path, private)
+            path = private
         models[label] = dict(cp, path=str(path))
         assert sha(path) == cp['sha256']
     ref, before, trained = load(models['sft']), load(boundary(0)), load(boundary(40))
