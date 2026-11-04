@@ -33,7 +33,7 @@
         "optimizer_steps": 0
       },
       "first_update": "E2-FIRST-UPDATE.json",
-      "last_completed_updates": 2
+      "last_completed_updates": 7
     },
     "C": {
       "job": "job-1gheyfqughhs",
@@ -43,19 +43,36 @@
       "GPUs": 8,
       "automatic_retry": false,
       "nonhead_tensors_equal_at_start": 667,
-      "last_completed_updates": 1,
+      "last_completed_updates": 8,
       "first_update": "C-FIRST-UPDATE.json",
       "device_probe": "passed"
     },
     "D": {
-      "status": "qualified, pending storage admission"
+      "job": "job-jbf0ex8k1s3o",
+      "status": "scheduled, first rollout pending",
+      "attempt": "attempt-01",
+      "GPUs": 8,
+      "scheduler_minutes": 175,
+      "automatic_retry": false
     },
     "endpoint512": {
       "status": "preparing, waits for immutable final checkpoints"
     }
   },
-  "last_checked_Shanghai": "2026-11-04 19:49",
+  "last_checked_Shanghai": "2026-11-04 20:10",
   "engine_r2": "02ce594015eaa8f972f875d7f37e6972f4ada495",
   "endpoint_eval_code": "3cc33a4820344d4f4a894b9ab1bb4d7137f701c1",
-  "next_check_Shanghai": "2026-11-04 20:09"
+  "next_check_Shanghai": "2026-11-04 20:09",
+  "third_arm_admission": {
+    "shared_PFS_free_GiB": 660,
+    "combined_E_C_current_GiB_rounded_up": 62,
+    "conservative_full_GiB_per_new_run": 167,
+    "projected_remaining_free_GiB_approx": 220,
+    "stop_floor_GiB": 200,
+    "scheduler_idle_GPUs": 30,
+    "scheduler_limit_GPUs": 416,
+    "reviewed_new_main_scientific_commit": "6d106487dfc712c8358a5a9e332d0f31b3017f65",
+    "pinned_engine_same_across_three_arms": true
+  },
+  "next_action": "Verify D first collection includes index 9 and both ranks pass likelihood/value replay"
 }
