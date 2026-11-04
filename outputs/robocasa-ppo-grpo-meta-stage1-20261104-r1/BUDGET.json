@@ -7,9 +7,9 @@
   "GPUs_per_arm": 8,
   "wall_seconds_per_arm": 14400,
   "retries_approved": false,
-  "GPU_hours_used": 17.126666666666665,
+  "GPU_hours_used": 20.61777777777778,
   "recorded_at_shanghai": "2026-11-04T15:50:34.928866+08:00",
-  "GPU_hours_remaining": 46.873333333333335,
+  "GPU_hours_remaining": 43.382222222222225,
   "all_attempt_ledger": [
     {
       "arm": "ppo",
@@ -18,9 +18,17 @@
       "state": "Succeeded",
       "worker_gpu_seconds": 61488,
       "conservative_gpu_seconds": 61656
+    },
+    {
+      "arm": "grpo",
+      "attempt": "attempt-01",
+      "job_id": "job-r4b89rtmuhbx",
+      "state": "Failed",
+      "worker_gpu_seconds": 12144,
+      "conservative_gpu_seconds": 12568
     }
   ],
-  "GRPO_reserved_GPU_hours": 32,
+  "GRPO_reserved_GPU_hours": 20,
   "manual_continuation": {
     "authorized": true,
     "checkpoint": "original GRPO update 10",

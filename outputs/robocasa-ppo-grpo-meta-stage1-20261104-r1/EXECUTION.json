@@ -1,7 +1,7 @@
 {
   "format": "robocasa_stage1_execution_v1",
-  "checked_shanghai": "2026-11-04T19:35:06+08:00",
-  "state": "PPO_COMPLETE_GRPO_RUNNING",
+  "checked_shanghai": "2026-11-04T20:14:46+08:00",
+  "state": "PPO_COMPLETE_GRPO_RESUMING_STEP10",
   "source_commit": "d9a1c61616443f7f88c71f91da4567d85b1f4253",
   "source_path": "/mowenjie/fluffy-bassoon-2/sources/stage1-d9a1c616",
   "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
@@ -68,7 +68,7 @@
       "numerical_gate_passed": true
     },
     "grpo": {
-      "state": "RUNNING",
+      "state": "RUNNING_FROM_STEP10",
       "reserved_future_GPU_hours": 32,
       "reviewed_main_commit": "46daecc9b4652632d4c551ec51293d790476ec2d",
       "qualification_source_path": "/mowenjie/fluffy-bassoon-2/sources/stage1-grpo-46daecc9",
@@ -84,17 +84,17 @@
         "ROBOCASA_FLOW_ACTOR_BATCH_DROP": "[]"
       },
       "scheduler_access": "Authenticated Baige console",
-      "source_commit": "013c2f10c84b22db834dfe533907bb8a01737768",
-      "source_path": "/mowenjie/fluffy-bassoon-2/sources/stage1-grpo-013c2f10",
-      "job_id": "job-r4b89rtmuhbx",
-      "job_name": "mwj_1104_stage1_grpo_OpenDrawer_r1",
+      "source_commit": "9bf964b1f8686f0a390c6f5b723dc521c8a7365b",
+      "source_path": "/mowenjie/fluffy-bassoon-2/sources/grpo-resume-9bf964b1",
+      "job_id": "job-yflncaoh2yxt",
+      "job_name": "mwj_1104_stage1_grpo_OpenDrawer_resume10_r2",
       "cluster": "Baige Pro6K",
       "queue": "aihcq-rh0wwk9muei4",
-      "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/grpo/attempt-01",
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/grpo/attempt-02",
       "actual_GPU_probe": "passed",
       "local_probe": "GRPO-GPU-PROBE.json",
       "manifest": "GRPO-MANIFEST.json",
-      "scheduler_minutes": 240,
+      "scheduler_minutes": 150,
       "automatic_retry": false,
       "queue_available_at_admission": {
         "GPU": 63,
@@ -104,16 +104,43 @@
       "free_bytes_at_launch": 774914441216,
       "config_diff": "GRPO code and config match reviewed main. The prepared launcher explicitly sets two actor ranks and microbatch 16 to match PPO.",
       "worker_started_unix": 1793791880.1261606,
-      "last_check_shanghai": "2026-11-04T19:44:56+08:00",
-      "completed_iterations": 4,
+      "last_check_shanghai": "2026-11-04T20:14:46+08:00",
+      "completed_iterations": 10,
       "baseline_DEV64_successes": 41,
-      "first_update_audit": "GRPO-FIRST-UPDATE.json"
+      "first_update_audit": "GRPO-FIRST-UPDATE.json",
+      "attempts": [
+        {
+          "attempt": "attempt-01",
+          "job_id": "job-r4b89rtmuhbx",
+          "source": "013c2f10c84b22db834dfe533907bb8a01737768",
+          "status": "Failed",
+          "created_shanghai": "2026-11-04 19:30:47",
+          "ended_shanghai": "2026-11-04 19:56:58",
+          "GPU_seconds": 12568,
+          "complete_training_updates": 10,
+          "valid_DEV": [
+            0
+          ],
+          "failure": "GRPO-DEV10-FAILURE-DIAGNOSIS.json"
+        },
+        {
+          "attempt": "attempt-02",
+          "job_id": "job-yflncaoh2yxt",
+          "source": "9bf964b1f8686f0a390c6f5b723dc521c8a7365b",
+          "status": "Running",
+          "created_shanghai": "2026-11-04 20:12:43",
+          "resume_step": 10,
+          "maximum_GPU_hours": 20,
+          "probe": "GRPO-RESUME10-GPU-PROBE.json",
+          "replay_first": "DEV10"
+        }
+      ]
     }
   },
-  "next_action": "Verify grouped physical/public TRAIN resets and advancing optimizer updates, then audit the completed run and compare its 3,072,000 TRAIN controls against PPO.",
+  "next_action": "Verify replayed paired DEV10, then 30 fresh TRAIN updates to reach the same cumulative 3,072,000 controls; complete matched four-policy DEV64 and short-chunk benchmark.",
   "PFS_free_GiB_observed": 622.328125,
   "storage_checked_unix": 1793786026.7150784,
-  "git_publication": "GRPO and recipe source commits, launch receipts, PPO40 result and DEV64 plan published to origin/main at 6d106487dfc712c8358a5a9e332d0f31b3017f65 and remotely verified.",
+  "git_publication": "GRPO start and PPO source evidence on main. Qualified recovery code pinned to 9bf964b1.",
   "root_cause_analysis": "ROOT-CAUSE-ANALYSIS.md",
   "storage_plan_update": "Human requested parallelGRPO/diagnosis. PPO is alreadyterminal. Last PFSfree493GiB; a same-sizeGRPO footprint leaves >300GiB. Do not wait for bulk archive beforeGRPO; keep200GiB floor. Archive/reclaimonlyownclosedPPOdata afterhashverification; retainPPO40.",
   "recipe_implementation_qualification": "outputs/robocasa-ppo-recipe-fixes-20261104-r1/CPU-QUALIFICATION.json",
