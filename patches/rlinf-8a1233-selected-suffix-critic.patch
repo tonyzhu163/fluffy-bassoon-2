@@ -1,8 +1,6 @@
 --- a/rlinf/models/embodiment/openpi/tasks/rl.py
 +++ b/rlinf/models/embodiment/openpi/tasks/rl.py
-@@ -293,7 +293,14 @@
-         if vlm_value is not None:
-             prev_values = vlm_value[:, None].float().contiguous()
+@@ -295,3 +295,10 @@
          elif suffix_values:
 -            prev_values = torch.stack(suffix_values, dim=1).mean(dim=1, keepdim=True)
 +            suffix_values_stacked = torch.stack(suffix_values, dim=1)
@@ -14,5 +12,3 @@
 +                    torch.arange(B, device=device), denoise_inds[:, 0]
 +                ][:, None].float().contiguous()
          else:
-             prev_values = torch.zeros((B, 1), device=device, dtype=torch.float32)
- 
