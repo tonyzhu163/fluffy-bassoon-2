@@ -1,0 +1,255 @@
+{
+  "task": "PickPlaceDrawerToCounter",
+  "source": "original native production-r1/updates",
+  "aggregation": "equal update/rank mean; not independent replicates",
+  "conditional_KL_caution": "native signed chunk-conditional approximation, not full-action KL",
+  "windows": [
+    {
+      "updates": [
+        2,
+        11
+      ],
+      "ranks": [
+        0,
+        1
+      ],
+      "records": 20,
+      "mean": {
+        "actor/approx_kl": 0.09833421371877193,
+        "actor/clip_fraction": 0.21657855659723282,
+        "critic/explained_variance": 0.13526934385299683,
+        "critic/value_loss": 0.07477676421403885,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/grad_norm": 48.76912078857422
+      },
+      "raw_sha256": {
+        "iteration-002-rank-01.json": "96ce6dfc96b81fb49fb2c17064c4997389b7aeddb4b36513eb341dfa1050f932",
+        "iteration-010-rank-01.json": "59ddffc1f463156877993c4d782e3084532cb1251b50aa51fab4eaf5ea04a965",
+        "iteration-005-rank-00.json": "a7116e191e310ca0fdb8b1e8916b69d16238610ba64b2206f9eec2c62bc9c0f6",
+        "iteration-008-rank-01.json": "0e0168f64ac4a4f691066a46c2e6b4d05228aa249ed7932b4d176b912f278547",
+        "iteration-008-rank-00.json": "40e3e0841315e182b195c58416bc63160121f706cba8823dff1b043181be7a11",
+        "iteration-003-rank-00.json": "faa97faea2d34966cfee12a7ccf0f19d9b4b9ac18246578640197a233d775e1e",
+        "iteration-009-rank-01.json": "cbcf8a631ce1b95a8bf60a9185fc6498c4239dcd9ce4a98a9b5c69806e207d75",
+        "iteration-011-rank-00.json": "0258e8d4c607dd458eb5f6bcd96678a00086170fd6bb942899157b7ae91b8e99",
+        "iteration-009-rank-00.json": "70c066e12f2e88cc795f6a2be4b25cbcbc640431a6636a4838076619b8bb8d13",
+        "iteration-007-rank-01.json": "3785dd34ec5956918be1439a0574667aa93f6d4e413dc828f0cffe6f7747f007",
+        "iteration-004-rank-00.json": "27bb9fb0e259542e5eafde0502bda930c85805cb44d1f1e6c4e56cd8d18c438d",
+        "iteration-007-rank-00.json": "e44bc247379b1c6f2131591bf288f525132c831afcd77e396726cb516652b642",
+        "iteration-002-rank-00.json": "bcf1bf41fce2aca730ea4ab3b8caeef91ab814c42ba6ec750099bba86deb0e35",
+        "iteration-006-rank-00.json": "9d0a63d9d3640faac5326044c3f25a8543c5416992729449f3128baf51649d3f",
+        "iteration-005-rank-01.json": "3fa0c793353996f52c513649bae836aee77cb06db8891cbe6c1a833919cf6c1f",
+        "iteration-004-rank-01.json": "bc9dccb6fd59fb69dbac9f87ea44ba2b392e603a6681fb94708ec798e36d5035",
+        "iteration-010-rank-00.json": "12cfbfaf6301108c895e62bd2c3ffc4d03c1a6cec471f6b457df84adaee40ad4",
+        "iteration-006-rank-01.json": "315eef5c750c243e48045ad23bc37b731990d3113cbb0abaa1bba192ccb1288d",
+        "iteration-011-rank-01.json": "50693a3e03d3e7aaa729be5b05d7cb16b6df496ddcc6c59b1e086755bf4049a1",
+        "iteration-003-rank-01.json": "7dfe5822c739d6c486e24f0fb3ae2cec7c224a343c61504c522dd399ccd9aea0"
+      }
+    },
+    {
+      "updates": [
+        81,
+        90
+      ],
+      "ranks": [
+        0,
+        1
+      ],
+      "records": 20,
+      "mean": {
+        "actor/approx_kl": 0.07960675284266472,
+        "actor/clip_fraction": 0.21269113719463348,
+        "critic/explained_variance": 0.271061372756958,
+        "critic/value_loss": 0.06302373558282852,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/grad_norm": 41.2711986541748
+      },
+      "raw_sha256": {
+        "iteration-086-rank-01.json": "ac63a62a420ac1981a0262f6a7f6c7ab3775b10397cb5e6c5748c1e7d0955473",
+        "iteration-089-rank-01.json": "dd4f88f5d1baed62560fe2ccc62f7310be35d8d87d1635e312cdd436cd7f2146",
+        "iteration-084-rank-01.json": "5c4837f0767bcbae08c5d921b787ba56a83ddd2039d3a12a7e52aa91f6c18ac3",
+        "iteration-082-rank-01.json": "620af7aa54a46696a172ef2b96a663eb8fc07d501e6da7693d1ed5d140e04a5f",
+        "iteration-086-rank-00.json": "7da4f2e12c8b8ac2527f1ae059bd8028ea6557c76f4284962b58d3bdf24f4fc3",
+        "iteration-085-rank-00.json": "ebdceaf4734bb11a587f14e29c29b1e8a86502237cf57bc23836a8b9b19b7a48",
+        "iteration-089-rank-00.json": "b2d860b4e0dc4b606d91fe6bfaeb8b5d9084d38016dff6f48a5901940a03b2dc",
+        "iteration-087-rank-01.json": "63c4b4faf3bad6695592f5848a18e22356e184d5e741f5671f44256f48c12393",
+        "iteration-084-rank-00.json": "2cb94b3499740bf43854c4a18f7ff64c4d3af717d22209b3c3f67650a60617d0",
+        "iteration-088-rank-01.json": "f8799946f4d78cd69e80a5a6f8e9b9f37e60c071ef888be0a8fbc170f10eba8f",
+        "iteration-088-rank-00.json": "dc615462232c10ee5ed95307a84e934f07c298fdf5d83fcfac2bb3fb68fcc630",
+        "iteration-085-rank-01.json": "7a8d9ab785a12af81b4bb78cc0c22353c9c97ba1a358aa648ed105b259f83582",
+        "iteration-083-rank-00.json": "38bcf05b3114004434c2e832646d1b29464614ee44312a9a623de914e19755d3",
+        "iteration-082-rank-00.json": "ec78ff0066c7a1da48ee0223a18b40c854a4667db1fe86ad4268842becee7281",
+        "iteration-081-rank-00.json": "568459c5c94200419a3709ab935f38fffe3dc1d8459a4ab1a487d6ea18e15933",
+        "iteration-083-rank-01.json": "2e18732ec26ee66b16f65ba5c4ed9e255da1b26ba71b1560e24996807374dcaf",
+        "iteration-081-rank-01.json": "fc8c3b773a6dccf3ce2e3ed7364fbe3ae5d431d2a1669541fbfd8f963ffd12d6",
+        "iteration-090-rank-00.json": "1e83d3ff0902845bec18b63be3a132ad45c855d493e5ebcae560b5bde15b4fca",
+        "iteration-087-rank-00.json": "afc93c12695ed0b0fa03d822ef66fac332fad680d511df82f0cd158eca263a11",
+        "iteration-090-rank-01.json": "c87b85345ec075cbc0439d91a04f903e4cfc5f886c455d3cdf572b14b92138e9"
+      }
+    },
+    {
+      "updates": [
+        91,
+        100
+      ],
+      "ranks": [
+        0,
+        1
+      ],
+      "records": 20,
+      "mean": {
+        "actor/approx_kl": 0.11521960645914078,
+        "actor/clip_fraction": 0.22531109899282456,
+        "critic/explained_variance": 0.29174649715423584,
+        "critic/value_loss": 0.060654963925480844,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/grad_norm": 48.789147186279294
+      },
+      "raw_sha256": {
+        "iteration-093-rank-01.json": "b81b2f29c86a8c9b571d15fd676741de6b12a53319eea49cd60087847d29dff7",
+        "iteration-098-rank-01.json": "5aef1c57babc80173a2066e80db52e5843476678b56513cbce6b01a6e5af63e1",
+        "iteration-099-rank-00.json": "ef53d4c58fa861e0b41283ddaf5a1a59a810f2d05527559af6c6d32a5e9f1999",
+        "iteration-091-rank-00.json": "444574f71cf2bbdd42474f9c836a5083e4334259d694ce2aa8ab6376c7e4b0eb",
+        "iteration-092-rank-00.json": "eccb0e73adc7550db91084d41f6622bf8028ffd4d21cadc5142e0d9dd74b7231",
+        "iteration-100-rank-01.json": "e6b27c575c7dbe662d1e38fdbeb97327fc221583565e041beea654d944206f47",
+        "iteration-095-rank-00.json": "17b05637b48f758221f86e626a5ed686813dfa1c9b96192894cedff563a4ed11",
+        "iteration-094-rank-00.json": "67515f0db2c13955e270b97591331cff1c44fbdf5e2c6dac60ce8211b604fbde",
+        "iteration-099-rank-01.json": "ba65bea7054493b69515541da9324d6ff42f68785d991f0fb8e67fd09caf9233",
+        "iteration-092-rank-01.json": "5bccef0b279e265b520d12e178306c944d2bbdfb841783a6070f97bded08f172",
+        "iteration-095-rank-01.json": "9a7df3bf70f352a33d6d62379fb3403b93f1a871cae8406df007a9132258f44e",
+        "iteration-096-rank-00.json": "9c61268406fe894a72656fef92b98601d7c4e07b268a6cac760692ef66057884",
+        "iteration-091-rank-01.json": "abca7656d05a9b2d6c650df7dd148373f1d3716a9e4f11855da48fab765d21ec",
+        "iteration-094-rank-01.json": "2e9cacf6e0111c8b75807b96b89cb7f3d9e3910a20048f5caa24608c28e98478",
+        "iteration-096-rank-01.json": "4c1a8e9e194d01510377dea018873f18c60a0926c7b33d1522c2931c12b8b838",
+        "iteration-097-rank-00.json": "604603cb35d7da8f9a87f81d0461d25b81c88b34d9151b41c527e0bb7a4ebf04",
+        "iteration-098-rank-00.json": "413384f3a5a530d845afffaa06152694b671c504ef545c26d4295d6649cc4a87",
+        "iteration-097-rank-01.json": "b4f566c8d23ddaa27faf7b159f4423a4da806e8f0cff2aee288f3931003cc74f",
+        "iteration-100-rank-00.json": "68f98d6fca9eab160c5e90f8787f8e17a137a57f3116e51b9123743f91ba034d",
+        "iteration-093-rank-00.json": "d9473de347baf337a96c0f1adab036b6cde10e2da1e60c6d2e7a1d33c855621a"
+      }
+    },
+    {
+      "updates": [
+        101,
+        110
+      ],
+      "ranks": [
+        0,
+        1
+      ],
+      "records": 20,
+      "mean": {
+        "actor/approx_kl": 0.07954327911138534,
+        "actor/clip_fraction": 0.2040584236383438,
+        "critic/explained_variance": 0.295876556634903,
+        "critic/value_loss": 0.0600536398589611,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/grad_norm": 40.07022647857666
+      },
+      "raw_sha256": {
+        "iteration-105-rank-01.json": "67585927bce467b01b850be291149fa949abe3335d5742e59fbef1e7d31bd190",
+        "iteration-104-rank-00.json": "cf37cb4117688b1067e25033db1464f338753d8f93eb398866f43add3371c822",
+        "iteration-102-rank-00.json": "ce30b3793b1142ecbfed1830a6c93c2e8ebddec05ebb07bbdd996c972c1d95ae",
+        "iteration-104-rank-01.json": "008c917320fdbb67e87760bfad46f892c78163506a7efda53e3581326faa2b69",
+        "iteration-107-rank-00.json": "3d9f7acdd0b0a4aed9211dcb74e56d24a524e2e85b70dd50bce0c8f70f913ebb",
+        "iteration-106-rank-00.json": "3413d27940d7176944d3df769af031fbcb464472d333810f8d2f80e3fc15ee16",
+        "iteration-109-rank-00.json": "1c31dd884cdc9ff644a897e58d8204c87e6a835b0050414b6e33156b3dc19b42",
+        "iteration-106-rank-01.json": "3ade3ee383524b9a06fab96389f67815a840105432e9a5d807d33491d61855eb",
+        "iteration-108-rank-01.json": "61c26b18f3c007a941c1517f79edad2a7f89c1b7a8dea5469d31b80d4db431bc",
+        "iteration-102-rank-01.json": "8fb47911867243cf4e93c9e56e4d2f6e643a7066498ad01958200ac53845932f",
+        "iteration-101-rank-01.json": "cc5ad820ee73e988bb01eedad52218942c22dcd86ab2a7337cb743be1061f1b6",
+        "iteration-107-rank-01.json": "aa9f9f8ae9a54dd3d06cd19d14ef8c52b0e374014ac3dcca9a1e5ccbb308ee23",
+        "iteration-110-rank-01.json": "b1f6a4e0b78d0ff1ad108756242ad97f16a27ca7a3477d936af461c7570085bc",
+        "iteration-103-rank-01.json": "6343938922038688568e74fa04d6f3e5693f9d11f4d6b4bfcbe8b41379e8add5",
+        "iteration-108-rank-00.json": "fe5a6be204b23fe483ded718a4e714e64949a130e433889643a524edd2000362",
+        "iteration-109-rank-01.json": "38fc81f1a4adc778e3ed2df1207d2e92a70490dd309436aafca7585dbac9b649",
+        "iteration-103-rank-00.json": "c25d766fd5c6cd9a013009376cbcfa46af355586c029c6665d96325540c83108",
+        "iteration-101-rank-00.json": "a5b39f7706dc834a081e2b1bad45faea03df2bf85af47bfd0ca07ccadd503550",
+        "iteration-105-rank-00.json": "22acb69f36d639254f5498555e07d8229199ffbc09089d85a74bd6521789a110",
+        "iteration-110-rank-00.json": "21fe65e301edf9fc2b373f5f701ee9abbcac7fcf1696eef13b938e5302246da2"
+      }
+    },
+    {
+      "updates": [
+        111,
+        120
+      ],
+      "ranks": [
+        0,
+        1
+      ],
+      "records": 20,
+      "mean": {
+        "actor/approx_kl": 0.09690564721822739,
+        "actor/clip_fraction": 0.21795932501554488,
+        "critic/explained_variance": 0.2955451190471649,
+        "critic/value_loss": 0.06023233532905579,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/grad_norm": 44.55490264892578
+      },
+      "raw_sha256": {
+        "iteration-116-rank-01.json": "867cd785de58fcb825338bf5907442e0f136059e6f61a6da69934119328128c9",
+        "iteration-114-rank-00.json": "e602e719ad52eca9574e7372d1114a7fd667e6a636ef2e46054fcb78a6822a6d",
+        "iteration-120-rank-01.json": "96de67ab37a42b706597c5841359d4485b2ad3aea3d3797a03062cc335501654",
+        "iteration-118-rank-01.json": "a0efd4961b604fc5b5de9f50adc674d23896150940aaa17fed7ffb5a473be6f2",
+        "iteration-112-rank-01.json": "04ba1b5b9fab902544a9c72970a23d2e0a85cdc49686d7f78ad3825dd79c9717",
+        "iteration-116-rank-00.json": "e32657c8583bfc089f0262a29a3ed968de2ea9a4443bdc322e12735567c1a749",
+        "iteration-113-rank-00.json": "e4b30f6739cc8266165fec22c0bc9348fdabdcdd7d53bb3cce82fc73b978e884",
+        "iteration-118-rank-00.json": "dfb30815b05c52297a6f4a96bec36f44774c3f1aae7b17183ab94d6351895bdc",
+        "iteration-119-rank-01.json": "427a25f048d6ba4b5a8972a85570f424fc4b4eb331cfaceb2ee1d16a338d96bd",
+        "iteration-113-rank-01.json": "fdda66bcd1f0df1a1019ffcc6c9993c7bce7db87b4805c83cfa2b9835ba3b539",
+        "iteration-120-rank-00.json": "ba012099483bcd7532fbf3359d8877ff4027c5096e158e4a34c4bd7785f45447",
+        "iteration-111-rank-00.json": "d03cb80ea8d12e959ddb13140ad35f01fbe7e885fa853ff56d4c99bb89fd6d28",
+        "iteration-117-rank-00.json": "28ad87ea51d7a9c2053d81179a4e2f724343588a8964c4fc3875b9fb22cf8eb7",
+        "iteration-115-rank-01.json": "dd9a3b74c82b7d8acee255b77d63eb76ec7e0630b80c5290a9d36ab1990e5373",
+        "iteration-115-rank-00.json": "e6767a1b017f3a77ab4ad6a701d1779314a677933abce985629516d9e7122fda",
+        "iteration-119-rank-00.json": "192d455f8da27cb3d83e684379d1680b55466e0bb07647e9c0b5e0248d589ae5",
+        "iteration-117-rank-01.json": "a8cfac8fc9fa0e74a968321cbdda620e383a794b943718ed6d7f33459e558fc7",
+        "iteration-112-rank-00.json": "a250d0dc01b82e1115c50928d813f500d391d964de5c83168c64aefdf599fef5",
+        "iteration-114-rank-01.json": "f70f5523953302a2566eb426cb86a0f1a616011a06bd8caac29730102994b0a9",
+        "iteration-111-rank-01.json": "483e0223cbb26ccc17d7b9526bdf18de3aaa252ba45a05e2ba0c74cf6e84a07b"
+      }
+    },
+    {
+      "updates": [
+        121,
+        130
+      ],
+      "ranks": [
+        0,
+        1
+      ],
+      "records": 20,
+      "mean": {
+        "actor/approx_kl": 0.10188485532999039,
+        "actor/clip_fraction": 0.23087024539709092,
+        "critic/explained_variance": 0.2796916365623474,
+        "critic/value_loss": 0.06179816499352455,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/grad_norm": 42.04133338928223
+      },
+      "raw_sha256": {
+        "iteration-123-rank-01.json": "e87de27dee6a109bac31f4ede1660ce6dea3f718801db31d48be2d23482d4725",
+        "iteration-129-rank-00.json": "0ddc4cc4bee7756379ab8c434147afdc19401bbc7f2b6763356b7448c13f96bb",
+        "iteration-123-rank-00.json": "02a1b5cad86ceda81c9e298fad91681c528847b89d14b28d7b61a4e150241548",
+        "iteration-121-rank-00.json": "a53974767923e5f1c3c127b9dcd08a477e79d2f10663ea25b138e422c378174f",
+        "iteration-122-rank-00.json": "7cdc267decd392d3963f63068fcfb7ae03f31a57bf85e8cdc850b70739ec2ea5",
+        "iteration-126-rank-01.json": "6e899ea3cdf0cd1c6443caac1ae648e1b2ffc2a5d52a9e167076d6032d41a8a5",
+        "iteration-130-rank-01.json": "fc6cf43b14c523f6d0f3aa584a391e26f91efb94b0c45d07a94498327cbc68f6",
+        "iteration-130-rank-00.json": "2f3c208cd6631c33bde94c15958209a249f3d60cf836ce55f75838a83472e7dd",
+        "iteration-128-rank-00.json": "382c87b8ea5acd2de7030204efd23dd30a975b19b5ab2f010711677d6ebdb6f7",
+        "iteration-129-rank-01.json": "99a994194c186dfb4e28109cb24ee7040ddd762ad476e1e816387013149f6095",
+        "iteration-127-rank-00.json": "4d81ddbbf60900c24de0e7b339623f135fc8a187c39e8bac609edf1932d0a13d",
+        "iteration-121-rank-01.json": "a306dd4f6f0583973ab9ea631d2b09c9eee6e3042ea0adeb2968b3bf24a95ccb",
+        "iteration-126-rank-00.json": "229cab8cafa46d0abdda1f036b82ccfe86453ebe716d7989c535e8c58991940d",
+        "iteration-124-rank-00.json": "216e3676d43ab6038259fb1c53453204f72638e7e908ac348ce03dcf0bce8762",
+        "iteration-125-rank-00.json": "3123aa161b7dac8038ad562cb25ee3ad64d73f51de90329621a2f3520e82fc1a",
+        "iteration-122-rank-01.json": "cf9fd5c27fac261ec110a20f4bafb30b08f34c5d6c63512535f97d9dc8150ef6",
+        "iteration-124-rank-01.json": "5cc1f69e55cf8c50752f180ac03572a59134ff734c1341e569e7dc29f49c02b9",
+        "iteration-128-rank-01.json": "60c0129a76cd44a48bc11c4124182411fb11a72206a097ff73e372d87f1d2451",
+        "iteration-127-rank-01.json": "be29578e4b65d8042feb60faf028624a790221748e88c321050b324b51a56cf1",
+        "iteration-125-rank-01.json": "cf9787869b2e9a5b9e48867fe092fdb50ada52e9afb5d38e56f47ff7214d8c56"
+      }
+    }
+  ],
+  "claims": "descriptive existing CPU JSON audit only; no new model computation or training"
+}
