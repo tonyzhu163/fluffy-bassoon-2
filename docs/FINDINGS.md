@@ -38,6 +38,16 @@ implementation defect, not an established cause of the failed teacher gates.
 Repair and qualify the critic contract before further PPO.
 [Bug audit and reproduction](../outputs/robocasa-flow-sde-bug-audit-20261104-r1/RESULT.md).
 
+Matching-checkpoint GPU replay then confirmed the mismatch on256 saved Drawer
+decisions at policies0,1,10,120, with exact likelihood and saved-mean parity.
+One of64 initial-policy decisions crosses the.2 value-clip threshold and
+suppresses an active critic gradient; none of192 later-policy decisions does.
+Historical returns were held fixed, so corrected GAE and learning impact are
+unmeasured. An independent CPU tensor/native-loss audit passes; the selected
+suffix correction passes20 sampler cases without changing actions or RNG.
+The short matched learning comparison is running, with no outcome claimed.
+[Production critic evidence and limits](../outputs/robocasa-flow-sde-critic-parity-20261104-r1/RESULT.md).
+
 A follow-up saved-record check rejects duplicated rollout noise for the
 finished Drawer source: all eight ranks have distinct CUDA states/seeds and
 actual initial-noise tensors in q1 and production. Same-index recovered SDE

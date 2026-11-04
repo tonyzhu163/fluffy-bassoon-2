@@ -1,0 +1,194 @@
+{
+  "completed": true,
+  "audit_script_sha256": "96759da5f35866dc2b2ddd347628fc2624fb481b728052ae83c88471b1163ac8",
+  "result_sha256": "032d1e5c7d94d5df39a3436c1fea716076a787432a0b54da6eda3d7fe27ab8fb",
+  "replay_script_sha256": "4363cac3f569d24fa73765807e4827cbdefc9270cb646ed4219b80e0a9779a92",
+  "prepared_sha256": "b211687f098f76e8b854520d5a679185a7dde66941059121e6d4935518149cbb",
+  "qualified_fix_sha256": "c007facb06215053b3e4864ed70d5814ad7a57fc8c6475f9ee158c47f9b1039a",
+  "clock": {
+    "started_unix": 1793771061,
+    "finished_unix": 1793771326,
+    "allocated_gpus": 1,
+    "observed_gpu_seconds": 265,
+    "exit_code": 0
+  },
+  "receipts": [
+    {
+      "step": 0,
+      "ready_sha256": "d2192766ad3593057e23f356aa9965ebdc608f510cc06340c076a2d1666c17ef",
+      "consumed_sha256": "6de6373445db30700436e4fc05b26b5210b1b9973ab3dd9e75eb8d2dd1dabce9"
+    },
+    {
+      "step": 1,
+      "ready_sha256": "6b953880c128758f635924952733a03b1db7edf9108c3b8a330d46959e361011",
+      "consumed_sha256": "a55ace5a485504655bebb6dab135a915eb5e6afce52fa31098019ae4ed27f3cf"
+    },
+    {
+      "step": 10,
+      "ready_sha256": "0951f448c20122f1465d1dba08ed78f408840bb843b0765792028c7b23448699",
+      "consumed_sha256": "f7203714d2966388cd93676d54295913bb5201c645293268bcdad6a77bb2e13c"
+    },
+    {
+      "step": 120,
+      "ready_sha256": "a004c0e0ac511c152d1776ceadfec913a3b211ab07c6142f26a89b83f89ccf4e",
+      "consumed_sha256": "e8e25e381764bcc59c50bc7f735c630020f202b962e36eef94ee735f77ce2ee3"
+    }
+  ],
+  "cohorts": 16,
+  "decisions": 256,
+  "by_policy_step": [
+    {
+      "policy_step": 0,
+      "decisions": 64,
+      "value_gap_max_abs": 0.21155618131160736,
+      "value_gap_mean_abs": 0.06634455604944378,
+      "value_gap_rms": 0.08245300868705355,
+      "pre_sgd_clip_count": 1,
+      "suppressed_prediction_gradients": 1,
+      "cpu_float64_mean_to_saved_max_abs_error": 3.2782554615362614e-08,
+      "maximum_reported_head_gradient_relative_delta": 0.17988483607769012,
+      "tensors": [
+        {
+          "actor_rank": 0,
+          "time_index": 0,
+          "sha256": "71b4116717807c30ef0595e9c2a0334354bdb6fb2c25d725a14fb682e38692f1",
+          "bytes": 4514
+        },
+        {
+          "actor_rank": 0,
+          "time_index": 6,
+          "sha256": "69e626b5b2a1475f5bcac11d01603f4f64ddce07a3d2b5e697b8a8c8888a8a29",
+          "bytes": 4514
+        },
+        {
+          "actor_rank": 1,
+          "time_index": 0,
+          "sha256": "b3caf2f42307504075e1e0593ea6b3acaa481d4da6393e368558dcea01215707",
+          "bytes": 4514
+        },
+        {
+          "actor_rank": 1,
+          "time_index": 6,
+          "sha256": "84b6c4f1d3b3ce3af447655620f95c9680b0b7e87814120ec8ffbe5267f914e8",
+          "bytes": 4514
+        }
+      ]
+    },
+    {
+      "policy_step": 1,
+      "decisions": 64,
+      "value_gap_max_abs": 0.08921029418706894,
+      "value_gap_mean_abs": 0.026799140654475195,
+      "value_gap_rms": 0.03404554604616945,
+      "pre_sgd_clip_count": 0,
+      "suppressed_prediction_gradients": 0,
+      "cpu_float64_mean_to_saved_max_abs_error": 1.7881393421514957e-08,
+      "maximum_reported_head_gradient_relative_delta": 2.7671417934804765e-10,
+      "tensors": [
+        {
+          "actor_rank": 0,
+          "time_index": 0,
+          "sha256": "1c5a493687ffdb55cfcb9f84e47251557b2f257b4bd03fe90408dda6b86a3de6",
+          "bytes": 4514
+        },
+        {
+          "actor_rank": 0,
+          "time_index": 6,
+          "sha256": "543d708f1cea004f0fd4f7bccca1ce3d5d207c9e9e692516eda37eae0f1e481a",
+          "bytes": 4514
+        },
+        {
+          "actor_rank": 1,
+          "time_index": 0,
+          "sha256": "5405606b762cacd1e58d19b5043808a8e669cadb386cc4cf76f40d2beb281914",
+          "bytes": 4514
+        },
+        {
+          "actor_rank": 1,
+          "time_index": 6,
+          "sha256": "e6fce98154014b99fbb31992df09fd47de3f37485e57afd57b18ff774795e7ce",
+          "bytes": 4514
+        }
+      ]
+    },
+    {
+      "policy_step": 10,
+      "decisions": 64,
+      "value_gap_max_abs": 0.13869330286979675,
+      "value_gap_mean_abs": 0.045312721631489694,
+      "value_gap_rms": 0.05705680842979799,
+      "pre_sgd_clip_count": 0,
+      "suppressed_prediction_gradients": 0,
+      "cpu_float64_mean_to_saved_max_abs_error": 5.6624412547723324e-08,
+      "maximum_reported_head_gradient_relative_delta": 0.0,
+      "tensors": [
+        {
+          "actor_rank": 0,
+          "time_index": 0,
+          "sha256": "e326ec4c4bb28ddf7f73be7c89bbba22ec8af95471e4b88a687b3f89b4825e7a",
+          "bytes": 4514
+        },
+        {
+          "actor_rank": 0,
+          "time_index": 6,
+          "sha256": "d1d71940dddd784ceeb1c3865a11650a6e522f620470784fa94f33b9e05bdb79",
+          "bytes": 4514
+        },
+        {
+          "actor_rank": 1,
+          "time_index": 0,
+          "sha256": "09887d4ccdb8e3b60950f2dbe498f2472ab15e9449604daa2d8d0ba9308f948e",
+          "bytes": 4514
+        },
+        {
+          "actor_rank": 1,
+          "time_index": 6,
+          "sha256": "03da59eb4dc31fd999406f2463dddbeb69e4fb79d08f61471ea2064bd62f3337",
+          "bytes": 4514
+        }
+      ]
+    },
+    {
+      "policy_step": 120,
+      "decisions": 64,
+      "value_gap_max_abs": 0.19671601057052612,
+      "value_gap_mean_abs": 0.06028744886862114,
+      "value_gap_rms": 0.07463762271048162,
+      "pre_sgd_clip_count": 0,
+      "suppressed_prediction_gradients": 0,
+      "cpu_float64_mean_to_saved_max_abs_error": 1.0132789607375514e-07,
+      "maximum_reported_head_gradient_relative_delta": 0.0,
+      "tensors": [
+        {
+          "actor_rank": 0,
+          "time_index": 0,
+          "sha256": "5c9eeb057367772df7b4aa039c234b4e86d2cd78f6f2cda459ab91002989f600",
+          "bytes": 4514
+        },
+        {
+          "actor_rank": 0,
+          "time_index": 6,
+          "sha256": "22a6ee50e645657e7e94f050a39c77ddb2d96f31eacaa393441184c08294f1c5",
+          "bytes": 4514
+        },
+        {
+          "actor_rank": 1,
+          "time_index": 0,
+          "sha256": "91791c5cc2061dda753a2e4032d4a6d4d3f1cdc2f3643efafdbaa2ab7e0bd517",
+          "bytes": 4514
+        },
+        {
+          "actor_rank": 1,
+          "time_index": 6,
+          "sha256": "92add368f53623d12823660bce5781cd23f299a2070cd960a232873c88456cad",
+          "bytes": 4514
+        }
+      ]
+    }
+  ],
+  "new_controls": 0,
+  "SGD": 0,
+  "cpu_float64_mean_absolute_tolerance": 2e-07,
+  "checks": "Independent tensor reductions, archive/fixture/model receipt hashes, selected-step gather, saved rollout mean, and CPU native-loss/prediction gradients.",
+  "limits": "Head-gradient vectors were not retained, so their norms/deltas are GPU replay reports; historical returns fixed, no corrected GAE or learning outcome measured."
+}
