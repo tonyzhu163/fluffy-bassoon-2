@@ -145,3 +145,9 @@ benchmark. The separate ablation supplies the fresh TEST512 comparison.
 
 No historical run, shared worktree, policy or optimizer was modified for this
 analysis. The joins ran on the allocated Linux development container.
+
+## Observed follow-up
+
+At equal TRAIN controls, GRPO finished DEV at its starting 41/64. On matched DEV64, new PPO40 scored 40, SFT 36, old PPO40 33 and GRPO40 31. The separate PPO ablation's fresh TEST512 scored 315, 303 and 320 for new PPO40, SFT and old PPO40, respectively. The original new-PPO DEV decline did not reproduce on either common-draw comparison. The three panels do not isolate its cause. [Matched and fresh readouts](../robocasa-ppo40-matched-dev64-20261104-r1/RESULT.md).
+
+The shorter-chunk candidate passed real-weight replay and completed 15 Adam steps at 283.2 seconds per first update. The corresponding H50/K10 first update took 156.9 seconds and six Adam steps. A source-policy endpoint for the shorter chunk was outside the one-update benchmark. [Benchmark](../robocasa-ppo-short-chunk-benchmark-20261104-r1/RESULT.md).
