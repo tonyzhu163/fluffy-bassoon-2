@@ -21,4 +21,4 @@ All entries are successes out of50 paired cases. AD-ID50-RESULT.json contains ev
 
 Independent CPU audit passed all1800episodes,1080000physical controls,21600chunks,5400videos and3245400decoded frames, including all actual commands/draws/feedback and initial native state matches. The scheduler released job-zqllm5eqzgj3 at04:21:44 Shanghai; conservative charge3.7367GPU-hours.
 
-AD OOD50 was submitted only after this audit passed, as job-8htog8yitbyq. Its outcomes remain pending.
+AD OOD50 was submitted only after this audit passed, as job-8htog8yitbyq. The independent OOD audit has now passed; see AD-OOD50-RESULT.md for the weak transfer result.
