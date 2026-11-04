@@ -77,6 +77,8 @@ intermediate curve and fresh validation-selected TEST remain unrun.
 
 A native18-layer learned-KV steering interface now passes byte-exact zero-adapter action parity, active-coordinate normalization and gradient propagation on the allocated RPBZZZ6, with every native VLA parameter frozen and zero optimizer updates. Its384-token history cache accepts378 synthetic tokens; six actual H600 episodes retain complete prior history. Independent CPU auditing reproduces72 native draws/command chunks and decodes all18 videos (3600controls). This qualifies the implementation and context capacity, not fitted steering or adaptation. [Numerical and physical evidence](../outputs/robocasa-eight-hour-babysit-20261104-r1/BRIDGE-RESULT.md).
 
+The prospective frozen-base bridge sampler now converts its history-normalized physical labels back to physical commands, pads32 coordinates and applies the native action normalization. The previous direct padding produced a maximum.59341 normalized-target error on a real saved chunk; the repaired result matches the official transform exactly (physical encoding round-trip error2.38e-7). All31 affected allocated-Linux core tests pass. This fixes the prepared sampler before any fitted-steerer claim; the running direct-action learners and prior manually normalized native gradient check use separate paths. [Numerical evidence](../outputs/robocasa-eight-hour-babysit-20261104-r1/NATIVE-TARGETS-QUALIFICATION.json).
+
 ## Headline
 
 - **No experiment so far shows in-context adaptation or a memory benefit**, on

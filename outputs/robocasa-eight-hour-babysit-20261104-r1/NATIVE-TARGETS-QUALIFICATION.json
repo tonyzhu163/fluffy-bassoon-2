@@ -1,0 +1,17 @@
+{
+  "source_commit": "e4dfe6157211247418a0bf343ae2d863033737f3",
+  "host": "Baige allocated development Linux CPU container",
+  "tests": 31,
+  "passed": true,
+  "elapsed_seconds": 16.61,
+  "GPU_hours": 0,
+  "tests_run": [
+    "tests/test_flow_history.py",
+    "tests/test_steering_history_eval.py",
+    "tests/test_steering_history_native.py"
+  ],
+  "numerical_reference": "NATIVE-TARGETS-NUMERICAL.json",
+  "change": "Require explicit native32 action statistics and history codec when sampling a bridge query; decode physical labels, pad32 in physical space, then official z-score normalization. Preserve canonical binary commands.",
+  "active_fit_source_unchanged": "d71cb532",
+  "prior_native_GPU_qualification": "Manual official target conversion was already correct at2fa880d3"
+}
