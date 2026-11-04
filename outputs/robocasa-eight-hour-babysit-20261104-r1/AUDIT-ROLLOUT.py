@@ -24,7 +24,7 @@ def audit_result(result_path, output_path):
         return path
     result = json.loads(result_path.read_text())
     episodes, chunks, controls, frames, videos = 0, 0, 0, 0, []
-    policies, bindings, case_attempts = set(), set(), {}
+    policies, bindings, case_attempts, memory_boundaries = set(), set(), {}, {}
     for ref in result['references']:
         saved = torch.load(checked(ref), map_location='cpu', weights_only=False)
         case, attempt, horizon = saved['case'], saved['attempt'], saved['horizon']
@@ -32,10 +32,17 @@ def audit_result(result_path, output_path):
         key = json.dumps(case, sort_keys=True)
         case_attempts.setdefault(key, []).append(attempt)
         episode_reset = saved['binding']['native_attempt_protocol'].get('memory_mode') == 'episode'
-        entry_length = 0 if episode_reset else (attempt - 1) * (horizon // 50)
+        # Entry is recorded before the first controller.act, which performs
+        # an episode-mode reset. It therefore still describes the previous
+        # episode's completed cache; the post-act/output check is separate.
+        entry_length = (0 if attempt == 1 else horizon // 50) if episode_reset else (attempt - 1) * (horizon // 50)
+        exit_length = horizon // 50 if episode_reset else entry_length + horizon // 50
         assert saved['memory_entry']['length'] == entry_length
-        assert saved['memory_exit']['length'] == entry_length + horizon // 50
+        assert saved['memory_exit']['length'] == exit_length
+        assert saved['memory_entry']['episode_start'] and not saved['memory_entry']['pending']
+        assert saved['memory_entry']['previous_done'] == (attempt > 1)
         assert saved['memory_exit']['previous_done'] and not saved['memory_exit']['pending']
+        memory_boundaries[key,attempt] = saved['memory_entry'],saved['memory_exit']
         policies.add(saved['policy_weights_sha256'])
         bindings.add(json.dumps(saved['binding'], sort_keys=True))
         initial = torch.load(checked(saved['initial']), map_location='cpu', weights_only=False)
@@ -49,7 +56,7 @@ def audit_result(result_path, output_path):
         assert truth['simulator_final_success'] == saved['success_at_end']
         assert truth['first_success_step'] == saved['first_success_step']
         assert truth['native_counts']['controls'] - truth['native_counts']['reset_controls'] == horizon
-        first_success, previous_exit = None, saved['memory_entry']
+        first_success = None
         for index, cref in enumerate(saved['chunks']):
             with gzip.open(checked(cref), 'rb') as stream:
                 row = pickle.load(stream)
@@ -101,6 +108,9 @@ def audit_result(result_path, output_path):
         episodes += 1
         controls += horizon
     assert all(sorted(values) == list(range(1,7)) for values in case_attempts.values())
+    for case in case_attempts:
+        for attempt in range(2,7):
+            assert memory_boundaries[case,attempt][0] == memory_boundaries[case,attempt-1][1]
     assert len(policies) == len(bindings) == 1
     if 'optimizer_updates' in result:
         assert result['optimizer_updates'] == 0 and result['native_parameters_frozen']
@@ -113,7 +123,10 @@ def audit_result(result_path, output_path):
         episodes=episodes, physical_controls=controls, complete_chunks=chunks,
         decoded_videos=len(videos), video_frames=frames, all_commands_and_draws_reproduced=True,
         all_initial_physical_public_states_match=True, maximum_allowed_RGB_component_delta=2,
-        SGD=0, all_prior_history_retained=True, elapsed_CPU_seconds=time.time()-began, videos=videos)
+        SGD=0, all_prior_history_retained=not episode_reset,
+        history_boundary_contract='Pre-act entry equals prior completed exit; episode mode resets within the first act',
+        memory_mode='episode' if episode_reset else 'full',
+        elapsed_CPU_seconds=time.time()-began, videos=videos)
     output_path.write_text(json.dumps(audit, indent=2)+'\n')
     return audit
 

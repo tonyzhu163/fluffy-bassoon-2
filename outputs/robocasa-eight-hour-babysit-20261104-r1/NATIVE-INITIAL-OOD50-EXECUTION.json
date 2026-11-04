@@ -1,0 +1,43 @@
+{
+  "name": "mwj_1105_native_initial_OOD50_r1",
+  "source_commit": "28593323a4f69d25378bf888e03d141b91c99d26",
+  "method": "native_initial",
+  "split": "OOD",
+  "tasks": {
+    "CloseFridge": 900,
+    "TurnOnMicrowave": 450
+  },
+  "cases_per_task": 50,
+  "actual_episodes_per_case": 6,
+  "expected_episodes": 600,
+  "expected_controls": 405000,
+  "GPUs": 2,
+  "replicas": 2,
+  "GPUs_per_replica": 1,
+  "CPU_per_replica": 16,
+  "RAM_GiB_per_replica": 64,
+  "SHM_GiB_per_replica": 8,
+  "maximum_minutes": 75,
+  "worker_seconds": 4200,
+  "reservation_GPU_hours": 2.5,
+  "budget": "existing96GPUh",
+  "status": "Created",
+  "output": "gpu/native-initial-OOD-final-01",
+  "teacher_on_OOD": null,
+  "scientific_scope": "Current three-source baseline contracted two-task OOD; not the future five-source 15-task panel",
+  "queue_snapshot": {
+    "free_GPUs": 20,
+    "max_GPUs": 416,
+    "free_CPU": 1698,
+    "max_CPU": 9100,
+    "free_memory_GiB": 25591,
+    "max_memory_GiB": 93596,
+    "accelerator": "NVIDIA RPBZZZ6"
+  },
+  "preflight_storage_free_GiB": 369.64,
+  "write_probe_passed": true,
+  "core_byte_diff_since_B8_qualification": "empty",
+  "job_id": "job-e15gtr27kh0j",
+  "created_shanghai": "2026-11-05T02:57:34+08:00",
+  "ID_native_truth_audit_passed": true
+}
