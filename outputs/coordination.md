@@ -110,6 +110,8 @@ to the [2026-11-03 snapshot](archive/coordination/coordination-20261103.md#ongoi
 
 | Storage audit and aggressive cold archival | Owner chat `01a1a590`; all Baige `/mowenjie` projects/envs → existing BOS; no GPU job | **Nov4 16:32 Shanghai:** 51.75GiB duplicate Flora shards coalesced with full pairwise SHA256 checks and both paths preserved; six closed runs and legacy policy env verified/reclaimed (~83GiB combined). Simulator/bootstrap/superseded DSRL env and unrelated RoboMME/state-SFT/evaluation assets continue. Retained four-method raw corpus, shared bases, current runtimes, held checkpoints and active Stage1 inputs protected. [Audit](storage-audit-baige-20261104-r1/PLAN.json). |
 
+| Joint three-task exploratory meta-learning baseline | Owner chat `01a1a5bb`; Baige CPU-qualified source `cc469f32`; no GPU allocation | **Nov4 17:16 Shanghai HUMAN HOLD:** all eight pooled exports and 47 Linux CPU tests pass; one joint model per AD/DPT/DIT/IC-IQL over 336 TRAIN/48 validation streams. Approved96GPUh; prepare with4GPUs/task, then pooled4GPU fits with checkpointed continuation until validation convergence; await human release of launch hold. [Launch](robocasa-three-task-meta-baseline-20261104-r2/LAUNCH.md), [qualification](robocasa-three-task-meta-baseline-20261104-r2/QUALIFICATION.md). |
+
 ### Needs owner refresh
 
 - Native VLRLA-recipe PPO pilot: last recorded 2026-10-31 14:06 Shanghai as

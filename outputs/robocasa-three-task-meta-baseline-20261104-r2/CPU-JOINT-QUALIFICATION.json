@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "source_commit": "cc469f320cb3f0750e9e2f7b0e348b3272ffc4fd",
+  "device": "CPU; CUDA hidden; no accelerator allocation",
+  "fixture": "synthetic four-chunk streams with original 112/16 split counts; full-corpus and GPU qualification pending",
+  "checks": [
+    "ad/train: exact arrays, chronology, unique task IDs and source hashes",
+    "ad/validation: exact arrays, chronology, unique task IDs and source hashes",
+    "dpt/train: exact arrays, chronology, unique task IDs and source hashes",
+    "dpt/validation: exact arrays, chronology, unique task IDs and source hashes",
+    "dit/train: exact arrays, chronology, unique task IDs and source hashes",
+    "dit/validation: exact arrays, chronology, unique task IDs and source hashes",
+    "ic_iql/train: exact arrays, chronology, unique task IDs and source hashes",
+    "ic_iql/validation: exact arrays, chronology, unique task IDs and source hashes"
+  ],
+  "train_streams": 336,
+  "validation_streams": 48,
+  "train_validation_disjoint": true
+}
