@@ -1,13 +1,13 @@
 {
   "format": "robocasa_stage1_execution_v1",
-  "checked_shanghai": "2026-11-04T17:21:24.461418+08:00",
-  "state": "PPO_RUNNING",
+  "checked_shanghai": "2026-11-04T19:35:06+08:00",
+  "state": "PPO_COMPLETE_GRPO_RUNNING",
   "source_commit": "d9a1c61616443f7f88c71f91da4567d85b1f4253",
   "source_path": "/mowenjie/fluffy-bassoon-2/sources/stage1-d9a1c616",
   "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
   "budget_GPU_hours": 64,
   "reserved_GPU_hours": 32,
-  "completed_GPU_hours": 0,
+  "completed_GPU_hours": 17.126666666666665,
   "monitor": "finish-stage-1-ppo-versus-grpo-and-push-results",
   "arms": {
     "ppo": {
@@ -15,7 +15,7 @@
       "job_name": "mwj_1104_stage1_vlmppo_OpenDrawer_r1",
       "cluster": "Baige Pro6K",
       "queue": "aihcq-rh0wwk9muei4",
-      "scheduler_status": "Running",
+      "scheduler_status": "Succeeded",
       "GPU_count": 8,
       "CPUs": 168,
       "RAM_GiB": 1280,
@@ -26,7 +26,7 @@
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01",
       "GPU_probe": "passed; all 8 actual devices",
       "model_norm_hash_checks": "passed",
-      "completed_iterations": 25,
+      "completed_iterations": 40,
       "target_iterations": 40,
       "first_iteration_parity": "both actor ranks: exact zero likelihood and value error",
       "baseline_DEV64_successes": 34,
@@ -34,26 +34,109 @@
       "scheduler_created_shanghai": "2026-11-04T15:56:02+08:00",
       "all_observed_updates_finite_and_VLM_unchanged": true,
       "observed_max_KL": 0.020878616720438004,
-      "observed_max_clip_fraction": 0.07574737071990967,
+      "observed_max_clip_fraction": 0.08253401517868042,
       "step10_DEV64_successes": 34,
       "step10_DEV64_gain_pp": 0,
       "training_first10_rate": 0.63203125,
-      "observed_completed_SGD_iterations": 25,
+      "observed_completed_SGD_iterations": 40,
       "DEV20_status": "complete, physical/public reset pairing passed all8 ranks",
       "step20_DEV64_successes": 36,
       "step20_DEV64_gain_pp": 3.125,
       "step20_paired_wins_losses": [
         9,
         7
-      ]
+      ],
+      "step30_DEV64_successes": 34,
+      "step30_DEV64_gain_pp": 0,
+      "step30_paired_wins_losses": [
+        7,
+        7
+      ],
+      "scheduler_completed_shanghai": "2026-11-04T18:04:29+08:00",
+      "allocation_released": true,
+      "conservative_GPU_hours": 17.126666666666665,
+      "step40_DEV64_successes": 26,
+      "step40_DEV64_gain_pp": -12.5,
+      "step40_paired_wins_losses": [
+        5,
+        13
+      ],
+      "step40_exact_p": 0.09625244140625,
+      "training_last10_rate": 0.64453125,
+      "training_gain_pp": 1.25,
+      "learning_gate_passed": false,
+      "numerical_gate_passed": true
     },
     "grpo": {
-      "state": "NOT_SUBMITTED",
+      "state": "RUNNING",
       "reserved_future_GPU_hours": 32,
-      "reason": "serial arms for storage headroom"
+      "reviewed_main_commit": "46daecc9b4652632d4c551ec51293d790476ec2d",
+      "qualification_source_path": "/mowenjie/fluffy-bassoon-2/sources/stage1-grpo-46daecc9",
+      "execution_override_required": "retain2 actor ranks via COMMAND.sh and explicitly set ROBOCASA_SIM_PPO_MICRO_BATCH=16; new YAML defaults are8 actors and microbatch32",
+      "qualification": "55 Linux CPU tests passed in 169.80s; code pin46daecc9; latest main1b4b3982 only changes another run metadata/fit sizing",
+      "latest_reviewed_main_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+      "parallel_with_diagnosis_requested": true,
+      "TRAIN_controls": 3072000,
+      "optimizer_steps_per_rank": 240,
+      "execution_overrides": {
+        "ROBOCASA_SIM_PPO_ACTOR_PLACEMENT": "0-1",
+        "ROBOCASA_SIM_PPO_MICRO_BATCH": "16",
+        "ROBOCASA_FLOW_ACTOR_BATCH_DROP": "[]"
+      },
+      "scheduler_access": "Authenticated Baige console",
+      "source_commit": "013c2f10c84b22db834dfe533907bb8a01737768",
+      "source_path": "/mowenjie/fluffy-bassoon-2/sources/stage1-grpo-013c2f10",
+      "job_id": "job-r4b89rtmuhbx",
+      "job_name": "mwj_1104_stage1_grpo_OpenDrawer_r1",
+      "cluster": "Baige Pro6K",
+      "queue": "aihcq-rh0wwk9muei4",
+      "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/grpo/attempt-01",
+      "actual_GPU_probe": "passed",
+      "local_probe": "GRPO-GPU-PROBE.json",
+      "manifest": "GRPO-MANIFEST.json",
+      "scheduler_minutes": 240,
+      "automatic_retry": false,
+      "queue_available_at_admission": {
+        "GPU": 63,
+        "CPU": 2554,
+        "memory_GB": 33635
+      },
+      "free_bytes_at_launch": 774914441216,
+      "config_diff": "GRPO code and config match reviewed main. The prepared launcher explicitly sets two actor ranks and microbatch 16 to match PPO.",
+      "worker_started_unix": 1793791880.1261606
     }
   },
-  "next_action": "Continue stable PPO through40 and inspect DEV30 next. DEV20 is36/64 versus34/64 baseline (+3.125pp, nine wins/seven losses); no Stage1 learning gate achieved yet. GRPO serial/pending after PPO closure/archive.",
-  "live_GPU_hours_conservative_upper_from_submission": 11.383250888718498,
-  "PFS_free_GiB_observed": 562.88671875
+  "next_action": "Verify grouped physical/public TRAIN resets and advancing optimizer updates, then audit the completed run and compare its 3,072,000 TRAIN controls against PPO.",
+  "PFS_free_GiB_observed": 622.328125,
+  "storage_checked_unix": 1793786026.7150784,
+  "git_publication": "Blocked: GitHub connector writes403, localSSH auth fails, local/remote HTTPS has no credential; pending commits retained in local refs and verified Git bundles",
+  "root_cause_analysis": "ROOT-CAUSE-ANALYSIS.md",
+  "storage_plan_update": "Human requested parallelGRPO/diagnosis. PPO is alreadyterminal. Last PFSfree493GiB; a same-sizeGRPO footprint leaves >300GiB. Do not wait for bulk archive beforeGRPO; keep200GiB floor. Archive/reclaimonlyownclosedPPOdata afterhashverification; retainPPO40.",
+  "recipe_implementation_qualification": "outputs/robocasa-ppo-recipe-fixes-20261104-r1/CPU-QUALIFICATION.json",
+  "checkpoint_archive": {
+    "state": "RUNNING",
+    "pid": 2111912,
+    "GPU_hours": 0,
+    "source_job_id": "job-bylh99ylx9ie",
+    "source_job_verified_terminal": true,
+    "checkpoints_to_archive": [
+      1,
+      10,
+      20,
+      30
+    ],
+    "complete_checkpoints_retained_on_PFS": [
+      0,
+      40
+    ],
+    "source_script": "ARCHIVE-CHECKPOINTS.py",
+    "source_script_sha256": "9398167edc9f4018cbcdca0e8b71523f85e449464fa9a9c4ed91ad12862c38f6",
+    "pinned_helper_source": "/mowenjie/fluffy-bassoon-2/sources/stage1-grpo-013c2f10/outputs/storage-audit-baige-20261104-r1/archive.py",
+    "pinned_helper_sha256": "ce5df6e4d313fbdc6948a897ee1311c143e8efef00fdcd86df4da82e4888dbb5",
+    "receipt_directory": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/checkpoint-archive-r1",
+    "BOS_directory": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-ppo-grpo-meta-stage1-20261104-r1/checkpoints-r1",
+    "reclaim_condition": "exact GNU tar source comparison, exact archive member coverage and full BOS SHA256 readback verified; source inventory unchanged and no open users",
+    "note": "Intermediate worker/RNG sidecars and boundary markers also retained on PFS after verified bulk reclamation. No raw trajectory archive/reclamation yet."
+  },
+  "storage_checked_shanghai": "2026-11-04T19:21:50.957546+08:00"
 }
