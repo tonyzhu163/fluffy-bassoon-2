@@ -1,6 +1,6 @@
 {
   "format": "robocasa_stage1_execution_v1",
-  "checked_shanghai": "2026-11-04T16:09:57.993683+08:00",
+  "checked_shanghai": "2026-11-04T16:20:22.377204+08:00",
   "state": "PPO_RUNNING",
   "source_commit": "d9a1c61616443f7f88c71f91da4567d85b1f4253",
   "source_path": "/mowenjie/fluffy-bassoon-2/sources/stage1-d9a1c616",
@@ -26,14 +26,14 @@
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01",
       "GPU_probe": "passed; all 8 actual devices",
       "model_norm_hash_checks": "passed",
-      "completed_iterations": 2,
+      "completed_iterations": 6,
       "target_iterations": 40,
       "first_iteration_parity": "both actor ranks: exact zero likelihood and value error",
       "baseline_DEV64_successes": 34,
       "initial_KL_max": 0.0065961540676653385,
       "scheduler_created_shanghai": "2026-11-04T15:56:02+08:00",
       "all_observed_updates_finite_and_VLM_unchanged": true,
-      "observed_max_KL": 0.0065961540676653385,
+      "observed_max_KL": 0.01071573793888092,
       "observed_max_clip_fraction": 0.07574737071990967
     },
     "grpo": {
@@ -42,6 +42,7 @@
       "reason": "serial arms for storage headroom"
     }
   },
-  "next_action": "Continue PPO through40 and DEV0/10/20/30/40, monitor every20minutes; after exact scheduler release and verified artifact archival, launch GRPO and push audited results",
-  "live_GPU_hours_conservative_upper_from_submission": 1.857768735355801
+  "next_action": "Continue healthy PPO through40; inspect first intermediate DEV64 at10; GRPO remains unsubmitted until PPO closure and archival",
+  "live_GPU_hours_conservative_upper_from_submission": 3.245284850862291,
+  "PFS_free_GiB_observed": 525
 }
