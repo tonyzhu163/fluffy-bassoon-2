@@ -1,24 +1,44 @@
 {
   "format": "robocasa_joint_three_task_execution_v1",
-  "checked_shanghai": "2026-11-04T18:40:49.863603+08:00",
-  "status": "submission_blocked_chrome_runtime_missing",
+  "checked_shanghai": "2026-11-04T18:57:40.503135+08:00",
+  "status": "preparation_startup_diagnosed_retry_pending",
   "approved_ceiling_GPU_hours": 96.0,
-  "cumulative_scheduler_GPU_hours": 0.0,
-  "jobs": {},
+  "cumulative_scheduler_GPU_hours": 0.09666666666666666,
+  "jobs": {
+    "job-30kj6dnpleas": {
+      "task": "OpenDrawer",
+      "attempt": "prepare-4gpu-01",
+      "status": "Failed",
+      "created_shanghai": "2026-11-04T18:55:07+08:00",
+      "released_shanghai": "2026-11-04T18:55:52+08:00",
+      "conservative_GPU_seconds": 180
+    },
+    "job-g4pztq1tz1mw": {
+      "task": "OpenDrawer",
+      "attempt": "prepare-4gpu-01",
+      "status": "Failed",
+      "created_shanghai": "2026-11-04T18:55:11+08:00",
+      "released_shanghai": "2026-11-04T18:55:53+08:00",
+      "conservative_GPU_seconds": 168,
+      "error": "GPU probe: CUDA_VISIBLE_DEVICES unset"
+    }
+  },
   "queue": {
     "id": "aihcq-rh0wwk9muei4",
     "name": "\u7b97\u6cd5Z\u7ec4",
     "pool": "Pro6K",
-    "observed_available_GPUs": 125,
+    "observed_available_GPUs": 63,
     "accelerator_type": "NVIDIA RPBZZZ6",
     "four_GPU_template_max_CPUs": 87,
     "four_GPU_template_max_RAM_GiB": 899,
     "user_quota": "not configured; default queue resources",
-    "queue_auto_stop": "21 days or GPU utilization <=10% for 12 hours; does not bind 4h/8h allocations"
+    "queue_auto_stop": "21 days or GPU utilization <=10% for 12 hours; does not bind 4h/8h allocations",
+    "observed_available_CPUs": 2538,
+    "observed_available_RAM_GiB": 32355
   },
   "storage": {
-    "PFS_free_GiB": 561.1171875,
-    "write_probe": "passed",
+    "PFS_free_GiB": 492.46875,
+    "write_probe": "passed 2026-11-04 18:54 Shanghai",
     "quota_tool_available": false
   },
   "last_validation": {
@@ -26,7 +46,7 @@
     "Linux_CPU_tests": 47,
     "pooled_fixture": "all eight datasets pass"
   },
-  "next_action": "Restore Chrome plugin instructions and runtime through the app plugin setup; then inspect and complete the existing copied Baige template before submission.",
+  "next_action": "Deploy explicit CUDA local-ordinal visibility fix, then retry with fresh preparation attempt identity. Both accidental duplicate submissions are terminal and their creation-to-release charge is retained.",
   "learner_architecture": {
     "width": 256,
     "layers": 6,
@@ -37,7 +57,8 @@
     "value_learner_trainable_parameters": 16713650,
     "user_instruction": "use at least 256 * 6 then"
   },
-  "blocking_condition": "Chrome installation checks pass, but the chat has no loaded browser runtime or browser skill. Underlying tool-loading cause unconfirmed.",
+  "blocking_condition": null,
   "browser_diagnosis": "BROWSER-DIAGNOSIS.json",
-  "deployed_code_commit": "1b4b3982881f7cab696a4b1e3172216ccff73b14"
+  "deployed_code_commit": "a564ec7e2d031fab02f5245bc99193bff8dbc57a",
+  "submission_incident": "The first button click submitted despite an unchanged accessibility snapshot; pressing Return submitted again before the loading state appeared. Neither launch advanced beyond startup. Use one submit action and wait for scheduler acceptance before any further action."
 }

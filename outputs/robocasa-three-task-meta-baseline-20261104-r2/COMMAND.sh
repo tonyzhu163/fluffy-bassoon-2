@@ -6,6 +6,8 @@ PY=$ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
 CODE=$TASK_CODE_DIR
 RUN=$ROOT/outputs/robocasa-three-task-meta-baseline-20261104-r2
 export PYTHONPATH="$CODE/src:$ROOT/sources/critic-selected-a1229239-r1"
+# Baige preserves its NVIDIA UUID assignment; CUDA selects its four local ordinals.
+export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0,1,2,3}
 TASK=${ROBOCASA_META_TASK:?Set a source task for preparation, or joint for pooled fitting}
 if [[ "$TASK" == "joint" ]]; then
   STAGE=fit

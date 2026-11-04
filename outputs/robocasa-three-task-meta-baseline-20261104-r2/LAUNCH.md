@@ -1,6 +1,8 @@
 # Joint three-task training with four GPUs per preparation task
 
-**Status:** Human hold released; submission blocked by browser-control connection failure. No new jobs submitted. The user approved
+**Status:** Human hold released. Two OpenDrawer startup submissions failed and released
+2026-11-04 18:55 Shanghai (348 GPU-seconds conservative); explicit local CUDA
+visibility is being deployed before a fresh attempt. See [EXECUTION.json](EXECUTION.json). The user approved
 more resources/time and clarified joint training until convergence. The approved
 cumulative ceiling is **96 GPU-hours**; see [BUDGET.json](BUDGET.json).
 

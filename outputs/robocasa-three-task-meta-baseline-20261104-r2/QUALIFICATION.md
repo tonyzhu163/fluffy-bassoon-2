@@ -21,7 +21,7 @@ Evidence: [pooled export](CPU-JOINT-QUALIFICATION.json),
 [flow tests](CPU-CORE-TESTS.log), [history/value recovery tests](CPU-RESUME-TESTS.log),
 [static checks](STATIC-PREFLIGHT.json).
 
-**Human launch hold remains in force.** No GPU allocation, model fitting or
-simulator interaction has started for this scaled run. The 96 GPU-hour ceiling
-is recorded as approved; allocation duration is an operational checkpoint,
+**Human launch hold was released.** The first two scheduler submissions failed
+before data preparation; see EXECUTION.json. The 96 GPU-hour ceiling
+is approved; allocation duration is an operational checkpoint,
 while the stopping rule is each method's declared validation plateau.
