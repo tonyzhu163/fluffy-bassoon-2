@@ -186,7 +186,7 @@ def test_fixed_native_rows_survive_six_query_episodes_and_unequal_cohorts_fail(t
             assert row["execution_provenance"]["case_owners"] == expected_owners
             assert row["execution_provenance"]["row"] == expected_owners.index(case_key(saved["case"]))
     unequal, _, journal = backend(tmp_path / "unequal", spec=spec, fixed_case_order=True)
-    cases[1]["horizon"] = 150
+    cases[1]["horizon"] = 50
     with pytest.raises(ValueError, match="equal-horizon wave"):
         unequal.run_bank(policy, cases, lanes=2)
     assert journal.charged() == 0

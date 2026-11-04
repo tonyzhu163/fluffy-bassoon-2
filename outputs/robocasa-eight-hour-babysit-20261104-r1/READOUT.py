@@ -1,6 +1,5 @@
 """Six-episode matched readout of one frozen, validation-selected joint learner."""
 import argparse
-from functools import partial
 import json
 import os
 from pathlib import Path
@@ -87,8 +86,10 @@ def main():
         raise ValueError('Original frozen feature motor or normalization changed')
     stats = json.loads(norm.read_text()); stats = stats.get('norm_stats', stats)
     codec = DirectActionCodec.from_stats(stats)
-    if corpus['codec'] != codec.record():
-        raise ValueError('Source and evaluation physical-action encodings differ')
+    for reference in corpus['source_assemblies'].values():
+        path = Path(reference['path'])
+        if file_sha256(path) != reference['sha256'] or json.loads(path.read_text())['codec'] != codec.record():
+            raise ValueError('Source and evaluation physical-action encodings differ')
     if args.method == 'native_initial':
         policy = ReferencePlaceholder().to('cuda:0')
         motor = FlowReferenceMotor(native, codec, native.model)

@@ -11,6 +11,8 @@ test "$(git -C "$RLINF_PATH" rev-parse HEAD)" = 8f9bfa7661928ef8c17494b04f4d7bf3
 OUT=$ROOT/$RUN/gpu/$BABYSIT_ATTEMPT
 test ! -e "$OUT"
 mkdir -p "$(dirname "$OUT")"
+mkdir -p "$ROOT/$RUN/logs"
+exec > >(tee "$ROOT/$RUN/logs/$BABYSIT_ATTEMPT.log") 2>&1
 START=$(date +%s)
 finish() {
   rc=$?
