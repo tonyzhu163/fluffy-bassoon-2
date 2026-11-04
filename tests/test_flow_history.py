@@ -197,12 +197,20 @@ def test_history_flow_steering_policy_supports_interfaces_and_four_meta_learners
             batch_size=2,
         )
         policy.zero_grad(set_to_none=True)
+        step_context = policy.encode_sequence(tokens, valid, starts)[-1]
         loss = policy.flow_matching_loss(
-            motor, {}, target, noise, tau, cache, mask, context, sample_weights=weights)
+            motor, {}, target, noise, tau, cache, mask, step_context, sample_weights=weights)
         loss.backward()
         assert torch.isfinite(loss)
         assert any(p.grad is not None and p.grad.abs().sum() > 0 for p in policy.parameters())
         assert all(p.grad is None for p in motor.parameters())
+        if objective == "ad":
+            with torch.no_grad():
+                for p in policy.parameters():
+                    if p.grad is not None:
+                        p.sub_(0.1 * p.grad)
+        else:
+            assert any(p.grad is not None and p.grad.abs().sum() > 0 for p in policy.core.parameters())
 
 
 def test_export_grpo_group_trials_orders_failures_before_successes_within_scene(tmp_path):

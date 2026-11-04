@@ -18,12 +18,12 @@ def _positive(value, name):
     return float(value)
 
 
-def _features(features, reference, dimension, batch):
+def _features(features, reference, dimension, batch, *, detach=True):
     if (not isinstance(features, torch.Tensor) or features.shape != (batch, dimension)
             or not features.is_floating_point() or features.device != reference.device
             or not torch.isfinite(features).all()):
         raise ValueError("Require finite current-observation features [B, public_dim] on the hook device")
-    return features.detach().to(reference.dtype)
+    return (features.detach() if detach else features).to(reference.dtype)
 
 
 def _add(base, delta):
@@ -43,7 +43,7 @@ class ReactiveKVResidual(nn.Module):
     Scale is in native cache units, not an asserted calibrated safety bound.
     """
 
-    def __init__(self, *, public_dim, kv_heads, head_dim, rank=4, layers=(-1,), scale=.1):
+    def __init__(self, *, public_dim, kv_heads, head_dim, rank=4, layers=(-1,), scale=.1, detach_features=True):
         super().__init__()
         if any(type(v) is not int or v < 1 for v in (public_dim, kv_heads, head_dim, rank)):
             raise ValueError("Require positive integer KV adapter dimensions")
@@ -52,6 +52,7 @@ class ReactiveKVResidual(nn.Module):
             raise ValueError("Require distinct selected cache layer indices")
         self.public_dim, self.kv_heads, self.head_dim, self.rank = public_dim, kv_heads, head_dim, rank
         self.layers, self.scale = tuple(layers), _positive(scale, "scale")
+        self.detach_features = bool(detach_features)
         width = 2 * kv_heads * head_dim
         self.token_projections = nn.ModuleList(nn.Linear(width, rank) for _ in layers)
         self.context_projections = nn.ModuleList(nn.Linear(public_dim, rank, bias=False) for _ in layers)
@@ -75,7 +76,8 @@ class ReactiveKVResidual(nn.Module):
         if any(not 0 <= i < len(cache) for i in resolved) or len(set(resolved)) != len(resolved):
             raise ValueError("Selected cache layers are absent or aliases of the same layer")
         reference = self.output_bases[0].weight
-        features = _features(public_features, reference, self.public_dim, prefix_mask.shape[0])
+        features = _features(public_features, reference, self.public_dim, prefix_mask.shape[0],
+                             detach=self.detach_features)
         if prefix_mask.device != reference.device:
             raise ValueError("Prefix mask and adapter must share a device")
         expected = (*prefix_mask.shape, self.kv_heads, self.head_dim)

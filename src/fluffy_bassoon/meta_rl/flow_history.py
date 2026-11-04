@@ -409,6 +409,7 @@ class HistoryFlowSteeringPolicy(nn.Module):
             self.kv_adapter = ReactiveKVResidual(
                 public_dim=config.width, kv_heads=config.kv_heads, head_dim=config.head_dim,
                 rank=config.kv_rank, layers=config.kv_layers, scale=config.scale,
+                detach_features=False,
             )
             self.velocity_head = None
         else:
