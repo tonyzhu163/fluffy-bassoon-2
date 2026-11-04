@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
-: "${TASK_META:?}" "${TASK_CODE_PIN:?}" "${TASK_MANIFEST:?}"
+: "${TASK_META:?}" "${TASK_CODE_PIN:?}" "${TASK_MANIFEST:?}" "${TASK_ATTEMPT:?}"
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_RUN=$TASK_META/outputs/robocasa-endpoint512-acceleration-20261104-r1
-TASK_OUTPUT=$TASK_ROOT/outputs/robocasa-endpoint512-acceleration-20261104-r1/gpu-r1
+TASK_OUTPUT=$TASK_ROOT/outputs/robocasa-endpoint512-acceleration-20261104-r1/$TASK_ATTEMPT
 TASK_RUNTIME=$TASK_ROOT/sources/flow10m-0988b5f9
 TASK_RLINF=$TASK_ROOT/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf
 TASK_EVAL=$TASK_ROOT/sources/stove-drift-endpoint512-d13dc18d/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1
@@ -30,6 +30,9 @@ test -z "$(git -C "$TASK_RLINF" status --porcelain)"
 export PYTHONPATH=$TASK_RUN:$TASK_EVAL:$TASK_RUNTIME/src:$TASK_RLINF
 export OPENPI_DATA_HOME=$TASK_ROOT/setups/robocasa365-native-20261101-r1/cache/.cache/openpi
 export NCCL_P2P_DISABLE=1 FLUFFY_GPU_EXECUTION=baige
+# Baige can omit this variable for an exclusive full-node allocation. Retain
+# a scheduler-provided list; otherwise declare this job's eight local devices.
+export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0,1,2,3,4,5,6,7}
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
 "$TASK_PY" -B "$TASK_RUNTIME/scripts/[train]gpu_probe.py" --expected-count 8 --purpose evaluation \
  --baige-container --output "$TASK_OUTPUT/gpu-probe.json"
