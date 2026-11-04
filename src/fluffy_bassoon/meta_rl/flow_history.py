@@ -4,7 +4,7 @@ The action expert is bypassed by students. Its Gaussian draws are neither
 student labels nor steering codes. Visual features come from the original
 frozen VLM, alongside all 25 public state coordinates.
 """
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 import hashlib
 import json
 import math
@@ -16,14 +16,16 @@ from torch import nn
 
 from ..rl.pi05_residual import ReactiveKVResidual, _add, velocity_with_kv_residual
 from .causal_decoder import CausalDecoderCore
-from .history_value import importance_weights
-from .vla_history import MODES, save_dataset
+from .history_value import discounted_returns, importance_weights
+from .vla_history import MODES, save_dataset, trial_tokens, validate_trial
+from .warmstart import atomic_save, checked_load, validate_weights
 
 
 BINARY = (6, 11)
 FEATURE_DIM, ACTION_DIM = 2073, 600
 FLOW_STEERING_INTERFACES = ("kv_bridge", "velocity_bridge")
 FLOW_META_OBJECTIVES = ("ad", "dpt", "dit", "ic_iql")
+BRIDGE_MODEL_FORMAT = "flow_steering_bridge_policy_v1"
 
 
 @dataclass(frozen=True)
@@ -559,3 +561,86 @@ class FlowBridgeMotor(FlowDirectMotor):
             self.model.build_prefix_cache = original_prefix
             self.model.velocity_from_suffix = original_velocity
             self.native._prepared = None
+
+
+def sample_bridge_query_batch(
+    trials, policy: HistoryFlowSteeringPolicy, rng, *,
+    batch_size: int, max_episodes: int = 12, mode: str = "full",
+    objective: str = "ad", discount: float = .99,
+):
+    """Sample complete-episode causal windows and select one target query per window."""
+    if (mode not in MODES or objective not in FLOW_META_OBJECTIVES
+            or type(batch_size) is not int or batch_size < 1
+            or type(max_episodes) is not int or max_episodes < 1):
+        raise ValueError("Require valid mode/objective and positive batch/episode window counts")
+    windows = []
+    for index in rng.integers(len(trials), size=batch_size):
+        trial_idx = int(index)
+        trial = trials[trial_idx]
+        validate_trial(trial, objective=objective)
+        boundaries = np.flatnonzero(trial["episode_starts"])
+        end_episode = int(rng.integers(1, len(boundaries) + 1))
+        count = int(rng.integers(1, min(max_episodes, end_episode) + 1))
+        begin = int(boundaries[end_episode - count])
+        end = int(boundaries[end_episode]) if end_episode < len(boundaries) else len(trial["rewards"])
+        token = trial_tokens(trial, mode=mode)[begin:end].copy()
+        token[0, policy.config.observation_dim:-1] = 0
+        query_rel = int(rng.integers(0, end - begin))
+        query_abs = begin + query_rel
+        target_flat = np.asarray(trial["target_noise"][query_abs], np.float32)
+        target_active = target_flat.reshape(policy.config.action_horizon, policy.config.active_action_dim)
+        target_padded = np.zeros((policy.config.action_horizon, policy.config.model_action_dim), np.float32)
+        target_padded[:, :policy.config.active_action_dim] = target_active
+        windows.append(dict(
+            tokens=token, actions=trial["executed_noise"][begin:end],
+            rewards=trial["rewards"][begin:end], dones=trial["dones"][begin:end],
+            starts=trial["episode_starts"][begin:end],
+            returns=discounted_returns(trial["rewards"], trial["dones"], discount)[begin:end],
+            query_rel=query_rel, query_abs=query_abs, trial_idx=trial_idx,
+            target_actions=target_padded,
+        ))
+    length = max(len(row["tokens"]) for row in windows)
+    if length > policy.config.context_length:
+        raise ValueError("Sampled complete-episode window exceeds bridge context_length")
+    reference = next(policy.parameters())
+    device, dtype = reference.device, reference.dtype
+    shapes = dict(tokens=(policy.core.input_dim,), actions=(policy.config.history_action_dim,),
+                  rewards=(), dones=(), starts=(), returns=(), valid=())
+    result = {key: torch.zeros((length, batch_size, *shape), device=device,
+        dtype=torch.bool if key in ("dones", "starts", "valid") else dtype)
+        for key, shape in shapes.items()}
+    for lane, window in enumerate(windows):
+        count = len(window["tokens"])
+        result["valid"][:count, lane] = True
+        for key in ("tokens", "actions", "rewards", "dones", "starts", "returns"):
+            result[key][:count, lane] = torch.as_tensor(window[key], device=device)
+    result["query_rel"] = torch.tensor([w["query_rel"] for w in windows], dtype=torch.long, device=device)
+    result["target_actions"] = torch.as_tensor(
+        np.stack([w["target_actions"] for w in windows]), dtype=dtype, device=device)
+    result["query_indices"] = [(w["trial_idx"], w["query_abs"]) for w in windows]
+    return result
+
+
+def export_bridge_policy(path, policy: HistoryFlowSteeringPolicy, *, manifest):
+    if not manifest or any(not torch.isfinite(value).all() for value in policy.state_dict().values()):
+        raise ValueError("Require finite bridge candidate weights and provenance")
+    cfg = asdict(policy.config)
+    cfg["kv_layers"] = list(policy.config.kv_layers)
+    payload = dict(
+        format=BRIDGE_MODEL_FORMAT, config=cfg,
+        manifest=json.loads(json.dumps(manifest, allow_nan=False)),
+        policy={key: value.detach().cpu().clone() for key, value in policy.state_dict().items()},
+    )
+    return atomic_save(path, payload)
+
+
+def load_bridge_policy(path, *, expected_sha256, device="cpu"):
+    saved = checked_load(path, expected_sha256)
+    if saved.get("format") != BRIDGE_MODEL_FORMAT or not saved.get("manifest"):
+        raise ValueError("Require a flow-steering bridge checkpoint and its provenance")
+    cfg_dict = dict(saved["config"])
+    cfg_dict["kv_layers"] = tuple(cfg_dict["kv_layers"])
+    policy = HistoryFlowSteeringPolicy(FlowBridgeConfig(**cfg_dict))
+    validate_weights(policy, saved["policy"])
+    policy.load_state_dict(saved["policy"], strict=True)
+    return policy.to(device).eval().requires_grad_(False), saved["manifest"]
