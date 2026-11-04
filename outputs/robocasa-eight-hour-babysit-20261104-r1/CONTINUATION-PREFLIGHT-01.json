@@ -1,0 +1,69 @@
+{
+  "passed": true,
+  "CPU_only": true,
+  "GPU_hours": 0,
+  "learner_source": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+  "methods": {
+    "dit": {
+      "sha256": "c7f0f3a1b534bcac04f887ca823a2d3f7f06c5d658aa042f9d5243d97bb5c7ad",
+      "bytes": 313295846,
+      "phase": "actor",
+      "updates": {
+        "value": 2700,
+        "actor": 8406
+      },
+      "plateaus": {
+        "value": {
+          "reference": 0.19111633393913507,
+          "stale_checks": 10,
+          "converged": true
+        },
+        "actor": {
+          "reference": -144.91791018098593,
+          "stale_checks": 0,
+          "converged": false
+        }
+      },
+      "optimizer_states": {
+        "value": 184,
+        "actor": 91
+      },
+      "complete_optimizer_sampler_python_numpy_torch_cuda_RNG": true,
+      "all_learner_tensors_finite": true
+    },
+    "ic_iql": {
+      "sha256": "71d342a800d9d400c89b0995c5f3f524a53b6221729c843027e20d093524fd0e",
+      "bytes": 313295846,
+      "phase": "actor",
+      "updates": {
+        "value": 2600,
+        "actor": 8421
+      },
+      "plateaus": {
+        "value": {
+          "reference": 0.022999236709438264,
+          "stale_checks": 10,
+          "converged": true
+        },
+        "actor": {
+          "reference": -140.3512271642685,
+          "stale_checks": 1,
+          "converged": false
+        }
+      },
+      "optimizer_states": {
+        "value": 184,
+        "actor": 91
+      },
+      "complete_optimizer_sampler_python_numpy_torch_cuda_RNG": true,
+      "all_learner_tensors_finite": true
+    }
+  },
+  "original_all_children_released": true,
+  "converged_methods_omitted": [
+    "ad",
+    "dpt"
+  ],
+  "scope": "Only topology changes; exact original code/data/optimizer/sampler/RNG/plateau contract preserved",
+  "checked_unix": 1793826393.5761607
+}
