@@ -93,7 +93,7 @@ def main():
                 "--train-data", train["path"], "--train-sha256", train["sha256"],
                 "--validation-data", validation["path"], "--validation-sha256", validation["sha256"],
                 "--output-dir", str(directory),
-                "--mode", "full", "--width", "128", "--layers", "2", "--heads", "4",
+                "--mode", "full", "--width", "256", "--layers", "6", "--heads", "8",
                 "--context-length", "192", "--backbone", "decoder",
                 "--max-episodes-per-window", "12", "--batch-size", "8",
                 "--learning-rate", "0.0003", "--eval-every", "100", "--validation-batches", "16",

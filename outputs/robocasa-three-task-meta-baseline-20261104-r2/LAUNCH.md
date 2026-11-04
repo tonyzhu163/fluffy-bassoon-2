@@ -1,6 +1,6 @@
 # Joint three-task training with four GPUs per preparation task
 
-**Status:** Human hold released by “keep going?”; preparing verified deployment and submission. The user approved
+**Status:** Human hold released; submission blocked by browser-control connection failure. No new jobs submitted. The user approved
 more resources/time and clarified joint training until convergence. The approved
 cumulative ceiling is **96 GPU-hours**; see [BUDGET.json](BUDGET.json).
 
@@ -29,6 +29,9 @@ chronological stream. Training has **336 streams** (112/task), validation
 **48 streams** (16/task), with the original train/validation slots unchanged.
 Equal stream counts and lengths give equal task sampling probability. Task
 names in provenance do not become privileged model inputs.
+
+All actor and critic transformers use **width 256, 6 layers and 8 heads**, as
+requested by the user. Each actor has 5,579,184 trainable parameters.
 
 Each learner trains with `--until-converged`, at least 1,000 updates, validation
 every 100 updates, 16 validation batches, patience 10 and relative delta .001.

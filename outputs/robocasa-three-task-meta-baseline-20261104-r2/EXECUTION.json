@@ -1,7 +1,7 @@
 {
   "format": "robocasa_joint_three_task_execution_v1",
-  "checked_shanghai": "2026-11-04T17:25:07.561729+08:00",
-  "status": "deployment_and_submission",
+  "checked_shanghai": "2026-11-04T18:08:55.200221+08:00",
+  "status": "submission_blocked_browser_connection",
   "approved_ceiling_GPU_hours": 96.0,
   "cumulative_scheduler_GPU_hours": 0.0,
   "jobs": {},
@@ -26,5 +26,16 @@
     "Linux_CPU_tests": 47,
     "pooled_fixture": "all eight datasets pass"
   },
-  "next_action": "Deploy the latest main release pin, then submit three four-GPU preparation jobs; pooled fitting follows all verified preparations."
+  "next_action": "Qualify the requested 256x6 configuration, then complete prior-job template copies once browser control reconnects.",
+  "learner_architecture": {
+    "width": 256,
+    "layers": 6,
+    "heads": 8,
+    "context_length": 192,
+    "logical_batch_size": 8,
+    "actor_parameters": 5579184,
+    "value_learner_trainable_parameters": 16713650,
+    "user_instruction": "use at least 256 * 6 then"
+  },
+  "blocking_condition": "Native browser-control bridge failed; browser-only fallback lost its debugger connection before submission. Copied job forms are incomplete and have not been submitted."
 }
