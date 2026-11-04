@@ -25,3 +25,17 @@ Evidence: [pooled export](CPU-JOINT-QUALIFICATION.json),
 before data preparation; see EXECUTION.json. The 96 GPU-hour ceiling
 is approved; allocation duration is an operational checkpoint,
 while the stopping rule is each method's declared validation plateau.
+
+## Allocated runtime qualification, 2026-11-04 19:14 Shanghai
+
+The deployed source is `d71cb532`, with the same qualified model/objective code
+and an explicit four-device local CUDA default. All 12 allocated GPUs pass
+actual tensor computation plus scheduler UUID, CUDA/PCI and own-PID checks.
+All 12 B64 preparation workers have loaded the frozen original VLA and task
+step-130 teacher and advanced at least 200/3120 archive members; one drawer
+shard reached 400. Drawer shard 01 took 290.28 seconds for the next 200 members
+(50 B64 calls, 5.806 seconds/call, including archive reads and extraction).
+This qualifies observed preparation capacity; no joint fit or convergence
+result is claimed. See `CHECK-20261104-1914.json`. The bounded read-only worker
+monitor is active at 20-minute intervals; scheduler release still requires
+console verification before pooled fitting.

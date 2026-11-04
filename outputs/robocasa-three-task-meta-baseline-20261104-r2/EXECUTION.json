@@ -1,9 +1,9 @@
 {
   "format": "robocasa_joint_three_task_execution_v1",
-  "checked_shanghai": "2026-11-04T19:09:44.638460+08:00",
+  "checked_shanghai": "2026-11-04T19:14:25.227050+08:00",
   "status": "three_preparations_running",
   "approved_ceiling_GPU_hours": 96.0,
-  "cumulative_scheduler_GPU_hours": 1.3394062411111112,
+  "cumulative_scheduler_GPU_hours": 2.168534611111111,
   "jobs": {
     "job-30kj6dnpleas": {
       "task": "OpenDrawer",
@@ -104,14 +104,38 @@
     "target": "/mnt/bos/adgfyl",
     "read_only": true
   },
-  "active_conservative_GPU_hours": 1.1527395744444444,
+  "active_conservative_GPU_hours": 1.9818679444444443,
   "maximum_preparation_reservation_including_failures_GPU_hours": 48.18666666666667,
   "remaining_after_maximum_preparation_and_initial_fit_GPU_hours": 15.813333333333333,
   "initial_advancement": "INITIAL-ADVANCEMENT.json",
   "monitor": {
     "script": "MONITOR.py",
     "interval_seconds": 1200,
-    "status": "deploying",
-    "scope": "Read-only worker evidence; scheduler release and fitting submission remain separate verified actions"
+    "status": "running",
+    "scope": "Read-only worker evidence; scheduler release and fitting submission remain separate verified actions",
+    "pid": 2110873,
+    "source_commit": "f2380ced6dbaea1aa751c53207af41d9d43a1485",
+    "process_receipt": "MONITOR-PROCESS.json",
+    "started_shanghai": "2026-11-04T19:14:24.984828+08:00"
+  },
+  "last_worker_check": "CHECK-20261104-1914.json",
+  "next_worker_check_shanghai": "2026-11-04T19:34:25.227050+08:00",
+  "publication": {
+    "status": "local_main_committed_remote_push_blocked",
+    "last_published_training_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+    "SSH_error": "Permission denied (publickey)",
+    "connected_GitHub_error": "403 Resource not accessible by integration",
+    "deployment": "Verified Git bundle; active training source unchanged"
+  },
+  "GPU_batch_qualification": {
+    "files_per_batch": 4,
+    "observations_per_file": 16,
+    "batch_size_per_GPU": 64,
+    "all_12_shards_completed_members_at_least": 200,
+    "maximum_observed_members": 400,
+    "steady_drawer_shard01_200_members_seconds": 290.28007221221924,
+    "steady_B64_batch_seconds": 5.805601444244385,
+    "global_learner_batch": 8,
+    "learner_updates": "not started"
   }
 }
