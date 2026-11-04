@@ -7,16 +7,23 @@ frozen VLM, alongside all 25 public state coordinates.
 from dataclasses import dataclass
 import hashlib
 import json
+import math
 from pathlib import Path
 
 import numpy as np
 import torch
+from torch import nn
 
-from .vla_history import save_dataset
+from ..rl.pi05_residual import ReactiveKVResidual, _add, velocity_with_kv_residual
+from .causal_decoder import CausalDecoderCore
+from .history_value import importance_weights
+from .vla_history import MODES, save_dataset
 
 
 BINARY = (6, 11)
 FEATURE_DIM, ACTION_DIM = 2073, 600
+FLOW_STEERING_INTERFACES = ("kv_bridge", "velocity_bridge")
+FLOW_META_OBJECTIVES = ("ad", "dpt", "dit", "ic_iql")
 
 
 @dataclass(frozen=True)
@@ -159,36 +166,51 @@ class ReferencePlaceholder(torch.nn.Module):
 
 
 def export_corpus(output, raw, features, teacher_actions, codec, *, provenance, validation_slots=tuple(range(112, 128))):
-    """Identical complete chronological streams for all four methods."""
-    states, actions = raw["public_states"], raw["physical_actions"]
-    if (states.shape != (128, 144, 25) or actions.shape != (128, 144, 50, 12)
-            or features.shape != (128, 144, FEATURE_DIM) or teacher_actions.shape != actions.shape
+    """Identical complete chronological streams for all four methods (PPO or GRPO)."""
+    states, actions = np.asarray(raw["public_states"]), np.asarray(raw["physical_actions"])
+    features, teacher_actions = np.asarray(features), np.asarray(teacher_actions)
+    if (states.ndim != 3 or states.shape[2] != 25 or actions.ndim != 4
+            or actions.shape[:2] != states.shape[:2] or actions.shape[2:] != (50, 12)
+            or features.shape != (*states.shape[:2], FEATURE_DIM) or teacher_actions.shape != actions.shape
             or not np.array_equal(features[..., :25], states)
             or not np.isfinite(features).all() or not provenance):
-        raise ValueError("Bind the fully audited 18-version physical source and frozen public features")
-    starts = np.broadcast_to(np.arange(144) % 8 == 0, (128, 144))
-    ends = np.broadcast_to(np.arange(144) % 8 == 7, (128, 144))
-    versions = np.broadcast_to(np.repeat(np.arange(18), 8), (128, 144))
+        raise ValueError("Bind the fully audited physical source and frozen public features")
+    num_streams, total_chunks = states.shape[:2]
+    raw_starts = np.asarray(raw["episode_starts"], dtype=bool)
+    if raw_starts.shape != (num_streams, total_chunks) or not raw_starts[:, 0].all():
+        raise ValueError("Do not change chronology or physical boundaries")
+    first_starts = np.flatnonzero(raw_starts[0])
+    chunks_per_episode = int(first_starts[1]) if len(first_starts) > 1 else total_chunks
+    if chunks_per_episode < 1 or total_chunks % chunks_per_episode:
+        raise ValueError("Do not change chronology or physical boundaries")
+    num_versions = total_chunks // chunks_per_episode
+    if num_versions < 2:
+        raise ValueError("Require at least two chronological policy versions")
+    starts = np.broadcast_to(np.arange(total_chunks) % chunks_per_episode == 0, (num_streams, total_chunks))
+    ends = np.broadcast_to(np.arange(total_chunks) % chunks_per_episode == chunks_per_episode - 1, (num_streams, total_chunks))
+    versions = np.broadcast_to(np.repeat(np.arange(num_versions), chunks_per_episode), (num_streams, total_chunks))
     if (not np.array_equal(raw["episode_starts"], starts)
             or not np.array_equal(raw["physical_episode_ends"], ends)
             or not np.array_equal(raw["producer_versions"], versions)):
         raise ValueError("Do not change chronology or physical boundaries")
     actual, labels = codec.encode(actions), codec.encode(teacher_actions)
     rewards = np.asarray(raw["primitive_rewards"].sum(-1), np.float32)
-    if (not np.isin(rewards, [0., 1.]).all() or (rewards.reshape(128, 18, 8).sum(-1) > 1).any()):
+    if (not np.isin(rewards, [0., 1.]).all()
+            or (rewards.reshape(num_streams, num_versions, chunks_per_episode).sum(-1) > 1).any()):
         raise ValueError("Keep actual first-success reward once per physical episode")
     validation = set(validation_slots)
-    if not validation or not validation < set(range(128)):
+    if not validation or not validation < set(range(num_streams)):
         raise ValueError("Require a fixed nonempty held-out collection-slot partition")
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
     manifests = {}
-    for partition, slots in (("train", sorted(set(range(128)) - validation)), ("validation", sorted(validation))):
+    for partition, slots in (("train", sorted(set(range(num_streams)) - validation)), ("validation", sorted(validation))):
         for objective in ("ad", "dpt", "dit", "ic_iql"):
             trials = [dict(observations=features[s].astype(np.float32), executed_noise=actual[s],
                 target_noise=labels[s] if objective == "dpt" else actual[s], rewards=rewards[s],
                 dones=ends[s].copy(), episode_starts=starts[s].copy(), teacher_steps=versions[s].copy()) for s in slots]
             metadata = dict(provenance, trial_ids=[f"flow-source-slot-{s:03d}" for s in slots],
+                schedule=dict(streams=num_streams, policy_versions=num_versions, chunks_per_episode=chunks_per_episode),
                 feature_contract=dict(dimension=FEATURE_DIM, meaning="original frozen VLM prefix2048 RMS plus raw public state25"),
                 noise_contract=codec.record(), value_contract=dict(discount=.99, boundary="physical_done",
                     rewards="actual native first-success once", terminal_bootstrap=0,
@@ -198,3 +220,341 @@ def export_corpus(output, raw, features, teacher_actions, codec, *, provenance, 
             saved = save_dataset(path, trials, objective=objective, metadata=metadata)
             manifests[f"{objective}_{partition}"] = dict(path=str(path), sha256=saved["sha256"])
     return manifests
+
+
+def export_grpo_group_trials(
+    output, raw, features, teacher_actions, codec, *, provenance,
+    group_size=8, attempts_per_trial=5, validation_groups=None,
+):
+    """Export within-scene multi-attempt trials from GRPO grouped rollouts."""
+    states, actions = np.asarray(raw["public_states"]), np.asarray(raw["physical_actions"])
+    features, teacher_actions = np.asarray(features), np.asarray(teacher_actions)
+    if (states.ndim != 3 or states.shape[2] != 25 or actions.ndim != 4
+            or actions.shape[:2] != states.shape[:2] or actions.shape[2:] != (50, 12)
+            or features.shape != (*states.shape[:2], FEATURE_DIM) or teacher_actions.shape != actions.shape
+            or not np.array_equal(features[..., :25], states)
+            or not np.isfinite(features).all() or not provenance):
+        raise ValueError("Bind the fully audited physical source and frozen public features")
+    num_streams, total_chunks = states.shape[:2]
+    if (type(group_size) is not int or group_size < 2 or num_streams % group_size
+            or type(attempts_per_trial) is not int or not 2 <= attempts_per_trial <= group_size):
+        raise ValueError("Require integer group_size >= 2 dividing num_streams and 2 <= attempts_per_trial <= group_size")
+    raw_starts = np.asarray(raw["episode_starts"], dtype=bool)
+    if raw_starts.shape != (num_streams, total_chunks) or not raw_starts[:, 0].all():
+        raise ValueError("Do not change chronology or physical boundaries")
+    first_starts = np.flatnonzero(raw_starts[0])
+    chunks_per_episode = int(first_starts[1]) if len(first_starts) > 1 else total_chunks
+    if chunks_per_episode < 1 or total_chunks % chunks_per_episode:
+        raise ValueError("Do not change chronology or physical boundaries")
+    num_versions = total_chunks // chunks_per_episode
+    if num_versions < 1:
+        raise ValueError("Require at least one policy version")
+    starts = np.broadcast_to(np.arange(total_chunks) % chunks_per_episode == 0, (num_streams, total_chunks))
+    ends = np.broadcast_to(np.arange(total_chunks) % chunks_per_episode == chunks_per_episode - 1, (num_streams, total_chunks))
+    versions = np.broadcast_to(np.repeat(np.arange(num_versions), chunks_per_episode), (num_streams, total_chunks))
+    if (not np.array_equal(raw["episode_starts"], starts)
+            or not np.array_equal(raw["physical_episode_ends"], ends)
+            or not np.array_equal(raw["producer_versions"], versions)):
+        raise ValueError("Do not change chronology or physical boundaries")
+    actual, labels = codec.encode(actions), codec.encode(teacher_actions)
+    rewards = np.asarray(raw["primitive_rewards"].sum(-1), np.float32)
+    if (not np.isin(rewards, [0., 1.]).all()
+            or (rewards.reshape(num_streams, num_versions, chunks_per_episode).sum(-1) > 1).any()):
+        raise ValueError("Keep actual first-success reward once per physical episode")
+    num_groups = num_streams // group_size
+    if validation_groups is None:
+        validation_groups = tuple(range(max(1, num_groups - max(1, num_groups // 8)), num_groups))
+    validation = set(validation_groups)
+    if not validation or not validation < set(range(num_groups)):
+        raise ValueError("Require a fixed nonempty held-out scene-group partition")
+    trial_len = attempts_per_trial * chunks_per_episode
+    trial_starts = np.arange(trial_len) % chunks_per_episode == 0
+    trial_dones = np.arange(trial_len) % chunks_per_episode == chunks_per_episode - 1
+    trial_steps = np.repeat(np.arange(attempts_per_trial, dtype=np.int64), chunks_per_episode)
+    output = Path(output)
+    output.mkdir(parents=True, exist_ok=False)
+    manifests = {}
+    for partition, groups in (("train", sorted(set(range(num_groups)) - validation)), ("validation", sorted(validation))):
+        for objective in ("ad", "dpt", "dit", "ic_iql"):
+            trials, trial_ids = [], []
+            for v in range(num_versions):
+                c0, c1 = v * chunks_per_episode, (v + 1) * chunks_per_episode
+                for g in groups:
+                    s0, s1 = g * group_size, (g + 1) * group_size
+                    group_states = states[s0:s1, c0:c1]
+                    for m in range(1, group_size):
+                        if not np.array_equal(group_states[0, 0], group_states[m, 0]):
+                            raise ValueError("GRPO group members must share identical initial public state at reset")
+                    ep_rewards = rewards[s0:s1, c0:c1]
+                    ep_returns = ep_rewards.sum(-1)
+                    failed = [m for m in range(group_size) if ep_returns[m] == 0.]
+                    succeeded = [m for m in range(group_size) if ep_returns[m] > 0.]
+                    if failed and succeeded:
+                        num_fail = min(len(failed), max(1, attempts_per_trial - len(succeeded)))
+                        chosen = failed[:num_fail] + succeeded[:attempts_per_trial - num_fail]
+                    else:
+                        chosen = (failed + succeeded)[:attempts_per_trial]
+                    idx = [s0 + m for m in chosen]
+                    obs_seq = features[idx, c0:c1].reshape(trial_len, FEATURE_DIM).astype(np.float32)
+                    act_seq = actual[idx, c0:c1].reshape(trial_len, ACTION_DIM)
+                    lbl_seq = labels[idx, c0:c1].reshape(trial_len, ACTION_DIM)
+                    rew_seq = rewards[idx, c0:c1].reshape(trial_len)
+                    trials.append(dict(
+                        observations=obs_seq, executed_noise=act_seq,
+                        target_noise=lbl_seq if objective == "dpt" else act_seq,
+                        rewards=rew_seq, dones=trial_dones.copy(),
+                        episode_starts=trial_starts.copy(), teacher_steps=trial_steps.copy(),
+                    ))
+                    trial_ids.append(f"grpo-v{v:03d}-group{g:02d}")
+            metadata = dict(provenance, trial_ids=trial_ids,
+                schedule=dict(streams=num_streams, group_size=group_size, scene_groups=num_groups,
+                              attempts_per_trial=attempts_per_trial, policy_versions=num_versions,
+                              chunks_per_episode=chunks_per_episode),
+                feature_contract=dict(dimension=FEATURE_DIM, meaning="original frozen VLM prefix2048 RMS plus raw public state25"),
+                noise_contract=codec.record(), value_contract=dict(discount=.99, boundary="physical_done",
+                    rewards="actual native first-success once", terminal_bootstrap=0,
+                    next_observation="following saved query within episode; no invented terminal RGB"),
+                validation="held-out GRPO scene-group partition; within-scene failure-to-success ordering")
+            path = output / f"{objective}-grpo-groups-{partition}.npz"
+            saved = save_dataset(path, trials, objective=objective, metadata=metadata)
+            manifests[f"{objective}_{partition}"] = dict(path=str(path), sha256=saved["sha256"])
+    return manifests
+
+
+@dataclass(frozen=True)
+class FlowBridgeCodec:
+    mean: tuple
+    std: tuple
+    interface: str = "kv_bridge"
+    steering_dim: int = ACTION_DIM
+
+    def __post_init__(self):
+        if self.interface not in FLOW_STEERING_INTERFACES:
+            raise ValueError(f"Unsupported flow bridge interface: {self.interface!r}")
+        DirectActionCodec(self.mean, self.std, steering_dim=self.steering_dim)
+
+    @classmethod
+    def from_stats(cls, stats, *, interface="kv_bridge"):
+        direct = DirectActionCodec.from_stats(stats)
+        return cls(direct.mean, direct.std, interface=interface)
+
+    def record(self):
+        return dict(
+            kind=f"flow_{self.interface}",
+            interface=self.interface,
+            steering_dim=ACTION_DIM,
+            mean=list(self.mean),
+            std=list(self.std),
+            labels="actual mapped physical H50x12; binary coordinates -1/+1",
+            deployment=f"{self.interface} over frozen VLA prefix/suffix with actual physical-action history feedback",
+        )
+
+    def feedback_control(self, commands):
+        return DirectActionCodec(self.mean, self.std).feedback_control(commands)
+
+
+@dataclass(frozen=True)
+class FlowBridgeConfig:
+    interface: str = "kv_bridge"
+    observation_dim: int = FEATURE_DIM
+    history_action_dim: int = ACTION_DIM
+    width: int = 128
+    layers: int = 2
+    heads: int = 4
+    context_length: int = 300
+    kv_heads: int = 1
+    head_dim: int = 256
+    kv_rank: int = 4
+    kv_layers: tuple[int, ...] = (-1,)
+    scale: float = .1
+    action_horizon: int = 50
+    model_action_dim: int = 32
+    active_action_dim: int = 12
+
+    def __post_init__(self):
+        if (self.interface not in FLOW_STEERING_INTERFACES
+                or any(type(v) is not int or v < 1 for v in (
+                    self.observation_dim, self.history_action_dim, self.width, self.layers,
+                    self.heads, self.context_length, self.kv_heads, self.head_dim,
+                    self.kv_rank, self.action_horizon, self.model_action_dim, self.active_action_dim))
+                or self.width > self.history_action_dim
+                or self.width % self.heads or self.width % 2
+                or self.active_action_dim > self.model_action_dim
+                or not math.isfinite(self.scale) or self.scale <= 0):
+            raise ValueError("Invalid flow-steering bridge configuration")
+
+    @property
+    def noise_dim(self) -> int:
+        return self.history_action_dim
+
+
+class HistoryFlowSteeringPolicy(nn.Module):
+    """Causal history decoder driving a KV or velocity bridge on a frozen VLA.
+
+    Supports all four meta-learning objectives (AD, DPT, DIT, IC-IQL) via
+    advantage-weighted flow-matching supervision through the frozen action
+    expert. Both steering interfaces are zero-initialized at the output layer,
+    preserving exact native frozen-motor parity before training.
+    """
+
+    def __init__(self, config: FlowBridgeConfig):
+        super().__init__()
+        self.config = config
+        self.core = CausalDecoderCore(
+            config.observation_dim + config.history_action_dim + 3,
+            width=config.width, layers=config.layers, heads=config.heads,
+            memory_length=config.context_length,
+        )
+        if config.interface == "kv_bridge":
+            self.kv_adapter = ReactiveKVResidual(
+                public_dim=config.width, kv_heads=config.kv_heads, head_dim=config.head_dim,
+                rank=config.kv_rank, layers=config.kv_layers, scale=config.scale,
+            )
+            self.velocity_head = None
+        else:
+            self.kv_adapter = None
+            self.velocity_head = nn.Linear(config.width, config.model_action_dim)
+            nn.init.zeros_(self.velocity_head.weight)
+            nn.init.zeros_(self.velocity_head.bias)
+        self.register_buffer("observation_mean", torch.zeros(config.observation_dim))
+        self.register_buffer("observation_std", torch.ones(config.observation_dim))
+
+    @torch.no_grad()
+    def fit_observation_normalization(self, trials):
+        values = torch.as_tensor(np.concatenate([trial["observations"] for trial in trials]),
+                                 dtype=self.observation_mean.dtype, device=self.observation_mean.device)
+        self.observation_mean.copy_(values.mean(0))
+        self.observation_std.copy_(values.std(0, unbiased=False).clamp(min=1e-4))
+
+    def initial_state(self, batch):
+        return self.core.initial_state(batch)
+
+    def encode_step(self, token, state=None, *, reset=None):
+        if token.ndim != 2 or token.shape[1] != self.core.input_dim:
+            raise ValueError("Require public query token [B,F+A+3]")
+        if reset is not None and state is not None:
+            initial = self.core.initial_state(len(token))
+            state = {key: torch.where(reset.reshape(-1, *([1] * (value.ndim - 1))),
+                                      initial[key], value) for key, value in state.items()}
+        d = self.config.observation_dim
+        encoded = torch.cat(((token[:, :d] - self.observation_mean) / self.observation_std,
+                             token[:, d:]), dim=-1)
+        return self.core(encoded, state)
+
+    def step(self, token, state=None, *, reset=None, deterministic=False, generator=None):
+        """Consume one public query token; return padded context [B, A], zero logp, state."""
+        if reset is not None and (reset.shape != token.shape[:1] or reset.dtype != torch.bool or reset.device != token.device):
+            raise ValueError("Require boolean per-lane reset on the token device")
+        context, state = self.encode_step(token, state, reset=reset)
+        pad = self.config.history_action_dim - self.config.width
+        control = torch.nn.functional.pad(context, (0, pad)) if pad > 0 else context
+        return control, torch.zeros(len(token), dtype=control.dtype, device=control.device), state
+
+    def encode_sequence(self, tokens, valid, episode_starts, *, mode="full"):
+        if mode not in MODES or tokens.ndim != 3 or valid.shape != tokens.shape[:2]:
+            raise ValueError("Invalid sequence shape/mode")
+        state, contexts = None, []
+        for index in range(len(tokens)):
+            reset = (torch.ones_like(valid[index]) if mode == "static" else
+                     episode_starts[index] if mode == "episode" else None)
+            token = torch.where(valid[index, :, None], tokens[index], 0.)
+            context, state = self.encode_step(token, state, reset=reset)
+            contexts.append(context)
+        return torch.stack(contexts)
+
+    def predict_velocity(self, model, observation, noisy_actions, timestep, cache, prefix_mask, context):
+        if self.config.interface == "kv_bridge":
+            return velocity_with_kv_residual(
+                model, observation, noisy_actions, timestep, cache, prefix_mask, context, self.kv_adapter)
+        if model.training or any(p.requires_grad for p in model.parameters()):
+            raise ValueError("Require an eval-mode motor with every parameter frozen")
+        detached_cache = tuple((k.detach(), v.detach()) for k, v in cache)
+        with torch.no_grad():
+            suffix = model.run_suffix(observation, noisy_actions.detach(), timestep.detach(),
+                                      detached_cache, prefix_mask)
+            base_velocity = model.velocity_from_suffix(suffix).detach()
+        delta = self.config.scale * torch.tanh(self.velocity_head(context))[:, None, :]
+        return _add(base_velocity, delta.expand_as(base_velocity).to(base_velocity.dtype))
+
+    def flow_matching_loss(self, model, observation, target_actions, noise, timestep,
+                           cache, prefix_mask, context, *, sample_weights=None):
+        """Flow-matching MSE over active coordinates, supporting AD/DPT/DIT/IC-IQL weights."""
+        batch = len(target_actions)
+        expected = (batch, self.config.action_horizon, self.config.model_action_dim)
+        if (target_actions.shape != expected or noise.shape != expected
+                or timestep.shape != (batch,) or context.shape != (batch, self.config.width)):
+            raise ValueError("Require batch-aligned target_actions, noise, timestep and history context")
+        tau = timestep[:, None, None].to(target_actions.dtype)
+        noisy_actions = (1. - tau) * target_actions.detach() + tau * noise.detach()
+        target_velocity = (noise.detach() - target_actions.detach())[..., :self.config.active_action_dim]
+        predicted = self.predict_velocity(
+            model, observation, noisy_actions, timestep, cache, prefix_mask, context
+        )[..., :self.config.active_action_dim]
+        per_sample = (predicted - target_velocity).square().mean(dim=(-1, -2))
+        if sample_weights is not None:
+            weights = sample_weights.reshape(batch).detach().to(per_sample.dtype)
+            if not torch.isfinite(weights).all() or (weights < 0).any():
+                raise ValueError("Require finite nonnegative sample weights")
+            per_sample = per_sample * weights
+        return per_sample.mean()
+
+    @staticmethod
+    def meta_objective_weights(objective, *, q_values=None, v_values=None, value_config=None, batch_size=None, device="cpu"):
+        """Return per-sample weights for AD/DPT (1.0) or DIT/IC-IQL (exp-clamped Q-V)."""
+        if objective not in FLOW_META_OBJECTIVES:
+            raise ValueError(f"Unsupported meta-learning objective: {objective!r}")
+        if objective in ("ad", "dpt"):
+            if batch_size is None or batch_size < 1:
+                raise ValueError("AD and DPT require a positive batch_size")
+            return torch.ones(batch_size, dtype=torch.float32, device=device)
+        if q_values is None or v_values is None or value_config is None:
+            raise ValueError(f"{objective} requires q_values, v_values and value_config")
+        return importance_weights(q_values.detach() - v_values.detach(), value_config)
+
+
+class FlowBridgeMotor(FlowDirectMotor):
+    """Closed-loop KV or velocity bridge motor with frozen VLM and action expert."""
+    def __init__(self, native, codec: FlowBridgeCodec, policy: HistoryFlowSteeringPolicy):
+        if not isinstance(codec, FlowBridgeCodec) or policy.config.interface != codec.interface:
+            raise ValueError("Bind matching FlowBridgeCodec and HistoryFlowSteeringPolicy interface")
+        super().__init__(native, codec)
+        self.policy = policy.eval().requires_grad_(False)
+
+    @torch.no_grad()
+    def execute_batch(self, prepared, *, noise, steering, spec):
+        if (prepared is not self.native._prepared or spec.record() != self.codec.record()
+                or np.shape(steering) != (prepared["batch_size"], ACTION_DIM)):
+            raise ValueError("Require the unconsumed same-observation bridge steering token")
+        batch = prepared["batch_size"]
+        draw = torch.as_tensor(noise, dtype=torch.float32, device=self.model.device)
+        if draw.shape != (batch, 50, 32) or not torch.isfinite(draw).all():
+            raise ValueError("Use the prospective common native draw for every bridge query")
+        steering_tensor = torch.as_tensor(steering, dtype=torch.float32, device=self.model.device)
+        if not torch.isfinite(steering_tensor).all():
+            raise ValueError("Require finite bridge steering tensor")
+        context = steering_tensor[:, :self.policy.config.width]
+        hidden, mask, cache = prepared["prefix"]
+        original_prefix = self.model.build_prefix_cache
+        original_velocity = self.model.velocity_from_suffix
+        try:
+            if self.policy.config.interface == "kv_bridge":
+                edited_cache = self.policy.kv_adapter(cache, mask, context)
+                self.model.build_prefix_cache = lambda *args, **kwargs: (hidden, mask, edited_cache)
+            else:
+                self.model.build_prefix_cache = lambda *args, **kwargs: prepared["prefix"]
+                delta = self.policy.config.scale * torch.tanh(self.policy.velocity_head(context))[:, None, :]
+
+                def altered_velocity(suffix):
+                    base = original_velocity(suffix)
+                    return _add(base, delta.expand_as(base).to(base.dtype))
+
+                self.model.velocity_from_suffix = altered_velocity
+            commands, _ = self.model.predict_action_batch(prepared["observation"], mode="eval", noise=draw)
+            commands = commands.detach().float().cpu().numpy() if torch.is_tensor(commands) else np.asarray(commands, np.float32)
+            if commands.shape != (batch, 50, 12) or not np.isfinite(commands).all():
+                raise ValueError("Require complete finite native bridge commands")
+            return commands
+        finally:
+            self.model.build_prefix_cache = original_prefix
+            self.model.velocity_from_suffix = original_velocity
+            self.native._prepared = None

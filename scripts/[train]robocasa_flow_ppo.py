@@ -23,9 +23,9 @@ def main(cfg):
     contract = flow_contract(cfg)  # task, horizon, seeds, schedule and action ceiling
     assert cfg.runner.max_steps in (-1, contract['iterations'])
     assert not cfg.runner.use_training_pipeline and not cfg.runner.overlap_env_bootstrap
-    assert cfg.actor.global_batch_size == 256 and cfg.algorithm.update_epoch == 4
+    assert contract['optimizer_steps_per_update'] >= 1
     assert cfg.actor.model.openpi.train_expert_only and cfg.actor.model.openpi.noise_method == 'flow_sde'
-    assert cfg.actor.model.openpi.noise_level == .3 and cfg.algorithm.gamma == .99
+    assert contract['noise_level'] > 0 and cfg.algorithm.gamma == .99
     assert cfg.algorithm.kl_beta == 0, 'KL penalty is off for this campaign; KL is logged only'
     print(json.dumps(OmegaConf.to_container(cfg, resolve=True), indent=2), flush=True)
     cluster = Cluster(cluster_cfg=cfg.cluster, distributed_log_dir=cfg.runner.per_worker_log_path)
@@ -34,7 +34,7 @@ def main(cfg):
     assert placement.get_world_size('env') == placement.get_world_size('rollout') == cfg.native_pilot.world_size
     assert cfg.native_pilot.world_size in (2, 8)
     world = cfg.native_pilot.world_size
-    assert contract['train_envs'] % world == 0 and contract['eval_cases'] % world == 0
+    assert contract['train_envs'] % (world * contract['group_size']) == 0 and contract['eval_cases'] % world == 0
     actor = FlowActor.create_group(cfg).launch(cluster, name=cfg.actor.group_name,
         placement_strategy=placement.get_strategy('actor'))
     rollout = FlowRollout.create_group(cfg).launch(cluster, name=cfg.rollout.group_name,

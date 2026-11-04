@@ -22,8 +22,9 @@ def test_first_success_rejects_a_broadcast_latch():
 
 
 from fluffy_bassoon.meta_rl.rlinf_robocasa_flow_ppo import (
-    GlobalActionJournal, flow_contract, flow_logprob_parity, flow_seeds, flow_value_parity,
-    keep_frozen_image_encoder_in_eval, train_case_seeds)
+    GlobalActionJournal, flow_contract, flow_episode_ids, flow_logprob_parity, flow_seeds,
+    flow_value_parity, keep_frozen_image_encoder_in_eval, train_case_seeds,
+    verify_grpo_group_reset)
 
 
 def test_frozen_image_mode_is_preserved_without_changing_expert_training():
@@ -141,3 +142,66 @@ def test_actor_batch_drop_removes_only_named_duplicates():
     assert retained_batch(batch, []) == batch
     with pytest.raises(ValueError, match='absent'):
         retained_batch(batch, ['forward_inputs.observation/images'])
+
+
+def test_vlm_critic_ppo_and_grpo_contracts_and_grouped_seeds():
+    assert flow_seeds('TurnOnSinkFaucet') == (2800000, 680100)
+    ppo_cfg = flow_config(task='TurnOnSinkFaucet')
+    ppo_cfg['actor']['model'].update(add_value_head=True, openpi=dict(value_after_vlm=True))
+    ppo = flow_contract(ppo_cfg)
+    assert ppo['adv_type'] == 'gae' and ppo['loss_type'] == 'actor_critic'
+    assert ppo['group_size'] == 1 and ppo['add_value_head'] and ppo['value_after_vlm']
+    assert ppo['scenes_per_iteration'] == 128
+
+    grpo_cfg = flow_config(task='OpenDrawer', envs=128, rounds=1)
+    grpo_cfg['algorithm'].update(adv_type='grpo', loss_type='actor', group_size=8)
+    grpo_cfg['env']['train']['group_size'] = 8
+    grpo_cfg['env']['eval']['group_size'] = 1
+    grpo_cfg['actor']['model'].update(add_value_head=False, openpi=dict(value_after_vlm=False))
+    grpo = flow_contract(grpo_cfg)
+    assert grpo['adv_type'] == 'grpo' and grpo['loss_type'] == 'actor'
+    assert grpo['group_size'] == 8 and not grpo['add_value_head']
+    assert grpo['scenes_per_iteration'] == 16 and grpo['episodes_per_iteration'] == 128
+
+    all_episode_ids, all_scene_seeds = [], []
+    for iteration in range(130):
+        for rank in range(8):
+            seeds = train_case_seeds(grpo, iteration=iteration, round_index=0, rank=rank, local_envs=16)
+            assert seeds[:8] == [seeds[0]] * 8 and seeds[8:] == [seeds[8]] * 8
+            assert seeds[0] != seeds[8]
+            ids = flow_episode_ids(grpo['task'], seeds, group_size=8)
+            assert len(ids) == len(set(ids)) == 16
+            all_episode_ids.extend(ids)
+            all_scene_seeds.extend([seeds[0], seeds[8]])
+    assert len(all_episode_ids) == len(set(all_episode_ids)) == 130 * 128
+    assert len(all_scene_seeds) == len(set(all_scene_seeds)) == 130 * 16
+    assert not set(all_scene_seeds) & set(range(grpo['eval_seed'], grpo['eval_seed'] + 64))
+
+    bad_grpo = flow_config()
+    bad_grpo['algorithm'].update(adv_type='grpo', loss_type='actor', group_size=8)
+    bad_grpo['actor']['model']['add_value_head'] = True
+    with pytest.raises(ValueError, match='GRPO requires'):
+        flow_contract(bad_grpo)
+
+
+def test_verify_grpo_group_reset_enforces_within_group_scene_identity():
+    snapshot = dict(
+        case=dict(seeds=[100, 100, 101, 101]),
+        physical=[dict(xml='a'), dict(xml='a'), dict(xml='b'), dict(xml='b')],
+        task_descriptions=['open drawer', 'open drawer', 'open drawer 2', 'open drawer 2'],
+        states=np.array([[1.0, 2.0], [1.0, 2.0], [3.0, 4.0], [3.0, 4.0]], dtype=np.float32),
+    )
+    verify_grpo_group_reset(snapshot, 2)
+    broken = dict(snapshot, states=np.array([[1.0, 2.0], [1.0, 9.0], [3.0, 4.0], [3.0, 4.0]], dtype=np.float32))
+    with pytest.raises(ValueError, match='initial public states'):
+        verify_grpo_group_reset(broken, 2)
+
+
+def test_periodic_val_check_interval_contract_accounting():
+    cfg = flow_config(task='OpenDrawer', maximum=15000000)
+    cfg['runner']['val_check_interval'] = 10
+    contract = flow_contract(cfg)
+    assert contract['eval_interval'] == 10
+    assert contract['eval_panels'] == 1 + 130 // 10 == 14
+    assert contract['nominal_policy_controls'] == 130 * 128 * 600 + 14 * 64 * 600
+    assert contract['nominal_policy_controls'] + contract['reset_reserve_controls'] <= 15000000

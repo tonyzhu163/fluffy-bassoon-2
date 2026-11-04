@@ -62,7 +62,7 @@ class GlobalActionJournal:
 # later tasks append. PPO tasks: robocasa-flow-sde-10m-per-task TASK-PORTFOLIO.json.
 FLOW_TASK_NUMBERS = dict(OpenDrawer=1, PickPlaceCounterToCabinet=2, PickPlaceDrawerToCounter=3,
                          TurnOffStove=4, CoffeeSetupMug=5, PickPlaceCounterToStove=6,
-                         CloseToasterOvenDoor=7)
+                         CloseToasterOvenDoor=7, TurnOnSinkFaucet=8)
 RESET_CONTROL_RESERVE = 128  # counted_native_factory's per-episode reset reserve
 
 
@@ -123,17 +123,29 @@ def flow_seeds(task):
     return 2000000 + 100000 * number, 600100 + 10000 * number
 
 
-def _get(cfg, path):
+_MISSING = object()
+
+
+def _get(cfg, path, default=_MISSING):
     for key in path.split('.'):
-        cfg = cfg[key]
+        if isinstance(cfg, dict) and key not in cfg:
+            if default is not _MISSING:
+                return default
+            raise KeyError(key)
+        try:
+            cfg = cfg[key]
+        except KeyError:
+            if default is not _MISSING:
+                return default
+            raise
     return cfg
 
 
 def flow_contract(cfg):
     """Derive and check the per-task run arithmetic from one resolved config.
 
-    Everything the runtime previously hard-coded for OpenDrawer/400/18 comes
-    from here, so a changed config cannot silently disagree with the sidecars.
+    Supports both GAE PPO (actor_critic, group_size=1, add_value_head=True)
+    and critic-free GRPO (actor, group_size>=2, add_value_head=False).
     """
     train, evaluation = _get(cfg, 'env.train'), _get(cfg, 'env.eval')
     tasks, eval_tasks = list(train['task_filter']), list(evaluation['task_filter'])
@@ -146,6 +158,24 @@ def flow_contract(cfg):
         raise ValueError('Train/eval horizons must agree and be a whole number of chunks')
     envs, rounds = int(train['total_num_envs']), int(train['rollout_epoch'])
     episodes = envs * rounds
+    adv_type = str(_get(cfg, 'algorithm.adv_type', 'gae'))
+    if adv_type == 'gae':
+        loss_type = str(_get(cfg, 'algorithm.loss_type', 'actor_critic'))
+        group_size = int(_get(cfg, 'algorithm.group_size', 1))
+        value_head = bool(_get(cfg, 'actor.model.add_value_head', True))
+        if loss_type != 'actor_critic' or group_size != 1 or not value_head:
+            raise ValueError('GAE PPO requires loss_type=actor_critic, group_size=1 and add_value_head=True')
+    elif adv_type == 'grpo':
+        loss_type = str(_get(cfg, 'algorithm.loss_type', 'actor'))
+        group_size = int(_get(cfg, 'algorithm.group_size', 0))
+        value_head = bool(_get(cfg, 'actor.model.add_value_head', False))
+        if loss_type != 'actor' or group_size < 2 or envs % group_size or value_head:
+            raise ValueError('GRPO requires loss_type=actor, group_size>=2 dividing train_envs and add_value_head=False')
+    else:
+        raise ValueError(f'Unsupported advantage estimator: {adv_type!r}')
+    if int(_get(train, 'group_size', group_size)) != group_size or int(_get(evaluation, 'group_size', 1)) != 1:
+        raise ValueError('Train group_size must match algorithm.group_size and eval group_size must be 1')
+    scenes_per_iteration = episodes // group_size
     samples = episodes * (horizon // chunk)
     batch, epochs = int(_get(cfg, 'actor.global_batch_size')), int(_get(cfg, 'algorithm.update_epoch'))
     if samples % batch:
@@ -156,19 +186,33 @@ def flow_contract(cfg):
     train_seed, eval_seed = int(train['seed']), int(evaluation['seed'])
     if (train_seed, eval_seed) != flow_seeds(task):
         raise ValueError(f'{task} seeds must be {flow_seeds(task)}, got {(train_seed, eval_seed)}')
-    if train_seed + iterations * episodes > eval_seed and eval_seed + eval_cases > train_seed:
+    if train_seed + iterations * scenes_per_iteration > eval_seed and eval_seed + eval_cases > train_seed:
         raise ValueError('TRAIN and eval seed ranges overlap')
     interval = int(_get(cfg, 'runner.save_interval'))
     if interval < 1 or iterations % interval:
         raise ValueError('Checkpoint interval must divide the iteration count')
-    policy = iterations * episodes * horizon + 2 * eval_cases * horizon
-    resets = (iterations * episodes + 2 * eval_cases) * RESET_CONTROL_RESERVE
+    eval_interval = int(_get(cfg, 'runner.val_check_interval', iterations))
+    if eval_interval < 1 or iterations % eval_interval:
+        raise ValueError('Evaluation interval must divide the iteration count')
+    eval_panels = 1 + iterations // eval_interval
+    policy = iterations * episodes * horizon + eval_panels * eval_cases * horizon
+    resets = (iterations * episodes + eval_panels * eval_cases) * RESET_CONTROL_RESERVE
     maximum = _get(cfg, 'native_pilot.maximum_actions')
     if maximum is not None and int(maximum) < policy + resets:
         raise ValueError(f'Action ceiling {maximum} is below nominal {policy} plus reset reserve {resets}')
+    noise_level = float(_get(cfg, 'actor.model.openpi.noise_level', 0.3))
+    if not np.isfinite(noise_level) or noise_level <= 0:
+        raise ValueError('Flow-SDE noise_level must be finite and positive')
     return dict(task=task, horizon=horizon, chunk=chunk, chunks_per_episode=horizon // chunk,
-                train_envs=envs, rounds=rounds, episodes_per_iteration=episodes, iterations=iterations,
-                eval_cases=eval_cases, optimizer_steps_per_update=samples // batch * epochs,
+                adv_type=adv_type, loss_type=loss_type, group_size=group_size,
+                add_value_head=value_head,
+                value_after_vlm=bool(_get(cfg, 'actor.model.openpi.value_after_vlm', False)),
+                ignore_last=bool(_get(cfg, 'actor.model.openpi.ignore_last', False)),
+                noise_level=noise_level, update_epochs=epochs,
+                train_envs=envs, rounds=rounds, episodes_per_iteration=episodes,
+                scenes_per_iteration=scenes_per_iteration, iterations=iterations,
+                eval_cases=eval_cases, eval_interval=eval_interval, eval_panels=eval_panels,
+                optimizer_steps_per_update=samples // batch * epochs,
                 train_seed=train_seed, eval_seed=eval_seed, checkpoint_interval=interval,
                 nominal_policy_controls=policy, reset_reserve_controls=resets,
                 maximum_actions=None if maximum is None else int(maximum),
@@ -176,12 +220,53 @@ def flow_contract(cfg):
 
 
 def train_case_seeds(contract, *, iteration, round_index, rank, local_envs):
-    """Unique TRAIN seeds for any envs-per-rank / rollout-epoch layout."""
+    """TRAIN seeds for any envs-per-rank / rollout-epoch layout (grouped for GRPO)."""
     if not 0 <= round_index < contract['rounds'] or not 0 <= iteration < contract['iterations']:
         raise ValueError('Round or iteration outside the declared schedule')
-    start = (contract['train_seed'] + iteration * contract['episodes_per_iteration']
-             + round_index * contract['train_envs'] + rank * local_envs)
-    return [start + i for i in range(local_envs)]
+    group = int(contract.get('group_size', 1))
+    if group < 1 or local_envs % group or contract['train_envs'] % group:
+        raise ValueError('Local and total train environments must be positive multiples of group_size')
+    scenes_per_iteration = contract['episodes_per_iteration'] // group
+    scenes_per_round = contract['train_envs'] // group
+    local_scenes = local_envs // group
+    start = (contract['train_seed'] + iteration * scenes_per_iteration
+             + round_index * scenes_per_round + rank * local_scenes)
+    return [start + (i // group) for i in range(local_envs)]
+
+
+def flow_episode_ids(task, seeds, *, group_size=1):
+    """Unique episode IDs preserving `task/seed` for PPO and `task/seed/gNN` for GRPO."""
+    seeds = list(seeds)
+    group = int(group_size)
+    if group < 1 or len(seeds) % group:
+        raise ValueError('Seed count must be a positive multiple of group_size')
+    if group == 1:
+        return [f'{task}/{seed}' for seed in seeds]
+    for start in range(0, len(seeds), group):
+        if len(set(seeds[start:start + group])) != 1:
+            raise ValueError(f'GRPO group [{start}:{start + group}] must share one scene seed')
+    return [f'{task}/{seed}/g{i % group:02d}' for i, seed in enumerate(seeds)]
+
+
+def verify_grpo_group_reset(snapshot, group_size):
+    """Confirm every GRPO group shares one scene seed, physical state and prompt."""
+    seeds = list(snapshot['case']['seeds'])
+    physical = list(snapshot['physical'])
+    prompts = list(snapshot['task_descriptions'])
+    states = np.asarray(snapshot['states'])
+    group = int(group_size)
+    if group < 2 or len(seeds) % group:
+        raise ValueError('GRPO group verification requires group_size>=2 dividing batch size')
+    for start in range(0, len(seeds), group):
+        end = start + group
+        if len(set(seeds[start:end])) != 1:
+            raise ValueError(f'GRPO group [{start}:{end}] seeds differ: {seeds[start:end]}')
+        if any(item != physical[start] for item in physical[start + 1:end]):
+            raise ValueError(f'GRPO group [{start}:{end}] physical fingerprints differ')
+        if any(prompt != prompts[start] for prompt in prompts[start + 1:end]):
+            raise ValueError(f'GRPO group [{start}:{end}] task descriptions differ')
+        if not np.array_equal(states[start:end], np.broadcast_to(states[start:start + 1], states[start:end].shape)):
+            raise ValueError(f'GRPO group [{start}:{end}] initial public states differ')
 
 
 def first_success_reward(success, previously_succeeded, coefficient=1.0):

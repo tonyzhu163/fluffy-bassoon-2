@@ -24,8 +24,8 @@ from .rlinf_native_ppo import ActionJournal, cpu_tree, restore_rng, snapshot_rng
 from .rlinf_native_ppo import sha
 from .rlinf_native_ppo_runtime import PilotActor, PilotRollout, PilotRunner, save_tensor
 from .rlinf_robocasa_flow_ppo import (GlobalActionJournal, RESET_CONTROL_RESERVE, first_success_reward,
-    flow_contract, flow_logprob_parity, flow_value_parity, keep_frozen_image_encoder_in_eval,
-    train_case_seeds)
+    flow_contract, flow_episode_ids, flow_logprob_parity, flow_value_parity,
+    keep_frozen_image_encoder_in_eval, train_case_seeds, verify_grpo_group_reset)
 from .rlinf_robocasa_ppo_env import counted_native_factory
 from .robocasa_pairing import canonical_case, native_fingerprint, public_snapshot, stable_counter_regions
 
@@ -85,6 +85,8 @@ def native_class(original, owner):
             else:
                 self.env_seeds = train_case_seeds(contract, iteration=owner._flow_iteration,
                     round_index=self._flow_round, rank=owner._rank, local_envs=self.num_envs)
+            self._flow_episode_ids = flow_episode_ids(contract['task'], self.env_seeds,
+                group_size=1 if is_eval else contract['group_size'])
             self.task_ids = np.zeros(self.num_envs, dtype=np.int32)
             self._refresh_task_context()
             self._is_start = True
@@ -105,6 +107,8 @@ def native_class(original, owner):
             case = dict(task=contract['task'], seeds=self.env_seeds, split=str(self.cfg.split),
                         horizon=contract['horizon'])
             snapshot = public_snapshot(observation, case, self.env.get_env_attr('_flow_physical'))
+            if not is_eval and contract['group_size'] > 1:
+                verify_grpo_group_reset(snapshot, contract['group_size'])
             initial = self._flow_root / (self._flow_key + '-initial.pt')
             self._flow_initial = save_tensor(initial, snapshot)
             if is_eval:
@@ -128,11 +132,12 @@ def native_class(original, owner):
                 counts = self.env.get_env_attr('_flora_accounting')
                 assert all(c['controls'] - c['reset_controls'] == horizon for c in counts)
                 finals = [bool(info.get('success', False)) for info in self.current_info_list]
-                task = owner._flow_contract['task']
-                rows = [dict(episode_id=f'{task}/{seed}', seed=seed, success_once=first is not None,
+                rows = [dict(episode_id=episode_id, seed=seed, success_once=first is not None,
                     first_success_control=first,
-                    success_at_end=final, native_counts=count) for seed, first, final, count in
-                    zip(self.env_seeds, self._flow_first_success, finals, counts, strict=True)]
+                    success_at_end=final, native_counts=count)
+                    for episode_id, seed, first, final, count in zip(
+                        self._flow_episode_ids, self.env_seeds, self._flow_first_success,
+                        finals, counts, strict=True)]
                 write(self._flow_root / (self._flow_key + '-episodes.json'),
                     dict(completed=True, phase=owner._flow_phase, iteration=owner._flow_iteration,
                          rank=owner._rank, initial=self._flow_initial, rows=rows))
@@ -153,7 +158,7 @@ def native_class(original, owner):
             with gzip.open(path, 'xb', compresslevel=1) as stream:
                 torch.save(dict(phase=owner._flow_phase, iteration=owner._flow_iteration,
                     round=self._flow_round, seeds=self.env_seeds,
-                    episode_ids=[f'{contract["task"]}/{seed}' for seed in self.env_seeds],
+                    episode_ids=list(self._flow_episode_ids),
                     current_observation=before, current_observation_sha256=tensor_hash(before),
                     decoded_actions=cpu_tree(actions), rewards=cpu_tree(result[1]),
                     terminations=cpu_tree(result[2]), truncations=cpu_tree(result[3]),
@@ -174,12 +179,14 @@ class FlowActor(PilotActor):
         def check(module, inputs, output):
             report = flow_logprob_parity(output['logprobs'], micro_batch['prev_logprobs'],
                 action_dim=int(self.cfg.actor.model.action_dim))
-            if output.get('values') is not None and micro_batch.get('prev_values') is not None:
+            value_head = bool(self.cfg.actor.model.get('add_value_head', True))
+            if value_head and output.get('values') is not None and micro_batch.get('prev_values') is not None:
                 value = flow_value_parity(output['values'], micro_batch['prev_values'])
                 report = dict(report, value=value, passed=report['passed'] and value['passed'])
             write(Path(self.cfg.native_pilot.output) / 'logprob-parity' /
                 f'iteration-{self.version + 1:03d}-rank-{self._rank:02d}.json',
-                dict(report, optimizer_steps=self.optimizer_steps, before_backward=True))
+                dict(report, value_head_enabled=value_head,
+                     optimizer_steps=self.optimizer_steps, before_backward=True))
             self._flow_first_micro_checked = True
             if not report['passed']:
                 raise RuntimeError(f'Unchanged-policy logprob parity failed before SGD: {report}')
@@ -215,6 +222,13 @@ class FlowActor(PilotActor):
 
 
 class FlowRollout(PilotRollout):
+    def pilot_training_rng(self, *, restore=False):
+        if restore:
+            restore_rng(self._flow_training_rng)
+        else:
+            self._flow_training_rng = snapshot_rng()
+        return dict(role=self.pilot_role, rank=self._rank, restored=restore)
+
     def pilot_restore(self, directory):
         result = super().pilot_restore(directory)
         state = torch.load(Path(directory) / f'rollout-{self._rank:02d}.pt',
@@ -268,6 +282,13 @@ class FlowEnvironment(EnvWorker):
             self._flow_rng = snapshot_rng()
         return dict(rank=self._rank, restored=restore)
 
+    def pilot_training_rng(self, *, restore=False):
+        if restore:
+            restore_rng(self._flow_training_rng)
+        else:
+            self._flow_training_rng = snapshot_rng()
+        return dict(rank=self._rank, restored=restore)
+
     def pilot_capture(self, directory, **kwargs):
         samplers = []
         for mode, envs in (('train', self.env_list), ('eval', self.eval_env_list)):
@@ -308,9 +329,26 @@ class FlowRunner(PilotRunner):
         output = Path(self.cfg.native_pilot.output)
         requested = (output / 'CHECKPOINT_AND_EXIT').exists()
         first_after_restore = self.global_step == getattr(self, '_flow_resume_step', 0) + 1
-        interval = flow_contract(self.cfg)['checkpoint_interval']
+        contract = flow_contract(self.cfg)
+        interval = contract['checkpoint_interval']
         if requested or first_after_restore or self.global_step % interval == 0 or self.global_step == self.max_steps:
             self._capture_boundary()
+        eval_interval = contract['eval_interval']
+        if not requested and 0 < eval_interval < self.max_steps and 0 < self.global_step < self.max_steps and self.global_step % eval_interval == 0:
+            self.rollout.pilot_training_rng().wait()
+            self.env.pilot_training_rng().wait()
+            self.update_rollout_weights()
+            self.rollout.pilot_rng(restore=True).wait()
+            self.env.pilot_rng(restore=True).wait()
+            phase = f'eval_step_{self.global_step:03d}'
+            self.env.pilot_phase(phase, policy_iteration=self.global_step).wait()
+            self.rollout.pilot_evaluation_iteration(self.global_step).wait()
+            periodic = self.evaluate()
+            write(output / 'evaluations' / f'step-{self.global_step:03d}.json',
+                dict(completed=True, global_step=self.global_step, phase=phase, metrics=json_metrics(periodic)))
+            self.rollout.pilot_training_rng(restore=True).wait()
+            self.env.pilot_training_rng(restore=True).wait()
+            self.env.pilot_phase('training', policy_iteration=self.global_step).wait()
         write(output / 'progress.json',
             dict(completed_iterations=self.global_step, target_iterations=self.max_steps,
                  checked_unix=time.time(), operator_checkpoint_exit=requested))
