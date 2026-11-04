@@ -68,12 +68,14 @@ def prepare(manifest):
 
 
 def combine(manifest, folder):
+    import gzip
+    import torch
     native = configure()
     from endpoint import paired
     outcomes = {label: {} for label in LABELS}
     endings = {label: {} for label in LABELS}
     total = charged = 0
-    repeats = []
+    repeat = None
     for index in range(2):
         node = folder / f'node-{index:02d}'
         done = native.read(node / 'RESULT.json')
@@ -89,11 +91,26 @@ def combine(manifest, folder):
                 assert panel['common_sampler'] and panel['sampler_seed'] == RNG_BASE + bank
                 assert native.sha(Path(panel['episodes_path'])) == panel['episodes_sha256']
                 if label == 'repeat':
-                    repeats.append(panel); continue
+                    continue
                 for row in panel['episodes']:
                     seed = row['seed']; assert seed not in outcomes[label]
                     outcomes[label][seed] = bool(row['success_once'])
                     endings[label][seed] = bool(row['success_at_end'])
+            if bank == 0:
+                original, repeated = panels['SFT'], panels['repeat']
+                differences = []
+                for chunk in range(1,13):
+                    actions = []
+                    for panel in (original,repeated):
+                        path = Path(panel['episodes_path'].removesuffix('-episodes.json') + f'-chunk{chunk:02d}.pt.gz')
+                        with gzip.open(path,'rb') as stream:
+                            actions.append(torch.as_tensor(torch.load(stream,map_location='cpu',weights_only=False)['decoded_actions']))
+                    delta = (actions[0]-actions[1]).abs().float()
+                    differences.append(dict(max_abs=float(delta.max()),mean_abs=float(delta.mean())))
+                repeat = dict(cases=8,
+                    matching_action_hashes=sum(x==y for x,y in zip(original['sampler_actions'],repeated['sampler_actions'],strict=True)),
+                    decoded_actions_by_chunk=differences,
+                    outcomes_equal=sum(x['success_once']==y['success_once'] for x,y in zip(original['episodes'],repeated['episodes'],strict=True)))
     assert total == 926400 and all(set(rows) == set(range(CASE_BASE, CASE_BASE + 512)) for rows in outcomes.values())
     result = dict(completed=True, cases=512, policy_controls=total, charged_controls=charged,
         first_successes={key: sum(rows.values()) for key, rows in outcomes.items()},
@@ -101,7 +118,7 @@ def combine(manifest, folder):
         primary_GRPO_minus_PPO=paired(outcomes['PPO'], outcomes['GRPO'], 85311000),
         descriptive_versus_SFT={key: paired(outcomes['SFT'], outcomes[key], 85311001+i) for i, key in enumerate(('PPO','GRPO'))},
         descriptive_end_GRPO_minus_PPO=paired(endings['PPO'], endings['GRPO'], 85311003),
-        repeat_SFT=repeats, manifest_sha256=native.sha(manifest), SGD=0)
+        repeat_SFT=repeat, manifest_sha256=native.sha(manifest), SGD=0)
     native.write(folder / 'RESULT.json', result)
 
 

@@ -34,8 +34,10 @@ def main():
         assert saved['completed'] and len(saved['chunks']) * 50 == horizon
         key = json.dumps(case, sort_keys=True)
         case_attempts.setdefault(key, []).append(attempt)
-        assert saved['memory_entry']['length'] == (attempt - 1) * (horizon // 50)
-        assert saved['memory_exit']['length'] == attempt * (horizon // 50)
+        episode_reset = saved['binding']['native_attempt_protocol'].get('memory_mode') == 'episode'
+        entry_length = 0 if episode_reset else (attempt - 1) * (horizon // 50)
+        assert saved['memory_entry']['length'] == entry_length
+        assert saved['memory_exit']['length'] == entry_length + horizon // 50
         assert saved['memory_exit']['previous_done'] and not saved['memory_exit']['pending']
         policies.add(saved['policy_weights_sha256'])
         bindings.add(json.dumps(saved['binding'], sort_keys=True))
@@ -103,7 +105,11 @@ def main():
         controls += horizon
     assert all(sorted(values) == list(range(1,7)) for values in case_attempts.values())
     assert len(policies) == len(bindings) == 1
-    assert result['optimizer_updates'] == 0 and result['native_parameters_frozen']
+    if 'optimizer_updates' in result:
+        assert result['optimizer_updates'] == 0 and result['native_parameters_frozen']
+    else:
+        outer = json.loads((args.result.parents[3] / 'RESULT.json').read_text())
+        assert outer['completed'] and outer['deployment_optimizer_updates'] == 0
     assert result['controls_charged'] >= controls
     audit = dict(passed=True, checked_shanghai=datetime.datetime.now(datetime.timezone(
         datetime.timedelta(hours=8))).isoformat(), result_sha256=digest(args.result),

@@ -57,11 +57,19 @@ def observe():
             tail = stream.read().decode(errors='replace')
         if any(marker in tail for marker in ('Traceback', 'OutOfMemoryError', 'CUDA out of memory')):
             errors[path.name] = tail[-3000:]
-    created = datetime.datetime.fromisoformat('2026-11-04T21:36:20+08:00').timestamp()
     release = read(fit / 'joint/fit-4gpu-01/RELEASED.json')
-    ended = release.get('ended_unix', now) if release else now
-    upper = 17.57 + 4 * (ended - created) / 3600
     own = root / 'outputs/robocasa-eight-hour-babysit-20261104-r1'
+    ledger = read(own / 'META-ALLOCATION-LEDGER.json')
+    if ledger is None:
+        raise ValueError('Require the cumulative allocation ledger')
+    upper = ledger['preparation_GPU_hours']
+    allocations = []
+    for row in ledger['allocations']:
+        created = datetime.datetime.fromisoformat(row['created_shanghai']).timestamp()
+        ended = datetime.datetime.fromisoformat(row['released_shanghai']).timestamp() if row.get('released_shanghai') else now
+        charged = row['GPUs'] * (ended-created) / 3600
+        upper += charged
+        allocations.append(dict(row, conservative_GPU_hours=charged))
     baseline = {}
     for index in range(2):
         node = own / 'baseline-test512/attempt-01' / f'node-{index:02d}'
@@ -83,10 +91,12 @@ def observe():
         cluster='Baige Pro6K', job_id='job-967y1maorj80', learner_commit='d71cb532',
         methods=methods, worker_release=release, error_tails=errors,
         source_budget=dict(approved_GPU_hours=96, preparation_GPU_hours=17.57,
-            native_qualification_conservative_GPU_hours=925/3600,
-            native_KV_qualification_conservative_GPU_hours=347/3600,
-            creation_to_check_GPU_hours_upper=upper + (925+347)/3600, remaining_GPU_hours_lower=96-upper-(925+347)/3600,
-            note='Worker end is provisional until scheduler terminal/release verification'),
+            allocations=allocations, creation_to_check_GPU_hours_upper=upper,
+            remaining_GPU_hours_lower=96-upper,
+            note='Creation through scheduler release; unreleased allocations charged through this check'),
+        final_anchor=dict(job_id='job-icbta8h6gp49',
+            progress=read(own / 'gpu/native-final-ID-qualification-01/PROGRESS.json'),
+            clock=read(own / 'gpu/native-final-ID-qualification-01/CLOCK.json')),
         baseline_test512=dict(job_id='job-ynq6hyyggfj6', incremental_cap_GPU_hours=7.5,
             nodes=baseline, complete_paired_cases=sum(node['complete_paired_cases'] for node in baseline.values())),
         storage_free_GiB=os.statvfs(root).f_bavail * os.statvfs(root).f_frsize / 2**30,
