@@ -117,6 +117,12 @@ across attempts.
 
 ## RoboCasa365
 
+### OpenDrawer PPO and GRPO at matched training controls
+
+On OpenDrawer, PPO and GRPO each trained for 40 updates at 128 episodes × 600 controls per update. PPO's first and last ten TRAIN collections scored 63.20% and 64.45%. GRPO's scored 64.84% and 66.41%. On the original 64 DEV cases, PPO went from 34 to 26 successes (5 gains, 13 losses, paired p=.0963). GRPO went from 41 to 41 (7 gains, 7 losses, p=1). Each arm used its own sampler stream. Both fell short of the planned ten-point gain. [PPO result](../outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/PPO-RESULT.md) · [GRPO result](../outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/GRPO-RESULT.md).
+
+<!-- stage1-opendrawer-end -->
+
 The original Human30075000 pi0.5 completed the predeclared OpenDrawer headroom
 bank with **3/8 terminal successes**, full native750-step episodes. The first
 episode verified all15 chunk seeds against exact zero-residual action replay
