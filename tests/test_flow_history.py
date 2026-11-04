@@ -363,9 +363,9 @@ def test_bridge_query_batch_and_checkpoint_roundtrip(tmp_path, interface, object
     assert batch["target_actions"].shape == (4, 50, 32)
     assert len(batch["query_indices"]) == 4
     ckpt_path = tmp_path / f"{interface}-{objective}.pt"
-    saved = export_bridge_policy(ckpt_path, policy, manifest=dict(interface=interface, objective=objective))
-    loaded, manifest = load_bridge_policy(ckpt_path, expected_sha256=saved["sha256"])
-    assert file_sha256(ckpt_path) == saved["sha256"]
+    saved_sha = export_bridge_policy(ckpt_path, policy, manifest=dict(interface=interface, objective=objective))
+    loaded, manifest = load_bridge_policy(ckpt_path, expected_sha256=saved_sha)
+    assert file_sha256(ckpt_path) == saved_sha
     assert manifest == dict(interface=interface, objective=objective)
     for k, v in policy.state_dict().items():
         assert torch.equal(v, loaded.state_dict()[k])
