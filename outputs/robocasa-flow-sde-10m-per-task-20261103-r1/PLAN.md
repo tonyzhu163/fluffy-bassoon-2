@@ -2,6 +2,10 @@
 
 2026-11-03. **Adopted contract; all five Q1 qualifications passed and five
 production resumes submitted.** Live receipts: [EXECUTION.json](EXECUTION.json).
+**Completed Nov4 2026:** all sources, corpus retention checks and offline
+reports are complete. All five failed teacher-improvement gates and retain
+reference corpora. See [results](RESULT.md) and [final closeout](FINAL-CLOSEOUT-R1.json).
+
 Governing decision:
 [PAPER.md source campaign (2026-11-03)](../../docs/PAPER.md#agreed-design).
 Live status: [coordination](../coordination.md).

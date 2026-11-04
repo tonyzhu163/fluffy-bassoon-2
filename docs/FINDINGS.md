@@ -25,8 +25,8 @@ All five remain reference sources. The full 650-cohort numerical corpus audit
 passed, with zero initial likelihood gaps, finite losses and unchanged frozen
 VLMs. These are source-learning results; no student or OOD adaptation result
 is claimed. All 80 fixed-batch checkpoint likelihood reports are complete, with zero
-initial-policy replay error on all five tasks. Corpus archival closeout is
-still in progress. [Native results and evidence](../outputs/robocasa-flow-sde-10m-per-task-20261103-r1/RESULT.md).
+initial-policy replay error on all five tasks. All five corpora and resumable final checkpoints passed archival/retention
+closeout; all campaign GPU work is complete at 373.93 accounted GPU-hours. [Native results and evidence](../outputs/robocasa-flow-sde-10m-per-task-20261103-r1/RESULT.md).
 
 ## Headline
 

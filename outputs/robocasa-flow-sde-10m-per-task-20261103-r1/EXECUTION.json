@@ -1,8 +1,8 @@
 {
   "owner_chat": "01a1a077-e5ab-7982-840d-de8a81d4321a",
-  "checked_shanghai": "2026-11-04 05:40:46",
+  "checked_shanghai": "2026-11-04 10:36:27",
   "source_commit": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
-  "phase": "All5 native130 and all80fixedB16 likelihood reports complete;0admitted teachers;4/5full corpus archives verified; Stove archive last",
+  "phase": "COMPLETE: all5 native130/9,984,000TRAIN controls;650corpus joins;80fixedB16 reports;5corpus archives and75cold model restores verified;0admitted teachers",
   "cluster": "Baige Pro6K",
   "queue": "\u7b97\u6cd5Z\u7ec4",
   "jobs": [
@@ -398,7 +398,7 @@
       "action_ledger_sha256": "1c091ed4af5dfeda8a97f0e00eb440e83ecddef70fc34b24ae368b7b9845ee60"
     }
   ],
-  "next_action": "Finish and verify Stove BOS corpus archive/reclaim, verify all five restore/retention receipts and final results, then end this monitor. All GPU jobs finished; no student fitting.",
+  "next_action": "Campaign complete. Disable this heartbeat; no additional GPU work or student fitting scheduled.",
   "fixed_batch_layout": {
     "train_envs_per_gpu": 16,
     "rollout_rounds": 1,
@@ -710,14 +710,14 @@
   "monitor": {
     "automation_id": "monitor-five-task-10m-ppo-campaign",
     "cadence_minutes": 20,
-    "status": "ACTIVE",
-    "next_action": "Finish and verify Stove BOS corpus archive/reclaim, verify all five restore/retention receipts and final results, then end this monitor. All GPU jobs finished; no student fitting.",
-    "last_check_shanghai": "2026-11-04 05:40:46",
-    "next_check_shanghai": "2026-11-04 05:54 Shanghai",
+    "status": "ENDING_AFTER_VERIFIED_COMPLETION",
+    "next_action": "Campaign complete. Disable this heartbeat; no additional GPU work or student fitting scheduled.",
+    "last_check_shanghai": "2026-11-04 10:36:27",
+    "next_check_shanghai": null,
     "scheduler_check": "Baige console reporting job and refreshed instance bothSUCCESS; instance exit05:38:44, jobSUCCESS05:38:53. All source jobs alreadySUCCESS; no active campaign GPUs."
   },
   "storage": {
-    "pfs_free_GiB": 644.28125,
+    "pfs_free_GiB": 740.83984375,
     "stop_floor_GiB": 200,
     "tier_receipt": "TIER-CHECKPOINT-WATCH-R1-003.json",
     "tiered_superseded_boundaries": 75,
@@ -819,7 +819,7 @@
       "admission_result": "CHECKPOINT-TIER-WATCH-R1-ADMISSION.json",
       "admission_result_sha256": "e879a037e627544c7ab08fceede5c021ae1e783b5021ac74c86b427ea267acc3",
       "first_two_boundaries_verified": true,
-      "last_checked_shanghai": "2026-11-04 02:54:12",
+      "last_checked_shanghai": "2026-11-04 10:36:27",
       "last_result": {
         "completed": true,
         "pid": 2044520,
@@ -886,11 +886,11 @@
       "last_process_check": "First3 fresh batches verified4 additional boundaries including superseded leading120s; waiting for next complete boundary, no errors."
     },
     "corpus_closeout_status": {
-      "OpenDrawer": "Full archive/readback/QC verified and full reclaim completed after guarded timeout recovery",
-      "CloseToasterOvenDoor": "Full archive/readback/QC verified and full reclaim completed",
-      "PickPlaceDrawerToCounter": "Full archive/readback/QC verified and full reclaim completed",
-      "CoffeeSetupMug": "Full archive/readback/QC verified and full reclaim completed",
-      "TurnOffStove": "Serial BOS copy/readback active; last corpus",
+      "OpenDrawer": "COMPLETE: full BOS source/QC readbacks and reclaim; full130 checkpoint retained onPFS",
+      "CloseToasterOvenDoor": "COMPLETE: full BOS source/QC readbacks and reclaim; full130 checkpoint retained onPFS",
+      "PickPlaceDrawerToCounter": "COMPLETE: full BOS source/QC readbacks and reclaim; full130 checkpoint retained onPFS",
+      "CoffeeSetupMug": "COMPLETE: full BOS source/QC readbacks and reclaim; full130 checkpoint retained onPFS",
+      "TurnOffStove": "COMPLETE: full BOS source/QC readbacks and reclaim; full130 checkpoint retained onPFS",
       "floor_GiB": 200,
       "all_original_data_retained": true
     },
@@ -926,11 +926,19 @@
         "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-CoffeeSetupMug-R1-RECLAIMED.json",
         "sha256": "c62cbf3d0c3c9fdc05b907b6a54efdc1c99d400b9ac46b92d3dfe6c4761bdc72",
         "completed": true
+      },
+      "TurnOffStove": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-TurnOffStove-R1-RECLAIMED.json",
+        "sha256": "56b8672e343939ea13ac7afac6eb05fde0e57c0222af2b3cb1fa1c116b7f4d6f",
+        "completed": true
       }
-    }
+    },
+    "final_retention_receipt": "FINAL-CLOSEOUT-R1.json",
+    "final_retention_receipt_sha256": "40359c3755e265d4d68420c99fd85646f605427cbe0be2a0a44340bb345ae2bd",
+    "closed_corpus_archive_state": "COMPLETED"
   },
   "usage_snapshot": {
-    "checked_shanghai": "2026-11-04 05:40:46",
+    "checked_shanghai": "2026-11-04 10:36:27",
     "valid_Q1_process_GPU_seconds": 21824,
     "failed_Q1_process_GPU_seconds": 4352,
     "diagnostics_scheduler_GPU_seconds_upper": 262,
@@ -965,12 +973,13 @@
     "final_evidence": "COMPLETE-CORPUS-JOINS-R1.json and all5 FINAL-ACTION-ACCOUNTING-R1.json"
   },
   "ETA": {
-    "native_and_reporting": "All complete; all GPU jobs terminal.",
-    "remaining": "Stove verified BOS corpus archive/reclaim and final all-five archive/results closeout."
+    "status": "COMPLETE",
+    "active_GPU_jobs": 0,
+    "remaining": "Monitor shutdown only."
   },
   "performance_units_and_old_run_comparison": "PERFORMANCE-NOTE.md",
   "closeout_preparation": {
-    "status": "All650cohorts and all650join/raw-manifest SHA256 references verified; all5native results/ledgers passed structural checks; all5teacher gates fail; archives and offline ratio pending.",
+    "status": "COMPLETE:650disjoint cohorts/joins; all5native readouts/ledgers; all80fixedB16 reports;5fullcorpus/QC archives;75archived model restores; newest5models and18worker states each rehashed. All5remain reference sources; no fitting.",
     "required": [
       "All130source versions, disjoint seeds,128episodes/76800controls each, full actor/sampling/environment joins and raw-file hash manifests",
       "Final paired64case after-panel, final complete teacher130, first10 versus last10TRAIN gate and exact paired McNemar",
@@ -1905,7 +1914,8 @@
         }
       },
       "result_tables": "result-tables-r1/RESULT.json",
-      "result_tables_sha256": "f8d60e50d9b1c54914273803746e67a0a5455303acf1c16e3eb6e2536f215f94"
+      "result_tables_sha256": "f8d60e50d9b1c54914273803746e67a0a5455303acf1c16e3eb6e2536f215f94",
+      "remaining": "None for this source campaign. Student fitting/OOD baselines need their own scientific plan; no teacher was admitted."
     },
     "native_closeout_watch": {
       "pid": 2044160,
@@ -1922,29 +1932,29 @@
       "SGD": 0,
       "CPU_budget": "watch10 + checkpoint tier2 + serial closer1 <= actual13CPU quota",
       "help_passed": true,
-      "state": "SERIAL_ARCHIVES_ACTIVE",
+      "state": "COMPLETED",
       "admission": "CLOSED-CORPUS-WATCH-R1-ADMISSION.json",
       "admission_sha256": "671df8863e8a28f0224c75a7ec174c271f6a4fcdc4f8898d75192c9c62bfbc55",
       "gates": "Exact expected eight-GPU manifests; successful130, after64 and clock0+60s before pinned FINAL-READOUT41ce8d78 and TIER-CORPUS1aa840ac. Serial prepare streams directly to BOS and verifies all members/full-object readback. Optional prefix only below240GiB and only fully audited ENV/actor files; all sampling/JSON remain for continuing QA. Full reclaim requires all1..130 exact audits, QC archive and retained18-worker full130 boundary.",
       "ownership": "This worker owns Task/FINAL-READOUT-R1.json and CORPUS-ARCHIVE-Task-R1-{PREPARED,PREFIX,RECLAIMED}.json; do not run duplicate closeout commands. Inspect its ERROR/PID before a new attempt.",
       "qualification": "AST/help plus actual all-five manifest/fixture-hash admission passed with zero model calls, new controls or SGD. Real closed-source branches remain gated on actual native closure; existing pinned readout/archive guards unchanged.",
-      "last_checked_shanghai": "2026-11-04 05:40:46",
+      "last_checked_shanghai": "2026-11-04 10:36:27",
       "last_result": {
-        "completed": false,
+        "completed": true,
         "started_unix": 1793730572.5006053,
         "pid": 2044160,
         "tasks": {
           "OpenDrawer": {
-            "state": "AUDITED_PREFIX_TIERED_SAMPLING_LOCAL",
+            "state": "CLOSED_AND_TIERED",
             "started_phase_unix": 1793733738.7760093,
             "readout": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/FINAL-READOUT-R1.json",
             "readout_sha256": "dfc288a93eca880773ec1023326916011a7109258eac2d3f7df4ab750dc3fc70",
             "prepared": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-OpenDrawer-R1-PREPARED.json",
             "prepared_sha256": "12055d1ca468333971884470a5ea411ea3e511907b8bc6a5dc7b78eeef3c66e8",
             "native_closed": true,
-            "full_reclaimed": false,
-            "reclaim": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-OpenDrawer-R1-PREFIX.json",
-            "reclaim_sha256": "93b32dbf0fb09aba3454865babfc19fb5f8ea34badf9204fb355a30dca7e7a1d"
+            "full_reclaimed": true,
+            "reclaim": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-OpenDrawer-R1-RECLAIMED.json",
+            "reclaim_sha256": "b559883bd9d91742bf8e36b58ee08a8689c2a0f78fccc2e4b6ca89a550431f8e"
           },
           "CloseToasterOvenDoor": {
             "state": "CLOSED_AND_TIERED",
@@ -1983,10 +1993,16 @@
             "reclaim_sha256": "c62cbf3d0c3c9fdc05b907b6a54efdc1c99d400b9ac46b92d3dfe6c4761bdc72"
           },
           "TurnOffStove": {
-            "state": "copy-and-full-object-readback",
+            "state": "CLOSED_AND_TIERED",
             "readout": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TurnOffStove/FINAL-READOUT-R1.json",
             "readout_sha256": "ecc832821a03f7dfa35a49664217787b3e27895ec78d47a5414c0c46060fb65d",
-            "started_phase_unix": 1793741386.1820552
+            "started_phase_unix": 1793743285.1046252,
+            "prepared": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-TurnOffStove-R1-PREPARED.json",
+            "prepared_sha256": "080829224da60ce98213dfe5820e83864361e34e7bc97c2acf0d84e382603eaf",
+            "native_closed": true,
+            "full_reclaimed": true,
+            "reclaim": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-TurnOffStove-R1-RECLAIMED.json",
+            "reclaim_sha256": "56b8672e343939ea13ac7afac6eb05fde0e57c0222af2b3cb1fa1c116b7f4d6f"
           }
         },
         "CPU_workers": 1,
@@ -2005,10 +2021,10 @@
           ]
         },
         "scope": "Native final gates plus corpus archive/reclaim only; full joins, initial-ratio GPU reporting and campaign results closeout remain required before fitting.",
-        "checked_unix": 1793741386.1412535,
-        "PFS_free_GiB": 637.71484375
+        "checked_unix": 1793743666.2845771,
+        "PFS_free_GiB": 740.8359375
       },
-      "last_process_check": "Four authoritative full archive/reclaim receipts complete; Stove last. OpenDrawer recovered receipt adopted on next outer controller pass."
+      "last_process_check": "All five full corpus archives/reclaims complete; recovered OpenDrawer receipt adopted by controller; no errors."
     },
     "final_teacher_readouts": {
       "OpenDrawer": {
@@ -2241,6 +2257,43 @@
           "passed": false
         }
       }
+    },
+    "final_retention_audit": {
+      "pid": 2053695,
+      "started_unix": 1793743170.9752576,
+      "source": "4fecc52139d15a2964471e67f09ae0b665945969",
+      "script": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/tools/4fecc521-FINAL-CLOSEOUT.py",
+      "script_sha256": "a1c39d8037c5fc55c0c8780ef492feb707eb2e1c95f6aa377cd76a6b43e2abc7",
+      "command": [
+        "python3",
+        "-B",
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/tools/4fecc521-FINAL-CLOSEOUT.py",
+        "--root",
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1",
+        "--output",
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/FINAL-CLOSEOUT-R1.json",
+        "--wait-seconds",
+        "1800"
+      ],
+      "CPU_workers": 1,
+      "GPU_jobs": 0,
+      "new_controls": 0,
+      "SGD": 0,
+      "model_calls": 0,
+      "scope": "Read-only final hashes/restore receipts on allocated Linux; waits for qualified serial Stove archive. No deletions, source mutations or fitting.",
+      "state": "PASSED",
+      "result": "FINAL-CLOSEOUT-R1.json",
+      "result_sha256": "40359c3755e265d4d68420c99fd85646f605427cbe0be2a0a44340bb345ae2bd",
+      "completed_shanghai": "2026-11-04 06:08:58",
+      "summary": {
+        "corpora": 5,
+        "newest_full_checkpoints": 5,
+        "restored_cold_models": 75,
+        "corpus_joins": 650,
+        "fixed_B16_reports": 80
+      }
     }
-  }
+  },
+  "status": "COMPLETE",
+  "completed_shanghai": "2026-11-04 06:08:58"
 }

@@ -1,19 +1,19 @@
 {
-  "completed": false,
+  "completed": true,
   "started_unix": 1793730572.5006053,
   "pid": 2044160,
   "tasks": {
     "OpenDrawer": {
-      "state": "AUDITED_PREFIX_TIERED_SAMPLING_LOCAL",
+      "state": "CLOSED_AND_TIERED",
       "started_phase_unix": 1793733738.7760093,
       "readout": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/FINAL-READOUT-R1.json",
       "readout_sha256": "dfc288a93eca880773ec1023326916011a7109258eac2d3f7df4ab750dc3fc70",
       "prepared": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-OpenDrawer-R1-PREPARED.json",
       "prepared_sha256": "12055d1ca468333971884470a5ea411ea3e511907b8bc6a5dc7b78eeef3c66e8",
       "native_closed": true,
-      "full_reclaimed": false,
-      "reclaim": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-OpenDrawer-R1-PREFIX.json",
-      "reclaim_sha256": "93b32dbf0fb09aba3454865babfc19fb5f8ea34badf9204fb355a30dca7e7a1d"
+      "full_reclaimed": true,
+      "reclaim": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-OpenDrawer-R1-RECLAIMED.json",
+      "reclaim_sha256": "b559883bd9d91742bf8e36b58ee08a8689c2a0f78fccc2e4b6ca89a550431f8e"
     },
     "CloseToasterOvenDoor": {
       "state": "CLOSED_AND_TIERED",
@@ -52,10 +52,16 @@
       "reclaim_sha256": "c62cbf3d0c3c9fdc05b907b6a54efdc1c99d400b9ac46b92d3dfe6c4761bdc72"
     },
     "TurnOffStove": {
-      "state": "copy-and-full-object-readback",
+      "state": "CLOSED_AND_TIERED",
       "readout": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/TurnOffStove/FINAL-READOUT-R1.json",
       "readout_sha256": "ecc832821a03f7dfa35a49664217787b3e27895ec78d47a5414c0c46060fb65d",
-      "started_phase_unix": 1793741386.1820552
+      "started_phase_unix": 1793743285.1046252,
+      "prepared": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-TurnOffStove-R1-PREPARED.json",
+      "prepared_sha256": "080829224da60ce98213dfe5820e83864361e34e7bc97c2acf0d84e382603eaf",
+      "native_closed": true,
+      "full_reclaimed": true,
+      "reclaim": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-TurnOffStove-R1-RECLAIMED.json",
+      "reclaim_sha256": "56b8672e343939ea13ac7afac6eb05fde0e57c0222af2b3cb1fa1c116b7f4d6f"
     }
   },
   "CPU_workers": 1,
@@ -74,6 +80,6 @@
     ]
   },
   "scope": "Native final gates plus corpus archive/reclaim only; full joins, initial-ratio GPU reporting and campaign results closeout remain required before fitting.",
-  "checked_unix": 1793741386.1412535,
-  "PFS_free_GiB": 637.71484375
+  "checked_unix": 1793743666.2845771,
+  "PFS_free_GiB": 740.8359375
 }

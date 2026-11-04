@@ -1,5 +1,8 @@
 # Five-task native source results
 
+**Completed Nov4 2026.** Native training, reporting and corpus retention checks
+are complete; all campaign GPU jobs are terminal.
+
 All five Baige Pro6K jobs completed 130/130 updates and their final paired
 64-case panels, exited 0 and reached scheduler SUCCESS. Each task used eight
 GPUs, 16 TRAIN / 8 EVAL lanes per GPU and two actor ranks on immutable runtime
@@ -51,13 +54,19 @@ full-action marginal KL or teacher-performance gates. Download the verified
 [80-row likelihood table](result-tables-r1/initial-policy-log-ratios.csv), and
 [five-source summary](result-tables-r1/source-summary.csv).
 
-Campaign archival closeout remains in progress: 75 superseded checkpoints are
-verified in BOS; final 130 checkpoints stay on PFS. Full corpus archives,
-QC metadata, readbacks and reclaims are complete for OpenDrawer, Toaster,
-Drawer→Counter and Coffee; Stove is last. OpenDrawer's interrupted cleanup was
-recovered with exact archive and inventory checks, preserving all data. The
-first two reporting attempts made no simulator actions, SGD or likelihood
-forwards.
+The [final retention check](FINAL-CLOSEOUT-R1.json) passed on allocated Linux.
+All five full raw corpora and QC archives are retained in BOS, with full
+object/member SHA256 readback receipts and restore commands. All 75 older full
+checkpoints remain in BOS; reporting actually restored and strictly loaded
+all 75 archived model payloads. The five newest full step130 checkpoints stay
+on PFS, with their model and all 18 worker/optimizer/sampler/RNG sidecar hashes
+rechecked at closeout. All 650 join and raw-file manifests were rehashed after
+tiering. At the latest check PFS has 740.84 GiB free, above the 200 GiB floor.
+
+OpenDrawer's interrupted cleanup was recovered with exact archive/inventory
+checks, preserving all data. The first two reporting attempts made no simulator
+actions, SGD or likelihood forwards. No student fitting or DPT label queries
+were started. Further fitting or OOD PPO comparisons require their own plan.
 
 Evidence: [all 650 joins](COMPLETE-CORPUS-JOINS-R1.json), each task's
 FINAL-READOUT-R1.json and FINAL-ACTION-ACCOUNTING-R1.json, and
