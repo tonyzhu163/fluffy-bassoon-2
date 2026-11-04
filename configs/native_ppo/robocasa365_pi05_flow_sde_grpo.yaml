@@ -202,6 +202,7 @@ critic:
   use_critic_model: false
 
 native_pilot:
+  fresh_eval_processes: ${oc.decode:${oc.env:ROBOCASA_FLOW_FRESH_EVAL_PROCESSES,false}}
   output: ${oc.env:ROBOCASA_SIM_PPO_OUTPUT}
   accounting_root: ${oc.env:ROBOCASA_SIM_PPO_ACCOUNTING}
   world_size: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_WORLD_SIZE,8}}

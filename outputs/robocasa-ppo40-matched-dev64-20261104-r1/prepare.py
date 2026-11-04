@@ -98,14 +98,17 @@ def add_grpo(staging):
     torch.set_num_threads(2)
     fs = os.statvfs(staging)
     assert fs.f_bavail * fs.f_frsize > 214 << 30
-    root = ROOT / 'robocasa-ppo-grpo-meta-stage1-20261104-r1/grpo/attempt-01'
+    original = ROOT / 'robocasa-ppo-grpo-meta-stage1-20261104-r1/grpo/attempt-01'
+    root = original.with_name('attempt-02')
+    assert Path(read(root/'resolved-config.json')['runner']['resume_dir']) == original/'OpenDrawer/checkpoints/global_step_10'
+    assert read(root/'evaluations/step-010.json')['completed']
     assert read(root/'clock.json')['exit_code'] == 0
     assert read(root/'after-evaluation.json')['global_step'] == 40
     assert read(root/'progress.json')['completed_iterations'] == 40
     base = staging/'READY.json'
     record = read(base)
     ref = load(record['models']['sft'])
-    start, final = boundary(0, root), boundary(40, root)
+    start, final = boundary(0, original), boundary(40, root)
     initial, trained = load(start), load(final)
     actor = {k for k in ref if not k.startswith('value_head.')}
     assert initial.keys() == trained.keys() == actor
