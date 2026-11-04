@@ -33,7 +33,7 @@ def prepare(manifest):
     torch.set_num_threads(2)
     native = configure()
     previous = native.read(ROOT / 'outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/EVAL-MANIFEST.json')
-    ready = native.read(ROOT / 'outputs/robocasa-ppo40-matched-dev64-20261104-r1/READY-FOUR.json')
+    ready = native.read(ROOT / 'outputs/robocasa-ppo40-matched-dev64-20261104-r1/staging-r1/READY-FOUR.json')
     grpo = ready['models']['grpo']['source']
     assert file_sha256(grpo['path']) == grpo['sha256']
     initial = previous['policies']['SFT']
