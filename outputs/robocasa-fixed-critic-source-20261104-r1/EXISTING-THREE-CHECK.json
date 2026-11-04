@@ -1,0 +1,126 @@
+{
+  "checked_shanghai": "2026-11-04T14:21:09.597264+08:00",
+  "scope": "Read-only published-record and owner-status check; no cluster query, new job, SGD or student fitting.",
+  "user_direction": "Only two replacement PPO restarts first, conditional on verifying significant learning in all three retained sources.",
+  "fresh_tasks": [
+    "PickPlaceCounterToCabinet",
+    "TurnOnSinkFaucet"
+  ],
+  "conditional_retained_tasks": [
+    "OpenDrawer",
+    "CloseToasterOvenDoor",
+    "CoffeeSetupMug"
+  ],
+  "source": "outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/EXECUTION.json",
+  "source_sha256": "8c9d63fd0eae75498cd175af76c5ff53d9f978a1d6541e2513166edcb9717ff5",
+  "source_last_published_check": "2026-11-04T14:12:10.148232+08:00",
+  "existing_sweep_correction_family": 5,
+  "criterion": "Each DEV-selected teacher must beat initial on independent paired TEST, wins>losses and exact McNemar Holm-corrected p<.05; original five-test family retained.",
+  "all_three_verified": false,
+  "rows": [
+    {
+      "task": "OpenDrawer",
+      "job_id": "job-cn2if26i9hth",
+      "status": "RUNNING",
+      "last_published_check": "2026-11-04T14:12:10.148232+08:00",
+      "completed_DEV_checkpoints": [
+        130,
+        120,
+        110,
+        100,
+        90,
+        80,
+        70,
+        60,
+        50,
+        40
+      ],
+      "latest_progress": {
+        "completed": false,
+        "task": "OpenDrawer",
+        "banks_completed": 86,
+        "episodes_completed": 688,
+        "policy_controls": 412800,
+        "latest": {
+          "panel": "DEV",
+          "step": 30,
+          "bank": 5
+        },
+        "SGD": 0
+      },
+      "learning_gate": "PENDING_INDEPENDENT_SELECTED_VS_INITIAL_TEST",
+      "significant_learning_verified": false
+    },
+    {
+      "task": "CloseToasterOvenDoor",
+      "job_id": "job-zwstryxe9plb",
+      "status": "RUNNING",
+      "last_published_check": "2026-11-04T14:12:10.148232+08:00",
+      "completed_DEV_checkpoints": [
+        130,
+        120,
+        110,
+        100,
+        90,
+        80,
+        70,
+        60,
+        50,
+        40,
+        30
+      ],
+      "latest_progress": {
+        "completed": false,
+        "task": "CloseToasterOvenDoor",
+        "banks_completed": 94,
+        "episodes_completed": 752,
+        "policy_controls": 451200,
+        "latest": {
+          "panel": "DEV",
+          "step": 20,
+          "bank": 5
+        },
+        "SGD": 0
+      },
+      "learning_gate": "PENDING_INDEPENDENT_SELECTED_VS_INITIAL_TEST",
+      "significant_learning_verified": false
+    },
+    {
+      "task": "CoffeeSetupMug",
+      "job_id": "job-49hgr77uuw87",
+      "status": "RUNNING",
+      "last_published_check": "2026-11-04T14:12:10.148232+08:00",
+      "completed_DEV_checkpoints": [
+        130,
+        120,
+        110,
+        100,
+        90,
+        80,
+        70,
+        60,
+        50,
+        40,
+        30
+      ],
+      "latest_progress": {
+        "completed": false,
+        "task": "CoffeeSetupMug",
+        "banks_completed": 91,
+        "episodes_completed": 728,
+        "policy_controls": 436800,
+        "latest": {
+          "panel": "DEV",
+          "step": 20,
+          "bank": 2
+        },
+        "SGD": 0
+      },
+      "learning_gate": "PENDING_INDEPENDENT_SELECTED_VS_INITIAL_TEST",
+      "significant_learning_verified": false
+    }
+  ],
+  "new_job_ids": [],
+  "new_GPU_seconds": 0,
+  "new_controls": 0
+}
