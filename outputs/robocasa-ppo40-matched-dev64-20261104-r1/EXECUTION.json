@@ -3,7 +3,7 @@
   "queue": "aihcq-rh0wwk9muei4",
   "job_id": "job-q4bwu5sczbmj",
   "job_name": "mwj_1104_stage1_dev64_four_r1",
-  "status": "Running",
+  "status": "Evaluation retry prepared",
   "created_shanghai": "2026-11-04T21:28:49+08:00",
   "source": "cb44bb74044e6c8d5a7a3b678aa349f4318776f8",
   "reviewed_through": "147c125393a78387cebd83f1a89a70f55753d7fd",
@@ -22,5 +22,17 @@
     "automatic_retries": false
   },
   "models": "READY-FOUR.json",
-  "receipt": "BAIGE-LAUNCH.png"
+  "receipt": "BAIGE-LAUNCH.png",
+  "attempts": [
+    {
+      "job_id": "job-q4bwu5sczbmj",
+      "output": "gpu-r1",
+      "status": "failed before any episodes",
+      "cause": "exclusive scheduler container exposed one NVIDIA GPU but omitted CUDA_VISIBLE_DEVICES; the eval launcher did not supply the visibility selector",
+      "probe": "ATTEMPT-01-PROBE.json",
+      "clock": "ATTEMPT-01-CLOCK.json",
+      "episodes": 0,
+      "SGD": 0
+    }
+  ]
 }
