@@ -38,14 +38,17 @@ def main():
         target = output/(method+'-metrics.jsonl')
         target.write_bytes(frozen)
         rows = [json.loads(line) for line in lines]
-        actor = [row for row in rows if row.get('phase','actor')=='actor' and 'validation_loss' in row]
-        assert actor and all(math.isfinite(row['validation_loss']) for row in actor)
+        actor = [row for row in rows if row.get('phase','actor')=='actor'
+            and ('validation_loss' in row or 'validation_nll' in row)]
+        def loss(row):
+            return row['validation_loss'] if 'validation_loss' in row else row['validation_nll']
+        assert actor and all(math.isfinite(loss(row)) for row in actor)
         status = json.loads((fits/method/'training-status.json').read_text())
         (output/(method+'-status.json')).write_text(json.dumps(status,indent=2)+'\n')
-        best = min(actor,key=lambda row:row['validation_loss'])
-        x,y = [row['update'] for row in actor], [row['validation_loss'] for row in actor]
+        best = min(actor,key=loss)
+        x,y = [row['update'] for row in actor], [loss(row) for row in actor]
         ax.plot(x,y,color='#147dba',linewidth=1.5)
-        ax.scatter([best['update']],[best['validation_loss']],color='#df812e',s=25,zorder=4)
+        ax.scatter([best['update']],[loss(best)],color='#df812e',s=25,zorder=4)
         stop = 'converged' if status['converged'] else 'training'
         ax.set_title(method.upper().replace('_','-')+': '+stop+'; latest '+str(actor[-1]['update']))
         ax.set_xlabel('Actor updates'); ax.set_ylabel('Held-out actor loss')
