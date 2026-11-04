@@ -12,6 +12,8 @@ import torch
 ROOT = Path('/mowenjie/fluffy-bassoon-2/outputs/robocasa-buttons-replacement-qualification-20261104-r1')
 RUN = ROOT/'gpu-r1'
 TASKS = ['TurnOnSinkFaucet', 'TurnOnElectricKettle']
+INSTRUCTIONS = ['Turn on the sink faucet.',
+                'Press down the lever to turn on the electric kettle.']
 CAMERAS = ['robot0_agentview_left', 'robot0_eye_in_hand', 'robot0_agentview_right']
 
 
@@ -64,7 +66,7 @@ for rank, task in enumerate(TASKS):
         path = directory/'episodes'/f'{slot:03d}.pt'
         data = torch.load(path, map_location='cpu', weights_only=False)
         episode, records = data['episode'], data['records']
-        assert data['case'] == case and episode['task'] == task
+        assert data['case'] == case and episode['task'] == INSTRUCTIONS[rank]
         assert episode['completed'] and episode['horizon'] == 600 and len(records) == 12
         assert episode['success_termination_disabled'] and episode['raw_rgb_only']
         assert not episode['info_on_video'] and not episode['extra_info_on_video']
