@@ -33,9 +33,12 @@
         "optimizer_steps": 0
       },
       "first_update": "E2-FIRST-UPDATE.json",
-      "last_completed_updates": 9,
-      "optimizer_steps": 216,
-      "dev_successes_of_64": {}
+      "last_completed_updates": 22,
+      "optimizer_steps": 528,
+      "dev_successes_of_64": {
+        "step-010": 34,
+        "step-020": 34
+      }
     },
     "C": {
       "job": "job-1gheyfqughhs",
@@ -45,12 +48,13 @@
       "GPUs": 8,
       "automatic_retry": false,
       "nonhead_tensors_equal_at_start": 667,
-      "last_completed_updates": 10,
+      "last_completed_updates": 29,
       "first_update": "C-FIRST-UPDATE.json",
       "device_probe": "passed",
-      "optimizer_steps": 60,
+      "optimizer_steps": 174,
       "dev_successes_of_64": {
-        "step-010": 31
+        "step-010": 31,
+        "step-020": 35
       }
     },
     "D": {
@@ -60,9 +64,11 @@
       "GPUs": 8,
       "scheduler_minutes": 175,
       "automatic_retry": false,
-      "last_completed_updates": 1,
-      "optimizer_steps": 6,
-      "dev_successes_of_64": {},
+      "last_completed_updates": 19,
+      "optimizer_steps": 114,
+      "dev_successes_of_64": {
+        "step-010": 38
+      },
       "device_probe": "passed",
       "first_update": "D-FIRST-UPDATE.json"
     },
@@ -70,10 +76,10 @@
       "status": "preparing, waits for immutable final checkpoints"
     }
   },
-  "last_checked_Shanghai": "2026-11-04 20:17",
+  "last_checked_Shanghai": "2026-11-04 21:13",
   "engine_r2": "02ce594015eaa8f972f875d7f37e6972f4ada495",
   "endpoint_eval_code": "3cc33a4820344d4f4a894b9ab1bb4d7137f701c1",
-  "next_check_Shanghai": "2026-11-04 20:37",
+  "next_check_Shanghai": "2026-11-04 21:33",
   "third_arm_admission": {
     "shared_PFS_free_GiB": 660,
     "combined_E_C_current_GiB_rounded_up": 62,
@@ -86,5 +92,5 @@
     "pinned_engine_same_across_three_arms": true
   },
   "next_action": "Monitor three step-40 checkpoints and evaluate all six policies on the locked 512 cases",
-  "PFS_free_GiB": 606.9
+  "PFS_free_GiB": 315.1
 }
