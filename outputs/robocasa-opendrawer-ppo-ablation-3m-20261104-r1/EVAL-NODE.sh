@@ -38,6 +38,12 @@ echo "$EVAL_MANIFEST_SHA  $manifest" | sha256sum -c -
 # Scientific workers and baseline analysis come from the experiment's pinned checkout.
 export PYTHONPATH=$EVAL_CODE/$run:$EVAL_CODE/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1:$EVAL_CODE/outputs/robocasa-flow-sde-endpoint-test512-20261104-r1:$engine/src:$vendor
 export OPENPI_DATA_HOME=$root/setups/robocasa365-native-20261101-r1/cache/.cache/openpi
+export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl
+if [[ -z ${CUDA_VISIBLE_DEVICES:-} ]]; then
+  device_uuid=$(nvidia-smi --query-gpu=uuid --format=csv,noheader)
+  [[ $device_uuid == GPU-* && $device_uuid != *$'\n'* ]]
+  export CUDA_VISIBLE_DEVICES=0
+fi
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 NCCL_P2P_DISABLE=1 FLUFFY_GPU_EXECUTION=baige
 "$py" -B "$engine/scripts/[train]gpu_probe.py" --expected-count 1 --purpose evaluation --baige-container --output "$out/gpu-probe.json"
 deadline=$((start+10140))
