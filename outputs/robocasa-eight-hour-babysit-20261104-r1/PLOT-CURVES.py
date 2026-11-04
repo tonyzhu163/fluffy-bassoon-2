@@ -77,13 +77,16 @@ def main():
             ax.grid(axis='y',alpha=.18)
     legend_styles=styles[:2] if methods==['controls'] else styles
     handles=[Line2D([0],[0],color=s[2],linestyle=s[4],marker=s[5],label=s[3]) for s in legend_styles]
-    fig.suptitle('RoboCasa: actual query success after 0–5 completed episodes',y=.98,fontsize=15)
+    heading='RoboCasa direct-action meta baseline' if args.methods else 'RoboCasa frozen native controls'
+    fig.suptitle(heading+': query success after 0–5 completed episodes',y=.98,fontsize=15)
     fig.legend(handles=handles,loc='upper center',bbox_to_anchor=(.5,.93),ncol=len(handles),frameon=False)
     fig.subplots_adjust(top=.79 if len(methods)==1 else .83,bottom=.20 if len(methods)==1 else .16,wspace=.12,hspace=.35)
     fig.supxlabel('Completed prior episodes (0 is the first query)',y=.095,fontsize=10)
+    context=('Direct-action learners use the frozen original feature encoder; single-fit descriptive curves.'
+        if args.methods else 'ID PPO controls use each source teacher; OOD PPO uses the designated OpenDrawer130 teacher.')
     fig.text(.5,.025,'50 paired cases per task and mode; actual query success, not cumulative best-of-six. '
-        'Native controls have no learned memory.\nCurrent three-source baseline with two contracted OOD tasks; '
-        'single-fit descriptive curves; zero deployment SGD.',ha='center',fontsize=9,color='#505860')
+        'Native controls have no learned memory.\n'+context+' Three-source / two-OOD protocol; zero deployment SGD.',
+        ha='center',fontsize=9,color='#505860')
     output=run/'figures'/args.tag;output.mkdir(parents=True,exist_ok=False)
     png,svg=output/'query-curves.png',output/'query-curves.svg'
     fig.savefig(png,dpi=160,facecolor='white');fig.savefig(svg,facecolor='white');plt.close(fig)
