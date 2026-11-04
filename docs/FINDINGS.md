@@ -121,6 +121,8 @@ across attempts.
 
 On OpenDrawer, PPO and GRPO each trained for 40 updates at 128 episodes × 600 controls per update. PPO's first and last ten TRAIN collections scored 63.20% and 64.45%. GRPO's scored 64.84% and 66.41%. On the original 64 DEV cases, PPO went from 34 to 26 successes (5 gains, 13 losses, paired p=.0963). GRPO went from 41 to 41 (7 gains, 7 losses, p=1). Each arm used its own sampler stream. Both fell short of the planned ten-point gain. [PPO result](../outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/PPO-RESULT.md) · [GRPO result](../outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/GRPO-RESULT.md).
 
+On the original 64 DEV scenes with common sampler draws, SFT and old PPO40 scored 36 and 33 successes. New PPO40 scored 40 and GRPO40 scored 31. New PPO won 13 discordant cases and GRPO won four (+14.06 pp for new PPO, paired 95% bootstrap interval +1.56 to +26.56, exact p=.0490). Repeating SFT changed one of eight outcomes on the first bank. This comparison covers these checkpoints and this DEV panel. [Matched results](../outputs/robocasa-ppo40-matched-dev64-20261104-r1/RESULT.md).
+
 <!-- stage1-opendrawer-end -->
 
 The original Human30075000 pi0.5 completed the predeclared OpenDrawer headroom

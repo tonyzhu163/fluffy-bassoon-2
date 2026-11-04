@@ -3,7 +3,7 @@
   "queue": "aihcq-rh0wwk9muei4",
   "job_id": "job-1o0kckkz2s3e",
   "job_name": "mwj_1104_stage1_dev64_four_r2",
-  "status": "Running",
+  "status": "Succeeded",
   "created_shanghai": "2026-11-04T21:33:38+08:00",
   "source": "24affd15164a65d8304ea3c439916f2a8a9be6f6",
   "reviewed_through": "147c125393a78387cebd83f1a89a70f55753d7fd",
@@ -44,19 +44,26 @@
       "job_id": "job-1o0kckkz2s3e",
       "created_shanghai": "2026-11-04T21:33:38+08:00",
       "source": "24affd15164a65d8304ea3c439916f2a8a9be6f6",
-      "state": "Running",
+      "state": "Succeeded",
       "probe": "GPU-PROBE-R2.json",
       "scheduler": "BAIGE-EVAL-R2.png",
-      "limit_minutes": 73
+      "limit_minutes": 73,
+      "completed_shanghai": "2026-11-04T22:13:49+08:00",
+      "conservative_GPU_seconds": 2411,
+      "worker_GPU_seconds": 2380
     }
   ],
   "continuation_wall_minutes": 73,
-  "last_check_shanghai": "2026-11-04T21:53:39+08:00",
-  "last_complete_common_cases": 24,
+  "last_check_shanghai": "2026-11-04T22:13:49+08:00",
+  "last_complete_common_cases": 64,
   "first_24_successes": {
     "sft": 14,
     "old": 14,
     "new": 15,
     "grpo": 13
-  }
+  },
+  "conservative_GPU_seconds": 2494,
+  "worker_GPU_seconds": 2381,
+  "result": "RESULT.json",
+  "verification": "DEV64-VERIFICATION.json"
 }
