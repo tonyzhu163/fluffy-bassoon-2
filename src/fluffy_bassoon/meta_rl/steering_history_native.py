@@ -56,7 +56,8 @@ class _ThreadJournal:
 class NativeAttemptBackend:
     def __init__(self, *, output, canonical_root, motor, spec, native_factory, journal,
                  writer_factory, binding, maximum_rgb_delta,
-                 rank=0, environment_type=_RecordingEnvironment, memory_mode="full", actual_attempts=5):
+                 rank=0, environment_type=_RecordingEnvironment, memory_mode="full", actual_attempts=5,
+                 fixed_case_order=False):
         if (not binding or maximum_rgb_delta is not None
                 and (type(maximum_rgb_delta) is not int or maximum_rgb_delta < 0)
                 or maximum_rgb_delta is None and binding.get("render_contract") != "diagnostic_only"):
@@ -64,6 +65,7 @@ class NativeAttemptBackend:
         if type(actual_attempts) is not int or not 1 <= actual_attempts <= 6:
             raise ValueError("Bind at most six actual episodes for zero through five support episodes")
         self.actual_attempts = actual_attempts
+        self.fixed_case_order = fixed_case_order
         self.output, self.canonical_root = Path(output), Path(canonical_root)
         self.motor, self.spec, self.native_factory = motor, spec, native_factory
         self.journal, self.writer_factory, self.binding = journal, writer_factory, deepcopy(binding)
@@ -76,6 +78,8 @@ class NativeAttemptBackend:
         self.memory_mode = memory_mode
         if memory_mode != "full":
             protocol["memory_mode"] = memory_mode
+        if fixed_case_order:
+            protocol["batching"] = "fixed_order_same_horizon_waves_v1"
         if "native_attempt_protocol" in self.binding and self.binding["native_attempt_protocol"] != protocol:
             raise ValueError("Do not change a bound native attempt protocol")
         self.binding["native_attempt_protocol"] = protocol
@@ -262,7 +266,11 @@ class NativeAttemptBackend:
         prefixes = prefix_references or {}
         if len(set(keys)) != len(keys) or not set(prefixes) <= set(keys):
             raise ValueError("Case bank and recovery prefixes must have unique matching identities")
-        broker = BatchedMotorBroker(self.motor, self.spec, maximum_batch=lanes, deadline_unix=deadline_unix)
+        if self.fixed_case_order and (len(cases) > lanes or len({item["horizon"] for item in cases}) != 1
+                or len({len(prefixes.get(key, ())) for key in keys}) != 1):
+            raise ValueError("Fixed native batches require one equal-horizon wave with equal recovery prefixes")
+        broker = BatchedMotorBroker(self.motor, self.spec, maximum_batch=lanes, deadline_unix=deadline_unix,
+            ordered_owners=keys if self.fixed_case_order else None)
         policy.eval().requires_grad_(False)
 
         def worker(item):

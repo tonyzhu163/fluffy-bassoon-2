@@ -26,13 +26,17 @@ class _Call:
 
 
 class BatchedMotorBroker:
-    def __init__(self, motor, spec, *, maximum_batch, deadline_unix=None):
+    def __init__(self, motor, spec, *, maximum_batch, deadline_unix=None, ordered_owners=None):
         if type(maximum_batch) is not int or maximum_batch < 1:
             raise ValueError("Require a qualified positive native execution batch")
         self.motor, self.spec, self.maximum_batch = motor, spec, maximum_batch
         self.deadline, self.failure = deadline_unix, None
         self.queue, self.lock, self.calls = Queue(), threading.RLock(), {}
         self.batch_sizes, self.sequence = [], 0
+        if ordered_owners is not None and (not ordered_owners or len(ordered_owners) > maximum_batch
+                or len(set(ordered_owners)) != len(ordered_owners)):
+            raise ValueError("Fixed native batches require one unique owner per row")
+        self.ordered_owners = tuple(ordered_owners) if ordered_owners is not None else None
 
     def check(self):
         with self.lock:
@@ -81,14 +85,27 @@ class BatchedMotorBroker:
             calls = [self.queue.get(timeout=.02)]
         except Empty:
             return False
-        # A short rendezvous coalesces ready cases without waiting for slow
-        # physical resets. It changes execution only, never a source batch.
-        until = time.monotonic() + .001
-        while len(calls) < self.maximum_batch:
-            try:
-                calls.append(self.queue.get(timeout=max(0., until - time.monotonic())))
-            except Empty:
-                break
+        if self.ordered_owners is not None:
+            # Equal-horizon cohorts rendezvous at every physical chunk. Reset
+            # timing cannot change row membership or BF16 execution width.
+            while len(calls) < len(self.ordered_owners):
+                self.check()
+                try:
+                    calls.append(self.queue.get(timeout=.02))
+                except Empty:
+                    continue
+            by_owner = {call.owner: call for call in calls}
+            if len(by_owner) != len(calls) or set(by_owner) != set(self.ordered_owners):
+                raise ValueError("Fixed native batch membership changed")
+            calls = [by_owner[owner] for owner in self.ordered_owners]
+        else:
+            # A short rendezvous coalesces ready cases in legacy readouts.
+            until = time.monotonic() + .001
+            while len(calls) < self.maximum_batch:
+                try:
+                    calls.append(self.queue.get(timeout=max(0., until - time.monotonic())))
+                except Empty:
+                    break
         self.sequence += 1
         features, prepared = self.motor.prepare_batch(combine_observations([call.observation for call in calls]))
         if len(features) != len(calls):

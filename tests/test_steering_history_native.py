@@ -71,7 +71,8 @@ class PhysicalReference:
         self.closed, self.native = True, None
 
 
-def backend(root, *, spec, environment_type=PhysicalReference, maximum_rgb_delta=1, actual_attempts=5):
+def backend(root, *, spec, environment_type=PhysicalReference, maximum_rgb_delta=1, actual_attempts=5,
+            fixed_case_order=False):
     from test_interface_ppo import batch_native
     native, _ = batch_native()
     native.model.layers = 18
@@ -80,7 +81,8 @@ def backend(root, *, spec, environment_type=PhysicalReference, maximum_rgb_delta
         motor=FrozenRoboCasaInterface(native), spec=spec, native_factory=lambda _: None, journal=journal,
         writer_factory=lambda _: None, binding=dict(source="fixture", candidate="frozen-fixture",
             render_contract="diagnostic_only" if maximum_rgb_delta is None else "bounded"),
-        environment_type=environment_type, maximum_rgb_delta=maximum_rgb_delta, actual_attempts=actual_attempts)
+        environment_type=environment_type, maximum_rgb_delta=maximum_rgb_delta, actual_attempts=actual_attempts,
+        fixed_case_order=fixed_case_order)
     return result, native.model, journal
 
 
@@ -162,6 +164,31 @@ def test_sixth_query_uses_five_completed_episodes_and_resumes_exactly(tmp_path):
     default, _, journal = backend(tmp_path / "default", spec=spec)
     with pytest.raises(ValueError, match="bound native attempt protocol"):
         default.run_case(policy, case, horizon=100, attempts=6)
+    assert journal.charged() == 0
+
+
+def test_fixed_native_rows_survive_six_query_episodes_and_unequal_cohorts_fail(tmp_path):
+    spec = InterfaceSpec(kind="velocity", steering_dim=32)
+    policy = HistoryNoisePolicy(HistoryConfig(20, 32, width=8, heads=2, layers=1, context_length=12))
+    cases = [dict(case=dict(task="OpenDrawer", native_seed=seed), horizon=100) for seed in (17, 18)]
+    runner, _, journal = backend(tmp_path / "fixed", spec=spec, actual_attempts=6, fixed_case_order=True)
+    results = runner.run_bank(policy, cases, lanes=2, attempts=6)
+    assert len(results) == 12 and runner.last_batch_sizes == [2] * 12
+    assert journal.charged() == 12 * 103
+    expected_owners = [case_key(item["case"]) for item in cases]
+    import gzip
+    import pickle
+    for reference in runner.references:
+        saved = torch.load(reference["path"], weights_only=False)
+        for item in saved["chunks"]:
+            with gzip.open(item["path"], "rb") as stream:
+                row = pickle.load(stream)
+            assert row["execution_provenance"]["case_owners"] == expected_owners
+            assert row["execution_provenance"]["row"] == expected_owners.index(case_key(saved["case"]))
+    unequal, _, journal = backend(tmp_path / "unequal", spec=spec, fixed_case_order=True)
+    cases[1]["horizon"] = 150
+    with pytest.raises(ValueError, match="equal-horizon wave"):
+        unequal.run_bank(policy, cases, lanes=2)
     assert journal.charged() == 0
 
 
