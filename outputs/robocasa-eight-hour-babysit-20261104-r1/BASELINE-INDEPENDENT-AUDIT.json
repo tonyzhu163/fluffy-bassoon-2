@@ -1,0 +1,43 @@
+{
+  "verified": true,
+  "manifest_sha256": "0fd8c6f5f9213836267a1aecc80c0b35fc9a6323e14ad8e75703635081207dee",
+  "combined_sha256": "55bd6e68ab01a80cc8f8d18925145f3d1d59baf84d434c1a7f952692b492b246",
+  "cases_per_policy": 512,
+  "policy_episodes": 1544,
+  "matched_physical_public_starts": 1544,
+  "matched_sampler_chunk_calls": 2316,
+  "accounted_policy_controls": 926400,
+  "reset_controls": 0,
+  "charged_controls": 926400,
+  "distinct_accelerators": 2,
+  "first_successes": {
+    "SFT": 311,
+    "PPO": 303,
+    "GRPO": 322
+  },
+  "end_successes": {
+    "SFT": 299,
+    "PPO": 290,
+    "GRPO": 309
+  },
+  "independent_paired_tests": {
+    "primary_GRPO_minus_PPO": {
+      "wins": 83,
+      "losses": 64,
+      "exact_p": 0.13737776624912437,
+      "role": "primary"
+    },
+    "PPO_vs_SFT": {
+      "wins": 66,
+      "losses": 74,
+      "exact_p": 0.5542689157763171,
+      "role": "descriptive"
+    },
+    "GRPO_vs_SFT": {
+      "wins": 51,
+      "losses": 40,
+      "exact_p": 0.29446978456853373,
+      "role": "descriptive"
+    }
+  }
+}

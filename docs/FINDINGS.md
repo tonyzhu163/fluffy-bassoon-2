@@ -79,6 +79,8 @@ A native18-layer learned-KV steering interface now passes byte-exact zero-adapte
 
 The prospective frozen-base bridge sampler now converts its history-normalized physical labels back to physical commands, pads32 coordinates and applies the native action normalization. The previous direct padding produced a maximum.59341 normalized-target error on a real saved chunk; the repaired result matches the official transform exactly (physical encoding round-trip error2.38e-7). All31 affected allocated-Linux core tests pass. This fixes the prepared sampler before any fitted-steerer claim; the running direct-action learners and prior manually normalized native gradient check use separate paths. [Numerical evidence](../outputs/robocasa-eight-hour-babysit-20261104-r1/NATIVE-TARGETS-QUALIFICATION.json).
 
+A fresh independent OpenDrawer TEST512 finds GRPO40 at322/512 and PPO40 at303/512 (SFT311/512). The primary GRPO−PPO difference is+3.71points,83wins/64losses, exact p=.1374 and paired95% interval[-.78,+8.40]; it establishes no winner and does not repeat the earlier DEV64 PPO advantage. Both actors used3.072M TRAIN controls. Independent Linux CPU auditing verifies all1544 complete episodes, matched native physical/public starts, common sampler RNG and926400controls. This is one trained checkpoint per method; the separate four-epoch PPO improvement remains a different paired comparison. [Fresh result and limits](../outputs/robocasa-eight-hour-babysit-20261104-r1/BASELINE-RESULT.md).
+
 ## Headline
 
 - **No experiment so far shows in-context adaptation or a memory benefit**, on
