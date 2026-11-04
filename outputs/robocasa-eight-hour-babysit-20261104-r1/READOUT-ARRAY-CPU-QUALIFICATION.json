@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "source_commit": "70d9b97677dc2aca5d40402cd76b294a903f25c1",
+  "GPU_hours": 0,
+  "CPU_only": true,
+  "reference": "Fresh independent512-case matched PPO/GRPO endpoints",
+  "paired_reducer_matches_existing_qualified_reference": true,
+  "actual": {
+    "cases": 512,
+    "delta_percentage_points": 3.7109375,
+    "wins": 83,
+    "losses": 64,
+    "exact_McNemar_p": 0.13737776624912437,
+    "paired_bootstrap95_percentage_points": [
+      -0.78125,
+      8.3984375
+    ],
+    "bootstrap_seed": 85311000,
+    "bootstrap_draws": 10000,
+    "inference": "descriptive; marginal intervals, no multiplicity-adjusted adaptation claim"
+  },
+  "initial_qualification": "Explicit case resampling had the same bootstrap law but a different seeded sample sequence; replaced with the qualified multinomial count bootstrap before any readout use.",
+  "core_difference_from_GPU_qualified_7b528d35": ""
+}

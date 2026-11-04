@@ -1,0 +1,42 @@
+{
+  "job_id": "job-i7sjmb1kcwmm",
+  "name": "mwj_1105_native_initial_ID50_r1",
+  "source_commit": "70d9b97677dc2aca5d40402cd76b294a903f25c1",
+  "cluster": "Baige Pro6K",
+  "GPUs": 2,
+  "replicas": 2,
+  "GPUs_per_replica": 1,
+  "CPU_per_replica": 16,
+  "RAM_GiB_per_replica": 64,
+  "SHM_GiB_per_replica": 8,
+  "maximum_minutes": 75,
+  "worker_seconds": 4200,
+  "budget": "existing96GPUh",
+  "reservation_GPU_hours": 2.5,
+  "created_shanghai": "2026-11-05T01:50:52+08:00",
+  "cases_per_task": 50,
+  "tasks": [
+    "OpenDrawer",
+    "CloseToasterOvenDoor",
+    "CoffeeSetupMug"
+  ],
+  "actual_episodes_per_case": 6,
+  "expected_episodes": 900,
+  "expected_controls": 540000,
+  "method": "native_initial",
+  "output": "gpu/native-initial-ID-final-01",
+  "qualification": "B8 actual144episodes/86400controls/432decodedvideos passed; paired reduction matches qualified reference; core bytes unchanged since GPU qualification",
+  "queue_snapshot": {
+    "free_GPUs": 25,
+    "max_GPUs": 416,
+    "free_CPU": 1813,
+    "max_CPU": 9100,
+    "free_memory_GiB": 25463,
+    "max_memory_GiB": 93596,
+    "accelerator": "NVIDIA RPBZZZ6"
+  },
+  "status": "Running",
+  "actual_GPU_probes": "passed independently on both allocated GPUs",
+  "first_complete_actual_episodes_verified": true,
+  "last_checked_shanghai": "2026-11-05T01:58:37.350976+08:00"
+}

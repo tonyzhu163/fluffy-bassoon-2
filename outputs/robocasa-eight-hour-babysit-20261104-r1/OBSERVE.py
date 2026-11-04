@@ -93,18 +93,27 @@ def observe():
         if not row.get('output'):
             continue
         directory = own / row['output']
+        parts = {part.name:dict(progress=read(part / 'PROGRESS.json'),
+            completed=bool(read(part / 'RESULT.json')), clock=read(part / 'CLOCK.json'))
+            for part in directory.glob('node-*') if part.is_dir()}
         readouts[row['job_id']] = dict(output=row['output'], progress=read(directory / 'PROGRESS.json'),
-            completed=bool(read(directory / 'RESULT.json')), clock=read(directory / 'CLOCK.json'))
-        log = own / 'logs' / (directory.name + '.log')
-        if log.exists():
+            completed=bool(read(directory / 'RESULT.json')), clock=read(directory / 'CLOCK.json'),
+            parts=parts, expected_parts=row.get('replicas'),
+            workers_completed=bool(parts) and len(parts)==row.get('replicas') and all(part['completed'] for part in parts.values()))
+        logs = [own / 'logs' / (directory.name + '.log')]
+        logs += list((own / 'logs' / directory.name).glob('node-*.log'))
+        for log in logs:
+            if not log.exists():
+                continue
             with log.open('rb') as stream:
                 stream.seek(max(0, log.stat().st_size - 6000))
                 tail = stream.read().decode(errors='replace')
             if any(marker in tail for marker in ('Traceback', 'OutOfMemoryError', 'CUDA out of memory')):
-                errors['readout/' + row['job_id']] = tail[-3000:]
+                errors['readout/' + row['job_id'] + '/' + log.name] = tail[-3000:]
     return dict(checked_shanghai=datetime.datetime.fromtimestamp(now,
             datetime.timezone(datetime.timedelta(hours=8))).isoformat(),
         cluster='Baige Pro6K', job_id='job-967y1maorj80', learner_commit='d71cb532',
+        active_fit_jobs=[row['job_id'] for row in ledger['allocations'] if row.get('kind')=='fit' and not row.get('released_shanghai')],
         methods=methods, worker_release=release, error_tails=errors,
         source_budget=dict(approved_GPU_hours=96, preparation_GPU_hours=17.57,
             allocations=allocations, creation_to_check_GPU_hours_upper=upper,
