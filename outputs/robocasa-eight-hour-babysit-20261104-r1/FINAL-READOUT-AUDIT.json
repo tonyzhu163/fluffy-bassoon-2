@@ -1,0 +1,108 @@
+{
+  "passed": true,
+  "checked_shanghai": "2026-11-05T06:45:20.699041+08:00",
+  "groups": [
+    {
+      "method": "native-initial",
+      "split": "ID",
+      "result_sha256": "871c344ea1838f9e4f0f71bf872ffd0c000a359758afb7ff3211605fd95e9ce0",
+      "audit_status_sha256": "a891648ee4573fbf170752b8efdf53ac6d86400df300b368263308a744855135",
+      "audit_summary_sha256": "c2a35a20f5eae1af9606323521bcf10224795e7cdea6e19002f34e144f7fc745",
+      "episodes": 900,
+      "physical_controls": 540000,
+      "complete_chunks": 10800,
+      "decoded_videos": 2700,
+      "video_frames": 1622700
+    },
+    {
+      "method": "native-initial",
+      "split": "OOD",
+      "result_sha256": "0d92d7abe0a85aa8412ca01fa0f54a2f5d1505c095564f95715b68a276c77616",
+      "audit_status_sha256": "2d3471a125167b83404d20bf7fa04381673da4825cda79dce2e0ca716a592069",
+      "audit_summary_sha256": "06b371f0fecca74a6a9132a3d3082f8f73c0f84c37a9f368741b74b32e85c6a9",
+      "episodes": 600,
+      "physical_controls": 405000,
+      "complete_chunks": 8100,
+      "decoded_videos": 1800,
+      "video_frames": 1216800
+    },
+    {
+      "method": "native-final",
+      "split": "ID",
+      "result_sha256": "cfbd610c10b59fb88a470e45130d81e4635eb8df06e2d928706fde6ae44e6ef9",
+      "audit_status_sha256": "186f5615b4a002919e0657a113eb8f43aceb13132350eb8228d8dcc7b0169c23",
+      "audit_summary_sha256": "3d4342bd87343dd23af03c6e2d867684f4d2bcfa9871bdab8e9d5f99a20ac889",
+      "episodes": 900,
+      "physical_controls": 540000,
+      "complete_chunks": 10800,
+      "decoded_videos": 2700,
+      "video_frames": 1622700
+    },
+    {
+      "method": "native-final",
+      "split": "OOD",
+      "result_sha256": "15fb891f86181f89c02e09d7920abc26b7a0305442d06490db03fb5cd1be8e34",
+      "audit_status_sha256": "6a08189ddde309a48652d0e462a1909a105b7b233f41551052bc3d6875a001d9",
+      "audit_summary_sha256": "6ed253a1714c60fbf52f936b406185ecc836a5d7ca808425c9807269993cac84",
+      "episodes": 600,
+      "physical_controls": 405000,
+      "complete_chunks": 8100,
+      "decoded_videos": 1800,
+      "video_frames": 1216800
+    },
+    {
+      "method": "ad",
+      "split": "ID",
+      "result_sha256": "11ac1c10bbe405a83232fc0bac6188dc40f66a67fc7d7744a098109fd2ac8bff",
+      "audit_status_sha256": "6e5b16bba9744470fcb574a144971bb1af70e9821986cd0ce190768512a7d422",
+      "audit_summary_sha256": "eda0bd6daabdd91e1a3deaa6b9df3800932946f3d22a7b346a3a077ffc805eaf",
+      "episodes": 1800,
+      "physical_controls": 1080000,
+      "complete_chunks": 21600,
+      "decoded_videos": 5400,
+      "video_frames": 3245400
+    },
+    {
+      "method": "ad",
+      "split": "OOD",
+      "result_sha256": "ef576869316b2b55aee7788fdc25b58df356aa4da0bd0aaeb275ef82a960713a",
+      "audit_status_sha256": "2bdeb40ff83ffced6a31a06160490e1629ce1a332ff73d9255b0e2c9e57d8372",
+      "audit_summary_sha256": "14a9b37e415c3a547c8304fec253ebc47f4ae491be0d3e6296551edf32ef0f32",
+      "episodes": 1200,
+      "physical_controls": 810000,
+      "complete_chunks": 16200,
+      "decoded_videos": 3600,
+      "video_frames": 2433600
+    },
+    {
+      "method": "dpt",
+      "split": "ID",
+      "result_sha256": "bec77e6f9ce6f12089540febd4a865157b8504dffddd1bfc34db01ead098994f",
+      "audit_status_sha256": "5711d7b4e2ce03a23459af1c453369674459e45ab992b7fca07b44737b23ec51",
+      "audit_summary_sha256": "7e23bbb499d79de5bd48d8f10710057837be94aeeaa8e12f5dbc48e8e8e3affe",
+      "episodes": 1800,
+      "physical_controls": 1080000,
+      "complete_chunks": 21600,
+      "decoded_videos": 5400,
+      "video_frames": 3245400
+    },
+    {
+      "method": "dpt",
+      "split": "OOD",
+      "result_sha256": "61f6fc29b042565cae3982dd0ecf9d6fbb581ba33f8f2d6b73cdc7dc607a6047",
+      "audit_status_sha256": "e1ea4d5a5996fe9514257c658168385dccde8518d18f34ac8857f63e50e07114",
+      "audit_summary_sha256": "352ed32965f0bf6a5a1e33bd2825404f11c6faa6c9247b110169499820a83212",
+      "episodes": 1200,
+      "physical_controls": 810000,
+      "complete_chunks": 16200,
+      "decoded_videos": 3600,
+      "video_frames": 2433600
+    }
+  ],
+  "episodes": 9000,
+  "physical_controls": 5670000,
+  "complete_chunks": 113400,
+  "decoded_videos": 27000,
+  "video_frames": 17037000,
+  "meaning": "Eight immutable final native-control and converged direct-action groups only; unfinished DIT/IC-IQL are excluded; source original paired PPO/GRPO512 has its separate independent audit."
+}
