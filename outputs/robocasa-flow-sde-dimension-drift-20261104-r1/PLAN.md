@@ -109,3 +109,16 @@ The GPU artifact preserves the proposed flattened `action`/`model_action`
 statistics. These are indexed by flattened position, not physical dimension.
 A separate CPU readout will reshape them to `[16,50,12]` / `[16,50,32]` for
 per-dimension statistics; no active source file or GPU execution is changed.
+
+## Fixed-cohort comparison caveat verified on Linux CPU
+
+[The native-sampler readout](COHORT-READOUT.json) finds one denoising index
+per original cohort: OpenDrawer 0, Toaster 4, Drawer→Counter 9, Coffee 1 and
+Stove 4. At noise level 0.3 their transition standard deviations are 0.3000,
+0.1162, 0.03162, 0.2846 and 0.1162. The Drawer cohort thus has 90× the inverse
+variance of OpenDrawer and 81× that of Coffee. For a fixed Gaussian variance,
+log-density changes scale with squared residual changes divided by that
+variance. The raw cross-task drift ratio therefore cannot establish a
+corresponding difference in parameter movement, gradient alignment or behavior.
+Within-cohort checkpoint trends and dimension splits remain valid conditional
+readouts. This diagnostic does not resample or modify the active GPU inputs.
