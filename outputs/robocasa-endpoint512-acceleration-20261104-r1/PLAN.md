@@ -49,3 +49,29 @@ Publish results in this migration directory with a pointer to the original
 run; do not overwrite the original executable worktree or its result files.
 Reclaim only this migration's files, after verification; original staging
 processes and source checkpoints remain protected. Monitor every20minutes.
+
+## Explicit migration after the shared-container attempt
+
+The shared-container attempt `gpu-r3` was stopped and released Nov4 14:34:10.
+Independent Ray services in one container caused ambiguous address discovery;
+the RLinf node probe also advertised the whole allocation. This layout is
+retired. Its completed paired banks remain usable only after original seed,
+noise, state and sampler audits; retain both policies from the same attempt.
+
+Use eight scheduler containers with one GPU,16 CPUs,224GiB RAM and8GiB shared
+memory each, with a27-minute maximum and automatic retry disabled. The Baige
+PyTorch master-0 maps to shard0 and worker-0 through worker-6 map to shards1–7.
+`NODE.sh` rejects other identities. Each container uses its scheduler GPU
+visibility, the actual one-device probe and the unchanged qualified evaluator.
+The runtime and RLinf commits are unchanged. A fresh continuation manifest
+retains original complete pairs and complete pairs from the stopped helper
+attempt, preserving hashes and the local-to-global bank mapping. Never stitch
+two incomplete banks from separate attempts into a pair.
+
+All three acceleration attempts stay charged. At most96000 recovery controls
+are reserved across interrupted original/helper banks, replacing the earlier
+19200 reserve for two original banks only. Valid cases, outcomes and1228800
+valid controls are unchanged; this is replay overhead, not additional cases.
+The original27600GPU-second all-attempt cap remains binding. The latest stopped
+receipt and27-minute reservation must fit it before another launch. Combine
+on allocated Linux CPU after all eight shard results and clocks are complete.

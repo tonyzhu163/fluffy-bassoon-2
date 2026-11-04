@@ -58,7 +58,7 @@ def split_banks(banks, workers=4):
     return result
 
 
-def prepare(metadata, original, output, stopped):
+def prepare(metadata, original, output, stopped, previous=None, scheduler_seconds=2100):
     assert not output.exists(), 'Use a new migration identity'
     assert stopped['scheduler_released'] and len(stopped['jobs']) == 2
     ep = endpoint(metadata)
@@ -68,16 +68,43 @@ def prepare(metadata, original, output, stopped):
         _, row = ep.bind(prepared, task)
         root = Path(original) / task / 'gpu-r1'
         panels = [read(p) for p in sorted((root / 'panels').glob('*.json'))]
+        abandoned = []
+        if previous is not None:
+            old = read(previous)
+            assert old['prepared_sha256'] == sha(prepared)
+            assert old['endpoint_sha256'] == sha(ep.HERE)
+            original_complete = old['tasks'][task]['retained_banks']
+            abandoned.extend(p for p in panels if p['bank'] not in original_complete)
+            panels = [p for p in panels if p['bank'] in original_complete]
+            for shard in old['shards']:
+                if shard['task'] != task:
+                    continue
+                paths = sorted((Path(shard['output']) / 'panels').glob('*.json'))
+                source_banks = {}
+                for path in paths:
+                    panel = read(path)
+                    source_banks.setdefault(panel['bank'], set()).add(panel['step'])
+                complete_here = {b for b, steps in source_banks.items() if steps == {0, 130}}
+                for path in paths:
+                    panel = read(path)
+                    panel['source_panel_path'] = str(path)
+                    panel['source_panel_sha256'] = sha(path)
+                    panel['source_local_bank'] = panel['bank']
+                    panel['bank'] = shard['banks'][panel['bank']]
+                    (panels if panel['source_local_bank'] in complete_here else abandoned).append(panel)
         by_bank = {}
         for panel in panels:
             assert panel['seeds'] == row['seeds'][panel['bank'] * 8:(panel['bank'] + 1) * 8]
+            assert panel['rng_seed'] == row['rng_seeds'][panel['bank']]
             assert sha(panel['episode_path']) == panel['episode_sha256']
-            by_bank.setdefault(panel['bank'], {})[panel['step']] = panel
+            entries = by_bank.setdefault(panel['bank'], {})
+            assert panel['step'] not in entries, 'Repeated retained case/policy bank'
+            entries[panel['step']] = panel
         complete = sorted(b for b, values in by_bank.items() if set(values) == {0, 130})
         retained = [p for p in panels if p['bank'] in complete]
         remaining = [b for b in range(64) if b not in complete]
         tasks[task] = dict(retained_banks=complete, retained_panels=retained,
-            discarded_incomplete_panels=[p for p in panels if p['bank'] not in complete],
+            discarded_incomplete_panels=abandoned + [p for p in panels if p['bank'] not in complete],
             remaining_banks=remaining)
         for index, banks in enumerate(split_banks(remaining)):
             assert banks
@@ -85,14 +112,18 @@ def prepare(metadata, original, output, stopped):
                 output=str(output / task / f'shard-{index:02d}'),
                 original_staging=str(Path(original) / task / 'staging-r1')))
     # Scheduler creation-to-release costs, including old failed attempts, remain charged.
-    assert prior_charge + 8 * 35 * 60 <= 27600, 'Migration reservation exceeds original GPU-hour ceiling'
+    assert prior_charge + 8 * scheduler_seconds <= 27600, 'Migration reservation exceeds original GPU-hour ceiling'
     manifest = dict(completed=True, run=RUN, metadata=str(metadata),
         original=str(original), prepared=str(prepared), prepared_sha256=sha(prepared),
         endpoint_sha256=sha(ep.HERE), tasks=tasks, shards=shards,
         stopped=stopped, maximum_gpus=8, budget_gpu_seconds=27600,
-        reserved_gpu_seconds_upper=prior_charge + 8 * 2100,
+        reserved_gpu_seconds_upper=prior_charge + 8 * scheduler_seconds,
+        scheduler_seconds=scheduler_seconds,
+        previous_manifest=str(previous) if previous else None,
+        previous_manifest_sha256=sha(previous) if previous else None,
         original_maximum_policy_controls=1228800,
-        recovery_control_reserve=19200, maximum_all_attempt_policy_controls=1248000,
+        recovery_control_reserve=96000 if previous else 19200,
+        maximum_all_attempt_policy_controls=1324800 if previous else 1248000,
         scientific_comparison_unchanged=True, fixed_batch=8, SGD=0)
     write(output / 'MIGRATION.json', manifest)
     return manifest
@@ -187,6 +218,8 @@ def combine(manifest_path, destination):
         _, row = ep.bind(Path(manifest['prepared']), task)
         outcomes, end_outcomes = {0: {}, 130: {}}, {0: {}, 130: {}}
         for panel in panels:
+            if 'source_panel_path' in panel:
+                assert sha(panel['source_panel_path']) == panel['source_panel_sha256']
             assert sha(panel['episode_path']) == panel['episode_sha256']
             assert panel['rng_seed'] == row['rng_seeds'][row['seeds'].index(panel['seeds'][0]) // 8]
             for episode in panel['episodes']:
