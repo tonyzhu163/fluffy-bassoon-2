@@ -1,0 +1,7 @@
+# OpenDrawer shorter-chunk device benchmark
+
+After matched DEV64, benchmark the CPU-qualified `ppo_short_chunk` profile through the native Stage 1 launcher. Use a fresh SFT start and a dedicated output directory. The benchmark executes one native collection and optimizer update, then saves its full boundary using the launcher's Q1 checkpoint-and-exit marker.
+
+Keep 128 TRAIN episodes of 600 controls, two actor ranks at microbatch 16, eight rollout/environment ranks, the VLM-prefix critic, warmup zero and a single epoch. Predict 50 controls, execute 10, denoise with K5 and noise 0.5, use the 512-chunk global minibatch, and record all sampling fields. Expected shapes are 60 decisions per episode, 7,680 TRAIN chunk samples and 15 Adam steps per rank. The initial 64-case native panel is separate from the 76,800 TRAIN controls. A shared 200 GiB storage floor also triggers boundary preservation.
+
+Book eight GPUs for at most 40 minutes (5.333 GPU-hours) with retries disabled. The separate one-GPU DEV64 ceiling of 1.25 hours brings the two diagnostic ceilings to 6.583 GPU-hours. Measure native rollout and optimizer time, effective batch, peak memory and output bytes. Check that replay on real weights uses 120 executed likelihood coordinates and that the prefix value matches before SGD. Report the original H50/K10 runner's time alongside the candidate with the different number of Adam steps, decision cadence and recording overhead identified. The single measured update addresses feasibility and cost.
