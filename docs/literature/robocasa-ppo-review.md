@@ -35,6 +35,15 @@ training runs was reproduced here.
    a termination-shift patch whose applicability depends on buffer indexing.
    These are reproduction questions to resolve, not fixes to copy blindly.
 
+**Nov 4 update.** The [recipe audit](../../outputs/robocasa-ppo-recipe-audit-20261104-r1/AUDIT.md)
+compares the five-task 10M Flow-SDE sources with πRL's ablation tables and
+RLinf's shipped π0.5 configs. Our H50 chunk, K10 denoising steps, noise 0.3
+and action-expert critic all sit on the losing side of πRL's ablations. Together they make
+the 600-coordinate chunk ratio ~8–10× more sensitive than published recipes
+(first-update approx-KL .151, clip fraction .262). This revises finding 3
+above: the scalar constants are fine, but the Flow-SDE cadence/noise/critic
+recipe is not.
+
 Primary starting points: [StructRL paper](https://arxiv.org/html/2609.36352v1),
 [released reproduction guide](https://github.com/amazon-science/StructRL/blob/6caba1f9538167e0752a7338663e45aac8df965d/docs/REPRODUCE.md),
 [RLinf RoboCasa365 guide](https://rlinf.readthedocs.io/en/latest/rst_source/examples/embodied/robocasa365.html),
