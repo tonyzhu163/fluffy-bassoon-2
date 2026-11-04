@@ -125,6 +125,8 @@ On the original 64 DEV scenes with common sampler draws, SFT and old PPO40 score
 
 The candidate that predicts 50 controls, executes 10 and denoises in five steps passed real-weight likelihood and value replay with zero error. At the same 76,800 TRAIN controls, its first PPO update took 283.2 seconds versus 156.9 seconds for the original recipe. Rollout took 139.2 versus 120.1 seconds, and actor training took 140.0 versus 35.5 seconds (15 versus 6 optimizer steps). [Single-update benchmark](../outputs/robocasa-ppo-short-chunk-benchmark-20261104-r1/RESULT.md).
 
+In the separate six-policy ablation's fresh 512 cases, SFT scored 303/512, old PPO40 320/512 and new PPO40 315/512. New PPO40 gained 61 and lost 49 cases against SFT (+2.34 pp, exact p=.294). Old PPO40 gained 78 and lost 73 against new PPO40 (+0.98 pp, p=.745). All three intervals for the SFT/old/new pairwise contrasts included zero. [Reused fresh TEST512](../outputs/robocasa-ppo40-matched-dev64-20261104-r1/RESULT.md#fresh-test512-from-the-separate-ppo-ablation).
+
 <!-- stage1-opendrawer-end -->
 
 The original Human30075000 pi0.5 completed the predeclared OpenDrawer headroom

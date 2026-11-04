@@ -25,3 +25,21 @@ All 33 eight-case batches matched the original physical state, public state and 
 The run used 158,400 valid policy controls, 158,400 journaled controls and zero training updates. All 667 inference actor tensors verified for the converted checkpoints. The two allocations used 0.693 scheduler GPU-hours combined. The first attempt ended before model inference because the CUDA visibility selector was missing.
 
 [Paired results and end-success contrasts](RESULT.json) · [independent episode and RNG verification](DEV64-VERIFICATION.json) · [model hashes](READY-FOUR.json) · [execution and costs](EXECUTION.json).
+
+## Fresh TEST512 from the separate PPO ablation
+
+We reused the ablation’s 512 new cases (31,941,000–31,941,511). The three source checkpoint hashes match the actors used on DEV. The separate run paired all policies on the same physical and public states and sampler draws. On its eight-case SFT repeat, all eight first-success outcomes agreed.
+
+| Policy | First success | Success at the final control |
+| --- | ---: | ---: |
+| SFT | 303/512 (59.18%) | 299/512 (58.40%) |
+| Old PPO40 | 320/512 (62.50%) | 309/512 (60.35%) |
+| New PPO40 | 315/512 (61.52%) | 303/512 (59.18%) |
+
+| Comparison | Difference (pp) | Gains / losses | Paired 95% interval (pp) | Exact p |
+| --- | ---: | ---: | ---: | ---: |
+| Old PPO40 minus SFT | +3.32 | 72 / 55 | -0.98 to +7.62 | 0.1554 |
+| New PPO40 minus SFT | +2.34 | 61 / 49 | -1.76 to +6.45 | 0.2942 |
+| Old minus new PPO40 | +0.98 | 78 / 73 | -3.91 to +5.66 | 0.7449 |
+
+New PPO40’s 7-case lead over old PPO40 on DEV became a 5-case deficit on fresh TEST. Both PPO endpoints scored above SFT on TEST, with both intervals spanning zero. The ablation’s six-policy panel omitted GRPO. A separately owned [independent GRPO/PPO/SFT test](../robocasa-eight-hour-babysit-20261104-r1/BASELINE-TEST512-PLAN.md) uses another case bank. [Reused result and manifest hashes](REUSED-TEST512.json).
