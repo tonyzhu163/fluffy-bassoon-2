@@ -31,7 +31,7 @@ export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4
 if [[ -z ${CUDA_VISIBLE_DEVICES:-} ]]; then
     gpu_ids=$(nvidia-smi --query-gpu=uuid --format=csv,noheader)
     [[ $gpu_ids == GPU-* && $gpu_ids != *$'\n'* ]]
-    export CUDA_VISIBLE_DEVICES=$gpu_ids
+    export CUDA_VISIBLE_DEVICES=0
 fi
 export NCCL_P2P_DISABLE=1
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl FLUFFY_GPU_EXECUTION=baige

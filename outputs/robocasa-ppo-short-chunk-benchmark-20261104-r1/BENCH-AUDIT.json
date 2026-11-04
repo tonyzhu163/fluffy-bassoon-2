@@ -1,0 +1,236 @@
+{
+  "completed": true,
+  "episodes": {
+    "training": {
+      "episodes": 128,
+      "success_once": 88,
+      "valid_controls": 76800
+    },
+    "before": {
+      "episodes": 64,
+      "success_once": 41,
+      "valid_controls": 38400
+    }
+  },
+  "actual_policy_chunk_coordinates": 120,
+  "chunks_per_rank": 3840,
+  "total_chunks": 7680,
+  "optimizer_steps_per_rank": [
+    15,
+    15
+  ],
+  "parity": [
+    {
+      "passed": true,
+      "finite": true,
+      "shape": [
+        16,
+        10,
+        12
+      ],
+      "action_dim": 12,
+      "tolerance": 0.001,
+      "max_abs_chunk_log_ratio": 0.0,
+      "max_abs_coordinate_log_ratio": 0.0,
+      "mean_abs_chunk_log_ratio": 0.0,
+      "value": {
+        "passed": true,
+        "finite": true,
+        "tolerance": 0.001,
+        "max_abs_value_delta": 0.0,
+        "mean_abs_value_delta": 0.0
+      },
+      "value_head_enabled": true,
+      "optimizer_steps": 0,
+      "before_backward": true
+    },
+    {
+      "passed": true,
+      "finite": true,
+      "shape": [
+        16,
+        10,
+        12
+      ],
+      "action_dim": 12,
+      "tolerance": 0.001,
+      "max_abs_chunk_log_ratio": 0.0,
+      "max_abs_coordinate_log_ratio": 0.0,
+      "mean_abs_chunk_log_ratio": 0.0,
+      "value": {
+        "passed": true,
+        "finite": true,
+        "tolerance": 0.001,
+        "max_abs_value_delta": 0.0,
+        "mean_abs_value_delta": 0.0
+      },
+      "value_head_enabled": true,
+      "optimizer_steps": 0,
+      "before_backward": true
+    }
+  ],
+  "updates": [
+    {
+      "completed": true,
+      "rank": 0,
+      "producing_policy_iteration": 0,
+      "optimizer_steps_before": 0,
+      "optimizer_steps_after": 15,
+      "batch_shape": [
+        60,
+        64,
+        10,
+        12
+      ],
+      "losses": {
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 17.186471939086914,
+        "actor/policy_loss": -0.3447256088256836,
+        "actor/policy_loss_abs": 0.9261250495910645,
+        "actor/total_loss": -0.013624501414597034,
+        "critic/value_loss": 0.12673357129096985
+      },
+      "metrics": {
+        "actor/approx_kl": 0.003488739486783743,
+        "actor/clip_fraction": 0.01524314284324646,
+        "actor/clipped_ratio": 0.998641312122345,
+        "actor/dual_cliped_ratio": 0.0,
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 17.186471939086914,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/policy_loss": -0.3447256088256836,
+        "actor/policy_loss_abs": 0.9261250495910645,
+        "actor/ratio": 0.9993568658828735,
+        "actor/ratio_abs": 0.04702189564704895,
+        "actor/total_loss": -0.013624501414597034,
+        "critic/lr": 9.999999747378752e-05,
+        "critic/value_clip_ratio": 0.6497003436088562,
+        "critic/value_loss": 0.12673357129096985,
+        "critic/explained_variance": -2.1108505725860596
+      },
+      "training_seconds": 140.0073164952919,
+      "cuda_peak_allocated_bytes": 17116421120,
+      "cuda_peak_reserved_bytes": 19725811712,
+      "frozen_vlm_unchanged": true
+    },
+    {
+      "completed": true,
+      "rank": 1,
+      "producing_policy_iteration": 0,
+      "optimizer_steps_before": 0,
+      "optimizer_steps_after": 15,
+      "batch_shape": [
+        60,
+        64,
+        10,
+        12
+      ],
+      "losses": {
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 17.186471939086914,
+        "actor/policy_loss": -0.3447256088256836,
+        "actor/policy_loss_abs": 0.9261250495910645,
+        "actor/total_loss": -0.013624501414597034,
+        "critic/value_loss": 0.12673357129096985
+      },
+      "metrics": {
+        "actor/approx_kl": 0.003488739486783743,
+        "actor/clip_fraction": 0.01524314284324646,
+        "actor/clipped_ratio": 0.998641312122345,
+        "actor/dual_cliped_ratio": 0.0,
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 17.186471939086914,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/policy_loss": -0.3447256088256836,
+        "actor/policy_loss_abs": 0.9261250495910645,
+        "actor/ratio": 0.9993568658828735,
+        "actor/ratio_abs": 0.04702189564704895,
+        "actor/total_loss": -0.013624501414597034,
+        "critic/lr": 9.999999747378752e-05,
+        "critic/value_clip_ratio": 0.6497003436088562,
+        "critic/value_loss": 0.12673357129096985,
+        "critic/explained_variance": -2.1108505725860596
+      },
+      "training_seconds": 140.02414797246456,
+      "cuda_peak_allocated_bytes": 17116421120,
+      "cuda_peak_reserved_bytes": 19725811712,
+      "frozen_vlm_unchanged": true
+    }
+  ],
+  "first_update_s": {
+    "Step Time:": 283.165,
+    "generate_rollouts=": 139.2,
+    "actor_training=": 140.0,
+    "rollout/predict=": 77.831,
+    "env/interact=": 137.8
+  },
+  "stage1_first_update_s": {
+    "Step Time:": 156.909,
+    "generate_rollouts=": 120.1,
+    "actor_training=": 35.472,
+    "rollout/predict=": 22.173,
+    "env/interact=": 119.2
+  },
+  "stage1_steady_median_s": 168.85,
+  "peak_GPU_MiB_sampled": {
+    "0": 61153,
+    "1": 59485,
+    "2": 39900,
+    "3": 36852,
+    "4": 38586,
+    "5": 39100,
+    "6": 38520,
+    "7": 37996
+  },
+  "component_bytes": {
+    "OpenDrawer": 37175358542,
+    "training-rollouts": 4905235258,
+    "logprob-parity": 914,
+    "updates": 2705,
+    "canonical-eval": 55272640,
+    "tensorboard": 12861,
+    "video": 11800943,
+    "actor-invariants": 88589,
+    "sampling": 1068509239,
+    "environment": 2503621545
+  },
+  "allocated_bytes": 45732788736,
+  "worker_clock": {
+    "started_unix": 1793801664,
+    "finished_unix": 1793802281,
+    "allocated_gpus": 8,
+    "observed_gpu_seconds": 4936,
+    "exit_code": 0
+  },
+  "full_checkpoint_SHA256_verified_files": 22,
+  "halt": {
+    "completed": true,
+    "global_step": 1,
+    "requested_marker": "CHECKPOINT_AND_EXIT",
+    "scope": "All update handles completed; native DCP and all worker sidecars saved; no next rollout"
+  },
+  "refs": {
+    "attempt-01/updates/iteration-001-rank-00.json": "ab71694636a69ed5549f5ce0c93241a4fbf45a658c89e25590bde8450c6e65f2",
+    "attempt-01/updates/iteration-001-rank-01.json": "f7aefb07859c6e3f847e3e0096bf750820f92b6a6444885400863256ebfb0b26",
+    "attempt-01/logprob-parity/iteration-001-rank-00.json": "74f273fcecb2954fe59366ef72b8e26906ef53e0122f867bd8ecc8adb0fa3512",
+    "attempt-01/logprob-parity/iteration-001-rank-01.json": "74f273fcecb2954fe59366ef72b8e26906ef53e0122f867bd8ecc8adb0fa3512",
+    "attempt-01/training-rollouts/iteration-0001-policy-0000-rank-00.json": "e24d5488599553d417304b2a399be97c49bd24ebef7cd6cee641dce634091562",
+    "attempt-01/training-rollouts/iteration-0001-policy-0000-rank-01.json": "1e5a008d8dd7e034512344528a144fc19480c18c8ad563abba53b3440ded92d4",
+    "attempt-01/environment/rank-00/training-i000-round00-episodes.json": "e45ea2cbb8c2e56f2b0da63b8e06229493b981e1cd2a20019b60a7bdae6c8f27",
+    "attempt-01/environment/rank-01/training-i000-round00-episodes.json": "de9f3c77c4577551a19008535e005623deb7dd7ec50c3cbf38a6cf38a6383a32",
+    "attempt-01/environment/rank-02/training-i000-round00-episodes.json": "5b550bf1eaa630b688342bb671ff5f358ad1876c071437a3ebeec786e4add8a0",
+    "attempt-01/environment/rank-03/training-i000-round00-episodes.json": "d5aef72a414258197a1cc3b0feeaab2e77f62c1211728559802ec34987f79568",
+    "attempt-01/environment/rank-04/training-i000-round00-episodes.json": "a5e68c62daf786ef878709686d0e33088e8fe83467e2433e0c90e74aa82b89e5",
+    "attempt-01/environment/rank-05/training-i000-round00-episodes.json": "550c1724d7304ae8193cfb832e5761e5b28feed737699f812ed21710413c3f9f",
+    "attempt-01/environment/rank-06/training-i000-round00-episodes.json": "ff9b2480744fbb5020fa55d1f80f9fe77cd5b5481af3ad4041b54e0061befbd4",
+    "attempt-01/environment/rank-07/training-i000-round00-episodes.json": "6a34f7443d4d9568e1667fb4f4aa0fc848176958b1336596378c7cb8abd4af47",
+    "attempt-01/environment/rank-00/before-i000-round00-episodes.json": "9f5ea21a437e680fcc3a5e3d3339cbb99d2f7457e590212f015cafc3e2462100",
+    "attempt-01/environment/rank-01/before-i000-round00-episodes.json": "69b11a7f1f087152a9852beb047264e6f30e6da18a0ba9778b805942c6ad1fb1",
+    "attempt-01/environment/rank-02/before-i000-round00-episodes.json": "2467823fd1702fb053de07d64098a8747546d346923207e9936eea56baf0dae4",
+    "attempt-01/environment/rank-03/before-i000-round00-episodes.json": "469e826e102499c5f1e3082e76c0203cd4caa810ce7fcecaef183a7c4a86fd0e",
+    "attempt-01/environment/rank-04/before-i000-round00-episodes.json": "08d3d4400394e7f42e4a25fd4e9495fc9ac2946d56c6d0cea4ff65ee0be4ea90",
+    "attempt-01/environment/rank-05/before-i000-round00-episodes.json": "76b5185cb39c771b76a689ba4bd8aef7759a237a7b44fa67b435b5dd81407be1",
+    "attempt-01/environment/rank-06/before-i000-round00-episodes.json": "db3c663ffb4ee2f45a63833d6e9c93bcedbf3ff6d340500dd2a3f49178eeb688",
+    "attempt-01/environment/rank-07/before-i000-round00-episodes.json": "e06af11f60bfa58e7956a6ad80169f8519ce193bb4bb8b7f63be3dffb83ff080"
+  }
+}

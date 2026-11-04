@@ -99,6 +99,8 @@ def execute(manifest, index, workers, output, deadline):
     banks = list(range(index, 64, workers))
     expected = sum(len(order(b)) for b in banks) * 4800
     cfg = configuration(m, output, deadline, maximum_actions=expected + 64 * 8 * 32)
+    # All replicas have RLinf rank zero; each bank partition owns its separate escrow.
+    cfg.native_pilot.accounting_root = str(output/'accounting')
     write(output/'resolved-config.json', OmegaConf.to_container(cfg, resolve=True))
     cluster = Cluster(cluster_cfg=cfg.cluster, distributed_log_dir=cfg.runner.per_worker_log_path)
     placement = HybridComponentPlacement(cfg, cluster)
@@ -155,7 +157,7 @@ def execute(manifest, index, workers, output, deadline):
             write(output/'progress.json',dict(panels=panels, bank=bank, label=label, controls=panels*4800))
     env.release_environments().wait()
     runner.metric_logger.finish()
-    calls = read(output.parent/'accounting/rank-00'/f'{output.name}.json')['calls']
+    calls = read(output/'accounting/rank-00'/f'{output.name}.json')['calls']
     assert all(r['resolved'] for r in calls)
     charged = sum(r['executed_or_conservative'] for r in calls)
     assert charged >= expected
