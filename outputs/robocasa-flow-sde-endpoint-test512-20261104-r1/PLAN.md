@@ -139,3 +139,11 @@ Use `--allow-incomplete` and a distinct destination only for completed-bank
 receipt checks while jobs advance; that mode makes no final statistical or
 whole-run claim. Scheduler release and all-attempt cost closeout remain
 required after the independent artifact audit.
+
+
+The continuation now has its own active 20-minute monitor,
+`finish-accelerated-matched-512-evaluation`, attached to owner chat `01a1a512`.
+After verifying that handoff on Nov4, this chat deleted its redundant original
+three-run heartbeat. Replacement qualification and matched drift are fully
+closed; the acceleration owner retains responsibility for endpoint completion,
+final auditing/statistics and the shared all-attempt ledger.
