@@ -1,0 +1,583 @@
+{
+  "task": "OpenDrawer",
+  "config": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/resolved-config.json",
+  "config_sha256": "9468db92c697c3bafcb6ec34d7725e1059c131216c27a4da8a90f2d7382166ea",
+  "fixture": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/offline-initial-ratio-inputs-r2/OpenDrawer.pt",
+  "fixture_sha256": "e1b7d41082c7c9206a4c1416adb278d25c0a02d29fb967e0a8db0a32f4894d22",
+  "policies": {
+    "SFT": {
+      "step": 0,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/input-prefix-r1/global_step_0/actor/model_state_dict/full_weights.pt",
+      "sha256": "eb276899d5a06d8ae87870239c549a5c6e1fee6770d2976d05f6d97a0fa95a10",
+      "marker": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/input-prefix-r1/global_step_0/pilot-boundary.json",
+      "marker_sha256": "f5c3382d8e51761bfd9ad3d48071673c7cd8412a4f0c3793318531f64d491018",
+      "prefix": true,
+      "ignore_last": true
+    },
+    "stage1": {
+      "step": 40,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/OpenDrawer/checkpoints/global_step_40/actor/model_state_dict/full_weights.pt",
+      "sha256": "881ba13ef89231d9d5794bf036548c142d4e48da9955d42c56352e2ee68f280c",
+      "marker": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/OpenDrawer/checkpoints/global_step_40/pilot-boundary.json",
+      "marker_sha256": "aa3eeff3f0050441e7c1b26ae31e358f5518be68e85e3ad725dc247383041937",
+      "prefix": true,
+      "ignore_last": true
+    },
+    "original": {
+      "step": 40,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/eval-input-original40/full_weights.pt",
+      "sha256": "a0d5c35ef3b609785ea903405fa07437a510edc9d3c9b20d2fbf74e18c457f63",
+      "marker": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints/global_step_40/pilot-boundary.json",
+      "marker_sha256": "05b3b074246766c0d07149c2c3cc69d9a040a5fbf08d1689f165d36725c67c8f",
+      "prefix": false,
+      "ignore_last": false
+    },
+    "E": {
+      "step": 40,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/E/attempt-02/OpenDrawer/checkpoints/global_step_40/actor/model_state_dict/full_weights.pt",
+      "sha256": "9ee63a55f7bef8d4b896d50aa37fa3c84d9788fa9bf89c428267f583d950862b",
+      "marker": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/E/attempt-02/OpenDrawer/checkpoints/global_step_40/pilot-boundary.json",
+      "marker_sha256": "82175f4439c67c3af0ccf075c2c2df4d105eb8627b9b040e82b22c503c727da2",
+      "prefix": true,
+      "ignore_last": true
+    },
+    "C": {
+      "step": 40,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/C/attempt-01/OpenDrawer/checkpoints/global_step_40/actor/model_state_dict/full_weights.pt",
+      "sha256": "d9277358f6a38ec817fbefe5efd57b0522b01e48c994bfa1122ae7da26a3783c",
+      "marker": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/C/attempt-01/OpenDrawer/checkpoints/global_step_40/pilot-boundary.json",
+      "marker_sha256": "0ac199072a9ef376aac296046522425762ecb633c0cff95e72a0eadbf794ee5f",
+      "prefix": false,
+      "ignore_last": true
+    },
+    "D": {
+      "step": 40,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/D/attempt-01/OpenDrawer/checkpoints/global_step_40/actor/model_state_dict/full_weights.pt",
+      "sha256": "44e73fe4779b92f1b7a8074b9551e3f1865386bf9aab1571472ca56116c9fd7a",
+      "marker": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/D/attempt-01/OpenDrawer/checkpoints/global_step_40/pilot-boundary.json",
+      "marker_sha256": "311bd543916b9a11614d4aa28eab1b6447be36669d78157adef3a831e56b387a",
+      "prefix": true,
+      "ignore_last": false
+    }
+  },
+  "sequential_order": [
+    [
+      "SFT",
+      "stage1",
+      "D",
+      "original",
+      "C",
+      "E",
+      "repeat"
+    ],
+    [
+      "stage1",
+      "original",
+      "SFT",
+      "E",
+      "D",
+      "C"
+    ],
+    [
+      "original",
+      "E",
+      "stage1",
+      "C",
+      "SFT",
+      "D"
+    ],
+    [
+      "E",
+      "C",
+      "original",
+      "D",
+      "stage1",
+      "SFT"
+    ],
+    [
+      "C",
+      "D",
+      "E",
+      "SFT",
+      "original",
+      "stage1"
+    ],
+    [
+      "D",
+      "SFT",
+      "C",
+      "stage1",
+      "E",
+      "original"
+    ],
+    [
+      "SFT",
+      "stage1",
+      "D",
+      "original",
+      "C",
+      "E"
+    ],
+    [
+      "stage1",
+      "original",
+      "SFT",
+      "E",
+      "D",
+      "C"
+    ],
+    [
+      "original",
+      "E",
+      "stage1",
+      "C",
+      "SFT",
+      "D"
+    ],
+    [
+      "E",
+      "C",
+      "original",
+      "D",
+      "stage1",
+      "SFT"
+    ],
+    [
+      "C",
+      "D",
+      "E",
+      "SFT",
+      "original",
+      "stage1"
+    ],
+    [
+      "D",
+      "SFT",
+      "C",
+      "stage1",
+      "E",
+      "original"
+    ],
+    [
+      "SFT",
+      "stage1",
+      "D",
+      "original",
+      "C",
+      "E"
+    ],
+    [
+      "stage1",
+      "original",
+      "SFT",
+      "E",
+      "D",
+      "C"
+    ],
+    [
+      "original",
+      "E",
+      "stage1",
+      "C",
+      "SFT",
+      "D"
+    ],
+    [
+      "E",
+      "C",
+      "original",
+      "D",
+      "stage1",
+      "SFT"
+    ],
+    [
+      "C",
+      "D",
+      "E",
+      "SFT",
+      "original",
+      "stage1"
+    ],
+    [
+      "D",
+      "SFT",
+      "C",
+      "stage1",
+      "E",
+      "original"
+    ],
+    [
+      "SFT",
+      "stage1",
+      "D",
+      "original",
+      "C",
+      "E"
+    ],
+    [
+      "stage1",
+      "original",
+      "SFT",
+      "E",
+      "D",
+      "C"
+    ],
+    [
+      "original",
+      "E",
+      "stage1",
+      "C",
+      "SFT",
+      "D"
+    ],
+    [
+      "E",
+      "C",
+      "original",
+      "D",
+      "stage1",
+      "SFT"
+    ],
+    [
+      "C",
+      "D",
+      "E",
+      "SFT",
+      "original",
+      "stage1"
+    ],
+    [
+      "D",
+      "SFT",
+      "C",
+      "stage1",
+      "E",
+      "original"
+    ],
+    [
+      "SFT",
+      "stage1",
+      "D",
+      "original",
+      "C",
+      "E"
+    ],
+    [
+      "stage1",
+      "original",
+      "SFT",
+      "E",
+      "D",
+      "C"
+    ],
+    [
+      "original",
+      "E",
+      "stage1",
+      "C",
+      "SFT",
+      "D"
+    ],
+    [
+      "E",
+      "C",
+      "original",
+      "D",
+      "stage1",
+      "SFT"
+    ],
+    [
+      "C",
+      "D",
+      "E",
+      "SFT",
+      "original",
+      "stage1"
+    ],
+    [
+      "D",
+      "SFT",
+      "C",
+      "stage1",
+      "E",
+      "original"
+    ],
+    [
+      "SFT",
+      "stage1",
+      "D",
+      "original",
+      "C",
+      "E"
+    ],
+    [
+      "stage1",
+      "original",
+      "SFT",
+      "E",
+      "D",
+      "C"
+    ],
+    [
+      "original",
+      "E",
+      "stage1",
+      "C",
+      "SFT",
+      "D"
+    ],
+    [
+      "E",
+      "C",
+      "original",
+      "D",
+      "stage1",
+      "SFT"
+    ],
+    [
+      "C",
+      "D",
+      "E",
+      "SFT",
+      "original",
+      "stage1"
+    ],
+    [
+      "D",
+      "SFT",
+      "C",
+      "stage1",
+      "E",
+      "original"
+    ],
+    [
+      "SFT",
+      "stage1",
+      "D",
+      "original",
+      "C",
+      "E"
+    ],
+    [
+      "stage1",
+      "original",
+      "SFT",
+      "E",
+      "D",
+      "C"
+    ],
+    [
+      "original",
+      "E",
+      "stage1",
+      "C",
+      "SFT",
+      "D"
+    ],
+    [
+      "E",
+      "C",
+      "original",
+      "D",
+      "stage1",
+      "SFT"
+    ],
+    [
+      "C",
+      "D",
+      "E",
+      "SFT",
+      "original",
+      "stage1"
+    ],
+    [
+      "D",
+      "SFT",
+      "C",
+      "stage1",
+      "E",
+      "original"
+    ],
+    [
+      "SFT",
+      "stage1",
+      "D",
+      "original",
+      "C",
+      "E"
+    ],
+    [
+      "stage1",
+      "original",
+      "SFT",
+      "E",
+      "D",
+      "C"
+    ],
+    [
+      "original",
+      "E",
+      "stage1",
+      "C",
+      "SFT",
+      "D"
+    ],
+    [
+      "E",
+      "C",
+      "original",
+      "D",
+      "stage1",
+      "SFT"
+    ],
+    [
+      "C",
+      "D",
+      "E",
+      "SFT",
+      "original",
+      "stage1"
+    ],
+    [
+      "D",
+      "SFT",
+      "C",
+      "stage1",
+      "E",
+      "original"
+    ],
+    [
+      "SFT",
+      "stage1",
+      "D",
+      "original",
+      "C",
+      "E"
+    ],
+    [
+      "stage1",
+      "original",
+      "SFT",
+      "E",
+      "D",
+      "C"
+    ],
+    [
+      "original",
+      "E",
+      "stage1",
+      "C",
+      "SFT",
+      "D"
+    ],
+    [
+      "E",
+      "C",
+      "original",
+      "D",
+      "stage1",
+      "SFT"
+    ],
+    [
+      "C",
+      "D",
+      "E",
+      "SFT",
+      "original",
+      "stage1"
+    ],
+    [
+      "D",
+      "SFT",
+      "C",
+      "stage1",
+      "E",
+      "original"
+    ],
+    [
+      "SFT",
+      "stage1",
+      "D",
+      "original",
+      "C",
+      "E"
+    ],
+    [
+      "stage1",
+      "original",
+      "SFT",
+      "E",
+      "D",
+      "C"
+    ],
+    [
+      "original",
+      "E",
+      "stage1",
+      "C",
+      "SFT",
+      "D"
+    ],
+    [
+      "E",
+      "C",
+      "original",
+      "D",
+      "stage1",
+      "SFT"
+    ],
+    [
+      "C",
+      "D",
+      "E",
+      "SFT",
+      "original",
+      "stage1"
+    ],
+    [
+      "D",
+      "SFT",
+      "C",
+      "stage1",
+      "E",
+      "original"
+    ],
+    [
+      "SFT",
+      "stage1",
+      "D",
+      "original",
+      "C",
+      "E"
+    ],
+    [
+      "stage1",
+      "original",
+      "SFT",
+      "E",
+      "D",
+      "C"
+    ],
+    [
+      "original",
+      "E",
+      "stage1",
+      "C",
+      "SFT",
+      "D"
+    ],
+    [
+      "E",
+      "C",
+      "original",
+      "D",
+      "stage1",
+      "SFT"
+    ]
+  ],
+  "case_base": 31941000,
+  "rng_base": 41941000,
+  "cases": 512,
+  "bank_size": 8,
+  "policy_controls": 1848000
+}

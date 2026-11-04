@@ -15,7 +15,7 @@
   "qualification": "All three effective actor/rollout configs composed, 14 core Linux CPU checks passed. Original collection passed the before-SGD control comparison on both ranks. All 22 starting checkpoint files rehashed.",
   "arms": {
     "E": {
-      "status": "advancing",
+      "status": "completed",
       "job": "job-t2edw03k1kwn",
       "attempt": "attempt-02",
       "GPUs": 8,
@@ -33,17 +33,27 @@
         "optimizer_steps": 0
       },
       "first_update": "E2-FIRST-UPDATE.json",
-      "last_completed_updates": 37,
-      "optimizer_steps": 888,
+      "last_completed_updates": 40,
+      "optimizer_steps": 960,
       "dev_successes_of_64": {
         "step-010": 34,
         "step-020": 34,
-        "step-030": 36
-      }
+        "step-030": 36,
+        "after": 38
+      },
+      "clock": {
+        "started_unix": 1793792004,
+        "finished_unix": 1793802665,
+        "allocated_gpus": 8,
+        "observed_gpu_seconds": 85288,
+        "exit_code": 0
+      },
+      "training_controls": 3072000,
+      "full_receipt": "E-COMPLETE.json"
     },
     "C": {
       "job": "job-1gheyfqughhs",
-      "status": "complete",
+      "status": "completed",
       "attempt": "attempt-01",
       "scheduler_minutes": 175,
       "GPUs": 8,
@@ -65,11 +75,13 @@
         "allocated_gpus": 8,
         "observed_gpu_seconds": 59720,
         "exit_code": 0
-      }
+      },
+      "training_controls": 3072000,
+      "full_receipt": "C-COMPLETE.json"
     },
     "D": {
       "job": "job-jbf0ex8k1s3o",
-      "status": "complete",
+      "status": "completed",
       "attempt": "attempt-01",
       "GPUs": 8,
       "scheduler_minutes": 175,
@@ -90,16 +102,25 @@
         "allocated_gpus": 8,
         "observed_gpu_seconds": 60104,
         "exit_code": 0
-      }
+      },
+      "training_controls": 3072000,
+      "full_receipt": "D-COMPLETE.json"
     },
     "endpoint512": {
-      "status": "preparing, waits for immutable final checkpoints"
+      "status": "scheduled",
+      "job": "job-t6o21b4rl1x7",
+      "replicas": 4,
+      "GPUs_per_replica": 1,
+      "scheduler_minutes": 175,
+      "automatic_retry": false,
+      "manifest_sha256": "5f4b5c56bcacd96aca167f529bae807890011b34e34cb55072029588d8fc24f7",
+      "evaluation_code": "81caf87060c9d966e0256e94da2ae705366ec33f"
     }
   },
-  "last_checked_Shanghai": "2026-11-04 22:18",
+  "last_checked_Shanghai": "2026-11-04 22:33",
   "engine_r2": "02ce594015eaa8f972f875d7f37e6972f4ada495",
   "endpoint_eval_code": "81caf87060c9d966e0256e94da2ae705366ec33f",
-  "next_check_Shanghai": "2026-11-04 22:38",
+  "next_check_Shanghai": "2026-11-04 22:53",
   "third_arm_admission": {
     "shared_PFS_free_GiB": 660,
     "combined_E_C_current_GiB_rounded_up": 62,
@@ -111,7 +132,7 @@
     "reviewed_new_main_scientific_commit": "6d106487dfc712c8358a5a9e332d0f31b3017f65",
     "pinned_engine_same_across_three_arms": true
   },
-  "next_action": "Monitor three step-40 checkpoints and evaluate all six policies on the locked 512 cases",
-  "PFS_free_GiB": 482.7,
+  "next_action": "Verify four device probes and the first completed paired banks",
+  "PFS_free_GiB": 434.8,
   "endpoint_eval_launcher_qualification": "Single-GPU scheduler isolation checked before defaulting the CUDA ordinal, EGL selected; CPU config, B8 design, source imports, 675-key prefix and original mmap loads verified. All four disjoint case partitions have independently tested action journals."
 }
