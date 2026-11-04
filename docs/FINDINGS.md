@@ -47,6 +47,14 @@ missing explicit HF-worker seeding does not imply cloned rank noise. This
 check covers Drawer, not every task or draw.
 [RNG evidence and scope](../outputs/robocasa-flow-sde-bug-audit-20261104-r1/RNG-RESULT.md).
 
+The Nov4 dimension-drift replay completed all 80 checkpoint/cohort forwards;
+independent Linux CPU reductions and original R3 per-sample likelihoods agree
+exactly. Drawer's final conditional log ratio is −137.5202, with arm share
+61.43% and gripper/base-mode share 24.44%; neither 70% concentration rule
+fires. Different cohort denoising scales confound raw cross-task drift ratios.
+This does not establish marginal action KL, behavioral change or a cause of
+failed learning. [Verified decomposition and limits](../outputs/robocasa-flow-sde-dimension-drift-20261104-r1/RESULT.md).
+
 A Nov4 native checkpoint-evaluation qualification preserves fixed eight-lane
 batches and common sampler RNG, with zero initial-policy likelihood error.
 Repeated initial-policy Drawer→Counter success was6/8 then8/8. Initial

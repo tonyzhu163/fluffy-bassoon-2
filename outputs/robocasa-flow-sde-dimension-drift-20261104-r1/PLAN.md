@@ -1,6 +1,6 @@
 # Per-dimension drift diagnostic for the 10M Flow-SDE sources
 
-**Status 2026-11-04: RUNNING on Baige `job-aesultap3qa8`.** Owner
+**Status 2026-11-04: COMPLETE; Baige `job-aesultap3qa8` succeeded and released its allocation.** Owner
 chat `01a1a4a2`; user requested pull and dimension-drift check. Reads only retained artifacts of
 [`robocasa-flow-sde-10m-per-task-20261103-r1`](../robocasa-flow-sde-10m-per-task-20261103-r1/RESULT.md).
 No simulator controls, sampling or SGD.

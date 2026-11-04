@@ -1,6 +1,6 @@
 {
-  "status": "RUNNING",
-  "checked_shanghai": "2026-11-04T12:48:21.557326+08:00",
+  "status": "COMPLETE",
+  "checked_shanghai": "2026-11-04T13:12:39.501903+08:00",
   "owner_chat": "01a1a4a2",
   "cluster": "Baige Pro6K",
   "job_id": "job-aesultap3qa8",
@@ -23,23 +23,31 @@
   "cpu_metrics_rows": 1300,
   "cpu_numerical_cases": 2,
   "active_worktree_immutable": true,
-  "next_action": "Finish four task controls; after GPU exit and 80 staging receipts run the deployed independent Linux CPU audit, verify scheduler release/costs, publish full results, and pause the heartbeat.",
+  "next_action": "Remove completed heartbeat after publication; no further work remains in this diagnostic.",
   "target_completed": true,
   "target_checkpoint_forwards": 16,
   "target_independent_reduction_error": 0,
-  "completed_checkpoint_forwards_at_last_check": 61,
-  "control_tasks_completed": 2,
+  "completed_checkpoint_forwards_at_last_check": 80,
+  "control_tasks_completed": 4,
   "heartbeat_id": "finish-dimension-drift-diagnostic",
-  "heartbeat_status": "ACTIVE",
+  "heartbeat_status": "DELETE_PENDING",
   "monitor_interval_minutes": 20,
   "task_progress": {
     "OpenDrawer": {
-      "completed": false,
-      "rows": 13,
-      "last_step": 100,
+      "completed": true,
+      "rows": 16,
+      "last_step": 130,
       "all_rows_reproduce_r3": true,
-      "last_mean_chunk_log_ratio": -0.22748260479420424,
-      "result_sha256": "4e064f18f84136b8574ae5ed7caf50edb2b616b922a6dcba4de28c174027a66e"
+      "last_mean_chunk_log_ratio": -0.3402960328385234,
+      "result_sha256": "d6d5d8896a0aed777f543dadd6f09c1cb7be610cbdc4e3a57d965f3b6deaf959"
+    },
+    "CloseToasterOvenDoor": {
+      "completed": true,
+      "rows": 16,
+      "last_step": 130,
+      "all_rows_reproduce_r3": true,
+      "last_mean_chunk_log_ratio": -2.575063891708851,
+      "result_sha256": "244942d21d35e77de2dd378572dba73549507a5ebe07aaff8c59963a4f694874"
     },
     "PickPlaceDrawerToCounter": {
       "completed": true,
@@ -49,14 +57,6 @@
       "last_mean_chunk_log_ratio": -137.52018895745277,
       "result_sha256": "b6c27700a511b5adc672e9516474099e388fffde7b716847961434a82f0991d7"
     },
-    "TurnOffStove": {
-      "completed": true,
-      "rows": 16,
-      "last_step": 130,
-      "all_rows_reproduce_r3": true,
-      "last_mean_chunk_log_ratio": -1.4524267315864563,
-      "result_sha256": "0a124911715bd0269a3b110c6d62f2cb0ae6edd190dc996925b0960b8f81aba6"
-    },
     "CoffeeSetupMug": {
       "completed": true,
       "rows": 16,
@@ -64,9 +64,30 @@
       "all_rows_reproduce_r3": true,
       "last_mean_chunk_log_ratio": -0.771257821470499,
       "result_sha256": "a5943f6dc38d36d145735ee3e53e19c8b6e8541d80f873d6936f5d14947d77a9"
+    },
+    "TurnOffStove": {
+      "completed": true,
+      "rows": 16,
+      "last_step": 130,
+      "all_rows_reproduce_r3": true,
+      "last_mean_chunk_log_ratio": -1.4524267315864563,
+      "result_sha256": "0a124911715bd0269a3b110c6d62f2cb0ae6edd190dc996925b0960b8f81aba6"
     }
   },
   "latest_monitor": "MONITOR-20261104-1248.json",
-  "gpu_clock_present": false,
-  "elapsed_since_probe_seconds_lower_bound": 3305.668328
+  "gpu_clock_present": true,
+  "elapsed_since_probe_seconds_lower_bound": 3305.668328,
+  "full_cpu_audit_passed": true,
+  "full_cpu_tensor_count": 80,
+  "maximum_per_sample_r3_difference": 0,
+  "scheduler_status": "Succeeded",
+  "allocation_released": true,
+  "process_gpu_seconds": 4330,
+  "conservative_gpu_seconds": 4373.0,
+  "conservative_gpu_hours": 1.2147222222222223,
+  "within_cap": true,
+  "staging_completed": true,
+  "staging_worker_alive": false,
+  "final_audit_sha256": "17145f00703aece21173086eb50bb69e3fcf4f6feee5a93c2409d337c0d628fe",
+  "scheduler_closeout": "SCHEDULER-CLOSEOUT.json"
 }
