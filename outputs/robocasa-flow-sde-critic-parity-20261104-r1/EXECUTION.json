@@ -1,7 +1,7 @@
 {
-  "status": "RUNNING",
+  "status": "GPU_REPLAY_COMPLETE_CPU_AUDIT_PENDING",
   "phase": "matching-checkpoint replay",
-  "checked_shanghai": "2026-11-04T13:47:35.596336+08:00",
+  "checked_shanghai": "2026-11-04T13:58:10.759467+08:00",
   "cluster": "Baige Pro6K",
   "job_id": "job-b6d2kkvouxx4",
   "job_name": "mwj_1104_flow10m_critic_parity_1x1_r2",
@@ -10,7 +10,7 @@
   "accelerator": "NVIDIA RPBZZZ6",
   "probe_passed": true,
   "maximum_runtime_minutes": 41,
-  "completed_cohorts": 11,
+  "completed_cohorts": 16,
   "target_cohorts": 16,
   "target_decisions": 256,
   "prior_failed_attempt_conservative_gpu_seconds": 108,
@@ -19,5 +19,6 @@
   "automatic_retry": false,
   "new_controls": 0,
   "SGD": 0,
-  "next_action": "Finish exact value/likelihood replay, qualify selected-step patch, then assess need for a bounded controlled comparison."
+  "next_action": "Independent CPU audit and controlled-comparison admission.",
+  "cumulative_conservative_gpu_seconds": 393
 }
