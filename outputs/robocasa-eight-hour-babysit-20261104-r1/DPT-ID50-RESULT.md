@@ -19,4 +19,4 @@ All entries are successes out of50 paired cases. Per-query full-minus-reset cont
 
 Independent CPU audit passed all1800episodes,1080000physical controls,21600chunks,5400videos and3245400decoded frames, including actual commands/draws/feedback, native initial-state matching and memory continuity. Audit receipt: DPT-ID50-AUDIT.json. Scheduler job-h62ufmu061kl ended05:07:23 Shanghai; conservative allocation charge3.6633GPU-hours.
 
-The same frozen candidate will be used on contracted CloseFridge H900 and TurnOnMicrowave H450,50cases/task,6actualepisodes,full/reset modes.
+The same frozen candidate completed the contracted CloseFridge H900 and TurnOnMicrowave H450,50cases/task,6actualepisodes,full/reset panel. Independent audit passed; see DPT-OOD50-RESULT.md for the weak transfer result.
