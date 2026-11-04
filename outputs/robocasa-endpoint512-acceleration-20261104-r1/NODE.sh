@@ -47,6 +47,6 @@ export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
 "$TASK_PY" -B "$TASK_RUNTIME/scripts/[train]gpu_probe.py" --expected-count 1 --purpose evaluation \
  --baige-container --output "$TASK_OUTPUT/gpu-probe.json"
-TASK_DEADLINE=$((TASK_STARTED+1170))
-timeout --signal=TERM --kill-after=30s 1170 "$TASK_PY" -B "$TASK_RUN/parallel_endpoint.py" worker \
+TASK_DEADLINE=$((TASK_STARTED+1410))
+timeout --signal=TERM --kill-after=30s 1410 "$TASK_PY" -B "$TASK_RUN/parallel_endpoint.py" worker \
  --manifest "$TASK_MANIFEST" --index "$TASK_INDEX" --deadline "$TASK_DEADLINE"

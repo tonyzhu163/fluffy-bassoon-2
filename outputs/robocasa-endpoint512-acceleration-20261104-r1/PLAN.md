@@ -85,6 +85,6 @@ Qualify the real frozen ActionJournal with all eight roots and unequal limits
 on Linux CPU before launch. Reuse prior complete native import qualification;
 the evaluator and all model imports are unchanged. Retain previous manifest
 pairs recursively, with raw-file hashes and no stitching of interrupted banks.
-The next eight-container reservation is20minutes, with a1170-second worker
+The next eight-container reservation is24minutes, with a1410-second worker
 timeout and30-second kill allowance. Recompute cumulative charges on release
 and admit only when that reservation fits the original27600GPU-second ceiling.
