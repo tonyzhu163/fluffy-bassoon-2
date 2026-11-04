@@ -1,6 +1,7 @@
 """Keep this chat's read-only twenty-minute observations through the requested window."""
 import datetime
 import json
+import os
 from pathlib import Path
 import subprocess
 import time
@@ -8,12 +9,14 @@ import time
 
 def main():
     root = Path(__file__).resolve().parent
+    target = os.environ['BABYSIT_SSH_TARGET']
+    port = os.environ.get('BABYSIT_SSH_PORT','22')
     end = datetime.datetime.fromisoformat('2026-11-05T07:05:00+08:00').timestamp()
     while True:
         began = time.time()
         try:
-            process = subprocess.run(['ssh', '-p', '4952', '-o', 'BatchMode=yes', '-o',
-                'ConnectTimeout=10', 'root@10.200.0.11', 'python3', '-'],
+            process = subprocess.run(['ssh', '-p', port, '-o', 'BatchMode=yes', '-o',
+                'ConnectTimeout=10', target, 'python3', '-'],
                 input=(root / 'OBSERVE.py').read_text(), text=True, capture_output=True,
                 timeout=45, check=True)
             value = json.loads(process.stdout)
