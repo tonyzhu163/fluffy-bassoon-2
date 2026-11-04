@@ -1,0 +1,18 @@
+--- a/rlinf/models/embodiment/openpi/tasks/rl.py
++++ b/rlinf/models/embodiment/openpi/tasks/rl.py
+@@ -293,7 +293,14 @@
+         if vlm_value is not None:
+             prev_values = vlm_value[:, None].float().contiguous()
+         elif suffix_values:
+-            prev_values = torch.stack(suffix_values, dim=1).mean(dim=1, keepdim=True)
++            suffix_values_stacked = torch.stack(suffix_values, dim=1)
++            if rl_cfg.joint_logprob or rl_cfg.is_nft:
++                prev_values = suffix_values_stacked.mean(dim=1, keepdim=True)
++            else:
++                # PPO replay evaluates this same pre-transition suffix state.
++                prev_values = suffix_values_stacked[
++                    torch.arange(B, device=device), denoise_inds[:, 0]
++                ][:, None].float().contiguous()
+         else:
+             prev_values = torch.zeros((B, 1), device=device, dtype=torch.float32)
+ 
