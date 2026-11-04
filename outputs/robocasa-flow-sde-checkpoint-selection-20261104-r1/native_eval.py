@@ -6,7 +6,6 @@ simulator construction use the source runtime; no training workers are created.
 import argparse
 import gc
 import json
-import os
 from pathlib import Path
 import random
 import time
@@ -95,7 +94,7 @@ class SelectionRollout(MultiStepRolloutWorker):
         assert mode == 'eval' and self.only_eval
         before = snapshot_rng()
         actions, result = super().predict(env_obs, mode=mode)
-        assert actions.shape[:2] == (8, 50) and bool(torch.isfinite(actions).all())
+        assert tuple(actions.shape) == (8, 50, 12) and bool(torch.isfinite(actions).all())
         self._selection_calls += 1
         write(Path(self.cfg.selection.output) / 'sampler' /
               f'{self._selection_phase}-{self._selection_calls:02d}.json',
@@ -176,7 +175,9 @@ def run(prepared, output, deadline):
             rollout.select_checkpoint(cp['staged_path'], cp['sha256'], step,
                                         phase, 11030000).wait()
         env.select_bank(phase, step, 10030000).wait()
+        evaluation_started = time.monotonic()
         metrics = runner.evaluate()
+        evaluation_seconds = time.monotonic() - evaluation_started
         episodes = output / 'bank/environment/rank-00' / f'{phase}-i{step:03d}-round00-episodes.json'
         data = json.loads(episodes.read_text())
         assert data['completed'] and len(data['rows']) == 8
@@ -184,6 +185,8 @@ def run(prepared, output, deadline):
         samples = sorted((output / 'sampler').glob(phase + '-*.json'))
         assert len(samples) == 12
         rows.append(dict(phase=phase, step=step, seconds=time.monotonic()-tick,
+            evaluation_seconds=evaluation_seconds,
+            evaluation_controls_per_second=4800/evaluation_seconds,
             load=load, first_success=sum(r['success_once'] for r in data['rows']),
             success_at_end=sum(r['success_at_end'] for r in data['rows']),
             episodes=str(episodes), episodes_sha256=sha(episodes),
@@ -196,6 +199,12 @@ def run(prepared, output, deadline):
                [r['before_rng_sha256'] for r in sampler_rows[0]] for values in sampler_rows)
     assert all([r['after_rng_sha256'] for r in values] ==
                [r['after_rng_sha256'] for r in sampler_rows[0]] for values in sampler_rows)
+    # Equality is recorded as a diagnostic, never imposed as a requirement on
+    # GPU kernels. Numeric actions remain in the native full chunk records.
+    repeated_success = []
+    for phase, step in [('zero-a', 0), ('zero-b', 0)]:
+        p = output / 'bank/environment/rank-00' / f'{phase}-i{step:03d}-round00-episodes.json'
+        repeated_success.append([r['success_once'] for r in json.loads(p.read_text())['rows']])
     released = env.release_environments().wait()
     runner.metric_logger.finish()
     journals = list((output.parent / 'accounting').glob('rank-*/*.json'))
@@ -206,6 +215,9 @@ def run(prepared, output, deadline):
     write(output / 'RESULT.json', dict(completed=True, rows=rows, SGD=0,
         policy_controls=14400, all_controls=controls, released=released,
         fixed_eight_lane_batches=True, common_sampler_rng_passed=True,
+        repeated_initial_policy_success_equal=repeated_success[0]==repeated_success[1],
+        repeated_initial_policy_action_hashes_equal=[r['actions_sha256'] for r in sampler_rows[0]]==
+                                                  [r['actions_sha256'] for r in sampler_rows[2]],
         bitwise_deterministic_kernels_required=False,
         initial_parity=parity, source_admission_sha256=sha(prepared)))
 
