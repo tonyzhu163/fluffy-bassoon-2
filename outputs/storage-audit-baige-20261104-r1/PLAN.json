@@ -1,0 +1,33 @@
+{
+  "authorization": "Human: i need you to audit storage, be aggressive in archiving unused or stale",
+  "scope": "All Baige /mowenjie projects, models and stale environments, plus current-repo inactive bulk",
+  "strategy": "Cold archive inactive assets to existing private BOS mount. Inventory, source comparison, complete archive readback SHA256 before any source reclamation. Preserve configs/logs/evaluation records in archive. No active job, held resumable state or shared current runtime/cache mutation.",
+  "protected": [
+    "Stage1 job-bylh99ylx9ie (8 GPUs, running 2026-11-04 16:02 Shanghai)",
+    "robocasa-ppo-grpo-meta-stage1-20261104-r1",
+    "robocasa-joint-steering-scale50-20261103-r1 event005 complete recovery state",
+    "robocasa-flow-sde-critic-parity-20261104-r1 held continuation state",
+    "robocasa-flow-sde-checkpoint-selection-20261104-r1 and source checkpoints/corpora",
+    "current RoboCasa/Flora runtimes and weights, libraries, credentials",
+    "other original fluffy-bassoon/LycoReco results and runs until independently qualified inactive"
+  ],
+  "scheduler_snapshot": {
+    "time": "2026-11-04T16:02:00+08:00",
+    "only_my_tasks": true,
+    "all_clusters_queues": true,
+    "states": [
+      "Created",
+      "Scheduled",
+      "Running",
+      "Stopping",
+      "Restarting",
+      "ToBeSubmitted"
+    ],
+    "jobs": [
+      "job-bylh99ylx9ie"
+    ],
+    "observation": "Existing authenticated Chrome console; single results page, no next page."
+  },
+  "GPU_usage": 0,
+  "expanded_authorization": "Human clarification: i meant its worth archiving other projects as well or stale envs not used"
+}

@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "linux_cpu_only": true,
+  "GPU_used": 0,
+  "checks": [
+    "content compare",
+    "exact members",
+    "complete archive SHA256 readback",
+    "source reclamation",
+    "restore",
+    "symlink",
+    "hardlink"
+  ],
+  "fixture_receipt": {
+    "source": "/tmp/storage-qualification-20261104-j6m4kycm/source/fixture",
+    "archive": "/tmp/storage-qualification-20261104-j6m4kycm/bos/fixture.tar.zst",
+    "sha256": "408b2bddf128634e7704c9421f082959200ea5b6dfa5515c122fc92ec37e849c",
+    "archive_bytes": 340,
+    "source_allocated_bytes": 12288,
+    "source_logical_bytes": 5200,
+    "entries": 4,
+    "source_compare": true,
+    "exact_member_coverage": true,
+    "bos_readback_sha256_verified": true,
+    "source_reclaimed": true,
+    "verified_at": "2026-11-04T16:08:11+0800",
+    "restore_command": "tar --acls --xattrs -I zstd -xf '/tmp/storage-qualification-20261104-j6m4kycm/bos/fixture.tar.zst' -C '/tmp/storage-qualification-20261104-j6m4kycm/source'",
+    "reclaimed_at": "2026-11-04T16:08:11+0800"
+  }
+}
