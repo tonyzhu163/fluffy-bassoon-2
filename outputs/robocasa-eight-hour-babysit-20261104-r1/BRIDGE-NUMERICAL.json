@@ -1,0 +1,45 @@
+{
+  "zero_actions_exact": true,
+  "layers": 18,
+  "adapter_rank": 4,
+  "context_length": 384,
+  "exercised_tokens": 378,
+  "gradients": [
+    {
+      "perturbed_probe_only": false,
+      "loss": 0.09114120900630951,
+      "output_basis_gradient_L1": 0.19466277002356946,
+      "history_core_gradient_L1": 0.0
+    },
+    {
+      "perturbed_probe_only": true,
+      "loss": 0.09159763902425766,
+      "output_basis_gradient_L1": 0.19559070956893265,
+      "history_core_gradient_L1": 3.839356413067435
+    }
+  ],
+  "official_physical_normalization_roundtrip_max_abs": 2.9398415812842416e-08,
+  "physical_binary_target": "canonical +/-1 representative; not the original continuous prediction",
+  "native_parameters_frozen": true,
+  "native_gradient_tensors": 0,
+  "optimizer_updates": 0,
+  "perturbed_probe_basis_restored": true,
+  "source_chunk": {
+    "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/gpu/native-six-qualification-01/full/OpenDrawer/bank-000/attempts/case-c6405cf8b20dd9fcc72d816ceb696227104083baca4d5eeff86298bf7a5cc30c/attempt-1/chunk-0000.pkl.gz",
+    "sha256": "18ee03c684909a859f479cb1e620a0d2b7720286876b5517517c571f03b56a19"
+  },
+  "signature": {
+    "model_directory": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
+    "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+    "model_config_sha256": "1c85bc28303a2144a1cc3af492b1b6d91f9cdcd94b30f04212505ffb5118f1b0",
+    "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+    "source_commit": "2fa880d331e0a3c90cadd508b1a9df8611f86f81",
+    "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+    "parameter_count": 3353433872,
+    "cuda_uuid": "506f4251-c33b-64fe-2f9f-a0aeaf31b558",
+    "scheduler_uuid": "GPU-a827077c-35ab-fb2b-a1a4-fa68c55d3746",
+    "device_name": "NVIDIA RPBZZZ6",
+    "all_parameters_frozen": true,
+    "parameter_versions_sha256": "a2dfa470179d52480a23bffc2b87edf316f172e82a50e42fd749425ff7d4b7c9"
+  }
+}

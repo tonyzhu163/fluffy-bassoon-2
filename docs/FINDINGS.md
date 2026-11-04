@@ -75,6 +75,8 @@ performance gain. No bitwise GPU-kernel requirement is introduced; the full
 intermediate curve and fresh validation-selected TEST remain unrun.
 [Qualification and limitations](../outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/RESULT.md).
 
+A native18-layer learned-KV steering interface now passes byte-exact zero-adapter action parity, active-coordinate normalization and gradient propagation on the allocated RPBZZZ6, with every native VLA parameter frozen and zero optimizer updates. Its384-token history cache accepts378 synthetic tokens; six actual H600 episodes retain complete prior history. Independent CPU auditing reproduces72 native draws/command chunks and decodes all18 videos (3600controls). This qualifies the implementation and context capacity, not fitted steering or adaptation. [Numerical and physical evidence](../outputs/robocasa-eight-hour-babysit-20261104-r1/BRIDGE-RESULT.md).
+
 ## Headline
 
 - **No experiment so far shows in-context adaptation or a memory benefit**, on

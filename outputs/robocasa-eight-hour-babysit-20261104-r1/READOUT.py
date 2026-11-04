@@ -13,7 +13,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--code', type=Path, required=True)
     parser.add_argument('--source-commit', required=True)
-    parser.add_argument('--method', choices=('ad', 'dpt', 'dit', 'ic_iql', 'native_initial'), required=True)
+    parser.add_argument('--method', choices=('ad', 'dpt', 'dit', 'ic_iql', 'native_initial', 'native_final'), required=True)
     parser.add_argument('--split', choices=('ID', 'OOD'), required=True)
     parser.add_argument('--stage', choices=('qualification', 'final'), required=True)
     parser.add_argument('--count', type=int, choices=(2, 8, 50), required=True)
@@ -52,7 +52,8 @@ def main():
     corpus = json.loads(assembly.read_text())
     selected = dict(kind=args.method)
     policy = None
-    if args.method != 'native_initial':
+    is_anchor = args.method in ('native_initial', 'native_final')
+    if not is_anchor:
         directory = fit / 'fits' / args.method
         status = json.loads((directory / 'training-status.json').read_text())
         if status.get('converged') is not True or status.get('stop_reason') != 'validation_plateau':
@@ -90,7 +91,7 @@ def main():
         path = Path(reference['path'])
         if file_sha256(path) != reference['sha256'] or json.loads(path.read_text())['codec'] != codec.record():
             raise ValueError('Source and evaluation physical-action encodings differ')
-    if args.method == 'native_initial':
+    if is_anchor:
         policy = ReferencePlaceholder().to('cuda:0')
         motor = FlowReferenceMotor(native, codec, native.model)
     else:
@@ -101,7 +102,7 @@ def main():
     TASKS['CloseToasterOvenDoor'] = (600, 'atomic_seen', 'atomic', None)
     tasks = ('OpenDrawer', 'CloseToasterOvenDoor', 'CoffeeSetupMug') if args.split == 'ID' else ('CloseFridge', 'TurnOnMicrowave')
     horizons = {task: TASKS[task][0] for task in tasks}
-    modes = ('full',) if args.method == 'native_initial' else ('full', 'episode')
+    modes = ('full',) if is_anchor else ('full', 'episode')
     base_seed = 63105000 if args.stage == 'qualification' else 64105000
     canonical = args.output.parent / ('canonical-' + args.stage + '-' + args.split)
     binding = dict(format='three_task_six_episode_readout_v1', source_commit=args.source_commit,
@@ -112,8 +113,50 @@ def main():
     _json(args.output / 'BINDING.json', binding)
     results = []
     started = time.time()
+    reference_actor = None
+    prepared_hashes = dict(OpenDrawer='12055d1ca468333971884470a5ea411ea3e511907b8bc6a5dc7b78eeef3c66e8',
+        CloseToasterOvenDoor='2a3df641c4e0b6cbb8123add201b17e16b874d3c1ffc49b2f002675350637659',
+        CoffeeSetupMug='f9474e04c21f4a8708ae75e077b8f238dc95e90019266d600f4637d3da1a2842')
     for mode in modes:
         for task in tasks:
+            task_binding = dict(binding)
+            if args.method == 'native_final':
+                # ID uses that task's fixed130 teacher; OOD always uses the
+                # prospectively designated Drawer teacher, never an OOD fit.
+                teacher_task = task if args.split == 'ID' else 'OpenDrawer'
+                receipt_path = root / ('outputs/robocasa-flow-sde-10m-per-task-20261103-r1/'
+                    + 'CORPUS-ARCHIVE-' + teacher_task + '-R1-PREPARED.json')
+                if file_sha256(receipt_path) != prepared_hashes[teacher_task]:
+                    raise ValueError('Final teacher preparation binding changed')
+                receipt = json.loads(receipt_path.read_text())
+                boundary = Path(receipt['checkpoint']['path'])
+                boundary_record = boundary / 'pilot-boundary.json'
+                if file_sha256(boundary_record) != receipt['checkpoint']['boundary_sha256']:
+                    raise ValueError('Fixed130 teacher boundary changed')
+                checkpoint = json.loads(boundary_record.read_text())
+                if checkpoint.get('completed') is not True or checkpoint['global_step'] != 130:
+                    raise ValueError('Require the complete fixed130 teacher')
+                weights = boundary / 'actor/model_state_dict/full_weights.pt'
+                weight_ref = next(item for item in checkpoint['actor_checkpoint_files']
+                    if Path(item['path']) == weights)
+                if file_sha256(weights) != weight_ref['sha256']:
+                    raise ValueError('Final teacher actor bytes differ from the source boundary')
+                teacher_identity = dict(task=teacher_task, step=130, weights=str(weights),
+                    weights_sha256=weight_ref['sha256'], receipt_sha256=file_sha256(receipt_path))
+                from hydra import compose, initialize_config_dir
+                from rlinf.models.embodiment.openpi import get_model
+                if reference_actor is not None:
+                    del motor, reference_actor
+                    torch.cuda.empty_cache()
+                with initialize_config_dir(config_dir=str(args.code / 'configs/native_ppo'), version_base=None):
+                    cfg = compose(config_name='robocasa365_pi05_eval')
+                cfg.rollout.model.model_path = str(weights.parent)
+                cfg.rollout.model.openpi_data.norm_stats_path = str(norm)
+                reference_actor = get_model(cfg.rollout.model, torch_dtype=torch.bfloat16).to('cuda:0').eval().requires_grad_(False)
+                motor = FlowReferenceMotor(native, codec, reference_actor)
+                task_binding['final_teacher'] = teacher_identity
+                _json(args.output / ('FINAL-TEACHER-' + task + '.json'), teacher_identity)
+                reference_versions = tensor_hash(_versions(reference_actor))
             # The same task retains the same physical cases across methods/modes.
             task_number = ('OpenDrawer', 'CloseToasterOvenDoor', 'CoffeeSetupMug', 'CloseFridge', 'TurnOnMicrowave').index(task)
             for first in range(0, args.count, 8):
@@ -131,12 +174,14 @@ def main():
                     maximum_actions=len(cases) * 6 * (horizons[task] + 128))
                 backend = NativeAttemptBackend(output=directory / 'attempts', canonical_root=canonical,
                     motor=motor, spec=codec, native_factory=factory.paired, journal=journal,
-                    writer_factory=native_video_writer, binding=binding, maximum_rgb_delta=2,
+                    writer_factory=native_video_writer, binding=task_binding, maximum_rgb_delta=2,
                     memory_mode=mode, actual_attempts=6, fixed_case_order=True)
                 began = time.time()
                 rows = backend.run_bank(policy, cases, lanes=len(cases), attempts=6, deadline_unix=args.deadline - 90)
                 if tensor_hash(_versions(native.model)) != native_versions:
                     raise ValueError('Frozen native weights mutated')
+                if reference_actor is not None and tensor_hash(_versions(reference_actor)) != reference_versions:
+                    raise ValueError('Frozen final teacher weights mutated')
                 expected_batches = 6 * (horizons[task] // 50)
                 if backend.last_batch_sizes != [len(cases)] * expected_batches or len(rows) != 6 * len(cases):
                     raise ValueError('Actual native batch membership or episode coverage differs')
