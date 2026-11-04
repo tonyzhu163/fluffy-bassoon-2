@@ -1,0 +1,22 @@
+{
+  "format": "robocasa_three_task_meta_baseline_budget_v1",
+  "approved_shanghai": "2026-11-04T16:35:59+08:00",
+  "user_approval": "yes start it, plan how many gpus? / go",
+  "approved_ceiling_GPU_hours": 21.0,
+  "gpu_plan": {
+    "parallel_jobs": 3,
+    "gpus_per_job": 1,
+    "total_concurrent_gpus": 3,
+    "accelerator_type": "NVIDIA RPBZZZ6 (RTX 6000D 96GiB)",
+    "cpu_per_job": 16,
+    "ram_gib_per_job": 64,
+    "shm_gib_per_job": 16,
+    "wall_minutes_per_job": 240,
+    "automatic_retry": false
+  },
+  "tasks": [
+    "OpenDrawer",
+    "CloseToasterOvenDoor",
+    "CoffeeSetupMug"
+  ]
+}
