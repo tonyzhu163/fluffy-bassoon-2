@@ -1,0 +1,209 @@
+{
+  "checked_shanghai": "2026-11-05T07:12:10.548939+08:00",
+  "inputs": [
+    {
+      "method": "ad",
+      "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/joint/fits/ad/metrics.jsonl",
+      "frozen_metrics": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/figures/training-handoff-final-01/ad-metrics.jsonl",
+      "sha256": "90bcb749ca88b46acbe34e64e8107ab0d7bcc926df1f2958a2bc72b248a36aee",
+      "complete_lines": 152,
+      "observed_best": {
+        "update": 13800,
+        "elapsed_seconds": 19058.232286432758,
+        "validation_nll": -198.26115429401398,
+        "nll": -277.323974609375,
+        "gradient_norm": 928.6318359375,
+        "update_seconds": 1.4644837593659759,
+        "valid_positions": 648,
+        "logical_batch_size": 8,
+        "execution_batch_size": 8,
+        "cuda_peak_allocated_bytes": 5791580160,
+        "plateau": {
+          "reference": -198.26115429401398,
+          "stale_checks": 0,
+          "converged": false
+        }
+      },
+      "latest_actor": {
+        "update": 14800,
+        "elapsed_seconds": 20433.9906375492,
+        "validation_nll": -198.20544576644897,
+        "nll": -286.9975280761719,
+        "gradient_norm": 722.4791259765625,
+        "update_seconds": 1.3127203034237027,
+        "valid_positions": 552,
+        "logical_batch_size": 8,
+        "execution_batch_size": 8,
+        "cuda_peak_allocated_bytes": 5791729664,
+        "plateau": {
+          "reference": -198.26115429401398,
+          "stale_checks": 10,
+          "converged": true
+        }
+      },
+      "status": {
+        "converged": true,
+        "update": 14800,
+        "best_validation_nll": -198.26115429401398,
+        "plateau": {
+          "reference": -198.26115429401398,
+          "stale_checks": 10,
+          "converged": true
+        },
+        "elapsed_seconds": 20433.9906375492,
+        "stop_reason": "validation_plateau"
+      }
+    },
+    {
+      "method": "dpt",
+      "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/joint/fits/dpt/metrics.jsonl",
+      "frozen_metrics": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/figures/training-handoff-final-01/dpt-metrics.jsonl",
+      "sha256": "dff61136764bc03cb7773f5676b8301e6d26d8d0ecb7e8b297292b492c4c87f8",
+      "complete_lines": 166,
+      "observed_best": {
+        "update": 16200,
+        "elapsed_seconds": 22778.291457260028,
+        "validation_nll": -236.91089487075806,
+        "nll": -323.8204040527344,
+        "gradient_norm": 1191.13818359375,
+        "update_seconds": 1.3874183911830187,
+        "valid_positions": 768,
+        "logical_batch_size": 8,
+        "execution_batch_size": 8,
+        "cuda_peak_allocated_bytes": 5791580160,
+        "plateau": {
+          "reference": -236.6782808303833,
+          "stale_checks": 10,
+          "converged": true
+        }
+      },
+      "latest_actor": {
+        "update": 16200,
+        "elapsed_seconds": 22778.291457260028,
+        "validation_nll": -236.91089487075806,
+        "nll": -323.8204040527344,
+        "gradient_norm": 1191.13818359375,
+        "update_seconds": 1.3874183911830187,
+        "valid_positions": 768,
+        "logical_batch_size": 8,
+        "execution_batch_size": 8,
+        "cuda_peak_allocated_bytes": 5791580160,
+        "plateau": {
+          "reference": -236.6782808303833,
+          "stale_checks": 10,
+          "converged": true
+        }
+      },
+      "status": {
+        "converged": true,
+        "update": 16200,
+        "best_validation_nll": -236.91089487075806,
+        "plateau": {
+          "reference": -236.6782808303833,
+          "stale_checks": 10,
+          "converged": true
+        },
+        "elapsed_seconds": 22778.291457260028,
+        "stop_reason": "validation_plateau"
+      }
+    },
+    {
+      "method": "dit",
+      "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/joint/fits/dit/metrics.jsonl",
+      "frozen_metrics": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/figures/training-handoff-final-01/dit-metrics.jsonl",
+      "sha256": "60f31456e273a5bfdadcbf873124549c00f44980542f424e09faf6335b8cdda3",
+      "complete_lines": 147,
+      "observed_best": {
+        "phase": "actor",
+        "update": 11100,
+        "validation_loss": -179.4802303314209,
+        "loss": -252.9686737060547,
+        "nll": -252.7579345703125,
+        "weight_mean": 1.0034734010696411,
+        "weight_max": 1.3303390741348267,
+        "gradient_norm": 423.7947082519531
+      },
+      "latest_actor": {
+        "phase": "actor",
+        "update": 11384,
+        "validation_loss": -176.50725483894348,
+        "loss": -109.19434356689453,
+        "nll": -103.946044921875,
+        "weight_mean": 1.0051778554916382,
+        "weight_max": 1.2453256845474243,
+        "gradient_norm": 380.2330017089844
+      },
+      "status": {
+        "converged": false,
+        "phase": "actor",
+        "update": 11384,
+        "updates": {
+          "value": 2700,
+          "actor": 11384
+        },
+        "best_validation_loss": {
+          "value": 0.19111633393913507,
+          "actor": -179.4802303314209
+        },
+        "elapsed_seconds": 33100.52254413068,
+        "stop_reason": "operational_checkpoint"
+      }
+    },
+    {
+      "method": "ic_iql",
+      "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/joint/fits/ic_iql/metrics.jsonl",
+      "frozen_metrics": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/figures/training-handoff-final-01/ic_iql-metrics.jsonl",
+      "sha256": "bbdd9cb3bb18d6994202e1ee3fa6f6cf97572ab2d99d17d6776b74aa4a086a31",
+      "complete_lines": 146,
+      "observed_best": {
+        "phase": "actor",
+        "update": 11200,
+        "validation_loss": -175.88580799102783,
+        "loss": -250.36671447753906,
+        "nll": -254.17079162597656,
+        "weight_mean": 0.991900622844696,
+        "weight_max": 1.7367534637451172,
+        "gradient_norm": 405.3500061035156
+      },
+      "latest_actor": {
+        "phase": "actor",
+        "update": 11328,
+        "validation_loss": -174.70296531915665,
+        "loss": -203.92808532714844,
+        "nll": -208.74884033203125,
+        "weight_mean": 0.9836733341217041,
+        "weight_max": 1.1875479221343994,
+        "gradient_norm": 422.7967224121094
+      },
+      "status": {
+        "converged": false,
+        "phase": "actor",
+        "update": 11328,
+        "updates": {
+          "value": 2600,
+          "actor": 11328
+        },
+        "best_validation_loss": {
+          "value": 0.022269945475272834,
+          "actor": -175.88580799102783
+        },
+        "elapsed_seconds": 33124.97709573526,
+        "stop_reason": "operational_checkpoint"
+      }
+    }
+  ],
+  "images": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/figures/training-handoff-final-01/training-progress.png",
+      "sha256": "3e188f7dbd1ea665309cf3a0c30277bfc9f0ffc5cbe61cb93afe57d4b2ceb9cb"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/figures/training-handoff-final-01/training-progress.svg",
+      "sha256": "0a591d8beddf578a4751bb34fe8c5cd3a031ff3d7c486a3adeedbafe5e68d7b6"
+    }
+  ],
+  "CPU_only": true,
+  "GPU_hours": 0,
+  "source_learner_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+  "meaning": "Snapshot of complete metric lines; active histories continue after this figure."
+}
