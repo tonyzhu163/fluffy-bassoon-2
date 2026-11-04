@@ -1,0 +1,131 @@
+{
+  "passed": true,
+  "CPU_only": true,
+  "GPU_hours": 0,
+  "job_id": "job-gmk7n873l35e",
+  "scheduler_released_shanghai": "2026-11-05T07:08:47+08:00",
+  "checked_shanghai": "2026-11-05T07:10:49.404240+08:00",
+  "learner_source": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+  "methods": {
+    "dit": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/joint/fits/dit/latest.pt",
+      "sha256": "2e936fcff65c662318e2b18f89a4de2b764b0a03f7e7192e23f97ad67a4f6511",
+      "bytes": 313295846,
+      "phase": "actor",
+      "updates": {
+        "value": 2700,
+        "actor": 11384
+      },
+      "converged": false,
+      "best_validation_loss": {
+        "value": 0.19111633393913507,
+        "actor": -179.4802303314209
+      },
+      "plateaus": {
+        "value": {
+          "reference": 0.19111633393913507,
+          "stale_checks": 10,
+          "converged": true
+        },
+        "actor": {
+          "reference": -179.4802303314209,
+          "stale_checks": 2,
+          "converged": false
+        }
+      },
+      "optimizer_states": {
+        "value": 184,
+        "actor": 91
+      },
+      "all_learner_best_value_and_optimizer_tensors_finite": true,
+      "complete_optimizer_sampler_python_numpy_torch_cuda_RNG": true,
+      "checkpoint_SHA_stable_during_read": true,
+      "status": {
+        "converged": false,
+        "phase": "actor",
+        "update": 11384,
+        "updates": {
+          "value": 2700,
+          "actor": 11384
+        },
+        "best_validation_loss": {
+          "value": 0.19111633393913507,
+          "actor": -179.4802303314209
+        },
+        "elapsed_seconds": 33100.52254413068,
+        "stop_reason": "operational_checkpoint"
+      },
+      "contract_sha256": "0b6474bf7c2297a9113442f0195a20cc406c0724ca930719a5c962b83c7f56da"
+    },
+    "ic_iql": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/joint/fits/ic_iql/latest.pt",
+      "sha256": "84f29bddd379381d4f9d0a0478861fa0737334aaaf560329fc76cd568ff1a469",
+      "bytes": 313295846,
+      "phase": "actor",
+      "updates": {
+        "value": 2600,
+        "actor": 11328
+      },
+      "converged": false,
+      "best_validation_loss": {
+        "value": 0.022269945475272834,
+        "actor": -175.88580799102783
+      },
+      "plateaus": {
+        "value": {
+          "reference": 0.022999236709438264,
+          "stale_checks": 10,
+          "converged": true
+        },
+        "actor": {
+          "reference": -175.88580799102783,
+          "stale_checks": 1,
+          "converged": false
+        }
+      },
+      "optimizer_states": {
+        "value": 184,
+        "actor": 91
+      },
+      "all_learner_best_value_and_optimizer_tensors_finite": true,
+      "complete_optimizer_sampler_python_numpy_torch_cuda_RNG": true,
+      "checkpoint_SHA_stable_during_read": true,
+      "status": {
+        "converged": false,
+        "phase": "actor",
+        "update": 11328,
+        "updates": {
+          "value": 2600,
+          "actor": 11328
+        },
+        "best_validation_loss": {
+          "value": 0.022269945475272834,
+          "actor": -175.88580799102783
+        },
+        "elapsed_seconds": 33124.97709573526,
+        "stop_reason": "operational_checkpoint"
+      },
+      "contract_sha256": "b05da570d1da91185bbda4fe0d017df77c7e629bad823d2979fa6cb86c9e2511"
+    }
+  },
+  "all_direct_children_exit_zero": true,
+  "all_owned_meta_allocations_released": true,
+  "outer_clock": {
+    "started_unix": 1793827035,
+    "ended_unix": 1793833718,
+    "exit_code": 0,
+    "hostname": "job-gmk7n873l35e-master-0",
+    "gpus": 2
+  },
+  "worker_release": {
+    "hostname": "job-gmk7n873l35e-master-0",
+    "source_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+    "ended_unix": 1793833718.3799846,
+    "all_children_released": true,
+    "exit_codes": {
+      "dit": 0,
+      "ic_iql": 0
+    }
+  },
+  "meaning": "Complete resumable operational checkpoints; convergence remains false, so no final DIT/IC-IQL readout or performance claim."
+}

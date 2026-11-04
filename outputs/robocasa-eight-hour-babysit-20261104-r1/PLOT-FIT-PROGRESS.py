@@ -28,6 +28,9 @@ def main():
     fig, axes = plt.subplots(2, 2, figsize=(12, 7))
     inputs = []
     checked = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat()
+    ledger = json.loads((run/'META-ALLOCATION-LEDGER.json').read_text())
+    fit_active = any(row.get('kind')=='fit' and not row.get('released_shanghai')
+        for row in ledger['allocations'])
     for ax, method in zip(axes.flat, ('ad', 'dpt', 'dit', 'ic_iql')):
         source = fits/method/'metrics.jsonl'
         raw = source.read_bytes()
@@ -49,7 +52,7 @@ def main():
         x,y = [row['update'] for row in actor], [loss(row) for row in actor]
         ax.plot(x,y,color='#147dba',linewidth=1.5)
         ax.scatter([best['update']],[loss(best)],color='#df812e',s=25,zorder=4)
-        stop = 'converged' if status['converged'] else 'training'
+        stop = 'converged' if status['converged'] else ('training' if fit_active else 'checkpointed, unconverged')
         ax.set_title(method.upper().replace('_','-')+': '+stop+'; latest '+str(actor[-1]['update']))
         ax.set_xlabel('Actor updates'); ax.set_ylabel('Held-out actor loss')
         ax.grid(alpha=.2)
