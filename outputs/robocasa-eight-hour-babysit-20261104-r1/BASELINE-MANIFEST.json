@@ -1,0 +1,375 @@
+{
+  "task": "OpenDrawer",
+  "config": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/resolved-config.json",
+  "config_sha256": "9468db92c697c3bafcb6ec34d7725e1059c131216c27a4da8a90f2d7382166ea",
+  "fixture": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/offline-initial-ratio-inputs-r2/OpenDrawer.pt",
+  "fixture_sha256": "e1b7d41082c7c9206a4c1416adb278d25c0a02d29fb967e0a8db0a32f4894d22",
+  "policies": {
+    "SFT": {
+      "step": 0,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/input-prefix-r1/global_step_0/actor/model_state_dict/full_weights.pt",
+      "sha256": "eb276899d5a06d8ae87870239c549a5c6e1fee6770d2976d05f6d97a0fa95a10",
+      "marker": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/input-prefix-r1/global_step_0/pilot-boundary.json",
+      "marker_sha256": "f5c3382d8e51761bfd9ad3d48071673c7cd8412a4f0c3793318531f64d491018",
+      "prefix": true,
+      "ignore_last": true
+    },
+    "PPO": {
+      "step": 40,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/OpenDrawer/checkpoints/global_step_40/actor/model_state_dict/full_weights.pt",
+      "sha256": "881ba13ef89231d9d5794bf036548c142d4e48da9955d42c56352e2ee68f280c",
+      "marker": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01/OpenDrawer/checkpoints/global_step_40/pilot-boundary.json",
+      "marker_sha256": "aa3eeff3f0050441e7c1b26ae31e358f5518be68e85e3ad725dc247383041937",
+      "prefix": true,
+      "ignore_last": true
+    },
+    "GRPO": {
+      "step": 40,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/inputs/grpo40-prefix-eval.pt",
+      "sha256": "e6c07bd8435d1012333d4c71bb4e211e22b8783898cc92ea7acac954af79867b",
+      "marker": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/grpo/attempt-02/OpenDrawer/checkpoints/global_step_40/pilot-boundary.json",
+      "marker_sha256": "fb855c0f40c401895446eefcb3a9110768503b028b3814795a80712bac009336",
+      "prefix": true,
+      "ignore_last": true,
+      "original_actor_source": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/grpo/attempt-02/OpenDrawer/checkpoints/global_step_40/actor/model_state_dict/full_weights.pt",
+        "sha256": "18098a188fd6df53ddaa6f09e091c55d8fc9745a827bb1f4b41b853628f706fe",
+        "bytes": 6946527306,
+        "marker": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/grpo/attempt-02/OpenDrawer/checkpoints/global_step_40/pilot-boundary.json",
+        "marker_sha256": "fb855c0f40c401895446eefcb3a9110768503b028b3814795a80712bac009336"
+      },
+      "unchanged_actor_tensors": 667,
+      "unused_inference_head_tensors": 8
+    }
+  },
+  "sequential_order": [
+    [
+      "SFT",
+      "PPO",
+      "GRPO",
+      "repeat"
+    ],
+    [
+      "SFT",
+      "GRPO",
+      "PPO"
+    ],
+    [
+      "PPO",
+      "SFT",
+      "GRPO"
+    ],
+    [
+      "PPO",
+      "GRPO",
+      "SFT"
+    ],
+    [
+      "GRPO",
+      "SFT",
+      "PPO"
+    ],
+    [
+      "GRPO",
+      "PPO",
+      "SFT"
+    ],
+    [
+      "SFT",
+      "PPO",
+      "GRPO"
+    ],
+    [
+      "SFT",
+      "GRPO",
+      "PPO"
+    ],
+    [
+      "PPO",
+      "SFT",
+      "GRPO"
+    ],
+    [
+      "PPO",
+      "GRPO",
+      "SFT"
+    ],
+    [
+      "GRPO",
+      "SFT",
+      "PPO"
+    ],
+    [
+      "GRPO",
+      "PPO",
+      "SFT"
+    ],
+    [
+      "SFT",
+      "PPO",
+      "GRPO"
+    ],
+    [
+      "SFT",
+      "GRPO",
+      "PPO"
+    ],
+    [
+      "PPO",
+      "SFT",
+      "GRPO"
+    ],
+    [
+      "PPO",
+      "GRPO",
+      "SFT"
+    ],
+    [
+      "GRPO",
+      "SFT",
+      "PPO"
+    ],
+    [
+      "GRPO",
+      "PPO",
+      "SFT"
+    ],
+    [
+      "SFT",
+      "PPO",
+      "GRPO"
+    ],
+    [
+      "SFT",
+      "GRPO",
+      "PPO"
+    ],
+    [
+      "PPO",
+      "SFT",
+      "GRPO"
+    ],
+    [
+      "PPO",
+      "GRPO",
+      "SFT"
+    ],
+    [
+      "GRPO",
+      "SFT",
+      "PPO"
+    ],
+    [
+      "GRPO",
+      "PPO",
+      "SFT"
+    ],
+    [
+      "SFT",
+      "PPO",
+      "GRPO"
+    ],
+    [
+      "SFT",
+      "GRPO",
+      "PPO"
+    ],
+    [
+      "PPO",
+      "SFT",
+      "GRPO"
+    ],
+    [
+      "PPO",
+      "GRPO",
+      "SFT"
+    ],
+    [
+      "GRPO",
+      "SFT",
+      "PPO"
+    ],
+    [
+      "GRPO",
+      "PPO",
+      "SFT"
+    ],
+    [
+      "SFT",
+      "PPO",
+      "GRPO"
+    ],
+    [
+      "SFT",
+      "GRPO",
+      "PPO"
+    ],
+    [
+      "PPO",
+      "SFT",
+      "GRPO"
+    ],
+    [
+      "PPO",
+      "GRPO",
+      "SFT"
+    ],
+    [
+      "GRPO",
+      "SFT",
+      "PPO"
+    ],
+    [
+      "GRPO",
+      "PPO",
+      "SFT"
+    ],
+    [
+      "SFT",
+      "PPO",
+      "GRPO"
+    ],
+    [
+      "SFT",
+      "GRPO",
+      "PPO"
+    ],
+    [
+      "PPO",
+      "SFT",
+      "GRPO"
+    ],
+    [
+      "PPO",
+      "GRPO",
+      "SFT"
+    ],
+    [
+      "GRPO",
+      "SFT",
+      "PPO"
+    ],
+    [
+      "GRPO",
+      "PPO",
+      "SFT"
+    ],
+    [
+      "SFT",
+      "PPO",
+      "GRPO"
+    ],
+    [
+      "SFT",
+      "GRPO",
+      "PPO"
+    ],
+    [
+      "PPO",
+      "SFT",
+      "GRPO"
+    ],
+    [
+      "PPO",
+      "GRPO",
+      "SFT"
+    ],
+    [
+      "GRPO",
+      "SFT",
+      "PPO"
+    ],
+    [
+      "GRPO",
+      "PPO",
+      "SFT"
+    ],
+    [
+      "SFT",
+      "PPO",
+      "GRPO"
+    ],
+    [
+      "SFT",
+      "GRPO",
+      "PPO"
+    ],
+    [
+      "PPO",
+      "SFT",
+      "GRPO"
+    ],
+    [
+      "PPO",
+      "GRPO",
+      "SFT"
+    ],
+    [
+      "GRPO",
+      "SFT",
+      "PPO"
+    ],
+    [
+      "GRPO",
+      "PPO",
+      "SFT"
+    ],
+    [
+      "SFT",
+      "PPO",
+      "GRPO"
+    ],
+    [
+      "SFT",
+      "GRPO",
+      "PPO"
+    ],
+    [
+      "PPO",
+      "SFT",
+      "GRPO"
+    ],
+    [
+      "PPO",
+      "GRPO",
+      "SFT"
+    ],
+    [
+      "GRPO",
+      "SFT",
+      "PPO"
+    ],
+    [
+      "GRPO",
+      "PPO",
+      "SFT"
+    ],
+    [
+      "SFT",
+      "PPO",
+      "GRPO"
+    ],
+    [
+      "SFT",
+      "GRPO",
+      "PPO"
+    ],
+    [
+      "PPO",
+      "SFT",
+      "GRPO"
+    ],
+    [
+      "PPO",
+      "GRPO",
+      "SFT"
+    ]
+  ],
+  "case_base": 65311000,
+  "rng_base": 75311000,
+  "cases": 512,
+  "bank_size": 8,
+  "policy_controls": 926400,
+  "primary": "GRPO minus PPO first-success; paired two-sided exact McNemar alpha .05",
+  "maximum_all_attempt_GPU_seconds": 27000
+}

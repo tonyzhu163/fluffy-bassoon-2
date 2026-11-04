@@ -1,0 +1,150 @@
+{
+  "checked_shanghai": "2026-11-04T23:50:17.954720+08:00",
+  "cluster": "Baige Pro6K",
+  "job_id": "job-967y1maorj80",
+  "learner_commit": "d71cb532",
+  "methods": {
+    "ad": {
+      "status": {
+        "converged": false,
+        "update": 4760,
+        "best_validation_nll": -49.32999290525913,
+        "plateau": {
+          "reference": -46.10345283895731,
+          "stale_checks": 0,
+          "converged": false
+        },
+        "elapsed_seconds": 6601.426332723349,
+        "stop_reason": "operational_checkpoint"
+      },
+      "latest_metric": {
+        "update": 5700,
+        "elapsed_seconds": 7852.545311833732,
+        "validation_nll": -83.29175817966461,
+        "nll": -29.041799545288086,
+        "gradient_norm": 161.5082244873047,
+        "update_seconds": 1.345642643980682,
+        "valid_positions": 516,
+        "logical_batch_size": 8,
+        "execution_batch_size": 8,
+        "cuda_peak_allocated_bytes": 5791531008,
+        "plateau": {
+          "reference": -83.29175817966461,
+          "stale_checks": 0,
+          "converged": false
+        }
+      },
+      "recent_metrics_finite": true,
+      "metric_age_seconds": 21.21,
+      "checkpoint_age_seconds": 21.02,
+      "candidate_bytes": 22394505
+    },
+    "dpt": {
+      "status": {
+        "converged": false,
+        "update": 4818,
+        "best_validation_nll": -50.86081460118294,
+        "plateau": {
+          "reference": -50.483945190906525,
+          "stale_checks": 0,
+          "converged": false
+        },
+        "elapsed_seconds": 6600.55969034601,
+        "stop_reason": "operational_checkpoint"
+      },
+      "latest_metric": {
+        "update": 5600,
+        "elapsed_seconds": 7742.311350878328,
+        "validation_nll": -81.21311613917351,
+        "nll": -66.87285614013672,
+        "gradient_norm": 103.97390747070312,
+        "update_seconds": 1.4368736017495394,
+        "valid_positions": 672,
+        "logical_batch_size": 8,
+        "execution_batch_size": 8,
+        "cuda_peak_allocated_bytes": 5791661056,
+        "plateau": {
+          "reference": -81.21311613917351,
+          "stale_checks": 0,
+          "converged": false
+        }
+      },
+      "recent_metrics_finite": true,
+      "metric_age_seconds": 124.73,
+      "checkpoint_age_seconds": 124.62,
+      "candidate_bytes": 22394505
+    },
+    "dit": {
+      "status": {
+        "converged": false,
+        "phase": "value",
+        "update": 0,
+        "updates": {
+          "value": 2600,
+          "actor": 0
+        },
+        "best_validation_loss": {
+          "value": 0.19111633393913507,
+          "actor": null
+        },
+        "elapsed_seconds": 7640.726359992288,
+        "stop_reason": "operational_checkpoint"
+      },
+      "latest_metric": {
+        "phase": "value",
+        "update": 2600,
+        "validation_loss": 0.1912826532498002,
+        "loss": 0.16038861870765686,
+        "q_loss": 0.07876021414995193,
+        "v_loss": 0.08162840455770493,
+        "gradient_norm": 0.23748204112052917
+      },
+      "recent_metrics_finite": true,
+      "metric_age_seconds": 247.03,
+      "checkpoint_age_seconds": 246.81,
+      "candidate_bytes": null
+    },
+    "ic_iql": {
+      "status": {
+        "converged": false,
+        "phase": "actor",
+        "update": 1,
+        "updates": {
+          "value": 2600,
+          "actor": 1
+        },
+        "best_validation_loss": {
+          "value": 0.022269945475272834,
+          "actor": 842.9972915649414
+        },
+        "elapsed_seconds": 7671.5066750580445,
+        "stop_reason": "operational_checkpoint"
+      },
+      "latest_metric": {
+        "phase": "actor",
+        "update": 1,
+        "validation_loss": 842.9972915649414,
+        "loss": 992.3623657226562,
+        "nll": 999.3811645507812,
+        "weight_mean": 0.9902322888374329,
+        "weight_max": 1.3116145133972168,
+        "gradient_norm": 1224.77783203125
+      },
+      "recent_metrics_finite": true,
+      "metric_age_seconds": 209.21,
+      "checkpoint_age_seconds": 208.95,
+      "candidate_bytes": 22394825
+    }
+  },
+  "worker_release": null,
+  "error_tails": {},
+  "source_budget": {
+    "approved_GPU_hours": 96,
+    "preparation_GPU_hours": 17.57,
+    "creation_to_check_GPU_hours_upper": 26.50106079975764,
+    "remaining_GPU_hours_lower": 69.49893920024236,
+    "note": "Worker end is provisional until scheduler terminal/release verification"
+  },
+  "storage_free_GiB": 415.08984375,
+  "scheduler_release_verified": false
+}

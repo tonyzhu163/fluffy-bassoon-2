@@ -29,7 +29,7 @@ def main():
                 for name, row in value['methods'].items()}
             print(json.dumps(dict(checked_shanghai=value['checked_shanghai'], methods=methods,
                 errors=value['error_tails'], released=value['worker_release'],
-                budget=value['source_budget'])), flush=True)
+                budget=value['source_budget'], baseline_test512=value.get('baseline_test512'))), flush=True)
         except Exception as error:
             print(json.dumps(dict(checked_unix=time.time(), observation_failed=repr(error))), flush=True)
         if time.time() >= end:

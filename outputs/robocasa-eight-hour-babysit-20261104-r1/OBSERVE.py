@@ -61,13 +61,33 @@ def observe():
     release = read(fit / 'joint/fit-4gpu-01/RELEASED.json')
     ended = release.get('ended_unix', now) if release else now
     upper = 17.57 + 4 * (ended - created) / 3600
+    own = root / 'outputs/robocasa-eight-hour-babysit-20261104-r1'
+    baseline = {}
+    for index in range(2):
+        node = own / 'baseline-test512/attempt-01' / f'node-{index:02d}'
+        proof = read(node / 'GPU-PROBE.json')
+        complete_banks = sum(all((bank / (label + '.json')).exists() for label in ('SFT', 'PPO', 'GRPO'))
+            for bank in (node / 'banks').glob('bank-*'))
+        baseline[node.name] = dict(probe_passed=bool(proof and proof.get('status') == 'passed'),
+            progress=read(node / 'progress.json'), complete_paired_cases=complete_banks * 8,
+            complete=read(node / 'RESULT.json'), clock=read(node / 'CLOCK.json'))
+        log = node / 'console.log'
+        if log.exists():
+            with log.open('rb') as stream:
+                stream.seek(max(0, log.stat().st_size - 6000))
+                tail = stream.read().decode(errors='replace')
+            if any(marker in tail for marker in ('Traceback', 'OutOfMemoryError', 'CUDA out of memory')):
+                errors['baseline/' + node.name] = tail[-3000:]
     return dict(checked_shanghai=datetime.datetime.fromtimestamp(now,
             datetime.timezone(datetime.timedelta(hours=8))).isoformat(),
         cluster='Baige Pro6K', job_id='job-967y1maorj80', learner_commit='d71cb532',
         methods=methods, worker_release=release, error_tails=errors,
         source_budget=dict(approved_GPU_hours=96, preparation_GPU_hours=17.57,
-            creation_to_check_GPU_hours_upper=upper, remaining_GPU_hours_lower=96-upper,
+            native_qualification_conservative_GPU_hours=925/3600,
+            creation_to_check_GPU_hours_upper=upper + 925/3600, remaining_GPU_hours_lower=96-upper-925/3600,
             note='Worker end is provisional until scheduler terminal/release verification'),
+        baseline_test512=dict(job_id='job-ynq6hyyggfj6', incremental_cap_GPU_hours=7.5,
+            nodes=baseline, complete_paired_cases=sum(node['complete_paired_cases'] for node in baseline.values())),
         storage_free_GiB=os.statvfs(root).f_bavail * os.statvfs(root).f_frsize / 2**30,
         scheduler_release_verified=False)
 
