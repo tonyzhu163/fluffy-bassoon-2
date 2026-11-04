@@ -13,6 +13,7 @@ import csv
 import gc
 import importlib.util
 import json
+import math
 from pathlib import Path
 import time
 
@@ -54,6 +55,11 @@ def metrics(root, output):
             if key not in best or row['segment'].startswith('production'):
                 best[key] = row
         rows = [best[k] for k in sorted(best)]
+        assert {(r['iteration'], r['rank']) for r in rows} == {
+            (iteration, rank) for iteration in range(1, 131) for rank in (0, 1)
+        }, f'Incomplete update/rank coverage for {task}'
+        assert all(r['optimizer_steps_after'] == 24 * r['iteration'] for r in rows)
+        assert all(math.isfinite(v) for r in rows for v in r.values() if isinstance(v, float))
         iterations = sorted({r['iteration'] for r in rows})
         summary[task] = dict(rows=len(rows), first=iterations[0] if iterations else None,
                              last=iterations[-1] if iterations else None,
@@ -71,7 +77,9 @@ def metrics(root, output):
 
 def stage(root, output, result_root):
     """Same one-private-model-at-a-time bridge as the source run, bound to this script."""
-    assert output.resolve().is_relative_to(root.resolve())
+    diagnostic = root.parent / HERE.parent.name
+    assert output.resolve() == (diagnostic / 'staging').resolve()
+    assert result_root.resolve() == (diagnostic / 'gpu').resolve()
     output.mkdir(parents=True, exist_ok=False)
     receipts = []
     for task in ORDER:
@@ -89,11 +97,14 @@ def stage(root, output, result_root):
                     raise TimeoutError('GPU consumption receipt absent; private model retained')
                 time.sleep(5)
             receipt = json.loads(consumed.read_text())
+            assert receipt['task'] == task and receipt['step'] == row['step']
             assert receipt['model_sha256'] == row['sha256'] and receipt['strict_load_passed']
+            assert receipt['ready_sha256'] == sha(directory / 'READY.json')
             if temporary:
                 assert path.parent == directory and sha(path) == row['sha256']
                 path.unlink()
-            receipts.append(dict(task=task, step=row['step'], private_copy_reclaimed=temporary))
+            receipts.append(dict(task=task, step=row['step'], private_copy_reclaimed=temporary,
+                            ready_sha256=sha(directory / 'READY.json'), consumed_sha256=sha(consumed)))
             write(output / 'PROGRESS.json', dict(completed=False, receipts=receipts))
     write(output / 'PROGRESS.json', dict(completed=True, receipts=receipts,
           new_controls=0, SGD=0, model_calls=0))
@@ -110,12 +121,19 @@ def decompose(delta):
     """delta: [16, 50, 12] float64 log p_checkpoint - log p_initial."""
     per_dim = delta.sum(dim=1).mean(dim=0)          # mean over samples of per-chunk sum, per dim
     total = per_dim.sum().item()
+    absolute = per_dim.abs().sum().item()
+    negative = (-per_dim.clamp(max=0)).sum().item()
     return dict(
         mean_chunk_log_ratio_to_initial=delta.sum(dim=(1, 2)).mean().item(),
         per_sample_chunk_log_ratio_to_initial=delta.sum(dim=(1, 2)).tolist(),
         per_dimension_chunk_log_ratio=per_dim.tolist(),
         per_dimension_share=[(v / total) if total else 0.0 for v in per_dim.tolist()],
         binarized_dimensions_share=(sum(per_dim[i].item() for i in BINARIZED) / total) if total else 0.0,
+        binarized_absolute_dimension_share=(sum(abs(per_dim[i].item()) for i in BINARIZED) / absolute) if absolute else 0.0,
+        binarized_negative_dimension_share=(sum(max(-per_dim[i].item(), 0.0) for i in BINARIZED) / negative) if negative else 0.0,
+        absolute_dimension_mass=absolute, negative_dimension_mass=negative,
+        arm_dimension_log_ratio=per_dim[:6].sum().item(),
+        arm_absolute_dimension_share=per_dim[:6].abs().sum().item() / absolute if absolute else 0.0,
         per_timestep_log_ratio=delta.sum(dim=2).mean(dim=0).tolist(),
         per_sample_per_dimension=delta.sum(dim=1).tolist())
 
@@ -134,14 +152,22 @@ def run(prepared, reference, task, output, staging):
     assert admission == recorded, 'Prepared fixtures differ from the recorded R2 admission'
     assert admission['completed'] and admission['runtime'] == RUNTIME
     root = Path(admission['root'])
+    production = root / task / 'production-r1'
+    assert json.loads((production / 'clock.json').read_text())['exit_code'] == 0
+    assert json.loads((production / 'progress.json').read_text())['completed_iterations'] == 130
     fixture = next(r for r in admission['tasks'] if r['task'] == task)
     assert sha(fixture['fixture']) == fixture['fixture_sha256']
     assert sha(fixture['config']) == fixture['config_sha256']
+    assert sha(fixture['manifest']) == fixture['manifest_sha256']
     data = torch.load(fixture['fixture'], map_location='cpu', weights_only=False)
     assert {k: tensor_sha(v) for k, v in data['forward_inputs'].items()} == fixture['input_tensor_sha256']
+    assert tensor_sha(data['old_logprobs']) == fixture['old_logprobs_sha256']
     assert data['old_logprobs'].shape == (16, 50, 12)
     previous = {r['checkpoint']['step']: r['mean_chunk_log_ratio_to_initial']
                 for r in json.loads((reference / task / 'RESULT.json').read_text())['rows']}
+    reference_value = json.loads((reference / task / 'RESULT.json').read_text())
+    assert reference_value['completed'] and reference_value['runtime'] == RUNTIME
+    assert reference_value['fixture'] == fixture
     catalog = base.checkpoint_catalog(root, task)
     output.mkdir(parents=True, exist_ok=False)
     (output / 'deltas').mkdir()
@@ -165,7 +191,10 @@ def run(prepared, reference, task, output, staging):
         ready = json.loads(ready_path.read_text())
         assert ready['completed'] and ready['task'] == task and ready['checkpoint'] == row
         assert ready['script_sha256'] == sha(HERE)
+        assert Path(ready['result_root']).resolve() == output.parent.resolve()
         path = Path(ready['path'])
+        assert path == Path(row['path']) or (path.parent == ready_path.parent and
+                                            path.name == 'extracted-full_weights.pt')
         assert sha(path) == row['sha256']
         state = _convert_official_openpi_keys(_normalize_state_dict(as_state_dict(
             torch.load(path, map_location='cpu', weights_only=False))), path)
@@ -191,10 +220,12 @@ def run(prepared, reference, task, output, staging):
         # Same weights/inputs as R3; GPU reductions are not bitwise deterministic.
         old = previous[row['step']]
         parts['reproduces_r3'] = abs(parts['mean_chunk_log_ratio_to_initial'] - old) <= 1e-2 * max(1.0, abs(old))
+        assert parts['reproduces_r3'], f'R3 likelihood mismatch at {task} step {row["step"]}'
         rows.append(dict(step=row['step'], model_sha256=row['sha256'], r3_mean_chunk=old,
                          seconds=time.monotonic() - tick, **parts))
         value = dict(completed=False, task=task, runtime=RUNTIME, fixture=fixture['fixture'],
                      initial_parity=parity, binarized_dimensions=BINARIZED, cohort=cohort,
+                     metric='Signed conditional-transition log ratios on one initial-policy B16 saved-chain cohort; not full-action marginal KL or evidence of unchanged executed actions.',
                      rows=rows, new_controls=0, SGD=0, model_forward_calls=len(rows))
         write(output / 'RESULT.json', value)
         print(json.dumps(dict(step=row['step'], mean=parts['mean_chunk_log_ratio_to_initial'],
