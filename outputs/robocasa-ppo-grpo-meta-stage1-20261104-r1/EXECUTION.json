@@ -1,6 +1,6 @@
 {
   "format": "robocasa_stage1_execution_v1",
-  "checked_shanghai": "2026-11-04T16:41:05.025709+08:00",
+  "checked_shanghai": "2026-11-04T17:03:27.509652+08:00",
   "state": "PPO_RUNNING",
   "source_commit": "d9a1c61616443f7f88c71f91da4567d85b1f4253",
   "source_path": "/mowenjie/fluffy-bassoon-2/sources/stage1-d9a1c616",
@@ -26,7 +26,7 @@
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ppo/attempt-01",
       "GPU_probe": "passed; all 8 actual devices",
       "model_norm_hash_checks": "passed",
-      "completed_iterations": 12,
+      "completed_iterations": 19,
       "target_iterations": 40,
       "first_iteration_parity": "both actor ranks: exact zero likelihood and value error",
       "baseline_DEV64_successes": 34,
@@ -37,7 +37,9 @@
       "observed_max_clip_fraction": 0.07574737071990967,
       "step10_DEV64_successes": 34,
       "step10_DEV64_gain_pp": 0,
-      "training_first10_rate": 0.63203125
+      "training_first10_rate": 0.63203125,
+      "observed_completed_SGD_iterations": 20,
+      "DEV20_status": "in progress after completed update20; no step20 panel published at check"
     },
     "grpo": {
       "state": "NOT_SUBMITTED",
@@ -45,7 +47,7 @@
       "reason": "serial arms for storage headroom"
     }
   },
-  "next_action": "Continue PPO through40; inspect DEV20 next. DEV10 equals baseline34/64 with five paired wins and five losses; no early learning conclusion. GRPO remains serial/pending.",
-  "live_GPU_hours_conservative_upper_from_submission": 6.006726224157545,
-  "PFS_free_GiB_observed": 533.99609375
+  "next_action": "Verify DEV20 when its complete receipt is published; continue healthy PPO through40. GRPO remains serial/pending after PPO closure and verified archival.",
+  "live_GPU_hours_conservative_upper_from_submission": 8.990026868714226,
+  "PFS_free_GiB_observed": 573.859375
 }
