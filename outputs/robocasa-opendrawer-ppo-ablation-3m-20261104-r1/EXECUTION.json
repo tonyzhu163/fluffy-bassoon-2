@@ -15,7 +15,7 @@
   "qualification": "All three effective actor/rollout configs composed, 14 core Linux CPU checks passed. Original collection passed the before-SGD control comparison on both ranks. All 22 starting checkpoint files rehashed.",
   "arms": {
     "E": {
-      "status": "advancing, first update complete",
+      "status": "advancing",
       "job": "job-t2edw03k1kwn",
       "attempt": "attempt-02",
       "GPUs": 8,
@@ -33,36 +33,47 @@
         "optimizer_steps": 0
       },
       "first_update": "E2-FIRST-UPDATE.json",
-      "last_completed_updates": 7
+      "last_completed_updates": 9,
+      "optimizer_steps": 216,
+      "dev_successes_of_64": {}
     },
     "C": {
       "job": "job-1gheyfqughhs",
-      "status": "advancing, first update complete",
+      "status": "advancing",
       "attempt": "attempt-01",
       "scheduler_minutes": 175,
       "GPUs": 8,
       "automatic_retry": false,
       "nonhead_tensors_equal_at_start": 667,
-      "last_completed_updates": 8,
+      "last_completed_updates": 10,
       "first_update": "C-FIRST-UPDATE.json",
-      "device_probe": "passed"
+      "device_probe": "passed",
+      "optimizer_steps": 60,
+      "dev_successes_of_64": {
+        "step-010": 31
+      }
     },
     "D": {
       "job": "job-jbf0ex8k1s3o",
-      "status": "scheduled, first rollout pending",
+      "status": "advancing",
       "attempt": "attempt-01",
       "GPUs": 8,
       "scheduler_minutes": 175,
-      "automatic_retry": false
+      "automatic_retry": false,
+      "last_completed_updates": 1,
+      "optimizer_steps": 6,
+      "dev_successes_of_64": {},
+      "device_probe": "passed",
+      "first_update": "D-FIRST-UPDATE.json"
     },
     "endpoint512": {
       "status": "preparing, waits for immutable final checkpoints"
     }
   },
-  "last_checked_Shanghai": "2026-11-04 20:10",
+  "last_checked_Shanghai": "2026-11-04 20:17",
   "engine_r2": "02ce594015eaa8f972f875d7f37e6972f4ada495",
   "endpoint_eval_code": "3cc33a4820344d4f4a894b9ab1bb4d7137f701c1",
-  "next_check_Shanghai": "2026-11-04 20:09",
+  "next_check_Shanghai": "2026-11-04 20:37",
   "third_arm_admission": {
     "shared_PFS_free_GiB": 660,
     "combined_E_C_current_GiB_rounded_up": 62,
@@ -74,5 +85,6 @@
     "reviewed_new_main_scientific_commit": "6d106487dfc712c8358a5a9e332d0f31b3017f65",
     "pinned_engine_same_across_three_arms": true
   },
-  "next_action": "Verify D first collection includes index 9 and both ranks pass likelihood/value replay"
+  "next_action": "Monitor three step-40 checkpoints and evaluate all six policies on the locked 512 cases",
+  "PFS_free_GiB": 606.9
 }
