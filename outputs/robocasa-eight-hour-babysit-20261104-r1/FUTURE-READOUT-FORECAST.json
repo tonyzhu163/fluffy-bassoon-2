@@ -1,0 +1,96 @@
+{
+  "approval_status": "Forecast only; no new allocation or budget authorization",
+  "case_count": 50,
+  "actual_episodes_per_case": 6,
+  "context_counts": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "source_tasks": 5,
+  "transfer_tasks": 15,
+  "source_horizon": 600,
+  "transfer_horizons": [
+    900,
+    1050,
+    450,
+    450,
+    450,
+    1500,
+    1800,
+    1800,
+    1350,
+    1200,
+    2250,
+    1200,
+    2250,
+    1800,
+    3150
+  ],
+  "policy_controls_per_variant": 7380000,
+  "measured_controls": 1890000,
+  "measured_GPU_hours": 6.763333333333334,
+  "measured_policy_controls_per_GPU_hour": 279448.003942829,
+  "basis": [
+    {
+      "job_id": "job-i7sjmb1kcwmm",
+      "group": "native-initial-ID-final-01",
+      "physical_controls": 540000,
+      "conservative_GPU_hours": 1.886111111111111,
+      "audit_status_sha256": "a891648ee4573fbf170752b8efdf53ac6d86400df300b368263308a744855135"
+    },
+    {
+      "job_id": "job-3d830xecyx0s",
+      "group": "native-final-ID-final-01",
+      "physical_controls": 540000,
+      "conservative_GPU_hours": 1.9805555555555556,
+      "audit_status_sha256": "186f5615b4a002919e0657a113eb8f43aceb13132350eb8228d8dcc7b0169c23"
+    },
+    {
+      "job_id": "job-e15gtr27kh0j",
+      "group": "native-initial-OOD-final-01",
+      "physical_controls": 405000,
+      "conservative_GPU_hours": 1.4094444444444445,
+      "audit_status_sha256": "2d3471a125167b83404d20bf7fa04381673da4825cda79dce2e0ca716a592069"
+    },
+    {
+      "job_id": "job-4cvxzc1m8cx2",
+      "group": "native-final-OOD-final-01",
+      "physical_controls": 405000,
+      "conservative_GPU_hours": 1.4872222222222222,
+      "audit_status_sha256": "6a08189ddde309a48652d0e462a1909a105b7b233f41551052bc3d6875a001d9"
+    }
+  ],
+  "options": {
+    "four_learners_times_full_and_reset_plus_original_native": {
+      "variants": 9,
+      "episodes": 54000,
+      "policy_controls": 66420000,
+      "reserved_reset_controls_upper": 6912000,
+      "point_GPU_hours": 237.68285714285716,
+      "planning_GPU_hours_with_25percent_timing_margin": 297.10357142857146,
+      "estimated_raw_output_GiB": 1744.5378183270805
+    },
+    "also_include_optional_fixed_teacher_reference": {
+      "variants": 10,
+      "episodes": 60000,
+      "policy_controls": 73800000,
+      "reserved_reset_controls_upper": 7680000,
+      "point_GPU_hours": 264.0920634920635,
+      "planning_GPU_hours_with_25percent_timing_margin": 330.1150793650794,
+      "estimated_raw_output_GiB": 1938.375353696756
+    }
+  },
+  "assumptions": [
+    "Four future fitted KV objectives, full-history and reset; original frozen native control. A second teacher control is optional.",
+    "Inference-only estimate from actual shorter native panels, including creation-to-release time. Longer simulator tasks, context384 and fitted steering require actual timing qualification.",
+    "Current50-case protocol retained. Fit, corpus preparation and source training costs excluded.",
+    "Bytes extrapolate actual B8 qualification data; composite scene compression can differ. Closed groups must be archived progressively.",
+    "The pending70GPU-hour proposal covers two sources and three readiness tests only. This matrix needs a separate measured reservation after five source policies qualify."
+  ],
+  "CPU_only": true,
+  "GPU_hours": 0
+}

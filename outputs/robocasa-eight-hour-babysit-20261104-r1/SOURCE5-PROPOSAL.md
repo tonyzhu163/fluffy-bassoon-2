@@ -73,3 +73,10 @@ fit one joint frozen-base KV meta-learner per objective, context384, followed
 by ID then the locked15-task one-to-five-context panel. That later fit/readout
 needs its own measured reservation; this70GPU-hour request does not silently
 authorize an unbounded matrix or override the current96GPU-hour ceiling.
+
+The completed native panels now provide a concrete inference-only planning
+estimate for the later50-case matrix: about238GPU-hours for four KV methods
+with full/reset controls plus the original frozen anchor, before fitting or
+long-task timing margin. An optional second native reference raises that to
+about264GPU-hours. See TRANSFER-PLAN.md and FUTURE-READOUT-FORECAST.json.
+These estimates do not expand this70GPU-hour source request.

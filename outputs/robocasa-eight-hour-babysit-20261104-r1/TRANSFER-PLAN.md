@@ -64,3 +64,25 @@ controls**, plus at most576,000 reserved reset controls. Full-history and
 episode-reset controls double this per learner. Current three-task ID/OOD
 evaluation uses its own shorter task contract and the existing96GPU-hour cap;
 this larger panel has no invented budget or implicit source admission.
+
+## Inference-cost calibration from completed native panels
+
+The four current native reference panels completed3000episodes and1.89M
+policy controls in6.7633creation-to-release GPU-hours, about279448controls
+per GPU-hour. Applying that measured rate to the locked50-case protocol,
+five H600 source tasks and the fifteen transfer horizons gives7.38M policy
+controls per model/control variant.
+
+| Prospective variants | Policy controls | Point estimate | With25% timing margin |
+| --- | ---: | ---: | ---: |
+| Four KV learners, full/reset, plus original native control |66.42M |237.7GPU-hours |297.1GPU-hours |
+| Also retain an optional fixed-teacher reference |73.80M |264.1GPU-hours |330.1GPU-hours |
+
+These are planning estimates, not approved allocations. Fit/corpus preparation
+and the proposed70GPU-hour source campaign are excluded. Long composite
+simulators, context384 and fitted native KV execution must be timed on the
+allocated devices before reserving a large matrix. Existing native raw bytes
+also project to about1.70–1.89TiB, so closed output groups need progressive
+verified archival. The25% margin is a planning allowance, not a confidence
+interval. See FUTURE-READOUT-FORECAST.json for exact formulas and hashed
+completed-panel inputs. No future panel has been launched.
