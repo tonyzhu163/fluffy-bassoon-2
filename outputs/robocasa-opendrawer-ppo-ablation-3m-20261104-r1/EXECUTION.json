@@ -49,7 +49,8 @@
         "exit_code": 0
       },
       "training_controls": 3072000,
-      "full_receipt": "E-COMPLETE.json"
+      "full_receipt": "E-COMPLETE.json",
+      "allocation_released": true
     },
     "C": {
       "job": "job-1gheyfqughhs",
@@ -77,7 +78,8 @@
         "exit_code": 0
       },
       "training_controls": 3072000,
-      "full_receipt": "C-COMPLETE.json"
+      "full_receipt": "C-COMPLETE.json",
+      "allocation_released": true
     },
     "D": {
       "job": "job-jbf0ex8k1s3o",
@@ -104,10 +106,11 @@
         "exit_code": 0
       },
       "training_controls": 3072000,
-      "full_receipt": "D-COMPLETE.json"
+      "full_receipt": "D-COMPLETE.json",
+      "allocation_released": true
     },
     "endpoint512": {
-      "status": "evaluating held-out cases",
+      "status": "complete and independently audited",
       "job": "job-t6o21b4rl1x7",
       "replicas": 4,
       "GPUs_per_replica": 1,
@@ -115,53 +118,51 @@
       "automatic_retry": false,
       "manifest_sha256": "5f4b5c56bcacd96aca167f529bae807890011b34e34cb55072029588d8fc24f7",
       "evaluation_code": "81caf87060c9d966e0256e94da2ae705366ec33f",
-      "fully_paired_cases": 416,
-      "completed_B8_policy_panels": 333,
+      "fully_paired_cases": 512,
+      "completed_B8_policy_panels": 385,
       "scored_B8_panels_target": 385,
       "per_worker": {
         "node-00": {
-          "panels": 84,
-          "fully_paired_cases": 104,
-          "parity": true,
-          "status": null,
-          "done": false,
+          "done": true,
+          "panels": 97,
+          "fully_paired_cases": 128,
           "probe": "passed",
-          "last": "original"
+          "initial_parity": "passed",
+          "exit_code": 0
         },
         "node-01": {
-          "panels": 83,
-          "fully_paired_cases": 104,
-          "parity": true,
-          "status": null,
-          "done": false,
+          "done": true,
+          "panels": 96,
+          "fully_paired_cases": 128,
           "probe": "passed",
-          "last": "E"
+          "initial_parity": "passed",
+          "exit_code": 0
         },
         "node-02": {
-          "panels": 83,
-          "fully_paired_cases": 104,
-          "parity": true,
-          "status": null,
-          "done": false,
+          "done": true,
+          "panels": 96,
+          "fully_paired_cases": 128,
           "probe": "passed",
-          "last": "C"
+          "initial_parity": "passed",
+          "exit_code": 0
         },
         "node-03": {
-          "panels": 83,
-          "fully_paired_cases": 104,
-          "parity": true,
-          "status": null,
-          "done": false,
+          "done": true,
+          "panels": 96,
+          "fully_paired_cases": 128,
           "probe": "passed",
-          "last": "D"
+          "initial_parity": "passed",
+          "exit_code": 0
         }
-      }
+      },
+      "allocated_GPUs_released": 4,
+      "source_result": "ENDPOINT-RESULT.json",
+      "audit": "ENDPOINT-AUDIT.json"
     }
   },
-  "last_checked_Shanghai": "2026-11-05 00:02",
+  "last_checked_Shanghai": "2026-11-05 00:21",
   "engine_r2": "02ce594015eaa8f972f875d7f37e6972f4ada495",
   "endpoint_eval_code": "81caf87060c9d966e0256e94da2ae705366ec33f",
-  "next_check_Shanghai": "2026-11-05 00:22",
   "third_arm_admission": {
     "shared_PFS_free_GiB": 660,
     "combined_E_C_current_GiB_rounded_up": 62,
@@ -173,7 +174,9 @@
     "reviewed_new_main_scientific_commit": "6d106487dfc712c8358a5a9e332d0f31b3017f65",
     "pinned_engine_same_across_three_arms": true
   },
-  "next_action": "Finish all 512 common cases and SFT repeat, verify source receipts and analyze paired outcomes",
   "PFS_free_GiB": 408.5,
-  "endpoint_eval_launcher_qualification": "Single-GPU scheduler isolation checked before defaulting the CUDA ordinal, EGL selected; CPU config, B8 design, source imports, 675-key prefix and original mmap loads verified. All four disjoint case partitions have independently tested action journals."
+  "endpoint_eval_launcher_qualification": "Single-GPU scheduler isolation checked before defaulting the CUDA ordinal, EGL selected; CPU config, B8 design, source imports, 675-key prefix and original mmap loads verified. All four disjoint case partitions have independently tested action journals.",
+  "status": "complete",
+  "budget_closeout": "BUDGET-CLOSEOUT.json",
+  "result": "RESULT.md"
 }
