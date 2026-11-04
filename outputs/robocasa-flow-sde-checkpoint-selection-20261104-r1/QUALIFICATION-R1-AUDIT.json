@@ -1,0 +1,46 @@
+{
+  "completed": true,
+  "checked_unix": 1793765230.931293,
+  "job": "job-1nfvvw2b93t5",
+  "cluster": "Baige Pro6K",
+  "scheduler_status": "SUCCESS",
+  "scheduler_created_shanghai": "2026-11-04 11:56:39",
+  "scheduler_success_shanghai": "2026-11-04 12:02:28",
+  "fixed_layout_and_inference_qualification_passed": true,
+  "bitwise_repeatability_claimed": false,
+  "identical_policy_repeat_successes": [
+    6,
+    8
+  ],
+  "final_policy_successes": 3,
+  "cases_per_panel": 8,
+  "policy_controls": 14400,
+  "reset_controls": 0,
+  "unresolved_intents": 0,
+  "SGD": 0,
+  "first_observed_repeat_difference": {
+    "after_controls": 50,
+    "observation_key": "extra_view_images",
+    "differing_RGB_components": 3,
+    "max_uint8_delta": 1,
+    "public_state_identical": true,
+    "initial_observations_and_first_actions_identical": true
+  },
+  "interpretation": "The first observed divergence is three one-level RGB differences after the first identical H50 action chunk, followed by different actions/trajectories. This does not establish a GPU-kernel or PPO bug. Do not use these qualification rates as performance evidence or checkpoint selection; retain rendering/trajectory variability in the evaluation limitations.",
+  "cost": {
+    "process_gpu_seconds": 304,
+    "charged_gpu_seconds": 349,
+    "charged_gpu_hours": 0.09694444444444444,
+    "charge_basis": "Conservative scheduler task-creation-to-success upper bound; not a currency bill",
+    "qualification_ceiling_gpu_hours": 0.75
+  },
+  "evidence_sha256": {
+    "qualification-r1/RESULT.json": "62582b5306f4aa469c28c2770858cc0c2cf4990eedbdb644016485a69406d9ec",
+    "qualification-r1/clock.json": "183a550266bdc73fb4b51100767c1e95dbd9e3a64a813e929bc0375a324dda38",
+    "qualification-r1/initial-parity.json": "3c8a192ec539d173a1c2aa4da025e87fc28e23a87808832d7246bbd7f34e541d",
+    "qualification-r1/gpu-probe.json": "ae7932c73b28163b999adce823c001fe7e8e63995755eaf4241b4457fae63586",
+    "QUALIFICATION-R1-REPEAT-COMPARISON.json": "fb8da18ba2443817f8d8371603bf8336320ccd1830fc109d679191ece6789d6e",
+    "accounting/rank-00/qualification-r1.json": "c269dfacd4e594cb32e2f4ae954eb5a36429aa05bf3f42f7c286fb6d2f8c1405"
+  },
+  "full_sweep_submitted": false
+}

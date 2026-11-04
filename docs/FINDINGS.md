@@ -28,6 +28,17 @@ is claimed. All 80 fixed-batch checkpoint likelihood reports are complete, with 
 initial-policy replay error on all five tasks. All five corpora and resumable final checkpoints passed archival/retention
 closeout; all campaign GPU work is complete at 373.93 accounted GPU-hours. [Native results and evidence](../outputs/robocasa-flow-sde-10m-per-task-20261103-r1/RESULT.md).
 
+A Nov4 native checkpoint-evaluation qualification preserves fixed eight-lane
+batches and common sampler RNG, with zero initial-policy likelihood error.
+Repeated initial-policy Drawer→Counter success was6/8 then8/8. Initial
+physical/public states, all initial cameras and the first H50 actions match;
+the first observed divergence is three one-level right-camera RGB differences
+after50controls, before later action/trajectory divergence. This demonstrates
+evaluation variability on those qualification cases, not a PPO bug or a
+performance gain. No bitwise GPU-kernel requirement is introduced; the full
+intermediate curve and fresh validation-selected TEST remain unrun.
+[Qualification and limitations](../outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/RESULT.md).
+
 ## Headline
 
 - **No experiment so far shows in-context adaptation or a memory benefit**, on

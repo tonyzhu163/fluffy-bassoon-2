@@ -1,9 +1,13 @@
 # Intermediate native checkpoint evaluation
 
 2026-11-04. Owner chat `01a1a077`. User requested intermediate evaluations
-and asked whether to select the best checkpoint. **Qualification running on Baige Pro6K as `job-1nfvvw2b93t5`**
-(one GPU,45-minute cap,automatic retry off; source`2affc246`). No checkpoint
-selected and no full sweep submitted. [Admission](QUALIFICATION-R1-ADMISSION.json),
+and asked whether to select the best checkpoint. **Qualification complete;
+full sweep prepared, awaiting budget approval.** Baige Pro6K
+`job-1nfvvw2b93t5` succeeded and released its one GPU at12:02:28 Shanghai;
+source`2affc246`. No checkpoint selected and no full sweep submitted.
+[Qualification result and limitations](RESULT.md),
+[audit](QUALIFICATION-R1-AUDIT.json), [sweep manifest](SWEEP-PREPARED-R1.json),
+[admission](QUALIFICATION-R1-ADMISSION.json),
 [submission](QUALIFICATION-R1-SUBMITTED.json), [allocated GPU probe](QUALIFICATION-R1-GPU-PROBE.json)
 and [zero-error initial likelihood replay](QUALIFICATION-R1-INITIAL-PARITY.json).
 
@@ -18,7 +22,8 @@ student fitting.
 - All five ID tasks; retained policies 0, 1, 2, 10, 20, ..., 130.
 - Fresh **64-case DEV** per task, identical case order and eight-lane batches
   for every policy. Primary metric: native first success in 600 controls.
-  Report success at end and first-success timing too.
+  Report success at end and first-success timing too. The manifest fixes an
+  independently seeded checkpoint order for each task before seeing DEV.
 - Select the largest DEV success count separately per task, breaking exact
   ties in favour of the earlier checkpoint. Lock model hashes and the selection
   receipt before TEST. Include policy zero in selection so a worse adapted
@@ -28,6 +33,10 @@ student fitting.
   paired confidence intervals and both endpoint and selected-policy results.
   Show the full DEV curve, its sample size and the selection procedure.
   Selecting the maximum among many noisy estimates is not itself improvement.
+  Counterbalance policy order within each eight-case TEST bank by cycling all
+  unique-policy permutations; with two models alternate AB/BA. Apply Holm
+  correction across the five primary selected-versus-initial comparisons;
+  report paired95% case-bootstrap intervals as descriptive, not simultaneous.
 - Never select on the original 64-case before/after panel or on OOD tasks.
   These results cannot retroactively change the original teacher gates.
 
@@ -70,6 +79,25 @@ throughput/paired-reset check, not an initial tranche of an unapproved sweep.
 Use its measured time, model-restore overhead and all-attempt charge to give
 one concrete full-sweep budget. If the proposed budget is8GPU-hours or more,
 obtain the approval required by AGENTS.md before submitting that sweep.
+
+Qualification measured70.63–78.35 controls/s including native resets. At its
+slowest rate, nominal full-panel simulation/inference is16.61GPU-hours before
+startup, weight restoration and counterbalanced TEST reloads. Proposed ceiling:
+**22GPU-hours across this follow-up, including qualification and any retries**,
+at most five one-GPU jobs in parallel, maximum250minutes per job, with the
+cumulative ledger taking precedence. The first qualification is conservatively
+charged349GPU-s /0.096944GPUh, from scheduler creation to success; the process
+clock records304GPU-s. This is a forecast and ceiling, not an approved budget.
+
+Qualification confirmed exact initial physical/public states and all three
+images, identical first H50 actions, fixedB8 calls and shared sampler RNG. The
+first observed repeat difference was three RGB components, each one intensity
+level, in the right camera after50controls; later actions/trajectories differed
+and identical-policy success changed6/8→8/8. Keep this rendering/trajectory
+variability explicit; neither exact trajectory reproduction nor bitwise GPU
+kernels is required. No qualification success rate is used for selection or
+as a performance claim. The larger fresh panels and separate, counterbalanced
+TEST protect the selection readout from this small-panel noise.
 
 ## Optimization diagnosis
 
