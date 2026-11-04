@@ -33,29 +33,38 @@
         "optimizer_steps": 0
       },
       "first_update": "E2-FIRST-UPDATE.json",
-      "last_completed_updates": 27,
-      "optimizer_steps": 648,
+      "last_completed_updates": 30,
+      "optimizer_steps": 720,
       "dev_successes_of_64": {
         "step-010": 34,
-        "step-020": 34
+        "step-020": 34,
+        "step-030": 36
       }
     },
     "C": {
       "job": "job-1gheyfqughhs",
-      "status": "advancing",
+      "status": "complete",
       "attempt": "attempt-01",
       "scheduler_minutes": 175,
       "GPUs": 8,
       "automatic_retry": false,
       "nonhead_tensors_equal_at_start": 667,
-      "last_completed_updates": 36,
+      "last_completed_updates": 40,
       "first_update": "C-FIRST-UPDATE.json",
       "device_probe": "passed",
-      "optimizer_steps": 216,
+      "optimizer_steps": 240,
       "dev_successes_of_64": {
         "step-010": 31,
         "step-020": 35,
-        "step-030": 33
+        "step-030": 33,
+        "after": 33
+      },
+      "clock": {
+        "started_unix": 1793792531,
+        "finished_unix": 1793799996,
+        "allocated_gpus": 8,
+        "observed_gpu_seconds": 59720,
+        "exit_code": 0
       }
     },
     "D": {
@@ -65,11 +74,12 @@
       "GPUs": 8,
       "scheduler_minutes": 175,
       "automatic_retry": false,
-      "last_completed_updates": 27,
-      "optimizer_steps": 162,
+      "last_completed_updates": 31,
+      "optimizer_steps": 186,
       "dev_successes_of_64": {
         "step-010": 38,
-        "step-020": 32
+        "step-020": 32,
+        "step-030": 32
       },
       "device_probe": "passed",
       "first_update": "D-FIRST-UPDATE.json"
@@ -78,10 +88,10 @@
       "status": "preparing, waits for immutable final checkpoints"
     }
   },
-  "last_checked_Shanghai": "2026-11-04 21:34",
+  "last_checked_Shanghai": "2026-11-04 21:48",
   "engine_r2": "02ce594015eaa8f972f875d7f37e6972f4ada495",
   "endpoint_eval_code": "04e4694a7ad6978583667efe2f9f0bdd692fbec1",
-  "next_check_Shanghai": "2026-11-04 21:54",
+  "next_check_Shanghai": "2026-11-04 22:08",
   "third_arm_admission": {
     "shared_PFS_free_GiB": 660,
     "combined_E_C_current_GiB_rounded_up": 62,
@@ -94,6 +104,6 @@
     "pinned_engine_same_across_three_arms": true
   },
   "next_action": "Monitor three step-40 checkpoints and evaluate all six policies on the locked 512 cases",
-  "PFS_free_GiB": 341.9,
+  "PFS_free_GiB": 295.1,
   "endpoint_eval_launcher_qualification": "Single-GPU scheduler isolation checked before defaulting the CUDA ordinal, EGL selected; CPU config, B8 design, source imports, 675-key prefix and original mmap loads verified."
 }
