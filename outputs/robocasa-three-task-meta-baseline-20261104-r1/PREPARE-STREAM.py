@@ -25,18 +25,21 @@ import time
 
 TASKS = {
     "OpenDrawer": {
+        "q1_stage": "q1-r2",
         "prepared_receipt": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-OpenDrawer-R1-PREPARED.json",
         "prepared_sha256": "12055d1ca468333971884470a5ea411ea3e511907b8bc6a5dc7b78eeef3c66e8",
         "archive_sha256": "c0817a8be0a250c357d8f40d57ec1508da1d634a5bac7e54ba98f3d2c1ef44c6",
         "boundary_sha256": "10deeac6761a5018ce8aa6eaed978d449e0f642552cfe68c8ae26bb56c613e57",
     },
     "CloseToasterOvenDoor": {
+        "q1_stage": "q1-r1",
         "prepared_receipt": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-CloseToasterOvenDoor-R1-PREPARED.json",
         "prepared_sha256": "2a3df641c4e0b6cbb8123add201b17e16b874d3c1ffc49b2f002675350637659",
         "archive_sha256": "788b6e3357bdd17786fbec1fabb6811a74b1f4e8ef1d985a05e28d6c64fd322a",
         "boundary_sha256": "5e525b1b8df3a41df79cd8d4d76ccae918d93eb12eac58c0ad9d9e49449583ef",
     },
     "CoffeeSetupMug": {
+        "q1_stage": "q1-r1",
         "prepared_receipt": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CORPUS-ARCHIVE-CoffeeSetupMug-R1-PREPARED.json",
         "prepared_sha256": "f9474e04c21f4a8708ae75e077b8f238dc95e90019266d600f4637d3da1a2842",
         "archive_sha256": "1ad7c6674e642ca0da8d54687e62c0b31b16d1ddca01e0757b00d5514ef02da1",
@@ -45,9 +48,26 @@ TASKS = {
 }
 
 CHUNK_RE = re.compile(
-    r"^(?P<task>[^/]+)/production-r1/environment/rank-(?P<rank>\d{2})/"
+    r"^(?P<task>[^/]+)/(?P<stage>q1-r[12]|production-r1)/environment/rank-(?P<rank>\d{2})/"
     r"training-i(?P<iter>\d{3})-round(?P<round>\d{2})-chunk(?P<chunk>\d{2})\.pt\.gz$"
 )
+
+
+def valid_env_member(task, name):
+    m = CHUNK_RE.match(name)
+    if not m or m.group("task") != task:
+        return None
+    stage = m.group("stage")
+    rank = int(m.group("rank"))
+    version = int(m.group("iter"))
+    round_idx = int(m.group("round"))
+    chunk = int(m.group("chunk"))
+    q1_stage = TASKS[task]["q1_stage"]
+    if not (0 <= rank < 8 and round_idx == 0 and 1 <= chunk <= 12):
+        return None
+    if (stage == q1_stage and version == 0) or (stage == "production-r1" and 1 <= version <= 129):
+        return dict(stage=stage, rank=rank, version=version, chunk=chunk)
+    return None
 
 
 def sha(path):
@@ -226,21 +246,16 @@ def main():
 
     pending = []
     seen_members = 0
-    with archive_path.open("rb", buffering=16 << 20) as f, tarfile.open(fileobj=f, mode="r|", bufsize=16 << 20) as tf:
+    with tarfile.open(archive_path, mode="r:") as tf:
         for member in tf:
-            m = CHUNK_RE.match(member.name)
-            if not m:
+            parsed = valid_env_member(args.task, member.name)
+            if parsed is None:
                 if seen_members == total_members:
                     break
                 continue
-            if m.group("task") != args.task:
-                raise ValueError(f"Unexpected task member {member.name}")
-            rank = int(m.group("rank"))
-            iteration = int(m.group("iter"))
-            round_idx = int(m.group("round"))
-            chunk = int(m.group("chunk"))
-            if not (0 <= rank < 8 and 1 <= iteration <= 130 and round_idx == 0 and 1 <= chunk <= 12):
-                raise ValueError(f"Out-of-contract environment member {member.name}")
+            rank = parsed["rank"]
+            version = parsed["version"]
+            chunk = parsed["chunk"]
             raw_bytes = tf.extractfile(member).read()
             digest = hashlib.sha256(raw_bytes).hexdigest()
             expected = manifest_files[member.name]
@@ -249,7 +264,7 @@ def main():
             payload = torch.load(io.BytesIO(gzip.decompress(raw_bytes)), map_location="cpu", weights_only=False)
             obs = payload["current_observation"]
             pending.append(dict(
-                name=member.name, sha256=digest, rank=rank, version=iteration - 1, chunk=chunk,
+                name=member.name, sha256=digest, rank=rank, version=version, chunk=chunk,
                 obs=public_observation(obs),
                 states=np.asarray(obs["states"], np.float32),
                 actions=np.asarray(payload["decoded_actions"], np.float32),
@@ -259,8 +274,9 @@ def main():
                 seeds=np.asarray(payload["seeds"], np.int64),
             ))
             tar_index.append(dict(
-                name=member.name, bytes=len(raw_bytes), sha256=digest,
-                rank=rank, version=iteration - 1, chunk=chunk,
+                name=member.name, offset_data=int(member.offset_data),
+                bytes=len(raw_bytes), sha256=digest,
+                stage=parsed["stage"], rank=rank, version=version, chunk=chunk,
             ))
             seen_members += 1
             if len(pending) == 2:
