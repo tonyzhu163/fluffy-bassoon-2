@@ -1,6 +1,6 @@
 # Per-dimension drift diagnostic for the 10M Flow-SDE sources
 
-**Status 2026-11-04: under review and qualification, not launched.** Owner
+**Status 2026-11-04: RUNNING on Baige `job-aesultap3qa8`.** Owner
 chat `01a1a4a2`; user requested pull and dimension-drift check. Reads only retained artifacts of
 [`robocasa-flow-sde-10m-per-task-20261103-r1`](../robocasa-flow-sde-10m-per-task-20261103-r1/RESULT.md).
 No simulator controls, sampling or SGD.
@@ -30,8 +30,8 @@ live, and is a behavioural diagnostic warranted?
 
 - **H1, binarized dimensions.** The env binarizes gripper (index 6) and base
   mode (index 11). PPO still scores the continuous pre-binarization values. Means
-  can move within one sign region without changing the corresponding executed
-  binary action, but crossing the threshold changes it. Predicts concentration
+  can move on the same side of the decoded 0.5 threshold without changing the corresponding executed
+  binary action, but crossing that threshold changes it. Predicts concentration
   in dims 6/11; saved transition likelihoods alone do not test sign changes.
 - **H2, arm dimensions.** Real motion change that does not raise success.
   Predicts drift spread over dims 0–5 (or the base/torso dims).
@@ -99,5 +99,13 @@ The original staging assertion required an output inside the source campaign,
 but COMMAND.sh puts it in this sibling diagnostic run. Staging is now bound
 to this run's exact staging/gpu paths. Consumption receipts bind task, step,
 model hash and READY hash; R3 reproduction is required before completion.
-Initial fixture hashes and source completion are checked. Qualified evidence
-and the deployed commit will be recorded here before accelerator launch.
+Initial fixture hashes and source completion are checked. Linux CPU checks
+passed: all 1,300 update/rank rows, optimizer counts, finite scalars, and two
+reference decomposition cases. [Receipt](CPU-QUALIFICATION.json). The deployed
+clean commit is `0dbdafa4`; the allocated-device probe and initial replay pass
+exactly. [Execution](EXECUTION.json), [first check](MONITOR-FIRST.json).
+
+The GPU artifact preserves the proposed flattened `action`/`model_action`
+statistics. These are indexed by flattened position, not physical dimension.
+A separate CPU readout will reshape them to `[16,50,12]` / `[16,50,32]` for
+per-dimension statistics; no active source file or GPU execution is changed.
