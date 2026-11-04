@@ -398,7 +398,7 @@
       "action_ledger_sha256": "1c091ed4af5dfeda8a97f0e00eb440e83ecddef70fc34b24ae368b7b9845ee60"
     }
   ],
-  "next_action": "Campaign complete. Disable this heartbeat; no additional GPU work or student fitting scheduled.",
+  "next_action": "Complete. No future campaign runs or student fitting scheduled.",
   "fixed_batch_layout": {
     "train_envs_per_gpu": 16,
     "rollout_rounds": 1,
@@ -710,11 +710,15 @@
   "monitor": {
     "automation_id": "monitor-five-task-10m-ppo-campaign",
     "cadence_minutes": 20,
-    "status": "ENDING_AFTER_VERIFIED_COMPLETION",
-    "next_action": "Campaign complete. Disable this heartbeat; no additional GPU work or student fitting scheduled.",
+    "status": "COMPLETED",
+    "next_action": "Complete. No future campaign runs or student fitting scheduled.",
     "last_check_shanghai": "2026-11-04 10:36:27",
     "next_check_shanghai": null,
-    "scheduler_check": "Baige console reporting job and refreshed instance bothSUCCESS; instance exit05:38:44, jobSUCCESS05:38:53. All source jobs alreadySUCCESS; no active campaign GPUs."
+    "scheduler_check": "Baige console reporting job and refreshed instance bothSUCCESS; instance exit05:38:44, jobSUCCESS05:38:53. All source jobs alreadySUCCESS; no active campaign GPUs.",
+    "automation_status": "PAUSED",
+    "ended_shanghai": "2026-11-04 10:39:36",
+    "end_receipt": "MONITOR-END-R1.json",
+    "completion_guard": "An already-queued heartbeat should observe COMPLETE and PAUSED and take no further campaign actions."
   },
   "storage": {
     "pfs_free_GiB": 740.83984375,
@@ -975,7 +979,7 @@
   "ETA": {
     "status": "COMPLETE",
     "active_GPU_jobs": 0,
-    "remaining": "Monitor shutdown only."
+    "remaining": "None"
   },
   "performance_units_and_old_run_comparison": "PERFORMANCE-NOTE.md",
   "closeout_preparation": {

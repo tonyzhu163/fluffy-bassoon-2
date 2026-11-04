@@ -2,6 +2,7 @@
 
 **Completed Nov4 2026.** Native training, reporting and corpus retention checks
 are complete; all campaign GPU jobs are terminal.
+The scheduled monitor is stopped; [shutdown receipt](MONITOR-END-R1.json).
 
 All five Baige Pro6K jobs completed 130/130 updates and their final paired
 64-case panels, exited 0 and reached scheduler SUCCESS. Each task used eight
