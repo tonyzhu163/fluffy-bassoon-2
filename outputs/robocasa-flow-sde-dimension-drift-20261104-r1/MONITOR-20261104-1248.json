@@ -1,0 +1,60 @@
+{
+  "checked_shanghai": "2026-11-04T12:48:21.557326+08:00",
+  "cluster": "Baige Pro6K",
+  "job_id": "job-aesultap3qa8",
+  "status": "RUNNING",
+  "probe_passed": true,
+  "gpu_count": 1,
+  "gpu_uuid": "GPU-4c2c17b4-142f-82e1-74d4-f60b1ce4f289",
+  "staging_completed": false,
+  "staging_receipts": 61,
+  "staging_counts": {
+    "PickPlaceDrawerToCounter": 16,
+    "CoffeeSetupMug": 16,
+    "TurnOffStove": 16,
+    "OpenDrawer": 13
+  },
+  "staging_progress_sha256": "1da1d82d68eb26d199d52d0248b585831de42446c0e9f69d723c274763b149f9",
+  "stage_pid": 2065166,
+  "stage_command_verified": true,
+  "gpu_clock_present": false,
+  "allocated_gpu_seconds_cap": 10800,
+  "elapsed_since_probe_seconds": 3305.668328,
+  "elapsed_is_lower_bound_not_final_charge": true,
+  "tasks": {
+    "OpenDrawer": {
+      "completed": false,
+      "rows": 13,
+      "last_step": 100,
+      "all_rows_reproduce_r3": true,
+      "last_mean_chunk_log_ratio": -0.22748260479420424,
+      "result_sha256": "4e064f18f84136b8574ae5ed7caf50edb2b616b922a6dcba4de28c174027a66e"
+    },
+    "PickPlaceDrawerToCounter": {
+      "completed": true,
+      "rows": 16,
+      "last_step": 130,
+      "all_rows_reproduce_r3": true,
+      "last_mean_chunk_log_ratio": -137.52018895745277,
+      "result_sha256": "b6c27700a511b5adc672e9516474099e388fffde7b716847961434a82f0991d7"
+    },
+    "TurnOffStove": {
+      "completed": true,
+      "rows": 16,
+      "last_step": 130,
+      "all_rows_reproduce_r3": true,
+      "last_mean_chunk_log_ratio": -1.4524267315864563,
+      "result_sha256": "0a124911715bd0269a3b110c6d62f2cb0ae6edd190dc996925b0960b8f81aba6"
+    },
+    "CoffeeSetupMug": {
+      "completed": true,
+      "rows": 16,
+      "last_step": 130,
+      "all_rows_reproduce_r3": true,
+      "last_mean_chunk_log_ratio": -0.771257821470499,
+      "result_sha256": "a5943f6dc38d36d145735ee3e53e19c8b6e8541d80f873d6936f5d14947d77a9"
+    }
+  },
+  "checkpoint_forwards": 61,
+  "next_action": "Continue same allocation; after all 80 receipts and successful GPU clock, independently audit all tensors and verify scheduler release/cost."
+}

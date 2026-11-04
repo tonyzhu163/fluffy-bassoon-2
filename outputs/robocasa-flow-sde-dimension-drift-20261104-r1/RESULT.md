@@ -36,7 +36,7 @@ All 1,300 task/update/rank records are present, with finite scalars and the expe
 
 ## Running controls and evidence
 
-Baige Pro6K job `job-aesultap3qa8` continues the remaining four tasks under the original one-GPU / 180-minute ceiling. At the 12:14 Shanghai check, Drawer is 16/16 and Coffee is 7/16 (through checkpoint 40). No new controls, sampling or SGD are performed. The 20-minute heartbeat `finish-dimension-drift-diagnostic` will finish the independent 80-tensor audit, scheduler release and cost closeout, publish the final comparison, and stop itself.
+Baige Pro6K job `job-aesultap3qa8` continues under the original one-GPU / 180-minute ceiling. At the 12:48 Shanghai check, 61/80 forwards are complete: Drawer, Coffee and Stove each 16/16; OpenDrawer 13/16 through checkpoint 100; Toaster pending. Every recorded row reproduces R3; the GPU clock is still open and the verified staging worker is healthy. Elapsed time since the device probe is 3,306 seconds (a lower bound, not final scheduler cost). No new controls, sampling or SGD are performed. [Latest monitor](MONITOR-20261104-1248.json). The next check is due by 13:08; the heartbeat will finish the independent 80-tensor audit, scheduler release and cost closeout, publish the final comparison, and stop itself.
 
 - [Independent target audit](TARGET-AUDIT.json) and [complete target readout](gpu/PickPlaceDrawerToCounter/RESULT.json).
 - [Noise-scale and correctly reshaped action statistics](COHORT-READOUT.json), [CPU qualification](CPU-QUALIFICATION.json), and [all update metrics](metrics/METRICS.json).
