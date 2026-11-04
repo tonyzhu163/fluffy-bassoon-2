@@ -1,6 +1,6 @@
 # Joint three-task training with four GPUs per preparation task
 
-**Status:** Human launch hold; no scaled allocation submitted. The user approved
+**Status:** Human hold released by “keep going?”; preparing verified deployment and submission. The user approved
 more resources/time and clarified joint training until convergence. The approved
 cumulative ceiling is **96 GPU-hours**; see [BUDGET.json](BUDGET.json).
 
@@ -44,7 +44,7 @@ checkpoint. It never implies convergence. Check cumulative scheduler charges
 before continuing; request an increase only if the 96 GPU-hour ceiling would be
 exceeded.
 
-## Submission commands after the human hold is released
+## Submission commands
 
 Set `TASK_CODE_DIR` to the clean, Git-deployed source pin that contains this
 launcher's final qualification. Run each source task command in a separate

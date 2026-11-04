@@ -1,0 +1,30 @@
+{
+  "format": "robocasa_joint_three_task_execution_v1",
+  "checked_shanghai": "2026-11-04T17:25:07.561729+08:00",
+  "status": "deployment_and_submission",
+  "approved_ceiling_GPU_hours": 96.0,
+  "cumulative_scheduler_GPU_hours": 0.0,
+  "jobs": {},
+  "queue": {
+    "id": "aihcq-rh0wwk9muei4",
+    "name": "\u7b97\u6cd5Z\u7ec4",
+    "pool": "Pro6K",
+    "observed_available_GPUs": 125,
+    "accelerator_type": "NVIDIA RPBZZZ6",
+    "four_GPU_template_max_CPUs": 87,
+    "four_GPU_template_max_RAM_GiB": 899,
+    "user_quota": "not configured; default queue resources",
+    "queue_auto_stop": "21 days or GPU utilization <=10% for 12 hours; does not bind 4h/8h allocations"
+  },
+  "storage": {
+    "PFS_free_GiB": 561.1171875,
+    "write_probe": "passed",
+    "quota_tool_available": false
+  },
+  "last_validation": {
+    "code": "cc469f320cb3f0750e9e2f7b0e348b3272ffc4fd",
+    "Linux_CPU_tests": 47,
+    "pooled_fixture": "all eight datasets pass"
+  },
+  "next_action": "Deploy the latest main release pin, then submit three four-GPU preparation jobs; pooled fitting follows all verified preparations."
+}
