@@ -58,7 +58,7 @@ def split_banks(banks, workers=4):
     return result
 
 
-def prepare(metadata, original, output, stopped, previous=None, scheduler_seconds=2100):
+def prepare(metadata, original, output, stopped, previous=None, scheduler_seconds=2100, workers=4):
     assert not output.exists(), 'Use a new migration identity'
     assert stopped['scheduler_released'] and len(stopped['jobs']) == 2
     ep = endpoint(metadata)
@@ -107,7 +107,7 @@ def prepare(metadata, original, output, stopped, previous=None, scheduler_second
         tasks[task] = dict(retained_banks=complete, retained_panels=retained,
             discarded_incomplete_panels=abandoned + [p for p in panels if p['bank'] not in complete],
             remaining_banks=remaining)
-        for index, banks in enumerate(split_banks(remaining)):
+        for index, banks in enumerate(split_banks(remaining, min(workers, len(remaining))) if remaining else []):
             assert banks
             shards.append(dict(task=task, shard=index, banks=banks,
                 # native_eval puts accounting in output.parent/accounting.
@@ -115,12 +115,12 @@ def prepare(metadata, original, output, stopped, previous=None, scheduler_second
                 output=str(output / task / f'shard-{index:02d}' / 'gpu-r1'),
                 original_staging=str(Path(original) / task / 'staging-r1')))
     # Scheduler creation-to-release costs, including old failed attempts, remain charged.
-    assert prior_charge + 8 * scheduler_seconds <= 27600, 'Migration reservation exceeds original GPU-hour ceiling'
+    assert shards and prior_charge + len(shards) * scheduler_seconds <= 27600, 'Migration reservation exceeds original GPU-hour ceiling'
     manifest = dict(completed=True, run=RUN, metadata=str(metadata),
         original=str(original), prepared=str(prepared), prepared_sha256=sha(prepared),
         endpoint_sha256=sha(ep.HERE), tasks=tasks, shards=shards,
-        stopped=stopped, maximum_gpus=8, budget_gpu_seconds=27600,
-        reserved_gpu_seconds_upper=prior_charge + 8 * scheduler_seconds,
+        stopped=stopped, maximum_gpus=len(shards), budget_gpu_seconds=27600,
+        reserved_gpu_seconds_upper=prior_charge + len(shards) * scheduler_seconds,
         scheduler_seconds=scheduler_seconds,
         previous_manifest=str(previous) if previous else None,
         previous_manifest_sha256=sha(previous) if previous else None,
@@ -242,9 +242,23 @@ def combine(manifest_path, destination):
     return result
 
 
+def barrier(manifest_path, deadline):
+    """Keep the PyTorch master alive until every independent shard finishes."""
+    manifest = read(manifest_path)
+    paths = [Path(s['output']) / 'RESULT.json' for s in manifest['shards']]
+    while time.time() < deadline:
+        if all(p.exists() for p in paths):
+            results = [read(p) for p in paths]
+            assert all(r['completed'] and r['SGD'] == r['unresolved_intents'] == 0 for r in results)
+            print(json.dumps(dict(all_shards_complete=True, count=len(paths))), flush=True)
+            return
+        time.sleep(1)
+    raise TimeoutError('Not all independent shard results exist before the allocation deadline')
+
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('mode', choices=['worker', 'launch', 'combine'])
+    parser.add_argument('mode', choices=['worker', 'launch', 'combine', 'barrier'])
     parser.add_argument('--manifest', type=Path, required=True)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--index', type=int)
@@ -254,6 +268,8 @@ def main():
         worker(args.manifest, args.index, args.deadline)
     elif args.mode == 'launch':
         launch(args.manifest, args.output, args.deadline)
+    elif args.mode == 'barrier':
+        barrier(args.manifest, args.deadline)
     else:
         combine(args.manifest, args.output)
 

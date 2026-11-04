@@ -88,3 +88,15 @@ pairs recursively, with raw-file hashes and no stitching of interrupted banks.
 The next eight-container reservation is24minutes, with a1410-second worker
 timeout and30-second kill allowance. Recompute cumulative charges on release
 and admit only when that reservation fits the original27600GPU-second ceiling.
+
+If that phase ends before every assigned bank completes, retain only complete
+pairs and freeze a fresh continuation after verifying scheduler release. A
+recovery may omit already completed tasks and partition the remaining banks
+over fewer containers. Charge its actual container count, not a fixed eight.
+The planned small recovery uses at most three one-GPU containers for18minutes
+each, only if the measured cumulative charge plus3240GPU-seconds fits27600.
+Each keeps the same private journal and qualified evaluator. A completion
+barrier holds every successful replica until all shard RESULT files exist,
+so the PyTorch master cannot mark a partially finished independent job done.
+The18-minute command uses1050seconds plus30seconds kill allowance and a barrier
+deadline at1065seconds. The original active phase remains immutable atf7f79709.

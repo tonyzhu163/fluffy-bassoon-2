@@ -32,10 +32,10 @@ for index, shard in enumerate(manifest['shards']):
     journals.append(journal)
 for index, journal in enumerate(journals):
     assert journal.charged() == 400 + index
-assert len(roots) == 8
+assert len(roots) == manifest['maximum_gpus']
 acc.write(output / 'QUALIFICATION.json', dict(completed=True,
     source_sha256=acc.sha(source), journal_source_sha256=acc.sha(runtime / 'src/fluffy_bassoon/meta_rl/rlinf_native_ppo.py'),
-    manifest_sha256=acc.sha(manifest_path), distinct_private_accounting_roots=8,
+    manifest_sha256=acc.sha(manifest_path), distinct_private_accounting_roots=len(roots),
     real_action_journal_isolation_pass=True, unequal_shard_limits_pass=True,
     model_forwards=0, simulator_controls=0, SGD=0, checked_unix=time.time()))
 print((output / 'QUALIFICATION.json').read_text(), flush=True)
