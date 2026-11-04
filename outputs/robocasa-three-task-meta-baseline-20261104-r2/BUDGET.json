@@ -1,0 +1,24 @@
+{
+  "format": "robocasa_three_task_meta_baseline_budget_v2",
+  "status": "proposed_pending_higher_ceiling_approval",
+  "date_shanghai": "2026-11-04",
+  "user_request": "can you scale these up? use 4 gpus per task / and scale up the time?",
+  "prior_approved_ceiling_GPU_hours": 21.0,
+  "proposed_ceiling_GPU_hours": 96.0,
+  "approved_ceiling_GPU_hours": null,
+  "gpu_plan": {
+    "parallel_jobs": 3,
+    "gpus_per_job": 4,
+    "total_concurrent_gpus": 12,
+    "cpu_per_job_requested": 64,
+    "ram_gib_per_job_requested": 256,
+    "shm_gib_per_job_requested": 32,
+    "wall_minutes_per_job": 480,
+    "automatic_retry": false,
+    "accelerator_type": "Must verify actual Baige queue/device at submission"
+  },
+  "reservation_GPU_hours_per_task": 32.0,
+  "scope": "Existing exploratory three-task corpus preparation and four direct-action learner fits; checkpointed operational stops do not imply convergence. No Stage 1 PPO/GRPO allocation changes.",
+  "later_evaluation": "Any subsequent evaluation must fit the remaining approved cumulative ceiling; no separate extra allocation is authorized by this proposal.",
+  "tasks": ["OpenDrawer", "CloseToasterOvenDoor", "CoffeeSetupMug"]
+}
