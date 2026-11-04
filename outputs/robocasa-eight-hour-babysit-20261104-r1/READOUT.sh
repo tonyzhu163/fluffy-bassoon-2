@@ -11,7 +11,7 @@ test "$(git -C "$RLINF_PATH" rev-parse HEAD)" = 8f9bfa7661928ef8c17494b04f4d7bf3
 OUT=$ROOT/$RUN/gpu/$BABYSIT_ATTEMPT
 test ! -e "$OUT"
 mkdir -p "$(dirname "$OUT")"
-mkdir -p "$ROOT/$RUN/logs"
+mkdir -p "$(dirname "$ROOT/$RUN/logs/$BABYSIT_ATTEMPT.log")"
 exec > >(tee "$ROOT/$RUN/logs/$BABYSIT_ATTEMPT.log") 2>&1
 START=$(date +%s)
 finish() {
@@ -37,4 +37,5 @@ SECONDS_LIMIT=${BABYSIT_SECONDS_LIMIT:-3300}
 timeout --kill-after=30s "$SECONDS_LIMIT" "$PY" -B "$BABYSIT_CODE/$RUN/READOUT.py" \
   --code "$BABYSIT_CODE" --source-commit "$BABYSIT_COMMIT" --method "$BABYSIT_METHOD" \
   --split "$BABYSIT_SPLIT" --stage "${BABYSIT_STAGE:-qualification}" --count "${BABYSIT_COUNT:-2}" \
+  --memory-mode "${BABYSIT_MEMORY_MODE:-all}" --shards "${BABYSIT_SHARDS:-1}" --shard-index "${BABYSIT_SHARD_INDEX:-0}" \
   --output "$OUT" --probe "$PROBE" --expected-hostname "$HOSTNAME" --deadline "$((START+SECONDS_LIMIT))"

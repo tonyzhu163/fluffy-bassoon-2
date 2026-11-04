@@ -17,6 +17,9 @@ def main():
     parser.add_argument('--split', choices=('ID', 'OOD'), required=True)
     parser.add_argument('--stage', choices=('qualification', 'final'), required=True)
     parser.add_argument('--count', type=int, choices=(2, 8, 50), required=True)
+    parser.add_argument('--memory-mode', choices=('all', 'full', 'episode'), default='all')
+    parser.add_argument('--shards', type=int, choices=(1,2), default=1)
+    parser.add_argument('--shard-index', type=int, default=0)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--probe', type=Path, required=True)
     parser.add_argument('--expected-hostname', required=True)
@@ -26,6 +29,8 @@ def main():
         raise ValueError('Require the exact allocated Linux container')
     if args.stage == 'final' and args.count != 50:
         raise ValueError('Final panels have fifty cases per task')
+    if not 0 <= args.shard_index < args.shards:
+        raise ValueError('Select a complete-bank shard within the bound partition')
     root = Path('/mowenjie/fluffy-bassoon-2')
     sys.path.insert(0, str(args.code / 'src'))
     from fluffy_bassoon.meta_rl.rlinf_native_ppo import checked_checkout, tensor_hash
@@ -53,6 +58,8 @@ def main():
     selected = dict(kind=args.method)
     policy = None
     is_anchor = args.method in ('native_initial', 'native_final')
+    if is_anchor and args.memory_mode == 'episode':
+        raise ValueError('Native anchors use their single history-independent control')
     if not is_anchor:
         directory = fit / 'fits' / args.method
         status = json.loads((directory / 'training-status.json').read_text())
@@ -103,12 +110,16 @@ def main():
     tasks = ('OpenDrawer', 'CloseToasterOvenDoor', 'CoffeeSetupMug') if args.split == 'ID' else ('CloseFridge', 'TurnOnMicrowave')
     horizons = {task: TASKS[task][0] for task in tasks}
     modes = ('full',) if is_anchor else ('full', 'episode')
+    if args.memory_mode != 'all':
+        modes = tuple(mode for mode in modes if mode == args.memory_mode)
     base_seed = 63105000 if args.stage == 'qualification' else 64105000
-    canonical = args.output.parent / ('canonical-' + args.stage + '-' + args.split)
+    canonical = root / 'outputs/robocasa-eight-hour-babysit-20261104-r1/gpu' / ('canonical-' + args.stage + '-' + args.split)
     binding = dict(format='three_task_six_episode_readout_v1', source_commit=args.source_commit,
         selection=selected, signature=signature, source_assembly_sha256=file_sha256(assembly),
         stage=args.stage, split=args.split, cases_per_task=args.count,
         support_episodes=[0, 1, 2, 3, 4, 5], render_contract='bounded_two_intensity_levels',
+        memory_modes=list(modes), shard_count=args.shards, shard_index=args.shard_index,
+        sharding='whole fixed cohorts; (global task index + cohort index) modulo shard count',
         batch_contract='fixed_order_same_horizon_waves_v1', feedback='native sparse first-success per H50; simulator-supervised baseline')
     _json(args.output / 'BINDING.json', binding)
     results = []
@@ -160,6 +171,8 @@ def main():
             # The same task retains the same physical cases across methods/modes.
             task_number = ('OpenDrawer', 'CloseToasterOvenDoor', 'CoffeeSetupMug', 'CloseFridge', 'TurnOnMicrowave').index(task)
             for first in range(0, args.count, 8):
+                if (task_number + first//8) % args.shards != args.shard_index:
+                    continue
                 if time.time() + 300 >= args.deadline:
                     raise TimeoutError('Preserve complete waves before the allocation boundary')
                 if shutil.disk_usage(root).free < 220 * 2**30:
@@ -190,7 +203,9 @@ def main():
                 result = dict(method=args.method, mode=mode, task=task, cases=cases,
                     first_success_counts_by_support_episodes=counts, denominators=len(cases),
                     episodes=rows, references=backend.references, actual_batch_sizes=backend.last_batch_sizes,
-                    controls_charged=journal.charged(), elapsed_seconds=time.time() - began)
+                    controls_charged=journal.charged(), elapsed_seconds=time.time() - began,
+                    peak_CUDA_allocated_bytes=torch.cuda.max_memory_allocated(),
+                    peak_CUDA_reserved_bytes=torch.cuda.max_memory_reserved())
                 _json(directory / 'RESULT.json', result)
                 results.append({key: value for key, value in result.items() if key not in ('episodes', 'references', 'cases', 'actual_batch_sizes')})
                 _json(args.output / 'PROGRESS.json', dict(results=results, checked_unix=time.time()))
