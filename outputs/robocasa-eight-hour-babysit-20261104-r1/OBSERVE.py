@@ -72,6 +72,8 @@ def observe():
         upper += charged
         reserved_upper += charged if row.get('released_shanghai') else max(charged, row['max_reservation_GPU_hours'])
         allocations.append(dict(row, conservative_GPU_hours=charged))
+    active_fits = [row['job_id'] for row in ledger['allocations']
+        if row.get('kind') == 'fit' and not row.get('released_shanghai')]
     baseline = {}
     for index in range(2):
         node = own / 'baseline-test512/attempt-01' / f'node-{index:02d}'
@@ -90,7 +92,7 @@ def observe():
                 errors['baseline/' + node.name] = tail[-3000:]
     readouts = {}
     for row in ledger['allocations']:
-        if not row.get('output'):
+        if row.get('kind') == 'fit' or not row.get('output'):
             continue
         directory = own / row['output']
         parts = {part.name:dict(progress=read(part / 'PROGRESS.json'),
@@ -112,8 +114,9 @@ def observe():
                 errors['readout/' + row['job_id'] + '/' + log.name] = tail[-3000:]
     return dict(checked_shanghai=datetime.datetime.fromtimestamp(now,
             datetime.timezone(datetime.timedelta(hours=8))).isoformat(),
-        cluster='Baige Pro6K', job_id='job-967y1maorj80', learner_commit='d71cb532',
-        active_fit_jobs=[row['job_id'] for row in ledger['allocations'] if row.get('kind')=='fit' and not row.get('released_shanghai')],
+        cluster='Baige Pro6K', job_id=active_fits[-1] if active_fits else None,
+        original_fit_job_id='job-967y1maorj80', learner_commit='d71cb532',
+        active_fit_jobs=active_fits,
         methods=methods, worker_release=release, error_tails=errors,
         source_budget=dict(approved_GPU_hours=96, preparation_GPU_hours=17.57,
             allocations=allocations, creation_to_check_GPU_hours_upper=upper,
