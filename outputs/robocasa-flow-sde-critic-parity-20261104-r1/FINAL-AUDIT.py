@@ -57,7 +57,7 @@ def main():
         assert receipt['consumed_sha256'] == sha(consumed_path)
         assert receipt['private_copy_reclaimed'] and not Path(ready['path']).exists()
         receipts.append(dict(step=step, ready_sha256=sha(ready_path), consumed_sha256=sha(consumed_path)))
-        gaps, suppressed, tensor_receipts = [], 0, []
+        gaps, suppressed, tensor_receipts, mean_roundoff = [], 0, [], 0.0
         rows = [r for r in result['rows'] if r['policy_step'] == step]
         assert len(rows) == 4
         for row in rows:
@@ -79,7 +79,11 @@ def main():
             indices = fixture['forward_inputs']['denoise_inds'][:, 0].long()
             selected = all_values[torch.arange(16), indices]
             assert torch.equal(old, fixture['old_values'].flatten())
-            assert torch.equal(all_values.mean(1), old)
+            # CUDA and CPU use different float32 reduction orders. Audit the
+            # ten retained float32 inputs in float64 with a declared bound.
+            mean_error = float((all_values.double().mean(1) - old.double()).abs().max())
+            assert mean_error <= 2e-7, mean_error
+            mean_roundoff = max(mean_roundoff, mean_error)
             assert torch.equal(selected, tensors['selected_values'])
             for field in ['returns', 'loss_mask']:
                 assert torch.equal(tensors[field], fixture[field])
@@ -121,6 +125,7 @@ def main():
         summaries.append(dict(policy_step=step, decisions=len(gap), value_gap_max_abs=float(gap.abs().max()),
             value_gap_mean_abs=float(gap.abs().mean()), value_gap_rms=float(gap.square().mean().sqrt()),
             pre_sgd_clip_count=int((gap.abs() > .2).sum()), suppressed_prediction_gradients=suppressed,
+            cpu_float64_mean_to_saved_max_abs_error=mean_roundoff,
             maximum_reported_head_gradient_relative_delta=max(r['head_gradient_relative_delta'] for r in rows),
             tensors=tensor_receipts))
     qualified = json.loads((root / 'QUALIFIED-FIX.json').read_text())
@@ -129,6 +134,7 @@ def main():
         replay_script_sha256=result['script_sha256'], prepared_sha256=sha(prepared_path),
         qualified_fix_sha256=sha(root / 'QUALIFIED-FIX.json'), clock=clock, receipts=receipts,
         cohorts=16, decisions=256, by_policy_step=summaries, new_controls=0, SGD=0,
+        cpu_float64_mean_absolute_tolerance=2e-7,
         checks='Independent tensor reductions, archive/fixture/model receipt hashes, selected-step gather, '
                'saved rollout mean, and CPU native-loss/prediction gradients.',
         limits='Head-gradient vectors were not retained, so their norms/deltas are GPU replay reports; '
