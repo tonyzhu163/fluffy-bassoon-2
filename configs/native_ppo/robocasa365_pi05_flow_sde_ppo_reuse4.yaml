@@ -1,0 +1,26 @@
+# Action-matched reuse comparison: 40 x 128 x 600 TRAIN controls; 960 Adam steps.
+# Keep the original Stage1 critic/noise/cadence; change epoch reuse only.
+defaults:
+  - robocasa365_pi05_flow_sde_ppo_vlm_critic_base
+  - _self_
+
+hydra:
+  searchpath:
+    - file://${oc.env:RLINF_PATH}/examples/embodiment/config/
+
+runner:
+  max_epochs: ${oc.decode:${oc.env:ROBOCASA_FLOW_MAX_EPOCHS,40}}
+  val_check_interval: ${oc.decode:${oc.env:ROBOCASA_FLOW_VAL_INTERVAL,10}}
+  save_interval: ${oc.decode:${oc.env:ROBOCASA_FLOW_SAVE_INTERVAL,10}}
+  logger:
+    project_name: robocasa365_flow_sde_ppo_reuse4
+
+algorithm:
+  update_epoch: 4
+
+actor:
+  optim:
+    critic_warmup_steps: 0
+
+native_pilot:
+  maximum_actions: ${oc.decode:${oc.env:ROBOCASA_FLOW_MAX_ACTIONS,4100000}}

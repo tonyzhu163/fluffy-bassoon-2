@@ -100,6 +100,49 @@ def test_ten_million_contract_arithmetic():
     assert contract['physics_tick_limit'] == (600 + 128) * 128
 
 
+@pytest.mark.parametrize('chunk,batch,epochs,iterations,steps', [
+    (50, 256, 1, 40, 240),
+    (50, 256, 4, 40, 960),
+    (10, 512, 1, 40, 600),
+    (50, 256, 1, 160, 960),
+])
+def test_executed_cadence_controls_likelihood_and_optimizer_exposure(
+        chunk, batch, epochs, iterations, steps):
+    cfg = flow_config(maximum=None)
+    cfg['runner']['max_epochs'] = iterations
+    cfg['actor']['global_batch_size'] = batch
+    cfg['actor']['model'].update(num_action_chunks=chunk, action_dim=12, num_steps=5,
+        openpi=dict(action_horizon=50, action_chunk=chunk, num_steps=5, ignore_last=True))
+    cfg['algorithm']['update_epoch'] = epochs
+    contract = flow_contract(cfg)
+    assert contract['predicted_action_horizon'] == 50
+    assert contract['chunks_per_episode'] == 600 // chunk
+    assert contract['likelihood_coordinates'] == chunk * 12
+    assert contract['total_optimizer_steps'] == steps
+    assert contract['TRAIN_policy_controls'] == iterations * 128 * 600
+
+
+def test_contract_rejects_unexecuted_likelihood_tail_or_mismatched_sampler():
+    cfg = flow_config()
+    cfg['actor']['model'].update(num_action_chunks=10,
+        openpi=dict(action_horizon=50, action_chunk=50))
+    with pytest.raises(ValueError, match='likelihood slices'):
+        flow_contract(cfg)
+    cfg['actor']['model']['openpi']['action_chunk'] = 10
+    cfg['actor']['model']['num_steps'] = 5
+    cfg['actor']['model']['openpi']['num_steps'] = 10
+    with pytest.raises(ValueError, match='denoising steps'):
+        flow_contract(cfg)
+
+
+def test_short_chunk_parity_checks_only_executed_coordinates():
+    import torch
+    values = torch.zeros(2, 10, 12)
+    assert flow_logprob_parity(values, values.clone())['shape'] == [2, 10, 12]
+    with pytest.raises(ValueError, match='executed action'):
+        flow_logprob_parity(torch.zeros(2, 50, 12), values)
+
+
 def test_train_seeds_are_unique_disjoint_and_layout_independent():
     banks = []
     for envs, rounds in ((128, 1), (64, 2), (32, 4)):
