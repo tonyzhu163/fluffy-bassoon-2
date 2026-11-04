@@ -104,8 +104,8 @@
       "free_bytes_at_launch": 774914441216,
       "config_diff": "GRPO code and config match reviewed main. The prepared launcher explicitly sets two actor ranks and microbatch 16 to match PPO.",
       "worker_started_unix": 1793791880.1261606,
-      "last_check_shanghai": "2026-11-04T20:20:00+08:00",
-      "completed_iterations": 10,
+      "last_check_shanghai": "2026-11-04T21:14:04+08:00",
+      "completed_iterations": 35,
       "baseline_DEV64_successes": 41,
       "first_update_audit": "GRPO-FIRST-UPDATE.json",
       "attempts": [
@@ -142,10 +142,16 @@
         "wins": 5,
         "losses": 8,
         "exact_p": 0.5810546875
+      },
+      "periodic_DEV": {
+        "initial": 41,
+        "10": 38,
+        "20": 43,
+        "30": 44
       }
     }
   },
-  "next_action": "Verify replayed paired DEV10, then 30 fresh TRAIN updates to reach the same cumulative 3,072,000 controls; complete matched four-policy DEV64 and short-chunk benchmark.",
+  "next_action": "Finish GRPO, validate final checkpoint and score all four actors on the original DEV64 with common sampler RNG.",
   "PFS_free_GiB_observed": 622.328125,
   "storage_checked_unix": 1793786026.7150784,
   "git_publication": "GRPO start and PPO source evidence on main. Qualified recovery code pinned to 9bf964b1.",
