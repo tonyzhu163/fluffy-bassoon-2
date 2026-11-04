@@ -1,10 +1,11 @@
 # Joint three-task training with four GPUs per preparation task
 
-**Status:** Human hold released. Two OpenDrawer startup submissions failed and released
-2026-11-04 18:55 Shanghai (348 GPU-seconds conservative); explicit local CUDA
-visibility is being deployed before a fresh attempt. See [EXECUTION.json](EXECUTION.json). The user approved
-more resources/time and clarified joint training until convergence. The approved
-cumulative ceiling is **96 GPU-hours**; see [BUDGET.json](BUDGET.json).
+**Status:** All three four-GPU preparations are RUNNING on Baige Pro6K.
+OpenDrawer `job-2y8auhjtt9ak`, Toaster `job-75dnd0uputmn`, Coffee
+`job-38ix8q2xm8wt`; source `d71cb532`. All 12 actual GPU probes pass.
+Startup failures are terminal/released and charged 672 conservative GPU-seconds.
+The approved cumulative ceiling remains **96 GPU-hours**; see
+[BUDGET.json](BUDGET.json) and [EXECUTION.json](EXECUTION.json).
 
 The three task jobs only prepare data. Each method then trains **one model on
 all three tasks together**: AD, DPT, DIT and IC-IQL use separate objectives and
@@ -20,7 +21,11 @@ models. The earlier separate-task fit draft is superseded before any launch.
 Request Baige Pro6K / 算法Z组 queue `aihcq-rh0wwk9muei4`, 64 CPUs,
 256 GiB RAM and 32 GiB SHM per job, subject to current queue limits. Recheck
 capacity and actual accelerator type at submission. Automatic retry is off.
-Release preparation GPUs before allocating pooled fitting.
+Release preparation GPUs before allocating pooled fitting. Mount
+`bos://dexmal-mowenjie-data` read-only at `/mnt/bos/adgfyl` for preparation;
+the PFS code/runtime/output mount remains `/mowenjie`. The successful template
+retains automatic retries OFF. Failed startups reduce the worst-case
+continuation reserve from 16 to 15.8133 GPU-hours.
 
 ## Data and convergence
 

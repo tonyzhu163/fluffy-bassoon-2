@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/sources/three-task-joint-d71cb532/outputs/robocasa-three-task-meta-baseline-20261104-r2/PREPARE-STREAM.py", line 340, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/sources/three-task-joint-d71cb532/outputs/robocasa-three-task-meta-baseline-20261104-r2/PREPARE-STREAM.py", line 121, in main
+    if sha(manifest_path) != prepared_meta["manifest_sha256"]:
+       ^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/sources/three-task-joint-d71cb532/outputs/robocasa-three-task-meta-baseline-20261104-r2/PREPARE-STREAM.py", line 75, in sha
+    with Path(path).open("rb") as stream:
+         ^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/cache/pythons/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1/corpora/OpenDrawer/native-130-r1.tar.manifest.json'

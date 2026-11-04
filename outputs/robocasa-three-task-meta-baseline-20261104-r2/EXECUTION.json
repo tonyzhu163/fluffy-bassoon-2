@@ -1,9 +1,9 @@
 {
   "format": "robocasa_joint_three_task_execution_v1",
-  "checked_shanghai": "2026-11-04T18:57:40.503135+08:00",
-  "status": "preparation_startup_diagnosed_retry_pending",
+  "checked_shanghai": "2026-11-04T19:09:44.638460+08:00",
+  "status": "three_preparations_running",
   "approved_ceiling_GPU_hours": 96.0,
-  "cumulative_scheduler_GPU_hours": 0.09666666666666666,
+  "cumulative_scheduler_GPU_hours": 1.3394062411111112,
   "jobs": {
     "job-30kj6dnpleas": {
       "task": "OpenDrawer",
@@ -21,6 +21,42 @@
       "released_shanghai": "2026-11-04T18:55:53+08:00",
       "conservative_GPU_seconds": 168,
       "error": "GPU probe: CUDA_VISIBLE_DEVICES unset"
+    },
+    "job-3wkmo01vslqc": {
+      "task": "OpenDrawer",
+      "attempt": "prepare-4gpu-02",
+      "status": "Failed",
+      "created_shanghai": "2026-11-04T18:59:29+08:00",
+      "released_shanghai": "2026-11-04T19:00:50+08:00",
+      "conservative_GPU_seconds": 324,
+      "error": "Actual four-GPU probe passed; BOS corpus mount absent from copied scheduler template"
+    },
+    "job-2y8auhjtt9ak": {
+      "task": "OpenDrawer",
+      "attempt": "prepare-4gpu-03",
+      "status": "Running",
+      "created_shanghai": "2026-11-04T19:03:10+08:00",
+      "source_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+      "GPU_probe": "passed all four actual GPUs; probe computation 2097152 each",
+      "reserved_GPU_hours": 16
+    },
+    "job-75dnd0uputmn": {
+      "task": "CloseToasterOvenDoor",
+      "attempt": "prepare-4gpu-01",
+      "status": "Running",
+      "created_shanghai": "2026-11-04T19:04:35+08:00",
+      "source_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+      "GPU_probe": "passed all four actual GPUs",
+      "reserved_GPU_hours": 16
+    },
+    "job-38ix8q2xm8wt": {
+      "task": "CoffeeSetupMug",
+      "attempt": "prepare-4gpu-01",
+      "status": "Running",
+      "created_shanghai": "2026-11-04T19:05:47+08:00",
+      "source_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+      "GPU_probe": "passed all four actual GPUs",
+      "reserved_GPU_hours": 16
     }
   },
   "queue": {
@@ -46,7 +82,7 @@
     "Linux_CPU_tests": 47,
     "pooled_fixture": "all eight datasets pass"
   },
-  "next_action": "Deploy explicit CUDA local-ordinal visibility fix, then retry with fresh preparation attempt identity. Both accidental duplicate submissions are terminal and their creation-to-release charge is retained.",
+  "next_action": "Finish submission/initial-advancement verification for the remaining two preparation tasks, monitor every 20 minutes, release all three before pooled four-GPU fitting.",
   "learner_architecture": {
     "width": 256,
     "layers": 6,
@@ -59,6 +95,23 @@
   },
   "blocking_condition": null,
   "browser_diagnosis": "BROWSER-DIAGNOSIS.json",
-  "deployed_code_commit": "a564ec7e2d031fab02f5245bc99193bff8dbc57a",
-  "submission_incident": "The first button click submitted despite an unchanged accessibility snapshot; pressing Return submitted again before the loading state appeared. Neither launch advanced beyond startup. Use one submit action and wait for scheduler acceptance before any further action."
+  "deployed_code_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+  "submission_incident": "The first button click submitted despite an unchanged accessibility snapshot; pressing Return submitted again before the loading state appeared. Neither launch advanced beyond startup. Use one submit action and wait for scheduler acceptance before any further action.",
+  "terminal_conservative_GPU_seconds": 672,
+  "cumulative_scheduler_GPU_hours_note": "Terminal jobs: 672/3600=0.186667 GPU-hours; active creation-to-now charges added at each check.",
+  "corpus_mount": {
+    "source": "bos://dexmal-mowenjie-data",
+    "target": "/mnt/bos/adgfyl",
+    "read_only": true
+  },
+  "active_conservative_GPU_hours": 1.1527395744444444,
+  "maximum_preparation_reservation_including_failures_GPU_hours": 48.18666666666667,
+  "remaining_after_maximum_preparation_and_initial_fit_GPU_hours": 15.813333333333333,
+  "initial_advancement": "INITIAL-ADVANCEMENT.json",
+  "monitor": {
+    "script": "MONITOR.py",
+    "interval_seconds": 1200,
+    "status": "deploying",
+    "scope": "Read-only worker evidence; scheduler release and fitting submission remain separate verified actions"
+  }
 }
