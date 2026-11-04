@@ -943,3 +943,7 @@ needs repair before further PPO. This evaluation does not test that repair
 or admit student fits.
 [Results and limits](../outputs/robocasa-endpoint512-acceleration-20261104-r1/RESULT.md),
 [independent audit](../outputs/robocasa-endpoint512-acceleration-20261104-r1/FINAL-AUDIT.json).
+
+### OpenDrawer PPO at 3,072,000 training actions
+
+On 512 fresh paired drawer cases, four epochs per rollout improved first success from 315/512 (61.52%) for Stage 1 to 355/512 (69.34%). The gain was 7.81 percentage points, with a paired 95% interval of +3.71 to +11.91 and Holm-adjusted p = 0.000775. Changing only the critic placement or only last-step eligibility each gave 330/512 (+2.93 points, adjusted p = 0.327 for each). Historical PPO at the same 40-update endpoint attained 320/512. Its difference from Stage 1 was +0.98 points (paired 95% interval −3.91 to +5.66). All new policies saw 3,072,000 fresh controls. The four-epoch arm took 960 optimizer steps, while Stage 1 and both other arms took 240. The experiment used one training seed. [Matched test and interpretation](../outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/RESULT.md) · [Native episode audit](../outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/ENDPOINT-AUDIT.json)
