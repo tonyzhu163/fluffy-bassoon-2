@@ -563,8 +563,33 @@ class FlowBridgeMotor(FlowDirectMotor):
             self.native._prepared = None
 
 
+def native_flow_targets(encoded_actions, history_codec, native_action_stats):
+    """Convert saved physical-history labels to the native model's FM space.
+
+    History uses canonical binary +/-1 with unit scale; the native normalizer
+    retains its learned means/scales for all32 coordinates. Padding therefore
+    happens in physical space before applying the official transform.
+    """
+    encoded = np.asarray(encoded_actions, np.float32)
+    if encoded.shape[-1:] != (ACTION_DIM,) or not np.isfinite(encoded).all():
+        raise ValueError("Require finite encoded physical H50x12 target labels")
+    direct = DirectActionCodec(history_codec.mean, history_codec.std)
+    physical = (encoded.reshape(*encoded.shape[:-1], 50, 12)
+                * np.asarray(direct.std, np.float32) + np.asarray(direct.mean, np.float32))
+    if not np.isin(physical[..., list(BINARY)], [-1., 1.]).all():
+        raise ValueError("Require actual canonical binary commands, not continuous predictions")
+    mean, std = (np.asarray(native_action_stats[key]) for key in ('mean', 'std'))
+    if (mean.shape != (32,) or std.shape != (32,) or not np.isfinite(mean).all()
+            or not np.isfinite(std).all() or (std < 0).any()):
+        raise ValueError("Require the official32-coordinate native action statistics")
+    padded = np.pad(physical, [(0,0)] * (physical.ndim-1) + [(0,20)])
+    # openpi.transforms.Normalize._normalize, with quantiles disabled.
+    return ((padded - mean) / (std + 1e-6)).astype(np.float32)
+
+
 def sample_bridge_query_batch(
     trials, policy: HistoryFlowSteeringPolicy, rng, *,
+    action_codec, native_action_stats,
     batch_size: int, max_episodes: int = 12, mode: str = "full",
     objective: str = "ad", discount: float = .99,
 ):
@@ -588,9 +613,9 @@ def sample_bridge_query_batch(
         query_rel = int(rng.integers(0, end - begin))
         query_abs = begin + query_rel
         target_flat = np.asarray(trial["target_noise"][query_abs], np.float32)
-        target_active = target_flat.reshape(policy.config.action_horizon, policy.config.active_action_dim)
-        target_padded = np.zeros((policy.config.action_horizon, policy.config.model_action_dim), np.float32)
-        target_padded[:, :policy.config.active_action_dim] = target_active
+        target_padded = native_flow_targets(target_flat, action_codec, native_action_stats)
+        if target_padded.shape != (policy.config.action_horizon, policy.config.model_action_dim):
+            raise ValueError("Native flow targets differ from the bound model action shape")
         windows.append(dict(
             tokens=token, actions=trial["executed_noise"][begin:end],
             rewards=trial["rewards"][begin:end], dones=trial["dones"][begin:end],

@@ -337,10 +337,16 @@ def test_bridge_query_batch_and_checkpoint_roundtrip(tmp_path, interface, object
 
     rng = np.random.default_rng(19)
     trials = []
+    native_stats = dict(mean=np.arange(32) * .1, std=np.arange(32) + .5)
+    action_codec = codec()
     for _ in range(3):
         obs = rng.normal(size=(24, FEATURE_DIM)).astype(np.float32)
-        act = rng.normal(size=(24, ACTION_DIM)).astype(np.float32)
-        tgt = act.copy() if objective == "ad" else (act + 0.1).astype(np.float32)
+        physical = rng.normal(size=(24, 50, 12)).astype(np.float32)
+        physical[..., [6,11]] = np.where(physical[..., [6,11]] > 0, 1., -1.)
+        act = action_codec.encode(physical)
+        teacher = physical.copy()
+        teacher[..., :6] += .1
+        tgt = act.copy() if objective == "ad" else action_codec.encode(teacher)
         rew = np.zeros(24, dtype=np.float32)
         rew[11] = 1.0
         dones = (np.arange(24) % 12 == 11)
@@ -359,9 +365,18 @@ def test_bridge_query_batch_and_checkpoint_roundtrip(tmp_path, interface, object
     policy.fit_observation_normalization(trials)
     batch = sample_bridge_query_batch(
         trials, policy, rng, batch_size=4, max_episodes=2, mode="full", objective=objective,
+        action_codec=action_codec, native_action_stats=native_stats,
     )
     assert batch["target_actions"].shape == (4, 50, 32)
     assert len(batch["query_indices"]) == 4
+    for lane,(trial,index) in enumerate(batch['query_indices']):
+        encoded = trials[trial]['target_noise'][index].reshape(50,12)
+        physical = encoded * np.asarray(action_codec.std,np.float32) + np.asarray(action_codec.mean,np.float32)
+        padded = np.pad(physical, ((0,0),(0,20)))
+        expected = ((padded - native_stats['mean']) / (native_stats['std']+1e-6)).astype(np.float32)
+        np.testing.assert_allclose(batch['target_actions'][lane].cpu().numpy(),expected,rtol=0,atol=1e-7)
+        assert np.any(expected[:,12:] != 0)
+        assert not np.array_equal(expected[:,[6,11]], encoded[:,[6,11]])
     ckpt_path = tmp_path / f"{interface}-{objective}.pt"
     saved_sha = export_bridge_policy(ckpt_path, policy, manifest=dict(interface=interface, objective=objective))
     loaded, manifest = load_bridge_policy(ckpt_path, expected_sha256=saved_sha)
