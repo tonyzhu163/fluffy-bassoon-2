@@ -35,12 +35,16 @@ class SelectionEnvironment(FlowEnvironment):
         self._flow_contract = OmegaConf.to_container(self.cfg.selection.contract, resolve=True)
         self._flow_journal = ActionJournal(self.cfg.native_pilot.accounting_root,
             rank=self._rank, world=self._world_size,
-            attempt=self.cfg.native_pilot.attempt, maximum_actions=100000)
+            attempt=self.cfg.native_pilot.attempt,
+            maximum_actions=int(self.cfg.selection.get('maximum_actions', 100000)))
         return EnvWorker.init_worker(self)
 
-    def select_bank(self, phase, step, case_seed):
+    def select_bank(self, phase, step, case_seed, bank_output=None):
         self._flow_phase, self._flow_iteration = phase, int(step)
         self._flow_contract['eval_seed'] = int(case_seed)
+        if bank_output is not None:
+            assert Path(bank_output).resolve().is_relative_to(Path(self.cfg.selection.output).resolve())
+            self.cfg.native_pilot.output = str(bank_output)
         for wrapped in self.eval_env_list:
             unwrapped(wrapped)._flow_round = -1
         return dict(phase=phase, step=step, seeds=list(range(case_seed, case_seed + 8)))
@@ -68,6 +72,10 @@ class SelectionRollout(MultiStepRolloutWorker):
         gc.collect()
         self.hf_model.eval().requires_grad_(False)
         self.hf_model.set_global_step(int(step))
+        self.select_sampling_scope(phase, rng_seed)
+        return dict(step=step, model_sha256=expected_sha, strict_load=True, rng_seed=rng_seed)
+
+    def select_sampling_scope(self, phase, rng_seed):
         self._selection_phase = phase
         self._selection_calls = 0
         # Environment constructors live in another worker; resetting the
@@ -76,7 +84,7 @@ class SelectionRollout(MultiStepRolloutWorker):
         np.random.seed(rng_seed)
         torch.manual_seed(rng_seed)
         torch.cuda.manual_seed_all(rng_seed)
-        return dict(step=step, model_sha256=expected_sha, strict_load=True, rng_seed=rng_seed)
+        return dict(phase=phase, rng_seed=rng_seed)
 
     def initial_likelihood_parity(self, fixture_path, expected_sha):
         assert sha(fixture_path) == expected_sha
@@ -106,13 +114,13 @@ class SelectionRollout(MultiStepRolloutWorker):
         return actions, result
 
 
-def configuration(admission, output, deadline):
+def configuration(admission, output, deadline, maximum_actions=100000):
     from fluffy_bassoon.meta_rl.rlinf_robocasa_flow_ppo import flow_contract
     from rlinf.config import validate_cfg
     cfg = OmegaConf.create(json.loads(Path(admission['config']).read_text()))
     assert sha(admission['config']) == admission['config_sha256']
     contract = flow_contract(cfg)
-    assert contract['task'] == 'PickPlaceDrawerToCounter'
+    assert contract['task'] == admission['task']
     assert contract['horizon'] == 600 and contract['chunk'] == 50
     assert cfg.env.eval.total_num_envs == 64
     original_model = OmegaConf.merge(cfg.actor.model, cfg.rollout.model)
@@ -132,7 +140,7 @@ def configuration(admission, output, deadline):
     cfg.native_pilot.accounting_root = str(output.parent / 'accounting')
     cfg.native_pilot.attempt = output.name
     cfg.native_pilot.deadline_unix = deadline
-    cfg.selection = dict(contract=contract, output=str(output))
+    cfg.selection = dict(contract=contract, output=str(output), maximum_actions=maximum_actions)
     cfg = validate_cfg(cfg)
     assert cfg.runner.only_eval and cfg.env.eval.total_num_envs == 8
     assert cfg.rollout.model.precision == 'bf16'

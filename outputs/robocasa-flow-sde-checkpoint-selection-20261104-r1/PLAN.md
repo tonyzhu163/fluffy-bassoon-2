@@ -2,11 +2,12 @@
 
 2026-11-04. Owner chat `01a1a077`. User requested intermediate evaluations
 and asked whether to select the best checkpoint. **Qualification complete;
-full sweep prepared, awaiting budget approval.** Baige Pro6K
+full sweep approved at22GPU-hours including qualification and all attempts;
+launch preparation in progress.** Baige Pro6K
 `job-1nfvvw2b93t5` succeeded and released its one GPU at12:02:28 Shanghai;
 source`2affc246`. No checkpoint selected and no full sweep submitted.
 [Qualification result and limitations](RESULT.md),
-[audit](QUALIFICATION-R1-AUDIT.json), [sweep manifest](SWEEP-PREPARED-R1.json),
+[audit](QUALIFICATION-R1-AUDIT.json), [adopted sweep manifest](SWEEP-PREPARED-R2.json), [budget approval](BUDGET-APPROVAL.json),
 [admission](QUALIFICATION-R1-ADMISSION.json),
 [submission](QUALIFICATION-R1-SUBMITTED.json), [allocated GPU probe](QUALIFICATION-R1-GPU-PROBE.json)
 and [zero-error initial likelihood replay](QUALIFICATION-R1-INITIAL-PARITY.json).
@@ -23,7 +24,8 @@ student fitting.
 - Fresh **64-case DEV** per task, identical case order and eight-lane batches
   for every policy. Primary metric: native first success in 600 controls.
   Report success at end and first-success timing too. The manifest fixes an
-  independently seeded checkpoint order for each task before seeing DEV.
+  human-requested back-to-front checkpoint order130,120,…,10,2,1,0 before
+  seeing DEV. The earlier randomized-order proposal remains in the R1 manifest.
 - Select the largest DEV success count separately per task, breaking exact
   ties in favour of the earlier checkpoint. Lock model hashes and the selection
   receipt before TEST. Include policy zero in selection so a worse adapted
@@ -87,7 +89,8 @@ startup, weight restoration and counterbalanced TEST reloads. Proposed ceiling:
 at most five one-GPU jobs in parallel, maximum250minutes per job, with the
 cumulative ledger taking precedence. The first qualification is conservatively
 charged349GPU-s /0.096944GPUh, from scheduler creation to success; the process
-clock records304GPU-s. This is a forecast and ceiling, not an approved budget.
+clock records304GPU-s. The human approved this cap and then specified back-to-front checkpoint order.
+The estimate is a forecast; cumulative charged GPU time remains the hard limit.
 
 Qualification confirmed exact initial physical/public states and all three
 images, identical first H50 actions, fixedB8 calls and shared sampler RNG. The
