@@ -1,0 +1,23 @@
+{
+  "status": "FAILED_BEFORE_MODEL_LOAD",
+  "cluster": "Baige Pro6K",
+  "job_id": "job-l2r7gscsv6vr",
+  "job_name": "mwj_1104_flow10m_critic_parity_1x1_r1",
+  "source": "8c35c4edd19e619b9ea28d61e75350385efedfe3",
+  "device_probe_passed": true,
+  "models_loaded": 0,
+  "cohorts_replayed": 0,
+  "new_controls": 0,
+  "SGD": 0,
+  "process_gpu_seconds": 51,
+  "scheduler_status": "Failed",
+  "allocation_released": true,
+  "scheduler_created_shanghai": "2026-11-04T13:35:05+08:00",
+  "scheduler_finished_shanghai": "2026-11-04T13:36:53+08:00",
+  "conservative_gpu_seconds": 108,
+  "diagnosis": "Checkpoint converter helpers imported from repository compatibility module rather than their actual frozen RLinf modules; ImportError before model construction.",
+  "repair": "Use the exact native loader and converter imports already used by the qualified dimension replay; exact-runtime CPU import qualification passed. Stage checks parent clock path.",
+  "staging_worker_pid": 2078482,
+  "staging_worker_stopped_after_failed_consumer": true,
+  "next_attempt": "r2 with a fresh gpu-r2 and staging-r2, 41-minute scheduler cap; count this cost in same total budget."
+}

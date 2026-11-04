@@ -42,8 +42,8 @@ def stage(args):
         consumed=args.result/f'CONSUMED-{step:03d}.json';deadline=time.monotonic()+5400
         while not consumed.exists():
             if time.monotonic()>deadline:raise TimeoutError('Consumer absent; private weights retained')
-            if (args.result/'clock.json').exists():
-                assert json.loads((args.result/'clock.json').read_text())['exit_code']==0,'Consumer failed; preserve private weights'
+            if (args.result.parent/'clock.json').exists():
+                assert json.loads((args.result.parent/'clock.json').read_text())['exit_code']==0,'Consumer failed; preserve private weights'
             time.sleep(5)
         receipt=json.loads(consumed.read_text())
         assert receipt['step']==step and receipt['model_sha256']==checkpoint['sha256']
@@ -58,10 +58,10 @@ def stage(args):
 def run(args):
     import torch
     from omegaconf import OmegaConf
-    from rlinf.models import get_model
+    from rlinf.models.embodiment.openpi import get_model
     from rlinf.models.embodiment.openpi.sampling import rl_sampler
-    from fluffy_bassoon.rl.rlinf_checkpoint_compat import (
-        _convert_official_openpi_keys,_normalize_state_dict,as_state_dict)
+    from rlinf.models.embodiment.openpi.checkpoint import _convert_official_openpi_keys,_normalize_state_dict
+    from rlinf.utils.ckpt_convertor.openpi._core import as_state_dict
     from fluffy_bassoon.meta_rl.rlinf_robocasa_flow_ppo import (
         flow_logprob_parity,keep_frozen_image_encoder_in_eval)
     import rlinf.algorithms.losses
