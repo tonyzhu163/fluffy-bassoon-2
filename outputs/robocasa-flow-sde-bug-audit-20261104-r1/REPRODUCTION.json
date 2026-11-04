@@ -1,0 +1,233 @@
+{
+  "scope": "Unmodified deployed method control flow with synthetic suffix features; not measured production-model errors",
+  "device": "cpu",
+  "torch_version": "2.11.0+cu128",
+  "files": {
+    "/mowenjie/fluffy-bassoon-2/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf/rlinf/models/embodiment/openpi/tasks/rl.py": "f779834b551e7b0823b62f273594575918b825016253d4c41c4d09e71d047dc2",
+    "/mowenjie/fluffy-bassoon-2/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf/rlinf/models/embodiment/openpi/sampling/rl_sampler.py": "e8ec916c5bcebab3bc2ecd6d043c5e859372c71f622c88a74b5e067a99c88086",
+    "/mowenjie/fluffy-bassoon-2/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf/rlinf/envs/sim/robocasa365/robocasa365_env.py": "239ee187299c0155c1a29257caf2e55963e14335fa64f0a19d707482ba98b2c3",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/PickPlaceDrawerToCounter/production-r1/resolved-config.json": "11caffc895aaef78d0db93ed3ccd7251d41bf5298ed075c0d02704e7b52ec3d3"
+  },
+  "actual_run_openpi": {
+    "task": "rl",
+    "config_name": "pi05_robocasa365_pretrain_human300",
+    "num_images_in_input": 3,
+    "noise_level": 0.3,
+    "action_chunk": 50,
+    "num_steps": 10,
+    "train_expert_only": true,
+    "action_env_dim": 12,
+    "noise_method": "flow_sde",
+    "add_value_head": true,
+    "value_after_vlm": false,
+    "value_vlm_mode": "mean_token",
+    "detach_critic_input": true,
+    "model_action_dim": 32,
+    "paligemma_variant": "gemma_2b",
+    "action_expert_variant": "gemma_300m",
+    "max_token_len": 200,
+    "torch_compile": false,
+    "action_horizon": 50,
+    "discrete_state_input": true
+  },
+  "rows": [
+    {
+      "index": 0,
+      "rollout_value": [
+        0.550000011920929,
+        0.550000011920929
+      ],
+      "replay_value": [
+        1.0,
+        1.0
+      ],
+      "max_value_gap": 0.44999998807907104,
+      "logprob_max_gap": 0.0,
+      "clipped_before_sgd": 2
+    },
+    {
+      "index": 1,
+      "rollout_value": [
+        0.550000011920929,
+        0.550000011920929
+      ],
+      "replay_value": [
+        0.8999999165534973,
+        0.8999999165534973
+      ],
+      "max_value_gap": 0.34999990463256836,
+      "logprob_max_gap": 0.0,
+      "clipped_before_sgd": 2
+    },
+    {
+      "index": 2,
+      "rollout_value": [
+        0.550000011920929,
+        0.550000011920929
+      ],
+      "replay_value": [
+        0.8000001311302185,
+        0.8000001311302185
+      ],
+      "max_value_gap": 0.25000011920928955,
+      "logprob_max_gap": 0.0,
+      "clipped_before_sgd": 2
+    },
+    {
+      "index": 3,
+      "rollout_value": [
+        0.550000011920929,
+        0.550000011920929
+      ],
+      "replay_value": [
+        0.699999988079071,
+        0.699999988079071
+      ],
+      "max_value_gap": 0.1499999761581421,
+      "logprob_max_gap": 0.0,
+      "clipped_before_sgd": 0
+    },
+    {
+      "index": 4,
+      "rollout_value": [
+        0.550000011920929,
+        0.550000011920929
+      ],
+      "replay_value": [
+        0.5999999046325684,
+        0.5999999046325684
+      ],
+      "max_value_gap": 0.049999892711639404,
+      "logprob_max_gap": 0.0,
+      "clipped_before_sgd": 0
+    },
+    {
+      "index": 5,
+      "rollout_value": [
+        0.550000011920929,
+        0.550000011920929
+      ],
+      "replay_value": [
+        0.4999999701976776,
+        0.4999999701976776
+      ],
+      "max_value_gap": 0.05000004172325134,
+      "logprob_max_gap": 0.0,
+      "clipped_before_sgd": 0
+    },
+    {
+      "index": 6,
+      "rollout_value": [
+        0.550000011920929,
+        0.550000011920929
+      ],
+      "replay_value": [
+        0.4000000059604645,
+        0.4000000059604645
+      ],
+      "max_value_gap": 0.15000000596046448,
+      "logprob_max_gap": 0.0,
+      "clipped_before_sgd": 0
+    },
+    {
+      "index": 7,
+      "rollout_value": [
+        0.550000011920929,
+        0.550000011920929
+      ],
+      "replay_value": [
+        0.2999999523162842,
+        0.2999999523162842
+      ],
+      "max_value_gap": 0.2500000596046448,
+      "logprob_max_gap": 0.0,
+      "clipped_before_sgd": 2
+    },
+    {
+      "index": 8,
+      "rollout_value": [
+        0.550000011920929,
+        0.550000011920929
+      ],
+      "replay_value": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "max_value_gap": 0.3500000238418579,
+      "logprob_max_gap": 0.0,
+      "clipped_before_sgd": 2
+    },
+    {
+      "index": 9,
+      "rollout_value": [
+        0.550000011920929,
+        0.550000011920929
+      ],
+      "replay_value": [
+        0.10000001639127731,
+        0.10000001639127731
+      ],
+      "max_value_gap": 0.44999998807907104,
+      "logprob_max_gap": 0.0,
+      "clipped_before_sgd": 2
+    }
+  ],
+  "prefix_critic_control_gap": 0.0,
+  "confirmed": "Rollout averages ten suffix values; replay uses selected one even at identical weights",
+  "max_gap": 0.44999998807907104,
+  "samples_clipped_before_sgd": 12,
+  "samples": 20,
+  "denoising_noise_checks": [
+    {
+      "index": 0,
+      "native_std": 0.30000001192092896,
+      "independent_std": 0.3
+    },
+    {
+      "index": 1,
+      "native_std": 0.28460493683815,
+      "independent_std": 0.28460498941515416
+    },
+    {
+      "index": 2,
+      "native_std": 0.18973663449287415,
+      "independent_std": 0.18973665961010275
+    },
+    {
+      "index": 3,
+      "native_std": 0.14491380751132965,
+      "independent_std": 0.14491376746189438
+    },
+    {
+      "index": 4,
+      "native_std": 0.11618953943252563,
+      "independent_std": 0.11618950038622249
+    },
+    {
+      "index": 5,
+      "native_std": 0.09486832469701767,
+      "independent_std": 0.09486832980505137
+    },
+    {
+      "index": 6,
+      "native_std": 0.0774596631526947,
+      "independent_std": 0.07745966692414834
+    },
+    {
+      "index": 7,
+      "native_std": 0.062105897814035416,
+      "independent_std": 0.062105900340811884
+    },
+    {
+      "index": 8,
+      "native_std": 0.047434158623218536,
+      "independent_std": 0.04743416490252568
+    },
+    {
+      "index": 9,
+      "native_std": 0.03162277862429619,
+      "independent_std": 0.031622776601683784
+    }
+  ],
+  "action_mapping": "PASS: threshold 0.5 at indices 6 and 11; continuous controls and input unchanged"
+}

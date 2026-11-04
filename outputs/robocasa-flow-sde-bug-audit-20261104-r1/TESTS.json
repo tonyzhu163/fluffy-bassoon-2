@@ -1,0 +1,13 @@
+{
+  "environment": "Baige configured development endpoint, native RoboCasa365 Linux runtime",
+  "runtime": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+  "test_checkout": "/mowenjie/fluffy-bassoon-2/sources/dimension-drift-0dbdafa4",
+  "test_checkout_commit": "0dbdafa412c4c83ead35538dec3ac77101754cbd",
+  "command": "PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=2 PYTHONPATH=/mowenjie/fluffy-bassoon-2/sources/dimension-drift-0dbdafa4/src:/mowenjie/fluffy-bassoon-2/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf EMBODIED_PATH=/mowenjie/fluffy-bassoon-2/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf/examples/embodiment /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B -m pytest -q -p no:cacheprovider /mowenjie/fluffy-bassoon-2/sources/dimension-drift-0dbdafa4/tests/test_robocasa_flow_ppo.py /mowenjie/fluffy-bassoon-2/sources/dimension-drift-0dbdafa4/tests/test_robocasa_pairing.py /mowenjie/fluffy-bassoon-2/sources/dimension-drift-0dbdafa4/tests/test_rlinf_native_ppo.py",
+  "exit_code": 0,
+  "passed": 37,
+  "warnings": 23,
+  "duration_seconds": 46.33,
+  "receipt": "Transcribed from completed SSH tool output; warnings were TorchScript deprecations and Hydra missing _self_",
+  "scope": "Existing tests; the separate REPRODUCE.py establishes the critic inconsistency outside this coverage"
+}

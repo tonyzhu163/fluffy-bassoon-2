@@ -28,6 +28,16 @@ is claimed. All 80 fixed-batch checkpoint likelihood reports are complete, with 
 initial-policy replay error on all five tasks. All five corpora and resumable final checkpoints passed archival/retention
 closeout; all campaign GPU work is complete at 373.93 accounted GPU-hours. [Native results and evidence](../outputs/robocasa-flow-sde-10m-per-task-20261103-r1/RESULT.md).
 
+A subsequent Nov4 code audit found a critic inconsistency in all five source
+configurations: rollout averages the ten suffix value predictions, while PPO
+replay uses only the selected denoising step. An unchanged-weight Linux CPU
+reproduction has exact likelihood parity but unequal values; synthetic value
+gaps can exceed the configured clipping threshold before SGD. The earlier
+likelihood audits do not qualify critic parity. This is a confirmed
+implementation defect, not an established cause of the failed teacher gates.
+Repair and qualify the critic contract before further PPO.
+[Bug audit and reproduction](../outputs/robocasa-flow-sde-bug-audit-20261104-r1/RESULT.md).
+
 A Nov4 native checkpoint-evaluation qualification preserves fixed eight-lane
 batches and common sampler RNG, with zero initial-policy likelihood error.
 Repeated initial-policy Drawer→Counter success was6/8 then8/8. Initial
