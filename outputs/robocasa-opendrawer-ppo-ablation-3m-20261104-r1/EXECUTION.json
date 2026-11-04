@@ -1,0 +1,56 @@
+{
+  "approved_incremental_GPU_hours": 92,
+  "arm_limits_GPU_hours": {
+    "E": 32,
+    "C": 24,
+    "D": 24,
+    "endpoint512": 12
+  },
+  "cluster": "Baige Pro6K",
+  "reviewed_main": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+  "engine": "dcd125e15f0aa03dae172b93a2efef067a9b1f91",
+  "engine_parent": "d9a1c61616443f7f88c71f91da4567d85b1f4253",
+  "engine_basis": "Matched counterfactual reuses Stage 1 simulator construction and synchronous I/O. Current main changes the subprocess lifecycle. Only the critic config switch and the before-SGD first-collection observer change on the pinned engine.",
+  "RLinf": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+  "qualification": "All three effective actor/rollout configs composed, 14 core Linux CPU checks passed. Original collection passed the before-SGD control comparison on both ranks. All 22 starting checkpoint files rehashed.",
+  "arms": {
+    "E": {
+      "status": "advancing, first update complete",
+      "job": "job-t2edw03k1kwn",
+      "attempt": "attempt-02",
+      "GPUs": 8,
+      "scheduler_minutes": 225,
+      "automatic_retry": false,
+      "device_probe": "passed",
+      "prior_attempt": {
+        "job": "job-2tvci6a249lu",
+        "status": "failed before SGD on rank-ordered observer; 128/128 joined under corrected observer",
+        "scheduler_elapsed_seconds": 389,
+        "scheduler_GPU_seconds": 3112,
+        "create_to_release_upper_GPU_seconds": 3240,
+        "worker_GPU_seconds": 2864,
+        "training_controls": 76800,
+        "optimizer_steps": 0
+      },
+      "first_update": "E2-FIRST-UPDATE.json"
+    },
+    "C": {
+      "job": "job-1gheyfqughhs",
+      "status": "scheduled, allocation startup",
+      "attempt": "attempt-01",
+      "scheduler_minutes": 175,
+      "GPUs": 8,
+      "automatic_retry": false,
+      "nonhead_tensors_equal_at_start": 667
+    },
+    "D": {
+      "status": "qualified, pending storage admission"
+    },
+    "endpoint512": {
+      "status": "preparing, waits for immutable final checkpoints"
+    }
+  },
+  "last_checked_Shanghai": "2026-11-04 19:42",
+  "engine_r2": "02ce594015eaa8f972f875d7f37e6972f4ada495",
+  "endpoint_eval_code": "3cc33a4820344d4f4a894b9ab1bb4d7137f701c1"
+}
