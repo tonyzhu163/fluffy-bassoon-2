@@ -32,16 +32,20 @@
         "training_controls": 76800,
         "optimizer_steps": 0
       },
-      "first_update": "E2-FIRST-UPDATE.json"
+      "first_update": "E2-FIRST-UPDATE.json",
+      "last_completed_updates": 2
     },
     "C": {
       "job": "job-1gheyfqughhs",
-      "status": "scheduled, allocation startup",
+      "status": "advancing, first update complete",
       "attempt": "attempt-01",
       "scheduler_minutes": 175,
       "GPUs": 8,
       "automatic_retry": false,
-      "nonhead_tensors_equal_at_start": 667
+      "nonhead_tensors_equal_at_start": 667,
+      "last_completed_updates": 1,
+      "first_update": "C-FIRST-UPDATE.json",
+      "device_probe": "passed"
     },
     "D": {
       "status": "qualified, pending storage admission"
@@ -50,7 +54,8 @@
       "status": "preparing, waits for immutable final checkpoints"
     }
   },
-  "last_checked_Shanghai": "2026-11-04 19:42",
+  "last_checked_Shanghai": "2026-11-04 19:49",
   "engine_r2": "02ce594015eaa8f972f875d7f37e6972f4ada495",
-  "endpoint_eval_code": "3cc33a4820344d4f4a894b9ab1bb4d7137f701c1"
+  "endpoint_eval_code": "3cc33a4820344d4f4a894b9ab1bb4d7137f701c1",
+  "next_check_Shanghai": "2026-11-04 20:09"
 }
