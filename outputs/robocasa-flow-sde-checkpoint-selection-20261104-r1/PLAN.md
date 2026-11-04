@@ -3,9 +3,12 @@
 2026-11-04. Owner chat `01a1a077`. User requested intermediate evaluations
 and asked whether to select the best checkpoint. **Qualification complete;
 full sweep approved at22GPU-hours including qualification and all attempts;
-all five one-GPU jobs running.** Baige Pro6K
+all80 DEV checkpoint panels complete, allfive selections locked and independent TEST running.**
+See [DEV selections and TEST-start audit](DEV-SELECTIONS-R1.md). Baige Pro6K
 `job-1nfvvw2b93t5` succeeded and released its one GPU at12:02:28 Shanghai;
-source`2affc246`. No checkpoint selected yet. The full sweep is running; see [live jobs](EXECUTION.json).
+source`2affc246`. Selected updates are30/1/80/20/30 in campaign order.
+These are DEV selections; independent improvement is not yet established.
+The sweep is running; see [live jobs](EXECUTION.json).
 [Qualification result and limitations](RESULT.md),
 [audit](QUALIFICATION-R1-AUDIT.json), [adopted sweep manifest](SWEEP-PREPARED-R2.json), [budget approval](BUDGET-APPROVAL.json),
 [admission](QUALIFICATION-R1-ADMISSION.json),
