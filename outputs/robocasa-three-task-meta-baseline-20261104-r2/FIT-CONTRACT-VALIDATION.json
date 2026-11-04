@@ -1,0 +1,136 @@
+{
+  "passed": true,
+  "checked_shanghai": "2026-11-04T21:41:42.857596+08:00",
+  "checks": [
+    {
+      "method": "ad",
+      "config": {
+        "observation_dim": 2073,
+        "noise_dim": 600,
+        "width": 256,
+        "layers": 6,
+        "heads": 8,
+        "context_length": 192,
+        "initial_std": 0.5,
+        "backbone": "decoder"
+      },
+      "batch_size": 8,
+      "source_tasks": [
+        "OpenDrawer",
+        "CloseToasterOvenDoor",
+        "CoffeeSetupMug"
+      ],
+      "train_streams": 336,
+      "validation_streams": 48,
+      "schedule": {
+        "updates": null,
+        "eval_every": 100,
+        "validation_batches": 16,
+        "max_elapsed_seconds": 6600.0,
+        "checkpoint_selection": "validation-nll",
+        "until_converged": true,
+        "minimum_updates": 1000,
+        "validation_patience": 10,
+        "validation_relative_delta": 0.001,
+        "elapsed_limit": "per invocation; operational boundary, not convergence"
+      }
+    },
+    {
+      "method": "dpt",
+      "config": {
+        "observation_dim": 2073,
+        "noise_dim": 600,
+        "width": 256,
+        "layers": 6,
+        "heads": 8,
+        "context_length": 192,
+        "initial_std": 0.5,
+        "backbone": "decoder"
+      },
+      "batch_size": 8,
+      "source_tasks": [
+        "OpenDrawer",
+        "CloseToasterOvenDoor",
+        "CoffeeSetupMug"
+      ],
+      "train_streams": 336,
+      "validation_streams": 48,
+      "schedule": {
+        "updates": null,
+        "eval_every": 100,
+        "validation_batches": 16,
+        "max_elapsed_seconds": 6600.0,
+        "checkpoint_selection": "validation-nll",
+        "until_converged": true,
+        "minimum_updates": 1000,
+        "validation_patience": 10,
+        "validation_relative_delta": 0.001,
+        "elapsed_limit": "per invocation; operational boundary, not convergence"
+      }
+    },
+    {
+      "method": "dit",
+      "config": {
+        "observation_dim": 2073,
+        "noise_dim": 600,
+        "width": 256,
+        "layers": 6,
+        "heads": 8,
+        "context_length": 192,
+        "initial_std": 0.5,
+        "backbone": "decoder"
+      },
+      "batch_size": 8,
+      "source_tasks": [
+        "OpenDrawer",
+        "CloseToasterOvenDoor",
+        "CoffeeSetupMug"
+      ],
+      "train_streams": 336,
+      "validation_streams": 48,
+      "schedule": {
+        "updates": null,
+        "critic_updates": null,
+        "eval_every": 100,
+        "validation_batches": 16,
+        "checkpoint_selection": "validation-nll",
+        "until_converged": true,
+        "minimum_updates": 1000,
+        "validation_patience": 10,
+        "validation_relative_delta": 0.001
+      }
+    },
+    {
+      "method": "ic_iql",
+      "config": {
+        "observation_dim": 2073,
+        "noise_dim": 600,
+        "width": 256,
+        "layers": 6,
+        "heads": 8,
+        "context_length": 192,
+        "initial_std": 0.5,
+        "backbone": "decoder"
+      },
+      "batch_size": 8,
+      "source_tasks": [
+        "OpenDrawer",
+        "CloseToasterOvenDoor",
+        "CoffeeSetupMug"
+      ],
+      "train_streams": 336,
+      "validation_streams": 48,
+      "schedule": {
+        "updates": null,
+        "critic_updates": null,
+        "eval_every": 100,
+        "validation_batches": 16,
+        "checkpoint_selection": "validation-nll",
+        "until_converged": true,
+        "minimum_updates": 1000,
+        "validation_patience": 10,
+        "validation_relative_delta": 0.001
+      }
+    }
+  ]
+}

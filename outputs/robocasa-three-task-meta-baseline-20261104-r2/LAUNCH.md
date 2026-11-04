@@ -1,11 +1,17 @@
 # Joint three-task training with four GPUs per preparation task
 
-**Status:** All three four-GPU preparations SUCCEEDED and released their
-allocations by 2026-11-04 20:34:15 Shanghai. There are 599,040 step-130 teacher
-annotations, 130 producer versions and all 12 completed shards. Conservative
-cumulative charge including startup failures is **17.57 GPU-hours**, leaving
-**78.43 of the approved 96 GPU-hours**. CPU pooling is in progress before the
-approved four-GPU joint fit. See [EXECUTION.json](EXECUTION.json).
+**Status:** Joint fitting is RUNNING on Baige Pro6K as `job-967y1maorj80`,
+4 GPUs total (one per AD, DPT, DIT and IC-IQL), submitted 2026-11-04 21:36:20
+Shanghai. All four actual GPU probes pass; all four learners have finite
+validation results and complete resume checkpoints. AD/DPT reached update100
+at the 21:41 check. DIT/IC-IQL are in their value-learning phase. No convergence
+is declared. The same learner pin `d71cb532` and approved 96 GPU-hour ceiling apply.
+
+All three preparations succeeded and released by 20:34:15, producing 599,040
+annotations for 17.57 conservative GPU-hours including startup failures. The
+current 8-hour fitting reservation costs at most32 GPU-hours, leaving46.43
+GPU-hours afterward if used in full. Worker monitoring is active every20minutes;
+next21:58 Shanghai. See [EXECUTION.json](EXECUTION.json).
 
 The three task jobs only prepare data. Each method then trains **one model on
 all three tasks together**: AD, DPT, DIT and IC-IQL use separate objectives and

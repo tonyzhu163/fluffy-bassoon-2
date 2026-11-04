@@ -1,0 +1,110 @@
+{
+  "checked_shanghai": "2026-11-04T21:41:43.498293+08:00",
+  "job_id": "job-967y1maorj80",
+  "attempt": "fit-4gpu-01",
+  "probe_passed": true,
+  "methods": {
+    "ad": {
+      "status": null,
+      "last_metrics": {
+        "update": 100,
+        "elapsed_seconds": 147.01798665802926,
+        "validation_nll": 280.01094818115234,
+        "nll": 272.79425048828125,
+        "gradient_norm": 64.8698501586914,
+        "update_seconds": 1.410680671222508,
+        "valid_positions": 576,
+        "logical_batch_size": 8,
+        "execution_batch_size": 8,
+        "cuda_peak_allocated_bytes": 5791531008,
+        "plateau": {
+          "reference": 280.01094818115234,
+          "stale_checks": 0,
+          "converged": false
+        }
+      },
+      "resumable_checkpoint_present": true,
+      "checkpoint_mtime_unix": 1793799603.2274287
+    },
+    "dpt": {
+      "status": null,
+      "last_metrics": {
+        "update": 100,
+        "elapsed_seconds": 141.11309914290905,
+        "validation_nll": 281.60266876220703,
+        "nll": 267.1791076660156,
+        "gradient_norm": 74.10948181152344,
+        "update_seconds": 1.3579041492193937,
+        "valid_positions": 576,
+        "logical_batch_size": 8,
+        "execution_batch_size": 8,
+        "cuda_peak_allocated_bytes": 5791531008,
+        "plateau": {
+          "reference": 281.60266876220703,
+          "stale_checks": 0,
+          "converged": false
+        }
+      },
+      "resumable_checkpoint_present": true,
+      "checkpoint_mtime_unix": 1793799602.9704878
+    },
+    "dit": {
+      "status": {
+        "converged": false,
+        "phase": "value",
+        "update": 0,
+        "updates": {
+          "value": 1,
+          "actor": 0
+        },
+        "best_validation_loss": {
+          "value": 1.0878925547003746,
+          "actor": null
+        },
+        "elapsed_seconds": 22.398940001614392,
+        "stop_reason": "operational_checkpoint"
+      },
+      "last_metrics": {
+        "phase": "value",
+        "update": 1,
+        "validation_loss": 1.0878925547003746,
+        "loss": 0.5365909337997437,
+        "q_loss": 0.2130657285451889,
+        "v_loss": 0.32352522015571594,
+        "gradient_norm": 7.9488701820373535
+      },
+      "resumable_checkpoint_present": true,
+      "checkpoint_mtime_unix": 1793799483.2916565
+    },
+    "ic_iql": {
+      "status": {
+        "converged": false,
+        "phase": "value",
+        "update": 0,
+        "updates": {
+          "value": 1,
+          "actor": 0
+        },
+        "best_validation_loss": {
+          "value": 2.180100940167904,
+          "actor": null
+        },
+        "elapsed_seconds": 22.067511143162847,
+        "stop_reason": "operational_checkpoint"
+      },
+      "last_metrics": {
+        "phase": "value",
+        "update": 1,
+        "validation_loss": 2.180100940167904,
+        "loss": 0.13007856905460358,
+        "q_loss": 0.0918566957116127,
+        "v_loss": 0.038221873342990875,
+        "gradient_norm": 2.6821095943450928
+      },
+      "resumable_checkpoint_present": true,
+      "checkpoint_mtime_unix": 1793799489.9674191
+    }
+  },
+  "worker_release": null,
+  "scheduler_release_requires_console": true
+}
