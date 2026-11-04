@@ -3,9 +3,9 @@
 2026-11-04. Owner chat `01a1a077`. User requested intermediate evaluations
 and asked whether to select the best checkpoint. **Qualification complete;
 full sweep approved at22GPU-hours including qualification and all attempts;
-launch preparation in progress.** Baige Pro6K
+all five one-GPU jobs running.** Baige Pro6K
 `job-1nfvvw2b93t5` succeeded and released its one GPU at12:02:28 Shanghai;
-source`2affc246`. No checkpoint selected and no full sweep submitted.
+source`2affc246`. No checkpoint selected yet. The full sweep is running; see [live jobs](EXECUTION.json).
 [Qualification result and limitations](RESULT.md),
 [audit](QUALIFICATION-R1-AUDIT.json), [adopted sweep manifest](SWEEP-PREPARED-R2.json), [budget approval](BUDGET-APPROVAL.json),
 [admission](QUALIFICATION-R1-ADMISSION.json),
@@ -118,3 +118,14 @@ belongs to chat `01a1a4a2`; do not take its job or modify its files. Conditional
 saved-transition likelihood drift is not full-action KL or robot performance.
 Any hyperparameter ablation is a subsequent scientific decision after these
 measurements; no training recipe change is authorized here.
+
+## Closeout
+
+After all five result files and exit-zero clocks exist, run `CLOSEOUT.py` on
+Linux CPU with this run as `--root`, its live `EXECUTION.json` as `--execution`
+and a fresh `results-r1` directory as `--output`. It rejoins every bank and
+episode, rechecks selection and paired statistics, applies Holm across the
+five primary tests, exports the80-point DEV table, and hashes all retained
+raw records. Deploy the postprocessor through Git to a fresh tools/readout
+location; keep the active `f30a2a4f` GPU/staging checkout unchanged. Confirm
+scheduler release and charge every attempt before declaring final closeout.

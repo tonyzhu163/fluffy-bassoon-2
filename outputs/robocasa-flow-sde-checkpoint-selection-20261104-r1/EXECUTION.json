@@ -1,5 +1,5 @@
 {
-  "status": "PREPARING_LAUNCH",
+  "status": "RUNNING",
   "cluster": "Baige Pro6K",
   "budget": {
     "approved_gpu_hours": 22,
@@ -8,53 +8,170 @@
     "maximum_parallel_GPUs": 5,
     "default_job_reservation_gpu_seconds": 15540,
     "initial_five_plus_qualification_reserve_gpu_seconds": 78049,
-    "automatic_retry": false
+    "automatic_retry": false,
+    "live_creation_to_check_upper_bound_gpu_seconds": 2324.642561674118,
+    "live_creation_to_check_upper_bound_gpu_hours": 0.6457340449094773,
+    "reservation_with_all_five_inflight_gpu_seconds": 78049
   },
   "matrix": "SWEEP-PREPARED-R2.json",
   "native_runtime": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
-  "metadata_commit": null,
-  "metadata_worktree": null,
+  "metadata_commit": "f30a2a4f5b499251a1ff8f5d0e6716c7c42e0f3b",
+  "metadata_worktree": "/mowenjie/fluffy-bassoon-2/sources/flow-checkpoint-sweep-f30a2a4f",
   "monitor_id": "monitor-five-task-10m-ppo-campaign",
   "tasks": [
     {
       "task": "OpenDrawer",
-      "job": null,
-      "status": "PREPARING",
+      "job": "job-cn2if26i9hth",
+      "status": "RUNNING",
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/OpenDrawer/evaluation-r1",
       "staging": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/OpenDrawer/staging-r1",
-      "reserved_gpu_seconds": 15540
+      "reserved_gpu_seconds": 15540,
+      "job_name": "mwj_1104_flow10m_ckpt_Open_r1",
+      "scheduler_created_shanghai": "2026-11-04 12:35:28",
+      "scheduler_created_unix": 1793766928,
+      "maximum_minutes": 250,
+      "allocated_GPUs": 1,
+      "automatic_retry": false,
+      "gpu_probe": "passed",
+      "initial_likelihood_error": 0.0,
+      "progress": {
+        "completed": false,
+        "task": "OpenDrawer",
+        "banks_completed": 5,
+        "episodes_completed": 40,
+        "policy_controls": 24000,
+        "latest": {
+          "panel": "DEV",
+          "step": 130,
+          "bank": 4
+        },
+        "SGD": 0
+      },
+      "last_check_shanghai": "2026-11-04T12:42:49.928653+08:00"
     },
     {
       "task": "CloseToasterOvenDoor",
-      "job": null,
-      "status": "PREPARING",
+      "job": "job-zwstryxe9plb",
+      "status": "RUNNING",
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/CloseToasterOvenDoor/evaluation-r1",
       "staging": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/CloseToasterOvenDoor/staging-r1",
-      "reserved_gpu_seconds": 15540
+      "reserved_gpu_seconds": 15540,
+      "job_name": "mwj_1104_flow10m_ckpt_Toaster_r1",
+      "scheduler_created_shanghai": "2026-11-04 12:37:16",
+      "scheduler_created_unix": 1793767036,
+      "maximum_minutes": 250,
+      "allocated_GPUs": 1,
+      "automatic_retry": false,
+      "gpu_probe": "passed",
+      "initial_likelihood_error": 0.0,
+      "progress": {
+        "completed": false,
+        "task": "CloseToasterOvenDoor",
+        "banks_completed": 4,
+        "episodes_completed": 32,
+        "policy_controls": 19200,
+        "latest": {
+          "panel": "DEV",
+          "step": 130,
+          "bank": 3
+        },
+        "SGD": 0
+      },
+      "last_check_shanghai": "2026-11-04T12:42:49.928653+08:00"
     },
     {
       "task": "PickPlaceDrawerToCounter",
-      "job": null,
-      "status": "PREPARING",
+      "job": "job-sfm20c7jc9dp",
+      "status": "RUNNING",
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/PickPlaceDrawerToCounter/evaluation-r1",
       "staging": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/PickPlaceDrawerToCounter/staging-r1",
-      "reserved_gpu_seconds": 15540
+      "reserved_gpu_seconds": 15540,
+      "job_name": "mwj_1104_flow10m_ckpt_Drawer_r1",
+      "gpu_probe": "passed",
+      "first_native_bank_verified": true,
+      "initial_likelihood_error": 0.0,
+      "scheduler_created_shanghai": "2026-11-04 12:30:03",
+      "scheduler_created_unix": 1793766603,
+      "maximum_minutes": 250,
+      "allocated_GPUs": 1,
+      "automatic_retry": false,
+      "progress": {
+        "completed": false,
+        "task": "PickPlaceDrawerToCounter",
+        "banks_completed": 8,
+        "episodes_completed": 64,
+        "policy_controls": 38400,
+        "latest": {
+          "panel": "DEV",
+          "step": 130,
+          "bank": 7
+        },
+        "SGD": 0
+      },
+      "last_check_shanghai": "2026-11-04T12:42:49.928653+08:00"
     },
     {
       "task": "CoffeeSetupMug",
-      "job": null,
-      "status": "PREPARING",
+      "job": "job-49hgr77uuw87",
+      "status": "RUNNING",
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/CoffeeSetupMug/evaluation-r1",
       "staging": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/CoffeeSetupMug/staging-r1",
-      "reserved_gpu_seconds": 15540
+      "reserved_gpu_seconds": 15540,
+      "job_name": "mwj_1104_flow10m_ckpt_Coffee_r1",
+      "scheduler_created_shanghai": "2026-11-04 12:38:42",
+      "scheduler_created_unix": 1793767122,
+      "maximum_minutes": 250,
+      "allocated_GPUs": 1,
+      "automatic_retry": false,
+      "gpu_probe": "passed",
+      "initial_likelihood_error": 0.0,
+      "progress": {
+        "completed": false,
+        "task": "CoffeeSetupMug",
+        "banks_completed": 2,
+        "episodes_completed": 16,
+        "policy_controls": 9600,
+        "latest": {
+          "panel": "DEV",
+          "step": 130,
+          "bank": 1
+        },
+        "SGD": 0
+      },
+      "last_check_shanghai": "2026-11-04T12:42:49.928653+08:00"
     },
     {
       "task": "TurnOffStove",
-      "job": null,
-      "status": "PREPARING",
+      "job": "job-mrwxr4gq2p7u",
+      "status": "RUNNING",
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/TurnOffStove/evaluation-r1",
       "staging": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/TurnOffStove/staging-r1",
-      "reserved_gpu_seconds": 15540
+      "reserved_gpu_seconds": 15540,
+      "job_name": "mwj_1104_flow10m_ckpt_Stove_r1",
+      "scheduler_created_shanghai": "2026-11-04 12:39:45",
+      "scheduler_created_unix": 1793767185,
+      "maximum_minutes": 250,
+      "allocated_GPUs": 1,
+      "automatic_retry": false,
+      "gpu_probe": "passed",
+      "initial_likelihood_error": 0.0,
+      "progress": {
+        "completed": false,
+        "task": "TurnOffStove",
+        "banks_completed": 1,
+        "episodes_completed": 8,
+        "policy_controls": 4800,
+        "latest": {
+          "panel": "DEV",
+          "step": 130,
+          "bank": 0
+        },
+        "SGD": 0
+      },
+      "last_check_shanghai": "2026-11-04T12:42:49.928653+08:00"
     }
-  ]
+  ],
+  "monitor_status": "ACTIVE",
+  "last_check_shanghai": "2026-11-04T12:42:49.928653+08:00",
+  "next_action": "Finish descending DEV130\u21920; lock each DEV winner before fresh counterbalanced TEST128; monitor every20minutes."
 }

@@ -36,10 +36,11 @@ costs remain separately closed at373.933889GPUh. This is not a currency bill.
 states, decoded actions, episode rows and action journals remain on Baige under
 this run's `qualification-r1/`; the audit binds the files with SHA256 hashes.
 
-The full five-task intermediate curve and DEV-selected/fresh-TEST readout
-remain **unrun**. The [prepared manifest](SWEEP-PREPARED-R1.json) binds all80
+**Follow-up started Nov4:** all five native jobs are now running under the
+human-approved22GPU-hour cap and130→0 checkpoint order; [live state](EXECUTION.json).
+The full five-task curve and independent TEST results are not complete yet. The [prepared manifest](SWEEP-PREPARED-R1.json) binds all80
 candidate model hashes, fixed case banks, DEV order and selection/test rules.
 The [plan](PLAN.md) proposes at most7,040episodes/4,224,000controls, about17–20
 GPU-hours with a22GPU-hour all-attempt ceiling including this qualification.
-That budget requires approval under AGENTS.md; no full sweep, new PPO training
-or student fitting has been submitted.
+The human approved that ceiling. No new PPO training or student fitting is
+part of this sweep.
