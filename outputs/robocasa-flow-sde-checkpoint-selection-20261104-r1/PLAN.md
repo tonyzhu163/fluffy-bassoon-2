@@ -1,8 +1,11 @@
 # Intermediate native checkpoint evaluation
 
 2026-11-04. Owner chat `01a1a077`. User requested intermediate evaluations
-and asked whether to select the best checkpoint. **Preparation; no new GPU
-job submitted and no checkpoint selected.**
+and asked whether to select the best checkpoint. **Qualification running on Baige Pro6K as `job-1nfvvw2b93t5`**
+(one GPU,45-minute cap,automatic retry off; source`2affc246`). No checkpoint
+selected and no full sweep submitted. [Admission](QUALIFICATION-R1-ADMISSION.json),
+[submission](QUALIFICATION-R1-SUBMITTED.json), [allocated GPU probe](QUALIFICATION-R1-GPU-PROBE.json)
+and [zero-error initial likelihood replay](QUALIFICATION-R1-INITIAL-PARITY.json).
 
 The completed [10M source result](../robocasa-flow-sde-10m-per-task-20261103-r1/RESULT.md)
 is already on main. Its update-130 results and failed improvement gates stay
