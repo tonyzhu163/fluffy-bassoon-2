@@ -108,6 +108,8 @@ to the [2026-11-03 snapshot](archive/coordination/coordination-20261103.md#ongoi
 
 | Stage 1 fixed VLM-critic PPO versus GRPO | Owner chat `01a1a57c`; Baige Pro6K / 算法Z组 `job-bylh99ylx9ie`; source `d9a1c616` | **Nov4 16:20 Shanghai:** PPO 6/40, all observed updates/parity pass and VLM unchanged; max KL0.0107, clip0.076, DEV0=34/64. Live conservative charge3.25/64GPUh; PFS525GiB. Next inspect DEV10; GRPO remains serial/pending; monitor every20min and push audited results. [Execution](robocasa-ppo-grpo-meta-stage1-20261104-r1/EXECUTION.json), [plan](robocasa-ppo-grpo-meta-stage1-20261104-r1/PLAN.md). |
 
+| Storage audit and aggressive cold archival | Owner chat `01a1a590`; all Baige `/mowenjie` projects/envs → existing BOS; no GPU job | **Nov4 16:32 Shanghai:** 51.75GiB duplicate Flora shards coalesced with full pairwise SHA256 checks and both paths preserved; six closed runs and legacy policy env verified/reclaimed (~83GiB combined). Simulator/bootstrap/superseded DSRL env and unrelated RoboMME/state-SFT/evaluation assets continue. Retained four-method raw corpus, shared bases, current runtimes, held checkpoints and active Stage1 inputs protected. [Audit](storage-audit-baige-20261104-r1/PLAN.json). |
+
 ### Needs owner refresh
 
 - Native VLRLA-recipe PPO pilot: last recorded 2026-10-31 14:06 Shanghai as
