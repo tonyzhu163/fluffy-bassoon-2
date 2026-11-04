@@ -1,5 +1,5 @@
 {
-  "status": "RUNNING",
+  "status": "STOPPED_BY_USER",
   "cluster": "Baige Pro6K",
   "budget": {
     "approved_gpu_hours": 22,
@@ -11,7 +11,10 @@
     "automatic_retry": false,
     "live_creation_to_check_upper_bound_gpu_seconds": 53766.42598748207,
     "live_creation_to_check_upper_bound_gpu_hours": 14.935118329856131,
-    "reservation_with_all_five_inflight_gpu_seconds": 78049
+    "reservation_with_all_five_inflight_gpu_seconds": 0,
+    "final_all_attempt_creation_to_terminal_upper_gpu_seconds": 55746,
+    "final_all_attempt_creation_to_terminal_upper_gpu_hours": 15.485,
+    "remaining_inflight_reservation_gpu_seconds": 0
   },
   "matrix": "SWEEP-PREPARED-R2.json",
   "native_runtime": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
@@ -22,10 +25,10 @@
     {
       "task": "OpenDrawer",
       "job": "job-cn2if26i9hth",
-      "status": "RUNNING",
+      "status": "STOPPED_BY_USER",
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/OpenDrawer/evaluation-r1",
       "staging": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/OpenDrawer/staging-r1",
-      "reserved_gpu_seconds": 15540,
+      "reserved_gpu_seconds": 0,
       "job_name": "mwj_1104_flow10m_ckpt_Open_r1",
       "scheduler_created_shanghai": "2026-11-04 12:35:28",
       "scheduler_created_unix": 1793766928,
@@ -37,17 +40,17 @@
       "progress": {
         "completed": false,
         "task": "OpenDrawer",
-        "banks_completed": 158,
-        "episodes_completed": 1264,
-        "policy_controls": 758400,
+        "banks_completed": 164,
+        "episodes_completed": 1312,
+        "policy_controls": 787200,
         "latest": {
           "panel": "TEST",
           "step": 0,
-          "bank": 9
+          "bank": 11
         },
         "SGD": 0
       },
-      "last_check_shanghai": "2026-11-04T15:34:18.285197+08:00",
+      "last_check_shanghai": "2026-11-04T15:52:08.731484+08:00",
       "DEV_complete_checkpoints": [
         130,
         120,
@@ -66,24 +69,31 @@
         1,
         0
       ],
-      "phase": "TEST",
+      "phase": "TERMINAL",
       "selected_step": 30,
       "selected_model_sha256": "70cb16cd87f469f4b6bc9e8642bf76a7277a4e856bda78b3274f4a64a04a5486",
       "selection_lock_sha256": "33eb67965aee25fd5461018b501cd4dc81d8062541b78f09b1ada44e085c12b4",
-      "TEST_completed_policy_banks": 30,
+      "TEST_completed_policy_banks": 36,
       "DEV_initial_selected_final130": [
         44,
         48,
         47
+      ],
+      "scheduler_status": "ManualTermination",
+      "scheduler_ended_shanghai": "2026-11-04 15:41:23",
+      "TEST_completed_cases_per_initial_selected_final": [
+        96,
+        96,
+        96
       ]
     },
     {
       "task": "CloseToasterOvenDoor",
       "job": "job-zwstryxe9plb",
-      "status": "RUNNING",
+      "status": "SUCCEEDED",
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/CloseToasterOvenDoor/evaluation-r1",
       "staging": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/CloseToasterOvenDoor/staging-r1",
-      "reserved_gpu_seconds": 15540,
+      "reserved_gpu_seconds": 0,
       "job_name": "mwj_1104_flow10m_ckpt_Toaster_r1",
       "scheduler_created_shanghai": "2026-11-04 12:37:16",
       "scheduler_created_unix": 1793767036,
@@ -95,17 +105,17 @@
       "progress": {
         "completed": false,
         "task": "CloseToasterOvenDoor",
-        "banks_completed": 171,
-        "episodes_completed": 1368,
-        "policy_controls": 820800,
+        "banks_completed": 176,
+        "episodes_completed": 1408,
+        "policy_controls": 844800,
         "latest": {
           "panel": "TEST",
-          "step": 1,
-          "bank": 14
+          "step": 0,
+          "bank": 15
         },
         "SGD": 0
       },
-      "last_check_shanghai": "2026-11-04T15:34:18.285197+08:00",
+      "last_check_shanghai": "2026-11-04T15:52:08.731484+08:00",
       "DEV_complete_checkpoints": [
         130,
         120,
@@ -124,24 +134,31 @@
         1,
         0
       ],
-      "phase": "TEST",
+      "phase": "TERMINAL",
       "selected_step": 1,
       "selected_model_sha256": "0515525cca0b24fc0a1502bd2ffcbff365d40082d25d749914e6d15675d894c1",
       "selection_lock_sha256": "07f6aac2fd35c123ae12950f553273b713c2f5d9aa48274918f5e58b8e847cf2",
-      "TEST_completed_policy_banks": 43,
+      "TEST_completed_policy_banks": 48,
       "DEV_initial_selected_final130": [
         22,
         28,
         25
+      ],
+      "scheduler_status": "Succeeded",
+      "scheduler_ended_shanghai": "2026-11-04 15:39:01",
+      "TEST_completed_cases_per_initial_selected_final": [
+        128,
+        128,
+        128
       ]
     },
     {
       "task": "PickPlaceDrawerToCounter",
       "job": "job-sfm20c7jc9dp",
-      "status": "RUNNING",
+      "status": "STOPPED_BY_USER",
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/PickPlaceDrawerToCounter/evaluation-r1",
       "staging": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/PickPlaceDrawerToCounter/staging-r1",
-      "reserved_gpu_seconds": 15540,
+      "reserved_gpu_seconds": 0,
       "job_name": "mwj_1104_flow10m_ckpt_Drawer_r1",
       "gpu_probe": "passed",
       "first_native_bank_verified": true,
@@ -154,17 +171,17 @@
       "progress": {
         "completed": false,
         "task": "PickPlaceDrawerToCounter",
-        "banks_completed": 158,
-        "episodes_completed": 1264,
-        "policy_controls": 758400,
+        "banks_completed": 164,
+        "episodes_completed": 1312,
+        "policy_controls": 787200,
         "latest": {
           "panel": "TEST",
           "step": 0,
-          "bank": 9
+          "bank": 11
         },
         "SGD": 0
       },
-      "last_check_shanghai": "2026-11-04T15:34:18.285197+08:00",
+      "last_check_shanghai": "2026-11-04T15:52:08.731484+08:00",
       "DEV_complete_checkpoints": [
         130,
         120,
@@ -183,24 +200,31 @@
         1,
         0
       ],
-      "phase": "TEST",
+      "phase": "TERMINAL",
       "selected_step": 80,
       "selected_model_sha256": "0bfea105b016c11bc09cb6d3437a57a11fc9f72fff775087ca885c49e2bf600e",
       "selection_lock_sha256": "cb509cb38034abf01c992e66fb1ce1947fe00230f98385f1281711dcd966d8fe",
-      "TEST_completed_policy_banks": 30,
+      "TEST_completed_policy_banks": 36,
       "DEV_initial_selected_final130": [
         26,
         34,
         21
+      ],
+      "scheduler_status": "ManualTermination",
+      "scheduler_ended_shanghai": "2026-11-04 15:41:21",
+      "TEST_completed_cases_per_initial_selected_final": [
+        96,
+        96,
+        96
       ]
     },
     {
       "task": "CoffeeSetupMug",
       "job": "job-49hgr77uuw87",
-      "status": "RUNNING",
+      "status": "STOPPED_BY_USER",
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/CoffeeSetupMug/evaluation-r1",
       "staging": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/CoffeeSetupMug/staging-r1",
-      "reserved_gpu_seconds": 15540,
+      "reserved_gpu_seconds": 0,
       "job_name": "mwj_1104_flow10m_ckpt_Coffee_r1",
       "scheduler_created_shanghai": "2026-11-04 12:38:42",
       "scheduler_created_unix": 1793767122,
@@ -212,17 +236,17 @@
       "progress": {
         "completed": false,
         "task": "CoffeeSetupMug",
-        "banks_completed": 166,
-        "episodes_completed": 1328,
-        "policy_controls": 796800,
+        "banks_completed": 173,
+        "episodes_completed": 1384,
+        "policy_controls": 830400,
         "latest": {
           "panel": "TEST",
-          "step": 20,
-          "bank": 12
+          "step": 130,
+          "bank": 14
         },
         "SGD": 0
       },
-      "last_check_shanghai": "2026-11-04T15:34:18.285197+08:00",
+      "last_check_shanghai": "2026-11-04T15:52:08.731484+08:00",
       "DEV_complete_checkpoints": [
         130,
         120,
@@ -241,24 +265,31 @@
         1,
         0
       ],
-      "phase": "TEST",
+      "phase": "TERMINAL",
       "selected_step": 20,
       "selected_model_sha256": "66cbc9cbd09cba0a99d72708ce4392262c756e452edac858286db183cfbce5f0",
       "selection_lock_sha256": "36169a7f851b92c7ca001544b0233185456804e5790e901c15b1a9b674ef8c92",
-      "TEST_completed_policy_banks": 38,
+      "TEST_completed_policy_banks": 45,
       "DEV_initial_selected_final130": [
         19,
         28,
         26
+      ],
+      "scheduler_status": "ManualTermination",
+      "scheduler_ended_shanghai": "2026-11-04 15:41:23",
+      "TEST_completed_cases_per_initial_selected_final": [
+        120,
+        120,
+        120
       ]
     },
     {
       "task": "TurnOffStove",
       "job": "job-mrwxr4gq2p7u",
-      "status": "RUNNING",
+      "status": "STOPPED_BY_USER",
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/TurnOffStove/evaluation-r1",
       "staging": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1/TurnOffStove/staging-r1",
-      "reserved_gpu_seconds": 15540,
+      "reserved_gpu_seconds": 0,
       "job_name": "mwj_1104_flow10m_ckpt_Stove_r1",
       "scheduler_created_shanghai": "2026-11-04 12:39:45",
       "scheduler_created_unix": 1793767185,
@@ -270,17 +301,17 @@
       "progress": {
         "completed": false,
         "task": "TurnOffStove",
-        "banks_completed": 165,
-        "episodes_completed": 1320,
-        "policy_controls": 792000,
+        "banks_completed": 172,
+        "episodes_completed": 1376,
+        "policy_controls": 825600,
         "latest": {
           "panel": "TEST",
           "step": 0,
-          "bank": 12
+          "bank": 14
         },
         "SGD": 0
       },
-      "last_check_shanghai": "2026-11-04T15:34:18.285197+08:00",
+      "last_check_shanghai": "2026-11-04T15:52:08.731484+08:00",
       "DEV_complete_checkpoints": [
         130,
         120,
@@ -299,23 +330,31 @@
         1,
         0
       ],
-      "phase": "TEST",
+      "phase": "TERMINAL",
       "selected_step": 30,
       "selected_model_sha256": "b7ada25a88049a6afb5379aa63ff57846d2fa35536ae1c80c37d4ead941f182d",
       "selection_lock_sha256": "c65e96695c9872fb45662c8d97b45d38f4835c903ae5a01b282e3f82e71cfe41",
-      "TEST_completed_policy_banks": 37,
+      "TEST_completed_policy_banks": 44,
       "DEV_initial_selected_final130": [
         9,
         12,
         7
+      ],
+      "scheduler_status": "ManualTermination",
+      "scheduler_ended_shanghai": "2026-11-04 15:41:23",
+      "TEST_completed_cases_per_initial_selected_final": [
+        120,
+        120,
+        112
       ]
     }
   ],
-  "monitor_status": "ACTIVE",
-  "last_check_shanghai": "2026-11-04T15:34:18.285197+08:00",
-  "next_action": "Complete locked independent TEST128 panels (178/240 policy banks complete), then pinned CPU full raw/statistical closeout and terminal scheduler/cost audit. CPU postprocessor Git/blob hash verified; do not run before all five native exits0. No recipe changes or student fitting.",
-  "storage_free_GiB": 502.69140625,
-  "last_monitor_record": "MONITOR-20261104-153418.json",
+  "monitor_status": "DELETED",
+  "last_check_shanghai": "2026-11-04T15:52:08.731484+08:00",
+  "next_action": "None for this evaluation campaign: stopped by direct human request. Preserve complete DEV, partial TEST and journals. No relaunch, full TEST128 claim, teacher admission or student fitting.",
+  "storage_free_GiB": 514.84765625,
+  "last_monitor_record": "USER-STOP-CLOSEOUT-R1.json",
   "last_partial_curve": "CURVE-PARTIAL-20261104-141441.json",
-  "phase": "INDEPENDENT_TEST"
+  "phase": "EARLY_STOPPED",
+  "early_stop_readout": "USER-STOP.md"
 }

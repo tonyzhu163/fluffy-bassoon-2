@@ -44,3 +44,12 @@ The [plan](PLAN.md) proposes at most7,040episodes/4,224,000controls, about17–2
 GPU-hours with a22GPU-hour all-attempt ceiling including this qualification.
 The human approved that ceiling. No new PPO training or student fitting is
 part of this sweep.
+
+
+## Human-requested stop of the subsequent sweep
+
+The subsequent five-task sweep was stopped on2026-11-04 after all80 DEV
+panels and209/240 TEST policy banks. Four jobs were canceled and Toaster
+completed; no campaign allocation remains. The monitor is deleted. See
+[the stop record and limitations](USER-STOP.md). Qualification results above
+remain unchanged; this is not a complete five-task TEST128 result.
