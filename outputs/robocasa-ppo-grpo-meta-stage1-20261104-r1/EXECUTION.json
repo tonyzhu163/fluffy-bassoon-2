@@ -113,7 +113,7 @@
   "next_action": "Verify grouped physical/public TRAIN resets and advancing optimizer updates, then audit the completed run and compare its 3,072,000 TRAIN controls against PPO.",
   "PFS_free_GiB_observed": 622.328125,
   "storage_checked_unix": 1793786026.7150784,
-  "git_publication": "Verified SSH access to origin restored November 4. The current remote main is d71cb532 before publication of the GRPO launch records.",
+  "git_publication": "GRPO and recipe source commits, launch receipts, PPO40 result and DEV64 plan published to origin/main at 6d106487dfc712c8358a5a9e332d0f31b3017f65 and remotely verified.",
   "root_cause_analysis": "ROOT-CAUSE-ANALYSIS.md",
   "storage_plan_update": "Human requested parallelGRPO/diagnosis. PPO is alreadyterminal. Last PFSfree493GiB; a same-sizeGRPO footprint leaves >300GiB. Do not wait for bulk archive beforeGRPO; keep200GiB floor. Archive/reclaimonlyownclosedPPOdata afterhashverification; retainPPO40.",
   "recipe_implementation_qualification": "outputs/robocasa-ppo-recipe-fixes-20261104-r1/CPU-QUALIFICATION.json",
@@ -142,5 +142,6 @@
     "reclaim_condition": "exact GNU tar source comparison, exact archive member coverage and full BOS SHA256 readback verified; source inventory unchanged and no open users",
     "note": "Intermediate worker/RNG sidecars and boundary markers also retained on PFS after verified bulk reclamation. No raw trajectory archive/reclamation yet."
   },
-  "storage_checked_shanghai": "2026-11-04T19:21:50.957546+08:00"
+  "storage_checked_shanghai": "2026-11-04T19:21:50.957546+08:00",
+  "matched_DEV64": "Original DEV64, common eight-case batches and per-bank sampler RNG. User added GRPO40 to SFT, historical PPO40 and Stage 1 PPO40 before matched outcomes. Fresh TEST512 remains with the separate ablation."
 }

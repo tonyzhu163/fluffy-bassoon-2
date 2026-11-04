@@ -7,7 +7,7 @@ RUNTIME=$ROOT/sources/flow10m-0988b5f9
 RLINF=$ROOT/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf
 PY=$ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
 OUT=$ROOT/outputs/$RUN/gpu-r1
-READY=$ROOT/outputs/$RUN/staging-r1/READY.json
+READY=$ROOT/outputs/$RUN/staging-r1/READY-FOUR.json
 test -s "$READY"
 test "$(git -C "$TASK_META" rev-parse HEAD)" = "$TASK_CODE_PIN"
 test "$(git -C "$RUNTIME" rev-parse HEAD)" = 0988b5f9e9bf31ac3db673cc2860959611b9ae12
