@@ -75,7 +75,8 @@ for rank, task in enumerate(TASKS):
         for chunk, record in enumerate(records):
             seed = 172000000 + 100000*rank + 1000*slot + chunk
             assert record['noise_seed'] == seed == plan['motor_seeds'][12*slot+chunk]
-            assert record['zero_residual_verified'] and np.count_nonzero(record['control']) == 0
+            assert record['zero_residual_verified'] == (slot == 0)
+            assert np.count_nonzero(record['control']) == 0
             assert np.array_equal(record['base_chunk'], record['executed_chunk'])
             assert np.isfinite(record['executed_chunk']).all()
             assert record['episode_start'] == (chunk == 0) and record['done'] == (chunk == 11)
