@@ -1,11 +1,11 @@
 {
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
-  "job_id": "job-q4bwu5sczbmj",
-  "job_name": "mwj_1104_stage1_dev64_four_r1",
-  "status": "Evaluation retry prepared",
-  "created_shanghai": "2026-11-04T21:28:49+08:00",
-  "source": "cb44bb74044e6c8d5a7a3b678aa349f4318776f8",
+  "job_id": "job-1o0kckkz2s3e",
+  "job_name": "mwj_1104_stage1_dev64_four_r2",
+  "status": "Running",
+  "created_shanghai": "2026-11-04T21:33:38+08:00",
+  "source": "24affd15164a65d8304ea3c439916f2a8a9be6f6",
   "reviewed_through": "147c125393a78387cebd83f1a89a70f55753d7fd",
   "relevant_runtime_diff": [],
   "queue_capacity_check": {
@@ -18,7 +18,7 @@
     "CPU": 20,
     "memory_GiB": 224,
     "shm_GiB": 32,
-    "wall_minutes": 75,
+    "wall_minutes": 73,
     "automatic_retries": false
   },
   "models": "READY-FOUR.json",
@@ -37,6 +37,17 @@
       "created_shanghai": "2026-11-04T21:28:49+08:00",
       "ended_shanghai": "2026-11-04T21:30:12+08:00",
       "conservative_GPU_seconds": 83
+    },
+    {
+      "attempt": 2,
+      "output": "gpu-r2",
+      "job_id": "job-1o0kckkz2s3e",
+      "created_shanghai": "2026-11-04T21:33:38+08:00",
+      "source": "24affd15164a65d8304ea3c439916f2a8a9be6f6",
+      "state": "Running",
+      "probe": "GPU-PROBE-R2.json",
+      "scheduler": "BAIGE-EVAL-R2.png",
+      "limit_minutes": 73
     }
   ],
   "continuation_wall_minutes": 73
