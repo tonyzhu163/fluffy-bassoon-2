@@ -325,3 +325,47 @@ def test_flow_bridge_motor_zero_init_parity_and_closed_loop_controller(interface
     feedback = spec.feedback_control(commands)
     controller.observe(feedback, 1.0, True)
     assert np.array_equal(controller.previous_noise, feedback)
+
+
+@pytest.mark.parametrize("interface", ["kv_bridge", "velocity_bridge"])
+@pytest.mark.parametrize("objective", ["ad", "dpt"])
+def test_bridge_query_batch_and_checkpoint_roundtrip(tmp_path, interface, objective):
+    from fluffy_bassoon.meta_rl.flow_history import (
+        ACTION_DIM, FEATURE_DIM, FlowBridgeConfig, HistoryFlowSteeringPolicy,
+        export_bridge_policy, load_bridge_policy, sample_bridge_query_batch)
+    from fluffy_bassoon.meta_rl.vla_history import file_sha256
+
+    rng = np.random.default_rng(19)
+    trials = []
+    for _ in range(3):
+        obs = rng.normal(size=(24, FEATURE_DIM)).astype(np.float32)
+        act = rng.normal(size=(24, ACTION_DIM)).astype(np.float32)
+        tgt = act.copy() if objective == "ad" else (act + 0.1).astype(np.float32)
+        rew = np.zeros(24, dtype=np.float32)
+        rew[11] = 1.0
+        dones = (np.arange(24) % 12 == 11)
+        starts = (np.arange(24) % 12 == 0)
+        steps = np.repeat(np.array([0, 1], dtype=np.int64), 12)
+        trials.append(dict(
+            observations=obs, executed_noise=act, target_noise=tgt,
+            rewards=rew, dones=dones, episode_starts=starts, teacher_steps=steps,
+        ))
+    cfg = FlowBridgeConfig(
+        interface=interface, observation_dim=FEATURE_DIM, history_action_dim=ACTION_DIM,
+        width=16, layers=1, heads=2, context_length=32,
+        kv_heads=1, head_dim=4, kv_rank=2, kv_layers=(-1,), scale=0.1,
+    )
+    policy = HistoryFlowSteeringPolicy(cfg)
+    policy.fit_observation_normalization(trials)
+    batch = sample_bridge_query_batch(
+        trials, policy, rng, batch_size=4, max_episodes=2, mode="full", objective=objective,
+    )
+    assert batch["target_actions"].shape == (4, 50, 32)
+    assert len(batch["query_indices"]) == 4
+    ckpt_path = tmp_path / f"{interface}-{objective}.pt"
+    saved = export_bridge_policy(ckpt_path, policy, manifest=dict(interface=interface, objective=objective))
+    loaded, manifest = load_bridge_policy(ckpt_path, expected_sha256=saved["sha256"])
+    assert file_sha256(ckpt_path) == saved["sha256"]
+    assert manifest == dict(interface=interface, objective=objective)
+    for k, v in policy.state_dict().items():
+        assert torch.equal(v, loaded.state_dict()[k])
