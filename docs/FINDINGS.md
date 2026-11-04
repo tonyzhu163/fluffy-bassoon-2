@@ -885,3 +885,22 @@ Flora agreement or replacement PPO source is established. The subsequent
 whole-portfolio / 30–60% preference review remains a separate decision.
 [Qualified result](../outputs/robocasa-buttons-replacement-qualification-20261104-r1/RESULT.md),
 [independent audit](../outputs/robocasa-buttons-replacement-qualification-20261104-r1/FINAL-AUDIT.json).
+
+## Matched-denoising drift across the five PPO sources (2026-11-04)
+
+All80 checkpoint loads /800forwards and independent float64 tensor reductions
+passed. With16policy-zero samples at each of the same ten denoising indices,
+Drawer→Counter's final variance-normalized mean signed log ratio is−0.3693,
+close to OpenDrawer−0.3484; Coffee is−0.2572,Toaster−0.3380,and Stove−0.4746.
+Drawer is not the most negative task at nine of ten matched indices, so the
+predeclared uniform Drawer-specific excess is not supported. A last-step
+difference remains (Drawer−122.565,OpenDrawer−82.541),with descriptive sample
+SD49.917 and26.908. The original different-noise-scale comparison is not
+evidence of a roughly100-fold Drawer-specific PPO problem. These saved
+conditional transition likelihoods are not action marginal KL, behavioral
+regression, or evidence that the critic bug caused the learning curve.
+All50fixtures match original actor records,80staging/consumption joins and
+private-copy cleanup pass,and all50initial likelihood replays are exact.
+Baige job-pjgeuietm5of succeeded and released14:21:51; conservative cost4472GPU-s
+(1.2422GPUh),inside4GPUh,with zero controls/sampling/SGD.
+[Result and complete evidence](../outputs/robocasa-flow-sde-matched-denoise-drift-20261104-r1/RESULT.md).

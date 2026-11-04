@@ -1,11 +1,12 @@
 # Cross-task drift on matched denoising indices
 
-**Status 2026-11-04: running on Baige `job-pjgeuietm5of`.** Owner: Codex chat
+**Status 2026-11-04: complete; Baige `job-pjgeuietm5of` succeeded and released its GPU at14:21:51 Shanghai.** Owner: Codex chat
 `01a1a4de`, on the human's execution request. The dimension predecessor released
 at13:05:17 Shanghai with80consumption receipts before this bridge started.
 All10common indices qualify:50B16fixtures from10 restored/hash-verified original
-Q1actor batches. Drawer step0 likelihood parity is exact at every index; later
-checkpoints advance. Ceiling remains oneGPU/4GPUh, no automatic retry,
+Q1actor batches. All80 checkpoint loads /800forwards and the independent800-tensor audit pass;
+initial likelihood parity is exact at every index for all five tasks.
+[Verified result](RESULT.md), [final audit](FINAL-AUDIT.json). Ceiling remains oneGPU/4GPUh, no automatic retry,
 simulator controls, sampling or SGD. [Execution](EXECUTION.json),
 [prepared fixtures](PREPARED.json), [Q1 restoration](RESTORED-Q1.json).
 

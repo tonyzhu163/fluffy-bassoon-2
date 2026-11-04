@@ -1,6 +1,6 @@
 # 512-case paired endpoint test: policy 0 vs policy 130
 
-**Status 2026-11-04: both native endpoint jobs running.** Toaster
+**Status 2026-11-04: original jobs stopped/released for a user-authorized eight-GPU continuation.** Toaster
 `job-anm7svcgngnn` and OpenDrawer `job-895ee4k7j85c` have exact step0 likelihood
 parity and independently verified first paired eight-case banks/common RNG.
 Owner: Codex chat `01a1a4de`; the human requested execution of this prepared plan.
@@ -9,6 +9,12 @@ A duplicate Toaster submit failed at the existing-output guard; its conservative
 timeouts plus recorded startup and release allowances reserve27559GPU-s,
 including that failure; actual scheduler release costs remain controlling.
 [Execution, first-bank evidence and budget](EXECUTION.json), [first check](FIRST-CHECK.json).
+The user requested acceleration in chat `01a1a512`; that chat owns the
+[continuation](../robocasa-endpoint512-acceleration-20261104-r1/PLAN.md). It retains
+896 complete paired policy episodes and preserves all512 cases per task.
+The original jobs and incomplete-bank evidence remain immutable; do not
+restart them or run the original two-directory combine against partial data.
+The original all-attempt ceiling and statistical comparison remain binding.
 No training or checkpoint selection.
 
 ## Why
