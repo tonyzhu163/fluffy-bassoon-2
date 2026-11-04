@@ -43,6 +43,44 @@ Evidence: [deployed source snapshot](deployed-openpi-rl.py) lines 268–296 and
 451–507; [source/configuration hashes for all five tasks](SOURCE.json);
 [executable reproduction](REPRODUCE.py); [CPU reproduction results](REPRODUCTION.json).
 
+## Effect on the loss and consequences for existing runs
+
+The follow-up [actual loss-registry probe](CRITIC-LOSS-PROBE.json) runs the
+deployed `policy_loss` entry point, including embodied preprocessing and the
+registered actor/critic loss, on Linux CPU. With a selected-step prediction
+0.9, rollout reference 0.55, target 1.0 and clip 0.2, the critic gradient is
+zero because the clipped-reference branch dominates. Anchoring the same
+prediction to its own unchanged-policy value gives a nonzero gradient toward
+the target. A second case with prediction 0.1 and target zero shows the same
+mechanism in the opposite direction. Thus preprocessing does not remove this
+value inconsistency, and it can suppress useful critic learning. These
+synthetic cases do not measure the trained models' gaps or counterfactual
+learning outcomes. [Executable probe](CRITIC-LOSS-PROBE.py).
+
+Update-level metrics cannot attribute clipping to this issue: they combine
+the initial value-definition gap with actual parameter updates over four
+epochs. For context, Drawer's logged value-clip ratio averages 2.83% across
+the campaign and 2.36% over updates 121–130; its logged explained variance
+averages 0.250 overall and 0.280 over that last window. The critic was not
+uniformly failing to fit returns, but these metrics neither qualify value
+parity nor rule out a material learning penalty.
+
+There is no evidence-based requirement to restart the entire campaign now.
+The retained observations, actions, videos, rewards, accounting and measured
+checkpoint success remain observations of the implementation that actually
+ran. They cannot be relabeled as outcomes of a corrected PPO learner. A
+corrected-method training claim requires repeating the relevant affected
+training condition; model conversion, simulator setup and all historical
+artifact collection do not need to be redone merely because of this defect.
+
+The smallest useful next validation is an unchanged-policy replay on saved
+production batches to measure actual value gaps, baseline offsets and their
+effect on critic gradients, followed by one short controlled old-versus-fixed
+training comparison if needed. Broader training reruns should follow that
+evidence. No such model replay, comparison or replacement training was
+launched by this audit; previous synthetic numbers are not production error
+estimates.
+
 ## Upstream source and reporting status
 
 Checked Nov4: the deployed file is byte-identical to official RLinf's file,

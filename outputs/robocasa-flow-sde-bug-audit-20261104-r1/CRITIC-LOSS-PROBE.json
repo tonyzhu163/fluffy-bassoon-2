@@ -1,0 +1,181 @@
+{
+  "completed": true,
+  "device": "cpu",
+  "torch_version": "2.11.0+cu128",
+  "scope": "Synthetic values, actual deployed policy_loss registry/preprocessing/loss; not measured model errors",
+  "source_sha256": {
+    "/mowenjie/fluffy-bassoon-2/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf/rlinf/algorithms/registry.py": "67af98b26e4ed0b4ee1e08965f782b50cfeba337b070e86bc77a70cb14b37474",
+    "/mowenjie/fluffy-bassoon-2/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf/rlinf/algorithms/losses.py": "68508fcdcb1bc0c4d71386944ddbced0bc6715483463b7ec498b81a8cf0645ea",
+    "/mowenjie/fluffy-bassoon-2/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf/rlinf/algorithms/utils.py": "de21453674c103f82e51c9a373937130ab6f7ca8f50acba051f50ff79e7c104b"
+  },
+  "script_sha256": "bf518fac93d52f3c561ea3ef836ab5d1f145fef47a4dba25c7d9db55512543b7",
+  "cases": [
+    {
+      "predicted": 0.9,
+      "return_target": 1.0,
+      "old_value_reference": 0.55,
+      "critic_loss": 0.03125,
+      "value_clip_ratio": 1.0,
+      "gradient_wrt_predictions": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "predicted": 0.9,
+      "return_target": 1.0,
+      "old_value_reference": 0.9,
+      "critic_loss": 0.005000002216547728,
+      "value_clip_ratio": 0.0,
+      "gradient_wrt_predictions": [
+        -0.050000011920928955,
+        -0.050000011920928955
+      ]
+    },
+    {
+      "predicted": 0.1,
+      "return_target": 0.0,
+      "old_value_reference": 0.55,
+      "critic_loss": 0.06125000864267349,
+      "value_clip_ratio": 1.0,
+      "gradient_wrt_predictions": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "predicted": 0.1,
+      "return_target": 0.0,
+      "old_value_reference": 0.1,
+      "critic_loss": 0.005000000353902578,
+      "value_clip_ratio": 0.0,
+      "gradient_wrt_predictions": [
+        0.05000000074505806,
+        0.05000000074505806
+      ]
+    }
+  ],
+  "production_update_metrics": {
+    "CloseToasterOvenDoor": {
+      "file_sha256": "9ff1aba9bcb43e3f3e2260058bf2c3aa510338799ce54397613e7fe236638007",
+      "rows": 260,
+      "statistics": {
+        "critic/value_clip_ratio": {
+          "mean": 0.03541540658961122,
+          "minimum": 0.0018348947633057833,
+          "maximum": 0.2803697884082794,
+          "last_ten_updates_mean": 0.037440630793571475
+        },
+        "critic/value_loss": {
+          "mean": 0.0641403066710784,
+          "minimum": 0.05177626758813858,
+          "maximum": 0.09914837777614594,
+          "last_ten_updates_mean": 0.0637462493032217
+        },
+        "critic/explained_variance": {
+          "mean": 0.2059407371741075,
+          "minimum": -0.006354689598083496,
+          "maximum": 0.33274078369140625,
+          "last_ten_updates_mean": 0.24939640760421752
+        }
+      }
+    },
+    "CoffeeSetupMug": {
+      "file_sha256": "0d208b0843c6c63c09910c50723c6e0fc678b1e6a7c3a1e271ce923f3696dddd",
+      "rows": 260,
+      "statistics": {
+        "critic/value_clip_ratio": {
+          "mean": 0.01743702240413628,
+          "minimum": 0.0010714762611314654,
+          "maximum": 0.3031274378299713,
+          "last_ten_updates_mean": 0.015468782698735594
+        },
+        "critic/value_loss": {
+          "mean": 0.06325611331715034,
+          "minimum": 0.054250091314315796,
+          "maximum": 0.09265153110027313,
+          "last_ten_updates_mean": 0.06364015862345695
+        },
+        "critic/explained_variance": {
+          "mean": 0.18879639047842758,
+          "minimum": -0.02006220817565918,
+          "maximum": 0.30939042568206787,
+          "last_ten_updates_mean": 0.2097581744194031
+        }
+      }
+    },
+    "OpenDrawer": {
+      "file_sha256": "293c8416c995c9328593b27ab3f6f8f6e3d4073351a540e0e1178ae04ca047bb",
+      "rows": 260,
+      "statistics": {
+        "critic/value_clip_ratio": {
+          "mean": 0.026092143457096355,
+          "minimum": 0.0047785332426428795,
+          "maximum": 0.5507107973098755,
+          "last_ten_updates_mean": 0.01787530295550823
+        },
+        "critic/value_loss": {
+          "mean": 0.044755448085757404,
+          "minimum": 0.02754979580640793,
+          "maximum": 0.16694387793540955,
+          "last_ten_updates_mean": 0.037602541595697404
+        },
+        "critic/explained_variance": {
+          "mean": 0.4686566508733309,
+          "minimum": 0.02983468770980835,
+          "maximum": 0.5948779582977295,
+          "last_ten_updates_mean": 0.5374140739440918
+        }
+      }
+    },
+    "PickPlaceDrawerToCounter": {
+      "file_sha256": "b05805eb8a037d24f78e8ce08d743946a8188debcf59d5efc83245d7cc26c4c8",
+      "rows": 260,
+      "statistics": {
+        "critic/value_clip_ratio": {
+          "mean": 0.028265850672211785,
+          "minimum": 0.00222749263048172,
+          "maximum": 0.552604079246521,
+          "last_ten_updates_mean": 0.023636560048907997
+        },
+        "critic/value_loss": {
+          "mean": 0.06376362718068636,
+          "minimum": 0.054707758128643036,
+          "maximum": 0.11797437071800232,
+          "last_ten_updates_mean": 0.06179816499352455
+        },
+        "critic/explained_variance": {
+          "mean": 0.2504342890702761,
+          "minimum": -0.0807267427444458,
+          "maximum": 0.3795211911201477,
+          "last_ten_updates_mean": 0.2796916365623474
+        }
+      }
+    },
+    "TurnOffStove": {
+      "file_sha256": "b10ababe69d45e8fe4063e80a644b76cc2bc34b47ef2da8198030abbd457b682",
+      "rows": 260,
+      "statistics": {
+        "critic/value_clip_ratio": {
+          "mean": 0.010020542511035903,
+          "minimum": 0.00034877232974395156,
+          "maximum": 0.20843373239040375,
+          "last_ten_updates_mean": 0.011025986983440816
+        },
+        "critic/value_loss": {
+          "mean": 0.03819982985464426,
+          "minimum": 0.024130741134285927,
+          "maximum": 0.06434579193592072,
+          "last_ten_updates_mean": 0.03885054811835289
+        },
+        "critic/explained_variance": {
+          "mean": 0.13024499691449679,
+          "minimum": -0.0348278284072876,
+          "maximum": 0.3046081066131592,
+          "last_ten_updates_mean": 0.13388847112655639
+        }
+      }
+    }
+  },
+  "metrics_limit": "Epoch/update-averaged metrics mix pre-SGD mismatch and real parameter updates; cannot attribute clipping to this defect"
+}
