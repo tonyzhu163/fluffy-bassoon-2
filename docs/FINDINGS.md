@@ -38,6 +38,15 @@ implementation defect, not an established cause of the failed teacher gates.
 Repair and qualify the critic contract before further PPO.
 [Bug audit and reproduction](../outputs/robocasa-flow-sde-bug-audit-20261104-r1/RESULT.md).
 
+A follow-up saved-record check rejects duplicated rollout noise for the
+finished Drawer source: all eight ranks have distinct CUDA states/seeds and
+actual initial-noise tensors in q1 and production. Same-index recovered SDE
+innovations have maximum absolute pair correlation 0.00984 in the checked
+decisions. PyTorch's implicit CUDA generators seed nondeterministically;
+missing explicit HF-worker seeding does not imply cloned rank noise. This
+check covers Drawer, not every task or draw.
+[RNG evidence and scope](../outputs/robocasa-flow-sde-bug-audit-20261104-r1/RNG-RESULT.md).
+
 A Nov4 native checkpoint-evaluation qualification preserves fixed eight-lane
 batches and common sampler RNG, with zero initial-policy likelihood error.
 Repeated initial-policy Drawer→Counter success was6/8 then8/8. Initial
