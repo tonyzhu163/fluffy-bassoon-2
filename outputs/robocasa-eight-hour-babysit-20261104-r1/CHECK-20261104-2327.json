@@ -1,0 +1,127 @@
+{
+  "checked_shanghai": "2026-11-04T23:27:16.843893+08:00",
+  "cluster": "Baige Pro6K",
+  "job_id": "job-967y1maorj80",
+  "learner_commit": "d71cb532",
+  "methods": {
+    "ad": {
+      "status": null,
+      "latest_metric": {
+        "update": 4700,
+        "elapsed_seconds": 6513.891504085623,
+        "validation_nll": -46.10345283895731,
+        "nll": -62.61832046508789,
+        "gradient_norm": 103.97119140625,
+        "update_seconds": 1.3759521478787065,
+        "valid_positions": 684,
+        "logical_batch_size": 8,
+        "execution_batch_size": 8,
+        "cuda_peak_allocated_bytes": 5791848448,
+        "plateau": {
+          "reference": -46.10345283895731,
+          "stale_checks": 0,
+          "converged": false
+        }
+      },
+      "recent_metrics_finite": true,
+      "metric_age_seconds": 67.2,
+      "checkpoint_age_seconds": 67.05,
+      "candidate_bytes": 22394505
+    },
+    "dpt": {
+      "status": null,
+      "latest_metric": {
+        "update": 4800,
+        "elapsed_seconds": 6569.984098285437,
+        "validation_nll": -50.483945190906525,
+        "nll": 42.90705871582031,
+        "gradient_norm": 128.5652618408203,
+        "update_seconds": 1.2124837571755052,
+        "valid_positions": 384,
+        "logical_batch_size": 8,
+        "execution_batch_size": 8,
+        "cuda_peak_allocated_bytes": 5791848448,
+        "plateau": {
+          "reference": -50.483945190906525,
+          "stale_checks": 0,
+          "converged": false
+        }
+      },
+      "recent_metrics_finite": true,
+      "metric_age_seconds": 5.12,
+      "checkpoint_age_seconds": 5.0,
+      "candidate_bytes": 22394505
+    },
+    "dit": {
+      "status": {
+        "converged": false,
+        "phase": "value",
+        "update": 0,
+        "updates": {
+          "value": 2200,
+          "actor": 0
+        },
+        "best_validation_loss": {
+          "value": 0.19111633393913507,
+          "actor": null
+        },
+        "elapsed_seconds": 6454.76981210988,
+        "stop_reason": "operational_checkpoint"
+      },
+      "latest_metric": {
+        "phase": "value",
+        "update": 2200,
+        "validation_loss": 0.19228460267186165,
+        "loss": 0.20379218459129333,
+        "q_loss": 0.10125314444303513,
+        "v_loss": 0.1025390475988388,
+        "gradient_norm": 0.24363836646080017
+      },
+      "recent_metrics_finite": true,
+      "metric_age_seconds": 121.45,
+      "checkpoint_age_seconds": 121.19,
+      "candidate_bytes": null
+    },
+    "ic_iql": {
+      "status": {
+        "converged": false,
+        "phase": "value",
+        "update": 0,
+        "updates": {
+          "value": 2200,
+          "actor": 0
+        },
+        "best_validation_loss": {
+          "value": 0.022999236709438264,
+          "actor": null
+        },
+        "elapsed_seconds": 6424.649885010906,
+        "stop_reason": "operational_checkpoint"
+      },
+      "latest_metric": {
+        "phase": "value",
+        "update": 2200,
+        "validation_loss": 0.025755318347364664,
+        "loss": 0.029173633083701134,
+        "q_loss": 0.028379591181874275,
+        "v_loss": 0.0007940421346575022,
+        "gradient_norm": 0.12665846943855286
+      },
+      "recent_metrics_finite": true,
+      "metric_age_seconds": 144.53,
+      "checkpoint_age_seconds": 144.28,
+      "candidate_bytes": null
+    }
+  },
+  "worker_release": null,
+  "error_tails": {},
+  "source_budget": {
+    "approved_GPU_hours": 96,
+    "preparation_GPU_hours": 17.57,
+    "creation_to_check_GPU_hours_upper": 24.966493214236365,
+    "remaining_GPU_hours_lower": 71.03350678576363,
+    "note": "Worker end is provisional until scheduler terminal/release verification"
+  },
+  "storage_free_GiB": 427.11328125,
+  "scheduler_release_verified": false
+}

@@ -1,0 +1,33 @@
+{
+  "status": "native_qualification_running",
+  "job_id": "job-kujwuyw5y6uv",
+  "created_shanghai": "2026-11-04T23:22:57+08:00",
+  "source_commit": "a5e1b9c80992502c3f2f7f88ed739f3c1ec89050",
+  "code_path": "/mowenjie/fluffy-bassoon-2/sources/babysit-fixed-bdbe552f",
+  "GPU_count": 1,
+  "CPU_count": 16,
+  "RAM_GiB": 64,
+  "SHM_GiB": 8,
+  "scheduler_minutes": 30,
+  "allocation_reserved_GPU_hours": 0.5,
+  "worker_deadline_seconds": 1650,
+  "maximum_existing_fit_and_qualification_GPU_hours": 50.07,
+  "approved_lifetime_GPU_hours": 96,
+  "automatic_retry": false,
+  "CPU_qualification": {
+    "allocated_Linux_tests": 31,
+    "passed": true,
+    "tests": [
+      "test_steering_history_eval.py",
+      "test_steering_history_native.py",
+      "test_flow_history.py"
+    ]
+  },
+  "queue_observation": {
+    "available_GPUs": 47,
+    "maximum_GPUs": 416,
+    "actual_accelerator": "NVIDIA RPBZZZ6"
+  },
+  "storage_write_probe": "passed; PFS 428 GiB free before submission",
+  "next_action": "Verify actual GPU probe and complete six-episode native trial before frozen learner readouts"
+}
