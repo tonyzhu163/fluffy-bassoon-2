@@ -10,22 +10,19 @@ import sys
 import time
 
 
-def main():
+def audit_result(result_path, output_path):
     assert sys.platform == 'linux'
     import cv2
     import numpy as np
     import torch
-    parser = argparse.ArgumentParser()
-    parser.add_argument('result', type=Path)
-    parser.add_argument('output', type=Path)
-    args = parser.parse_args()
+    result_path, output_path = Path(result_path), Path(output_path)
     began = time.time()
     digest = lambda path: hashlib.sha256(Path(path).read_bytes()).hexdigest()
     def checked(ref):
         path = Path(ref['path'])
         assert digest(path) == ref['sha256'], path
         return path
-    result = json.loads(args.result.read_text())
+    result = json.loads(result_path.read_text())
     episodes, chunks, controls, frames, videos = 0, 0, 0, 0, []
     policies, bindings, case_attempts = set(), set(), {}
     for ref in result['references']:
@@ -108,16 +105,25 @@ def main():
     if 'optimizer_updates' in result:
         assert result['optimizer_updates'] == 0 and result['native_parameters_frozen']
     else:
-        outer = json.loads((args.result.parents[3] / 'RESULT.json').read_text())
+        outer = json.loads((result_path.parents[3] / 'RESULT.json').read_text())
         assert outer['completed'] and outer['deployment_optimizer_updates'] == 0
     assert result['controls_charged'] >= controls
     audit = dict(passed=True, checked_shanghai=datetime.datetime.now(datetime.timezone(
-        datetime.timedelta(hours=8))).isoformat(), result_sha256=digest(args.result),
+        datetime.timedelta(hours=8))).isoformat(), result_sha256=digest(result_path),
         episodes=episodes, physical_controls=controls, complete_chunks=chunks,
         decoded_videos=len(videos), video_frames=frames, all_commands_and_draws_reproduced=True,
         all_initial_physical_public_states_match=True, maximum_allowed_RGB_component_delta=2,
         SGD=0, all_prior_history_retained=True, elapsed_CPU_seconds=time.time()-began, videos=videos)
-    args.output.write_text(json.dumps(audit, indent=2)+'\n')
+    output_path.write_text(json.dumps(audit, indent=2)+'\n')
+    return audit
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('result', type=Path)
+    parser.add_argument('output', type=Path)
+    args = parser.parse_args()
+    audit = audit_result(args.result,args.output)
     print(json.dumps({k:v for k,v in audit.items() if k != 'videos'}))
 
 
