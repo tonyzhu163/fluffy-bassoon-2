@@ -1,8 +1,8 @@
 # Matched512 completion monitor
 
 Final evaluation and independent audit completed on 2026-11-04. All GPUs were
-released by 15:31:24 Shanghai; no work remains for this monitor. Deletion is
-pending publication and mirroring of the final evidence.
+released by 15:31:24 Shanghai; no work remains. The monitor was deleted after publication and SHA-256 verification of the
+remote evidence mirror.
 
 - Automation: `finish-accelerated-matched-512-evaluation`
 - Owner chat: `01a1a512-959d-7f42-82b2-9323662ff4dd`
