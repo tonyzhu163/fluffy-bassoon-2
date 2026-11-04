@@ -136,7 +136,7 @@ commit-pinned runs retain their original protocol.
 | `scripts/diagnostics/` | One launcher per experiment (`vla_*.sh`, `robotwin_*.py`, `dsrl_pi0_replication.sh`) |
 | `scripts/setup/` | DSRL Pi0 and RoboTwin runtime setup |
 | `scripts/gpu_availability.sh`, `scripts/[train]gpu_probe.py` | School-cluster availability; in-job GPU isolation probe |
-| `patches/` | RLinf flow-noise key patch, applied only to an isolated copy |
+| `patches/` | RLinf patches (flow-noise checkpoint keys; critic value at the sampled denoising step), applied only to an isolated copy |
 
 The package names are kept from `tonyzhu163/fluffy-bassoon` so copied code
 stays byte-identical ([PROVENANCE.md](../PROVENANCE.md)).

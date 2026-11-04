@@ -1,0 +1,21 @@
+--- a/rlinf/models/embodiment/openpi/tasks/rl.py
++++ b/rlinf/models/embodiment/openpi/tasks/rl.py
+@@ -293,7 +293,17 @@
+         if vlm_value is not None:
+             prev_values = vlm_value[:, None].float().contiguous()
+         elif suffix_values:
+-            prev_values = torch.stack(suffix_values, dim=1).mean(dim=1, keepdim=True)
++            stacked_values = torch.stack(suffix_values, dim=1)
++            if rl_cfg.joint_logprob:
++                prev_values = stacked_values.mean(dim=1, keepdim=True)
++            else:
++                # default_forward recomputes only denoise_inds[:, 0]; store the
++                # value at that same step so GAE, value clipping and the critic
++                # target all use one estimator.
++                prev_values = stacked_values[
++                    torch.arange(B, device=device), denoise_inds[:, 0]
++                ][:, None]
++            prev_values = prev_values.float().contiguous()
+         else:
+             prev_values = torch.zeros((B, 1), device=device, dtype=torch.float32)
+ 

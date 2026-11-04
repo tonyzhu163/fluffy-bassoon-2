@@ -99,6 +99,24 @@ def flow_logprob_parity(logprobs, old_logprobs, *, action_dim=12, tolerance=1e-3
         mean_abs_chunk_log_ratio=float(joint.abs().mean().item()))
 
 
+def flow_value_parity(values, old_values, *, tolerance=1e-3):
+    """Before the first SGD, the recomputed critic must equal the rollout's.
+
+    GAE and value clipping use rollout values; the loss trains recomputed
+    ones. Native RLinf averages all denoising steps at rollout but recomputes
+    only the sampled step (patches/rlinf-e1a82ebf-critic-chosen-step-value.patch).
+    """
+    import torch
+    new, old = values.detach().float().flatten(), old_values.detach().to(values.device).float().flatten()
+    if new.shape != old.shape:
+        raise ValueError('Recomputed and rollout values must have one entry per sample')
+    delta = (new - old).abs()
+    finite = bool(torch.isfinite(delta).all().item())
+    maximum = float(delta.max().item())
+    return dict(passed=finite and maximum <= tolerance, finite=finite, tolerance=tolerance,
+        max_abs_value_delta=maximum, mean_abs_value_delta=float(delta.mean().item()))
+
+
 def flow_seeds(task):
     """Per-task disjoint ranges: TRAIN 2,x00,000+; before/after eval 6x0100."""
     number = FLOW_TASK_NUMBERS[task]

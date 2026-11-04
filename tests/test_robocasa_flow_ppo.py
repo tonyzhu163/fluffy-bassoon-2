@@ -22,7 +22,7 @@ def test_first_success_rejects_a_broadcast_latch():
 
 
 from fluffy_bassoon.meta_rl.rlinf_robocasa_flow_ppo import (
-    GlobalActionJournal, flow_contract, flow_logprob_parity, flow_seeds,
+    GlobalActionJournal, flow_contract, flow_logprob_parity, flow_seeds, flow_value_parity,
     keep_frozen_image_encoder_in_eval, train_case_seeds)
 
 
@@ -51,6 +51,16 @@ def test_pre_sgd_parity_uses_executed_chunk_sum_and_rejects_padded_dims():
     assert not flow_logprob_parity(old + float('nan'), old)['passed']
     with pytest.raises(ValueError, match='executed action'):
         flow_logprob_parity(torch.zeros(2, 50, 32), torch.zeros(2, 50, 32))
+
+
+def test_pre_sgd_value_parity_rejects_denoise_step_mean():
+    import torch
+    steps = torch.tensor([[0.1, 0.5, 0.9], [0.2, 0.2, 0.8]])  # per-denoise-step values
+    chosen = steps[torch.arange(2), torch.tensor([2, 0])]
+    assert flow_value_parity(chosen.clone(), chosen[:, None])['passed']
+    # Unpatched RLinf stores the mean over steps but recomputes the chosen step.
+    assert not flow_value_parity(chosen, steps.mean(dim=1, keepdim=True))['passed']
+    assert not flow_value_parity(chosen + float('nan'), chosen[:, None])['passed']
 
 
 def test_flow_factory_stabilizes_native_regions_before_constructor(monkeypatch):
