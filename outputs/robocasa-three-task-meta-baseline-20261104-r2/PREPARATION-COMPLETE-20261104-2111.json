@@ -1,0 +1,676 @@
+{
+  "checked_shanghai": "2026-11-04T21:11:19.537600+08:00",
+  "tasks": [
+    {
+      "task": "OpenDrawer",
+      "job_id": "job-2y8auhjtt9ak",
+      "attempt": "prepare-4gpu-03",
+      "created_shanghai": "2026-11-04T19:03:10+08:00",
+      "shards": [
+        {
+          "shard": "shard-00",
+          "progress": {
+            "task": "OpenDrawer",
+            "seen_members": 3120,
+            "total_members": 3120,
+            "completed_decisions": 49920,
+            "elapsed_seconds": 4347.1621561050415
+          },
+          "mtime": "2026-11-04T20:16:03.000033+08:00",
+          "complete": true
+        },
+        {
+          "shard": "shard-01",
+          "progress": {
+            "task": "OpenDrawer",
+            "seen_members": 3120,
+            "total_members": 3120,
+            "completed_decisions": 49920,
+            "elapsed_seconds": 4344.152245521545
+          },
+          "mtime": "2026-11-04T20:15:59.990623+08:00",
+          "complete": true
+        },
+        {
+          "shard": "shard-02",
+          "progress": {
+            "task": "OpenDrawer",
+            "seen_members": 3120,
+            "total_members": 3120,
+            "completed_decisions": 49920,
+            "elapsed_seconds": 4345.64818072319
+          },
+          "mtime": "2026-11-04T20:16:01.485510+08:00",
+          "complete": true
+        },
+        {
+          "shard": "shard-03",
+          "progress": {
+            "task": "OpenDrawer",
+            "seen_members": 3120,
+            "total_members": 3120,
+            "completed_decisions": 49920,
+            "elapsed_seconds": 4345.562747716904
+          },
+          "mtime": "2026-11-04T20:16:01.399833+08:00",
+          "complete": true
+        }
+      ],
+      "released": {
+        "status": "prepared",
+        "source_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+        "hostname": "job-2y8auhjtt9ak-master-0",
+        "task": "OpenDrawer",
+        "started_unix": 1793790204.7171097,
+        "ended_unix": 1793795377.0831914,
+        "worker_GPU_hours": 5.747073424127366,
+        "scheduler_charge_pending": true,
+        "exit_codes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "assembly": {
+        "completed": true,
+        "task": "OpenDrawer",
+        "iterations": 130,
+        "chunks_per_episode": 12,
+        "source_physical_horizons": [
+          600
+        ],
+        "datasets": {
+          "ad_train": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/OpenDrawer/preparation/corpus/ad-train.npz",
+            "sha256": "bc9fb334293a6f78a8550a7e8679c22086a9b114dde03c7e8550771b58fb3ad3"
+          },
+          "dpt_train": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/OpenDrawer/preparation/corpus/dpt-train.npz",
+            "sha256": "a9e35a87c4206f81ce0b87664d45f10c5e428c61d9eb975ae25ad4005a373ae9"
+          },
+          "dit_train": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/OpenDrawer/preparation/corpus/dit-train.npz",
+            "sha256": "bc9fb334293a6f78a8550a7e8679c22086a9b114dde03c7e8550771b58fb3ad3"
+          },
+          "ic_iql_train": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/OpenDrawer/preparation/corpus/ic_iql-train.npz",
+            "sha256": "bc9fb334293a6f78a8550a7e8679c22086a9b114dde03c7e8550771b58fb3ad3"
+          },
+          "ad_validation": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/OpenDrawer/preparation/corpus/ad-validation.npz",
+            "sha256": "30739f6c5c2ffe33d1835a9ff0633ecb9a8abe1a46d82f0d606f402ed8ac605d"
+          },
+          "dpt_validation": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/OpenDrawer/preparation/corpus/dpt-validation.npz",
+            "sha256": "34c551e035186a636613dcfc75fa7a7c3ef559aab27f23f92cd494a283546b67"
+          },
+          "dit_validation": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/OpenDrawer/preparation/corpus/dit-validation.npz",
+            "sha256": "30739f6c5c2ffe33d1835a9ff0633ecb9a8abe1a46d82f0d606f402ed8ac605d"
+          },
+          "ic_iql_validation": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/OpenDrawer/preparation/corpus/ic_iql-validation.npz",
+            "sha256": "30739f6c5c2ffe33d1835a9ff0633ecb9a8abe1a46d82f0d606f402ed8ac605d"
+          }
+        },
+        "provenance": {
+          "task": "OpenDrawer",
+          "motor_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+          "bos_archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1/corpora/OpenDrawer/native-130-r1.tar",
+          "bos_archive_sha256": "c0817a8be0a250c357d8f40d57ec1508da1d634a5bac7e54ba98f3d2c1ef44c6",
+          "source_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+          "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+          "teacher": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/OpenDrawer/production-r1/OpenDrawer/checkpoints/global_step_130/actor/model_state_dict/full_weights.pt",
+            "sha256": "20976fe994b01ee5cd332d0f09b6459359fd2433d5effc6ed21ba26d7d7422a9",
+            "iteration": 130,
+            "boundary_sha256": "10deeac6761a5018ce8aa6eaed978d449e0f642552cfe68c8ae26bb56c613e57",
+            "sampling": "native eval ODE10; deterministic per-query PCG64 initial Gaussian"
+          },
+          "raw_corpus_sha256": "fb996f2a5f16aace542d05ff6d636e2afcbe6f4a971454e82d6caf1447a65729",
+          "preparation_shards": 4
+        },
+        "codec": {
+          "kind": "flow_physical_action",
+          "steering_dim": 600,
+          "mean": [
+            0.00630647037178278,
+            -0.004275198560208082,
+            -0.038552429527044296,
+            0.0021012206561863422,
+            -0.010011998936533928,
+            0.0008334461017511785,
+            0.0,
+            0.03817916288971901,
+            0.0035834098234772682,
+            0.0007685691234655678,
+            0.0,
+            0.0
+          ],
+          "std": [
+            0.37416529655456543,
+            0.3163819909095764,
+            0.32647767663002014,
+            0.08450452238321304,
+            0.10373636335134506,
+            0.09780381619930267,
+            1.0,
+            0.2287949025630951,
+            0.19417312741279602,
+            0.1452745497226715,
+            9.999999974752427e-07,
+            1.0
+          ],
+          "labels": "actual mapped physical H50x12; binary coordinates -1/+1",
+          "deployment": "continuous inverse normalization; binary sign to native 0/1 input before native +/-1 map",
+          "native_gaussian": "not used by direct-action student"
+        },
+        "feature_dim": 2073,
+        "action_dim": 600,
+        "teacher_queries": 199680,
+        "source_episodes": 16640,
+        "source_TRAIN_controls": 9984000,
+        "student_fit_ready": true
+      },
+      "logs": [
+        {
+          "log": "merge.log",
+          "bytes": 3966,
+          "mtime": "2026-11-04T20:29:35.785764+08:00",
+          "error": false,
+          "error_tail": null
+        },
+        {
+          "log": "prepare-00.log",
+          "bytes": 5681,
+          "mtime": "2026-11-04T20:16:04.505571+08:00",
+          "error": false,
+          "error_tail": null
+        },
+        {
+          "log": "prepare-01.log",
+          "bytes": 5691,
+          "mtime": "2026-11-04T20:16:01.514916+08:00",
+          "error": false,
+          "error_tail": null
+        },
+        {
+          "log": "prepare-02.log",
+          "bytes": 5691,
+          "mtime": "2026-11-04T20:16:02.995553+08:00",
+          "error": false,
+          "error_tail": null
+        },
+        {
+          "log": "prepare-03.log",
+          "bytes": 5719,
+          "mtime": "2026-11-04T20:16:02.912584+08:00",
+          "error": false,
+          "error_tail": null
+        },
+        {
+          "log": "probe.log",
+          "bytes": 6247,
+          "mtime": "2026-11-04T19:03:28.259115+08:00",
+          "error": false,
+          "error_tail": null
+        }
+      ]
+    },
+    {
+      "task": "CloseToasterOvenDoor",
+      "job_id": "job-75dnd0uputmn",
+      "attempt": "prepare-4gpu-01",
+      "created_shanghai": "2026-11-04T19:04:35+08:00",
+      "shards": [
+        {
+          "shard": "shard-00",
+          "progress": {
+            "task": "CloseToasterOvenDoor",
+            "seen_members": 3120,
+            "total_members": 3120,
+            "completed_decisions": 49920,
+            "elapsed_seconds": 4252.859961748123
+          },
+          "mtime": "2026-11-04T20:16:16.260720+08:00",
+          "complete": true
+        },
+        {
+          "shard": "shard-01",
+          "progress": {
+            "task": "CloseToasterOvenDoor",
+            "seen_members": 3120,
+            "total_members": 3120,
+            "completed_decisions": 49920,
+            "elapsed_seconds": 4254.3287653923035
+          },
+          "mtime": "2026-11-04T20:16:17.739597+08:00",
+          "complete": true
+        },
+        {
+          "shard": "shard-02",
+          "progress": {
+            "task": "CloseToasterOvenDoor",
+            "seen_members": 3120,
+            "total_members": 3120,
+            "completed_decisions": 49920,
+            "elapsed_seconds": 4253.137152194977
+          },
+          "mtime": "2026-11-04T20:16:16.547722+08:00",
+          "complete": true
+        },
+        {
+          "shard": "shard-03",
+          "progress": {
+            "task": "CloseToasterOvenDoor",
+            "seen_members": 3120,
+            "total_members": 3120,
+            "completed_decisions": 49920,
+            "elapsed_seconds": 4254.195739984512
+          },
+          "mtime": "2026-11-04T20:16:17.555880+08:00",
+          "complete": true
+        }
+      ],
+      "released": {
+        "status": "prepared",
+        "source_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+        "hostname": "job-75dnd0uputmn-master-0",
+        "task": "CloseToasterOvenDoor",
+        "started_unix": 1793790297.3262491,
+        "ended_unix": 1793795400.6853402,
+        "worker_GPU_hours": 5.6703989900483025,
+        "scheduler_charge_pending": true,
+        "exit_codes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "assembly": {
+        "completed": true,
+        "task": "CloseToasterOvenDoor",
+        "iterations": 130,
+        "chunks_per_episode": 12,
+        "source_physical_horizons": [
+          600
+        ],
+        "datasets": {
+          "ad_train": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/CloseToasterOvenDoor/preparation/corpus/ad-train.npz",
+            "sha256": "9dbedc04a4f190901d244c0a23d2980acbc6a21aa43c2f7f26fe7b71b899fbc7"
+          },
+          "dpt_train": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/CloseToasterOvenDoor/preparation/corpus/dpt-train.npz",
+            "sha256": "7adc17d6523eb91a6880c1d640d1f9fa08d4c2ac5342e2e64f3eb9ce2ddd36fb"
+          },
+          "dit_train": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/CloseToasterOvenDoor/preparation/corpus/dit-train.npz",
+            "sha256": "9dbedc04a4f190901d244c0a23d2980acbc6a21aa43c2f7f26fe7b71b899fbc7"
+          },
+          "ic_iql_train": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/CloseToasterOvenDoor/preparation/corpus/ic_iql-train.npz",
+            "sha256": "9dbedc04a4f190901d244c0a23d2980acbc6a21aa43c2f7f26fe7b71b899fbc7"
+          },
+          "ad_validation": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/CloseToasterOvenDoor/preparation/corpus/ad-validation.npz",
+            "sha256": "40e24b94139d26721e9d6ab170b980578cca140e35eafe86cbf6abf8c5a5f371"
+          },
+          "dpt_validation": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/CloseToasterOvenDoor/preparation/corpus/dpt-validation.npz",
+            "sha256": "4f101a550c6d02adbe2e7ab5a549de9426f6df7e72800e3f54f92a2c3f5de7b6"
+          },
+          "dit_validation": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/CloseToasterOvenDoor/preparation/corpus/dit-validation.npz",
+            "sha256": "40e24b94139d26721e9d6ab170b980578cca140e35eafe86cbf6abf8c5a5f371"
+          },
+          "ic_iql_validation": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/CloseToasterOvenDoor/preparation/corpus/ic_iql-validation.npz",
+            "sha256": "40e24b94139d26721e9d6ab170b980578cca140e35eafe86cbf6abf8c5a5f371"
+          }
+        },
+        "provenance": {
+          "task": "CloseToasterOvenDoor",
+          "motor_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+          "bos_archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1/corpora/CloseToasterOvenDoor/native-130-r1.tar",
+          "bos_archive_sha256": "788b6e3357bdd17786fbec1fabb6811a74b1f4e8ef1d985a05e28d6c64fd322a",
+          "source_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+          "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+          "teacher": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CloseToasterOvenDoor/production-r1/CloseToasterOvenDoor/checkpoints/global_step_130/actor/model_state_dict/full_weights.pt",
+            "sha256": "20f215f9e80adcbc3ecbac74d109138a86875cceb6a6a43b879267f057a08eee",
+            "iteration": 130,
+            "boundary_sha256": "5e525b1b8df3a41df79cd8d4d76ccae918d93eb12eac58c0ad9d9e49449583ef",
+            "sampling": "native eval ODE10; deterministic per-query PCG64 initial Gaussian"
+          },
+          "raw_corpus_sha256": "1cde792d70e15c8acf99ddfd5dc65406d6be7207007523311641da8ea8ff43fd",
+          "preparation_shards": 4
+        },
+        "codec": {
+          "kind": "flow_physical_action",
+          "steering_dim": 600,
+          "mean": [
+            0.00630647037178278,
+            -0.004275198560208082,
+            -0.038552429527044296,
+            0.0021012206561863422,
+            -0.010011998936533928,
+            0.0008334461017511785,
+            0.0,
+            0.03817916288971901,
+            0.0035834098234772682,
+            0.0007685691234655678,
+            0.0,
+            0.0
+          ],
+          "std": [
+            0.37416529655456543,
+            0.3163819909095764,
+            0.32647767663002014,
+            0.08450452238321304,
+            0.10373636335134506,
+            0.09780381619930267,
+            1.0,
+            0.2287949025630951,
+            0.19417312741279602,
+            0.1452745497226715,
+            9.999999974752427e-07,
+            1.0
+          ],
+          "labels": "actual mapped physical H50x12; binary coordinates -1/+1",
+          "deployment": "continuous inverse normalization; binary sign to native 0/1 input before native +/-1 map",
+          "native_gaussian": "not used by direct-action student"
+        },
+        "feature_dim": 2073,
+        "action_dim": 600,
+        "teacher_queries": 199680,
+        "source_episodes": 16640,
+        "source_TRAIN_controls": 9984000,
+        "student_fit_ready": true
+      },
+      "logs": [
+        {
+          "log": "merge.log",
+          "bytes": 4096,
+          "mtime": "2026-11-04T20:29:59.862082+08:00",
+          "error": false,
+          "error_tail": null
+        },
+        {
+          "log": "prepare-00.log",
+          "bytes": 5801,
+          "mtime": "2026-11-04T20:16:17.816744+08:00",
+          "error": false,
+          "error_tail": null
+        },
+        {
+          "log": "prepare-01.log",
+          "bytes": 5811,
+          "mtime": "2026-11-04T20:16:19.318769+08:00",
+          "error": false,
+          "error_tail": null
+        },
+        {
+          "log": "prepare-02.log",
+          "bytes": 5811,
+          "mtime": "2026-11-04T20:16:18.101690+08:00",
+          "error": false,
+          "error_tail": null
+        },
+        {
+          "log": "prepare-03.log",
+          "bytes": 5839,
+          "mtime": "2026-11-04T20:16:19.114597+08:00",
+          "error": false,
+          "error_tail": null
+        },
+        {
+          "log": "probe.log",
+          "bytes": 6247,
+          "mtime": "2026-11-04T19:05:14.366547+08:00",
+          "error": false,
+          "error_tail": null
+        }
+      ]
+    },
+    {
+      "task": "CoffeeSetupMug",
+      "job_id": "job-38ix8q2xm8wt",
+      "attempt": "prepare-4gpu-01",
+      "created_shanghai": "2026-11-04T19:05:47+08:00",
+      "shards": [
+        {
+          "shard": "shard-00",
+          "progress": {
+            "task": "CoffeeSetupMug",
+            "seen_members": 3120,
+            "total_members": 3120,
+            "completed_decisions": 49920,
+            "elapsed_seconds": 4386.295611619949
+          },
+          "mtime": "2026-11-04T20:19:33.701004+08:00",
+          "complete": true
+        },
+        {
+          "shard": "shard-01",
+          "progress": {
+            "task": "CoffeeSetupMug",
+            "seen_members": 3120,
+            "total_members": 3120,
+            "completed_decisions": 49920,
+            "elapsed_seconds": 4387.225589752197
+          },
+          "mtime": "2026-11-04T20:19:34.631156+08:00",
+          "complete": true
+        },
+        {
+          "shard": "shard-02",
+          "progress": {
+            "task": "CoffeeSetupMug",
+            "seen_members": 3120,
+            "total_members": 3120,
+            "completed_decisions": 49920,
+            "elapsed_seconds": 4391.944707870483
+          },
+          "mtime": "2026-11-04T20:19:39.324881+08:00",
+          "complete": true
+        },
+        {
+          "shard": "shard-03",
+          "progress": {
+            "task": "CoffeeSetupMug",
+            "seen_members": 3120,
+            "total_members": 3120,
+            "completed_decisions": 49920,
+            "elapsed_seconds": 4317.795615911484
+          },
+          "mtime": "2026-11-04T20:18:25.201661+08:00",
+          "complete": true
+        }
+      ],
+      "released": {
+        "status": "prepared",
+        "source_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+        "hostname": "job-38ix8q2xm8wt-master-0",
+        "task": "CoffeeSetupMug",
+        "started_unix": 1793790364.3345304,
+        "ended_unix": 1793795634.7077143,
+        "worker_GPU_hours": 5.855970204406314,
+        "scheduler_charge_pending": true,
+        "exit_codes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "assembly": {
+        "completed": true,
+        "task": "CoffeeSetupMug",
+        "iterations": 130,
+        "chunks_per_episode": 12,
+        "source_physical_horizons": [
+          600
+        ],
+        "datasets": {
+          "ad_train": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/CoffeeSetupMug/preparation/corpus/ad-train.npz",
+            "sha256": "1f43ca4206abe829c2ad8f405c906332b7d6f3199e841cd9dcc4e50ab1a36258"
+          },
+          "dpt_train": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/CoffeeSetupMug/preparation/corpus/dpt-train.npz",
+            "sha256": "d72ebab687c0da984481fb3ee02c73474dec5ea0c7e802646bfb66fe7d9dfcf1"
+          },
+          "dit_train": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/CoffeeSetupMug/preparation/corpus/dit-train.npz",
+            "sha256": "1f43ca4206abe829c2ad8f405c906332b7d6f3199e841cd9dcc4e50ab1a36258"
+          },
+          "ic_iql_train": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/CoffeeSetupMug/preparation/corpus/ic_iql-train.npz",
+            "sha256": "1f43ca4206abe829c2ad8f405c906332b7d6f3199e841cd9dcc4e50ab1a36258"
+          },
+          "ad_validation": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/CoffeeSetupMug/preparation/corpus/ad-validation.npz",
+            "sha256": "a28225c34a61111311a2bdab0d55e174af206023aa1e0acc3ec2df05866cb512"
+          },
+          "dpt_validation": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/CoffeeSetupMug/preparation/corpus/dpt-validation.npz",
+            "sha256": "5ee6f8c79fb05fd1b2ce598618034cae4064f69630b1f65721da7a6ca72efc89"
+          },
+          "dit_validation": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/CoffeeSetupMug/preparation/corpus/dit-validation.npz",
+            "sha256": "a28225c34a61111311a2bdab0d55e174af206023aa1e0acc3ec2df05866cb512"
+          },
+          "ic_iql_validation": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/CoffeeSetupMug/preparation/corpus/ic_iql-validation.npz",
+            "sha256": "a28225c34a61111311a2bdab0d55e174af206023aa1e0acc3ec2df05866cb512"
+          }
+        },
+        "provenance": {
+          "task": "CoffeeSetupMug",
+          "motor_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+          "bos_archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1/corpora/CoffeeSetupMug/native-130-r1.tar",
+          "bos_archive_sha256": "1ad7c6674e642ca0da8d54687e62c0b31b16d1ddca01e0757b00d5514ef02da1",
+          "source_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+          "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+          "teacher": {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CoffeeSetupMug/production-r1/CoffeeSetupMug/checkpoints/global_step_130/actor/model_state_dict/full_weights.pt",
+            "sha256": "fd3585acc1bbe6637035e58fd3237bf62ad53dfb1149b570e4237d95a9bfaec5",
+            "iteration": 130,
+            "boundary_sha256": "d04c3136edc34189ff7337983725a6378844a823c79c55cb28849532a94bc09f",
+            "sampling": "native eval ODE10; deterministic per-query PCG64 initial Gaussian"
+          },
+          "raw_corpus_sha256": "443566abfeac3edbe0b2f443b537d97da7d2dbb09f43f8d6117ad444abe028d7",
+          "preparation_shards": 4
+        },
+        "codec": {
+          "kind": "flow_physical_action",
+          "steering_dim": 600,
+          "mean": [
+            0.00630647037178278,
+            -0.004275198560208082,
+            -0.038552429527044296,
+            0.0021012206561863422,
+            -0.010011998936533928,
+            0.0008334461017511785,
+            0.0,
+            0.03817916288971901,
+            0.0035834098234772682,
+            0.0007685691234655678,
+            0.0,
+            0.0
+          ],
+          "std": [
+            0.37416529655456543,
+            0.3163819909095764,
+            0.32647767663002014,
+            0.08450452238321304,
+            0.10373636335134506,
+            0.09780381619930267,
+            1.0,
+            0.2287949025630951,
+            0.19417312741279602,
+            0.1452745497226715,
+            9.999999974752427e-07,
+            1.0
+          ],
+          "labels": "actual mapped physical H50x12; binary coordinates -1/+1",
+          "deployment": "continuous inverse normalization; binary sign to native 0/1 input before native +/-1 map",
+          "native_gaussian": "not used by direct-action student"
+        },
+        "feature_dim": 2073,
+        "action_dim": 600,
+        "teacher_queries": 199680,
+        "source_episodes": 16640,
+        "source_TRAIN_controls": 9984000,
+        "student_fit_ready": true
+      },
+      "logs": [
+        {
+          "log": "merge.log",
+          "bytes": 4018,
+          "mtime": "2026-11-04T20:33:53.922858+08:00",
+          "error": false,
+          "error_tail": null
+        },
+        {
+          "log": "prepare-00.log",
+          "bytes": 5729,
+          "mtime": "2026-11-04T20:19:35.278343+08:00",
+          "error": false,
+          "error_tail": null
+        },
+        {
+          "log": "prepare-01.log",
+          "bytes": 5739,
+          "mtime": "2026-11-04T20:19:36.289372+08:00",
+          "error": false,
+          "error_tail": null
+        },
+        {
+          "log": "prepare-02.log",
+          "bytes": 5740,
+          "mtime": "2026-11-04T20:19:40.872193+08:00",
+          "error": false,
+          "error_tail": null
+        },
+        {
+          "log": "prepare-03.log",
+          "bytes": 5767,
+          "mtime": "2026-11-04T20:18:26.775274+08:00",
+          "error": false,
+          "error_tail": null
+        },
+        {
+          "log": "probe.log",
+          "bytes": 6253,
+          "mtime": "2026-11-04T19:06:18.505274+08:00",
+          "error": false,
+          "error_tail": null
+        }
+      ]
+    }
+  ],
+  "monitor": {
+    "pid": 2110873,
+    "source_commit": "f2380ced6dbaea1aa751c53207af41d9d43a1485",
+    "script_sha256": "eb389a796cc81f5d111c2e4dbb8b90a6e0a6531fa7ca1661bbb92d445d6919ec",
+    "deployed_via": "Verified Git-bundle object export; active training worktrees unchanged",
+    "started_shanghai": "2026-11-04T19:14:24.984828+08:00",
+    "interval_seconds": 1200,
+    "maximum_checks": 14,
+    "scope": "Read-only worker evidence, no scheduler changes",
+    "alive": false
+  },
+  "last_monitor_check": "2026-11-04T20:34:31.081586+08:00",
+  "joint_files": [],
+  "free_PFS_GiB": 334.5625
+}

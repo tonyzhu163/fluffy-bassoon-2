@@ -1,11 +1,11 @@
 # Joint three-task training with four GPUs per preparation task
 
-**Status:** All three four-GPU preparations are RUNNING on Baige Pro6K.
-OpenDrawer `job-2y8auhjtt9ak`, Toaster `job-75dnd0uputmn`, Coffee
-`job-38ix8q2xm8wt`; source `d71cb532`. All 12 actual GPU probes pass.
-Startup failures are terminal/released and charged 672 conservative GPU-seconds.
-The approved cumulative ceiling remains **96 GPU-hours**; see
-[BUDGET.json](BUDGET.json) and [EXECUTION.json](EXECUTION.json).
+**Status:** All three four-GPU preparations SUCCEEDED and released their
+allocations by 2026-11-04 20:34:15 Shanghai. There are 599,040 step-130 teacher
+annotations, 130 producer versions and all 12 completed shards. Conservative
+cumulative charge including startup failures is **17.57 GPU-hours**, leaving
+**78.43 of the approved 96 GPU-hours**. CPU pooling is in progress before the
+approved four-GPU joint fit. See [EXECUTION.json](EXECUTION.json).
 
 The three task jobs only prepare data. Each method then trains **one model on
 all three tasks together**: AD, DPT, DIT and IC-IQL use separate objectives and
@@ -84,3 +84,21 @@ This launcher covers the existing direct-action four-method baseline. Bridge
 training and closed-loop evaluation in the broader original plan remain pending
 implementation/qualification and must fit the same cumulative approved budget.
 The active Stage 1 PPO/GRPO allocation is unchanged.
+
+## Pooled-container migration, 2026-11-04
+
+The original zlib writer dominated CPU pooling. The owned CPU-only attempt was
+stopped with its partial output preserved as
+`joint/preparation-pool-cpu-01-abandoned`. No learner was running. The replacement
+`POOL-UNCOMPRESSED.py` is Git-deployed at `6bc69884` and writes the same schema,
+arrays, dtypes, task order and split metadata using uncompressed NPZ containers.
+All eight objective/split numerical fixtures exactly match the original writer;
+only file SHA256 differs. Source receipts and per-task dataset hashes are still
+checked, and the learner/source pin stays `d71cb532`.
+
+The fresh output is `joint/preparation-uncompressed-cpu02`. After completion and
+verification, `joint/preparation` is a read-only-use path alias to that output;
+its manifests bind the actual NPZ paths and hashes. The scientific data, global
+batch 8, models and validation-convergence contract are unchanged.
+[Migration receipt](POOL-MIGRATION.json),
+[numerical qualification](UNCOMPRESSED-NUMERICAL-QUALIFICATION.json).

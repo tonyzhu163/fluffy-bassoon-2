@@ -18,8 +18,8 @@ from rlinf.utils.placement import HybridComponentPlacement
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'robocasa-flow-sde-endpoint-test512-20261104-r1'))
 from endpoint import paired, read, sha, write
 
-POLICIES = ('sft', 'old', 'new')
-STEP = {'sft': 0, 'old': 40, 'new': 40}
+POLICIES = ('sft', 'old', 'new', 'grpo')
+STEP = {'sft': 0, 'old': 40, 'new': 40, 'grpo': 40}
 
 
 def decoded(path):
@@ -31,7 +31,7 @@ def run(ready, output, deadline):
     assert torch.cuda.device_count() == 1
     spec = read(ready)
     cfg = configuration(dict(task='OpenDrawer', config=spec['source_config'],
-        config_sha256=spec['source_config_sha256']), output, deadline, maximum_actions=148000)
+        config_sha256=spec['source_config_sha256']), output, deadline, maximum_actions=194000)
     write(output / 'resolved-config.json', OmegaConf.to_container(cfg, resolve=True))
     cluster = Cluster(cluster_cfg=cfg.cluster, distributed_log_dir=cfg.runner.per_worker_log_path)
     placement = HybridComponentPlacement(cfg, cluster)
@@ -57,7 +57,8 @@ def run(ready, output, deadline):
     parity, = rollout.initial_likelihood_parity(spec['fixture'], spec['fixture_sha256']).wait()
     assert parity['passed']
     write(output / 'SFT-PARITY.json', parity)
-    orders = list(itertools.permutations(POLICIES))
+    # Each policy occupies every slot twice and follows every other policy twice.
+    orders = [tuple(POLICIES[(i + offset) % 4] for i in (0, 1, 3, 2)) for offset in range(4)]
     panels = []
     for bank in range(8):
         start = 610100 + 8 * bank
@@ -115,15 +116,15 @@ def run(ready, output, deadline):
     calls = read(output.parent / 'accounting' / 'rank-00' / (output.name+'.json'))['calls']
     assert calls and all(r['resolved'] for r in calls)
     executed = sum(r['executed_or_conservative'] for r in calls)
-    assert executed >= 120000 and executed <= 148000
-    assert len(panels) == 25
+    assert 158400 <= executed <= 194000
+    assert len(panels) == 33
     stats = {}
     for idx, metric in enumerate(('first_success','end_success')):
         by = {label:{k:v[idx] for p in panels if p['policy']==label for k,v in p['outcomes'].items()} for label in POLICIES}
         assert all(set(d) == set(range(610100,610164)) for d in by.values())
         stats[metric] = {f'{a}_to_{b}':paired(by[a],by[b],616441) for a,b in itertools.combinations(POLICIES,2)}
     repeat = next(p for p in panels if p['policy']=='repeat')
-    write(output/'RESULT.json',dict(completed=True, stats=stats, SGD=0, valid_controls=120000,
+    write(output/'RESULT.json',dict(completed=True, stats=stats, SGD=0, valid_controls=158400,
           all_journaled_controls=executed, repeat=repeat, ready_sha256=sha(ready),
           panels={p.name:sha(p) for p in sorted((output/'panels').glob('*.json'))}))
 

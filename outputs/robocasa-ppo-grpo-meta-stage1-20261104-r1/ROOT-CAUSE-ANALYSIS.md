@@ -123,7 +123,7 @@ H10/K5 profile also changes noise, minibatch size and the physical duration
 represented by a per-decision discount. A single benchmark can measure its
 cost and replay parity. [StructRL launcher](https://github.com/amazon-science/StructRL/blob/6caba1f9538167e0752a7338663e45aac8df965d/launch/train_pi05_sparse_rl_ppo.sbatch)
 
-The agreed order is matched-control GRPO, the three-policy rerun on the
+The agreed order is matched-control GRPO, the SFT, old PPO40, new PPO40 and GRPO40 rerun on the
 original DEV64 with common sampler RNG, then the single-update shorter-chunk
 benchmark. The separate ablation supplies the fresh TEST512 comparison.
 [DEV64 contract](../robocasa-ppo40-matched-dev64-20261104-r1/PLAN.md) ·

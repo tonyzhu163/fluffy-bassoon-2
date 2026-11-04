@@ -1,0 +1,38 @@
+{
+  "reason": "CPU zlib serialization dominated pooling; uncompressed arrays are numerically exact against the original writer for all eight objective/split fixtures",
+  "qualification": "QUALIFY-UNCOMPRESSED.py: 336 train / 48 validation streams, exact arrays/dtypes/shapes and identical metadata except NPZ SHA256",
+  "old_owned_pid": 2128363,
+  "old_exit": {
+    "exit_code": -15,
+    "started_unix": 1793798099.1789536,
+    "ended_unix": 1793798775.5805073,
+    "GPU_hours": 0
+  },
+  "partial_preserved": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/joint/preparation-pool-cpu-01-abandoned",
+  "new_attempt": {
+    "pid": 2129618,
+    "command": [
+      "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+      "-B",
+      "/mowenjie/fluffy-bassoon-2/sources/three-task-pool-6bc69884/outputs/robocasa-three-task-meta-baseline-20261104-r2/POOL-UNCOMPRESSED.py",
+      "--learner-code",
+      "/mowenjie/fluffy-bassoon-2/sources/three-task-joint-d71cb532",
+      "--pooler-commit",
+      "6bc6988492c33d030b88d4b4c4394c9d161168c6",
+      "--sources",
+      "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2",
+      "--output",
+      "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/joint/preparation-uncompressed-cpu02",
+      "--source-commit",
+      "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+      "--expected-hostname",
+      "aibox-rffe453e3884-5f96c78b88-rtvhb"
+    ],
+    "started_shanghai": "2026-11-04T21:26:15.666939+08:00",
+    "pooler_commit": "6bc6988492c33d030b88d4b4c4394c9d161168c6",
+    "learner_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+    "GPU_hours": 0,
+    "CUDA_VISIBLE_DEVICES": "-1"
+  },
+  "active_learner_source_unchanged": true
+}

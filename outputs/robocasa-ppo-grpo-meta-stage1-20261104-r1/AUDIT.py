@@ -16,7 +16,7 @@ def digest(path):
     return h.hexdigest()
 
 
-def audit(root, *, snapshots=False):
+def audit(root, *, snapshots=False, previous=None):
     refs = []
 
     def read(path):
@@ -31,10 +31,41 @@ def audit(root, *, snapshots=False):
     assert probe['status'] == 'passed' and len(probe['devices']) == 8
     assert contract['iterations'] == 40 and contract['update_epochs'] == 1
     assert contract['optimizer_steps_per_update'] == 6 and contract['eval_panels'] == 5
+    sources = [root] if previous is None else [previous, root]
+    resume_step = None
+    if previous is not None:
+        cfg = read(root / 'resolved-config.json')
+        source_boundary = Path(cfg['runner']['resume_dir'])
+        assert source_boundary.parent.parent.parent == previous
+        source_record = read(source_boundary / 'pilot-boundary.json')
+        resume_step = source_record['global_step']
+        reference = Path(cfg['native_pilot']['before_reference'])
+        before = read(reference)
+        assert digest(reference) == cfg['native_pilot']['before_reference_sha256']
+        assert before['pending_evaluation_step'] == resume_step == 10
+        assert before['checkpoint_boundary_sha256'] == digest(source_boundary / 'pilot-boundary.json')
+        prior_contract = read(previous / 'flow-contract.json')
+        assert all(contract[k] == v for k, v in prior_contract.items())
+        prior_probe = read(previous / 'gpu-probe.json')
+        assert prior_probe['status'] == 'passed' and len(prior_probe['devices']) == 8
+        replay = read(root / 'evaluations' / f'step-{resume_step:03}.json')
+        assert replay['completed'] and replay['global_step'] == resume_step
+        assert read(previous / 'clock.json')['exit_code'] != 0
+
+    def paths(pattern):
+        for src in sources:
+            for path in sorted(src.glob(pattern)):
+                # The failed, partial DEV10 was charged but replayed in full.
+                if previous is not None and src == previous and path.name.startswith(f'eval_step_{resume_step:03}-'):
+                    continue
+                yield path
+
     updates = collections.defaultdict(dict)
-    for path in sorted((root / 'updates').glob('*.json')):
+    for path in paths('updates/*.json'):
         row = read(path)
         iteration = row['producing_policy_iteration'] + 1
+        if previous is not None:
+            assert (iteration <= resume_step) == path.is_relative_to(previous)
         assert row['completed'] and row['frozen_vlm_unchanged']
         assert row['optimizer_steps_after'] - row['optimizer_steps_before'] == 6
         assert all(math.isfinite(v) for v in row['losses'].values())
@@ -42,14 +73,15 @@ def audit(root, *, snapshots=False):
         assert row['rank'] not in updates[iteration]
         updates[iteration][row['rank']] = row
     parity = []
-    for path in sorted((root / 'logprob-parity').glob('*.json')):
+    for path in paths('logprob-parity/*.json'):
         row = read(path)
         assert row['passed'] and row['before_backward']
         if contract['add_value_head']:
             assert row['value_head_enabled'] and row['value']['passed']
         parity.append(dict(path=str(path), **row))
+    assert len({Path(row['path']).name for row in parity}) == len(parity)
     episodes = collections.defaultdict(dict)
-    for path in sorted((root / 'environment').glob('rank-*/*-episodes.json')):
+    for path in paths('environment/rank-*/*-episodes.json'):
         row = read(path)
         assert row['completed']
         key = (row['phase'], row['iteration'])
@@ -61,6 +93,8 @@ def audit(root, *, snapshots=False):
             episodes[key][episode_id] = episode
     panels = []
     baseline = episodes.get(('before', 0), {})
+    train_seeds = set()
+    group_outcomes = collections.Counter()
     for (phase, step), rows in sorted(episodes.items(), key=lambda item: (item[0][1], item[0][0])):
         expected = 128 if phase == 'training' else 64
         if len(rows) != expected:
@@ -69,6 +103,10 @@ def audit(root, *, snapshots=False):
         if phase == 'training':
             assert len(seeds) == contract['scenes_per_iteration']
             assert set(seeds.values()) == {contract['group_size']}
+            assert not train_seeds.intersection(seeds)
+            train_seeds.update(seeds)
+            successful = collections.Counter(row['seed'] for row in rows.values() if row['success_once'])
+            group_outcomes.update(successful[seed] for seed in seeds)
         panel = dict(phase=phase, policy_iteration=step, episodes=len(rows),
                      successes=sum(row['success_once'] for row in rows.values()),
                      end_successes=sum(row['success_at_end'] for row in rows.values()))
@@ -84,7 +122,7 @@ def audit(root, *, snapshots=False):
                          gain_pp=100 * (panel['success_rate'] - sum(r['success_once'] for r in baseline.values()) / 64))
         panels.append(panel)
     physical = []
-    for path in sorted((root / 'environment').glob('rank-*/*-initial.json')):
+    for path in paths('environment/rank-*/*-initial.json'):
         row = read(path)
         report = row['report']
         assert report['matched'] and report['physical_state_exact'] and report['public_state_exact']
@@ -93,7 +131,7 @@ def audit(root, *, snapshots=False):
     if snapshots and contract['group_size'] > 1:
         import torch
         from fluffy_bassoon.meta_rl.rlinf_robocasa_flow_ppo import verify_grpo_group_reset
-        for path in sorted((root / 'environment').glob('rank-*/training-*-initial.pt')):
+        for path in paths('environment/rank-*/training-*-initial.pt'):
             snapshot = torch.load(path, map_location='cpu', weights_only=False)
             verify_grpo_group_reset(snapshot, contract['group_size'])
             refs.append(dict(path=str(path), sha256=digest(path)))
@@ -105,6 +143,9 @@ def audit(root, *, snapshots=False):
         assert set(updates) == set(range(1, 41))
         assert all(set(rows) == {0, 1} for rows in updates.values())
         assert len(parity) == 80
+        for i, ranks in updates.items():
+            assert all(r['optimizer_steps_before'] == (i - 1) * 6 and
+                       r['optimizer_steps_after'] == i * 6 for r in ranks.values())
         assert len([p for p in panels if p['phase'] == 'training']) == 40
         assert {p['policy_iteration'] for p in panels if p['phase'] != 'training'} == {0, 10, 20, 30, 40}
         assert len(physical) == 40  # Eight ranks at each of five DEV panels.
@@ -129,6 +170,41 @@ def audit(root, *, snapshots=False):
                   physical_reset_receipts=len(physical), GRPO_raw_group_snapshots_rechecked=group_snapshots,
                   clock=clock, references=refs,
                   interpretation='Exploratory Stage 1 gate; full curves still require collapse/clipping review. No independent TEST or student admission is implied.')
+    if previous is not None:
+        result['previous_root'] = str(previous)
+        result['group_counts_by_winning_members'] = dict(sorted(group_outcomes.items()))
+        result['max_abs_chunk_log_ratio'] = max(r['max_abs_chunk_log_ratio'] for r in parity)
+        result['KL_over_threshold'] = [
+            dict(update=i, rank=rank, approx_kl=r['metrics']['actor/approx_kl'])
+            for i, ranks in sorted(updates.items()) for rank,r in sorted(ranks.items())
+            if r['metrics']['actor/approx_kl'] > 0.03]
+        if complete:
+            charged = collections.Counter()
+            unresolved = 0
+            ledgers = sorted(Path(cfg['native_pilot']['accounting_root']).glob('rank-*/grpo-attempt-*.json'))
+            assert len(ledgers) == 16
+            for path in ledgers:
+                row = read(path)
+                assert row['maximum_all_in_actions'] == contract['maximum_actions']
+                for call in row['calls']:
+                    charged[call['phase']] += call.get('executed_or_conservative', call['requested'])
+                    unresolved += int(not call['resolved'])
+            assert sum(charged.values()) <= contract['maximum_actions']
+            assert charged['training'] == contract['TRAIN_policy_controls']
+            result['action_ledger'] = dict(total=sum(charged.values()), by_phase=charged,
+                                           unresolved_calls=unresolved)
+            boundaries = []
+            for step in (0, 1, 10, 20, 30, 40):
+                parent = previous if step <= resume_step else root
+                path = parent / f'OpenDrawer/checkpoints/global_step_{step}/pilot-boundary.json'
+                boundary = read(path)
+                assert boundary['completed'] and boundary['global_step'] == step
+                assert len(boundary['workers']) == 18 and len(boundary['actor_checkpoint_files']) == 4
+                if step == 40:
+                    for item in boundary['workers'] + boundary['actor_checkpoint_files']:
+                        assert digest(Path(item['path'])) == item['sha256']
+                boundaries.append(dict(step=step, path=str(path), sha256=digest(path)))
+            result['boundaries'] = boundaries
     return result
 
 
@@ -137,7 +213,8 @@ if __name__ == '__main__':
     parser.add_argument('root', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--verify-group-snapshots', action='store_true')
+    parser.add_argument('--previous-root', type=Path)
     args = parser.parse_args()
-    report = audit(args.root, snapshots=args.verify_group_snapshots)
+    report = audit(args.root, snapshots=args.verify_group_snapshots, previous=args.previous_root)
     args.output.write_text(json.dumps(report, indent=2) + '\n')
     print(json.dumps({key: value for key, value in report.items() if key not in {'references', 'TRAIN', 'DEV64'}}, indent=2))

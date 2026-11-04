@@ -1,9 +1,9 @@
 {
   "format": "robocasa_joint_three_task_execution_v1",
-  "checked_shanghai": "2026-11-04T19:14:25.227050+08:00",
-  "status": "three_preparations_running",
+  "checked_shanghai": "2026-11-04T21:27:53.218772+08:00",
+  "status": "preparation_complete_pooling_on_CPU",
   "approved_ceiling_GPU_hours": 96.0,
-  "cumulative_scheduler_GPU_hours": 2.168534611111111,
+  "cumulative_scheduler_GPU_hours": 17.57,
   "jobs": {
     "job-30kj6dnpleas": {
       "task": "OpenDrawer",
@@ -34,29 +34,35 @@
     "job-2y8auhjtt9ak": {
       "task": "OpenDrawer",
       "attempt": "prepare-4gpu-03",
-      "status": "Running",
+      "status": "Succeeded",
       "created_shanghai": "2026-11-04T19:03:10+08:00",
       "source_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
       "GPU_probe": "passed all four actual GPUs; probe computation 2097152 each",
-      "reserved_GPU_hours": 16
+      "reserved_GPU_hours": 16,
+      "released_shanghai": "2026-11-04T20:29:57+08:00",
+      "conservative_GPU_seconds": 20828.0
     },
     "job-75dnd0uputmn": {
       "task": "CloseToasterOvenDoor",
       "attempt": "prepare-4gpu-01",
-      "status": "Running",
+      "status": "Succeeded",
       "created_shanghai": "2026-11-04T19:04:35+08:00",
       "source_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
       "GPU_probe": "passed all four actual GPUs",
-      "reserved_GPU_hours": 16
+      "reserved_GPU_hours": 16,
+      "released_shanghai": "2026-11-04T20:30:05+08:00",
+      "conservative_GPU_seconds": 20520.0
     },
     "job-38ix8q2xm8wt": {
       "task": "CoffeeSetupMug",
       "attempt": "prepare-4gpu-01",
-      "status": "Running",
+      "status": "Succeeded",
       "created_shanghai": "2026-11-04T19:05:47+08:00",
       "source_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
       "GPU_probe": "passed all four actual GPUs",
-      "reserved_GPU_hours": 16
+      "reserved_GPU_hours": 16,
+      "released_shanghai": "2026-11-04T20:34:15+08:00",
+      "conservative_GPU_seconds": 21232.0
     }
   },
   "queue": {
@@ -82,7 +88,7 @@
     "Linux_CPU_tests": 47,
     "pooled_fixture": "all eight datasets pass"
   },
-  "next_action": "Finish submission/initial-advancement verification for the remaining two preparation tasks, monitor every 20 minutes, release all three before pooled four-GPU fitting.",
+  "next_action": "Complete numerically qualified CPU uncompressed pooling, verify assembly, then submit the approved 4-GPU / 8-hour fit on unchanged learner pin d71cb532.",
   "learner_architecture": {
     "width": 256,
     "layers": 6,
@@ -97,26 +103,27 @@
   "browser_diagnosis": "BROWSER-DIAGNOSIS.json",
   "deployed_code_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
   "submission_incident": "The first button click submitted despite an unchanged accessibility snapshot; pressing Return submitted again before the loading state appeared. Neither launch advanced beyond startup. Use one submit action and wait for scheduler acceptance before any further action.",
-  "terminal_conservative_GPU_seconds": 672,
+  "terminal_conservative_GPU_seconds": 63252.0,
   "cumulative_scheduler_GPU_hours_note": "Terminal jobs: 672/3600=0.186667 GPU-hours; active creation-to-now charges added at each check.",
   "corpus_mount": {
     "source": "bos://dexmal-mowenjie-data",
     "target": "/mnt/bos/adgfyl",
     "read_only": true
   },
-  "active_conservative_GPU_hours": 1.9818679444444443,
+  "active_conservative_GPU_hours": 0,
   "maximum_preparation_reservation_including_failures_GPU_hours": 48.18666666666667,
   "remaining_after_maximum_preparation_and_initial_fit_GPU_hours": 15.813333333333333,
   "initial_advancement": "INITIAL-ADVANCEMENT.json",
   "monitor": {
     "script": "MONITOR.py",
     "interval_seconds": 1200,
-    "status": "running",
+    "status": "finished_after_all_preparation_workers_released",
     "scope": "Read-only worker evidence; scheduler release and fitting submission remain separate verified actions",
     "pid": 2110873,
     "source_commit": "f2380ced6dbaea1aa751c53207af41d9d43a1485",
     "process_receipt": "MONITOR-PROCESS.json",
-    "started_shanghai": "2026-11-04T19:14:24.984828+08:00"
+    "started_shanghai": "2026-11-04T19:14:24.984828+08:00",
+    "last_check_shanghai": "2026-11-04T20:34:31.081586+08:00"
   },
   "last_worker_check": "CHECK-20261104-1914.json",
   "next_worker_check_shanghai": "2026-11-04T19:34:25.227050+08:00",
@@ -137,5 +144,15 @@
     "steady_B64_batch_seconds": 5.805601444244385,
     "global_learner_batch": 8,
     "learner_updates": "not started"
+  },
+  "remaining_approved_GPU_hours": 78.43,
+  "pooling": {
+    "status": "running_CPU_only",
+    "GPU_hours": 0,
+    "migration": "POOL-MIGRATION.json",
+    "pooler_source": "6bc6988492c33d030b88d4b4c4394c9d161168c6",
+    "learner_source": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+    "numerical_qualification": "UNCOMPRESSED-NUMERICAL-QUALIFICATION.json",
+    "partial_compressed_attempt": "joint/preparation-pool-cpu-01-abandoned"
   }
 }

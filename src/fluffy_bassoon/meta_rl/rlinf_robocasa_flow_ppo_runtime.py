@@ -101,7 +101,11 @@ def native_class(original, owner):
                 phase=owner._flow_phase + '/native_constructor_reset')
             fns = [fresh_factory(fn, seed, contract['physics_tick_limit']) for fn, seed in
                 zip(super().get_env_fns(), self.env_seeds, strict=True)]
-            self.env = reconfigure_or_create_subproc_env(getattr(self, 'env', None), fns)
+            current = getattr(self, 'env', None)
+            if is_eval and owner.cfg.native_pilot.get('fresh_eval_processes', False) and current is not None:
+                current.close()
+                current = None
+            self.env = reconfigure_or_create_subproc_env(current, fns)
             observation, info = super().reset()
             counts = self.env.get_env_attr('_flora_accounting')
             owner._flow_journal.finish(token, sum(c['reset_controls'] for c in counts))
@@ -362,6 +366,22 @@ class FlowEnvironment(EnvWorker):
 
 
 class FlowRunner(PilotRunner):
+    def _periodic_evaluation(self, output):
+        self.rollout.pilot_training_rng().wait()
+        self.env.pilot_training_rng().wait()
+        self.update_rollout_weights()
+        self.rollout.pilot_rng(restore=True).wait()
+        self.env.pilot_rng(restore=True).wait()
+        phase = f'eval_step_{self.global_step:03d}'
+        self.env.pilot_phase(phase, policy_iteration=self.global_step).wait()
+        self.rollout.pilot_evaluation_iteration(self.global_step).wait()
+        periodic = self.evaluate()
+        write(output / 'evaluations' / f'step-{self.global_step:03d}.json',
+            dict(completed=True, global_step=self.global_step, phase=phase, metrics=json_metrics(periodic)))
+        self.rollout.pilot_training_rng(restore=True).wait()
+        self.env.pilot_training_rng(restore=True).wait()
+        self.env.pilot_phase('training', policy_iteration=self.global_step).wait()
+
     def _log_step_metrics(self, *args, **kwargs):
         result = EmbodiedRunner._log_step_metrics(self, *args, **kwargs)
         output = Path(self.cfg.native_pilot.output)
@@ -373,20 +393,7 @@ class FlowRunner(PilotRunner):
             self._capture_boundary()
         eval_interval = contract['eval_interval']
         if not requested and 0 < eval_interval < self.max_steps and 0 < self.global_step < self.max_steps and self.global_step % eval_interval == 0:
-            self.rollout.pilot_training_rng().wait()
-            self.env.pilot_training_rng().wait()
-            self.update_rollout_weights()
-            self.rollout.pilot_rng(restore=True).wait()
-            self.env.pilot_rng(restore=True).wait()
-            phase = f'eval_step_{self.global_step:03d}'
-            self.env.pilot_phase(phase, policy_iteration=self.global_step).wait()
-            self.rollout.pilot_evaluation_iteration(self.global_step).wait()
-            periodic = self.evaluate()
-            write(output / 'evaluations' / f'step-{self.global_step:03d}.json',
-                dict(completed=True, global_step=self.global_step, phase=phase, metrics=json_metrics(periodic)))
-            self.rollout.pilot_training_rng(restore=True).wait()
-            self.env.pilot_training_rng(restore=True).wait()
-            self.env.pilot_phase('training', policy_iteration=self.global_step).wait()
+            self._periodic_evaluation(output)
         write(output / 'progress.json',
             dict(completed_iterations=self.global_step, target_iterations=self.max_steps,
                  checked_unix=time.time(), operator_checkpoint_exit=requested))
@@ -420,6 +427,12 @@ class FlowRunner(PilotRunner):
                     sha256=self.cfg.native_pilot.before_reference_sha256), new_evaluation_controls=0))
             for group in (self.actor, self.rollout, self.env):
                 group.pilot_restore(str(Path(self.cfg.runner.resume_dir) / 'pilot')).wait()
+            pending = reference.get('pending_evaluation_step')
+            if pending is not None:
+                if (pending != self.global_step or not 0 < pending < self.max_steps
+                        or contract['eval_interval'] <= 0 or pending % contract['eval_interval']):
+                    raise ValueError('Pending DEV evaluation must match a scheduled restored boundary')
+                self._periodic_evaluation(output)
         else:
             self.update_rollout_weights()
             for group in (self.actor, self.rollout, self.env):

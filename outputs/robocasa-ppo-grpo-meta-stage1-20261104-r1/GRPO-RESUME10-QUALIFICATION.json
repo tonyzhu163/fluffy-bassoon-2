@@ -1,0 +1,126 @@
+{
+  "before_reference_sha256": "d114a64ee8e5e353d0f848c796b51f2817fa4fb8a7bffc20953e238ee4e26488",
+  "runtime_source": "grpo-resume-9bf964b1",
+  "original_contract_fields_equal": [
+    "add_value_head",
+    "adv_type",
+    "checkpoint_interval",
+    "chunk",
+    "chunks_per_episode",
+    "episodes_per_iteration",
+    "eval_cases",
+    "eval_interval",
+    "eval_panels",
+    "eval_seed",
+    "group_size",
+    "horizon",
+    "ignore_last",
+    "iterations",
+    "loss_type",
+    "maximum_actions",
+    "noise_level",
+    "nominal_policy_controls",
+    "optimizer_steps_per_update",
+    "physics_tick_limit",
+    "reset_reserve_controls",
+    "rounds",
+    "scenes_per_iteration",
+    "task",
+    "train_envs",
+    "train_seed",
+    "update_epochs",
+    "value_after_vlm"
+  ],
+  "fresh_eval_processes": true,
+  "restored_panel": {
+    "completed": true,
+    "global_step": 10,
+    "phase": "eval_step_010",
+    "metrics": {
+      "test_fixture": 0.5
+    }
+  },
+  "periodic_phase_calls": [
+    [
+      "rollout",
+      "pilot_training_rng",
+      [],
+      {}
+    ],
+    [
+      "env",
+      "pilot_training_rng",
+      [],
+      {}
+    ],
+    [
+      "sync"
+    ],
+    [
+      "rollout",
+      "pilot_rng",
+      [],
+      {
+        "restore": true
+      }
+    ],
+    [
+      "env",
+      "pilot_rng",
+      [],
+      {
+        "restore": true
+      }
+    ],
+    [
+      "env",
+      "pilot_phase",
+      [
+        "eval_step_010"
+      ],
+      {
+        "policy_iteration": 10
+      }
+    ],
+    [
+      "rollout",
+      "pilot_evaluation_iteration",
+      [
+        10
+      ],
+      {}
+    ],
+    [
+      "rollout",
+      "pilot_training_rng",
+      [],
+      {
+        "restore": true
+      }
+    ],
+    [
+      "env",
+      "pilot_training_rng",
+      [],
+      {
+        "restore": true
+      }
+    ],
+    [
+      "env",
+      "pilot_phase",
+      [
+        "training"
+      ],
+      {
+        "policy_iteration": 10
+      }
+    ]
+  ],
+  "SGD": 0,
+  "device_count": 0,
+  "Linux_core_tests_passed": 61,
+  "pytest_elapsed_seconds": 140.48,
+  "original_budget_GPU_hours": 64,
+  "authorized_manual_continuation_GPU_hours": 20
+}

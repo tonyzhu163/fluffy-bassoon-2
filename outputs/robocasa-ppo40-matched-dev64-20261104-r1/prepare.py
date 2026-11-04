@@ -14,8 +14,8 @@ sys.path.insert(0, str(HERE.parent / SWEEP))
 from sweep import read, sha, write
 
 
-def boundary(step):
-    path = STAGE / f'OpenDrawer/checkpoints/global_step_{step}/pilot-boundary.json'
+def boundary(step, root=STAGE):
+    path = root / f'OpenDrawer/checkpoints/global_step_{step}/pilot-boundary.json'
     data = read(path)
     assert data['completed'] and data['global_step'] == step
     weights, = [r for r in data['actor_checkpoint_files'] if r['path'].endswith('/full_weights.pt')]
@@ -92,5 +92,42 @@ def main(staging):
         resets=[dict(path=str(p), sha256=sha(p)) for p in resets]))
 
 
+def add_grpo(staging):
+    """Bind the fourth policy only after the immutable GRPO final checkpoint."""
+    assert os.environ.get('CUDA_VISIBLE_DEVICES') == ''
+    torch.set_num_threads(2)
+    fs = os.statvfs(staging)
+    assert fs.f_bavail * fs.f_frsize > 214 << 30
+    original = ROOT / 'robocasa-ppo-grpo-meta-stage1-20261104-r1/grpo/attempt-01'
+    root = original.with_name('attempt-02')
+    assert Path(read(root/'resolved-config.json')['runner']['resume_dir']) == original/'OpenDrawer/checkpoints/global_step_10'
+    assert read(root/'evaluations/step-010.json')['completed']
+    assert read(root/'clock.json')['exit_code'] == 0
+    assert read(root/'after-evaluation.json')['global_step'] == 40
+    assert read(root/'progress.json')['completed_iterations'] == 40
+    base = staging/'READY.json'
+    record = read(base)
+    ref = load(record['models']['sft'])
+    start, final = boundary(0, original), boundary(40, root)
+    initial, trained = load(start), load(final)
+    actor = {k for k in ref if not k.startswith('value_head.')}
+    assert initial.keys() == trained.keys() == actor
+    assert all(same(ref[k], initial[k]) for k in actor)
+    assert all(ref[k].dtype == trained[k].dtype and ref[k].shape == trained[k].shape for k in actor)
+    target = staging/'grpo40-eval.pt'
+    with target.open('xb') as stream:
+        torch.save({k: trained[k] if k in actor else ref[k] for k in ref}, stream)
+    check = torch.load(target, mmap=True, map_location='cpu', weights_only=True)
+    assert check.keys() == ref.keys() and all(same(check[k], trained[k] if k in actor else ref[k]) for k in ref)
+    record['models']['grpo'] = dict(path=str(target), sha256=sha(target), source=final,
+        initial_source=start, initialized_actor_tensors_equal=len(actor),
+        converted_actor_tensors_equal=len(actor), inference_only_keys=sorted(ref.keys()-actor))
+    record['three_policy_ready_sha256'] = sha(base)
+    write(staging/'READY-FOUR.json', record)
+
+
 if __name__ == '__main__':
-    main(Path(sys.argv[1]))
+    if len(sys.argv) > 2 and sys.argv[2] == 'add-grpo':
+        add_grpo(Path(sys.argv[1]))
+    else:
+        main(Path(sys.argv[1]))

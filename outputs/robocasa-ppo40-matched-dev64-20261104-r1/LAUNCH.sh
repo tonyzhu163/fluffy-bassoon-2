@@ -6,8 +6,10 @@ RUN=robocasa-ppo40-matched-dev64-20261104-r1
 RUNTIME=$ROOT/sources/flow10m-0988b5f9
 RLINF=$ROOT/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf
 PY=$ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
-OUT=$ROOT/outputs/$RUN/gpu-r1
-READY=$ROOT/outputs/$RUN/staging-r1/READY.json
+ATTEMPT=${TASK_EVAL_ATTEMPT:-gpu-r1}
+[[ $ATTEMPT == gpu-r1 || $ATTEMPT == gpu-r2 ]]
+OUT=$ROOT/outputs/$RUN/$ATTEMPT
+READY=$ROOT/outputs/$RUN/staging-r1/READY-FOUR.json
 test -s "$READY"
 test "$(git -C "$TASK_META" rev-parse HEAD)" = "$TASK_CODE_PIN"
 test "$(git -C "$RUNTIME" rev-parse HEAD)" = 0988b5f9e9bf31ac3db673cc2860959611b9ae12
@@ -25,6 +27,13 @@ export TASK_CODE_PIN PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 export PYTHONPATH=$TASK_META/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1:$RUNTIME/src:$RLINF
 export OPENPI_DATA_HOME=$ROOT/setups/robocasa365-native-20261101-r1/cache/.cache/openpi
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4
+# Baige exposes only the allocation's device nodes and can omit the CUDA selector.
+if [[ -z ${CUDA_VISIBLE_DEVICES:-} ]]; then
+    gpu_ids=$(nvidia-smi --query-gpu=uuid --format=csv,noheader)
+    [[ $gpu_ids == GPU-* && $gpu_ids != *$'\n'* ]]
+    export CUDA_VISIBLE_DEVICES=$gpu_ids
+fi
+export NCCL_P2P_DISABLE=1
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl FLUFFY_GPU_EXECUTION=baige
 "$PY" "$RUNTIME/scripts/[train]gpu_probe.py" --expected-count 1 --purpose evaluation --baige-container --output "$OUT/gpu-probe.json"
-timeout --kill-after=30s 4350 "$PY" "$TASK_META/outputs/$RUN/evaluate.py" "$READY" "$OUT" "$((begin+4350))"
+timeout --kill-after=30s 4200 "$PY" "$TASK_META/outputs/$RUN/evaluate.py" "$READY" "$OUT" "$((begin+4200))"
