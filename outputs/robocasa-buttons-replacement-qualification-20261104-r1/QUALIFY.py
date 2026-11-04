@@ -46,7 +46,8 @@ controls,_,_=policy.act(torch.randn(4,2088),deterministic=True)
 chunk=np.random.default_rng(42).normal(size=(4,50,12)).astype('float32')
 assert torch.count_nonzero(controls)==0
 assert np.array_equal(ResidualBound(12,tuple(range(6)),(1.,)*6).apply(chunk,controls.numpy()),chunk)
-assert module.interval(0)[0]==0. and module.interval(50)[1]==1. and abs(sum(module.interval(25))-1.)<1e-12
+assert np.allclose([module.interval(0)[0],module.interval(50)[1],sum(module.interval(25))],
+                   [0.,1.,1.],atol=1e-12,rtol=0.)
 reference=json.loads((root/'outputs/robocasa-residual-approved-20261101-r1/S-job/pipeline-profile.json').read_text())['training']
 initializer=reference['initializer']
 def sha(path):
