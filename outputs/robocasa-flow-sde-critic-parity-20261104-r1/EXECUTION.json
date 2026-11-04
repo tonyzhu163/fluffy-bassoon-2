@@ -1,7 +1,7 @@
 {
-  "status": "RUNNING",
-  "phase": "three-update baseline versus selected-critic comparison",
-  "checked_shanghai": "2026-11-04T14:24:16.051555+08:00",
+  "status": "RECOVERY_PREPARATION",
+  "phase": "canonical snapshot restoration after completed baseline training",
+  "checked_shanghai": "2026-11-04T14:49:40.034347+08:00",
   "cluster": "Baige Pro6K",
   "job_id": "job-eigq1w5m3ba9",
   "job_name": "mwj_1104_flow10m_critic_compare_8x1_r1",
@@ -17,15 +17,13 @@
   "whole_validation_budget_gpu_seconds": 21600,
   "phase1_cumulative_budget_gpu_seconds": 2700,
   "automatic_retry": false,
-  "new_controls": 0,
-  "SGD": 0,
-  "next_action": "Verify first advancing update and selected-arm pre-SGD parity; check within20min; audit both endpoints and exact scheduler release/cost after termination.",
-  "cumulative_conservative_gpu_seconds": 393,
+  "next_action": "Restore and hash-qualify24 archived canonical members; retain baseline policy3, qualify its serial B8 evaluation and run only the unstarted fixed arm within remaining6GPUh total.",
+  "cumulative_conservative_gpu_seconds": 9265,
   "phase1_independent_cpu_audit_passed": true,
   "phase1_job_id": "job-b6d2kkvouxx4",
   "phase1_cumulative_conservative_gpu_seconds": 393,
   "live_comparison": {
-    "baseline_updates": 0,
+    "baseline_updates": 3,
     "fixed_updates": 0,
     "target_updates_per_arm": 3,
     "optimizer_steps_per_arm": 72,
@@ -34,6 +32,10 @@
     "fixed_vendor": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
     "frozen_runtime": "0988b5f9e9bf31ac3db673cc2860959611b9ae12",
     "gpu_probe_passed": true,
-    "stage": "baseline restoring model/environment"
-  }
+    "stage": "R1 terminal: baseline endpoint reset failed on missing archived canonical initial.pt; no fixed training started",
+    "baseline_optimizer_steps": 72
+  },
+  "phase1_new_controls": 0,
+  "phase1_SGD": 0,
+  "allocation_released": true
 }

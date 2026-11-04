@@ -45,7 +45,6 @@ suppresses an active critic gradient; none of192 later-policy decisions does.
 Historical returns were held fixed, so corrected GAE and learning impact are
 unmeasured. An independent CPU tensor/native-loss audit passes; the selected
 suffix correction passes20 sampler cases without changing actions or RNG.
-The short matched learning comparison is running, with no outcome claimed.
 [Production critic evidence and limits](../outputs/robocasa-flow-sde-critic-parity-20261104-r1/RESULT.md).
 
 A follow-up saved-record check rejects duplicated rollout noise for the

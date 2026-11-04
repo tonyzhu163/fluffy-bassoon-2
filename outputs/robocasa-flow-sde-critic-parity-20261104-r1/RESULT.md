@@ -1,4 +1,4 @@
-# Critic parity: saved-batch evidence complete; short comparison running
+# Critic parity: saved-batch evidence complete; comparison recovery underway
 
 Owner chat `01a1a4a2`. On Nov4, matching-checkpoint replay confirms the native
 RLinf critic mismatch on real Drawer→Counter records. Rollout saves the mean
@@ -67,8 +67,12 @@ learner/environment changes fixed.
 
 Baige Pro6K `job-eigq1w5m3ba9`,
 `mwj_1104_flow10m_critic_compare_8x1_r1`, started Nov4 14:18 Shanghai.
-Eight-GPU probe passed; baseline initialization is advancing. No comparison
-result is claimed yet. [Admission](COMPARISON-ADMISSION.json),
+Baseline completed all three updates and72 optimizer steps with finite losses
+and an unchanged frozen VLM. Its after-panel reset failed on an archived
+canonical initial.pt snapshot; fixed training never started. The full policy3
+checkpoint is retained. A new private canonical restoration and endpoint/fixed
+arm recovery is being qualified; no comparison outcome is claimed yet.
+[Failure and explicit recovery](RECOVERY.md). [Admission](COMPARISON-ADMISSION.json),
 [deployments](COMPARISON-DEPLOYED.json), [state](EXECUTION.json).
 
 ## Cost and failure evidence
