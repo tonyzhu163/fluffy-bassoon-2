@@ -1,0 +1,73 @@
+{
+  "scheduler_released": true,
+  "jobs": [
+    {
+      "task": "CloseToasterOvenDoor",
+      "job_id": "job-anm7svcgngnn",
+      "created_shanghai": "2026-11-04T12:59:31+08:00",
+      "released_shanghai": "2026-11-04T14:05:40+08:00",
+      "creation_to_release_gpu_seconds_upper": 3969,
+      "scheduler_status": "ManualTermination",
+      "GPUs": 1
+    },
+    {
+      "task": "OpenDrawer",
+      "job_id": "job-895ee4k7j85c",
+      "created_shanghai": "2026-11-04T13:04:16+08:00",
+      "released_shanghai": "2026-11-04T14:05:22+08:00",
+      "creation_to_release_gpu_seconds_upper": 3666,
+      "scheduler_status": "ManualTermination",
+      "GPUs": 1
+    }
+  ],
+  "duplicate_failure_gpu_seconds": 41,
+  "all_attempt_gpu_seconds_upper": 23540,
+  "verification": "Both exact owned job IDs, creator mowenjie, ManualTermination and release timestamps visually verified in authenticated Baige console",
+  "user_requested_eight_gpu_acceleration": true,
+  "failed_acceleration_attempts": [
+    {
+      "job_id": "job-767fe0i9h9tv",
+      "GPUs": 8,
+      "created_shanghai": "2026-11-04T14:09:16+08:00",
+      "released_shanghai": "2026-11-04T14:10:24+08:00",
+      "gpu_seconds_upper": 544,
+      "cause": "Full-node visibility variable omitted; probe stopped before workers"
+    },
+    {
+      "job_id": "job-34ylr0lgqkkn",
+      "GPUs": 8,
+      "created_shanghai": "2026-11-04T14:14:33+08:00",
+      "released_shanghai": "2026-11-04T14:16:22+08:00",
+      "gpu_seconds_upper": 872,
+      "cause": "Local accelerate.py shadowed accelerate.hooks; all workers exited before inference"
+    },
+    {
+      "job_id": "job-61y4yxztaig8",
+      "GPUs": 8,
+      "created_shanghai": "2026-11-04T14:25:36+08:00",
+      "released_shanghai": "2026-11-04T14:34:10+08:00",
+      "gpu_seconds_upper": 4112,
+      "cause": "Shared-container Ray discovery ambiguity and whole-allocation advertisement; stopped. Retain complete pairs only."
+    },
+    {
+      "job_id": "job-br1eg0r7025w",
+      "GPUs": 8,
+      "created_shanghai": "2026-11-04T14:43:34+08:00",
+      "released_shanghai": "2026-11-04T14:45:56+08:00",
+      "gpu_seconds_upper": 1136,
+      "cause": "Sibling outputs shared action accounting. Unequal limits stopped one worker; scheduler failed and released all replicas."
+    }
+  ],
+  "released_phases": [
+    {
+      "job_id": "job-1x7xmprauwiu",
+      "scheduler_status": "Succeeded",
+      "GPUs": 8,
+      "created_shanghai": "2026-11-04T14:55:06+08:00",
+      "released_shanghai": "2026-11-04T15:14:16+08:00",
+      "gpu_seconds_upper": 9200,
+      "scientifically_complete": false,
+      "reason": "Master succeeded; four Toaster shards complete, Drawer workers terminated with incomplete assigned banks"
+    }
+  ]
+}

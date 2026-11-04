@@ -903,3 +903,31 @@ private-copy cleanup pass,and all50initial likelihood replays are exact.
 Baige job-pjgeuietm5of succeeded and released14:21:51; conservative cost4472GPU-s
 (1.2422GPUh),inside4GPUh,with zero controls/sampling/SGD.
 [Result and complete evidence](../outputs/robocasa-flow-sde-matched-denoise-drift-20261104-r1/RESULT.md).
+
+## Matched512 paired PPO endpoints (2026-11-04)
+
+On 512 fresh paired cases per task, policy130 improves native first success in
+600 controls for both predeclared simulator-reward Flow-SDE PPO endpoints:
+CloseToasterOvenDoor 168→212/512 (32.81→41.41%, +8.59 points; paired 95% CI
+[+3.71, +13.67], exact McNemar p=.001056) and OpenDrawer 331→369/512
+(64.65→72.07%, +7.42 points; [+2.73, +11.91], p=.002406). Both pass Holm across
+these two tasks. The intervals are descriptive paired-bootstrap intervals.
+End success separately improves 166→212 and 317→358/512.
+
+The independent Linux CPU audit verifies 2,048 episodes/256 banks, 3,072 H50
+sampler receipts, 1,228,800 valid controls, same-attempt pairing, original
+ABBA/common noise, source/checkpoint joins and exact physical/public states.
+Renderer differences are quantified: 68 panels have some differing pixels,
+maximum component delta 2/255, under the original diagnostic pixel criterion.
+All-attempt controls are 1,269,296; nine abandoned intents remain conservatively
+charged. All GPUs are released, with 25,205/27,600 GPU-seconds (7.0014 GPUh)
+charged across original jobs, setup failures, eight-GPU acceleration and the
+final three-GPU completion.
+
+This establishes positive endpoint gains for these two checkpoints. Evidence
+across five tasks or multiple training seeds remains separate. Original
+64-case gates remain recorded, and the confirmed critic contract bug still
+needs repair before further PPO. This evaluation does not test that repair
+or admit student fits.
+[Results and limits](../outputs/robocasa-endpoint512-acceleration-20261104-r1/RESULT.md),
+[independent audit](../outputs/robocasa-endpoint512-acceleration-20261104-r1/FINAL-AUDIT.json).

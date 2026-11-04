@@ -1,0 +1,72 @@
+{
+  "completed": true,
+  "prior_gpu_seconds_upper": 23540,
+  "last_phase": {
+    "job_id": "job-2cpg9wglwz5d",
+    "job_name": "mwj_1104_endpoint512_finish3x1_r6",
+    "scheduler_status": "Succeeded",
+    "GPUs": 3,
+    "created_shanghai": "2026-11-04T15:22:09+08:00",
+    "released_shanghai": "2026-11-04T15:31:24+08:00",
+    "gpu_seconds_upper": 1665
+  },
+  "all_attempt_gpu_seconds_upper": 25205,
+  "cap_gpu_seconds": 27600,
+  "unused_gpu_seconds": 2395,
+  "new_phase_worker_gpu_seconds": 1538,
+  "nodes": [
+    {
+      "index": 0,
+      "replica": {
+        "index": 0,
+        "hostname": "job-2cpg9wglwz5d-master-0",
+        "scheduler_rank": "0"
+      },
+      "clock": {
+        "started_unix": 1793776951,
+        "finished_unix": 1793777467,
+        "allocated_gpus": 1,
+        "observed_gpu_seconds": 516,
+        "exit_code": 0
+      },
+      "gpu_probe_sha256": "b4b1defbdf3730c20e575c7f8a5d264e968dda8d4e60d31aa484ec86bb0aed76",
+      "barrier_completed": true
+    },
+    {
+      "index": 1,
+      "replica": {
+        "index": 1,
+        "hostname": "job-2cpg9wglwz5d-worker-0",
+        "scheduler_rank": "1"
+      },
+      "clock": {
+        "started_unix": 1793776957,
+        "finished_unix": 1793777467,
+        "allocated_gpus": 1,
+        "observed_gpu_seconds": 510,
+        "exit_code": 0
+      },
+      "gpu_probe_sha256": "7ac9a3be82eb9694d7260ad7ade7ee184c2e2971112e2a2b5ae6b28b9b79f554",
+      "barrier_completed": true
+    },
+    {
+      "index": 2,
+      "replica": {
+        "index": 2,
+        "hostname": "job-2cpg9wglwz5d-worker-1",
+        "scheduler_rank": "2"
+      },
+      "clock": {
+        "started_unix": 1793776957,
+        "finished_unix": 1793777469,
+        "allocated_gpus": 1,
+        "observed_gpu_seconds": 512,
+        "exit_code": 0
+      },
+      "gpu_probe_sha256": "8d08b6910367d8f22be1035617ec57501db9c5a28e89573a6c514485bb962f3b",
+      "barrier_completed": true
+    }
+  ],
+  "verification": "Authenticated Baige console: exact owned job ID, creator mowenjie, three GPUs, Succeeded and creation/release timestamps. All three actual probes, distinct UUIDs, barriers and exit0 clocks verified.",
+  "checked_unix": 1793777610.4860473
+}

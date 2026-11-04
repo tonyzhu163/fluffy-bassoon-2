@@ -1,0 +1,94 @@
+{
+  "completed": true,
+  "tasks": {
+    "CloseToasterOvenDoor": {
+      "first_success": {
+        "cases": 512,
+        "initial_successes": 168,
+        "policy_successes": 212,
+        "delta_percentage_points": 8.59375,
+        "wins": 109,
+        "losses": 65,
+        "exact_McNemar_p": 0.0010559135324063687,
+        "paired_bootstrap95_percentage_points": [
+          3.7109375,
+          13.671875
+        ],
+        "bootstrap_seed": 18000002,
+        "bootstrap_draws": 10000,
+        "intervals_simultaneous": false
+      },
+      "success_at_end": {
+        "cases": 512,
+        "initial_successes": 166,
+        "policy_successes": 212,
+        "delta_percentage_points": 8.984375,
+        "wins": 111,
+        "losses": 65,
+        "exact_McNemar_p": 0.0006513359088043816,
+        "paired_bootstrap95_percentage_points": [
+          4.1015625,
+          14.0625
+        ],
+        "bootstrap_seed": 18000002,
+        "bootstrap_draws": 10000,
+        "intervals_simultaneous": false
+      },
+      "policy_episodes": 1024,
+      "panels": 128
+    },
+    "OpenDrawer": {
+      "first_success": {
+        "cases": 512,
+        "initial_successes": 331,
+        "policy_successes": 369,
+        "delta_percentage_points": 7.421875,
+        "wins": 94,
+        "losses": 56,
+        "exact_McNemar_p": 0.0024055162156063517,
+        "paired_bootstrap95_percentage_points": [
+          2.734375,
+          11.9140625
+        ],
+        "bootstrap_seed": 18000001,
+        "bootstrap_draws": 10000,
+        "intervals_simultaneous": false
+      },
+      "success_at_end": {
+        "cases": 512,
+        "initial_successes": 317,
+        "policy_successes": 358,
+        "delta_percentage_points": 8.0078125,
+        "wins": 97,
+        "losses": 56,
+        "exact_McNemar_p": 0.0011504552032125664,
+        "paired_bootstrap95_percentage_points": [
+          3.3203125,
+          12.6953125
+        ],
+        "bootstrap_seed": 18000001,
+        "bootstrap_draws": 10000,
+        "intervals_simultaneous": false
+      },
+      "policy_episodes": 1024,
+      "panels": 128
+    }
+  },
+  "holm": {
+    "CloseToasterOvenDoor": {
+      "threshold": 0.025,
+      "rejected_two_sided": true,
+      "improvement": true
+    },
+    "OpenDrawer": {
+      "threshold": 0.05,
+      "rejected_two_sided": true,
+      "improvement": true
+    }
+  },
+  "migration_sha256": "9f374c8712119ac192dc05aa5ca2d6c992261ed9deae6195b0c7f1187a8dc1c3",
+  "valid_policy_controls": 1228800,
+  "valid_policy_episodes": 2048,
+  "SGD": 0,
+  "finished_unix": 1793777473.0181491
+}
