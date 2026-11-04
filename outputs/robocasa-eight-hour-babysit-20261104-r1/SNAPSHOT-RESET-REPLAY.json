@@ -1,0 +1,58 @@
+{
+  "passed": true,
+  "methods": {
+    "ad": {
+      "passed": true,
+      "queries": 864,
+      "episodes": 72,
+      "inspected_episode_reset_tokens": 36,
+      "maximum_CPU_vs_saved_GPU_control_error": 8.535385131835938e-05,
+      "relative_tolerance": 0.0001,
+      "absolute_tolerance": 0.0001,
+      "prior_action_reward_done_zeroed_and_cache_None_on_reset": true,
+      "post_query_cache_lengths_match_declared_mode": true
+    },
+    "dpt": {
+      "passed": true,
+      "queries": 864,
+      "episodes": 72,
+      "inspected_episode_reset_tokens": 36,
+      "maximum_CPU_vs_saved_GPU_control_error": 5.888938903808594e-05,
+      "relative_tolerance": 0.0001,
+      "absolute_tolerance": 0.0001,
+      "prior_action_reward_done_zeroed_and_cache_None_on_reset": true,
+      "post_query_cache_lengths_match_declared_mode": true
+    },
+    "dit": {
+      "passed": true,
+      "queries": 864,
+      "episodes": 72,
+      "inspected_episode_reset_tokens": 36,
+      "maximum_CPU_vs_saved_GPU_control_error": 6.407499313354492e-05,
+      "relative_tolerance": 0.0001,
+      "absolute_tolerance": 0.0001,
+      "prior_action_reward_done_zeroed_and_cache_None_on_reset": true,
+      "post_query_cache_lengths_match_declared_mode": true
+    },
+    "ic_iql": {
+      "passed": true,
+      "queries": 864,
+      "episodes": 72,
+      "inspected_episode_reset_tokens": 36,
+      "maximum_CPU_vs_saved_GPU_control_error": 6.592273712158203e-05,
+      "relative_tolerance": 0.0001,
+      "absolute_tolerance": 0.0001,
+      "prior_action_reward_done_zeroed_and_cache_None_on_reset": true,
+      "post_query_cache_lengths_match_declared_mode": true
+    }
+  },
+  "episodes": 288,
+  "queries": 3456,
+  "GPU_hours": 0,
+  "CPU_only": true,
+  "SGD": 0,
+  "elapsed_seconds": 125.8645007610321,
+  "group_result_sha256": "893126089a8ea2a92bdffae373ecdc8d0d574177511a363a960696ea7a70cfe1",
+  "initial_precision_check": "1e-5 CPU/CUDA output tolerance failed: seven of600 coordinates on one query differed by up to1.6868114e-5; retain this as a numerical precision observation, not a rollout failure.",
+  "diagnosis": "Saved memory_entry is a pre-act boundary. Episode reset happens inside act; all actual saved GPU outputs replay within1e-4 CPU tolerances with exact cleared causal inputs. This is numerical agreement, not byte-exact cross-device replay. No rollout or policy change."
+}
