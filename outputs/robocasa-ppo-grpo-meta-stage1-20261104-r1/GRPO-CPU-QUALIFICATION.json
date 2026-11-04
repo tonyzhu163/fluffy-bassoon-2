@@ -1,0 +1,24 @@
+{
+  "completed": true,
+  "source_commit": "46daecc9b4652632d4c551ec51293d790476ec2d",
+  "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+  "CUDA_VISIBLE_DEVICES": "",
+  "tests": [
+    "tests/test_robocasa_flow_ppo.py",
+    "tests/test_flow_history.py",
+    "tests/test_pi05_residual.py",
+    "tests/test_robocasa_native_clock.py"
+  ],
+  "passed": 55,
+  "warnings": 17,
+  "seconds": 169.8,
+  "log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/grpo-cpu-qualification-r1/pytest.log",
+  "qualification_source_path": "/mowenjie/fluffy-bassoon-2/sources/stage1-grpo-46daecc9",
+  "required_execution_overrides": {
+    "actor_ranks": 2,
+    "micro_batch_size": 16,
+    "sampling_record": "full",
+    "actor_batch_drop": []
+  },
+  "scope": "CPU qualification; actual GPU probe/reset groups/advancing updates are required in GRPO allocation"
+}

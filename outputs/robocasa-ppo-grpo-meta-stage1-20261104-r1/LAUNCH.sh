@@ -25,4 +25,7 @@ export ROBOCASA_FLOW_TRAIN_ENVS=128 ROBOCASA_FLOW_ROUNDS=1
 export ROBOCASA_FLOW_SAMPLING_RECORD=full
 export ROBOCASA_SIM_PPO_GLOBAL_ESCROW=true
 export ROBOCASA_FLOW_ACTOR_BATCH_DROP='[]'
+# Preserve the qualified Stage 1 actor layout when current-main defaults change.
+export ROBOCASA_SIM_PPO_ACTOR_PLACEMENT=0-1
+export ROBOCASA_SIM_PPO_MICRO_BATCH=16
 exec bash "$TASK_META/outputs/robocasa-ppo-grpo-meta-pipeline-20261104-r1/COMMAND.sh"
