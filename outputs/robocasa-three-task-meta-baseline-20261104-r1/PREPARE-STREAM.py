@@ -98,6 +98,7 @@ def main():
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--expected-hostname", required=True)
     p.add_argument("--max-seconds", type=int, default=12000)
+    p.add_argument("--files-per-batch", type=int, default=4)
     args = p.parse_args()
 
     if sys.platform != "linux" or socket.gethostname() != args.expected_hostname:
@@ -279,7 +280,7 @@ def main():
                 stage=parsed["stage"], rank=rank, version=version, chunk=chunk,
             ))
             seen_members += 1
-            if len(pending) == 2:
+            if len(pending) == args.files_per_batch:
                 process_pair(pending)
                 pending = []
                 if seen_members % 200 == 0 or seen_members == total_members:
