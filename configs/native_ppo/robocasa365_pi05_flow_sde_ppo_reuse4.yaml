@@ -4,6 +4,10 @@ defaults:
   - robocasa365_pi05_flow_sde_ppo_vlm_critic
   - _self_
 
+hydra:
+  searchpath:
+    - file://${oc.env:RLINF_PATH}/examples/embodiment/config/
+
 runner:
   max_epochs: ${oc.decode:${oc.env:ROBOCASA_FLOW_MAX_EPOCHS,40}}
   val_check_interval: ${oc.decode:${oc.env:ROBOCASA_FLOW_VAL_INTERVAL,10}}
