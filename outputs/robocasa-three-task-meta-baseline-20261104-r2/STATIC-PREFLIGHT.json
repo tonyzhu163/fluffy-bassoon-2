@@ -1,24 +1,28 @@
 {
-  "checked_shanghai": "2026-11-04T16:55:51.150880+08:00",
+  "checked_shanghai": "2026-11-04T17:07:05.517994+08:00",
   "python_AST": "pass",
   "bash_syntax": "pass",
-  "budget_arithmetic": "3 tasks x 4 GPUs x 8 hours = 96 GPU-hours",
-  "disjoint_shard_slot_coverage": "128 unique slots; two ranks/32 slots per worker",
+  "budget_arithmetic": "maximum preparation 48 + first pooled fit 32 + continuation reserve 16 = 96 GPU-hours",
+  "pooled_streams": {
+    "train": 336,
+    "validation": 48
+  },
   "GPU_qualification": "pending actual scheduled allocation",
-  "Linux_runtime_qualification": "pending",
-  "launch_status": "not_submitted_pending_higher_budget_approval",
+  "Linux_pool_qualification": "pending",
+  "launch_status": "human_hold_no_job_submitted",
   "prior_run_remote_readonly_check": {
     "task_outputs_present": false,
     "PFS_free_GiB": 596.03515625
   },
   "files": {
-    "BUDGET.json": "f8f1fa3ff8275068f79623e07bfb8e93421f236652a76ba2c8a5e5624bc5dce0",
-    "COMMAND.sh": "a03955d6e156b51cb97db6f7e94bc27df986e0d870b455e596d403b503b3ae1c",
-    "FITS.py": "19ddd0ca32cab7ebab864285dbf2df7dac919f39a8e96826d83fc5b24539e70b",
-    "LAUNCH.md": "fd4a9bd5c8fec424fba50098d0eee13c2772e9e24716c7ab52a132ee4811c8aa",
+    "BUDGET.json": "a6bddae09580e4a4d399a0f0321cdebffc234efbeb14f36f48ddd34fcf286987",
+    "COMMAND.sh": "3b59da44633b8910d7833ebd4192a01b82e62eb2231163fbde1c6559150eca22",
+    "FITS.py": "336f9487d3f19d7f6cbed721c61ed141d6ea02b5580fe6a7b89c4c4f501bdd69",
+    "LAUNCH.md": "75862a34013d9562e03e1e476d5f1dc46bb55dc853df1689339097c0d9fea81b",
     "MERGE.py": "833431e7ef3f980aa7a931a4534db38de1add4080679cdea6442d585069930a6",
+    "POOL.py": "21f32ebce8f9df4ae1eaf338131f6abf7bdc9bf3d32b3eb5674616cc839ad845",
     "PREPARE-STREAM.py": "cd1d92627f9a722248b350b989cdccdf7d733bbfdae9630655bd40d3727da36c",
-    "RUN.py": "d5c2839f7623340fd8a9acae33c5987499e035c6c279ffa74870437d3105b1c7",
+    "RUN.py": "e5ecac55558dee09e46619d0e616784ec2755ede1dd04958ec979a1133528d5a",
     "TRAIN-WORKER.py": "344268413afdefb0b06e0527f96178e7de7bb7e7daa6307a7ee8139e54ce9000"
   }
 }

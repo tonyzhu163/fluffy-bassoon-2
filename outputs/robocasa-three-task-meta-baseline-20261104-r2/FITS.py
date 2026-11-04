@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Four independent meta-learner fits (AD, DPT, DIT, IC-IQL) on a 130-update 10M Flow-SDE corpus.
+"""Four meta-learners, each jointly trained across the complete three-task corpus.
 
 Each learner runs as an independent process with its own actor/critic/Adam/sampler/RNG,
 consuming the 12-chunk-per-episode H600 trajectories with context_length=192
@@ -51,10 +51,12 @@ def main():
 
     binding = json.loads(a.assembly.read_text())
     if (binding.get("completed") is not True or not binding.get("student_fit_ready")
-            or binding.get("source_TRAIN_controls") != 9984000
+            or binding.get("source_TRAIN_controls") != 29952000
+            or binding.get("joint_training") is not True
+            or binding.get("source_tasks") != ["OpenDrawer", "CloseToasterOvenDoor", "CoffeeSetupMug"]
             or binding.get("action_dim") != 600
             or binding.get("source_physical_horizons") != [600]):
-        raise ValueError("Require the complete 130-update H600 Flow corpus assembly")
+        raise ValueError("Require the pooled three-task 130-update H600 assembly")
 
     a.output.mkdir(parents=True, exist_ok=True)
     master_lock = (a.output / ".fit-master.lock").open("a")

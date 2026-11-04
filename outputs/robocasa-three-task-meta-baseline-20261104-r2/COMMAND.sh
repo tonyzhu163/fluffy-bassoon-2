@@ -6,9 +6,17 @@ PY=$ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
 CODE=$TASK_CODE_DIR
 RUN=$ROOT/outputs/robocasa-three-task-meta-baseline-20261104-r2
 export PYTHONPATH="$CODE/src:$ROOT/sources/critic-selected-a1229239-r1"
+TASK=${ROBOCASA_META_TASK:?Set a source task for preparation, or joint for pooled fitting}
+if [[ "$TASK" == "joint" ]]; then
+  STAGE=fit
+  WALL=${ROBOCASA_META_WALL_SECONDS:-28800}
+else
+  STAGE=prepare
+  WALL=14400
+fi
 exec "$PY" -B "$CODE/outputs/robocasa-three-task-meta-baseline-20261104-r2/RUN.py" \
-  --task "${ROBOCASA_META_TASK:?Set one of the three source tasks}" \
+  --task "$TASK" --stage "$STAGE" \
   --output "$RUN/$ROBOCASA_META_TASK" \
-  --attempt "${ROBOCASA_META_ATTEMPT:-prepare-fit-4gpu-01}" \
+  --attempt "${ROBOCASA_META_ATTEMPT:-${STAGE}-4gpu-01}" \
   --files-per-batch "${ROBOCASA_META_FILES_PER_BATCH:-4}" \
-  --wall-seconds 28800 --prepare-seconds 14400
+  --wall-seconds "$WALL" --prepare-seconds 12600
