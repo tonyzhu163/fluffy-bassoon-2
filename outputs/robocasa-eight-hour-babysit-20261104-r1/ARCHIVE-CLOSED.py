@@ -76,7 +76,15 @@ def main():
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         manifest=list(pool.map(copy,files))
     assert {path.relative_to(source) for path in source.rglob('*') if path.is_file()}=={Path(row['relative']) for row in manifest}
-    assert all(sha(source/row['relative'])==row['sha256'] for row in manifest)
+    def verify_tree(root):
+        def matches(item):
+            return sha(root/item['relative'])==item['sha256']
+        with ThreadPoolExecutor(max_workers=args.workers) as pool:
+            # Materialize every result: every original leaf must be checked
+            # even if one fails. Phases remain strictly sequential.
+            checked=list(pool.map(matches,manifest))
+        assert all(checked)
+    verify_tree(source)
     record=dict(source=str(source),target=str(target),job_id=row['job_id'],scheduler_released_shanghai=row['released_shanghai'],
         group_result_sha256=audit['group_result_sha256'],audit_summary=audit['audit_summary'],files=manifest)
     cold_manifest=target/'ARCHIVE-MANIFEST.json';write(cold_manifest,record)
@@ -86,7 +94,7 @@ def main():
     try:
         source.symlink_to(target,target_is_directory=True)
         assert source.is_symlink() and source.resolve()==target
-        assert all(sha(source/item['relative'])==item['sha256'] for item in manifest)
+        verify_tree(source)
     except BaseException:
         if source.is_symlink():source.unlink()
         quarantine.rename(source)
