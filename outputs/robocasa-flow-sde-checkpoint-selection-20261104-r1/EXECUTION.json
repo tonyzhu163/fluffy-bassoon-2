@@ -9,8 +9,8 @@
     "default_job_reservation_gpu_seconds": 15540,
     "initial_five_plus_qualification_reserve_gpu_seconds": 78049,
     "automatic_retry": false,
-    "live_creation_to_check_upper_bound_gpu_seconds": 4707.276613712311,
-    "live_creation_to_check_upper_bound_gpu_hours": 1.3075768371423087,
+    "live_creation_to_check_upper_bound_gpu_seconds": 8744.47147488594,
+    "live_creation_to_check_upper_bound_gpu_hours": 2.4290198541349834,
     "reservation_with_all_five_inflight_gpu_seconds": 78049
   },
   "matrix": "SWEEP-PREPARED-R2.json",
@@ -37,17 +37,22 @@
       "progress": {
         "completed": false,
         "task": "OpenDrawer",
-        "banks_completed": 12,
-        "episodes_completed": 96,
-        "policy_controls": 57600,
+        "banks_completed": 24,
+        "episodes_completed": 192,
+        "policy_controls": 115200,
         "latest": {
           "panel": "DEV",
-          "step": 120,
-          "bank": 3
+          "step": 110,
+          "bank": 7
         },
         "SGD": 0
       },
-      "last_check_shanghai": "2026-11-04T12:50:46.455306+08:00"
+      "last_check_shanghai": "2026-11-04T13:04:19.781200+08:00",
+      "DEV_complete_checkpoints": [
+        130,
+        120,
+        110
+      ]
     },
     {
       "task": "CloseToasterOvenDoor",
@@ -67,17 +72,22 @@
       "progress": {
         "completed": false,
         "task": "CloseToasterOvenDoor",
-        "banks_completed": 12,
-        "episodes_completed": 96,
-        "policy_controls": 57600,
+        "banks_completed": 25,
+        "episodes_completed": 200,
+        "policy_controls": 120000,
         "latest": {
           "panel": "DEV",
-          "step": 120,
-          "bank": 3
+          "step": 100,
+          "bank": 0
         },
         "SGD": 0
       },
-      "last_check_shanghai": "2026-11-04T12:50:46.455306+08:00"
+      "last_check_shanghai": "2026-11-04T13:04:19.781200+08:00",
+      "DEV_complete_checkpoints": [
+        130,
+        120,
+        110
+      ]
     },
     {
       "task": "PickPlaceDrawerToCounter",
@@ -98,17 +108,22 @@
       "progress": {
         "completed": false,
         "task": "PickPlaceDrawerToCounter",
-        "banks_completed": 15,
-        "episodes_completed": 120,
-        "policy_controls": 72000,
+        "banks_completed": 28,
+        "episodes_completed": 224,
+        "policy_controls": 134400,
         "latest": {
           "panel": "DEV",
-          "step": 120,
-          "bank": 6
+          "step": 100,
+          "bank": 3
         },
         "SGD": 0
       },
-      "last_check_shanghai": "2026-11-04T12:50:46.455306+08:00"
+      "last_check_shanghai": "2026-11-04T13:04:19.781200+08:00",
+      "DEV_complete_checkpoints": [
+        130,
+        120,
+        110
+      ]
     },
     {
       "task": "CoffeeSetupMug",
@@ -128,17 +143,22 @@
       "progress": {
         "completed": false,
         "task": "CoffeeSetupMug",
-        "banks_completed": 10,
-        "episodes_completed": 80,
-        "policy_controls": 48000,
+        "banks_completed": 24,
+        "episodes_completed": 192,
+        "policy_controls": 115200,
         "latest": {
           "panel": "DEV",
-          "step": 120,
-          "bank": 1
+          "step": 110,
+          "bank": 7
         },
         "SGD": 0
       },
-      "last_check_shanghai": "2026-11-04T12:50:46.455306+08:00"
+      "last_check_shanghai": "2026-11-04T13:04:19.781200+08:00",
+      "DEV_complete_checkpoints": [
+        130,
+        120,
+        110
+      ]
     },
     {
       "task": "TurnOffStove",
@@ -158,20 +178,26 @@
       "progress": {
         "completed": false,
         "task": "TurnOffStove",
-        "banks_completed": 9,
-        "episodes_completed": 72,
-        "policy_controls": 43200,
+        "banks_completed": 23,
+        "episodes_completed": 184,
+        "policy_controls": 110400,
         "latest": {
           "panel": "DEV",
-          "step": 120,
-          "bank": 0
+          "step": 110,
+          "bank": 6
         },
         "SGD": 0
       },
-      "last_check_shanghai": "2026-11-04T12:50:46.455306+08:00"
+      "last_check_shanghai": "2026-11-04T13:04:19.781200+08:00",
+      "DEV_complete_checkpoints": [
+        130,
+        120
+      ]
     }
   ],
   "monitor_status": "ACTIVE",
-  "last_check_shanghai": "2026-11-04T12:50:46.455306+08:00",
-  "next_action": "Finish descending DEV130\u21920; lock each DEV winner before fresh counterbalanced TEST128; monitor every20minutes."
+  "last_check_shanghai": "2026-11-04T13:04:19.781200+08:00",
+  "next_action": "Continue healthy descending DEV panels; lock winners only after all16 checkpoints/task, then independent TEST128. No user action needed.",
+  "storage_free_GiB": 641.83203125,
+  "last_monitor_record": "MONITOR-20261104-130419.json"
 }
