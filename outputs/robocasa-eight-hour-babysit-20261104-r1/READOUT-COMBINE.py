@@ -20,12 +20,13 @@ def paired(a, b, seed):
     assert set(a) == set(b)
     delta = np.asarray([int(b[k])-int(a[k]) for k in sorted(a)], np.float64)
     wins, losses = int((delta > 0).sum()), int((delta < 0).sum())
-    rng = np.random.default_rng(seed)
-    samples = delta[rng.integers(len(delta), size=(10000,len(delta)))].mean(-1)*100
+    counts = np.asarray([(delta == value).sum() for value in (-1,0,1)])
+    bootstrap = np.random.default_rng(seed).multinomial(len(delta),counts/len(delta),size=10000)
+    interval = np.quantile((bootstrap[:,2]-bootstrap[:,0])/len(delta),[.025,.975])*100
     return dict(cases=len(delta), delta_percentage_points=float(delta.mean()*100),
         wins=wins, losses=losses,
         exact_McNemar_p=float(binomtest(wins,wins+losses,.5).pvalue) if wins+losses else 1.,
-        paired_bootstrap95_percentage_points=np.quantile(samples,[.025,.975]).tolist(),
+        paired_bootstrap95_percentage_points=interval.tolist(),
         bootstrap_seed=seed, bootstrap_draws=10000, inference='descriptive; marginal intervals, no multiplicity-adjusted adaptation claim')
 
 
