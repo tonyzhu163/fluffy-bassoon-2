@@ -115,13 +115,13 @@
       "automatic_retry": false,
       "manifest_sha256": "5f4b5c56bcacd96aca167f529bae807890011b34e34cb55072029588d8fc24f7",
       "evaluation_code": "81caf87060c9d966e0256e94da2ae705366ec33f",
-      "fully_paired_cases": 16,
-      "completed_B8_policy_panels": 22,
+      "fully_paired_cases": 128,
+      "completed_B8_policy_panels": 99,
       "scored_B8_panels_target": 385,
       "per_worker": {
         "node-00": {
-          "panels": 6,
-          "fully_paired_cases": 8,
+          "panels": 25,
+          "fully_paired_cases": 32,
           "parity": true,
           "status": null,
           "done": false,
@@ -129,17 +129,17 @@
           "last": "E"
         },
         "node-01": {
-          "panels": 6,
-          "fully_paired_cases": 8,
+          "panels": 25,
+          "fully_paired_cases": 32,
           "parity": true,
           "status": null,
           "done": false,
           "probe": "passed",
-          "last": "C"
+          "last": "D"
         },
         "node-02": {
-          "panels": 5,
-          "fully_paired_cases": 0,
+          "panels": 25,
+          "fully_paired_cases": 32,
           "parity": true,
           "status": null,
           "done": false,
@@ -147,21 +147,21 @@
           "last": "SFT"
         },
         "node-03": {
-          "panels": 5,
-          "fully_paired_cases": 0,
+          "panels": 24,
+          "fully_paired_cases": 32,
           "parity": true,
           "status": null,
           "done": false,
           "probe": "passed",
-          "last": "stage1"
+          "last": "SFT"
         }
       }
     }
   },
-  "last_checked_Shanghai": "2026-11-04 22:43",
+  "last_checked_Shanghai": "2026-11-04 23:03",
   "engine_r2": "02ce594015eaa8f972f875d7f37e6972f4ada495",
   "endpoint_eval_code": "81caf87060c9d966e0256e94da2ae705366ec33f",
-  "next_check_Shanghai": "2026-11-04 23:03",
+  "next_check_Shanghai": "2026-11-04 23:23",
   "third_arm_admission": {
     "shared_PFS_free_GiB": 660,
     "combined_E_C_current_GiB_rounded_up": 62,
@@ -174,6 +174,6 @@
     "pinned_engine_same_across_three_arms": true
   },
   "next_action": "Finish all 512 common cases and SFT repeat, verify source receipts and analyze paired outcomes",
-  "PFS_free_GiB": 434.1,
+  "PFS_free_GiB": 432.0,
   "endpoint_eval_launcher_qualification": "Single-GPU scheduler isolation checked before defaulting the CUDA ordinal, EGL selected; CPU config, B8 design, source imports, 675-key prefix and original mmap loads verified. All four disjoint case partitions have independently tested action journals."
 }
