@@ -37,5 +37,5 @@ export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 PYTHONUNBUFFER
 "$TASK_PY" -B "$TASK_RUNTIME/scripts/[train]gpu_probe.py" --expected-count 8 --purpose evaluation \
  --baige-container --output "$TASK_OUTPUT/gpu-probe.json"
 TASK_DEADLINE=$((TASK_STARTED+2070))
-timeout --signal=TERM --kill-after=30s 2070 "$TASK_PY" -B "$TASK_RUN/accelerate.py" launch \
+timeout --signal=TERM --kill-after=30s 2070 "$TASK_PY" -B "$TASK_RUN/parallel_endpoint.py" launch \
  --manifest "$TASK_MANIFEST" --output "$TASK_OUTPUT" --deadline "$TASK_DEADLINE"

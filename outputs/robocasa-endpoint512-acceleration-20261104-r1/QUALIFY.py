@@ -6,12 +6,15 @@ import sys
 import time
 
 root, metadata, destination = map(Path, sys.argv[1:])
-spec = importlib.util.spec_from_file_location('acceleration', root / 'accelerate.py')
+spec = importlib.util.spec_from_file_location('endpoint_parallel', root / 'parallel_endpoint.py')
 acc = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(acc)
 destination.mkdir(parents=True, exist_ok=False)
 ep = acc.endpoint(metadata)
 prepared = metadata / 'outputs' / acc.PARENT / 'PREPARED.json'
+from native_eval import configuration, SelectionEnvironment, SelectionRollout
+from transformers import AutoModelForCausalLM
+import accelerate.hooks
 for count in range(4, 65):
     remaining = list(range(64 - count, 64))
     groups = acc.split_banks(remaining)
@@ -70,7 +73,8 @@ assert free.f_bavail * free.f_frsize > 200 * 2**30
 acc.write(destination / 'QUALIFICATION.json', dict(completed=True,
     partition_frontiers_checked=61, worker_binding_checks=len(captured),
     fixed_batch=8, case_and_noise_identity_exact=True, ABBA_order_exact=True,
-    endpoint_sha256=acc.sha(ep.HERE), wrapper_sha256=acc.sha(root / 'accelerate.py'),
-    prepared_sha256=acc.sha(prepared), new_controls=0, SGD=0,
+    endpoint_sha256=acc.sha(ep.HERE), wrapper_sha256=acc.sha(root / 'parallel_endpoint.py'),
+    prepared_sha256=acc.sha(prepared), full_native_imports_pass=True,
+    new_controls=0, SGD=0,
     free_GiB=free.f_bavail * free.f_frsize / 2**30, checked_unix=time.time()))
 print((destination / 'QUALIFICATION.json').read_text(), flush=True)
