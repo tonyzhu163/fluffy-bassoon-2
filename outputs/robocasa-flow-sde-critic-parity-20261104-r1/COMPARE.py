@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 
 import hydra
+import ray
 import torch.multiprocessing as mp
 
 from rlinf.config import validate_cfg
@@ -40,6 +41,11 @@ def main(cfg):
     runner = FlowRunner(cfg=cfg, actor=actor, rollout=rollout, env=env)
     runner.init_workers()
     runner.run()
+    # Close only the groups created above, then the local Ray instance, before
+    # the other arm starts in this same exclusive scheduler container.
+    for group in groups:
+        group._close()
+    ray.shutdown()
 
 
 if __name__ == '__main__':
