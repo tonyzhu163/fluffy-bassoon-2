@@ -36,7 +36,7 @@ require policy0 likelihood parity in every worker before any simulator bank.
 
 Keep the original27600GPU-second all-attempt ceiling. Admission requires the
 old conservative charge plus8×2100seconds to fit that ceiling. Reserve at most
-9600 additional physical controls for two interrupted bank pairs; all2048valid
+19200 additional physical controls for two interrupted bank pairs; all2048valid
 policy episodes and1228800validcontrols remain exactly the original comparison.
 All abandoned attempts stay charged and separate from valid-case statistics.
 No scientific scope expansion, PPO update or student fitting is included.

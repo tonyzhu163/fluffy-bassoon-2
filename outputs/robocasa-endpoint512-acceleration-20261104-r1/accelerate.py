@@ -92,7 +92,7 @@ def prepare(metadata, original, output, stopped):
         stopped=stopped, maximum_gpus=8, budget_gpu_seconds=27600,
         reserved_gpu_seconds_upper=prior_charge + 8 * 2100,
         original_maximum_policy_controls=1228800,
-        recovery_control_reserve=9600, maximum_all_attempt_policy_controls=1238400,
+        recovery_control_reserve=19200, maximum_all_attempt_policy_controls=1248000,
         scientific_comparison_unchanged=True, fixed_batch=8, SGD=0)
     write(output / 'MIGRATION.json', manifest)
     return manifest

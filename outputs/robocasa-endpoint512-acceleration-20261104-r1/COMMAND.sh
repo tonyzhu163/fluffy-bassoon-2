@@ -6,7 +6,7 @@ TASK_RUN=$TASK_META/outputs/robocasa-endpoint512-acceleration-20261104-r1
 TASK_OUTPUT=$TASK_ROOT/outputs/robocasa-endpoint512-acceleration-20261104-r1/gpu-r1
 TASK_RUNTIME=$TASK_ROOT/sources/flow10m-0988b5f9
 TASK_RLINF=$TASK_ROOT/sources/robocasa365-public-pi05-nnx-leaves-20261101-r1/RLinf
-TASK_EVAL=$TASK_META/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1
+TASK_EVAL=$TASK_ROOT/sources/stove-drift-endpoint512-d13dc18d/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1
 TASK_PY=$TASK_ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
 TASK_STARTED=$(date +%s)
 test ! -e "$TASK_OUTPUT"
