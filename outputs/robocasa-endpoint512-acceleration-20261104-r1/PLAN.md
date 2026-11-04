@@ -75,3 +75,16 @@ valid controls are unchanged; this is replay overhead, not additional cases.
 The original27600GPU-second all-attempt cap remains binding. The latest stopped
 receipt and27-minute reservation must fit it before another launch. Combine
 on allocated Linux CPU after all eight shard results and clocks are complete.
+
+The first separate-container attempt exposed an accounting collision: the
+qualified evaluator uses `output.parent/accounting`, so sibling shard outputs
+shared a ledger root and disagreed on ceilings for unequal shard lengths.
+Release that attempt, retain complete pairs, then place each new model output
+at `<task>/shard-XX/gpu-r1`. Its parent and action journal are now private.
+Qualify the real frozen ActionJournal with all eight roots and unequal limits
+on Linux CPU before launch. Reuse prior complete native import qualification;
+the evaluator and all model imports are unchanged. Retain previous manifest
+pairs recursively, with raw-file hashes and no stitching of interrupted banks.
+The next eight-container reservation is20minutes, with a1170-second worker
+timeout and30-second kill allowance. Recompute cumulative charges on release
+and admit only when that reservation fits the original27600GPU-second ceiling.

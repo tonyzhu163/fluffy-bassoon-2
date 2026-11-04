@@ -73,9 +73,10 @@ def prepare(metadata, original, output, stopped, previous=None, scheduler_second
             old = read(previous)
             assert old['prepared_sha256'] == sha(prepared)
             assert old['endpoint_sha256'] == sha(ep.HERE)
-            original_complete = old['tasks'][task]['retained_banks']
-            abandoned.extend(p for p in panels if p['bank'] not in original_complete)
-            panels = [p for p in panels if p['bank'] in original_complete]
+            # The previous manifest can already include multiple released
+            # attempts; preserve its canonical retained pairs recursively.
+            panels = deepcopy(old['tasks'][task]['retained_panels'])
+            abandoned = deepcopy(old['tasks'][task]['discarded_incomplete_panels'])
             for shard in old['shards']:
                 if shard['task'] != task:
                     continue
@@ -109,7 +110,9 @@ def prepare(metadata, original, output, stopped, previous=None, scheduler_second
         for index, banks in enumerate(split_banks(remaining)):
             assert banks
             shards.append(dict(task=task, shard=index, banks=banks,
-                output=str(output / task / f'shard-{index:02d}'),
+                # native_eval puts accounting in output.parent/accounting.
+                # Give each shard a private parent, including unequal lengths.
+                output=str(output / task / f'shard-{index:02d}' / 'gpu-r1'),
                 original_staging=str(Path(original) / task / 'staging-r1')))
     # Scheduler creation-to-release costs, including old failed attempts, remain charged.
     assert prior_charge + 8 * scheduler_seconds <= 27600, 'Migration reservation exceeds original GPU-hour ceiling'
