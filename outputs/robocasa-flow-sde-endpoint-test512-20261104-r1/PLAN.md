@@ -99,3 +99,37 @@ for the Holm decision.
   as an improvement.
 
 The GPU path is untested until the first bank's receipts are checked.
+
+## Independent raw-receipt and statistics audit
+
+Both jobs' first-bank audits and exact initial likelihood replays have passed;
+the historical preparation checks above are preserved. The separate
+[FINAL-AUDIT.py](FINAL-AUDIT.py), source `6c95116e`, was Git-deployed beside this
+run as `FINAL-AUDIT-6c95116e.py`; it does not change the active executable
+checkout. It recomputes physical/public snapshot equality, renderer diagnostic
+differences, case/control identities, all 12 H50 sampler records, paired RNG
+identity and actual ABBA order from the raw files. Its final mode independently
+reproduces McNemar with SciPy's binomial test and verifies the bootstrap/Holm
+decisions.
+
+After both task clocks exit successfully and their staging closeouts exist,
+run on allocated Linux CPU, using a new destination:
+
+```bash
+TASK_ROOT=/mowenjie/fluffy-bassoon-2
+TASK_RUN=$TASK_ROOT/outputs/robocasa-flow-sde-endpoint-test512-20261104-r1
+TASK_META=$TASK_ROOT/sources/stove-drift-endpoint512-d13dc18d
+TASK_PY=$TASK_ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
+TASK_PREPARED=$TASK_META/outputs/robocasa-flow-sde-endpoint-test512-20261104-r1/PREPARED.json
+"$TASK_PY" -B "$TASK_META/outputs/robocasa-flow-sde-endpoint-test512-20261104-r1/endpoint.py" \
+  combine --prepared "$TASK_PREPARED" --outputs "$TASK_RUN" --destination "$TASK_RUN/HOLM.json"
+"$TASK_PY" -B "$TASK_RUN/FINAL-AUDIT-6c95116e.py" --root "$TASK_RUN" \
+  --prepared "$TASK_PREPARED" \
+  --source-script "$TASK_META/outputs/robocasa-flow-sde-endpoint-test512-20261104-r1/endpoint.py" \
+  --destination "$TASK_RUN/FINAL-AUDIT.json"
+```
+
+Use `--allow-incomplete` and a distinct destination only for completed-bank
+receipt checks while jobs advance; that mode makes no final statistical or
+whole-run claim. Scheduler release and all-attempt cost closeout remain
+required after the independent artifact audit.

@@ -75,3 +75,31 @@ indices.
 
 This remains a conditional-transition likelihood on policy-zero samples. It
 is not a full-action marginal KL or a behavioural test.
+
+## Independent closeout audit
+
+The separately Git-deployed [FINAL-AUDIT.py](FINAL-AUDIT.py), source `d1850311`,
+does not modify the active executable checkout. Its Linux CPU partial audit
+checks all 480 index tensors for the completed Drawer, OpenDrawer and Coffee
+tasks, selected fixture contents against the original Q1 actor records,
+checkpoint marker/READY/CONSUMED joins, variance normalization and dimension
+sums. The maximum reduction difference is 1.56e-15; this is not a whole-run
+closeout. [Partial audit](PARTIAL-AUDIT-20261104-1400.json).
+
+After the GPU clock exits successfully and staging has all 80 receipts, run
+the following with the allocated Linux environment's Python. The destination
+must be new; omit `--allow-incomplete` for the final audit.
+
+```bash
+TASK_ROOT=/mowenjie/fluffy-bassoon-2
+TASK_RUN=$TASK_ROOT/outputs/robocasa-flow-sde-matched-denoise-drift-20261104-r1
+TASK_META=$TASK_ROOT/sources/stove-drift-endpoint512-d13dc18d
+"$TASK_ROOT/setups/robocasa365-native-20261101-r1/env/bin/python" -B \
+  "$TASK_RUN/FINAL-AUDIT-d1850311.py" --root "$TASK_RUN" \
+  --source-script "$TASK_META/outputs/robocasa-flow-sde-matched-denoise-drift-20261104-r1/MATCHED-DRIFT.py" \
+  --destination "$TASK_RUN/FINAL-AUDIT.json"
+```
+
+The audit also requires every temporary private model copy to have been
+reclaimed by its own stager. Scheduler terminal/release accounting and the
+scientific five-task comparison remain separate closeout steps.

@@ -28,6 +28,22 @@ source/PPO/meta-training exposure, not tasks unseen to the foundation model.
 The 18 include 17 manipulation tasks and NavigateKitchen; excluding navigation from
 a manipulation portfolio is a separate, explicit scope decision.
 
+## Why five source tasks
+
+The human clarified that five PPO source tasks is a practical balance for
+debugging, inspired by the seen/held-out structure of the RoboTwin comparison.
+It is a compute and iteration-speed choice, not a number derived from the
+18-task pool or proof that five tasks suffice for broad meta-generalization.
+The referenced [VLRLA simulation experiment](https://arxiv.org/html/2610.19517v1#S5)
+actually uses six seen and six unseen tasks; our five-plus-five is a smaller
+pilot with that general structure.
+
+Screening the 18 with the unchanged checkpoint does not require PPO on all 18.
+Likewise, the official Atomic-Seen, Composite-Seen and Composite-Unseen labels
+do not require choosing five from each category for this debugging phase.
+Specific source/held-out memberships still need the baseline, skill-coverage
+and exposure justification below. No broader training campaign is adopted.
+
 ## Evidence for every candidate
 
 First success is the primary endpoint. Counts below come from different fresh
