@@ -20,6 +20,7 @@ def main():
     parser.add_argument('--memory-mode', choices=('all', 'full', 'episode'), default='all')
     parser.add_argument('--shards', type=int, choices=(1,2), default=1)
     parser.add_argument('--shard-index', type=int, default=0)
+    parser.add_argument('--snapshot-manifest', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--probe', type=Path, required=True)
     parser.add_argument('--expected-hostname', required=True)
@@ -31,6 +32,8 @@ def main():
         raise ValueError('Final panels have fifty cases per task')
     if not 0 <= args.shard_index < args.shards:
         raise ValueError('Select a complete-bank shard within the bound partition')
+    if args.snapshot_manifest and (args.stage!='qualification' or args.count!=2 or args.split!='ID' or args.shards!=1):
+        raise ValueError('Interim snapshots qualify deployment on the two-case ID bank only')
     root = Path('/mowenjie/fluffy-bassoon-2')
     sys.path.insert(0, str(args.code / 'src'))
     from fluffy_bassoon.meta_rl.rlinf_native_ppo import checked_checkout, tensor_hash
@@ -62,10 +65,21 @@ def main():
         raise ValueError('Native anchors use their single history-independent control')
     if not is_anchor:
         directory = fit / 'fits' / args.method
-        status = json.loads((directory / 'training-status.json').read_text())
-        if status.get('converged') is not True or status.get('stop_reason') != 'validation_plateau':
-            raise ValueError('Dispatch only this method\'s converged validation-selected candidate')
-        source = directory / 'candidate.pt'
+        if args.snapshot_manifest:
+            snapshot = json.loads(args.snapshot_manifest.read_text())
+            if (snapshot['method']!=args.method or snapshot['source_assembly_sha256']!=file_sha256(assembly)
+                    or snapshot.get('qualification_only') is not True):
+                raise ValueError('Require the explicit immutable diagnostic snapshot binding')
+            source = Path(snapshot['candidate']['path'])
+            if file_sha256(source)!=snapshot['candidate']['sha256']:
+                raise ValueError('Frozen diagnostic actor changed')
+            status = snapshot['training_status_at_freeze']
+            selected.update(qualification_only=True,snapshot=snapshot)
+        else:
+            status = json.loads((directory / 'training-status.json').read_text())
+            if status.get('converged') is not True or status.get('stop_reason') != 'validation_plateau':
+                raise ValueError('Dispatch only this method\'s converged validation-selected candidate')
+            source = directory / 'candidate.pt'
         digest = file_sha256(source)
         frozen = args.output / 'selected-candidate.pt'
         shutil.copyfile(source, frozen)

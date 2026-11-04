@@ -34,8 +34,10 @@ PROBE=$ROOT/$RUN/probes/$BABYSIT_ATTEMPT.json
 mkdir -p "$(dirname "$PROBE")"
 "$PY" -B "$BABYSIT_CODE/scripts/[train]gpu_probe.py" --expected-count 1 --purpose evaluation --baige-container --output "$PROBE"
 SECONDS_LIMIT=${BABYSIT_SECONDS_LIMIT:-3300}
+EXTRA_ARGS=()
+if [[ -n ${BABYSIT_SNAPSHOT_MANIFEST:-} ]]; then EXTRA_ARGS+=(--snapshot-manifest "$BABYSIT_SNAPSHOT_MANIFEST"); fi
 timeout --kill-after=30s "$SECONDS_LIMIT" "$PY" -B "$BABYSIT_CODE/$RUN/READOUT.py" \
   --code "$BABYSIT_CODE" --source-commit "$BABYSIT_COMMIT" --method "$BABYSIT_METHOD" \
   --split "$BABYSIT_SPLIT" --stage "${BABYSIT_STAGE:-qualification}" --count "${BABYSIT_COUNT:-2}" \
   --memory-mode "${BABYSIT_MEMORY_MODE:-all}" --shards "${BABYSIT_SHARDS:-1}" --shard-index "${BABYSIT_SHARD_INDEX:-0}" \
-  --output "$OUT" --probe "$PROBE" --expected-hostname "$HOSTNAME" --deadline "$((START+SECONDS_LIMIT))"
+  --output "$OUT" --probe "$PROBE" --expected-hostname "$HOSTNAME" --deadline "$((START+SECONDS_LIMIT))" "${EXTRA_ARGS[@]}"
