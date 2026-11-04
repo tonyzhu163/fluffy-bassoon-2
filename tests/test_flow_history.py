@@ -151,7 +151,7 @@ def test_history_flow_steering_policy_supports_interfaces_and_four_meta_learners
     class FrozenMotor(torch.nn.Module):
         def __init__(self):
             super().__init__()
-            self.kv_proj = torch.nn.Linear(8, 32, bias=False)
+            self.kv_proj = torch.nn.Linear(4, 32, bias=False)
             self.action_proj = torch.nn.Linear(32, 32, bias=False)
             self.eval().requires_grad_(False)
 
@@ -185,8 +185,8 @@ def test_history_flow_steering_policy_supports_interfaces_and_four_meta_learners
     # Zero-initialized output preserves exact native velocity before any step.
     with torch.no_grad():
         base_v = motor.velocity_from_suffix(motor.run_suffix({}, noise, tau, cache, mask))
-        init_v = policy.predict_velocity(motor, {}, noise, tau, cache, mask, context)
-        assert torch.allclose(base_v, init_v)
+    init_v = policy.predict_velocity(motor, {}, noise, tau, cache, mask, context)
+    assert torch.allclose(base_v, init_v.detach())
 
     for objective in ("ad", "dpt", "dit", "ic_iql"):
         weights = HistoryFlowSteeringPolicy.meta_objective_weights(
