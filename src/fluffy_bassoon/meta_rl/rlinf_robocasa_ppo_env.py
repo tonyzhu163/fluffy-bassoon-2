@@ -23,7 +23,7 @@ def counted_native_factory(factory,*,reset_control_limit=128,physics_tick_limit)
         from robosuite.utils.binding_utils import MjSim
         counts=dict(controls=0,reset_controls=0,physics_ticks=0,step1_calls=0,
             phase='reset',control_time=None,clock=None)
-        step=MujocoEnv.step
+        step=getattr(MujocoEnv.step,'_flora_unwrapped',MujocoEnv.step)
         def counted_step(env,action):
             if counts['phase']=='reset' and counts['reset_controls']>=reset_control_limit:
                 raise RuntimeError('Native constructor/reset exceeded its prospective control reserve')
@@ -32,16 +32,19 @@ def counted_native_factory(factory,*,reset_control_limit=128,physics_tick_limit)
             result=step(env,action)
             counts['control_time']=float(env.cur_time)
             return result
+        counted_step._flora_unwrapped=step
         MujocoEnv.step=counted_step
         # lite_physics uses step1+step2, ordinary physics uses step. A completed
         # step2 and a completed step are each one integration tick, never two.
         for name in ('step','step1','step2'):
-            original=getattr(MjSim,name)
+            current=getattr(MjSim,name)
+            original=getattr(current,'_flora_unwrapped',current)
             def counted_tick(sim,*args,_original=original,_name=name,**kwargs):
                 if counts['physics_ticks']>=physics_tick_limit:raise RuntimeError('Native physics tick bound exceeded')
                 if _name=='step1':counts['step1_calls']+=1
                 else:counts['physics_ticks']+=1
                 return _original(sim,*args,**kwargs)
+            counted_tick._flora_unwrapped=original
             setattr(MjSim,name,counted_tick)
         env=factory()
         original_reset=env.reset
@@ -64,6 +67,26 @@ def counted_native_factory(factory,*,reset_control_limit=128,physics_tick_limit)
         env._flora_accounting=counts
         return env
     return create
+
+
+def reconfigure_or_create_subproc_env(current_env, fns):
+    """Reconfigure persistent RobocasaSubprocEnv workers in parallel without process teardown."""
+    from rlinf.envs.sim.robocasa.venv import RobocasaSubprocEnv
+    workers = getattr(current_env, 'workers', None)
+    if (current_env is not None and not getattr(current_env, 'is_closed', False)
+            and workers is not None and len(workers) == len(fns)):
+        if all(hasattr(w, 'parent_remote') for w in workers):
+            from rlinf.envs.venv import CloudpickleWrapper
+            for worker, fn in zip(workers, fns):
+                worker.parent_remote.send(['reconfigure', CloudpickleWrapper(fn)])
+            for worker in workers:
+                worker.parent_remote.recv()
+        else:
+            current_env.reconfigure_env_fns(fns)
+        return current_env
+    if current_env is not None:
+        current_env.close()
+    return RobocasaSubprocEnv(fns)
 
 
 def robocasa_class(original,worker):

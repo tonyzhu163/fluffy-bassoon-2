@@ -205,3 +205,69 @@ def test_periodic_val_check_interval_contract_accounting():
     assert contract['eval_panels'] == 1 + 130 // 10 == 14
     assert contract['nominal_policy_controls'] == 130 * 128 * 600 + 14 * 64 * 600
     assert contract['nominal_policy_controls'] + contract['reset_reserve_controls'] <= 15000000
+
+
+def test_reconfigure_or_create_subproc_env_batches_pipe_commands_in_parallel(monkeypatch):
+    from types import SimpleNamespace
+    import rlinf.envs.sim.robocasa.venv as robocasa_venv
+    import rlinf.envs.venv as base_venv
+    from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo_env import reconfigure_or_create_subproc_env
+
+    events = []
+    created = []
+
+    class FakeRemote:
+        def __init__(self, idx):
+            self.idx = idx
+
+        def send(self, msg):
+            events.append(('send', self.idx, msg[0], msg[1].data()))
+
+        def recv(self):
+            events.append(('recv', self.idx))
+            return None
+
+    class FakeSubprocEnv:
+        def __init__(self, fns):
+            created.append(len(fns))
+            self.is_closed = False
+            self.workers = [SimpleNamespace(parent_remote=FakeRemote(i)) for i in range(len(fns))]
+
+        def close(self):
+            self.is_closed = True
+
+    monkeypatch.setattr(robocasa_venv, 'RobocasaSubprocEnv', FakeSubprocEnv)
+    monkeypatch.setattr(base_venv, 'CloudpickleWrapper', lambda fn: SimpleNamespace(data=fn))
+
+    env = reconfigure_or_create_subproc_env(None, [lambda: 'e0', lambda: 'e1'])
+    assert created == [2] and not events
+    reused = reconfigure_or_create_subproc_env(env, [lambda: 'n0', lambda: 'n1'])
+    assert reused is env and created == [2]
+    # All sends happen before any blocking recv so worker reconfigures run concurrently.
+    assert events == [
+        ('send', 0, 'reconfigure', 'n0'),
+        ('send', 1, 'reconfigure', 'n1'),
+        ('recv', 0),
+        ('recv', 1),
+    ]
+
+
+def test_async_chunk_io_writes_and_flushes_deterministically(tmp_path):
+    from concurrent.futures import ThreadPoolExecutor
+    import gzip
+    import torch
+    from fluffy_bassoon.meta_rl.rlinf_robocasa_flow_ppo_runtime import FlowEnvironment, _write_chunk_archive
+
+    worker = object.__new__(FlowEnvironment)
+    worker._flow_io_pool = ThreadPoolExecutor(max_workers=2)
+    worker._flow_io_futures = []
+    path = tmp_path / 'chunk01.pt.gz'
+    payload = dict(phase='training', iteration=1, current_observation=dict(states=torch.ones(2, 4)))
+    worker._submit_flow_io(_write_chunk_archive, path, payload)
+    worker._flush_flow_io()
+    assert worker._flow_io_futures == []
+    with gzip.open(path, 'rb') as stream:
+        loaded = torch.load(stream, weights_only=False)
+    assert loaded['current_observation_sha256']
+    assert torch.equal(loaded['current_observation']['states'], torch.ones(2, 4))
+    worker._flow_io_pool.shutdown(wait=True)

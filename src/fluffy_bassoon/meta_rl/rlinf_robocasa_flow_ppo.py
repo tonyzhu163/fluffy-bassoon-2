@@ -13,6 +13,8 @@ class GlobalActionJournal:
         self.path = self.root / f'rank-{rank:02d}' / f'{attempt}.json'
         self.limit, self.rank, self.world = maximum_actions, rank, world
         self.rows = []
+        self._local_charged = 0
+        self._file_cache = {}
         if self.path.exists():
             raise ValueError('Never overwrite an existing attempt journal')
         write(self.path, self._value())
@@ -24,9 +26,21 @@ class GlobalActionJournal:
 
     def charged(self):
         import json
-        return sum(row.get('executed_or_conservative', row['requested'])
-            for path in self.root.glob('rank-*/*.json')
-            for row in json.loads(path.read_text())['calls'])
+        total = self._local_charged
+        for path in self.root.glob('rank-*/*.json'):
+            if path == self.path:
+                continue
+            stat = path.stat()
+            key = (stat.st_mtime_ns, stat.st_size)
+            cached = self._file_cache.get(path)
+            if cached is None or cached[0] != key:
+                amount = sum(row.get('executed_or_conservative', row['requested'])
+                    for row in json.loads(path.read_text())['calls'])
+                self._file_cache[path] = (key, amount)
+            else:
+                amount = cached[1]
+            total += amount
+        return total
 
     def _change(self, mutate):
         import fcntl
@@ -45,6 +59,7 @@ class GlobalActionJournal:
                 raise RuntimeError('Global action escrow cannot reserve another complete vector chunk')
             self.rows.append(dict(requested=requested, phase=phase,
                 started_unix=time.time(), resolved=False))
+            self._local_charged += requested
             return len(self.rows) - 1
         return self._change(reserve)
 
@@ -54,6 +69,7 @@ class GlobalActionJournal:
             row = self.rows[cursor]
             if row['resolved'] or not isinstance(executed, int) or not 0 <= executed <= row['requested']:
                 raise ValueError('Invalid or duplicate simulator accounting resolution')
+            self._local_charged += executed - row['requested']
             row.update(executed_or_conservative=executed, resolved=True, ended_unix=time.time())
         return self._change(resolve)
 

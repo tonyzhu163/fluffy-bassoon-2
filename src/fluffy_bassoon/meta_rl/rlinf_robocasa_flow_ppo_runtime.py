@@ -4,6 +4,7 @@ Each episode uses a fresh deterministic native constructor. This makes the
 next complete-iteration boundary recoverable without pickling MuJoCo state.
 Actor/Adam/LR/RNG use RLinf DCP; sidecars retain rollout RNG and case cursors.
 """
+from concurrent.futures import ThreadPoolExecutor
 from copy import deepcopy
 import gzip
 import json
@@ -26,8 +27,14 @@ from .rlinf_native_ppo_runtime import PilotActor, PilotRollout, PilotRunner, sav
 from .rlinf_robocasa_flow_ppo import (GlobalActionJournal, RESET_CONTROL_RESERVE, first_success_reward,
     flow_contract, flow_episode_ids, flow_logprob_parity, flow_value_parity,
     keep_frozen_image_encoder_in_eval, train_case_seeds, verify_grpo_group_reset)
-from .rlinf_robocasa_ppo_env import counted_native_factory
+from .rlinf_robocasa_ppo_env import counted_native_factory, reconfigure_or_create_subproc_env
 from .robocasa_pairing import canonical_case, native_fingerprint, public_snapshot, stable_counter_regions
+
+
+def _write_chunk_archive(path, payload):
+    payload['current_observation_sha256'] = tensor_hash(payload['current_observation'])
+    with gzip.open(path, 'xb', compresslevel=1) as stream:
+        torch.save(payload, stream)
 
 
 def unwrapped(env):
@@ -73,8 +80,8 @@ def native_class(original, owner):
         def reset(self, env_idx=None, options=None):
             if env_idx is not None or options is not None:
                 raise ValueError('Flow PPO uses complete fixed-horizon vector resets')
-            if hasattr(self, 'env'):
-                self.env.close()
+            if hasattr(owner, '_flush_flow_io'):
+                owner._flush_flow_io()
             self._flow_round += 1
             is_eval = bool(self.cfg.is_eval)
             contract = owner._flow_contract
@@ -90,11 +97,11 @@ def native_class(original, owner):
             self.task_ids = np.zeros(self.num_envs, dtype=np.int32)
             self._refresh_task_context()
             self._is_start = True
-            from rlinf.envs.sim.robocasa.venv import RobocasaSubprocEnv
             token = owner._flow_journal.begin(self.num_envs * RESET_CONTROL_RESERVE,
                 phase=owner._flow_phase + '/native_constructor_reset')
-            self.env = RobocasaSubprocEnv([fresh_factory(fn, seed, contract['physics_tick_limit']) for fn, seed in
-                zip(super().get_env_fns(), self.env_seeds, strict=True)])
+            fns = [fresh_factory(fn, seed, contract['physics_tick_limit']) for fn, seed in
+                zip(super().get_env_fns(), self.env_seeds, strict=True)]
+            self.env = reconfigure_or_create_subproc_env(getattr(self, 'env', None), fns)
             observation, info = super().reset()
             counts = self.env.get_env_attr('_flora_accounting')
             owner._flow_journal.finish(token, sum(c['reset_controls'] for c in counts))
@@ -155,16 +162,19 @@ def native_class(original, owner):
             after = cpu_tree(result[0][-1])
             last = self._flow_steps == contract['horizon']
             path = self._flow_root / (self._flow_key + f'-chunk{self._flow_steps // contract["chunk"]:02d}.pt.gz')
-            with gzip.open(path, 'xb', compresslevel=1) as stream:
-                torch.save(dict(phase=owner._flow_phase, iteration=owner._flow_iteration,
-                    round=self._flow_round, seeds=self.env_seeds,
-                    episode_ids=list(self._flow_episode_ids),
-                    current_observation=before, current_observation_sha256=tensor_hash(before),
-                    decoded_actions=cpu_tree(actions), rewards=cpu_tree(result[1]),
-                    terminations=cpu_tree(result[2]), truncations=cpu_tree(result[3]),
-                    final_info=cpu_tree(result[4][-1]),
-                    # The horizon observation is never a decision input; value targets need it.
-                    terminal_observation=after if last else None), stream)
+            payload = dict(phase=owner._flow_phase, iteration=owner._flow_iteration,
+                round=self._flow_round, seeds=list(self.env_seeds),
+                episode_ids=list(self._flow_episode_ids),
+                current_observation=before,
+                decoded_actions=cpu_tree(actions), rewards=cpu_tree(result[1]),
+                terminations=cpu_tree(result[2]), truncations=cpu_tree(result[3]),
+                final_info=cpu_tree(result[4][-1]),
+                # The horizon observation is never a decision input; value targets need it.
+                terminal_observation=after if last else None)
+            if hasattr(owner, '_submit_flow_io'):
+                owner._submit_flow_io(_write_chunk_archive, path, payload)
+            else:
+                _write_chunk_archive(path, payload)
             self._flow_current = after
             return result
     return FlowRoboCasa
@@ -223,6 +233,7 @@ class FlowActor(PilotActor):
 
 class FlowRollout(PilotRollout):
     def pilot_training_rng(self, *, restore=False):
+        self._flush_pilot_io()
         if restore:
             restore_rng(self._flow_training_rng)
         else:
@@ -230,6 +241,7 @@ class FlowRollout(PilotRollout):
         return dict(role=self.pilot_role, rank=self._rank, restored=restore)
 
     def pilot_restore(self, directory):
+        self._flush_pilot_io()
         result = super().pilot_restore(directory)
         state = torch.load(Path(directory) / f'rollout-{self._rank:02d}.pt',
                            map_location='cpu', weights_only=False)
@@ -251,23 +263,45 @@ class FlowEnvironment(EnvWorker):
         self._flow_phase = 'initialization'
         self._flow_iteration = 0
         self._flow_contract = flow_contract(self.cfg)
+        self._flow_io_pool = ThreadPoolExecutor(max_workers=2)
+        self._flow_io_futures = []
         journal = GlobalActionJournal if self.cfg.native_pilot.get('global_action_escrow', False) else ActionJournal
         self._flow_journal = journal(self.cfg.native_pilot.accounting_root,
             rank=self._rank, world=self._world_size, attempt=self.cfg.native_pilot.attempt,
             maximum_actions=self._flow_contract['maximum_actions'])
         return super().init_worker()
 
+    def _submit_flow_io(self, fn, *args):
+        pool = getattr(self, '_flow_io_pool', None)
+        if pool is None:
+            return fn(*args)
+        pending = []
+        for future in self._flow_io_futures:
+            if future.done():
+                future.result()
+            else:
+                pending.append(future)
+        pending.append(pool.submit(fn, *args))
+        self._flow_io_futures = pending
+
+    def _flush_flow_io(self):
+        for future in getattr(self, '_flow_io_futures', ()):
+            future.result()
+        self._flow_io_futures = []
+
     def _setup_env_and_wrappers(self, env_cls, env_cfg, num_envs_per_stage):
         assert self.stage_num == 1
         return super()._setup_env_and_wrappers(native_class(env_cls, self), env_cfg, num_envs_per_stage)
 
     def set_global_step(self, step):
+        self._flush_flow_io()
         self._flow_iteration = int(step)
         for wrapped in self.env_list:
             unwrapped(wrapped)._flow_round = -1
         return super().set_global_step(step)
 
     def pilot_phase(self, phase, *, policy_iteration=None):
+        self._flush_flow_io()
         self._flow_phase = phase
         if policy_iteration is not None:
             self._flow_iteration = int(policy_iteration)
@@ -276,6 +310,7 @@ class FlowEnvironment(EnvWorker):
         return dict(rank=self._rank, phase=phase, charged=self._flow_journal.charged())
 
     def pilot_rng(self, *, restore=False):
+        self._flush_flow_io()
         if restore:
             restore_rng(self._flow_rng)
         else:
@@ -283,6 +318,7 @@ class FlowEnvironment(EnvWorker):
         return dict(rank=self._rank, restored=restore)
 
     def pilot_training_rng(self, *, restore=False):
+        self._flush_flow_io()
         if restore:
             restore_rng(self._flow_training_rng)
         else:
@@ -290,6 +326,7 @@ class FlowEnvironment(EnvWorker):
         return dict(rank=self._rank, restored=restore)
 
     def pilot_capture(self, directory, **kwargs):
+        self._flush_flow_io()
         samplers = []
         for mode, envs in (('train', self.env_list), ('eval', self.eval_env_list)):
             for ordinal, wrapped in enumerate(envs):
@@ -305,6 +342,7 @@ class FlowEnvironment(EnvWorker):
                  recovery='Whole completed iteration; fresh seeded native constructors at next reset'))
 
     def pilot_restore(self, directory):
+        self._flush_flow_io()
         state = torch.load(Path(directory) / f'env-{self._rank:02d}.pt', map_location='cpu', weights_only=False)
         assert state['rank'] == self._rank
         self._flow_phase, self._flow_iteration = state['phase'], state['iteration']

@@ -123,6 +123,8 @@ class ActionJournal:
         if self.path.exists():
             raise ValueError('Never overwrite an existing attempt journal')
         self.rows = []
+        self._local_charged = 0
+        self._file_cache = {}
         self.charged()  # Reject a changed rank partition before writing anything.
         self._save()
 
@@ -131,12 +133,22 @@ class ActionJournal:
             rank_action_ceiling=self.limit, calls=self.rows))
 
     def charged(self):
-        total = 0
+        total = self._local_charged
         for path in self.root.glob('*.json'):
-            value = json.loads(path.read_text())
-            if value['rank_action_ceiling'] != self.limit:
-                raise ValueError('Cannot change rank partition while reusing action escrow')
-            total += sum(row.get('executed_or_conservative', row['requested']) for row in value['calls'])
+            if path == self.path:
+                continue
+            stat = path.stat()
+            key = (stat.st_mtime_ns, stat.st_size)
+            cached = self._file_cache.get(path)
+            if cached is None or cached[0] != key:
+                value = json.loads(path.read_text())
+                if value['rank_action_ceiling'] != self.limit:
+                    raise ValueError('Cannot change rank partition while reusing action escrow')
+                amount = sum(row.get('executed_or_conservative', row['requested']) for row in value['calls'])
+                self._file_cache[path] = (key, amount)
+            else:
+                amount = cached[1]
+            total += amount
         return total
 
     def begin(self, requested, *, phase):
@@ -144,6 +156,7 @@ class ActionJournal:
                 or self.limit is not None and self.charged() + requested > self.limit):
             raise RuntimeError('Action escrow cannot reserve another complete vector chunk')
         self.rows.append(dict(requested=requested, phase=phase, started_unix=time.time(), resolved=False))
+        self._local_charged += requested
         self._save()  # Before the simulator call.
         return len(self.rows) - 1
 
@@ -151,6 +164,7 @@ class ActionJournal:
         row = self.rows[cursor]
         if row['resolved'] or not isinstance(executed, int) or not 0 <= executed <= row['requested']:
             raise ValueError('Invalid or duplicate simulator accounting resolution')
+        self._local_charged += executed - row['requested']
         row.update(executed_or_conservative=executed, resolved=True, ended_unix=time.time())
         self._save()
 

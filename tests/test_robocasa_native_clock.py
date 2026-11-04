@@ -27,6 +27,38 @@ def test_clock_is_read_from_initialized_native_reset_not_constructor(monkeypatch
     assert actual._flora_accounting["control_time"] == 0.
 
 
+def test_counted_native_factory_does_not_stack_hooks_across_persistent_reconfigures(monkeypatch):
+    from robosuite.environments.base import MujocoEnv
+    from robosuite.utils.binding_utils import MjSim
+    base_step_calls, base_tick_calls = [], []
+
+    def base_step(self, action):
+        base_step_calls.append(action)
+        self.cur_time += 0.04
+        return "step-ok"
+
+    def base_tick(self, *args, **kwargs):
+        base_tick_calls.append(1)
+
+    monkeypatch.setattr(MujocoEnv, "step", base_step)
+    for name in ("step", "step1", "step2"):
+        monkeypatch.setattr(MjSim, name, base_tick)
+
+    for episode in range(3):
+        env = SimpleNamespace(control_freq=25., control_timestep=.04, model_timestep=.002,
+            lite_physics=False, cur_time=0.)
+        env.reset = lambda: "reset-ok"
+        wrapped = counted_native_factory(lambda e=env: e, physics_tick_limit=2)()
+        wrapped.reset()
+        MujocoEnv.step(wrapped, f"act-{episode}")
+        MjSim.step(SimpleNamespace())
+        MjSim.step(SimpleNamespace())
+        assert wrapped._flora_accounting["controls"] == 1
+        assert wrapped._flora_accounting["physics_ticks"] == 2
+    assert len(base_step_calls) == 3
+    assert len(base_tick_calls) == 6
+
+
 def test_residual_factory_uses_declared_ppo_cap_and_preserves_native_ood(monkeypatch):
     from omegaconf import OmegaConf
     from rlinf.envs.sim.robocasa365.robocasa365_env import Robocasa365Env

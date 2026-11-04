@@ -3,6 +3,7 @@
 No PPO, action sampling, reward, GAE or loss implementation is replaced.
 Sidecars are whole-iteration recovery, not an in-flight physics checkpoint.
 """
+from concurrent.futures import ThreadPoolExecutor
 import gzip
 import hashlib
 import os
@@ -17,6 +18,14 @@ from rlinf.workers.rollout.hf.huggingface_worker import MultiStepRolloutWorker
 
 from .rlinf_native_ppo import (ActionJournal, cpu_tree, retained_batch, restore_rng, sha,
     snapshot_rng, tensor_hash, validate_recipe, write)
+
+
+def _write_sampling_record(path, record, env_obs_cpu, actions_cpu):
+    record['public_observation_sha256'] = tensor_hash(env_obs_cpu)
+    record['actions_sha256'] = tensor_hash(actions_cpu)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with gzip.open(path, 'xb', compresslevel=1) as handle:
+        torch.save(record, handle)
 
 
 def save_tensor(path, value):
@@ -44,8 +53,27 @@ def producing_iteration(worker):
 class SidecarMixin:
     pilot_role = None
 
+    def _submit_pilot_io(self, fn, *args):
+        pool = getattr(self, '_pilot_io_pool', None)
+        if pool is None:
+            return fn(*args)
+        pending = []
+        for future in self._pilot_io_futures:
+            if future.done():
+                future.result()
+            else:
+                pending.append(future)
+        pending.append(pool.submit(fn, *args))
+        self._pilot_io_futures = pending
+
+    def _flush_pilot_io(self):
+        for future in getattr(self, '_pilot_io_futures', ()):
+            future.result()
+        self._pilot_io_futures = []
+
     def pilot_capture(self, directory, *, retain_rollout=False):
         """Called only after all iteration handles have completed."""
+        self._flush_pilot_io()
         state = dict(format='rlinf_native_ppo_worker_v1', role=self.pilot_role,
             rank=self._rank, rng=snapshot_rng(), global_step=getattr(self, 'global_step', None),
             version=getattr(self, 'version', None), paired_eval_rng=getattr(self, '_pilot_rng', None))
@@ -78,6 +106,7 @@ class SidecarMixin:
         return save_tensor(Path(directory) / f'{self.pilot_role}-{self._rank:02d}.pt', state)
 
     def pilot_restore(self, directory):
+        self._flush_pilot_io()
         state = torch.load(Path(directory) / f'{self.pilot_role}-{self._rank:02d}.pt',
             map_location='cpu', weights_only=False)
         if state['role'] != self.pilot_role or state['rank'] != self._rank:
@@ -114,6 +143,7 @@ class SidecarMixin:
             snapshot_sha256=sha(Path(directory) / f'{self.pilot_role}-{self._rank:02d}.pt'))
 
     def pilot_rng(self, *, restore=False):
+        self._flush_pilot_io()
         if restore:
             restore_rng(self._pilot_rng)
         else:
@@ -228,6 +258,8 @@ class PilotRollout(SidecarMixin, MultiStepRolloutWorker):
         self._pilot_terminal_only = False
         self._pilot_eval_iteration = 0
         self._pilot_processed_state = None
+        self._pilot_io_pool = ThreadPoolExecutor(max_workers=2)
+        self._pilot_io_futures = []
         original_train_prediction = self.hf_model._predict_train
 
         def recorded_train_prediction(observation, *args, **kwargs):
@@ -242,10 +274,12 @@ class PilotRollout(SidecarMixin, MultiStepRolloutWorker):
         return result
 
     def set_global_step(self, global_step):
+        self._flush_pilot_io()
         self._pilot_producing_policy_iteration = int(global_step)
         return super().set_global_step(global_step)
 
     def pilot_evaluation_iteration(self, iteration):
+        self._flush_pilot_io()
         self._pilot_eval_iteration = int(iteration)
         return dict(rank=self._rank, evaluation_policy_iteration=int(iteration))
 
@@ -273,29 +307,30 @@ class PilotRollout(SidecarMixin, MultiStepRolloutWorker):
             full = policy == 'full'
             policy_iteration = (self._pilot_eval_iteration if mode == 'eval'
                 else producing_iteration(self))
+            steps = self._pilot_sampling_steps if full else None
+            processed_state = self._pilot_processed_state
+            env_obs_cpu = cpu_tree(env_obs)
+            actions_cpu = cpu_tree(actions)
             record = dict(format='rlinf_native_ppo_actual_sampling_v1', mode=mode,
                 evaluation_data=mode == 'eval', terminal_value_only=self._pilot_terminal_only,
                 collection_iteration=policy_iteration+1 if mode == 'train' else None,
                 producing_policy_iteration=policy_iteration,
                 rank=self._rank, prediction_ordinal=self._pilot_prediction_ordinal,
-                public_observation_sha256=tensor_hash(env_obs),
-                actions_sha256=tensor_hash(actions), rng_before=before, rng_after=after,
+                rng_before=before, rng_after=after,
                 sampling_record='full' if full else 'scalars',
-                actual_gaussian_parameters=self._pilot_sampling_steps if full else None,
+                actual_gaussian_parameters=steps,
                 forward_sampling_fields=cpu_tree({key: inputs[key] for key in
                     (('chains',) if full else ()) + ('denoise_inds', 'action', 'model_action') if key in inputs}),
                 old_logprobs=cpu_tree(result.get('prev_logprobs')),
                 old_values=cpu_tree(result.get('prev_values')),
                 model_actions=cpu_tree(result.get('model_actions')),
-                processed_model_state=self._pilot_processed_state,
+                processed_model_state=processed_state,
                 initial_gaussian_path='forward_sampling_fields.chains[:,0]' if full else None,
                 noise_semantics='Actual mean/std objects and full realized chain; later Gaussian draws recoverable from saved sampler RNG/source, no RNG-consuming replay performed',
                 frozen_sft_steering_target_compatible=False)
             path = Path(self.cfg.native_pilot.output) / 'sampling' / f'rank-{self._rank:02d}' / (
                 f'{self._pilot_prediction_ordinal:05d}.pt.gz')
-            path.parent.mkdir(parents=True, exist_ok=True)
-            with gzip.open(path, 'xb', compresslevel=1) as handle:
-                torch.save(record, handle)
+            self._submit_pilot_io(_write_sampling_record, path, record, env_obs_cpu, actions_cpu)
             self._pilot_prediction_ordinal += 1
             return actions, result
         finally:

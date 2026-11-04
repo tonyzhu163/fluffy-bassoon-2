@@ -18,12 +18,14 @@ export ROBOCASA_PI05_TORCH_MODEL=$TASK_ROOT/inputs/robocasa365-public-pi05-c484-
 export ROBOCASA_PI05_NATIVE_NORM=$TASK_ROOT/inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json
 export ROBOCASA_SIM_PPO_OUTPUT=$TASK_OUTPUT
 export ROBOCASA_SIM_PPO_ACCOUNTING
-export ROBOCASA_SIM_PPO_ROLLOUT_PLACEMENT=0-7
-export ROBOCASA_SIM_PPO_ACTOR_PLACEMENT=0-1
-export ROBOCASA_SIM_PPO_WORLD_SIZE=8
+export ROBOCASA_SIM_PPO_ROLLOUT_PLACEMENT=${ROBOCASA_SIM_PPO_ROLLOUT_PLACEMENT:-0-7}
+export ROBOCASA_SIM_PPO_ACTOR_PLACEMENT=${ROBOCASA_SIM_PPO_ACTOR_PLACEMENT:-0-7}
+export ROBOCASA_SIM_PPO_MICRO_BATCH=${ROBOCASA_SIM_PPO_MICRO_BATCH:-32}
+export ROBOCASA_SIM_PPO_WORLD_SIZE=${ROBOCASA_SIM_PPO_WORLD_SIZE:-8}
 export ROBOCASA_FLOW_TRAIN_ENVS=${ROBOCASA_FLOW_TRAIN_ENVS:-128}
 export ROBOCASA_FLOW_ROUNDS=${ROBOCASA_FLOW_ROUNDS:-1}
 export ROBOCASA_FLOW_SAMPLING_RECORD=${ROBOCASA_FLOW_SAMPLING_RECORD:-full}
+export ROBOCASA_FLOW_ACTOR_BATCH_DROP=${ROBOCASA_FLOW_ACTOR_BATCH_DROP:-'["forward_inputs.observation/image","forward_inputs.observation/wrist_image","forward_inputs.observation/extra_view_image","forward_inputs.chains"]'}
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl NCCL_P2P_DISABLE=1 FLUFFY_GPU_EXECUTION=baige
 export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-$(seq -s, 0 $((TASK_GPUS-1)))}
 export OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false
@@ -74,7 +76,8 @@ assert norm=='4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee'
  RAM_GiB=int(os.environ['TASK_RAM_GIB']),SHM_GiB=int(os.environ['TASK_SHM_GIB']),free_bytes=fs.f_bavail*fs.f_frsize,
  quota='Shared PFS2TiB; no per-project quota interface exposed',started_unix=time.time(),
  task=os.environ['ROBOCASA_FLOW_TASK'], segment=os.environ['TASK_SEGMENT'],
- batch_layout=dict(world=8, train_envs_per_rank=16, eval_envs_per_rank=8, actor_ranks=2),
+ batch_layout=dict(world=8, train_envs_per_rank=16, eval_envs_per_rank=8,
+                   actor_ranks=8 if os.environ.get('ROBOCASA_SIM_PPO_ACTOR_PLACEMENT','0-7')=='0-7' else 2),
  nominal_controls_source='flow-contract.json'),indent=2)+'\n')
 PY
 "$TASK_PY" -B "$TASK_META/scripts/[train]gpu_probe.py" --expected-count "$TASK_GPUS" --purpose training \

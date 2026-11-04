@@ -24,7 +24,7 @@ hydra:
 cluster:
   num_nodes: 1
   component_placement:
-    actor: ${oc.env:ROBOCASA_SIM_PPO_ACTOR_PLACEMENT,0-1}
+    actor: ${oc.env:ROBOCASA_SIM_PPO_ACTOR_PLACEMENT,0-7}
     env,rollout: ${oc.env:ROBOCASA_SIM_PPO_ROLLOUT_PLACEMENT,0-7}
 
 runner:
@@ -148,7 +148,7 @@ actor:
   training_backend: fsdp
   # 128 episodes x 12 H50 chunks = 1,536 samples/iteration:
   # 6 minibatches x 4 epochs = 24 optimizer steps.
-  micro_batch_size: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_MICRO_BATCH,16}}
+  micro_batch_size: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_MICRO_BATCH,32}}
   global_batch_size: 256
   seed: 1234
   enable_offload: false
@@ -219,7 +219,7 @@ native_pilot:
   # segment drops actor-batch images and chains duplicated in the env chunk
   # and sampling records. Q1 keeps everything to verify the duplication.
   sampling_record: ${oc.env:ROBOCASA_FLOW_SAMPLING_RECORD,full}
-  actor_batch_drop: ${oc.decode:${oc.env:ROBOCASA_FLOW_ACTOR_BATCH_DROP,'[]'}}
+  actor_batch_drop: ${oc.decode:${oc.env:ROBOCASA_FLOW_ACTOR_BATCH_DROP,'["forward_inputs.observation/image","forward_inputs.observation/wrist_image","forward_inputs.observation/extra_view_image","forward_inputs.chains"]'}}
   global_action_escrow: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_GLOBAL_ESCROW,false}}
   attempt: ${oc.env:TASK_ATTEMPT}
   deadline_unix: ${oc.decode:${oc.env:TASK_DEADLINE}}

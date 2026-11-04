@@ -30,7 +30,7 @@ def main(cfg):
     print(json.dumps(OmegaConf.to_container(cfg, resolve=True), indent=2), flush=True)
     cluster = Cluster(cluster_cfg=cfg.cluster, distributed_log_dir=cfg.runner.per_worker_log_path)
     placement = HybridComponentPlacement(cfg, cluster)
-    assert placement.get_world_size('actor') == 2  # retain qualified rank-local reductions/Adam
+    assert placement.get_world_size('actor') in (2, 8)
     assert placement.get_world_size('env') == placement.get_world_size('rollout') == cfg.native_pilot.world_size
     assert cfg.native_pilot.world_size in (2, 8)
     world = cfg.native_pilot.world_size
