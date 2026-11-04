@@ -1,11 +1,11 @@
 # Intermediate native checkpoint evaluation
 
 2026-11-04. Owner chat `01a1a077`. User requested intermediate evaluations
-and asked whether to select the best checkpoint. **Qualification complete;
+and asked whether to select the best checkpoint. Qualification complete;
 full sweep was approved at22GPU-hours including qualification and all attempts;
 **stopped at the human's request on Nov4,15:41 Shanghai.**
 All80 DEV panels completed; TEST stopped at209/240 policy banks.
-Allfive allocations are terminal and the monitor is deleted. See [stop closeout](USER-STOP.md).**
+Allfive allocations are terminal and the monitor is deleted. See [stop closeout](USER-STOP.md).
 See [DEV selections and TEST-start audit](DEV-SELECTIONS-R1.md). Baige Pro6K
 `job-1nfvvw2b93t5` succeeded and released its one GPU at12:02:28 Shanghai;
 source`2affc246`. Selected updates are30/1/80/20/30 in campaign order.
