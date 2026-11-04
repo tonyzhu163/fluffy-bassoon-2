@@ -3,7 +3,7 @@
 **Status 2026-11-04: written and CPU-checked on macOS; not launched.**
 **Human decision:** replace ID task TurnOffStove with a buttons/knobs task.
 **Human approval:** qualify both candidates ("Yes, prepare both").
-TurnOnMicrowave stays OOD. Needs a Baige owner.
+TurnOnMicrowave stays OOD. Execution owner: Codex chat `01a1a4de` (human requested launch 2026-11-04).
 
 ## Question
 

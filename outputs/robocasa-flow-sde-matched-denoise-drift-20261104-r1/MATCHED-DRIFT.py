@@ -106,6 +106,7 @@ def prepare(root, output):
         del flat, old, flats, olds
         gc.collect()
     common = sorted(set.intersection(*[{b['denoise_index'] for b in r['batches']} for r in rows]))
+    assert common, 'No denoising index has 16 policy-zero samples in every task'
     write(output / 'PREPARED.json', dict(completed=True, root=str(root), runtime=RUNTIME,
           per_index=PER_INDEX, seed=SEED, common_indices=common, tasks=rows,
           new_controls=0, SGD=0, model_calls=0))
@@ -131,7 +132,9 @@ def stage(root, output, result_root):
                     raise TimeoutError('GPU consumption receipt absent; private model retained')
                 time.sleep(5)
             receipt = json.loads(consumed.read_text())
+            assert receipt['task'] == task and receipt['step'] == row['step']
             assert receipt['model_sha256'] == row['sha256'] and receipt['strict_load_passed']
+            assert receipt['ready_sha256'] == sha(directory / 'READY.json')
             if temporary:
                 assert path.parent == directory and sha(path) == row['sha256']
                 path.unlink()

@@ -1,7 +1,7 @@
 # 512-case paired endpoint test: policy 0 vs policy 130
 
 **Status 2026-11-04: written, manifest built, CPU-checked; not launched.**
-**Human approval:** "Yes, prepare it". Needs a Baige owner. No training and no
+**Human approval:** "Yes, prepare it". Execution owner: Codex chat `01a1a4de` (human requested launch 2026-11-04). No training and no
 checkpoint selection.
 
 ## Why

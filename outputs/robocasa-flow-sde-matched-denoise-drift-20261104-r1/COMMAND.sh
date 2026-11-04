@@ -35,8 +35,8 @@ export OPENPI_DATA_HOME=$TASK_ROOT/setups/robocasa365-native-20261101-r1/cache/.
 export NCCL_P2P_DISABLE=1 FLUFFY_GPU_EXECUTION=baige
 export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
-"$TASK_PY" -B "$TASK_RUNTIME/scripts/[train]gpu_probe.py" --expected-count 1 --purpose training \
- --baige-container --baige-exclusive-training --output "$TASK_OUTPUT/gpu-probe.json"
+"$TASK_PY" -B "$TASK_RUNTIME/scripts/[train]gpu_probe.py" --expected-count 1 --purpose evaluation \
+ --baige-container --output "$TASK_OUTPUT/gpu-probe.json"
 # 80 checkpoint loads (R3: 4285 s) plus up to 10 B16 forwards each; one deadline in a 240-minute job.
 TASK_DEADLINE=$((TASK_STARTED+13800))
 # Must match ORDER in MATCHED-DRIFT.py (the stage bridge walks the same order).

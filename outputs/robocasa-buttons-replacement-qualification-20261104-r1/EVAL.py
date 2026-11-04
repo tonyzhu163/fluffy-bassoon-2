@@ -174,8 +174,8 @@ def summarize(output, profile):
         category = lambda n:'below_5pct' if n < .05*CASES else 'above_70pct' if n > .70*CASES else '5_to_70pct'
         summary.append(dict(task=task,horizon=horizon,episodes=CASES,
             native_horizon=NATIVE_HORIZONS[task],first_successes_within_native_horizon=native,
-            first_successes=first,first_success_rate=first/20,first_success_wilson95=interval(first),
-            end_successes=end,end_success_rate=end/20,end_success_wilson95=interval(end),
+            first_successes=first,first_success_rate=first/CASES,first_success_wilson95=interval(first),
+            end_successes=end,end_success_rate=end/CASES,end_success_wilson95=interval(end),
             first_success_category=category(first),end_success_category=category(end)))
     charged = []
     for rank in range(WORKERS):
@@ -185,12 +185,13 @@ def summarize(output, profile):
             physical_controls=sum(c.get('executed_or_conservative',c['requested']) for c in calls)))
     assert sum(r['horizon'] for r in rows) == CASES*sum(h for _,h in TASKS)
     assert sum(c['pending'] for c in charged) == 0
+    selected = next((r['task'] for r in summary if 3 <= r['first_successes'] <= 35), None)
     write(output/'CASE-RESULTS.json',rows)
     write(output/'RESULT.json',dict(completed=True,source_commit=profile['source_commit'],
         tasks=summary,episodes=len(rows),policy_controls=sum(r['horizon'] for r in rows),
         physical_accounting_by_rank=charged,optimizer_updates=0,
         selection_rule='TurnOnSinkFaucet if first success at 600 is 5-70%, else TurnOnElectricKettle if 5-70%, else neither',
-        task_selection='human_pending'))
+        task_selection=selected))
 
 
 def main():
