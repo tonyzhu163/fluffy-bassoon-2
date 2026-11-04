@@ -1,0 +1,22 @@
+# Duration alternative: 160 x 6 = 960 Adam steps, with 12,288,000 TRAIN controls.
+# This does NOT match the 40-update pilot's environment/action budget.
+defaults:
+  - robocasa365_pi05_flow_sde_ppo_vlm_critic
+  - _self_
+
+runner:
+  max_epochs: ${oc.decode:${oc.env:ROBOCASA_FLOW_MAX_EPOCHS,160}}
+  val_check_interval: ${oc.decode:${oc.env:ROBOCASA_FLOW_VAL_INTERVAL,10}}
+  save_interval: ${oc.decode:${oc.env:ROBOCASA_FLOW_SAVE_INTERVAL,10}}
+  logger:
+    project_name: robocasa365_flow_sde_ppo_long
+
+algorithm:
+  update_epoch: 1
+
+actor:
+  optim:
+    critic_warmup_steps: 0
+
+native_pilot:
+  maximum_actions: ${oc.decode:${oc.env:ROBOCASA_FLOW_MAX_ACTIONS,16000000}}

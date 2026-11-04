@@ -1,0 +1,35 @@
+# Candidate recipe: predict 50 controls, execute/reobserve every 10, K=5.
+# Warmup stays zero, matching the checked StructRL/RLinf released PPO configs.
+# This is a combined recipe candidate, not a causal one-factor ablation.
+defaults:
+  - robocasa365_pi05_flow_sde_ppo_vlm_critic
+  - _self_
+
+runner:
+  max_epochs: ${oc.decode:${oc.env:ROBOCASA_FLOW_MAX_EPOCHS,40}}
+  val_check_interval: ${oc.decode:${oc.env:ROBOCASA_FLOW_VAL_INTERVAL,10}}
+  save_interval: ${oc.decode:${oc.env:ROBOCASA_FLOW_SAVE_INTERVAL,10}}
+  logger:
+    project_name: robocasa365_flow_sde_ppo_short_chunk
+
+algorithm:
+  update_epoch: ${oc.decode:${oc.env:ROBOCASA_FLOW_UPDATE_EPOCHS,1}}
+  # These remain per-decision discounts from the reference recipe. H10 changes
+  # the discount horizon in physical time; this is recorded in the contract.
+
+actor:
+  global_batch_size: ${oc.decode:${oc.env:ROBOCASA_FLOW_GLOBAL_BATCH,512}}
+  model:
+    num_action_chunks: 10
+    num_steps: 5
+    openpi:
+      action_horizon: 50
+      action_chunk: 10
+      num_steps: 5
+      noise_level: ${oc.decode:${oc.env:ROBOCASA_FLOW_NOISE_LEVEL,0.5}}
+      ignore_last: true
+  optim:
+    critic_warmup_steps: 0
+
+native_pilot:
+  maximum_actions: ${oc.decode:${oc.env:ROBOCASA_FLOW_MAX_ACTIONS,4100000}}
