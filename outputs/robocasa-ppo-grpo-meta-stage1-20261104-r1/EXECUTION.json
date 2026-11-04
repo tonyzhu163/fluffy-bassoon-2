@@ -69,7 +69,7 @@
     },
     "grpo": {
       "state": "RUNNING_FROM_STEP10",
-      "reserved_future_GPU_hours": 32,
+      "reserved_future_GPU_hours": 20,
       "reviewed_main_commit": "46daecc9b4652632d4c551ec51293d790476ec2d",
       "qualification_source_path": "/mowenjie/fluffy-bassoon-2/sources/stage1-grpo-46daecc9",
       "execution_override_required": "retain2 actor ranks via COMMAND.sh and explicitly set ROBOCASA_SIM_PPO_MICRO_BATCH=16; new YAML defaults are8 actors and microbatch32",
@@ -92,8 +92,8 @@
       "queue": "aihcq-rh0wwk9muei4",
       "output": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/grpo/attempt-02",
       "actual_GPU_probe": "passed",
-      "local_probe": "GRPO-GPU-PROBE.json",
-      "manifest": "GRPO-MANIFEST.json",
+      "local_probe": "GRPO-RESUME10-GPU-PROBE.json",
+      "manifest": "GRPO-RESUME10-MANIFEST.json",
       "scheduler_minutes": 150,
       "automatic_retry": false,
       "queue_available_at_admission": {
@@ -104,7 +104,7 @@
       "free_bytes_at_launch": 774914441216,
       "config_diff": "GRPO code and config match reviewed main. The prepared launcher explicitly sets two actor ranks and microbatch 16 to match PPO.",
       "worker_started_unix": 1793791880.1261606,
-      "last_check_shanghai": "2026-11-04T20:14:46+08:00",
+      "last_check_shanghai": "2026-11-04T20:20:00+08:00",
       "completed_iterations": 10,
       "baseline_DEV64_successes": 41,
       "first_update_audit": "GRPO-FIRST-UPDATE.json",
@@ -134,7 +134,15 @@
           "probe": "GRPO-RESUME10-GPU-PROBE.json",
           "replay_first": "DEV10"
         }
-      ]
+      ],
+      "replayed_DEV10": {
+        "cases": 64,
+        "successes": 38,
+        "baseline": 41,
+        "wins": 5,
+        "losses": 8,
+        "exact_p": 0.5810546875
+      }
     }
   },
   "next_action": "Verify replayed paired DEV10, then 30 fresh TRAIN updates to reach the same cumulative 3,072,000 controls; complete matched four-policy DEV64 and short-chunk benchmark.",
@@ -145,7 +153,7 @@
   "storage_plan_update": "Human requested parallelGRPO/diagnosis. PPO is alreadyterminal. Last PFSfree493GiB; a same-sizeGRPO footprint leaves >300GiB. Do not wait for bulk archive beforeGRPO; keep200GiB floor. Archive/reclaimonlyownclosedPPOdata afterhashverification; retainPPO40.",
   "recipe_implementation_qualification": "outputs/robocasa-ppo-recipe-fixes-20261104-r1/CPU-QUALIFICATION.json",
   "checkpoint_archive": {
-    "state": "RUNNING",
+    "state": "COMPLETE",
     "pid": 2111912,
     "GPU_hours": 0,
     "source_job_id": "job-bylh99ylx9ie",
@@ -167,7 +175,8 @@
     "receipt_directory": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/checkpoint-archive-r1",
     "BOS_directory": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-ppo-grpo-meta-stage1-20261104-r1/checkpoints-r1",
     "reclaim_condition": "exact GNU tar source comparison, exact archive member coverage and full BOS SHA256 readback verified; source inventory unchanged and no open users",
-    "note": "Intermediate worker/RNG sidecars and boundary markers also retained on PFS after verified bulk reclamation. No raw trajectory archive/reclamation yet."
+    "note": "Intermediate worker/RNG sidecars and boundary markers also retained on PFS after verified bulk reclamation. No raw trajectory archive/reclamation yet.",
+    "receipt": "PPO-CHECKPOINT-ARCHIVE.json"
   },
   "storage_checked_shanghai": "2026-11-04T19:21:50.957546+08:00",
   "matched_DEV64": "Original DEV64, common eight-case batches and per-bank sampler RNG. User added GRPO40 to SFT, historical PPO40 and Stage 1 PPO40 before matched outcomes. Fresh TEST512 remains with the separate ablation."
