@@ -1,0 +1,198 @@
+{
+  "completed": true,
+  "requested_window_start": "2026-11-04T23:05:00+08:00",
+  "requested_window_end": "2026-11-05T07:05:00+08:00",
+  "last_window_check": "2026-11-05T07:05:00.425494+08:00",
+  "watcher_exit_code": 0,
+  "source_check": "CHECK-20261105-070500.json",
+  "methods": {
+    "ad": {
+      "update": 14800,
+      "converged": true,
+      "recent_metrics_finite": true
+    },
+    "dpt": {
+      "update": 16200,
+      "converged": true,
+      "recent_metrics_finite": true
+    },
+    "dit": {
+      "update": 11200,
+      "converged": false,
+      "recent_metrics_finite": true
+    },
+    "ic_iql": {
+      "update": 11200,
+      "converged": false,
+      "recent_metrics_finite": true
+    }
+  },
+  "last_error_tails": {},
+  "meta_budget_at_window_end": {
+    "approved_GPU_hours": 96,
+    "preparation_GPU_hours": 17.57,
+    "allocations": [
+      {
+        "job_id": "job-967y1maorj80",
+        "purpose": "four joint three-task direct-action meta learners",
+        "GPUs": 4,
+        "created_shanghai": "2026-11-04T21:36:20+08:00",
+        "released_shanghai": "2026-11-05T05:03:08+08:00",
+        "max_reservation_GPU_hours": 32,
+        "kind": "fit",
+        "conservative_GPU_hours": 29.786666666666665
+      },
+      {
+        "job_id": "job-kujwuyw5y6uv",
+        "purpose": "native six-episode qualification",
+        "GPUs": 1,
+        "created_shanghai": "2026-11-04T23:22:57+08:00",
+        "released_shanghai": "2026-11-04T23:38:22+08:00",
+        "conservative_GPU_hours": 0.2569444444444444
+      },
+      {
+        "job_id": "job-xj72fk0yxo5e",
+        "purpose": "native all-layer KV numerical and physical qualification",
+        "GPUs": 1,
+        "created_shanghai": "2026-11-05T00:24:10+08:00",
+        "released_shanghai": "2026-11-05T00:29:57+08:00",
+        "conservative_GPU_hours": 0.09638888888888889
+      },
+      {
+        "job_id": "job-icbta8h6gp49",
+        "purpose": "fixed130 final-policy anchor qualification ID",
+        "GPUs": 1,
+        "created_shanghai": "2026-11-05T00:53:47+08:00",
+        "released_shanghai": "2026-11-05T01:10:15+08:00",
+        "max_reservation_GPU_hours": 0.75,
+        "output": "gpu/native-final-ID-qualification-01",
+        "conservative_GPU_hours": 0.27444444444444444
+      },
+      {
+        "job_id": "job-p4bg9yk8vbcb",
+        "purpose": "production fixed B8 six-episode qualification, original anchor ID",
+        "GPUs": 1,
+        "created_shanghai": "2026-11-05T01:14:42+08:00",
+        "released_shanghai": "2026-11-05T01:31:31+08:00",
+        "max_reservation_GPU_hours": 0.75,
+        "output": "gpu/native-initial-ID-B8-qualification-01",
+        "conservative_GPU_hours": 0.2802777777777778
+      },
+      {
+        "job_id": "job-i7sjmb1kcwmm",
+        "purpose": "original frozen native anchor, full ID50 six-episode panel",
+        "GPUs": 2,
+        "replicas": 2,
+        "created_shanghai": "2026-11-05T01:50:52+08:00",
+        "released_shanghai": "2026-11-05T02:47:27+08:00",
+        "max_reservation_GPU_hours": 2.5,
+        "output": "gpu/native-initial-ID-final-01",
+        "conservative_GPU_hours": 1.886111111111111
+      },
+      {
+        "job_id": "job-3d830xecyx0s",
+        "purpose": "fixed130 native teacher anchor, full ID50 six-episode panel",
+        "GPUs": 2,
+        "replicas": 2,
+        "created_shanghai": "2026-11-05T01:52:51+08:00",
+        "released_shanghai": "2026-11-05T02:52:16+08:00",
+        "max_reservation_GPU_hours": 2.5,
+        "output": "gpu/native-final-ID-final-01",
+        "conservative_GPU_hours": 1.9805555555555556
+      },
+      {
+        "job_id": "job-rknv4x51ygqr",
+        "purpose": "frozen interim AD/DPT/DIT/IC-IQL native ID deployment qualification",
+        "GPUs": 4,
+        "replicas": 4,
+        "created_shanghai": "2026-11-05T02:17:50+08:00",
+        "released_shanghai": "2026-11-05T02:45:06+08:00",
+        "max_reservation_GPU_hours": 3,
+        "output": "gpu/direct-snapshot-ID-qualification-01",
+        "conservative_GPU_hours": 1.8177777777777777
+      },
+      {
+        "job_id": "job-e15gtr27kh0j",
+        "purpose": "original frozen native anchor, contracted two-task OOD50 six-episode panel",
+        "GPUs": 2,
+        "replicas": 2,
+        "created_shanghai": "2026-11-05T02:57:34+08:00",
+        "released_shanghai": "2026-11-05T03:39:51+08:00",
+        "max_reservation_GPU_hours": 2.5,
+        "output": "gpu/native-initial-OOD-final-01",
+        "conservative_GPU_hours": 1.4094444444444445
+      },
+      {
+        "job_id": "job-4cvxzc1m8cx2",
+        "purpose": "designated fixed130 OpenDrawer native teacher anchor, contracted two-task OOD50 panel",
+        "GPUs": 2,
+        "replicas": 2,
+        "created_shanghai": "2026-11-05T03:02:34+08:00",
+        "released_shanghai": "2026-11-05T03:47:11+08:00",
+        "max_reservation_GPU_hours": 2.5,
+        "output": "gpu/native-final-OOD-final-01",
+        "conservative_GPU_hours": 1.4872222222222222
+      },
+      {
+        "job_id": "job-zqllm5eqzgj3",
+        "purpose": "converged AD, full ID50 six-episode full-history and episode-reset panel",
+        "GPUs": 4,
+        "replicas": 4,
+        "created_shanghai": "2026-11-05T03:25:41+08:00",
+        "released_shanghai": "2026-11-05T04:21:44+08:00",
+        "max_reservation_GPU_hours": 5,
+        "output": "gpu/ad-ID-final-01",
+        "conservative_GPU_hours": 3.736666666666667
+      },
+      {
+        "job_id": "job-h62ufmu061kl",
+        "purpose": "converged DPT, full ID50 six-episode full-history and episode-reset panel",
+        "GPUs": 4,
+        "replicas": 4,
+        "created_shanghai": "2026-11-05T04:12:26+08:00",
+        "released_shanghai": "2026-11-05T05:07:23+08:00",
+        "max_reservation_GPU_hours": 5,
+        "output": "gpu/dpt-ID-final-01",
+        "conservative_GPU_hours": 3.6633333333333336
+      },
+      {
+        "job_id": "job-8htog8yitbyq",
+        "purpose": "converged AD, contracted two-task OOD50 full-history and episode-reset panel after audited ID",
+        "GPUs": 4,
+        "replicas": 4,
+        "created_shanghai": "2026-11-05T04:36:16+08:00",
+        "released_shanghai": "2026-11-05T05:16:37+08:00",
+        "max_reservation_GPU_hours": 5,
+        "output": "gpu/ad-OOD-final-01",
+        "conservative_GPU_hours": 2.69
+      },
+      {
+        "job_id": "job-gmk7n873l35e",
+        "purpose": "unchanged D71 full-checkpoint continuation, unfinished DIT and IC-IQL only",
+        "GPUs": 2,
+        "replicas": 1,
+        "created_shanghai": "2026-11-05T05:16:58+08:00",
+        "max_reservation_GPU_hours": 4,
+        "kind": "fit",
+        "output": "continuations/fit-continuation-01",
+        "conservative_GPU_hours": 3.6013474967744616
+      },
+      {
+        "job_id": "job-bwzckp4hz18i",
+        "purpose": "validation-converged frozen DPT, contracted OOD50 full/reset six-episode panel",
+        "GPUs": 4,
+        "replicas": 4,
+        "created_shanghai": "2026-11-05T05:22:41+08:00",
+        "max_reservation_GPU_hours": 5,
+        "output": "gpu/dpt-OOD-final-01",
+        "released_shanghai": "2026-11-05T06:03:23+08:00",
+        "conservative_GPU_hours": 2.7133333333333334
+      }
+    ],
+    "creation_to_check_GPU_hours_upper": 73.25051416344112,
+    "remaining_GPU_hours_lower": 22.749485836558875,
+    "remaining_after_active_reservations_GPU_hours": 22.35083333333334,
+    "note": "Creation through scheduler release; unreleased allocations charged through this check"
+  },
+  "remaining_action": "Verify the already-running continuation publishes complete recovery and releases within its existing two-hour cap; no new allocation is requested or launched."
+}
