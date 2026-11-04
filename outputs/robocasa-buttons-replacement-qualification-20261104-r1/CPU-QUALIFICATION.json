@@ -1,0 +1,48 @@
+{
+  "completed": true,
+  "source_commit": "a28f84051dcfbeebf48cf1e9ed2b75a828ac0b85",
+  "native_source": "3443cdf3dd20f9ae8ed41adba442059b506891d0",
+  "native_registry": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/sources/RoboCasa/robocasa/utils/dataset_registry.py",
+  "native_registry_sha256": "23e8e31bb56bae80de86c34eafadfe32dd1e1eba6608376152ba9fdda5532a4b",
+  "tasks": [
+    [
+      "TurnOnSinkFaucet",
+      600
+    ],
+    [
+      "TurnOnElectricKettle",
+      600
+    ]
+  ],
+  "episodes": 100,
+  "policy_controls": 60000,
+  "chunks": 1200,
+  "motor_seeds_unique": true,
+  "zero_residual_batch_identity": true,
+  "wilson_reference_pass": true,
+  "initializer": {
+    "repository": "robocasa/robocasa365_checkpoints",
+    "revision": "c484448aba1a9b60a04c9b0ca117241518ea69f3",
+    "prefix": "pi05_pretrain_human300/multitask_learning/75000",
+    "model_directory": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
+    "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+    "normalization_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+    "norm_path": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json"
+  },
+  "rlinf_execution_commit": "8a1233c3fae6f5905adfda7684c455842b0ecfb8",
+  "core_files": {
+    "src/fluffy_bassoon/meta_rl/robocasa_residual.py": "f6d58788e9c32532cea8e2a9707404e894d3edc6bbfcd9c630b00efbaa3418d3",
+    "src/fluffy_bassoon/meta_rl/rlinf_robocasa_ppo.py": "7a99d2f7210f773c33563b1ffa2dba22bb8c22c750286a8d58d517f67c650125",
+    "src/fluffy_bassoon/meta_rl/robocasa_residual_parallel.py": "7bb85ee00e6f1df6b9b2cf61be38c935958ae5b26238ed501d9da3603236acc6",
+    "src/fluffy_bassoon/meta_rl/robocasa_video.py": "1f7366a89afd73456199763e4506c430c3fa179012d6f13786c1d2832761a4cd",
+    "outputs/robocasa-buttons-replacement-qualification-20261104-r1/EVAL.py": "a05885ba658c8879801718b86e42453697b595933dbe099cd35b082454159b6a",
+    "outputs/robocasa-buttons-replacement-qualification-20261104-r1/COMMAND.sh": "4025fce2d2893761f93bbe0b309b98024dcbfd9b781901882782541dcdd08918"
+  },
+  "storage_free_bytes": 716034801664,
+  "write_probe_pass": true,
+  "quota": "unavailable",
+  "allocated_CPU_max": "1300000 100000",
+  "allocated_RAM_bytes": 120259084288,
+  "new_GPU_seconds": 0,
+  "created_unix": 1793767981.030842
+}

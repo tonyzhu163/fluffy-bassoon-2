@@ -1,8 +1,13 @@
 # Cross-task drift on matched denoising indices
 
-**Status 2026-11-04: written and CPU-checked; not launched.** Execution owner: Codex chat `01a1a4de` (human requested launch 2026-11-04). Launch after `job-aesultap3qa8` (the dimension-drift controls) releases,
-so the two BOS staging bridges do not compete for PFS. No simulator controls,
-sampling or SGD.
+**Status 2026-11-04: running on Baige `job-pjgeuietm5of`.** Owner: Codex chat
+`01a1a4de`, on the human's execution request. The dimension predecessor released
+at13:05:17 Shanghai with80consumption receipts before this bridge started.
+All10common indices qualify:50B16fixtures from10 restored/hash-verified original
+Q1actor batches. Drawer step0 likelihood parity is exact at every index; later
+checkpoints advance. Ceiling remains oneGPU/4GPUh, no automatic retry,
+simulator controls, sampling or SGD. [Execution](EXECUTION.json),
+[prepared fixtures](PREPARED.json), [Q1 restoration](RESTORED-Q1.json).
 
 ## Why
 

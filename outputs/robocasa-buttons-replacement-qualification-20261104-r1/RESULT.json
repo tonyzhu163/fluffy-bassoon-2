@@ -1,0 +1,65 @@
+{
+  "completed": true,
+  "source_commit": "a28f84051dcfbeebf48cf1e9ed2b75a828ac0b85",
+  "tasks": [
+    {
+      "task": "TurnOnSinkFaucet",
+      "horizon": 600,
+      "episodes": 50,
+      "native_horizon": 600,
+      "first_successes_within_native_horizon": 18,
+      "first_successes": 18,
+      "first_success_rate": 0.36,
+      "first_success_wilson95": [
+        0.24138749651846741,
+        0.49858983123887307
+      ],
+      "end_successes": 18,
+      "end_success_rate": 0.36,
+      "end_success_wilson95": [
+        0.24138749651846741,
+        0.49858983123887307
+      ],
+      "first_success_category": "5_to_70pct",
+      "end_success_category": "5_to_70pct"
+    },
+    {
+      "task": "TurnOnElectricKettle",
+      "horizon": 600,
+      "episodes": 50,
+      "native_horizon": 450,
+      "first_successes_within_native_horizon": 32,
+      "first_successes": 32,
+      "first_success_rate": 0.64,
+      "first_success_wilson95": [
+        0.501410168761127,
+        0.7586125034815325
+      ],
+      "end_successes": 29,
+      "end_success_rate": 0.58,
+      "end_success_wilson95": [
+        0.4423344176857823,
+        0.7062499664528802
+      ],
+      "first_success_category": "5_to_70pct",
+      "end_success_category": "5_to_70pct"
+    }
+  ],
+  "episodes": 100,
+  "policy_controls": 60000,
+  "physical_accounting_by_rank": [
+    {
+      "rank": 0,
+      "pending": 0,
+      "physical_controls": 30000
+    },
+    {
+      "rank": 1,
+      "pending": 0,
+      "physical_controls": 30000
+    }
+  ],
+  "optimizer_updates": 0,
+  "selection_rule": "TurnOnSinkFaucet if first success at 600 is 5-70%, else TurnOnElectricKettle if 5-70%, else neither",
+  "task_selection": "TurnOnSinkFaucet"
+}

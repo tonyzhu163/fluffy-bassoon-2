@@ -859,3 +859,19 @@ warm starts ran with one seed. None shows ICRL or a CTM advantage.
 3. Source learners must actually improve before their histories can teach a
    meta-learner.
 4. Report reset and reward-blind controls with every memory claim.
+
+## Stove replacement native qualification (2026-11-04)
+
+At 600 controls, unchanged released Human300 pi0.5 first succeeded on
+18/50 TurnOnSinkFaucet cases (36%; Wilson 95% 24.1–49.9%) and 32/50
+TurnOnElectricKettle cases (64%; 50.1–75.9%). End successes were 18/50 and
+29/50; all 32 Kettle first successes already occurred by its native 450-control
+horizon. The predeclared Faucet-first 3–35/50 rule selects Faucet. An independent
+Linux CPU audit verified all 100 cases, 1,200 case/noise/action chunks, 300 fully
+decoded videos (180,300 frames), 60,000 physical controls and zero unresolved
+intents or SGD. Both GPUs are released; conservative total cost is 1,724 GPU-s
+(0.479 GPU-h). This qualifies native headroom only; no new improving teacher,
+Flora agreement or replacement PPO source is established. The subsequent
+whole-portfolio / 30–60% preference review remains a separate decision.
+[Qualified result](../outputs/robocasa-buttons-replacement-qualification-20261104-r1/RESULT.md),
+[independent audit](../outputs/robocasa-buttons-replacement-qualification-20261104-r1/FINAL-AUDIT.json).

@@ -1,8 +1,15 @@
 # 512-case paired endpoint test: policy 0 vs policy 130
 
-**Status 2026-11-04: written, manifest built, CPU-checked; not launched.**
-**Human approval:** "Yes, prepare it". Execution owner: Codex chat `01a1a4de` (human requested launch 2026-11-04). No training and no
-checkpoint selection.
+**Status 2026-11-04: both native endpoint jobs running.** Toaster
+`job-anm7svcgngnn` and OpenDrawer `job-895ee4k7j85c` have exact step0 likelihood
+parity and independently verified first paired eight-case banks/common RNG.
+Owner: Codex chat `01a1a4de`; the human requested execution of this prepared plan.
+A duplicate Toaster submit failed at the existing-output guard; its conservative
+41GPU-s charge stays inside the same27600GPU-s all-attempt cap. Internal process
+timeouts plus recorded startup and release allowances reserve27559GPU-s,
+including that failure; actual scheduler release costs remain controlling.
+[Execution, first-bank evidence and budget](EXECUTION.json), [first check](FIRST-CHECK.json).
+No training or checkpoint selection.
 
 ## Why
 

@@ -1,9 +1,11 @@
 # TurnOffStove replacement: 50-case native qualification
 
-**Status 2026-11-04: written and CPU-checked on macOS; not launched.**
-**Human decision:** replace ID task TurnOffStove with a buttons/knobs task.
-**Human approval:** qualify both candidates ("Yes, prepare both").
-TurnOnMicrowave stays OOD. Execution owner: Codex chat `01a1a4de` (human requested launch 2026-11-04).
+**Status 2026-11-04: all 100 native episodes and the independent Linux CPU
+video/action audit completed.** Baige `job-ltf38050md7y` succeeded and released
+both GPUs at13:07:44 Shanghai. Faucet18/50 and Kettle32/50 first successes;
+the predeclared rule selects Faucet. No new PPO source is launched.
+Execution owner: Codex chat `01a1a4de`, on the human's request to run this plan.
+[Execution and accounting](EXECUTION.json). TurnOnMicrowave stays OOD.
 
 ## Question
 
