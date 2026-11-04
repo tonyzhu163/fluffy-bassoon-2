@@ -43,6 +43,31 @@ Evidence: [deployed source snapshot](deployed-openpi-rl.py) lines 268–296 and
 451–507; [source/configuration hashes for all five tasks](SOURCE.json);
 [executable reproduction](REPRODUCE.py); [CPU reproduction results](REPRODUCTION.json).
 
+## Upstream source and reporting status
+
+Checked Nov4: the deployed file is byte-identical to official RLinf's file,
+Git blob `9dafb7f1ced52ce3bd18b2f432ec710e61e5e5c4`, and remains unchanged at
+current upstream main `c716f625f8475f9be9fbc98941812bf95270ac08`.
+The mismatch was already present in the Sep14
+[OpenPI refactor PR #1512](https://github.com/RLinf/RLinf/pull/1512) under
+`openpi_rlinf/tasks/rl.py`; the Sep22 rename
+[PR #1580](https://github.com/RLinf/RLinf/pull/1580) moved it to the current path.
+The three local runtime commits after the official Oct30 base did not modify
+this file; the deployed vendor checkout has no tracked changes.
+
+Primary evidence is the official
+[rollout average](https://github.com/RLinf/RLinf/blob/c716f625f8475f9be9fbc98941812bf95270ac08/rlinf/models/embodiment/openpi/tasks/rl.py#L268-L296)
+and [single-step replay](https://github.com/RLinf/RLinf/blob/c716f625f8475f9be9fbc98941812bf95270ac08/rlinf/models/embodiment/openpi/tasks/rl.py#L450-L507),
+together with our unchanged-weight reproduction. No matching public issue or
+maintainer confirmation was found in the searches recorded in
+[UPSTREAM.json](UPSTREAM.json). We have not filed an external issue.
+
+[Issue #1568](https://github.com/RLinf/RLinf/issues/1568) is a different critic
+report about `[B]` versus `[B, 1]` broadcasting. It was closed after a
+[reproduction comment](https://github.com/RLinf/RLinf/issues/1568#issuecomment-5780797446)
+showed that loss preprocessing aligns those shapes. It does not report or
+confirm this ten-values-versus-one-value discrepancy.
+
 ## Diagnostic interpretation and reporting issues (P2)
 
 The original one-cohort-per-task drift comparison does not match denoising
