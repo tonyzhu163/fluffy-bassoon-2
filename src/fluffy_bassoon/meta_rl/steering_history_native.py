@@ -29,7 +29,7 @@ def case_key(case):
 
 def attempt_noise(case, attempt, chunk):
     """Common across methods/interfaces; independent fixed streams per attempt."""
-    if type(attempt) is not int or not 1 <= attempt <= 5 or type(chunk) is not int or chunk < 0:
+    if type(attempt) is not int or not 1 <= attempt <= 6 or type(chunk) is not int or chunk < 0:
         raise ValueError("Bind one actual attempt and prospective chunk")
     identity = dict(version="frozen_steering_actual_attempt_noise_v1", case=case,
                     attempt=attempt, chunk=chunk)
@@ -56,16 +56,19 @@ class _ThreadJournal:
 class NativeAttemptBackend:
     def __init__(self, *, output, canonical_root, motor, spec, native_factory, journal,
                  writer_factory, binding, maximum_rgb_delta,
-                 rank=0, environment_type=_RecordingEnvironment, memory_mode="full"):
+                 rank=0, environment_type=_RecordingEnvironment, memory_mode="full", actual_attempts=5):
         if (not binding or maximum_rgb_delta is not None
                 and (type(maximum_rgb_delta) is not int or maximum_rgb_delta < 0)
                 or maximum_rgb_delta is None and binding.get("render_contract") != "diagnostic_only"):
             raise ValueError("Bind immutable source/model identity and qualified render contract")
+        if type(actual_attempts) is not int or not 1 <= actual_attempts <= 6:
+            raise ValueError("Bind at most six actual episodes for zero through five support episodes")
+        self.actual_attempts = actual_attempts
         self.output, self.canonical_root = Path(output), Path(canonical_root)
         self.motor, self.spec, self.native_factory = motor, spec, native_factory
         self.journal, self.writer_factory, self.binding = journal, writer_factory, deepcopy(binding)
         protocol = dict(version="frozen_steering_actual_attempt_v1", interface=spec.record(),
-            maximum_rgb_delta=maximum_rgb_delta, actual_attempts=5,
+            maximum_rgb_delta=maximum_rgb_delta, actual_attempts=actual_attempts,
             feedback="Observed first-success once; full physical boundary",
             noise="frozen_steering_actual_attempt_noise_v1")
         if memory_mode not in ("full", "episode"):
@@ -208,6 +211,8 @@ class NativeAttemptBackend:
         return prefix
 
     def run_case(self, policy, case, *, horizon, attempts=5, prefix_references=(), motor=None, gate=None, on_error=None):
+        if type(attempts) is not int or not 1 <= attempts <= self.actual_attempts:
+            raise ValueError("Actual attempts exceed the bound native attempt protocol")
         prefix = self.recover_prefix(prefix_references, case=case, horizon=horizon, policy=policy)
         try:
             def factory(case, attempt):
@@ -248,7 +253,7 @@ class NativeAttemptBackend:
         from .steering_history_batch import BatchedMotorBroker
         if type(lanes) is not int or lanes < 1 or not cases:
             raise ValueError("Require a finite case bank and qualified execution lanes")
-        if (type(attempts) is not int or not 1 <= attempts <= 5
+        if (type(attempts) is not int or not 1 <= attempts <= self.actual_attempts
                 or policy.config.noise_dim != self.spec.steering_dim
                 or any(type(item["horizon"]) is not int or item["horizon"] < 50 or item["horizon"] % 50
                     or attempts * (item["horizon"] // 50) > policy.config.context_length for item in cases)):

@@ -71,7 +71,7 @@ class PhysicalReference:
         self.closed, self.native = True, None
 
 
-def backend(root, *, spec, environment_type=PhysicalReference, maximum_rgb_delta=1):
+def backend(root, *, spec, environment_type=PhysicalReference, maximum_rgb_delta=1, actual_attempts=5):
     from test_interface_ppo import batch_native
     native, _ = batch_native()
     native.model.layers = 18
@@ -80,7 +80,7 @@ def backend(root, *, spec, environment_type=PhysicalReference, maximum_rgb_delta
         motor=FrozenRoboCasaInterface(native), spec=spec, native_factory=lambda _: None, journal=journal,
         writer_factory=lambda _: None, binding=dict(source="fixture", candidate="frozen-fixture",
             render_contract="diagnostic_only" if maximum_rgb_delta is None else "bounded"),
-        environment_type=environment_type, maximum_rgb_delta=maximum_rgb_delta)
+        environment_type=environment_type, maximum_rgb_delta=maximum_rgb_delta, actual_attempts=actual_attempts)
     return result, native.model, journal
 
 
@@ -138,6 +138,31 @@ def test_native_attempt_noise_is_case_stable_and_attempt_specific():
     assert meta == repeated and first.shape == (50, 32) and first.dtype == np.float32
     assert not np.array_equal(first, attempt_noise(case, 2, 0)[0])
     assert not np.array_equal(first, attempt_noise(case, 1, 1)[0])
+
+
+def test_sixth_query_uses_five_completed_episodes_and_resumes_exactly(tmp_path):
+    spec = InterfaceSpec(kind="velocity", steering_dim=32)
+    policy = HistoryNoisePolicy(HistoryConfig(20, 32, width=8, heads=2, layers=1, context_length=12))
+    case = dict(task="OpenDrawer", native_seed=17)
+    original, model, journal = backend(tmp_path / "original", spec=spec, actual_attempts=6)
+    results = original.run_case(policy, case, horizon=100, attempts=6)
+    assert len(results) == len(original.references) == 6
+    assert results[5]["memory_entry"]["length"] == results[4]["memory_exit"]["length"]
+    assert results[5]["memory_tokens"] == 12
+    assert journal.charged() == 6 * 103 and model.draws == 12
+    assert original.binding["native_attempt_protocol"]["actual_attempts"] == 6
+    recovered, model, journal = backend(tmp_path / "recovered", spec=spec, actual_attempts=6)
+    resumed = recovered.run_case(policy, case, horizon=100, attempts=6,
+                                 prefix_references=original.references[:5])
+    assert journal.charged() == 103 and len(recovered.references) == 1
+    assert resumed[5]["memory_entry"] == results[5]["memory_entry"]
+    for old, new in zip(results[5]["records"], resumed[5]["records"], strict=True):
+        np.testing.assert_array_equal(old["control"], new["control"])
+        np.testing.assert_array_equal(old["native_noise"], new["native_noise"])
+    default, _, journal = backend(tmp_path / "default", spec=spec)
+    with pytest.raises(ValueError, match="bound native attempt protocol"):
+        default.run_case(policy, case, horizon=100, attempts=6)
+    assert journal.charged() == 0
 
 
 def test_explicit_diagnostic_render_contract_keeps_original_policy_pixels(tmp_path):

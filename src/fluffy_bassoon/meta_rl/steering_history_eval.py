@@ -67,7 +67,7 @@ def collect_case_attempts(policy, spec, case, *, horizon, environment_factory, m
     dispatch. The caller must hash-verify any completed prefix before passing
     it here; partial attempts are never accepted or silently recollected.
     """
-    if (type(attempts) is not int or not 1 <= attempts <= 5
+    if (type(attempts) is not int or not 1 <= attempts <= 6
             or type(horizon) is not int or horizon < 50 or horizon % 50
             or len(completed_prefix) > attempts
             or policy.config.noise_dim != spec.steering_dim
