@@ -49,6 +49,7 @@ for index, shard in enumerate(shards):
     original_init = ray.init
     acc.worker(manifest_path, index, time.time() + 3600)
     ray.init = original_init
+    ep.CASES, ep.BANKS = 512, 64
     _, row = original_bind(prepared, shard['task'])
     actual = captured[-1]
     assert actual['cases'] == 8 * len(shard['banks'])
