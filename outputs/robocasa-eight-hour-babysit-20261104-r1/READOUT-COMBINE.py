@@ -118,7 +118,8 @@ def main():
         source_nodes=references,source_banks=checked_banks,selected_candidate_sha256=selected_sha,
         episodes=len(cases),summaries=summaries,descriptive_full_minus_episode=comparisons,
         meaning='Query episode j uses j-1 complete actual prior episodes in full mode. Ever-success is a separate cumulative measure.',
-        native_truth_audit='Pending independent raw command/draw/frame audits; this reduction verifies exact coverage and retained complete-episode hashes.',
+        native_truth_audit='Coverage and complete-reference reduction only; independent raw command/draw/frame status is recorded separately in AUDIT-STATUS.json.',
+        native_truth_audit_status=str(args.group/'AUDIT-STATUS.json'),
         deployment_optimizer_updates=0)
     target=args.group/'RESULT.json'
     assert not target.exists()

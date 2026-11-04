@@ -23,6 +23,11 @@ def main():
     if not banks:
         banks = sorted(args.group.glob('*/*/bank-*/RESULT.json'))
     assert banks and len(set(banks)) == len(banks)
+    if 'source_banks' in top:
+        assert set(banks) == {Path(row['path']) for row in top['source_banks']}
+        assert all(hashlib.sha256(Path(row['path']).read_bytes()).hexdigest()==row['sha256'] for row in top['source_banks'])
+    else:
+        assert len(banks)==len(top['results'])
     # Import CPU libraries before starting threads; no model or CUDA context.
     import cv2
     import numpy
@@ -50,7 +55,16 @@ def main():
         banks=len(rows),bank_audits=sorted(rows,key=lambda row:row['path']),CPU_only=True,GPU_hours=0,
         elapsed_seconds=time.time()-began,workers=args.workers,
         **{key:sum(row[key] for row in rows) for key in ('episodes','physical_controls','complete_chunks','decoded_videos','video_frames')})
+    expected_episodes=top['episodes'] if isinstance(top.get('episodes'),int) else sum(6*row['denominators'] for row in top['results'])
+    assert summary['episodes']==expected_episodes
     (args.output/'SUMMARY.json').write_text(json.dumps(summary,indent=2)+'\n')
+    status=dict(passed=True,group_result_sha256=summary['group_result_sha256'],
+        audit_summary=dict(path=str(args.output/'SUMMARY.json'),sha256=hashlib.sha256((args.output/'SUMMARY.json').read_bytes()).hexdigest()),
+        episodes=summary['episodes'],physical_controls=summary['physical_controls'],decoded_videos=summary['decoded_videos'],
+        checked_unix=time.time(),claim='All retained raw draws, mapped commands, feedback, native truth and every video frame audited; performance contrasts remain descriptive.')
+    target=args.group/'AUDIT-STATUS.json'
+    assert not target.exists()
+    temporary=target.with_suffix('.tmp');temporary.write_text(json.dumps(status,indent=2)+'\n');temporary.replace(target)
     print(json.dumps({key:value for key,value in summary.items() if key!='bank_audits'}))
 
 
