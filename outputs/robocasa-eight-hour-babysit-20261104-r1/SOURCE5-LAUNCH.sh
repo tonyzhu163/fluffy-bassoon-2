@@ -58,7 +58,7 @@ space=os.statvfs(run)
 # bytes are reflected in free space; avoid reserving those bytes twice.
 remaining=0;active_sources=[]
 for row in ledger['allocations']:
-    if row.get('kind')!='source_train' or row.get('released_shanghai') or row['job_id']==job:
+    if row.get('released_shanghai') or row['job_id']==job:
         continue
     directory=run/row['output'];written=0
     for parent,dirs,files in os.walk(directory,followlinks=False):
@@ -67,7 +67,7 @@ for row in ledger['allocations']:
             if path.is_symlink():raise RuntimeError('Active source contains an unexpected symlink')
             try:written+=path.stat().st_size
             except FileNotFoundError:pass  # an atomic producer rename
-    allowance=row.get('storage_reservation_GiB',150)*2**30
+    allowance=row['storage_reservation_GiB']*2**30
     assert written<=allowance, 'Active source exceeded its measured storage reservation'
     remaining+=allowance-written
     active_sources.append(dict(job_id=row['job_id'],written_bytes=written,reserved_remaining_bytes=allowance-written))

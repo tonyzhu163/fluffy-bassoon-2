@@ -1,0 +1,319 @@
+{
+  "passed": true,
+  "checked_shanghai": "2026-11-05T11:38:58.672096+08:00",
+  "job_id": "job-p4vgvfgs7s29",
+  "GPU_probe": "passed8",
+  "initial_DEV": {
+    "completed": true,
+    "metrics": {
+      "reward": 0.0009374999790452421,
+      "episode_len": 600.0,
+      "return": 0.5625,
+      "success_at_end": 0.546875,
+      "success_once": 0.5625,
+      "num_trajectories": 64
+    }
+  },
+  "progress": {
+    "completed_iterations": 1,
+    "target_iterations": 40,
+    "checked_unix": 1793849830.9118392,
+    "operator_checkpoint_exit": false
+  },
+  "actor_updates": [
+    {
+      "completed": true,
+      "rank": 0,
+      "producing_policy_iteration": 0,
+      "optimizer_steps_before": 0,
+      "optimizer_steps_after": 24,
+      "batch_shape": [
+        12,
+        64,
+        50,
+        12
+      ],
+      "losses": {
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 31.325754165649414,
+        "actor/policy_loss": -0.4794059097766876,
+        "actor/policy_loss_abs": 1.0931214094161987,
+        "actor/total_loss": -0.018275078386068344,
+        "critic/value_loss": 0.33320528268814087
+      },
+      "metrics": {
+        "actor/approx_kl": 0.015957046300172806,
+        "actor/clip_fraction": 0.23076288402080536,
+        "actor/clipped_ratio": 0.9983943700790405,
+        "actor/dual_cliped_ratio": 0.0,
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 31.325754165649414,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/policy_loss": -0.4794059097766876,
+        "actor/policy_loss_abs": 1.0931214094161987,
+        "actor/ratio": 1.0831458568572998,
+        "actor/ratio_abs": 0.24463880062103271,
+        "actor/total_loss": -0.018275078386068344,
+        "critic/lr": 9.999999747378752e-05,
+        "critic/value_clip_ratio": 0.8893851637840271,
+        "critic/value_loss": 0.33320528268814087,
+        "critic/explained_variance": -0.16803491115570068
+      },
+      "training_seconds": 117.3543148348108,
+      "cuda_peak_allocated_bytes": 17117409792,
+      "cuda_peak_reserved_bytes": 19723714560,
+      "frozen_vlm_unchanged": true
+    },
+    {
+      "completed": true,
+      "rank": 1,
+      "producing_policy_iteration": 0,
+      "optimizer_steps_before": 0,
+      "optimizer_steps_after": 24,
+      "batch_shape": [
+        12,
+        64,
+        50,
+        12
+      ],
+      "losses": {
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 31.325754165649414,
+        "actor/policy_loss": -0.4794059097766876,
+        "actor/policy_loss_abs": 1.0931214094161987,
+        "actor/total_loss": -0.018275078386068344,
+        "critic/value_loss": 0.33320528268814087
+      },
+      "metrics": {
+        "actor/approx_kl": 0.015957046300172806,
+        "actor/clip_fraction": 0.23076288402080536,
+        "actor/clipped_ratio": 0.9983943700790405,
+        "actor/dual_cliped_ratio": 0.0,
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 31.325754165649414,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/policy_loss": -0.4794059097766876,
+        "actor/policy_loss_abs": 1.0931214094161987,
+        "actor/ratio": 1.0831458568572998,
+        "actor/ratio_abs": 0.24463880062103271,
+        "actor/total_loss": -0.018275078386068344,
+        "critic/lr": 9.999999747378752e-05,
+        "critic/value_clip_ratio": 0.8893851637840271,
+        "critic/value_loss": 0.33320528268814087,
+        "critic/explained_variance": -0.16803491115570068
+      },
+      "training_seconds": 117.24712475668639,
+      "cuda_peak_allocated_bytes": 17117409792,
+      "cuda_peak_reserved_bytes": 19723714560,
+      "frozen_vlm_unchanged": true
+    }
+  ],
+  "boundary": {
+    "completed": true,
+    "global_step": 1,
+    "workers": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/pilot/actor-00.pt",
+        "sha256": "fadf4f8acd0c528087f99bf189193f824e3830c35a85f141935beac5a91ee9f6"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/pilot/actor-01.pt",
+        "sha256": "079268d8a2c5b5cd708a88361714088028d4e63a2055e311efc0e44f958d482b"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/pilot/rollout-00.pt",
+        "sha256": "e7e39bdf3eca271332f5f26f36b842e68733ff9a8f3a073891f434758beb1f20"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/pilot/rollout-01.pt",
+        "sha256": "bc4dcd534215c51ab63d7b83f225138a03bc5349899eefb4451b44af86abfd22"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/pilot/rollout-02.pt",
+        "sha256": "f791888ced8a0a36c136ac22a416ea5e720132d59c96559fc303486fce49b9ea"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/pilot/rollout-03.pt",
+        "sha256": "e35b5cbdb729f9927a50e94b3df32cfec2c08468f24b1c2cf3c2867103d967e7"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/pilot/rollout-04.pt",
+        "sha256": "babb7ddd704b815323e65fabf94d05bcd15190f4aaeb0dffb6d9bf08630db3cc"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/pilot/rollout-05.pt",
+        "sha256": "069cfe82aa1dc0ce5fdd913dbd18a7e57a6a1a116293c8e623e264a9d1eac4ae"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/pilot/rollout-06.pt",
+        "sha256": "3f82963624e998d7cf6d7ec6ca888bd594bea7b72af27674a7bf8225dc1cafbe"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/pilot/rollout-07.pt",
+        "sha256": "5ae877cd1b5d6e67a07b0b24e17a75c012be78e14f9c8121589600ffa3515343"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/pilot/env-00.pt",
+        "sha256": "d892a0efdce591811da6cda34bb484688bb738680e4af5cd793fd3425dfba9ce"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/pilot/env-01.pt",
+        "sha256": "adb629cda8606ba718f935992ac386c819f9242e4fde434f4f77e4a49458d09f"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/pilot/env-02.pt",
+        "sha256": "5f16a76fb9184ec825feac97f29c0acfcdf5bdfd5661af706a1bf5d18ee50fb5"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/pilot/env-03.pt",
+        "sha256": "729c22ceb93f7c92a499fa8a1cba3839bb14d66ef08a854c11fcf2a6c8ca2b5d"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/pilot/env-04.pt",
+        "sha256": "b087060d4777f53740b123782fd0bb8295d43a9bcfd80d18a7ee971984e3d0ed"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/pilot/env-05.pt",
+        "sha256": "1a82cd757bb5d86cfda5c59e03ab0ce9df8def59fbf96c46102ad128b8d9cb3c"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/pilot/env-06.pt",
+        "sha256": "3d25cbe13dee8611070a42db0e4330f4a2cb0cd56fe40501dc7f4600405154b6"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/pilot/env-07.pt",
+        "sha256": "6e6e749395344063b831b8ebc282e3b892f0b06f7860c77ff92212dc86ed03b2"
+      }
+    ],
+    "actor_checkpoint_files": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/actor/dcp_checkpoint/.metadata",
+        "sha256": "f848c84b31a1b969eeaf51e267be10fbdea68838a4ba7c58e6729f9502efb056",
+        "bytes": 500337
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/actor/dcp_checkpoint/__0_0.distcp",
+        "sha256": "4285618ead428f366b98149483c531c0980c408a78a03244261518a4c063a9ba",
+        "bytes": 4588051134
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_1/actor/dcp_checkpoint/__1_0.distcp",
+        "sha256": "23cfd4aa8cb68b114732e9443ee6a5f5b7274738a91ce39c03c2baf5a9f2359b",
+        "bytes": 4588471830
+      }
+    ],
+    "exact_resume_scope": "whole completed PPO iteration; fresh source reset",
+    "mid_iteration_physics_resume": false,
+    "source_admission": false
+  },
+  "parity_records": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/logprob-parity/iteration-001-rank-00.json",
+      "record": {
+        "passed": true,
+        "finite": true,
+        "shape": [
+          16,
+          50,
+          12
+        ],
+        "action_dim": 12,
+        "tolerance": 0.001,
+        "max_abs_chunk_log_ratio": 0.0,
+        "max_abs_coordinate_log_ratio": 0.0,
+        "mean_abs_chunk_log_ratio": 0.0,
+        "value": {
+          "passed": true,
+          "finite": true,
+          "tolerance": 0.001,
+          "max_abs_value_delta": 0.0,
+          "mean_abs_value_delta": 0.0
+        },
+        "value_head_enabled": true,
+        "optimizer_steps": 0,
+        "before_backward": true
+      }
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/logprob-parity/iteration-001-rank-01.json",
+      "record": {
+        "passed": true,
+        "finite": true,
+        "shape": [
+          16,
+          50,
+          12
+        ],
+        "action_dim": 12,
+        "tolerance": 0.001,
+        "max_abs_chunk_log_ratio": 0.0,
+        "max_abs_coordinate_log_ratio": 0.0,
+        "mean_abs_chunk_log_ratio": 0.0,
+        "value": {
+          "passed": true,
+          "finite": true,
+          "tolerance": 0.001,
+          "max_abs_value_delta": 0.0,
+          "mean_abs_value_delta": 0.0
+        },
+        "value_head_enabled": true,
+        "optimizer_steps": 0,
+        "before_backward": true
+      }
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/logprob-parity/iteration-002-rank-00.json",
+      "record": {
+        "passed": true,
+        "finite": true,
+        "shape": [
+          16,
+          50,
+          12
+        ],
+        "action_dim": 12,
+        "tolerance": 0.001,
+        "max_abs_chunk_log_ratio": 0.0,
+        "max_abs_coordinate_log_ratio": 0.0,
+        "mean_abs_chunk_log_ratio": 0.0,
+        "value": {
+          "passed": true,
+          "finite": true,
+          "tolerance": 0.001,
+          "max_abs_value_delta": 0.0,
+          "mean_abs_value_delta": 0.0
+        },
+        "value_head_enabled": true,
+        "optimizer_steps": 24,
+        "before_backward": true
+      }
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/logprob-parity/iteration-002-rank-01.json",
+      "record": {
+        "passed": true,
+        "finite": true,
+        "shape": [
+          16,
+          50,
+          12
+        ],
+        "action_dim": 12,
+        "tolerance": 0.001,
+        "max_abs_chunk_log_ratio": 0.0,
+        "max_abs_coordinate_log_ratio": 0.0,
+        "mean_abs_chunk_log_ratio": 0.0,
+        "value": {
+          "passed": true,
+          "finite": true,
+          "tolerance": 0.001,
+          "max_abs_value_delta": 0.0,
+          "mean_abs_value_delta": 0.0
+        },
+        "value_head_enabled": true,
+        "optimizer_steps": 24,
+        "before_backward": true
+      }
+    }
+  ]
+}

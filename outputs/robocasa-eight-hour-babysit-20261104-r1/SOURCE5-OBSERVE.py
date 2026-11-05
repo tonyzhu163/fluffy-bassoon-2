@@ -41,7 +41,7 @@ def observe():
         manifest = read(output / 'manifest.json')
         if manifest:
             assert manifest['hostname'] == row['job_id'] + '-master-0'
-        probe = read(output / 'gpu-probe.json')
+        probe = read(output / 'gpu-probe.json') or read(output / 'node-00/GPU-PROBE.json')
         written = 0
         for parent, _, files in os.walk(output, followlinks=False):
             for name in files:
@@ -51,7 +51,7 @@ def observe():
                     written += path.stat().st_size
                 except FileNotFoundError:
                     pass
-        if row['kind'] == 'source_train' and not row.get('released_shanghai'):
+        if not row.get('released_shanghai'):
             allowance = row['storage_reservation_GiB'] * 2**30
             assert written <= allowance
             remaining_storage += allowance - written
@@ -72,7 +72,9 @@ def observe():
         errors = console if any(word in console for word in ('Traceback', 'OutOfMemoryError', 'CUDA out of memory', 'RayTaskError')) else None
         allocations.append(dict(**row, conservative_GPU_hours=hours, manifest=manifest,
             probe_passed=bool(probe and probe.get('status') == 'passed'),
-            progress=read(output / 'progress.json'), clock=read(output / 'clock.json'),
+            progress=read(output / 'progress.json') or read(output / 'node-00/progress.json'),
+            clock=read(output / 'clock.json') or read(output / 'node-00/CLOCK.json'),
+            result=read(output / 'RESULT.json'),
             boundaries=boundaries, latest_actor_updates=updates, written_GiB=written/2**30,
             error_tail=errors, console_tail=console[-1600:]))
     fs = os.statvfs(ROOT)
