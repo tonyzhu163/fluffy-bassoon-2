@@ -1,0 +1,141 @@
+{
+  "checked_shanghai": "2026-11-06T03:01:34.976371+08:00",
+  "published_commit": "7487fbd27d339a34c5c1c2e39390ddffd92f08bd",
+  "scope": "Newly closed fits, full recovery aliases, workflow attempts, logs and probes",
+  "all_eight_fits_closed": true,
+  "inventory": {
+    "fits": {
+      "files": 65,
+      "apparent_bytes": 702961290,
+      "additional_unique_allocated_bytes": 707236352,
+      "already_counted_hardlink_aliases": 0,
+      "large_files": [
+        {
+          "path": "fits/velocity_bridge/dit/latest.pt",
+          "bytes": 65339875,
+          "hardlinks": 2
+        },
+        {
+          "path": "fits/velocity_bridge/dpt/latest.pt",
+          "bytes": 65339619,
+          "hardlinks": 2
+        },
+        {
+          "path": "fits/velocity_bridge/ad/latest.pt",
+          "bytes": 65339619,
+          "hardlinks": 2
+        },
+        {
+          "path": "fits/velocity_bridge/ic_iql/latest.pt",
+          "bytes": 65339875,
+          "hardlinks": 2
+        },
+        {
+          "path": "fits/kv_bridge/dit/latest.pt",
+          "bytes": 66431859,
+          "hardlinks": 2
+        },
+        {
+          "path": "fits/kv_bridge/dpt/latest.pt",
+          "bytes": 66431603,
+          "hardlinks": 2
+        },
+        {
+          "path": "fits/kv_bridge/ad/latest.pt",
+          "bytes": 66431603,
+          "hardlinks": 2
+        },
+        {
+          "path": "fits/kv_bridge/ic_iql/latest.pt",
+          "bytes": 66431859,
+          "hardlinks": 2
+        }
+      ]
+    },
+    "workflows": {
+      "files": 65,
+      "apparent_bytes": 200529,
+      "additional_unique_allocated_bytes": 224768,
+      "already_counted_hardlink_aliases": 0,
+      "large_files": []
+    },
+    "finalized-fits-20261106-r1": {
+      "files": 33,
+      "apparent_bytes": 702844406,
+      "additional_unique_allocated_bytes": 24576,
+      "already_counted_hardlink_aliases": 32,
+      "large_files": [
+        {
+          "path": "finalized-fits-20261106-r1/velocity_bridge/dit/latest.pt",
+          "bytes": 65339875,
+          "hardlinks": 2
+        },
+        {
+          "path": "finalized-fits-20261106-r1/velocity_bridge/dpt/latest.pt",
+          "bytes": 65339619,
+          "hardlinks": 2
+        },
+        {
+          "path": "finalized-fits-20261106-r1/velocity_bridge/ad/latest.pt",
+          "bytes": 65339619,
+          "hardlinks": 2
+        },
+        {
+          "path": "finalized-fits-20261106-r1/velocity_bridge/ic_iql/latest.pt",
+          "bytes": 65339875,
+          "hardlinks": 2
+        },
+        {
+          "path": "finalized-fits-20261106-r1/kv_bridge/dit/latest.pt",
+          "bytes": 66431859,
+          "hardlinks": 2
+        },
+        {
+          "path": "finalized-fits-20261106-r1/kv_bridge/dpt/latest.pt",
+          "bytes": 66431603,
+          "hardlinks": 2
+        },
+        {
+          "path": "finalized-fits-20261106-r1/kv_bridge/ad/latest.pt",
+          "bytes": 66431603,
+          "hardlinks": 2
+        },
+        {
+          "path": "finalized-fits-20261106-r1/kv_bridge/ic_iql/latest.pt",
+          "bytes": 66431859,
+          "hardlinks": 2
+        }
+      ]
+    },
+    "logs": {
+      "files": 30,
+      "apparent_bytes": 92272,
+      "additional_unique_allocated_bytes": 30720,
+      "already_counted_hardlink_aliases": 0,
+      "large_files": []
+    },
+    "probes": {
+      "files": 29,
+      "apparent_bytes": 87717,
+      "additional_unique_allocated_bytes": 37888,
+      "already_counted_hardlink_aliases": 0,
+      "large_files": []
+    }
+  },
+  "unique_allocated_bytes": 707554304,
+  "canonical_full_recovery_bytes": 527085912,
+  "selected_candidate_bytes": 175710996,
+  "decision": "No useful eligible scratch bytes; retain all selected and full recovery files hot. Workflow/log/probe evidence is under1MiB. No nonselected large recovery snapshots remain. Finalized aliases are hardlinks, not duplicate allocations; removing only aliases frees no checkpoint payload.",
+  "archive_operations": 0,
+  "files_moved_or_deleted": 0,
+  "protected_hot": [
+    "all8 selected candidates and canonical inference paths",
+    "all8 complete policy/Adam/sampler/global+flow RNG recovery plus finalized aliases",
+    "canonical TRAIN and all native/value/config/source receipts referenced by future readout",
+    "127GiB PFS shared source-member cache and CACHE manifest",
+    "frozen native weights, normalization statistics and allocated runtime"
+  ],
+  "free_PFS_GiB": 632.375,
+  "GPU_allocations_started": 0,
+  "source_growth_bytes": 0
+}
