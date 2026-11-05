@@ -1,0 +1,1385 @@
+{
+  "checked_unix": 1793911815.82128,
+  "free_GiB": 578.98828125,
+  "robotwin": {
+    "train07": {
+      "top_level_files": [
+        "EXIT.json",
+        "RESULT.json",
+        "action-admission.json",
+        "actor-invariants",
+        "bridge-admission.json",
+        "camera-checks",
+        "capacity-admission.json",
+        "collection-contract.json",
+        "config-validation.json",
+        "core-tests.log",
+        "environment-tests.log",
+        "first-replay",
+        "gpu-probe.json",
+        "host-memory.json",
+        "host-memory.log",
+        "initial-states",
+        "loss-masks",
+        "memory-admission.json",
+        "metrics.log",
+        "operational-restore.json",
+        "renderers",
+        "resolved-native-config.json",
+        "resolved-pilot-contract.json",
+        "sampling",
+        "scene-bindings",
+        "sidney-native-two",
+        "tensorboard",
+        "traces",
+        "train.log",
+        "training-rollouts",
+        "worker-gpus",
+        "worker.log",
+        "worker_logs"
+      ],
+      "RESULT.json": {
+        "status": "complete",
+        "rollout_iterations": 2,
+        "baseline_reference": "published Sidney SFT",
+        "new_sft_evaluation_episodes": 0,
+        "source_task": "place_phone_stand",
+        "paper_numeric_reproduction": false
+      },
+      "EXIT.json": {
+        "exit_code": 0,
+        "started_unix": 1793900102,
+        "ended_unix": 1793906964,
+        "worker_gpu_seconds": 27448,
+        "prior_bridge_gpu_seconds": 30000
+      },
+      "gpu-probe.json": {
+        "sha256": "4ceee64dc159d75d3269950107acf781612d8796cad90dcd2617e1440b08fc91",
+        "status": "passed",
+        "hostname": "job-rxih2makcwv4-master-0",
+        "device_count": 4
+      },
+      "host-memory.json": {
+        "at_unix": 1793906954.7359793,
+        "limit_bytes": 1099511627776,
+        "current_bytes": 443302223872,
+        "peak_observed_bytes": 528766726144,
+        "minimum_allocation_bytes": 1099511627776,
+        "headroom_bytes": 656209403904,
+        "anonymous_bytes": 400553463808,
+        "file_cache_bytes": 16470630400,
+        "ray_memory_guard_unchanged": true
+      },
+      "operational-restore.json": {
+        "global_step": 0,
+        "worker_count": 12,
+        "all_restored": true
+      },
+      "camera-checks": {
+        "count": 8,
+        "recent_names": [
+          "rank-00.jpg",
+          "rank-00.json",
+          "rank-01.jpg",
+          "rank-01.json",
+          "rank-02.jpg",
+          "rank-02.json",
+          "rank-03.jpg",
+          "rank-03.json"
+        ]
+      },
+      "scene-bindings": {
+        "count": 32,
+        "recent_names": [
+          "rank-03-00000.json",
+          "rank-03-00001.json",
+          "rank-03-00002.json",
+          "rank-03-00003.json",
+          "rank-03-00004.json",
+          "rank-03-00005.json",
+          "rank-03-00006.json",
+          "rank-03-00007.json"
+        ]
+      },
+      "first-replay": {
+        "count": 4,
+        "recent_names": [
+          "rank-00.json",
+          "rank-01.json",
+          "rank-02.json",
+          "rank-03.json"
+        ]
+      },
+      "loss-masks": {
+        "count": 8,
+        "recent_names": [
+          "step-0-rank-00.json",
+          "step-0-rank-01.json",
+          "step-0-rank-02.json",
+          "step-0-rank-03.json",
+          "step-1-rank-00.json",
+          "step-1-rank-01.json",
+          "step-1-rank-02.json",
+          "step-1-rank-03.json"
+        ]
+      },
+      "actor-invariants": {
+        "count": 16,
+        "recent_names": [
+          "rank-02-before.json",
+          "rank-02-first-backward.json",
+          "rank-02-step-0-after.json",
+          "rank-02-step-1-after.json",
+          "rank-03-before.json",
+          "rank-03-first-backward.json",
+          "rank-03-step-0-after.json",
+          "rank-03-step-1-after.json"
+        ]
+      },
+      "completed_boundaries": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train07/sidney-native-two/checkpoints/global_step_1/pilot-boundary.json",
+          "completed": true,
+          "global_step": 1,
+          "worker_count": 12,
+          "actor_file_count": 5
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train07/sidney-native-two/checkpoints/global_step_2/pilot-boundary.json",
+          "completed": true,
+          "global_step": 2,
+          "worker_count": 12,
+          "actor_file_count": 5
+        }
+      ],
+      "frozen_after": [
+        {
+          "name": "rank-00-step-0-after.json",
+          "unchanged": true
+        },
+        {
+          "name": "rank-00-step-1-after.json",
+          "unchanged": true
+        },
+        {
+          "name": "rank-01-step-0-after.json",
+          "unchanged": true
+        },
+        {
+          "name": "rank-01-step-1-after.json",
+          "unchanged": true
+        },
+        {
+          "name": "rank-02-step-0-after.json",
+          "unchanged": true
+        },
+        {
+          "name": "rank-02-step-1-after.json",
+          "unchanged": true
+        },
+        {
+          "name": "rank-03-step-0-after.json",
+          "unchanged": true
+        },
+        {
+          "name": "rank-03-step-1-after.json",
+          "unchanged": true
+        }
+      ],
+      "first_replay": [
+        {
+          "name": "rank-00.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": {
+            "logprobs": 0.0,
+            "native_mean_vs_selected_value_max_abs": 0.3926909565925598
+          }
+        },
+        {
+          "name": "rank-01.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": {
+            "logprobs": 0.0,
+            "native_mean_vs_selected_value_max_abs": 0.2647531032562256
+          }
+        },
+        {
+          "name": "rank-02.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": {
+            "logprobs": 0.0,
+            "native_mean_vs_selected_value_max_abs": 0.13837507367134094
+          }
+        },
+        {
+          "name": "rank-03.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": {
+            "logprobs": 0.0,
+            "native_mean_vs_selected_value_max_abs": 0.12392216175794601
+          }
+        }
+      ]
+    },
+    "matched/qual01": {
+      "top_level_files": [
+        "EXIT.json",
+        "admission.json",
+        "config-validation.json",
+        "gpu-probe.json",
+        "host-memory.json",
+        "host-memory.log",
+        "learner-numerics.json",
+        "worker.log"
+      ],
+      "EXIT.json": {
+        "exit_code": 1,
+        "started_unix": 1793904466,
+        "ended_unix": 1793904512,
+        "worker_gpu_seconds": 184
+      },
+      "gpu-probe.json": {
+        "sha256": "482abfe865e86d265688aede7017825436c7cd01421c5045e79893c587dfe4d4",
+        "status": "passed",
+        "hostname": "job-6koe87i8ibvf-master-0",
+        "device_count": 4
+      },
+      "host-memory.json": {
+        "at_unix": 1793904507.081077,
+        "limit_bytes": 1099511627776,
+        "current_bytes": 1344892928,
+        "peak_observed_bytes": 1344892928,
+        "minimum_allocation_bytes": 1099511627776,
+        "headroom_bytes": 1098166734848,
+        "anonymous_bytes": 573140992,
+        "file_cache_bytes": 739614720,
+        "ray_memory_guard_unchanged": true
+      },
+      "completed_boundaries": [],
+      "frozen_after": [],
+      "first_replay": []
+    },
+    "matched/qual02": {
+      "top_level_files": [
+        "EXIT.json",
+        "action-accounting",
+        "admission.json",
+        "config-grpo-scientific.json",
+        "config-ppo-scientific.json",
+        "config-validation.json",
+        "gpu-probe.json",
+        "host-memory.json",
+        "host-memory.log",
+        "learner-numerics.json",
+        "train",
+        "train.log",
+        "worker.log"
+      ],
+      "EXIT.json": {
+        "exit_code": 255,
+        "started_unix": 1793905320,
+        "ended_unix": 1793906321,
+        "worker_gpu_seconds": 4004
+      },
+      "gpu-probe.json": {
+        "sha256": "1f06e79484b334a3dcd9508bc771ffa5a921bb83491a8a51fdafe8f0af939d57",
+        "status": "passed",
+        "hostname": "job-l218ew6o4lfw-master-0",
+        "device_count": 4
+      },
+      "host-memory.json": {
+        "at_unix": 1793906315.464739,
+        "limit_bytes": 1099511627776,
+        "current_bytes": 119914078208,
+        "peak_observed_bytes": 361386950656,
+        "minimum_allocation_bytes": 1099511627776,
+        "headroom_bytes": 979597549568,
+        "anonymous_bytes": 98075422720,
+        "file_cache_bytes": 8623964160,
+        "ray_memory_guard_unchanged": true
+      },
+      "completed_boundaries": [],
+      "frozen_after": [],
+      "first_replay": []
+    },
+    "matched/qual02/train": {
+      "top_level_files": [
+        "actor-invariants",
+        "boundary-timings",
+        "camera-checks",
+        "first-replay",
+        "group-resets",
+        "initial-states",
+        "loss-masks",
+        "paired-rng",
+        "renderers",
+        "resolved-native-config.json",
+        "sampling",
+        "scene-bindings",
+        "sidney-paired-grpo",
+        "tensorboard",
+        "traces",
+        "training-rollouts",
+        "worker-gpus",
+        "worker_logs"
+      ],
+      "camera-checks": {
+        "count": 8,
+        "recent_names": [
+          "rank-00.jpg",
+          "rank-00.json",
+          "rank-01.jpg",
+          "rank-01.json",
+          "rank-02.jpg",
+          "rank-02.json",
+          "rank-03.jpg",
+          "rank-03.json"
+        ]
+      },
+      "scene-bindings": {
+        "count": 4,
+        "recent_names": [
+          "rank-00-00000.json",
+          "rank-01-00000.json",
+          "rank-02-00000.json",
+          "rank-03-00000.json"
+        ]
+      },
+      "first-replay": {
+        "count": 4,
+        "recent_names": [
+          "rank-00.json",
+          "rank-01.json",
+          "rank-02.json",
+          "rank-03.json"
+        ]
+      },
+      "loss-masks": {
+        "count": 4,
+        "recent_names": [
+          "step-0-rank-00.json",
+          "step-0-rank-01.json",
+          "step-0-rank-02.json",
+          "step-0-rank-03.json"
+        ]
+      },
+      "actor-invariants": {
+        "count": 8,
+        "recent_names": [
+          "rank-00-before.json",
+          "rank-00-first-backward.json",
+          "rank-01-before.json",
+          "rank-01-first-backward.json",
+          "rank-02-before.json",
+          "rank-02-first-backward.json",
+          "rank-03-before.json",
+          "rank-03-first-backward.json"
+        ]
+      },
+      "completed_boundaries": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual02/train/sidney-paired-grpo/checkpoints/global_step_0/pilot-boundary.json",
+          "completed": true,
+          "global_step": 0,
+          "worker_count": 12,
+          "actor_file_count": 5
+        }
+      ],
+      "frozen_after": [],
+      "first_replay": [
+        {
+          "name": "rank-00.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": null
+        },
+        {
+          "name": "rank-01.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": null
+        },
+        {
+          "name": "rank-02.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": null
+        },
+        {
+          "name": "rank-03.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": null
+        }
+      ]
+    },
+    "matched/grad01": {
+      "top_level_files": [
+        "EXIT.json",
+        "admission.json",
+        "config-grpo-scientific.json",
+        "config-ppo-scientific.json",
+        "config-validation.json",
+        "gpu-probe.json",
+        "host-memory.json",
+        "host-memory.log",
+        "learner-numerics.json",
+        "train",
+        "train.log",
+        "worker.log"
+      ],
+      "EXIT.json": {
+        "exit_code": 1,
+        "started_unix": 1793908691,
+        "ended_unix": 1793908859,
+        "worker_gpu_seconds": 672
+      },
+      "gpu-probe.json": {
+        "sha256": "88199c7566eeb5f2035a979c4a5545d551d99775fd2d34db5393c3278bbcb697",
+        "status": "passed",
+        "hostname": "job-01rwmdh7muey-master-0",
+        "device_count": 4
+      },
+      "host-memory.json": {
+        "at_unix": 1793908851.9844851,
+        "limit_bytes": 274877906944,
+        "current_bytes": 10494439424,
+        "peak_observed_bytes": 80054042624,
+        "minimum_allocation_bytes": 274877906944,
+        "headroom_bytes": 264383467520,
+        "anonymous_bytes": 1733419008,
+        "file_cache_bytes": 8677154816,
+        "ray_memory_guard_unchanged": true
+      },
+      "completed_boundaries": [],
+      "frozen_after": [],
+      "first_replay": []
+    },
+    "matched/grad01/train": {
+      "top_level_files": [
+        "actor-invariants",
+        "paired-rng",
+        "recovery-frozen",
+        "recovery-signatures",
+        "worker-gpus",
+        "worker_logs"
+      ],
+      "actor-invariants": {
+        "count": 4,
+        "recent_names": [
+          "rank-00-before.json",
+          "rank-01-before.json",
+          "rank-02-before.json",
+          "rank-03-before.json"
+        ]
+      },
+      "completed_boundaries": [],
+      "frozen_after": [],
+      "first_replay": []
+    },
+    "matched/opt01": {
+      "top_level_files": [
+        "EXIT.json",
+        "SEMANTIC-COMPARISON.json",
+        "admission.json",
+        "config-grpo-scientific.json",
+        "config-ppo-scientific.json",
+        "config-validation.json",
+        "gpu-probe.json",
+        "host-memory.json",
+        "host-memory.log",
+        "learner-numerics.json",
+        "ray-cleanup.log",
+        "recovery-timing.json",
+        "restore",
+        "restore.log",
+        "train",
+        "train.log",
+        "worker.log"
+      ],
+      "EXIT.json": {
+        "exit_code": 0,
+        "started_unix": 1793910631,
+        "ended_unix": 1793910848,
+        "worker_gpu_seconds": 868
+      },
+      "gpu-probe.json": {
+        "sha256": "583c5f361b5ea27fc63d22a162f0ceeec1e47e5f68b5d9f85d2ebc00b7e118c4",
+        "status": "passed",
+        "hostname": "job-6npadxhz5bln-master-0",
+        "device_count": 4
+      },
+      "host-memory.json": {
+        "at_unix": 1793910838.3233554,
+        "limit_bytes": 274877906944,
+        "current_bytes": 46325104640,
+        "peak_observed_bytes": 72307384320,
+        "minimum_allocation_bytes": 274877906944,
+        "headroom_bytes": 228552802304,
+        "anonymous_bytes": 25573937152,
+        "file_cache_bytes": 20287324160,
+        "ray_memory_guard_unchanged": true
+      },
+      "completed_boundaries": [],
+      "frozen_after": [],
+      "first_replay": []
+    },
+    "matched/opt01/train": {
+      "top_level_files": [
+        "RESULT.json",
+        "actor-invariants",
+        "checkpoint0",
+        "optimizer-layout",
+        "paired-rng",
+        "worker-gpus",
+        "worker_logs"
+      ],
+      "RESULT.json": {
+        "status": "diagnostic_complete_unqualified",
+        "before": [
+          {
+            "rank": 0,
+            "optimizer_sha256": "9fedc6ad3b147f7c026005f513f3db05603b517412604d6c2eec60b9cfc4c134",
+            "state_entries": 190
+          },
+          {
+            "rank": 1,
+            "optimizer_sha256": "4ed06e5d8ac7f3b31f02a3f23a5e9cf85616414e65bebf4856d5c721b81b9dcd",
+            "state_entries": 190
+          },
+          {
+            "rank": 2,
+            "optimizer_sha256": "4ed06e5d8ac7f3b31f02a3f23a5e9cf85616414e65bebf4856d5c721b81b9dcd",
+            "state_entries": 190
+          },
+          {
+            "rank": 3,
+            "optimizer_sha256": "efb26652364ec5ba3b3797e3e901681874a16b6b49aa0b4140cea05b60f7f497",
+            "state_entries": 190
+          }
+        ],
+        "after": [
+          {
+            "rank": 0,
+            "optimizer_sha256": "9fedc6ad3b147f7c026005f513f3db05603b517412604d6c2eec60b9cfc4c134",
+            "state_entries": 190
+          },
+          {
+            "rank": 1,
+            "optimizer_sha256": "4ed06e5d8ac7f3b31f02a3f23a5e9cf85616414e65bebf4856d5c721b81b9dcd",
+            "state_entries": 190
+          },
+          {
+            "rank": 2,
+            "optimizer_sha256": "4ed06e5d8ac7f3b31f02a3f23a5e9cf85616414e65bebf4856d5c721b81b9dcd",
+            "state_entries": 190
+          },
+          {
+            "rank": 3,
+            "optimizer_sha256": "efb26652364ec5ba3b3797e3e901681874a16b6b49aa0b4140cea05b60f7f497",
+            "state_entries": 190
+          }
+        ],
+        "workers": [
+          {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/opt01/train/checkpoint0/pilot/actor-00.pt",
+            "sha256": "048b29547df2bb7cae3e1e81875f7e9304bbc1acc5b02a95803c99cbb706258c"
+          },
+          {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/opt01/train/checkpoint0/pilot/actor-01.pt",
+            "sha256": "a98b0e44623d3053adaf8be2177a3228bd483af7b6d00f7d751daccd6c6c0c5f"
+          },
+          {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/opt01/train/checkpoint0/pilot/actor-02.pt",
+            "sha256": "59fb239ed039b9f7b1426cf79a71c0ca8750ec9b3690273274d9ddb5a8a3189e"
+          },
+          {
+            "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/opt01/train/checkpoint0/pilot/actor-03.pt",
+            "sha256": "2aaefdd0b52a1e9ca45fec0bedcb2b6f76683d2162572ad0c07172fe53b47bad"
+          }
+        ],
+        "new_optimizer_updates": 0,
+        "new_simulator_controls": 0
+      },
+      "actor-invariants": {
+        "count": 4,
+        "recent_names": [
+          "rank-00-before.json",
+          "rank-01-before.json",
+          "rank-02-before.json",
+          "rank-03-before.json"
+        ]
+      },
+      "completed_boundaries": [],
+      "frozen_after": [],
+      "first_replay": []
+    },
+    "matched/opt01/restore": {
+      "top_level_files": [
+        "RESULT.json",
+        "actor-invariants",
+        "diagnostic-restore-rank-00.json",
+        "diagnostic-restore-rank-01.json",
+        "diagnostic-restore-rank-02.json",
+        "diagnostic-restore-rank-03.json",
+        "optimizer-layout",
+        "paired-rng",
+        "worker-gpus",
+        "worker_logs"
+      ],
+      "RESULT.json": {
+        "status": "diagnostic_complete_unqualified",
+        "before": [
+          {
+            "rank": 0,
+            "optimizer_sha256": "9fedc6ad3b147f7c026005f513f3db05603b517412604d6c2eec60b9cfc4c134",
+            "state_entries": 190
+          },
+          {
+            "rank": 1,
+            "optimizer_sha256": "4ed06e5d8ac7f3b31f02a3f23a5e9cf85616414e65bebf4856d5c721b81b9dcd",
+            "state_entries": 190
+          },
+          {
+            "rank": 2,
+            "optimizer_sha256": "4ed06e5d8ac7f3b31f02a3f23a5e9cf85616414e65bebf4856d5c721b81b9dcd",
+            "state_entries": 190
+          },
+          {
+            "rank": 3,
+            "optimizer_sha256": "efb26652364ec5ba3b3797e3e901681874a16b6b49aa0b4140cea05b60f7f497",
+            "state_entries": 190
+          }
+        ],
+        "after": [
+          {
+            "rank": 0,
+            "optimizer_sha256": "4d2276b1087ec32550e8d611639667cf3ea3ab6802ba4a277231035d0a62411d",
+            "state_entries": 113
+          },
+          {
+            "rank": 1,
+            "optimizer_sha256": "dd4351bd154950d5c39a70ba47aee3c0edd944e14b93d186271387f38a98a3e6",
+            "state_entries": 41
+          },
+          {
+            "rank": 2,
+            "optimizer_sha256": "dd4351bd154950d5c39a70ba47aee3c0edd944e14b93d186271387f38a98a3e6",
+            "state_entries": 41
+          },
+          {
+            "rank": 3,
+            "optimizer_sha256": "08e33137ea8cd9bb2df22db76428bc7ac375ebf3d04f01d2fc75489652b9fc90",
+            "state_entries": 118
+          }
+        ],
+        "restored": [
+          {
+            "rank": 0,
+            "expected": {
+              "optimizer_steps": 0,
+              "trainable_parameters_sha256": "f9fc3e7c738eedaba07a05ea8e4abb8552cace59dba1c468adbf2644412569f3",
+              "optimizer_sha256": "9fedc6ad3b147f7c026005f513f3db05603b517412604d6c2eec60b9cfc4c134",
+              "lr_scheduler_sha256": "af63fb8b5a5a302611982f7e83fc9d6b3202ac0a739143a50ece8e776a47016b",
+              "grad_scaler_sha256": "6ab47d70854a8c690a0c2035be903f3d812cbab06f9e442e9b10ad70b1acd446",
+              "rng_sha256": "621b6b6edc647c7f20ac5564f732845263614b451ac130597b0c4c78bcd214b3"
+            },
+            "actual": {
+              "optimizer_steps": 0,
+              "trainable_parameters_sha256": "f9fc3e7c738eedaba07a05ea8e4abb8552cace59dba1c468adbf2644412569f3",
+              "optimizer_sha256": "4d2276b1087ec32550e8d611639667cf3ea3ab6802ba4a277231035d0a62411d",
+              "lr_scheduler_sha256": "af63fb8b5a5a302611982f7e83fc9d6b3202ac0a739143a50ece8e776a47016b",
+              "grad_scaler_sha256": "6ab47d70854a8c690a0c2035be903f3d812cbab06f9e442e9b10ad70b1acd446",
+              "rng_sha256": "621b6b6edc647c7f20ac5564f732845263614b451ac130597b0c4c78bcd214b3"
+            },
+            "equality": {
+              "optimizer_steps": true,
+              "trainable_parameters_sha256": true,
+              "optimizer_sha256": false,
+              "lr_scheduler_sha256": true,
+              "grad_scaler_sha256": true,
+              "rng_sha256": true
+            },
+            "frozen_unchanged": true,
+            "optimizer_semantic_qualified": false,
+            "new_optimizer_updates": 0
+          },
+          {
+            "rank": 1,
+            "expected": {
+              "optimizer_steps": 0,
+              "trainable_parameters_sha256": "2ca45cacca16412ca93280220c3c37bbd60ce61fa52e2ef3fb7ae02c6922060a",
+              "optimizer_sha256": "4ed06e5d8ac7f3b31f02a3f23a5e9cf85616414e65bebf4856d5c721b81b9dcd",
+              "lr_scheduler_sha256": "af63fb8b5a5a302611982f7e83fc9d6b3202ac0a739143a50ece8e776a47016b",
+              "grad_scaler_sha256": "6ab47d70854a8c690a0c2035be903f3d812cbab06f9e442e9b10ad70b1acd446",
+              "rng_sha256": "f10d50b79a1ed36f46a044034badca9e838356d4ccc10023764235cd9597a334"
+            },
+            "actual": {
+              "optimizer_steps": 0,
+              "trainable_parameters_sha256": "2ca45cacca16412ca93280220c3c37bbd60ce61fa52e2ef3fb7ae02c6922060a",
+              "optimizer_sha256": "dd4351bd154950d5c39a70ba47aee3c0edd944e14b93d186271387f38a98a3e6",
+              "lr_scheduler_sha256": "af63fb8b5a5a302611982f7e83fc9d6b3202ac0a739143a50ece8e776a47016b",
+              "grad_scaler_sha256": "6ab47d70854a8c690a0c2035be903f3d812cbab06f9e442e9b10ad70b1acd446",
+              "rng_sha256": "f10d50b79a1ed36f46a044034badca9e838356d4ccc10023764235cd9597a334"
+            },
+            "equality": {
+              "optimizer_steps": true,
+              "trainable_parameters_sha256": true,
+              "optimizer_sha256": false,
+              "lr_scheduler_sha256": true,
+              "grad_scaler_sha256": true,
+              "rng_sha256": true
+            },
+            "frozen_unchanged": true,
+            "optimizer_semantic_qualified": false,
+            "new_optimizer_updates": 0
+          },
+          {
+            "rank": 2,
+            "expected": {
+              "optimizer_steps": 0,
+              "trainable_parameters_sha256": "6dd71a2fb8024daa6573ed7ba481c65d328d8745888bab8ed525deee86d1d25c",
+              "optimizer_sha256": "4ed06e5d8ac7f3b31f02a3f23a5e9cf85616414e65bebf4856d5c721b81b9dcd",
+              "lr_scheduler_sha256": "af63fb8b5a5a302611982f7e83fc9d6b3202ac0a739143a50ece8e776a47016b",
+              "grad_scaler_sha256": "6ab47d70854a8c690a0c2035be903f3d812cbab06f9e442e9b10ad70b1acd446",
+              "rng_sha256": "13c0c882727ff09732dad0874e17a41ea71e6be89a6a46de39573d93e48ad756"
+            },
+            "actual": {
+              "optimizer_steps": 0,
+              "trainable_parameters_sha256": "6dd71a2fb8024daa6573ed7ba481c65d328d8745888bab8ed525deee86d1d25c",
+              "optimizer_sha256": "dd4351bd154950d5c39a70ba47aee3c0edd944e14b93d186271387f38a98a3e6",
+              "lr_scheduler_sha256": "af63fb8b5a5a302611982f7e83fc9d6b3202ac0a739143a50ece8e776a47016b",
+              "grad_scaler_sha256": "6ab47d70854a8c690a0c2035be903f3d812cbab06f9e442e9b10ad70b1acd446",
+              "rng_sha256": "13c0c882727ff09732dad0874e17a41ea71e6be89a6a46de39573d93e48ad756"
+            },
+            "equality": {
+              "optimizer_steps": true,
+              "trainable_parameters_sha256": true,
+              "optimizer_sha256": false,
+              "lr_scheduler_sha256": true,
+              "grad_scaler_sha256": true,
+              "rng_sha256": true
+            },
+            "frozen_unchanged": true,
+            "optimizer_semantic_qualified": false,
+            "new_optimizer_updates": 0
+          },
+          {
+            "rank": 3,
+            "expected": {
+              "optimizer_steps": 0,
+              "trainable_parameters_sha256": "1d2815966ba95045899867343e680e55420bae4e7b43129c32dcd22faf6e49c1",
+              "optimizer_sha256": "efb26652364ec5ba3b3797e3e901681874a16b6b49aa0b4140cea05b60f7f497",
+              "lr_scheduler_sha256": "af63fb8b5a5a302611982f7e83fc9d6b3202ac0a739143a50ece8e776a47016b",
+              "grad_scaler_sha256": "6ab47d70854a8c690a0c2035be903f3d812cbab06f9e442e9b10ad70b1acd446",
+              "rng_sha256": "1a7f6a60b7439391c720d1401b3c360bb0b1c28dd3d55835ff09cc870dbf1f1e"
+            },
+            "actual": {
+              "optimizer_steps": 0,
+              "trainable_parameters_sha256": "1d2815966ba95045899867343e680e55420bae4e7b43129c32dcd22faf6e49c1",
+              "optimizer_sha256": "08e33137ea8cd9bb2df22db76428bc7ac375ebf3d04f01d2fc75489652b9fc90",
+              "lr_scheduler_sha256": "af63fb8b5a5a302611982f7e83fc9d6b3202ac0a739143a50ece8e776a47016b",
+              "grad_scaler_sha256": "6ab47d70854a8c690a0c2035be903f3d812cbab06f9e442e9b10ad70b1acd446",
+              "rng_sha256": "1a7f6a60b7439391c720d1401b3c360bb0b1c28dd3d55835ff09cc870dbf1f1e"
+            },
+            "equality": {
+              "optimizer_steps": true,
+              "trainable_parameters_sha256": true,
+              "optimizer_sha256": false,
+              "lr_scheduler_sha256": true,
+              "grad_scaler_sha256": true,
+              "rng_sha256": true
+            },
+            "frozen_unchanged": true,
+            "optimizer_semantic_qualified": false,
+            "new_optimizer_updates": 0
+          }
+        ],
+        "new_optimizer_updates": 0,
+        "new_simulator_controls": 0,
+        "optimizer_semantic_qualified": false
+      },
+      "actor-invariants": {
+        "count": 4,
+        "recent_names": [
+          "rank-00-before.json",
+          "rank-01-before.json",
+          "rank-02-before.json",
+          "rank-03-before.json"
+        ]
+      },
+      "completed_boundaries": [],
+      "frozen_after": [],
+      "first_replay": []
+    },
+    "matched/grad02": {
+      "top_level_files": [
+        "EXIT.json",
+        "admission.json",
+        "config-grpo-scientific.json",
+        "config-ppo-scientific.json",
+        "config-validation.json",
+        "gpu-probe.json",
+        "host-memory.json",
+        "host-memory.log",
+        "learner-numerics.json",
+        "ray-cleanup.log",
+        "recovery-timing.json",
+        "restore",
+        "restore.log",
+        "train",
+        "train.log",
+        "worker.log"
+      ],
+      "EXIT.json": {
+        "exit_code": 0,
+        "started_unix": 1793911249,
+        "ended_unix": 1793911475,
+        "worker_gpu_seconds": 904
+      },
+      "gpu-probe.json": {
+        "sha256": "7faa89b5cb75c5f1626c2e6e092991537a3afe1ff66c213b08096136fd2fa94c",
+        "status": "passed",
+        "hostname": "job-xauoc0y9dwvf-master-0",
+        "device_count": 4
+      },
+      "host-memory.json": {
+        "at_unix": 1793911473.7722757,
+        "limit_bytes": 274877906944,
+        "current_bytes": 9733218304,
+        "peak_observed_bytes": 56032194560,
+        "minimum_allocation_bytes": 274877906944,
+        "headroom_bytes": 265144688640,
+        "anonymous_bytes": 3371433984,
+        "file_cache_bytes": 551632896,
+        "ray_memory_guard_unchanged": true
+      },
+      "completed_boundaries": [],
+      "frozen_after": [],
+      "first_replay": []
+    },
+    "matched/grad02/train": {
+      "top_level_files": [
+        "RESULT.json",
+        "actor-invariants",
+        "checkpoint-timing.json",
+        "checkpoint1",
+        "first-replay",
+        "fixture-initializer",
+        "gradient-audit",
+        "loss-masks",
+        "paired-gradients",
+        "paired-rng",
+        "probe-rank-00.json",
+        "probe-rank-01.json",
+        "probe-rank-02.json",
+        "probe-rank-03.json",
+        "worker-gpus",
+        "worker_logs"
+      ],
+      "RESULT.json": {
+        "status": "complete",
+        "actor_only": true,
+        "mode": "train",
+        "ranks": [
+          {
+            "rank": 0,
+            "status": "complete",
+            "optimizer_steps": 1,
+            "seconds": 34.3678361158818,
+            "fixture_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual02/train/training-rollouts/iteration-0001-policy-0000-rank-00.pt",
+            "fixture_sha256": "267082d4d8c343dbac3aa7d2cbddda5ed55e151f75cce72f2581e8cd0ad25b1e",
+            "new_simulator_controls": 0,
+            "source_corpus_admission": false
+          },
+          {
+            "rank": 1,
+            "status": "complete",
+            "optimizer_steps": 1,
+            "seconds": 34.508146004984155,
+            "fixture_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual02/train/training-rollouts/iteration-0001-policy-0000-rank-01.pt",
+            "fixture_sha256": "ae55f3664f308f80c68f469921a9883f673f45c6ef2117fccfd4a26f9d18e4fe",
+            "new_simulator_controls": 0,
+            "source_corpus_admission": false
+          },
+          {
+            "rank": 2,
+            "status": "complete",
+            "optimizer_steps": 1,
+            "seconds": 34.53003936703317,
+            "fixture_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual02/train/training-rollouts/iteration-0001-policy-0000-rank-02.pt",
+            "fixture_sha256": "65047c44a3e45875747422ce1bdbcca0372a107a9fe869fa9d6f452abc1cfdc2",
+            "new_simulator_controls": 0,
+            "source_corpus_admission": false
+          },
+          {
+            "rank": 3,
+            "status": "complete",
+            "optimizer_steps": 1,
+            "seconds": 34.154604024020955,
+            "fixture_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual02/train/training-rollouts/iteration-0001-policy-0000-rank-03.pt",
+            "fixture_sha256": "bf2f7e3ce3d7824dba79a4ad6a9e346396321a3b7aa8fd606bafef22bf41e6c7",
+            "new_simulator_controls": 0,
+            "source_corpus_admission": false
+          }
+        ],
+        "initial_actors_exactly_match_fixture": [
+          {
+            "rank": 0,
+            "expected": {
+              "optimizer_steps": 0,
+              "trainable_parameters_sha256": "f9fc3e7c738eedaba07a05ea8e4abb8552cace59dba1c468adbf2644412569f3",
+              "optimizer_sha256": "9fedc6ad3b147f7c026005f513f3db05603b517412604d6c2eec60b9cfc4c134",
+              "lr_scheduler_sha256": "af63fb8b5a5a302611982f7e83fc9d6b3202ac0a739143a50ece8e776a47016b",
+              "grad_scaler_sha256": "6ab47d70854a8c690a0c2035be903f3d812cbab06f9e442e9b10ad70b1acd446",
+              "rng_sha256": "621b6b6edc647c7f20ac5564f732845263614b451ac130597b0c4c78bcd214b3"
+            },
+            "actual": {
+              "optimizer_steps": 0,
+              "trainable_parameters_sha256": "f9fc3e7c738eedaba07a05ea8e4abb8552cace59dba1c468adbf2644412569f3",
+              "optimizer_sha256": "9fedc6ad3b147f7c026005f513f3db05603b517412604d6c2eec60b9cfc4c134",
+              "lr_scheduler_sha256": "af63fb8b5a5a302611982f7e83fc9d6b3202ac0a739143a50ece8e776a47016b",
+              "grad_scaler_sha256": "6ab47d70854a8c690a0c2035be903f3d812cbab06f9e442e9b10ad70b1acd446",
+              "rng_sha256": "621b6b6edc647c7f20ac5564f732845263614b451ac130597b0c4c78bcd214b3"
+            },
+            "exact_identity": true,
+            "original_SFT_freshly_initialized": true,
+            "fixture_checkpoint_mutated": false
+          },
+          {
+            "rank": 1,
+            "expected": {
+              "optimizer_steps": 0,
+              "trainable_parameters_sha256": "2ca45cacca16412ca93280220c3c37bbd60ce61fa52e2ef3fb7ae02c6922060a",
+              "optimizer_sha256": "4ed06e5d8ac7f3b31f02a3f23a5e9cf85616414e65bebf4856d5c721b81b9dcd",
+              "lr_scheduler_sha256": "af63fb8b5a5a302611982f7e83fc9d6b3202ac0a739143a50ece8e776a47016b",
+              "grad_scaler_sha256": "6ab47d70854a8c690a0c2035be903f3d812cbab06f9e442e9b10ad70b1acd446",
+              "rng_sha256": "f10d50b79a1ed36f46a044034badca9e838356d4ccc10023764235cd9597a334"
+            },
+            "actual": {
+              "optimizer_steps": 0,
+              "trainable_parameters_sha256": "2ca45cacca16412ca93280220c3c37bbd60ce61fa52e2ef3fb7ae02c6922060a",
+              "optimizer_sha256": "4ed06e5d8ac7f3b31f02a3f23a5e9cf85616414e65bebf4856d5c721b81b9dcd",
+              "lr_scheduler_sha256": "af63fb8b5a5a302611982f7e83fc9d6b3202ac0a739143a50ece8e776a47016b",
+              "grad_scaler_sha256": "6ab47d70854a8c690a0c2035be903f3d812cbab06f9e442e9b10ad70b1acd446",
+              "rng_sha256": "f10d50b79a1ed36f46a044034badca9e838356d4ccc10023764235cd9597a334"
+            },
+            "exact_identity": true,
+            "original_SFT_freshly_initialized": true,
+            "fixture_checkpoint_mutated": false
+          },
+          {
+            "rank": 2,
+            "expected": {
+              "optimizer_steps": 0,
+              "trainable_parameters_sha256": "6dd71a2fb8024daa6573ed7ba481c65d328d8745888bab8ed525deee86d1d25c",
+              "optimizer_sha256": "4ed06e5d8ac7f3b31f02a3f23a5e9cf85616414e65bebf4856d5c721b81b9dcd",
+              "lr_scheduler_sha256": "af63fb8b5a5a302611982f7e83fc9d6b3202ac0a739143a50ece8e776a47016b",
+              "grad_scaler_sha256": "6ab47d70854a8c690a0c2035be903f3d812cbab06f9e442e9b10ad70b1acd446",
+              "rng_sha256": "13c0c882727ff09732dad0874e17a41ea71e6be89a6a46de39573d93e48ad756"
+            },
+            "actual": {
+              "optimizer_steps": 0,
+              "trainable_parameters_sha256": "6dd71a2fb8024daa6573ed7ba481c65d328d8745888bab8ed525deee86d1d25c",
+              "optimizer_sha256": "4ed06e5d8ac7f3b31f02a3f23a5e9cf85616414e65bebf4856d5c721b81b9dcd",
+              "lr_scheduler_sha256": "af63fb8b5a5a302611982f7e83fc9d6b3202ac0a739143a50ece8e776a47016b",
+              "grad_scaler_sha256": "6ab47d70854a8c690a0c2035be903f3d812cbab06f9e442e9b10ad70b1acd446",
+              "rng_sha256": "13c0c882727ff09732dad0874e17a41ea71e6be89a6a46de39573d93e48ad756"
+            },
+            "exact_identity": true,
+            "original_SFT_freshly_initialized": true,
+            "fixture_checkpoint_mutated": false
+          },
+          {
+            "rank": 3,
+            "expected": {
+              "optimizer_steps": 0,
+              "trainable_parameters_sha256": "1d2815966ba95045899867343e680e55420bae4e7b43129c32dcd22faf6e49c1",
+              "optimizer_sha256": "efb26652364ec5ba3b3797e3e901681874a16b6b49aa0b4140cea05b60f7f497",
+              "lr_scheduler_sha256": "af63fb8b5a5a302611982f7e83fc9d6b3202ac0a739143a50ece8e776a47016b",
+              "grad_scaler_sha256": "6ab47d70854a8c690a0c2035be903f3d812cbab06f9e442e9b10ad70b1acd446",
+              "rng_sha256": "1a7f6a60b7439391c720d1401b3c360bb0b1c28dd3d55835ff09cc870dbf1f1e"
+            },
+            "actual": {
+              "optimizer_steps": 0,
+              "trainable_parameters_sha256": "1d2815966ba95045899867343e680e55420bae4e7b43129c32dcd22faf6e49c1",
+              "optimizer_sha256": "efb26652364ec5ba3b3797e3e901681874a16b6b49aa0b4140cea05b60f7f497",
+              "lr_scheduler_sha256": "af63fb8b5a5a302611982f7e83fc9d6b3202ac0a739143a50ece8e776a47016b",
+              "grad_scaler_sha256": "6ab47d70854a8c690a0c2035be903f3d812cbab06f9e442e9b10ad70b1acd446",
+              "rng_sha256": "1a7f6a60b7439391c720d1401b3c360bb0b1c28dd3d55835ff09cc870dbf1f1e"
+            },
+            "exact_identity": true,
+            "original_SFT_freshly_initialized": true,
+            "fixture_checkpoint_mutated": false
+          }
+        ],
+        "optimizer_updates": 1,
+        "new_simulator_controls": 0,
+        "full_grouped_runtime_recovery_qualified": false
+      },
+      "first-replay": {
+        "count": 4,
+        "recent_names": [
+          "rank-00.json",
+          "rank-01.json",
+          "rank-02.json",
+          "rank-03.json"
+        ]
+      },
+      "loss-masks": {
+        "count": 4,
+        "recent_names": [
+          "step-0-rank-00.json",
+          "step-0-rank-01.json",
+          "step-0-rank-02.json",
+          "step-0-rank-03.json"
+        ]
+      },
+      "actor-invariants": {
+        "count": 12,
+        "recent_names": [
+          "rank-01-first-backward.json",
+          "rank-01-step-0-after.json",
+          "rank-02-before.json",
+          "rank-02-first-backward.json",
+          "rank-02-step-0-after.json",
+          "rank-03-before.json",
+          "rank-03-first-backward.json",
+          "rank-03-step-0-after.json"
+        ]
+      },
+      "completed_boundaries": [],
+      "frozen_after": [
+        {
+          "name": "rank-00-step-0-after.json",
+          "unchanged": true
+        },
+        {
+          "name": "rank-01-step-0-after.json",
+          "unchanged": true
+        },
+        {
+          "name": "rank-02-step-0-after.json",
+          "unchanged": true
+        },
+        {
+          "name": "rank-03-step-0-after.json",
+          "unchanged": true
+        }
+      ],
+      "first_replay": [
+        {
+          "name": "rank-00.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": null
+        },
+        {
+          "name": "rank-01.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": null
+        },
+        {
+          "name": "rank-02.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": null
+        },
+        {
+          "name": "rank-03.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": null
+        }
+      ]
+    },
+    "matched/grad02/restore": {
+      "top_level_files": [
+        "RESULT.json",
+        "actor-invariants",
+        "paired-rng",
+        "recovery-frozen",
+        "recovery-optimizer-layout",
+        "recovery-signatures",
+        "worker-gpus",
+        "worker_logs"
+      ],
+      "RESULT.json": {
+        "status": "complete",
+        "actor_only": true,
+        "mode": "restore",
+        "actors_restored": [
+          {
+            "role": "actor",
+            "rank": 0,
+            "restored": true,
+            "snapshot_sha256": "44bf3cd92da03c2a6367840c066284f1e9f1055984e698cc80349efd9177da50"
+          },
+          {
+            "role": "actor",
+            "rank": 1,
+            "restored": true,
+            "snapshot_sha256": "14efadd0407afb5a633e753f2f5f075c2d714c5979c65d9efba3d584d25594c0"
+          },
+          {
+            "role": "actor",
+            "rank": 2,
+            "restored": true,
+            "snapshot_sha256": "e79fa1fee4ac111ab517b2afc28161338cb67c59c9e92f28f1abad2018589abb"
+          },
+          {
+            "role": "actor",
+            "rank": 3,
+            "restored": true,
+            "snapshot_sha256": "b4e32dfd3a099c76a5456919fd8caf5df90d45114ead45eb6574587d24f92694"
+          }
+        ],
+        "new_simulator_controls": 0,
+        "full_grouped_runtime_recovery_qualified": false
+      },
+      "actor-invariants": {
+        "count": 4,
+        "recent_names": [
+          "rank-00-before.json",
+          "rank-01-before.json",
+          "rank-02-before.json",
+          "rank-03-before.json"
+        ]
+      },
+      "completed_boundaries": [],
+      "frozen_after": [],
+      "first_replay": []
+    },
+    "matched/qual03": {
+      "top_level_files": [
+        "admission.json",
+        "config-grpo-scientific.json",
+        "config-ppo-scientific.json",
+        "config-validation.json",
+        "gpu-probe.json",
+        "host-memory.json",
+        "host-memory.log",
+        "learner-numerics.json",
+        "train",
+        "train.log",
+        "worker.log"
+      ],
+      "gpu-probe.json": {
+        "sha256": "e8d60f3cb479589e35d7f8c393c90b899cd694d212cd984d110fba12e1ed2938",
+        "status": "passed",
+        "hostname": "job-33jue5tb0a7o-master-0",
+        "device_count": 4
+      },
+      "host-memory.json": {
+        "at_unix": 1793911806.891895,
+        "limit_bytes": 1099511627776,
+        "current_bytes": 1100918784,
+        "peak_observed_bytes": 1106444288,
+        "minimum_allocation_bytes": 1099511627776,
+        "headroom_bytes": 1098410708992,
+        "anonymous_bytes": 499974144,
+        "file_cache_bytes": 568557568,
+        "ray_memory_guard_unchanged": true
+      },
+      "completed_boundaries": [],
+      "frozen_after": [],
+      "first_replay": []
+    },
+    "matched/qual03/train": {
+      "top_level_files": [],
+      "completed_boundaries": [],
+      "frozen_after": [],
+      "first_replay": []
+    }
+  },
+  "action_accounting": {
+    "rank-00": {
+      "total_charged": 291200,
+      "train07": [
+        {
+          "attempt": "train07",
+          "charged": 210560,
+          "calls": 73,
+          "last_phase": "training",
+          "unresolved": 0
+        }
+      ]
+    },
+    "rank-01": {
+      "total_charged": 279680,
+      "train07": [
+        {
+          "attempt": "train07",
+          "charged": 210560,
+          "calls": 73,
+          "last_phase": "training",
+          "unresolved": 0
+        }
+      ]
+    },
+    "rank-02": {
+      "total_charged": 283520,
+      "train07": [
+        {
+          "attempt": "train07",
+          "charged": 210560,
+          "calls": 73,
+          "last_phase": "training",
+          "unresolved": 0
+        }
+      ]
+    },
+    "rank-03": {
+      "total_charged": 274560,
+      "train07": [
+        {
+          "attempt": "train07",
+          "charged": 210560,
+          "calls": 73,
+          "last_phase": "training",
+          "unresolved": 0
+        }
+      ]
+    }
+  },
+  "kv_dit": {
+    "update": 9700,
+    "best_loss": 0.12103313324041665,
+    "plateau": {
+      "reference": 0.12175330985337496,
+      "stale_checks": 10,
+      "converged": true
+    },
+    "converged": true,
+    "elapsed_seconds": 42998.10434502363,
+    "stop_reason": "validation_plateau",
+    "native_parameters_frozen": true,
+    "interface": "kv_bridge",
+    "objective": "dit"
+  },
+  "readout_admission_present": true,
+  "readout_admission": {
+    "approved_GPU_hours": 150,
+    "selected_candidates": [
+      "kv_bridge/ad",
+      "velocity_bridge/ad"
+    ],
+    "implementation_commit": "87984718c9199797d31a158c47225cc695623afe"
+  },
+  "readouts": {
+    "kv_bridge/ad/ID": {
+      "binding": {
+        "source_commit": "87984718c9199797d31a158c47225cc695623afe",
+        "selected_candidate_sha256": "f7085e4a6940546e32e46710314ac4fa4319e6179e69e23320e486d48345ad74",
+        "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+        "deployment_optimizer_updates": 0,
+        "cases_per_task": 50,
+        "support_episodes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "memory_modes": [
+          "full",
+          "episode"
+        ]
+      },
+      "PROGRESS.json": {
+        "completed": null,
+        "checked_unix": 1793911720.8511822,
+        "wave_count": 18,
+        "case_mode_count": 132,
+        "completed_episodes": 792,
+        "last_wave": {
+          "task": "CoffeeSetupMug",
+          "mode": "full",
+          "elapsed_seconds": 297.4416251182556,
+          "optimizer_updates": 0,
+          "native_parameters_frozen": true
+        },
+        "reason": null
+      }
+    },
+    "velocity_bridge/ad/ID": {
+      "binding": {
+        "source_commit": "87984718c9199797d31a158c47225cc695623afe",
+        "selected_candidate_sha256": "04701478c2f3f850b8ce0329855f334732212d4186ae9502e4d97a08a3bab9ca",
+        "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+        "deployment_optimizer_updates": 0,
+        "cases_per_task": 50,
+        "support_episodes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "memory_modes": [
+          "full",
+          "episode"
+        ]
+      },
+      "PROGRESS.json": {
+        "completed": null,
+        "checked_unix": 1793911624.8247633,
+        "wave_count": 18,
+        "case_mode_count": 132,
+        "completed_episodes": 792,
+        "last_wave": {
+          "task": "CoffeeSetupMug",
+          "mode": "full",
+          "elapsed_seconds": 283.1373770236969,
+          "optimizer_updates": 0,
+          "native_parameters_frozen": true
+        },
+        "reason": null
+      }
+    }
+  },
+  "readout_probes": {
+    "readout-pfs06-kv-ad": {
+      "status": "passed",
+      "hostname": "job-hi7e0c0yu7jv-master-0",
+      "device_count": 1
+    },
+    "readout-pfs06-vel-ad": {
+      "status": "passed",
+      "hostname": "job-jxj1wded8dns-master-0",
+      "device_count": 1
+    }
+  },
+  "packed_storage": {
+    "checked_unix": 1793911745.387197,
+    "current_bytes": 2159390749,
+    "peak_bytes": 2159390749,
+    "new_wave_soft_limit_bytes": 12884901888,
+    "reserved_hot_bytes": 42949672960,
+    "packed_archive_workers": 4,
+    "packed_archive_enabled": true
+  },
+  "meta_budget": {
+    "approved_GPU_hours": 150,
+    "actual_GPU_hours": 130.55200869555557,
+    "maximum_committed_GPU_hours": 142.2455555555556,
+    "uncommitted_GPU_hours": 7.7544444444444025,
+    "active": [
+      {
+        "job_id": "job-hi7e0c0yu7jv",
+        "max_reservation_GPU_hours": 7.5
+      },
+      {
+        "job_id": "job-jxj1wded8dns",
+        "max_reservation_GPU_hours": 7.5
+      }
+    ]
+  }
+}
