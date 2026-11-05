@@ -1,6 +1,10 @@
 # RoboCasa and RoboTwin project monitoring
 
 Human request, 2026-11-05 Asia/Shanghai: babysit the existing project jobs.
+The user renewed this request at about23:10 on Nov5 for the next eight hours,
+through about07:10 on Nov6. Resolve routine blockers using reasonable
+assumptions within existing scientific scope and human budgets. Keep checking
+in this active task; notify on meaningful changes, failures or required action.
 The human also explicitly authorized direct coordination with the three owner
 chats listed below. This monitoring work does not allocate accelerator time.
 
@@ -81,3 +85,12 @@ round trip alone does not bound a complete production archive's size.
 
 Live status belongs in the monitor's own row in `outputs/coordination.md`.
 Scientific results remain in their owners' evidence folders and FINDINGS.
+
+## User-requested host-memory investigation
+
+The scientific RoboTwin retry is held while its owner runs a bounded native
+simulator memory diagnostic. Existing256-scene deployment exhausted host RAM
+before newSGD; the intermediate-render path is disabled. Measure per-scene
+creation, repeated resets and allocator release before selecting a fix or
+justifying a larger allocation. Preserve the original loss/batch recipe and
+all prior compute/action charges. See RAM-TRACE-20261105-2306.json.
