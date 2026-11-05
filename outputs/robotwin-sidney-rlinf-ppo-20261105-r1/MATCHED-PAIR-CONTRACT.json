@@ -58,8 +58,8 @@
     "nominal_primitive_controls_per_arm": 819200,
     "nominal_Adam_steps_per_iteration": 20,
     "nominal_Adam_steps_per_arm": 40,
-    "manifest_status": "MUST_GENERATE_AND_HASH_INSIDE_ALLOCATED_LINUX_BEFORE_LAUNCH",
-    "manifest_rule": "Pinned native partition_success_seeds with base_seed0/4ranks/8groupsperrank;2iterationsx4roundsx32globalgroups;8contiguous replicas. One immutable case/replica manifest shared by both arms.",
+    "manifest_status": "STATIC_EXISTING_BANK_SUBSET_READY_RUNTIME_CONSUMPTION_NOT_YET_QUALIFIED",
+    "manifest_rule": "PythonRandom0shuffle of pinned1000TRAINseedlist, first256distinctcases;2iterationsx4roundsx32groupsx8replicas. This explicit common manifest replaces method-dependent native cursor selection in the fresh pair; no outcome filtering or new seed bank.",
     "identity_keys": [
       "task",
       "bank_sha256",
@@ -81,7 +81,9 @@
       "physical_control_count",
       "setup_retry_allowances"
     ],
-    "reject_if_retry_breaks_group_identity": true
+    "reject_if_retry_breaks_group_identity": true,
+    "manifest_path": "outputs/robotwin-sidney-matched-baselines-20261106-r1/CASES.json",
+    "manifest_sha256": "2d3af16ac50f5637af36975c0d795b8c77ee081da14755c5bc05be68219d5110"
   },
   "arms": {
     "ppo": {
@@ -112,12 +114,12 @@
   "resource_maximum_per_arm": {
     "gpus": 4,
     "cpus": 64,
-    "memory_gib": 512,
+    "memory_gib": 1024,
     "shared_memory_gib": 64,
     "wall_minutes": 170,
     "automatic_retry": false,
     "maximum_gpu_seconds_including60second_margin": 41040,
-    "host_memory": "Use only after memory03 qualifies; actual full-phase telemetry required"
+    "host_memory": "Qualified native_batch_end route; actual cgroup minimum1024GiB, experimental per-scene callbackOFF and unchanged95%Rayguard"
   },
   "storage": {
     "maximum_incremental_gib_per_arm": 125,
@@ -127,7 +129,8 @@
     "current_PPO_may_have_remaining_125GiB_reservation": true,
     "concurrent_required_free_gib_with_full_current_reservation": 661,
     "qualification_scratch": "budget separately with exact live bytes; do not double-count releases",
-    "prepared_other_campaign_hot_reservation_gib": 40
+    "prepared_other_campaign_hot_reservation_gib": 40,
+    "qualification_scratch_reserved_gib": 40
   },
   "accounting": {
     "separate_fresh_run_and_action_ledger_per_arm": true,
@@ -138,7 +141,7 @@
     "additional_qualification_ceiling_gpu_hours": 2.0,
     "current_authored_engineering_envelope_gpu_hours": 20,
     "proposed_new_authored_envelope_gpu_hours": 46,
-    "migration_status": "NOT_ACTIVE: record only after current PPO real advances and actual cumulative charge reconcile",
+    "migration_status": "NOT_ACTIVE: await current PPO real optimizer boundary and all new numerical/model/case/resource/storage gates",
     "human_cumulative_task_cap_gpu_hours": 50,
     "worst_additional_envelope_reason": "Current20h worstcase +22.8h pair +2h qualification =44.8additionalh <46; legacy0.7114h yields<=46.7114h cumulative. Abort admission if actual/task aggregate differs or50h would be exceeded."
   },
