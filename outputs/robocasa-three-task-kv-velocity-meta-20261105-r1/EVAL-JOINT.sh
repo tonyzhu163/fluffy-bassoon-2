@@ -10,7 +10,7 @@ test -z "$(git -C "$CODE" status --porcelain)"
 ROOT=/mowenjie/fluffy-bassoon-2
 RUN=outputs/robocasa-three-task-kv-velocity-meta-20261105-r1
 PY=$ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
-export STEERING_INTERFACE=$INTERFACE STEERING_OBJECTIVE=$OBJECTIVE STEERING_CODE=$CODE
+export STEERING_INTERFACE=$INTERFACE STEERING_OBJECTIVE=$OBJECTIVE STEERING_CODE=$CODE STEERING_COMMIT=$COMMIT
 export STEERING_MIN_FREE_GIB=411 STEERING_WAVE_ALLOWANCE_SECONDS=1200
 export RLINF_PATH=$ROOT/sources/critic-selected-a1229239-r1 PYTHONPATH=$CODE/src:$ROOT/sources/critic-selected-a1229239-r1
 export OPENPI_DATA_HOME=$ROOT/setups/robocasa365-native-20261101-r1/cache/.cache/openpi
@@ -20,7 +20,7 @@ export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
 mkdir -p "$ROOT/$RUN/logs" "$ROOT/$RUN/probes"
 exec > >(tee "$ROOT/$RUN/logs/$ATTEMPT.log") 2>&1
 "$PY" - <<'PY'
-import datetime,hashlib,json,os,shutil
+import datetime,hashlib,json,os,shutil,time
 from pathlib import Path
 root=Path('/mowenjie/fluffy-bassoon-2');run=root/'outputs/robocasa-three-task-kv-velocity-meta-20261105-r1'
 def sha(path):
@@ -29,6 +29,7 @@ def sha(path):
 # shared-storage admission. Its absence keeps the scientific benchmark held.
 admission=json.loads((run/'READOUT-ADMISSION.json').read_text())
 assert admission['approved'] and admission['human_budget_authorization']
+assert admission['implementation_commit']==os.environ['STEERING_COMMIT']
 ledger=json.loads((root/'outputs/robocasa-eight-hour-babysit-20261104-r1/META-ALLOCATION-LEDGER.json').read_text())
 assert admission['approved_GPU_hours']==ledger['approved_GPU_hours'] and ledger['approved_GPU_hours']<=190
 assert admission['scientific_contract_sha256']==sha(run/'CONTRACT.json')
@@ -49,7 +50,11 @@ for row in ledger['allocations']:
 assert reserved+(0 if own else 7.5)<=ledger['approved_GPU_hours']
 assert shutil.disk_usage(root).free/2**30>411
 watch=json.loads((run/'monitor/WATCH-RECEIPT.json').read_text());assert watch['packed_archive_enabled']
-assert Path('/proc',str(watch['pid']),'cmdline').read_bytes().split(b'\0')[:-1]==[x.encode() for x in watch['command']]
+assert watch['source_commit']==admission['implementation_commit']
+# The CPU watcher is in a different allocated container: use its shared-PFS
+# heartbeat rather than treating its PID as visible in this GPU namespace.
+heartbeat=json.loads((run/'monitor/HOT-STORAGE.json').read_text())
+assert time.time()-heartbeat['checked_unix']<600 and heartbeat['packed_archive_enabled']
 print(json.dumps(dict(admitted=True,model=key,maximum_job_GPU_hours=7.5,committed_GPU_hours=reserved,
     free_PFS_GiB=shutil.disk_usage(root).free/2**30,hot_reservation_GiB=40,main_cases_per_task=50,episodes_per_case=6)),flush=True)
 PY

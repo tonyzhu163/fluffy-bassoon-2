@@ -155,6 +155,13 @@ def main():
                         packed_spec = importlib.util.spec_from_file_location('readout_hot_storage', Path(__file__).with_name('PACKED-WAVES.py'))
                         packed = importlib.util.module_from_spec(packed_spec)
                         packed_spec.loader.exec_module(packed)
+                        heartbeat_path = root / 'outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/monitor/HOT-STORAGE.json'
+                        heartbeat = json.loads(heartbeat_path.read_text()) if heartbeat_path.exists() else {}
+                        if not heartbeat.get('packed_archive_enabled') or time.time() - heartbeat.get('checked_unix', 0) >= 600:
+                            _json(args.output / 'OPERATIONAL-CHECKPOINT.json', dict(completed=False,
+                                reason='packed_archive_heartbeat_stale', next_bank=str(directory),
+                                binding_sha256=binding_digest))
+                            return
                         hot = packed.hot_bytes()
                         if hot >= 12 * 2**30:
                             _json(args.output / 'OPERATIONAL-CHECKPOINT.json', dict(completed=False,

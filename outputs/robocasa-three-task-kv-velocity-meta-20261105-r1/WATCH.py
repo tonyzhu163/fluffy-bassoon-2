@@ -163,7 +163,7 @@ def main():
                 write(ROOT / 'monitor/HOT-STORAGE.json', dict(checked_unix=time.time(),
                     current_bytes=current_hot_bytes, peak_bytes=peak_hot_bytes,
                     new_wave_soft_limit_bytes=12*2**30, reserved_hot_bytes=40*2**30,
-                    packed_archive_workers=4))
+                    packed_archive_workers=4, packed_archive_enabled=True))
             summaries=[]
             for result_path in ROOT.glob('readouts/*/*/*/RESULT.json'):
                 summary=reducer.reduce_group(result_path.parent)
