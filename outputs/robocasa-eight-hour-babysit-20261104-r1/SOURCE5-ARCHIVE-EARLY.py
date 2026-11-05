@@ -48,11 +48,13 @@ def durable_json(path, value):
     return hashlib.sha256(payload.encode()).hexdigest()
 
 
-def main(completed_task=None, archive_attempt=1):
+def main(completed_task=None, archive_attempt=1, numerical_rollouts=False):
     assert sys.platform == 'linux'
     assert 1 <= archive_attempt <= 9 and (completed_task is not None or archive_attempt == 1)
+    assert not numerical_rollouts or completed_task is not None
     archive_id = ('source5-early-checkpoints-01' if completed_task is None else
-                  f'source5-{completed_task}-intermediate-after40-{archive_attempt:02d}')
+                  f'source5-{completed_task}-'+('numerical-rollouts' if numerical_rollouts else 'intermediate')+
+                  f'-after40-{archive_attempt:02d}')
     cold = COLD.with_name(archive_id)
     receipts = RUN / 'archives'
     receipts.mkdir(exist_ok=True)
@@ -90,21 +92,45 @@ def main(completed_task=None, archive_attempt=1):
                 assert update['completed'] and update['optimizer_steps_after'] == 960 and update['frozen_vlm_unchanged']
             original = next(row for row in ledger['allocations'] if row['job_id'] == JOBS[task])
             assert original['scheduler_release_verified'] and original['released_shanghai']
-            candidates = [(parent / 'attempt-01' / task / 'checkpoints/global_step_10', 10, original)]
-            candidates += [(recovery.with_name(f'global_step_{step}'), step, allocation) for step in (11, 20, 30)]
+            if numerical_rollouts:
+                candidates = [(parent / 'attempt-01/training-rollouts', None, original),
+                              (parent / 'attempt-02/training-rollouts', None, allocation)]
+            else:
+                candidates = [(parent / 'attempt-01' / task / 'checkpoints/global_step_10', 10, original)]
+                candidates += [(recovery.with_name(f'global_step_{step}'), step, allocation) for step in (11, 20, 30)]
         assert recovery.is_dir() and not recovery.is_symlink()
         hot_recovery.append(str(recovery))
         for source, step, owner in candidates:
             assert source.is_dir() and not source.is_symlink()
-            marker = source / 'pilot-boundary.json'
-            boundary = json.loads(marker.read_text())
-            assert boundary['completed'] and boundary['global_step'] == step and len(boundary['workers']) == 18
-            expected = {Path(row['path']): row['sha256'] for row in boundary['workers'] + boundary['actor_checkpoint_files']}
-            expected[marker] = digest(marker)
             entries = list(source.rglob('*'))
             assert not any(path.is_symlink() for path in entries)
+            if numerical_rollouts:
+                assert source.name == 'training-rollouts' and source.parent.name in ('attempt-01', 'attempt-02')
+                files = [path for path in entries if path.is_file()]
+                assert files and all(path.suffix in ('.pt', '.json') for path in files)
+                expected = {}
+                tensors = [path for path in files if path.suffix == '.pt']
+                iterations = range(1, 11) if source.parent.name == 'attempt-01' else range(11, 41)
+                assert {path.name for path in tensors} == {
+                    f'iteration-{iteration:04d}-policy-{iteration-1:04d}-rank-{rank:02d}.pt'
+                    for iteration in iterations for rank in (0, 1)}
+                for path in tensors:
+                    metadata = path.with_suffix('.json')
+                    saved = json.loads(metadata.read_text())
+                    assert saved['completed'] and not saved['evaluation_data']
+                    assert saved['optimizer_steps_before'] == 24 * saved['producing_policy_iteration']
+                    assert saved['collection_iteration'] == saved['producing_policy_iteration'] + 1
+                    expected[path] = saved['sha256']
+                    expected[metadata] = digest(metadata)
+            else:
+                marker = source / 'pilot-boundary.json'
+                boundary = json.loads(marker.read_text())
+                assert boundary['completed'] and boundary['global_step'] == step and len(boundary['workers']) == 18
+                expected = {Path(row['path']): row['sha256'] for row in boundary['workers'] + boundary['actor_checkpoint_files']}
+                expected[marker] = digest(marker)
             assert {path for path in entries if path.is_file()} == set(expected)
-            plans.append(dict(source=source, target=cold / task / source.name, expected=expected,
+            target = cold / task / source.parent.name / source.name if numerical_rollouts else cold / task / source.name
+            plans.append(dict(source=source, target=target, expected=expected,
                               job_id=owner['job_id'], released_shanghai=owner['released_shanghai']))
     cold.parent.mkdir(parents=True, exist_ok=True)
     probe = cold.parent / (archive_id + '.write-probe')
@@ -174,7 +200,11 @@ def main(completed_task=None, archive_attempt=1):
         manifest_sha256=manifest_sha256, elapsed_seconds=time.time()-began,
         cold_read_retries=COLD_READ_RETRIES, cold_read_attempt_limit=6,
         original_paths_verified=True, complete_optimizer_sampler_RNG_retained=True,
-        all_TRAIN_histories_remain_hot=True, cold_storage_requires_staging_for_future_GPU_use=True)
+        all_TRAIN_histories_remain_hot=not numerical_rollouts,
+        canonical_environment_histories_remain_hot=True,
+        numerical_PPO_rollouts_archived=numerical_rollouts,
+        future_numerical_or_meta_preparation_requires_PFS_staging=numerical_rollouts,
+        cold_storage_requires_staging_for_future_GPU_use=True)
     durable_json(receipts / (archive_id + '.json'), receipt)
     print(json.dumps({key: value for key, value in receipt.items() if key != 'checkpoints'}))
 
@@ -183,5 +213,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--completed-task', choices=tuple(JOBS))
     parser.add_argument('--archive-attempt', type=int, default=1)
+    parser.add_argument('--numerical-rollouts', action='store_true')
     args = parser.parse_args()
-    main(args.completed_task, args.archive_attempt)
+    main(args.completed_task, args.archive_attempt, args.numerical_rollouts)
