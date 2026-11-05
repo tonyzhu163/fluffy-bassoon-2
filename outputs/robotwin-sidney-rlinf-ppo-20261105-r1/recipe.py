@@ -26,6 +26,7 @@ def validate_sidney(cfg):
         initializer_revision=REVISION,original_initializer_reproduction=False,
         micro_batch_size=micro,accumulation_steps=2048//(micro*world),
         nominal_before_after_actions=0,nominal_all_in_actions=819200,
+        maximum_aggregate_gpu_seconds=50400,
         precision='native mixed BF16; entire vision and norms FP32',
         baseline_reference='published Sidney SFT; no rebenchmark panel',
         migration='H50 retained; K10 native reference to VLRLA K5/.3 Flow-SDE PPO')
