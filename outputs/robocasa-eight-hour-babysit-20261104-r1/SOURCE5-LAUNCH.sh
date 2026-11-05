@@ -54,10 +54,28 @@ for row in ledger['allocations']:
         included=True
 assert reserved + (0 if included else 30) <= 70
 space=os.statvfs(run)
-assert space.f_bavail*space.f_frsize >= 350*2**30, 'Need150GiB source reservation plus200GiB floor'
+# Account for future growth of every other active source. Already-written
+# bytes are reflected in free space; avoid reserving those bytes twice.
+remaining=0;active_sources=[]
+for row in ledger['allocations']:
+    if row.get('kind')!='source_train' or row.get('released_shanghai') or row['job_id']==job:
+        continue
+    directory=run/row['output'];written=0
+    for parent,dirs,files in os.walk(directory,followlinks=False):
+        for name in files:
+            path=Path(parent)/name
+            if path.is_symlink():raise RuntimeError('Active source contains an unexpected symlink')
+            try:written+=path.stat().st_size
+            except FileNotFoundError:pass  # an atomic producer rename
+    allowance=row.get('storage_reservation_GiB',150)*2**30
+    assert written<=allowance, 'Active source exceeded its measured storage reservation'
+    remaining+=allowance-written
+    active_sources.append(dict(job_id=row['job_id'],written_bytes=written,reserved_remaining_bytes=allowance-written))
+required=(200+150+20)*2**30+remaining
+free=space.f_bavail*space.f_frsize
+assert free>=required, 'Need the200GiB floor,150GiB new source, other active reservations and20GiB headroom'
+print(json.dumps(dict(passed=True,checked_unix=time.time(),free_GiB=free/2**30,required_GiB=required/2**30,active_sources=active_sources,reserved_GPU_hours=reserved+(0 if included else 30))))
 
 PY
-mkdir -p "$RUN/source5"
-exec 9>"$RUN/source5/.source-training.lock"
-flock -n 9
+if [[ ${2:-} == --admit ]]; then exit 0; fi
 exec bash "$TASK_META/outputs/robocasa-ppo-grpo-meta-pipeline-20261104-r1/COMMAND.sh"
