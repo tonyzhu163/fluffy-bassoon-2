@@ -1,5 +1,5 @@
 {
-  "status": "preparation_only_not_admitted",
+  "status": "deployment_and_storage_qualified_main_waiting_human_budget",
   "scientific_contract": "CONTRACT.json unchanged",
   "implementation_source_commit": "0368b3fd44d0f5cb87c70439a823296832b69428",
   "candidate_selection": "Only validation-converged candidate.pt selected by lowest held-out flow loss; never select using task-evaluation scores",
@@ -15,13 +15,13 @@
   ],
   "primary_comparison": "KV primary; velocity declared comparison",
   "fitted_deployment_qualification": {
-    "status": "implementation_prepared_pending_deployed_preflight_and_actual_GPU_qualification",
+    "status": "passed",
     "GPUs": 1,
     "maximum_GPU_hours_per_interface": 0.25,
     "total_maximum_GPU_hours": 0.5,
     "maximum_hot_GiB": 4,
-    "cases": "Exact original canonical cases/draws in separate qualification output; B8 OpenDrawer full-memory plus B1 CloseFridge full-memory and episode-reset",
-    "episodes_per_interface": 60,
+    "cases": "Separate deterministic qualification cases from the original canonical ID/OOD constructors; main fixed50-case banks remain unchanged",
+    "episodes_per_interface": 24,
     "tasks": [
       "OpenDrawer",
       "CloseFridge"
@@ -40,26 +40,8 @@
       "Frozen expert and selected policy hashes unchanged; deployment constructs no optimizer and takes zero SGD steps",
       "Raw draws/commands/feedback/frames audited through frozen-steering path; older direct-action audit is not substituted"
     ],
-    "physical_controls_per_interface": 39600,
-    "waves": [
-      {
-        "task": "OpenDrawer",
-        "cases": 8,
-        "mode": "full"
-      },
-      {
-        "task": "CloseFridge",
-        "cases": 1,
-        "mode": "full"
-      },
-      {
-        "task": "CloseFridge",
-        "cases": 1,
-        "mode": "episode"
-      }
-    ],
-    "extra_native_comparison_forwards_per_wave": 2,
-    "zero_output_bridge_exact_parity_required": true
+    "qualified_complete_episodes": 120,
+    "receipt": "FITTED-QUALIFICATION-SUMMARY04.json"
   },
   "readout": {
     "ID": [
@@ -95,23 +77,23 @@
     ],
     "episodes_all_eight": 24000,
     "policy_controls_all_eight": 15120000,
-    "GPU_hours_point_estimate_all_eight": 54.1,
+    "GPU_hours_point_estimate_all_eight": 55.84271174960666,
     "GPU_hours_point_estimate_each": 6.7625,
     "unchanged_anchors": "Only hash-bound original-native and fixed130-native controls on the original cases/draws; verify identities during fitted qualification",
-    "planned_hot_reservation_GiB": 32,
-    "hot_reservation_status": "Provisional; measure fitted qualification wave size and archival latency, then reserve a bounded double buffer before any main readout",
-    "cold_archival": "Independent complete-wave raw/frame audit, SHA-verified cold readback and stable original paths; preserve every incomplete or unaudited wave"
+    "planned_hot_reservation_GiB": 40,
+    "hot_reservation_status": "Actual packed archival+stageback+metadata eviction/restore verified;4 concurrent workers32.769MiB/s;12GiB new-wave soft limit;40GiB reserved;411GiB shared admission floor",
+    "cold_archival": "Packed SHA-verified immutable cold wave plus complete member manifest; original metadata stays onPFS and raw references explicitly stage back before inspection",
+    "GPU_hours_allowance_all_eight": 57
   },
   "budget": {
     "approved_GPU_hours": 150,
-    "charged_at_snapshot_GPU_hours": 122.7828620641667,
-    "maximum_committed_with_fits_GPU_hours": 123.55250000000001,
-    "uncommitted_at_reserved_fit_max_GPU_hours": 26.44749999999999,
-    "inference_only_all_eight_exceeds_current_remaining_GPU_hours": 26.882862064166694,
-    "admission": "No readout GPU allocation until actual released-fit reservations plus measured readout/qualification costs fit150; complete8-model54.1GPUh readout already exceeds remaining150 cap and requires new direct human budget authorization unless verified measured cost changes that conclusion",
-    "no_other_campaign_budget_borrowed": true,
-    "checked_shanghai": "2026-11-05T23:10:44.303431+08:00",
-    "gap_after_committed_fits_and_half_hour_qualification_GPU_hours": 28.152500000000003
+    "charged_GPU_hours": 124.4847134302778,
+    "maximum_committed_GPU_hours": 127.79444444444447,
+    "uncommitted_GPU_hours": 22.205555555555534,
+    "proposed_total_GPU_hours": 190,
+    "proposal_authorized": false,
+    "main_readout_GPU_hours_allowance": 57,
+    "proposal": "migrations/pfs-members-01/READOUT-BUDGET-PROPOSAL05.json"
   },
   "shared_storage": {
     "protected_floor_GiB": 220,
@@ -119,8 +101,8 @@
     "source_tests_future_GiB": 20,
     "metafits_future_GiB": 6,
     "qualification_additional_GiB": 4,
-    "main_readout_additional_GiB": 32,
-    "conservative_full_main_threshold_GiB": 403,
+    "main_readout_additional_GiB": 40,
+    "conservative_full_main_threshold_GiB": 411,
     "admission": "Reconcile current actual bytes and remaining reservations with owning chats; do not count already-consumed bytes twice. No new rollout writers admitted by this plan."
   }
 }

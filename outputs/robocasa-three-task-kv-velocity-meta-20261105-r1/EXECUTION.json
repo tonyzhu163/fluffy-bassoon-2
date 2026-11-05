@@ -1,7 +1,7 @@
 {
-  "checked_shanghai": "2026-11-05T23:10:44.303431+08:00",
+  "checked_shanghai": "2026-11-06T00:06:30.007601+08:00",
   "cluster": "Baige Pro6K",
-  "status": "seven_fits_validation_plateau_one_advancing_on_PFS",
+  "status": "PFS_migrated_seven_fits_plateau_DIT_continuing_fitted_and_packed_qualification_passed",
   "source_commit": "0368b3fd44d0f5cb87c70439a823296832b69428",
   "preserved_learner_contract_commit": "1c88834265cfadc511ba62cac48db0542ad0ebd1",
   "member_cache": "/mowenjie/fluffy-bassoon-2/inputs/steering-source-members-20261105-pfs01",
@@ -55,27 +55,33 @@
       "released_shanghai": "2026-11-05T22:23:52+08:00"
     },
     "kv_bridge/dit": {
-      "job_id": "job-bsbwmugtxxrq",
+      "job_id": "job-8nwofgy7ymu8",
       "scheduler_status": "Running",
-      "restored_update": 1065,
-      "saved_update": 5300,
-      "post_resume_saved_updates": 4235,
+      "restored_update": 5485,
+      "saved_update": 6200,
+      "post_resume_saved_updates": 715,
       "full_policy_Adam_sampler_global_and_flow_RNG_restore": true,
-      "input_checkpoint_sha256": "fe333093ad07d5e82f58203ac3be4e1f25b0c10295a22b4e1f696b0bb16bc81c",
+      "input_checkpoint_sha256": "3582499a3070153332981560235f190bb112419a6ca2dd54bf1c9b8f6eaaa192",
       "member_cache_manifest_sha256": "62606233074f623341acbddd3da5ea6c70865e01ab86f7a0a2fe34958d8afb12",
       "allocated_GPU_probe_passed": true,
-      "GPU_uuid": "GPU-2f9bfedd-c2e8-3762-6dc7-afe6d7252b9d",
       "native_parameters_frozen": true,
       "converged": false,
-      "best_validation_flow_loss": 0.12710464117117226,
+      "best_validation_flow_loss": 0.1250764038413763,
       "plateau": {
-        "reference": 0.12729508220218122,
-        "stale_checks": 1,
+        "reference": 0.1250764038413763,
+        "stale_checks": 0,
         "converged": false
       },
-      "equivalent_epochs": 0.0808913308913309,
+      "equivalent_epochs": 0.09462759462759462,
       "worker_traceback": false,
-      "early_post_PFS_seconds_per_update_including_validation": 2.7855551072154885
+      "early_post_PFS_seconds_per_update_including_validation": 2.7855551072154885,
+      "previous_PFS_job": {
+        "job_id": "job-bsbwmugtxxrq",
+        "released_shanghai": "2026-11-05T23:19:01+08:00",
+        "update": 5485
+      },
+      "previous_PFS_GPU_uuid": "GPU-2f9bfedd-c2e8-3762-6dc7-afe6d7252b9d",
+      "current_GPU_probe": "probes/fit-pfs03-kv_bridge-dit.json"
     },
     "kv_bridge/ic_iql": {
       "job_id": "job-jn7u4l4ch1ku",
@@ -207,37 +213,55 @@
   "maximum_committed_GPU_hours": 143.12666666666667,
   "approved_GPU_hours": 150,
   "failed_deployment_GPU_hours": 0.057777777777777775,
-  "free_PFS_GiB": 673.78515625,
+  "free_PFS_GiB": 699.19921875,
   "storage_floor_GiB": 220,
   "CPU_tests_passed": 20,
   "full_PFS_members_verified": 37440,
   "source_member_bytes": 136438194610,
   "watcher": {
-    "pid": 2702082,
+    "pid": 2719502,
     "command": [
       "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
       "-B",
-      "/mowenjie/fluffy-bassoon-2/sources/steering-pfs-full-0368b3fd/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/WATCH.py",
+      "/mowenjie/fluffy-bassoon-2/sources/steering-packed-87984718/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/WATCH.py",
       "--auditor",
-      "/mowenjie/fluffy-bassoon-2/sources/steering-pfs-full-0368b3fd/outputs/robocasa-eight-hour-babysit-20261104-r1/AUDIT-ROLLOUT.py",
+      "/mowenjie/fluffy-bassoon-2/sources/steering-packed-87984718/outputs/robocasa-eight-hour-babysit-20261104-r1/AUDIT-ROLLOUT.py",
       "--job-id",
-      "job-52qrp0gjh8b6,job-2q5g1m45hakg,job-bsbwmugtxxrq,job-jn7u4l4ch1ku,job-v28z09ka1muh,job-b9qpgophmo27,job-bg106f3xulpi,job-ojb6aomewgxz"
+      "job-8nwofgy7ymu8"
     ],
-    "source_commit": "0368b3fd44d0f5cb87c70439a823296832b69428",
-    "started_unix": 1793880435.8101685,
+    "source_commit": "87984718c9199797d31a158c47225cc695623afe",
+    "started_unix": 1793894720.9435523,
     "cadence_seconds": 1200,
-    "closed_wave_audit_and_verified_archive": true,
-    "latest_worker_tracebacks_recorded": true
+    "hot_heartbeat_seconds": 30,
+    "packed_archive_enabled": true,
+    "archive_workers": 4,
+    "hot_reservation_GiB": 40,
+    "new_wave_soft_limit_GiB": 12,
+    "previous_owned_watcher": 2712066
   },
   "next_monitor_check_shanghai": "2026-11-05T20:27:58.081281+08:00",
-  "next_check_shanghai": "2026-11-05T23:30:44.303431+08:00",
+  "next_check_shanghai": "2026-11-06T00:26:30.007601+08:00",
   "budget": {
     "approved_GPU_hours": 150,
-    "charged_GPU_hours": 122.7828620641667,
-    "remaining_GPU_hours": 27.217137935833307,
-    "maximum_committed_GPU_hours": 123.55250000000001,
-    "uncommitted_GPU_hours": 26.44749999999999,
-    "scheduler_releases_receipt": "outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/migrations/pfs-members-01/SCHEDULER-RELEASES.json"
+    "charged_GPU_hours": 124.4847134302778,
+    "maximum_committed_GPU_hours": 127.79444444444447,
+    "uncommitted_GPU_hours": 22.205555555555534,
+    "proposed_total_GPU_hours": 190,
+    "proposal_authorized": false,
+    "main_readout_GPU_hours_allowance": 57,
+    "proposal": "migrations/pfs-members-01/READOUT-BUDGET-PROPOSAL05.json"
   },
-  "evaluation": "Main ID/OOD held; fitted-deployment qualification preparation only; no task-success readout inferred from flow loss"
+  "evaluation": "Fitted deployment qualification120 complete episodes and independent raw/camera/action/history audits passed. Full24k-episode/15.12M-policy-control ID/OOD benchmark still held for direct human budget decision; no scientific success rates yet.",
+  "storage": {
+    "member_cache_PFS_payloads": 37440,
+    "member_cache_GiB": 127.068,
+    "packed_archive_qualified": true,
+    "concurrent_archive_payload_MiB_per_second": 32.76911946112714,
+    "archive_workers": 4,
+    "readout_hot_reservation_GiB": 40,
+    "readout_new_wave_soft_limit_GiB": 12,
+    "minimum_free_PFS_GiB": 411,
+    "source_cache_and_checkpoints_untouched": true,
+    "raw_recovery": "SHA-verified tar plus complete member manifest and explicit stage-back; unchanged result/audit metadata retained hot"
+  }
 }

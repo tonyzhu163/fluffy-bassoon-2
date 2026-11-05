@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "checked_shanghai": "2026-11-05T23:20:35.710747+08:00",
+  "source_commit": "85832212514fc1c90a680016a6ce61cf0e2311f6",
+  "deployed_code": "/mowenjie/fluffy-bassoon-2/sources/steering-fitqual-85832212",
+  "native_runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+  "Hydra_resolved": true,
+  "model_profile": {
+    "action_horizon": 50,
+    "denoising_steps": 10,
+    "active_action_dim": 12
+  },
+  "native_model_and_norm_SHA_verified": true,
+  "selected_fitted_AD_candidates": {
+    "kv_bridge": {
+      "candidate_sha256": "f7085e4a6940546e32e46710314ac4fa4319e6179e69e23320e486d48345ad74",
+      "selected_update": 2900,
+      "best_validation_loss": 0.12998429453000426
+    },
+    "velocity_bridge": {
+      "candidate_sha256": "04701478c2f3f850b8ce0329855f334732212d4186ae9502e4d97a08a3bab9ca",
+      "selected_update": 1200,
+      "best_validation_loss": 0.1336060776375234
+    }
+  },
+  "CPU_module_imports": true,
+  "write_probe": true,
+  "free_PFS_GiB": 673.6328125,
+  "protected_floor_GiB": 375,
+  "maximum_total_qualification_GPU_hours": 0.5,
+  "main_readout_held": true,
+  "source_review": "Shared delta since0368: optional ActionJournal prior-limit migration; unchanged default fresh readout calls. RoboTwin runtime/config changes outside path."
+}

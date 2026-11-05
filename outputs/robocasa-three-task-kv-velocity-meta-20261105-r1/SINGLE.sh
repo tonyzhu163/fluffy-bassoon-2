@@ -24,18 +24,21 @@ with initialize_config_dir(config_dir=str(configuration_directory),version_base=
     configuration=compose(config_name='robocasa365_pi05_eval')
 assert configuration.rollout.model is not None and configuration.env.eval is not None
 r=Path('/mowenjie/fluffy-bassoon-2');d=json.loads((r/'outputs/robocasa-eight-hour-babysit-20261104-r1/META-ALLOCATION-LEDGER.json').read_text())
-assert d['approved_GPU_hours']==150
+ceiling=d['approved_GPU_hours'];assert 0<ceiling<=190
+if ceiling>150:
+    authority=json.loads((r/'outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/READOUT-ADMISSION.json').read_text())
+    assert authority['approved'] and authority['human_budget_authorization'] and authority['approved_GPU_hours']==ceiling
 now=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8)));reserved=d['preparation_GPU_hours'];own=False
 for row in d['allocations']:
     actual=row['GPUs']*((datetime.datetime.fromisoformat(row['released_shanghai']) if row.get('released_shanghai') else now)-datetime.datetime.fromisoformat(row['created_shanghai'])).total_seconds()/3600
     reserved+=actual if row.get('released_shanghai') else max(actual,row['max_reservation_GPU_hours'])
     own|=row['job_id']==os.environ['HOSTNAME'].removesuffix('-master-0')
 hours=int(os.environ['STEERING_HOURS']);assert 1<=hours<=9
-assert reserved+(0 if own else hours)<=150
+assert reserved+(0 if own else hours)<=ceiling
 minimum_free=int(os.environ.get('STEERING_MIN_FREE_GIB','220'));assert minimum_free>=96
 v=os.statvfs(r);assert v.f_bavail*v.f_frsize>minimum_free*2**30
 q=json.loads(Path(os.environ['STEERING_QUALIFICATION']).read_text());assert q['passed']
-print(json.dumps(dict(approved_GPU_hours=150,maximum_new_reservation_GPU_hours=hours,committed_GPU_hours=reserved,minimum_free_PFS_GiB=minimum_free,free_PFS_GiB=v.f_bavail*v.f_frsize/2**30,native_Hydra_configuration_composed=True,configuration_directory=str(configuration_directory))))
+print(json.dumps(dict(approved_GPU_hours=ceiling,maximum_new_reservation_GPU_hours=hours,committed_GPU_hours=reserved,minimum_free_PFS_GiB=minimum_free,free_PFS_GiB=v.f_bavail*v.f_frsize/2**30,native_Hydra_configuration_composed=True,configuration_directory=str(configuration_directory))))
 PY
 PROBE=$ROOT/$RUN/probes/$STEERING_ATTEMPT.json
 "$PY" -B "$STEERING_CODE/scripts/[train]gpu_probe.py" --expected-count 1 --purpose training --baige-container --baige-exclusive-training --output "$PROBE"

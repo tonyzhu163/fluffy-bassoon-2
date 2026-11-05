@@ -1,9 +1,9 @@
 {
   "cluster": "Baige Pro6K",
-  "job_id": "job-52qrp0gjh8b6,job-2q5g1m45hakg,job-bsbwmugtxxrq,job-jn7u4l4ch1ku,job-v28z09ka1muh,job-b9qpgophmo27,job-bg106f3xulpi,job-ojb6aomewgxz",
-  "checked_shanghai": "2026-11-05T23:10:44.303431+08:00",
-  "charged_GPU_hours": 122.7828620641667,
-  "remaining_GPU_hours": 27.217137935833307,
+  "job_id": "job-8nwofgy7ymu8",
+  "checked_shanghai": "2026-11-06T00:06:30.007601+08:00",
+  "charged_GPU_hours": 124.46111322250002,
+  "remaining_GPU_hours": 25.538886777499982,
   "methods": {
     "kv_bridge/ad": {
       "status": {
@@ -101,26 +101,45 @@
     },
     "kv_bridge/dit": {
       "status": {
-        "update": 5300,
-        "best_loss": 0.12710464117117226,
+        "update": 6200,
+        "best_loss": 0.1250764038413763,
         "plateau": {
-          "reference": 0.12729508220218122,
-          "stale_checks": 1,
+          "reference": 0.1250764038413763,
+          "stale_checks": 0,
           "converged": false
         },
         "converged": false,
-        "elapsed_seconds": 30521.019337195903,
+        "elapsed_seconds": 33108.72847689246,
         "stop_reason": "operational_checkpoint",
         "native_parameters_frozen": true,
         "interface": "kv_bridge",
         "objective": "dit"
       },
-      "checkpoint_mtime": 1793891442.0758011,
-      "latest_worker_log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/workflows/kv_bridge/dit/train-fit-pfs02-kv_bridge-dit-01.log",
-      "latest_worker_log_mtime": 1793891442.0086777,
+      "checkpoint_mtime": 1793894590.0799792,
+      "latest_worker_log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/workflows/kv_bridge/dit/train-fit-pfs03-kv_bridge-dit-00.log",
+      "latest_worker_log_mtime": 1793894590.0064836,
       "worker_failed": false,
       "last_worker_error": null,
-      "workflow_result": null,
+      "workflow_result": {
+        "completed": false,
+        "status": "operational_checkpoint",
+        "training_status": {
+          "update": 5485,
+          "best_loss": 0.12678466364741325,
+          "plateau": {
+            "reference": 0.12729508220218122,
+            "stale_checks": 2,
+            "converged": false
+          },
+          "converged": false,
+          "elapsed_seconds": 31011.43436491862,
+          "stop_reason": "operational_checkpoint",
+          "native_parameters_frozen": true,
+          "interface": "kv_bridge",
+          "objective": "dit"
+        },
+        "source_commit": "0368b3fd44d0f5cb87c70439a823296832b69428"
+      },
       "readouts": {
         "ID": null,
         "OOD": null
@@ -362,5 +381,5 @@
       }
     }
   },
-  "next_check_shanghai": "2026-11-05T23:30:44.303431+08:00"
+  "next_check_shanghai": "2026-11-06T00:26:30.007601+08:00"
 }
