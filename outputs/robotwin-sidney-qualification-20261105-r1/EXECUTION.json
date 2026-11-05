@@ -1,12 +1,12 @@
 {
-  "status": "NATIVE_QUALIFICATION_RETRY_QUEUED",
+  "status": "SECOND_ATTEMPT_FAILED_RUNTIME02_READY",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
   "job_id": "job-5rnpa5xvsxwm",
   "job_name": "mwj_1105_robotwin_sidney_native_qual_r2",
   "submitted_at_shanghai": "2026-11-05 14:03:43",
-  "last_checked_at_shanghai": "2026-11-05 14:04",
-  "observed_scheduler_status": "queued",
+  "last_checked_at_shanghai": "2026-11-05 14:10",
+  "observed_scheduler_status": "failed",
   "source_commit": "caf637e707683dda365998133f8290314045cd23",
   "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r4",
   "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual02",
@@ -20,15 +20,17 @@
     "maximum_runtime_minutes": 30,
     "automatic_fault_tolerance": false,
     "scheduler_gpu_type": "NVIDIA RPBZZZ6",
-    "actual_gpu_type": "await allocated gpu_probe"
+    "actual_gpu_type": "NVIDIA RPBZZZ6; CUDA/NVML/PCI mapping and tensor computation passed in qual02"
   },
   "budget": {
-    "gpu_hours_used_as_of_last_check": null,
+    "gpu_hours_used_as_of_last_check": 0.04138888888888889,
     "this_attempt_maximum_gpu_hours": 0.5,
     "initial_qualification_ceiling_gpu_hours": 4,
     "task_scope_incremental_ceiling_gpu_hours": 50,
-    "worker_gpu_seconds_measured": 1,
-    "conservative_allocated_gpu_hours_charge": 0.5
+    "worker_gpu_seconds_measured": 54,
+    "conservative_allocated_gpu_hours_charge": 1.0,
+    "scheduler_display_gpu_seconds": 149,
+    "usage_basis": "one GPU times scheduler displayed durations 60s+89s; worker process durations are separately retained"
   },
   "qualification": {
     "weight_hashes_verified": true,
@@ -43,7 +45,7 @@
     "physical_control_limit": 400,
     "scene_bank": "RLinf eval source-task bank, first success_seed"
   },
-  "next_action": "Inspect qual02 probe, processor numerical/import precheck, model strict loading, queue parity, and native phone-stand episode. Diagnose before any further fresh attempt. No PPO before native SFT screen and explicit RLinf parity.",
+  "next_action": "Submit qual03 with fresh runtime02 from reviewed committed main; numerical/import precheck then native H50/K10 phone-stand episode. Runtime02 metadata audit has zero non-extra requirement conflicts, but native behavior is unqualified. No PPO before native screen and explicit RLinf parity.",
   "monitor_interval_minutes": 20,
   "queue_receipt": "RETRY-QUEUED.jpg",
   "attempts": [
@@ -69,14 +71,30 @@
       "attempt": "qual02",
       "job_id": "job-5rnpa5xvsxwm",
       "source_commit": "caf637e707683dda365998133f8290314045cd23",
-      "status": "queued",
+      "status": "failed",
       "maximum_gpu_hours": 0.5,
       "contract_changes": [
         "existing launcher CUDA ordinal/map setup",
         "retained PhysX cache link",
         "processor-only import/numerical precheck before model construction"
       ],
-      "native_model_contract_unchanged": true
+      "native_model_contract_unchanged": true,
+      "scheduler_status": "failed",
+      "scheduler_ended_at_shanghai": "2026-11-05 14:05:33",
+      "scheduler_display_duration": "1 minute29 seconds",
+      "worker_gpu_seconds": 53,
+      "exit_code": 1,
+      "gpu_probe_passed": true,
+      "model_constructed": false,
+      "simulator_episodes": 0,
+      "optimizer_updates": 0,
+      "error": "NumPy1.26.4 incompatible with retained pandas3.1.0 requiring NumPy>=2.0.2",
+      "evidence": [
+        "qual02/gpu-probe.json",
+        "qual02/cpu-imports/RESULT.json",
+        "qual02/cpu-imports.log",
+        "qual02/EXIT.json"
+      ]
     }
   ],
   "cpu_probe_attempt": {
@@ -85,5 +103,6 @@
     "output_exists": false,
     "tests_executed": false,
     "prepared_commit": "3a0597229c5e6d53f1d352bb0c4321d52605731c"
-  }
+  },
+  "model_environment": "/mowenjie/fluffy-bassoon-2/envs/lerobot-sidney-92f96f33-20261105-r2"
 }

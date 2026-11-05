@@ -4,7 +4,7 @@ TASK_SOURCE=${1:?exact reviewed commit}
 TASK_OUT=${2:?fresh output}
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_LEROBOT=/mowenjie/fluffy-bassoon-2/sources/lerobot-sidney-92f96f33-20261105-r1
-TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/lerobot-sidney-92f96f33-20261105-r1/bin/python
+TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/lerobot-sidney-92f96f33-20261105-r2/bin/python
 [[ $(uname -s) == Linux && $(hostname) == job-* ]]
 [[ $(git -C "$TASK_CODE" rev-parse HEAD) == "$TASK_SOURCE" ]]
 [[ $(git -C "$TASK_LEROBOT" rev-parse HEAD) == 92f96f33b3a842ead3a115cc4f701ba2ad8aa3b5 ]]

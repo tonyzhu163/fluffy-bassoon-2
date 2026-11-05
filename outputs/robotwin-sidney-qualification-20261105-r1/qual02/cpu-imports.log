@@ -1,0 +1,36 @@
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon/envs/lerobot-v044-8fff0fde/lib/python3.12/site-packages/pandas/__init__.py", line 22, in <module>
+    from pandas.compat import (
+  File "/mowenjie/fluffy-bassoon/envs/lerobot-v044-8fff0fde/lib/python3.12/site-packages/pandas/compat/__init__.py", line 28, in <module>
+    from pandas.compat.numpy import is_numpy_dev
+  File "/mowenjie/fluffy-bassoon/envs/lerobot-v044-8fff0fde/lib/python3.12/site-packages/pandas/compat/numpy/__init__.py", line 19, in <module>
+    raise ImportError(
+ImportError: Please upgrade numpy to >= 2.0.2 to use this pandas version.
+Your numpy version is 1.26.4.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r4/outputs/robotwin-sidney-qualification-20261105-r1/cpu_imports.py", line 67, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r4/outputs/robotwin-sidney-qualification-20261105-r1/cpu_imports.py", line 24, in main
+    from lerobot.policies.pi05.configuration_pi05 import PI05Config
+  File "/mowenjie/fluffy-bassoon-2/sources/lerobot-sidney-92f96f33-20261105-r1/src/lerobot/policies/__init__.py", line 21, in <module>
+    from .factory import get_policy_class, make_policy, make_policy_config, make_pre_post_processors
+  File "/mowenjie/fluffy-bassoon-2/sources/lerobot-sidney-92f96f33-20261105-r1/src/lerobot/policies/factory.py", line 53, in <module>
+    from .groot.configuration_groot import GrootConfig
+  File "/mowenjie/fluffy-bassoon-2/sources/lerobot-sidney-92f96f33-20261105-r1/src/lerobot/policies/groot/__init__.py", line 19, in <module>
+    from .processor_groot import make_groot_pre_post_processors
+  File "/mowenjie/fluffy-bassoon-2/sources/lerobot-sidney-92f96f33-20261105-r1/src/lerobot/policies/groot/processor_groot.py", line 49, in <module>
+    from lerobot.datasets.lerobot_dataset import LeRobotDataset
+  File "/mowenjie/fluffy-bassoon-2/sources/lerobot-sidney-92f96f33-20261105-r1/src/lerobot/datasets/__init__.py", line 23, in <module>
+    from .aggregate import aggregate_datasets
+  File "/mowenjie/fluffy-bassoon-2/sources/lerobot-sidney-92f96f33-20261105-r1/src/lerobot/datasets/aggregate.py", line 23, in <module>
+    import datasets
+  File "/mowenjie/fluffy-bassoon/envs/lerobot-v044-8fff0fde/lib/python3.12/site-packages/datasets/__init__.py", line 17, in <module>
+    from .arrow_dataset import Column, Dataset
+  File "/mowenjie/fluffy-bassoon/envs/lerobot-v044-8fff0fde/lib/python3.12/site-packages/datasets/arrow_dataset.py", line 58, in <module>
+    import pandas as pd
+  File "/mowenjie/fluffy-bassoon/envs/lerobot-v044-8fff0fde/lib/python3.12/site-packages/pandas/__init__.py", line 27, in <module>
+    raise ImportError(
+ImportError: C extension: None not built. If you want to import pandas from the source directory, you may need to run 'python -m pip install -ve . --no-build-isolation -Ceditable-verbose=true' to build the C extensions first.

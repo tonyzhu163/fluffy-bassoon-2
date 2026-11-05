@@ -11,7 +11,7 @@ import time
 from model_worker import save
 
 MODEL = Path('/mowenjie/fluffy-bassoon-2/cache/robotwin-sidney-qualification-20261105-r1')
-MODEL_PYTHON = '/mowenjie/fluffy-bassoon-2/envs/lerobot-sidney-92f96f33-20261105-r1/bin/python'
+MODEL_PYTHON = '/mowenjie/fluffy-bassoon-2/envs/lerobot-sidney-92f96f33-20261105-r2/bin/python'
 LEROBOT = Path('/mowenjie/fluffy-bassoon-2/sources/lerobot-sidney-92f96f33-20261105-r1')
 LEROBOT_COMMIT = '92f96f33b3a842ead3a115cc4f701ba2ad8aa3b5'
 

@@ -32,7 +32,7 @@ def main():
     cfg = PI05Config.from_pretrained(str(args.model))
     assert cfg.chunk_size == cfg.n_action_steps == 50
     assert cfg.num_inference_steps == 10 and not cfg.use_relative_actions
-    assert cfg.output_features['action'].shape == (14,)
+    assert tuple(cfg.output_features['action'].shape) == (14,)
     cfg.device = 'cuda'
     cfg.compile_model = False
     cfg.gradient_checkpointing = False

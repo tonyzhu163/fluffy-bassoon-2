@@ -45,7 +45,7 @@ if [[ ! -e /root/.sapien/physx/105.1-physx-5.3.1.patch0 ]]; then
   ln -s /mowenjie/fluffy-bassoon/inputs/maniskill-scene-assets-20261028-r1/physx/105.1-physx-5.3.1.patch0 \
     /root/.sapien/physx/105.1-physx-5.3.1.patch0
 fi
-TASK_MODEL_PYTHON=/mowenjie/fluffy-bassoon-2/envs/lerobot-sidney-92f96f33-20261105-r1/bin/python
+TASK_MODEL_PYTHON=/mowenjie/fluffy-bassoon-2/envs/lerobot-sidney-92f96f33-20261105-r2/bin/python
 PYTHONPATH=/mowenjie/fluffy-bassoon-2/sources/lerobot-sidney-92f96f33-20261105-r1/src \
   timeout --signal=TERM --kill-after=10s 240 \
   "$TASK_MODEL_PYTHON" "$TASK_RUN_CODE/cpu_imports.py" --expected-visible-gpus 1 \

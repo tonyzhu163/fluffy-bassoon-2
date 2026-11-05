@@ -45,3 +45,16 @@ and exports that probe's map. It also links the retained PhysX cache in the
 fresh container, matching those launchers. A processor-only numerical/import
 check runs in the allocation before constructing the model; it neither runs
 a model on CPU nor substitutes for the actual GPU episode.
+
+`qual02` passed the scheduler/CUDA/PCI/PID probe on the actual GPU, then
+failed during the processor import check: the retained pandas requires
+NumPy >=2.0.2, while the first overlay pinned 1.26.4. No model was constructed.
+For qual03, create a fresh environment ending `20261105-r2`, using NumPy
+2.2.6 to match the retained Python3.12 base (also within SciPy1.14.1's
+NumPy range), keeping LeRobot, Transformers, Torch and simulator pins.
+The old overlay and failed attempt remain immutable. Record package metadata
+constraints and the new overlay freeze separately in `RUNTIME02-*`.
+The metadata audit also pins Pillow12.0.0, packaging25.0 and fsspec2026.2.0
+to satisfy the installed LeRobot/datasets requirements; it reports zero
+non-extra requirement conflicts across the 15 inspected packages. This is
+metadata validation, not a successful native import or model qualification.
