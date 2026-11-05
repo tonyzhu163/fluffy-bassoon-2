@@ -1,5 +1,12 @@
 # RoboTwin source PPO pilot
 
+**Current hold (2026-11-05):** the user asks to reconsider the SFT initializer.
+The queued native qualification was stopped before allocation; no CPU/GPU
+qualification, simulator episode or SGD has run. The prepared H50 Motus recipe
+below is provisional: the Motus model card specifies H32. Select/qualify the
+checkpoint and its native horizon before launching PPO. See
+[CHECKPOINT-SCREEN.md](CHECKPOINT-SCREEN.md) and [EXECUTION.json](EXECUTION.json).
+
 2026-11-05, Asia/Shanghai. User requests trying PPO after restoring the
 RLinf/VLRLA benchmark arm. Start with `place_phone_stand`, a VLRLA seen task
 with shipped RLinf TRAIN/evaluation seed banks. No held-out-task training.
@@ -45,5 +52,6 @@ Before submission: verify queue capacity/limits/actual type and storage
 capacity/quota/write access. Monitor every 20 minutes after launch. Report
 job ID, progress, last check, next action and cumulative allocated GPU time.
 
-Current state: preparing model restoration and the first native qualification;
-no new allocation has been launched yet.
+Current state: common Motus model restored and hash-verified; native
+qualification submitted then stopped while still queued; PPO held for SFT
+selection. The launchers have static checks only and are not runtime-qualified.

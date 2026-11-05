@@ -1,0 +1,45 @@
+{
+  "checked_at": "2026-11-05T13:19:31+08:00",
+  "state": "HELD_FOR_SFT_INITIALIZER_SELECTION",
+  "reason": "User asks to reconsider SFT checkpoint; Motus card specifies native H32 while the provisional pilot prepared H50.",
+  "model_restoration": "MOTOR-READY.json",
+  "restoration_attempt_01": {
+    "source_commit": "f6e056aa8c36249c939d3bf0ef53cf3adb93c84f",
+    "archive_sha256_passed": true,
+    "status": "failed_on_BOS_FUSE_zstd_read_error",
+    "partial_model_bytes": 1189316096,
+    "partial_model_used": false,
+    "gpu_seconds": 0
+  },
+  "restoration_attempt_02": {
+    "source_commit": "d19b335aa66a4512c476eb87d613249c57722b1c",
+    "status": "passed_via_verified_PFS_archive_copy",
+    "gpu_seconds": 0
+  },
+  "native_qualification": {
+    "job_id": "job-tfjfmxlsdu7s",
+    "cluster": "Baige Pro6K / 算法Z组",
+    "source_commit": "d19b335aa66a4512c476eb87d613249c57722b1c",
+    "submitted_at": "2026-11-05T13:10:19+08:00",
+    "stopped_at": "2026-11-05T13:18:53+08:00",
+    "final_status": "stopped_while_queued",
+    "gpu_request": 1,
+    "cpu_request": 8,
+    "memory_gib": 64,
+    "maximum_runtime_minutes": 20,
+    "worker_output_created": false,
+    "allocated_gpu_seconds": 0
+  },
+  "cpu_check": {
+    "prepared_source_commit": "7c30da782ee32d8a8ba67f93283a5976eab66daf",
+    "submission_attempt_verified": false,
+    "matching_job_found_on_refresh": false,
+    "worker_output_created": false,
+    "runtime_test_result": "none"
+  },
+  "ppo_training_submitted": false,
+  "simulator_episodes": 0,
+  "optimizer_updates": 0,
+  "cumulative_gpu_hours": 0,
+  "static_validation": "Python AST and bash -n passed; no allocated runtime or numerical qualification completed"
+}
