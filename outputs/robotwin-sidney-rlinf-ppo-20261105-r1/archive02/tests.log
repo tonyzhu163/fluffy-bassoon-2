@@ -1,0 +1,20 @@
+......                                                                   [100%]
+=============================== warnings summary ===============================
+../../envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/dash/testing/plugin.py:104
+  /mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages/dash/testing/plugin.py:104: PytestRemovedIn10Warning: The hookimpl pytest_addhooks uses old-style configuration options (marks or attributes).
+  Please use the pytest.hookimpl(tryfirst=True) decorator instead
+   to configure the hooks.
+   See https://docs.pytest.org/en/latest/deprecations.html#configuring-hook-specs-impls-using-markers
+    @pytest.mark.tryfirst
+
+tests/test_rlinf_native_ppo.py::test_sampler_and_eval_rng_survive_whole_boundary_restore
+tests/test_rlinf_native_ppo.py::test_sampler_and_eval_rng_survive_whole_boundary_restore
+  /mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/torch/jit/_script.py:1488: DeprecationWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+tests/test_rlinf_native_ppo.py: 14 warnings
+  /mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+6 passed, 11 deselected, 17 warnings in 25.82s

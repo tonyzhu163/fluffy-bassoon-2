@@ -1,7 +1,7 @@
 {
-  "status": "STORAGE_QUALIFICATION_RUNNING",
+  "status": "ARCHIVE_QUALIFIED_PREPARING_PPO_RESTART",
   "cluster": "Baige Pro6K",
-  "last_checked_at_shanghai": "2026-11-05 19:34",
+  "last_checked_at_shanghai": "2026-11-05 19:48",
   "prior_scheduler_gpu_seconds": 2561,
   "prior_scheduler_gpu_hours": 0.7113888888888888,
   "optimizer_updates": 0,
@@ -9,15 +9,15 @@
   "revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "user_preference": "Broad multi-task SFT, no RL tuning. Maximize actual6000-series batch capacity or measured throughput.",
   "precision": "Native mixed BF16 with full FP32 vision/norms. FP32 full-model replay only if required to localize conversion drift.",
-  "next_action": "Verify allocated CPU archive/tensor/recovery readback, peak shared/local staging and cleanup. Keep scientific PPO held until combined storage admission. Accepted micro64/accum8/global2048 unchanged.",
-  "job_id": "job-c7b3cq4fpjqd",
+  "next_action": "Fresh398.4375GiB free exceeds371GiB combined original-format admission after scratch cleanup. Review/deploy latest main, verify allocation and resume full step0 with64/GPU\u00d7accum8/global2048; compression remains off.",
+  "job_id": null,
   "source_commit": "89a272ab98478d0670bd730b9e69846d60018ed6",
   "core_tests_passed": 23,
   "scene_instruction_binding_passed": true,
   "conversion_passed": true,
   "error": null,
   "bridge_scheduler_gpu_seconds_completed": 920,
-  "cumulative_scheduler_gpu_seconds_completed": 18948,
+  "cumulative_scheduler_gpu_seconds_completed": 19678,
   "completed_bridge_attempts": [
     {
       "attempt": "bridge01",
@@ -136,7 +136,7 @@
     }
   ],
   "config_validation_passed": true,
-  "additional_scheduler_gpu_seconds_completed": 16387,
+  "additional_scheduler_gpu_seconds_completed": 17117,
   "additional_envelope_gpu_hours": 18,
   "task_scope_limit_gpu_hours": 50,
   "resume_dir": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03/sidney-native-two/checkpoints/global_step_0",
@@ -209,22 +209,24 @@
       "outcome": "All four candidates64/128/256/512 completed four native FSDP/PPO updates on all four ranks.64 fastest including conditional reference overhead;512 has only1.00GB reserved headroom."
     }
   ],
-  "active_gpu_jobs": 1,
-  "additional_scheduler_gpu_hours_completed": 4.551944444444445,
-  "cumulative_scheduler_gpu_hours_completed": 5.263333333333334,
+  "active_gpu_jobs": 0,
+  "additional_scheduler_gpu_hours_completed": 4.754722222222222,
+  "cumulative_scheduler_gpu_hours_completed": 5.466111111111111,
   "storage_admission": {
-    "status": "held_combined_reservations",
-    "last_observed_free_gib": 188.7578125,
-    "observed_at_shanghai": "2026-11-05 19:20",
+    "status": "actual_free_exceeds_combined_original_format_threshold",
+    "last_observed_free_gib": 398.4375,
+    "observed_at_shanghai": "2026-11-05 19:48",
     "initial_checkpoint_bytes": 9985762432,
     "protected_checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03/sidney-native-two/checkpoints/global_step_0",
-    "projected_incremental_bytes": 125000000000,
-    "projection_status": "conservative; no compressed canonical format admitted",
+    "projected_incremental_bytes": 134217728000,
+    "projection_status": "Conservative125GiB combined storage reservation including transient output; original125e9 decimal projection superseded, compression not required for scientific admission.",
     "other_owner_floor_gib": 240,
     "other_owner_growth_gib": 6,
     "coordinator_thread": "01a1ab47-e0cb-7890-bbf8-088a1be17240",
     "warning": "Do not count prospective releases or prior112.28GiB reclaim twice. Preserve active caches and checkpoints.",
-    "qualification_reserved_bytes": 8589934592
+    "qualification_reserved_bytes": 0,
+    "combined_required_free_gib_after_qualification_cleanup": 371,
+    "canonical_compression": "none"
   },
   "user_selected_execution": {
     "micro_batch_per_gpu": 64,
@@ -251,14 +253,26 @@
       "attempt": "archive02",
       "job_id": "job-c7b3cq4fpjqd",
       "source_commit": "89a272ab98478d0670bd730b9e69846d60018ed6",
-      "status": "submitted",
+      "status": "complete",
       "gpus": 1,
       "model_compute_device": "cpu",
       "maximum_minutes": 25,
       "created_at_shanghai": "2026-11-05 19:33:59",
       "maximum_pfs_staging_bytes": 8589934592,
-      "maximum_local_staging_bytes": 17179869184
+      "maximum_local_staging_bytes": 17179869184,
+      "scheduler_gpu_seconds": 730,
+      "creation_to_release_seconds": 745,
+      "worker_gpu_seconds": 719,
+      "ended_at_shanghai": "2026-11-05 19:46:24",
+      "real_recovery_files_verified": 18,
+      "worker_sidecars_tensor_verified": 12,
+      "restored_dcp_metadata_items": 1304,
+      "peak_pfs_staging_bytes": 2168764309,
+      "peak_local_staging_bytes": 9985746048,
+      "shared_scratch_removed": true,
+      "canonical_compression_enabled": false
     }
   ],
-  "additional_conservative_gpu_seconds_completed": 16399
+  "additional_conservative_gpu_seconds_completed": 17144,
+  "core_storage_tests_passed": 6
 }
