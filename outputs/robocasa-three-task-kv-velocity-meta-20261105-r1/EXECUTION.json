@@ -1,8 +1,8 @@
 {
-  "checked_shanghai": "2026-11-06T01:07:00.155236+08:00",
+  "checked_shanghai": "2026-11-06T02:57:45.233749+08:00",
   "cluster": "Baige Pro6K",
-  "status": "PFS_migrated_seven_fits_plateau_DIT_continuing_fitted_and_packed_qualification_passed",
-  "source_commit": "0368b3fd44d0f5cb87c70439a823296832b69428",
+  "status": "PFS_migrated_all_eight_fits_stopped_all_allocations_released_main_readout_held",
+  "source_commit": "9bef7583fa49a5ec6e3786e5e589748bd22c9948",
   "preserved_learner_contract_commit": "1c88834265cfadc511ba62cac48db0542ad0ebd1",
   "member_cache": "/mowenjie/fluffy-bassoon-2/inputs/steering-source-members-20261105-pfs01",
   "models": {
@@ -28,7 +28,11 @@
       "equivalent_epochs": 0.044261294261294264,
       "worker_traceback": false,
       "early_post_PFS_seconds_per_update_including_validation": 2.065528168172265,
-      "released_shanghai": "2026-11-05T20:45:41+08:00"
+      "released_shanghai": "2026-11-05T20:45:41+08:00",
+      "selected_candidate_update": 2900,
+      "selected_candidate_sha256": "f7085e4a6940546e32e46710314ac4fa4319e6179e69e23320e486d48345ad74",
+      "full_recovery_sha256": "6a50cba3702b4a91cbd57478f441ba514425a918395ef310b07d32734a9e64f4",
+      "protected_recovery_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/finalized-fits-20261106-r1/kv_bridge/ad"
     },
     "kv_bridge/dpt": {
       "job_id": "job-2q5g1m45hakg",
@@ -52,36 +56,48 @@
       "equivalent_epochs": 0.07478632478632478,
       "worker_traceback": false,
       "early_post_PFS_seconds_per_update_including_validation": 1.9234535389672964,
-      "released_shanghai": "2026-11-05T22:23:52+08:00"
+      "released_shanghai": "2026-11-05T22:23:52+08:00",
+      "selected_candidate_update": 4900,
+      "selected_candidate_sha256": "7a0c4f6c3fbb92f54c3b6f0d9a36828e8d16fce2e5970b73a23ce77e8286f217",
+      "full_recovery_sha256": "f10925be4580ed5ae5d8978459e2f945ff0b8c0f736b5abec6ae48b9b3dd8f50",
+      "protected_recovery_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/finalized-fits-20261106-r1/kv_bridge/dpt"
     },
     "kv_bridge/dit": {
-      "job_id": "job-8nwofgy7ymu8",
-      "scheduler_status": "Running",
-      "restored_update": 5485,
-      "saved_update": 7400,
-      "post_resume_saved_updates": 1915,
+      "job_id": "job-6d32bmd1wwde",
+      "scheduler_status": "Succeeded",
+      "restored_update": 9684,
+      "saved_update": 9700,
+      "post_resume_saved_updates": 16,
       "full_policy_Adam_sampler_global_and_flow_RNG_restore": true,
-      "input_checkpoint_sha256": "3582499a3070153332981560235f190bb112419a6ca2dd54bf1c9b8f6eaaa192",
+      "input_checkpoint_sha256": "a209f1eb37b47909cf4b3b0c768e5fcd639e5f3bee69f2fd65d505eecc58a22a",
       "member_cache_manifest_sha256": "62606233074f623341acbddd3da5ea6c70865e01ab86f7a0a2fe34958d8afb12",
       "allocated_GPU_probe_passed": true,
       "native_parameters_frozen": true,
-      "converged": false,
-      "best_validation_flow_loss": 0.12326905317604542,
+      "converged": true,
+      "best_validation_flow_loss": 0.12103313324041665,
       "plateau": {
-        "reference": 0.12385996151715517,
-        "stale_checks": 5,
-        "converged": false
+        "reference": 0.12175330985337496,
+        "stale_checks": 10,
+        "converged": true
       },
-      "equivalent_epochs": 0.11294261294261294,
+      "equivalent_epochs": 0.14804639804639805,
       "worker_traceback": false,
       "early_post_PFS_seconds_per_update_including_validation": 2.7855551072154885,
       "previous_PFS_job": {
-        "job_id": "job-bsbwmugtxxrq",
-        "released_shanghai": "2026-11-05T23:19:01+08:00",
-        "update": 5485
+        "job_id": "job-8nwofgy7ymu8",
+        "released_shanghai": "2026-11-06T02:49:35+08:00",
+        "update": 9684
       },
       "previous_PFS_GPU_uuid": "GPU-2f9bfedd-c2e8-3762-6dc7-afe6d7252b9d",
-      "current_GPU_probe": "probes/fit-pfs03-kv_bridge-dit.json"
+      "current_GPU_probe": "probes/fit-pfs04-kv_bridge-dit.json",
+      "selected_candidate_update": 9684,
+      "selected_candidate_sha256": "7ccaae7048df38a90ced30530002469f1f73e1ee9cb37a17b07c8137cabb3721",
+      "full_recovery_sha256": "d2e7b4968e008d5e957ca9c5a899c55e53e82c6d0ef62070cd77d9f454e1b532",
+      "protected_recovery_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/finalized-fits-20261106-r1/kv_bridge/dit",
+      "released_shanghai": "2026-11-06T02:56:16+08:00",
+      "implementation_commit": "9bef7583fa49a5ec6e3786e5e589748bd22c9948",
+      "GPU_uuid": "GPU-5b0e6e64-4e06-18d9-4dd5-d383a8a3502c",
+      "implementation_migration_reason": "Launcher accepts properly authorized future ceilings; core learner/reader/native/config bytes unchanged as preflight07 verifies"
     },
     "kv_bridge/ic_iql": {
       "job_id": "job-jn7u4l4ch1ku",
@@ -105,7 +121,11 @@
       "equivalent_epochs": 0.044261294261294264,
       "worker_traceback": false,
       "early_post_PFS_seconds_per_update_including_validation": 2.7197425250150262,
-      "released_shanghai": "2026-11-05T21:29:42+08:00"
+      "released_shanghai": "2026-11-05T21:29:42+08:00",
+      "selected_candidate_update": 2900,
+      "selected_candidate_sha256": "24885ed79be9bcefc524397c3f51757eb5408f6f11fab202a94737097fba2b3b",
+      "full_recovery_sha256": "2bdcec4103485874395c7c6ab9e9918237812f7f0485dcf10df7283eccbfc3b1",
+      "protected_recovery_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/finalized-fits-20261106-r1/kv_bridge/ic_iql"
     },
     "velocity_bridge/ad": {
       "job_id": "job-v28z09ka1muh",
@@ -129,7 +149,11 @@
       "equivalent_epochs": 0.028998778998779,
       "worker_traceback": false,
       "early_post_PFS_seconds_per_update_including_validation": 1.87116263784737,
-      "released_shanghai": "2026-11-05T20:44:13+08:00"
+      "released_shanghai": "2026-11-05T20:44:13+08:00",
+      "selected_candidate_update": 1200,
+      "selected_candidate_sha256": "04701478c2f3f850b8ce0329855f334732212d4186ae9502e4d97a08a3bab9ca",
+      "full_recovery_sha256": "cf0cb3f4e924b3f9eac8250a5f69c424b55c8d839d7957ae073046d59db52beb",
+      "protected_recovery_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/finalized-fits-20261106-r1/velocity_bridge/ad"
     },
     "velocity_bridge/dpt": {
       "job_id": "job-b9qpgophmo27",
@@ -153,7 +177,11 @@
       "equivalent_epochs": 0.028998778998779,
       "worker_traceback": false,
       "early_post_PFS_seconds_per_update_including_validation": 1.9445994999354261,
-      "released_shanghai": "2026-11-05T20:51:43+08:00"
+      "released_shanghai": "2026-11-05T20:51:43+08:00",
+      "selected_candidate_update": 1500,
+      "selected_candidate_sha256": "0265a3ae26c7c446acf5a43347aaca7ad73d5c8856171c77c2b491a89e99ab2e",
+      "full_recovery_sha256": "f54a247d93f55e6df68ce1e7a27e3918ff99c80c6f5579ce25a396d436aa56ce",
+      "protected_recovery_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/finalized-fits-20261106-r1/velocity_bridge/dpt"
     },
     "velocity_bridge/dit": {
       "job_id": "job-bg106f3xulpi",
@@ -177,7 +205,11 @@
       "equivalent_epochs": 0.028998778998779,
       "worker_traceback": false,
       "early_post_PFS_seconds_per_update_including_validation": 3.2712603039108217,
-      "released_shanghai": "2026-11-05T21:20:52+08:00"
+      "released_shanghai": "2026-11-05T21:20:52+08:00",
+      "selected_candidate_update": 1200,
+      "selected_candidate_sha256": "727cdb594e90f0fa6c91e95b77d5cf1fd131bbc8e4c7bc27db811b253cabdef3",
+      "full_recovery_sha256": "519a2f875624ec85b486071742a1c673b7528cbf00b0fda774eeaf9d58a25eed",
+      "protected_recovery_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/finalized-fits-20261106-r1/velocity_bridge/dit"
     },
     "velocity_bridge/ic_iql": {
       "job_id": "job-ojb6aomewgxz",
@@ -201,19 +233,23 @@
       "equivalent_epochs": 0.028998778998779,
       "worker_traceback": false,
       "early_post_PFS_seconds_per_update_including_validation": 3.278098398969779,
-      "released_shanghai": "2026-11-05T20:40:22+08:00"
+      "released_shanghai": "2026-11-05T20:40:22+08:00",
+      "selected_candidate_update": 1700,
+      "selected_candidate_sha256": "d7790035b70471dafeaeddd7b121631f8fffd2c5cd6320f566dd7be79f85cb37",
+      "full_recovery_sha256": "78430d7dd5024f3af9859371beb498cbf9193136855ed029e8d29d87e62bd3ec",
+      "protected_recovery_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/finalized-fits-20261106-r1/velocity_bridge/ic_iql"
     }
   },
   "all_eight_GPU_probes_passed": true,
   "all_eight_full_restores_verified": true,
   "all_eight_have_new_saved_updates": true,
   "ID_OOD_rollout_writers": "held pending separate admission",
-  "active_GPUs": 8,
-  "charged_GPU_hours": 112.39268062444445,
-  "maximum_committed_GPU_hours": 143.12666666666667,
+  "active_GPUs": 0,
+  "charged_GPU_hours": 127.24555555555554,
+  "maximum_committed_GPU_hours": 127.24555555555554,
   "approved_GPU_hours": 150,
   "failed_deployment_GPU_hours": 0.057777777777777775,
-  "free_PFS_GiB": 699.19921875,
+  "free_PFS_GiB": 632.3984375,
   "storage_floor_GiB": 220,
   "CPU_tests_passed": 20,
   "full_PFS_members_verified": 37440,
@@ -239,17 +275,19 @@
     "new_wave_soft_limit_GiB": 12,
     "previous_owned_watcher": 2712066
   },
-  "next_monitor_check_shanghai": "2026-11-05T20:27:58.081281+08:00",
-  "next_check_shanghai": "2026-11-06T00:26:30.007601+08:00",
+  "next_monitor_check_shanghai": null,
+  "next_check_shanghai": null,
   "budget": {
     "approved_GPU_hours": 150,
-    "charged_GPU_hours": 125.46948756555558,
-    "maximum_committed_GPU_hours": 127.79444444444447,
-    "uncommitted_GPU_hours": 22.205555555555534,
+    "charged_GPU_hours": 127.24555555555554,
+    "maximum_committed_GPU_hours": 127.24555555555554,
+    "uncommitted_GPU_hours": 22.75444444444446,
     "proposed_total_GPU_hours": 190,
     "proposal_authorized": false,
     "main_readout_GPU_hours_allowance": 57,
-    "proposal": "migrations/pfs-members-01/READOUT-BUDGET-PROPOSAL05.json"
+    "proposal": "migrations/pfs-members-01/READOUT-BUDGET-PROPOSAL08.json",
+    "main_allowance_plus_actual_fit_GPU_hours": 184.24555555555554,
+    "eight_7p5h_reservations_plus_actual_fit_GPU_hours": 187.24555555555554
   },
   "evaluation": "Fitted deployment qualification120 complete episodes and independent raw/camera/action/history audits passed. Full24k-episode/15.12M-policy-control ID/OOD benchmark still held for direct human budget decision; no scientific success rates yet.",
   "storage": {
@@ -265,5 +303,10 @@
     "raw_recovery": "SHA-verified tar plus complete member manifest and explicit stage-back; unchanged result/audit metadata retained hot"
   },
   "closed_fit_recovery_index": "finalized-fits-20261106-r1/INDEX.json",
-  "seven_closed_fits_complete_state_SHA_and_finite_RNG_checks": true
+  "seven_closed_fits_complete_state_SHA_and_finite_RNG_checks": true,
+  "next_action": "Await existing direct human decision on proposed190GPUh ceiling; all fits complete, full scientific readout remains unlaunched",
+  "all_eight_closed_fits_complete_state_SHA_and_finite_RNG_checks": true,
+  "closed_fit_recovery_receipt": "migrations/pfs-members-01/ALL-EIGHT-FITS-RECOVERY08.json",
+  "all_allocations_release_receipt": "migrations/pfs-members-01/ALL-EIGHT-FITS-RELEASE08.json",
+  "final_validation_plot": "monitor/VALIDATION-FINAL08.png"
 }

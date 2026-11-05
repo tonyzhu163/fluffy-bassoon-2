@@ -143,6 +143,34 @@
       "max_reservation_GPU_hours": 5,
       "output": "gpu/dpt-OOD-final-01",
       "released_shanghai": "2026-11-05T06:03:23+08:00"
+    },
+    {
+      "job_id": "job-8nwofgy7ymu8",
+      "GPUs": 1,
+      "created_shanghai": "2026-11-05T23:26:30+08:00",
+      "max_reservation_GPU_hours": 4,
+      "kind": "frozen-steering-PFS-fit-continuation",
+      "purpose": "Exact full KV DIT checkpoint5485 continuation to unchanged validation stopping rule; main ID/OOD held",
+      "source_commit": "0368b3fd44d0f5cb87c70439a823296832b69428",
+      "attempt": "fit-pfs03-kv_bridge-dit",
+      "status": "Succeeded",
+      "released_shanghai": "2026-11-06T02:49:35+08:00",
+      "release_evidence": "Authenticated Baige scheduler DOM end-time column: operational checkpoint9684, not validation plateau"
+    },
+    {
+      "job_id": "job-6d32bmd1wwde",
+      "GPUs": 1,
+      "created_shanghai": "2026-11-06T02:52:17+08:00",
+      "max_reservation_GPU_hours": 4,
+      "kind": "frozen-steering-PFS-fit-continuation",
+      "purpose": "Exact full KV DIT checkpoint9684 continuation through unchanged validation stopping rule; full main ID/OOD held",
+      "source_commit": "9bef7583fa49a5ec6e3786e5e589748bd22c9948",
+      "attempt": "fit-pfs04-kv_bridge-dit",
+      "member_cache": "/mowenjie/fluffy-bassoon-2/inputs/steering-source-members-20261105-pfs01",
+      "input_checkpoint_sha256": "a209f1eb37b47909cf4b3b0c768e5fcd639e5f3bee69f2fd65d505eecc58a22a",
+      "status": "Succeeded",
+      "released_shanghai": "2026-11-06T02:56:16+08:00",
+      "release_evidence": "Authenticated Baige scheduler end-time column verified; configured validation plateau reached9700, selected9684; all8 full-state finite/Adam/RNG hashes protected"
     }
   ]
 }

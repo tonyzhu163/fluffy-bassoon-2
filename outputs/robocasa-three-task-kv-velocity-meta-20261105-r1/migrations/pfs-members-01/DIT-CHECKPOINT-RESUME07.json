@@ -1,0 +1,69 @@
+{
+  "checked_shanghai": "2026-11-06T02:51:08.402155+08:00",
+  "old_job": "job-8nwofgy7ymu8",
+  "old_source_commit": "0368b3fd44d0f5cb87c70439a823296832b69428",
+  "next_source_commit": "9bef7583fa49a5ec6e3786e5e589748bd22c9948",
+  "next_attempt": "fit-pfs04-kv_bridge-dit",
+  "training_status": {
+    "update": 9684,
+    "best_loss": 0.12103313324041665,
+    "plateau": {
+      "reference": 0.12175330985337496,
+      "stale_checks": 9,
+      "converged": false
+    },
+    "converged": false,
+    "elapsed_seconds": 42939.50169387879,
+    "stop_reason": "operational_checkpoint",
+    "native_parameters_frozen": true,
+    "interface": "kv_bridge",
+    "objective": "dit"
+  },
+  "candidate_update": 9684,
+  "policy_and_Adam_finite": true,
+  "full_sampler_global_and_flow_RNG_present": true,
+  "artifacts": {
+    "latest.pt": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/fits/kv_bridge/dit/latest.pt",
+      "sha256": "a209f1eb37b47909cf4b3b0c768e5fcd639e5f3bee69f2fd65d505eecc58a22a",
+      "bytes": 66431859
+    },
+    "candidate.pt": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/fits/kv_bridge/dit/candidate.pt",
+      "sha256": "7ccaae7048df38a90ced30530002469f1f73e1ee9cb37a17b07c8137cabb3721",
+      "bytes": 22142841
+    },
+    "training-status.json": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/fits/kv_bridge/dit/training-status.json",
+      "sha256": "230da659695e34f37f0d4613cff16a46a8e3fe4cf2da7652852dadbb80a0ff7b",
+      "bytes": 352
+    },
+    "contract.json": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/fits/kv_bridge/dit/contract.json",
+      "sha256": "8a4131b01c46e21d7bebde0018427f135f2affb2d780fc2b56c9946d9aeb3b43",
+      "bytes": 3247
+    }
+  },
+  "scheduler_release_verified": true,
+  "old_job_released_shanghai": "2026-11-06T02:49:35+08:00",
+  "old_job_scheduler_status": "Succeeded",
+  "all_closed_charged_GPU_hours": 127.17916666666667,
+  "new_job": {
+    "job_id": "job-6d32bmd1wwde",
+    "GPUs": 1,
+    "created_shanghai": "2026-11-06T02:52:17+08:00",
+    "max_reservation_GPU_hours": 4,
+    "kind": "frozen-steering-PFS-fit-continuation",
+    "purpose": "Exact full KV DIT checkpoint9684 continuation through unchanged validation stopping rule; full main ID/OOD held",
+    "source_commit": "9bef7583fa49a5ec6e3786e5e589748bd22c9948",
+    "attempt": "fit-pfs04-kv_bridge-dit",
+    "member_cache": "/mowenjie/fluffy-bassoon-2/inputs/steering-source-members-20261105-pfs01",
+    "input_checkpoint_sha256": "a209f1eb37b47909cf4b3b0c768e5fcd639e5f3bee69f2fd65d505eecc58a22a",
+    "status": "Starting"
+  },
+  "queue_idle_GPUs_at_submission": 106,
+  "queue_GPU_limit": 416,
+  "actual_hardware": "NVIDIA RPBZZZ6",
+  "maximum_committed_GPU_hours": 131.17916666666667,
+  "approved_GPU_hours": 150
+}

@@ -1,0 +1,151 @@
+{
+  "status": "reviewable_proposal_NOT_AUTHORIZED_NO_MAIN_LAUNCH",
+  "checked_shanghai": "2026-11-06T02:57:45.233749+08:00",
+  "implementation_commit": "87984718c9199797d31a158c47225cc695623afe",
+  "deployed_code": "/mowenjie/fluffy-bassoon-2/sources/steering-packed-87984718",
+  "scientific_contract_sha256": "9ce2900d4b2c33b46807e6002aef02c140162723b476a97ccc2d69f0354098df",
+  "fitted_qualification_sha256": "7b2ce0be5fb60fc2710365df6f8c4b31f50a038b36d2d49e6143f8ca4dc2c6c6",
+  "packed_storage_qualification_sha256": "df7b2f15ca749ecf908d016cb32cc81b8ba954b6436907828439c7e9ccffec65",
+  "model_count": 8,
+  "episodes": 24000,
+  "policy_controls": 15120000,
+  "horizons": [
+    600,
+    600,
+    600,
+    900,
+    450
+  ],
+  "native_draws_and_original_cases_unchanged": true,
+  "benchmark_SGD": 0,
+  "full_matrix_no_truncation": true,
+  "selected_candidates": {
+    "kv_bridge/ad": {
+      "converged": true,
+      "latest_update": 2900,
+      "best_validation_loss": 0.12998429453000426,
+      "sha256": "f7085e4a6940546e32e46710314ac4fa4319e6179e69e23320e486d48345ad74",
+      "selection": "Lowest held-out flow loss; freeze only after configured validation stopping rule",
+      "selected_update": 2900
+    },
+    "kv_bridge/dpt": {
+      "converged": true,
+      "latest_update": 4900,
+      "best_validation_loss": 0.10406972863711417,
+      "sha256": "7a0c4f6c3fbb92f54c3b6f0d9a36828e8d16fce2e5970b73a23ce77e8286f217",
+      "selection": "Lowest held-out flow loss; freeze only after configured validation stopping rule",
+      "selected_update": 4900
+    },
+    "kv_bridge/dit": {
+      "converged": true,
+      "latest_update": 9700,
+      "best_validation_loss": 0.12103313324041665,
+      "sha256": "7ccaae7048df38a90ced30530002469f1f73e1ee9cb37a17b07c8137cabb3721",
+      "selection": "Lowest held-out flow loss; freeze only after configured validation stopping rule",
+      "selected_update": 9684
+    },
+    "kv_bridge/ic_iql": {
+      "converged": true,
+      "latest_update": 2900,
+      "best_validation_loss": 0.13021480664610863,
+      "sha256": "24885ed79be9bcefc524397c3f51757eb5408f6f11fab202a94737097fba2b3b",
+      "selection": "Lowest held-out flow loss; freeze only after configured validation stopping rule",
+      "selected_update": 2900
+    },
+    "velocity_bridge/ad": {
+      "converged": true,
+      "latest_update": 1900,
+      "best_validation_loss": 0.1336060776375234,
+      "sha256": "04701478c2f3f850b8ce0329855f334732212d4186ae9502e4d97a08a3bab9ca",
+      "selection": "Lowest held-out flow loss; freeze only after configured validation stopping rule",
+      "selected_update": 1200
+    },
+    "velocity_bridge/dpt": {
+      "converged": true,
+      "latest_update": 1900,
+      "best_validation_loss": 0.1094971769489348,
+      "sha256": "0265a3ae26c7c446acf5a43347aaca7ad73d5c8856171c77c2b491a89e99ab2e",
+      "selection": "Lowest held-out flow loss; freeze only after configured validation stopping rule",
+      "selected_update": 1500
+    },
+    "velocity_bridge/dit": {
+      "converged": true,
+      "latest_update": 1900,
+      "best_validation_loss": 0.1353502501733601,
+      "sha256": "727cdb594e90f0fa6c91e95b77d5cf1fd131bbc8e4c7bc27db811b253cabdef3",
+      "selection": "Lowest held-out flow loss; freeze only after configured validation stopping rule",
+      "selected_update": 1200
+    },
+    "velocity_bridge/ic_iql": {
+      "converged": true,
+      "latest_update": 1900,
+      "best_validation_loss": 0.13382872426882386,
+      "sha256": "d7790035b70471dafeaeddd7b121631f8fffd2c5cd6320f566dd7be79f85cb37",
+      "selection": "Lowest held-out flow loss; freeze only after configured validation stopping rule",
+      "selected_update": 1700
+    }
+  },
+  "measured_costs": {
+    "kv_bridge": {
+      "measured_B8_controls_per_second": 88.72064508385144,
+      "measured_conservative_B1_controls_per_second": 15.838725056667506,
+      "bulk_policy_controls": 7257600,
+      "tail_policy_controls": 302400,
+      "tail_cost_model": "Conservatively charge two B1 serial cases for each B2 tail",
+      "estimated_GPU_hours": 28.02646598365572
+    },
+    "velocity_bridge": {
+      "measured_B8_controls_per_second": 90.93083594550754,
+      "measured_conservative_B1_controls_per_second": 15.96034357855304,
+      "bulk_policy_controls": 7257600,
+      "tail_policy_controls": 302400,
+      "tail_cost_model": "Conservatively charge two B1 serial cases for each B2 tail",
+      "estimated_GPU_hours": 27.433741465939413
+    }
+  },
+  "estimated_wave_GPU_hours": 55.46020744959513,
+  "setup_allowance_GPU_hours": 0.38250430001152885,
+  "estimated_inference_plus_setup_GPU_hours": 55.84271174960666,
+  "requested_readout_allowance_GPU_hours": 57,
+  "charged_so_far_GPU_hours": 127.24555555555554,
+  "maximum_committed_fits_and_qualifications_GPU_hours": 127.24555555555554,
+  "current_approved_GPU_hours": 150,
+  "proposed_total_GPU_hour_ceiling": 190,
+  "proposed_increase_GPU_hours": 40,
+  "remaining_closeout_and_fit_resume_margin_GPU_hours": 5.754444444444459,
+  "maximum_reservation_eight_7p5h_jobs_GPU_hours": 187.24555555555554,
+  "authority": "Proposal only; keep actual150 hard cap until direct human approval and canonical ledger/admission receipt updated",
+  "unmeasured_limits": "B8 measured on OpenDrawer; B1 measured on CloseFridge. Other task and B2 timings may vary; use measured actual costs, guards and complete-wave resumes rather than reduce cases/horizons",
+  "storage": {
+    "current_free_GiB": 632.3984375,
+    "minimum_admission_free_GiB": 411,
+    "protected_shared_floor_GiB": 220,
+    "other_reserved_RoboTwin_GiB": 125,
+    "source_future_GiB": 20,
+    "fit_future_GiB": 6,
+    "additional_readout_hot_GiB": 40,
+    "new_wave_soft_limit_GiB": 12,
+    "archive_workers": 4,
+    "packed_concurrent_verified_MiB_per_second": 32.76911946112714,
+    "required_archive_MiB_per_second": 22,
+    "raw_only_inspection": "Unchanged result/audit metadata retained at original PFS paths; raw references explicitly stage back from SHA-verified tar before inspection",
+    "whole_hot_raw_estimate_GiB": 360,
+    "full_hot_raw_not_reserved": true,
+    "blocked_wave_behavior": "Exit allocation before starting another wave; no GPU waiting loop, incomplete evidence retained",
+    "maximum_normal_wave_allowance_seconds": 1200,
+    "archive_heartbeat_max_age_seconds": 600
+  },
+  "authorization_gate": "EVAL-JOINT.sh requires READOUT-ADMISSION.json, direct human budget authority, matching candidate/qualification/contract/source hashes, current packed watcher heartbeat, free storage and canonical GPU-hour headroom",
+  "supersedes": "READOUT-BUDGET-PROPOSAL07.json",
+  "eight_simultaneous_7p5h_reservations_admissible_under_proposed190": true,
+  "main_point_estimate_plus_maximum_fit_commitment_GPU_hours": 183.0882673051622,
+  "main_allowance_plus_maximum_fit_commitment_GPU_hours": 184.24555555555554,
+  "admission_strategy": "All8 fits closed and candidates pinned. Eight7.5h slots fit proposed190 ceiling after exact fit release reconciliation; start only after direct human approval and matching admission/ledger update. Rolling admission remains available. Full24k-episode15.12M-control scientific matrix unchanged.",
+  "fit_reservation": {
+    "active": false,
+    "final_job_id": "job-6d32bmd1wwde",
+    "released_shanghai": "2026-11-06T02:56:16+08:00"
+  },
+  "maximum_reservation_seven_7p5h_jobs_GPU_hours": 179.74555555555554,
+  "actual150_full_matrix_admissible": false
+}
