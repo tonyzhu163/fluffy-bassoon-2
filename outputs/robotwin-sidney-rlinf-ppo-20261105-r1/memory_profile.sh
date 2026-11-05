@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 TASK_SOURCE=${1:?source};TASK_OUT=${2:?fresh output}
 TASK_SCENES=${3:-16};[[ $TASK_SCENES == 16 || $TASK_SCENES == 64 ]]
-TASK_PROFILE_MODE=${4:-full};[[ $TASK_PROFILE_MODE == full || $TASK_PROFILE_MODE == paired ]]
+TASK_PROFILE_MODE=${4:-full};[[ $TASK_PROFILE_MODE == full || $TASK_PROFILE_MODE == paired || $TASK_PROFILE_MODE == repeat ]]
 TASK_ACCOUNTING_RANK=${5:-0};[[ $TASK_ACCOUNTING_RANK =~ ^[0-3]$ ]]
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python
@@ -27,5 +27,5 @@ if [[ ! -e /root/.sapien/physx/105.1-physx-5.3.1.patch0 ]]; then
   ln -s /mowenjie/fluffy-bassoon/inputs/maniskill-scene-assets-20261028-r1/physx/105.1-physx-5.3.1.patch0 /root/.sapien/physx/105.1-physx-5.3.1.patch0
 fi
 TASK_LIMIT=1100;if [[ $TASK_SCENES == 64 ]]; then TASK_LIMIT=1700; fi
-if [[ $TASK_PROFILE_MODE == paired ]]; then TASK_LIMIT=2300; fi
+if [[ $TASK_PROFILE_MODE != full ]]; then TASK_LIMIT=2300; fi
 timeout --signal=INT --kill-after=15s "$TASK_LIMIT" "$TASK_PYTHON" "$(dirname "${BASH_SOURCE[0]}")/memory_profile.py" > "$TASK_OUT/profile.log" 2>&1

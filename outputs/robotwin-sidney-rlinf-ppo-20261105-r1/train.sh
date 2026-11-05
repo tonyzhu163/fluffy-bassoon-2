@@ -100,7 +100,7 @@ for event in memory['events']:
 assert memory['paired_reset_rgb_bit_identity']
 assert memory['paired_reset_max_abs']['states']<=1e-6
 assert memory['paired_motor_prefix_state_max_abs']<=1e-6 and memory['paired_motor_prefix_reward_identity']
-selected=[row for row in memory['snapshots'] if row['stage'].startswith('round2/')]
+selected=[row for row in memory['snapshots'] if row['stage'].startswith(f"round{memory.get('per_close_round_index',2)}/")]
 peak=max(max(row['smaps']['Rss'],row.get('reset_peak',{}).get('rss_bytes',0)) for row in selected)
 headroom_allowances=dict(environment_runtime_per_rank_bytes=10*2**30,
     other_workers_bytes=80*2**30,pending_rollout_and_checkpoint_bytes=64*2**30)

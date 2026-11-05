@@ -151,3 +151,20 @@ freshpilot controls/allowances below its300,000 partition. Runtime40min/1GPU;
 conservativecompleted25,274+2,440diagnostic+41,040production=68,754GPU-seconds
 within20additionalGPUh. This is a diagnostic continuation, not scientific scope
 expansion. Active memory02 worktree and journals are immutable.
+
+
+Memory03 lowered64-scene reset peak to56.120GiB and had bit-identical initial
+RGB/14Dstates, but its post50hold assertion failed before candidate error/reward
+was persisted. No production admission follows. Memory04 adds native-native
+repeat control, exposed qvel/root/object pose/velocity/contact and bookkeeping
+probes, exact actual action hashes/raw outcomes, and per-case differences saved
+before every gate. Restore identical Python/NumPy/Torch/CUDA hold RNG as a
+model-free diagnostic control; this does not change production RNG behavior.
+Keep1e-6state and exact reward/termination/truncation/mask gates unchanged.
+
+Freshmemory04 uses1GPU/64CPU/256GiB/40min and journalrank2, originalsource seed
+partition0, at most9,600physical controls+2,560constructor/reset allowances.
+Rank2wouldbe72,960plus212,480freshPPO=285,440<300,000. Completedconservative
+additional26,602+2,440diagnostic+41,040PPO=70,082GPU-seconds<72,000(20h); keep
+all failed/unresolved charges. Scientificupdatesremain0. Never modify prior
+active/terminal worktrees or silently relax a tolerance to obtain admission.
