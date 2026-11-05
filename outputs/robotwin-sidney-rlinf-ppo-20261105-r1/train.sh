@@ -75,19 +75,7 @@ PY
 cd "$TASK_CODE"
 # Compose/validate the actual source configuration inside the allocation before
 # model initialization. It keeps global2048 and only tunes execution microbatch.
-"$TASK_PYTHON" - "$TASK_CODE" "$TASK_MICRO" <<'PY'
-import importlib.util,json,sys,os
-from pathlib import Path
-from hydra import compose,initialize_config_dir
-from omegaconf import OmegaConf
-root=Path(sys.argv[1]);micro=int(sys.argv[2])
-spec=importlib.util.spec_from_file_location('sidney_validation',root/'outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train_entry.py')
-module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
-with initialize_config_dir(version_base='1.1',config_dir=str(root/'configs/native_ppo')):
-    cfg=compose(config_name='sidney_phone_two',overrides=[f'actor.micro_batch_size={micro}'])
-contract=module.validate_sidney(cfg)
-Path(os.environ['NATIVE_PPO_OUTPUT'],'config-validation.json').write_text(json.dumps(contract,indent=2)+'\n')
-PY
+"$TASK_PYTHON" "$TASK_RUN_CODE/validate_config.py" "$TASK_CODE" "$TASK_MICRO"
 timeout --signal=INT --kill-after=20s 1380 "$TASK_PYTHON" "$TASK_RUN_CODE/train_entry.py" \
   --config-path "$TASK_CODE/configs/native_ppo" --config-name sidney_phone_two \
   "actor.micro_batch_size=$TASK_MICRO" > "$TASK_OUT/train.log" 2>&1

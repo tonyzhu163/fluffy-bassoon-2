@@ -79,3 +79,10 @@ if [[ -n $TASK_FP32 ]]; then TASK_EXTRA+=(--fp32-reference "$TASK_FP32"); fi
 timeout --signal=TERM --kill-after=15s 900 "$TASK_PYTHON" "$TASK_RUN_CODE/qualify_rlinf.py" \
   --vectors "$TASK_INPUTS/vectors" --reference "$TASK_INPUTS/native-reference" \
   --model "$TASK_CACHE" --output "$TASK_OUT/rlinf" "${TASK_EXTRA[@]}" > "$TASK_OUT/rlinf.log" 2>&1
+export ROBOTWIN_ASSETS_PATH=$ROBOTWIN_PATH
+export NATIVE_PPO_WORLD=8 NATIVE_PPO_PLACEMENT=0-7 NATIVE_PPO_MODE=train
+export NATIVE_PPO_OUTPUT=$TASK_OUT NATIVE_PPO_ACCOUNTING_ROOT=$TASK_OUT/action-accounting
+export NATIVE_PPO_MODEL=$TASK_CACHE NATIVE_PPO_DEADLINE=$((TASK_STARTED+1800))
+export NATIVE_PPO_INITIALIZER_REVISION=e49e2ab6c11f07511573b67261bd129e88d0a416
+TASK_MICRO=$("$TASK_PYTHON" -c 'import json,sys;print(json.load(open(sys.argv[1]))["execution_microbatch"])' "$TASK_OUT/rlinf/RESULT.json")
+"$TASK_PYTHON" "$TASK_RUN_CODE/validate_config.py" "$TASK_CODE" "$TASK_MICRO" > "$TASK_OUT/config-validation.log" 2>&1
