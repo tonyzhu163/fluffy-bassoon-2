@@ -23,9 +23,13 @@ from fluffy_bassoon.meta_rl.rlinf_native_ppo import write
 
 
 class BenchmarkActor(SidneyActor):
-    def benchmark(self):
+    def benchmark(self, execution_micro=None):
+        micro=int(execution_micro or self.cfg.actor.micro_batch_size)
+        self.cfg.actor.micro_batch_size=micro
+        self.gradient_accumulation=2048//(self._world_size*micro)
         root=Path(self.cfg.native_pilot.output)
-        micro=int(self.cfg.actor.micro_batch_size);local=2048//self._world_size
+        if execution_micro is not None:root=root/f'micro-{micro}'
+        local=2048//self._world_size
         assert self._world_size==4 and local%micro==0
         report=dict(rank=self._rank,micro=micro,local_global_batch=local,
             accumulation=local//micro,scientific_training=False,updates=[])
@@ -51,6 +55,7 @@ class BenchmarkActor(SidneyActor):
                 denoise_inds=sampled['forward_sampling_fields']['denoise_inds'],
                 tokenized_prompt=prepared.tokenized_prompt.cpu(),
                 tokenized_prompt_mask=prepared.tokenized_prompt_mask.cpu())
+            sampled_logprobs=sampled['old_logprobs']
             index=torch.arange(local)%64
             inputs={k:v.index_select(0,index).contiguous() for k,v in base.items()}
             del base,prepared,repacked,raw,initial,sampled
@@ -70,6 +75,10 @@ class BenchmarkActor(SidneyActor):
             report['reference_peak_allocated_bytes']=torch.cuda.max_memory_allocated()
             write(path,report)
             old_logprobs=torch.cat([p[0] for p in parts]);old_values=torch.cat([p[1] for p in parts])
+            if micro==64 and self.optimizer_steps==0:
+                report['initial_saved_rollout_max_abs_error']=float((old_logprobs-sampled_logprobs.repeat(8,1,1)).abs().max())
+                assert report['initial_saved_rollout_max_abs_error']<=1e-3
+                write(path,report)
             advantages=torch.linspace(-1.,1.,local)[:,None]
             batch=dict(forward_inputs=inputs,prev_logprobs=old_logprobs,prev_values=old_values,
                 advantages=advantages,returns=old_values+advantages,
@@ -85,6 +94,8 @@ class BenchmarkActor(SidneyActor):
                         if isinstance(value,dict) else value[start:start+micro]) for k,value in batch.items()}
                     EmbodiedFSDPActor.train_micro_batch(self,part,metrics,is_last=start+micro==local)
                     del part
+                # Match the unchanged native per-global-batch cleanup exactly.
+                self.torch_platform.empty_cache()
                 grad_norm,_=self.optimizer_step();self.optimizer.zero_grad()
                 torch.cuda.synchronize();elapsed=time.monotonic()-started
                 maximum=torch.tensor(elapsed,device=self.device)
@@ -114,9 +125,16 @@ def main(cfg):
         placement_strategy=placement.get_strategy('actor'))
     try:
         actor.init_worker().wait()
-        results=actor.benchmark().wait()
-        write(Path(cfg.native_pilot.output)/'RESULT.json',dict(status='complete',ranks=results,
-            scientific_training=False,source_commit=os.environ['TASK_SOURCE']))
+        if os.environ.get('TASK_SINGLE_GROUP_SWEEP')=='1':
+            for micro in (64,128,256,512):
+                results=actor.benchmark(micro).wait()
+                write(Path(cfg.native_pilot.output)/f'micro-{micro}/RESULT.json',
+                    dict(status='complete',ranks=results,scientific_training=False,
+                        source_commit=os.environ['TASK_SOURCE']))
+        else:
+            results=actor.benchmark().wait()
+            write(Path(cfg.native_pilot.output)/'RESULT.json',dict(status='complete',ranks=results,
+                scientific_training=False,source_commit=os.environ['TASK_SOURCE']))
     finally:
         actor._close();ray.shutdown()
 

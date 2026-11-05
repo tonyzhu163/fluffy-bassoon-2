@@ -25,6 +25,18 @@ export NATIVE_PPO_DEADLINE=$(($(date +%s)+1500))
 "$TASK_PYTHON" "$TASK_CODE/scripts/[train]gpu_probe.py" --baige-container \
   --baige-exclusive-training --purpose training --expected-count 4 --output "$TASK_OUT/gpu-probe.json" > "$TASK_OUT/probe.log" 2>&1
 export LYCO_BAIGE_GPU_MAP=$TASK_OUT/gpu-probe.json
+if [[ ${TASK_SINGLE_GROUP_SWEEP:-0} == 1 ]]; then
+  export NATIVE_PPO_OUTPUT=$TASK_OUT NATIVE_PPO_ACCOUNTING_ROOT=$TASK_OUT/not-used
+  export PYTORCH_ALLOC_CONF=expandable_segments:True
+  set +e
+  timeout --signal=INT --kill-after=15s 1200 "$TASK_PYTHON" "$TASK_RUN_CODE/throughput.py" \
+    actor.micro_batch_size=64 > "$TASK_OUT/console.log" 2>&1
+  TASK_RC=$?
+  set -e
+  printf '{"exit_code":%s}\n' "$TASK_RC" > "$TASK_OUT/EXIT.json"
+  "$TASK_PYTHON" -m ray.scripts.scripts stop --force > "$TASK_OUT/ray-stop.log" 2>&1 || true
+  exit "$TASK_RC"
+fi
 for TASK_MICRO in 64 128 256 512; do
   export NATIVE_PPO_OUTPUT=$TASK_OUT/micro-$TASK_MICRO
   export NATIVE_PPO_ACCOUNTING_ROOT=$NATIVE_PPO_OUTPUT/not-used
