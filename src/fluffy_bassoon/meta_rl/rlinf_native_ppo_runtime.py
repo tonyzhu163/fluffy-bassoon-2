@@ -6,6 +6,7 @@ Sidecars are whole-iteration recovery, not an in-flight physics checkpoint.
 from concurrent.futures import ThreadPoolExecutor
 import gzip
 import hashlib
+import json
 import os
 from pathlib import Path
 import time
@@ -18,6 +19,7 @@ from rlinf.workers.rollout.hf.huggingface_worker import MultiStepRolloutWorker
 
 from .rlinf_native_ppo import (ActionJournal, cpu_tree, retained_batch, restore_rng, sha,
     snapshot_rng, tensor_hash, validate_recipe, write)
+from .tensor_archive import write_tensor
 
 
 def _write_sampling_record(path, record, env_obs_cpu, actions_cpu):
@@ -30,8 +32,7 @@ def _write_sampling_record(path, record, env_obs_cpu, actions_cpu):
 
 def save_tensor(path, value):
     path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_suffix(path.suffix + '.tmp')
-    torch.save(value, temporary); temporary.replace(path)
+    write_tensor(path, value)
     return dict(path=str(path), sha256=sha(path))
 
 
@@ -106,7 +107,14 @@ class SidecarMixin:
                     f'iteration-{producing_iteration(self)+1:04d}-policy-{producing_iteration(self):04d}-rank-{self._rank:02d}.json')
                 if not receipt.is_file():
                     raise RuntimeError('Canonical rollout archive required before dropping duplicate sidecar fields')
+                reference=json.loads(receipt.read_text())
+                archive=Path(reference['path'])
+                if not (reference.get('completed') and reference['rank']==self._rank
+                        and reference['producing_policy_iteration']==producing_iteration(self)
+                        and archive.is_file() and sha(archive)==reference['sha256']):
+                    raise RuntimeError('Canonical rollout reference failed integrity validation')
                 state['canonical_rollout_receipt']=str(receipt)
+                state['canonical_rollout_reference']={key:reference[key] for key in ('path','sha256')}
                 state['sidecar_dropped_rollout_fields']=list(drop)
                 batch=retained_batch(batch,drop)
             state['rollout_batch'] = cpu_tree(batch) if retain_rollout else None
@@ -175,8 +183,15 @@ class PilotActor(SidecarMixin, EmbodiedFSDPActor):
         policy_iteration = producing_iteration(self)
         path = Path(self.cfg.native_pilot.output) / 'training-rollouts' / (
             f'iteration-{policy_iteration+1:04d}-policy-{policy_iteration:04d}-rank-{self._rank:02d}.pt')
-        if path.exists() or path.with_suffix('.json').exists():
+        receipt_path = path.with_suffix('.json')
+        compressed_path = path.with_suffix('.pt.gz')
+        if path.exists() or compressed_path.exists() or receipt_path.exists():
             raise RuntimeError('Chronological rollout archive already exists; never overwrite a policy version')
+        compression = self.cfg.native_pilot.get('canonical_compression', 'none')
+        if compression not in ('none', 'gzip'):
+            raise ValueError('canonical_compression must be none or gzip')
+        if compression == 'gzip':
+            path = compressed_path
         value = dict(format='rlinf_native_ppo_chronological_rollout_v1',
             collection_iteration=policy_iteration+1, producing_policy_iteration=policy_iteration,
             worker_policy_version=getattr(self, 'version', None), rank=self._rank,
@@ -191,7 +206,8 @@ class PilotActor(SidecarMixin, EmbodiedFSDPActor):
             evaluation_data=False, source6_pretraining_admission=False)
         receipt = save_tensor(path, value)
         from .rlinf_native_ppo_data import FORMAT, shape_tree
-        write(path.with_suffix('.json'), dict(receipt, completed=True, capture_format=FORMAT,
+        write(receipt_path, dict(receipt, completed=True, capture_format=FORMAT,
+            compression=compression, bytes=path.stat().st_size,
             collection_iteration=policy_iteration+1, producing_policy_iteration=policy_iteration,
             rank=self._rank, optimizer_steps_before=self.optimizer_steps,
             fields=sorted(self.rollout_batch), field_shapes=shape_tree(self.rollout_batch),

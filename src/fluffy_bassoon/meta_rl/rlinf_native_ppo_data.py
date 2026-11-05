@@ -15,7 +15,7 @@ FIELD_PATHS = {
     'native14D_motor_action': 'traces:proposed_motor_actions plus outputs[4][-1].valid_action_mask; inactive padded rows are preserved',
     'actual_duration': 'traces:executed_or_conservative_duration (measured_valid_mask marks actual versus conservative)',
     'raw_reward_term_trunc': 'traces:outputs[1],outputs[2],outputs[3]',
-    'raw_untrimmed_bootstrap': 'training-rollouts/*.pt:rollout_batch.prev_values,dones,terminations,truncations (final rows retained)',
+    'raw_untrimmed_bootstrap': 'training-rollouts/*.pt or *.pt.gz (read_tensor):rollout_batch.prev_values,dones,terminations,truncations (final rows retained)',
     'processed_current_inputs': 'training-rollouts:rollout_batch.forward_inputs (raw replay inputs plus tokenized prompt)',
     'policy_statistics': 'training-rollouts:rollout_batch.prev_logprobs,prev_values,advantages,returns,loss_mask,loss_mask_sum,versions',
     'flow_chain32D': 'training-rollouts:rollout_batch.forward_inputs.chains,denoise_inds,model_action',

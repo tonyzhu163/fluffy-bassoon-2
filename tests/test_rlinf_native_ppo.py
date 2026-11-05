@@ -173,12 +173,13 @@ def test_sampler_and_eval_rng_survive_whole_boundary_restore(tmp_path):
         worker.pilot_restore(str(tmp_path))
 
 
-def test_original_rollout_is_saved_before_official_training_shuffle(monkeypatch, tmp_path):
+@pytest.mark.parametrize('compression', ['none', 'gzip'])
+def test_original_rollout_is_saved_before_official_training_shuffle(monkeypatch, tmp_path, compression):
     import torch
     from fluffy_bassoon.meta_rl import rlinf_native_ppo_runtime as runtime
     actor = object.__new__(runtime.PilotActor)
     from omegaconf import OmegaConf
-    actor.cfg = SimpleNamespace(native_pilot=OmegaConf.create(dict(output=str(tmp_path))),
+    actor.cfg = SimpleNamespace(native_pilot=OmegaConf.create(dict(output=str(tmp_path),canonical_compression=compression)),
         env=SimpleNamespace(train=SimpleNamespace(rollout_epoch=4)))
     actor._rank = 0; actor.optimizer_steps = 0
     actor.model = SimpleNamespace(set_global_step=lambda step: None)
@@ -192,25 +193,59 @@ def test_original_rollout_is_saved_before_official_training_shuffle(monkeypatch,
         return {'unchanged_metric': 1}
     monkeypatch.setattr(runtime.EmbodiedFSDPActor, 'compute_advantages_and_returns', official_adv)
     assert actor.compute_advantages_and_returns() == {'unchanged_metric': 1}
-    saved = torch.load(next((tmp_path/'training-rollouts').glob('*.pt')), weights_only=False)
+    from fluffy_bassoon.meta_rl.tensor_archive import read_tensor
+    suffix = '*.pt.gz' if compression == 'gzip' else '*.pt'
+    saved = read_tensor(next((tmp_path/'training-rollouts').glob(suffix)))
     assert torch.equal(saved['rollout_batch']['prev_values'], final_values)
     assert saved['rollout_batch']['forward_inputs']['chains'].shape[2] == 6
     assert saved['producing_policy_iteration'] == 0 and saved['collection_iteration'] == 1
     assert saved['evaluation_data'] is False
     actor.rollout_batch['prev_values'] = final_values[:-1].flatten()
     assert torch.equal(saved['rollout_batch']['prev_values'], final_values)
-    first_path = next((tmp_path/'training-rollouts').glob('*.pt'))
+    first_path = next((tmp_path/'training-rollouts').glob(suffix))
     first_sha = sha(first_path)
     actor.rollout_batch['prev_values'] = final_values
     actor.set_global_step(1)
     actor.compute_advantages_and_returns()
-    paths = sorted((tmp_path/'training-rollouts').glob('*.pt'))
+    paths = sorted((tmp_path/'training-rollouts').glob(suffix))
     assert len(paths) == 2 and sha(first_path) == first_sha
-    second = torch.load(paths[1], weights_only=False)
+    second = read_tensor(paths[1])
     assert second['producing_policy_iteration'] == 1 and second['collection_iteration'] == 2
     assert not hasattr(actor, 'global_step')
     with pytest.raises(RuntimeError, match='never overwrite'):
         actor.compute_advantages_and_returns()
+
+
+def test_actor_sidecar_requires_intact_canonical_images(tmp_path):
+    import torch
+    from omegaconf import OmegaConf
+    from fluffy_bassoon.meta_rl.rlinf_native_ppo import write
+    from fluffy_bassoon.meta_rl.rlinf_native_ppo_runtime import SidecarMixin
+    from fluffy_bassoon.meta_rl.tensor_archive import read_tensor,write_tensor
+    class Actor(SidecarMixin):
+        pilot_role='actor'
+    actor=Actor();actor._rank=0;actor.version=0;actor.optimizer_steps=1
+    actor.grad_scaler=SimpleNamespace(state_dict=lambda:{'scale':1.})
+    actor.cfg=SimpleNamespace(native_pilot=OmegaConf.create(dict(output=str(tmp_path),sidecar_batch_drop=[
+        'forward_inputs.observation/image','forward_inputs.observation/wrist_image'])))
+    actor.rollout_batch={'forward_inputs':{'observation/image':torch.ones(2,3,dtype=torch.uint8),
+        'observation/wrist_image':torch.ones(2,2,3,dtype=torch.uint8),'chains':torch.arange(6.)},
+        'prev_logprobs':torch.tensor([-.2,-.3])}
+    with pytest.raises(RuntimeError,match='archive required'):
+        actor.pilot_capture(tmp_path/'recovery',retain_rollout=True)
+    canonical=tmp_path/'training-rollouts/iteration-0001-policy-0000-rank-00.pt.gz'
+    write_tensor(canonical,{'rollout_batch':actor.rollout_batch})
+    receipt=canonical.with_name('iteration-0001-policy-0000-rank-00.json')
+    write(receipt,dict(path=str(canonical),sha256=sha(canonical),completed=True,rank=0,producing_policy_iteration=0))
+    actor.pilot_capture(tmp_path/'recovery',retain_rollout=True)
+    sidecar=read_tensor(tmp_path/'recovery/actor-00.pt')
+    assert set(sidecar['rollout_batch']['forward_inputs'])=={'chains'}
+    assert torch.equal(sidecar['rollout_batch']['prev_logprobs'],actor.rollout_batch['prev_logprobs'])
+    assert torch.equal(read_tensor(canonical)['rollout_batch']['forward_inputs']['observation/image'],
+        actor.rollout_batch['forward_inputs']['observation/image'])
+    canonical.write_bytes(b'changed')
+    with pytest.raises(RuntimeError,match='integrity'):
+        actor.pilot_capture(tmp_path/'recovery',retain_rollout=True)
 
 
 def test_native_history_multirank_episode_contract(monkeypatch, tmp_path):
