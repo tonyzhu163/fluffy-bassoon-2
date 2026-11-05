@@ -53,6 +53,8 @@ def single(args):
                 '--output', str(fit), '--execution-batch', str(args.execution_batch), '--max-seconds', str(seconds)]
             if args.resume_contract_commit:
                 command += ['--resume-contract-commit', args.resume_contract_commit]
+            if args.member_cache:
+                command += ['--member-cache', str(args.member_cache)]
             process = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT)
             while process.poll() is None:
                 if stopped:
@@ -104,6 +106,7 @@ def main():
         p.add_argument('--'+name, type=Path, required=True)
     p.add_argument('--commit', required=True)
     p.add_argument('--resume-contract-commit')
+    p.add_argument('--member-cache', type=Path)
     p.add_argument('--attempt', required=True)
     p.add_argument('--qualification', type=Path, required=True)
     p.add_argument('--execution-batch', type=int, default=8)

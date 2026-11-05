@@ -27,15 +27,19 @@ for row in d['allocations']:
     own|=row['job_id']==os.environ['HOSTNAME'].removesuffix('-master-0')
 hours=int(os.environ['STEERING_HOURS']);assert 1<=hours<=9
 assert reserved+(0 if own else hours)<=150
-v=os.statvfs(r);assert v.f_bavail*v.f_frsize>220*2**30
+minimum_free=int(os.environ.get('STEERING_MIN_FREE_GIB','220'));assert minimum_free>=96
+v=os.statvfs(r);assert v.f_bavail*v.f_frsize>minimum_free*2**30
 q=json.loads(Path(os.environ['STEERING_QUALIFICATION']).read_text());assert q['passed']
-print(json.dumps(dict(approved_GPU_hours=150,maximum_new_reservation_GPU_hours=hours,committed_GPU_hours=reserved,free_PFS_GiB=v.f_bavail*v.f_frsize/2**30)))
+print(json.dumps(dict(approved_GPU_hours=150,maximum_new_reservation_GPU_hours=hours,committed_GPU_hours=reserved,minimum_free_PFS_GiB=minimum_free,free_PFS_GiB=v.f_bavail*v.f_frsize/2**30)))
 PY
 PROBE=$ROOT/$RUN/probes/$STEERING_ATTEMPT.json
 "$PY" -B "$STEERING_CODE/scripts/[train]gpu_probe.py" --expected-count 1 --purpose training --baige-container --baige-exclusive-training --output "$PROBE"
 EXTRA=()
 if [[ -n ${STEERING_RESUME_CONTRACT_COMMIT:-} ]]; then
     EXTRA+=(--resume-contract-commit "$STEERING_RESUME_CONTRACT_COMMIT")
+fi
+if [[ -n ${STEERING_MEMBER_CACHE:-} ]]; then
+    EXTRA+=(--member-cache "$STEERING_MEMBER_CACHE")
 fi
 DEADLINE=$(( $(date +%s) + STEERING_HOURS * 3600 - 1800 ))
 timeout --signal=TERM --kill-after=120s "$(( STEERING_HOURS * 3600 - 900 ))" "$PY" -B "$STEERING_CODE/$RUN/MATRIX.py" --single --code "$STEERING_CODE" --commit "$STEERING_COMMIT" --attempt "$STEERING_ATTEMPT" --probe "$PROBE" --qualification "$STEERING_QUALIFICATION" --execution-batch "${STEERING_EXECUTION_BATCH:-8}" --interface "$STEERING_INTERFACE" --objective "$STEERING_OBJECTIVE" --deadline "$DEADLINE" "${EXTRA[@]}"

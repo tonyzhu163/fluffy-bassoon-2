@@ -19,9 +19,18 @@ from .vla_history import file_sha256
 
 
 class FlowSourceQueries:
-    def __init__(self, sources, codec, *, cached_members=16, read_attempts=5, retry_delay=.25):
+    def __init__(self, sources, codec, *, cached_members=16, read_attempts=5, retry_delay=.25,
+                 member_cache=None):
         self.codec, self.sources, self.members, self.cache = codec, {}, {}, OrderedDict()
         self.archive_paths = {}
+        self.member_cache = Path(member_cache) if member_cache is not None else None
+        cache_manifest = None
+        if self.member_cache is not None:
+            cache_manifest = json.loads((self.member_cache / 'CACHE.json').read_text())
+            if (cache_manifest.get('format') != 'flow_source_member_cache_v1'
+                    or cache_manifest.get('completed') is not True
+                    or set(cache_manifest.get('sources', {})) != set(sources)):
+                raise ValueError('Require a complete cache for the exact source tasks')
         if type(read_attempts) is not int or read_attempts < 1 or not 0 <= retry_delay <= 10:
             raise ValueError("Require bounded source-read attempts and retry delay")
         self.read_attempts, self.retry_delay = read_attempts, retry_delay
@@ -36,6 +45,12 @@ class FlowSourceQueries:
             lookup = {(r["rank"], r["version"], r["chunk"]): r for r in rows}
             if len(lookup) != len(rows):
                 raise ValueError("Ambiguous chronological source member identity")
+            if cache_manifest is not None:
+                cached = cache_manifest['sources'][task]
+                if (cached['index_sha256'] != source['index_sha256']
+                        or cached['members'] != len(rows)
+                        or cached['bytes'] != sum(row['bytes'] for row in rows)):
+                    raise ValueError('PFS member cache differs from the bound source index')
             self.archive_paths[task] = source["archive"]
             self.sources[task] = None
             self.members[task] = lookup
@@ -62,6 +77,11 @@ class FlowSourceQueries:
         transient = {errno.EIO, errno.ESTALE, errno.ETIMEDOUT, errno.EAGAIN, errno.EBUSY, errno.EINTR}
         for attempt in range(self.read_attempts):
             try:
+                if self.member_cache is not None:
+                    raw = (self.member_cache / task / (row['sha256'] + '.pt.gz')).read_bytes()
+                    if len(raw) != row['bytes'] or hashlib.sha256(raw).hexdigest() != row['sha256']:
+                        raise ValueError(f'PFS source member failed byte/hash verification: {task}')
+                    return raw
                 if self.sources.get(task) is None:
                     self.sources[task] = os.open(self.archive_paths[task], os.O_RDONLY)
                 parts, received = [], 0

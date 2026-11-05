@@ -26,6 +26,7 @@ def main():
     p.add_argument('--code', type=Path, required=True)
     p.add_argument('--commit', required=True)
     p.add_argument('--resume-contract-commit', help='Explicit implementation migration preserving an existing learner contract')
+    p.add_argument('--member-cache', type=Path, help='Complete hash-verified PFS source members')
     p.add_argument('--probe', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--interface', choices=('kv_bridge', 'velocity_bridge'), required=True)
@@ -83,7 +84,7 @@ def main():
         index = path.parent / 'TAR-INDEX.json'
         sources[task] = dict(index_path=str(index), index_sha256=file_sha256(index),
                              archive=record['provenance']['bos_archive'])
-    reader = FlowSourceQueries(sources, action_codec)
+    reader = FlowSourceQueries(sources, action_codec, member_cache=args.member_cache)
     norm = ROOT / 'inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json'
     model_path = ROOT / 'inputs/robocasa365-public-pi05-c484-torch-20261101-r2'
     stats = json.loads(norm.read_text()); stats = stats.get('norm_stats', stats)
@@ -153,6 +154,8 @@ def main():
                 dict(implementation_commit=args.commit, preserved_contract_commit=args.resume_contract_commit,
                      resumed_update=progress['update'], checkpoint_sha256=file_sha256(args.output / 'latest.pt'),
                      all_contract_fields_and_policy_optimizer_sampler_RNG_restored=True,
+                     member_cache=str(args.member_cache) if args.member_cache else None,
+                     member_cache_manifest_sha256=file_sha256(args.member_cache / 'CACHE.json') if args.member_cache else None,
                      migration='Verified storage-read retries and nonfatal read-only close; learner unchanged'))
     else:
         args.output.mkdir(parents=True, exist_ok=True)
