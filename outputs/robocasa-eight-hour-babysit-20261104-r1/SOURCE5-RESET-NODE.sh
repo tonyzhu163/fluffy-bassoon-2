@@ -25,7 +25,7 @@ budget=json.loads((run/'SOURCE5-BUDGET.json').read_text());assert budget['approv
 ledger=json.loads((run/'SOURCE5-ALLOCATION-LEDGER.json').read_text())
 reserved=diagnosed=remaining=0;included=False
 for row in ledger['allocations']:
-    began=datetime.datetime.fromisoformat(row['created_shanghai']).timestamp()
+    began=datetime.datetime.fromisoformat(row.get('accounting_start_shanghai',row['created_shanghai'])).timestamp()
     end=datetime.datetime.fromisoformat(row['released_shanghai']).timestamp() if row.get('released_shanghai') else time.time()
     charge=row['GPUs']*(end-began)/3600
     amount=charge if row.get('released_shanghai') else max(charge,row['max_reservation_GPU_hours'])
@@ -42,6 +42,15 @@ for row in ledger['allocations']:
                 try:written+=path.stat().st_size
                 except FileNotFoundError:pass
         allowance=row['storage_reservation_GiB']*2**30;assert written<=allowance
+        remaining+=allowance-written
+for row in ledger.get('pending_submissions',[]):
+    reserved+=row['max_reservation_GPU_hours']
+    if row['kind']=='diagnostic':diagnosed+=row['max_reservation_GPU_hours']
+    if row['job_id']==job:included=True
+    else:
+        allowance=row['storage_reservation_GiB']*2**30
+        written=sum(p.stat().st_size for p in (run/row['output']).rglob('*') if p.is_file() and not p.is_symlink())
+        assert written<=allowance
         remaining+=allowance-written
 assert reserved+(0 if included else .5)<=70 and diagnosed+(0 if included else .5)<=2
 fs=os.statvfs(run);free=fs.f_bavail*fs.f_frsize;required=222*2**30+remaining

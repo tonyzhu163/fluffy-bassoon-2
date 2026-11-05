@@ -26,7 +26,7 @@ ledger=json.loads((run/'SOURCE5-ALLOCATION-LEDGER.json').read_text())
 assert ledger['approved_GPU_hours']==70
 reserved=test_reserved=remaining=0;included=False
 for row in ledger['allocations']:
-    began=datetime.datetime.fromisoformat(row['created_shanghai']).timestamp()
+    began=datetime.datetime.fromisoformat(row.get('accounting_start_shanghai',row['created_shanghai'])).timestamp()
     end=datetime.datetime.fromisoformat(row['released_shanghai']).timestamp() if row.get('released_shanghai') else time.time()
     charge=row['GPUs']*(end-began)/3600
     amount=charge if row.get('released_shanghai') else max(charge,row['max_reservation_GPU_hours'])
@@ -46,6 +46,13 @@ for row in ledger['allocations']:
         allowance=row['storage_reservation_GiB']*2**30
         assert written<=allowance
         remaining+=allowance-written
+for row in ledger.get('pending_submissions',[]):
+    reserved+=row['max_reservation_GPU_hours']
+    if row['kind']=='endpoint_test':test_reserved+=row['max_reservation_GPU_hours']
+    allowance=row['storage_reservation_GiB']*2**30
+    written=sum(p.stat().st_size for p in (run/row['output']).rglob('*') if p.is_file() and not p.is_symlink())
+    assert written<=allowance
+    remaining+=allowance-written
 assert reserved+(0 if included else 2.5)<=70
 assert test_reserved+(0 if included else 2.5)<=8
 fs=os.statvfs(run);free=fs.f_bavail*fs.f_frsize

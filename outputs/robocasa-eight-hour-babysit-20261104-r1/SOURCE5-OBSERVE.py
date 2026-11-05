@@ -32,7 +32,7 @@ def observe():
     charged = reserved = remaining_storage = 0
     allocations = []
     for row in ledger['allocations']:
-        began = datetime.datetime.fromisoformat(row['created_shanghai']).timestamp()
+        began = datetime.datetime.fromisoformat(row.get('accounting_start_shanghai', row['created_shanghai'])).timestamp()
         ended = datetime.datetime.fromisoformat(row['released_shanghai']).timestamp() if row.get('released_shanghai') else now
         hours = row['GPUs'] * (ended - began) / 3600
         charged += hours
@@ -80,16 +80,32 @@ def observe():
             result=read(output / 'RESULT.json') or read(worker / 'RESULT.json'),
             boundaries=boundaries, latest_actor_updates=updates, written_GiB=written/2**30,
             error_tail=errors, console_tail=console[-1600:]))
+    pending = []
+    for row in ledger.get('pending_submissions', []):
+        output = RUN / row['output']
+        worker = output / row['worker_subdir']
+        probe = read(worker / 'GPU-PROBE.json')
+        clock = read(worker / 'CLOCK.json')
+        cutoff = datetime.datetime.fromisoformat(row['last_confirmed_queued_shanghai']).timestamp()
+        upper = row['GPUs'] * ((clock['ended_unix'] if clock else now)-cutoff)/3600 if worker.exists() else 0.
+        charged += upper
+        reserved += max(upper, row['max_reservation_GPU_hours'])
+        written = sum(p.stat().st_size for p in output.rglob('*') if p.is_file() and not p.is_symlink())
+        remaining_storage += max(0, row['storage_reservation_GiB']*2**30-written)
+        pending.append(dict(**row, allocated_worker_artifacts=worker.exists(), probe_passed=bool(probe and probe.get('status')=='passed'),
+            clock=clock, progress=read(worker / 'PROGRESS.json'), result=read(worker / 'RESULT.json'),
+            conservative_GPU_hours_since_confirmed_queue_cutoff=upper))
     fs = os.statvfs(ROOT)
     free = fs.f_bavail * fs.f_frsize
     return dict(checked_shanghai=datetime.datetime.fromtimestamp(now,
         datetime.timezone(datetime.timedelta(hours=8))).isoformat(),
-        cluster='Baige Pro6K', allocations=allocations,
+        cluster='Baige Pro6K', allocations=allocations, pending_submissions=pending,
         approved_GPU_hours=70, conservative_GPU_hours=charged,
         remaining_after_active_reservations_GPU_hours=70-reserved,
         storage_free_GiB=free/2**30,
-        new_source_required_GiB=370+remaining_storage/2**30,
-        another_source_storage_admissible=free >= 370*2**30+remaining_storage,
+        continuation_storage_reservation_GiB=110,
+        continuation_required_GiB=330+remaining_storage/2**30,
+        another_continuation_storage_admissible=free >= 330*2**30+remaining_storage,
         scheduler_release_verified=False)
 
 

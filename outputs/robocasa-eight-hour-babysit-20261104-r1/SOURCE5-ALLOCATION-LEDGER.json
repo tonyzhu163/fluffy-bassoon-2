@@ -41,7 +41,10 @@
       "max_reservation_GPU_hours": 2.5,
       "storage_reservation_GiB": 15,
       "output": "source5-tests/CoffeeSetupMug/attempt-01"
-    },
+    }
+  ],
+  "scope": "Two fixed40 four-epoch PPO sources and three fresh paired512 readiness panels, including setup/qualification/failures/release",
+  "pending_submissions": [
     {
       "job_id": "job-q250t3zf6g1x",
       "name": "mwj_1105_source5_counter_reset_qual01",
@@ -52,8 +55,27 @@
       "max_reservation_GPU_hours": 0.5,
       "storage_reservation_GiB": 2,
       "output": "reset-qualification/counter-r1",
-      "worker_subdir": "gpu-01"
+      "worker_subdir": "gpu-01",
+      "last_confirmed_queued_shanghai": "2026-11-05T13:26:00+08:00",
+      "state": "Queued; no allocation at last scheduler observation",
+      "GPU_hours_occupied_at_last_confirmation": 0
+    },
+    {
+      "job_id": "job-16c6s3w9ccx7",
+      "name": "mwj_1105_source5_faucet_reset_qual01",
+      "kind": "diagnostic",
+      "task": "TurnOnSinkFaucet",
+      "GPUs": 1,
+      "created_shanghai": "2026-11-05T13:09:03+08:00",
+      "max_reservation_GPU_hours": 0.5,
+      "storage_reservation_GiB": 2,
+      "output": "reset-qualification/faucet-r1",
+      "worker_subdir": "gpu-01",
+      "last_confirmed_queued_shanghai": "2026-11-05T13:26:00+08:00",
+      "state": "Queued; no allocation at last scheduler observation",
+      "GPU_hours_occupied_at_last_confirmation": 0
     }
   ],
-  "scope": "Two fixed40 four-epoch PPO sources and three fresh paired512 readiness panels, including setup/qualification/failures/release"
+  "pending_reserved_GPU_hours": 1.0,
+  "queue_accounting": "Confirmed queued jobs reserve their bounded allowance but occupy zero GPUs; retain scheduler creation times. Move to allocations with an explicit conservative accounting_start_shanghai after the legacy diagnostic launch guards have run; that cutoff cannot precede the last confirmed queued observation. Both known diagnostic reservations together are1/2GPUh."
 }

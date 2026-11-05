@@ -41,7 +41,13 @@ def prepare(task, manifest):
         source = ROOT / 'outputs/robocasa-flow-sde-10m-per-task-20261103-r1/CoffeeSetupMug/production-r1'
         step, prefix, ignore_last = 130, False, False
     else:
-        source = RUN / 'source5' / task / 'attempt-01'
+        binding = RUN / 'source5' / task / 'ENDPOINT-SOURCE.json'
+        if binding.exists():
+            bound = native.read(binding)
+            assert bound['task'] == task and bound['step'] == 40 and bound['fixed_endpoint'] and not bound['DEV_selection']
+            source = Path(bound['path'])
+        else:
+            source = RUN / 'source5' / task / 'attempt-01'
         step, prefix, ignore_last = 40, True, True
     source_cfg_path = source / 'resolved-config.json'
     source_cfg = native.read(source_cfg_path)
