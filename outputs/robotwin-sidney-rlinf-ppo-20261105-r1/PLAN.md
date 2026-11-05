@@ -168,3 +168,26 @@ Rank2wouldbe72,960plus212,480freshPPO=285,440<300,000. Completedconservative
 additional26,602+2,440diagnostic+41,040PPO=70,082GPU-seconds<72,000(20h); keep
 all failed/unresolved charges. Scientificupdatesremain0. Never modify prior
 active/terminal worktrees or silently relax a tolerance to obtain admission.
+
+
+Prepare an explicit fallback selection while memory04 runs. `native_batch_end`
+disables the experimental per-scene callback, retains RLinf's existing
+malloc_trim_reset_interval1, and requires an actual1024GiB cgroup allocation.
+Its admission uses only memory02's closed native round1, retaining that
+whole diagnostic's failed status and not claiming candidate dynamics parity.
+Measured106.183GiB per-worker peak plus184GiB conservative model/runtime/
+rollout/checkpoint allowances gives608.73GiB projected full-phase usage, below
+972.8GiB at the unchanged95% Ray guard. This is an engineering forecast, not a
+full-phase measurement. Use the fallback if per-scene semantics remain
+unqualified; do not keep running inconclusive diagnostics throughout the watch.
+The per-scene512GiB route still requires all original strict gates. Both routes
+use4GPUs, micro64/accum8/global2048, five epochs, exact originalstep0 restore,
+continuous host telemetry and first-reset camera checks. Neither route is
+launched by this preparation.
+
+Forward storage reservation now includes40GiB for the coordinator's prepared
+packed-readout campaign, even while its separate human budget question is
+pending. CurrentPPO needs125+286=411GiB freshfree; a future two-arm pair needs
+250+286=536GiB aftercurrentPPO closes, or661GiB while reserving its full125GiB.
+Qualification scratch is separate; use actual remaining growth and do not
+double-count existing consumed bytes or prospective releases.

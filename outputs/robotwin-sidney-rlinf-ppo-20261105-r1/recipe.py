@@ -13,13 +13,15 @@ def validate_sidney(cfg):
     assert cfg.runner.val_check_interval==-1
     assert cfg.native_pilot.maximum_actions==1200000
     assert cfg.native_pilot.previous_maximum_actions==1000000
-    assert cfg.native_pilot.trim_after_scene_close
+    assert cfg.native_pilot.memory_strategy in ('per_scene_close','native_batch_end')
+    assert bool(cfg.native_pilot.trim_after_scene_close)==(cfg.native_pilot.memory_strategy=='per_scene_close')
     assert cfg.env.train.malloc_trim_reset_interval==1
     for mode in ('train','eval'):
         assert cfg.env[mode].task_config.task_name=='place_phone_stand'
         assert cfg.env[mode].task_config.camera.head_camera_type=='Large_D435'
         assert cfg.env[mode].task_config.camera.wrist_camera_type=='Large_D435'
     micro=int(cfg.actor.micro_batch_size);world=int(cfg.native_pilot.world_size)
+    assert world==4
     assert micro in (8,16,32,64,128,256,512) and 2048%(micro*world)==0
     rollout_batch=256//world//int(cfg.rollout.pipeline_stage_num)
     assert bool(cfg.algorithm.recompute_logprobs)==(micro!=rollout_batch)
@@ -33,6 +35,7 @@ def validate_sidney(cfg):
         micro_batch_size=micro,accumulation_steps=2048//(micro*world),
         nominal_before_after_actions=0,nominal_all_in_actions=819200,
         maximum_aggregate_gpu_seconds=72000,maximum_actions=1200000,
+        memory_strategy=cfg.native_pilot.memory_strategy,
         probability_reference=('native RLinf actor recomputation' if cfg.algorithm.recompute_logprobs else 'same-batch native rollout probabilities'),
         precision='native mixed BF16; entire vision and norms FP32',
         baseline_reference='published Sidney SFT; no rebenchmark panel',

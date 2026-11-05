@@ -5,12 +5,18 @@ TASK_OUT=${2:?fresh training output}
 TASK_BRIDGE=${3:?completed bridge output}
 TASK_PRIOR_GPU_SECONDS=${4:?conservative completed task GPU charge}
 TASK_WORLD=${5:-4}
-[[ $TASK_WORLD == 4 || $TASK_WORLD == 8 ]]
+[[ $TASK_WORLD == 4 ]]
 TASK_LIMIT=${6:-$((12000/TASK_WORLD))}
 TASK_RESUME=${7:-}
 TASK_ACCOUNTING=${8:-$TASK_OUT/action-accounting}
 TASK_CAPACITY=${9:-}
 TASK_MEMORY=${10:-$(dirname "$TASK_OUT")/memory02}
+TASK_MEMORY_STRATEGY=${11:-per_scene_close}
+[[ $TASK_MEMORY_STRATEGY == per_scene_close || $TASK_MEMORY_STRATEGY == native_batch_end ]]
+TASK_MINIMUM_HOST_GIB=512;TASK_TRIM_AFTER_CLOSE=true
+if [[ $TASK_MEMORY_STRATEGY == native_batch_end ]]; then
+  TASK_MINIMUM_HOST_GIB=1024;TASK_TRIM_AFTER_CLOSE=false
+fi
 [[ $TASK_LIMIT =~ ^[0-9]+$ && $TASK_LIMIT -le 10800 ]]
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_RUN_CODE=$TASK_CODE/outputs/robotwin-sidney-rlinf-ppo-20261105-r1
@@ -58,8 +64,8 @@ trap finish EXIT
 "$TASK_PYTHON" "$TASK_CODE/scripts/[train]gpu_probe.py" --baige-container \
   --baige-exclusive-training --purpose training --expected-count "$TASK_WORLD" --output "$TASK_OUT/gpu-probe.json"
 export LYCO_BAIGE_GPU_MAP=$TASK_OUT/gpu-probe.json
-"$TASK_PYTHON" "$TASK_RUN_CODE/host_memory.py" "$TASK_OUT" --minimum-gib 512 --once
-"$TASK_PYTHON" "$TASK_RUN_CODE/host_memory.py" "$TASK_OUT" --minimum-gib 512 > "$TASK_OUT/host-memory.log" 2>&1 &
+"$TASK_PYTHON" "$TASK_RUN_CODE/host_memory.py" "$TASK_OUT" --minimum-gib "$TASK_MINIMUM_HOST_GIB" --once
+"$TASK_PYTHON" "$TASK_RUN_CODE/host_memory.py" "$TASK_OUT" --minimum-gib "$TASK_MINIMUM_HOST_GIB" > "$TASK_OUT/host-memory.log" 2>&1 &
 TASK_MEMORY_PID=$!
 [[ $(git -C "$REPO_PATH" rev-parse HEAD) == c605b9d55ed93a180119b099e6f836abff293b08 ]]
 [[ $(git -C "$ROBOTWIN_PATH" rev-parse HEAD) == dca9ec682688821c42944eacd7f5dd9bfb15396f ]]
@@ -69,7 +75,7 @@ mkdir -p /root/.sapien/physx
 if [[ ! -e /root/.sapien/physx/105.1-physx-5.3.1.patch0 ]]; then
   ln -s /mowenjie/fluffy-bassoon/inputs/maniskill-scene-assets-20261028-r1/physx/105.1-physx-5.3.1.patch0 /root/.sapien/physx/105.1-physx-5.3.1.patch0
 fi
-export TASK_CAPACITY TASK_MEMORY
+export TASK_CAPACITY TASK_MEMORY TASK_MEMORY_STRATEGY
 TASK_MICRO=$("$TASK_PYTHON" - <<'PY'
 import hashlib,json,os
 from pathlib import Path
@@ -92,15 +98,27 @@ Path(os.environ['NATIVE_PPO_OUTPUT'],'bridge-admission.json').write_text(json.du
 # host-memory telemetry remains required throughout the scientific retry.
 memory_path=Path(os.environ['TASK_MEMORY'])/'RESULT.json'
 memory=json.loads(memory_path.read_text())
-assert memory['status']=='complete' and memory['scenes']==64 and not memory['model_loaded']
-assert memory['optimizer_updates']==0 and len(memory['events']) in (2,3)
+assert memory['scenes']==64 and not memory['model_loaded'] and memory['optimizer_updates']==0
 for event in memory['events']:
     assert all(event[key] for key in ('allocator_observation_identity',
         'python_numpy_torch_rng_identity','scene_identity','motor_input_identity'))
-assert memory['paired_reset_rgb_bit_identity']
-assert memory['paired_reset_max_abs']['states']<=1e-6
-assert memory['paired_motor_prefix_state_max_abs']<=1e-6 and memory['paired_motor_prefix_reward_identity']
-selected=[row for row in memory['snapshots'] if row['stage'].startswith(f"round{memory.get('per_close_round_index',2)}/")]
+strategy=os.environ['TASK_MEMORY_STRATEGY']
+if strategy=='per_scene_close':
+    assert memory['status']=='complete' and len(memory['events']) in (2,3)
+    assert memory['paired_reset_rgb_bit_identity']
+    assert memory['paired_reset_max_abs']['states']<=1e-6
+    assert memory['paired_motor_prefix_state_max_abs']<=1e-6 and memory['paired_motor_prefix_reward_identity']
+    selected_round=memory.get('per_close_round_index',2)
+else:
+    # Use the already completed native batch-end mode, without the experimental
+    # per-scene callback. Preserve the failed diagnostic's global status.
+    assert memory_path.parent.name=='memory02'
+    selected_round=1
+    native=next(r for r in memory['snapshots'] if r['stage']=='round1/after_reset')
+    assert native['native_malloc_trim_reset_interval']==1 and not native['trim_after_each_scene_close']
+    assert any(r['stage']=='round1/chunk0' and r['physical_controls']==3200 for r in memory['snapshots'])
+    assert any(r['round']==1 for r in memory['events'])
+selected=[row for row in memory['snapshots'] if row['stage'].startswith(f'round{selected_round}/')]
 peak=max(max(row['smaps']['Rss'],row.get('reset_peak',{}).get('rss_bytes',0)) for row in selected)
 headroom_allowances=dict(environment_runtime_per_rank_bytes=10*2**30,
     other_workers_bytes=80*2**30,pending_rollout_and_checkpoint_bytes=64*2**30)
@@ -110,6 +128,7 @@ limit=json.loads(Path(os.environ['NATIVE_PPO_OUTPUT'],'host-memory.json').read_t
 assert bound<.95*limit,f'Qualified full-phase host-memory bound exceeds Ray threshold: {bound/2**30:.1f}GiB'
 Path(os.environ['NATIVE_PPO_OUTPUT'],'memory-admission.json').write_text(json.dumps(dict(
     qualification=str(memory_path),sha256=hashlib.sha256(memory_path.read_bytes()).hexdigest(),
+    strategy=strategy,qualification_global_status=memory['status'],selected_completed_round=selected_round,
     scene_count_per_rank=64,measured_peak_rss_bytes=peak,allowances=headroom_allowances,
     projected_full_phase_bytes=bound,cgroup_limit_bytes=limit,ray_memory_guard_unchanged=True),indent=2)+'\n')
 capacity=os.environ.get('TASK_CAPACITY')
@@ -140,7 +159,7 @@ cd "$TASK_CODE"
   -k 'unresolved_calls or original_rollout or worker_rng or sampler_and_eval_rng or actor_sidecar_requires' > "$TASK_OUT/core-tests.log" 2>&1
 # Compose/validate the actual source configuration inside the allocation before
 # model initialization. It keeps global2048 and only tunes execution microbatch.
-"$TASK_PYTHON" "$TASK_RUN_CODE/validate_config.py" "$TASK_CODE" "$TASK_MICRO"
+"$TASK_PYTHON" "$TASK_RUN_CODE/validate_config.py" "$TASK_CODE" "$TASK_MICRO" "$TASK_MEMORY_STRATEGY"
 "$TASK_PYTHON" - <<'PY'
 import hashlib,json,os
 from pathlib import Path
@@ -177,4 +196,6 @@ PY
 fi
 timeout --signal=INT --kill-after=20s "$((TASK_LIMIT-120))" "$TASK_PYTHON" "$TASK_RUN_CODE/train_entry.py" \
   --config-path "$TASK_CODE/configs/native_ppo" --config-name sidney_phone_two \
-  "actor.micro_batch_size=$TASK_MICRO" "algorithm.recompute_logprobs=$TASK_RECOMPUTE" "${TASK_RESUME_ARGS[@]}" > "$TASK_OUT/train.log" 2>&1
+  "actor.micro_batch_size=$TASK_MICRO" "algorithm.recompute_logprobs=$TASK_RECOMPUTE" \
+  "native_pilot.memory_strategy=$TASK_MEMORY_STRATEGY" "native_pilot.trim_after_scene_close=$TASK_TRIM_AFTER_CLOSE" \
+  "${TASK_RESUME_ARGS[@]}" > "$TASK_OUT/train.log" 2>&1
