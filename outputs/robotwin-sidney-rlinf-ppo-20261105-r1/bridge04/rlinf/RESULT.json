@@ -1,0 +1,137 @@
+{
+  "status": "complete",
+  "optimizer_updates": 0,
+  "source_commit": "fdc6b5ba236d57827339f1275039022a46feffd6",
+  "chunk_size": 50,
+  "native_flow_steps": 10,
+  "ppo_flow_steps": 5,
+  "rows": [
+    {
+      "vector": "00-place_a2b_left-100100001.npz",
+      "precision": "native mixed BF16/full FP32 vision",
+      "tokens_equal": true,
+      "state_max_abs": 0.0,
+      "pixels_max_abs": 0.0,
+      "normalized_max_abs": 0.009247779846191406,
+      "decoded_max_abs": 0.0062408447265625,
+      "seconds": 1.5076060676947236
+    },
+    {
+      "vector": "01-place_a2b_left-100100004.npz",
+      "precision": "native mixed BF16/full FP32 vision",
+      "tokens_equal": true,
+      "state_max_abs": 0.0,
+      "pixels_max_abs": 0.0,
+      "normalized_max_abs": 0.00857388973236084,
+      "decoded_max_abs": 0.005643129348754883,
+      "seconds": 0.4326354991644621
+    },
+    {
+      "vector": "02-place_phone_stand-100100002.npz",
+      "precision": "native mixed BF16/full FP32 vision",
+      "tokens_equal": true,
+      "state_max_abs": 0.0,
+      "pixels_max_abs": 0.0,
+      "normalized_max_abs": 0.010647177696228027,
+      "decoded_max_abs": 0.006654500961303711,
+      "seconds": 0.43051575031131506
+    }
+  ],
+  "fp32_rows": [
+    {
+      "vector": "00-place_a2b_left-100100001.npz",
+      "precision": "FP32 diagnostic only",
+      "tokens_equal": true,
+      "state_max_abs": 0.0,
+      "pixels_max_abs": 0.0,
+      "normalized_max_abs": 2.6226043701171875e-06,
+      "decoded_max_abs": 1.6093254089355469e-06,
+      "seconds": 0.48009173572063446
+    },
+    {
+      "vector": "01-place_a2b_left-100100004.npz",
+      "precision": "FP32 diagnostic only",
+      "tokens_equal": true,
+      "state_max_abs": 0.0,
+      "pixels_max_abs": 0.0,
+      "normalized_max_abs": 3.814697265625e-06,
+      "decoded_max_abs": 3.814697265625e-06,
+      "seconds": 0.4534171400591731
+    },
+    {
+      "vector": "02-place_phone_stand-100100002.npz",
+      "precision": "FP32 diagnostic only",
+      "tokens_equal": true,
+      "state_max_abs": 0.0,
+      "pixels_max_abs": 0.0,
+      "normalized_max_abs": 2.5033950805664062e-06,
+      "decoded_max_abs": 2.0265579223632812e-06,
+      "seconds": 0.4579682983458042
+    }
+  ],
+  "parity_basis": "FP32 reference; mixed BF16 drift reported",
+  "capacity": [
+    {
+      "batch": 32,
+      "seconds": 3.1707563577219844,
+      "peak_allocated_bytes": 13446076416,
+      "max_abs_error": {
+        "logprobs": 0.0,
+        "selected_step_values": 0.0,
+        "rollout_mean_values": 0.0
+      },
+      "native_value_semantics": "rollout averages K suffix values; actor replays the sampled denoising step",
+      "mean_vs_selected_value_max_abs": 0.06303494423627853
+    }
+  ],
+  "execution_microbatch": 32,
+  "episode": {
+    "task": "place_phone_stand",
+    "seed": 100100002,
+    "scene_info": {
+      "{A}": "077_phone/base1",
+      "{B}": "078_phonestand/base2",
+      "{a}": "left"
+    },
+    "instruction": [
+      "Move the palm-sized phone onto the phonestand with smooth texture."
+    ],
+    "controls": 400,
+    "chunks": [
+      {
+        "controls": 50,
+        "success": false
+      },
+      {
+        "controls": 100,
+        "success": false
+      },
+      {
+        "controls": 150,
+        "success": false
+      },
+      {
+        "controls": 200,
+        "success": false
+      },
+      {
+        "controls": 250,
+        "success": false
+      },
+      {
+        "controls": 300,
+        "success": false
+      },
+      {
+        "controls": 350,
+        "success": false
+      },
+      {
+        "controls": 400,
+        "success": false
+      }
+    ],
+    "flow_steps": 5,
+    "complete": true
+  }
+}

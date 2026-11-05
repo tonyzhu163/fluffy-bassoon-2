@@ -18,7 +18,13 @@ The task split is already encoded in
 | `place_phone_stand` | `place_empty_cup` |
 | `scan_object` | `stamp_seal` |
 
-Start by qualifying all six source tasks. Keep the six held-out tasks for
+Use [Sidney's broad multi-task SFT checkpoint](https://huggingface.co/SidneyXie/pi05_robotwin)
+as the common initializer, pinned per run. The intended starting point has no
+RL tuning; it may include all twelve benchmark tasks in its SFT exposure.
+Use its published SFT results as reference values. A fresh SFT benchmark panel
+is not a prerequisite for the PPO execution pilot. Qualify the model boundary
+and actual source environments, then verify the scene banks before expanding
+collection to all six source tasks. Keep the six held-out tasks for
 transfer evaluation; their episodes must not enter source histories, student
 gradients, normalization or checkpoint selection. "Held out" concerns
 adaptation training; audit and disclose the base motor's task exposure

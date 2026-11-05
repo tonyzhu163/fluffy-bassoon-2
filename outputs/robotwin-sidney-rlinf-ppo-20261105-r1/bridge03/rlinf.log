@@ -1,0 +1,19 @@
+INFO:RLinf:openpi[eval]: loaded Pi0Config(dtype='bfloat16', paligemma_variant='gemma_2b', action_expert_variant='gemma_300m', pointnet_variant='pcd', action_dim=32, action_horizon=50, max_token_len=200, pi05=True, discrete_state_input=True, pcd=False) (3.35B params) from /mowenjie/fluffy-bassoon-2/cache/robotwin-sidney-rlinf-20261105-r1/model.safetensors precision=None num_steps=10 action_horizon=50 action_chunk=50
+{"vector": "00-place_a2b_left-100100001.npz", "precision": "native mixed BF16/full FP32 vision", "tokens_equal": true, "state_max_abs": 0.0, "pixels_max_abs": 0.0, "normalized_max_abs": 0.009247779846191406, "decoded_max_abs": 0.0062408447265625, "seconds": 1.6124419225379825}
+{"vector": "01-place_a2b_left-100100004.npz", "precision": "native mixed BF16/full FP32 vision", "tokens_equal": true, "state_max_abs": 0.0, "pixels_max_abs": 0.0, "normalized_max_abs": 0.00857388973236084, "decoded_max_abs": 0.005643129348754883, "seconds": 0.4856170676648617}
+{"vector": "02-place_phone_stand-100100002.npz", "precision": "native mixed BF16/full FP32 vision", "tokens_equal": true, "state_max_abs": 0.0, "pixels_max_abs": 0.0, "normalized_max_abs": 0.010647177696228027, "decoded_max_abs": 0.006654500961303711, "seconds": 0.4693013560026884}
+INFO:RLinf:openpi[eval]: loaded Pi0Config(dtype='float32', paligemma_variant='gemma_2b', action_expert_variant='gemma_300m', pointnet_variant='pcd', action_dim=32, action_horizon=50, max_token_len=200, pi05=True, discrete_state_input=True, pcd=False) (3.35B params) from /mowenjie/fluffy-bassoon-2/cache/robotwin-sidney-rlinf-20261105-r1/model.safetensors precision=None num_steps=10 action_horizon=50 action_chunk=50
+{"vector": "00-place_a2b_left-100100001.npz", "precision": "FP32 diagnostic only", "tokens_equal": true, "state_max_abs": 0.0, "pixels_max_abs": 0.0, "normalized_max_abs": 2.6226043701171875e-06, "decoded_max_abs": 1.6093254089355469e-06, "seconds": 0.49373785592615604}
+{"vector": "01-place_a2b_left-100100004.npz", "precision": "FP32 diagnostic only", "tokens_equal": true, "state_max_abs": 0.0, "pixels_max_abs": 0.0, "normalized_max_abs": 3.814697265625e-06, "decoded_max_abs": 3.814697265625e-06, "seconds": 0.48172365967184305}
+{"vector": "02-place_phone_stand-100100002.npz", "precision": "FP32 diagnostic only", "tokens_equal": true, "state_max_abs": 0.0, "pixels_max_abs": 0.0, "normalized_max_abs": 2.5033950805664062e-06, "decoded_max_abs": 2.0265579223632812e-06, "seconds": 0.4811273403465748}
+INFO:RLinf:openpi: loaded base safetensors /mowenjie/fluffy-bassoon-2/cache/robotwin-sidney-rlinf-20261105-r1/model.safetensors; leaving 8 extra module tensors randomly initialized (['value_head.mlp.0.weight', 'value_head.mlp.0.bias', 'value_head.mlp.2.weight', 'value_head.mlp.2.bias']...)
+INFO:RLinf:openpi[rl]: train_expert_only=True; froze 477 parameter tensors (SigLIP + gemma expert-0) after weight load
+INFO:RLinf:openpi[rl]: loaded Pi0Config(dtype='bfloat16', paligemma_variant='gemma_2b', action_expert_variant='gemma_300m', pointnet_variant='pcd', action_dim=32, action_horizon=50, max_token_len=200, pi05=True, discrete_state_input=True, pcd=False) (3.35B params) from /mowenjie/fluffy-bassoon-2/cache/robotwin-sidney-rlinf-20261105-r1/model.safetensors precision=None num_steps=5 action_horizon=50 action_chunk=50
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-r3/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/qualify_rlinf.py", line 156, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-r3/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/qualify_rlinf.py", line 111, in main
+    assert before.shape==after.shape and torch.isfinite(after).all()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

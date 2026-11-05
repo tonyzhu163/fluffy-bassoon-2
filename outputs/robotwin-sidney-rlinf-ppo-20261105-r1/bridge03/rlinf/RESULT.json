@@ -1,0 +1,75 @@
+{
+  "status": "failed",
+  "optimizer_updates": 0,
+  "source_commit": "edf3c2f3307255d2b0dad5c2a661108fc3fb3ca4",
+  "chunk_size": 50,
+  "native_flow_steps": 10,
+  "ppo_flow_steps": 5,
+  "rows": [
+    {
+      "vector": "00-place_a2b_left-100100001.npz",
+      "precision": "native mixed BF16/full FP32 vision",
+      "tokens_equal": true,
+      "state_max_abs": 0.0,
+      "pixels_max_abs": 0.0,
+      "normalized_max_abs": 0.009247779846191406,
+      "decoded_max_abs": 0.0062408447265625,
+      "seconds": 1.6124419225379825
+    },
+    {
+      "vector": "01-place_a2b_left-100100004.npz",
+      "precision": "native mixed BF16/full FP32 vision",
+      "tokens_equal": true,
+      "state_max_abs": 0.0,
+      "pixels_max_abs": 0.0,
+      "normalized_max_abs": 0.00857388973236084,
+      "decoded_max_abs": 0.005643129348754883,
+      "seconds": 0.4856170676648617
+    },
+    {
+      "vector": "02-place_phone_stand-100100002.npz",
+      "precision": "native mixed BF16/full FP32 vision",
+      "tokens_equal": true,
+      "state_max_abs": 0.0,
+      "pixels_max_abs": 0.0,
+      "normalized_max_abs": 0.010647177696228027,
+      "decoded_max_abs": 0.006654500961303711,
+      "seconds": 0.4693013560026884
+    }
+  ],
+  "fp32_rows": [
+    {
+      "vector": "00-place_a2b_left-100100001.npz",
+      "precision": "FP32 diagnostic only",
+      "tokens_equal": true,
+      "state_max_abs": 0.0,
+      "pixels_max_abs": 0.0,
+      "normalized_max_abs": 2.6226043701171875e-06,
+      "decoded_max_abs": 1.6093254089355469e-06,
+      "seconds": 0.49373785592615604
+    },
+    {
+      "vector": "01-place_a2b_left-100100004.npz",
+      "precision": "FP32 diagnostic only",
+      "tokens_equal": true,
+      "state_max_abs": 0.0,
+      "pixels_max_abs": 0.0,
+      "normalized_max_abs": 3.814697265625e-06,
+      "decoded_max_abs": 3.814697265625e-06,
+      "seconds": 0.48172365967184305
+    },
+    {
+      "vector": "02-place_phone_stand-100100002.npz",
+      "precision": "FP32 diagnostic only",
+      "tokens_equal": true,
+      "state_max_abs": 0.0,
+      "pixels_max_abs": 0.0,
+      "normalized_max_abs": 2.5033950805664062e-06,
+      "decoded_max_abs": 2.0265579223632812e-06,
+      "seconds": 0.4811273403465748
+    }
+  ],
+  "parity_basis": "FP32 reference; mixed BF16 drift reported",
+  "error_type": "AssertionError",
+  "error": ""
+}

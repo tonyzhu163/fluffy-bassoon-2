@@ -3,6 +3,12 @@ defaults:
   - adjust_bottle_published_batch_two
   - _self_
 
+hydra:
+  # Hydra discovers search paths from the primary configuration before loading
+  # inherited defaults, so repeat the upstream path here.
+  searchpath:
+    - file://${oc.env:EMBODIED_PATH}/config/
+
 runner:
   val_check_interval: -1
   logger:
