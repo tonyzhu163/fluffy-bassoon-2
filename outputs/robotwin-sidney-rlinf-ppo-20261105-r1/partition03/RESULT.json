@@ -1,0 +1,51 @@
+{
+  "status": "complete",
+  "optimizer_updates": 0,
+  "rows": [
+    {
+      "batch": 64,
+      "max_abs_logprob_error": 0.0,
+      "seconds": 2.7663031462579966,
+      "peak_allocated_bytes": 19053927936,
+      "passed": true
+    },
+    {
+      "batch": 32,
+      "max_abs_logprob_error": 0.03328895568847656,
+      "seconds": 2.433127721771598,
+      "peak_allocated_bytes": 13504753664,
+      "passed": false
+    },
+    {
+      "batch": 16,
+      "max_abs_logprob_error": 0.04197037220001221,
+      "seconds": 2.453872784972191,
+      "peak_allocated_bytes": 10730077696,
+      "passed": false
+    },
+    {
+      "batch": 8,
+      "max_abs_logprob_error": 0.034438133239746094,
+      "seconds": 2.6527647525072098,
+      "peak_allocated_bytes": 9343992320,
+      "passed": false
+    }
+  ],
+  "source_commit": "a034b8dbc103a948818ae5a24f01bbfdfdab552d",
+  "training_forward": {
+    "logprob_max_abs_error": 0.0,
+    "image_training_mode": false,
+    "policy_training_mode": true
+  },
+  "execution_microbatch": 64,
+  "backward": {
+    "batch": 64,
+    "seconds": 2.7369424998760223,
+    "peak_allocated_bytes": 19054287360,
+    "logprob_max_abs_error": 0.0,
+    "policy_gradient_tensors": 190,
+    "critic_gradient_tensors": 8,
+    "frozen_vlm_has_no_gradients": true,
+    "optimizer_updates": 0
+  }
+}

@@ -1,0 +1,18 @@
+INFO:RLinf:openpi: loaded base safetensors /mowenjie/fluffy-bassoon-2/cache/robotwin-sidney-rlinf-20261105-r1/model.safetensors; leaving 8 extra module tensors randomly initialized (['value_head.mlp.0.weight', 'value_head.mlp.0.bias', 'value_head.mlp.2.weight', 'value_head.mlp.2.bias']...)
+INFO:RLinf:openpi[rl]: train_expert_only=True; froze 477 parameter tensors (SigLIP + gemma expert-0) after weight load
+INFO:RLinf:openpi[rl]: loaded Pi0Config(dtype='bfloat16', paligemma_variant='gemma_2b', action_expert_variant='gemma_300m', pointnet_variant='pcd', action_dim=32, action_horizon=50, max_token_len=200, pi05=True, discrete_state_input=True, pcd=False) (3.35B params) from /mowenjie/fluffy-bassoon-2/cache/robotwin-sidney-rlinf-20261105-r1/model.safetensors precision=None num_steps=5 action_horizon=50 action_chunk=50
+{"batch": 64, "max_abs_logprob_error": 0.0, "seconds": 2.749614117667079, "peak_allocated_bytes": 19053927936, "passed": true}
+{"batch": 32, "max_abs_logprob_error": 0.03328895568847656, "seconds": 2.427969981916249, "peak_allocated_bytes": 13504753664, "passed": false}
+{"batch": 16, "max_abs_logprob_error": 0.04197037220001221, "seconds": 2.448364839889109, "peak_allocated_bytes": 10730077696, "passed": false}
+{"batch": 8, "max_abs_logprob_error": 0.034438133239746094, "seconds": 2.6374395778402686, "peak_allocated_bytes": 9343992320, "passed": false}
+/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-partition02/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/replay_partition.py:56: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+  error=float((forward['logprobs'].float()-old).abs().max())
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-partition02/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/replay_partition.py", line 75, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-partition02/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/replay_partition.py", line 57, in main
+    assert error<=1e-3
+           ^^^^^^^^^^^
+AssertionError

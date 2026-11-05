@@ -1,7 +1,7 @@
 {
-  "status": "QUALIFYING_MATCHED_BF16_BATCH64",
+  "status": "MATCHED_BF16_BATCH64_BACKWARD_PASSED",
   "cluster": "Baige Pro6K",
-  "last_checked_at_shanghai": "2026-11-05 18:13",
+  "last_checked_at_shanghai": "2026-11-05 18:21",
   "prior_scheduler_gpu_seconds": 2561,
   "prior_scheduler_gpu_hours": 0.7113888888888888,
   "optimizer_updates": 0,
@@ -9,13 +9,13 @@
   "revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "user_preference": "Broad multi-task SFT with no RL tuning; continue Sidney for six-task setup",
   "precision": "Native mixed BF16 with full FP32 vision/norms. FP32 full-model replay only if required to localize conversion drift.",
-  "next_action": "Qualify full batch64 backward, then resume step0 with matching rollout64/actor64, accumulation8, global2048 unchanged.",
+  "next_action": "Resume complete step0 with micro64/accum8 and frozen vision eval mode; global2048/five epochs/sampler unchanged.",
   "job_id": null,
   "source_commit": "8c86c21f7b76cec9b8305fe76b250cbc2131fda6",
   "core_tests_passed": 23,
   "scene_instruction_binding_passed": true,
   "conversion_passed": true,
-  "error": "BF16 batch64 rollout versus smaller actor partition exceeds1e-3; stop before SGD, retain BF16 and match execution batch64.",
+  "error": null,
   "bridge_scheduler_gpu_seconds_completed": 920,
   "cumulative_scheduler_gpu_seconds_completed": 10695,
   "completed_bridge_attempts": [
@@ -139,6 +139,24 @@
       "worker_gpu_seconds": 63,
       "scheduler_gpu_seconds": 110,
       "outcome": "Batch64 exact; smaller BF16 partitions numerically differ;0SGD"
+    },
+    {
+      "attempt": "partition02",
+      "job_id": "job-obb2zf8cl25v",
+      "worker_gpu_seconds": 46,
+      "scheduler_gpu_seconds": 90,
+      "outcome": "Training mode changed frozen vision attention path; no SGD"
+    },
+    {
+      "attempt": "partition03",
+      "job_id": "job-cox1v8xbuo7l",
+      "worker_gpu_seconds": 47,
+      "scheduler_gpu_seconds": null,
+      "outcome": "Exact training-mode64 replay; full backward finite policy/critic gradients and frozen VLM no gradients"
     }
-  ]
+  ],
+  "execution_microbatch": 64,
+  "gradient_accumulation": 8,
+  "backward_peak_allocated_bytes": 19054287360,
+  "training_mode_logprob_max_abs_error": 0.0
 }

@@ -64,3 +64,10 @@ five epochs, sampler, loss and optimizer schedule stay unchanged. The earlier
 receipt and charge its prefix; resume the complete original step0 boundary.
 The next four-GPU allocation is170 minutes so all attempts stay within the
 14 additionalGPUh envelope. No optimizer updates have occurred yet.
+
+Matching-batch64 training qualification passes after keeping frozen SigLIP
+in eval mode during policy training (PyTorch MHA otherwise switches kernels).
+Training-mode logprobs replay exactly, full backward peaks at19.05GB and takes
+2.74s, with190 policy and8 critic gradient tensors finite and no frozen VLM
+gradients. No SGD in this qualification. Retain native mixed BF16; no tolerance
+relaxation or FP32 training fallback.
