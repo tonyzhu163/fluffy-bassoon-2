@@ -1,0 +1,30 @@
+{
+  "checked_shanghai": "2026-11-05T18:16:31.182738+08:00",
+  "source_owner_chat": "01a1a62c-f32b-7ce0-a78f-ed43f8254bb1",
+  "job_id": "job-rseimb87nbjg",
+  "scope": "Read-only babysit observation; owner allocations/worktree/contract unchanged",
+  "saved_status": {
+    "update": 1138,
+    "best_loss": 0.13383586844429374,
+    "plateau": {
+      "reference": 0.13446938898414373,
+      "stale_checks": 2,
+      "converged": false
+    },
+    "converged": false,
+    "elapsed_seconds": 12665.357300892472,
+    "stop_reason": "operational_checkpoint",
+    "native_parameters_frozen": true,
+    "interface": "velocity_bridge",
+    "objective": "ic_iql"
+  },
+  "checkpoint_mtime": 1793871038.9715483,
+  "worker_failed": true,
+  "last_worker_error": "OSError: [Errno 16] Device or resource busy",
+  "log_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/workflows/velocity_bridge/ic_iql/train-fit-vel-ic_iql-01-01.log",
+  "log_sha256": "2a6e8b72f2613edf724046917d954619970dea8706def480bf69c2b5d7294dfe",
+  "log_tail": "ed\": false}, \"loss\": 0.16252747178077698, \"gradient_norm\": 0.08926235884428024, \"logical_batch_size\": 8, \"execution_batch_size\": 8, \"weight_mean\": 0.9837900400161743, \"weight_max\": 1.1939195394515991}\n{\"update\": 1138, \"validation_flow_loss\": 0.13395267142914236, \"elapsed_seconds\": 12665.357300892472, \"update_seconds\": 42.82212323509157, \"plateau\": {\"reference\": 0.13446938898414373, \"stale_checks\": 2, \"converged\": false}, \"loss\": 0.08875526487827301, \"gradient_norm\": 0.03207773342728615, \"logical_batch_size\": 8, \"execution_batch_size\": 8, \"weight_mean\": 0.9899858832359314, \"weight_max\": 1.049739122390747}\nTraceback (most recent call last):\n  File \"/mowenjie/fluffy-bassoon-2/sources/steering-eight-full-1c888342/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/TRAIN.py\", line 354, in <module>\n    main()\n  File \"/mowenjie/fluffy-bassoon-2/sources/steering-eight-full-1c888342/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/TRAIN.py\", line 350, in main\n    reader.close()\n  File \"/mowenjie/fluffy-bassoon-2/sources/steering-eight-full-1c888342/src/fluffy_bassoon/meta_rl/flow_source_queries.py\", line 37, in close\n    os.close(fd)\nOSError: [Errno 16] Device or resource busy\n",
+  "diagnosis": "Original1c888342 reader.close raised EBUSY after the operational checkpoint;27b97440 owner-qualified fix exists in six other resumed fits",
+  "frozen_native_parameters": true,
+  "converged": false
+}

@@ -1,5 +1,5 @@
 {
-  "checked_shanghai": "2026-11-05T17:34:06.086114+08:00",
+  "checked_shanghai": "2026-11-05T18:31:54.098625+08:00",
   "cluster": "Baige Pro6K",
   "active": [
     {
@@ -8,9 +8,9 @@
       "kind": "source_resume",
       "GPUs": 8,
       "progress": {
-        "completed_iterations": 20,
+        "completed_iterations": 36,
         "target_iterations": 40,
-        "checked_unix": 1793871235.2905092,
+        "checked_unix": 1793874632.7770064,
         "operator_checkpoint_exit": false
       },
       "clock": null,
@@ -28,8 +28,21 @@
           "num_trajectories": 64
         }
       },
+      "evaluations/step-030.json": {
+        "completed": true,
+        "global_step": 30,
+        "phase": "eval_step_030",
+        "metrics": {
+          "success_at_end": 0.421875,
+          "return": 0.4375,
+          "episode_len": 600.0,
+          "success_once": 0.4375,
+          "reward": 0.0007291666697710752,
+          "num_trajectories": 64
+        }
+      },
       "latest_complete_recovery": {
-        "step": 20,
+        "step": 30,
         "completed": true,
         "worker_sidecars": 18
       }
@@ -40,17 +53,23 @@
       "kind": "endpoint_test",
       "GPUs": 1,
       "progress": {
-        "panels": 23,
-        "bank": 10,
-        "label": "teacher",
-        "controls": 110400
+        "panels": 77,
+        "bank": 37,
+        "label": "SFT",
+        "controls": 369600
       },
       "clock": null,
-      "error_tail": null
+      "error_tail": null,
+      "timing": {
+        "completed_panels": 77,
+        "completed_paired_cases": 304,
+        "mean_last10_panel_seconds": 62.5706610918045,
+        "forecast_finish_shanghai": "2026-11-05T19:26:09.444416"
+      }
     }
   ],
-  "conservative_charged_GPU_hours": 37.42162351177799,
+  "conservative_charged_GPU_hours": 46.09444776680735,
   "approved_GPU_hours": 70,
-  "free_GiB": 325.9765625,
-  "next_check_shanghai": "2026-11-05T17:54:06.086114+08:00"
+  "free_GiB": 269.046875,
+  "next_check_shanghai": "2026-11-05T18:51:54.098625+08:00"
 }
