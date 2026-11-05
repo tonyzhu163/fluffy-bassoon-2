@@ -1,7 +1,7 @@
 # Concrete next step toward five improving source policies
 
-Prepared2026-11-05, after the audited512-case four-epoch result. **Not launched;
-requires a new70GPU-hour budget and the endpoint-gate decision below.**
+Prepared2026-11-05, after the audited512-case four-epoch result. **The user approved the70GPU-hour ceiling and the endpoint gate on2026-11-05.**
+See SOURCE5-BUDGET.json. Launch preparation is checking checkpoint storage first.
 
 OpenDrawer and CloseToasterOvenDoor already have independently confirmed
 policy130 improvements. OpenDrawer's separate action-matched experiment now

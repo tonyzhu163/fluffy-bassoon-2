@@ -1,0 +1,36 @@
+{
+  "approved": true,
+  "GPU_hours_ceiling": 70,
+  "independent_endpoint_gate_authorized": true,
+  "approved_shanghai": "2026-11-05T10:47:00+08:00",
+  "authorization": "Direct user reply: Approve 70 GPU-hours and the proposed readiness rule",
+  "source_proposal": "SOURCE5-PROPOSAL.md",
+  "training_tasks": [
+    "PickPlaceCounterToCabinet",
+    "TurnOnSinkFaucet"
+  ],
+  "training_updates": 40,
+  "update_epochs": 4,
+  "TRAIN_controls_per_task": 3072000,
+  "maximum_training_GPU_hours_per_task": 30,
+  "maximum_test_and_preparation_GPU_hours": 8,
+  "maximum_diagnosed_contingency_GPU_hours": 2,
+  "automatic_retry_authorized": false,
+  "source_gate": {
+    "tasks": [
+      "CoffeeSetupMug",
+      "PickPlaceCounterToCabinet",
+      "TurnOnSinkFaucet"
+    ],
+    "fresh_paired_cases_per_task": 512,
+    "selection": "Coffee fixed130; both new sources fixed final40; no DEV-peak selection",
+    "condition": "paired wins>losses and two-sided exact McNemar Holm-adjusted p<.05 across these three tests"
+  },
+  "old_stopped_campaign_remains_stopped": true,
+  "frozen_expert_route": {
+    "primary": "learned KV bridge",
+    "matched_ablation": "velocity residual",
+    "direct_action_fits": "closed exploratory baseline; no continuation"
+  },
+  "later_five_task_fit_and_full_transfer_budget": "Separate measured reservation; not included in this70GPUh ceiling"
+}
