@@ -142,4 +142,3 @@ if [[ $TASK_PHASE == ppo || $TASK_PHASE == grpo ]]; then
   printf '{"seconds":%s,"actor_only":true,"extra_optimizer_updates":0,"extra_simulator_controls":0}\n' \
     "$(($(date +%s)-TASK_RESTORE_STARTED))" > "$TASK_PARENT_OUT/final-restore-timing.json"
 fi
-
