@@ -1,0 +1,17 @@
+{
+  "task": "TurnOnSinkFaucet",
+  "job_id": "job-16c6s3w9ccx7",
+  "source_commit": "5eb0c3dcf46416d0bdee55ebe5f04b630ecec02e",
+  "scheduler_released_shanghai": "2026-11-05T13:59:36+08:00",
+  "conservative_GPU_hours": 0.2475,
+  "GPU_probe_passed": true,
+  "initial_likelihood_parity_max_log_ratio": 0.0,
+  "SGD": 0,
+  "episodes_completed": 0,
+  "root_cause": "AttributeError: NoneType has no attribute model in capture_factory before first native reset",
+  "secondary_error": "Ray dashboard unavailable while handling the initial failure",
+  "fix": "Install pass-through XML capture at the existing post-reset native_fingerprint call; never inspect env.sim during lazy construction",
+  "next_identity": "reset-qualification/faucet-r2/gpu-01",
+  "maximum_retry_GPU_hours": 0.5,
+  "automatic_retry": false
+}

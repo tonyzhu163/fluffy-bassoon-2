@@ -57,11 +57,16 @@ cap=24 if attempt=='02' else 30
 storage=110 if attempt=='02' else 150
 if attempt=='02':
     group='counter-r1' if target=='PickPlaceCounterToCabinet' else 'faucet-r1'
+    group=os.environ.get('SOURCE5_RESET_GROUP',group)
+    import re
+    prefix='counter' if target=='PickPlaceCounterToCabinet' else 'faucet'
+    assert re.fullmatch(prefix+r'-r[1-9][0-9]*',group)
     qualification=json.loads((run/'reset-qualification'/group/'gpu-01/RESULT.json').read_text())
     import hashlib
     qm=run/'reset-qualification'/group/'MANIFEST.json'
     assert qualification['manifest_sha256']==hashlib.sha256(qm.read_bytes()).hexdigest()
-    assert json.loads(qm.read_text())['task']==target
+    manifest=json.loads(qm.read_text())
+    assert manifest['task']==target and manifest['source']==str(run/'source5'/target/'attempt-01')
     assert qualification['passed'] and qualification['original_cases']==64 and qualification['repeated_cases']==8
     assert qualification['fresh_eval_processes'] and qualification['original_pairing_check_retained'] and qualification['SGD']==0
     reference=Path(os.environ['ROBOCASA_SIM_PPO_BEFORE_REFERENCE'])

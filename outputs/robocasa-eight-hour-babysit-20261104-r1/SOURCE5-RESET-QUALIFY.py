@@ -63,24 +63,33 @@ def capture_factory(original, capture_root, *args, **kwargs):
 
     def create():
         import os
-        env = factory()
-        model_class = type(env.sim.model)
-        get_xml = model_class.get_xml
-        if not getattr(get_xml, '_source5_xml_capture', False):
-            def recorded_xml(model):
-                value = get_xml(model)
-                digest = hashlib.sha256(value.encode()).hexdigest()
-                root = Path(capture_root)
-                root.mkdir(parents=True, exist_ok=True)
-                destination = root / (digest + '.xml')
-                if not destination.exists():
-                    temp = root / f'{digest}.{os.getpid()}.tmp'
-                    temp.write_text(value)
-                    temp.replace(destination)
-                return value
-            recorded_xml._source5_xml_capture = True
-            model_class.get_xml = recorded_xml
-        return env
+        from fluffy_bassoon.meta_rl import rlinf_robocasa_flow_ppo_runtime as runtime
+        fingerprint = runtime.native_fingerprint
+
+        def observed_fingerprint(env):
+            # Native constructors may leave sim=None until reset. This hook
+            # runs at the existing fingerprint call after native reset, and
+            # records exactly its one original get_xml return value.
+            model_class = type(env.sim.model)
+            get_xml = model_class.get_xml
+            if not getattr(get_xml, '_source5_xml_capture', False):
+                def recorded_xml(model):
+                    value = get_xml(model)
+                    digest = hashlib.sha256(value.encode()).hexdigest()
+                    root = Path(capture_root)
+                    root.mkdir(parents=True, exist_ok=True)
+                    destination = root / (digest + '.xml')
+                    if not destination.exists():
+                        temp = root / f'{digest}.{os.getpid()}.tmp'
+                        temp.write_text(value)
+                        temp.replace(destination)
+                    return value
+                recorded_xml._source5_xml_capture = True
+                model_class.get_xml = recorded_xml
+            return fingerprint(env)
+
+        runtime.native_fingerprint = observed_fingerprint
+        return factory()
     return create
 
 
@@ -169,7 +178,12 @@ if __name__ == '__main__':
     parser.add_argument('--task', choices=('PickPlaceCounterToCabinet', 'TurnOnSinkFaucet'), default=TASK)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--deadline', type=float)
+    parser.add_argument('--group')
     args = parser.parse_args()
     TASK = args.task
-    GROUP = RUN / 'reset-qualification' / ('counter-r1' if TASK == 'PickPlaceCounterToCabinet' else 'faucet-r1')
+    prefix = 'counter' if TASK == 'PickPlaceCounterToCabinet' else 'faucet'
+    group = args.group or prefix + '-r1'
+    import re
+    assert re.fullmatch(prefix + r'-r[1-9][0-9]*', group)
+    GROUP = RUN / 'reset-qualification' / group
     prepare() if args.mode == 'prepare' else execute(args.output, args.deadline)

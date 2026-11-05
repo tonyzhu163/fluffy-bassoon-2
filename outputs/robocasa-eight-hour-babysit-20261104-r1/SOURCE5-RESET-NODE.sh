@@ -12,10 +12,13 @@ test "$(git -C "$VENDOR" rev-parse HEAD)" = 8f9bfa7661928ef8c17494b04f4d7bf31256
 for CODE in "$SOURCE5_DIAG_CODE" "$EVAL" "$VENDOR"; do test -z "$(git -C "$CODE" status --porcelain)"; done
 SOURCE5_DIAG_TASK=${SOURCE5_DIAG_TASK:-PickPlaceCounterToCabinet}
 case "$SOURCE5_DIAG_TASK" in
-  PickPlaceCounterToCabinet) GROUP=$ROOT/$RUN/reset-qualification/counter-r1 ;;
-  TurnOnSinkFaucet) GROUP=$ROOT/$RUN/reset-qualification/faucet-r1 ;;
+  PickPlaceCounterToCabinet) PREFIX=counter ;;
+  TurnOnSinkFaucet) PREFIX=faucet ;;
   *) exit 2 ;;
 esac
+SOURCE5_DIAG_GROUP=${SOURCE5_DIAG_GROUP:-$PREFIX-r1}
+[[ $SOURCE5_DIAG_GROUP =~ ^$PREFIX-r[1-9][0-9]*$ ]]
+GROUP=$ROOT/$RUN/reset-qualification/$SOURCE5_DIAG_GROUP
 OUT=$GROUP/gpu-01
 python3 - "$ROOT/$RUN" <<'PY'
 import datetime,json,os,socket,sys,time
@@ -79,4 +82,4 @@ if [[ -z ${CUDA_VISIBLE_DEVICES:-} ]]; then
 fi
 "$PY" -B "$SOURCE5_DIAG_CODE/scripts/[train]gpu_probe.py" --expected-count 1 --purpose evaluation --baige-container --output "$OUT/GPU-PROBE.json"
 DEADLINE=$((START+1650))
-timeout --kill-after=30s 1650 "$PY" -B "$SOURCE5_DIAG_CODE/$RUN/SOURCE5-RESET-QUALIFY.py" run --task "$SOURCE5_DIAG_TASK" --output "$OUT" --deadline "$DEADLINE"
+timeout --kill-after=30s 1650 "$PY" -B "$SOURCE5_DIAG_CODE/$RUN/SOURCE5-RESET-QUALIFY.py" run --task "$SOURCE5_DIAG_TASK" --group "$SOURCE5_DIAG_GROUP" --output "$OUT" --deadline "$DEADLINE"

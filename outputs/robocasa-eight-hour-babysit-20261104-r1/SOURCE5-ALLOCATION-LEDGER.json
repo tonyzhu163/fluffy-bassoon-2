@@ -49,10 +49,7 @@
       "max_reservation_GPU_hours": 2.5,
       "storage_reservation_GiB": 15,
       "output": "source5-tests/CoffeeSetupMug/attempt-01"
-    }
-  ],
-  "scope": "Two fixed40 four-epoch PPO sources and three fresh paired512 readiness panels, including setup/qualification/failures/release",
-  "pending_submissions": [
+    },
     {
       "job_id": "job-q250t3zf6g1x",
       "name": "mwj_1105_source5_counter_reset_qual01",
@@ -64,9 +61,11 @@
       "storage_reservation_GiB": 2,
       "output": "reset-qualification/counter-r1",
       "worker_subdir": "gpu-01",
-      "last_confirmed_queued_shanghai": "2026-11-05T13:26:00+08:00",
-      "state": "Queued; no allocation at last scheduler observation",
-      "GPU_hours_occupied_at_last_confirmation": 0
+      "last_confirmed_queued_shanghai": "2026-11-05T13:44:45+08:00",
+      "state": "Running; actual GPU probe passed13:56:11; original-case qualification pending",
+      "GPU_hours_occupied_at_last_confirmation": 0,
+      "accounting_start_shanghai": "2026-11-05T13:44:45+08:00",
+      "allocated_shanghai_not_after": "2026-11-05T13:56:11+08:00"
     },
     {
       "job_id": "job-16c6s3w9ccx7",
@@ -79,11 +78,19 @@
       "storage_reservation_GiB": 2,
       "output": "reset-qualification/faucet-r1",
       "worker_subdir": "gpu-01",
-      "last_confirmed_queued_shanghai": "2026-11-05T13:26:00+08:00",
-      "state": "Queued; no allocation at last scheduler observation",
-      "GPU_hours_occupied_at_last_confirmation": 0
+      "last_confirmed_queued_shanghai": "2026-11-05T13:44:45+08:00",
+      "state": "Running; actual GPU probe passed13:56:11; original-case qualification pending",
+      "GPU_hours_occupied_at_last_confirmation": 0,
+      "accounting_start_shanghai": "2026-11-05T13:44:45+08:00",
+      "allocated_shanghai_not_after": "2026-11-05T13:56:11+08:00",
+      "released_shanghai": "2026-11-05T13:59:36+08:00",
+      "scheduler_release_verified": true,
+      "termination": "Failed before first simulator reset: observational XML hook accessed env.sim while None; zero SGD, no original-case qualification established",
+      "closed_conservative_GPU_hours": 0.2475
     }
   ],
-  "pending_reserved_GPU_hours": 1.0,
-  "queue_accounting": "Queued submissions reserve their bounded allowance and occupy zero GPUs at the last scheduler observation. Retain actual creation timestamps. After both legacy diagnostic launch guards run, use the last confirmed queued timestamp as the explicit conservative accounting_start_shanghai; do not substitute a later worker-start timestamp. Both known diagnostic reservations together are1/2GPUh."
+  "scope": "Two fixed40 four-epoch PPO sources and three fresh paired512 readiness panels, including setup/qualification/failures/release",
+  "pending_reserved_GPU_hours": 0,
+  "queue_accounting": "Queued submissions reserve their bounded allowance and occupy zero GPUs at the last scheduler observation. Retain actual creation timestamps. After both legacy diagnostic launch guards run, use the last confirmed queued timestamp as the explicit conservative accounting_start_shanghai; do not substitute a later worker-start timestamp. Both known diagnostic reservations together are1/2GPUh.",
+  "pending_submissions": []
 }
