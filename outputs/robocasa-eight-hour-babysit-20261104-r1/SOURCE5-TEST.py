@@ -149,6 +149,12 @@ def family():
     results = {}
     for task in SEEDS:
         folder = RUN / 'source5-tests' / task / 'attempt-01'
+        binding = folder.parent / 'ENDPOINT-RESULT-SOURCE.json'
+        if binding.exists():
+            bound = native.read(binding)
+            assert bound['task'] == task and bound['cases'] == 512 and bound['scientific_comparison_unchanged']
+            folder = Path(bound['path'])
+            assert folder.parent == binding.parent and bound['manifest_sha256'] == native.sha(folder / 'MANIFEST.json')
         result = native.read(folder / 'RESULT.json')
         manifest = folder / 'MANIFEST.json'
         assert result['completed'] and result['task'] == task and result['cases'] == 512

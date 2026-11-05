@@ -25,23 +25,37 @@ def sha(path):
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
-def audit(task, *, qualification=False):
+def audit(task, *, qualification=False, folder=None):
     assert sys.platform == 'linux' and os.environ.get('CUDA_VISIBLE_DEVICES') == ''
     torch.set_num_threads(2)
-    folder = RUN / 'source5-tests' / task / 'attempt-01'
+    folder = folder or RUN / 'source5-tests' / task / 'attempt-01'
     manifest = folder / 'MANIFEST.json'
     m = read(manifest)
     assert m['task'] == task and m['case_base'] == SEEDS[task] and m['cases'] == 512
     worker = folder / 'node-00'
-    probe = read(worker / 'GPU-PROBE.json')
-    assert probe['status'] == 'passed' and len(probe['devices']) == 1
-    assert read(worker / 'initial-parity.json')[0]['passed']
+    collection = read(folder / 'COLLECTION.json') if (folder / 'COLLECTION.json').exists() else None
+    if collection:
+        assert collection['manifest_sha256'] == sha(manifest)
+        for source in collection['sources']:
+            for key in ('probe', 'parity'):
+                assert sha(Path(source[key]['path'])) == source[key]['sha256']
+            probe = read(Path(source['probe']['path']))
+            assert probe['status'] == 'passed' and len(probe['devices']) == 1
+            assert probe['hostname'] == source['job_id'] + '-master-0'
+            assert read(Path(source['parity']['path']))[0]['passed']
+    else:
+        probe = read(worker / 'GPU-PROBE.json')
+        assert probe['status'] == 'passed' and len(probe['devices']) == 1
+        assert read(worker / 'initial-parity.json')[0]['passed']
     cases = {key: {} for key in ('SFT', 'teacher')}
     ends = {key: 0 for key in cases}
     panels = controls = resets = chunks = images = image_exact = 0
     raw_digest = hashlib.sha256()
     for bank in range(1 if qualification else 64):
         base = worker / 'banks' / f'bank-{bank:03d}'
+        if collection:
+            source = collection['sources'][collection['bank_sources'][str(bank)]]
+            assert base.resolve() == (Path(source['worker']) / 'banks' / f'bank-{bank:03d}').resolve()
         seeds = list(range(SEEDS[task] + bank*8, SEEDS[task] + bank*8 + 8))
         canonical = base / 'canonical-eval/rank-00/complete.json'
         c = read(canonical)
@@ -54,13 +68,17 @@ def audit(task, *, qualification=False):
         assert m['sequential_order'][bank] == expected_order
         for label in expected_order:
             panel = read(base / f'{label}.json')
+            if collection:
+                source_panel = Path(source['worker']) / 'banks' / f'bank-{bank:03d}' / f'{label}.json'
+                assert sha(source_panel) == collection['panel_sha256'][str(source_panel)]
             policy = 'SFT' if label == 'repeat' else label
             assert panel['load']['strict_load'] and panel['load']['sha256'] == m['policies'][policy]['sha256']
             assert panel['sampler_seed'] == SEEDS[task] + 10000000 + bank and panel['seeds'] == seeds
             path = Path(panel['episodes_path'])
             assert sha(path) == panel['episodes_sha256']
             initial = read(path.with_name(path.name.replace('-episodes.json', '-initial.json')))
-            assert initial['canonical'] == str(canonical) and initial['report']['matched']
+            assert initial['canonical'] == panel['canonical'] and initial['report']['matched']
+            assert (Path(initial['canonical']).resolve() == canonical.resolve())
             assert initial['report']['physical_state_exact'] and initial['report']['public_state_exact']
             image_exact += int(initial['report']['images_exact'])
             rows = read(path)['rows']
@@ -84,7 +102,7 @@ def audit(task, *, qualification=False):
                 # qualified prepare_actions thresholds6/11 before this archive
                 # records physical commands, so these stage hashes differ.
                 assert torch.isin(actions[..., [6, 11]], torch.tensor([-1., 1.])).all()
-                raw_digest.update(str(chunk_path.relative_to(folder)).encode())
+                raw_digest.update(str(chunk_path.relative_to(RUN if collection else folder)).encode())
                 raw_digest.update(tensor_hash(actions).encode())
                 observation = raw['current_observation']
                 assert tensor_hash(observation) == raw['current_observation_sha256']
@@ -135,9 +153,29 @@ def audit(task, *, qualification=False):
         assert done['completed'] and done['banks'] == list(range(64))
         assert done['manifest_sha256'] == combined['manifest_sha256'] == sha(manifest)
         calls = read(worker / 'accounting/rank-00/node-00.json')['calls']
-        assert all(row['resolved'] for row in calls)
+        if collection:
+            selected = set()
+            for bank in range(64):
+                source_index = collection['bank_sources'][str(bank)]
+                for label in m['sequential_order'][bank]:
+                    panel = read(worker / 'banks' / f'bank-{bank:03d}' / f'{label}.json')
+                    selected.add((source_index, panel['phase']))
+            normalized = []
+            for index, source in enumerate(collection['sources']):
+                journal = Path(source['journal']['path'])
+                assert sha(journal) == source['journal']['sha256']
+                for call_index, row in enumerate(read(journal)['calls']):
+                    normalized.append(dict(row, source_index=index, source_call_index=call_index,
+                        executed_or_conservative=row.get('executed_or_conservative', row['requested']),
+                        selected_for_readout=(index, row['phase'].split('/')[0]) in selected))
+            assert calls == normalized
+            assert all(row['resolved'] for row in calls if row['selected_for_readout'])
+            discarded = sum(row['executed_or_conservative'] for row in calls if not row['selected_for_readout'])
+        else:
+            assert all(row['resolved'] for row in calls)
+            discarded = 0
         charged = sum(row['executed_or_conservative'] for row in calls)
-        assert panels == 129 and controls == 619200 and charged == controls + resets == combined['charged_controls']
+        assert panels == 129 and controls == 619200 and charged == controls + resets + discarded == combined['charged_controls']
         assert all(set(rows) == set(range(SEEDS[task], SEEDS[task]+512)) for rows in cases.values())
         assert result['first_successes'] == combined['first_successes'] and ends == combined['end_successes']
         differences = Counter(cases['teacher'][seed] - cases['SFT'][seed] for seed in cases['SFT'])
@@ -147,6 +185,9 @@ def audit(task, *, qualification=False):
         assert abs(exact-combined['primary']['exact_McNemar_p']) < 1e-12
         result.update(combined_sha256=sha(folder / 'RESULT.json'), charged_controls=charged,
             independent_paired_test=dict(wins=wins, losses=losses, exact_McNemar_p=exact))
+        if collection:
+            result.update(input_collection_sha256=sha(folder / 'COLLECTION.json'),
+                          discarded_recovery_controls_upper=discarded)
     return result
 
 
@@ -154,5 +195,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--task', choices=tuple(SEEDS), required=True)
     parser.add_argument('--qualification', action='store_true')
+    parser.add_argument('--folder', type=Path)
     args = parser.parse_args()
-    print(json.dumps(audit(args.task, qualification=args.qualification), indent=2))
+    print(json.dumps(audit(args.task, qualification=args.qualification, folder=args.folder), indent=2))
