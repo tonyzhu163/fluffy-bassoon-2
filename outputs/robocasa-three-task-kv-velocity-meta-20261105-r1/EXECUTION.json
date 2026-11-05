@@ -1,5 +1,5 @@
 {
-  "status": "both_native_interfaces_qualified_eight_jobs_ready",
+  "status": "eight_jobs_submitted_three_running_five_queued",
   "approved_campaign_GPU_hours": 150,
   "prior_direct_action_closed": true,
   "initial_qualification": {
@@ -16,8 +16,8 @@
     "diagnosis": "Dimension probe did not clear native._prepared before the second preparation",
     "fix": "Release the dimension-only prepared observation after binding cache dimensions; new attempt identity qualification-02"
   },
-  "cumulative_GPU_hours": 73.89138888888888,
-  "remaining_GPU_hours": 76.10861111111112,
+  "cumulative_GPU_hours": 74.82043993333333,
+  "remaining_GPU_hours": 75.17956006666667,
   "Linux_CPU_validation": {
     "source_commit": "5343c975bd226ca00293cafa639518c71c03b791",
     "tests_passed": 50,
@@ -31,7 +31,7 @@
     "policy_controls": 15120000,
     "estimated_GPU_hours": 54.1
   },
-  "next_action": "Launch8 independent one-GPU pipelines; train to held-out flow-loss convergence, then ID50 and OOD50 full/reset six-episode readouts; CPU-audit and cold-archive completed waves",
+  "next_action": "Verify subsequent advancing updates in all three running KV fits; queued KV IC-IQL and four velocity jobs start on released capacity; continue every20-minute snapshots, independently audit/cold-archive completed waves and reduce paired curves",
   "qualification03_job_id": "job-7brm9euwivvz",
   "qualification03_source": "837cbc6915af91b31816d61ae327fe76ecac34ea",
   "qualification03": "QUALIFICATION03.json",
@@ -50,5 +50,19 @@
     "wall_minutes_per_job": 540,
     "maximum_combined_GPU_hours": 72,
     "automatic_retry": false
+  },
+  "source_commit": "1c88834265cfadc511ba62cac48db0542ad0ebd1",
+  "checked_shanghai": "2026-11-05T12:38:11.197970+08:00",
+  "terminal_GPU_hours_before_full_fits": 74.29194444444445,
+  "maximum_reserved_GPU_hours_including_all_eight": 146.29194444444445,
+  "headroom_after_full_72_GPU_hour_reservation": 3.70805555555555,
+  "allocations": "ALLOCATIONS.json",
+  "monitor": "monitor/WATCH-RECEIPT.json",
+  "latest_monitor_snapshot": "monitor/LIVE-CHECK.json",
+  "next_check_shanghai": "2026-11-05T12:58:11.197970+08:00",
+  "initial_running_updates": {
+    "kv_bridge/ad": 1,
+    "kv_bridge/dpt": 1,
+    "kv_bridge/dit": 1
   }
 }
