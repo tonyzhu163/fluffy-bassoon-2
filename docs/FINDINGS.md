@@ -95,6 +95,12 @@ The independent CPU audit recounts 1,032 episodes, 619,200 policy controls, 1,54
 
 Evidence: [verified result](../outputs/robocasa-eight-hour-babysit-20261104-r1/SOURCE5-COFFEE-VERIFIED-RESULT.json), [independent raw audit](../outputs/robocasa-eight-hour-babysit-20261104-r1/source5-tests/CoffeeSetupMug/attempt-01/INDEPENDENT-AUDIT.json), [approved scope](../outputs/robocasa-eight-hour-babysit-20261104-r1/SOURCE5-PROPOSAL.md). The approved scope prohibits automatically adding a Coffee training arm after failure.
 
+## Source readiness extension: Faucet improves; five-source gate remains unmet
+
+The fixed four-epoch Faucet40 policy scores242/512 versus SFT204/512 (+7.4219percentage points), with92wins/54losses and Holm-adjusted exact paired p=.00627018 across the three prospectively declared tests. Counter40 scores312versus299 (+2.5391points,p=.482863 after Holm), and Coffee130 scores172versus162 (+1.9531points,p=.497629); neither establishes improvement. Each comparison passes independent raw auditing of1032episodes,619200selectedcontrols,1548action/observationchunks and37152camera frames. Recovery retains completed pairs and charges12000 additional orphan/partial controls across Counter and Faucet.
+
+Faucet joins the separately confirmed Drawer/Toaster sources, giving three effective source tasks under the adopted readiness rule; five-source fitting/full15-task transfer remains unadmitted. All original production130 sources already used four PPO epochs; retained-source actor counters end at3120. They must not be confused with the distinct short one-epoch ablation. The proposed Coffee40 critic/ignore_last change is not an epoch conversion. All source70 GPUs are released at51.632222/70GPU-hours. [Results and statistical boundaries](../outputs/robocasa-eight-hour-babysit-20261104-r1/SOURCE5-RESULT.md).
+
 ## Headline
 
 - **No experiment so far shows in-context adaptation or a memory benefit**, on
