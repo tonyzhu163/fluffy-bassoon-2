@@ -1,0 +1,117 @@
+{
+  "verified": true,
+  "job_id": "job-z15y0bm9f75d",
+  "cluster": "Baige Pro6K",
+  "checked_shanghai": "2026-11-05T17:06:52.567768+08:00",
+  "first_new_TRAIN_iteration": 11,
+  "producing_policy_iteration": 10,
+  "original_optimizer_steps": 240,
+  "completed_optimizer_steps": 264,
+  "actor_updates": [
+    {
+      "completed": true,
+      "rank": 0,
+      "producing_policy_iteration": 10,
+      "optimizer_steps_before": 240,
+      "optimizer_steps_after": 264,
+      "batch_shape": [
+        12,
+        64,
+        50,
+        12
+      ],
+      "losses": {
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 29.04357147216797,
+        "actor/policy_loss": -0.27602604031562805,
+        "actor/policy_loss_abs": 0.9440404176712036,
+        "actor/total_loss": -0.028052184730768204,
+        "critic/value_loss": 0.05160856246948242
+      },
+      "metrics": {
+        "actor/approx_kl": 0.00102527835406363,
+        "actor/clip_fraction": 0.1422857642173767,
+        "actor/clipped_ratio": 1.0023303031921387,
+        "actor/dual_cliped_ratio": 0.0,
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 29.04357147216797,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/policy_loss": -0.27602604031562805,
+        "actor/policy_loss_abs": 0.9440404176712036,
+        "actor/ratio": 1.0225965976715088,
+        "actor/ratio_abs": 0.1310231238603592,
+        "actor/total_loss": -0.028052184730768204,
+        "critic/lr": 9.999999747378752e-05,
+        "critic/value_clip_ratio": 0.0,
+        "critic/value_loss": 0.05160856246948242,
+        "critic/explained_variance": 0.3777555227279663
+      },
+      "training_seconds": 116.41451464034617,
+      "cuda_peak_allocated_bytes": 17119469056,
+      "cuda_peak_reserved_bytes": 19927138304,
+      "frozen_vlm_unchanged": true
+    },
+    {
+      "completed": true,
+      "rank": 1,
+      "producing_policy_iteration": 10,
+      "optimizer_steps_before": 240,
+      "optimizer_steps_after": 264,
+      "batch_shape": [
+        12,
+        64,
+        50,
+        12
+      ],
+      "losses": {
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 29.04357147216797,
+        "actor/policy_loss": -0.27602604031562805,
+        "actor/policy_loss_abs": 0.9440404176712036,
+        "actor/total_loss": -0.028052184730768204,
+        "critic/value_loss": 0.05160856246948242
+      },
+      "metrics": {
+        "actor/approx_kl": 0.00102527835406363,
+        "actor/clip_fraction": 0.1422857642173767,
+        "actor/clipped_ratio": 1.0023303031921387,
+        "actor/dual_cliped_ratio": 0.0,
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 29.04357147216797,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/policy_loss": -0.27602604031562805,
+        "actor/policy_loss_abs": 0.9440404176712036,
+        "actor/ratio": 1.0225965976715088,
+        "actor/ratio_abs": 0.1310231238603592,
+        "actor/total_loss": -0.028052184730768204,
+        "critic/lr": 9.999999747378752e-05,
+        "critic/value_clip_ratio": 0.0,
+        "critic/value_loss": 0.05160856246948242,
+        "critic/explained_variance": 0.3777555227279663
+      },
+      "training_seconds": 116.58928277902305,
+      "cuda_peak_allocated_bytes": 17119469056,
+      "cuda_peak_reserved_bytes": 19927138304,
+      "frozen_vlm_unchanged": true
+    }
+  ],
+  "complete_recovery_sidecars": 18,
+  "redundant_standalone_export_omitted": true,
+  "DEV10": {
+    "completed": true,
+    "global_step": 10,
+    "phase": "eval_step_010",
+    "metrics": {
+      "success_at_end": 0.484375,
+      "return": 0.484375,
+      "episode_len": 600.0,
+      "success_once": 0.484375,
+      "reward": 0.0008072916534729302,
+      "num_trajectories": 64
+    }
+  },
+  "original_SFT_successes": 24,
+  "cases": 64,
+  "fixed_primary_endpoint": 40,
+  "DEV_selection": false
+}
