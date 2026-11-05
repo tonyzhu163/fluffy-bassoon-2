@@ -24,7 +24,7 @@ from rlinf.workers.env.env_worker import EnvWorker
 from .rlinf_native_ppo import ActionJournal, cpu_tree, restore_rng, snapshot_rng, tensor_hash, write
 from .rlinf_native_ppo import sha
 from .rlinf_native_ppo_runtime import PilotActor, PilotRollout, PilotRunner, save_tensor
-from .rlinf_robocasa_flow_ppo import (GlobalActionJournal, RESET_CONTROL_RESERVE, first_success_reward,
+from .rlinf_robocasa_flow_ppo import (GlobalActionJournal, RESET_CONTROL_RESERVE, checkpoint_weight_export, first_success_reward,
     flow_contract, flow_episode_ids, flow_logprob_parity, flow_value_parity,
     keep_frozen_image_encoder_in_eval, train_case_seeds, verify_grpo_group_reset)
 from .rlinf_robocasa_ppo_env import counted_native_factory, reconfigure_or_create_subproc_env
@@ -185,6 +185,17 @@ def native_class(original, owner):
 
 
 class FlowActor(PilotActor):
+    def save_checkpoint(self, save_path, step=0):
+        final = int(self.cfg.runner.max_epochs)
+        maximum = int(self.cfg.runner.get('max_steps', -1))
+        if maximum >= 0:
+            final = min(final, maximum)
+        with checkpoint_weight_export(self._cfg.fsdp_config, step=int(step), final_step=final,
+                export_steps=self.cfg.native_pilot.get('full_model_export_steps')):
+            # The upstream writer always saves complete model/Adam/LR/RNG DCP.
+            # Its optional full_weights.pt is an additional inference copy.
+            return super().save_checkpoint(save_path, step)
+
     def train_micro_batch(self, micro_batch, metrics, *, is_last):
         if self._flow_first_micro_checked:
             return super().train_micro_batch(micro_batch, metrics, is_last=is_last)

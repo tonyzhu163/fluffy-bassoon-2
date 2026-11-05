@@ -1,5 +1,38 @@
 """Reward semantics for native RoboCasa action-expert PPO."""
+from contextlib import contextmanager, nullcontext
+
 import numpy as np
+
+
+@contextmanager
+def checkpoint_weight_export(fsdp_config, *, step, final_step, export_steps=None):
+    """Keep every DCP recovery while selecting redundant inference exports.
+
+    None preserves the upstream setting. Explicit schedules must include the
+    final teacher. Restore the setting even when a checkpoint write fails.
+    """
+    if export_steps is None:
+        yield
+        return
+    steps = list(export_steps)
+    if (type(step) is not int or type(final_step) is not int or final_step < 1
+            or not 0 <= step <= final_step or not steps
+            or any(type(value) is not int or not 0 <= value <= final_step for value in steps)
+            or len(set(steps)) != len(steps) or final_step not in steps):
+        raise ValueError('Full-weight export schedule must include the final teacher')
+    from omegaconf import OmegaConf, open_dict
+    present = 'save_full_model_weights' in fsdp_config
+    original = fsdp_config.get('save_full_model_weights')
+    context = open_dict(fsdp_config) if OmegaConf.is_config(fsdp_config) else nullcontext()
+    with context:
+        fsdp_config['save_full_model_weights'] = step in steps
+        try:
+            yield
+        finally:
+            if present:
+                fsdp_config['save_full_model_weights'] = original
+            else:
+                del fsdp_config['save_full_model_weights']
 
 
 class GlobalActionJournal:
