@@ -5,11 +5,11 @@ TASK_OUT=${2:?fresh output identity}
 TASK_PHASE=${3:?qualification or ppo or grpo}
 TASK_PLAN=${4:?admitted funding/storage contract}
 TASK_LIMIT=${5:?maximum worker seconds}
-[[ $TASK_PHASE == gradient_probe || $TASK_PHASE == qualification || $TASK_PHASE == ppo || $TASK_PHASE == grpo ]]
+[[ $TASK_PHASE == optimizer_probe || $TASK_PHASE == gradient_probe || $TASK_PHASE == qualification || $TASK_PHASE == ppo || $TASK_PHASE == grpo ]]
 [[ $TASK_LIMIT =~ ^[0-9]+$ ]]
 TASK_CONFIG_MODE=$TASK_PHASE
 TASK_MINIMUM_HOST_GIB=1024
-if [[ $TASK_PHASE == gradient_probe ]]; then
+if [[ $TASK_PHASE == gradient_probe || $TASK_PHASE == optimizer_probe ]]; then
   [[ $TASK_LIMIT -le 840 ]]; TASK_ALGORITHM=grpo;TASK_CONFIG_MODE=qualification
   TASK_MINIMUM_HOST_GIB=256
 elif [[ $TASK_PHASE == qualification ]]; then
@@ -72,7 +72,7 @@ if [[ ! -e /root/.sapien/physx/105.1-physx-5.3.1.patch0 ]]; then
   ln -s /mowenjie/fluffy-bassoon/inputs/maniskill-scene-assets-20261028-r1/physx/105.1-physx-5.3.1.patch0 /root/.sapien/physx/105.1-physx-5.3.1.patch0
 fi
 "$TASK_PYTHON" "$TASK_RUN/admission.py" "$TASK_PLAN" "$TASK_PHASE"
-if [[ $TASK_PHASE == qualification || $TASK_PHASE == gradient_probe ]]; then
+if [[ $TASK_PHASE == qualification || $TASK_PHASE == gradient_probe || $TASK_PHASE == optimizer_probe ]]; then
   "$TASK_PYTHON" "$TASK_RUN/numerical_qualification.py" "$TASK_OUT"
   for TASK_METHOD in ppo grpo; do
     "$TASK_PYTHON" "$TASK_RUN/configuration.py" validate "$TASK_METHOD" scientific > "$TASK_OUT/config-$TASK_METHOD-scientific.json"
@@ -81,12 +81,13 @@ fi
 "$TASK_PYTHON" "$TASK_RUN/configuration.py" validate "$TASK_ALGORITHM" "$TASK_CONFIG_MODE" > "$TASK_OUT/config-validation.json"
 TASK_PARENT_OUT=$TASK_OUT
 TASK_ENTRY=$TASK_RUN/paired_entry.py
-if [[ $TASK_PHASE == gradient_probe ]]; then
+if [[ $TASK_PHASE == gradient_probe || $TASK_PHASE == optimizer_probe ]]; then
   TASK_ENTRY=$TASK_RUN/gradient_probe.py
   export TASK_FIXTURE=/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual02
   export TASK_PROBE_MODE=train
+  if [[ $TASK_PHASE == optimizer_probe ]]; then export TASK_OPTIMIZER_DIAGNOSTIC=1; fi
 fi
-if [[ $TASK_PHASE == qualification || $TASK_PHASE == gradient_probe ]]; then
+if [[ $TASK_PHASE == qualification || $TASK_PHASE == gradient_probe || $TASK_PHASE == optimizer_probe ]]; then
   export NATIVE_PPO_OUTPUT=$TASK_PARENT_OUT/train
   mkdir "$NATIVE_PPO_OUTPUT"
 fi
@@ -97,7 +98,7 @@ TASK_REMAINING=$((NATIVE_PPO_DEADLINE-$(date +%s)-60))
 timeout --signal=INT --kill-after=20s "$TASK_REMAINING" "$TASK_PYTHON" "$TASK_ENTRY" \
   --config-path "$TASK_CODE/configs/native_ppo" --config-name sidney_phone_two \
   "${TASK_OVERRIDES[@]}" > "$TASK_PARENT_OUT/train.log" 2>&1
-if [[ $TASK_PHASE == qualification || $TASK_PHASE == gradient_probe ]]; then
+if [[ $TASK_PHASE == qualification || $TASK_PHASE == gradient_probe || $TASK_PHASE == optimizer_probe ]]; then
   TASK_RESUME=$TASK_PARENT_OUT/train/sidney-paired-grpo/checkpoints/global_step_1
   # This scheduler container is exclusive to this qualification. The completed
   # first process has saved its full boundary; release its Ray runtime before
@@ -105,8 +106,9 @@ if [[ $TASK_PHASE == qualification || $TASK_PHASE == gradient_probe ]]; then
   "$TASK_PYTHON" -m ray.scripts.scripts stop --force > "$TASK_PARENT_OUT/ray-cleanup.log" 2>&1
   export NATIVE_PPO_OUTPUT=$TASK_PARENT_OUT/restore NATIVE_PPO_ATTEMPT=restore
   mkdir "$NATIVE_PPO_OUTPUT"
-  if [[ $TASK_PHASE == gradient_probe ]]; then
+  if [[ $TASK_PHASE == gradient_probe || $TASK_PHASE == optimizer_probe ]]; then
     export TASK_PROBE_MODE=restore TASK_PROBE_CHECKPOINT=$TASK_PARENT_OUT/train/checkpoint1
+    if [[ $TASK_PHASE == optimizer_probe ]]; then export TASK_PROBE_CHECKPOINT=$TASK_PARENT_OUT/train/checkpoint0; fi
     mapfile -t TASK_OVERRIDES < <("$TASK_PYTHON" "$TASK_RUN/configuration.py" grpo qualification)
   else
     mapfile -t TASK_OVERRIDES < <("$TASK_PYTHON" "$TASK_RUN/configuration.py" grpo qualification "$TASK_RESUME")

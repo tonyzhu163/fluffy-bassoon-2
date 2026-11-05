@@ -13,10 +13,32 @@ from rlinf.utils.placement import HybridComponentPlacement
 
 from paired_entry import PairedActor
 from paired_recipe import validate_pair
+from optimizer_evidence import evidence
+from recovery_signature import actor_signature
+from fluffy_bassoon.meta_rl.rlinf_native_ppo import snapshot_rng
+from fluffy_bassoon.meta_rl.rlinf_native_ppo_runtime import SidecarMixin
 from fluffy_bassoon.meta_rl.rlinf_native_ppo import restore_rng,sha,write
 
 
 class ProbeActor(PairedActor):
+    def describe_optimizer(self,label):
+        value=evidence(self)
+        write(Path(self.cfg.native_pilot.output)/'optimizer-layout'/f'{label}-rank-{self._rank:02d}.json',value)
+        return dict(rank=self._rank,optimizer_sha256=value['optimizer_sha256'],state_entries=value['state_entries'])
+
+    def restore_for_diagnosis(self,directory):
+        # Diagnostic only: preserve the failing raw-hash comparison and collect
+        # its full state/group delta. This method never claims qualification.
+        result=SidecarMixin.pilot_restore(self,directory)
+        expected=json.loads((Path(directory)/f'paired-actor-signature-{self._rank:02d}.json').read_text())
+        actual=actor_signature(self,snapshot_rng())
+        report=dict(rank=self._rank,expected=expected,actual=actual,
+            equality={k:expected[k]==actual[k] for k in expected},
+            frozen_unchanged=self._pilot_frozen_signature()==self._pilot_frozen_before,
+            optimizer_semantic_qualified=False,new_optimizer_updates=0)
+        write(Path(self.cfg.native_pilot.output)/f'diagnostic-restore-rank-{self._rank:02d}.json',report)
+        return report
+
     def replay_fixture(self,source):
         source=Path(source)
         receipt=source/'training-rollouts'/f'iteration-0001-policy-0000-rank-{self._rank:02d}.json'
@@ -52,7 +74,25 @@ def main(cfg):
         placement_strategy=placement.get_strategy('actor'))
     try:
         actor.init_worker().wait()
-        if mode=='train':
+        diagnostic=os.environ.get('TASK_OPTIMIZER_DIAGNOSTIC')=='1'
+        if diagnostic and mode=='train':
+            before=actor.describe_optimizer('before-save').wait()
+            checkpoint=root/'checkpoint0'
+            actor.save_checkpoint(str(checkpoint/'actor'),0).wait()
+            workers=actor.pilot_capture(str(checkpoint/'pilot'),retain_rollout=False).wait()
+            after=actor.describe_optimizer('after-save').wait()
+            write(root/'RESULT.json',dict(status='diagnostic_complete_unqualified',before=before,after=after,
+                workers=workers,new_optimizer_updates=0,new_simulator_controls=0))
+        elif diagnostic:
+            checkpoint=Path(os.environ['TASK_PROBE_CHECKPOINT'])
+            before=actor.describe_optimizer('before-load').wait()
+            actor.load_checkpoint(str(checkpoint/'actor')).wait()
+            after=actor.describe_optimizer('after-load').wait()
+            restored=actor.restore_for_diagnosis(str(checkpoint/'pilot')).wait()
+            write(root/'RESULT.json',dict(status='diagnostic_complete_unqualified',before=before,after=after,
+                restored=restored,new_optimizer_updates=0,new_simulator_controls=0,
+                optimizer_semantic_qualified=False))
+        elif mode=='train':
             initial=source/'sidney-paired-grpo/checkpoints/global_step_0'
             actor.load_checkpoint(str(initial/'actor')).wait()
             restored=actor.pilot_restore(str(initial/'pilot')).wait()

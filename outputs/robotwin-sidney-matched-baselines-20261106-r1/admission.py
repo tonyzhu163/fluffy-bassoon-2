@@ -11,9 +11,9 @@ import torch
 assert sys.platform=='linux' and socket.gethostname().startswith('job-')
 plan=json.loads(Path(sys.argv[1]).read_text());phase=sys.argv[2]
 out=Path(os.environ['NATIVE_PPO_OUTPUT'])
-assert plan['status']=='admitted' and phase in ('gradient_probe','qualification','ppo','grpo')
+assert plan['status']=='admitted' and phase in ('optimizer_probe','gradient_probe','qualification','ppo','grpo')
 assert plan['human_cumulative_gpu_hours']==50
-assert plan['additional_engineering_gpu_hours']==(23 if phase in ('gradient_probe','qualification') else 46)
+assert plan['additional_engineering_gpu_hours']==(23 if phase in ('optimizer_probe','gradient_probe','qualification') else 46)
 reserved=plan['completed_additional_conservative_gpu_seconds']+sum(plan['gpu_reservations_seconds'].values())
 assert reserved<=plan['additional_engineering_gpu_hours']*3600
 assert reserved+plan['legacy_gpu_seconds']<=50*3600
@@ -39,7 +39,7 @@ for name,expected in plan['initializer_sha256'].items():
         for block in iter(lambda:handle.read(8*1024**2),b''):h.update(block)
     assert h.hexdigest()==expected,name
 
-if phase not in ('qualification','gradient_probe'):
+if phase not in ('qualification','gradient_probe','optimizer_probe'):
     completed=json.loads((pilot/'RESULT.json').read_text())
     assert completed['status']=='complete' and completed['rollout_iterations']==2
     assert json.loads((pilot/'EXIT.json').read_text())['exit_code']==0
