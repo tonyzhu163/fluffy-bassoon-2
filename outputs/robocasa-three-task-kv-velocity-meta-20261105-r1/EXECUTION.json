@@ -1,99 +1,64 @@
 {
-  "status": "eight_jobs_running_six_resumed_with_verified_storage_retries",
-  "approved_campaign_GPU_hours": 150,
-  "prior_direct_action_closed": true,
-  "initial_qualification": {
-    "job_id": "job-03xgdtc8ido1",
-    "source_commit": "73ed4d4661cd4b69632f224364d5d45314d5b37a",
-    "scheduler_created_shanghai": "2026-11-05T11:34:55+08:00",
-    "scheduler_released_shanghai": "2026-11-05T11:38:06+08:00",
-    "status": "Failed",
-    "GPU_probe": "passed both actual devices",
-    "GPUs": 2,
-    "conservative_GPU_hours": 0.10611111111111111,
-    "optimizer_updates": 0,
-    "simulator_episodes": 0,
-    "diagnosis": "Dimension probe did not clear native._prepared before the second preparation",
-    "fix": "Release the dimension-only prepared observation after binding cache dimensions; new attempt identity qualification-02"
+  "checked_shanghai": "2026-11-05T18:52:57.497260+08:00",
+  "cluster": "Baige Pro6K",
+  "status": "paused_for_user_requested_PFS_source_migration",
+  "active_GPU_allocations": 0,
+  "approved_GPU_hours": 150,
+  "charged_GPU_hours": 111.0688888888889,
+  "remaining_GPU_hours": 38.93111111111109,
+  "member_cache": "/mowenjie/fluffy-bassoon-2/inputs/steering-source-members-20261105-pfs01",
+  "staging_progress": "/mowenjie/fluffy-bassoon-2/inputs/steering-source-members-20261105-pfs01/PROGRESS.json",
+  "source_commit": "c9a82095ca927ed359c034b11ddaa16d014b7992",
+  "preserved_learner_contract_commit": "1c88834265cfadc511ba62cac48db0542ad0ebd1",
+  "models": {
+    "kv_bridge/ad": {
+      "update": 1500,
+      "finite_policy_and_Adam": true,
+      "global_sampler_and_flow_RNG_present": true,
+      "checkpoint_sha256": "4b388263475dc01e0da851846cde432f2cbb082f74f116e74e5880acce0871c7"
+    },
+    "kv_bridge/dit": {
+      "update": 1065,
+      "finite_policy_and_Adam": true,
+      "global_sampler_and_flow_RNG_present": true,
+      "checkpoint_sha256": "fe333093ad07d5e82f58203ac3be4e1f25b0c10295a22b4e1f696b0bb16bc81c"
+    },
+    "kv_bridge/dpt": {
+      "update": 400,
+      "finite_policy_and_Adam": true,
+      "global_sampler_and_flow_RNG_present": true,
+      "checkpoint_sha256": "a0f8466387d0a277e6b9db955555ccc420e2c2abaa39a8c053c95d128232f1d3"
+    },
+    "kv_bridge/ic_iql": {
+      "update": 900,
+      "finite_policy_and_Adam": true,
+      "global_sampler_and_flow_RNG_present": true,
+      "checkpoint_sha256": "100731f99e8d7329aaf14a82e1dc50196b6b93165c6839a5c86c83c09bc49186"
+    },
+    "velocity_bridge/ad": {
+      "update": 506,
+      "finite_policy_and_Adam": true,
+      "global_sampler_and_flow_RNG_present": true,
+      "checkpoint_sha256": "e1ecabcc024b4de61c6d106deb4f75619f5d23d0477237aa2c7333cc2b975f0b"
+    },
+    "velocity_bridge/dit": {
+      "update": 238,
+      "finite_policy_and_Adam": true,
+      "global_sampler_and_flow_RNG_present": true,
+      "checkpoint_sha256": "1b8cc801559109a70fbf731772d9122df81234af9b69605731de2e801c927a7d"
+    },
+    "velocity_bridge/dpt": {
+      "update": 303,
+      "finite_policy_and_Adam": true,
+      "global_sampler_and_flow_RNG_present": true,
+      "checkpoint_sha256": "02b9e2a4f6baa40a8a028c1847ba0b8d1bc350b7dd2ade9510a68963226f9249"
+    },
+    "velocity_bridge/ic_iql": {
+      "update": 1138,
+      "finite_policy_and_Adam": true,
+      "global_sampler_and_flow_RNG_present": true,
+      "checkpoint_sha256": "3f030e284206d870fdcee1e8fe97c470152dc17f307985c02f5c92a712864a25"
+    }
   },
-  "cumulative_GPU_hours": 99.72262739777779,
-  "remaining_GPU_hours": 50.277372602222215,
-  "Linux_CPU_validation": {
-    "source_commit": "5343c975bd226ca00293cafa639518c71c03b791",
-    "tests_passed": 50,
-    "seconds": 53.32,
-    "real_source_queries_verified": 6,
-    "source_states_actions_versions_and_member_hashes_exact": true
-  },
-  "planned_models": 8,
-  "evaluation": {
-    "episodes": 24000,
-    "policy_controls": 15120000,
-    "estimated_GPU_hours": 54.1
-  },
-  "next_action": "Continue immutable checkpointed fits; verify post-resume checkpoints then monitor every20 minutes; ID/OOD evaluation follows validation convergence under150GPUh",
-  "qualification03_job_id": "job-7brm9euwivvz",
-  "qualification03_source": "837cbc6915af91b31816d61ae327fe76ecac34ea",
-  "qualification03": "QUALIFICATION03.json",
-  "qualified_execution_batch": 8,
-  "targeted_regression_tests": {
-    "passed": 8,
-    "allocated_Linux_CPU_seconds": 17.22
-  },
-  "source_value_reuse": "VALUE-REUSE-CPU-QUALIFICATION.json",
-  "initial_fit_allocation": {
-    "jobs": 8,
-    "GPUs_per_job": 1,
-    "CPUs_per_job": 16,
-    "RAM_GiB_per_job": 64,
-    "SHM_GiB_per_job": 8,
-    "wall_minutes_per_job": 540,
-    "maximum_combined_GPU_hours": 72,
-    "automatic_retry": false
-  },
-  "source_commit": "1c88834265cfadc511ba62cac48db0542ad0ebd1",
-  "checked_shanghai": "2026-11-05T17:06:18.932329+08:00",
-  "terminal_GPU_hours_before_full_fits": 74.29194444444445,
-  "maximum_reserved_GPU_hours_including_all_eight": 146.29194444444445,
-  "headroom_after_full_72_GPU_hour_reservation": 3.70805555555555,
-  "allocations": "ALLOCATIONS.json",
-  "monitor": "monitor/WATCH-RECEIPT.json",
-  "latest_monitor_snapshot": "monitor/LIVE-CHECK.json",
-  "next_check_shanghai": "2026-11-05T17:22:23.756437+08:00",
-  "initial_running_updates": {
-    "kv_bridge/ad": 1,
-    "kv_bridge/dpt": 1,
-    "kv_bridge/dit": 1
-  },
-  "initial_checkpoint_evidence": "INITIAL-CHECKPOINT-EVIDENCE.json",
-  "worktree_cleanup": "Feature branch merged to main and deleted; clean detached managed checkout retained because desktop marked it as a protected primary checkout",
-  "current_status": "migrations/storage-retry-02/EXECUTION.json",
-  "retry_source_commit": "27b97440e19fe953f56e6c09de7fc00e810abf58",
-  "maximum_reserved_GPU_hours": 141.19555555555556,
-  "post_resume_saved_updates": {
-    "kv_bridge/dpt": [
-      100,
-      100
-    ],
-    "kv_bridge/dit": [
-      875,
-      900
-    ],
-    "kv_bridge/ic_iql": [
-      700,
-      700
-    ],
-    "velocity_bridge/ad": [
-      328,
-      328
-    ],
-    "velocity_bridge/dpt": [
-      100,
-      100
-    ],
-    "velocity_bridge/dit": [
-      1,
-      1
-    ]
-  }
+  "next_action": "Complete all source SHA/readback checks, qualify real PFS reads, resume eight models within remaining budget"
 }

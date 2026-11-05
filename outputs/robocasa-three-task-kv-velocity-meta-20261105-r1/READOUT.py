@@ -20,6 +20,9 @@ def main():
     p.add_argument('--deadline', type=float, required=True)
     p.add_argument('--attempt', required=True)
     args = p.parse_args()
+    minimum_free_gib = int(os.environ.get('STEERING_MIN_FREE_GIB', '220'))
+    if minimum_free_gib < 96:
+        raise ValueError('Retain at least96GiB shared hot-storage reserve')
     if sys.platform != 'linux' or not socket.gethostname().startswith('job-'):
         raise ValueError('Require the actual allocated Linux GPU container')
     sys.path[:0] = [str(args.code / 'src'), os.environ['RLINF_PATH']]
@@ -106,8 +109,12 @@ def main():
                         _json(args.output / 'OPERATIONAL-CHECKPOINT.json', dict(completed=False,
                             completed_banks=len(results), next_bank=str(directory), binding_sha256=binding_digest))
                         return
-                    if shutil.disk_usage(root).free < 220 * 2**30:
-                        raise RuntimeError('Preserve the shared hot-storage reserve; archive completed waves before resuming')
+                    if shutil.disk_usage(root).free < minimum_free_gib * 2**30:
+                        _json(args.output / 'OPERATIONAL-CHECKPOINT.json', dict(completed=False,
+                            reason='hot_storage_reserve', completed_banks=len(results),
+                            next_bank=str(directory), minimum_free_GiB=minimum_free_gib,
+                            binding_sha256=binding_digest))
+                        return
                     journal = ActionJournal(directory / ('accounting-' + args.attempt), rank=0, world=1,
                         attempt='six-episode-' + args.attempt,
                         maximum_actions=len(cases) * 6 * (horizons[task] + 128))

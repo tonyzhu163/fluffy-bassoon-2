@@ -39,7 +39,7 @@ fig.suptitle('Frozen-expert steering: measured validation curves\n'
              fontsize=13)
 args.output.parent.mkdir(parents=True,exist_ok=True)
 fig.savefig(args.output,dpi=170)
-args.output.with_suffix('.json').write_text(json.dumps(dict(training_queries=524160,
+args.output.with_suffix('.summary.json').write_text(json.dumps(dict(training_queries=524160,
     validation_queries=74880,validation_sample_queries=128,updates_per_equivalent_epoch=65520,
     initial='first logged validation after update1; not a pre-training baseline',models=summary),indent=2)+'\n')
 print(json.dumps(summary,indent=2))

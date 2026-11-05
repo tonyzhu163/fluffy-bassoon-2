@@ -1,0 +1,105 @@
+{
+  "training_queries": 524160,
+  "validation_queries": 74880,
+  "validation_sample_queries": 128,
+  "updates_per_equivalent_epoch": 65520,
+  "initial": "first logged validation after update1; not a pre-training baseline",
+  "models": [
+    {
+      "interface": "KV",
+      "method": "ad",
+      "update": 1500,
+      "sampled_training_targets": 12000,
+      "equivalent_epochs": 0.022893772893772892,
+      "initial_logged_validation_loss": 0.13430013810284436,
+      "best_validation_loss": 0.13170505571179092,
+      "best_reduction_percent": 1.9323006124283948,
+      "plateau_stale_checks": 3,
+      "converged": false
+    },
+    {
+      "interface": "Velocity",
+      "method": "ad",
+      "update": 506,
+      "sampled_training_targets": 4048,
+      "equivalent_epochs": 0.007722832722832723,
+      "initial_logged_validation_loss": 0.13421811955049634,
+      "best_validation_loss": 0.13372905110009015,
+      "best_reduction_percent": 0.3643833277087394,
+      "plateau_stale_checks": 0,
+      "converged": false
+    },
+    {
+      "interface": "KV",
+      "method": "dpt",
+      "update": 400,
+      "sampled_training_targets": 3200,
+      "equivalent_epochs": 0.006105006105006105,
+      "initial_logged_validation_loss": 0.11170502356253564,
+      "best_validation_loss": 0.10880951373837888,
+      "best_reduction_percent": 2.5921034988509506,
+      "plateau_stale_checks": 0,
+      "converged": false
+    },
+    {
+      "interface": "Velocity",
+      "method": "dpt",
+      "update": 303,
+      "sampled_training_targets": 2424,
+      "equivalent_epochs": 0.004624542124542125,
+      "initial_logged_validation_loss": 0.11159233120270073,
+      "best_validation_loss": 0.11006598523817956,
+      "best_reduction_percent": 1.3677875066062106,
+      "plateau_stale_checks": 0,
+      "converged": false
+    },
+    {
+      "interface": "KV",
+      "method": "dit",
+      "update": 1065,
+      "sampled_training_targets": 8520,
+      "equivalent_epochs": 0.016254578754578756,
+      "initial_logged_validation_loss": 0.13605371792800725,
+      "best_validation_loss": 0.13424887578003109,
+      "best_reduction_percent": 1.3265658413915582,
+      "plateau_stale_checks": 1,
+      "converged": false
+    },
+    {
+      "interface": "Velocity",
+      "method": "dit",
+      "update": 238,
+      "sampled_training_targets": 1904,
+      "equivalent_epochs": 0.0036324786324786326,
+      "initial_logged_validation_loss": 0.13599334051832557,
+      "best_validation_loss": 0.13556152349337935,
+      "best_reduction_percent": 0.31752806666883737,
+      "plateau_stale_checks": 0,
+      "converged": false
+    },
+    {
+      "interface": "KV",
+      "method": "ic_iql",
+      "update": 900,
+      "sampled_training_targets": 7200,
+      "equivalent_epochs": 0.013736263736263736,
+      "initial_logged_validation_loss": 0.134552167262882,
+      "best_validation_loss": 0.13279551919549704,
+      "best_reduction_percent": 1.3055516704928993,
+      "plateau_stale_checks": 0,
+      "converged": false
+    },
+    {
+      "interface": "Velocity",
+      "method": "ic_iql",
+      "update": 1138,
+      "sampled_training_targets": 9104,
+      "equivalent_epochs": 0.01736874236874237,
+      "initial_logged_validation_loss": 0.13446938898414373,
+      "best_validation_loss": 0.13383586844429374,
+      "best_reduction_percent": 0.4711262129142968,
+      "plateau_stale_checks": 2,
+      "converged": false
+    }
+  ]
+}
