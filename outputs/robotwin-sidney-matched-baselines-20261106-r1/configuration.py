@@ -31,15 +31,30 @@ def overrides(algorithm,qualification=False,resume=None):
 
 
 if __name__=='__main__':
-    if sys.argv[1]=='validate':
+    if sys.argv[1] in ('validate','validate_all'):
         import json
         import os
+        import socket
+        import torch
         from hydra import compose,initialize_config_dir
         sys.path.insert(0,str(ROOT.parent/'robotwin-sidney-rlinf-ppo-20261105-r1'))
         from paired_recipe import validate_pair
-        with initialize_config_dir(version_base='1.1',config_dir=str(ROOT.parents[1]/'configs/native_ppo')):
-            cfg=compose(config_name='sidney_phone_two',overrides=overrides(sys.argv[2],sys.argv[3]=='qualification'))
-        print(json.dumps(validate_pair(cfg)))
+        if sys.argv[1]=='validate_all':
+            assert sys.platform=='linux' and socket.gethostname()==sys.argv[2]
+            assert socket.gethostname().startswith('job-') and os.environ['CUDA_VISIBLE_DEVICES']==''
+            specs=[('ppo',False),('grpo',False),('grpo',True)]
+        else:specs=[(sys.argv[2],sys.argv[3]=='qualification')]
+        rows=[]
+        for algorithm,qualification in specs:
+            with initialize_config_dir(version_base='1.1',config_dir=str(ROOT.parents[1]/'configs/native_ppo')):
+                cfg=compose(config_name='sidney_phone_two',overrides=overrides(algorithm,qualification))
+            rows.append(dict(algorithm=algorithm,qualification_only=qualification,
+                native_world_value=cfg.native_pilot.world_size,
+                native_world_type=type(cfg.native_pilot.world_size).__name__,
+                contract=validate_pair(cfg)))
+        assert not torch.cuda.is_initialized(),'Metadata-only preflight initialized CUDA'
+        print(json.dumps(dict(status='complete',host=socket.gethostname(),configs=rows,
+            model_or_simulator_constructed=False,cuda_initialized=False)))
         sys.exit(0)
     print('\n'.join(overrides(sys.argv[1],sys.argv[2]=='qualification',
         sys.argv[3] if len(sys.argv)>3 else None)))
