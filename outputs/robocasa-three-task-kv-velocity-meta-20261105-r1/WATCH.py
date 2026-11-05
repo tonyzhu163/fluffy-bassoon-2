@@ -129,10 +129,23 @@ def main():
     if args.once_bank:
         archive_closed_bank(args.once_bank,module.audit_result);return
     began,last=time.time(),0
+    spec=importlib.util.spec_from_file_location('paired_readout_reducer',Path(__file__).with_name('REDUCE.py'))
+    reducer=importlib.util.module_from_spec(spec);spec.loader.exec_module(reducer)
     with ThreadPoolExecutor(max_workers=4) as pool:
         while time.time()-began < 12*3600:
             banks=[p.parent for p in ROOT.glob('readouts/*/*/*/*/*/bank-*/RESULT.json') if not p.parent.is_symlink()]
             for result in pool.map(lambda bank:archive_closed_bank(bank,module.audit_result),banks):pass
+            summaries=[]
+            for result_path in ROOT.glob('readouts/*/*/*/RESULT.json'):
+                summary=reducer.reduce_group(result_path.parent)
+                if summary:summaries.append(summary)
+            if len(summaries)==16:
+                assert sum(x['episodes'] for x in summaries)==24000
+                write(ROOT/'COMPLETE.json',dict(completed=True,models=8,audited_readout_groups=16,
+                    episodes=24000,policy_controls=15120000,groups=summaries,
+                    completed_unix=time.time()))
+                snapshot(args.job_id)
+                return
             if time.time()-last>=1200:
                 snapshot(args.job_id);last=time.time()
             time.sleep(30)

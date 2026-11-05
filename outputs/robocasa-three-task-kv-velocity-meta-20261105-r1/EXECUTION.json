@@ -1,5 +1,5 @@
 {
-  "status": "native_qualification01_failed_before_SGD_retry02_ready",
+  "status": "both_native_interfaces_qualified_eight_jobs_ready",
   "approved_campaign_GPU_hours": 150,
   "prior_direct_action_closed": true,
   "initial_qualification": {
@@ -31,5 +31,24 @@
     "policy_controls": 15120000,
     "estimated_GPU_hours": 54.1
   },
-  "next_action": "Run native qualification02 on both interfaces, then eight fits and converged ID/OOD readouts within150GPUh"
+  "next_action": "Launch8 independent one-GPU pipelines; train to held-out flow-loss convergence, then ID50 and OOD50 full/reset six-episode readouts; CPU-audit and cold-archive completed waves",
+  "qualification03_job_id": "job-7brm9euwivvz",
+  "qualification03_source": "837cbc6915af91b31816d61ae327fe76ecac34ea",
+  "qualification03": "QUALIFICATION03.json",
+  "qualified_execution_batch": 8,
+  "targeted_regression_tests": {
+    "passed": 8,
+    "allocated_Linux_CPU_seconds": 17.22
+  },
+  "source_value_reuse": "VALUE-REUSE-CPU-QUALIFICATION.json",
+  "initial_fit_allocation": {
+    "jobs": 8,
+    "GPUs_per_job": 1,
+    "CPUs_per_job": 16,
+    "RAM_GiB_per_job": 64,
+    "SHM_GiB_per_job": 8,
+    "wall_minutes_per_job": 540,
+    "maximum_combined_GPU_hours": 72,
+    "automatic_retry": false
+  }
 }
