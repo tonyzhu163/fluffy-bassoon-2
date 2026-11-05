@@ -1,0 +1,87 @@
+{
+  "checked_unix": 1793898977.5558193,
+  "free_GiB": 702.796875,
+  "robotwin": {
+    "memory04": {
+      "RESULT.json": {
+        "sha256": "2bbff409bcdf7bb6626d2d47f81d314304d475d93f43134b4d938fc2f8514180",
+        "status": "running",
+        "optimizer_updates": 0,
+        "model_loaded": false,
+        "scenes": 64,
+        "events": [
+          {
+            "round": 1,
+            "allocator_observation_identity": true,
+            "python_numpy_torch_rng_identity": true,
+            "scene_identity": true,
+            "motor_input_identity": true
+          }
+        ],
+        "profile_mode": "repeat",
+        "accounting_rank": 2,
+        "source_seed_offset": 0,
+        "per_close_round_index": 3,
+        "motor_comparisons": [],
+        "hold_rng": [
+          {
+            "round": 1,
+            "after_reset_sha256": "21682889f52348b9bba0a4b28c90be251f26f07fcef786425d4a2552dbb44cc9",
+            "actual_hold_sha256": "21682889f52348b9bba0a4b28c90be251f26f07fcef786425d4a2552dbb44cc9",
+            "action_sha256": "3811017dbdb5f894af98bb620237af42aa4ee0c14a47a8d7123296aae778b1d1",
+            "diagnostic_only_reference_restore": true
+          }
+        ],
+        "reset_peaks": [
+          {
+            "stage": "round1/after_reset",
+            "reset_peak": {
+              "rss_bytes": 59088072704,
+              "cgroup_bytes": 59140730880
+            },
+            "rss_GiB": 54.713157653808594
+          }
+        ],
+        "recent_stages": [
+          {
+            "stage": "round1/after_malloc_trim",
+            "time": 1793898722.199448,
+            "rss_GiB": 54.44362258911133
+          },
+          {
+            "stage": "round1/chunk0",
+            "time": 1793898755.6538434,
+            "rss_GiB": 55.875797271728516
+          },
+          {
+            "stage": "round1/round_end",
+            "time": 1793898756.1167893,
+            "rss_GiB": 55.875797271728516
+          }
+        ]
+      },
+      "gpu-probe.json": {
+        "sha256": "9d99a9036605e577a2889ee0a383bedaee4f579cdc369c5104a19acc4f65709a",
+        "status": "passed",
+        "hostname": "job-lcwxw1uz7kdy-master-0",
+        "device_count": 1
+      }
+    }
+  },
+  "kv_dit": {
+    "update": 7616,
+    "best_loss": 0.12291241297498345,
+    "plateau": {
+      "reference": 0.12385996151715517,
+      "stale_checks": 7,
+      "converged": false
+    },
+    "converged": false,
+    "elapsed_seconds": 37333.77192184562,
+    "stop_reason": "operational_checkpoint",
+    "native_parameters_frozen": true,
+    "interface": "kv_bridge",
+    "objective": "dit"
+  },
+  "readout_admission_present": false
+}
