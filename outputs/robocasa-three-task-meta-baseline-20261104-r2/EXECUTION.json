@@ -1,9 +1,9 @@
 {
   "format": "robocasa_joint_three_task_execution_v1",
-  "checked_shanghai": "2026-11-05T11:05:46.752421+08:00",
-  "status": "AD_DPT_converged_DIT_IC_IQL_resumed",
+  "checked_shanghai": "2026-11-05T11:10:32+08:00",
+  "status": "closed_exploratory_direct_action_baseline",
   "approved_ceiling_GPU_hours": 96.0,
-  "cumulative_scheduler_GPU_hours": 73.62680690055555,
+  "cumulative_scheduler_GPU_hours": 73.78527777777778,
   "jobs": {
     "job-30kj6dnpleas": {
       "task": "OpenDrawer",
@@ -254,7 +254,8 @@
       "kind": "fit",
       "output": "continuations/fit-continuation-02",
       "conservative_GPU_hours": 0.1442640103234185,
-      "status": "Running"
+      "status": "ManualTermination",
+      "released_shanghai": "2026-11-05T11:10:32+08:00"
     }
   },
   "queue": {
@@ -281,7 +282,7 @@
     "Linux_CPU_tests": 47,
     "pooled_fixture": "all eight datasets pass"
   },
-  "next_action": "Observe DIT and IC-IQL every20 minutes. Continue unchanged full-state resumes toward validation convergence; reconcile scheduler release and shared96GPUh ledger before each new allocation.",
+  "next_action": "No further direct-action fitting. Human requests all four methods through frozen KV and velocity-residual interfaces, followed by the same evaluation process; new immutable run contract in preparation.",
   "learner_architecture": {
     "width": 256,
     "layers": 6,
@@ -303,7 +304,7 @@
     "target": "/mnt/bos/adgfyl",
     "read_only": true
   },
-  "active_conservative_GPU_hours": 0.25041801166666744,
+  "active_conservative_GPU_hours": 0,
   "initial_advancement": "INITIAL-ADVANCEMENT.json",
   "monitor": {
     "script": "MONITOR.py",
@@ -317,7 +318,7 @@
     "last_check_shanghai": "2026-11-04T20:34:31.081586+08:00"
   },
   "last_worker_check": "CHECK-20261104-1914.json",
-  "next_worker_check_shanghai": "2026-11-05T11:25:46+08:00",
+  "next_worker_check_shanghai": null,
   "publication": {
     "status": "main_push_succeeded",
     "last_published_record_commit": "37364fae75d972d7876484e33ef5c0fc6a1644a3",
@@ -334,7 +335,7 @@
     "global_learner_batch": 8,
     "learner_updates": "AD14800/DPT16200 converged; DIT/IC-IQL actors continuing"
   },
-  "remaining_approved_GPU_hours": 22.37319309944445,
+  "remaining_approved_GPU_hours": 22.21472222222222,
   "pooling": {
     "status": "completed_and_verified",
     "GPU_hours": 0,
@@ -374,7 +375,7 @@
       "--ledger",
       "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/META-ALLOCATION-LEDGER.json"
     ],
-    "status": "running"
+    "status": "stopped_after_scheduler_release"
   },
   "last_fit_check": "CONTINUATION02-VERIFIED.json",
   "live_contract_validation": "FIT-CONTRACT-VALIDATION.json",
@@ -508,7 +509,7 @@
       "last_metrics_finite": true
     }
   },
-  "remaining_after_active_reservations_GPU_hours": 18.623611111111117,
+  "remaining_after_active_reservations_GPU_hours": 22.21472222222222,
   "shared_budget_ledger": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/META-ALLOCATION-LEDGER.json",
   "main_review": {
     "commit": "451779b92880f9f18ab58f4506a9fdba1dc087a4",
@@ -530,7 +531,8 @@
     ],
     "wrapper_commit": "038892d3896b34b96b2a8da0faf835545a2375c7",
     "GPU_probe_passed": true,
-    "scheduler_evidence": "evidence/CONTINUATION02-RUNNING.jpg"
+    "scheduler_evidence": "evidence/CONTINUATION02-RUNNING.jpg",
+    "status": "released"
   },
   "evaluation": {
     "completed_methods": [
@@ -541,5 +543,6 @@
     "readout": "direct-action heads; zero deployment optimizer updates",
     "summary": "EVALUATION-SUMMARY-20261105.json",
     "conclusion": "No consistent full-history advantage over episode reset; descriptive results."
-  }
+  },
+  "closure": "DIRECT-ACTION-CLOSURE.json"
 }

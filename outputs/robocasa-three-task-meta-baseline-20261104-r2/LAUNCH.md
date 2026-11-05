@@ -1,21 +1,19 @@
 # Joint three-task training with four GPUs per preparation task
 
-**Status, Nov5:** AD converged at14,800 updates and DPT at16,200 under the
-contracted validation plateau rule. Both value learners converged; the DIT and
-IC-IQL actors remain unfinished. Their full-state checkpoints at11,384/11,328
-actor updates passed the overnight CPU audit and the Nov5 resume hash checks.
-They resumed on Baige Pro6K as `job-nvoaf376pbdj`, created10:58:16 Shanghai,
-2 GPUs total, one per unfinished actor. AD/DPT are omitted from this allocation.
-Both actual GPU probes pass. The learner pin remains `d71cb532`; the previously
-qualified two-method wrapper is `038892d3`, attempt `fit-continuation-02`.
+**Closed, Nov5 11:10:32 Shanghai:** AD and DPT converged; DIT and IC-IQL
+remain unconverged and are preserved as complete resumable checkpoints.
+The two-GPU continuation was manually stopped after the user clarified that
+further fitting should use frozen-expert KV and velocity-residual steering.
+All GPUs are released; no further direct-action fitting is authorized by this
+launcher. The actual continuation cost was0.408889 GPU-hours. Shared cumulative
+cost is73.785278/96 GPU-hours, leaving22.214722. This run is an exploratory
+baseline and does not establish steering through the frozen action expert.
+[Closure](DIRECT-ACTION-CLOSURE.json), [full-state audit](DIRECT-ACTION-CLOSURE-PREFLIGHT.json).
 
-Preparation produced599,040 annotations for17.57 conservative GPU-hours.
-The shared ledger, including overnight native controls and AD/DPT evaluations,
-charged73.3764/96 GPU-hours before this continuation. Its two-hour limit reserves
-at most4 additional GPU-hours, leaving18.6236 after that reservation. Automatic
-retry is off. Checkpoints retain optimizer, sampler, RNG and plateau state.
-See [EXECUTION.json](EXECUTION.json), [resume preflight](CONTINUATION02-PREFLIGHT.json),
-and [evaluation counts](EVALUATION-SUMMARY-20261105.json).
+The user requests a new eight-model comparison on the existing three-task
+corpus: four objectives using learned KV and the same four using velocity
+residuals, followed by the same ID/OOD history readout. Its implementation,
+qualification and measured budget belong to a fresh immutable run identity.
 
 The three task jobs only prepare data. Each method then trains **one model on
 all three tasks together**: AD, DPT, DIT and IC-IQL use separate objectives and
