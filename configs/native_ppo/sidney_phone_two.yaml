@@ -156,7 +156,8 @@ rollout:
 actor:
   group_name: "ActorGroup"
   training_backend: "fsdp"
-  micro_batch_size: 32
+  # Measured throughput choice on four Pro6K GPUs; global2048 / (4*64) =8.
+  micro_batch_size: 64
   global_batch_size: 2048 # 1024
   seed: 1234
   enable_offload: True

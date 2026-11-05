@@ -1,7 +1,7 @@
 {
   "status": "THROUGHPUT_SELECTED_STORAGE_HOLD",
   "cluster": "Baige Pro6K",
-  "last_checked_at_shanghai": "2026-11-05 19:15",
+  "last_checked_at_shanghai": "2026-11-05 19:20",
   "prior_scheduler_gpu_seconds": 2561,
   "prior_scheduler_gpu_hours": 0.7113888888888888,
   "optimizer_updates": 0,
@@ -214,8 +214,8 @@
   "cumulative_scheduler_gpu_hours_completed": 5.255277777777778,
   "storage_admission": {
     "status": "held_combined_reservations",
-    "last_observed_free_gib": 184.15234375,
-    "observed_at_shanghai": "2026-11-05 19:13",
+    "last_observed_free_gib": 188.7578125,
+    "observed_at_shanghai": "2026-11-05 19:20",
     "initial_checkpoint_bytes": 9985762432,
     "protected_checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03/sidney-native-two/checkpoints/global_step_0",
     "projected_incremental_bytes": 125000000000,
@@ -224,5 +224,13 @@
     "other_owner_growth_gib": 6,
     "coordinator_thread": "01a1ab47-e0cb-7890-bbf8-088a1be17240",
     "warning": "Do not count prospective releases or prior112.28GiB reclaim twice. Preserve active caches and checkpoints."
+  },
+  "user_selected_execution": {
+    "micro_batch_per_gpu": 64,
+    "gradient_accumulation": 8,
+    "world_size": 4,
+    "global_batch": 2048,
+    "accepted_at_shanghai": "2026-11-05 19:20",
+    "scientific_settings_changed": false
   }
 }
