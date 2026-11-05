@@ -21,6 +21,7 @@ def main():
     import rlinf.models.embodiment.openpi as factory
     parser=argparse.ArgumentParser();parser.add_argument('--vectors',type=Path,required=True)
     parser.add_argument('--reference',type=Path,required=True)
+    parser.add_argument('--fp32-reference',type=Path)
     parser.add_argument('--model',type=Path,required=True);parser.add_argument('--output',type=Path,required=True)
     args=parser.parse_args();args.output.mkdir(parents=True,exist_ok=False)
     assert os.uname().nodename.startswith('job-') and torch.cuda.device_count()==1
@@ -71,14 +72,19 @@ def main():
         report['rows']=mixed;save(result,report)
         precise=all(r['decoded_max_abs']<=5e-4 and r['normalized_max_abs']<=1e-3 for r in mixed)
         if not precise:
-            reference=args.output/'fp32-reference'
-            subprocess.run([sys.executable,str(Path(__file__).with_name('native_replay.py')),
-                '--vectors',str(args.vectors),'--output',str(reference),'--precision','float32'],check=True)
-            factory._apply_openpi_param_dtypes(model,torch.float32)
+            reference=args.fp32_reference or args.output/'fp32-reference'
+            if args.fp32_reference is None:
+                subprocess.run([sys.executable,str(Path(__file__).with_name('native_replay.py')),
+                    '--vectors',str(args.vectors),'--output',str(reference),'--precision','float32'],check=True)
+            else:
+                assert json.loads((reference/'READY.json').read_text())['parameter_precision']=='float32'
+            # Reload original checkpoint values directly into FP32. Promoting
+            # an already BF16 model would retain any earlier rounding.
+            del model;gc.collect();torch.cuda.empty_cache()
+            model=factory.get_model(cfg,torch_dtype=torch.float32).cuda().eval().requires_grad_(False)
             rows=replay(reference,'FP32 diagnostic only')
             report['fp32_rows']=rows;save(result,report)
             assert all(r['decoded_max_abs']<=5e-4 and r['normalized_max_abs']<=1e-3 for r in rows),rows
-            factory._apply_openpi_param_dtypes(model,None)
         report.update(status='conversion_parity_passed',parity_basis='mixed BF16' if precise else 'FP32 reference; mixed BF16 drift reported')
         save(result,report)
         del model;gc.collect();torch.cuda.empty_cache()

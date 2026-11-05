@@ -12,6 +12,31 @@ REVISION = 'e49e2ab6c11f07511573b67261bd129e88d0a416'
 TOKENIZER = '/mowenjie/.cache/huggingface/hub/models--google--paligemma-3b-pt-224/snapshots/35e4f46485b4d07967e7e9935bc3786aad50687c'
 
 
+def _vision_mlp(self, x):
+    import torch.nn.functional as F
+    return self.fc2(self.dropout(F.gelu(self.fc1(x), approximate='tanh')))
+
+
+def _gemma_mlp(self, x):
+    import torch
+    import torch.nn.functional as F
+    gate = torch.matmul(x, self.w_gating[0].to(x.dtype))
+    value = torch.matmul(x, self.w_gating[1].to(x.dtype))
+    return torch.matmul(F.gelu(gate, approximate='tanh')*value, self.w_linear.to(x.dtype))
+
+
+def _install_native_activations(model):
+    from types import MethodType
+    # LeRobot's SigLIP and both Gemma experts use gelu_pytorch_tanh.
+    # The pinned RLinf implementation uses exact GELU. Keep Sidney's saved
+    # architecture without changing the sampler, learner or other checkpoints.
+    for layer in model.img.encoder.layers:
+        layer.mlp.forward = MethodType(_vision_mlp, layer.mlp)
+    for layer in model.llm.layers:
+        for mlp in layer.mlps:
+            mlp.forward = MethodType(_gemma_mlp, mlp)
+
+
 def deterministic_reference():
     import os
     import torch
@@ -104,6 +129,7 @@ def install_rlinf_transforms():
         if cfg.openpi_data.adapt_to_pi or cfg.openpi_data.extra_delta_transform:
             raise ValueError('Sidney uses raw absolute ALOHA joints')
         model.setup_transforms([SidneyInputs(metadata)],[SidneyOutputs(metadata)])
+        _install_native_activations(model)
         model._sidney_full_vision_fp32 = True
         # Pi0.__init__ enables TF32 globally; restore the qualified reference
         # setting after construction and before any inference.

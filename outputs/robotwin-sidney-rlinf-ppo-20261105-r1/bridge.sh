@@ -4,6 +4,7 @@ TASK_SOURCE=${1:?reviewed exact source}
 TASK_OUT=${2:?fresh attempt output}
 TASK_CACHE=${3:?fresh converted model directory}
 TASK_PRIOR=${4:-}
+TASK_FP32=${5:-}
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_RUN_CODE=$TASK_CODE/outputs/robotwin-sidney-rlinf-ppo-20261105-r1
 TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python
@@ -73,6 +74,8 @@ assert len(list((prior/'native-reference').glob('*-actions.npz')))==3
 PY
   TASK_INPUTS=$TASK_PRIOR
 fi
+TASK_EXTRA=()
+if [[ -n $TASK_FP32 ]]; then TASK_EXTRA+=(--fp32-reference "$TASK_FP32"); fi
 timeout --signal=TERM --kill-after=15s 900 "$TASK_PYTHON" "$TASK_RUN_CODE/qualify_rlinf.py" \
   --vectors "$TASK_INPUTS/vectors" --reference "$TASK_INPUTS/native-reference" \
-  --model "$TASK_CACHE" --output "$TASK_OUT/rlinf" > "$TASK_OUT/rlinf.log" 2>&1
+  --model "$TASK_CACHE" --output "$TASK_OUT/rlinf" "${TASK_EXTRA[@]}" > "$TASK_OUT/rlinf.log" 2>&1
