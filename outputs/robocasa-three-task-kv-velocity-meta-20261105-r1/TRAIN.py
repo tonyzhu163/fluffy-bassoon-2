@@ -100,6 +100,8 @@ def main():
     config = FlowBridgeConfig(interface=args.interface, width=256, layers=6, heads=8,
         context_length=192, kv_heads=first_cache[0][0].shape[2], head_dim=first_cache[0][0].shape[3],
         kv_rank=4, kv_layers=tuple(range(len(first_cache))), scale=.1)
+    native._prepared = None
+    del prepared, first_cache, first_mask
     policy = HistoryFlowSteeringPolicy(config).to('cuda:0')
     policy.fit_observation_normalization(train)
     values = None
@@ -231,7 +233,8 @@ def main():
             raise ValueError('Native six-episode qualification coverage changed')
         _json(zero_out / 'RESULT.json', dict(episodes=rows, references=backend.references,
             controls_charged=journal.charged(), zero_initialized_bridge=True,
-            actual_batch_sizes=backend.last_batch_sizes))
+            actual_batch_sizes=backend.last_batch_sizes, optimizer_updates=0,
+            native_parameters_frozen=True))
         del deployment, backend
         policy.requires_grad_(True)
         zero_loss = validate_batches(policy, native.model, validation_plan, val_prepare)
@@ -244,6 +247,9 @@ def main():
             torch.cuda.synchronize(); timings.append(time.monotonic() - began)
             print(json.dumps(dict(phase='reactive_qualification', update=step + 1, **metrics)), flush=True)
         fitted_loss = validate_batches(policy, native.model, validation_plan, val_prepare)
+        core_grad = sum(float(p.grad.abs().sum()) for p in policy.core.parameters() if p.grad is not None)
+        if core_grad <= 0 or not all(math.isfinite(x) for x in timings):
+            raise ValueError('The actual frozen-expert fit did not reach the history model')
         # Time the actual history-conditioned update at each execution batch size.
         sample = batch(train, sampler, generator)
         state, opt = deepcopy(policy.state_dict()), deepcopy(optimizer.state_dict())
@@ -271,6 +277,7 @@ def main():
             zero_validation_flow_loss=zero_loss, fitted_reactive_validation_flow_loss=fitted_loss,
             reactive_updates=args.qualify_updates, mean_reactive_update_seconds=float(np.mean(timings)),
             total_optimizer_calls=args.qualify_updates + 6, zero_initialized_native_episodes=6,
+            history_core_gradient_L1=core_grad,
             full_history_update_benchmarks=benchmarks, signature=signature,
             meaning='Native parity, actual RGB/action query mapping, finite optimization and exact recovery; imitation diagnostic, not a trained meta-steerer or adaptation result'))
         reader.close()

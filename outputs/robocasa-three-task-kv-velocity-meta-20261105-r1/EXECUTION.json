@@ -1,0 +1,35 @@
+{
+  "status": "native_qualification01_failed_before_SGD_retry02_ready",
+  "approved_campaign_GPU_hours": 150,
+  "prior_direct_action_closed": true,
+  "initial_qualification": {
+    "job_id": "job-03xgdtc8ido1",
+    "source_commit": "73ed4d4661cd4b69632f224364d5d45314d5b37a",
+    "scheduler_created_shanghai": "2026-11-05T11:34:55+08:00",
+    "scheduler_released_shanghai": "2026-11-05T11:38:06+08:00",
+    "status": "Failed",
+    "GPU_probe": "passed both actual devices",
+    "GPUs": 2,
+    "conservative_GPU_hours": 0.10611111111111111,
+    "optimizer_updates": 0,
+    "simulator_episodes": 0,
+    "diagnosis": "Dimension probe did not clear native._prepared before the second preparation",
+    "fix": "Release the dimension-only prepared observation after binding cache dimensions; new attempt identity qualification-02"
+  },
+  "cumulative_GPU_hours": 73.89138888888888,
+  "remaining_GPU_hours": 76.10861111111112,
+  "Linux_CPU_validation": {
+    "source_commit": "5343c975bd226ca00293cafa639518c71c03b791",
+    "tests_passed": 50,
+    "seconds": 53.32,
+    "real_source_queries_verified": 6,
+    "source_states_actions_versions_and_member_hashes_exact": true
+  },
+  "planned_models": 8,
+  "evaluation": {
+    "episodes": 24000,
+    "policy_controls": 15120000,
+    "estimated_GPU_hours": 54.1
+  },
+  "next_action": "Run native qualification02 on both interfaces, then eight fits and converged ID/OOD readouts within150GPUh"
+}
