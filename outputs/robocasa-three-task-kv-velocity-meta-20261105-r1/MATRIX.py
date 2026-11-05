@@ -73,6 +73,11 @@ def single(args):
         write(state / 'RESULT.json', dict(completed=False, status='operational_checkpoint',
             training_status=status, source_commit=args.commit))
         return
+    if args.fit_only:
+        write(state / 'RESULT.json', dict(completed=False, status='fit_complete_evaluation_held',
+            training_status=status, source_commit=args.commit,
+            reason='Separate shared-storage admission required before ID/OOD rollout writing'))
+        return
     for split in ('ID', 'OOD'):
         if stopped or time.time()+600 >= args.deadline:
             break
@@ -107,6 +112,7 @@ def main():
     p.add_argument('--commit', required=True)
     p.add_argument('--resume-contract-commit')
     p.add_argument('--member-cache', type=Path)
+    p.add_argument('--fit-only', action='store_true')
     p.add_argument('--attempt', required=True)
     p.add_argument('--qualification', type=Path, required=True)
     p.add_argument('--execution-batch', type=int, default=8)

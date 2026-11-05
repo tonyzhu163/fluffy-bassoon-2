@@ -41,5 +41,8 @@ fi
 if [[ -n ${STEERING_MEMBER_CACHE:-} ]]; then
     EXTRA+=(--member-cache "$STEERING_MEMBER_CACHE")
 fi
+if [[ ${STEERING_FIT_ONLY:-0} == 1 ]]; then
+    EXTRA+=(--fit-only)
+fi
 DEADLINE=$(( $(date +%s) + STEERING_HOURS * 3600 - 1800 ))
 timeout --signal=TERM --kill-after=120s "$(( STEERING_HOURS * 3600 - 900 ))" "$PY" -B "$STEERING_CODE/$RUN/MATRIX.py" --single --code "$STEERING_CODE" --commit "$STEERING_COMMIT" --attempt "$STEERING_ATTEMPT" --probe "$PROBE" --qualification "$STEERING_QUALIFICATION" --execution-batch "${STEERING_EXECUTION_BATCH:-8}" --interface "$STEERING_INTERFACE" --objective "$STEERING_OBJECTIVE" --deadline "$DEADLINE" "${EXTRA[@]}"
