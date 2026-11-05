@@ -7,21 +7,30 @@ import os
 from pathlib import Path
 import time
 import tracemalloc
+import threading
 
 import numpy as np
 import torch
 from omegaconf import OmegaConf
-from fluffy_bassoon.meta_rl.rlinf_native_ppo import ActionJournal,write,tensor_hash
+from fluffy_bassoon.meta_rl.rlinf_native_ppo import ActionJournal,write,tensor_hash,snapshot_rng
 from fluffy_bassoon.rl.robotwin_noise import _install_allocated_renderer,_install_reset_retry_limit
 
 
-root=Path(os.environ['TASK_OUT']);source=root.parent/'train06'
+root=Path(os.environ['TASK_OUT']);source=root.parent/'train06';scenes=int(os.environ.get('TASK_SCENES','16'))
 os.chdir(os.environ['ROBOTWIN_PATH'])
 _install_allocated_renderer(root/'renderer');_install_reset_retry_limit()
 from rlinf.envs.sim.robotwin.robotwin_env import RoboTwinEnv
 
-report=dict(status='running',optimizer_updates=0,model_loaded=False,snapshots=[],events=[])
+report=dict(status='running',optimizer_updates=0,model_loaded=False,scenes=scenes,snapshots=[],events=[])
 tracemalloc.start(5)
+peak={'rss_bytes':0,'cgroup_bytes':0};stop=threading.Event()
+def watch():
+    while not stop.wait(.2):
+        for line in Path('/proc/self/status').read_text().splitlines():
+            if line.startswith('VmRSS:'):peak['rss_bytes']=max(peak['rss_bytes'],int(line.split()[1])*1024)
+        path=Path('/sys/fs/cgroup/memory.current')
+        if path.exists():peak['cgroup_bytes']=max(peak['cgroup_bytes'],int(path.read_text()))
+monitor=threading.Thread(target=watch,daemon=True);monitor.start()
 libc=ctypes.CDLL('libc.so.6')
 class Mallinfo(ctypes.Structure):
     _fields_=[(name,ctypes.c_size_t) for name in ('arena','ordblks','smblks','hblks','hblkhd','usmblks','fsmblks','uordblks','fordblks','keepcost')]
@@ -60,7 +69,7 @@ constructed=0
 def measured_setup(self):
     global constructed
     result=original_setup(self);constructed+=1
-    if constructed in (1,4,8,16):sample(f'constructed_scene_{constructed}')
+    if constructed in (1,4,8,16,32,64):sample(f'constructed_scene_{constructed}')
     return result
 vector_env.SubEnv.setup_task=measured_setup
 original_factory=vector_env.class_decorator
@@ -81,14 +90,17 @@ def measured_factory(name):
     return task
 vector_env.class_decorator=measured_factory
 sample('imports_before_constructor')
-slot=journal.begin(160,phase='memory-diagnostic/constructor-allowance')
-env=RoboTwinEnv(cfg,16,seed_offset=0,total_num_processes=4,worker_info=None)
-journal.finish(slot,160);sample('constructor_16_scenes')
+slot=journal.begin(scenes*10,phase='memory-diagnostic/constructor-allowance')
+env=RoboTwinEnv(cfg,scenes,seed_offset=0,total_num_processes=4,worker_info=None)
+journal.finish(slot,scenes*10);sample(f'constructor_{scenes}_scenes')
 successful=False
 try:
     for round_index in range(2):
-        slot=journal.begin(160,phase='memory-diagnostic/reset-allowance')
-        obs,_=env.reset();journal.finish(slot,160)
+        if scenes==64 and round_index==1:cfg.malloc_trim_reset_interval=1
+        peak.update(rss_bytes=0,cgroup_bytes=0)
+        slot=journal.begin(scenes*10,phase='memory-diagnostic/reset-allowance')
+        obs,_=env.reset();journal.finish(slot,scenes*10)
+        reset_peak=dict(peak)
         seen=set()
         def array_bytes(value):
             if id(value) in seen:return 0
@@ -102,23 +114,31 @@ try:
         for sub in env.venv.envs:
             native_fields.append({key:array_bytes(value) for key,value in vars(sub.task).items()
                 if isinstance(value,(dict,list,tuple,np.ndarray,torch.Tensor))})
+        del sub
         before=digest(obs);sample(f'round{round_index}/after_reset',observation_sha256=before,
+            reset_peak=reset_peak,native_malloc_trim_reset_interval=int(cfg.get('malloc_trim_reset_interval',0)),
             task_reachable_array_bytes=native_fields,
             largest_python_traces=[dict(bytes=s.size,count=s.count,trace=str(s.traceback))
                 for s in tracemalloc.take_snapshot().statistics('traceback')[:8]])
         # Distinguish Python/native live objects from freed glibc arenas.
         collected=gc.collect();sample(f'round{round_index}/after_gc',gc_collected=collected)
+        rng_before=tensor_hash(snapshot_rng());scene_before=[s.task.get_info() for s in env.venv.envs]
+        motor_before=tensor_hash(obs['states'][:,None,:].repeat(1,50,1))
         trimmed=libc.malloc_trim(0);sample(f'round{round_index}/after_malloc_trim',trim_return=int(trimmed))
         after=digest(obs)
         assert before==after,'Allocator diagnostic changed retained observation bytes'
-        report['events'].append(dict(round=round_index,allocator_observation_identity=True))
+        assert rng_before==tensor_hash(snapshot_rng())
+        assert scene_before==[s.task.get_info() for s in env.venv.envs]
+        assert motor_before==tensor_hash(obs['states'][:,None,:].repeat(1,50,1))
+        report['events'].append(dict(round=round_index,allocator_observation_identity=True,
+            python_numpy_torch_rng_identity=True,scene_identity=True,motor_input_identity=True))
         # Replay only a fixed absolute-joint hold, never model inference.
-        count=8 if round_index==0 else 1
+        count=8 if scenes==16 and round_index==0 else 1
         for chunk in range(count):
             actions=obs['states'].detach().cpu()[:,None,:].repeat(1,50,1)
-            slot=journal.begin(800,phase='memory-diagnostic/physical-hold')
+            slot=journal.begin(scenes*50,phase='memory-diagnostic/physical-hold')
             result=env.chunk_step(actions)
-            mask=result[-1][-1].get('valid_action_mask');executed=int(mask.sum()) if mask is not None else 800
+            mask=result[-1][-1].get('valid_action_mask');executed=int(mask.sum()) if mask is not None else scenes*50
             journal.finish(slot,executed);obs=result[0][-1]
             sample(f'round{round_index}/chunk{chunk}',physical_controls=executed)
             del result,actions
@@ -131,6 +151,7 @@ finally:
     env.venv.close(clear_cache=True);sample('after_vector_close')
     del env;gc.collect();sample('after_delete_gc')
     libc.malloc_trim(0);sample('after_delete_trim')
+    stop.set();monitor.join()
     report.update(status='complete' if successful else 'failed',total_shared_rank0_charge=journal.charged(),
         physical_controls=sum(r.get('executed_or_conservative',r['requested']) for r in journal.rows if r['phase']=='memory-diagnostic/physical-hold'),
         active_worktrees_changed=False,scientific_source_admission=False)

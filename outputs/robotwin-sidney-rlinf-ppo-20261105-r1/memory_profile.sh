@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 TASK_SOURCE=${1:?source};TASK_OUT=${2:?fresh output}
+TASK_SCENES=${3:-16};[[ $TASK_SCENES == 16 || $TASK_SCENES == 64 ]]
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python
 [[ $(hostname) == job-* && $(git -C "$TASK_CODE" rev-parse HEAD) == "$TASK_SOURCE" && ! -e $TASK_OUT ]]
 mkdir -p "$TASK_OUT"
 exec > "$TASK_OUT/worker.log" 2>&1
-export TASK_OUT TASK_SOURCE
+export TASK_OUT TASK_SOURCE TASK_SCENES
 export REPO_PATH=/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf
 export ROBOTWIN_PATH=/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin
 export ROBOTWIN_ASSETS_PATH=$ROBOTWIN_PATH ASSETS_PATH=$ROBOTWIN_PATH
@@ -23,4 +24,5 @@ mkdir -p /root/.sapien/physx
 if [[ ! -e /root/.sapien/physx/105.1-physx-5.3.1.patch0 ]]; then
   ln -s /mowenjie/fluffy-bassoon/inputs/maniskill-scene-assets-20261028-r1/physx/105.1-physx-5.3.1.patch0 /root/.sapien/physx/105.1-physx-5.3.1.patch0
 fi
-timeout --signal=INT --kill-after=15s 1100 "$TASK_PYTHON" "$(dirname "${BASH_SOURCE[0]}")/memory_profile.py" > "$TASK_OUT/profile.log" 2>&1
+TASK_LIMIT=1100;if [[ $TASK_SCENES == 64 ]]; then TASK_LIMIT=1700; fi
+timeout --signal=INT --kill-after=15s "$TASK_LIMIT" "$TASK_PYTHON" "$(dirname "${BASH_SOURCE[0]}")/memory_profile.py" > "$TASK_OUT/profile.log" 2>&1
