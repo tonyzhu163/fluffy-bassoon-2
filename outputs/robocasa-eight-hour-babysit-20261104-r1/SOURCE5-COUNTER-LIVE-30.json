@@ -1,0 +1,119 @@
+{
+  "checked_shanghai": "2026-11-05T16:16:21.258665+08:00",
+  "cluster": "Baige Pro6K",
+  "job_id": "job-02kxcgvz9d5z",
+  "progress": {
+    "completed_iterations": 31,
+    "target_iterations": 40,
+    "checked_unix": 1793866449.3801522,
+    "operator_checkpoint_exit": false
+  },
+  "checkpoint_step": 30,
+  "worker_sidecars": 18,
+  "actor_updates": [
+    {
+      "completed": true,
+      "rank": 0,
+      "producing_policy_iteration": 29,
+      "optimizer_steps_before": 696,
+      "optimizer_steps_after": 720,
+      "batch_shape": [
+        12,
+        64,
+        50,
+        12
+      ],
+      "losses": {
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 29.703840255737305,
+        "actor/policy_loss": -0.2892102599143982,
+        "actor/policy_loss_abs": 0.8344988822937012,
+        "actor/total_loss": -0.03048819676041603,
+        "critic/value_loss": 0.04530470073223114
+      },
+      "metrics": {
+        "actor/approx_kl": 0.007375391665846109,
+        "actor/clip_fraction": 0.17998656630516052,
+        "actor/clipped_ratio": 1.002420425415039,
+        "actor/dual_cliped_ratio": 0.0,
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 29.703840255737305,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/policy_loss": -0.2892102599143982,
+        "actor/policy_loss_abs": 0.8344988822937012,
+        "actor/ratio": 1.0346882343292236,
+        "actor/ratio_abs": 0.16824838519096375,
+        "actor/total_loss": -0.03048819676041603,
+        "critic/lr": 9.999999747378752e-05,
+        "critic/value_clip_ratio": 0.0016668083844706416,
+        "critic/value_loss": 0.04530470073223114,
+        "critic/explained_variance": 0.4884592294692993
+      },
+      "training_seconds": 116.37172091845423,
+      "cuda_peak_allocated_bytes": 20354362880,
+      "cuda_peak_reserved_bytes": 25769803776,
+      "frozen_vlm_unchanged": true
+    },
+    {
+      "completed": true,
+      "rank": 1,
+      "producing_policy_iteration": 29,
+      "optimizer_steps_before": 696,
+      "optimizer_steps_after": 720,
+      "batch_shape": [
+        12,
+        64,
+        50,
+        12
+      ],
+      "losses": {
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 29.703840255737305,
+        "actor/policy_loss": -0.2892102599143982,
+        "actor/policy_loss_abs": 0.8344988822937012,
+        "actor/total_loss": -0.03048819676041603,
+        "critic/value_loss": 0.04530470073223114
+      },
+      "metrics": {
+        "actor/approx_kl": 0.007375391665846109,
+        "actor/clip_fraction": 0.17998656630516052,
+        "actor/clipped_ratio": 1.002420425415039,
+        "actor/dual_cliped_ratio": 0.0,
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 29.703840255737305,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/policy_loss": -0.2892102599143982,
+        "actor/policy_loss_abs": 0.8344988822937012,
+        "actor/ratio": 1.0346882343292236,
+        "actor/ratio_abs": 0.16824838519096375,
+        "actor/total_loss": -0.03048819676041603,
+        "critic/lr": 9.999999747378752e-05,
+        "critic/value_clip_ratio": 0.0016668083844706416,
+        "critic/value_loss": 0.04530470073223114,
+        "critic/explained_variance": 0.4884592294692993
+      },
+      "training_seconds": 116.20273601822555,
+      "cuda_peak_allocated_bytes": 17119469056,
+      "cuda_peak_reserved_bytes": 21531459584,
+      "frozen_vlm_unchanged": true
+    }
+  ],
+  "intermediate_export_omitted": true,
+  "DEV30": {
+    "completed": true,
+    "global_step": 30,
+    "phase": "eval_step_030",
+    "metrics": {
+      "return": 0.640625,
+      "success_at_end": 0.625,
+      "reward": 0.0010677083628252149,
+      "episode_len": 600.0,
+      "success_once": 0.640625,
+      "num_trajectories": 64
+    }
+  },
+  "fixed_primary_endpoint": 40,
+  "DEV_selection": false,
+  "free_GiB": 364.015625,
+  "clock_present": false
+}

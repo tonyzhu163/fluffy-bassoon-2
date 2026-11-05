@@ -18,7 +18,8 @@
       "closed_written_bytes": 29607280998,
       "closed_storage_measured_shanghai": "2026-11-05T13:25:50.382542+08:00",
       "closed_cold_archived_bytes": 19398298034,
-      "cold_archive_receipt_sha256": "722d55c7a302f4dfc1d5076814f7b57560fd6dcd1fceba0b3ed5ac84acc84626"
+      "cold_archive_receipt_sha256": "722d55c7a302f4dfc1d5076814f7b57560fd6dcd1fceba0b3ed5ac84acc84626",
+      "state": "Failed"
     },
     {
       "job_id": "job-jo6kx7qu29r4",
@@ -37,7 +38,8 @@
       "closed_written_bytes": 29267125048,
       "closed_storage_measured_shanghai": "2026-11-05T13:25:50.382542+08:00",
       "closed_cold_archived_bytes": 19398298796,
-      "cold_archive_receipt_sha256": "722d55c7a302f4dfc1d5076814f7b57560fd6dcd1fceba0b3ed5ac84acc84626"
+      "cold_archive_receipt_sha256": "722d55c7a302f4dfc1d5076814f7b57560fd6dcd1fceba0b3ed5ac84acc84626",
+      "state": "Failed"
     },
     {
       "job_id": "job-7lhczqc4c9yp",
@@ -51,8 +53,9 @@
       "output": "source5-tests/CoffeeSetupMug/attempt-01",
       "released_shanghai": "2026-11-05T14:05:43+08:00",
       "scheduler_release_verified": true,
-      "termination": "Completed all512 paired cases plus SFT repeat; independent raw audit running",
-      "closed_conservative_GPU_hours": 2.0952777777777776
+      "termination": "All512 paired cases plus repeat complete; full independent raw audit verified; readiness failed p=.4976293702",
+      "closed_conservative_GPU_hours": 2.0952777777777776,
+      "state": "Succeeded"
     },
     {
       "job_id": "job-q250t3zf6g1x",
@@ -66,7 +69,7 @@
       "output": "reset-qualification/counter-r1",
       "worker_subdir": "gpu-01",
       "last_confirmed_queued_shanghai": "2026-11-05T13:44:45+08:00",
-      "state": "Running; actual GPU probe passed13:56:11; original-case qualification pending",
+      "state": "Succeeded",
       "GPU_hours_occupied_at_last_confirmation": 0,
       "accounting_start_shanghai": "2026-11-05T13:44:45+08:00",
       "allocated_shanghai_not_after": "2026-11-05T13:56:11+08:00",
@@ -87,7 +90,7 @@
       "output": "reset-qualification/faucet-r1",
       "worker_subdir": "gpu-01",
       "last_confirmed_queued_shanghai": "2026-11-05T13:44:45+08:00",
-      "state": "Running; actual GPU probe passed13:56:11; original-case qualification pending",
+      "state": "Failed",
       "GPU_hours_occupied_at_last_confirmation": 0,
       "accounting_start_shanghai": "2026-11-05T13:44:45+08:00",
       "allocated_shanghai_not_after": "2026-11-05T13:56:11+08:00",
@@ -128,9 +131,16 @@
       "output": "source5/PickPlaceCounterToCabinet/attempt-02",
       "worker_subdir": ".",
       "last_confirmed_queued_shanghai": "2026-11-05T14:39:30+08:00",
-      "state": "Running, actual8GPU probe passed; resumed from10 and advancing through12/40",
+      "state": "Running; qualified8GPU probe, exact10 recovery, advancing",
       "GPU_hours_occupied_at_last_confirmation": 0,
-      "accounting_start_shanghai": "2026-11-05T14:39:30+08:00"
+      "accounting_start_shanghai": "2026-11-05T14:39:30+08:00",
+      "last_progress": {
+        "completed_iterations": 29,
+        "target_iterations": 40,
+        "checked_unix": 1793865927.5404067,
+        "operator_checkpoint_exit": false
+      },
+      "last_progress_checked_shanghai": "2026-11-05T16:10:28.908974+08:00"
     }
   ],
   "scope": "Two fixed40 four-epoch PPO sources and three fresh paired512 readiness panels, including setup/qualification/failures/release",
