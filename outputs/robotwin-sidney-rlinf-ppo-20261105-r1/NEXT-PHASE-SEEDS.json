@@ -1,0 +1,138 @@
+{
+  "at_utc": "2026-11-05T16:26:25Z",
+  "rlinf_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+  "robotwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+  "files": {
+    "train": {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/rlinf/envs/sim/robotwin/seeds/train_seeds.json",
+      "sha256": "55b25866308d4e7da486282982ead4d5857b53fd977f659b216045f1950b45e2"
+    },
+    "eval": {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/rlinf/envs/sim/robotwin/seeds/eval_seeds.json",
+      "sha256": "194164f7380fd7cad2a8940ca93def01c2be865da265e4af1c463d73b2aa482f"
+    }
+  },
+  "tasks": [
+    {
+      "task": "handover_mic",
+      "role": "source",
+      "task_module_exists": true,
+      "train_seed_count": 1000,
+      "eval_seed_count": 150,
+      "train_eval_integer_overlap": 0,
+      "new_campaign_planner_qualification": false,
+      "initializer_competence_claim": false
+    },
+    {
+      "task": "pick_diverse_bottles",
+      "role": "source",
+      "task_module_exists": true,
+      "train_seed_count": 0,
+      "eval_seed_count": 0,
+      "train_eval_integer_overlap": 0,
+      "new_campaign_planner_qualification": false,
+      "initializer_competence_claim": false
+    },
+    {
+      "task": "place_a2b_left",
+      "role": "source",
+      "task_module_exists": true,
+      "train_seed_count": 1000,
+      "eval_seed_count": 150,
+      "train_eval_integer_overlap": 0,
+      "new_campaign_planner_qualification": false,
+      "initializer_competence_claim": false
+    },
+    {
+      "task": "place_object_stand",
+      "role": "source",
+      "task_module_exists": true,
+      "train_seed_count": 0,
+      "eval_seed_count": 0,
+      "train_eval_integer_overlap": 0,
+      "new_campaign_planner_qualification": false,
+      "initializer_competence_claim": false
+    },
+    {
+      "task": "place_phone_stand",
+      "role": "source",
+      "task_module_exists": true,
+      "train_seed_count": 1000,
+      "eval_seed_count": 150,
+      "train_eval_integer_overlap": 0,
+      "new_campaign_planner_qualification": false,
+      "initializer_competence_claim": false
+    },
+    {
+      "task": "scan_object",
+      "role": "source",
+      "task_module_exists": true,
+      "train_seed_count": 0,
+      "eval_seed_count": 0,
+      "train_eval_integer_overlap": 0,
+      "new_campaign_planner_qualification": false,
+      "initializer_competence_claim": false
+    },
+    {
+      "task": "adjust_bottle",
+      "role": "held_out_from_adaptation",
+      "task_module_exists": true,
+      "train_seed_count": 1000,
+      "eval_seed_count": 150,
+      "train_eval_integer_overlap": 0,
+      "new_campaign_planner_qualification": false,
+      "initializer_competence_claim": false
+    },
+    {
+      "task": "move_stapler_pad",
+      "role": "held_out_from_adaptation",
+      "task_module_exists": true,
+      "train_seed_count": 1000,
+      "eval_seed_count": 260,
+      "train_eval_integer_overlap": 0,
+      "new_campaign_planner_qualification": false,
+      "initializer_competence_claim": false
+    },
+    {
+      "task": "place_a2b_right",
+      "role": "held_out_from_adaptation",
+      "task_module_exists": true,
+      "train_seed_count": 1000,
+      "eval_seed_count": 150,
+      "train_eval_integer_overlap": 0,
+      "new_campaign_planner_qualification": false,
+      "initializer_competence_claim": false
+    },
+    {
+      "task": "place_dual_shoes",
+      "role": "held_out_from_adaptation",
+      "task_module_exists": true,
+      "train_seed_count": 0,
+      "eval_seed_count": 0,
+      "train_eval_integer_overlap": 0,
+      "new_campaign_planner_qualification": false,
+      "initializer_competence_claim": false
+    },
+    {
+      "task": "place_empty_cup",
+      "role": "held_out_from_adaptation",
+      "task_module_exists": true,
+      "train_seed_count": 1000,
+      "eval_seed_count": 260,
+      "train_eval_integer_overlap": 0,
+      "new_campaign_planner_qualification": false,
+      "initializer_competence_claim": false
+    },
+    {
+      "task": "stamp_seal",
+      "role": "held_out_from_adaptation",
+      "task_module_exists": true,
+      "train_seed_count": 0,
+      "eval_seed_count": 0,
+      "train_eval_integer_overlap": 0,
+      "new_campaign_planner_qualification": false,
+      "initializer_competence_claim": false
+    }
+  ],
+  "scope": "Static pinned-source inventory only; no simulator episodes, model computation or new GPU allocation."
+}
