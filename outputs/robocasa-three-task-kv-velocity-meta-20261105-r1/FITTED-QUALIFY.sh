@@ -3,14 +3,15 @@ set -Eeuo pipefail
 BEGAN=$(date +%s)
 INTERFACE=${1:?interface}
 case "$INTERFACE" in kv_bridge|velocity_bridge) ;; *) exit 2 ;; esac
+PHASE=${2:-deployment}
+case "$PHASE" in deployment) ATTEMPT=fitted-deploy-pfs03-$INTERFACE; DIRECTORY=qualification-fitted-pfs03 ;; reset) ATTEMPT=fitted-reset-pfs04-$INTERFACE; DIRECTORY=qualification-fitted-reset-pfs04 ;; *) exit 2 ;; esac
 CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 COMMIT=$(git -C "$CODE" rev-parse HEAD)
 test -z "$(git -C "$CODE" status --porcelain)"
 ROOT=/mowenjie/fluffy-bassoon-2
 RUN=outputs/robocasa-three-task-kv-velocity-meta-20261105-r1
 PY=$ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
-ATTEMPT=fitted-deploy-pfs03-$INTERFACE
-OUT=$ROOT/$RUN/qualification-fitted-pfs03/$INTERFACE
+OUT=$ROOT/$RUN/$DIRECTORY/$INTERFACE
 mkdir -p "$(dirname "$OUT")"
 mkdir "$OUT"
 exec > >(tee "$OUT/WORKER.log") 2>&1
@@ -56,4 +57,4 @@ test "$REMAINING" -gt 0
 timeout --signal=TERM --kill-after=15s "${REMAINING}s" "$PY" -B "$CODE/$RUN/READOUT.py" \
     --code "$CODE" --commit "$COMMIT" --fit "$ROOT/$RUN/fits/$INTERFACE/ad" \
     --output "$OUT" --probe "$PROBE" --interface "$INTERFACE" --objective ad \
-    --split qualification --deadline "$DEADLINE" --attempt "$ATTEMPT"
+    --split qualification --qualification-phase "$PHASE" --deadline "$DEADLINE" --attempt "$ATTEMPT"

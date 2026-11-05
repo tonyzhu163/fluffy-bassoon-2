@@ -17,6 +17,7 @@ def main():
     p.add_argument('--interface', choices=('kv_bridge', 'velocity_bridge'), required=True)
     p.add_argument('--objective', choices=('ad', 'dpt', 'dit', 'ic_iql'), required=True)
     p.add_argument('--split', choices=('ID', 'OOD', 'qualification'), required=True)
+    p.add_argument('--qualification-phase', choices=('deployment', 'reset'), default='deployment')
     p.add_argument('--deadline', type=float, required=True)
     p.add_argument('--attempt', required=True)
     args = p.parse_args()
@@ -69,6 +70,8 @@ def main():
     stats = json.loads(norm.read_text()); stats = stats.get('norm_stats', stats)
     codec = FlowBridgeCodec.from_stats(stats, interface=args.interface)
     qualification = args.split == 'qualification'
+    if args.qualification_phase != 'deployment' and not qualification:
+        raise ValueError('Qualification phases do not change the main benchmark')
     if qualification:
         import importlib.util
         spec = importlib.util.spec_from_file_location('fitted_bridge_observer', Path(__file__).with_name('FITTED-CHECK.py'))
@@ -95,11 +98,13 @@ def main():
         batch_contract='fixed_order_same_horizon_waves_v1',
         render_contract='bounded_two_intensity_levels', deployment_optimizer_updates=0)
     if qualification:
+        waves = ([dict(task='CloseFridge', mode='episode', cases=1)] if args.qualification_phase == 'reset' else
+                 [dict(task='OpenDrawer', mode='full', cases=8),
+                  dict(task='CloseFridge', mode='full', cases=1),
+                  dict(task='CloseFridge', mode='episode', cases=1)])
         binding.update(format='fitted_bridge_deployment_qualification_v1', cases_per_task=None,
             separate_qualification_output=True, maximum_allocated_GPU_hours=.25,
-            waves=[dict(task='OpenDrawer', mode='full', cases=8),
-                   dict(task='CloseFridge', mode='full', cases=1),
-                   dict(task='CloseFridge', mode='episode', cases=1)],
+            qualification_phase=args.qualification_phase, waves=waves,
             purpose='Deployment, causal history and B8 throughput only; not the main ID/OOD benchmark')
     binding_path = args.output / 'BINDING.json'
     if binding_path.exists() and json.loads(binding_path.read_text()) != binding:
@@ -110,6 +115,8 @@ def main():
     results, started = [], time.time()
     for mode in ('full', 'episode'):
         for task in tasks:
+            if qualification and args.qualification_phase == 'reset' and (mode != 'episode' or task != 'CloseFridge'):
+                continue
             if qualification and task == 'OpenDrawer' and mode == 'episode':
                 continue
             canonical_split = 'ID' if task in ('OpenDrawer', 'CloseToasterOvenDoor', 'CoffeeSetupMug') else 'OOD'

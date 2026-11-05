@@ -31,7 +31,7 @@ def archive_closed_bank(bank, audit_result):
     if bank.is_symlink():
         return
     relative = bank.relative_to(ROOT)
-    if relative.parts[0] not in ('readouts', 'qualification-02'):
+    if relative.parts[0] not in ('readouts', 'qualification-02', 'qualification-fitted-pfs03', 'qualification-fitted-reset-pfs04'):
         raise ValueError('Archive only owned closed native waves in this run')
     result = json.loads((bank / 'RESULT.json').read_text())
     if result.get('optimizer_updates') != 0 or not result.get('native_parameters_frozen'):
