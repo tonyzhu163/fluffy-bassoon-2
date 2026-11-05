@@ -47,7 +47,7 @@ owners/floor286GiB includes the pending40GiB packed-readout reservation. Pair
 free-space gates are536GiB aftercurrentPPO closes, or661GiB while conservatively
 reserving its full125GiB. Count actual remaining growth without double-counting
 already consumed bytes. Each4GPU/170min arm has11.4GPUh maximum including launch
-margin; pair22.8 plus at most2qualificationGPUh. Reconcile actual completed
+margin; pair22.8 plus at most3qualificationGPUh. Reconcile actual completed
 current-run timing and charges before any explicit authored-envelope migration;
 never borrow another campaign's budget or exceed50cumulativeGPUh without the
 human's approval.
@@ -57,3 +57,5 @@ paired_entry.py. Only syntax/static source review has run on macOS. No model,
 learner numerics, group reset, GPU gradients or recovery qualification has run
 for this wrapper. Its launcher and actual-device qualification remain gated;
 these files do not constitute admission or a completed comparison.
+
+Qualification-only admission is now recorded in QUALIFICATION-ADMISSION.json:20→23additional engineering GPUh, human50cumulative unchanged. The qualification uses4GPU/64CPU/1024GiB/44min, with a45min creation/cleanup reservation (3GPUh). The prospective46h science-pair migration remains inactive; both arms await current PPO closure, successful qualification and fresh536GiB/resource admission. Post-model named actor/rollout RNG seed bases are22000/23000 plus rank; actor.seed1234 still controls model initialization.

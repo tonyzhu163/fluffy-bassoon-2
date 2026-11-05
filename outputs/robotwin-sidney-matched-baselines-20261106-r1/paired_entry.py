@@ -13,6 +13,7 @@ sys.path.insert(0,str(SHARED))
 import train_entry as shared
 from case_schedule import CaseSchedule,boundary_ordinal,install
 from paired_recipe import validate_pair
+from recovery_signature import actor_signature
 from fluffy_bassoon.meta_rl.rlinf_native_ppo import snapshot_rng,restore_rng,tensor_hash,write
 
 runtime=shared.runtime
@@ -33,6 +34,22 @@ class PairedActor(shared.SidneyActor):
     def init_worker(self):
         result=super().init_worker();initialize_rng(self,'actor')
         self._pair_first_replay=False
+        return result
+
+    def pilot_capture(self,directory,*,retain_rollout=False):
+        result=super().pilot_capture(directory,retain_rollout=retain_rollout)
+        write(Path(directory)/f'paired-actor-signature-{self._rank:02d}.json',
+            actor_signature(self,snapshot_rng()))
+        return result
+
+    def pilot_restore(self,directory):
+        import json
+        result=super().pilot_restore(directory)
+        expected=json.loads((Path(directory)/f'paired-actor-signature-{self._rank:02d}.json').read_text())
+        actual=actor_signature(self,snapshot_rng())
+        write(Path(self.cfg.native_pilot.output)/'recovery-signatures'/f'actor-{self._rank:02d}.json',dict(
+            expected=expected,actual=actual,exact_identity=expected==actual))
+        assert expected==actual,'Native model/Adam/scheduler/scaler/RNG restoration differs'
         return result
 
     def train_micro_batch(self,micro_batch,metrics,*,is_last):
@@ -90,7 +107,7 @@ class PairedEnvironment(shared.SidneyEnvironment):
         return result
 
     def pilot_capture(self,directory,*,retain_rollout=False):
-        assert self._paired_reset_ordinal==boundary_ordinal(directory)
+        assert self._paired_reset_ordinal==boundary_ordinal(directory,int(self.cfg.env.train.rollout_epoch))
         receipt=super().pilot_capture(directory,retain_rollout=retain_rollout)
         write(Path(directory)/f'case-schedule-env-{self._rank:02d}.json',dict(
             manifest_sha256=self._paired_schedule.sha256,next_reset_ordinal=self._paired_reset_ordinal))
@@ -100,14 +117,24 @@ class PairedEnvironment(shared.SidneyEnvironment):
         import json
         saved=json.loads((Path(directory)/f'case-schedule-env-{self._rank:02d}.json').read_text())
         assert saved['manifest_sha256']==self._paired_schedule.sha256
-        assert saved['next_reset_ordinal']==boundary_ordinal(directory)
+        assert saved['next_reset_ordinal']==boundary_ordinal(directory,int(self.cfg.env.train.rollout_epoch))
         receipt=super().pilot_restore(directory)
         self._paired_reset_ordinal=saved['next_reset_ordinal']
         return receipt
 
 
 class PairedRunner(shared.SidneyRunner):
+    def _capture_boundary(self):
+        import time
+        started=time.perf_counter();result=super()._capture_boundary()
+        self._pilot_write(f'boundary-timings/step-{self.global_step:04d}.json',dict(
+            global_step=self.global_step,seconds=time.perf_counter()-started,
+            includes_native_DCP_worker_sidecars_and_SHA256=True))
+        return result
+
     def run(self):
+        if self.cfg.native_pilot.qualification_only:
+            return self.qualify()
         result=super().run()
         self._pilot_write('RESULT.json',dict(status='complete',rollout_iterations=2,
             algorithm=str(self.cfg.native_pilot.comparison_algorithm),
@@ -116,6 +143,29 @@ class PairedRunner(shared.SidneyRunner):
             source_task='place_phone_stand',group_size=8,
             original_initializer_reproduction=False,paper_numeric_reproduction=False))
         return result
+
+    def qualify(self):
+        # A separately charged one-round/one-update engineering fixture. It is
+        # never admitted as an arm of the scientific two-iteration comparison.
+        from omegaconf import OmegaConf
+        from rlinf.runners.embodied_runner import EmbodiedRunner
+        validate_pair(self.cfg)
+        self._pilot_write('resolved-native-config.json',OmegaConf.to_container(self.cfg,resolve=True))
+        resume=self.cfg.runner.get('resume_dir')
+        if resume:
+            rows=[]
+            for group in (self.actor,self.rollout,self.env):
+                rows.extend(group.pilot_restore(str(Path(resume)/'pilot')).wait())
+            self._pilot_write('operational-restore.json',dict(global_step=self.global_step,workers=rows))
+        else:
+            self.update_rollout_weights();self._capture_boundary()
+        if not resume:
+            self.env.pilot_phase('training').wait()
+            EmbodiedRunner.run(self)
+        assert self.global_step==1
+        self._pilot_write('RESULT.json',dict(status='complete',qualification_only=True,
+            algorithm='grpo',rollout_iterations=1,optimizer_updates=1,
+            recovery_only=bool(resume),scientific_source_admission=False))
 
 
 def main():

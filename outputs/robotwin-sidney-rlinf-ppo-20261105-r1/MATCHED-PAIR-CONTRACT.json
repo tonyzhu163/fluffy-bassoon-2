@@ -44,7 +44,11 @@
     "environment_base_seed": 0,
     "normalize_advantages": true,
     "filter_rewards": false,
-    "new_SFT_benchmark_episodes": 0
+    "new_SFT_benchmark_episodes": 0,
+    "post_init_named_rng_seed_bases": {
+      "actor_minibatch": 22000,
+      "rollout_sampling": 23000
+    }
   },
   "cases": {
     "train_bank_sha256": "55b25866308d4e7da486282982ead4d5857b53fd977f659b216045f1950b45e2",
@@ -138,15 +142,16 @@
     "task_level_aggregate_includes_all_prior_PPO_and_diagnostics": true,
     "old_journal_files_rewritten": false,
     "maximum_pair_gpu_seconds": 82080,
-    "additional_qualification_ceiling_gpu_hours": 2.0,
-    "current_authored_engineering_envelope_gpu_hours": 20,
+    "additional_qualification_ceiling_gpu_hours": 3,
+    "current_authored_engineering_envelope_gpu_hours": 23,
     "proposed_new_authored_envelope_gpu_hours": 46,
-    "migration_status": "NOT_ACTIVE: await current PPO real optimizer boundary and all new numerical/model/case/resource/storage gates",
+    "migration_status": "Qualification-only20to23h active; science pair46h NOT_ACTIVE: requires qualification, current closure and fresh resource/storage gates",
     "human_cumulative_task_cap_gpu_hours": 50,
-    "worst_additional_envelope_reason": "Current20h worstcase +22.8h pair +2h qualification =44.8additionalh <46; legacy0.7114h yields<=46.7114h cumulative. Abort admission if actual/task aggregate differs or50h would be exceeded."
+    "worst_additional_envelope_reason": "Current20h worstcase +22.8h pair +3h qualification=45.8additionalh<46; legacy0.7114h implies<=46.5114cumulativeh<50. Use actual reservation ledger before admission.",
+    "qualification_only_authored_envelope_gpu_hours": 23
   },
   "launch_gates": [
-    "memory03complete: pairedRGB/state/motor/RNG and projectedhostheadroom",
+    "Closed native memory02 fallback, experimental per-closeOFF, actual1024GiB minimum and unchanged95percent Rayguard",
     "CurrentengineeringPPO real optimizer advance and complete resumable boundary, no frozenVLM drift",
     "Actual end-to-end reset/update/IObytes timing reconciled with pair budgets",
     "Dedicated pairedentry+validators implemented and Linux numeric GAE/groupGRPO/no-value model/replay/recovery tests pass",
