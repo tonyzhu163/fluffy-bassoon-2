@@ -1,0 +1,211 @@
+{
+  "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual03/train/training-rollouts/iteration-0001-policy-0000-rank-01.pt",
+  "sha256": "68096e4b8d8730c34b67546d35b61a3681774f121333b016f0864713251fae2c",
+  "completed": true,
+  "capture_format": "rlinf_native_ppo_history_capture_v1",
+  "compression": "none",
+  "bytes": 1445827076,
+  "collection_iteration": 1,
+  "producing_policy_iteration": 0,
+  "rank": 1,
+  "optimizer_steps_before": 0,
+  "fields": [
+    "actions",
+    "advantages",
+    "dones",
+    "forward_inputs",
+    "intervene_flags",
+    "loss_mask",
+    "loss_mask_sum",
+    "prev_logprobs",
+    "prev_values",
+    "rewards",
+    "terminations",
+    "truncations",
+    "versions"
+  ],
+  "field_shapes": {
+    "forward_inputs": {
+      "tokenized_prompt_mask": {
+        "shape": [
+          8,
+          64,
+          200
+        ],
+        "dtype": "torch.bool"
+      },
+      "chains": {
+        "shape": [
+          8,
+          64,
+          6,
+          50,
+          32
+        ],
+        "dtype": "torch.float32"
+      },
+      "observation/image": {
+        "shape": [
+          8,
+          64,
+          480,
+          640,
+          3
+        ],
+        "dtype": "torch.uint8"
+      },
+      "tokenized_prompt": {
+        "shape": [
+          8,
+          64,
+          200
+        ],
+        "dtype": "torch.int64"
+      },
+      "observation/wrist_image": {
+        "shape": [
+          8,
+          64,
+          2,
+          480,
+          640,
+          3
+        ],
+        "dtype": "torch.uint8"
+      },
+      "model_action": {
+        "shape": [
+          8,
+          64,
+          1600
+        ],
+        "dtype": "torch.float32"
+      },
+      "action": {
+        "shape": [
+          8,
+          64,
+          700
+        ],
+        "dtype": "torch.float32"
+      },
+      "denoise_inds": {
+        "shape": [
+          8,
+          64,
+          5
+        ],
+        "dtype": "torch.int64"
+      },
+      "observation/state": {
+        "shape": [
+          8,
+          64,
+          14
+        ],
+        "dtype": "torch.float64"
+      }
+    },
+    "actions": {
+      "shape": [
+        8,
+        64,
+        700
+      ],
+      "dtype": "torch.float32"
+    },
+    "intervene_flags": {
+      "shape": [
+        8,
+        64,
+        700
+      ],
+      "dtype": "torch.bool"
+    },
+    "rewards": {
+      "shape": [
+        8,
+        64,
+        50
+      ],
+      "dtype": "torch.float32"
+    },
+    "terminations": {
+      "shape": [
+        9,
+        64,
+        50
+      ],
+      "dtype": "torch.bool"
+    },
+    "truncations": {
+      "shape": [
+        9,
+        64,
+        50
+      ],
+      "dtype": "torch.bool"
+    },
+    "dones": {
+      "shape": [
+        9,
+        64,
+        50
+      ],
+      "dtype": "torch.bool"
+    },
+    "prev_logprobs": {
+      "shape": [
+        8,
+        64,
+        50,
+        14
+      ],
+      "dtype": "torch.float32"
+    },
+    "prev_values": {
+      "shape": [
+        9,
+        64,
+        1
+      ],
+      "dtype": "torch.float32"
+    },
+    "versions": {
+      "shape": [
+        8,
+        64,
+        50,
+        14
+      ],
+      "dtype": "torch.float32"
+    },
+    "loss_mask": {
+      "shape": [
+        8,
+        64,
+        1
+      ],
+      "dtype": "torch.bool"
+    },
+    "loss_mask_sum": {
+      "shape": [
+        8,
+        64,
+        1
+      ],
+      "dtype": "torch.int64"
+    },
+    "advantages": {
+      "shape": [
+        8,
+        64,
+        1
+      ],
+      "dtype": "torch.float32"
+    }
+  },
+  "evaluation_data": false,
+  "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual03/train/resolved-native-config.json",
+  "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+}

@@ -128,6 +128,7 @@ if [[ $TASK_PHASE == ppo || $TASK_PHASE == grpo ]]; then
   # Verify this arm's actual trained actor/Adam boundary in a new process while
   # preserving the declared simulator cases, SGD count and 170-minute ceiling.
   "$TASK_PYTHON" -m ray.scripts.scripts stop --force > "$TASK_PARENT_OUT/ray-cleanup-final.log" 2>&1
+  "$TASK_PYTHON" "$TASK_RUN/summarize_group_returns.py" "$TASK_PARENT_OUT" > "$TASK_PARENT_OUT/group-return-readout.log" 2>&1
   export TASK_PROBE_MODE=restore
   export TASK_FIXTURE=/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual02
   export TASK_PROBE_CHECKPOINT=$TASK_PARENT_OUT/sidney-paired-$TASK_ALGORITHM/checkpoints/global_step_2

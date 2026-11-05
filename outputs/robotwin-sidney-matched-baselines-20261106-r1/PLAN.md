@@ -1,6 +1,6 @@
 # Matched Sidney PPO / GRPO bounded comparison
 
-Updated Nov 6 after the two-iteration native PPO pilot completed. Qualification attempts qual01/qual02 and actor-only grad01/opt01 are closed; opt01 explains a zero-length FSDP optimizer representation difference. One actual gradient update with independent trained-state restore and the full twelve-worker/grouped runtime qualifier remain required. Scientific arms are held. The human cumulative RoboTwin cap remains 50 GPU-hours; see GRADIENT-ADMISSION.json for the bounded next step.
+Updated Nov 6 after full qual03 passed native source/group/raw-reference/update and twelve-worker whole-iteration recovery. Exactly two fresh-original-Sidney, two-iteration PPO/GRPO arms on place_phone_stand are admitted by PAIR-ADMISSION.json, subject to fresh queue, hardware, storage and allocated-step gates. The authored additional envelope migrates23→46 GPU-hours; the human cumulative50-hour cap is unchanged. Cumulative actual before the pair is19.68972 GPU-hours and conservative pair worst case42.65167 hours. No full six-task25iteration campaign or student corpus is admitted.
 
 Both fresh arms start from original broad Sidney SFT, never a PPO-updated
 expert. Use native mixedBF16/fullFP32vision+norms, three cameras,14D absolute
@@ -37,10 +37,10 @@ recovery. Those actual-device checks and an episode are still required after
 the current PPO reaches a real optimizer/checkpoint boundary. No fresh broad
 SFT benchmark panel or full six-task source campaign is added.
 
-Reserve125GiB per scientific arm and a separate40GiB qualification allowance;
+Reserve135GiB per scientific arm and a separate40GiB qualification allowance;
 reconcile closed qualification artifacts before admitting the pair. Other
 owners/floor286GiB includes the pending40GiB packed-readout reservation. Pair
-free-space gates are536GiB aftercurrentPPO closes, or661GiB while conservatively
+free-space gates are556GiB aftercurrentPPO closes, or661GiB while conservatively
 reserving its full125GiB. Count actual remaining growth without double-counting
 already consumed bytes. Each4GPU/170min arm has11.4GPUh maximum including launch
 margin; pair22.8 plus at most3qualificationGPUh. Reconcile actual completed
@@ -52,8 +52,10 @@ Actual qualification evidence: qual02 passed native learner numerical references
 
 Grad01 then stopped before replay because only the native raw Adam digest differed. Opt01 reproduced the mismatch and measured the complete named state/group delta: only zero-length unowned state was dropped; owned state and all other signatures match exactly. New signatures retain the raw digest and an exact named comparison that validates empty dropped state. The next actor-only grad02 initializes fresh original SFT, requires all six legacy initializer signatures to equal qual02 checkpoint0, replays its immutable canonical batch, saves an actual step1 boundary and restores it in an independent process. No old fixture payload is modified. Full qual03 must subsequently qualify simulator groups/raw-reference deduplication, all twelve workers, and next case ordinal1.
 
-The active authored engineering envelope is 23 additional GPU-hours, human cumulative 50 unchanged. GRADIENT-ADMISSION.json reconciles closed actual charges and reserves one GPU-hour for grad02 and three for full qual03. The prospective 46-hour additional science envelope remains inactive. Both science arms await the actual gradient/full-runtime gates and fresh 536 GiB storage/resource admission. Post-model named actor/rollout RNG seed bases are 22000/23000 plus rank; actor.seed1234 controls model initialization.
+The active authored engineering envelope is 23 additional GPU-hours, human cumulative 50 unchanged. GRADIENT-ADMISSION.json reconciles closed actual charges and reserves one GPU-hour for grad02 and three for full qual03. The prospective 46-hour additional science envelope remains inactive. Both science arms await the actual gradient/full-runtime gates and fresh 556 GiB storage/resource admission. Post-model named actor/rollout RNG seed bases are 22000/23000 plus rank; actor.seed1234 controls model initialization.
 
 Control accounting limitation: requested/conservative native14D motor commands bound the escrow. The current fast path has measured_valid_mask=False; actual executed actions, post-success no-ops and internal physics substeps are not measured. The bounded pair may claim common native case/horizon, not measured physical-control matching. Full source/student corpus admission remainsFalse until passive duration/mask/raw action alignment is qualified under a fresh reviewed source without changing policy/loss/reset behavior. See parent train07/CONTROL-ACCOUNTING.md.
 
 Each bounded science arm also performs an independent actor-only readback of its actual final step40 boundary after training, including PPO's critic optimizer group. This adds no SGD, simulator episodes or changes to the saved native contract. It stays within the original170minute/11.4GPU-hour per-arm ceiling; failure of this final recovery keeps job-level qualification false. The already running qual03 checkout is immutable.
+
+Admission update: the extra fresh step0 boundary measured9.29327 GiB. Pair storage therefore migrates125→135 GiB per arm, with556 GiB fresh free-space gate (270+286); the other-owner40 GiB packed-readout allowance is counted once inside286. Both closed CPU archives completed full cold/staged SHA verification and now reserve zero temporary growth. PAIR-CONTRACT.json and PAIR-ADMISSION.json supersede prepared budgets; old run contracts/checkpoints remain unchanged.

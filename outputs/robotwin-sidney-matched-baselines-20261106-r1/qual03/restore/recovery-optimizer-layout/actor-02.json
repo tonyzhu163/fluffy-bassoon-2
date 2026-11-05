@@ -1,0 +1,4225 @@
+{
+  "optimizer_sha256": "3e82ce477d65070a42076132e35e1d4b7c29fdc077fb07c4124958976c377ce3",
+  "rank": 2,
+  "optimizer_steps": 1,
+  "is_optimizer_offloaded": false,
+  "state_entries": 41,
+  "groups": [
+    {
+      "parameters": [
+        "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.attn.q_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.attn.k_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.attn.v_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.attn.o_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.mlps.1.w_gating",
+        "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.mlps.1.w_linear",
+        "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.attn.q_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.attn.k_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.attn.v_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.attn.o_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.mlps.1.w_gating",
+        "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.mlps.1.w_linear",
+        "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.attn.q_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.attn.k_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.attn.v_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.attn.o_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.mlps.1.w_gating",
+        "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.mlps.1.w_linear",
+        "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.attn.q_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.attn.k_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.attn.v_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.attn.o_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.mlps.1.w_gating",
+        "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.mlps.1.w_linear",
+        "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.attn.q_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.attn.k_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.attn.v_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.attn.o_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.mlps.1.w_gating",
+        "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.mlps.1.w_linear",
+        "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.attn.q_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.attn.k_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.attn.v_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.attn.o_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.mlps.1.w_gating",
+        "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.mlps.1.w_linear",
+        "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.attn.q_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.attn.k_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.attn.v_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.attn.o_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.mlps.1.w_gating",
+        "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.mlps.1.w_linear",
+        "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.attn.q_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.attn.k_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.attn.v_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.attn.o_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.mlps.1.w_gating",
+        "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.mlps.1.w_linear",
+        "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.attn.q_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.attn.k_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.attn.v_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.attn.o_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.mlps.1.w_gating",
+        "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.mlps.1.w_linear",
+        "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.attn.q_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.attn.k_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.attn.v_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.attn.o_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.mlps.1.w_gating",
+        "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.mlps.1.w_linear",
+        "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.attn.q_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.attn.k_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.attn.v_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.attn.o_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.mlps.1.w_gating",
+        "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.mlps.1.w_linear",
+        "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.attn.q_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.attn.k_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.attn.v_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.attn.o_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.mlps.1.w_gating",
+        "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.mlps.1.w_linear",
+        "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.attn.q_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.attn.k_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.attn.v_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.attn.o_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.mlps.1.w_gating",
+        "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.mlps.1.w_linear",
+        "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.attn.q_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.attn.k_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.attn.v_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.attn.o_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.mlps.1.w_gating",
+        "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.mlps.1.w_linear",
+        "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.attn.q_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.attn.k_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.attn.v_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.attn.o_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.mlps.1.w_gating",
+        "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.mlps.1.w_linear",
+        "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.attn.q_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.attn.k_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.attn.v_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.attn.o_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.mlps.1.w_gating",
+        "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.mlps.1.w_linear",
+        "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.attn.q_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.attn.k_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.attn.v_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.attn.o_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.mlps.1.w_gating",
+        "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.mlps.1.w_linear",
+        "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.attn.q_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.attn.k_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.attn.v_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.attn.o_proj.1.weight",
+        "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.mlps.1.w_gating",
+        "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.mlps.1.w_linear",
+        "_fsdp_wrapped_module.llm.final_norms.1._fsdp_wrapped_module.ada_modulation.weight",
+        "_fsdp_wrapped_module.llm.final_norms.1._fsdp_wrapped_module.ada_modulation.bias",
+        "_fsdp_wrapped_module.action_in_proj._fsdp_wrapped_module.weight",
+        "_fsdp_wrapped_module.action_in_proj._fsdp_wrapped_module.bias",
+        "_fsdp_wrapped_module.time_mlp_in._fsdp_wrapped_module.weight",
+        "_fsdp_wrapped_module.time_mlp_in._fsdp_wrapped_module.bias",
+        "_fsdp_wrapped_module.time_mlp_out._fsdp_wrapped_module.weight",
+        "_fsdp_wrapped_module.time_mlp_out._fsdp_wrapped_module.bias",
+        "_fsdp_wrapped_module.action_out_proj._fsdp_wrapped_module.weight",
+        "_fsdp_wrapped_module.action_out_proj._fsdp_wrapped_module.bias"
+      ],
+      "hyperparameters": {
+        "lr": {
+          "kind": "float",
+          "value": 5e-06
+        },
+        "betas": {
+          "kind": "tuple",
+          "items": [
+            {
+              "kind": "float",
+              "value": 0.9
+            },
+            {
+              "kind": "float",
+              "value": 0.95
+            }
+          ]
+        },
+        "eps": {
+          "kind": "float",
+          "value": 1e-08
+        },
+        "weight_decay": {
+          "kind": "float",
+          "value": 0.01
+        },
+        "amsgrad": {
+          "kind": "bool",
+          "value": false
+        },
+        "maximize": {
+          "kind": "bool",
+          "value": false
+        },
+        "foreach": {
+          "kind": "NoneType",
+          "value": null
+        },
+        "capturable": {
+          "kind": "bool",
+          "value": false
+        },
+        "differentiable": {
+          "kind": "bool",
+          "value": false
+        },
+        "fused": {
+          "kind": "bool",
+          "value": false
+        },
+        "decoupled_weight_decay": {
+          "kind": "bool",
+          "value": true
+        },
+        "initial_lr": {
+          "kind": "float",
+          "value": 5e-06
+        }
+      }
+    }
+  ],
+  "parameters": {
+    "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.attn.q_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.attn.k_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.attn.v_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.attn.o_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "37c1800b2bc2377e7c00af50b783755b802a81485d964aaf9062e82592b83191",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.003293541958555579
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "17a8e5a46f03e2847f21062ad99aac40a029b656a0d02df23902fd06f52f086b",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 5.4237090807873756e-05
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "4c958c1f64e9ba0a4768c0c795a556a0de34c625ff1962fe9738eb62e7cd7e4b",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0015968295047059655
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "08221051d7ba6dd4481150021905496f2bb78e421047864032151e9ad9b2ee7a",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 1.2749321285809856e-05
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.mlps.1.w_gating": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.0._fsdp_wrapped_module.mlps.1.w_linear": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.attn.q_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.attn.k_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.attn.v_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.attn.o_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "b746cc7f880c67c20457e03474ac2879e30de8007fd7f1ee4f02ca6275ec007d",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0012240292271599174
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "93033ebc1859ea5ecef791a43c4390455b07d239ef2665a28c83911c9be75fc4",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 7.491238193324534e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "0597de9c21870a13d54f9d547b27c0ff239b7e81b9d5cef3e1325b369e8d9752",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0008288370445370674
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "1a66e5fe2f952e4fc282936b728b48bcb208eafd6dc00eb7ce60b893b996d8ec",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 3.4348540793871507e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.mlps.1.w_gating": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.1._fsdp_wrapped_module.mlps.1.w_linear": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.attn.q_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.attn.k_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.attn.v_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.attn.o_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "d331a6ea9a84149941ac5263503336598ddcf22334a2ceb60f063b8c6cab4fbd",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0008520568953827024
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "1f2b547b43cb444b3ef14ecf32bf77c784e397ea20fce07d8d169a838f9734a9",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 3.630004812293919e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "cd27a35f9557fb43641fb4b7183e740ef6d4ef56323be367295a80e430f51bbc",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0011586896143853664
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "6afa419811444e81e352e34fc476296db84613952cdd7d0fcf782dc0efabf2c2",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 6.712808044539997e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.mlps.1.w_gating": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.2._fsdp_wrapped_module.mlps.1.w_linear": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.attn.q_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.attn.k_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.attn.v_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.attn.o_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "192719113322f75f770b356e35f771036fcdb10d737329546a4b3d2065a31721",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.00037830648943781853
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "3335f7d160b719a319e8a10deaa1a6ed7972cbd0d5569dc4b66a7a87b07a89cf",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 7.155790058277489e-07
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "2f1097bd9d97a37cd9962959c1244d2544dbb4c00d8ee99631e1d9c6eabd5964",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0004680832498706877
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "f94346e6c2476fa4ebd721e1d3dcd32c52d2840861dc520b7a4b8b96f0ed734d",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 1.0955095604003873e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.mlps.1.w_gating": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.3._fsdp_wrapped_module.mlps.1.w_linear": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.attn.q_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.attn.k_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.attn.v_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.attn.o_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "7dba7e4a446fa9b564db98ac5d6f31e91ee9b52b59e1e6d33e8341fced3d1477",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0005011486355215311
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "aef64d41fbd2097fb733ef3dbfbf45163503831a231b71a3b58de7e989831c28",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 1.2557497939269524e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "7ea549ed7bbde7ed70ac61b613ab803eb05bfd7ad1b9b1fb3f4e1aa9e531b066",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.00017578962433617562
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "f62d2cbe103cca0bde0fc04e0b19c81107522c116f0aa46cd3829c30d5e326d9",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 1.545099621580448e-07
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.mlps.1.w_gating": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.4._fsdp_wrapped_module.mlps.1.w_linear": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.attn.q_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.attn.k_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.attn.v_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.attn.o_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "650efa689b829ac6e92e5e162c06f875f316acc3785f2d17045c6a5745aca568",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.000705650367308408
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "f2063c69657b3e1e0ec05585f6c3b0388ce8d44544f94127e0d9a2dad8d770f2",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 2.4897121875255834e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "c4230c010ffabab8b8f36f2b28efed4abb1e8018df2773216f10ca8835aae190",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0002895845682360232
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "65aa701525afcf9a718eb6d2637b9fa04d9c9a5bcef649c1594e4a82a98da6ac",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 4.1929607164092886e-07
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.mlps.1.w_gating": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.5._fsdp_wrapped_module.mlps.1.w_linear": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.attn.q_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.attn.k_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.attn.v_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.attn.o_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "b3e91bc6b503f2184348c85a6d61510d54341ea9d33c26888a9fbd914424ae35",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.00047775846906006336
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "4b07759dda5cd387f8110cb08006097294853028019416348fa36694155cbb24",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 1.1412657840992324e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "43a579ea4501696955fc62afd867a3af6a8c09ea81c8cd0627a4a6b3422c1eb6",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0002207858779001981
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "d2b21afd45ec2acb8f42bf82955b86562417e415829df6329e2b7475912a63b2",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 2.4373201767957653e-07
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.mlps.1.w_gating": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.6._fsdp_wrapped_module.mlps.1.w_linear": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.attn.q_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.attn.k_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.attn.v_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.attn.o_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "34c7d63171697069291e9564be891a19e9f58b687f8cc36e0a1884aebebd3d1f",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0007692328654229641
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "98139d864cf0be0767cb53e23fcacbe7643b3ce92a3a81a3f6173f38df51613d",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 2.9585960419353796e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "8ad33395a08427388a8cfe6277063a8b691ac4ddd6c760ad9298c13983d4e242",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.00029806012753397226
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "955abb66186c87704ca4be7e03570f18eaf3d9e18b3cc885906119287c0cf0ff",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 4.441992302872677e-07
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.mlps.1.w_gating": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.7._fsdp_wrapped_module.mlps.1.w_linear": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.attn.q_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.attn.k_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.attn.v_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.attn.o_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "2ae34cdf6879ba74475fb528de3fdfa14a58fab0ba4ed9f1099965c7630e5cae",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0002363946259720251
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "4a0fc979bddf48e849e31ff5caa32bc7bdedc2d8d04379e6c2b0779bd5b8dad9",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 2.7941209168602654e-07
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "b9823db3fce8a30dc82e060cd43b90ccd1a42ed962426f16bdfe98df2eb17286",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0002288982068421319
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "96465097392d3ebb8ba55dc1737dfcd068eb0580b1c2a384c6826c4f35249616",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 2.6197196234534204e-07
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.mlps.1.w_gating": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.8._fsdp_wrapped_module.mlps.1.w_linear": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.attn.q_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.attn.k_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.attn.v_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.attn.o_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "773e7957bd89ec975508eac409ed96d45d61deddb22531da466addfdbb5edd4d",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.00031835385016165674
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "673b2e26445601365c4a9059be5c9fe4e329fc3472fa22c85d3722587842106e",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 5.067458346275089e-07
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "e3fbbe925f17e90448b24d90defacecaafaf60c9044a62fd02aaee65a06c2851",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0002588758652564138
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "13c9b7438bb59cd02e0eb1825cec68da4d0e3db28ca1a46adeae4877bcfa8540",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 3.350835982018907e-07
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.mlps.1.w_gating": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.9._fsdp_wrapped_module.mlps.1.w_linear": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.attn.q_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.attn.k_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.attn.v_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.attn.o_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "5f56484d46863bc001dc05778cead98cacd2c2dbd7a68214578f227c2c3632e3",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0005696668522432446
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "ac5cfcdebb1e0abbe38c6dda0719c0fb71585c3101679c498ca3059775a1157c",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 1.6226015304710018e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "63fdc14b65b9d728b6e38144683ff6515d8846f01f63bd4159af2696c4b306b8",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0004286728799343109
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "a6e45a6a66593fc94644c054c3851d836e1748196c0286968f29d58b667ef3d3",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 9.188021863337781e-07
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.mlps.1.w_gating": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.10._fsdp_wrapped_module.mlps.1.w_linear": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.attn.q_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.attn.k_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.attn.v_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.attn.o_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "79522951d3a700bb16d9e85eed876bc3f5dbc5eaf0d4a36cb60640cc08848afb",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.00047388425446115434
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "58e8b7ce253b0401c45056e4c0886ce7a487372d47c23bacbc3ceb24ec97d775",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 1.1228314633626724e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "fbdc2cd5f583eef417ada6ad20d6c1495df6d82acf9c8a4e2113e5456ef28d05",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.00021619447215925902
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "0aab617dc002e593c0b689649e1627626a8762181702c2e6d275edc4e35cf802",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 2.337002626973117e-07
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.mlps.1.w_gating": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.11._fsdp_wrapped_module.mlps.1.w_linear": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.attn.q_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.attn.k_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.attn.v_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.attn.o_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "4d61b2ec3eda61cc0f74d58152e7bbd79c945896a4a1ea88239ee8e364c546c5",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0004663572763092816
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "7e37d3d8da5b37ad4f967384f88b3484afd79575c1e01a0f3e1b2771198742ad",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 1.0874455256271176e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "47b0a082f072e82c6275ca2d96671e020c51e5f2b769e5fb5940798180f83f8b",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0003657819179352373
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "79bf87c50555f7484b11f7d652ce3128d5d3175df9484b918a0977115f4efc1d",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 6.689820679639524e-07
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.mlps.1.w_gating": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.12._fsdp_wrapped_module.mlps.1.w_linear": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.attn.q_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.attn.k_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.attn.v_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.attn.o_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "786cfd1bea281e5c5f153cddedc77a38821013d2d6ee1b7cca2c532e9713724e",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0004623234272003174
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "516b86875853f3d08a2f24ea454be71f95f5687d6f9b0af544ab0971e8eb3611",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 1.0687148233046173e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "9fdbeedaaacfab6b63d6b76ef129d10c0a95c0d5c228bd6664cc430731428275",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.00031997638870961964
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "f4c804101e7622ab8ddfb696ef46930279753f002cc989243f83f521c95d00af",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 5.119244406159851e-07
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.mlps.1.w_gating": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.13._fsdp_wrapped_module.mlps.1.w_linear": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.attn.q_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.attn.k_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.attn.v_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.attn.o_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "e747ff76d02f8a0ffb9cae01919334b89fe5932fa637cdf448882edb6a53c401",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0009504480403847992
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "d09021ede933095d72cc3432de5586ded91a091833a5fc24b7e5d57ae353dddd",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 4.516757599049015e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "f384291f6be63ca18cb3040a13c47c887866ccc6b1d864d3b518d8aa774cf9fa",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0004196972295176238
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "d88806c2a1249e1fd3e6bbe75556692bba82f06882b44f98362ba29c17ff49ac",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 8.807287485979032e-07
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.mlps.1.w_gating": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.14._fsdp_wrapped_module.mlps.1.w_linear": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.attn.q_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.attn.k_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.attn.v_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.attn.o_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "37721e9f29ea22f8050a955cd6666a2f8ea5611d751791939aee3f3c0e87d471",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.00046427801134996116
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "f567b83dc792379ba9086698dbb1e06f8362466c4b5286ef40c9924b056b6c59",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 1.0777703209896572e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "0c06f6b2f36c7f0b649bd07e666807c2106aee5d150bd077b91f0d5bb5ab613a",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0004339130246080458
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "25cb949fc2f641e8d91a8009413c3c187b03476a7acfd6add4647770cc5256e9",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 9.414025043952279e-07
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.mlps.1.w_gating": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.15._fsdp_wrapped_module.mlps.1.w_linear": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.attn.q_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.attn.k_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.attn.v_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.attn.o_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "a6cd7adf3ea1e355155f40e124bc7460eeffa221ff149ce328f7abf98f00af4b",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0006008493946865201
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "e034cdbcbfae6cc693ab61964559024c2d7c7f9855d27e7b44e7d1b43fbbf5c0",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 1.8050998278340558e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "3da01e6f7f1848c50d0ca9a0d2d240c53fb02c6aac806a85b81cd9fbe8e53e4f",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0009283018298447132
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "e8b1671781a7825e177a7303b7917a0255340cf769aa77dfb7b25416ef21c6bb",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 4.308721599954879e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.mlps.1.w_gating": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.16._fsdp_wrapped_module.mlps.1.w_linear": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.attn.q_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.attn.k_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.attn.v_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.attn.o_proj.1.weight": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "9597fda4fcff617ac5be4c5ad33e9fd2ccfac3199e1f91a7880121bd37a43028",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.0013297608820721507
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "b1dfd928a9973890efd0d0e85ef25a98bf6afe3f942aa6cfe52899e438e3b178",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 8.841318958729971e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.pre_attention_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "7a4549b500001f294ff6917a24528128834e48c20fbfa2e095499c9d9ee3ed88",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 0.00031462981132790446
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "11f736497588969ea2f48a125ffadea8a90284462ae9ee74e671be9bcbc0510a",
+          "finite": true,
+          "nonzero_elements": 787200,
+          "maximum_absolute": 4.949595791003958e-07
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.pre_ffw_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.mlps.1.w_gating": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.layers.17._fsdp_wrapped_module.mlps.1.w_linear": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.bfloat16",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.llm.final_norms.1._fsdp_wrapped_module.ada_modulation.weight": {
+      "parameter_shape": [
+        787200
+      ],
+      "parameter_numel": 787200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "98590077f96ba4196c96f1570d5c2c7340aead772795cce1a39a1a55116ed576",
+          "finite": true,
+          "nonzero_elements": 522752,
+          "maximum_absolute": 0.0017885376000776887
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            787200
+          ],
+          "numel": 787200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "709fd4c899d8a2659ced3581fb7327c87b489580c889ea68903021e52943714c",
+          "finite": true,
+          "nonzero_elements": 522752,
+          "maximum_absolute": 1.5994333807611838e-05
+        }
+      }
+    },
+    "_fsdp_wrapped_module.llm.final_norms.1._fsdp_wrapped_module.ada_modulation.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.action_in_proj._fsdp_wrapped_module.weight": {
+      "parameter_shape": [
+        8448
+      ],
+      "parameter_numel": 8448,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            8448
+          ],
+          "numel": 8448,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "0db8c5a01c4f96b8841a8fd5dbd7a094771e0699e9b4830ce4fe0e3979d1d9db",
+          "finite": true,
+          "nonzero_elements": 8448,
+          "maximum_absolute": 0.0006810221821069717
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            8448
+          ],
+          "numel": 8448,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "afe8cd40492f0aa5dadf4f5a2acf6a26602a36430a22bc48a6eec0cda47b73d1",
+          "finite": true,
+          "nonzero_elements": 8448,
+          "maximum_absolute": 2.3189561488834443e-06
+        }
+      }
+    },
+    "_fsdp_wrapped_module.action_in_proj._fsdp_wrapped_module.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.time_mlp_in._fsdp_wrapped_module.weight": {
+      "parameter_shape": [
+        262400
+      ],
+      "parameter_numel": 262400,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            262400
+          ],
+          "numel": 262400,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "efc320b536fe8f2391f76edc4cc975df6656178820ecd922e5d06119ad255b43",
+          "finite": true,
+          "nonzero_elements": 262400,
+          "maximum_absolute": 6.91582026774995e-05
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            262400
+          ],
+          "numel": 262400,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "1444c1620808815e708febfd429554e22a07030933888104ad9cc31a5fcefc83",
+          "finite": true,
+          "nonzero_elements": 262400,
+          "maximum_absolute": 2.3914285662840484e-08
+        }
+      }
+    },
+    "_fsdp_wrapped_module.time_mlp_in._fsdp_wrapped_module.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.time_mlp_out._fsdp_wrapped_module.weight": {
+      "parameter_shape": [
+        262400
+      ],
+      "parameter_numel": 262400,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            262400
+          ],
+          "numel": 262400,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "88ad96286fa6482a2c44421f6e3483acb2708406e79b422a58dd615a8b8a117b",
+          "finite": true,
+          "nonzero_elements": 262400,
+          "maximum_absolute": 0.002934179035946727
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            262400
+          ],
+          "numel": 262400,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "6ba65d06a0ba1db03346dc38a99a5351b5a799b1d36e5b4be760544355d07039",
+          "finite": true,
+          "nonzero_elements": 262400,
+          "maximum_absolute": 4.3047031795140356e-05
+        }
+      }
+    },
+    "_fsdp_wrapped_module.time_mlp_out._fsdp_wrapped_module.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    },
+    "_fsdp_wrapped_module.action_out_proj._fsdp_wrapped_module.weight": {
+      "parameter_shape": [
+        8200
+      ],
+      "parameter_numel": 8200,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": true,
+      "state_present": true,
+      "state": {
+        "step": {
+          "kind": "tensor",
+          "shape": [],
+          "numel": 1,
+          "dtype": "torch.float32",
+          "device": "cpu",
+          "sha256": "88f0d11ae93ac2f493bacc37a68050d8103e810580cae567e49d496c928d4428",
+          "finite": true,
+          "nonzero_elements": 1,
+          "maximum_absolute": 1.0,
+          "values": [
+            1.0
+          ]
+        },
+        "exp_avg": {
+          "kind": "tensor",
+          "shape": [
+            8200
+          ],
+          "numel": 8200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "0d817496c8493b482fdcc7a77f8b6b2df01ebb3ae932e897242043c5d0d8bcf0",
+          "finite": true,
+          "nonzero_elements": 0,
+          "maximum_absolute": 0.0
+        },
+        "exp_avg_sq": {
+          "kind": "tensor",
+          "shape": [
+            8200
+          ],
+          "numel": 8200,
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "0d817496c8493b482fdcc7a77f8b6b2df01ebb3ae932e897242043c5d0d8bcf0",
+          "finite": true,
+          "nonzero_elements": 0,
+          "maximum_absolute": 0.0
+        }
+      }
+    },
+    "_fsdp_wrapped_module.action_out_proj._fsdp_wrapped_module.bias": {
+      "parameter_shape": [
+        0
+      ],
+      "parameter_numel": 0,
+      "parameter_dtype": "torch.float32",
+      "requires_grad": true,
+      "registered_model_parameter": true,
+      "local_nonempty_parameter": false,
+      "state_present": false,
+      "state": {}
+    }
+  }
+}

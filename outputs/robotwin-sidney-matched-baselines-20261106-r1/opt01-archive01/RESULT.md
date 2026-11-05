@@ -1,0 +1,3 @@
+# Duplicate optimizer diagnostic checkpoint archived
+
+All five native opt01 zero-update DCP files were copied byte-for-byte to BOS, fully read back and SHA256-verified, then fully staged and SHA256-checked again. Only the four reader-free duplicate `.distcp` bulk shards were released (9.29080 GiB). Native `.metadata`, every original optimizer descriptor, signature, pilot/RNG sidecar and restore pointer remains hot. The original SFT cache, qual02 fixture, all main/grad02/qual03 checkpoints and active inputs were untouched. See STATUS.json for every path, byte count, SHA and restoration receipt. This CPU file operation used no GPU or model computation; its8 GiB staging allowance replaced the already closed train07 archive allowance and is now zero.

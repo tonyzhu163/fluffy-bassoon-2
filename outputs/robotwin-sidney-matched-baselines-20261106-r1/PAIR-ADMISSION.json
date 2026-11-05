@@ -1,0 +1,150 @@
+{
+  "status": "admitted",
+  "phase_admitted": "bounded_one_task_two_iteration_matched_PPO_GRPO_pair",
+  "scientific_pair_admitted": true,
+  "recorded_at_shanghai": "2026-11-06T05:17:55.659184+08:00",
+  "human_cumulative_gpu_hours": 50,
+  "additional_engineering_gpu_hours": 46,
+  "previous_additional_engineering_gpu_hours": 23,
+  "legacy_gpu_seconds": 2561,
+  "completed_additional_conservative_gpu_seconds": 68905,
+  "gpu_reservations_seconds": {
+    "ppo": 41040,
+    "grpo": 41040
+  },
+  "migration_reason": "Fullqual03 actual grouped source reset/update/12worker boundary restoration passed; both originalSFT arms retain global2048/micro64/accum8/fiveepochs. Explicit authored23to46 envelope, human50 cap unchanged. Fresh step0 needs135GiB per arm and556GiB forward floor; both closed archives complete, zero staging growth.",
+  "engineering_pilot": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train07",
+  "qualification_output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual03",
+  "initializer_sha256": {
+    "model.safetensors": "c71114641cf0819900f8b1d7b0568158a12e631b2ca08b2b19bc2d5b761b69b3",
+    "sidney-processors.json": "38ffadf70cf85cff5f8a0a4a6bf23e4886b33081b93f8bb2b20469b6cd571f5b"
+  },
+  "other_owners_and_floor_gib": 286,
+  "storage_reservations": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train07",
+      "maximum_gib": 125,
+      "closed": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual02",
+      "maximum_gib": 40,
+      "closed": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grad01",
+      "maximum_gib": 16,
+      "closed": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual03",
+      "maximum_gib": 40,
+      "closed": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/opt01",
+      "maximum_gib": 16,
+      "closed": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grad02",
+      "maximum_gib": 16,
+      "closed": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo01",
+      "maximum_gib": 135,
+      "closed": false
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01",
+      "maximum_gib": 135,
+      "closed": false
+    }
+  ],
+  "actual_device_gates_required": true,
+  "maximum_qualification_actions": 120000,
+  "worker_seconds": 10200,
+  "requested_wall_minutes": 170,
+  "gpus": 4,
+  "cpus": 64,
+  "memory_gib": 1024,
+  "shared_memory_gib": 64,
+  "automatic_retry": false,
+  "source_commit": "bound separately in launch receipt; latest reviewed main",
+  "old_checkpoint_and_action_journals_unchanged": true,
+  "closed_qualification_attempts": [
+    {
+      "attempt": "qual01",
+      "job_id": "job-6koe87i8ibvf",
+      "scheduler_gpu_seconds": 360,
+      "creation_to_release_gpu_seconds": 424,
+      "worker_gpu_seconds": 184,
+      "physical_controls": 0,
+      "optimizer_updates": 0
+    },
+    {
+      "attempt": "qual02",
+      "job_id": "job-l218ew6o4lfw",
+      "scheduler_gpu_seconds": 4120,
+      "creation_to_release_gpu_seconds": 4200,
+      "worker_gpu_seconds": 4004,
+      "optimizer_updates": 0
+    },
+    {
+      "attempt": "grad01",
+      "job_id": "job-01rwmdh7muey",
+      "scheduler_gpu_seconds": 836,
+      "creation_to_release_gpu_seconds": 888,
+      "worker_gpu_seconds": 672,
+      "new_simulator_controls": 0,
+      "optimizer_updates": 0
+    },
+    {
+      "attempt": "opt01",
+      "job_id": "job-6npadxhz5bln",
+      "scheduler_gpu_seconds": 924,
+      "creation_to_release_gpu_seconds": 1000,
+      "worker_gpu_seconds": 868,
+      "new_simulator_controls": 0,
+      "optimizer_updates": 0
+    },
+    {
+      "attempt": "grad02",
+      "job_id": "job-xauoc0y9dwvf",
+      "scheduler_gpu_seconds": 1004,
+      "creation_to_release_gpu_seconds": 1072,
+      "worker_gpu_seconds": 904,
+      "new_simulator_controls": 0,
+      "optimizer_updates": 1
+    },
+    {
+      "attempt": "qual03",
+      "job_id": "job-33jue5tb0a7o",
+      "scheduler_gpu_seconds": 5160,
+      "creation_to_release_gpu_seconds": 5200,
+      "worker_gpu_seconds": 5096,
+      "optimizer_updates": 1
+    }
+  ],
+  "probe_has_no_environment_workers": true,
+  "full_grouped_qualifier_still_required": true,
+  "prospective_science_pair_gpu_seconds": 82080,
+  "prospective_science_pair_cumulative_worst_gpu_seconds": 153546,
+  "prospective_science_pair_migration_active": true,
+  "current_pilot_maximum_reservation_closed": true,
+  "maximum_engineering_optimizer_updates": 1,
+  "optimizer_semantic_qualified": false,
+  "optimizer_zero_update_representation_explained": true,
+  "optimizer_metadata_diagnostic_output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/opt01",
+  "gradient_output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grad02",
+  "trained_actor_optimizer_restore_qualified": true,
+  "full_twelve_worker_runtime_qualified": true,
+  "archive_staging_included_gib": 0,
+  "completed_cumulative_actual_gpu_seconds": 70883,
+  "maximum_optimizer_updates_per_arm": 40,
+  "maximum_actions_per_arm": 1000000,
+  "scientific_source_corpus_admitted": false,
+  "six_task_campaign_admitted": false,
+  "final_actor_step40_independent_restore_required": true
+}
