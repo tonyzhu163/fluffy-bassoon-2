@@ -44,9 +44,10 @@ passed with BOS access disabled. The cache is an active dependency.
 The Counter-to-Cabinet TEST512 stopped at its 200 GiB free-space guard with
 376 complete paired cases and one unmatched panel. Preserve both; exclude the
 unmatched panel from the primary count. The meta owner retains its original
-220 GiB launch/readout admission floor and holds all eight resumes. RoboTwin's
-two-iteration output estimate is approximately 125-170 GB, pending its owner's
-validation of whether duplicate rollout sidecars can be omitted safely.
+220 GiB launch/readout admission floor. For RoboTwin's original-format
+two-iteration pilot, reserve 125 GiB (134,217,728,000 bytes), including transient
+peaks. Canonical image references avoid duplicate sidecar images while
+preserving complete chronological data and recovery.
 
 Before resuming large writers, reconcile all three owners' incremental output
 reservations against fresh shared capacity, including the strictest active
@@ -66,6 +67,17 @@ Schedule phases if all writers cannot fit concurrently: complete the pending
 Counter/Faucet tests and resume fit-only jobs when admitted; keep RoboTwin's
 large pilot held until its measured peak output and combined free space pass.
 Assess retention of newly closed artifacts only after their dependencies end.
+
+The bounded RoboTwin archive qualification temporarily reserves another 8 GiB
+of shared scratch, making the tests-plus-fits threshold 254 GiB until cleanup.
+Its separate 16 GiB node-local scratch does not consume that PFS reservation.
+The initial zero-GPU console form created no job; the CPU serialization checks
+use one charged GPU allocation with a 25-minute ceiling.
+
+After qualification cleanup, simultaneous tests, fit-only growth and the
+125 GiB RoboTwin pilot require at least 371 GiB actual fresh free. Compression
+can remain off if that original-format admission passes; an exact prefix
+round trip alone does not bound a complete production archive's size.
 
 Live status belongs in the monitor's own row in `outputs/coordination.md`.
 Scientific results remain in their owners' evidence folders and FINDINGS.
