@@ -1,0 +1,11 @@
+# Actual native GRPO update and independent actor recovery
+
+Baige Pro6K job `job-xauoc0y9dwvf` completed at 04:44:50 Shanghai, Nov 6, source `0608b0bd3b7cf0481c1b6f941f44b52fa5de7e45`. Four GPUs, 256 GiB host RAM, no environment workers or new simulator controls. The four freshly initialized original Sidney actors exactly matched every legacy model/Adam/scheduler/scaler/RNG initializer signature from qual02 before replaying its immutable canonical batch. Four first old-logprob replays had max absolute error 0.
+
+One real native critic-free GRPO optimizer update completed on every rank in 34.15–34.53 s including read-only audits. All 32 actual frozen-gradient audits passed: intermediate views were finite zero/empty, frozen parameters were excluded from Adam, and all frozen gradients were None at the final synchronized boundary. The frozen VLM hash remained unchanged after the update on all ranks. Actual policy weights changed; all 313 locally owned Adam state entries advanced to step 1, with nonzero first moments in 310 entries.
+
+A separate process restored the native checkpoint and actor sidecars. All four actor signatures matched exactly for policy weights, named owned Adam tensor bytes/dtypes/shapes, all optimizer group settings/order, scheduler, scaler and RNG. The raw digest still differs because native FSDP omits validated zero-length unowned state; both raw hashes and full named save/load layouts are retained. No tolerance or optimizer-state mutation is used.
+
+This qualifies the actual actor gradient and trained-state recovery path. The full simulator/group reset, deduplicated raw-observation reference, twelve-worker recovery and next case ordinal remain required in qual03. This is engineering evidence, not a scientific comparison or admitted student corpus.
+
+Scheduler charge 1,004 GPU-seconds; conservative creation-to-release 1,072; worker 904. Cumulative closed actual 65,723 GPU-seconds (18.25639 GPU-hours). Conservative full qualifier plus future bounded PPO/GRPO pair worst case 159,146 GPU-seconds (44.20722 hours), below the human 50-hour cap. Full raw gradient descriptors remain at their pinned paths with every SHA recorded in GRADIENT-AUDIT-SUMMARY.json.

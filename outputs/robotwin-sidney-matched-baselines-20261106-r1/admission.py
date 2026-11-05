@@ -28,6 +28,25 @@ if phase=='gradient_probe':
         assert row['groups_order_hyperparameters_exact'] and row['owned_parameter_states_exact_ignoring_only_device']
         for ref in row['files']:
             assert hashlib.sha256((diagnostic/ref['path']).read_bytes()).hexdigest()==ref['sha256']
+if phase=='qualification':
+    probe=Path(plan['gradient_output'])
+    assert json.loads((probe/'EXIT.json').read_text())['exit_code']==0
+    for suffix in ('train','restore'):
+        assert json.loads((probe/suffix/'RESULT.json').read_text())['status']=='complete'
+    for rank in range(4):
+        initial=json.loads((probe/'train/fixture-initializer'/f'actor-{rank:02d}.json').read_text())
+        assert initial['exact_identity']
+        trained=json.loads((probe/'train'/f'probe-rank-{rank:02d}.json').read_text())
+        assert trained['status']=='complete' and trained['optimizer_steps']==1
+        restored=json.loads((probe/'restore/recovery-signatures'/f'actor-{rank:02d}.json').read_text())
+        assert restored['semantic_identity'] and restored['actual']['optimizer_steps']==1
+        assert restored['actual']['trainable_parameters_sha256']!=initial['expected']['trainable_parameters_sha256']
+        assert json.loads((probe/'train/actor-invariants'/f'rank-{rank:02d}-step-0-after.json').read_text())['unchanged']
+        assert json.loads((probe/'restore/recovery-frozen'/f'actor-{rank:02d}.json').read_text())['unchanged']
+        for micro in range(8):
+            audit=json.loads((probe/'train/gradient-audit'/f'rank-{rank:02d}-micro-{micro:02d}.json').read_text())
+            assert audit['all_finite'] and audit['frozen_nonzero_elements']==audit['frozen_optimizer_members']==0
+            if micro==7:assert audit['synchronized_boundary'] and audit['frozen_non_none_views']==0
 
 pilot=Path(plan['engineering_pilot'])
 boundary=pilot/'sidney-native-two/checkpoints/global_step_1'
