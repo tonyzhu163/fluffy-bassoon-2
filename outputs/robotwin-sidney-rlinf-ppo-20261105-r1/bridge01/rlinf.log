@@ -1,0 +1,12 @@
+INFO:RLinf:openpi[eval]: loaded Pi0Config(dtype='bfloat16', paligemma_variant='gemma_2b', action_expert_variant='gemma_300m', pointnet_variant='pcd', action_dim=32, action_horizon=50, max_token_len=200, pi05=True, discrete_state_input=True, pcd=False) (3.35B params) from /mowenjie/fluffy-bassoon-2/cache/robotwin-sidney-rlinf-20261105-r1/model.safetensors precision=None num_steps=10 action_horizon=50 action_chunk=50
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-r1/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/qualify_rlinf.py", line 150, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-r1/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/qualify_rlinf.py", line 70, in main
+    mixed=replay(args.reference,'native mixed BF16/full FP32 vision')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-r1/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/qualify_rlinf.py", line 57, in replay
+    assert state_error<=1e-6 and pixel_error<=1e-6,(state_error,pixel_error)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (0.0, 1.0728836059570312e-06)

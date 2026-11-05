@@ -31,11 +31,13 @@ def deterministic_reference():
 class SidneyInputs:
     def __init__(self, metadata):
         import numpy as np
+        import torch
         from transformers import AutoTokenizer
         self.mean = np.asarray(metadata['state_mean'], dtype=np.float32)
         self.std = np.asarray(metadata['state_std'], dtype=np.float32)
         self.tokenizer = AutoTokenizer.from_pretrained(TOKENIZER, local_files_only=True)
         self.tokenizer.padding_side = 'right'
+        self.resize_device=torch.device('cuda',torch.cuda.current_device())
 
     def __call__(self, sample):
         import numpy as np
@@ -61,7 +63,7 @@ class SidneyInputs:
                 raise ValueError('Sidney requires uint8 HWC RGB before preprocessing')
             # Match native LeRobot: float[0,1], bilinear resize, zero padding,
             # then map to[-1,1]. Do not round back to uint8 after resize.
-            image = torch.from_numpy(camera.copy()).permute(2,0,1)[None].float()/255
+            image = (torch.from_numpy(camera.copy()).permute(2,0,1)[None].float()/255).to(self.resize_device)
             height, width = camera.shape[:2]
             ratio = max(width/224, height/224)
             resized_h, resized_w = int(height/ratio), int(width/ratio)
@@ -70,7 +72,7 @@ class SidneyInputs:
             top = (224-resized_h)//2
             left = (224-resized_w)//2
             image = F.pad(image,(left,224-resized_w-left,top,224-resized_h-top),value=0.)
-            images[key] = (image[0].permute(1,2,0)*2-1).numpy()
+            images[key] = (image[0].permute(1,2,0)*2-1).cpu().numpy()
         return dict(image=images,image_mask={key:np.asarray(True) for key in keys},
                     state=state,tokenized_prompt=encoded['input_ids'][0],
                     tokenized_prompt_mask=encoded['attention_mask'][0].astype(bool))

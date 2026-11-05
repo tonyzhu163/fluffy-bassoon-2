@@ -3,13 +3,15 @@ set -Eeuo pipefail
 TASK_SOURCE=${1:?reviewed exact source}
 TASK_OUT=${2:?fresh attempt output}
 TASK_CACHE=${3:?fresh converted model directory}
+TASK_PRIOR=${4:-}
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_RUN_CODE=$TASK_CODE/outputs/robotwin-sidney-rlinf-ppo-20261105-r1
 TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python
 [[ $(uname -s) == Linux && $(hostname) == job-* ]]
 [[ $(git -C "$TASK_CODE" rev-parse HEAD) == "$TASK_SOURCE" ]]
 [[ -z $(git -C "$TASK_CODE" status --porcelain --untracked-files=no) ]]
-[[ ! -e $TASK_OUT && ! -e $TASK_CACHE ]]
+[[ ! -e $TASK_OUT ]]
+if [[ -z $TASK_PRIOR ]]; then [[ ! -e $TASK_CACHE ]]; fi
 mkdir -p "$TASK_OUT"
 export TASK_SOURCE
 export REPO_PATH=/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf
@@ -43,14 +45,34 @@ if [[ ! -e /root/.sapien/physx/105.1-physx-5.3.1.patch0 ]]; then
   ln -s /mowenjie/fluffy-bassoon/inputs/maniskill-scene-assets-20261028-r1/physx/105.1-physx-5.3.1.patch0 /root/.sapien/physx/105.1-physx-5.3.1.patch0
 fi
 cd "$TASK_CODE"
-"$TASK_PYTHON" -m pytest -q tests/test_robotwin_noise.py \
-  --junitxml="$TASK_OUT/core-tests.xml" > "$TASK_OUT/core-tests.log" 2>&1
-"$TASK_PYTHON" "$TASK_RUN_CODE/convert.py" \
-  --source /mowenjie/fluffy-bassoon-2/cache/robotwin-sidney-qualification-20261105-r1 \
-  --output "$TASK_CACHE" --receipt "$TASK_OUT/CONVERSION.json" > "$TASK_OUT/conversion.log" 2>&1
-"$TASK_PYTHON" "$TASK_RUN_CODE/scene_vectors.py" --output "$TASK_OUT/vectors" > "$TASK_OUT/scenes.log" 2>&1
-"$TASK_PYTHON" "$TASK_RUN_CODE/native_replay.py" --vectors "$TASK_OUT/vectors" \
-  --output "$TASK_OUT/native-reference" > "$TASK_OUT/native-replay.log" 2>&1
+if [[ -z $TASK_PRIOR ]]; then
+  "$TASK_PYTHON" -m pytest -q tests/test_robotwin_noise.py \
+    --junitxml="$TASK_OUT/core-tests.xml" > "$TASK_OUT/core-tests.log" 2>&1
+  "$TASK_PYTHON" "$TASK_RUN_CODE/convert.py" \
+    --source /mowenjie/fluffy-bassoon-2/cache/robotwin-sidney-qualification-20261105-r1 \
+    --output "$TASK_CACHE" --receipt "$TASK_OUT/CONVERSION.json" > "$TASK_OUT/conversion.log" 2>&1
+  "$TASK_PYTHON" "$TASK_RUN_CODE/scene_vectors.py" --output "$TASK_OUT/vectors" > "$TASK_OUT/scenes.log" 2>&1
+  "$TASK_PYTHON" "$TASK_RUN_CODE/native_replay.py" --vectors "$TASK_OUT/vectors" \
+    --output "$TASK_OUT/native-reference" > "$TASK_OUT/native-replay.log" 2>&1
+  TASK_INPUTS=$TASK_OUT
+else
+  "$TASK_PYTHON" - "$TASK_PRIOR" "$TASK_CACHE" "$TASK_OUT" <<'PY'
+import hashlib,json,sys
+from pathlib import Path
+prior,cache,out=map(Path,sys.argv[1:])
+assert json.loads((prior/'EXIT.json').read_text())['exit_code']==1
+receipt=json.loads((prior/'CONVERSION.json').read_text())
+assert str(cache)==receipt['output']
+for filename,key in [('model.safetensors','model_sha256'),('sidney-processors.json','processors_sha256')]:
+    digest=hashlib.sha256()
+    with (cache/filename).open('rb') as f:
+        for block in iter(lambda:f.read(8*1024**2),b''):digest.update(block)
+    assert digest.hexdigest()==receipt[key]
+assert len(list((prior/'native-reference').glob('*-actions.npz')))==3
+(out/'REUSED-INPUTS.json').write_text(json.dumps(dict(prior=str(prior),conversion=receipt),indent=2)+'\n')
+PY
+  TASK_INPUTS=$TASK_PRIOR
+fi
 timeout --signal=TERM --kill-after=15s 900 "$TASK_PYTHON" "$TASK_RUN_CODE/qualify_rlinf.py" \
-  --vectors "$TASK_OUT/vectors" --reference "$TASK_OUT/native-reference" \
+  --vectors "$TASK_INPUTS/vectors" --reference "$TASK_INPUTS/native-reference" \
   --model "$TASK_CACHE" --output "$TASK_OUT/rlinf" > "$TASK_OUT/rlinf.log" 2>&1
