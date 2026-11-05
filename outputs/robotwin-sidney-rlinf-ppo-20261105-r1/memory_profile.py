@@ -139,7 +139,7 @@ try:
         if scenes==64 and round_index==1:
             paired={key:obs[key].clone() for key in ('main_images','wrist_images','states')}
         if scenes==64 and round_index==2:
-            changes={key:float((obs[key].float()-paired[key].float()).abs().max()) for key in paired}
+            changes={key:float((obs[key].float()-paired[key].float()).abs().max()) for key in ('main_images','wrist_images','states')}
             assert changes['states']<=1e-6,'Per-scene trim changed matched reset joint state'
             report['paired_reset_max_abs']=changes
             report['paired_reset_rgb_bit_identity']=all(changes[key]==0 for key in ('main_images','wrist_images'))
