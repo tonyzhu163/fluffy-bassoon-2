@@ -20,7 +20,10 @@ rewards, frozen VLM, trainable action expert, detached VLM-feature critic,
 global minibatch256, microbatch16, two actor ranks and eight rollout/env ranks.
 Actor/value rates stay5e-6/1e-4; no KL penalty/stopping or optimizer warmup.
 Each actor takes960optimizer steps. Keep every chronological source chunk,
-policy version and full resumable boundaries. No extension to130updates is
+policy version and full resumable boundaries. The approved prelaunch storage
+optimization retains complete distributed recovery at every boundary and writes
+the additional standalone inference export only at final40; see
+SOURCE5-CHECKPOINT-STORAGE.md. No extension to130updates is
 included in this proposal.
 
 DEV64 at0/10/20/30/40 shows the trajectory. Primary source confirmation uses

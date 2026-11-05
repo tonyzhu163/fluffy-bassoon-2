@@ -1,0 +1,119 @@
+{
+  "passed": true,
+  "CPU_only": true,
+  "GPU_hours": 0,
+  "models_loaded": 0,
+  "code_commit": "6308a9f83cc307c9f94d57c8ab86323cb9f1f86a",
+  "checked_shanghai": "2026-11-05T11:09:48.754726+08:00",
+  "core_tests": "24passed; including exact next sample/Adam recovery",
+  "tasks": {
+    "PickPlaceCounterToCabinet": {
+      "contract": {
+        "task": "PickPlaceCounterToCabinet",
+        "horizon": 600,
+        "chunk": 50,
+        "chunks_per_episode": 12,
+        "adv_type": "gae",
+        "loss_type": "actor_critic",
+        "group_size": 1,
+        "add_value_head": true,
+        "value_after_vlm": true,
+        "ignore_last": true,
+        "predicted_action_horizon": 50,
+        "denoising_steps": 10,
+        "likelihood_coordinates": 600,
+        "noise_level": 0.3,
+        "update_epochs": 4,
+        "train_envs": 128,
+        "rounds": 1,
+        "episodes_per_iteration": 128,
+        "scenes_per_iteration": 128,
+        "iterations": 40,
+        "eval_cases": 64,
+        "eval_interval": 10,
+        "eval_panels": 5,
+        "optimizer_steps_per_update": 24,
+        "total_optimizer_steps": 960,
+        "critic_only_optimizer_steps": 0,
+        "actor_optimizer_steps": 960,
+        "global_minibatch_chunks": 256,
+        "TRAIN_policy_controls": 3072000,
+        "gamma_per_decision": 0.99,
+        "gae_lambda_per_decision": 0.95,
+        "train_seed": 2200000,
+        "eval_seed": 620100,
+        "checkpoint_interval": 10,
+        "nominal_policy_controls": 3264000,
+        "reset_reserve_controls": 696320,
+        "maximum_actions": 4100000,
+        "physics_tick_limit": 93184
+      },
+      "all_scientific_contract_values_equal_prior_qualified_recipe": true,
+      "standalone_export_steps": [
+        40
+      ],
+      "config_sha256": "aa1b7b1d493125fdbaa8c7e386000836bc1904663e71680c22fe7f43cac45440"
+    },
+    "TurnOnSinkFaucet": {
+      "contract": {
+        "task": "TurnOnSinkFaucet",
+        "horizon": 600,
+        "chunk": 50,
+        "chunks_per_episode": 12,
+        "adv_type": "gae",
+        "loss_type": "actor_critic",
+        "group_size": 1,
+        "add_value_head": true,
+        "value_after_vlm": true,
+        "ignore_last": true,
+        "predicted_action_horizon": 50,
+        "denoising_steps": 10,
+        "likelihood_coordinates": 600,
+        "noise_level": 0.3,
+        "update_epochs": 4,
+        "train_envs": 128,
+        "rounds": 1,
+        "episodes_per_iteration": 128,
+        "scenes_per_iteration": 128,
+        "iterations": 40,
+        "eval_cases": 64,
+        "eval_interval": 10,
+        "eval_panels": 5,
+        "optimizer_steps_per_update": 24,
+        "total_optimizer_steps": 960,
+        "critic_only_optimizer_steps": 0,
+        "actor_optimizer_steps": 960,
+        "global_minibatch_chunks": 256,
+        "TRAIN_policy_controls": 3072000,
+        "gamma_per_decision": 0.99,
+        "gae_lambda_per_decision": 0.95,
+        "train_seed": 2800000,
+        "eval_seed": 680100,
+        "checkpoint_interval": 10,
+        "nominal_policy_controls": 3264000,
+        "reset_reserve_controls": 696320,
+        "maximum_actions": 4100000,
+        "physics_tick_limit": 93184
+      },
+      "all_scientific_contract_values_equal_prior_qualified_recipe": true,
+      "standalone_export_steps": [
+        40
+      ],
+      "config_sha256": "3dd32bf02fd258a4136c1da1ef0ba83261f97492c273cdc5579f12a2fab660b9"
+    }
+  },
+  "actor_save_override_checked": [
+    {
+      "step": 1,
+      "full_model_weights": false
+    },
+    {
+      "step": 40,
+      "full_model_weights": true
+    }
+  ],
+  "source_storage_reservation_GiB": 150,
+  "shared_storage_floor_GiB": 200,
+  "storage_free_GiB": 361.03515625,
+  "write_fsync_probe": true
+}
