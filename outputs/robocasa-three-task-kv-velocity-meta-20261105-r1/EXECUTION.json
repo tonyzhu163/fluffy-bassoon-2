@@ -255,28 +255,34 @@
   "full_PFS_members_verified": 37440,
   "source_member_bytes": 136438194610,
   "watcher": {
-    "pid": 2719502,
+    "pid": 2878654,
     "command": [
       "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
       "-B",
-      "/mowenjie/fluffy-bassoon-2/sources/steering-packed-87984718/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/WATCH.py",
+      "/mowenjie/fluffy-bassoon-2/sources/steering-storage-64b27a97/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/WATCH.py",
       "--auditor",
       "/mowenjie/fluffy-bassoon-2/sources/steering-packed-87984718/outputs/robocasa-eight-hour-babysit-20261104-r1/AUDIT-ROLLOUT.py",
       "--job-id",
-      "job-8nwofgy7ymu8"
+      "job-hi7e0c0yu7jv"
     ],
-    "source_commit": "87984718c9199797d31a158c47225cc695623afe",
-    "started_unix": 1793894720.9435523,
+    "source_commit": "64b27a972526ab93736be5669ffba3c04eb30812",
+    "scientific_auditor_commit": "87984718c9199797d31a158c47225cc695623afe",
+    "started_unix": 1793919533.188488,
     "cadence_seconds": 1200,
     "hot_heartbeat_seconds": 30,
     "packed_archive_enabled": true,
     "archive_workers": 4,
     "hot_reservation_GiB": 40,
     "new_wave_soft_limit_GiB": 12,
-    "previous_owned_watcher": 2712066
+    "storage_accounting_policy": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/STORAGE-ACCOUNTING12.json",
+    "storage_accounting_sha256": "c835ca721912d3fbcd79c5aa83bb01e032add7b0de0e0a690c544a78b5d89179",
+    "previous_owned_watcher": 2719502,
+    "migration_at_empty_archive_queue": true,
+    "no_old_pack_subprocesses": true,
+    "active_scientific_jobs_unchanged": true
   },
   "next_monitor_check_shanghai": "2026-11-06T03:30:28+08:00",
-  "next_check_shanghai": "2026-11-06T03:30:28+08:00",
+  "next_check_shanghai": "2026-11-06T07:20:00+08:00",
   "budget": {
     "approved_GPU_hours": 150,
     "charged_GPU_hours": 127.68887778833336,
@@ -306,7 +312,7 @@
   },
   "closed_fit_recovery_index": "finalized-fits-20261106-r1/INDEX.json",
   "seven_closed_fits_complete_state_SHA_and_finite_RNG_checks": true,
-  "next_action": "Continue original full AD KV/velocity arms; coordinating owner performs20minute progression, budget, heartbeat, audit and storage checks. Other6keys remainblocked.",
+  "next_action": "Direct owner monitors2ADarms through3000episodes each, full archive queue and exactterminalrelease/cost. ExistingGPU879jobs untouched; natural411boundaryexit triggers fresh5h-or-less operationalresume64 only after exactrelease/budgetcheck. Sourcecache127GiB remains hot.",
   "all_eight_closed_fits_complete_state_SHA_and_finite_RNG_checks": true,
   "closed_fit_recovery_receipt": "migrations/pfs-members-01/ALL-EIGHT-FITS-RECOVERY08.json",
   "all_allocations_release_receipt": "migrations/pfs-members-01/ALL-EIGHT-FITS-RELEASE08.json",
@@ -426,5 +432,9 @@
   "first_production_wave_verified_episodes": 96,
   "first_production_wave_verified_physical_controls": 57600,
   "first_production_wave_verified_videos": 288,
-  "continuing_monitor_owner_chat": "01a1ab47-e0cb-7890-bbf8-088a1be17240"
+  "continuing_monitor_owner_chat": "01a1a62c-f32b-7ce0-a78f-ed43f8254bb1",
+  "future_operational_resume_commit": "64b27a972526ab93736be5669ffba3c04eb30812",
+  "scientific_code_commit": "87984718c9199797d31a158c47225cc695623afe",
+  "storage_accounting_policy": "STORAGE-ACCOUNTING12.json",
+  "storage_migration_preflight": "migrations/pfs-members-01/STORAGE-MIGRATION-PREFLIGHT12.json"
 }
