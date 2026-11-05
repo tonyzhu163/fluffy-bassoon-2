@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 : "${STEERING_CODE:?}" "${STEERING_COMMIT:?}" "${STEERING_ATTEMPT:?}" "${STEERING_QUALIFICATION:?}" "${STEERING_INTERFACE:?}" "${STEERING_OBJECTIVE:?}"
+export STEERING_HOURS=${STEERING_HOURS:-9}
 ROOT=/mowenjie/fluffy-bassoon-2
 RUN=outputs/robocasa-three-task-kv-velocity-meta-20261105-r1
 PY=$ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
@@ -24,12 +25,17 @@ for row in d['allocations']:
     actual=row['GPUs']*((datetime.datetime.fromisoformat(row['released_shanghai']) if row.get('released_shanghai') else now)-datetime.datetime.fromisoformat(row['created_shanghai'])).total_seconds()/3600
     reserved+=actual if row.get('released_shanghai') else max(actual,row['max_reservation_GPU_hours'])
     own|=row['job_id']==os.environ['HOSTNAME'].removesuffix('-master-0')
-assert reserved+(0 if own else 9)<=150
+hours=int(os.environ['STEERING_HOURS']);assert 1<=hours<=9
+assert reserved+(0 if own else hours)<=150
 v=os.statvfs(r);assert v.f_bavail*v.f_frsize>220*2**30
 q=json.loads(Path(os.environ['STEERING_QUALIFICATION']).read_text());assert q['passed']
-print(json.dumps(dict(approved_GPU_hours=150,maximum_new_reservation_GPU_hours=9,committed_GPU_hours=reserved,free_PFS_GiB=v.f_bavail*v.f_frsize/2**30)))
+print(json.dumps(dict(approved_GPU_hours=150,maximum_new_reservation_GPU_hours=hours,committed_GPU_hours=reserved,free_PFS_GiB=v.f_bavail*v.f_frsize/2**30)))
 PY
 PROBE=$ROOT/$RUN/probes/$STEERING_ATTEMPT.json
 "$PY" -B "$STEERING_CODE/scripts/[train]gpu_probe.py" --expected-count 1 --purpose training --baige-container --baige-exclusive-training --output "$PROBE"
-DEADLINE=$(( $(date +%s) + 30600 ))
-timeout --signal=TERM --kill-after=120s 31500 "$PY" -B "$STEERING_CODE/$RUN/MATRIX.py" --single --code "$STEERING_CODE" --commit "$STEERING_COMMIT" --attempt "$STEERING_ATTEMPT" --probe "$PROBE" --qualification "$STEERING_QUALIFICATION" --execution-batch "${STEERING_EXECUTION_BATCH:-8}" --interface "$STEERING_INTERFACE" --objective "$STEERING_OBJECTIVE" --deadline "$DEADLINE"
+EXTRA=()
+if [[ -n ${STEERING_RESUME_CONTRACT_COMMIT:-} ]]; then
+    EXTRA+=(--resume-contract-commit "$STEERING_RESUME_CONTRACT_COMMIT")
+fi
+DEADLINE=$(( $(date +%s) + STEERING_HOURS * 3600 - 1800 ))
+timeout --signal=TERM --kill-after=120s "$(( STEERING_HOURS * 3600 - 900 ))" "$PY" -B "$STEERING_CODE/$RUN/MATRIX.py" --single --code "$STEERING_CODE" --commit "$STEERING_COMMIT" --attempt "$STEERING_ATTEMPT" --probe "$PROBE" --qualification "$STEERING_QUALIFICATION" --execution-batch "${STEERING_EXECUTION_BATCH:-8}" --interface "$STEERING_INTERFACE" --objective "$STEERING_OBJECTIVE" --deadline "$DEADLINE" "${EXTRA[@]}"

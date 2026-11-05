@@ -25,6 +25,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--code', type=Path, required=True)
     p.add_argument('--commit', required=True)
+    p.add_argument('--resume-contract-commit', help='Explicit implementation migration preserving an existing learner contract')
     p.add_argument('--probe', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--interface', choices=('kv_bridge', 'velocity_bridge'), required=True)
@@ -125,7 +126,7 @@ def main():
     sampler = np.random.default_rng(0)
     generator = torch.Generator(device='cuda:0').manual_seed(771105)
     frozen = tensor_hash(_versions(native.model))
-    contract = dict(source_commit=args.commit, interface=args.interface, objective=args.objective,
+    contract = dict(source_commit=args.resume_contract_commit or args.commit, interface=args.interface, objective=args.objective,
         config=asdict(config), assembly_sha256=ASSEMBLY_SHA,
         train_sha256=assembly['datasets'][args.objective + '_train']['sha256'],
         validation_sha256=assembly['datasets'][args.objective + '_validation']['sha256'],
@@ -140,11 +141,19 @@ def main():
                       patience=10, relative_delta=.001, checkpoint_selection='validation_flow_loss'))
     contract = json.loads(json.dumps(contract))
     progress = dict(update=0, best_loss=None, plateau={}, converged=False, elapsed_seconds=0.)
+    if args.resume_contract_commit and not (args.output / 'latest.pt').exists():
+        raise ValueError('Implementation migration requires an existing full learner checkpoint')
     if (args.output / 'latest.pt').exists():
         progress = restore_resume(args.output / 'latest.pt', contract=contract, policy=policy,
             optimizer=optimizer, sampler=sampler, generator=generator)
         if progress['converged']:
             raise ValueError('Do not resume an already converged actor')
+        if args.resume_contract_commit:
+            _json(args.output / 'implementations' / args.commit / f'{socket.gethostname()}-{os.getpid()}.json',
+                dict(implementation_commit=args.commit, preserved_contract_commit=args.resume_contract_commit,
+                     resumed_update=progress['update'], checkpoint_sha256=file_sha256(args.output / 'latest.pt'),
+                     all_contract_fields_and_policy_optimizer_sampler_RNG_restored=True,
+                     migration='Verified storage-read retries and nonfatal read-only close; learner unchanged'))
     else:
         args.output.mkdir(parents=True, exist_ok=True)
         _json(args.output / 'contract.json', contract)

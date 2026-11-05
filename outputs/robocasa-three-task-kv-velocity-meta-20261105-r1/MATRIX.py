@@ -51,12 +51,17 @@ def single(args):
         with log_path.open('x') as log:
             command = base + [str(scripts / 'TRAIN.py')] + common + [
                 '--output', str(fit), '--execution-batch', str(args.execution_batch), '--max-seconds', str(seconds)]
+            if args.resume_contract_commit:
+                command += ['--resume-contract-commit', args.resume_contract_commit]
             process = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT)
             while process.poll() is None:
                 if stopped:
                     process.terminate()
                 time.sleep(2)
             if process.returncode:
+                write(state / 'RESULT.json', dict(completed=False, status='failed',
+                    attempt=args.attempt, source_commit=args.commit, log_path=str(log_path),
+                    training_status=read(fit / 'training-status.json'), checked_unix=time.time()))
                 raise RuntimeError(f'Fit failed; inspect {log_path}')
         cycle += 1
         write(state / 'PROGRESS.json', dict(stage='fitting', status=read(fit / 'training-status.json'),
@@ -98,6 +103,7 @@ def main():
     for name in ('code', 'probe'):
         p.add_argument('--'+name, type=Path, required=True)
     p.add_argument('--commit', required=True)
+    p.add_argument('--resume-contract-commit')
     p.add_argument('--attempt', required=True)
     p.add_argument('--qualification', type=Path, required=True)
     p.add_argument('--execution-batch', type=int, default=8)
