@@ -42,3 +42,15 @@ Hydra inheritance. The retry uses the same recipe as a standalone primary
 configuration. Completed scheduler charge through train01:3761GPU-seconds
 including the earlier qualification;920 bridge plus280 failed-PPO seconds
 are part of the current additional envelope. No SGD has run at submission.
+
+Measured migration after the first live source chunks:256-scene reset costs
+about7 minutes and a50-control vector chunk about40 seconds on four GPUs.
+The50-minute allocation cannot reliably complete two full iterations. Preserve
+the complete step0 native actor/Adam/sampler/RNG boundary, stop only this owned
+job, and resume it in a fresh output with a3-hour maximum allocation. Keep
+the same four ranks, batch, source seeds, sampler and learner. Charge the old
+partial prefix in the same action journal under its original attempt; it is
+not an extra PPO update or admitted complete source history. Increase the
+self-imposed bridge+pilot envelope from4 to14 additional GPUh, including all
+attempts; this is within AGENTS.md authorization up to50GPUh for the task.
+No user hard cap changes. Preserve all checkpoint/cache inputs.
