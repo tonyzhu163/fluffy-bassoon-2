@@ -1,0 +1,19 @@
+{
+  "world_size": 4,
+  "global_batch_size": 2048,
+  "micro_batch_size": 32,
+  "accumulation_steps": 16,
+  "source_iterations": 2,
+  "nominal_train_actions": 819200,
+  "nominal_before_after_actions": 0,
+  "nominal_all_in_actions": 819200,
+  "maximum_actions": 1000000,
+  "maximum_aggregate_gpu_seconds": 21600,
+  "source_task": "place_phone_stand",
+  "initializer": "Sidney broad multi-task SFT",
+  "initializer_revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
+  "original_initializer_reproduction": false,
+  "precision": "native mixed BF16; entire vision and norms FP32",
+  "baseline_reference": "published Sidney SFT; no rebenchmark panel",
+  "migration": "H50 retained; K10 native reference to VLRLA K5/.3 Flow-SDE PPO"
+}

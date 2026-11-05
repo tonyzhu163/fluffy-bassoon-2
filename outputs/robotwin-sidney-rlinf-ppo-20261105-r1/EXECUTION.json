@@ -1,7 +1,7 @@
 {
-  "status": "PPO_RETRY_SUBMITTED",
+  "status": "PPO_WORKERS_INITIALIZING",
   "cluster": "Baige Pro6K",
-  "last_checked_at_shanghai": "2026-11-05 17:36",
+  "last_checked_at_shanghai": "2026-11-05 17:41",
   "prior_scheduler_gpu_seconds": 2561,
   "prior_scheduler_gpu_hours": 0.7113888888888888,
   "optimizer_updates": 0,
@@ -9,15 +9,15 @@
   "revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "user_preference": "Broad multi-task SFT with no RL tuning; continue Sidney for six-task setup",
   "precision": "Native mixed BF16 with full FP32 vision/norms. FP32 full-model replay only if required to localize conversion drift.",
-  "next_action": "Verify standalone primary Hydra recipe inside actual4GPU allocation, initialize workers and advance two PPO iterations.",
-  "job_id": "job-ba2pomp571fj",
-  "source_commit": "245b6ee9dce393317534e2ea5e4891e86e884ac8",
+  "next_action": "Observe first native PPO source collection/update and retain complete boundaries; final config and four-GPU allocation passed.",
+  "job_id": "job-xuc53l1ar0y1",
+  "source_commit": "0d3b3a5ea362a626a49e8cf081c8beda18b64a6c",
   "core_tests_passed": 23,
   "scene_instruction_binding_passed": true,
   "conversion_passed": true,
-  "error": "Train01 stopped before model initialization: inherited hydra.searchpath prohibited. Replaced thin inherited config with a standalone primary recipe; scientific settings unchanged.",
+  "error": null,
   "bridge_scheduler_gpu_seconds_completed": 920,
-  "cumulative_scheduler_gpu_seconds_completed": 3761,
+  "cumulative_scheduler_gpu_seconds_completed": 3961,
   "completed_bridge_attempts": [
     {
       "attempt": "bridge01",
@@ -58,8 +58,8 @@
     "maximum_minutes": 50,
     "bridge_charge_conservative_gpu_seconds": 950
   },
-  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train02",
-  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-train02",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03",
+  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-train03",
   "training_attempts": [
     {
       "attempt": "train01",
@@ -74,9 +74,23 @@
       "attempt": "train02",
       "job_id": "job-ba2pomp571fj",
       "source_commit": "245b6ee9dce393317534e2ea5e4891e86e884ac8",
-      "status": "submitted",
+      "status": "failed_before_models",
       "gpus": 4,
-      "maximum_minutes": 50
+      "maximum_minutes": 50,
+      "worker_gpu_seconds": 84,
+      "scheduler_gpu_seconds": 200,
+      "optimizer_updates": 0,
+      "outcome": "Inherited default task name not overridden; explicit source task fixed in both environments"
+    },
+    {
+      "attempt": "train03",
+      "job_id": "job-xuc53l1ar0y1",
+      "source_commit": "0d3b3a5ea362a626a49e8cf081c8beda18b64a6c",
+      "status": "workers_initializing",
+      "gpus": 4,
+      "maximum_minutes": 50,
+      "config_validation_passed": true
     }
-  ]
+  ],
+  "config_validation_passed": true
 }
