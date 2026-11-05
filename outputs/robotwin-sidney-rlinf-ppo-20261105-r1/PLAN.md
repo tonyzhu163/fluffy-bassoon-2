@@ -33,3 +33,12 @@ check advancing updates. This establishes execution, not convergence. No
 held-out-task selection. Scheduler resource limits and actual GPU type are
 checked before launch. Budget up to4 additional GPUh for bridge+pilot, within
 the repository-authorized50GPUh task scope; record all attempts and migrations.
+
+Execution migration: the eight-GPU group was not schedulable. Use four ranks
+with microbatch32 and accumulation16, retaining global2048,256 environments
+and five epochs. A50-minute four-GPU allocation replaces25 minutes on eight.
+The model bridge is complete; train01 failed before model initialization on
+Hydra inheritance. The retry uses the same recipe as a standalone primary
+configuration. Completed scheduler charge through train01:3761GPU-seconds
+including the earlier qualification;920 bridge plus280 failed-PPO seconds
+are part of the current additional envelope. No SGD has run at submission.

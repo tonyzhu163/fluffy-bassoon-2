@@ -1,7 +1,7 @@
 {
-  "status": "PPO_SUBMITTED",
+  "status": "PPO_RETRY_SUBMITTED",
   "cluster": "Baige Pro6K",
-  "last_checked_at_shanghai": "2026-11-05 17:32",
+  "last_checked_at_shanghai": "2026-11-05 17:36",
   "prior_scheduler_gpu_seconds": 2561,
   "prior_scheduler_gpu_hours": 0.7113888888888888,
   "optimizer_updates": 0,
@@ -9,15 +9,15 @@
   "revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "user_preference": "Broad multi-task SFT with no RL tuning; continue Sidney for six-task setup",
   "precision": "Native mixed BF16 with full FP32 vision/norms. FP32 full-model replay only if required to localize conversion drift.",
-  "next_action": "Verify final config/GPU mapping, actor/rollout initialization, first advancing PPO iteration and full optimizer/sampler/RNG boundary.",
-  "job_id": "job-yy42nhg42pl5",
-  "source_commit": "2c5bedc5a8e13fe178f8a9fa1d65dd05c73e4c27",
+  "next_action": "Verify standalone primary Hydra recipe inside actual4GPU allocation, initialize workers and advance two PPO iterations.",
+  "job_id": "job-ba2pomp571fj",
+  "source_commit": "245b6ee9dce393317534e2ea5e4891e86e884ac8",
   "core_tests_passed": 23,
   "scene_instruction_binding_passed": true,
   "conversion_passed": true,
-  "error": null,
+  "error": "Train01 stopped before model initialization: inherited hydra.searchpath prohibited. Replaced thin inherited config with a standalone primary recipe; scientific settings unchanged.",
   "bridge_scheduler_gpu_seconds_completed": 920,
-  "cumulative_scheduler_gpu_seconds_completed": 3481,
+  "cumulative_scheduler_gpu_seconds_completed": 3761,
   "completed_bridge_attempts": [
     {
       "attempt": "bridge01",
@@ -58,6 +58,25 @@
     "maximum_minutes": 50,
     "bridge_charge_conservative_gpu_seconds": 950
   },
-  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train01",
-  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-train01"
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train02",
+  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-train02",
+  "training_attempts": [
+    {
+      "attempt": "train01",
+      "job_id": "job-yy42nhg42pl5",
+      "source_commit": "2c5bedc5a8e13fe178f8a9fa1d65dd05c73e4c27",
+      "worker_gpu_seconds": 128,
+      "scheduler_gpu_seconds": 280,
+      "optimizer_updates": 0,
+      "outcome": "Primary Hydra configuration composition failed before models"
+    },
+    {
+      "attempt": "train02",
+      "job_id": "job-ba2pomp571fj",
+      "source_commit": "245b6ee9dce393317534e2ea5e4891e86e884ac8",
+      "status": "submitted",
+      "gpus": 4,
+      "maximum_minutes": 50
+    }
+  ]
 }
