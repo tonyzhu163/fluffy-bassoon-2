@@ -20,6 +20,13 @@ export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 HF_HUB_DISABLE_XET=1
 export ROBOT_PLATFORM=ALOHA MUJOCO_GL=egl PYOPENGL_PLATFORM=egl
 export OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 MKL_NUM_THREADS=4
 export FLUFFY_GPU_EXECUTION=baige NCCL_P2P_DISABLE=1
+# Baige exposes its allocation through NVIDIA_VISIBLE_DEVICES but can leave
+# CUDA_VISIBLE_DEVICES unset. Preserve an explicit scheduler value; otherwise
+# select ordinal zero inside this one-GPU container. The unchanged probe still
+# requires the scheduler UUID, CUDA PCI mapping and own-process tensor check.
+if [[ ${CUDA_VISIBLE_DEVICES+x} != x ]]; then
+  export CUDA_VISIBLE_DEVICES=0
+fi
 TASK_STARTED=$(date +%s)
 finish() {
   TASK_RC=$?
@@ -31,5 +38,17 @@ finish() {
 trap finish EXIT
 "$TASK_PYTHON" "$TASK_CODE/scripts/[train]gpu_probe.py" --baige-container \
   --baige-exclusive-training --purpose training --expected-count 1 --output "$TASK_OUT/gpu-probe.json"
+export LYCO_BAIGE_GPU_MAP=$TASK_OUT/gpu-probe.json
+# Match the existing qualified RoboTwin launcher in a fresh container.
+mkdir -p /root/.sapien/physx
+if [[ ! -e /root/.sapien/physx/105.1-physx-5.3.1.patch0 ]]; then
+  ln -s /mowenjie/fluffy-bassoon/inputs/maniskill-scene-assets-20261028-r1/physx/105.1-physx-5.3.1.patch0 \
+    /root/.sapien/physx/105.1-physx-5.3.1.patch0
+fi
+TASK_MODEL_PYTHON=/mowenjie/fluffy-bassoon-2/envs/lerobot-sidney-92f96f33-20261105-r1/bin/python
+PYTHONPATH=/mowenjie/fluffy-bassoon-2/sources/lerobot-sidney-92f96f33-20261105-r1/src \
+  timeout --signal=TERM --kill-after=10s 240 \
+  "$TASK_MODEL_PYTHON" "$TASK_RUN_CODE/cpu_imports.py" --expected-visible-gpus 1 \
+  --output "$TASK_OUT/cpu-imports" > "$TASK_OUT/cpu-imports.log" 2>&1
 timeout --signal=TERM --kill-after=15s 1600 "$TASK_PYTHON" "$TASK_RUN_CODE/qualify.py" \
   --output "$TASK_OUT/native" 2>&1 | tee "$TASK_OUT/qualification.log"

@@ -34,3 +34,14 @@ Preparation used only Git, downloads, package installation, file hashes and
 package metadata. No model computation, imports for qualification, simulator
 episodes or tests ran on the development host. Native runtime support remains
 unqualified until the allocated job succeeds.
+
+The first allocated attempt (`qual01`) stopped at the probe because this Baige
+container left CUDA_VISIBLE_DEVICES unset. Its wrapper also omitted the
+LYCO_BAIGE_GPU_MAP export needed by renderer binding. Both were already
+present in the repository's qualified RoboTwin launchers. The retry uses
+ordinal zero only when CUDA_VISIBLE_DEVICES is unset, retains the scheduler's
+NVIDIA_VISIBLE_DEVICES allocation unchanged, runs the same full GPU probe,
+and exports that probe's map. It also links the retained PhysX cache in the
+fresh container, matching those launchers. A processor-only numerical/import
+check runs in the allocation before constructing the model; it neither runs
+a model on CPU nor substitutes for the actual GPU episode.

@@ -9,10 +9,12 @@ import time
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--expected-visible-gpus', type=int, default=0)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     report = dict(status='started', model_constructed=False, simulator_episodes=0,
-                  optimizer_updates=0, gpu_hours=0, started_unix=time.time())
+                  optimizer_updates=0, model_forward_calls=0,
+                  started_unix=time.time())
     try:
         import inspect
         import numpy as np
@@ -23,7 +25,8 @@ def main():
         from lerobot.policies.pi05.modeling_pi05 import PI05Policy
         from lerobot.policies.factory import make_pre_post_processors
 
-        assert torch.cuda.device_count() == 0, 'This probe requires a CPU allocation'
+        assert torch.cuda.device_count() == args.expected_visible_gpus
+        report['visible_gpu_count'] = args.expected_visible_gpus
         source = Path('/mowenjie/fluffy-bassoon-2/sources/lerobot-sidney-92f96f33-20261105-r1')
         assert Path(inspect.getfile(PI05Policy)).is_relative_to(source)
         model = Path('/mowenjie/fluffy-bassoon-2/cache/robotwin-sidney-qualification-20261105-r1')

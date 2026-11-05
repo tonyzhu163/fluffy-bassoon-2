@@ -1,12 +1,12 @@
 {
-  "status": "NATIVE_QUALIFICATION_QUEUED",
+  "status": "FIRST_ATTEMPT_FAILED_RETRY_PREPARING",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
   "job_id": "job-140tcms97d8x",
   "job_name": "mwj_1105_robotwin_sidney_native_qual_r1",
   "submitted_at_shanghai": "2026-11-05 13:43:37",
-  "last_checked_at_shanghai": "2026-11-05 13:44",
-  "observed_scheduler_status": "queued",
+  "last_checked_at_shanghai": "2026-11-05 14:01",
+  "observed_scheduler_status": "worker exited 1; scheduler termination pending verification",
   "source_commit": "34a3a4299c621c18fec6860d18fd7343a4c29ff7",
   "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r2",
   "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual01",
@@ -23,10 +23,12 @@
     "actual_gpu_type": "await allocated gpu_probe"
   },
   "budget": {
-    "gpu_hours_used_as_of_last_check": 0,
+    "gpu_hours_used_as_of_last_check": null,
     "this_attempt_maximum_gpu_hours": 0.5,
     "initial_qualification_ceiling_gpu_hours": 4,
-    "task_scope_incremental_ceiling_gpu_hours": 50
+    "task_scope_incremental_ceiling_gpu_hours": 50,
+    "worker_gpu_seconds_measured": 1,
+    "conservative_allocated_gpu_hours_charge": 0.5
   },
   "qualification": {
     "weight_hashes_verified": true,
@@ -41,7 +43,31 @@
     "physical_control_limit": 400,
     "scene_bank": "RLinf eval source-task bank, first success_seed"
   },
-  "next_action": "On allocation inspect gpu-probe.json, model strict-load/normalization/native-queue parity, advancing chunks and native RESULT/EXIT. Diagnose before retrying with a fresh output identity. After native qualification, expand source screen and qualify explicit RLinf conversion before PPO.",
+  "next_action": "Verify first scheduler job is terminal, then submit fresh qual02 from committed wrapper with the existing GPU visibility/map setup; unchanged native SFT contract. Inspect processor numerical checks and native episode before any PPO.",
   "monitor_interval_minutes": 20,
-  "queue_receipt": "QUEUED.jpg"
+  "queue_receipt": "QUEUED.jpg",
+  "attempts": [
+    {
+      "attempt": "qual01",
+      "job_id": "job-140tcms97d8x",
+      "source_commit": "34a3a4299c621c18fec6860d18fd7343a4c29ff7",
+      "exit_code": 1,
+      "worker_gpu_seconds": 1,
+      "model_loaded": false,
+      "simulator_episodes": 0,
+      "optimizer_updates": 0,
+      "error": "CUDA_VISIBLE_DEVICES unset; probe rejected before CUDA computation",
+      "evidence": [
+        "qual01/gpu-probe.json",
+        "qual01/EXIT.json"
+      ]
+    }
+  ],
+  "cpu_probe_attempt": {
+    "status": "unaccepted zero-GPU draft canceled",
+    "job_id": null,
+    "output_exists": false,
+    "tests_executed": false,
+    "prepared_commit": "3a0597229c5e6d53f1d352bb0c4321d52605731c"
+  }
 }
