@@ -125,3 +125,11 @@ The remaining six arms and any spend above150 remain held for further
 admission; the proposed190 GPUh cap is still unanswered. See
 `AUTHORIZED-STAGED-READOUT-20261106-0305.json`. Fresh technical, canonical
 ledger and packed-storage admission checks are required before launch.
+
+At Nov6 03:11, direct trace metadata showed RoboTwin control accounting is
+requested/conservatively charged (`measured_valid_mask=False`), not a direct
+measurement of executed primitive physics. Earlier monitoring wording of
+these totals as physical controls is corrected by
+`ROBOTWIN-CONTROL-COUNT-CORRECTION-20261106-0311.json`. Optimizer/frozen/recovery
+proof and conservative budgets are unchanged. Corpus admission stays false
+until actual duration/validity and action alignment are qualified.

@@ -1,0 +1,20 @@
+{
+  "recorded_at_shanghai": "2026-11-06 03:11",
+  "scope": "RoboTwin train07 and earlier coordinator progress wording",
+  "correction": "Previously quoted400-control rounds/102400-per-round totals are requested/conservatively charged control slots, not direct measured executed physics steps.",
+  "evidence": "Owner direct stdlib read of train07 trace metadata: measured_valid_mask=False, executed_or_conservative=3200.",
+  "unchanged": [
+    "Conservative action ceiling accounting",
+    "Actual20Adam updates per actor atglobal_step_1",
+    "Full17-state-file checkpoint integrity",
+    "Frozen-VLM unchanged hashes",
+    "Bit-exact policy probability replay"
+  ],
+  "unqualified": [
+    "Actual primitive execution durations and post-success no-ops",
+    "Meta-learning raw action/mask/teacher alignment",
+    "Matched physical-control execution count"
+  ],
+  "source6_and_student_corpus_admission": false,
+  "active_runtime_changes": false
+}
