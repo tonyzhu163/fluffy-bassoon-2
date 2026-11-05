@@ -106,8 +106,21 @@ def snapshot(job):
     for interface in ('kv_bridge', 'velocity_bridge'):
         for method in ('ad', 'dpt', 'dit', 'ic_iql'):
             fit = ROOT / 'fits' / interface / method
+            workflow = ROOT / 'workflows' / interface / method
+            logs = list(workflow.glob('train-*.log'))
+            latest_log = max(logs, key=lambda path:path.stat().st_mtime) if logs else None
+            tail = ''
+            if latest_log:
+                with latest_log.open('rb') as stream:
+                    stream.seek(max(0, latest_log.stat().st_size-16384))
+                    tail = stream.read().decode(errors='replace')
             methods[interface+'/'+method] = dict(status=read(fit/'training-status.json'),
                 checkpoint_mtime=(fit/'latest.pt').stat().st_mtime if (fit/'latest.pt').exists() else None,
+                latest_worker_log=str(latest_log) if latest_log else None,
+                latest_worker_log_mtime=latest_log.stat().st_mtime if latest_log else None,
+                worker_failed='Traceback (most recent call last):' in tail,
+                last_worker_error=tail.splitlines()[-1] if 'Traceback (most recent call last):' in tail else None,
+                workflow_result=read(workflow/'RESULT.json'),
                 readouts={s:read(ROOT/'readouts'/interface/method/s/'PROGRESS.json') for s in ('ID','OOD')})
     write(ROOT/'monitor/LIVE-CHECK.json', dict(cluster='Baige Pro6K',job_id=job,
         checked_shanghai=now.isoformat(),charged_GPU_hours=charged,
