@@ -73,6 +73,9 @@ class SidneyEnvironment(runtime.PilotEnvironment):
         root=Path(self.cfg.native_pilot.output)
         _install_allocated_renderer(root/'renderers'/f'rank-{self._rank:02d}')
         _install_reset_retry_limit()
+        # Class default also covers SubEnvs recreated after native offload.
+        from robotwin.envs.vector_env import SubEnv
+        SubEnv._fb2_trim_after_scene_close=bool(self.cfg.native_pilot.trim_after_scene_close)
         result=super().init_worker();self._binding_ordinal=0
         for wrapped in self.env_list:
             env=runtime.base_env(wrapped);original=env.reset;owner=self

@@ -13,6 +13,8 @@ def validate_sidney(cfg):
     assert cfg.runner.val_check_interval==-1
     assert cfg.native_pilot.maximum_actions==1200000
     assert cfg.native_pilot.previous_maximum_actions==1000000
+    assert cfg.native_pilot.trim_after_scene_close
+    assert cfg.env.train.malloc_trim_reset_interval==1
     for mode in ('train','eval'):
         assert cfg.env[mode].task_config.task_name=='place_phone_stand'
         assert cfg.env[mode].task_config.camera.head_camera_type=='Large_D435'

@@ -14,7 +14,7 @@ else:
     base=base/'memory';limit_path=base/'memory.limit_in_bytes';current_path=base/'memory.usage_in_bytes';stat_path=base/'memory.stat'
 limit_text=limit_path.read_text().strip()
 limit=int(limit_text) if limit_text!='max' else os.sysconf('SC_PAGE_SIZE')*os.sysconf('SC_PHYS_PAGES')
-assert limit>=896*2**30,f'Host-memory allocation too small: {limit/2**30:.1f}GiB'
+assert limit>=512*2**30,f'Host-memory allocation too small: {limit/2**30:.1f}GiB'
 peak=0
 while True:
     used=int(current_path.read_text());peak=max(peak,used)

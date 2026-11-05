@@ -17,11 +17,15 @@ from fluffy_bassoon.rl.robotwin_noise import _install_allocated_renderer,_instal
 
 
 root=Path(os.environ['TASK_OUT']);source=root.parent/'train06';scenes=int(os.environ.get('TASK_SCENES','16'))
+paired_only=os.environ.get('TASK_PROFILE_MODE','full')=='paired'
+accounting_rank=int(os.environ.get('TASK_ACCOUNTING_RANK','0'))
+assert not paired_only or scenes==64
 os.chdir(os.environ['ROBOTWIN_PATH'])
 _install_allocated_renderer(root/'renderer');_install_reset_retry_limit()
 from rlinf.envs.sim.robotwin.robotwin_env import RoboTwinEnv
 
 report=dict(status='running',optimizer_updates=0,model_loaded=False,scenes=scenes,snapshots=[],events=[])
+report.update(profile_mode='paired' if paired_only else 'full',accounting_rank=accounting_rank,source_seed_offset=0)
 tracemalloc.start(5)
 peak={'rss_bytes':0,'cgroup_bytes':0};stop=threading.Event()
 def watch():
@@ -60,7 +64,7 @@ def digest(obs):
     assert bool(torch.isfinite(obs['states']).all())
     return tensor_hash(obs)
 
-journal=ActionJournal(source.parent/'train03/action-accounting',rank=0,world=4,
+journal=ActionJournal(source.parent/'train03/action-accounting',rank=accounting_rank,world=4,
     attempt=root.name,maximum_actions=1200000,previous_maximum_actions=1000000)
 cfg=OmegaConf.create(json.loads((source/'resolved-native-config.json').read_text())['env']['train'])
 from robotwin.envs import vector_env
@@ -96,7 +100,9 @@ journal.finish(slot,scenes*10);sample(f'constructor_{scenes}_scenes')
 successful=False
 paired=None
 try:
-    for round_index in range(3 if scenes==64 else 2):
+    if paired_only:env.update_reset_state_ids()
+    rounds=(1,2) if paired_only else range(3 if scenes==64 else 2)
+    for round_index in rounds:
         if scenes==64 and round_index==1:cfg.malloc_trim_reset_interval=1
         if scenes==64 and round_index==2:
             for subenv in env.venv.envs:subenv._fb2_trim_after_scene_close=True
@@ -138,6 +144,8 @@ try:
             python_numpy_torch_rng_identity=True,scene_identity=True,motor_input_identity=True))
         if scenes==64 and round_index==1:
             paired={key:obs[key].clone() for key in ('main_images','wrist_images','states')}
+            write(root/'paired-reference.json',dict(reset_observation_sha256=before,
+                states=obs['states'].tolist()))
         if scenes==64 and round_index==2:
             changes={key:float((obs[key].float()-paired[key].float()).abs().max()) for key in ('main_images','wrist_images','states')}
             assert changes['states']<=1e-6,'Per-scene trim changed matched reset joint state'
@@ -154,6 +162,9 @@ try:
             if scenes==64 and round_index==1:
                 paired['after_hold_states']=obs['states'].clone()
                 paired['after_hold_rewards']=result[1].clone()
+                reference=json.loads((root/'paired-reference.json').read_text())
+                reference.update(after_hold_states=obs['states'].tolist(),after_hold_rewards=result[1].tolist())
+                write(root/'paired-reference.json',reference)
             if scenes==64 and round_index==2:
                 error=float((obs['states']-paired['after_hold_states']).abs().max())
                 assert error<=1e-6 and torch.equal(result[1],paired['after_hold_rewards'])
@@ -171,7 +182,7 @@ finally:
     del env;gc.collect();sample('after_delete_gc')
     libc.malloc_trim(0);sample('after_delete_trim')
     stop.set();monitor.join()
-    report.update(status='complete' if successful else 'failed',total_shared_rank0_charge=journal.charged(),
+    report.update(status='complete' if successful else 'failed',total_shared_accounting_rank_charge=journal.charged(),
         physical_controls=sum(r.get('executed_or_conservative',r['requested']) for r in journal.rows if r['phase']=='memory-diagnostic/physical-hold'),
         active_worktrees_changed=False,scientific_source_admission=False)
     write(root/'RESULT.json',report)

@@ -1,7 +1,7 @@
 {
-  "status": "QUALIFYING_64_SCENE_ALLOCATOR_FIX_PRODUCTION_HELD",
+  "status": "PREPARING_MISSING_PAIRED_MEMORY_QUALIFICATION",
   "cluster": "Baige Pro6K",
-  "last_checked_at_shanghai": "2026-11-05 23:48",
+  "last_checked_at_shanghai": "2026-11-06 00:17",
   "prior_scheduler_gpu_seconds": 2561,
   "prior_scheduler_gpu_hours": 0.7113888888888888,
   "optimizer_updates": 0,
@@ -9,7 +9,7 @@
   "revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "user_preference": "Broad multi-task SFT, no RL tuning. Maximize actual6000-series batch capacity or measured throughput.",
   "precision": "Native mixed BF16 with full FP32 vision/norms. FP32 full-model replay only if required to localize conversion drift.",
-  "next_action": "Qualify64scene nativebatch-end vsper-sceneclose trim; continuouspeakRAM +matchedRGB/state/motor/RNG checks. No scientificretry until fullphasehostheadroomqualified; keep64/accum8/global2048/fiveepochs,20h/1.2Mengineeringcap.",
+  "next_action": "Freshmemory03 paired64scene nativebatchend vsperclose reset; no baseline repeat. Rank1accounting,6400physical+1920allowances,40minmax. Productionheldpendingpeak+pairedchecks.",
   "job_id": "job-p7hd216qprbd",
   "source_commit": "c7f68c1e0c0280a3efdf91866cb1b31e7b8f5c91",
   "core_tests_passed": 23,
@@ -17,7 +17,7 @@
   "conversion_passed": true,
   "error": null,
   "bridge_scheduler_gpu_seconds_completed": 920,
-  "cumulative_scheduler_gpu_seconds_completed": 25965,
+  "cumulative_scheduler_gpu_seconds_completed": 27715,
   "completed_bridge_attempts": [
     {
       "attempt": "bridge01",
@@ -169,7 +169,7 @@
     }
   ],
   "config_validation_passed": true,
-  "additional_scheduler_gpu_seconds_completed": 23404,
+  "additional_scheduler_gpu_seconds_completed": 25154,
   "additional_envelope_gpu_hours": 20,
   "task_scope_limit_gpu_hours": 50,
   "resume_dir": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03/sidney-native-two/checkpoints/global_step_0",
@@ -242,9 +242,9 @@
       "outcome": "All four candidates64/128/256/512 completed four native FSDP/PPO updates on all four ranks.64 fastest including conditional reference overhead;512 has only1.00GB reserved headroom."
     }
   ],
-  "active_gpu_jobs": 1,
-  "additional_scheduler_gpu_hours_completed": 6.501111111111111,
-  "cumulative_scheduler_gpu_hours_completed": 7.2125,
+  "active_gpu_jobs": 0,
+  "additional_scheduler_gpu_hours_completed": 6.987222222222222,
+  "cumulative_scheduler_gpu_hours_completed": 7.698611111111111,
   "storage_admission": {
     "status": "admitted_combined_371GiB_threshold",
     "last_observed_free_gib": 412.734375,
@@ -310,7 +310,7 @@
       "canonical_compression_enabled": false
     }
   ],
-  "additional_conservative_gpu_seconds_completed": 23512,
+  "additional_conservative_gpu_seconds_completed": 25274,
   "core_storage_tests_passed": 6,
   "maximum_cumulative_charged_actions": 1200000,
   "memory_diagnostics": [
@@ -343,7 +343,7 @@
       "attempt": "memory02",
       "job_id": "job-p7hd216qprbd",
       "source_commit": "c7f68c1e0c0280a3efdf91866cb1b31e7b8f5c91",
-      "status": "submitted",
+      "status": "failed_timeout_during_per_close_camera_read",
       "created_at_shanghai": "2026-11-05 23:46:13",
       "gpus": 1,
       "cpus": 64,
@@ -352,7 +352,22 @@
       "scenes": 64,
       "maximum_physical_controls": 9600,
       "maximum_setup_reset_allowance": 2560,
-      "optimizer_updates": 0
+      "optimizer_updates": 0,
+      "first_reset_rss_gib": 55.336,
+      "first_reset_live_glibc_gib": 53.071,
+      "first_mode_all_identity_checks_passed": true,
+      "deadline_risk": "Three64scene resets approach30min allocation; noactivecontractextension; qualifyonlymissingpairedbehaviorunderfreshidentityifneeded",
+      "ended_at_shanghai": "2026-11-06 00:15:35",
+      "scheduler_gpu_seconds": 1750,
+      "creation_to_release_gpu_seconds": 1762,
+      "worker_gpu_seconds": 1717,
+      "physical_controls": 6400,
+      "charged_setup_reset_allowance": 2560,
+      "total_charged": 8960,
+      "rank0_total_shared_charge": 80640,
+      "batch_end_reset_peak_rss_gib": 106.183,
+      "batch_end_post_reset_rss_gib": 55.477,
+      "per_close_qualified": false
     }
   ],
   "engineering_migration": {

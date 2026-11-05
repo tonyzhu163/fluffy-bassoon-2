@@ -3,13 +3,14 @@ set -Eeuo pipefail
 TASK_SOURCE=${1:?reviewed exact source}
 TASK_OUT=${2:?fresh training output}
 TASK_BRIDGE=${3:?completed bridge output}
-TASK_PRIOR_GPU_SECONDS=${4:?bridge scheduler charge}
+TASK_PRIOR_GPU_SECONDS=${4:?conservative completed task GPU charge}
 TASK_WORLD=${5:-4}
 [[ $TASK_WORLD == 4 || $TASK_WORLD == 8 ]]
 TASK_LIMIT=${6:-$((12000/TASK_WORLD))}
 TASK_RESUME=${7:-}
 TASK_ACCOUNTING=${8:-$TASK_OUT/action-accounting}
 TASK_CAPACITY=${9:-}
+TASK_MEMORY=${10:-$(dirname "$TASK_OUT")/memory02}
 [[ $TASK_LIMIT =~ ^[0-9]+$ && $TASK_LIMIT -le 10800 ]]
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_RUN_CODE=$TASK_CODE/outputs/robotwin-sidney-rlinf-ppo-20261105-r1
@@ -68,7 +69,7 @@ mkdir -p /root/.sapien/physx
 if [[ ! -e /root/.sapien/physx/105.1-physx-5.3.1.patch0 ]]; then
   ln -s /mowenjie/fluffy-bassoon/inputs/maniskill-scene-assets-20261028-r1/physx/105.1-physx-5.3.1.patch0 /root/.sapien/physx/105.1-physx-5.3.1.patch0
 fi
-export TASK_CAPACITY
+export TASK_CAPACITY TASK_MEMORY
 TASK_MICRO=$("$TASK_PYTHON" - <<'PY'
 import hashlib,json,os
 from pathlib import Path
@@ -85,6 +86,32 @@ for filename,key in [('model.safetensors','model_sha256'),('sidney-processors.js
         for block in iter(lambda:handle.read(8*1024**2),b''):h.update(block)
     assert h.hexdigest()==receipt[key]
 Path(os.environ['NATIVE_PPO_OUTPUT'],'bridge-admission.json').write_text(json.dumps(result,indent=2)+'\n')
+# Qualification uses the same64-scene native cameras/physics. Include model,
+# Ray and pending CPU rollout/checkpoint memory beyond its model-free RSS.
+# These are conservative admission allowances, not a measured full-phase peak;
+# host-memory telemetry remains required throughout the scientific retry.
+memory_path=Path(os.environ['TASK_MEMORY'])/'RESULT.json'
+memory=json.loads(memory_path.read_text())
+assert memory['status']=='complete' and memory['scenes']==64 and not memory['model_loaded']
+assert memory['optimizer_updates']==0 and len(memory['events']) in (2,3)
+for event in memory['events']:
+    assert all(event[key] for key in ('allocator_observation_identity',
+        'python_numpy_torch_rng_identity','scene_identity','motor_input_identity'))
+assert memory['paired_reset_rgb_bit_identity']
+assert memory['paired_reset_max_abs']['states']<=1e-6
+assert memory['paired_motor_prefix_state_max_abs']<=1e-6 and memory['paired_motor_prefix_reward_identity']
+selected=[row for row in memory['snapshots'] if row['stage'].startswith('round2/')]
+peak=max(max(row['smaps']['Rss'],row.get('reset_peak',{}).get('rss_bytes',0)) for row in selected)
+headroom_allowances=dict(environment_runtime_per_rank_bytes=10*2**30,
+    other_workers_bytes=80*2**30,pending_rollout_and_checkpoint_bytes=64*2**30)
+bound=4*(peak+headroom_allowances['environment_runtime_per_rank_bytes'])+sum(
+    headroom_allowances[key] for key in ('other_workers_bytes','pending_rollout_and_checkpoint_bytes'))
+limit=json.loads(Path(os.environ['NATIVE_PPO_OUTPUT'],'host-memory.json').read_text())['limit_bytes']
+assert bound<.95*limit,f'Qualified full-phase host-memory bound exceeds Ray threshold: {bound/2**30:.1f}GiB'
+Path(os.environ['NATIVE_PPO_OUTPUT'],'memory-admission.json').write_text(json.dumps(dict(
+    qualification=str(memory_path),sha256=hashlib.sha256(memory_path.read_bytes()).hexdigest(),
+    scene_count_per_rank=64,measured_peak_rss_bytes=peak,allowances=headroom_allowances,
+    projected_full_phase_bytes=bound,cgroup_limit_bytes=limit,ray_memory_guard_unchanged=True),indent=2)+'\n')
 capacity=os.environ.get('TASK_CAPACITY')
 if capacity:
     selection=Path(capacity)/'SELECTION.json'
@@ -108,6 +135,7 @@ else:print(result['execution_microbatch'])
 PY
 )
 cd "$TASK_CODE"
+"$TASK_PYTHON" -m pytest -q tests/test_robotwin_noise.py > "$TASK_OUT/environment-tests.log" 2>&1
 "$TASK_PYTHON" -m pytest -q tests/test_rlinf_native_ppo.py \
   -k 'unresolved_calls or original_rollout or worker_rng or sampler_and_eval_rng or actor_sidecar_requires' > "$TASK_OUT/core-tests.log" 2>&1
 # Compose/validate the actual source configuration inside the allocation before

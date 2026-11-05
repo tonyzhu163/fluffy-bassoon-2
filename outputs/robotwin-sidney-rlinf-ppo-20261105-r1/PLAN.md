@@ -117,3 +117,37 @@ identical across allocator diagnostics; preserve native shader/camera settings.
 The20additionalGPUh planning envelope includes this≤0.3334GPUh diagnostic.
 The explicit1.2M action migration remains sufficient including all old charges
 and the unequal rank0 diagnostic plus two new scientific iterations.
+
+
+The16-scene diagnostic completed: freed native allocations retained in glibc,
+rather than growing Python/rollout history, explain the dominant second-reset
+increase (27.93GiB RSS to15.13GiB after trim, live13.79GiB unchanged).
+Production remains held for `memory02`, a model-free64-scene comparison of
+baseline, native batch-end trim and per-scene-close trim. It records reset peaks
+every200ms, retained observation/RNG/scene/motor identity, and a matched second
+reset plus50-control hold. Maximum9,600 physical controls and2,560 constructor/
+reset allowances are charged to originalrank0 under a fresh attempt. Its
+30min/1GPU bound remains inside20additionalGPUh.
+
+The earlier proposed1024GiB allocation is provisional and superseded if this
+qualification supports512GiB. Prepared retry code requires all paired checks,
+unchanged RGB bytes, and a measured per-rank peak bound before model loading.
+The conservative full-phase bound is four times measured64-scene peak plus
+40GiB environment runtime overhead,80GiB other workers, and64GiB pending
+rollout/checkpoint buffers. It must stay below the actual unchanged95% Ray
+threshold. Only then enable the opt-in close-time trim and native batch-end
+trim in the fresh Sidney run. Active worktrees remain immutable.
+
+
+Memory02 reached its worker timeout during the final per-scene-mode camera
+read. Its closed baseline/batch-end results are retained; no per-scene peak or
+paired motor result is admitted. Scheduler charge1,750GPU-seconds (creation to
+release1,762), worker1,717;6,400physical controls plus2,560conservative allowances
+remain charged. Rank0now80,640. A freshmemory03 runs only the two paired resets,
+not the completed baseline. It uses original source seed partition0 but
+explicitly charges diagnostic allowance to original ledger rank1. Maximum
+6,400physical+1,920setup/reset=8,320; rank1then69,120, leaving room for212,480
+freshpilot controls/allowances below its300,000 partition. Runtime40min/1GPU;
+conservativecompleted25,274+2,440diagnostic+41,040production=68,754GPU-seconds
+within20additionalGPUh. This is a diagnostic continuation, not scientific scope
+expansion. Active memory02 worktree and journals are immutable.
