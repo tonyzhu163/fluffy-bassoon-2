@@ -139,7 +139,8 @@ def main():
                     if result['binding_sha256'] != binding_digest or result['cases'] != cases:
                         raise ValueError('Completed evaluation wave has a different case/candidate binding')
                 else:
-                    if time.time() + 300 >= args.deadline:
+                    wave_allowance = max(300, int(os.environ.get('STEERING_WAVE_ALLOWANCE_SECONDS', '300')))
+                    if time.time() + wave_allowance >= args.deadline:
                         _json(args.output / 'OPERATIONAL-CHECKPOINT.json', dict(completed=False,
                             completed_banks=len(results), next_bank=str(directory), binding_sha256=binding_digest))
                         return
@@ -149,6 +150,18 @@ def main():
                             next_bank=str(directory), minimum_free_GiB=minimum_free_gib,
                             binding_sha256=binding_digest))
                         return
+                    if not qualification:
+                        import importlib.util
+                        packed_spec = importlib.util.spec_from_file_location('readout_hot_storage', Path(__file__).with_name('PACKED-WAVES.py'))
+                        packed = importlib.util.module_from_spec(packed_spec)
+                        packed_spec.loader.exec_module(packed)
+                        hot = packed.hot_bytes()
+                        if hot >= 12 * 2**30:
+                            _json(args.output / 'OPERATIONAL-CHECKPOINT.json', dict(completed=False,
+                                reason='readout_hot_buffer_backpressure', current_hot_bytes=hot,
+                                new_wave_soft_limit_bytes=12*2**30, reserved_hot_bytes=40*2**30,
+                                next_bank=str(directory), binding_sha256=binding_digest))
+                            return
                     journal = ActionJournal(directory / ('accounting-' + args.attempt), rank=0, world=1,
                         attempt='six-episode-' + args.attempt,
                         maximum_actions=len(cases) * 6 * (horizons[task] + 128))

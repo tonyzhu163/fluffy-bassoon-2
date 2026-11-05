@@ -28,7 +28,7 @@ def main():
     run = root / 'outputs/robocasa-three-task-kv-velocity-meta-20261105-r1'
     if (sys.platform != 'linux' or args.bank.is_symlink()
             or not args.bank.resolve().is_relative_to(run)
-            or not args.output.resolve().is_relative_to(run / 'migrations')
+            or not any(args.output.resolve().is_relative_to(run / name) for name in ('migrations', 'archives'))
             or not args.cold.resolve().is_relative_to(Path('/mnt/bos/adgfyl/strong-plant-archives') / run.name)):
         raise ValueError('Use owned hot closed evidence, a fresh migration output and the private run archive')
     result = json.loads((args.bank / 'RESULT.json').read_text())

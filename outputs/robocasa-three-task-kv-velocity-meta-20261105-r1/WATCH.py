@@ -30,6 +30,11 @@ def archive_closed_bank(bank, audit_result):
     bank = Path(bank)
     if bank.is_symlink():
         return
+    if os.environ.get('STEERING_PACKED_ARCHIVE') == '1':
+        spec = importlib.util.spec_from_file_location('packed_wave_archive', Path(__file__).with_name('PACKED-WAVES.py'))
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module.archive_closed_bank(bank, audit_result)
     relative = bank.relative_to(ROOT)
     if relative.parts[0] not in ('readouts', 'qualification-02', 'qualification-fitted-pfs03', 'qualification-fitted-reset-pfs04', 'qualification-fitted-oodfull-pfs04'):
         raise ValueError('Archive only owned closed native waves in this run')
@@ -145,9 +150,20 @@ def main():
     spec=importlib.util.spec_from_file_location('paired_readout_reducer',Path(__file__).with_name('REDUCE.py'))
     reducer=importlib.util.module_from_spec(spec);spec.loader.exec_module(reducer)
     with ThreadPoolExecutor(max_workers=4) as pool:
+        peak_hot_bytes = 0
         while time.time()-began < 12*3600:
             banks=[p.parent for p in ROOT.glob('readouts/*/*/*/*/*/bank-*/RESULT.json') if not p.parent.is_symlink()]
             for result in pool.map(lambda bank:archive_closed_bank(bank,module.audit_result),banks):pass
+            if os.environ.get('STEERING_PACKED_ARCHIVE') == '1':
+                packed_spec = importlib.util.spec_from_file_location('packed_storage_accounting', Path(__file__).with_name('PACKED-WAVES.py'))
+                packed = importlib.util.module_from_spec(packed_spec)
+                packed_spec.loader.exec_module(packed)
+                current_hot_bytes = packed.hot_bytes()
+                peak_hot_bytes = max(peak_hot_bytes, current_hot_bytes)
+                write(ROOT / 'monitor/HOT-STORAGE.json', dict(checked_unix=time.time(),
+                    current_bytes=current_hot_bytes, peak_bytes=peak_hot_bytes,
+                    new_wave_soft_limit_bytes=12*2**30, reserved_hot_bytes=40*2**30,
+                    packed_archive_workers=4))
             summaries=[]
             for result_path in ROOT.glob('readouts/*/*/*/RESULT.json'):
                 summary=reducer.reduce_group(result_path.parent)
