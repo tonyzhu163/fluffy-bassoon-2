@@ -1,0 +1,97 @@
+{
+  "cluster": "Baige Pro6K",
+  "checked_shanghai": "2026-11-05T16:12:40.399987+08:00",
+  "running": 2,
+  "failed": 6,
+  "models": {
+    "kv_bridge/ad": {
+      "job_id": "job-61n1pq1jr89k",
+      "scheduler_status": "Running",
+      "saved_update": 1020,
+      "best_validation_flow_loss": 0.13242037734016776,
+      "converged": false,
+      "native_parameters_frozen": true,
+      "released_shanghai": null,
+      "checkpoint_bytes": 66431603
+    },
+    "kv_bridge/dpt": {
+      "job_id": "job-9q09tv5vh5xe",
+      "scheduler_status": "Failed",
+      "saved_update": 100,
+      "best_validation_flow_loss": 0.11024990072473884,
+      "converged": false,
+      "native_parameters_frozen": true,
+      "released_shanghai": "2026-11-05T12:52:49+08:00",
+      "checkpoint_bytes": 66431603
+    },
+    "kv_bridge/dit": {
+      "job_id": "job-9kwr019rpa4a",
+      "scheduler_status": "Failed",
+      "saved_update": 875,
+      "best_validation_flow_loss": 0.1343116571661085,
+      "converged": false,
+      "native_parameters_frozen": true,
+      "released_shanghai": "2026-11-05T16:08:22+08:00",
+      "checkpoint_bytes": 66431859
+    },
+    "kv_bridge/ic_iql": {
+      "job_id": "job-0uzh5p9v1dag",
+      "scheduler_status": "Failed",
+      "saved_update": 700,
+      "best_validation_flow_loss": 0.13319079345092177,
+      "converged": false,
+      "native_parameters_frozen": true,
+      "released_shanghai": "2026-11-05T15:59:13+08:00",
+      "checkpoint_bytes": 66431859
+    },
+    "velocity_bridge/ad": {
+      "job_id": "job-rzjllx4ofkbt",
+      "scheduler_status": "Failed",
+      "saved_update": 328,
+      "best_validation_flow_loss": 0.1337536135688424,
+      "converged": false,
+      "native_parameters_frozen": true,
+      "released_shanghai": "2026-11-05T14:44:05+08:00",
+      "checkpoint_bytes": 65339619
+    },
+    "velocity_bridge/dpt": {
+      "job_id": "job-zje19i0f7rii",
+      "scheduler_status": "Failed",
+      "saved_update": 100,
+      "best_validation_flow_loss": 0.11041463864967227,
+      "converged": false,
+      "native_parameters_frozen": true,
+      "released_shanghai": "2026-11-05T14:14:08+08:00",
+      "checkpoint_bytes": 65339619
+    },
+    "velocity_bridge/dit": {
+      "job_id": "job-4ei8atjsuxi5",
+      "scheduler_status": "Failed",
+      "saved_update": 1,
+      "best_validation_flow_loss": 0.13599334051832557,
+      "converged": false,
+      "native_parameters_frozen": true,
+      "released_shanghai": "2026-11-05T14:20:44+08:00",
+      "checkpoint_bytes": 65339875
+    },
+    "velocity_bridge/ic_iql": {
+      "job_id": "job-rseimb87nbjg",
+      "scheduler_status": "Running",
+      "saved_update": 700,
+      "best_validation_flow_loss": 0.133937060367316,
+      "converged": false,
+      "native_parameters_frozen": true,
+      "released_shanghai": null,
+      "checkpoint_bytes": 65339875
+    }
+  },
+  "readout_groups_completed": 0,
+  "approved_GPU_hours": 150,
+  "charged_GPU_hours_conservative_creation_to_release": 94.47383332611112,
+  "remaining_GPU_hours": 55.52616667388888,
+  "committed_including_running_max_reservations_GPU_hours": 105.19555555555556,
+  "uncommitted_GPU_hours": 44.80444444444444,
+  "storage_diagnosis": "One reproduced EIO among nine CPU reads; the other eight matched saved byte lengths and SHA256; failed GPU jobs include read hash/length failure, EIO and close EBUSY",
+  "storage_check": "STORAGE-READ-CHECK-1608.json",
+  "next_action": "Qualify bounded verified storage-read recovery before resuming failed jobs from full checkpoints; keep healthy allocations unchanged and do not exceed 150GPUh"
+}
