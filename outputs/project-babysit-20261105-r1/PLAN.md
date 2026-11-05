@@ -115,3 +115,13 @@ trimming alone peaks106.2GiB at64scenes. Memory02 timed out during the last
 per-scene comparison, so it cannot admit PPO. Its complete data and charges
 are retained. Fresh memory03 qualifies only the paired trim comparison with
 a40-minute bound; the existing scientific source remains held until it passes.
+
+At Nov6 03:05, all eight fits were closed at127.245556/150 GPUh.
+The coordinator corrected its blanket evaluation hold: the existing direct
+human150 GPUh authorization covers a staged pair of complete AD readouts
+(KV and velocity), up to15 GPUh reserved together. This preserves the full
+eight-model scientific matrix and all original per-model cases and horizons.
+The remaining six arms and any spend above150 remain held for further
+admission; the proposed190 GPUh cap is still unanswered. See
+`AUTHORIZED-STAGED-READOUT-20261106-0305.json`. Fresh technical, canonical
+ledger and packed-storage admission checks are required before launch.
