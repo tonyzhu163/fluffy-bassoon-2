@@ -115,7 +115,7 @@ to the [2026-11-03 snapshot](archive/coordination/coordination-20261103.md#ongoi
 
 | Eight-hour PPO/GRPO and meta-learning babysit | Codex | Baige Pro6K; approved SOURCE5 campaign70GPUh | Counter40/E4 `job-p4vgvfgs7s29` advancing5/40, both actors24Adam/update, pre-SGD exact logprob/value parity, frozen VLM unchanged. Faucet40/E4 `job-jo6kx7qu29r4` submittedNov5 11:53:59, actual probe/first-update next; each8GPUs/30GPUh cap, no automatic retry. Storage507.45GiB passed491.01GiB independent reservation; source9d1342cf/ccbad585. Coffee fresh paired512 manifest/static preflight passed, actual GPU test pending. Frozen-expert KV primary/velocity ablation; direct-action fits closed. |
 
-| Four-epoch PPO40 versus GRPO40 | Owner chat `01a1a633`; Baige Pro6K `job-hxgnpj0csx9s` RUNNING, 2GPUs, source `37364fae` | **Nov5 11:59 Shanghai:** 688/1544 episodes complete, 412,800 evaluation controls. Exact checkpoint loads, physical/public starts and sampler pairing enforced; full512-case result pending. Conservative 1.62/7.5GPUh through check. Next12:19; finish endpoint audit and verify release. [Execution](robocasa-ppo4-grpo40-test512-20261105-r1/EXECUTION.json). |
+| Four-epoch PPO40 versus GRPO40 | Owner chat `01a1a633`; Baige Pro6K `job-hxgnpj0csx9s` RUNNING, 2GPUs, source `37364fae` | **Nov5 12:20 Shanghai:** 992/1544 episodes complete, 595,200 evaluation controls. Exact checkpoint loads, physical/public starts and sampler pairing enforced; full512-case result pending. Conservative 2.30/7.5GPUh through check. Next12:40; finish endpoint audit and verify release. [Execution](robocasa-ppo4-grpo40-test512-20261105-r1/EXECUTION.json). |
 
 ### Needs owner refresh
 
