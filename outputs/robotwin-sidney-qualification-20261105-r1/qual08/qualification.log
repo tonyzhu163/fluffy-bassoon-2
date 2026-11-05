@@ -1,0 +1,23 @@
+/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/sapien/_vulkan_tricks.py:37: UserWarning: Failed to find system libvulkan. Fallback to SAPIEN builtin libvulkan.
+  warn("Failed to find system libvulkan. Fallback to SAPIEN builtin libvulkan.")
+/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/sapien/_vulkan_tricks.py:73: UserWarning: Failed to find Vulkan ICD file. This is probably due to an incorrect or partial installation of the NVIDIA driver. SAPIEN will attempt to provide an ICD file anyway but it may not work.
+  warn(
+[planner.py]: Something wrong happened when importing CuroboPlanner! Please check if Curobo is installed correctly. If the problem still exists, you can install Curobo from https://github.com/NVlabs/curobo manually.
+Exception traceback:
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/envs/robot/planner.py", line 297, in <module>
+    from curobo.types.math import Pose as CuroboPose
+ModuleNotFoundError: No module named 'curobo'
+missing pytorch3d
+[2026-11-05 15:37:29.240] [svulkan2] [error] OIDN Error: unsupported device type: CUDA
+[2026-11-05 15:37:29.265] [svulkan2] [error] OIDN Error: invalid handle
+[2026-11-05 15:37:29.311] [svulkan2] [error] OIDN Error: invalid handle
+[2026-11-05 15:37:29.345] [svulkan2] [error] OIDN Error: invalid handle
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r12/outputs/robotwin-sidney-qualification-20261105-r1/qualify.py", line 181, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r12/outputs/robotwin-sidney-qualification-20261105-r1/qualify.py", line 132, in main
+    wait_for(act_file.with_suffix('.json'), worker)
+  File "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r12/outputs/robotwin-sidney-qualification-20261105-r1/qualify.py", line 23, in wait_for
+    raise RuntimeError(f'Model worker exited {process.returncode}; inspect model-worker.log')
+RuntimeError: Model worker exited 1; inspect model-worker.log

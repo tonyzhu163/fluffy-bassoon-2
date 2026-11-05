@@ -1,7 +1,7 @@
 # Sidney to RLinf: static compatibility audit
 
 This is code and checkpoint-metadata evidence, not numerical qualification or
-a trained result. The native GPU job remains unchanged at main `34a3a429`.
+a trained result. Native strict GPU loading passed in qual05–08; no completed native episode or RLinf numerical replay exists yet.
 
 ## Weight layout and input embeddings
 
@@ -29,7 +29,7 @@ The native worker uses strict `safetensors.torch.load_model`, avoiding the
 LeRobot convenience loader's caught exceptions and weight-remapping fallback.
 If the chosen native runtime ties these distinct checkpoint tensors, the
 strict check must reject that incompatible representation rather than silently
-choose one. Actual strict loading still awaits the allocated job.
+choose one. Strict loading passed with4,143,404,816 parameters and no missing/unexpected keys. Native API repeatability remains under diagnosis; this is not RLinf conversion parity.
 
 ## Input and output transforms
 
@@ -61,5 +61,4 @@ separate declared migration after native parity, before collecting histories.
 `cpu_imports.py` and its wrapper were committed at `3a059722` for a separate
 allocated CPU import/processor check. A zero-GPU copy-form submission was not
 observed as a created task, and no `cpu01` directory appeared. The unaccepted
-draft was canceled. No CPU test result exists. This does not qualify the
-native runtime or justify modifying its queued environment.
+draft was canceled. No standalone CPU test result exists. Processor imports and numerical mean/std checks subsequently passed inside qual04–08 GPU allocations. This alone does not qualify native inference or an RLinf conversion.

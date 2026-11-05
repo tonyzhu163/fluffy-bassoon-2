@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r12/outputs/robotwin-sidney-qualification-20261105-r1/model_worker.py", line 174, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r12/outputs/robotwin-sidney-qualification-20261105-r1/model_worker.py", line 104, in main
+    buffers_before = {k:tensor_hash(v) for k,v in policy.named_buffers()}
+                        ^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r12/outputs/robotwin-sidney-qualification-20261105-r1/model_worker.py", line 100, in tensor_hash
+    return hashlib.sha256(value.detach().contiguous().view(torch.uint8).cpu().numpy().tobytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: self.dim() cannot be 0 to view BFloat16 as Byte (different element sizes)

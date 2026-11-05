@@ -1,15 +1,15 @@
 {
-  "status": "QUAL08_RUNNING",
+  "status": "QUAL09_SUBMITTED",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
-  "job_id": "job-obxncj7a4nll",
-  "job_name": "mwj_1105_robotwin_sidney_native_qual_r8",
-  "submitted_at_shanghai": "2026-11-05 15:36:31",
-  "last_checked_at_shanghai": "2026-11-05 15:37",
-  "observed_scheduler_status": "submitted and allocated; fresh output created",
-  "source_commit": "7a12a3b2373d385c55f6edc02e544721a9eb366b",
-  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r12",
-  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual08",
+  "job_id": "job-klvqq2iitu40",
+  "job_name": "mwj_1105_robotwin_sidney_native_qual_r9",
+  "submitted_at_shanghai": "2026-11-05 15:41:37",
+  "last_checked_at_shanghai": "2026-11-05 15:42",
+  "observed_scheduler_status": "queued; scalar buffer hashing corrected before repeatability test",
+  "source_commit": "2d67fb345fea369a8384d9bac8dfd61414195908",
+  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r13",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual09",
   "model_revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "allocation": {
     "workers": 1,
@@ -23,10 +23,10 @@
     "actual_gpu_type": "NVIDIA RPBZZZ6; CUDA/NVML/PCI mapping and tensor computation passed in qual02"
   },
   "budget": {
-    "gpu_hours_used_as_of_last_check": 0.26555555555555554,
-    "worker_gpu_seconds_measured": 695,
-    "scheduler_display_gpu_seconds": 956,
-    "usage_basis": "Seven completed one-GPU scheduler durations:60+89+128+50+210+230+189 seconds. Worker elapsed695 seconds.",
+    "gpu_hours_used_as_of_last_check": 0.3236111111111111,
+    "worker_gpu_seconds_measured": 861,
+    "scheduler_display_gpu_seconds": 1165,
+    "usage_basis": "Eight completed one-GPU scheduler durations60+89+128+50+210+230+189+209 seconds; active qual09 capped0.5GPUh.",
     "initial_qualification_ceiling_gpu_hours": 4,
     "task_scope_incremental_ceiling_gpu_hours": 50,
     "next_attempt_maximum_gpu_hours": 0.5,
@@ -63,7 +63,7 @@
   },
   "next_action": "Fresh qual08 tests deterministic algorithms, all-eager attention, TF32 disabled, explicit CUBLAS workspace and input/buffer hashes before any policy control.",
   "monitor_interval_minutes": 20,
-  "queue_receipt": "QUAL08-SUBMITTED.jpg",
+  "queue_receipt": "QUAL09-SUBMITTED.jpg",
   "attempts": [
     {
       "attempt": "qual01",
@@ -224,6 +224,25 @@
       "evidence": [
         "qual07/native/episode-00-chunk-00-actions.parity.json",
         "qual07/EXIT.json"
+      ]
+    },
+    {
+      "attempt": "qual08",
+      "job_id": "job-obxncj7a4nll",
+      "source_commit": "7a12a3b2373d385c55f6edc02e544721a9eb366b",
+      "exit_code": 1,
+      "worker_gpu_seconds": 166,
+      "scheduler_display_duration": "3 minutes29 seconds",
+      "scheduler_ended_at_shanghai": "2026-11-05 15:40:15",
+      "strict_weight_load_passed": true,
+      "simulator_reset_passed": true,
+      "simulator_episodes": 0,
+      "physical_controls": 0,
+      "optimizer_updates": 0,
+      "error": "Diagnostic hash view cannot reinterpret a scalar BF16 buffer; failed before inference. Corrected by reshape(-1) before byte view.",
+      "evidence": [
+        "qual08/native/model-worker.log",
+        "qual08/EXIT.json"
       ]
     }
   ],
