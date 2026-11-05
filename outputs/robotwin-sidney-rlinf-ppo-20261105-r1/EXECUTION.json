@@ -1,7 +1,7 @@
 {
-  "status": "ARCHIVE_QUALIFIED_PREPARING_PPO_RESTART",
+  "status": "PPO_TRAIN06_SUBMITTED",
   "cluster": "Baige Pro6K",
-  "last_checked_at_shanghai": "2026-11-05 19:48",
+  "last_checked_at_shanghai": "2026-11-05 19:54",
   "prior_scheduler_gpu_seconds": 2561,
   "prior_scheduler_gpu_hours": 0.7113888888888888,
   "optimizer_updates": 0,
@@ -9,9 +9,9 @@
   "revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "user_preference": "Broad multi-task SFT, no RL tuning. Maximize actual6000-series batch capacity or measured throughput.",
   "precision": "Native mixed BF16 with full FP32 vision/norms. FP32 full-model replay only if required to localize conversion drift.",
-  "next_action": "Fresh398.4375GiB free exceeds371GiB combined original-format admission after scratch cleanup. Review/deploy latest main, verify allocation and resume full step0 with64/GPU\u00d7accum8/global2048; compression remains off.",
-  "job_id": null,
-  "source_commit": "89a272ab98478d0670bd730b9e69846d60018ed6",
+  "next_action": "Verify actual4GPU probe, static recipe and12-worker restoration, then first actual optimizer steps and both complete rollout/update boundaries. Monitor at most20min apart. Micro64/accum8/global2048, fiveepochs, compressionOFF; full step0 and shared action ledger retained.",
+  "job_id": "job-42mdffft4wwc",
+  "source_commit": "a2c7180913b2946f39b33d1781f59b42531d5854",
   "core_tests_passed": 23,
   "scene_instruction_binding_passed": true,
   "conversion_passed": true,
@@ -58,8 +58,8 @@
     "maximum_minutes": 50,
     "bridge_charge_conservative_gpu_seconds": 950
   },
-  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/archive02",
-  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-archive02",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train06",
+  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-train06",
   "training_attempts": [
     {
       "attempt": "train01",
@@ -132,6 +132,29 @@
       "scheduler_gpu_seconds": 1828,
       "scheduler_duration_seconds": 457,
       "stopped_at_shanghai": "2026-11-05 18:31:00",
+      "optimizer_updates": 0
+    },
+    {
+      "attempt": "train06",
+      "job_id": "job-42mdffft4wwc",
+      "source_commit": "a2c7180913b2946f39b33d1781f59b42531d5854",
+      "status": "submitted",
+      "gpus": 4,
+      "cpus": 64,
+      "memory_gib": 512,
+      "shared_memory_gib": 64,
+      "maximum_minutes": 170,
+      "resume_global_step": 0,
+      "accounting_attempt": "train06",
+      "micro_batch_size": 64,
+      "gradient_accumulation": 8,
+      "global_batch_size": 2048,
+      "update_epochs": 5,
+      "algorithm_recompute_logprobs": false,
+      "canonical_compression": "none",
+      "conservative_prior_gpu_seconds": 18000,
+      "maximum_additional_envelope_gpu_seconds": 59040,
+      "created_at_shanghai": "2026-11-05 19:53:15",
       "optimizer_updates": 0
     }
   ],
@@ -209,13 +232,13 @@
       "outcome": "All four candidates64/128/256/512 completed four native FSDP/PPO updates on all four ranks.64 fastest including conditional reference overhead;512 has only1.00GB reserved headroom."
     }
   ],
-  "active_gpu_jobs": 0,
+  "active_gpu_jobs": 1,
   "additional_scheduler_gpu_hours_completed": 4.754722222222222,
   "cumulative_scheduler_gpu_hours_completed": 5.466111111111111,
   "storage_admission": {
-    "status": "actual_free_exceeds_combined_original_format_threshold",
-    "last_observed_free_gib": 398.4375,
-    "observed_at_shanghai": "2026-11-05 19:48",
+    "status": "admitted_combined_371GiB_threshold",
+    "last_observed_free_gib": 412.734375,
+    "observed_at_shanghai": "2026-11-05 19:50:45",
     "initial_checkpoint_bytes": 9985762432,
     "protected_checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03/sidney-native-two/checkpoints/global_step_0",
     "projected_incremental_bytes": 134217728000,
@@ -226,7 +249,11 @@
     "warning": "Do not count prospective releases or prior112.28GiB reclaim twice. Preserve active caches and checkpoints.",
     "qualification_reserved_bytes": 0,
     "combined_required_free_gib_after_qualification_cleanup": 371,
-    "canonical_compression": "none"
+    "canonical_compression": "none",
+    "write_fsync_probe": true,
+    "protected_checkpoint_workers": 12,
+    "protected_actor_files_verified": 5,
+    "coordinator_independent_check_free_gib": 412.7421875
   },
   "user_selected_execution": {
     "micro_batch_per_gpu": 64,
