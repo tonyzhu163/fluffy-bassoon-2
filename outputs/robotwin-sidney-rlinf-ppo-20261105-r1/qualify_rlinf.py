@@ -101,19 +101,32 @@ def main():
             torch.cuda.reset_peak_memory_stats();started=time.monotonic()
             try:
                 obs=env_obs(source,batch)
+                sampled_values=[]
+                hook=model.value_head.register_forward_hook(
+                    lambda module,inputs,output:sampled_values.append(output.detach().clone()))
                 with torch.no_grad():
-                    actions,sampled=model.predict_action_batch(obs,mode='train',compute_values=True)
+                    try:
+                        actions,sampled=model.predict_action_batch(obs,mode='train',compute_values=True)
+                    finally:hook.remove()
                     forward=model(forward_inputs=sampled['forward_inputs'],compute_logprobs=True,
                         compute_entropy=False,compute_values=True,use_cache=False)
-                errors={}
-                for out,old in [('logprobs','prev_logprobs'),('values','prev_values')]:
-                    before,after=sampled[old].float(),forward[out].float()
-                    assert before.shape==after.shape and torch.isfinite(after).all()
-                    errors[out]=float((after-before).abs().max())
+                before,after=sampled['prev_logprobs'].float(),forward['logprobs'].float()
+                assert before.shape==after.shape and torch.isfinite(after).all()
+                assert len(sampled_values)==5
+                values=torch.stack(sampled_values,dim=1).float().squeeze(-1)
+                picked=values[torch.arange(batch,device=values.device),sampled['forward_inputs']['denoise_inds'][:,0]]
+                replayed=forward['values'].float().reshape(batch)
+                mean=sampled['prev_values'].float().reshape(batch)
+                assert torch.isfinite(replayed).all() and torch.isfinite(mean).all()
+                errors=dict(logprobs=float((after-before).abs().max()),
+                    selected_step_values=float((replayed-picked).abs().max()),
+                    rollout_mean_values=float((mean-values.mean(dim=1)).abs().max()))
                 row=dict(batch=batch,seconds=time.monotonic()-started,
-                    peak_allocated_bytes=torch.cuda.max_memory_allocated(),max_abs_error=errors)
+                    peak_allocated_bytes=torch.cuda.max_memory_allocated(),max_abs_error=errors,
+                    native_value_semantics='rollout averages K suffix values; actor replays the sampled denoising step',
+                    mean_vs_selected_value_max_abs=float((mean-replayed).abs().max()))
                 capacity.append(row);print(json.dumps(row),flush=True)
-                assert errors['logprobs']<=1e-3 and errors['values']<=1e-4,errors
+                assert errors['logprobs']<=1e-3 and errors['selected_step_values']<=1e-4 and errors['rollout_mean_values']<=1e-4,errors
                 break
             except torch.OutOfMemoryError:
                 capacity.append(dict(batch=batch,out_of_memory=True));gc.collect();torch.cuda.empty_cache()

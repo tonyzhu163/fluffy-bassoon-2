@@ -67,12 +67,18 @@ class SidneyActor(runtime.PilotActor):
                 with torch.no_grad(),self.amp_context:
                     replay=self.model(forward_inputs=batch['forward_inputs'],compute_logprobs=True,
                         compute_entropy=False,compute_values=True,use_cache=False)
-                errors={}
-                for out,old in [('logprobs','prev_logprobs'),('values','prev_values')]:
-                    a,b=batch[old].float(),replay[out].float()
-                    assert a.shape==b.shape and torch.isfinite(a).all() and torch.isfinite(b).all()
-                    errors[out]=float((b-a).abs().max())
-                passed=errors['logprobs']<=1e-3 and errors['values']<=1e-4
+                a,b=batch['prev_logprobs'].float(),replay['logprobs'].float()
+                assert a.shape==b.shape and torch.isfinite(a).all() and torch.isfinite(b).all()
+                old_values=batch['prev_values'].float().reshape(-1)
+                new_values=replay['values'].float().reshape(-1)
+                assert old_values.shape==new_values.shape
+                assert torch.isfinite(old_values).all() and torch.isfinite(new_values).all()
+                errors=dict(logprobs=float((b-a).abs().max()),
+                    native_mean_vs_selected_value_max_abs=float((new_values-old_values).abs().max()))
+                # Native RLinf rollout values average all K suffix calls;
+                # actor values use the selected denoising step. They are
+                # intentionally different estimands. The bridge verifies each.
+                passed=errors['logprobs']<=1e-3
                 write(Path(self.cfg.native_pilot.output)/'first-replay'/f'rank-{self._rank:02d}.json',
                     dict(passed=passed,max_abs_error=errors,optimizer_steps=self.optimizer_steps))
                 assert passed,'Rollout/actor replay differs before first SGD'
