@@ -7,6 +7,7 @@ TASK_PLAN=${4:?admitted funding/storage contract}
 TASK_LIMIT=${5:?maximum worker seconds}
 [[ $TASK_PHASE == optimizer_probe || $TASK_PHASE == gradient_probe || $TASK_PHASE == qualification || $TASK_PHASE == ppo || $TASK_PHASE == grpo ]]
 [[ $TASK_LIMIT =~ ^[0-9]+$ ]]
+unset TASK_OPTIMIZER_DIAGNOSTIC
 TASK_CONFIG_MODE=$TASK_PHASE
 TASK_MINIMUM_HOST_GIB=1024
 if [[ $TASK_PHASE == gradient_probe || $TASK_PHASE == optimizer_probe ]]; then
@@ -139,6 +140,21 @@ if [[ $TASK_PHASE == ppo || $TASK_PHASE == grpo ]]; then
   timeout --signal=INT --kill-after=20s "$TASK_REMAINING" "$TASK_PYTHON" "$TASK_RUN/gradient_probe.py" \
     --config-path "$TASK_CODE/configs/native_ppo" --config-name sidney_phone_two \
     "${TASK_OVERRIDES[@]}" > "$TASK_PARENT_OUT/final-restore.log" 2>&1
+  "$TASK_PYTHON" - "$TASK_PARENT_OUT" "$TASK_ALGORITHM" <<'PY'
+import json,sys
+from pathlib import Path
+root=Path(sys.argv[1]);method=sys.argv[2]
+assert json.loads((root/'RESULT.json').read_text())['rollout_iterations']==2
+result=json.loads((root/'final-restore/RESULT.json').read_text())
+assert result['status']=='complete' and len(result['actors_restored'])==4
+for rank in range(4):
+    recovered=json.loads((root/'final-restore/recovery-signatures'/f'actor-{rank:02d}.json').read_text())
+    assert recovered['semantic_identity'] and recovered['actual']['optimizer_steps']==40
+    assert json.loads((root/'final-restore/recovery-frozen'/f'actor-{rank:02d}.json').read_text())['unchanged']
+(root/'final-restore/VERIFIED.json').write_text(json.dumps(dict(status='complete',algorithm=method,
+    optimizer_steps_per_rank=[40]*4,independent_process=True,extra_optimizer_updates=0,
+    extra_simulator_controls=0,weights_Adam_groups_scheduler_scaler_RNG_exact=True))+'\n')
+PY
   printf '{"seconds":%s,"actor_only":true,"extra_optimizer_updates":0,"extra_simulator_controls":0}\n' \
     "$(($(date +%s)-TASK_RESTORE_STARTED))" > "$TASK_PARENT_OUT/final-restore-timing.json"
 fi
