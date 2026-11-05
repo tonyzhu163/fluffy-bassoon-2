@@ -5,7 +5,7 @@ from pathlib import Path
 import sys
 
 from hydra import compose,initialize_config_dir
-from train_entry import validate_sidney
+from recipe import validate_sidney
 
 
 root=Path(sys.argv[1]);micro=int(sys.argv[2])
