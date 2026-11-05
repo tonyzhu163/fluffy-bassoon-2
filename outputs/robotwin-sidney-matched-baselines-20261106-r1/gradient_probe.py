@@ -77,7 +77,11 @@ class ProbeActor(PairedActor):
 @hydra.main(version_base='1.1',config_path=str(Path(os.environ['TASK_CODE'])/'configs/native_ppo'),config_name='sidney_phone_two')
 def main(cfg):
     cfg=validate_cfg(cfg);validate_pair(cfg)
-    assert cfg.native_pilot.qualification_only and cfg.algorithm.adv_type=='grpo'
+    # Training replay is the qualified critic-free fixture. Restore-only also
+    # checks each scientific arm's actual final actor boundary, including PPO's
+    # critic group, without constructing a simulator or taking another update.
+    if os.environ['TASK_PROBE_MODE']=='train':
+        assert cfg.native_pilot.qualification_only and cfg.algorithm.adv_type=='grpo'
     root=Path(cfg.native_pilot.output);source=Path(os.environ['TASK_FIXTURE'])/'train'
     mode=os.environ['TASK_PROBE_MODE'];assert mode in ('train','restore')
     cluster=Cluster(cluster_cfg=cfg.cluster,distributed_log_dir=cfg.runner.per_worker_log_path)

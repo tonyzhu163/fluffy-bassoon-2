@@ -38,3 +38,5 @@ canonical histories and raw audit evidence remain in place.
 
 [Final integrity](CHECKPOINT2-INTEGRITY.json), [boundary](checkpoint2/pilot-boundary.json),
 [result](RESULT.json), [exit](EXIT.json), [native metrics](all-iteration-metrics.txt).
+
+Post-close retention: the eight canonical rollout PTs were cold-copied with full byte/SHA readback and complete staged restoration before releasing 43.08858 GiB from PFS. Original metadata, restore pointers and all 36 checkpoint/boundary/worker files remain hot; the reported 114.97 GiB is the pre-archive snapshot. [Verified archive and restoration receipts](../../robotwin-sidney-matched-baselines-20261106-r1/train07-archive01/RESULT.md).

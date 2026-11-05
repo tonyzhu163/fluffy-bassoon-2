@@ -123,3 +123,23 @@ if [[ $TASK_PHASE == qualification || $TASK_PHASE == gradient_probe || $TASK_PHA
   printf '{"seconds":%s,"includes_fresh_workers_model_native_DCP_and_all_worker_sidecars":true}\n' \
     "$(($(date +%s)-TASK_RESTORE_STARTED))" > "$TASK_PARENT_OUT/recovery-timing.json"
 fi
+if [[ $TASK_PHASE == ppo || $TASK_PHASE == grpo ]]; then
+  # Verify this arm's actual trained actor/Adam boundary in a new process while
+  # preserving the declared simulator cases, SGD count and 170-minute ceiling.
+  "$TASK_PYTHON" -m ray.scripts.scripts stop --force > "$TASK_PARENT_OUT/ray-cleanup-final.log" 2>&1
+  export TASK_PROBE_MODE=restore
+  export TASK_FIXTURE=/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual02
+  export TASK_PROBE_CHECKPOINT=$TASK_PARENT_OUT/sidney-paired-$TASK_ALGORITHM/checkpoints/global_step_2
+  export NATIVE_PPO_OUTPUT=$TASK_PARENT_OUT/final-restore NATIVE_PPO_ATTEMPT=final-restore
+  mkdir "$NATIVE_PPO_OUTPUT"
+  mapfile -t TASK_OVERRIDES < <("$TASK_PYTHON" "$TASK_RUN/configuration.py" "$TASK_ALGORITHM" scientific)
+  TASK_REMAINING=$((NATIVE_PPO_DEADLINE-$(date +%s)-60))
+  [[ $TASK_REMAINING -gt 120 ]]
+  TASK_RESTORE_STARTED=$(date +%s)
+  timeout --signal=INT --kill-after=20s "$TASK_REMAINING" "$TASK_PYTHON" "$TASK_RUN/gradient_probe.py" \
+    --config-path "$TASK_CODE/configs/native_ppo" --config-name sidney_phone_two \
+    "${TASK_OVERRIDES[@]}" > "$TASK_PARENT_OUT/final-restore.log" 2>&1
+  printf '{"seconds":%s,"actor_only":true,"extra_optimizer_updates":0,"extra_simulator_controls":0}\n' \
+    "$(($(date +%s)-TASK_RESTORE_STARTED))" > "$TASK_PARENT_OUT/final-restore-timing.json"
+fi
+

@@ -1,0 +1,7 @@
+# Closed PPO pilot canonical rollouts archived
+
+The eight immutable train07 canonical `.pt` files (46,266,011,824 bytes, 43.08858 GiB) now have byte-identical plain-file copies in the existing BOS archive mount. Each file matched its original canonical receipt SHA, passed a complete independent cold readback, and was then fully staged back to shared storage and SHA256-checked again before its unchanged original was released. All eight originals were checked for visible open readers and source inventory stability; the closed scheduler job and owner-coordinated dependency review found no active consumers. The active replay uses qual02 and scientific arms initialize from original SFT.
+
+Original canonical JSON metadata remains hot, with adjacent `.pt.cold.json` pointers and explicit restore commands. Metadata also has cold copies. All 36 train07 checkpoint/boundary/worker files were retained with unchanged inventories. Shared model caches, the active qualifier and qual02 inputs were untouched. Peak staging was 5,783,251,531 bytes (5.38607 GiB), below the explicit 8 GiB reservation; staging was removed after the final verification. No tensor reserialization, model computation, simulator episode or GPU allocation was used.
+
+The complete per-file bytes, SHA256, cold paths, verification and restoration receipts are in STATUS.json. Reported training output size remains the pre-archive snapshot. No source/student alignment admission is implied. Fresh shared free space must still be measured before the science pair.
