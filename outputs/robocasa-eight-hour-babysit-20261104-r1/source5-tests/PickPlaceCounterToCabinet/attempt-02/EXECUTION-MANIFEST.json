@@ -1,0 +1,163 @@
+{
+  "task": "PickPlaceCounterToCabinet",
+  "config": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5-tests/PickPlaceCounterToCabinet/attempt-01/native-eval-config.json",
+  "config_sha256": "2126760025aeb6407bfb89476b3ae12756c4ed796148fb67d78f2cc63f8d034e",
+  "source_config": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-02/resolved-config.json",
+  "source_config_sha256": "2126760025aeb6407bfb89476b3ae12756c4ed796148fb67d78f2cc63f8d034e",
+  "fixture": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/offline-initial-ratio-inputs-r2/OpenDrawer.pt",
+  "fixture_sha256": "e1b7d41082c7c9206a4c1416adb278d25c0a02d29fb967e0a8db0a32f4894d22",
+  "policies": {
+    "SFT": {
+      "step": 0,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/input-prefix-r1/global_step_0/actor/model_state_dict/full_weights.pt",
+      "sha256": "eb276899d5a06d8ae87870239c549a5c6e1fee6770d2976d05f6d97a0fa95a10",
+      "marker": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/input-prefix-r1/global_step_0/pilot-boundary.json",
+      "marker_sha256": "f5c3382d8e51761bfd9ad3d48071673c7cd8412a4f0c3793318531f64d491018",
+      "prefix": true,
+      "ignore_last": true
+    },
+    "teacher": {
+      "step": 40,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-02/PickPlaceCounterToCabinet/checkpoints/global_step_40/actor/model_state_dict/full_weights.pt",
+      "sha256": "7592cfe90e76b37a0b6665f5de89e8e5521f80dd222937d327b601981ffa3055",
+      "marker": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-02/PickPlaceCounterToCabinet/checkpoints/global_step_40/pilot-boundary.json",
+      "marker_sha256": "52d7cdacae59ae63160ea5a280311acabbd35b040ac7f8038b3f0398ee5c38b1",
+      "prefix": true,
+      "ignore_last": true
+    }
+  },
+  "sequential_order": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "teacher",
+      "SFT"
+    ],
+    [
+      "SFT",
+      "teacher"
+    ],
+    [
+      "teacher",
+      "SFT"
+    ],
+    [
+      "SFT",
+      "teacher"
+    ],
+    [
+      "teacher",
+      "SFT"
+    ],
+    [
+      "SFT",
+      "teacher"
+    ],
+    [
+      "teacher",
+      "SFT"
+    ],
+    [
+      "SFT",
+      "teacher"
+    ],
+    [
+      "teacher",
+      "SFT"
+    ],
+    [
+      "SFT",
+      "teacher"
+    ],
+    [
+      "teacher",
+      "SFT"
+    ],
+    [
+      "SFT",
+      "teacher"
+    ],
+    [
+      "teacher",
+      "SFT"
+    ],
+    [
+      "SFT",
+      "teacher"
+    ],
+    [
+      "teacher",
+      "SFT"
+    ],
+    [
+      "SFT",
+      "teacher"
+    ],
+    [
+      "teacher",
+      "SFT"
+    ]
+  ],
+  "case_base": 73220000,
+  "rng_base": 83220000,
+  "cases": 512,
+  "bank_size": 8,
+  "policy_controls": 619200,
+  "primary": "teacher minus original SFT first success",
+  "family_tasks": [
+    "PickPlaceCounterToCabinet",
+    "CoffeeSetupMug",
+    "TurnOnSinkFaucet"
+  ],
+  "family_gate": "wins>losses and Holm-adjusted exact McNemar p<.05 across all three",
+  "fixed_endpoint": true,
+  "DEV_selection": false,
+  "SGD": 0,
+  "maximum_allocation_GPU_hours": 2.5,
+  "native_worker_commit": "81caf87060c9d966e0256e94da2ae705366ec33f"
+}

@@ -4,7 +4,7 @@
   "combined_base_floor_GiB": 220,
   "external_fit_only_growth_GiB": 6,
   "meta_readouts_held": true,
-  "RoboTwin_large_writes_held": true,
+  "RoboTwin_large_writes_held": false,
   "protected_cache": "/mowenjie/fluffy-bassoon-2/inputs/steering-source-members-20261105-pfs01",
   "owned_intents": [
     {
@@ -18,8 +18,11 @@
       "max_reservation_GPU_hours": 2.5
     }
   ],
-  "combined_required_before_any_own_output_GiB": 254,
+  "combined_required_before_any_own_output_GiB": 371,
   "rule": "Add only unregistered other output intents; registered rows already account for growth. Reclaimed bytes are counted only through fresh statvfs.",
-  "external_scratch_growth_GiB": 8,
-  "scratch_note": "RoboTwin CPU-only qualification; large pilot remains held. Coordinator supplies remaining reservation updates."
+  "external_scratch_growth_GiB": 0,
+  "scratch_note": "Archive02 scratch absent,8GiB released; coordinator admitted original-format125GiB pilot19:50 after fresh412.74GiB capacity check.",
+  "external_RoboTwin_pilot_growth_GiB": 125,
+  "new_source70_launches_held_pending_requalified_combined_guard": true,
+  "updated_shanghai": "2026-11-05T19:52:07.659768+08:00"
 }

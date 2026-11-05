@@ -1,0 +1,25 @@
+{
+  "measured_shanghai": "2026-11-05T19:49:07.415058+08:00",
+  "assessment_only": true,
+  "no_files_moved": true,
+  "protected_current_tests": true,
+  "capacity": {
+    "PickPlaceCounterToCabinet": {
+      "attempt-01": 5041964047,
+      "attempt-02": 15288999442,
+      "final40_inference_hot_bytes": 6957548034,
+      "final40_recovery_non_inference_bytes": 10220756578
+    },
+    "TurnOnSinkFaucet": {
+      "attempt-01": 4886714496,
+      "attempt-02": 14856054374,
+      "final40_inference_hot_bytes": 6957548034,
+      "final40_recovery_non_inference_bytes": 10220757401
+    }
+  },
+  "conditions": [
+    "Complete and independently audit all current512 tests before raw-test archival",
+    "Preserve full resumability and standalone inference; any recovery archival needs byte+SHA verified cold readback and stable path aliases",
+    "Stage canonical histories explicitly before any future five-source prep if archived; current histories remain hot"
+  ]
+}
