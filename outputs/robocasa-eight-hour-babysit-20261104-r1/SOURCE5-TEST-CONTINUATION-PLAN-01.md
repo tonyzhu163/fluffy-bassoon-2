@@ -1,31 +1,36 @@
-# Conditional fixed-case endpoint continuation
+# Fixed-case endpoint continuation after the shared-storage stop
 
-Counter's active test retains its original code, fixed40 teacher, original SFT,
-512 case seeds, eight-lane batches, native sampler and time limit. Recent panel
-timing puts completion near the native deadline reserve. Prepare recovery code
-without changing or stopping that allocation.
+The first Counter allocation stopped at its unchanged200GiB storage guard
+when the separate, human-requested127GiB meta-learning source cache was staged
+onto PFS. Scheduler release was verified18:52:22. Preserve all376 complete
+paired cases and the unmatched8-case teacher panel. Select retained banks by
+completeness alone; rerun both policies for incomplete banks47–63 in a new
+attempt. Count the abandoned panel in all-attempt work and exclude it from the
+512-case primary statistic. Do not resume the old stopped checkpoint sweep.
 
-Only if the original allocation ends with incomplete case banks, first verify
-its scheduler release. Retain each complete paired bank, including the bank0
-repeat, and rerun every incomplete bank in a new attempt. Select by completeness
-alone. Preserve and charge abandoned panels and unresolved action reservations;
-never use them twice in the 512-case statistic.
+One manually diagnosed continuation reserves at most1.2GPU-hours, with a
+72-minute scheduler cap and4140-second command deadline. The unchanged native
+executor retains global bank indices, cases/noise seeds, batch8, policy hashes
+and alternating policy order. A derived execution manifest differs from the
+original only by empty scheduling lists for already retained banks. This avoids
+reloading a model/Ray service separately for every recovered bank. The final
+artifact collection and statistics use the unchanged original manifest.
 
-One manually diagnosed continuation may reserve at most0.5GPU-hours on one GPU,
-with a30-minute scheduler cap. It may recover at most four banks by calling the
-unchanged qualified native executor with index=b,workers=64 for each bank b.
-This selects exactly that original bank, including its original case/noise seeds
-and alternating policy order. Each child has its own Ray service and escrow.
-No automatic retry follows another failure.
+The70GPU-hour campaign ceiling and8GPU-hour test/preparation allowance remain
+binding. Closed Coffee2.09528 + Counter1.77139 + continuation1.2 + Faucet2.5 is
+at most7.56667GPU-hours. No new source or scientific arm is authorized; no
+automatic retry follows another failure.
 
-The original70GPU-hour hard ceiling and8GPU-hour test/preparation allowance
-remain binding. Coffee2.09528 + Counter2.5 + continuation0.5 + Faucet2.5 is at
-most7.59528GPU-hours before other test/preparation charges. Recheck the live
-ledger and storage before submission. This is recovery of the authorized test,
-with no new source, checkpoint selection, cases, steering fit or test family.
+Combined shared admission uses the unchanged220GiB base (our200GiB floor plus
+20GiB headroom), Counter5GiB + Faucet15GiB outstanding output, and6GiB of the
+other owner's fit-only growth:246GiB of actual free PFS is required before
+concurrent starts. Completed archival or hardlink releases are counted only
+through fresh filesystem measurements. The active127GiB PFS source cache and
+all ACTIVE-DEPENDENCIES paths remain protected. Meta ID/OOD rollout writers and
+the125–170GB RoboTwin pilot remain held for separate shared admission.
 
 Create a separate artifact collection with explicit source-job receipts,
 immutable panel/sampler references and all source accounting. Independently
-audit every selected raw episode and every selected/discarded charge before
-publishing a result binding. The original three-comparison Holm rule is unchanged.
-If the original allocation completes, do not launch this continuation.
+audit all selected raw episodes, the execution-schedule mapping and every
+selected/discarded charge before publishing the result binding. The original
+three-comparison Holm rule is unchanged.

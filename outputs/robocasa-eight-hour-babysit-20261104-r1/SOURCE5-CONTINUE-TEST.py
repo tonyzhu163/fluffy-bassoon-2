@@ -1,5 +1,6 @@
 """Manually recover complete fixed-case banks without changing the qualified executor."""
 import argparse
+from copy import deepcopy
 import hashlib
 import importlib.util
 import json
@@ -56,7 +57,8 @@ def prepare(task, output):
     assert row['scheduler_release_verified'] and row['released_shanghai'] and row['kind'] == 'endpoint_test'
     console = (original / 'node-00/console.log').read_text(errors='replace')
     clock = read(original / 'node-00/CLOCK.json')
-    assert clock['exit_code'] != 0 and ('Insufficient time for next full bank' in console or clock['exit_code'] == 124)
+    storage_stop = 'assert fs.f_bavail*fs.f_frsize > 200 << 30' in console
+    assert clock['exit_code'] != 0 and (storage_stop or 'Insufficient time for next full bank' in console or clock['exit_code'] == 124)
     retained, discarded, hashes = [], [], {}
     for bank in range(64):
         base = original / 'node-00/banks' / f'bank-{bank:03d}'
@@ -69,43 +71,56 @@ def prepare(task, output):
                 assert panel['common_sampler'] and sha(panel['episodes_path']) == panel['episodes_sha256']
                 assert read(panel['episodes_path'])['completed']
                 hashes[str(path)] = sha(path)
-    assert 0 in retained and 1 <= len(discarded) <= 4
+    assert 0 in retained and 1 <= len(discarded) <= 24
     assert output.parent == original.parent and not output.exists()
     output.mkdir()
     manifest = original / 'MANIFEST.json'
+    execution = deepcopy(read(manifest))
+    execution['sequential_order'] = [labels(bank) if bank in discarded else [] for bank in range(64)]
+    execution_path = output / 'EXECUTION-MANIFEST.json'
+    write(execution_path, execution)
     write(output / 'PLAN.json', dict(task=task, original=str(original), original_job_id=row['job_id'],
         manifest=str(manifest), manifest_sha256=sha(manifest), retained_banks=retained,
         remaining_banks=discarded, original_panel_sha256=hashes,
-        maximum_GPU_hours=.4, scheduler_minutes=24, command_seconds=1260,
+        execution_manifest=str(execution_path), execution_manifest_sha256=sha(execution_path),
+        stop_reason='shared_storage_guard' if storage_stop else 'allocation_deadline',
+        maximum_GPU_hours=1.2, scheduler_minutes=72, command_seconds=4140,
         storage_reservation_GiB=5, scientific_comparison_unchanged=True,
         policy='Retain complete pairs only; rerun incomplete banks without inspecting outcomes',
         automatic_retry=False, SGD=0))
 
 
-def bank(plan_path, number, deadline):
-    plan = read(plan_path)
-    assert number in plan['remaining_banks'] and plan['scientific_comparison_unchanged']
-    manifest = Path(plan['manifest'])
-    assert sha(manifest) == plan['manifest_sha256']
-    output = plan_path.parent / 'workers' / f'bank-{number:03d}'
-    output.mkdir(parents=True)
-    native = fixed_test().configure(plan['task'])
-    # The qualified executor's partition is range(index,64,workers).
-    # index=b,workers=64 selects exactly the original bank b, with no remapping.
-    try:
-        native.execute(manifest, number, 64, output, deadline)
-    finally:
-        import ray
-        ray.shutdown()
-
-
 def run(plan_path, deadline):
     plan = read(plan_path)
-    assert 1 <= len(plan['remaining_banks']) <= 4
-    for number in plan['remaining_banks']:
-        subprocess.run([sys.executable, '-B', str(HERE / 'SOURCE5-CONTINUE-TEST.py'), 'bank',
-            '--plan', str(plan_path), '--bank', str(number), '--deadline', str(deadline)], check=True)
-    write(plan_path.parent / 'node-00/RESULT.json', dict(completed=True,
+    assert 1 <= len(plan['remaining_banks']) <= 24 and plan['scientific_comparison_unchanged']
+    manifest = Path(plan['manifest'])
+    assert sha(manifest) == plan['manifest_sha256']
+    execution_path = Path(plan['execution_manifest'])
+    assert sha(execution_path) == plan['execution_manifest_sha256']
+    original, execution = read(manifest), read(execution_path)
+    assert {k:v for k,v in original.items() if k != 'sequential_order'} == {
+        k:v for k,v in execution.items() if k != 'sequential_order'}
+    output = plan_path.parent / 'node-00'
+    assert output.is_dir() and not (output / 'RESULT.json').exists()
+    native = fixed_test().configure(plan['task'])
+    original_order = native.order
+    selected = set(plan['remaining_banks'])
+    assert original['sequential_order'] == [original_order(bank) for bank in range(64)]
+    native.order = lambda bank: original_order(bank) if bank in selected else []
+    assert execution['sequential_order'] == [native.order(bank) for bank in range(64)]
+    # Only the per-process scheduling table changes. Original bank indices,
+    # CASE_BASE/RNG_BASE, policies, batch width and the native executor stay fixed.
+    try:
+        native.execute(execution_path, 0, 1, output, deadline)
+    finally:
+        native.order = original_order
+        import ray
+        ray.shutdown()
+    done = read(output / 'RESULT.json')
+    assert done['completed'] and done['panels'] == 2*len(selected)
+    assert done['policy_controls'] == 9600*len(selected)
+    assert done['manifest_sha256'] == plan['execution_manifest_sha256']
+    write(output / 'RECOVERY-RESULT.json', dict(completed=True,
         banks=plan['remaining_banks'], plan_sha256=sha(plan_path), SGD=0))
 
 
@@ -183,14 +198,16 @@ def assemble(plan_path, job, output):
         assert sha(path) == digest
     sources = [source(original / 'node-00', plan['original_job_id'])]
     bank_sources = {str(b): 0 for b in plan['retained_banks']}
-    assert read(plan_path.parent / 'node-00/RESULT.json')['completed']
+    worker = plan_path.parent / 'node-00'
+    assert read(worker / 'RECOVERY-RESULT.json')['completed']
+    done = read(worker / 'RESULT.json')
+    assert done['completed'] and done['policy_controls'] == 9600*len(plan['remaining_banks'])
+    assert done['manifest_sha256'] == plan['execution_manifest_sha256']
+    added = source(worker, job)
+    added['execution_manifest'] = dict(path=plan['execution_manifest'], sha256=plan['execution_manifest_sha256'])
+    sources.append(added)
     for number in plan['remaining_banks']:
-        worker = plan_path.parent / 'workers' / f'bank-{number:03d}'
-        done = read(worker / 'RESULT.json')
-        assert done['completed'] and done['banks'] == [number] and done['policy_controls'] == 9600
-        assert done['manifest_sha256'] == plan['manifest_sha256']
-        sources.append(source(worker, job))
-        bank_sources[str(number)] = len(sources)-1
+        bank_sources[str(number)] = 1
     collect(plan['task'], Path(plan['manifest']), output, sources, bank_sources)
 
 
@@ -216,20 +233,17 @@ def promote(task, output):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=('prepare', 'run', 'bank', 'assemble', 'qualify', 'promote'))
+    parser.add_argument('mode', choices=('prepare', 'run', 'assemble', 'qualify', 'promote'))
     parser.add_argument('--task', choices=('PickPlaceCounterToCabinet', 'TurnOnSinkFaucet'))
     parser.add_argument('--plan', type=Path)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--job')
-    parser.add_argument('--bank', type=int)
     parser.add_argument('--deadline', type=float)
     args = parser.parse_args()
     if args.mode == 'prepare':
         prepare(args.task, args.output)
     elif args.mode == 'run':
         run(args.plan, args.deadline)
-    elif args.mode == 'bank':
-        bank(args.plan, args.bank, args.deadline)
     elif args.mode == 'assemble':
         assemble(args.plan, args.job, args.output)
     elif args.mode == 'qualify':

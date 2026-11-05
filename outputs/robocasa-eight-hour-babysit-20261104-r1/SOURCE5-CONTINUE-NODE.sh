@@ -22,7 +22,7 @@ import datetime,json,os,socket,sys,time
 run=Path(sys.argv[1]);task=sys.argv[2];plan=json.loads(Path(sys.argv[3]).read_text())
 budget=json.loads((run/'SOURCE5-BUDGET.json').read_text());ledger=json.loads((run/'SOURCE5-ALLOCATION-LEDGER.json').read_text())
 assert budget['approved'] and budget['GPU_hours_ceiling']==ledger['approved_GPU_hours']==70
-assert plan['task']==task and 1<=len(plan['remaining_banks'])<=4 and plan['maximum_GPU_hours']==.4
+assert plan['task']==task and 1<=len(plan['remaining_banks'])<=24 and plan['maximum_GPU_hours']==1.2
 assert plan['scientific_comparison_unchanged'] and not plan['automatic_retry']
 job=socket.gethostname().removesuffix('-master-0');reserved=tests=remaining=0;included=False
 for row in ledger['allocations']+ledger.get('pending_submissions',[]):
@@ -33,7 +33,7 @@ for row in ledger['allocations']+ledger.get('pending_submissions',[]):
     reserved+=amount
     if row['kind']=='endpoint_test':tests+=amount
     if row['job_id']==job:
-        assert row['kind']=='endpoint_test' and row['task']==task and row['GPUs']==1 and row['max_reservation_GPU_hours']==.4
+        assert row['kind']=='endpoint_test' and row['task']==task and row['GPUs']==1 and row['max_reservation_GPU_hours']==1.2
         included=True
     elif not row.get('released_shanghai'):
         written=0
@@ -45,10 +45,19 @@ for row in ledger['allocations']+ledger.get('pending_submissions',[]):
                 except FileNotFoundError:pass
         allowance=row['storage_reservation_GiB']*2**30;assert written<=allowance
         remaining+=allowance-written
-assert reserved+(0 if included else .4)<=70 and tests+(0 if included else .4)<=8
+shared=json.loads((run/'SOURCE5-SHARED-RESERVATIONS.json').read_text())
+assert shared['combined_base_floor_GiB']==220 and shared['meta_readouts_held'] and shared['RoboTwin_large_writes_held']
+registered={row['output'] for row in ledger['allocations']+ledger.get('pending_submissions',[])}
+current=f'source5-tests/{task}/attempt-02'
+for intent in shared['owned_intents']:
+    if intent['output']==current or intent['output'] in registered:continue
+    reserved+=intent['max_reservation_GPU_hours'];tests+=intent['max_reservation_GPU_hours']
+    remaining+=intent['storage_reservation_GiB']*2**30
+remaining+=shared['external_fit_only_growth_GiB']*2**30
+assert reserved+(0 if included else 1.2)<=70 and tests+(0 if included else 1.2)<=8
 fs=os.statvfs(run);free=fs.f_bavail*fs.f_frsize;required=225*2**30+remaining
 assert free>=required
-print(json.dumps(dict(passed=True,reserved_GPU_hours=reserved+(0 if included else .4),test_reserved_GPU_hours=tests+(0 if included else .4),free_GiB=free/2**30,required_GiB=required/2**30)))
+print(json.dumps(dict(passed=True,reserved_GPU_hours=reserved+(0 if included else 1.2),test_reserved_GPU_hours=tests+(0 if included else 1.2),free_GiB=free/2**30,required_GiB=required/2**30)))
 PY
 if [[ ${1:-} == --admit ]]; then exit 0; fi
 mkdir "$OUT"
@@ -67,5 +76,5 @@ if [[ -z ${CUDA_VISIBLE_DEVICES:-} ]]; then
     export CUDA_VISIBLE_DEVICES=0
 fi
 "$PY" -B "$ENGINE/scripts/[train]gpu_probe.py" --expected-count 1 --purpose evaluation --baige-container --output "$OUT/GPU-PROBE.json"
-DEADLINE=$((START+1260))
-timeout --kill-after=30s 1260 "$PY" -B "$SOURCE5_RECOVERY_CODE/$RUN/SOURCE5-CONTINUE-TEST.py" run --plan "$PLAN" --deadline "$DEADLINE"
+DEADLINE=$((START+4140))
+timeout --kill-after=30s 4140 "$PY" -B "$SOURCE5_RECOVERY_CODE/$RUN/SOURCE5-CONTINUE-TEST.py" run --plan "$PLAN" --deadline "$DEADLINE"

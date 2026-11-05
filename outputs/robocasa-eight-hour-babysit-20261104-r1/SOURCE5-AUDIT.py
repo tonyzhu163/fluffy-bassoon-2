@@ -43,6 +43,15 @@ def audit(task, *, qualification=False, folder=None):
             assert probe['status'] == 'passed' and len(probe['devices']) == 1
             assert probe['hostname'] == source['job_id'] + '-master-0'
             assert read(Path(source['parity']['path']))[0]['passed']
+            if 'execution_manifest' in source:
+                path = Path(source['execution_manifest']['path'])
+                assert sha(path) == source['execution_manifest']['sha256']
+                execution = read(path)
+                assert {k:v for k,v in execution.items() if k != 'sequential_order'} == {
+                    k:v for k,v in m.items() if k != 'sequential_order'}
+                index = collection['sources'].index(source)
+                assert execution['sequential_order'] == [m['sequential_order'][bank]
+                    if collection['bank_sources'][str(bank)] == index else [] for bank in range(64)]
     else:
         probe = read(worker / 'GPU-PROBE.json')
         assert probe['status'] == 'passed' and len(probe['devices']) == 1

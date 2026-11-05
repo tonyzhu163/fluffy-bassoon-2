@@ -1,0 +1,23 @@
+{
+  "format": "source5.shared-reserved-growth.v1",
+  "coordinator_thread": "01a1ab47-e0cb-7890-bbf8-088a1be17240",
+  "combined_base_floor_GiB": 220,
+  "external_fit_only_growth_GiB": 6,
+  "meta_readouts_held": true,
+  "RoboTwin_large_writes_held": true,
+  "protected_cache": "/mowenjie/fluffy-bassoon-2/inputs/steering-source-members-20261105-pfs01",
+  "owned_intents": [
+    {
+      "output": "source5-tests/PickPlaceCounterToCabinet/attempt-02",
+      "storage_reservation_GiB": 5,
+      "max_reservation_GPU_hours": 1.2
+    },
+    {
+      "output": "source5-tests/TurnOnSinkFaucet/attempt-01",
+      "storage_reservation_GiB": 15,
+      "max_reservation_GPU_hours": 2.5
+    }
+  ],
+  "combined_required_before_any_own_output_GiB": 246,
+  "rule": "Add only unregistered other output intents; registered rows already account for growth. Reclaimed bytes are counted only through fresh statvfs."
+}

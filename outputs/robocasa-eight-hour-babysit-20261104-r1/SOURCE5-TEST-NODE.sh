@@ -57,6 +57,18 @@ for row in ledger.get('pending_submissions',[]):
     written=sum(p.stat().st_size for p in (run/row['output']).rglob('*') if p.is_file() and not p.is_symlink())
     assert written<=allowance
     remaining+=allowance-written
+shared_path=run/'SOURCE5-SHARED-RESERVATIONS.json'
+if shared_path.exists():
+    shared=json.loads(shared_path.read_text())
+    assert shared['combined_base_floor_GiB']==220 and shared['meta_readouts_held'] and shared['RoboTwin_large_writes_held']
+    registered={row['output'] for row in ledger['allocations']+ledger.get('pending_submissions',[])}
+    current=f'source5-tests/{task}/attempt-01'
+    for intent in shared['owned_intents']:
+        if intent['output'] == current or intent['output'] in registered:continue
+        reserved+=intent['max_reservation_GPU_hours']
+        test_reserved+=intent['max_reservation_GPU_hours']
+        remaining+=intent['storage_reservation_GiB']*2**30
+    remaining+=shared['external_fit_only_growth_GiB']*2**30
 assert reserved+(0 if included else 2.5)<=70
 assert test_reserved+(0 if included else 2.5)<=8
 fs=os.statvfs(run);free=fs.f_bavail*fs.f_frsize
