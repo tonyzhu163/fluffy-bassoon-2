@@ -6,7 +6,8 @@ import torch
 
 from fluffy_bassoon.meta_rl.flow_history import FlowBridgeConfig, HistoryFlowSteeringPolicy
 from fluffy_bassoon.meta_rl.flow_bridge_train import (
-    bridge_update, query_context, query_weights, restore_resume, save_resume)
+    bridge_update, flow_batch_loss, query_context, query_weights, restore_resume,
+    save_resume, validate_batches)
 
 
 class Motor(torch.nn.Module):
@@ -111,3 +112,16 @@ def test_context_never_uses_future_query_labels_or_feedback(interface):
     assert torch.equal(query_weights(batch, 'ad'), torch.ones(4))
     with pytest.raises(ValueError, match='fitted frozen value'):
         query_weights(batch, 'dit')
+
+
+@pytest.mark.parametrize('interface', ['kv_bridge', 'velocity_bridge'])
+def test_native_validation_keeps_required_graph_without_backward_or_updates(interface):
+    policy, motor, batch, prepare = fixture(interface)
+    before = deepcopy(policy.state_dict())
+    expected = float(flow_batch_loss(policy, motor, batch, prepare).detach())
+    with torch.no_grad():
+        actual = validate_batches(policy, motor, [batch, batch], prepare)
+    assert actual == expected
+    assert all(torch.equal(v, policy.state_dict()[k]) for k, v in before.items())
+    assert all(p.grad is None for p in policy.parameters())
+    assert all(p.grad is None for p in motor.parameters())

@@ -21,7 +21,7 @@
     "query_selection": "One uniformly selected query per sampled causal complete-episode window; identical draws/seeds across interfaces",
     "loss": "Native action-derived flow matching over active12 coordinates",
     "targets": "AD/DIT/IC-IQL actual source actions; DPT fixed130 teacher actions; canonical binary representatives with official native normalization",
-    "value_methods": "Reuse only the independently converged Q/V states for this exact source split, with optimizer-free detached advantage weights; no direct-action actor is imported",
+    "value_methods": "Reuse only the independently converged Q/V states for this exact source split, with optimizer-free detached advantage weights; no direct-action actor initializes or controls a steering policy",
     "learning_rate": 0.0003,
     "minimum_updates": 1000,
     "validation_every_updates": 100,

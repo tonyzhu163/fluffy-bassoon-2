@@ -121,10 +121,12 @@ def restore_resume(path, *, contract, policy, optimizer, sampler, generator):
     return saved["progress"]
 
 
-@torch.no_grad()
+@torch.enable_grad()
 def validate_batches(policy, model, batches, prepare_queries):
+    # The KV suffix deliberately rejects detached/no-grad execution. Build its
+    # normal graph, then discard it without backward or optimizer updates.
     policy.eval()
-    losses = [float(flow_batch_loss(policy, model, batch, prepare_queries)) for batch in batches]
+    losses = [float(flow_batch_loss(policy, model, batch, prepare_queries).detach()) for batch in batches]
     if not losses or not all(math.isfinite(x) for x in losses):
         raise FloatingPointError("Require finite held-out native flow losses")
     return sum(losses) / len(losses)

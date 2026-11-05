@@ -32,6 +32,7 @@ def main():
     p.add_argument('--execution-batch', type=int, default=8)
     p.add_argument('--max-seconds', type=int, default=6300)
     p.add_argument('--qualify', action='store_true')
+    p.add_argument('--reuse-zero', type=Path)
     p.add_argument('--qualify-updates', type=int, default=50)
     args = p.parse_args()
     if sys.platform != 'linux' or not socket.gethostname().startswith('job-'):
@@ -131,7 +132,7 @@ def main():
         native_model_sha256=signature['model_sha256'], native_norm_sha256=signature['norm_sha256'],
         sources=sources, logical_batch=8, max_episodes=12, learning_rate=.0003,
         seed=0, value_reference=value_reference,
-        value_reuse='only independent converged Q/V; direct-action actors are never imported',
+        value_reuse='only independent converged Q/V used; direct-action actors never initialize or control a steering policy',
         target_space='canonical mapped physical actions encoded with official32-coordinate native normalization',
         loss='action-derived flow matching on active12 coordinates; one causal query per sampled history window',
         qualification_only=args.qualify,
@@ -208,35 +209,55 @@ def main():
             np.testing.assert_array_equal(actual, expected.detach().float().cpu().numpy())
         policy.requires_grad_(True)
         del deployment
-        # Same real six-episode protocol as the previous native qualification.
-        from fluffy_bassoon.meta_rl.steering_history_native import NativeAttemptBackend
-        from fluffy_bassoon.meta_rl.rlinf_native_ppo import ActionJournal
-        from fluffy_bassoon.meta_rl.joint_steering_ppo_worker import native_video_writer
-        prior = ROOT / 'outputs/robocasa-eight-hour-babysit-20261104-r1/gpu/native-six-qualification-01/full/OpenDrawer/bank-000/RESULT.json'
-        prior_result = json.loads(prior.read_text())
-        prior_saved = torch.load(prior_result['references'][0]['path'], map_location='cpu', weights_only=False)
-        zero_out = args.output / 'zero-native'
-        journal = ActionJournal(zero_out / 'accounting', rank=0, world=1,
-                                attempt='zero-bridge', maximum_actions=4368)
-        deployment = FlowBridgeMotor(native, FlowBridgeCodec(action_codec.mean, action_codec.std,
-            interface=args.interface), policy)
-        backend = NativeAttemptBackend(output=zero_out / 'attempts',
-            canonical_root=ROOT / 'outputs/robocasa-eight-hour-babysit-20261104-r1/gpu/canonical-qualification-ID',
-            motor=deployment, spec=deployment.codec, native_factory=factory.paired,
-            journal=journal, writer_factory=native_video_writer,
-            binding=dict(source_commit=args.commit, model=signature,
-                         render_contract='bounded_two_intensity_levels', zero_initialized_bridge=True),
-            maximum_rgb_delta=2, actual_attempts=6, fixed_case_order=True)
-        rows = backend.run_bank(policy, [dict(case=prior_saved['case'], horizon=600)],
-                                lanes=1, attempts=6, deadline_unix=time.time() + 650)
-        if len(rows) != 6 or backend.last_batch_sizes != [1] * 72:
-            raise ValueError('Native six-episode qualification coverage changed')
-        _json(zero_out / 'RESULT.json', dict(episodes=rows, references=backend.references,
-            controls_charged=journal.charged(), zero_initialized_bridge=True,
-            actual_batch_sizes=backend.last_batch_sizes, optimizer_updates=0,
-            native_parameters_frozen=True))
-        del deployment, backend
-        policy.requires_grad_(True)
+        if args.reuse_zero:
+            prior_bank = args.reuse_zero / args.interface / 'zero-native'
+            audit = json.loads((prior_bank / 'AUDIT.json').read_text())
+            if (not audit['passed'] or audit['episodes'] != 6
+                    or audit['result_sha256'] != file_sha256(prior_bank / 'RESULT.json')):
+                raise ValueError('Require independently audited complete zero-native episodes')
+            prior = json.loads((prior_bank / 'RESULT.json').read_text())
+            ref = prior['references'][0]
+            if file_sha256(ref['path']) != ref['sha256']:
+                raise ValueError('Reused native episode reference changed')
+            saved_zero = torch.load(ref['path'], map_location='cpu', weights_only=False)
+            bound_model = saved_zero['binding']['model']
+            if (bound_model['model_sha256'] != signature['model_sha256']
+                    or bound_model['norm_sha256'] != signature['norm_sha256']
+                    or bound_model['runtime_commit'] != signature['runtime_commit']):
+                raise ValueError('Reused native qualification has a different frozen motor')
+            _json(args.output / 'REUSED-ZERO-ROLLOUT.json', dict(path=str(prior_bank / 'RESULT.json'),
+                sha256=audit['result_sha256'], audit_sha256=file_sha256(prior_bank / 'AUDIT.json'),
+                reason='Only validation grad context changed; sampler, motor and zero adapter unchanged'))
+        else:
+            # Same real six-episode protocol as the previous native qualification.
+            from fluffy_bassoon.meta_rl.steering_history_native import NativeAttemptBackend
+            from fluffy_bassoon.meta_rl.rlinf_native_ppo import ActionJournal
+            from fluffy_bassoon.meta_rl.joint_steering_ppo_worker import native_video_writer
+            prior = ROOT / 'outputs/robocasa-eight-hour-babysit-20261104-r1/gpu/native-six-qualification-01/full/OpenDrawer/bank-000/RESULT.json'
+            prior_result = json.loads(prior.read_text())
+            prior_saved = torch.load(prior_result['references'][0]['path'], map_location='cpu', weights_only=False)
+            zero_out = args.output / 'zero-native'
+            journal = ActionJournal(zero_out / 'accounting', rank=0, world=1,
+                                    attempt='zero-bridge', maximum_actions=4368)
+            deployment = FlowBridgeMotor(native, FlowBridgeCodec(action_codec.mean, action_codec.std,
+                interface=args.interface), policy)
+            backend = NativeAttemptBackend(output=zero_out / 'attempts',
+                canonical_root=ROOT / 'outputs/robocasa-eight-hour-babysit-20261104-r1/gpu/canonical-qualification-ID',
+                motor=deployment, spec=deployment.codec, native_factory=factory.paired,
+                journal=journal, writer_factory=native_video_writer,
+                binding=dict(source_commit=args.commit, model=signature,
+                             render_contract='bounded_two_intensity_levels', zero_initialized_bridge=True),
+                maximum_rgb_delta=2, actual_attempts=6, fixed_case_order=True)
+            rows = backend.run_bank(policy, [dict(case=prior_saved['case'], horizon=600)],
+                                    lanes=1, attempts=6, deadline_unix=time.time() + 650)
+            if len(rows) != 6 or backend.last_batch_sizes != [1] * 72:
+                raise ValueError('Native six-episode qualification coverage changed')
+            _json(zero_out / 'RESULT.json', dict(episodes=rows, references=backend.references,
+                controls_charged=journal.charged(), zero_initialized_bridge=True,
+                actual_batch_sizes=backend.last_batch_sizes, optimizer_updates=0,
+                native_parameters_frozen=True))
+            del deployment, backend
+            policy.requires_grad_(True)
         zero_loss = validate_batches(policy, native.model, validation_plan, val_prepare)
         timings = []
         for step in range(args.qualify_updates):
@@ -276,7 +297,7 @@ def main():
             exact_next_update_resume=True, native_unchanged=True, interface=args.interface,
             zero_validation_flow_loss=zero_loss, fitted_reactive_validation_flow_loss=fitted_loss,
             reactive_updates=args.qualify_updates, mean_reactive_update_seconds=float(np.mean(timings)),
-            total_optimizer_calls=args.qualify_updates + 6, zero_initialized_native_episodes=6,
+            total_optimizer_calls=args.qualify_updates + 6, zero_initialized_native_episodes=6, fresh_native_episodes=0 if args.reuse_zero else 6,
             history_core_gradient_L1=core_grad,
             full_history_update_benchmarks=benchmarks, signature=signature,
             meaning='Native parity, actual RGB/action query mapping, finite optimization and exact recovery; imitation diagnostic, not a trained meta-steerer or adaptation result'))

@@ -27,6 +27,8 @@ def main():
                 '--code', str(args.code), '--commit', args.commit, '--probe', str(args.probe),
                 '--output', str(args.output / interface), '--interface', interface,
                 '--objective', 'dpt', '--qualify', '--qualify-updates', '50', '--execution-batch', '8']
+            if os.environ.get('STEERING_REUSE_ZERO'):
+                command += ['--reuse-zero', os.environ['STEERING_REUSE_ZERO']]
             env = dict(os.environ, CUDA_VISIBLE_DEVICES=device['visibility_token'],
                 LYCO_BAIGE_ISOLATED_UUID=device['uuid'])
             log = (args.output / (interface + '.log')).open('x')
