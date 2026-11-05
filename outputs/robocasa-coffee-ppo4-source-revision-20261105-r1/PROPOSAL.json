@@ -1,0 +1,96 @@
+{
+  "status": "proposal_only_not_approved",
+  "reason": "Audited Coffee130 fresh512 does not confirm improvement over SFT",
+  "evidence": "../robocasa-eight-hour-babysit-20261104-r1/SOURCE5-COFFEE-VERIFIED-RESULT.json",
+  "additional_GPU_hour_ceiling": 35,
+  "combined_source_work_GPU_hour_ceiling": 105,
+  "current_source5_ceiling_remains": 70,
+  "allocation": {
+    "source_training_GPU_hours": 30,
+    "source_GPUs": 8,
+    "source_scheduler_minutes": 225,
+    "endpoint_GPU_hours": 2.5,
+    "endpoint_GPUs": 1,
+    "endpoint_scheduler_minutes": 150,
+    "diagnosed_contingency_GPU_hours": 2.5,
+    "automatic_retry": false
+  },
+  "task": "CoffeeSetupMug",
+  "teacher": {
+    "initialization": "original Human300 SFT",
+    "updates": 40,
+    "PPO_epochs_per_update": 4,
+    "TRAIN_episodes": 5120,
+    "TRAIN_controls": 3072000,
+    "actor_optimizer_steps_per_rank": 960,
+    "frozen": "original VLM",
+    "trainable": "action expert and detached VLM-feature critic",
+    "actor_LR": 5e-06,
+    "value_LR": 0.0001,
+    "global_minibatch_chunks": 256,
+    "microbatch_chunks": 16,
+    "actor_ranks": 2,
+    "rollout_env_ranks": 8,
+    "horizon": 600,
+    "chunk": 50,
+    "flow_steps": 10,
+    "noise": 0.3,
+    "ignore_last": true,
+    "KL_penalty": 0,
+    "train_seed": 2500000,
+    "DEV_seed": 650100,
+    "DEV_cases": 64,
+    "DEV_steps": [
+      0,
+      10,
+      20,
+      30,
+      40
+    ],
+    "selection": "fixed final40, no DEV peak selection",
+    "full_recovery": "model+optimizer+sampler+RNG+all worker states; standalone inference export only40",
+    "case_bank_note": "Use the registered Coffee TRAIN/DEV banks; TRAIN initial seeds overlap the old Coffee130 prefix. These are newly executed trajectories under a separate recipe/run, not newly unique initial scenes. The new TEST92250000..92250511 is separate from the failed Coffee130 TEST73250000..73250511."
+  },
+  "fresh_TEST": {
+    "cases": 512,
+    "case_base": 92250000,
+    "sampler_rng_base": 102250000,
+    "matched_batch": 8,
+    "SFT_repeat_cases": 8,
+    "policy_controls": 619200,
+    "balanced_SFT_teacher_order": true,
+    "independent_raw_audit_required": true
+  },
+  "new_readiness": {
+    "family": [
+      "Coffee130 legacy fresh512",
+      "Counter40 existing source5 fresh512",
+      "Faucet40 existing source5 fresh512",
+      "Coffee PPO4 final40 new fresh512"
+    ],
+    "multiplicity": "two-sided exact McNemar with Holm across all four comparisons",
+    "require": [
+      "Counter40",
+      "Faucet40",
+      "Coffee PPO4 final40"
+    ],
+    "condition": "Each required comparison has wins>losses and Holm-adjusted p<.05; preserve Coffee130 failure and original source5 family failure",
+    "prior_sources": [
+      "independently confirmed OpenDrawer130",
+      "independently confirmed Toaster130"
+    ]
+  },
+  "launch_conditions": [
+    "Explicit approval of this additional35GPUh and revised four-comparison readiness rule",
+    "Finish and release all current source5 GPU allocations and endpoint tests",
+    "Counter40 and Faucet40 individually pass the current three-comparison Holm rule",
+    "Latest reviewed main and native accelerator validation",
+    "At least200GiB shared floor+150GiB new-source reservation+20GiB headroom, plus all other active owned reservations; archive only closed verified owned artifacts as needed"
+  ],
+  "excluded": [
+    "five-task student fitting",
+    "full15-task transfer matrix",
+    "any further source arm or extension beyond40",
+    "relabeling the old stopped evaluation campaign as complete"
+  ]
+}

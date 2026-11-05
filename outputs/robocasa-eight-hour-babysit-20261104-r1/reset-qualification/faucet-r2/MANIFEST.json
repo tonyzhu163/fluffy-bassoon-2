@@ -1,0 +1,81 @@
+{
+  "task": "TurnOnSinkFaucet",
+  "config": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/reset-qualification/faucet-r2/CONFIG.json",
+  "config_sha256": "0d5bb127975bf89737b1d46ebe1bca05ea517093e43a79e45f4a1fb895afe999",
+  "fixture": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1/offline-initial-ratio-inputs-r2/OpenDrawer.pt",
+  "fixture_sha256": "e1b7d41082c7c9206a4c1416adb278d25c0a02d29fb967e0a8db0a32f4894d22",
+  "policies": {
+    "SFT": {
+      "step": 0,
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/input-prefix-r1/global_step_0/actor/model_state_dict/full_weights.pt",
+      "sha256": "eb276899d5a06d8ae87870239c549a5c6e1fee6770d2976d05f6d97a0fa95a10",
+      "marker": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/input-prefix-r1/global_step_0/pilot-boundary.json",
+      "marker_sha256": "f5c3382d8e51761bfd9ad3d48071673c7cd8412a4f0c3793318531f64d491018",
+      "prefix": true,
+      "ignore_last": true
+    }
+  },
+  "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01",
+  "source_config_sha256": "54041973114bf2a69c8dd620a8934343184818bf0c61878a7465b4fc0876115b",
+  "references": [
+    {
+      "rank": 0,
+      "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/canonical-eval/rank-00",
+      "copied_snapshot_sha256": "210f0c4163e4c4bea373ab25918f20ae42e465767dbd6b18326f3348ee4dc45e"
+    },
+    {
+      "rank": 1,
+      "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/canonical-eval/rank-01",
+      "copied_snapshot_sha256": "239b9a1b298addc9a1b7abbf2631a83aa327b59dee6bb758591dc7fbc47638e8"
+    },
+    {
+      "rank": 2,
+      "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/canonical-eval/rank-02",
+      "copied_snapshot_sha256": "19c8546f69e707cc40a28894b030d1b0fb7e89a2650471346b7b2841d68b124e"
+    },
+    {
+      "rank": 3,
+      "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/canonical-eval/rank-03",
+      "copied_snapshot_sha256": "0137022e963995b8ba7d243dc929b3d95f903ad2d27f1cd950a2ef67d7cd23ea"
+    },
+    {
+      "rank": 4,
+      "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/canonical-eval/rank-04",
+      "copied_snapshot_sha256": "04d4d180f27333055b60813c0359e1821c99f08e335dacbddba14e6513cf19e6"
+    },
+    {
+      "rank": 5,
+      "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/canonical-eval/rank-05",
+      "copied_snapshot_sha256": "625d28918774f09b3cbf720cd64d2451267cf95b5e69e1b35dc2e0917c95c32c"
+    },
+    {
+      "rank": 6,
+      "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/canonical-eval/rank-06",
+      "copied_snapshot_sha256": "247a0c4f1fb2ae302281dab990a6d11e7c2c8e31bf5d36f8fdfed625c9da3147"
+    },
+    {
+      "rank": 7,
+      "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/canonical-eval/rank-07",
+      "copied_snapshot_sha256": "730e303d6b48a30a9ec910317652796af81d928158712426f63a27db4982fed7"
+    }
+  ],
+  "operations": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    6
+  ],
+  "cases": 64,
+  "case_base": 680100,
+  "repeated_cases": 8,
+  "policy_controls": 43200,
+  "maximum_controls": 54000,
+  "original_pairing_check_retained": true,
+  "optimizer_updates": 0,
+  "purpose": "Reproduce original source DEV starts with fresh processes; no source-readiness test"
+}

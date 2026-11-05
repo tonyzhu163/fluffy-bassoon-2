@@ -1,0 +1,66 @@
+{
+  "verified": true,
+  "task": "CoffeeSetupMug",
+  "fixed_teacher_step": 130,
+  "cases": 512,
+  "first_successes": {
+    "SFT": 162,
+    "teacher": 172
+  },
+  "primary": {
+    "cases": 512,
+    "initial_successes": 162,
+    "policy_successes": 172,
+    "delta_percentage_points": 1.953125,
+    "wins": 93,
+    "losses": 83,
+    "exact_McNemar_p": 0.4976293702234113,
+    "paired_bootstrap95_percentage_points": [
+      -3.125,
+      7.03125
+    ],
+    "bootstrap_seed": 93250000,
+    "bootstrap_draws": 10000,
+    "intervals_simultaneous": false
+  },
+  "independent_audit": {
+    "verified": true,
+    "qualification_only": false,
+    "task": "CoffeeSetupMug",
+    "manifest_sha256": "52c3212e07276107923843e9215c872c50d9a6fde8c8919f3bcbbc4f1f5cdb58",
+    "cases_per_policy": 512,
+    "policy_episodes": 1032,
+    "matched_physical_public_starts": 1032,
+    "matched_sampler_chunk_calls": 1548,
+    "hashed_raw_action_observation_chunks": 1548,
+    "decision_camera_frames": 37152,
+    "panels_with_exact_initial_RGB": 90,
+    "accounted_policy_controls": 619200,
+    "reset_controls": 0,
+    "first_successes": {
+      "SFT": 162,
+      "teacher": 172
+    },
+    "end_successes": {
+      "SFT": 161,
+      "teacher": 166
+    },
+    "raw_first_success_and_end_outcomes_recounted": true,
+    "GPU_hours": 0,
+    "raw_physical_command_observation_digest": "9ed88fc30e90424c048f0be31efdfec58801a33f6261913d442219624546e58e",
+    "sampler_and_physical_stages_checked_separately": true,
+    "native_binary_mapping": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1:rlinf/envs/action_utils.py:203-222",
+    "limitation": "Sampler hashes bind pre-threshold model scores; raw archives retain post-threshold physical commands, so their whole-tensor hashes cannot be directly equated.",
+    "combined_sha256": "fcf1c7a16adbd60261b2a7f33f757f10db43fb7dd2f512fd7ceae7c26063a5ad",
+    "charged_controls": 619200,
+    "independent_paired_test": {
+      "wins": 93,
+      "losses": 83,
+      "exact_McNemar_p": 0.49762937022341036
+    }
+  },
+  "readiness_condition_met": false,
+  "reason": "Unadjusted p=.497629; Holm-adjusted p cannot be below the unadjusted p, so the approved three-test readiness condition cannot hold for Coffee130",
+  "source5_family_status": "Cannot pass all three, with Counter40/Faucet40 still pending; retain all endpoint tests and do not add another training arm automatically",
+  "GPU_hours_for_test": 2.0952777777777776
+}

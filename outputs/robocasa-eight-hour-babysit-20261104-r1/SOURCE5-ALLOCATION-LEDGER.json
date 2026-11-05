@@ -48,7 +48,11 @@
       "created_shanghai": "2026-11-05T12:00:00+08:00",
       "max_reservation_GPU_hours": 2.5,
       "storage_reservation_GiB": 15,
-      "output": "source5-tests/CoffeeSetupMug/attempt-01"
+      "output": "source5-tests/CoffeeSetupMug/attempt-01",
+      "released_shanghai": "2026-11-05T14:05:43+08:00",
+      "scheduler_release_verified": true,
+      "termination": "Completed all512 paired cases plus SFT repeat; independent raw audit running",
+      "closed_conservative_GPU_hours": 2.0952777777777776
     },
     {
       "job_id": "job-q250t3zf6g1x",
@@ -65,7 +69,11 @@
       "state": "Running; actual GPU probe passed13:56:11; original-case qualification pending",
       "GPU_hours_occupied_at_last_confirmation": 0,
       "accounting_start_shanghai": "2026-11-05T13:44:45+08:00",
-      "allocated_shanghai_not_after": "2026-11-05T13:56:11+08:00"
+      "allocated_shanghai_not_after": "2026-11-05T13:56:11+08:00",
+      "released_shanghai": "2026-11-05T14:09:17+08:00",
+      "scheduler_release_verified": true,
+      "termination": "Passed all64 original paired starts plus repeated8; 43200policy controls, zero SGD",
+      "closed_conservative_GPU_hours": 0.4088888888888889
     },
     {
       "job_id": "job-16c6s3w9ccx7",
@@ -87,6 +95,42 @@
       "scheduler_release_verified": true,
       "termination": "Failed before first simulator reset: observational XML hook accessed env.sim while None; zero SGD, no original-case qualification established",
       "closed_conservative_GPU_hours": 0.2475
+    },
+    {
+      "job_id": "job-xlfmqi9yy28f",
+      "name": "mwj_1105_source5_faucet_reset_qual02",
+      "kind": "diagnostic",
+      "task": "TurnOnSinkFaucet",
+      "GPUs": 1,
+      "created_shanghai": "2026-11-05T14:11:05+08:00",
+      "max_reservation_GPU_hours": 0.5,
+      "storage_reservation_GiB": 2,
+      "output": "reset-qualification/faucet-r2",
+      "worker_subdir": "gpu-01",
+      "last_confirmed_queued_shanghai": "2026-11-05T14:11:05+08:00",
+      "state": "Succeeded",
+      "GPU_hours_occupied_at_last_confirmation": 0,
+      "accounting_start_shanghai": "2026-11-05T14:11:05+08:00",
+      "released_shanghai": "2026-11-05T14:24:14+08:00",
+      "scheduler_release_verified": true,
+      "termination": "All64 original starts+repeat8 passed unchanged checks;43200controls,zeroSGD",
+      "closed_conservative_GPU_hours": 0.21916666666666668
+    },
+    {
+      "job_id": "job-02kxcgvz9d5z",
+      "name": "mwj_1105_source5_counter_e4_resume_r2",
+      "kind": "source_resume",
+      "task": "PickPlaceCounterToCabinet",
+      "GPUs": 8,
+      "created_shanghai": "2026-11-05T14:17:44+08:00",
+      "max_reservation_GPU_hours": 24,
+      "storage_reservation_GiB": 110,
+      "output": "source5/PickPlaceCounterToCabinet/attempt-02",
+      "worker_subdir": ".",
+      "last_confirmed_queued_shanghai": "2026-11-05T14:39:30+08:00",
+      "state": "Running, actual8GPU probe passed; resumed from10 and advancing through12/40",
+      "GPU_hours_occupied_at_last_confirmation": 0,
+      "accounting_start_shanghai": "2026-11-05T14:39:30+08:00"
     }
   ],
   "scope": "Two fixed40 four-epoch PPO sources and three fresh paired512 readiness panels, including setup/qualification/failures/release",

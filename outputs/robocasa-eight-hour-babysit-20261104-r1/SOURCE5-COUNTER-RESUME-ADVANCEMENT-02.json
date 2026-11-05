@@ -1,0 +1,51 @@
+{
+  "verified": true,
+  "job_id": "job-02kxcgvz9d5z",
+  "checked_unix": 1793862714.1202414,
+  "source_commit": "df425f4067299687daf1e3a914e1ebc24309c8e6",
+  "GPU_probe_passed": true,
+  "GPUs": 8,
+  "first_new_update": 11,
+  "first_new_update_optimizer": [
+    {
+      "rank": 0,
+      "optimizer_steps_before": 240,
+      "optimizer_steps_after": 264,
+      "producing_policy_iteration": 10,
+      "frozen_vlm_unchanged": true,
+      "update_sha256": "a03be21302effc8e02cc3eaecf8ea2851f369212dce61eb1bfa23a22d92e034c"
+    },
+    {
+      "rank": 1,
+      "optimizer_steps_before": 240,
+      "optimizer_steps_after": 264,
+      "producing_policy_iteration": 10,
+      "frozen_vlm_unchanged": true,
+      "update_sha256": "4ea0ac129e2312661e99f49f9e04d2057a3cc5672ace700e4b5650b90f3e5827"
+    }
+  ],
+  "first_new_checkpoint_complete": true,
+  "worker_sidecars": 18,
+  "standalone_export_at11": false,
+  "checkpoint_marker_sha256": "31bbfcf669f983aa195025968d781364ba32fe1ee038cf062b8ef9e160de5344",
+  "pending_DEV10_completed_before_new_SGD": true,
+  "DEV10": {
+    "completed": true,
+    "global_step": 10,
+    "phase": "eval_step_010",
+    "metrics": {
+      "return": 0.65625,
+      "success_at_end": 0.640625,
+      "reward": 0.0010937500046566129,
+      "episode_len": 600.0,
+      "success_once": 0.65625,
+      "num_trajectories": 64
+    }
+  },
+  "progress": {
+    "completed_iterations": 13,
+    "target_iterations": 40,
+    "checked_unix": 1793862527.4063709,
+    "operator_checkpoint_exit": false
+  }
+}

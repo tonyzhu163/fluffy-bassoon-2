@@ -1,0 +1,56 @@
+{
+  "job_id": "job-02kxcgvz9d5z",
+  "name": "mwj_1105_source5_counter_e4_resume_r2",
+  "kind": "source_resume",
+  "task": "PickPlaceCounterToCabinet",
+  "GPUs": 8,
+  "created_shanghai": "2026-11-05T14:17:44+08:00",
+  "max_reservation_GPU_hours": 24,
+  "storage_reservation_GiB": 110,
+  "output": "source5/PickPlaceCounterToCabinet/attempt-02",
+  "worker_subdir": ".",
+  "last_confirmed_queued_shanghai": "2026-11-05T14:17:44+08:00",
+  "state": "Queued for one complete8GPU node; no eligible node at submission",
+  "GPU_hours_occupied_at_last_confirmation": 0,
+  "source_commit": "df425f4067299687daf1e3a914e1ebc24309c8e6",
+  "resume_checkpoint_step": 10,
+  "pending_DEV_step": 10,
+  "first_new_TRAIN_iteration": 11,
+  "target_iteration": 40,
+  "original_actor_optimizer_steps": 240,
+  "target_actor_optimizer_steps": 960,
+  "resume_reference_sha256": "34e99d8fa72d8d40c2070aa87fc30181c49d04082ad5598a1f34d6520ba2ef91",
+  "reset_qualification": "SOURCE5-COUNTER-RESET-RESULT-01.json",
+  "CPU": 168,
+  "RAM_GiB": 1280,
+  "SHM_GiB": 32,
+  "scheduler_minutes": 180,
+  "command_timeout_seconds": 10500,
+  "automatic_retry": false,
+  "admission": {
+    "passed": true,
+    "checked_unix": 1793859393.5905254,
+    "free_GiB": 438.3828125,
+    "required_GiB": 331.8550143390894,
+    "active_sources": [
+      {
+        "job_id": "job-xlfmqi9yy28f",
+        "written_bytes": 155677168,
+        "reserved_remaining_bytes": 1991806480
+      }
+    ],
+    "reserved_GPU_hours": 38.513888888888886,
+    "task_reserved_GPU_hours": 29.702222222222222
+  },
+  "queue_before_submission": {
+    "free_GPUs": 26,
+    "total_GPUs": 416,
+    "free_CPU": 1973,
+    "total_CPU": 9100,
+    "free_RAM_GiB": 28593,
+    "total_RAM_GiB": 93596,
+    "eligible_full8GPU_nodes": 0,
+    "queued_tasks": 0,
+    "hardware": "NVIDIA RPBZZZ6"
+  }
+}
