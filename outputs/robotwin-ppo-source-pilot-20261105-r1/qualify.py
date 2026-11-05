@@ -19,7 +19,7 @@ def main():
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     rlinf = Path(os.environ['REPO_PATH'])
-    model = Path('/mowenjie/fluffy-bassoon-2/cache/robotwin-ppo-pilot-20261105-r1/pi05-motus-effc6e1a-r1')
+    model = Path('/mowenjie/fluffy-bassoon-2/cache/robotwin-ppo-pilot-20261105-r1-restore02/pi05-motus-effc6e1a-r1')
     norm = model / 'assets/pi0.5_clean_randomize_joint_training/norm_stats.json'
     task = 'place_phone_stand'
     seeds = json.loads((rlinf / 'rlinf/envs/sim/robotwin/seeds/eval_seeds.json').read_text())

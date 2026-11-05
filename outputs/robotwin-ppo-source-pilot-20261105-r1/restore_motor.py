@@ -11,7 +11,7 @@ import time
 ARCHIVE = Path('/mnt/bos/adgfyl/strong-plant-archives/storage-audit-baige-20261104-r1/legacy-models/fluffy-bassoon-2__cache__robotwin.tar.zst')
 EXPECTED = '11a3e40fbb4103e8011a64dd20fe1f2ffef20b1969f50e1cc8558272bef3097b'
 PREFIX = 'fluffy-bassoon-2/cache/robotwin/pi05-motus-effc6e1a-r1'
-DEST = Path('/mowenjie/fluffy-bassoon-2/cache/robotwin-ppo-pilot-20261105-r1')
+DEST = Path('/mowenjie/fluffy-bassoon-2/cache/robotwin-ppo-pilot-20261105-r1-restore02')
 
 
 def digest(path):
@@ -33,10 +33,19 @@ def main():
     assert free >= 96 * 1024**3, 'Reserve restoration, pilot outputs and concurrent headroom'
     with tempfile.NamedTemporaryFile(dir=DEST.parent, prefix='.robotwin-write-probe-') as probe:
         probe.write(b'write probe\n'); probe.flush()
-    print('Verifying archived cache', flush=True)
-    assert digest(ARCHIVE) == EXPECTED, 'Archive SHA256 differs'
     DEST.mkdir()
-    subprocess.run(['tar', '--keep-old-files', '-I', 'zstd', '-xf', str(ARCHIVE),
+    # BOS FUSE returned a read error to zstd after a successful Python hash
+    # pass. Stream and hash onto PFS before letting tar/zstd read it locally.
+    local_archive = DEST / 'verified-cache.tar.zst'
+    print('Copying and verifying archived cache on PFS', flush=True)
+    h = hashlib.sha256()
+    with ARCHIVE.open('rb') as inp, local_archive.open('xb') as out:
+        for block in iter(lambda: inp.read(16 * 1024**2), b''):
+            out.write(block); h.update(block)
+    assert local_archive.stat().st_size == ARCHIVE.stat().st_size
+    assert h.hexdigest() == EXPECTED, 'Archive copy SHA256 differs'
+    print('Verified archive copy; extracting common motor', flush=True)
+    subprocess.run(['tar', '--keep-old-files', '-I', 'zstd', '-xf', str(local_archive),
                     '--strip-components=3', '-C', str(DEST), PREFIX], check=True)
     model = DEST / 'pi05-motus-effc6e1a-r1'
     norm = model / 'assets/pi0.5_clean_randomize_joint_training/norm_stats.json'
@@ -46,6 +55,7 @@ def main():
               'sha256': digest(p)} for p in sorted(model.rglob('*')) if p.is_file()]
     record = dict(status='restored', ended_unix=time.time(), archive=str(ARCHIVE),
                   archive_sha256=EXPECTED, archive_bytes=ARCHIVE.stat().st_size,
+                  verified_pfs_archive=str(local_archive),
                   model_path=str(model), norm_stats_path=str(norm), files=files,
                   available_before_bytes=free, quota='not exposed by the PFS mount',
                   write_probe=True, gpu_hours=0, model_loaded=False)
