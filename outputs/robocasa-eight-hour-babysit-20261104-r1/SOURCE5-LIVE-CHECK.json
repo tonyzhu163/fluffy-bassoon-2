@@ -1,0 +1,56 @@
+{
+  "checked_shanghai": "2026-11-05T17:34:06.086114+08:00",
+  "cluster": "Baige Pro6K",
+  "active": [
+    {
+      "job_id": "job-z15y0bm9f75d",
+      "task": "TurnOnSinkFaucet",
+      "kind": "source_resume",
+      "GPUs": 8,
+      "progress": {
+        "completed_iterations": 20,
+        "target_iterations": 40,
+        "checked_unix": 1793871235.2905092,
+        "operator_checkpoint_exit": false
+      },
+      "clock": null,
+      "error_tail": null,
+      "evaluations/step-020.json": {
+        "completed": true,
+        "global_step": 20,
+        "phase": "eval_step_020",
+        "metrics": {
+          "success_at_end": 0.484375,
+          "return": 0.5,
+          "episode_len": 600.0,
+          "success_once": 0.5,
+          "reward": 0.0008333333535119891,
+          "num_trajectories": 64
+        }
+      },
+      "latest_complete_recovery": {
+        "step": 20,
+        "completed": true,
+        "worker_sidecars": 18
+      }
+    },
+    {
+      "job_id": "job-xwchdvbay14h",
+      "task": "PickPlaceCounterToCabinet",
+      "kind": "endpoint_test",
+      "GPUs": 1,
+      "progress": {
+        "panels": 23,
+        "bank": 10,
+        "label": "teacher",
+        "controls": 110400
+      },
+      "clock": null,
+      "error_tail": null
+    }
+  ],
+  "conservative_charged_GPU_hours": 37.42162351177799,
+  "approved_GPU_hours": 70,
+  "free_GiB": 325.9765625,
+  "next_check_shanghai": "2026-11-05T17:54:06.086114+08:00"
+}
