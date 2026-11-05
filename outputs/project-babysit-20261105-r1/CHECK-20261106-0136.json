@@ -1,0 +1,264 @@
+{
+  "checked_unix": 1793900155.730415,
+  "free_GiB": 702.75,
+  "robotwin": {
+    "memory04": {
+      "top_level_files": [
+        "round3-reset-physics.json",
+        "round2-after-hold-physics.json",
+        "round1-reset-physics.json",
+        "gpu-probe.json",
+        "profile.log",
+        "paired-reference.json",
+        "round1-hold0.pt",
+        "round3-hold0.pt",
+        "worker.log",
+        "EXIT.json",
+        "round1-after-hold-physics.json",
+        "RESULT.json",
+        "round3-after-hold-physics.json",
+        "round2-reset-physics.json",
+        "round2-hold0.pt",
+        "renderer"
+      ],
+      "RESULT.json": {
+        "sha256": "59ecaeb984788b1274d6b002a9dfe335ddacec1f634f154f4c42454b9ed2a514",
+        "status": "failed",
+        "optimizer_updates": 0,
+        "model_loaded": false,
+        "scenes": 64,
+        "profile_mode": "repeat",
+        "accounting_rank": 2,
+        "error_type": "AssertionError",
+        "physical_controls": 9600,
+        "total_shared_accounting_rank_charge": 72960,
+        "active_worktrees_changed": false,
+        "scientific_source_admission": false,
+        "recent_stages": [
+          {
+            "stage": "after_vector_close",
+            "time": 1793899907.55404,
+            "rss_GiB": 56.36867141723633
+          },
+          {
+            "stage": "after_delete_gc",
+            "time": 1793899908.5296807,
+            "rss_GiB": 56.361019134521484
+          },
+          {
+            "stage": "after_delete_trim",
+            "time": 1793899911.1414015,
+            "rss_GiB": 3.360553741455078
+          }
+        ],
+        "motor_comparisons": [
+          {
+            "round": 2,
+            "per_close": false,
+            "state_max_abs": 0.001026532641844824,
+            "reward_max_abs": 0.0,
+            "reward_identity": true,
+            "termination_identity": true,
+            "truncation_identity": true,
+            "valid_mask_identity": true,
+            "action_identity": true
+          },
+          {
+            "round": 3,
+            "per_close": true,
+            "state_max_abs": 0.0009811139898374677,
+            "reward_max_abs": 0.0,
+            "reward_identity": true,
+            "termination_identity": true,
+            "truncation_identity": true,
+            "valid_mask_identity": true,
+            "action_identity": true
+          }
+        ],
+        "error_evidence": {
+          "preview": "{'round': 2, 'per_close': False, 'state_max_abs': 0.001026532641844824, 'per_environment_max_abs': [0.0006099905585870147, 0.0003817627075477503, 0.0003526335785863921, 0.000570495",
+          "characters": 8923,
+          "sha256": "d2d8b1749813ef4b18bda612a3cc70ecb91c34263afb7ff660eed207fc0adc15"
+        }
+      },
+      "EXIT.json": {
+        "sha256": "04dd948ca949e30cb957db50a29f990de4771910b27e435eeed63b582299fd20",
+        "exit_code": 1,
+        "worker_gpu_seconds": 1937
+      },
+      "gpu-probe.json": {
+        "sha256": "9d99a9036605e577a2889ee0a383bedaee4f579cdc369c5104a19acc4f65709a",
+        "status": "passed",
+        "hostname": "job-lcwxw1uz7kdy-master-0",
+        "device_count": 1
+      }
+    },
+    "train07": {
+      "top_level_files": [
+        "capacity-admission.json",
+        "memory-admission.json",
+        "core-tests.log",
+        "gpu-probe.json",
+        "bridge-admission.json",
+        "train.log",
+        "host-memory.log",
+        "worker.log",
+        "environment-tests.log",
+        "host-memory.json",
+        "config-validation.json",
+        "action-admission.json"
+      ],
+      "gpu-probe.json": {
+        "sha256": "4ceee64dc159d75d3269950107acf781612d8796cad90dcd2617e1440b08fc91",
+        "status": "passed",
+        "hostname": "job-rxih2makcwv4-master-0",
+        "device_count": 4
+      },
+      "admission_receipts": {
+        "capacity-admission.json": {
+          "status": "complete",
+          "global_batch_size": 2048,
+          "world_size": 4,
+          "selected_micro_batch_size": 64,
+          "selected_gradient_accumulation": 8,
+          "selection_basis": "maximum measured throughput with memory headroom",
+          "source_commit": "99c0393b65d5f2db14bf838e37574582f21e19d1",
+          "job_id": "job-jd3wvntcngt2",
+          "scientific_training": false,
+          "scientific_optimizer_updates": 0,
+          "scratch_optimizer_updates_per_candidate": 4,
+          "steady_updates_per_candidate": 3,
+          "allocator": "expandable_segments:True",
+          "minimum_reserved_headroom_bytes": 8589934592,
+          "largest_uniform_batch_tested_that_completed": 512,
+          "largest_batch_with_headroom": 256,
+          "reference_cost_accounting": "One old-prob reference pass per rollout, amortized across five PPO epochs; reference timer includes value output, so effective times are estimates. Micro64 matches rollout64 exactly and requires no reference recompute.",
+          "limitations": "Single real source observation batch repeated to global2048; actor update timing, not simulator end-to-end throughput. Candidate order64,128,256,512 with one scratch actor group.",
+          "candidates": [
+            {
+              "micro_batch_size": 64,
+              "accumulation_steps": 8,
+              "median_update_seconds": 26.413524627685547,
+              "reference_recompute_seconds_per_global_batch": 25.279802322387695,
+              "recompute_required": false,
+              "estimated_effective_seconds_per_update": 26.413524627685547,
+              "estimated_effective_examples_per_second": 77.5360361355702,
+              "peak_allocated_bytes": 19870068736,
+              "peak_reserved_bytes": 27283947520,
+              "total_device_bytes": 101973950464,
+              "reserved_headroom_bytes": 74690002944,
+              "memory_headroom_qualified": true
+            },
+            {
+              "micro_batch_size": 128,
+              "accumulation_steps": 4,
+              "median_update_seconds": 25.141082763671875,
+              "reference_recompute_seconds_per_global_batch": 23.421445846557617,
+              "recompute_required": true,
+              "estimated_effective_seconds_per_update": 29.825371932983398,
+              "estimated_effective_examples_per_second": 68.66636917728258,
+              "peak_allocated_bytes": 31264273408,
+              "peak_reserved_bytes": 41041264640,
+              "total_device_bytes": 101973950464,
+              "reserved_headroom_bytes": 60932685824,
+              "memory_headroom_qualified": true
+            },
+            {
+              "micro_batch_size": 256,
+              "accumulation_steps": 2,
+              "median_update_seconds": 25.4725399017334,
+              "reference_recompute_seconds_per_global_batch": 23.273895263671875,
+              "recompute_required": true,
+              "estimated_effective_seconds_per_update": 30.127318954467775,
+              "estimated_effective_examples_per_second": 67.97816968364153,
+              "peak_allocated_bytes": 54052684288,
+              "peak_reserved_bytes": 69042438144,
+              "total_device_bytes": 101973950464,
+              "reserved_headroom_bytes": 32931512320,
+              "memory_headroom_qualified": true
+            },
+            {
+              "micro_batch_size": 512,
+              "accumulation_steps": 1,
+              "median_update_seconds": 35.830745697021484,
+              "reference_recompute_seconds_per_global_batch": 34.44111251831055,
+              "recompute_required": true,
+              "estimated_effective_seconds_per_update": 42.71896820068359,
+              "estimated_effective_examples_per_second": 47.94123281206094,
+              "peak_allocated_bytes": 94565591552,
+              "peak_reserved_bytes": 100971577344,
+              "total_device_bytes": 101973950464,
+              "reserved_headroom_bytes": 1002373120,
+              "memory_headroom_qualified": false
+            }
+          ]
+        },
+        "memory-admission.json": {
+          "qualification": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/memory02/RESULT.json",
+          "sha256": "c26baaa6e17adbca59061e2ee684afad2b40a5bdd414e9f6c58b96f19322d7a7",
+          "strategy": "native_batch_end",
+          "qualification_global_status": "failed",
+          "selected_completed_round": 1,
+          "scene_count_per_rank": 64,
+          "measured_peak_rss_bytes": 114013196288,
+          "allowances": {
+            "environment_runtime_per_rank_bytes": 10737418240,
+            "other_workers_bytes": 85899345920,
+            "pending_rollout_and_checkpoint_bytes": 68719476736
+          },
+          "projected_full_phase_bytes": 653621280768,
+          "cgroup_limit_bytes": 1099511627776,
+          "ray_memory_guard_unchanged": true
+        },
+        "host-memory.json": {
+          "at_unix": 1793900163.0972779,
+          "limit_bytes": 1099511627776,
+          "current_bytes": 16580034560,
+          "peak_observed_bytes": 16580034560,
+          "minimum_allocation_bytes": 1099511627776,
+          "headroom_bytes": 1082931593216,
+          "anonymous_bytes": 15399374848,
+          "file_cache_bytes": 822145024,
+          "ray_memory_guard_unchanged": true
+        },
+        "config-validation.json": {
+          "world_size": 4,
+          "global_batch_size": 2048,
+          "micro_batch_size": 64,
+          "accumulation_steps": 8,
+          "source_iterations": 2,
+          "nominal_train_actions": 819200,
+          "nominal_before_after_actions": 0,
+          "nominal_all_in_actions": 819200,
+          "maximum_actions": 1200000,
+          "maximum_aggregate_gpu_seconds": 72000,
+          "source_task": "place_phone_stand",
+          "initializer": "Sidney broad multi-task SFT",
+          "initializer_revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
+          "original_initializer_reproduction": false,
+          "memory_strategy": "native_batch_end",
+          "probability_reference": "same-batch native rollout probabilities",
+          "precision": "native mixed BF16; entire vision and norms FP32",
+          "baseline_reference": "published Sidney SFT; no rebenchmark panel",
+          "migration": "H50 retained; K10 native reference to VLRLA K5/.3 Flow-SDE PPO"
+        }
+      }
+    }
+  },
+  "kv_dit": {
+    "update": 8000,
+    "best_loss": 0.1226918671745807,
+    "plateau": {
+      "reference": 0.12278330815024674,
+      "stale_checks": 3,
+      "converged": false
+    },
+    "converged": false,
+    "elapsed_seconds": 38494.30581556377,
+    "stop_reason": "operational_checkpoint",
+    "native_parameters_frozen": true,
+    "interface": "kv_bridge",
+    "objective": "dit"
+  },
+  "readout_admission_present": false
+}
