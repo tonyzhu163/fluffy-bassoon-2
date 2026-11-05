@@ -37,6 +37,16 @@ def _install_native_activations(model):
             mlp.forward = MethodType(_gemma_mlp, mlp)
 
 
+def _train_with_frozen_vision(self, mode=True):
+    import torch
+    torch.nn.Module.train(self, mode)
+    # MultiheadAttention switches numerical kernels between train/eval even
+    # with zero dropout. Frozen SigLIP must use the rollout inference path
+    # while gradients remain enabled for the action expert and critic.
+    self.img.eval()
+    return self
+
+
 def deterministic_reference():
     import os
     import torch
@@ -130,6 +140,9 @@ def install_rlinf_transforms():
             raise ValueError('Sidney uses raw absolute ALOHA joints')
         model.setup_transforms([SidneyInputs(metadata)],[SidneyOutputs(metadata)])
         _install_native_activations(model)
+        if str(cfg.openpi.task)=='rl' and cfg.openpi.train_expert_only:
+            from types import MethodType
+            model.train = MethodType(_train_with_frozen_vision, model)
         model._sidney_full_vision_fp32 = True
         # Pi0.__init__ enables TF32 globally; restore the qualified reference
         # setting after construction and before any inference.

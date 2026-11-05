@@ -53,7 +53,10 @@ def main():
     model.train();model.zero_grad(set_to_none=True)
     torch.cuda.reset_peak_memory_stats();started=time.monotonic()
     forward=model(forward_inputs=inputs,compute_values=True)
-    error=float((forward['logprobs'].float()-old).abs().max())
+    error=float((forward['logprobs'].float()-old).detach().abs().max())
+    report['training_forward']=dict(logprob_max_abs_error=error,
+        image_training_mode=model.img.training,policy_training_mode=model.training)
+    write(output,report)
     assert error<=1e-3
     loss=forward['logprobs'].float().mean()+forward['values'].float().square().mean()
     assert torch.isfinite(loss);loss.backward();torch.cuda.synchronize()
