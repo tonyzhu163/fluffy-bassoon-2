@@ -19,9 +19,9 @@ TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/pytho
 [[ -z $(git -C "$TASK_CODE" status --porcelain --untracked-files=no) ]]
 [[ ! -e $TASK_OUT && $TASK_PRIOR_GPU_SECONDS =~ ^[0-9]+$ ]]
 # Measured256-scene reset/rollout latency requires a longer continuation.
-# Fourteen additional GPU-hours including all bridge/failed/prefix attempts;
+# Eighteen additional GPU-hours including the requested throughput sweep;
 # this remains within the repository-authorized50GPUh task scope.
-[[ $((TASK_PRIOR_GPU_SECONDS+TASK_WORLD*(TASK_LIMIT+60))) -le 50400 ]]
+[[ $((TASK_PRIOR_GPU_SECONDS+TASK_WORLD*(TASK_LIMIT+60))) -le 64800 ]]
 mkdir -p "$TASK_OUT"
 exec > "$TASK_OUT/worker.log" 2>&1
 export TASK_SOURCE TASK_BRIDGE
@@ -81,13 +81,23 @@ for filename,key in [('model.safetensors','model_sha256'),('sidney-processors.js
 Path(os.environ['NATIVE_PPO_OUTPUT'],'bridge-admission.json').write_text(json.dumps(result,indent=2)+'\n')
 capacity=os.environ.get('TASK_CAPACITY')
 if capacity:
-    qualified=json.loads((Path(capacity)/'RESULT.json').read_text())
-    assert qualified['status']=='complete' and qualified['optimizer_updates']==0
-    assert qualified['execution_microbatch']==64 and qualified['backward']['frozen_vlm_has_no_gradients']
-    assert qualified['backward']['logprob_max_abs_error']<=1e-3
-    assert qualified['backward']['policy_gradient_tensors']>0 and qualified['backward']['critic_gradient_tensors']>0
+    selection=Path(capacity)/'SELECTION.json'
+    if selection.exists():
+        qualified=json.loads(selection.read_text())
+        assert qualified['status']=='complete' and qualified['global_batch_size']==2048 and qualified['world_size']==4
+        micro=qualified['selected_micro_batch_size'];assert micro in (64,128,256,512)
+        assert qualified['selection_basis']=='maximum measured throughput with memory headroom'
+        for rank in range(4):
+            row=json.loads((Path(capacity)/f'micro-{micro}/rank-{rank:02d}.json').read_text())
+            assert row['status']=='complete' and len(row['updates'])==4
+        print(micro)
+    else:
+        qualified=json.loads((Path(capacity)/'RESULT.json').read_text())
+        assert qualified['status']=='complete' and qualified['optimizer_updates']==0
+        assert qualified['execution_microbatch']==64 and qualified['backward']['frozen_vlm_has_no_gradients']
+        assert qualified['backward']['logprob_max_abs_error']<=1e-3
+        print(64)
     Path(os.environ['NATIVE_PPO_OUTPUT'],'capacity-admission.json').write_text(json.dumps(qualified,indent=2)+'\n')
-    print(64)
 else:print(result['execution_microbatch'])
 PY
 )

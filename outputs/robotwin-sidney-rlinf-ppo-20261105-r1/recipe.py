@@ -16,7 +16,8 @@ def validate_sidney(cfg):
         assert cfg.env[mode].task_config.camera.head_camera_type=='Large_D435'
         assert cfg.env[mode].task_config.camera.wrist_camera_type=='Large_D435'
     micro=int(cfg.actor.micro_batch_size);world=int(cfg.native_pilot.world_size)
-    assert micro in (8,16,32,64) and 2048%(micro*world)==0
+    assert micro in (8,16,32,64,128,256,512) and 2048%(micro*world)==0
+    assert cfg.algorithm.recompute_logprobs is True
     copy=OmegaConf.create(OmegaConf.to_container(cfg,resolve=True))
     for mode in ('train','eval'):copy.env[mode].task_config.task_name='adjust_bottle'
     copy.actor.model.openpi.config_name='pi05_aloha_robotwin'
@@ -26,7 +27,8 @@ def validate_sidney(cfg):
         initializer_revision=REVISION,original_initializer_reproduction=False,
         micro_batch_size=micro,accumulation_steps=2048//(micro*world),
         nominal_before_after_actions=0,nominal_all_in_actions=819200,
-        maximum_aggregate_gpu_seconds=50400,
+        maximum_aggregate_gpu_seconds=64800,
+        probability_reference='native RLinf actor recomputation in selected execution batch',
         precision='native mixed BF16; entire vision and norms FP32',
         baseline_reference='published Sidney SFT; no rebenchmark panel',
         migration='H50 retained; K10 native reference to VLRLA K5/.3 Flow-SDE PPO')
