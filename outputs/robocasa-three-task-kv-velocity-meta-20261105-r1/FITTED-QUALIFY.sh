@@ -4,7 +4,12 @@ BEGAN=$(date +%s)
 INTERFACE=${1:?interface}
 case "$INTERFACE" in kv_bridge|velocity_bridge) ;; *) exit 2 ;; esac
 PHASE=${2:-deployment}
-case "$PHASE" in deployment) ATTEMPT=fitted-deploy-pfs03-$INTERFACE; DIRECTORY=qualification-fitted-pfs03 ;; reset) ATTEMPT=fitted-reset-pfs04-$INTERFACE; DIRECTORY=qualification-fitted-reset-pfs04 ;; *) exit 2 ;; esac
+case "$PHASE" in
+    deployment) ATTEMPT=fitted-deploy-pfs03-$INTERFACE; DIRECTORY=qualification-fitted-pfs03 ;;
+    ood-full) ATTEMPT=fitted-oodfull-pfs04-$INTERFACE; DIRECTORY=qualification-fitted-oodfull-pfs04 ;;
+    reset) ATTEMPT=fitted-reset-pfs04-$INTERFACE; DIRECTORY=qualification-fitted-reset-pfs04 ;;
+    *) exit 2 ;;
+esac
 CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 COMMIT=$(git -C "$CODE" rev-parse HEAD)
 test -z "$(git -C "$CODE" status --porcelain)"

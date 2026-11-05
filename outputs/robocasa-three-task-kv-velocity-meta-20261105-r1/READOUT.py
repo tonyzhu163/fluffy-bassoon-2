@@ -17,7 +17,7 @@ def main():
     p.add_argument('--interface', choices=('kv_bridge', 'velocity_bridge'), required=True)
     p.add_argument('--objective', choices=('ad', 'dpt', 'dit', 'ic_iql'), required=True)
     p.add_argument('--split', choices=('ID', 'OOD', 'qualification'), required=True)
-    p.add_argument('--qualification-phase', choices=('deployment', 'reset'), default='deployment')
+    p.add_argument('--qualification-phase', choices=('deployment', 'ood-full', 'reset'), default='deployment')
     p.add_argument('--deadline', type=float, required=True)
     p.add_argument('--attempt', required=True)
     args = p.parse_args()
@@ -98,7 +98,8 @@ def main():
         batch_contract='fixed_order_same_horizon_waves_v1',
         render_contract='bounded_two_intensity_levels', deployment_optimizer_updates=0)
     if qualification:
-        waves = ([dict(task='CloseFridge', mode='episode', cases=1)] if args.qualification_phase == 'reset' else
+        waves = ([dict(task='CloseFridge', mode='episode' if args.qualification_phase == 'reset' else 'full', cases=1)]
+                 if args.qualification_phase in ('reset', 'ood-full') else
                  [dict(task='OpenDrawer', mode='full', cases=8),
                   dict(task='CloseFridge', mode='full', cases=1),
                   dict(task='CloseFridge', mode='episode', cases=1)])
@@ -116,6 +117,8 @@ def main():
     for mode in ('full', 'episode'):
         for task in tasks:
             if qualification and args.qualification_phase == 'reset' and (mode != 'episode' or task != 'CloseFridge'):
+                continue
+            if qualification and args.qualification_phase == 'ood-full' and (mode != 'full' or task != 'CloseFridge'):
                 continue
             if qualification and task == 'OpenDrawer' and mode == 'episode':
                 continue
