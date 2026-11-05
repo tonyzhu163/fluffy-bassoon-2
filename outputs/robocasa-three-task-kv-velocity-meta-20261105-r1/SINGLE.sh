@@ -18,6 +18,11 @@ exec > >(tee "$ROOT/$RUN/logs/$STEERING_ATTEMPT.log") 2>&1
 "$PY" - <<'PY'
 from pathlib import Path
 import datetime,json,os
+from hydra import compose, initialize_config_dir
+configuration_directory=Path(os.environ['STEERING_CODE'])/'configs/native_ppo'
+with initialize_config_dir(config_dir=str(configuration_directory),version_base=None):
+    configuration=compose(config_name='robocasa365_pi05_eval')
+assert configuration.rollout.model is not None and configuration.env.eval is not None
 r=Path('/mowenjie/fluffy-bassoon-2');d=json.loads((r/'outputs/robocasa-eight-hour-babysit-20261104-r1/META-ALLOCATION-LEDGER.json').read_text())
 assert d['approved_GPU_hours']==150
 now=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8)));reserved=d['preparation_GPU_hours'];own=False
@@ -30,7 +35,7 @@ assert reserved+(0 if own else hours)<=150
 minimum_free=int(os.environ.get('STEERING_MIN_FREE_GIB','220'));assert minimum_free>=96
 v=os.statvfs(r);assert v.f_bavail*v.f_frsize>minimum_free*2**30
 q=json.loads(Path(os.environ['STEERING_QUALIFICATION']).read_text());assert q['passed']
-print(json.dumps(dict(approved_GPU_hours=150,maximum_new_reservation_GPU_hours=hours,committed_GPU_hours=reserved,minimum_free_PFS_GiB=minimum_free,free_PFS_GiB=v.f_bavail*v.f_frsize/2**30)))
+print(json.dumps(dict(approved_GPU_hours=150,maximum_new_reservation_GPU_hours=hours,committed_GPU_hours=reserved,minimum_free_PFS_GiB=minimum_free,free_PFS_GiB=v.f_bavail*v.f_frsize/2**30,native_Hydra_configuration_composed=True,configuration_directory=str(configuration_directory))))
 PY
 PROBE=$ROOT/$RUN/probes/$STEERING_ATTEMPT.json
 "$PY" -B "$STEERING_CODE/scripts/[train]gpu_probe.py" --expected-count 1 --purpose training --baige-container --baige-exclusive-training --output "$PROBE"
