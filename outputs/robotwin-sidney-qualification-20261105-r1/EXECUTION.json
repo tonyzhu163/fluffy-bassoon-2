@@ -1,15 +1,15 @@
 {
-  "status": "STRICT_GPU_MODEL_LOAD_PASSED_ROOT_METADATA_REPAIR_PENDING",
+  "status": "SIMULATOR_SCENE_READY_MODEL_LOADING",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
-  "job_id": "job-672dz8gc69pd",
-  "job_name": "mwj_1105_robotwin_sidney_native_qual_r5",
-  "submitted_at_shanghai": "2026-11-05 14:42:45",
-  "last_checked_at_shanghai": "2026-11-05 14:54",
-  "observed_scheduler_status": "worker exited1 after strict model load; simulator root metadata missing",
-  "source_commit": "ee6d7f050a69ceaefe7247e4a2a55493a7940029",
-  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r8",
-  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual05",
+  "job_id": "job-r8krjq3phd11",
+  "job_name": "mwj_1105_robotwin_sidney_native_qual_r6",
+  "submitted_at_shanghai": "2026-11-05 14:59:48",
+  "last_checked_at_shanghai": "2026-11-05 15:03",
+  "observed_scheduler_status": "allocated; scene reset and three640x480 views ready; model worker loading",
+  "source_commit": "41cf8bda1c5970742a3a573889e266b8d0c8fd90",
+  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r10",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual06",
   "model_revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "allocation": {
     "workers": 1,
@@ -30,10 +30,10 @@
     "worker_gpu_seconds_measured": 172,
     "conservative_allocated_gpu_hours_charge": null,
     "scheduler_display_gpu_seconds": 277,
-    "usage_basis": "First four scheduler durations327s; fifth duration pending; worker time346s total",
+    "usage_basis": "Five completed scheduler durations60+89+128+50+210 seconds; current allocation still running",
     "worker_gpu_seconds_completed_attempts": 346,
-    "scheduler_display_gpu_seconds_completed_attempts": 327,
-    "gpu_hours_completed_attempts": 0.09083333333333334,
+    "scheduler_display_gpu_seconds_completed_attempts": 537,
+    "gpu_hours_completed_attempts": 0.14916666666666667,
     "active_attempt_maximum_gpu_hours": 0.5
   },
   "qualification": {
@@ -60,11 +60,14 @@
       3
     ],
     "strict_native_gpu_weight_load_passed": true,
-    "native_gpu_parameter_count": 4143404816
+    "native_gpu_parameter_count": 4143404816,
+    "root_metadata_restored": true,
+    "simulator_reset_passed": true,
+    "three_nonblank_views_passed": true
   },
-  "next_action": "Restore exact5865-byte same.json from the verified archive, preserving original dangling link. New run initializes simulator/reset/cameras before constructing model. Then native queue parity and episode; no PPO yet.",
+  "next_action": "Inspect rendered scene and native model READY, then queue parity and advancing action chunks until episode completes. No PPO before native SFT qualification and explicit RLinf parity.",
   "monitor_interval_minutes": 20,
-  "queue_receipt": "QUAL05-SUBMITTED.jpg",
+  "queue_receipt": "QUAL06-SUBMITTED.jpg",
   "attempts": [
     {
       "attempt": "qual01",
@@ -187,7 +190,26 @@
         "qual05/native/RESULT.json",
         "qual05/qualification.log",
         "qual05/EXIT.json"
-      ]
+      ],
+      "scheduler_status": "failed",
+      "scheduler_ended_at_shanghai": "2026-11-05 14:46:31",
+      "scheduler_display_duration": "3 minutes30 seconds"
+    },
+    {
+      "attempt": "qual06",
+      "job_id": "job-r8krjq3phd11",
+      "source_commit": "41cf8bda1c5970742a3a573889e266b8d0c8fd90",
+      "status": "scene_ready_model_loading",
+      "gpu_probe_passed": true,
+      "processor_check_passed": true,
+      "scene_reset_passed": true,
+      "three_camera_shape": [
+        480,
+        640,
+        3
+      ],
+      "actual_render_pci": "0000:61:00.0",
+      "maximum_gpu_hours": 0.5
     }
   ],
   "cpu_probe_attempt": {
