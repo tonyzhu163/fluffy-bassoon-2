@@ -52,6 +52,8 @@ def main():
         assert subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD'], text=True).strip() == expected
         assert not subprocess.check_output(['git', '-C', str(root), 'status', '--porcelain', '--untracked-files=no'], text=True).strip()
     asset_receipt = validate_robotwin_assets(robotwin, SOURCE_TASKS + HELDOUT_TASKS)
+    root_metadata = robotwin/'assets/objects/same.json'
+    assert hashlib.sha256(root_metadata.read_bytes()).hexdigest() == '3bcaa1618ff9d0b50478dd22183f77ca3557d9d5406442b17e39337e68cb5edd'
     seeds = json.loads((rlinf / 'rlinf/envs/sim/robotwin/seeds/eval_seeds.json').read_text())
     # Missing scene banks require their own qualification; never silently substitute seeds.
     cases = seeds[args.task]['success_seeds'][:args.episodes]
@@ -68,6 +70,25 @@ def main():
     save(result, report)
     worker = env = None
     try:
+        render_pci = _install_allocated_renderer(args.output / 'renderer')
+        _install_reset_retry_limit()
+        os.chdir(robotwin)
+        cfg = environment_config(rlinf, robotwin, args.task, int(cases[0]), 400,
+                                 task_config_name='demo_clean', final_observation_only=False)
+        cfg.task_config.camera.head_camera_type = 'Large_D435'
+        cfg.task_config.camera.wrist_camera_type = 'Large_D435'
+        env = RoboTwinEnv(cfg, 1, seed_offset=0, total_num_processes=1, worker_info=None)
+        _install_synchronous_vector_executor(env.venv)
+        initial_raw, _ = env.reset(env_seeds=[int(cases[0])])
+        initial_images = np.stack([initial_raw['main_images'][0].cpu().numpy(),
+                                  initial_raw['wrist_images'][0,0].cpu().numpy(),
+                                  initial_raw['wrist_images'][0,1].cpu().numpy()])
+        assert initial_images.shape == (3,480,640,3)
+        assert all(float(v.std()) > 1 for v in initial_images)
+        Image.fromarray(np.concatenate(initial_images,axis=1)).save(args.output/'scene-initial.png')
+        report.update(status='scene_ready', actual_render_pci=render_pci,
+                      initial_observation_sha256=_observation_hash(initial_raw))
+        save(result,report)
         model_env = dict(os.environ, PYTHONPATH=str(LEROBOT / 'src'),
                          TOKENIZERS_PARALLELISM='false')
         with (args.output / 'model-worker.log').open('w') as log:
@@ -79,19 +100,8 @@ def main():
         report['model'] = json.loads((args.output / 'READY.json').read_text())
         report['status'] = 'model_loaded'
         save(result, report)
-        render_pci = _install_allocated_renderer(args.output / 'renderer')
-        _install_reset_retry_limit()
-        os.chdir(robotwin)
-        cfg = environment_config(rlinf, robotwin, args.task, int(cases[0]), 400,
-                                 task_config_name='demo_clean', final_observation_only=False)
-        # Same calibrated D435 field of view, using RoboTwin's existing
-        # 640x480 preset to match the checkpoint's training image metadata.
-        cfg.task_config.camera.head_camera_type = 'Large_D435'
-        cfg.task_config.camera.wrist_camera_type = 'Large_D435'
-        env = RoboTwinEnv(cfg, 1, seed_offset=0, total_num_processes=1, worker_info=None)
-        _install_synchronous_vector_executor(env.venv)
         for episode_index, seed in enumerate(cases):
-            raw, _ = env.reset(env_seeds=[int(seed)])
+            raw = initial_raw if episode_index == 0 else env.reset(env_seeds=[int(seed)])[0]
             actual_seed = int(env.venv.envs[0].task.ep_num)
             episode = dict(requested_seed=int(seed), actual_seed=actual_seed,
                            instruction=list(raw['task_descriptions']),

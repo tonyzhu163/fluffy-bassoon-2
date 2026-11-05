@@ -1,12 +1,12 @@
 {
-  "status": "NATIVE_MODEL_LOADING",
+  "status": "STRICT_GPU_MODEL_LOAD_PASSED_ROOT_METADATA_REPAIR_PENDING",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
   "job_id": "job-672dz8gc69pd",
   "job_name": "mwj_1105_robotwin_sidney_native_qual_r5",
   "submitted_at_shanghai": "2026-11-05 14:42:45",
-  "last_checked_at_shanghai": "2026-11-05 14:44",
-  "observed_scheduler_status": "allocated; GPU probe and processor checks passed; model worker loading",
+  "last_checked_at_shanghai": "2026-11-05 14:54",
+  "observed_scheduler_status": "worker exited1 after strict model load; simulator root metadata missing",
   "source_commit": "ee6d7f050a69ceaefe7247e4a2a55493a7940029",
   "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r8",
   "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual05",
@@ -30,8 +30,8 @@
     "worker_gpu_seconds_measured": 172,
     "conservative_allocated_gpu_hours_charge": null,
     "scheduler_display_gpu_seconds": 277,
-    "usage_basis": "Completed allocation durations60+89+128+50 seconds; current allocation is still running",
-    "worker_gpu_seconds_completed_attempts": 172,
+    "usage_basis": "First four scheduler durations327s; fifth duration pending; worker time346s total",
+    "worker_gpu_seconds_completed_attempts": 346,
     "scheduler_display_gpu_seconds_completed_attempts": 327,
     "gpu_hours_completed_attempts": 0.09083333333333334,
     "active_attempt_maximum_gpu_hours": 0.5
@@ -58,9 +58,11 @@
       480,
       640,
       3
-    ]
+    ],
+    "strict_native_gpu_weight_load_passed": true,
+    "native_gpu_parameter_count": 4143404816
   },
-  "next_action": "Watch strict native model loading, queue parity and real phone-stand episode; preserve active model/runtime/tokenizer/asset paths. After qualified native inference, source-task SFT screen and explicit RLinf conversion/parity before PPO.",
+  "next_action": "Restore exact5865-byte same.json from the verified archive, preserving original dangling link. New run initializes simulator/reset/cameras before constructing model. Then native queue parity and episode; no PPO yet.",
   "monitor_interval_minutes": 20,
   "queue_receipt": "QUAL05-SUBMITTED.jpg",
   "attempts": [
@@ -165,12 +167,27 @@
       "attempt": "qual05",
       "job_id": "job-672dz8gc69pd",
       "source_commit": "ee6d7f050a69ceaefe7247e4a2a55493a7940029",
-      "status": "model_loading",
+      "status": "failed",
       "gpu_probe_passed": true,
       "processor_check_passed": true,
       "assets_passed": true,
       "maximum_gpu_hours": 0.5,
-      "camera_profile": "Large_D435 head/wrists640x480"
+      "camera_profile": "Large_D435 head/wrists640x480",
+      "exit_code": 1,
+      "worker_gpu_seconds": 174,
+      "strict_weight_load_passed": true,
+      "parameter_count": 4143404816,
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "simulator_episodes": 0,
+      "optimizer_updates": 0,
+      "error": "Simulator import requires missing root objects/same.json; per-family installer excludes root files",
+      "evidence": [
+        "qual05/native/READY.json",
+        "qual05/native/RESULT.json",
+        "qual05/qualification.log",
+        "qual05/EXIT.json"
+      ]
     }
   ],
   "cpu_probe_attempt": {
