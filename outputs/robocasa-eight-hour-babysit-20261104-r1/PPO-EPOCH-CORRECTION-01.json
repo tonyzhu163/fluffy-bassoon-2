@@ -1,0 +1,35 @@
+{
+  "verified": true,
+  "correction": "The claim that retained production130 sources used one PPO epoch was incorrect; the short one-epoch ablation is a separate run.",
+  "production_tasks": [
+    "OpenDrawer",
+    "CloseToasterOvenDoor",
+    "PickPlaceDrawerToCounter",
+    "CoffeeSetupMug",
+    "TurnOffStove"
+  ],
+  "production_updates": 130,
+  "PPO_epochs_per_update": 4,
+  "minibatches_per_epoch": 6,
+  "logical_optimizer_steps_per_task": 3120,
+  "completed_report": "outputs/robocasa-flow-sde-10m-per-task-20261103-r1/RESULT.md",
+  "completed_report_sha256": "1f52ff281803bbfb63e947548d2f7ce4c8450f15b57fe5f3c7d62abf62865651",
+  "saved_runtime_configs_independently_read_on_Linux": [
+    "OpenDrawer",
+    "CloseToasterOvenDoor",
+    "CoffeeSetupMug"
+  ],
+  "new_Counter_Faucet_updates": 40,
+  "new_Counter_Faucet_PPO_epochs": 4,
+  "new_Counter_Faucet_optimizer_steps_per_actor": 960,
+  "Coffee_proposal_status": "withdrawn_pending_corrected_scientific_rationale",
+  "current_70GPUh_endpoint_comparisons_unchanged": true,
+  "checked_shanghai": "2026-11-05T23:03:01.045859+08:00",
+  "direct_runtime_counter_audit": "PPO-EPOCH-RUNTIME-AUDIT-01.json",
+  "actual_final_actor_counters_for_each_retained_source": {
+    "before": 3096,
+    "after": 3120,
+    "both_actors": true
+  },
+  "no_epoch_setting_failure": true
+}
