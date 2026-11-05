@@ -114,7 +114,7 @@ to the [2026-11-03 snapshot](archive/coordination/coordination-20261103.md#ongoi
 
 | Eight-hour PPO/GRPO and meta-learning babysit | Codex | Baige Pro6K; approved SOURCE5 campaign70GPUh | Counter-to-Cabinet40/E4 `job-p4vgvfgs7s29` RUNNING8GPUs, createdNov5 11:26:43; source9d1342cf,30GPUh cap, no automatic retry. Checkpoint optimization passed24Linux core tests/675real tensor matches; full DCP every boundary, standalone teacher export40only. GPU probe/first SGD verification next, routine check11:46. Faucet waits for independent storage admission. Frozen-expert KV primary/velocity ablation; no more direct-action fits. Above50GPUh approval rule adopted; explicit caps preserved. |
 
-| Four-epoch PPO40 versus GRPO40 | Owner chat `01a1a633`; Baige Pro6K `job-hxgnpj0csx9s` RUNNING, 2GPUs, source `37364fae` | **Nov5 11:19 Shanghai:** 64/1544 policy episodes complete. Both allocated probes and zero-gap initial likelihood pass; first16 paired cases independently verify all three strict loads, common physical/public starts and12-chunk RNG. Next11:39; finish512case endpoint audit and release within7.5GPUh. Broader four-epoch sources remain with70GPUh owner. [Execution](robocasa-ppo4-grpo40-test512-20261105-r1/EXECUTION.json). |
+| Four-epoch PPO40 versus GRPO40 | Owner chat `01a1a633`; Baige Pro6K `job-hxgnpj0csx9s` RUNNING, 2GPUs, source `37364fae` | **Nov5 11:39 Shanghai:** 368/1544 episodes complete, 220,800 evaluation controls. Exact checkpoint loads, physical/public starts and sampler pairing enforced; full512-case result pending. Conservative 0.94/7.5GPUh through check. Next11:59; finish endpoint audit and verify release. [Execution](robocasa-ppo4-grpo40-test512-20261105-r1/EXECUTION.json). |
 
 ### Needs owner refresh
 
