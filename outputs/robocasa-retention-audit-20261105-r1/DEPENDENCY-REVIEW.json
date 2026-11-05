@@ -1,0 +1,311 @@
+{
+  "checked_from": "Local compact run contracts and current coordination; no live artifact-tree traversal.",
+  "protected_roots": [
+    "robocasa-three-task-meta-baseline-20261104-r2",
+    "robocasa-eight-hour-babysit-20261104-r1",
+    "robocasa-ppo4-grpo40-test512-20261105-r1",
+    "robocasa-flow-sde-10m-per-task-20261103-r1",
+    "robocasa-opendrawer-flow-sde-20261102-r4",
+    "robocasa-joint-h600-preparation-20261102-r4",
+    "robocasa-flow-sde-critic-parity-20261104-r1",
+    "robocasa-ppo-grpo-meta-stage1-20261104-r1",
+    "robocasa-opendrawer-ppo-ablation-3m-20261104-r1",
+    "robocasa-joint-steering-kv-scale50-20261103-r1",
+    "robocasa-joint-steering-velocity-scale50-20261103-r1"
+  ],
+  "relevant_cross_references": [
+    {
+      "target": "robocasa-flora-throughput-20261102-r2",
+      "record": "outputs/robocasa-joint-h600-preparation-20261102-r4/GRADE-SOURCE-AUDIT.py",
+      "lines": [
+        "inputs = json.loads((CODE / 'outputs/robocasa-flora-throughput-20261102-r2/INPUTS.json').read_text())"
+      ]
+    },
+    {
+      "target": "robocasa-flora-throughput-20261102-r2",
+      "record": "outputs/robocasa-joint-h600-preparation-20261102-r4/INPUTS.py",
+      "lines": [
+        "    flora = read(code / 'outputs/robocasa-flora-throughput-20261102-r2/INPUTS.json')"
+      ]
+    },
+    {
+      "target": "robocasa-joint-native-core-20261102-r1",
+      "record": "outputs/robocasa-joint-h600-preparation-20261102-r4/LAUNCH-EVIDENCE.json",
+      "lines": [
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-native-core-20261102-r1/READY.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-native-core-20261102-r1/READY.json\",",
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-native-core-20261102-r1/READY.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-native-core-20261102-r1/READY.json\",",
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-native-core-20261102-r1/READY.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-native-core-20261102-r1/READY.json\",",
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-native-core-20261102-r1/READY.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-native-core-20261102-r1/READY.json\","
+      ]
+    },
+    {
+      "target": "robocasa-joint-native-core-20261102-r1",
+      "record": "outputs/robocasa-joint-h600-preparation-20261102-r4/INPUT-CLOSURE.json",
+      "lines": [
+        "      \"path\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-native-core-20261102-r1/READY.json\",",
+        "      \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-native-core-20261102-r1/READY.json\",",
+        "      \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-native-core-20261102-r1/READY.json\","
+      ]
+    },
+    {
+      "target": "robocasa-residual-approved-20261101-r1",
+      "record": "outputs/robocasa-joint-h600-preparation-20261102-r4/LAUNCH-EVIDENCE.json",
+      "lines": [
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json\",",
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json\",",
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json\",",
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json\","
+      ]
+    },
+    {
+      "target": "robocasa-residual-approved-20261101-r1",
+      "record": "outputs/robocasa-joint-h600-preparation-20261102-r4/INPUT-CLOSURE.json",
+      "lines": [
+        "      \"path\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json\",",
+        "      \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json\",",
+        "      \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json\","
+      ]
+    },
+    {
+      "target": "robocasa-joint-lane-qualification-20261102-r5",
+      "record": "outputs/robocasa-joint-h600-preparation-20261102-r4/LAUNCH-EVIDENCE.json",
+      "lines": [
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json\",",
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json\",",
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json\",",
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json\","
+      ]
+    },
+    {
+      "target": "robocasa-joint-lane-qualification-20261102-r5",
+      "record": "outputs/robocasa-joint-h600-preparation-20261102-r4/INPUT-CLOSURE.json",
+      "lines": [
+        "      \"path\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json\",",
+        "      \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json\",",
+        "      \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json\","
+      ]
+    },
+    {
+      "target": "robocasa-flora-joint80-port-20261102-r1",
+      "record": "outputs/robocasa-joint-h600-preparation-20261102-r4/LAUNCH-EVIDENCE.json",
+      "lines": [
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json\",",
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json\",",
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json\",",
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json\","
+      ]
+    },
+    {
+      "target": "robocasa-flora-joint80-port-20261102-r1",
+      "record": "outputs/robocasa-joint-h600-preparation-20261102-r4/INPUT-CLOSURE.json",
+      "lines": [
+        "      \"path\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json\",",
+        "      \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json\",",
+        "      \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json\","
+      ]
+    },
+    {
+      "target": "robocasa-five-task-native-qualification-20261102-r1",
+      "record": "outputs/robocasa-joint-h600-preparation-20261102-r4/warmup-episodes.json",
+      "lines": [
+        "        \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000000-robot0_agentview_left.mp4\",",
+        "        \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000000-robot0_eye_in_hand.mp4\",",
+        "        \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000000-robot0_agentview_right.mp4\",",
+        "        \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000001-robot0_agentview_left.mp4\",",
+        "        \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000001-robot0_eye_in_hand.mp4\",",
+        "        \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000001-robot0_agentview_right.mp4\",",
+        "        \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000002-robot0_agentview_left.mp4\",",
+        "        \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000002-robot0_eye_in_hand.mp4\",",
+        "        \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000002-robot0_agentview_right.mp4\",",
+        "        \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000003-robot0_agentview_left.mp4\",",
+        "        \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000003-robot0_eye_in_hand.mp4\",",
+        "        \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000003-robot0_agentview_right.mp4\","
+      ]
+    },
+    {
+      "target": "robocasa-five-task-native-qualification-20261102-r1",
+      "record": "outputs/robocasa-joint-h600-preparation-20261102-r4/INPUT-CLOSURE.json",
+      "lines": [
+        "      \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000000-robot0_agentview_left.mp4\",",
+        "      \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000000-robot0_eye_in_hand.mp4\",",
+        "      \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000000-robot0_agentview_right.mp4\",",
+        "      \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000001-robot0_agentview_left.mp4\",",
+        "      \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000001-robot0_eye_in_hand.mp4\",",
+        "      \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000001-robot0_agentview_right.mp4\",",
+        "      \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000002-robot0_agentview_left.mp4\",",
+        "      \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000002-robot0_eye_in_hand.mp4\",",
+        "      \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000002-robot0_agentview_right.mp4\",",
+        "      \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000003-robot0_agentview_left.mp4\",",
+        "      \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000003-robot0_eye_in_hand.mp4\",",
+        "      \"path\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000003-robot0_agentview_right.mp4\","
+      ]
+    },
+    {
+      "target": "robocasa-joint-reward-core-20261102-r1",
+      "record": "outputs/robocasa-joint-h600-preparation-20261102-r4/LAUNCH-EVIDENCE.json",
+      "lines": [
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-reward-core-20261102-r1/READY.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-reward-core-20261102-r1/READY.json\",",
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-reward-core-20261102-r1/READY.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-reward-core-20261102-r1/READY.json\",",
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-reward-core-20261102-r1/READY.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-reward-core-20261102-r1/READY.json\",",
+        "            \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-reward-core-20261102-r1/READY.json\",",
+        "            \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-reward-core-20261102-r1/READY.json\","
+      ]
+    },
+    {
+      "target": "robocasa-joint-reward-core-20261102-r1",
+      "record": "outputs/robocasa-joint-h600-preparation-20261102-r4/INPUT-CLOSURE.json",
+      "lines": [
+        "      \"path\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-reward-core-20261102-r1/READY.json\",",
+        "      \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-reward-core-20261102-r1/READY.json\",",
+        "      \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-reward-core-20261102-r1/READY.json\","
+      ]
+    },
+    {
+      "target": "robocasa-joint-six-update-proposal-20261102-r1",
+      "record": "outputs/robocasa-joint-h600-preparation-20261102-r4/BINDING-REVIEW.json",
+      "lines": [
+        "      \"path\": \"outputs/robocasa-joint-six-update-proposal-20261102-r1/BINDING-TEMPLATE.json\",",
+        "      \"path\": \"outputs/robocasa-joint-six-update-proposal-20261102-r1/BINDING-BUDGET-APPROVED-TEMPLATE.json\","
+      ]
+    },
+    {
+      "target": "robocasa-joint-six-update-proposal-20261102-r1",
+      "record": "outputs/robocasa-joint-h600-preparation-20261102-r4/INPUTS.py",
+      "lines": [
+        "    base = copy.deepcopy(read(code / 'outputs/robocasa-joint-six-update-proposal-20261102-r1/BINDING-TEMPLATE.json')['policy_profile'])"
+      ]
+    },
+    {
+      "target": "robocasa-joint-six-update-proposal-20261102-r1",
+      "record": "outputs/robocasa-joint-h600-preparation-20261102-r4/BINDING-PATH-REPAIR.json",
+      "lines": [
+        "  \"original\": \"/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-six-update-proposal-20261102-r1/HUMAN-ACTION-AUTHORITY.json\",",
+        "  \"pinned\": \"/mowenjie/fluffy-bassoon-2/worktrees/joint-h600-preparation-20261102-r4/outputs/robocasa-joint-six-update-proposal-20261102-r1/HUMAN-ACTION-AUTHORITY.json\","
+      ]
+    },
+    {
+      "target": "robocasa-flow-sde-checkpoint-selection-20261104-r1",
+      "record": "outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ROOT-CAUSE-ANALYSIS.md",
+      "lines": [
+        "- [Historical DEV curve](../robocasa-flow-sde-checkpoint-selection-20261104-r1/DEV-CURVES-LOCKED-R1.csv),"
+      ]
+    },
+    {
+      "target": "robocasa-flow-sde-checkpoint-selection-20261104-r1",
+      "record": "outputs/robocasa-flow-sde-critic-parity-20261104-r1/FIXED-ENDPOINT-COMMAND.sh",
+      "lines": [
+        "export PYTHONPATH=$TASK_META/outputs/robocasa-flow-sde-critic-parity-20261104-r1:$TASK_META/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1:$TASK_RUNTIME/src:$TASK_VENDOR"
+      ]
+    },
+    {
+      "target": "robocasa-flow-sde-checkpoint-selection-20261104-r1",
+      "record": "outputs/robocasa-flow-sde-critic-parity-20261104-r1/BASELINE-ENDPOINT-COMMAND.sh",
+      "lines": [
+        "export PYTHONPATH=$TASK_META/outputs/robocasa-flow-sde-critic-parity-20261104-r1:$TASK_META/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1:$TASK_RUNTIME/src:$TASK_VENDOR"
+      ]
+    },
+    {
+      "target": "robocasa-flow-sde-checkpoint-selection-20261104-r1",
+      "record": "outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/EVAL-NODE.sh",
+      "lines": [
+        "export PYTHONPATH=$EVAL_CODE/$run:$EVAL_CODE/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1:$EVAL_CODE/outputs/robocasa-flow-sde-endpoint-test512-20261104-r1:$engine/src:$vendor"
+      ]
+    },
+    {
+      "target": "robocasa-flow-sde-checkpoint-selection-20261104-r1",
+      "record": "outputs/robocasa-ppo4-grpo40-test512-20261105-r1/NODE.sh",
+      "lines": [
+        "export PYTHONPATH=$PAIR_CODE/$RUN:$EVAL/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1:$EVAL/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1:$EVAL/outputs/robocasa-flow-sde-endpoint-test512-20261104-r1:$ENGINE/src:$VENDOR"
+      ]
+    },
+    {
+      "target": "robocasa-flow-sde-checkpoint-selection-20261104-r1",
+      "record": "outputs/robocasa-eight-hour-babysit-20261104-r1/BASELINE-NODE.sh",
+      "lines": [
+        "export PYTHONPATH=$BABYSIT_CODE/$RUN:$EVAL/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1:$EVAL/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1:$EVAL/outputs/robocasa-flow-sde-endpoint-test512-20261104-r1:$ENGINE/src:$VENDOR"
+      ]
+    },
+    {
+      "target": "robocasa-flow-sde-endpoint-test512-20261104-r1",
+      "record": "outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/EVAL-NODE.sh",
+      "lines": [
+        "export PYTHONPATH=$EVAL_CODE/$run:$EVAL_CODE/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1:$EVAL_CODE/outputs/robocasa-flow-sde-endpoint-test512-20261104-r1:$engine/src:$vendor"
+      ]
+    },
+    {
+      "target": "robocasa-flow-sde-endpoint-test512-20261104-r1",
+      "record": "outputs/robocasa-ppo4-grpo40-test512-20261105-r1/NODE.sh",
+      "lines": [
+        "export PYTHONPATH=$PAIR_CODE/$RUN:$EVAL/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1:$EVAL/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1:$EVAL/outputs/robocasa-flow-sde-endpoint-test512-20261104-r1:$ENGINE/src:$VENDOR"
+      ]
+    },
+    {
+      "target": "robocasa-flow-sde-endpoint-test512-20261104-r1",
+      "record": "outputs/robocasa-eight-hour-babysit-20261104-r1/BASELINE-NODE.sh",
+      "lines": [
+        "export PYTHONPATH=$BABYSIT_CODE/$RUN:$EVAL/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1:$EVAL/outputs/robocasa-flow-sde-checkpoint-selection-20261104-r1:$EVAL/outputs/robocasa-flow-sde-endpoint-test512-20261104-r1:$ENGINE/src:$VENDOR"
+      ]
+    },
+    {
+      "target": "robocasa-endpoint512-acceleration-20261104-r1",
+      "record": "outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/ROOT-CAUSE-ANALYSIS.md",
+      "lines": [
+        "  and [512-case endpoint](../robocasa-endpoint512-acceleration-20261104-r1/RESULT.md)."
+      ]
+    },
+    {
+      "target": "robocasa-endpoint512-acceleration-20261104-r1",
+      "record": "outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/RESULT.md",
+      "lines": [
+        "Every PPO40 policy in the table received 40 fresh rollouts of 128 episodes \u00d7 600 controls, totaling 5,120 episodes, **3,072,000 executed training actions**, or 61,440 policy decisions issuing 50-action chunks. Historical PPO and the four-epoch arm each took 960 Adam steps per actor rank. Stage 1 and the other two variants took 240. Matching 240 optimizer steps instead would select historical update 10 at 768,000 actions. The historical +7.42-point held-out improvement was measured at update 130 and 9,984,000 training actions. [Source comparison](../robocasa-ppo-grpo-meta-stage1-20261104-r1/ROOT-CAUSE-ANALYSIS.md) \u00b7 [Historical 512-case endpoint](../robocasa-endpoint512-acceleration-20261104-r1/RESULT.md)"
+      ]
+    },
+    {
+      "target": "robocasa-endpoint512-acceleration-20261104-r1",
+      "record": "outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/PLAN.md",
+      "lines": [
+        "[Stage 1 audit](../robocasa-ppo-grpo-meta-stage1-20261104-r1/PPO-AUDIT-LIVE.json) \u00b7 [timing comparison](../robocasa-ppo-grpo-meta-stage1-20261104-r1/PERFORMANCE-NOTE.md) \u00b7 [paired endpoint evaluation](../robocasa-endpoint512-acceleration-20261104-r1/RESULT.md)."
+      ]
+    }
+  ],
+  "resolution": "Selected-root dependencies include code, configuration/qualification records, calibration videos, historical CSV/results. All are retained; calibration videos are excluded from screen pruning. Teacher/training/calibration/recovery roots used by live work are wholly excluded.",
+  "referenced_selected_input_paths": [
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000000-robot0_agentview_left.mp4",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000000-robot0_agentview_right.mp4",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000000-robot0_eye_in_hand.mp4",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000001-robot0_agentview_left.mp4",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000001-robot0_agentview_right.mp4",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000001-robot0_eye_in_hand.mp4",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000002-robot0_agentview_left.mp4",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000002-robot0_agentview_right.mp4",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000002-robot0_eye_in_hand.mp4",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000003-robot0_agentview_left.mp4",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000003-robot0_agentview_right.mp4",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-five-task-native-qualification-20261102-r1/native/CoffeeSetupMug/baseline-000/videos/parallel-000000/rank-00/videos/CoffeeSetupMug-qualification-case-000000-rank-00-episode-000003-robot0_eye_in_hand.mp4",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flora-joint80-port-20261102-r1/qualification/READY.json",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-lane-qualification-20261102-r5/CPU-QUALIFICATION.json",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-native-core-20261102-r1/READY.json",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-reward-core-20261102-r1/READY.json",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-joint-six-update-proposal-20261102-r1/HUMAN-ACTION-AUTHORITY.json",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-residual-approved-20261101-r1/STRICT-LOADING.json"
+  ]
+}
