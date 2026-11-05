@@ -1,0 +1,60 @@
+{
+  "checked_shanghai": "2026-11-06T07:40:14.017029+08:00",
+  "old_job": {
+    "job_id": "job-jxj1wded8dns",
+    "GPUs": 1,
+    "created_shanghai": "2026-11-06T03:11:41+08:00",
+    "max_reservation_GPU_hours": 7.5,
+    "kind": "frozen-steering-full-arm-stage1-evaluation",
+    "purpose": "Original150-budget staged complete AD velocity5task50case6episodefull/reset readout; full8scientific matrix unchanged",
+    "interface": "velocity_bridge",
+    "objective": "ad",
+    "source_commit": "87984718c9199797d31a158c47225cc695623afe",
+    "attempt": "readout-pfs06-vel-ad",
+    "admission": "outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/READOUT-ADMISSION.json",
+    "candidate_sha256": "04701478c2f3f850b8ce0329855f334732212d4186ae9502e4d97a08a3bab9ca",
+    "status": "Succeeded",
+    "scheduler_max_runtime_minutes": 450,
+    "automatic_retry": false,
+    "released_shanghai": "2026-11-06T07:37:05+08:00",
+    "release_evidence": "Authenticated Baige scheduler endtime observed; complete-wave2088episodes, legacy411PFSgate; original879science preserved, nextOOD/full/CloseFridge/bank048"
+  },
+  "old_completed_episodes": 2088,
+  "exact_scheduler_release_verified": true,
+  "new_maximum_job_GPU_hours": 4,
+  "actual_new_wrapper_preflight": {
+    "admitted": true,
+    "model": "velocity_bridge/ad",
+    "maximum_job_GPU_hours": 4.0,
+    "committed_GPU_hours": 140.71500000000003,
+    "forward_storage": {
+      "checked_unix": 1793922014.0166588,
+      "free_bytes": 396533694464,
+      "required_free_bytes": 341633234944,
+      "margin_bytes": 54900459520,
+      "admitted": true,
+      "protected_floor_bytes": 236223201280,
+      "other_owner_contingency_bytes": 27917287424,
+      "readout_hot_allocated_bytes": 3708620288,
+      "readout_hot_remaining_bytes": 39241052672,
+      "robotwin": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01",
+          "cap_bytes": 144955146240,
+          "allocated_bytes": 131416827904,
+          "remaining_bytes": 13538318336
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02",
+          "cap_bytes": 144955146240,
+          "allocated_bytes": 120241771008,
+          "remaining_bytes": 24713375232
+        }
+      ],
+      "policy_sha256": "c835ca721912d3fbcd79c5aa83bb01e032add7b0de0e0a690c544a78b5d89179"
+    }
+  },
+  "prospective_campaign_max_GPU_hours": 144.71500000000003,
+  "approved_GPU_hours": 150,
+  "unchanged_original879bindings_and_all_completedwaves": true
+}

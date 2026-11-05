@@ -640,9 +640,11 @@
       "attempt": "readout-pfs06-vel-ad",
       "admission": "outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/READOUT-ADMISSION.json",
       "candidate_sha256": "04701478c2f3f850b8ce0329855f334732212d4186ae9502e4d97a08a3bab9ca",
-      "status": "Running",
+      "status": "Succeeded",
       "scheduler_max_runtime_minutes": 450,
-      "automatic_retry": false
+      "automatic_retry": false,
+      "released_shanghai": "2026-11-06T07:37:05+08:00",
+      "release_evidence": "Authenticated Baige scheduler endtime observed; complete-wave2088episodes, legacy411PFSgate; original879science preserved, nextOOD/full/CloseFridge/bank048"
     },
     {
       "job_id": "job-024yx9kxrefp",
@@ -659,6 +661,23 @@
       "candidate_sha256": "f7085e4a6940546e32e46710314ac4fa4319e6179e69e23320e486d48345ad74",
       "status": "Running",
       "scheduler_max_runtime_minutes": 300,
+      "automatic_retry": false
+    },
+    {
+      "job_id": "job-149vs0aki0iv",
+      "GPUs": 1,
+      "created_shanghai": "2026-11-06T07:41:35+08:00",
+      "max_reservation_GPU_hours": 4,
+      "kind": "frozen-steering-full-arm-operational-resume",
+      "interface": "velocity_bridge",
+      "objective": "ad",
+      "attempt": "readout-pfs07-vel-ad",
+      "source_commit": "07e3fbeef8ecc1f8f4ef405da747c8ea837f4a79",
+      "scientific_code_commit": "87984718c9199797d31a158c47225cc695623afe",
+      "purpose": "Complete unchanged3000episodeADvelocity arm after2088complete-wave checkpoint; original879bindings/0SGD, dynamicremainingPFSguard",
+      "candidate_sha256": "04701478c2f3f850b8ce0329855f334732212d4186ae9502e4d97a08a3bab9ca",
+      "status": "Running",
+      "scheduler_max_runtime_minutes": 240,
       "automatic_retry": false
     }
   ],
