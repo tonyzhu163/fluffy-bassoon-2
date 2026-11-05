@@ -93,7 +93,7 @@ if [[ $TASK_PHASE == qualification || $TASK_PHASE == gradient_probe || $TASK_PHA
   mkdir "$NATIVE_PPO_OUTPUT"
 fi
 mapfile -t TASK_OVERRIDES < <("$TASK_PYTHON" "$TASK_RUN/configuration.py" "$TASK_ALGORITHM" "$TASK_CONFIG_MODE")
-[[ ${#TASK_OVERRIDES[@]} -ge 18 ]]
+[[ ${#TASK_OVERRIDES[@]} -ge 16 ]]
 TASK_REMAINING=$((NATIVE_PPO_DEADLINE-$(date +%s)-60))
 [[ $TASK_REMAINING -gt 240 ]]
 timeout --signal=INT --kill-after=20s "$TASK_REMAINING" "$TASK_PYTHON" "$TASK_ENTRY" \
@@ -114,7 +114,7 @@ if [[ $TASK_PHASE == qualification || $TASK_PHASE == gradient_probe || $TASK_PHA
   else
     mapfile -t TASK_OVERRIDES < <("$TASK_PYTHON" "$TASK_RUN/configuration.py" grpo qualification "$TASK_RESUME")
   fi
-  [[ ${#TASK_OVERRIDES[@]} -ge 18 ]]
+  [[ ${#TASK_OVERRIDES[@]} -ge 16 ]]
   TASK_REMAINING=$((NATIVE_PPO_DEADLINE-$(date +%s)-60))
   [[ $TASK_REMAINING -gt 120 ]]
   TASK_RESTORE_STARTED=$(date +%s)

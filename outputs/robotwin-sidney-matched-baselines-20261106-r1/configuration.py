@@ -31,6 +31,32 @@ def overrides(algorithm,qualification=False,resume=None):
 
 
 if __name__=='__main__':
+    if sys.argv[1]=='validate_commands':
+        import json,os,socket
+        import torch
+        from hydra import compose,initialize_config_dir
+        from hydra._internal.utils import get_args_parser
+        from paired_recipe import validate_pair
+        assert sys.platform=='linux' and socket.gethostname().startswith('job-')
+        assert os.environ['CUDA_VISIBLE_DEVICES']==''
+        rows=[];config_dir=str(ROOT.parents[1]/'configs/native_ppo')
+        for method in ('ppo','grpo'):
+            for phase,driver in (('launch','paired_entry.py'),('actor_restore','gradient_probe.py')):
+                emitted=overrides(method,False)
+                argv=['--config-path',config_dir,'--config-name','sidney_phone_two',*emitted]
+                parsed=get_args_parser().parse_args(argv)
+                assert parsed.overrides==emitted and len(emitted)==16
+                with initialize_config_dir(version_base='1.1',config_dir=parsed.config_path):
+                    cfg=compose(config_name=parsed.config_name,overrides=parsed.overrides)
+                contract=validate_pair(cfg)  # Required scientific fields; not merely an argument count.
+                rows.append(dict(algorithm=method,phase=phase,entrypoint=driver,argv=argv,
+                    parsed_override_count=len(parsed.overrides),required_fields_validated=contract,
+                    shell_minimum_16_passed=len(emitted)>=16))
+        assert not torch.cuda.is_initialized()
+        print(json.dumps(dict(status='complete',host=socket.gethostname(),commands=rows,
+            actual_installed_Hydra_argument_parser=True,cuda_initialized=False,
+            model_or_simulator_constructed=False)))
+        sys.exit(0)
     if sys.argv[1] in ('validate','validate_all'):
         import json
         import os

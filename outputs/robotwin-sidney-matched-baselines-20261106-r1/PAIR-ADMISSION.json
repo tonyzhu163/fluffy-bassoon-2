@@ -1,5 +1,5 @@
 {
-  "status": "admitted",
+  "status": "prepared_waiting_command_preflight",
   "phase_admitted": "bounded_one_task_two_iteration_matched_PPO_GRPO_pair",
   "scientific_pair_admitted": true,
   "recorded_at_shanghai": "2026-11-06T05:17:55.659184+08:00",
@@ -7,7 +7,7 @@
   "additional_engineering_gpu_hours": 46,
   "previous_additional_engineering_gpu_hours": 23,
   "legacy_gpu_seconds": 2561,
-  "completed_additional_conservative_gpu_seconds": 68905,
+  "completed_additional_conservative_gpu_seconds": 69229,
   "gpu_reservations_seconds": {
     "ppo": 41040,
     "grpo": 41040
@@ -54,10 +54,15 @@
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo01",
       "maximum_gib": 135,
-      "closed": false
+      "closed": true
     },
     {
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01",
+      "maximum_gib": 135,
+      "closed": false
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02",
       "maximum_gib": 135,
       "closed": false
     }
@@ -125,12 +130,21 @@
       "creation_to_release_gpu_seconds": 5200,
       "worker_gpu_seconds": 5096,
       "optimizer_updates": 1
+    },
+    {
+      "attempt": "ppo01_pre_model",
+      "job_id": "job-aov10eugetky",
+      "scheduler_gpu_seconds": 280,
+      "creation_to_release_gpu_seconds": 324,
+      "worker_gpu_seconds": 128,
+      "optimizer_updates": 0,
+      "new_simulator_controls": 0
     }
   ],
   "probe_has_no_environment_workers": true,
   "full_grouped_qualifier_still_required": true,
   "prospective_science_pair_gpu_seconds": 82080,
-  "prospective_science_pair_cumulative_worst_gpu_seconds": 153546,
+  "prospective_science_pair_cumulative_worst_gpu_seconds": 153870,
   "prospective_science_pair_migration_active": true,
   "current_pilot_maximum_reservation_closed": true,
   "maximum_engineering_optimizer_updates": 1,
@@ -141,7 +155,7 @@
   "trained_actor_optimizer_restore_qualified": true,
   "full_twelve_worker_runtime_qualified": true,
   "archive_staging_included_gib": 0,
-  "completed_cumulative_actual_gpu_seconds": 70883,
+  "completed_cumulative_actual_gpu_seconds": 71163,
   "maximum_optimizer_updates_per_arm": 40,
   "maximum_actions_per_arm": 1000000,
   "scientific_source_corpus_admitted": false,

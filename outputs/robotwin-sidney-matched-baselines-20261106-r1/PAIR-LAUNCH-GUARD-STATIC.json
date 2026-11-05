@@ -1,0 +1,84 @@
+{
+  "status": "static_emitter_checked",
+  "scientific_override_count": 16,
+  "qualification_override_count": 20,
+  "old_minimum": 18,
+  "corrected_minimum": 16,
+  "actual_allocated_PPO_scientific_config_already_validated": true,
+  "model_or_simulator_computation_on_macos": false,
+  "rows": [
+    {
+      "algorithm": "ppo",
+      "mode": "scientific",
+      "override_count": 16,
+      "arguments": [
+        "algorithm.adv_type=gae",
+        "algorithm.loss_type=actor_critic",
+        "actor.model.add_value_head=true",
+        "algorithm.group_size=8",
+        "env.train.group_size=8",
+        "actor.micro_batch_size=64",
+        "algorithm.recompute_logprobs=false",
+        "native_pilot.memory_strategy=native_batch_end",
+        "native_pilot.trim_after_scene_close=false",
+        "native_pilot.maximum_actions=1000000",
+        "native_pilot.previous_maximum_actions=null",
+        "+native_pilot.comparison_algorithm=ppo",
+        "+native_pilot.qualification_only=false",
+        "+native_pilot.case_manifest_path=/Users/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/CASES.json",
+        "+native_pilot.case_manifest_sha256=2d3af16ac50f5637af36975c0d795b8c77ee081da14755c5bc05be68219d5110",
+        "runner.logger.experiment_name=sidney-paired-ppo"
+      ]
+    },
+    {
+      "algorithm": "grpo",
+      "mode": "scientific",
+      "override_count": 16,
+      "arguments": [
+        "algorithm.adv_type=grpo",
+        "algorithm.loss_type=actor",
+        "actor.model.add_value_head=false",
+        "algorithm.group_size=8",
+        "env.train.group_size=8",
+        "actor.micro_batch_size=64",
+        "algorithm.recompute_logprobs=false",
+        "native_pilot.memory_strategy=native_batch_end",
+        "native_pilot.trim_after_scene_close=false",
+        "native_pilot.maximum_actions=1000000",
+        "native_pilot.previous_maximum_actions=null",
+        "+native_pilot.comparison_algorithm=grpo",
+        "+native_pilot.qualification_only=false",
+        "+native_pilot.case_manifest_path=/Users/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/CASES.json",
+        "+native_pilot.case_manifest_sha256=2d3af16ac50f5637af36975c0d795b8c77ee081da14755c5bc05be68219d5110",
+        "runner.logger.experiment_name=sidney-paired-grpo"
+      ]
+    },
+    {
+      "algorithm": "grpo",
+      "mode": "qualification",
+      "override_count": 20,
+      "arguments": [
+        "algorithm.adv_type=grpo",
+        "algorithm.loss_type=actor",
+        "actor.model.add_value_head=false",
+        "algorithm.group_size=8",
+        "env.train.group_size=8",
+        "actor.micro_batch_size=64",
+        "algorithm.recompute_logprobs=false",
+        "native_pilot.memory_strategy=native_batch_end",
+        "native_pilot.trim_after_scene_close=false",
+        "native_pilot.maximum_actions=120000",
+        "native_pilot.previous_maximum_actions=null",
+        "+native_pilot.comparison_algorithm=grpo",
+        "+native_pilot.qualification_only=true",
+        "+native_pilot.case_manifest_path=/Users/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/CASES.json",
+        "+native_pilot.case_manifest_sha256=2d3af16ac50f5637af36975c0d795b8c77ee081da14755c5bc05be68219d5110",
+        "runner.logger.experiment_name=sidney-paired-grpo",
+        "runner.max_steps=1",
+        "runner.max_epochs=1",
+        "env.train.rollout_epoch=1",
+        "algorithm.update_epoch=1"
+      ]
+    }
+  ]
+}
