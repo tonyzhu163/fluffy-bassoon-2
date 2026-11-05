@@ -1,0 +1,52 @@
+{
+  "rows": [
+    {
+      "task": "PickPlaceCounterToCabinet",
+      "mode": "recovery",
+      "files": 21,
+      "archived_bytes": 10220756578,
+      "elapsed_seconds": 69.63996291160583,
+      "end_to_end_archived_MBytes_per_second": 146.76568094921635,
+      "cold_read_retries": 0
+    },
+    {
+      "task": "TurnOnSinkFaucet",
+      "mode": "recovery",
+      "files": 21,
+      "archived_bytes": 10220757401,
+      "elapsed_seconds": 67.2464690208435,
+      "end_to_end_archived_MBytes_per_second": 151.98950294077162,
+      "cold_read_retries": 0
+    },
+    {
+      "task": "PickPlaceCounterToCabinet",
+      "mode": "raw",
+      "files": 2340,
+      "archived_bytes": 4381409793,
+      "elapsed_seconds": 673.4468259811401,
+      "end_to_end_archived_MBytes_per_second": 6.505947647190635,
+      "cold_read_retries": 0
+    },
+    {
+      "task": "TurnOnSinkFaucet",
+      "mode": "raw",
+      "files": 2348,
+      "archived_bytes": 4147991096,
+      "elapsed_seconds": 663.2084307670593,
+      "end_to_end_archived_MBytes_per_second": 6.254430588589594,
+      "cold_read_retries": 0
+    },
+    {
+      "task": "CoffeeSetupMug",
+      "mode": "raw",
+      "files": 2320,
+      "archived_bytes": 4357252946,
+      "elapsed_seconds": 691.7241816520691,
+      "end_to_end_archived_MBytes_per_second": 6.299119015318245,
+      "cold_read_retries": 0
+    }
+  ],
+  "scope": "Existing archivecopy, byte/SHA readbacks, alias migration and protected-model verification; not isolated object bandwidth or separately measured per-request latency",
+  "inference": "Small-file latency is plausible, not causally isolated; no extra benchmark run",
+  "GPU_hours": 0
+}
