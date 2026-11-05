@@ -1,0 +1,7701 @@
+{
+  "status": "running",
+  "optimizer_updates": 0,
+  "model_loaded": false,
+  "scenes": 64,
+  "snapshots": [
+    {
+      "stage": "imports_before_constructor",
+      "at_unix": 1793897988.0137985,
+      "smaps": {
+        "Rss": 788807680,
+        "Pss": 780060672,
+        "Pss_Dirty": 365756416,
+        "Pss_Anon": 506265600,
+        "Pss_File": 273795072,
+        "Pss_Shmem": 0,
+        "Shared_Clean": 9682944,
+        "Shared_Dirty": 0,
+        "Private_Clean": 413368320,
+        "Private_Dirty": 365756416,
+        "Referenced": 788807680,
+        "Anonymous": 506265600,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 174063616,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 192335872,
+        "ordblks": 149,
+        "smblks": 104,
+        "hblks": 2,
+        "hblkhd": 401408,
+        "usmblks": 0,
+        "fsmblks": 5872,
+        "uordblks": 185847280,
+        "fordblks": 6488592,
+        "keepcost": 4326064
+      },
+      "python_traced_current_peak_bytes": [
+        105783,
+        4238133
+      ],
+      "memory.current": "1046355968",
+      "memory.peak": "1054502912",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 540905472,
+        "file": 473288704,
+        "kernel": 29081600,
+        "kernel_stack": 720896,
+        "pagetables": 5586944,
+        "sec_pagetables": 0,
+        "percpu": 34944,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 471232512,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 47108096,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 174063616,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 1011957760,
+        "inactive_file": 716800,
+        "active_file": 1339392,
+        "unevictable": 0,
+        "slab_reclaimable": 14259568,
+        "slab_unreclaimable": 8127920,
+        "slab": 22387488,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 450589,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 196,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "first/setup_scene/before",
+      "at_unix": 1793898006.476696,
+      "smaps": {
+        "Rss": 994553856,
+        "Pss": 975558656,
+        "Pss_Dirty": 535146496,
+        "Pss_Anon": 684044288,
+        "Pss_File": 291514368,
+        "Pss_Shmem": 0,
+        "Shared_Clean": 21229568,
+        "Shared_Dirty": 0,
+        "Private_Clean": 438177792,
+        "Private_Dirty": 535146496,
+        "Referenced": 994553856,
+        "Anonymous": 684044288,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 224395264,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 331501568,
+        "ordblks": 203,
+        "smblks": 80,
+        "hblks": 3,
+        "hblkhd": 8794112,
+        "usmblks": 0,
+        "fsmblks": 3488,
+        "uordblks": 243281936,
+        "fordblks": 88219632,
+        "keepcost": 717104
+      },
+      "python_traced_current_peak_bytes": [
+        39934020,
+        44135922
+      ],
+      "memory.current": "1231454208",
+      "memory.peak": "1243623424",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 725921792,
+        "file": 473628672,
+        "kernel": 30523392,
+        "kernel_stack": 835584,
+        "pagetables": 6168576,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 471232512,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 47419392,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 228589568,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 1198313472,
+        "inactive_file": 770048,
+        "active_file": 1626112,
+        "unevictable": 0,
+        "slab_reclaimable": 14895080,
+        "slab_unreclaimable": 8255056,
+        "slab": 23150136,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 625606,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 234,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "first/setup_scene/after",
+      "at_unix": 1793898006.920616,
+      "smaps": {
+        "Rss": 1261735936,
+        "Pss": 1219062784,
+        "Pss_Dirty": 675745792,
+        "Pss_Anon": 803741696,
+        "Pss_File": 415312896,
+        "Pss_Shmem": 8192,
+        "Shared_Clean": 47566848,
+        "Shared_Dirty": 0,
+        "Private_Clean": 538423296,
+        "Private_Dirty": 675745792,
+        "Referenced": 1261735936,
+        "Anonymous": 803741696,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 327155712,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 363417600,
+        "ordblks": 28,
+        "smblks": 55,
+        "hblks": 4,
+        "hblkhd": 97603584,
+        "usmblks": 0,
+        "fsmblks": 2256,
+        "uordblks": 354097856,
+        "fordblks": 9319744,
+        "keepcost": 8164656
+      },
+      "python_traced_current_peak_bytes": [
+        39948152,
+        44150283
+      ],
+      "memory.current": "1352933376",
+      "memory.peak": "1352933376",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 845619200,
+        "file": 473636864,
+        "kernel": 31531008,
+        "kernel_stack": 933888,
+        "pagetables": 6893568,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 471240704,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 47427584,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 331350016,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 1318051840,
+        "inactive_file": 770048,
+        "active_file": 1626112,
+        "unevictable": 0,
+        "slab_reclaimable": 14904232,
+        "slab_unreclaimable": 8431248,
+        "slab": 23335480,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 632164,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 283,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "first/load_robot/before",
+      "at_unix": 1793898006.9479222,
+      "smaps": {
+        "Rss": 1261789184,
+        "Pss": 1219116032,
+        "Pss_Dirty": 675778560,
+        "Pss_Anon": 803774464,
+        "Pss_File": 415333376,
+        "Pss_Shmem": 8192,
+        "Shared_Clean": 47566848,
+        "Shared_Dirty": 0,
+        "Private_Clean": 538443776,
+        "Private_Dirty": 675778560,
+        "Referenced": 1261789184,
+        "Anonymous": 803774464,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 327155712,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 363417600,
+        "ordblks": 27,
+        "smblks": 58,
+        "hblks": 4,
+        "hblkhd": 97603584,
+        "usmblks": 0,
+        "fsmblks": 2400,
+        "uordblks": 354183600,
+        "fordblks": 9234000,
+        "keepcost": 8082256
+      },
+      "python_traced_current_peak_bytes": [
+        39969436,
+        44170560
+      ],
+      "memory.current": "1352933376",
+      "memory.peak": "1352933376",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 845619200,
+        "file": 473636864,
+        "kernel": 31531008,
+        "kernel_stack": 933888,
+        "pagetables": 6893568,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 471240704,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 47427584,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 331350016,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 1318051840,
+        "inactive_file": 770048,
+        "active_file": 1626112,
+        "unevictable": 0,
+        "slab_reclaimable": 14904232,
+        "slab_unreclaimable": 8431248,
+        "slab": 23335480,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 632164,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 283,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "first/load_robot/after",
+      "at_unix": 1793898008.031682,
+      "smaps": {
+        "Rss": 1298726912,
+        "Pss": 1256463360,
+        "Pss_Dirty": 709591040,
+        "Pss_Anon": 837586944,
+        "Pss_File": 418868224,
+        "Pss_Shmem": 8192,
+        "Shared_Clean": 47566848,
+        "Shared_Dirty": 0,
+        "Private_Clean": 541569024,
+        "Private_Dirty": 709591040,
+        "Referenced": 1298726912,
+        "Anonymous": 837586944,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 352321536,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 389922816,
+        "ordblks": 49,
+        "smblks": 61,
+        "hblks": 4,
+        "hblkhd": 97603584,
+        "usmblks": 0,
+        "fsmblks": 2624,
+        "uordblks": 368425024,
+        "fordblks": 21497792,
+        "keepcost": 19137648
+      },
+      "python_traced_current_peak_bytes": [
+        40870557,
+        45112346
+      ],
+      "memory.current": "1387708416",
+      "memory.peak": "1414320128",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 879394816,
+        "file": 473653248,
+        "kernel": 31653888,
+        "kernel_stack": 933888,
+        "pagetables": 7000064,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 471240704,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 47443968,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 356515840,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 1351794688,
+        "inactive_file": 770048,
+        "active_file": 1642496,
+        "unevictable": 0,
+        "slab_reclaimable": 14916576,
+        "slab_unreclaimable": 8430536,
+        "slab": 23347112,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 638248,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 317,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "first/load_camera/before",
+      "at_unix": 1793898008.0626247,
+      "smaps": {
+        "Rss": 1298726912,
+        "Pss": 1256463360,
+        "Pss_Dirty": 709591040,
+        "Pss_Anon": 837586944,
+        "Pss_File": 418868224,
+        "Pss_Shmem": 8192,
+        "Shared_Clean": 47566848,
+        "Shared_Dirty": 0,
+        "Private_Clean": 541569024,
+        "Private_Dirty": 709591040,
+        "Referenced": 1298726912,
+        "Anonymous": 837586944,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 352321536,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 389922816,
+        "ordblks": 49,
+        "smblks": 61,
+        "hblks": 4,
+        "hblkhd": 97603584,
+        "usmblks": 0,
+        "fsmblks": 2592,
+        "uordblks": 368452896,
+        "fordblks": 21469920,
+        "keepcost": 19137648
+      },
+      "python_traced_current_peak_bytes": [
+        40882300,
+        45112346
+      ],
+      "memory.current": "1386344448",
+      "memory.peak": "1414320128",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 879394816,
+        "file": 473653248,
+        "kernel": 31653888,
+        "kernel_stack": 933888,
+        "pagetables": 7000064,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 471240704,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 47443968,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 356515840,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 1351794688,
+        "inactive_file": 770048,
+        "active_file": 1642496,
+        "unevictable": 0,
+        "slab_reclaimable": 14916576,
+        "slab_unreclaimable": 8430536,
+        "slab": 23347112,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 638248,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 317,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "first/load_camera/after",
+      "at_unix": 1793898008.426461,
+      "smaps": {
+        "Rss": 1429811200,
+        "Pss": 1387155456,
+        "Pss_Dirty": 780910592,
+        "Pss_Anon": 898093056,
+        "Pss_File": 480665600,
+        "Pss_Shmem": 8396800,
+        "Shared_Clean": 48001024,
+        "Shared_Dirty": 0,
+        "Private_Clean": 600899584,
+        "Private_Dirty": 780910592,
+        "Referenced": 1429811200,
+        "Anonymous": 898093056,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 352321536,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 469852160,
+        "ordblks": 242,
+        "smblks": 102,
+        "hblks": 4,
+        "hblkhd": 97603584,
+        "usmblks": 0,
+        "fsmblks": 5824,
+        "uordblks": 432853280,
+        "fordblks": 36998880,
+        "keepcost": 16848
+      },
+      "python_traced_current_peak_bytes": [
+        40893752,
+        45121623
+      ],
+      "memory.current": "1457573888",
+      "memory.peak": "1457582080",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 939986944,
+        "file": 482041856,
+        "kernel": 34152448,
+        "kernel_stack": 950272,
+        "pagetables": 7299072,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 479629312,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 57929728,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 356515840,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 1420795904,
+        "inactive_file": 770048,
+        "active_file": 1642496,
+        "unevictable": 0,
+        "slab_reclaimable": 14944848,
+        "slab_unreclaimable": 8493488,
+        "slab": 23438336,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 658052,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 317,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "constructed_scene_1",
+      "at_unix": 1793898009.545002,
+      "smaps": {
+        "Rss": 1191399424,
+        "Pss": 1172067328,
+        "Pss_Dirty": 667189248,
+        "Pss_Anon": 805273600,
+        "Pss_File": 358405120,
+        "Pss_Shmem": 8388608,
+        "Shared_Clean": 21729280,
+        "Shared_Dirty": 0,
+        "Private_Clean": 502480896,
+        "Private_Dirty": 667189248,
+        "Referenced": 1191399424,
+        "Anonymous": 805273600,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 266338304,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 476033024,
+        "ordblks": 3831,
+        "smblks": 176,
+        "hblks": 3,
+        "hblkhd": 8794112,
+        "usmblks": 0,
+        "fsmblks": 10240,
+        "uordblks": 294650560,
+        "fordblks": 181382464,
+        "keepcost": 4686064
+      },
+      "python_traced_current_peak_bytes": [
+        40818165,
+        45170131
+      ],
+      "memory.current": "1363906560",
+      "memory.peak": "1464123392",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 847147008,
+        "file": 482033664,
+        "kernel": 33234944,
+        "kernel_stack": 851968,
+        "pagetables": 6635520,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 479621120,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 57921536,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 270532608,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 1327968256,
+        "inactive_file": 770048,
+        "active_file": 1642496,
+        "unevictable": 0,
+        "slab_reclaimable": 14939936,
+        "slab_unreclaimable": 8362776,
+        "slab": 23302712,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 660310,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 318,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "constructed_scene_4",
+      "at_unix": 1793898018.3789542,
+      "smaps": {
+        "Rss": 1198321664,
+        "Pss": 1178874880,
+        "Pss_Dirty": 674111488,
+        "Pss_Anon": 812195840,
+        "Pss_File": 358290432,
+        "Pss_Shmem": 8388608,
+        "Shared_Clean": 21716992,
+        "Shared_Dirty": 0,
+        "Private_Clean": 502493184,
+        "Private_Dirty": 674111488,
+        "Referenced": 1198321664,
+        "Anonymous": 812195840,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 268435456,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 482705408,
+        "ordblks": 5646,
+        "smblks": 158,
+        "hblks": 3,
+        "hblkhd": 8794112,
+        "usmblks": 0,
+        "fsmblks": 9024,
+        "uordblks": 295021440,
+        "fordblks": 187683968,
+        "keepcost": 9017360
+      },
+      "python_traced_current_peak_bytes": [
+        40835495,
+        45187380
+      ],
+      "memory.current": "1371021312",
+      "memory.peak": "1472671744",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 854278144,
+        "file": 482033664,
+        "kernel": 33206272,
+        "kernel_stack": 851968,
+        "pagetables": 6635520,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 479621120,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 57921536,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 272629760,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 1335083008,
+        "inactive_file": 770048,
+        "active_file": 1642496,
+        "unevictable": 0,
+        "slab_reclaimable": 14941656,
+        "slab_unreclaimable": 8337256,
+        "slab": 23278912,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 703012,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 571,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "constructed_scene_8",
+      "at_unix": 1793898030.255623,
+      "smaps": {
+        "Rss": 1200394240,
+        "Pss": 1181021184,
+        "Pss_Dirty": 657309696,
+        "Pss_Anon": 814268416,
+        "Pss_File": 358364160,
+        "Pss_Shmem": 8388608,
+        "Shared_Clean": 21729280,
+        "Shared_Dirty": 0,
+        "Private_Clean": 521355264,
+        "Private_Dirty": 657309696,
+        "Referenced": 1200394240,
+        "Anonymous": 814268416,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 268435456,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 484855808,
+        "ordblks": 7134,
+        "smblks": 162,
+        "hblks": 3,
+        "hblkhd": 8794112,
+        "usmblks": 0,
+        "fsmblks": 8896,
+        "uordblks": 294794736,
+        "fordblks": 190061072,
+        "keepcost": 10082112
+      },
+      "python_traced_current_peak_bytes": [
+        40622067,
+        45453555
+      ],
+      "memory.current": "1373589504",
+      "memory.peak": "1474387968",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 856571904,
+        "file": 482033664,
+        "kernel": 33214464,
+        "kernel_stack": 851968,
+        "pagetables": 6643712,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 479621120,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 57921536,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 272629760,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 1337393152,
+        "inactive_file": 770048,
+        "active_file": 1642496,
+        "unevictable": 0,
+        "slab_reclaimable": 14940816,
+        "slab_unreclaimable": 8302656,
+        "slab": 23243472,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 822240,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 907,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "constructed_scene_16",
+      "at_unix": 1793898053.7056503,
+      "smaps": {
+        "Rss": 1200566272,
+        "Pss": 1181130752,
+        "Pss_Dirty": 667963392,
+        "Pss_Anon": 814436352,
+        "Pss_File": 358305792,
+        "Pss_Shmem": 8388608,
+        "Shared_Clean": 21729280,
+        "Shared_Dirty": 0,
+        "Private_Clean": 510873600,
+        "Private_Dirty": 667963392,
+        "Referenced": 1200566272,
+        "Anonymous": 814436352,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 268435456,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 484859904,
+        "ordblks": 8625,
+        "smblks": 176,
+        "hblks": 3,
+        "hblkhd": 8794112,
+        "usmblks": 0,
+        "fsmblks": 10128,
+        "uordblks": 294910400,
+        "fordblks": 189949504,
+        "keepcost": 10082112
+      },
+      "python_traced_current_peak_bytes": [
+        40692970,
+        45453555
+      ],
+      "memory.current": "1374298112",
+      "memory.peak": "1476112384",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 857739264,
+        "file": 482033664,
+        "kernel": 33280000,
+        "kernel_stack": 851968,
+        "pagetables": 6680576,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 479621120,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 57987072,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 272629760,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 1338560512,
+        "inactive_file": 770048,
+        "active_file": 1642496,
+        "unevictable": 0,
+        "slab_reclaimable": 14942616,
+        "slab_unreclaimable": 8369224,
+        "slab": 23311840,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 1085162,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 1579,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "constructed_scene_32",
+      "at_unix": 1793898099.7635348,
+      "smaps": {
+        "Rss": 1201725440,
+        "Pss": 1182679040,
+        "Pss_Dirty": 656539648,
+        "Pss_Anon": 815595520,
+        "Pss_File": 358694912,
+        "Pss_Shmem": 8388608,
+        "Shared_Clean": 21721088,
+        "Shared_Dirty": 0,
+        "Private_Clean": 523464704,
+        "Private_Dirty": 656539648,
+        "Referenced": 1201725440,
+        "Anonymous": 815595520,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 268435456,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 486318080,
+        "ordblks": 11194,
+        "smblks": 151,
+        "hblks": 3,
+        "hblkhd": 8794112,
+        "usmblks": 0,
+        "fsmblks": 8272,
+        "uordblks": 295099632,
+        "fordblks": 191218448,
+        "keepcost": 10082112
+      },
+      "python_traced_current_peak_bytes": [
+        40810599,
+        45453555
+      ],
+      "memory.current": "1378799616",
+      "memory.peak": "1480032256",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 861777920,
+        "file": 482033664,
+        "kernel": 33337344,
+        "kernel_stack": 868352,
+        "pagetables": 6705152,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 479621120,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 57987072,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 274726912,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 1342599168,
+        "inactive_file": 770048,
+        "active_file": 1642496,
+        "unevictable": 0,
+        "slab_reclaimable": 14950216,
+        "slab_unreclaimable": 8361904,
+        "slab": 23312120,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 1427150,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 2924,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "constructed_scene_64",
+      "at_unix": 1793898193.274504,
+      "smaps": {
+        "Rss": 1202282496,
+        "Pss": 1183433728,
+        "Pss_Dirty": 669671424,
+        "Pss_Anon": 816144384,
+        "Pss_File": 358900736,
+        "Pss_Shmem": 8388608,
+        "Shared_Clean": 21729280,
+        "Shared_Dirty": 0,
+        "Private_Clean": 510881792,
+        "Private_Dirty": 669671424,
+        "Referenced": 1202282496,
+        "Anonymous": 816144384,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 268435456,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 486649856,
+        "ordblks": 15674,
+        "smblks": 146,
+        "hblks": 3,
+        "hblkhd": 8794112,
+        "usmblks": 0,
+        "fsmblks": 7984,
+        "uordblks": 295461152,
+        "fordblks": 191188704,
+        "keepcost": 9997616
+      },
+      "python_traced_current_peak_bytes": [
+        41057854,
+        45607210
+      ],
+      "memory.current": "1380294656",
+      "memory.peak": "1481887744",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 863244288,
+        "file": 482033664,
+        "kernel": 33333248,
+        "kernel_stack": 868352,
+        "pagetables": 6725632,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 479621120,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 57987072,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 274726912,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 1344057344,
+        "inactive_file": 770048,
+        "active_file": 1642496,
+        "unevictable": 0,
+        "slab_reclaimable": 14952776,
+        "slab_unreclaimable": 8321528,
+        "slab": 23274304,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 2058341,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 5612,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "constructor_64_scenes",
+      "at_unix": 1793898193.3998976,
+      "smaps": {
+        "Rss": 1226174464,
+        "Pss": 1206359040,
+        "Pss_Dirty": 692006912,
+        "Pss_Anon": 830062592,
+        "Pss_File": 365810688,
+        "Pss_Shmem": 10485760,
+        "Shared_Clean": 22757376,
+        "Shared_Dirty": 0,
+        "Private_Clean": 511410176,
+        "Private_Dirty": 692006912,
+        "Referenced": 1226174464,
+        "Anonymous": 830062592,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 278921216,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 486649856,
+        "ordblks": 4488,
+        "smblks": 145,
+        "hblks": 3,
+        "hblkhd": 8794112,
+        "usmblks": 0,
+        "fsmblks": 7904,
+        "uordblks": 314865408,
+        "fordblks": 171784448,
+        "keepcost": 9997616
+      },
+      "python_traced_current_peak_bytes": [
+        41086705,
+        45607210
+      ],
+      "memory.current": "1396285440",
+      "memory.peak": "1481887744",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 877162496,
+        "file": 484130816,
+        "kernel": 33390592,
+        "kernel_stack": 868352,
+        "pagetables": 6774784,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 481718272,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 60084224,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 285212672,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 1360064512,
+        "inactive_file": 770048,
+        "active_file": 1642496,
+        "unevictable": 0,
+        "slab_reclaimable": 14956864,
+        "slab_unreclaimable": 8327624,
+        "slab": 23284488,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 2063954,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 5617,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "round1/after_reset",
+      "at_unix": 1793898720.8503733,
+      "smaps": {
+        "Rss": 58747805696,
+        "Pss": 58703729664,
+        "Pss_Dirty": 34501902336,
+        "Pss_Anon": 58016636928,
+        "Pss_File": 676598784,
+        "Pss_Shmem": 10493952,
+        "Shared_Clean": 49172480,
+        "Shared_Dirty": 0,
+        "Private_Clean": 24196730880,
+        "Private_Dirty": 34501902336,
+        "Referenced": 58747805696,
+        "Anonymous": 58016636928,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 30668750848,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 58387087360,
+        "ordblks": 82790,
+        "smblks": 73968,
+        "hblks": 5,
+        "hblkhd": 266166272,
+        "usmblks": 0,
+        "fsmblks": 2996112,
+        "uordblks": 56985840688,
+        "fordblks": 1401246672,
+        "keepcost": 256
+      },
+      "observation_sha256": "5411cd812de5751b9c786e3384219bf9223f13a5d7001f6e819637755ed104c5",
+      "reset_peak": {
+        "rss_bytes": 59088072704,
+        "cgroup_bytes": 59140730880
+      },
+      "native_malloc_trim_reset_interval": 1,
+      "trim_after_each_scene_close": false,
+      "task_reachable_array_bytes": [
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        }
+      ],
+      "largest_python_traces": [
+        {
+          "bytes": 191886449,
+          "count": 3397,
+          "trace": "/mowenjie/.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/copy.py:146"
+        },
+        {
+          "bytes": 10656800,
+          "count": 60962,
+          "trace": "<frozen importlib._bootstrap>:1147"
+        },
+        {
+          "bytes": 10104367,
+          "count": 79087,
+          "trace": "<frozen importlib._bootstrap>:690"
+        },
+        {
+          "bytes": 7689584,
+          "count": 1,
+          "trace": "/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/sapien/wrapper/urdf_loader.py:33"
+        },
+        {
+          "bytes": 1382772,
+          "count": 13262,
+          "trace": "/mowenjie/.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/traceback.py:433"
+        },
+        {
+          "bytes": 787070,
+          "count": 7430,
+          "trace": "<frozen importlib._bootstrap>:1176"
+        },
+        {
+          "bytes": 768128,
+          "count": 19456,
+          "trace": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/envs/utils/create_actor.py:554"
+        },
+        {
+          "bytes": 492564,
+          "count": 12699,
+          "trace": "<frozen importlib._bootstrap_external>:940"
+        }
+      ],
+      "python_traced_current_peak_bytes": [
+        248101468,
+        547897467
+      ],
+      "memory.current": "58932060160",
+      "memory.peak": "59329736704",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 58068234240,
+        "file": 484360192,
+        "kernel": 153841664,
+        "kernel_stack": 2129920,
+        "pagetables": 123744256,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 481726464,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 60096512,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 30672945152,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 58774994944,
+        "inactive_file": 987136,
+        "active_file": 1646592,
+        "unevictable": 0,
+        "slab_reclaimable": 14954944,
+        "slab_unreclaimable": 10544416,
+        "slab": 25499360,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 9336482,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 44199,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "round1/after_gc",
+      "at_unix": 1793898721.5260859,
+      "smaps": {
+        "Rss": 58734153728,
+        "Pss": 58690077696,
+        "Pss_Dirty": 34154803200,
+        "Pss_Anon": 58002984960,
+        "Pss_File": 676598784,
+        "Pss_Shmem": 10493952,
+        "Shared_Clean": 49172480,
+        "Shared_Dirty": 0,
+        "Private_Clean": 24530178048,
+        "Private_Dirty": 34154803200,
+        "Referenced": 58734153728,
+        "Anonymous": 58002984960,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 30668750848,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 58387087360,
+        "ordblks": 81245,
+        "smblks": 74056,
+        "hblks": 5,
+        "hblkhd": 266166272,
+        "usmblks": 0,
+        "fsmblks": 3001760,
+        "uordblks": 56985714144,
+        "fordblks": 1401373216,
+        "keepcost": 256
+      },
+      "gc_collected": 33,
+      "python_traced_current_peak_bytes": [
+        247981450,
+        547897467
+      ],
+      "memory.current": "58919350272",
+      "memory.peak": "59329736704",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 58054582272,
+        "file": 484360192,
+        "kernel": 153919488,
+        "kernel_stack": 2129920,
+        "pagetables": 123715584,
+        "sec_pagetables": 0,
+        "percpu": 40768,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 481726464,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 60096512,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 30672945152,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 58761392128,
+        "inactive_file": 987136,
+        "active_file": 1646592,
+        "unevictable": 0,
+        "slab_reclaimable": 14956144,
+        "slab_unreclaimable": 10603720,
+        "slab": 25559864,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 9387117,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 44199,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "round1/after_malloc_trim",
+      "at_unix": 1793898722.199448,
+      "smaps": {
+        "Rss": 58458394624,
+        "Pss": 58414318592,
+        "Pss_Dirty": 33924939776,
+        "Pss_Anon": 57727127552,
+        "Pss_File": 676697088,
+        "Pss_Shmem": 10493952,
+        "Shared_Clean": 49172480,
+        "Shared_Dirty": 0,
+        "Private_Clean": 24484282368,
+        "Private_Dirty": 33924939776,
+        "Referenced": 58458394624,
+        "Anonymous": 57727127552,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 30377246720,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 58387087360,
+        "ordblks": 80870,
+        "smblks": 64,
+        "hblks": 5,
+        "hblkhd": 266166272,
+        "usmblks": 0,
+        "fsmblks": 2784,
+        "uordblks": 56985781840,
+        "fordblks": 1401305520,
+        "keepcost": 256
+      },
+      "trim_return": 1,
+      "python_traced_current_peak_bytes": [
+        248019628,
+        547897467
+      ],
+      "memory.current": "58814738432",
+      "memory.peak": "59329736704",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 57778724864,
+        "file": 484360192,
+        "kernel": 153776128,
+        "kernel_stack": 2129920,
+        "pagetables": 123686912,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 481726464,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 60096512,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 30381441024,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 58657808384,
+        "inactive_file": 987136,
+        "active_file": 1646592,
+        "unevictable": 0,
+        "slab_reclaimable": 14954304,
+        "slab_unreclaimable": 10544952,
+        "slab": 25499256,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 9387511,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 44199,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "round1/chunk0",
+      "at_unix": 1793898755.6538434,
+      "smaps": {
+        "Rss": 59996180480,
+        "Pss": 59952322560,
+        "Pss_Dirty": 32404115456,
+        "Pss_Anon": 59246653440,
+        "Pss_File": 683833344,
+        "Pss_Shmem": 21835776,
+        "Shared_Clean": 49160192,
+        "Shared_Dirty": 0,
+        "Private_Clean": 27542904832,
+        "Private_Dirty": 32404115456,
+        "Referenced": 59996180480,
+        "Anonymous": 59246653440,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 31021072384,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 59056218112,
+        "ordblks": 70494,
+        "smblks": 1455,
+        "hblks": 7,
+        "hblkhd": 443121664,
+        "usmblks": 0,
+        "fsmblks": 61808,
+        "uordblks": 57172973072,
+        "fordblks": 1883245040,
+        "keepcost": 256
+      },
+      "physical_controls": 3200,
+      "python_traced_current_peak_bytes": [
+        248419801,
+        547897467
+      ],
+      "memory.current": "60347703296",
+      "memory.peak": "60486221824",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 59298254848,
+        "file": 495902720,
+        "kernel": 155934720,
+        "kernel_stack": 2129920,
+        "pagetables": 125739008,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 493068288,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 71639040,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 31025266688,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 60188594176,
+        "inactive_file": 987136,
+        "active_file": 1843200,
+        "unevictable": 0,
+        "slab_reclaimable": 14980208,
+        "slab_unreclaimable": 10619472,
+        "slab": 25599680,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 9872830,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 44679,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "round1/round_end",
+      "at_unix": 1793898756.1167893,
+      "smaps": {
+        "Rss": 59996180480,
+        "Pss": 59952321536,
+        "Pss_Dirty": 32389435392,
+        "Pss_Anon": 59246653440,
+        "Pss_File": 683832320,
+        "Pss_Shmem": 21835776,
+        "Shared_Clean": 49160192,
+        "Shared_Dirty": 0,
+        "Private_Clean": 27557584896,
+        "Private_Dirty": 32389435392,
+        "Referenced": 59996180480,
+        "Anonymous": 59246653440,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 31021072384,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 59056218112,
+        "ordblks": 70498,
+        "smblks": 1466,
+        "hblks": 7,
+        "hblkhd": 443121664,
+        "usmblks": 0,
+        "fsmblks": 62240,
+        "uordblks": 57172275328,
+        "fordblks": 1883942784,
+        "keepcost": 256
+      },
+      "python_traced_current_peak_bytes": [
+        248430108,
+        547897467
+      ],
+      "memory.current": "60347744256",
+      "memory.peak": "60486221824",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 59298254848,
+        "file": 495902720,
+        "kernel": 155934720,
+        "kernel_stack": 2129920,
+        "pagetables": 125739008,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 493068288,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 71639040,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 31025266688,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 60188594176,
+        "inactive_file": 987136,
+        "active_file": 1843200,
+        "unevictable": 0,
+        "slab_reclaimable": 14980208,
+        "slab_unreclaimable": 10619472,
+        "slab": 25599680,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 9872830,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 44679,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "round2/after_reset",
+      "at_unix": 1793899288.3171206,
+      "smaps": {
+        "Rss": 59697827840,
+        "Pss": 59653562368,
+        "Pss_Dirty": 33662021632,
+        "Pss_Anon": 58948284416,
+        "Pss_File": 683442176,
+        "Pss_Shmem": 21835776,
+        "Shared_Clean": 49160192,
+        "Shared_Dirty": 0,
+        "Private_Clean": 25986646016,
+        "Private_Dirty": 33662021632,
+        "Referenced": 59697827840,
+        "Anonymous": 58948284416,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 30882660352,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 113029881856,
+        "ordblks": 118922,
+        "smblks": 77846,
+        "hblks": 7,
+        "hblkhd": 443121664,
+        "usmblks": 0,
+        "fsmblks": 3152656,
+        "uordblks": 57174937200,
+        "fordblks": 55854944656,
+        "keepcost": 2240
+      },
+      "observation_sha256": "5411cd812de5751b9c786e3384219bf9223f13a5d7001f6e819637755ed104c5",
+      "reset_peak": {
+        "rss_bytes": 114016116736,
+        "cgroup_bytes": 114535841792
+      },
+      "native_malloc_trim_reset_interval": 1,
+      "trim_after_each_scene_close": false,
+      "task_reachable_array_bytes": [
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        },
+        {
+          "data_type": 0,
+          "file_path": 0,
+          "direction_light_lst": 0,
+          "point_light_lst": 0,
+          "now_obs": 2995904,
+          "size_dict": 0,
+          "cluttered_objs": 0,
+          "prohibited_area": 0,
+          "record_cluttered_objects": 0,
+          "left_joint_path": 0,
+          "right_joint_path": 0,
+          "table_xy_bias": 0,
+          "info": 0
+        }
+      ],
+      "largest_python_traces": [
+        {
+          "bytes": 191886153,
+          "count": 3395,
+          "trace": "/mowenjie/.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/copy.py:146"
+        },
+        {
+          "bytes": 10657364,
+          "count": 60967,
+          "trace": "<frozen importlib._bootstrap>:1147"
+        },
+        {
+          "bytes": 10104367,
+          "count": 79087,
+          "trace": "<frozen importlib._bootstrap>:690"
+        },
+        {
+          "bytes": 7689584,
+          "count": 1,
+          "trace": "/mowenjie/fluffy-bassoon/envs/maniskill-pi05-rlinf-e1a82ebf-20261028-r1/lib/python3.11/site-packages/sapien/wrapper/urdf_loader.py:33"
+        },
+        {
+          "bytes": 1382772,
+          "count": 13262,
+          "trace": "/mowenjie/.uv-python/cpython-3.11.17-linux-x86_64-gnu/lib/python3.11/traceback.py:433"
+        },
+        {
+          "bytes": 786838,
+          "count": 7426,
+          "trace": "<frozen importlib._bootstrap>:1176"
+        },
+        {
+          "bytes": 768128,
+          "count": 19456,
+          "trace": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/envs/utils/create_actor.py:554"
+        },
+        {
+          "bytes": 492564,
+          "count": 12699,
+          "trace": "<frozen importlib._bootstrap_external>:940"
+        }
+      ],
+      "python_traced_current_peak_bytes": [
+        248921356,
+        549085320
+      ],
+      "memory.current": "62431715328",
+      "memory.peak": "114714804224",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 59003588608,
+        "file": 495902720,
+        "kernel": 211853312,
+        "kernel_stack": 2179072,
+        "pagetables": 180932608,
+        "sec_pagetables": 0,
+        "percpu": 37856,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 493068288,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 71704576,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 30886854656,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 62215548928,
+        "inactive_file": 987136,
+        "active_file": 1847296,
+        "unevictable": 0,
+        "slab_reclaimable": 14885544,
+        "slab_unreclaimable": 11335720,
+        "slab": 26221264,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 17617499,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 82299,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "round2/after_gc",
+      "at_unix": 1793899289.023985,
+      "smaps": {
+        "Rss": 59683098624,
+        "Pss": 59638770688,
+        "Pss_Dirty": 33651486720,
+        "Pss_Anon": 58933555200,
+        "Pss_File": 683379712,
+        "Pss_Shmem": 21835776,
+        "Shared_Clean": 49160192,
+        "Shared_Dirty": 0,
+        "Private_Clean": 25982451712,
+        "Private_Dirty": 33651486720,
+        "Referenced": 59683098624,
+        "Anonymous": 58933555200,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 30882660352,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 113029881856,
+        "ordblks": 117337,
+        "smblks": 77976,
+        "hblks": 7,
+        "hblkhd": 443121664,
+        "usmblks": 0,
+        "fsmblks": 3160944,
+        "uordblks": 57174792128,
+        "fordblks": 55855089728,
+        "keepcost": 2240
+      },
+      "gc_collected": 33,
+      "python_traced_current_peak_bytes": [
+        248800379,
+        549085320
+      ],
+      "memory.current": "62415671296",
+      "memory.peak": "114714804224",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 58988859392,
+        "file": 495902720,
+        "kernel": 211668992,
+        "kernel_stack": 2179072,
+        "pagetables": 180912128,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 493068288,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 71704576,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 30886854656,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 62200868864,
+        "inactive_file": 987136,
+        "active_file": 1847296,
+        "unevictable": 0,
+        "slab_reclaimable": 14883704,
+        "slab_unreclaimable": 11233048,
+        "slab": 26116752,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 17653606,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 82299,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "round2/after_malloc_trim",
+      "at_unix": 1793899289.526194,
+      "smaps": {
+        "Rss": 59393789952,
+        "Pss": 59349469184,
+        "Pss_Dirty": 33368748032,
+        "Pss_Anon": 58644246528,
+        "Pss_File": 683386880,
+        "Pss_Shmem": 21835776,
+        "Shared_Clean": 49160192,
+        "Shared_Dirty": 0,
+        "Private_Clean": 25975881728,
+        "Private_Dirty": 33368748032,
+        "Referenced": 59393789952,
+        "Anonymous": 58644246528,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 30788288512,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 113029881856,
+        "ordblks": 117951,
+        "smblks": 59,
+        "hblks": 7,
+        "hblkhd": 443121664,
+        "usmblks": 0,
+        "fsmblks": 2400,
+        "uordblks": 57174822928,
+        "fordblks": 55855058928,
+        "keepcost": 2240
+      },
+      "trim_return": 1,
+      "python_traced_current_peak_bytes": [
+        248824264,
+        549085320
+      ],
+      "memory.current": "62225887232",
+      "memory.peak": "114714804224",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 58699554816,
+        "file": 495902720,
+        "kernel": 211664896,
+        "kernel_stack": 2179072,
+        "pagetables": 180899840,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 493068288,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 71704576,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 30792482816,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 62010597376,
+        "inactive_file": 987136,
+        "active_file": 1847296,
+        "unevictable": 0,
+        "slab_reclaimable": 14883704,
+        "slab_unreclaimable": 11226184,
+        "slab": 26109888,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 17656253,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 82299,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "round2/chunk0",
+      "at_unix": 1793899323.2555294,
+      "smaps": {
+        "Rss": 60377214976,
+        "Pss": 60334016512,
+        "Pss_Dirty": 33539272704,
+        "Pss_Anon": 59626086400,
+        "Pss_File": 686094336,
+        "Pss_Shmem": 21835776,
+        "Shared_Clean": 49160192,
+        "Shared_Dirty": 0,
+        "Private_Clean": 26788782080,
+        "Private_Dirty": 33539272704,
+        "Referenced": 60377214976,
+        "Anonymous": 59626086400,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 31086084096,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 113353764864,
+        "ordblks": 107827,
+        "smblks": 1727,
+        "hblks": 7,
+        "hblkhd": 443121664,
+        "usmblks": 0,
+        "fsmblks": 74032,
+        "uordblks": 57221213392,
+        "fordblks": 56132551472,
+        "keepcost": 2240
+      },
+      "physical_controls": 3200,
+      "python_traced_current_peak_bytes": [
+        249010735,
+        549085320
+      ],
+      "memory.current": "63209340928",
+      "memory.peak": "114714804224",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 59681259520,
+        "file": 497369088,
+        "kernel": 212561920,
+        "kernel_stack": 2179072,
+        "pagetables": 181764096,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 493068288,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 73170944,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 31090278400,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 62992244736,
+        "inactive_file": 987136,
+        "active_file": 3313664,
+        "unevictable": 0,
+        "slab_reclaimable": 14886352,
+        "slab_unreclaimable": 11262936,
+        "slab": 26149288,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 18061229,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 83958,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    },
+    {
+      "stage": "round2/round_end",
+      "at_unix": 1793899323.79078,
+      "smaps": {
+        "Rss": 60377214976,
+        "Pss": 60334015488,
+        "Pss_Dirty": 33535078400,
+        "Pss_Anon": 59626086400,
+        "Pss_File": 686093312,
+        "Pss_Shmem": 21835776,
+        "Shared_Clean": 49160192,
+        "Shared_Dirty": 0,
+        "Private_Clean": 26792976384,
+        "Private_Dirty": 33535078400,
+        "Referenced": 60377214976,
+        "Anonymous": 59626086400,
+        "KSM": 0,
+        "LazyFree": 0,
+        "AnonHugePages": 31086084096,
+        "ShmemPmdMapped": 0,
+        "FilePmdMapped": 0,
+        "Shared_Hugetlb": 0,
+        "Private_Hugetlb": 0,
+        "Swap": 0,
+        "SwapPss": 0,
+        "Locked": 0
+      },
+      "mallinfo": {
+        "arena": 113353764864,
+        "ordblks": 107644,
+        "smblks": 1670,
+        "hblks": 7,
+        "hblkhd": 443121664,
+        "usmblks": 0,
+        "fsmblks": 71200,
+        "uordblks": 57220502944,
+        "fordblks": 56133261920,
+        "keepcost": 2240
+      },
+      "python_traced_current_peak_bytes": [
+        249020926,
+        549085320
+      ],
+      "memory.current": "63209443328",
+      "memory.peak": "114714804224",
+      "memory.max": "274877906944",
+      "cgroup_stat": {
+        "anon": 59681259520,
+        "file": 497369088,
+        "kernel": 212680704,
+        "kernel_stack": 2179072,
+        "pagetables": 181768192,
+        "sec_pagetables": 0,
+        "percpu": 29120,
+        "sock": 0,
+        "vmalloc": 0,
+        "shmem": 493068288,
+        "zswap": 0,
+        "zswapped": 0,
+        "file_mapped": 73170944,
+        "file_dirty": 0,
+        "file_writeback": 0,
+        "swapcached": 0,
+        "anon_thp": 31090278400,
+        "file_thp": 0,
+        "shmem_thp": 0,
+        "inactive_anon": 0,
+        "active_anon": 62992302080,
+        "inactive_file": 987136,
+        "active_file": 3313664,
+        "unevictable": 0,
+        "slab_reclaimable": 14888192,
+        "slab_unreclaimable": 11368160,
+        "slab": 26256352,
+        "workingset_refault_anon": 0,
+        "workingset_refault_file": 0,
+        "workingset_activate_anon": 0,
+        "workingset_activate_file": 0,
+        "workingset_restore_anon": 0,
+        "workingset_restore_file": 0,
+        "workingset_nodereclaim": 0,
+        "pgscan": 0,
+        "pgsteal": 0,
+        "pgscan_kswapd": 0,
+        "pgscan_direct": 0,
+        "pgscan_khugepaged": 0,
+        "pgsteal_kswapd": 0,
+        "pgsteal_direct": 0,
+        "pgsteal_khugepaged": 0,
+        "pgfault": 18063712,
+        "pgmajfault": 0,
+        "pgrefill": 0,
+        "pgactivate": 0,
+        "pgdeactivate": 0,
+        "pglazyfree": 0,
+        "pglazyfreed": 0,
+        "zswpin": 0,
+        "zswpout": 0,
+        "zswpwb": 0,
+        "thp_fault_alloc": 83958,
+        "thp_collapse_alloc": 0,
+        "thp_swpout": 0,
+        "thp_swpout_fallback": 0
+      }
+    }
+  ],
+  "events": [
+    {
+      "round": 1,
+      "allocator_observation_identity": true,
+      "python_numpy_torch_rng_identity": true,
+      "scene_identity": true,
+      "motor_input_identity": true
+    },
+    {
+      "round": 2,
+      "allocator_observation_identity": true,
+      "python_numpy_torch_rng_identity": true,
+      "scene_identity": true,
+      "motor_input_identity": true
+    }
+  ],
+  "profile_mode": "repeat",
+  "accounting_rank": 2,
+  "source_seed_offset": 0,
+  "per_close_round_index": 3,
+  "motor_comparisons": [
+    {
+      "round": 2,
+      "per_close": false,
+      "state_max_abs": 0.001026532641844824,
+      "per_environment_max_abs": [
+        0.0006099905585870147,
+        0.0003817627075477503,
+        0.0003526335785863921,
+        0.0005704956274712458,
+        0.0005117052351124585,
+        0.0005089922487968579,
+        0.0006099705642554909,
+        0.00032469430880155414,
+        0.0005496267549460754,
+        0.00040580368658993393,
+        0.00040356495719606755,
+        0.00033963072928600013,
+        0.00046642287634313107,
+        0.0005624381155939773,
+        0.0004894739686278626,
+        0.00041024736128747463,
+        0.0006931761890882626,
+        0.00036515917599899694,
+        0.00031445240165339783,
+        0.0006377905956469476,
+        0.00039854155329521745,
+        0.0005353893939172849,
+        0.0006316271319519728,
+        0.0007964771502884105,
+        0.0005034402420278639,
+        0.00047651396016590297,
+        0.0005714074213756248,
+        0.0002655315474839881,
+        0.0006747166262357496,
+        0.0006124126084614545,
+        0.00047508439456578344,
+        0.0005189018629607745,
+        0.0010231486812699586,
+        0.0008450395980617031,
+        0.0006312243822321761,
+        0.0006139511242508888,
+        0.0005568322376348078,
+        0.0005498318350873888,
+        0.0007515701581723988,
+        0.000630484806606546,
+        0.0005690278921974823,
+        0.0003098003871855326,
+        0.0005651804676745087,
+        0.0006720632081851363,
+        0.0008519681286998093,
+        0.0005777613987447694,
+        0.0006750822503818199,
+        0.0004752024033223279,
+        0.000375109986634925,
+        0.000312852793285856,
+        0.0007674454536754638,
+        0.0005350130668375641,
+        0.0004128247001062846,
+        0.0005145119794178754,
+        0.0003745476860785857,
+        0.000450005623861216,
+        0.001026532641844824,
+        0.000694382848450914,
+        0.0008082033018581569,
+        0.0007272188377100974,
+        0.0007807434885762632,
+        0.00037943050847388804,
+        0.0005005087296012789,
+        0.0005037392311351141
+      ],
+      "per_joint_max_abs": [
+        0.0007515701581723988,
+        0.0008450395980617031,
+        0.00043601450306596234,
+        0.0010231486812699586,
+        0.000694382848450914,
+        0.000630484806606546,
+        0.0,
+        0.0007807434885762632,
+        0.0007964771502884105,
+        0.001026532641844824,
+        0.0006377905956469476,
+        0.0005729602562496439,
+        0.0006747166262357496,
+        0.0
+      ],
+      "state_offending_indices": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          8
+        ],
+        [
+          0,
+          9
+        ],
+        [
+          0,
+          10
+        ],
+        [
+          0,
+          11
+        ],
+        [
+          0,
+          12
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          10
+        ],
+        [
+          1,
+          11
+        ],
+        [
+          1,
+          12
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          2,
+          10
+        ],
+        [
+          2,
+          11
+        ],
+        [
+          2,
+          12
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          3,
+          10
+        ],
+        [
+          3,
+          11
+        ],
+        [
+          3,
+          12
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          4,
+          10
+        ],
+        [
+          4,
+          11
+        ],
+        [
+          4,
+          12
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          5,
+          10
+        ],
+        [
+          5,
+          11
+        ],
+        [
+          5,
+          12
+        ],
+        [
+          6,
+          0
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          6,
+          9
+        ],
+        [
+          6,
+          10
+        ],
+        [
+          6,
+          11
+        ],
+        [
+          6,
+          12
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          7,
+          1
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          7,
+          3
+        ],
+        [
+          7,
+          4
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          7,
+          10
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          7,
+          12
+        ],
+        [
+          8,
+          0
+        ],
+        [
+          8,
+          1
+        ],
+        [
+          8,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          8,
+          4
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          9,
+          0
+        ],
+        [
+          9,
+          1
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          9,
+          4
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          9,
+          8
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          12
+        ],
+        [
+          10,
+          0
+        ],
+        [
+          10,
+          1
+        ],
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          10,
+          4
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          10,
+          10
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          11,
+          0
+        ],
+        [
+          11,
+          1
+        ],
+        [
+          11,
+          2
+        ],
+        [
+          11,
+          3
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          11,
+          5
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          11,
+          8
+        ],
+        [
+          11,
+          9
+        ],
+        [
+          11,
+          10
+        ],
+        [
+          11,
+          11
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          12,
+          7
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          13,
+          0
+        ],
+        [
+          13,
+          1
+        ],
+        [
+          13,
+          2
+        ],
+        [
+          13,
+          3
+        ],
+        [
+          13,
+          4
+        ],
+        [
+          13,
+          5
+        ],
+        [
+          13,
+          7
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          13,
+          9
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          13,
+          11
+        ],
+        [
+          13,
+          12
+        ],
+        [
+          14,
+          0
+        ],
+        [
+          14,
+          1
+        ],
+        [
+          14,
+          2
+        ],
+        [
+          14,
+          3
+        ],
+        [
+          14,
+          4
+        ],
+        [
+          14,
+          5
+        ],
+        [
+          14,
+          7
+        ],
+        [
+          14,
+          8
+        ],
+        [
+          14,
+          9
+        ],
+        [
+          14,
+          10
+        ],
+        [
+          14,
+          11
+        ],
+        [
+          14,
+          12
+        ],
+        [
+          15,
+          0
+        ],
+        [
+          15,
+          1
+        ],
+        [
+          15,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          15,
+          4
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          15,
+          7
+        ],
+        [
+          15,
+          8
+        ],
+        [
+          15,
+          9
+        ],
+        [
+          15,
+          10
+        ],
+        [
+          15,
+          11
+        ],
+        [
+          15,
+          12
+        ],
+        [
+          16,
+          0
+        ],
+        [
+          16,
+          1
+        ],
+        [
+          16,
+          2
+        ],
+        [
+          16,
+          3
+        ],
+        [
+          16,
+          4
+        ],
+        [
+          16,
+          5
+        ],
+        [
+          16,
+          7
+        ],
+        [
+          16,
+          8
+        ],
+        [
+          16,
+          9
+        ],
+        [
+          16,
+          10
+        ],
+        [
+          16,
+          11
+        ],
+        [
+          16,
+          12
+        ],
+        [
+          17,
+          0
+        ],
+        [
+          17,
+          1
+        ],
+        [
+          17,
+          2
+        ],
+        [
+          17,
+          3
+        ],
+        [
+          17,
+          4
+        ],
+        [
+          17,
+          5
+        ],
+        [
+          17,
+          7
+        ],
+        [
+          17,
+          8
+        ],
+        [
+          17,
+          9
+        ],
+        [
+          17,
+          10
+        ],
+        [
+          17,
+          11
+        ],
+        [
+          17,
+          12
+        ],
+        [
+          18,
+          0
+        ],
+        [
+          18,
+          1
+        ],
+        [
+          18,
+          2
+        ],
+        [
+          18,
+          3
+        ],
+        [
+          18,
+          4
+        ],
+        [
+          18,
+          5
+        ],
+        [
+          18,
+          7
+        ],
+        [
+          18,
+          8
+        ],
+        [
+          18,
+          9
+        ],
+        [
+          18,
+          10
+        ],
+        [
+          18,
+          11
+        ],
+        [
+          18,
+          12
+        ],
+        [
+          19,
+          0
+        ],
+        [
+          19,
+          1
+        ],
+        [
+          19,
+          2
+        ],
+        [
+          19,
+          3
+        ],
+        [
+          19,
+          4
+        ],
+        [
+          19,
+          5
+        ],
+        [
+          19,
+          7
+        ],
+        [
+          19,
+          8
+        ],
+        [
+          19,
+          9
+        ],
+        [
+          19,
+          10
+        ],
+        [
+          19,
+          11
+        ],
+        [
+          19,
+          12
+        ],
+        [
+          20,
+          0
+        ],
+        [
+          20,
+          1
+        ],
+        [
+          20,
+          2
+        ],
+        [
+          20,
+          3
+        ],
+        [
+          20,
+          4
+        ],
+        [
+          20,
+          5
+        ],
+        [
+          20,
+          7
+        ],
+        [
+          20,
+          8
+        ],
+        [
+          20,
+          9
+        ],
+        [
+          20,
+          10
+        ],
+        [
+          20,
+          11
+        ],
+        [
+          20,
+          12
+        ],
+        [
+          21,
+          0
+        ],
+        [
+          21,
+          1
+        ],
+        [
+          21,
+          2
+        ],
+        [
+          21,
+          3
+        ],
+        [
+          21,
+          4
+        ],
+        [
+          21,
+          5
+        ],
+        [
+          21,
+          7
+        ],
+        [
+          21,
+          8
+        ],
+        [
+          21,
+          9
+        ],
+        [
+          21,
+          10
+        ],
+        [
+          21,
+          11
+        ],
+        [
+          21,
+          12
+        ],
+        [
+          22,
+          0
+        ],
+        [
+          22,
+          1
+        ],
+        [
+          22,
+          2
+        ],
+        [
+          22,
+          3
+        ],
+        [
+          22,
+          4
+        ],
+        [
+          22,
+          5
+        ],
+        [
+          22,
+          7
+        ],
+        [
+          22,
+          8
+        ],
+        [
+          22,
+          9
+        ],
+        [
+          22,
+          10
+        ],
+        [
+          22,
+          11
+        ],
+        [
+          22,
+          12
+        ],
+        [
+          23,
+          0
+        ],
+        [
+          23,
+          1
+        ],
+        [
+          23,
+          2
+        ],
+        [
+          23,
+          3
+        ],
+        [
+          23,
+          4
+        ],
+        [
+          23,
+          5
+        ],
+        [
+          23,
+          7
+        ],
+        [
+          23,
+          8
+        ],
+        [
+          23,
+          9
+        ],
+        [
+          23,
+          10
+        ],
+        [
+          23,
+          11
+        ],
+        [
+          23,
+          12
+        ],
+        [
+          24,
+          0
+        ],
+        [
+          24,
+          1
+        ],
+        [
+          24,
+          2
+        ],
+        [
+          24,
+          3
+        ],
+        [
+          24,
+          4
+        ],
+        [
+          24,
+          5
+        ],
+        [
+          24,
+          7
+        ],
+        [
+          24,
+          8
+        ],
+        [
+          24,
+          9
+        ],
+        [
+          24,
+          10
+        ],
+        [
+          24,
+          11
+        ],
+        [
+          24,
+          12
+        ],
+        [
+          25,
+          0
+        ],
+        [
+          25,
+          1
+        ],
+        [
+          25,
+          2
+        ],
+        [
+          25,
+          3
+        ],
+        [
+          25,
+          4
+        ],
+        [
+          25,
+          5
+        ],
+        [
+          25,
+          7
+        ],
+        [
+          25,
+          8
+        ],
+        [
+          25,
+          9
+        ],
+        [
+          25,
+          10
+        ],
+        [
+          25,
+          11
+        ],
+        [
+          25,
+          12
+        ],
+        [
+          26,
+          0
+        ],
+        [
+          26,
+          1
+        ],
+        [
+          26,
+          2
+        ],
+        [
+          26,
+          3
+        ],
+        [
+          26,
+          4
+        ],
+        [
+          26,
+          5
+        ],
+        [
+          26,
+          7
+        ],
+        [
+          26,
+          8
+        ],
+        [
+          26,
+          9
+        ],
+        [
+          26,
+          10
+        ],
+        [
+          26,
+          11
+        ],
+        [
+          26,
+          12
+        ],
+        [
+          27,
+          0
+        ],
+        [
+          27,
+          1
+        ],
+        [
+          27,
+          2
+        ],
+        [
+          27,
+          3
+        ],
+        [
+          27,
+          4
+        ],
+        [
+          27,
+          5
+        ],
+        [
+          27,
+          7
+        ],
+        [
+          27,
+          8
+        ],
+        [
+          27,
+          9
+        ],
+        [
+          27,
+          10
+        ],
+        [
+          27,
+          11
+        ],
+        [
+          27,
+          12
+        ],
+        [
+          28,
+          0
+        ],
+        [
+          28,
+          1
+        ],
+        [
+          28,
+          2
+        ],
+        [
+          28,
+          3
+        ],
+        [
+          28,
+          4
+        ],
+        [
+          28,
+          5
+        ],
+        [
+          28,
+          7
+        ],
+        [
+          28,
+          8
+        ],
+        [
+          28,
+          9
+        ],
+        [
+          28,
+          10
+        ],
+        [
+          28,
+          11
+        ],
+        [
+          28,
+          12
+        ],
+        [
+          29,
+          0
+        ],
+        [
+          29,
+          1
+        ],
+        [
+          29,
+          2
+        ],
+        [
+          29,
+          3
+        ],
+        [
+          29,
+          4
+        ],
+        [
+          29,
+          5
+        ],
+        [
+          29,
+          7
+        ],
+        [
+          29,
+          8
+        ],
+        [
+          29,
+          9
+        ],
+        [
+          29,
+          10
+        ],
+        [
+          29,
+          11
+        ],
+        [
+          29,
+          12
+        ],
+        [
+          30,
+          0
+        ],
+        [
+          30,
+          1
+        ],
+        [
+          30,
+          2
+        ],
+        [
+          30,
+          3
+        ],
+        [
+          30,
+          4
+        ],
+        [
+          30,
+          5
+        ],
+        [
+          30,
+          7
+        ],
+        [
+          30,
+          8
+        ],
+        [
+          30,
+          9
+        ],
+        [
+          30,
+          10
+        ],
+        [
+          30,
+          11
+        ],
+        [
+          30,
+          12
+        ],
+        [
+          31,
+          0
+        ],
+        [
+          31,
+          1
+        ],
+        [
+          31,
+          2
+        ],
+        [
+          31,
+          3
+        ],
+        [
+          31,
+          4
+        ],
+        [
+          31,
+          5
+        ],
+        [
+          31,
+          7
+        ],
+        [
+          31,
+          8
+        ],
+        [
+          31,
+          9
+        ],
+        [
+          31,
+          10
+        ],
+        [
+          31,
+          11
+        ],
+        [
+          31,
+          12
+        ],
+        [
+          32,
+          0
+        ],
+        [
+          32,
+          1
+        ],
+        [
+          32,
+          2
+        ],
+        [
+          32,
+          3
+        ],
+        [
+          32,
+          4
+        ],
+        [
+          32,
+          5
+        ],
+        [
+          32,
+          7
+        ],
+        [
+          32,
+          8
+        ],
+        [
+          32,
+          9
+        ],
+        [
+          32,
+          10
+        ],
+        [
+          32,
+          11
+        ],
+        [
+          32,
+          12
+        ],
+        [
+          33,
+          0
+        ],
+        [
+          33,
+          1
+        ],
+        [
+          33,
+          2
+        ],
+        [
+          33,
+          3
+        ],
+        [
+          33,
+          4
+        ],
+        [
+          33,
+          5
+        ],
+        [
+          33,
+          7
+        ],
+        [
+          33,
+          8
+        ],
+        [
+          33,
+          9
+        ],
+        [
+          33,
+          10
+        ],
+        [
+          33,
+          11
+        ],
+        [
+          33,
+          12
+        ],
+        [
+          34,
+          0
+        ],
+        [
+          34,
+          1
+        ],
+        [
+          34,
+          2
+        ],
+        [
+          34,
+          3
+        ],
+        [
+          34,
+          4
+        ],
+        [
+          34,
+          5
+        ],
+        [
+          34,
+          7
+        ],
+        [
+          34,
+          8
+        ],
+        [
+          34,
+          9
+        ],
+        [
+          34,
+          10
+        ],
+        [
+          34,
+          11
+        ],
+        [
+          34,
+          12
+        ],
+        [
+          35,
+          0
+        ],
+        [
+          35,
+          1
+        ],
+        [
+          35,
+          2
+        ],
+        [
+          35,
+          3
+        ],
+        [
+          35,
+          4
+        ],
+        [
+          35,
+          5
+        ],
+        [
+          35,
+          7
+        ],
+        [
+          35,
+          8
+        ],
+        [
+          35,
+          9
+        ],
+        [
+          35,
+          10
+        ],
+        [
+          35,
+          11
+        ],
+        [
+          35,
+          12
+        ],
+        [
+          36,
+          0
+        ],
+        [
+          36,
+          1
+        ],
+        [
+          36,
+          2
+        ],
+        [
+          36,
+          3
+        ],
+        [
+          36,
+          4
+        ],
+        [
+          36,
+          5
+        ],
+        [
+          36,
+          7
+        ],
+        [
+          36,
+          8
+        ],
+        [
+          36,
+          9
+        ],
+        [
+          36,
+          10
+        ],
+        [
+          36,
+          11
+        ],
+        [
+          36,
+          12
+        ],
+        [
+          37,
+          0
+        ],
+        [
+          37,
+          1
+        ],
+        [
+          37,
+          2
+        ],
+        [
+          37,
+          3
+        ],
+        [
+          37,
+          4
+        ],
+        [
+          37,
+          5
+        ],
+        [
+          37,
+          7
+        ],
+        [
+          37,
+          8
+        ],
+        [
+          37,
+          9
+        ],
+        [
+          37,
+          10
+        ],
+        [
+          37,
+          11
+        ],
+        [
+          37,
+          12
+        ],
+        [
+          38,
+          0
+        ],
+        [
+          38,
+          1
+        ],
+        [
+          38,
+          2
+        ],
+        [
+          38,
+          3
+        ],
+        [
+          38,
+          4
+        ],
+        [
+          38,
+          5
+        ],
+        [
+          38,
+          7
+        ],
+        [
+          38,
+          8
+        ],
+        [
+          38,
+          9
+        ],
+        [
+          38,
+          10
+        ],
+        [
+          38,
+          11
+        ],
+        [
+          38,
+          12
+        ],
+        [
+          39,
+          0
+        ],
+        [
+          39,
+          1
+        ],
+        [
+          39,
+          2
+        ],
+        [
+          39,
+          3
+        ],
+        [
+          39,
+          4
+        ],
+        [
+          39,
+          5
+        ],
+        [
+          39,
+          7
+        ],
+        [
+          39,
+          8
+        ],
+        [
+          39,
+          9
+        ],
+        [
+          39,
+          10
+        ],
+        [
+          39,
+          11
+        ],
+        [
+          39,
+          12
+        ],
+        [
+          40,
+          0
+        ],
+        [
+          40,
+          1
+        ],
+        [
+          40,
+          2
+        ],
+        [
+          40,
+          3
+        ],
+        [
+          40,
+          4
+        ],
+        [
+          40,
+          5
+        ],
+        [
+          40,
+          7
+        ],
+        [
+          40,
+          8
+        ],
+        [
+          40,
+          9
+        ],
+        [
+          40,
+          10
+        ],
+        [
+          40,
+          11
+        ],
+        [
+          40,
+          12
+        ],
+        [
+          41,
+          0
+        ],
+        [
+          41,
+          1
+        ],
+        [
+          41,
+          2
+        ],
+        [
+          41,
+          3
+        ],
+        [
+          41,
+          4
+        ],
+        [
+          41,
+          5
+        ],
+        [
+          41,
+          7
+        ],
+        [
+          41,
+          8
+        ],
+        [
+          41,
+          9
+        ],
+        [
+          41,
+          10
+        ],
+        [
+          41,
+          11
+        ],
+        [
+          41,
+          12
+        ],
+        [
+          42,
+          0
+        ],
+        [
+          42,
+          1
+        ],
+        [
+          42,
+          2
+        ],
+        [
+          42,
+          3
+        ],
+        [
+          42,
+          4
+        ],
+        [
+          42,
+          5
+        ],
+        [
+          42,
+          7
+        ],
+        [
+          42,
+          8
+        ],
+        [
+          42,
+          9
+        ],
+        [
+          42,
+          10
+        ],
+        [
+          42,
+          11
+        ],
+        [
+          42,
+          12
+        ],
+        [
+          43,
+          0
+        ],
+        [
+          43,
+          1
+        ],
+        [
+          43,
+          2
+        ],
+        [
+          43,
+          3
+        ],
+        [
+          43,
+          4
+        ],
+        [
+          43,
+          5
+        ],
+        [
+          43,
+          7
+        ],
+        [
+          43,
+          8
+        ],
+        [
+          43,
+          9
+        ],
+        [
+          43,
+          10
+        ],
+        [
+          43,
+          11
+        ],
+        [
+          43,
+          12
+        ],
+        [
+          44,
+          0
+        ],
+        [
+          44,
+          1
+        ],
+        [
+          44,
+          2
+        ],
+        [
+          44,
+          3
+        ],
+        [
+          44,
+          4
+        ],
+        [
+          44,
+          5
+        ],
+        [
+          44,
+          7
+        ],
+        [
+          44,
+          8
+        ],
+        [
+          44,
+          9
+        ],
+        [
+          44,
+          10
+        ],
+        [
+          44,
+          11
+        ],
+        [
+          44,
+          12
+        ],
+        [
+          45,
+          0
+        ],
+        [
+          45,
+          1
+        ],
+        [
+          45,
+          2
+        ],
+        [
+          45,
+          3
+        ],
+        [
+          45,
+          4
+        ],
+        [
+          45,
+          5
+        ],
+        [
+          45,
+          7
+        ],
+        [
+          45,
+          8
+        ],
+        [
+          45,
+          9
+        ],
+        [
+          45,
+          10
+        ],
+        [
+          45,
+          11
+        ],
+        [
+          45,
+          12
+        ],
+        [
+          46,
+          0
+        ],
+        [
+          46,
+          1
+        ],
+        [
+          46,
+          2
+        ],
+        [
+          46,
+          3
+        ],
+        [
+          46,
+          4
+        ],
+        [
+          46,
+          5
+        ],
+        [
+          46,
+          7
+        ],
+        [
+          46,
+          8
+        ],
+        [
+          46,
+          9
+        ],
+        [
+          46,
+          10
+        ],
+        [
+          46,
+          11
+        ],
+        [
+          46,
+          12
+        ],
+        [
+          47,
+          0
+        ],
+        [
+          47,
+          1
+        ],
+        [
+          47,
+          2
+        ],
+        [
+          47,
+          3
+        ],
+        [
+          47,
+          4
+        ],
+        [
+          47,
+          5
+        ],
+        [
+          47,
+          7
+        ],
+        [
+          47,
+          8
+        ],
+        [
+          47,
+          9
+        ],
+        [
+          47,
+          10
+        ],
+        [
+          47,
+          11
+        ],
+        [
+          47,
+          12
+        ],
+        [
+          48,
+          0
+        ],
+        [
+          48,
+          1
+        ],
+        [
+          48,
+          2
+        ],
+        [
+          48,
+          3
+        ],
+        [
+          48,
+          4
+        ],
+        [
+          48,
+          5
+        ],
+        [
+          48,
+          7
+        ],
+        [
+          48,
+          8
+        ],
+        [
+          48,
+          9
+        ],
+        [
+          48,
+          10
+        ],
+        [
+          48,
+          11
+        ],
+        [
+          48,
+          12
+        ],
+        [
+          49,
+          0
+        ],
+        [
+          49,
+          1
+        ],
+        [
+          49,
+          2
+        ],
+        [
+          49,
+          3
+        ],
+        [
+          49,
+          4
+        ],
+        [
+          49,
+          5
+        ],
+        [
+          49,
+          7
+        ],
+        [
+          49,
+          8
+        ],
+        [
+          49,
+          9
+        ],
+        [
+          49,
+          10
+        ],
+        [
+          49,
+          11
+        ],
+        [
+          49,
+          12
+        ],
+        [
+          50,
+          0
+        ],
+        [
+          50,
+          1
+        ],
+        [
+          50,
+          2
+        ],
+        [
+          50,
+          3
+        ],
+        [
+          50,
+          4
+        ],
+        [
+          50,
+          5
+        ],
+        [
+          50,
+          7
+        ],
+        [
+          50,
+          8
+        ],
+        [
+          50,
+          9
+        ],
+        [
+          50,
+          10
+        ],
+        [
+          50,
+          11
+        ],
+        [
+          50,
+          12
+        ],
+        [
+          51,
+          0
+        ],
+        [
+          51,
+          1
+        ],
+        [
+          51,
+          2
+        ],
+        [
+          51,
+          3
+        ],
+        [
+          51,
+          4
+        ],
+        [
+          51,
+          5
+        ],
+        [
+          51,
+          7
+        ],
+        [
+          51,
+          8
+        ],
+        [
+          51,
+          9
+        ],
+        [
+          51,
+          10
+        ],
+        [
+          51,
+          11
+        ],
+        [
+          51,
+          12
+        ],
+        [
+          52,
+          0
+        ],
+        [
+          52,
+          1
+        ],
+        [
+          52,
+          2
+        ],
+        [
+          52,
+          3
+        ],
+        [
+          52,
+          4
+        ],
+        [
+          52,
+          5
+        ],
+        [
+          52,
+          7
+        ],
+        [
+          52,
+          8
+        ],
+        [
+          52,
+          9
+        ],
+        [
+          52,
+          10
+        ],
+        [
+          52,
+          11
+        ],
+        [
+          52,
+          12
+        ],
+        [
+          53,
+          0
+        ],
+        [
+          53,
+          1
+        ],
+        [
+          53,
+          2
+        ],
+        [
+          53,
+          3
+        ],
+        [
+          53,
+          4
+        ],
+        [
+          53,
+          5
+        ],
+        [
+          53,
+          7
+        ],
+        [
+          53,
+          8
+        ],
+        [
+          53,
+          9
+        ],
+        [
+          53,
+          10
+        ],
+        [
+          53,
+          11
+        ],
+        [
+          53,
+          12
+        ],
+        [
+          54,
+          0
+        ],
+        [
+          54,
+          1
+        ],
+        [
+          54,
+          2
+        ],
+        [
+          54,
+          3
+        ],
+        [
+          54,
+          4
+        ],
+        [
+          54,
+          5
+        ],
+        [
+          55,
+          0
+        ],
+        [
+          55,
+          1
+        ],
+        [
+          55,
+          2
+        ],
+        [
+          55,
+          3
+        ],
+        [
+          55,
+          4
+        ],
+        [
+          55,
+          5
+        ],
+        [
+          55,
+          7
+        ],
+        [
+          55,
+          8
+        ],
+        [
+          55,
+          9
+        ],
+        [
+          55,
+          10
+        ],
+        [
+          55,
+          11
+        ],
+        [
+          55,
+          12
+        ],
+        [
+          56,
+          0
+        ],
+        [
+          56,
+          1
+        ],
+        [
+          56,
+          2
+        ],
+        [
+          56,
+          3
+        ],
+        [
+          56,
+          4
+        ],
+        [
+          56,
+          5
+        ],
+        [
+          56,
+          7
+        ],
+        [
+          56,
+          8
+        ],
+        [
+          56,
+          9
+        ],
+        [
+          56,
+          10
+        ],
+        [
+          56,
+          11
+        ],
+        [
+          56,
+          12
+        ],
+        [
+          57,
+          0
+        ],
+        [
+          57,
+          1
+        ],
+        [
+          57,
+          2
+        ],
+        [
+          57,
+          3
+        ],
+        [
+          57,
+          4
+        ],
+        [
+          57,
+          5
+        ],
+        [
+          57,
+          7
+        ],
+        [
+          57,
+          8
+        ],
+        [
+          57,
+          9
+        ],
+        [
+          57,
+          10
+        ],
+        [
+          57,
+          11
+        ],
+        [
+          57,
+          12
+        ],
+        [
+          58,
+          0
+        ],
+        [
+          58,
+          1
+        ],
+        [
+          58,
+          2
+        ],
+        [
+          58,
+          3
+        ],
+        [
+          58,
+          4
+        ],
+        [
+          58,
+          5
+        ],
+        [
+          59,
+          0
+        ],
+        [
+          59,
+          1
+        ],
+        [
+          59,
+          2
+        ],
+        [
+          59,
+          3
+        ],
+        [
+          59,
+          4
+        ],
+        [
+          59,
+          5
+        ],
+        [
+          59,
+          7
+        ],
+        [
+          59,
+          8
+        ],
+        [
+          59,
+          9
+        ],
+        [
+          59,
+          10
+        ],
+        [
+          59,
+          11
+        ],
+        [
+          59,
+          12
+        ],
+        [
+          60,
+          0
+        ],
+        [
+          60,
+          1
+        ],
+        [
+          60,
+          2
+        ],
+        [
+          60,
+          3
+        ],
+        [
+          60,
+          4
+        ],
+        [
+          60,
+          5
+        ],
+        [
+          60,
+          7
+        ],
+        [
+          60,
+          8
+        ],
+        [
+          60,
+          9
+        ],
+        [
+          60,
+          10
+        ],
+        [
+          60,
+          11
+        ],
+        [
+          60,
+          12
+        ],
+        [
+          61,
+          0
+        ],
+        [
+          61,
+          1
+        ],
+        [
+          61,
+          2
+        ],
+        [
+          61,
+          3
+        ],
+        [
+          61,
+          4
+        ],
+        [
+          61,
+          5
+        ],
+        [
+          61,
+          7
+        ],
+        [
+          61,
+          8
+        ],
+        [
+          61,
+          9
+        ],
+        [
+          61,
+          10
+        ],
+        [
+          61,
+          11
+        ],
+        [
+          61,
+          12
+        ],
+        [
+          62,
+          0
+        ],
+        [
+          62,
+          1
+        ],
+        [
+          62,
+          2
+        ],
+        [
+          62,
+          3
+        ],
+        [
+          62,
+          4
+        ],
+        [
+          62,
+          5
+        ],
+        [
+          62,
+          7
+        ],
+        [
+          62,
+          8
+        ],
+        [
+          62,
+          9
+        ],
+        [
+          62,
+          10
+        ],
+        [
+          62,
+          11
+        ],
+        [
+          62,
+          12
+        ],
+        [
+          63,
+          0
+        ],
+        [
+          63,
+          1
+        ],
+        [
+          63,
+          2
+        ],
+        [
+          63,
+          3
+        ],
+        [
+          63,
+          4
+        ],
+        [
+          63,
+          5
+        ],
+        [
+          63,
+          7
+        ],
+        [
+          63,
+          8
+        ],
+        [
+          63,
+          9
+        ],
+        [
+          63,
+          10
+        ],
+        [
+          63,
+          11
+        ],
+        [
+          63,
+          12
+        ]
+      ],
+      "reward_max_abs": 0.0,
+      "reward_offending_indices": [],
+      "reward_identity": true,
+      "termination_identity": true,
+      "truncation_identity": true,
+      "valid_mask_identity": true,
+      "action_identity": true
+    }
+  ],
+  "hold_rng": [
+    {
+      "round": 1,
+      "after_reset_sha256": "21682889f52348b9bba0a4b28c90be251f26f07fcef786425d4a2552dbb44cc9",
+      "actual_hold_sha256": "21682889f52348b9bba0a4b28c90be251f26f07fcef786425d4a2552dbb44cc9",
+      "action_sha256": "3811017dbdb5f894af98bb620237af42aa4ee0c14a47a8d7123296aae778b1d1",
+      "diagnostic_only_reference_restore": true
+    },
+    {
+      "round": 2,
+      "after_reset_sha256": "21682889f52348b9bba0a4b28c90be251f26f07fcef786425d4a2552dbb44cc9",
+      "actual_hold_sha256": "21682889f52348b9bba0a4b28c90be251f26f07fcef786425d4a2552dbb44cc9",
+      "action_sha256": "3811017dbdb5f894af98bb620237af42aa4ee0c14a47a8d7123296aae778b1d1",
+      "diagnostic_only_reference_restore": true
+    }
+  ],
+  "reset_comparisons": [
+    {
+      "round": 2,
+      "per_close": false,
+      "max_abs": {
+        "main_images": 0.0,
+        "wrist_images": 0.0,
+        "states": 0.0
+      }
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
-  "status": "RUNNING_NATIVE_REPEAT_DYNAMICS_DIAGNOSTIC_PRODUCTION_HELD",
+  "status": "NATIVE_FALLBACK_SELECTED_PREPARING_PPO_TRAIN07",
   "cluster": "Baige Pro6K",
-  "last_checked_at_shanghai": "2026-11-06 01:01",
+  "last_checked_at_shanghai": "2026-11-06 01:28",
   "prior_scheduler_gpu_seconds": 2561,
   "prior_scheduler_gpu_hours": 0.7113888888888888,
   "optimizer_updates": 0,
@@ -9,7 +9,7 @@
   "revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "user_preference": "Broad multi-task SFT, no RL tuning. Maximize actual6000-series batch capacity or measured throughput.",
   "precision": "Native mixed BF16 with full FP32 vision/norms. FP32 full-model replay only if required to localize conversion drift.",
-  "next_action": "Freshmemory04 native-native-repeat plusperclose64scene diagnosis; exposedphysics/qvel/poses/contacts, identicalholdRNG, rawpercaseactions/outcomesBEFOREgates. Same1e-6andexactrewardgate. NoPPOuntilchosenmemorystrategyqualifies.",
+  "next_action": "Launchfreshtrain07 on4GPU/1024GiB withnativebatchendtrim andexperimentalpercloseOFF; native-repeatcontrolhas1.027e-3statevariation. Preservefailedstrictgate/diagnostic; no tolerancechange. Same64/accum8/global2048/fiveepochs; priorreservation30000+41040=71040<72000.",
   "job_id": "job-lcwxw1uz7kdy",
   "source_commit": "a9ee838c67eba8e22282739ee468ed15bee8670d",
   "core_tests_passed": 23,
@@ -407,7 +407,7 @@
       "attempt": "memory04",
       "job_id": "job-lcwxw1uz7kdy",
       "source_commit": "a9ee838c67eba8e22282739ee468ed15bee8670d",
-      "status": "submitted",
+      "status": "running_final_candidate_native_repeat_dynamics_gate_already_failed",
       "created_at_shanghai": "2026-11-06 00:59:22",
       "gpus": 1,
       "cpus": 64,
@@ -419,7 +419,11 @@
       "source_seed_offset": 0,
       "maximum_physical_controls": 9600,
       "maximum_setup_reset_allowance": 2560,
-      "optimizer_updates": 0
+      "optimizer_updates": 0,
+      "native_repeat_state_max_abs": 0.001026532641844824,
+      "native_repeat_reward_identity": true,
+      "native_repeat_action_identity": true,
+      "native_repeat_hold_rng_identity": true
     }
   ],
   "engineering_migration": {
