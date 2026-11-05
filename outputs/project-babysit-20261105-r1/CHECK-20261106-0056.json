@@ -1,0 +1,102 @@
+{
+  "checked_unix": 1793897776.732408,
+  "free_GiB": 702.83984375,
+  "robotwin": {
+    "memory03": {
+      "RESULT.json": {
+        "sha256": "15081d5198a6c238d1e1199fda5b2b24890edafa35510efc30e79c7a40b2ea92",
+        "status": "failed",
+        "optimizer_updates": 0,
+        "model_loaded": false,
+        "scenes": 64,
+        "events": [
+          {
+            "round": 1,
+            "allocator_observation_identity": true,
+            "python_numpy_torch_rng_identity": true,
+            "scene_identity": true,
+            "motor_input_identity": true
+          },
+          {
+            "round": 2,
+            "allocator_observation_identity": true,
+            "python_numpy_torch_rng_identity": true,
+            "scene_identity": true,
+            "motor_input_identity": true
+          }
+        ],
+        "profile_mode": "paired",
+        "accounting_rank": 1,
+        "source_seed_offset": 0,
+        "paired_reset_max_abs": {
+          "main_images": 0.0,
+          "wrist_images": 0.0,
+          "states": 0.0
+        },
+        "paired_reset_rgb_bit_identity": true,
+        "error_type": "AssertionError",
+        "error": "",
+        "total_shared_accounting_rank_charge": 69120,
+        "physical_controls": 6400,
+        "active_worktrees_changed": false,
+        "scientific_source_admission": false,
+        "reset_peaks": [
+          {
+            "stage": "round1/after_reset",
+            "reset_peak": {
+              "rss_bytes": 59133595648,
+              "cgroup_bytes": 59158036480
+            },
+            "rss_GiB": 54.68739318847656
+          },
+          {
+            "stage": "round2/after_reset",
+            "reset_peak": {
+              "rss_bytes": 60258881536,
+              "cgroup_bytes": 63181606912
+            },
+            "rss_GiB": 55.54984664916992
+          }
+        ],
+        "recent_stages": [
+          {
+            "stage": "after_vector_close",
+            "time": 1793896908.4519315,
+            "rss_GiB": 56.17732238769531
+          },
+          {
+            "stage": "after_delete_gc",
+            "time": 1793896909.0589883,
+            "rss_GiB": 56.17060470581055
+          },
+          {
+            "stage": "after_delete_trim",
+            "time": 1793896910.8102512,
+            "rss_GiB": 3.2387351989746094
+          }
+        ]
+      },
+      "EXIT.json": {
+        "sha256": "04b2feb7b8c34614ddc8192d32ac5197b37b1e762455e0205a0f32222b1f99a2",
+        "exit_code": 1,
+        "worker_gpu_seconds": 1285
+      }
+    }
+  },
+  "kv_dit": {
+    "update": 7200,
+    "best_loss": 0.12341034738346934,
+    "plateau": {
+      "reference": 0.12385996151715517,
+      "stale_checks": 3,
+      "converged": false
+    },
+    "converged": false,
+    "elapsed_seconds": 36022.61408053851,
+    "stop_reason": "operational_checkpoint",
+    "native_parameters_frozen": true,
+    "interface": "kv_bridge",
+    "objective": "dit"
+  },
+  "readout_admission_present": false
+}
