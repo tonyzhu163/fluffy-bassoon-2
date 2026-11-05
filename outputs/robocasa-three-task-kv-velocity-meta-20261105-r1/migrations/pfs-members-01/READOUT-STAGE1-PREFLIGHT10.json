@@ -1,0 +1,63 @@
+{
+  "checked_shanghai": "2026-11-06T03:08:32.735805+08:00",
+  "actual_pinned_gate_executed_on_allocated_Linux_CPU": true,
+  "all8_model_admission_results": {
+    "kv_bridge/ad": {
+      "admitted": true,
+      "gate_output": {
+        "admitted": true,
+        "model": "kv_bridge/ad",
+        "maximum_job_GPU_hours": 7.5,
+        "committed_GPU_hours": 127.24555555555558,
+        "free_PFS_GiB": 616.8359375,
+        "hot_reservation_GiB": 40,
+        "main_cases_per_task": 50,
+        "episodes_per_case": 6
+      }
+    },
+    "kv_bridge/dpt": {
+      "admitted": false,
+      "blocked_by": "Model key absent from original150 stage1 admission"
+    },
+    "kv_bridge/dit": {
+      "admitted": false,
+      "blocked_by": "Model key absent from original150 stage1 admission"
+    },
+    "kv_bridge/ic_iql": {
+      "admitted": false,
+      "blocked_by": "Model key absent from original150 stage1 admission"
+    },
+    "velocity_bridge/ad": {
+      "admitted": true,
+      "gate_output": {
+        "admitted": true,
+        "model": "velocity_bridge/ad",
+        "maximum_job_GPU_hours": 7.5,
+        "committed_GPU_hours": 127.24555555555558,
+        "free_PFS_GiB": 616.8359375,
+        "hot_reservation_GiB": 40,
+        "main_cases_per_task": 50,
+        "episodes_per_case": 6
+      }
+    },
+    "velocity_bridge/dpt": {
+      "admitted": false,
+      "blocked_by": "Model key absent from original150 stage1 admission"
+    },
+    "velocity_bridge/dit": {
+      "admitted": false,
+      "blocked_by": "Model key absent from original150 stage1 admission"
+    },
+    "velocity_bridge/ic_iql": {
+      "admitted": false,
+      "blocked_by": "Model key absent from original150 stage1 admission"
+    }
+  },
+  "exact_two_admitted": true,
+  "runtime_clean_and_pinned": true,
+  "implementation_commit": "87984718c9199797d31a158c47225cc695623afe",
+  "admission_sha256": "30221a58feb4f6d2c395254b5364ac290cf22c0deaaf3ec2f4fee02bb962601c",
+  "maximum_joint_reservation_GPU_hours": 142.24555555555554,
+  "original_cap_GPU_hours": 150,
+  "scientific_contract_unchanged": true
+}
