@@ -13,6 +13,7 @@ mkdir -p "$TASK_OUT"
 export TASK_SOURCE
 export REPO_PATH=/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf
 export ROBOTWIN_PATH=/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin
+export ASSETS_PATH=$ROBOTWIN_PATH
 export EMBODIED_PATH=$REPO_PATH/examples/embodiment
 export PYTHONPATH=$TASK_CODE/src:$REPO_PATH:$ROBOTWIN_PATH
 export PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1 PYTHONUNBUFFERED=1
