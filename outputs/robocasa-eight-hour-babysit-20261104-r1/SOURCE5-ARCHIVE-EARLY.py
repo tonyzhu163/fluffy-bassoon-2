@@ -1,6 +1,7 @@
 """Archive verified obsolete source checkpoints; retain the latest complete recovery hot."""
 import argparse
 from concurrent.futures import ThreadPoolExecutor
+import errno
 import fcntl
 import hashlib
 import json
@@ -13,25 +14,45 @@ import time
 RUN = Path('/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1')
 COLD = Path('/mnt/bos/adgfyl/strong-plant-archives/robocasa-eight-hour-babysit-20261104-r1/source5-early-checkpoints-01')
 JOBS = {'PickPlaceCounterToCabinet': 'job-p4vgvfgs7s29', 'TurnOnSinkFaucet': 'job-jo6kx7qu29r4'}
+COLD_READ_RETRIES = []
 
 
-def digest(path):
-    with path.open('rb') as stream:
-        return hashlib.file_digest(stream, 'sha256').hexdigest()
+def digest(path, *, cold=False, expected=None):
+    for attempt in range(6 if cold else 1):
+        try:
+            size = path.stat().st_size
+            sha, read_bytes = hashlib.sha256(), 0
+            with path.open('rb') as stream:
+                while block := stream.read(8 << 20):
+                    sha.update(block)
+                    read_bytes += len(block)
+            actual = sha.hexdigest()
+            if read_bytes != size or (expected is not None and actual != expected):
+                raise ValueError('Closed archive read failed byte/hash verification')
+            return actual
+        except (OSError, ValueError) as error:
+            transient = isinstance(error, ValueError) or error.errno in (errno.EIO, errno.EBUSY, errno.ESTALE)
+            if not cold or not transient or attempt == 5:
+                raise
+            COLD_READ_RETRIES.append(dict(path=str(path), attempt=attempt+1,
+                                          error=type(error).__name__, errno=getattr(error, 'errno', None)))
+            time.sleep((1, 2, 4, 8, 8)[attempt])
 
 
 def durable_json(path, value):
+    payload = json.dumps(value, indent=2) + '\n'
     with path.open('x') as stream:
-        json.dump(value, stream, indent=2)
-        stream.write('\n')
+        stream.write(payload)
         stream.flush()
         os.fsync(stream.fileno())
+    return hashlib.sha256(payload.encode()).hexdigest()
 
 
-def main(completed_task=None):
+def main(completed_task=None, archive_attempt=1):
     assert sys.platform == 'linux'
+    assert 1 <= archive_attempt <= 9 and (completed_task is not None or archive_attempt == 1)
     archive_id = ('source5-early-checkpoints-01' if completed_task is None else
-                  f'source5-{completed_task}-intermediate-after40-01')
+                  f'source5-{completed_task}-intermediate-after40-{archive_attempt:02d}')
     cold = COLD.with_name(archive_id)
     receipts = RUN / 'archives'
     receipts.mkdir(exist_ok=True)
@@ -92,7 +113,8 @@ def main(completed_task=None):
         stream.write(payload)
         stream.flush()
         os.fsync(stream.fileno())
-    assert digest(probe) == hashlib.sha256(payload).hexdigest()
+    probe_sha256 = hashlib.sha256(payload).hexdigest()
+    assert digest(probe, cold=True, expected=probe_sha256) == probe_sha256
     probe.unlink()
     cold.mkdir()
     began = time.time()
@@ -113,7 +135,7 @@ def main(completed_task=None):
                     outgoing.write(block)
                 outgoing.flush()
                 os.fsync(outgoing.fileno())
-            assert sha.hexdigest() == expected == digest(destination)
+            assert sha.hexdigest() == expected == digest(destination, cold=True, expected=expected)
             after = path.stat()
             assert (stat.st_size, stat.st_mtime_ns) == (after.st_size, after.st_mtime_ns)
             return dict(relative=str(path.relative_to(source)), bytes=stat.st_size, sha256=expected)
@@ -123,7 +145,9 @@ def main(completed_task=None):
         plan['files'] = files
         manifest.append(dict(source=str(source), target=str(target), job_id=plan['job_id'],
                              released_shanghai=plan['released_shanghai'], files=files))
-    durable_json(cold / 'ARCHIVE-MANIFEST.json', dict(checkpoints=manifest, retained_hot_recovery=hot_recovery))
+    cold_manifest = cold / 'ARCHIVE-MANIFEST.json'
+    manifest_sha256 = durable_json(cold_manifest, dict(checkpoints=manifest, retained_hot_recovery=hot_recovery))
+    assert digest(cold_manifest, cold=True, expected=manifest_sha256) == manifest_sha256
     swapped = []
     try:
         for plan in plans:
@@ -135,7 +159,7 @@ def main(completed_task=None):
             source.symlink_to(plan['target'], target_is_directory=True)
             assert source.resolve() == plan['target']
             for row in plan['files']:
-                assert digest(source / row['relative']) == row['sha256']
+                assert digest(source / row['relative'], cold=True, expected=row['sha256']) == row['sha256']
     except BaseException:
         for source, quarantine in reversed(swapped):
             if source.is_symlink():
@@ -147,7 +171,8 @@ def main(completed_task=None):
     assert all(Path(path).is_dir() and not Path(path).is_symlink() for path in hot_recovery)
     receipt = dict(completed=True, GPU_hours=0, checkpoints=manifest, retained_hot_recovery=hot_recovery,
         archived_bytes=sum(row['bytes'] for plan in plans for row in plan['files']),
-        manifest_sha256=digest(cold / 'ARCHIVE-MANIFEST.json'), elapsed_seconds=time.time()-began,
+        manifest_sha256=manifest_sha256, elapsed_seconds=time.time()-began,
+        cold_read_retries=COLD_READ_RETRIES, cold_read_attempt_limit=6,
         original_paths_verified=True, complete_optimizer_sampler_RNG_retained=True,
         all_TRAIN_histories_remain_hot=True, cold_storage_requires_staging_for_future_GPU_use=True)
     durable_json(receipts / (archive_id + '.json'), receipt)
@@ -157,4 +182,6 @@ def main(completed_task=None):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--completed-task', choices=tuple(JOBS))
-    main(parser.parse_args().completed_task)
+    parser.add_argument('--archive-attempt', type=int, default=1)
+    args = parser.parse_args()
+    main(args.completed_task, args.archive_attempt)
