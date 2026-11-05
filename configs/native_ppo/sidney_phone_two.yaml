@@ -1,0 +1,39 @@
+# Native RLinf two-iteration execution pilot; no SFT benchmark panel.
+defaults:
+  - adjust_bottle_published_batch_two
+  - _self_
+
+runner:
+  val_check_interval: -1
+  logger:
+    experiment_name: sidney-native-two
+
+env:
+  train:
+    task_config:
+      task_name: place_phone_stand
+      camera:
+        head_camera_type: Large_D435
+        wrist_camera_type: Large_D435
+  eval:
+    task_config:
+      task_name: place_phone_stand
+      camera:
+        head_camera_type: Large_D435
+        wrist_camera_type: Large_D435
+
+actor:
+  model:
+    openpi_data:
+      adapt_to_pi: false
+      extra_delta_transform: false
+    openpi:
+      config_name: pi05_aloha_robotwin_sidney
+      action_horizon: 50
+      action_chunk: 50
+      action_env_dim: 14
+      discrete_state_input: true
+      torch_compile: false
+
+native_pilot:
+  sampling_record: full

@@ -1,7 +1,7 @@
 {
-  "status": "BRIDGE01_DIAGNOSED_RETRY_PREPARING",
+  "status": "BRIDGE03_RUNNING",
   "cluster": "Baige Pro6K",
-  "last_checked_at_shanghai": "2026-11-05 17:01",
+  "last_checked_at_shanghai": "2026-11-05 17:21",
   "prior_scheduler_gpu_seconds": 2561,
   "prior_scheduler_gpu_hours": 0.7113888888888888,
   "optimizer_updates": 0,
@@ -9,11 +9,29 @@
   "revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "user_preference": "Broad multi-task SFT with no RL tuning; continue Sidney for six-task setup",
   "precision": "Native mixed BF16 with full FP32 vision/norms. FP32 full-model replay only if required to localize conversion drift.",
-  "next_action": "1GPU bridge: core reset tests, source-object/instruction pairing, native/RLinf same-input replay, K5 sampler/replay/capacity and one source episode; then two PPO iterations.",
-  "job_id": "job-0hqp1i13nok2",
-  "source_commit": "d442b7b889c78068052f15f6274ae3415fd9c431",
+  "next_action": "Check native tanh-GELU action parity, sampler replay/capacity and one physical source episode; then launch two source PPO iterations.",
+  "job_id": "job-k9b46ey6idby",
+  "source_commit": "edf3c2f3307255d2b0dad5c2a661108fc3fb3ca4",
   "core_tests_passed": 23,
   "scene_instruction_binding_passed": true,
   "conversion_passed": true,
-  "error": "CPU resize differed from native CUDA by1.0728836e-6, exceeding input pixel1e-6 check before action replay. Match native CUDA resize path and reuse immutable saved inputs."
+  "error": "Bridge02 inputs exact; FP32 normalized drift0.00351 exposed native tanh-GELU versus RLinf exact GELU. Corrected checkpoint-specific activations in bridge03; original bounds retained.",
+  "bridge_scheduler_gpu_seconds_completed": 520,
+  "cumulative_scheduler_gpu_seconds_completed": 3081,
+  "completed_bridge_attempts": [
+    {
+      "attempt": "bridge01",
+      "job_id": "job-0hqp1i13nok2",
+      "scheduler_gpu_seconds": 310,
+      "worker_gpu_seconds": 268,
+      "outcome": "resize kernel input mismatch"
+    },
+    {
+      "attempt": "bridge02",
+      "job_id": "job-y28j7gjdamv0",
+      "scheduler_gpu_seconds": 210,
+      "worker_gpu_seconds": 175,
+      "outcome": "inputs exact; activation implementation mismatch"
+    }
+  ]
 }

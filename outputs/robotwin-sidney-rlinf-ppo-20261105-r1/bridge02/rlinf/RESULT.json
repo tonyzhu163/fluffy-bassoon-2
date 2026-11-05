@@ -1,0 +1,74 @@
+{
+  "status": "failed",
+  "optimizer_updates": 0,
+  "source_commit": "4a54a60b46a9a68a5de99e07941019cb04c517da",
+  "chunk_size": 50,
+  "native_flow_steps": 10,
+  "ppo_flow_steps": 5,
+  "rows": [
+    {
+      "vector": "00-place_a2b_left-100100001.npz",
+      "precision": "native mixed BF16/full FP32 vision",
+      "tokens_equal": true,
+      "state_max_abs": 0.0,
+      "pixels_max_abs": 0.0,
+      "normalized_max_abs": 0.011048495769500732,
+      "decoded_max_abs": 0.007844924926757812,
+      "seconds": 1.7116058245301247
+    },
+    {
+      "vector": "01-place_a2b_left-100100004.npz",
+      "precision": "native mixed BF16/full FP32 vision",
+      "tokens_equal": true,
+      "state_max_abs": 0.0,
+      "pixels_max_abs": 0.0,
+      "normalized_max_abs": 0.0129472017288208,
+      "decoded_max_abs": 0.01028895378112793,
+      "seconds": 0.4548581298440695
+    },
+    {
+      "vector": "02-place_phone_stand-100100002.npz",
+      "precision": "native mixed BF16/full FP32 vision",
+      "tokens_equal": true,
+      "state_max_abs": 0.0,
+      "pixels_max_abs": 0.0,
+      "normalized_max_abs": 0.010580182075500488,
+      "decoded_max_abs": 0.00657963752746582,
+      "seconds": 0.4477644572034478
+    }
+  ],
+  "fp32_rows": [
+    {
+      "vector": "00-place_a2b_left-100100001.npz",
+      "precision": "FP32 diagnostic only",
+      "tokens_equal": true,
+      "state_max_abs": 0.0,
+      "pixels_max_abs": 0.0,
+      "normalized_max_abs": 0.0035053491592407227,
+      "decoded_max_abs": 0.002179861068725586,
+      "seconds": 0.4917219765484333
+    },
+    {
+      "vector": "01-place_a2b_left-100100004.npz",
+      "precision": "FP32 diagnostic only",
+      "tokens_equal": true,
+      "state_max_abs": 0.0,
+      "pixels_max_abs": 0.0,
+      "normalized_max_abs": 0.003122985363006592,
+      "decoded_max_abs": 0.002481818199157715,
+      "seconds": 0.4802035866305232
+    },
+    {
+      "vector": "02-place_phone_stand-100100002.npz",
+      "precision": "FP32 diagnostic only",
+      "tokens_equal": true,
+      "state_max_abs": 0.0,
+      "pixels_max_abs": 0.0,
+      "normalized_max_abs": 0.0025046467781066895,
+      "decoded_max_abs": 0.0019457340240478516,
+      "seconds": 0.48291970044374466
+    }
+  ],
+  "error_type": "AssertionError",
+  "error": "[{'vector': '00-place_a2b_left-100100001.npz', 'precision': 'FP32 diagnostic only', 'tokens_equal': True, 'state_max_abs': 0.0, 'pixels_max_abs': 0.0, 'normalized_max_abs': 0.0035053491592407227, 'decoded_max_abs': 0.002179861068725586, 'seconds': 0.4917219765484333}, {'vector': '01-place_a2b_left-100100004.npz', 'precision': 'FP32 diagnostic only', 'tokens_equal': True, 'state_max_abs': 0.0, 'pixels_max_abs': 0.0, 'normalized_max_abs': 0.003122985363006592, 'decoded_max_abs': 0.002481818199157715, 'seconds': 0.4802035866305232}, {'vector': '02-place_phone_stand-100100002.npz', 'precision': 'FP32 diagnostic only', 'tokens_equal': True, 'state_max_abs': 0.0, 'pixels_max_abs': 0.0, 'normalized_max_abs': 0.0025046467781066895, 'decoded_max_abs': 0.0019457340240478516, 'seconds': 0.48291970044374466}]"
+}
