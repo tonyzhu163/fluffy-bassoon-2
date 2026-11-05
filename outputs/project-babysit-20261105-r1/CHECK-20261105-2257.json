@@ -1,0 +1,148 @@
+{
+  "checked_unix": 1793890591.4976428,
+  "disk": {
+    "total": 2199023255552,
+    "used": 1475484844032,
+    "free": 723538411520
+  },
+  "fits": {
+    "kv_bridge/ad": {
+      "update": 2900,
+      "best_loss": 0.12998429453000426,
+      "plateau": {
+        "reference": 0.13091450789943337,
+        "stale_checks": 10,
+        "converged": true
+      },
+      "converged": true,
+      "elapsed_seconds": 22614.67378126923,
+      "stop_reason": "validation_plateau",
+      "native_parameters_frozen": true,
+      "interface": "kv_bridge",
+      "objective": "ad"
+    },
+    "kv_bridge/dit": {
+      "update": 4900,
+      "best_loss": 0.12791518797166646,
+      "plateau": {
+        "reference": 0.12837591511197388,
+        "stale_checks": 2,
+        "converged": false
+      },
+      "converged": false,
+      "elapsed_seconds": 29469.961022125557,
+      "stop_reason": "operational_checkpoint",
+      "native_parameters_frozen": true,
+      "interface": "kv_bridge",
+      "objective": "dit"
+    },
+    "kv_bridge/dpt": {
+      "update": 4900,
+      "best_loss": 0.10406972863711417,
+      "plateau": {
+        "reference": 0.1047210288234055,
+        "stale_checks": 10,
+        "converged": true
+      },
+      "converged": true,
+      "elapsed_seconds": 16163.016028415412,
+      "stop_reason": "validation_plateau",
+      "native_parameters_frozen": true,
+      "interface": "kv_bridge",
+      "objective": "dpt"
+    },
+    "kv_bridge/ic_iql": {
+      "update": 2900,
+      "best_loss": 0.13021480664610863,
+      "plateau": {
+        "reference": 0.13118981244042516,
+        "stale_checks": 10,
+        "converged": true
+      },
+      "converged": true,
+      "elapsed_seconds": 22614.19734213222,
+      "stop_reason": "validation_plateau",
+      "native_parameters_frozen": true,
+      "interface": "kv_bridge",
+      "objective": "ic_iql"
+    },
+    "velocity_bridge/ad": {
+      "update": 1900,
+      "best_loss": 0.1336060776375234,
+      "plateau": {
+        "reference": 0.13421811955049634,
+        "stale_checks": 10,
+        "converged": true
+      },
+      "converged": true,
+      "elapsed_seconds": 15333.472707911395,
+      "stop_reason": "validation_plateau",
+      "native_parameters_frozen": true,
+      "interface": "velocity_bridge",
+      "objective": "ad"
+    },
+    "velocity_bridge/dit": {
+      "update": 1900,
+      "best_loss": 0.1353502501733601,
+      "plateau": {
+        "reference": 0.13599334051832557,
+        "stale_checks": 10,
+        "converged": true
+      },
+      "converged": true,
+      "elapsed_seconds": 11228.06886042934,
+      "stop_reason": "validation_plateau",
+      "native_parameters_frozen": true,
+      "interface": "velocity_bridge",
+      "objective": "dit"
+    },
+    "velocity_bridge/dpt": {
+      "update": 1900,
+      "best_loss": 0.1094971769489348,
+      "plateau": {
+        "reference": 0.11041463864967227,
+        "stale_checks": 10,
+        "converged": true
+      },
+      "converged": true,
+      "elapsed_seconds": 11818.998027492315,
+      "stop_reason": "validation_plateau",
+      "native_parameters_frozen": true,
+      "interface": "velocity_bridge",
+      "objective": "dpt"
+    },
+    "velocity_bridge/ic_iql": {
+      "update": 1900,
+      "best_loss": 0.13382872426882386,
+      "plateau": {
+        "reference": 0.13446938898414373,
+        "stale_checks": 10,
+        "converged": true
+      },
+      "converged": true,
+      "elapsed_seconds": 14854.970205149613,
+      "stop_reason": "validation_plateau",
+      "native_parameters_frozen": true,
+      "interface": "velocity_bridge",
+      "objective": "ic_iql"
+    }
+  },
+  "coordination": {
+    "owner_chats_reactivated": true,
+    "robotwin": {
+      "job": "job-42mdffft4wwc",
+      "scheduler": "Failed/released",
+      "released_shanghai": "2026-11-05 20:18:01",
+      "conservative_GPU_seconds": 5944,
+      "diagnosis": "Ray host RAM threshold at about488/512GiB; no new PPO update; owner preparing greater-host-memory retry"
+    },
+    "source_tests": {
+      "counter_recovery": "Succeeded/released;512 pair collection complete, audit pending",
+      "faucet": "TimeoutError preserving last complete boundary at deadline;496 complete paired cases; rerun banks62/63 only; orphan SFT62 charged",
+      "campaign_charged_GPUh": 51.5169444444,
+      "test_charged_GPUh": 6.9302777778,
+      "bounded_recovery_max_GPUh": 0.5
+    },
+    "readouts": "Held for budget, deployment and storage admission; all8 estimate54.1GPUh exceeds remaining150GPUh campaign budget"
+  }
+}
