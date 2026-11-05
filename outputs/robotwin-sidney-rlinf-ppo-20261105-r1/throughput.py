@@ -55,6 +55,7 @@ class BenchmarkActor(SidneyActor):
             inputs={k:v.index_select(0,index).contiguous() for k,v in base.items()}
             del base,prepared,repacked,raw,initial,sampled
             parts=[]
+            torch.distributed.barrier();torch.cuda.synchronize();reference_started=time.monotonic()
             with torch.no_grad(),self.amp_context:
                 for start in range(0,local,micro):
                     part=put_tensor_device({k:v[start:start+micro] for k,v in inputs.items()},self.device)
@@ -62,6 +63,12 @@ class BenchmarkActor(SidneyActor):
                         compute_entropy=False,use_cache=False)
                     parts.append((out['logprobs'].float().cpu(),out['values'].float().cpu().reshape(-1,1)))
                     del out,part
+            torch.cuda.synchronize()
+            reference_seconds=torch.tensor(time.monotonic()-reference_started,device=self.device)
+            torch.distributed.all_reduce(reference_seconds,op=torch.distributed.ReduceOp.MAX)
+            report['reference_recompute_seconds']=float(reference_seconds)
+            report['reference_peak_allocated_bytes']=torch.cuda.max_memory_allocated()
+            write(path,report)
             old_logprobs=torch.cat([p[0] for p in parts]);old_values=torch.cat([p[1] for p in parts])
             advantages=torch.linspace(-1.,1.,local)[:,None]
             batch=dict(forward_inputs=inputs,prev_logprobs=old_logprobs,prev_values=old_values,

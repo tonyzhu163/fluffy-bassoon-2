@@ -38,4 +38,7 @@ for TASK_MICRO in 64 128 256 512; do
   # This exclusive scheduler container contains only this benchmark's local
   # Ray cluster; clear it between candidates, including collective OOM cases.
   "$TASK_PYTHON" -m ray.scripts.scripts stop --force > "$NATIVE_PPO_OUTPUT/ray-stop.log" 2>&1 || true
+  if [[ $TASK_RC != 0 ]] && ! grep -q -E 'OutOfMemoryError|CUDA out of memory' "$NATIVE_PPO_OUTPUT/console.log"; then
+    exit "$TASK_RC"
+  fi
 done
