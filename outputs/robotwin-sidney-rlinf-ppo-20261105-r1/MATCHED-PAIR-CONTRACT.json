@@ -48,7 +48,8 @@
     "post_init_named_rng_seed_bases": {
       "actor_minibatch": 22000,
       "rollout_sampling": 23000
-    }
+    },
+    "horizon_unit": "requested native14D motor commands per environment round, not measured delivered actions or physics substeps"
   },
   "cases": {
     "train_bank_sha256": "55b25866308d4e7da486282982ead4d5857b53fd977f659b216045f1950b45e2",
@@ -148,7 +149,9 @@
     "migration_status": "Qualification-only20to23h active; science pair46h NOT_ACTIVE: requires qualification, current closure and fresh resource/storage gates",
     "human_cumulative_task_cap_gpu_hours": 50,
     "worst_additional_envelope_reason": "Current20h worstcase +22.8h pair +3h qualification=45.8additionalh<46; legacy0.7114h implies<=46.5114cumulativeh<50. Use actual reservation ledger before admission.",
-    "qualification_only_authored_envelope_gpu_hours": 23
+    "qualification_only_authored_envelope_gpu_hours": 23,
+    "control_measurement": "Conservative requested-command escrow; native fast path measured_valid_mask=False. Actual executed motor calls and internal physics substeps not measured.",
+    "measured_physical_control_matching_claim": false
   },
   "launch_gates": [
     "Closed native memory02 fallback, experimental per-closeOFF, actual1024GiB minimum and unchanged95percent Rayguard",
@@ -157,12 +160,13 @@
     "Dedicated pairedentry+validators implemented and Linux numeric GAE/groupGRPO/no-value model/replay/recovery tests pass",
     "Shared immutable case/replica manifest hashed and same originalSFT initializer in both arms",
     "Fresh queue capacity, actual4GPU health/identity in each step, hostlimits, PFSfree/writeprobe, otherowner reservations",
-    "Record engineering envelope migration and task aggregate before launch"
+    "Record engineering envelope migration and task aggregate before launch",
+    "Bounded pair claims common native case/horizon and conservative action ceiling only, not measured executed-control matching; full corpus/student targets require executor-duration/no-op/mask/raw alignment qualification under fresh reviewed source, without altering active protocols"
   ],
   "history_targets": {
-    "format": "Chronological native14D executed actions and actual masks, originalRGB/state/prompts/feedback",
+    "format": "Chronological proposed native14D commands, originalRGB/state/prompts/feedback and native done/loss masks. Actual executor duration and raw executed-action alignment are not yet qualified.",
     "frozen_Sidney_control_codec": "Must qualify native absolute14D mean/std and K5 frozen motor/action or KVbridge interface before student targets are admitted",
-    "AD": "Executed physical behavior actions; no updated-expertGaussian interpreted as frozenSFTsteering",
+    "AD": "No admitted targets until actual executed-motor correspondence, post-success no-ops and duration/padding masks qualify; after qualification use executed behavior actions.",
     "DPT": "Later immutable final-source-teacher query labels from saved observations; teacher/checkpoint/processor/queryRNGbound",
     "DIT_IC_IQL": "Identical admitted source streams with declared reward/return/value objectives and causal partitions",
     "pilot_source6_pretraining_admission": false

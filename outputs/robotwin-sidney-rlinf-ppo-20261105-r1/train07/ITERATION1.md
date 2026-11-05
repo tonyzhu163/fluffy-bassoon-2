@@ -12,7 +12,10 @@ backward has190finite policy and8finite critic gradients. All four frozen-VLM
 before/after signatures match. Native mixedBF16, fullFP32vision/norms,
 micro64/accum8/world4/global2048/fiveepochs and original loss/schedule remain.
 
-Four source rounds executed409,600physical controls. Native timings report
+Four source rounds charged409,600requested/conservative motor commands; no
+measured valid-action mask is available on this native fast path. These are not
+measured executed actions or physics integration substeps. [Accounting scope](CONTROL-ACCOUNTING.md).
+Native timings report
 2778.9sec collection and532.2sec actor-training wall time (530.6sec native
 run_training). The13.935sec interval between first DCP-file completion and
 boundary completion omits work before that file completed, so it is not a full

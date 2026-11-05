@@ -1,7 +1,7 @@
 {
-  "status": "qualification02_initializing",
+  "status": "qual02_group_identity_passed_collecting",
   "cluster": "Baige Pro6K",
-  "last_checked_at_shanghai": "2026-11-06T03:04:35.742881+08:00",
+  "last_checked_at_shanghai": "2026-11-06T03:19:25.498009+08:00",
   "scientific_pair_admitted": false,
   "human_cumulative_gpu_hours": 50,
   "active_additional_engineering_gpu_hours": 23,
@@ -54,7 +54,11 @@
       "independent_fresh_checkpoint_recovery_required": true,
       "gpu_probe_passed": 4,
       "learner_numerics_passed": true,
-      "production_and_qualification_configs_passed": 3
+      "production_and_qualification_configs_passed": 3,
+      "group_identity_passed_groups": 32,
+      "replicas_per_group": 8,
+      "initial_full_checkpoint_completed": true,
+      "actual_optimizer_updates_verified": 0
     }
   ],
   "prelaunch": {
@@ -68,5 +72,6 @@
     "write_fsync": true
   },
   "unchanged_engineering_pilot": "job-rxih2makcwv4",
-  "retry_prepared": "qual02"
+  "retry_prepared": "qual02",
+  "control_accounting": "requested/conservative motor-command escrow; measured executed actions and physics substeps unknown; source/student admissionFalse"
 }
