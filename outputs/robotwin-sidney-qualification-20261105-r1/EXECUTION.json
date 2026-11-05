@@ -1,15 +1,15 @@
 {
-  "status": "FIRST_ATTEMPT_FAILED_RETRY_PREPARING",
+  "status": "NATIVE_QUALIFICATION_RETRY_QUEUED",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
-  "job_id": "job-140tcms97d8x",
-  "job_name": "mwj_1105_robotwin_sidney_native_qual_r1",
-  "submitted_at_shanghai": "2026-11-05 13:43:37",
-  "last_checked_at_shanghai": "2026-11-05 14:01",
-  "observed_scheduler_status": "worker exited 1; scheduler termination pending verification",
-  "source_commit": "34a3a4299c621c18fec6860d18fd7343a4c29ff7",
-  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r2",
-  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual01",
+  "job_id": "job-5rnpa5xvsxwm",
+  "job_name": "mwj_1105_robotwin_sidney_native_qual_r2",
+  "submitted_at_shanghai": "2026-11-05 14:03:43",
+  "last_checked_at_shanghai": "2026-11-05 14:04",
+  "observed_scheduler_status": "queued",
+  "source_commit": "caf637e707683dda365998133f8290314045cd23",
+  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r4",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual02",
   "model_revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "allocation": {
     "workers": 1,
@@ -43,9 +43,9 @@
     "physical_control_limit": 400,
     "scene_bank": "RLinf eval source-task bank, first success_seed"
   },
-  "next_action": "Verify first scheduler job is terminal, then submit fresh qual02 from committed wrapper with the existing GPU visibility/map setup; unchanged native SFT contract. Inspect processor numerical checks and native episode before any PPO.",
+  "next_action": "Inspect qual02 probe, processor numerical/import precheck, model strict loading, queue parity, and native phone-stand episode. Diagnose before any further fresh attempt. No PPO before native SFT screen and explicit RLinf parity.",
   "monitor_interval_minutes": 20,
-  "queue_receipt": "QUEUED.jpg",
+  "queue_receipt": "RETRY-QUEUED.jpg",
   "attempts": [
     {
       "attempt": "qual01",
@@ -60,7 +60,23 @@
       "evidence": [
         "qual01/gpu-probe.json",
         "qual01/EXIT.json"
-      ]
+      ],
+      "scheduler_status": "failed",
+      "scheduler_ended_at_shanghai": "2026-11-05 13:59:53",
+      "scheduler_display_duration": "1 minute"
+    },
+    {
+      "attempt": "qual02",
+      "job_id": "job-5rnpa5xvsxwm",
+      "source_commit": "caf637e707683dda365998133f8290314045cd23",
+      "status": "queued",
+      "maximum_gpu_hours": 0.5,
+      "contract_changes": [
+        "existing launcher CUDA ordinal/map setup",
+        "retained PhysX cache link",
+        "processor-only import/numerical precheck before model construction"
+      ],
+      "native_model_contract_unchanged": true
     }
   ],
   "cpu_probe_attempt": {
