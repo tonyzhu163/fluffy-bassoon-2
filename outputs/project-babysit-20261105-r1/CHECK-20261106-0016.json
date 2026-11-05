@@ -1,0 +1,83 @@
+{
+  "checked_unix": 1793895387.1660109,
+  "free_GiB": 702.8671875,
+  "memory02": {
+    "RESULT.json": {
+      "status": "failed",
+      "physical_controls": 6400,
+      "error": "",
+      "error_type": "KeyboardInterrupt",
+      "events": [
+        {
+          "round": 0,
+          "allocator_observation_identity": true,
+          "python_numpy_torch_rng_identity": true,
+          "scene_identity": true,
+          "motor_input_identity": true
+        },
+        {
+          "round": 1,
+          "allocator_observation_identity": true,
+          "python_numpy_torch_rng_identity": true,
+          "scene_identity": true,
+          "motor_input_identity": true
+        }
+      ],
+      "recent_snapshots": [
+        {
+          "stage": "round1/chunk0",
+          "memory.current": "63513513984"
+        },
+        {
+          "stage": "round1/round_end",
+          "memory.current": "63513415680"
+        },
+        {
+          "stage": "after_vector_close",
+          "memory.current": "58832596992"
+        },
+        {
+          "stage": "after_delete_gc",
+          "memory.current": "58833055744"
+        },
+        {
+          "stage": "after_delete_trim",
+          "memory.current": "8643047424"
+        }
+      ],
+      "keys": [
+        "status",
+        "optimizer_updates",
+        "model_loaded",
+        "scenes",
+        "snapshots",
+        "events",
+        "error_type",
+        "error",
+        "total_shared_rank0_charge",
+        "physical_controls",
+        "active_worktrees_changed",
+        "scientific_source_admission"
+      ]
+    },
+    "EXIT.json": {
+      "exit_code": 124,
+      "worker_gpu_seconds": 1717
+    }
+  },
+  "kv_dit": {
+    "update": 6400,
+    "best_loss": 0.12464750371873379,
+    "plateau": {
+      "reference": 0.1250764038413763,
+      "stale_checks": 2,
+      "converged": false
+    },
+    "converged": false,
+    "elapsed_seconds": 33672.07879650849,
+    "stop_reason": "operational_checkpoint",
+    "native_parameters_frozen": true,
+    "interface": "kv_bridge",
+    "objective": "dit"
+  }
+}

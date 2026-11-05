@@ -94,3 +94,24 @@ before newSGD; the intermediate-render path is disabled. Measure per-scene
 creation, repeated resets and allocator release before selecting a fix or
 justifying a larger allocation. Preserve the original loss/batch recipe and
 all prior compute/action charges. See RAM-TRACE-20261105-2306.json.
+
+## Nov6 overnight phase
+
+Source70 is closed at51.632222/70GPUh, with seven-hour endpoint tests
+7.045556/8GPUh. Fresh Faucet passes the original Holm3 family; Counter and
+Coffee fail, leaving three effective tasks including prior OpenDrawer and
+Toaster. All31.060575GiB post-test allocated-block reclamation is verified;
+canonical TRAIN histories, inference weights and member cache remain hot.
+There is no new five-source admission or Coffee run. Source future growth is0.
+
+The exploratory eight-fit campaign remains capped at150GPUh. Seven fits
+converged; KV DIT continues. Fitted interfaces and packed archive restoration
+are qualified. Full24k evaluation needs the explicit150-to190GPUh human
+budget decision requested at00:10, which is pending. Keep the published
+411GiB admission guard, including its conservative20GiB source field.
+
+RoboTwin memory01 identified glibc retention of freed scene buffers; batch-end
+trimming alone peaks106.2GiB at64scenes. Memory02 timed out during the last
+per-scene comparison, so it cannot admit PPO. Its complete data and charges
+are retained. Fresh memory03 qualifies only the paired trim comparison with
+a40-minute bound; the existing scientific source remains held until it passes.
