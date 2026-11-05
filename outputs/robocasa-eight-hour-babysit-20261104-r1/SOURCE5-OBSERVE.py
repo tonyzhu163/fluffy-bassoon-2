@@ -68,7 +68,7 @@ def observe():
         updates = []
         for file in sorted((output / 'updates').glob('iteration-*-rank-*.json'))[-2:]:
             updates.append(dict(path=str(file), record=read(file)))
-        console = tail(output / 'console.log')
+        console = tail(output / 'console.log') or tail(output / 'node-00/console.log')
         errors = console if any(word in console for word in ('Traceback', 'OutOfMemoryError', 'CUDA out of memory', 'RayTaskError')) else None
         allocations.append(dict(**row, conservative_GPU_hours=hours, manifest=manifest,
             probe_passed=bool(probe and probe.get('status') == 'passed'),

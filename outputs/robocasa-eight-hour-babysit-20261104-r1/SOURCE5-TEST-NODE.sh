@@ -54,6 +54,7 @@ assert free>=required, 'Need the shared floor, every independent active reservat
 print(json.dumps(dict(passed=True,free_GiB=free/2**30,required_GiB=required/2**30,
     campaign_reserved_GPU_hours=reserved+(0 if included else 2.5),test_reserved_GPU_hours=test_reserved+(0 if included else 2.5))))
 PY
+if [[ ${1:-} == --admit ]]; then exit 0; fi
 mkdir "$OUT"
 exec > >(tee "$OUT/console.log") 2>&1
 START=$(date +%s)
