@@ -25,7 +25,11 @@
       "created_shanghai": "2026-11-05T11:53:59+08:00",
       "max_reservation_GPU_hours": 30,
       "storage_reservation_GiB": 150,
-      "output": "source5/TurnOnSinkFaucet/attempt-01"
+      "output": "source5/TurnOnSinkFaucet/attempt-01",
+      "released_shanghai": "2026-11-05T12:35:41+08:00",
+      "scheduler_release_verified": true,
+      "termination": "Failed during DEV10 fingerprint check; complete step10 recovery preserved",
+      "closed_conservative_GPU_hours": 5.56
     },
     {
       "job_id": "job-7lhczqc4c9yp",
@@ -37,6 +41,18 @@
       "max_reservation_GPU_hours": 2.5,
       "storage_reservation_GiB": 15,
       "output": "source5-tests/CoffeeSetupMug/attempt-01"
+    },
+    {
+      "job_id": "job-q250t3zf6g1x",
+      "name": "mwj_1105_source5_counter_reset_qual01",
+      "kind": "diagnostic",
+      "task": "PickPlaceCounterToCabinet",
+      "GPUs": 1,
+      "created_shanghai": "2026-11-05T12:42:49+08:00",
+      "max_reservation_GPU_hours": 0.5,
+      "storage_reservation_GiB": 2,
+      "output": "reset-qualification/counter-r1",
+      "worker_subdir": "gpu-01"
     }
   ],
   "scope": "Two fixed40 four-epoch PPO sources and three fresh paired512 readiness panels, including setup/qualification/failures/release"

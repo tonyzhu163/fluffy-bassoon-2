@@ -38,10 +38,11 @@ def observe():
         charged += hours
         reserved += hours if row.get('released_shanghai') else max(hours, row['max_reservation_GPU_hours'])
         output = RUN / row['output']
+        worker = output / row.get('worker_subdir', 'node-00')
         manifest = read(output / 'manifest.json')
         if manifest:
             assert manifest['hostname'] == row['job_id'] + '-master-0'
-        probe = read(output / 'gpu-probe.json') or read(output / 'node-00/GPU-PROBE.json')
+        probe = read(output / 'gpu-probe.json') or read(worker / 'GPU-PROBE.json')
         written = 0
         for parent, _, files in os.walk(output, followlinks=False):
             for name in files:
@@ -68,15 +69,15 @@ def observe():
         updates = []
         for file in sorted((output / 'updates').glob('iteration-*-rank-*.json'))[-2:]:
             updates.append(dict(path=str(file), record=read(file)))
-        console = tail(output / 'console.log') or tail(output / 'node-00/console.log')
-        clock = read(output / 'clock.json') or read(output / 'node-00/CLOCK.json')
+        console = tail(output / 'console.log') or tail(worker / 'console.log')
+        clock = read(output / 'clock.json') or read(worker / 'CLOCK.json')
         failed = clock is not None and clock.get('exit_code', 0) != 0
         errors = console if failed or any(word in console for word in ('Traceback', 'OutOfMemoryError', 'CUDA out of memory', 'RayTaskError', 'Exception occurred')) else None
         allocations.append(dict(**row, conservative_GPU_hours=hours, manifest=manifest,
             probe_passed=bool(probe and probe.get('status') == 'passed'),
-            progress=read(output / 'progress.json') or read(output / 'node-00/progress.json'),
+            progress=read(output / 'progress.json') or read(worker / 'progress.json') or read(worker / 'PROGRESS.json'),
             clock=clock,
-            result=read(output / 'RESULT.json'),
+            result=read(output / 'RESULT.json') or read(worker / 'RESULT.json'),
             boundaries=boundaries, latest_actor_updates=updates, written_GiB=written/2**30,
             error_tail=errors, console_tail=console[-1600:]))
     fs = os.statvfs(ROOT)
