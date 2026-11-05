@@ -58,8 +58,8 @@ trap finish EXIT
 "$TASK_PYTHON" "$TASK_CODE/scripts/[train]gpu_probe.py" --baige-container \
   --baige-exclusive-training --purpose training --expected-count "$TASK_WORLD" --output "$TASK_OUT/gpu-probe.json"
 export LYCO_BAIGE_GPU_MAP=$TASK_OUT/gpu-probe.json
-"$TASK_PYTHON" "$TASK_RUN_CODE/host_memory.py" "$TASK_OUT" --once
-"$TASK_PYTHON" "$TASK_RUN_CODE/host_memory.py" "$TASK_OUT" > "$TASK_OUT/host-memory.log" 2>&1 &
+"$TASK_PYTHON" "$TASK_RUN_CODE/host_memory.py" "$TASK_OUT" --minimum-gib 512 --once
+"$TASK_PYTHON" "$TASK_RUN_CODE/host_memory.py" "$TASK_OUT" --minimum-gib 512 > "$TASK_OUT/host-memory.log" 2>&1 &
 TASK_MEMORY_PID=$!
 [[ $(git -C "$REPO_PATH" rev-parse HEAD) == c605b9d55ed93a180119b099e6f836abff293b08 ]]
 [[ $(git -C "$ROBOTWIN_PATH" rev-parse HEAD) == dca9ec682688821c42944eacd7f5dd9bfb15396f ]]
