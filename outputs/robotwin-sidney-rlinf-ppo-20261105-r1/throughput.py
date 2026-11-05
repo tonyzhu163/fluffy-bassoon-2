@@ -45,7 +45,7 @@ class BenchmarkActor(SidneyActor):
             model=self.model
             while not hasattr(model,'env_obs_to_observation'):model=model.module
             prepared=model.env_obs_to_observation(raw)
-            repacked=repack_env_obs(CONFIG_NAME,raw,state_indices=None)
+            repacked=repack_env_obs(CONFIG_NAME,raw,select_state=model._select_configured_state)
             base={k:torch.as_tensor(v).cpu() for k,v in repacked.items() if k!='prompt'}
             base.update(chains=sampled['forward_sampling_fields']['chains'],
                 denoise_inds=sampled['forward_sampling_fields']['denoise_inds'],
