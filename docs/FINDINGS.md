@@ -971,3 +971,7 @@ On 512 fresh paired drawer cases, four epochs per rollout improved first success
 ### Four-epoch OpenDrawer PPO versus GRPO at matched 40 rollouts
 
 Four-epoch PPO succeeded on 358/512 OpenDrawer cases (69.92%) versus 328/512 for GRPO (64.06%). The paired difference was +5.86 percentage points (95% paired bootstrap interval +1.37 to +10.35); PPO won 87 discordant cases and GRPO won 57, exact two-sided McNemar p = 0.0153705. The primary paired test favors four-epoch PPO for these two checkpoints. SFT succeeded on 314/512. Each learned checkpoint saw 3,072,000 training actions; PPO took 960 optimizer steps versus GRPO’s 240. One training seed per method. [Fresh paired test and audit](../outputs/robocasa-ppo4-grpo40-test512-20261105-r1/RESULT.md).
+
+### Sidney native RoboTwin smoke test
+
+SidneyXie/pi05_robotwin revision e49e2ab6 passed strict native loading and succeeded on one place_phone_stand source-bank scene after127 physical controls, with frozen weights and zero optimizer updates. Native H50/K10, absolute14-joint actions and saved mean/std processors were retained. Identical explicit Gaussian noise produced exactly matching native chunk/queue predictions in the deterministic all-eager reference runtime; earlier default-runtime predictions differed. This validates one execution path and one scene, not a success-rate estimate, a Motus comparison, the six-task screen or RLinf conversion parity. [Evidence and runtime](../outputs/robotwin-sidney-qualification-20261105-r1/EXECUTION.json).

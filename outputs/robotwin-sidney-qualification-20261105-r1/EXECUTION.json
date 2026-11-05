@@ -1,12 +1,12 @@
 {
-  "status": "QUAL09_SUBMITTED",
+  "status": "NATIVE_EPISODE_PASSED_SCREEN_PREPARING",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
   "job_id": "job-klvqq2iitu40",
   "job_name": "mwj_1105_robotwin_sidney_native_qual_r9",
   "submitted_at_shanghai": "2026-11-05 15:41:37",
-  "last_checked_at_shanghai": "2026-11-05 15:42",
-  "observed_scheduler_status": "queued; scalar buffer hashing corrected before repeatability test",
+  "last_checked_at_shanghai": "2026-11-05 15:48",
+  "observed_scheduler_status": "qual09 succeeded15:45:48; strict weights, exact same-noise API parity, one successful127-control episode",
   "source_commit": "2d67fb345fea369a8384d9bac8dfd61414195908",
   "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r13",
   "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual09",
@@ -23,20 +23,20 @@
     "actual_gpu_type": "NVIDIA RPBZZZ6; CUDA/NVML/PCI mapping and tensor computation passed in qual02"
   },
   "budget": {
-    "gpu_hours_used_as_of_last_check": 0.3236111111111111,
-    "worker_gpu_seconds_measured": 861,
-    "scheduler_display_gpu_seconds": 1165,
-    "usage_basis": "Eight completed one-GPU scheduler durations60+89+128+50+210+230+189+209 seconds; active qual09 capped0.5GPUh.",
+    "gpu_hours_used_as_of_last_check": 0.3877777777777778,
+    "worker_gpu_seconds_measured": 1070,
+    "scheduler_display_gpu_seconds": 1396,
+    "usage_basis": "Nine completed one-GPU scheduler durations60+89+128+50+210+230+189+209+231 seconds.",
     "initial_qualification_ceiling_gpu_hours": 4,
     "task_scope_incremental_ceiling_gpu_hours": 50,
     "next_attempt_maximum_gpu_hours": 0.5,
-    "active_attempt_maximum_gpu_hours": 0.5
+    "active_attempt_maximum_gpu_hours": 0
   },
   "qualification": {
     "weight_hashes_verified": true,
     "runtime_installed": true,
-    "native_runtime_qualified": false,
-    "completed_simulator_episodes": 0,
+    "native_runtime_qualified": true,
+    "completed_simulator_episodes": 1,
     "optimizer_updates": 0,
     "task": "place_phone_stand",
     "episodes": 1,
@@ -59,9 +59,18 @@
     "native_gpu_parameter_count": 4143404816,
     "root_metadata_restored": true,
     "simulator_reset_passed": true,
-    "three_nonblank_views_passed": true
+    "three_nonblank_views_passed": true,
+    "successful_simulator_episodes": 1,
+    "physical_controls": 127,
+    "queue_parity_normalized_max_abs": 0.0,
+    "queue_parity_decoded_max_abs": 0.0,
+    "inputs_unchanged": true,
+    "buffers_unchanged": true,
+    "deterministic_reference": true,
+    "attention": "all eager",
+    "tf32": false
   },
-  "next_action": "Fresh qual08 tests deterministic algorithms, all-eager attention, TF32 disabled, explicit CUBLAS workspace and input/buffer hashes before any policy control.",
+  "next_action": "Run five existing source eval-bank scenes for each of handover_mic/place_a2b_left/place_phone_stand; retain native deterministic H50/K10. Remaining three scene banks and RLinf numerical conversion still pending.",
   "monitor_interval_minutes": 20,
   "queue_receipt": "QUAL09-SUBMITTED.jpg",
   "attempts": [
@@ -243,6 +252,28 @@
       "evidence": [
         "qual08/native/model-worker.log",
         "qual08/EXIT.json"
+      ]
+    },
+    {
+      "attempt": "qual09",
+      "job_id": "job-klvqq2iitu40",
+      "source_commit": "2d67fb345fea369a8384d9bac8dfd61414195908",
+      "exit_code": 0,
+      "worker_gpu_seconds": 209,
+      "scheduler_display_duration": "3 minutes51 seconds",
+      "scheduler_ended_at_shanghai": "2026-11-05 15:45:48",
+      "strict_weight_load_passed": true,
+      "simulator_reset_passed": true,
+      "simulator_episodes": 1,
+      "successes": 1,
+      "physical_controls": 127,
+      "optimizer_updates": 0,
+      "queue_parity_normalized_max_abs": 0.0,
+      "queue_parity_decoded_max_abs": 0.0,
+      "evidence": [
+        "qual09/native/RESULT.json",
+        "qual09/native/episode-00-chunk-00-actions.parity.json",
+        "qual09/EXIT.json"
       ]
     }
   ],

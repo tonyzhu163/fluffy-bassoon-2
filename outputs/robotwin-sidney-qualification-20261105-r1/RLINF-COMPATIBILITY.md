@@ -1,7 +1,7 @@
 # Sidney to RLinf: static compatibility audit
 
 This is code and checkpoint-metadata evidence, not numerical qualification or
-a trained result. Native strict GPU loading passed in qual05–08; no completed native episode or RLinf numerical replay exists yet.
+a trained result. Native strict GPU loading and one successful simulator episode passed in qual09. The deterministic/eager native chunk and queue APIs matched exactly with shared noise. No RLinf numerical replay exists yet.
 
 ## Weight layout and input embeddings
 
@@ -29,7 +29,7 @@ The native worker uses strict `safetensors.torch.load_model`, avoiding the
 LeRobot convenience loader's caught exceptions and weight-remapping fallback.
 If the chosen native runtime ties these distinct checkpoint tensors, the
 strict check must reject that incompatible representation rather than silently
-choose one. Strict loading passed with4,143,404,816 parameters and no missing/unexpected keys. Native API repeatability remains under diagnosis; this is not RLinf conversion parity.
+choose one. Strict loading passed with4,143,404,816 parameters and no missing/unexpected keys. Native API repeatability passed in the explicit deterministic/eager reference runtime; this is not RLinf conversion parity.
 
 ## Input and output transforms
 

@@ -2,6 +2,8 @@
 set -Eeuo pipefail
 TASK_SOURCE=${1:?exact reviewed project commit}
 TASK_OUT=${2:?fresh qualification output}
+TASK_TASK=${3:-place_phone_stand}
+TASK_EPISODES=${4:-1}
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_RUN_CODE=$TASK_CODE/outputs/robotwin-sidney-qualification-20261105-r1
 TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python
@@ -53,4 +55,5 @@ PYTHONPATH=/mowenjie/fluffy-bassoon-2/sources/lerobot-sidney-92f96f33-20261105-r
   "$TASK_MODEL_PYTHON" "$TASK_RUN_CODE/cpu_imports.py" --expected-visible-gpus 1 \
   --output "$TASK_OUT/cpu-imports" > "$TASK_OUT/cpu-imports.log" 2>&1
 timeout --signal=TERM --kill-after=15s 1600 "$TASK_PYTHON" "$TASK_RUN_CODE/qualify.py" \
-  --output "$TASK_OUT/native" 2>&1 | tee "$TASK_OUT/qualification.log"
+  --output "$TASK_OUT/native" --task "$TASK_TASK" --episodes "$TASK_EPISODES" \
+  2>&1 | tee "$TASK_OUT/qualification.log"
