@@ -1,7 +1,7 @@
 {
-  "status": "PPO_FULL_STATE_CONTINUATION_SUBMITTED",
+  "status": "QUALIFYING_MATCHED_BF16_BATCH64",
   "cluster": "Baige Pro6K",
-  "last_checked_at_shanghai": "2026-11-05 18:00",
+  "last_checked_at_shanghai": "2026-11-05 18:13",
   "prior_scheduler_gpu_seconds": 2561,
   "prior_scheduler_gpu_hours": 0.7113888888888888,
   "optimizer_updates": 0,
@@ -9,15 +9,15 @@
   "revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "user_preference": "Broad multi-task SFT with no RL tuning; continue Sidney for six-task setup",
   "precision": "Native mixed BF16 with full FP32 vision/norms. FP32 full-model replay only if required to localize conversion drift.",
-  "next_action": "Verify actual native optimizer/sampler/RNG restoration, then complete two PPO iterations; monitor at most20min apart.",
-  "job_id": "job-gxb8xmseycy4",
+  "next_action": "Qualify full batch64 backward, then resume step0 with matching rollout64/actor64, accumulation8, global2048 unchanged.",
+  "job_id": null,
   "source_commit": "8c86c21f7b76cec9b8305fe76b250cbc2131fda6",
   "core_tests_passed": 23,
   "scene_instruction_binding_passed": true,
   "conversion_passed": true,
-  "error": null,
+  "error": "BF16 batch64 rollout versus smaller actor partition exceeds1e-3; stop before SGD, retain BF16 and match execution batch64.",
   "bridge_scheduler_gpu_seconds_completed": 920,
-  "cumulative_scheduler_gpu_seconds_completed": 7941,
+  "cumulative_scheduler_gpu_seconds_completed": 10695,
   "completed_bridge_attempts": [
     {
       "attempt": "bridge01",
@@ -106,19 +106,39 @@
       "attempt": "train04",
       "job_id": "job-gxb8xmseycy4",
       "source_commit": "8c86c21f7b76cec9b8305fe76b250cbc2131fda6",
-      "status": "submitted",
+      "status": "stopped_before_sgd_batch_partition_migration",
       "gpus": 4,
       "maximum_minutes": 180,
       "resume_global_step": 0,
-      "accounting_attempt": "train04"
+      "accounting_attempt": "train04",
+      "optimizer_updates": 0,
+      "worker_restoration_passed": 12,
+      "scheduler_gpu_seconds": 2644,
+      "scheduler_duration_seconds": 661,
+      "stopped_at_shanghai": "2026-11-05 18:11:25"
     }
   ],
   "config_validation_passed": true,
-  "additional_scheduler_gpu_seconds_completed": 5380,
+  "additional_scheduler_gpu_seconds_completed": 8134,
   "additional_envelope_gpu_hours": 14,
   "task_scope_limit_gpu_hours": 50,
   "resume_dir": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03/sidney-native-two/checkpoints/global_step_0",
   "shared_action_accounting_root": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03/action-accounting",
   "measured_source_reset_minutes": 7,
-  "measured_vector_chunk_seconds": 40
+  "measured_vector_chunk_seconds": 40,
+  "batch_partition_logprob_max_abs": {
+    "batch64": 0.0,
+    "batch32": 0.03328895568847656,
+    "batch16": 0.04197037220001221,
+    "batch8": 0.034438133239746094
+  },
+  "partition_attempts": [
+    {
+      "attempt": "partition01",
+      "job_id": "job-c2csuwfbumu2",
+      "worker_gpu_seconds": 63,
+      "scheduler_gpu_seconds": 110,
+      "outcome": "Batch64 exact; smaller BF16 partitions numerically differ;0SGD"
+    }
+  ]
 }

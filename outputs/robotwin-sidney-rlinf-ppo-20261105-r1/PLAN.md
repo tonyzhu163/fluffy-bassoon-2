@@ -54,3 +54,13 @@ not an extra PPO update or admitted complete source history. Increase the
 self-imposed bridge+pilot envelope from4 to14 additional GPUh, including all
 attempts; this is within AGENTS.md authorization up to50GPUh for the task.
 No user hard cap changes. Preserve all checkpoint/cache inputs.
+
+BF16 execution migration: actual64-environment rollout logprobs replay exactly
+at batch64, but batch32/16/8 replays differ by up to0.04197 per scalar.
+Keep BF16 and the original1e-3 replay guard. Qualify a full64-example backward
+pass, then use actor micro64 and accumulation8 on four ranks; global2048,
+five epochs, sampler, loss and optimizer schedule stay unchanged. The earlier
+64-to32 continuation was stopped before any SGD. Retain its restored-state
+receipt and charge its prefix; resume the complete original step0 boundary.
+The next four-GPU allocation is170 minutes so all attempts stay within the
+14 additionalGPUh envelope. No optimizer updates have occurred yet.
