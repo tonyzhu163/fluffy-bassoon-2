@@ -97,7 +97,7 @@ all prior compute/action charges. See RAM-TRACE-20261105-2306.json.
 
 ## Nov6 overnight phase
 
-Source70 is closed at51.632222/70GPUh, with seven-hour endpoint tests
+Source70 is closed at51.632222/70GPUh, with endpoint tests
 7.045556/8GPUh. Fresh Faucet passes the original Holm3 family; Counter and
 Coffee fail, leaving three effective tasks including prior OpenDrawer and
 Toaster. All31.060575GiB post-test allocated-block reclamation is verified;
