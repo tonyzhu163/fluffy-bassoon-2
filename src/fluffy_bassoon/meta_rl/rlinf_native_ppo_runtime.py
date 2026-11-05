@@ -99,7 +99,17 @@ class SidecarMixin:
             state['train_prev_done'] = cpu_tree(getattr(self, 'train_prev_done', None))
             state['eval_prev_done'] = cpu_tree(getattr(self, 'eval_prev_done', None))
         if self.pilot_role == 'actor':
-            state['rollout_batch'] = cpu_tree(getattr(self, 'rollout_batch', None)) if retain_rollout else None
+            batch=getattr(self,'rollout_batch',None)
+            drop=self.cfg.native_pilot.get('sidecar_batch_drop',[])
+            if retain_rollout and batch is not None and drop:
+                receipt=Path(self.cfg.native_pilot.output)/'training-rollouts'/(
+                    f'iteration-{producing_iteration(self)+1:04d}-policy-{producing_iteration(self):04d}-rank-{self._rank:02d}.json')
+                if not receipt.is_file():
+                    raise RuntimeError('Canonical rollout archive required before dropping duplicate sidecar fields')
+                state['canonical_rollout_receipt']=str(receipt)
+                state['sidecar_dropped_rollout_fields']=list(drop)
+                batch=retained_batch(batch,drop)
+            state['rollout_batch'] = cpu_tree(batch) if retain_rollout else None
             state['optimizer_boundary'] = True
             state['grad_scaler'] = self.grad_scaler.state_dict()
             state['optimizer_steps'] = self.optimizer_steps
