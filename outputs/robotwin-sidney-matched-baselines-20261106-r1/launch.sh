@@ -69,6 +69,9 @@ fi
 "$TASK_PYTHON" "$TASK_RUN/admission.py" "$TASK_PLAN" "$TASK_PHASE"
 if [[ $TASK_PHASE == qualification ]]; then
   "$TASK_PYTHON" "$TASK_RUN/numerical_qualification.py" "$TASK_OUT"
+  for TASK_METHOD in ppo grpo; do
+    "$TASK_PYTHON" "$TASK_RUN/configuration.py" validate "$TASK_METHOD" scientific > "$TASK_OUT/config-$TASK_METHOD-scientific.json"
+  done
 fi
 "$TASK_PYTHON" "$TASK_RUN/configuration.py" validate "$TASK_ALGORITHM" "$TASK_PHASE" > "$TASK_OUT/config-validation.json"
 TASK_PARENT_OUT=$TASK_OUT

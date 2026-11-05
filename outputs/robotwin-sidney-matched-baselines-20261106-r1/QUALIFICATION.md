@@ -54,3 +54,5 @@ Reserve40GiB for qualification separately from current pilot's remaining
 actual allocated bytes and a fresh write/fsync probe, never subtracting bytes
 that were not actually released. After successful verification, retain compact
 evidence and reconcile disposable fixture data before the later536GiB pair gate.
+
+The closed qual01 pre-model guard failure consumed360scheduler/424conservative GPU-sec and0controls. Before qual02, the concrete reserve is29,013completed conservative +41,040current maximum +10,800retry =80,853additionalsec<82,800; +2,561legacy =83,414sec=23.1706cumulativeh. Prospective later pair adds82,080, totaling165,494sec=45.9706h<50; it is still not admitted. qual02 is a fresh output/source/action identity.

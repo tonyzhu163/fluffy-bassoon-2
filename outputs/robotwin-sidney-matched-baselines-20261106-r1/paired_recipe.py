@@ -16,7 +16,8 @@ def validate_pair(cfg):
     assert bool(cfg.actor.model.add_value_head)==(algorithm=='ppo')
     assert cfg.algorithm.group_size==cfg.env.train.group_size==8
     assert cfg.env.eval.group_size==1 and cfg.rollout.pipeline_stage_num==1
-    assert cfg.actor.micro_batch_size==64 and cfg.native_pilot.world_size==4
+    assert cfg.actor.micro_batch_size==64,f'Unexpected microbatch: {cfg.actor.micro_batch_size}'
+    assert int(cfg.native_pilot.world_size)==4,f'Unexpected world size: {cfg.native_pilot.world_size}'
     qualification=bool(cfg.native_pilot.qualification_only)
     assert cfg.native_pilot.maximum_actions==(120000 if qualification else 1000000)
     assert cfg.native_pilot.previous_maximum_actions is None
