@@ -105,6 +105,8 @@ cd "$TASK_CODE"
 # Compose/validate the actual source configuration inside the allocation before
 # model initialization. It keeps global2048 and only tunes execution microbatch.
 "$TASK_PYTHON" "$TASK_RUN_CODE/validate_config.py" "$TASK_CODE" "$TASK_MICRO"
+TASK_RECOMPUTE=false
+if [[ $TASK_MICRO != $((256/TASK_WORLD)) ]]; then TASK_RECOMPUTE=true; fi
 TASK_RESUME_ARGS=()
 if [[ -n $TASK_RESUME ]]; then
   "$TASK_PYTHON" - "$TASK_RESUME" <<'PY'
@@ -122,4 +124,4 @@ PY
 fi
 timeout --signal=INT --kill-after=20s "$((TASK_LIMIT-120))" "$TASK_PYTHON" "$TASK_RUN_CODE/train_entry.py" \
   --config-path "$TASK_CODE/configs/native_ppo" --config-name sidney_phone_two \
-  "actor.micro_batch_size=$TASK_MICRO" "${TASK_RESUME_ARGS[@]}" > "$TASK_OUT/train.log" 2>&1
+  "actor.micro_batch_size=$TASK_MICRO" "algorithm.recompute_logprobs=$TASK_RECOMPUTE" "${TASK_RESUME_ARGS[@]}" > "$TASK_OUT/train.log" 2>&1
