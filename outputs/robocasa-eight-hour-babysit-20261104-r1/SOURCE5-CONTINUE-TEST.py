@@ -49,7 +49,7 @@ def allocation(job):
     return next(row for row in ledger['allocations'] + ledger.get('pending_submissions', []) if row['job_id'] == job)
 
 
-def prepare(task, output):
+def prepare(task, output, maximum_gpu_hours=1.2):
     assert sys.platform == 'linux' and os.environ.get('CUDA_VISIBLE_DEVICES') == ''
     original = RUN / 'source5-tests' / task / 'attempt-01'
     ledger = read(RUN / 'SOURCE5-ALLOCATION-LEDGER.json')
@@ -71,7 +71,8 @@ def prepare(task, output):
                 assert panel['common_sampler'] and sha(panel['episodes_path']) == panel['episodes_sha256']
                 assert read(panel['episodes_path'])['completed']
                 hashes[str(path)] = sha(path)
-    assert 0 in retained and 1 <= len(discarded) <= 24
+    assert maximum_gpu_hours in (.5, 1.2)
+    assert 0 in retained and 1 <= len(discarded) <= (8 if maximum_gpu_hours == .5 else 24)
     assert output.parent == original.parent and not output.exists()
     output.mkdir()
     manifest = original / 'MANIFEST.json'
@@ -84,7 +85,9 @@ def prepare(task, output):
         remaining_banks=discarded, original_panel_sha256=hashes,
         execution_manifest=str(execution_path), execution_manifest_sha256=sha(execution_path),
         stop_reason='shared_storage_guard' if storage_stop else 'allocation_deadline',
-        maximum_GPU_hours=1.2, scheduler_minutes=72, command_seconds=4140,
+        maximum_GPU_hours=maximum_gpu_hours,
+        scheduler_minutes=30 if maximum_gpu_hours == .5 else 72,
+        command_seconds=1620 if maximum_gpu_hours == .5 else 4140,
         storage_reservation_GiB=5, scientific_comparison_unchanged=True,
         policy='Retain complete pairs only; rerun incomplete banks without inspecting outcomes',
         automatic_retry=False, SGD=0))
@@ -239,9 +242,10 @@ if __name__ == '__main__':
     parser.add_argument('--output', type=Path)
     parser.add_argument('--job')
     parser.add_argument('--deadline', type=float)
+    parser.add_argument('--maximum-gpu-hours', type=float, choices=(.5, 1.2), default=1.2)
     args = parser.parse_args()
     if args.mode == 'prepare':
-        prepare(args.task, args.output)
+        prepare(args.task, args.output, args.maximum_gpu_hours)
     elif args.mode == 'run':
         run(args.plan, args.deadline)
     elif args.mode == 'assemble':
