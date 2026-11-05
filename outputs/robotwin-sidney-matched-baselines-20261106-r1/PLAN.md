@@ -51,3 +51,9 @@ margin; pair22.8 plus at most2qualificationGPUh. Reconcile actual completed
 current-run timing and charges before any explicit authored-envelope migration;
 never borrow another campaign's budget or exceed50cumulativeGPUh without the
 human's approval.
+
+Prepared wrapper source now includes case_schedule.py, paired_recipe.py and
+paired_entry.py. Only syntax/static source review has run on macOS. No model,
+learner numerics, group reset, GPU gradients or recovery qualification has run
+for this wrapper. Its launcher and actual-device qualification remain gated;
+these files do not constitute admission or a completed comparison.
