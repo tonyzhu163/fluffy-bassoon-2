@@ -84,21 +84,50 @@ def main():
         torch.testing.assert_close(processed['observation.state'].cpu().reshape(14), expected.reshape(14), atol=1e-5, rtol=1e-5)
         torch.manual_seed(int(request['noise_seed']))
         torch.cuda.manual_seed_all(int(request['noise_seed']))
-        rng = torch.cuda.get_rng_state()
-        cpu_rng = torch.get_rng_state()
+        def attention_modes():
+            return {name:getattr(module.config,'_attn_implementation')
+                    for name,module in policy.named_modules()
+                    if hasattr(getattr(module,'config',None),'_attn_implementation')}
+        modes_before = attention_modes()
         started = time.monotonic()
         with torch.inference_mode():
-            normalized = policy.predict_action_chunk(processed)
+            noise = policy.model.sample_noise((1,50,32),torch.device('cuda'))
+            normalized = policy.predict_action_chunk(processed,noise=noise.clone())
+            modes_after_chunk = attention_modes()
             actions = post(normalized).float().cpu()
             expected_actions = normalized.float().cpu() * (output_stats['action.std'] + 1e-8) + output_stats['action.mean']
             torch.testing.assert_close(actions, expected_actions, atol=1e-6, rtol=1e-6)
             parity = None
             if request.get('check_queue_parity'):
-                torch.cuda.set_rng_state(rng)
-                torch.set_rng_state(cpu_rng)
                 policy.reset()
-                queued = torch.stack([post(policy.select_action(processed)).float().cpu() for _ in range(50)], dim=1)
+                original_sampler = policy.model.sample_noise
+                calls = []
+                def fixed_noise(shape,device):
+                    assert tuple(shape)==tuple(noise.shape) and torch.device(device)==noise.device
+                    calls.append(tuple(shape))
+                    return noise.clone()
+                policy.model.sample_noise = fixed_noise
+                try:
+                    queued_normalized = torch.stack([policy.select_action(processed).clone() for _ in range(50)],dim=1)
+                finally:
+                    policy.model.sample_noise = original_sampler
+                assert len(calls)==1
+                queued = torch.stack([post(queued_normalized[:,i]).float().cpu() for i in range(50)],dim=1)
                 parity = float((queued - actions).abs().max())
+                diagnostic = dict(gaussian_noise='one explicit shared [1,50,32] tensor',
+                    noise_sha256=hashlib.sha256(noise.cpu().numpy().tobytes()).hexdigest(),
+                    normalized_max_abs=float((queued_normalized-normalized).abs().max()),
+                    decoded_max_abs=parity, tolerance=dict(atol=1e-5,rtol=1e-5),
+                    attention_modes_before=modes_before,attention_modes_after_chunk=modes_after_chunk,
+                    attention_modes_after_queue=attention_modes(),
+                    cuda_matmul_tf32=torch.backends.cuda.matmul.allow_tf32,
+                    cudnn_tf32=torch.backends.cudnn.allow_tf32,cudnn_benchmark=torch.backends.cudnn.benchmark,
+                    parameters_unchanged=versions=={name:p._version for name,p in policy.named_parameters()})
+                if parity>1e-5:
+                    repeated = policy.predict_action_chunk(processed,noise=noise.clone())
+                    diagnostic.update(repeated_vs_first_normalized_max_abs=float((repeated-normalized).abs().max()),
+                                      repeated_vs_queue_normalized_max_abs=float((repeated-queued_normalized).abs().max()))
+                save(target.with_suffix('.parity.json'),diagnostic)
                 torch.testing.assert_close(queued, actions, atol=1e-5, rtol=1e-5)
                 policy.reset()
         torch.cuda.synchronize()
@@ -107,7 +136,7 @@ def main():
         assert versions == {name: p._version for name, p in policy.named_parameters()}
         array = actions[0].numpy()
         with target.with_suffix('.part').open('wb') as f:
-            np.savez(f, actions=array, normalized=normalized.float().cpu().numpy())
+            np.savez(f, actions=array, normalized=normalized.float().cpu().numpy(),noise=noise.float().cpu().numpy())
         target.with_suffix('.part').replace(target)
         save(target.with_suffix('.json'), dict(seconds=time.monotonic()-started,
              queue_parity_max_abs=parity, frozen_unchanged=True,

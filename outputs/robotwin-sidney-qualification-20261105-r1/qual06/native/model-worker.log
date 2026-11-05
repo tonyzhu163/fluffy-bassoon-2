@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r10/outputs/robotwin-sidney-qualification-20261105-r1/model_worker.py", line 119, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r10/outputs/robotwin-sidney-qualification-20261105-r1/model_worker.py", line 102, in main
+    torch.testing.assert_close(queued, actions, atol=1e-5, rtol=1e-5)
+  File "/mowenjie/fluffy-bassoon/envs/lerobot-v044-8fff0fde/lib/python3.12/site-packages/torch/testing/_comparison.py", line 1519, in assert_close
+    raise error_metas[0].to_error(msg)
+AssertionError: Tensor-likes are not close!
+
+Mismatched elements: 695 / 700 (99.3%)
+Greatest absolute difference: 0.004896402359008789 at index (0, 4, 1) (up to 1e-05 allowed)
+Greatest relative difference: 87.59701538085938 at index (0, 45, 7) (up to 1e-05 allowed)
