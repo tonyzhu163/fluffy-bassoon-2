@@ -97,7 +97,7 @@ def main():
                 batch[f'observation.images.{key}'] = torch.from_numpy(view.copy()).permute(2, 0, 1).float() / 255
         processed = pre(batch)
         def tensor_hash(value):
-            return hashlib.sha256(value.detach().contiguous().view(torch.uint8).cpu().numpy().tobytes()).hexdigest()
+            return hashlib.sha256(value.detach().reshape(-1).contiguous().view(torch.uint8).cpu().numpy().tobytes()).hexdigest()
         def input_hashes():
             return {k:tensor_hash(v) for k,v in processed.items() if isinstance(v,torch.Tensor)}
         inputs_before = input_hashes()
