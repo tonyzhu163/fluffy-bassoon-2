@@ -1,0 +1,53 @@
+{
+  "rank": 1,
+  "micro": 64,
+  "local_global_batch": 512,
+  "accumulation": 8,
+  "scientific_training": false,
+  "updates": [
+    {
+      "update": 0,
+      "warmup": true,
+      "seconds": 26.457027435302734,
+      "global_examples_per_second": 77.408545045664,
+      "peak_allocated_bytes": 18964098560,
+      "peak_reserved_bytes": 26375880704,
+      "total_device_bytes": 101973950464,
+      "grad_norm": 1.4140030145645142
+    },
+    {
+      "update": 1,
+      "warmup": false,
+      "seconds": 26.329116821289062,
+      "global_examples_per_second": 77.78460682524826,
+      "peak_allocated_bytes": 18964099072,
+      "peak_reserved_bytes": 26354909184,
+      "total_device_bytes": 101973950464,
+      "grad_norm": 4.432901859283447
+    },
+    {
+      "update": 2,
+      "warmup": false,
+      "seconds": 26.413524627685547,
+      "global_examples_per_second": 77.5360361355702,
+      "peak_allocated_bytes": 18964099072,
+      "peak_reserved_bytes": 26354909184,
+      "total_device_bytes": 101973950464,
+      "grad_norm": 3.864920139312744
+    },
+    {
+      "update": 3,
+      "warmup": false,
+      "seconds": 26.41523551940918,
+      "global_examples_per_second": 77.53101419425872,
+      "peak_allocated_bytes": 18964099072,
+      "peak_reserved_bytes": 26354909184,
+      "total_device_bytes": 101973950464,
+      "grad_norm": 3.2257027626037598
+    }
+  ],
+  "reference_recompute_seconds": 25.279802322387695,
+  "reference_peak_allocated_bytes": 13866447872,
+  "initial_saved_rollout_max_abs_error": 0.0,
+  "status": "complete"
+}

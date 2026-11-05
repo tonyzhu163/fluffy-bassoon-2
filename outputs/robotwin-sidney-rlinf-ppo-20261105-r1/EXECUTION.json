@@ -1,7 +1,7 @@
 {
-  "status": "USER_REQUESTED_FSDP_THROUGHPUT_SWEEP",
+  "status": "THROUGHPUT_SELECTED_STORAGE_HOLD",
   "cluster": "Baige Pro6K",
-  "last_checked_at_shanghai": "2026-11-05 18:44",
+  "last_checked_at_shanghai": "2026-11-05 19:15",
   "prior_scheduler_gpu_seconds": 2561,
   "prior_scheduler_gpu_hours": 0.7113888888888888,
   "optimizer_updates": 0,
@@ -9,15 +9,15 @@
   "revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "user_preference": "Broad multi-task SFT, no RL tuning. Maximize actual6000-series batch capacity or measured throughput.",
   "precision": "Native mixed BF16 with full FP32 vision/norms. FP32 full-model replay only if required to localize conversion drift.",
-  "next_action": "Measure native4GPU global2048 update throughput/memory at micro64,128,256,512; select fastest safe candidate and resume retained full-state PPO.",
+  "next_action": "Shared-storage admission remains held. After verified combined capacity, resume full-state step0 with selected micro64/accum8/global2048, expandable allocator, preserved action ledger and latest reviewed main. No extra user launch confirmation needed within authorized scope.",
   "job_id": null,
-  "source_commit": "1af04bb607095bffebb2fb1517e249c58f23afb8",
+  "source_commit": "99c0393b65d5f2db14bf838e37574582f21e19d1",
   "core_tests_passed": 23,
   "scene_instruction_binding_passed": true,
   "conversion_passed": true,
   "error": null,
   "bridge_scheduler_gpu_seconds_completed": 920,
-  "cumulative_scheduler_gpu_seconds_completed": 13475,
+  "cumulative_scheduler_gpu_seconds_completed": 18919,
   "completed_bridge_attempts": [
     {
       "attempt": "bridge01",
@@ -58,8 +58,8 @@
     "maximum_minutes": 50,
     "bridge_charge_conservative_gpu_seconds": 950
   },
-  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train05",
-  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-train05",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/throughput03",
+  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-throughput03",
   "training_attempts": [
     {
       "attempt": "train01",
@@ -136,7 +136,7 @@
     }
   ],
   "config_validation_passed": true,
-  "additional_scheduler_gpu_seconds_completed": 10914,
+  "additional_scheduler_gpu_seconds_completed": 16358,
   "additional_envelope_gpu_hours": 18,
   "task_scope_limit_gpu_hours": 50,
   "resume_dir": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03/sidney-native-two/checkpoints/global_step_0",
@@ -185,6 +185,44 @@
       "scheduler_duration_seconds": 198,
       "stop_at_shanghai": "2026-11-05 18:41:00",
       "outcome": "Unsupported repack state_indices argument; no usable timed updates"
+    },
+    {
+      "attempt": "throughput02",
+      "job_id": "job-lpp934emvl59",
+      "source_commit": "de8a05f61681f4c5ec20651149af989ac196f184",
+      "scheduler_gpu_seconds": 2760,
+      "scheduler_duration_seconds": 690,
+      "status": "complete_preliminary",
+      "outcome": "64/128/256 complete;512 caching-allocator fragmentation OOM. Replaced by exact-native-cleanup expandable allocator sweep."
+    },
+    {
+      "attempt": "throughput03",
+      "job_id": "job-jd3wvntcngt2",
+      "source_commit": "99c0393b65d5f2db14bf838e37574582f21e19d1",
+      "scheduler_gpu_seconds": 2684,
+      "scheduler_duration_seconds": 671,
+      "status": "complete",
+      "finished_at_shanghai": "2026-11-05 19:12:23",
+      "scientific_optimizer_updates": 0,
+      "scratch_optimizer_updates_per_candidate": 4,
+      "selection": "throughput03/SELECTION.json",
+      "outcome": "All four candidates64/128/256/512 completed four native FSDP/PPO updates on all four ranks.64 fastest including conditional reference overhead;512 has only1.00GB reserved headroom."
     }
-  ]
+  ],
+  "active_gpu_jobs": 0,
+  "additional_scheduler_gpu_hours_completed": 4.543888888888889,
+  "cumulative_scheduler_gpu_hours_completed": 5.255277777777778,
+  "storage_admission": {
+    "status": "held_combined_reservations",
+    "last_observed_free_gib": 184.15234375,
+    "observed_at_shanghai": "2026-11-05 19:13",
+    "initial_checkpoint_bytes": 9985762432,
+    "protected_checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03/sidney-native-two/checkpoints/global_step_0",
+    "projected_incremental_bytes": 125000000000,
+    "projection_status": "conservative; no compressed canonical format admitted",
+    "other_owner_floor_gib": 240,
+    "other_owner_growth_gib": 6,
+    "coordinator_thread": "01a1ab47-e0cb-7890-bbf8-088a1be17240",
+    "warning": "Do not count prospective releases or prior112.28GiB reclaim twice. Preserve active caches and checkpoints."
+  }
 }
