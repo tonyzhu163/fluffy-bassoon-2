@@ -71,3 +71,18 @@ Training-mode logprobs replay exactly, full backward peaks at19.05GB and takes
 2.74s, with190 policy and8 critic gradient tensors finite and no frozen VLM
 gradients. No SGD in this qualification. Retain native mixed BF16; no tolerance
 relaxation or FP32 training fallback.
+
+User steering: maximize feasible6000-series memory use or measured throughput,
+not merely the previously qualified micro64. Benchmark native4-GPU FSDP/PPO
+at micro64/128/256/512 with global2048. Warm Adam once, time three full updates
+per candidate, include raw camera preprocessing and record old-probability
+recompute overhead (amortized over five epochs). Synthetic advantages/returns
+and scratch updates are performance-only and never become the PPO initializer.
+Select fastest qualified memory-safe batch, record capacity and actual update
+time, and use native algorithm.recompute_logprobs if batch-dependent BF16
+numerics require it. Scientific batch, optimizer schedule and loss remain
+native. Extend the self-imposed envelope to18 additionalGPUh to include this
+user-requested throughput qualification; stay within AGENTS.md50GPUh scope.
+Train05 stopped before SGD; original full step0 boundary retained. Throughput01
+hit a state-selector API mismatch before timing; corrected and restarted in
+fresh throughput02, aborting any further non-memory harness error immediately.

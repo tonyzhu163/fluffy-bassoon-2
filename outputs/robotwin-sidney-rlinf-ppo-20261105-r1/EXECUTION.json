@@ -1,23 +1,23 @@
 {
-  "status": "QUALIFIED_BF16_PPO_SUBMITTED",
+  "status": "USER_REQUESTED_FSDP_THROUGHPUT_SWEEP",
   "cluster": "Baige Pro6K",
-  "last_checked_at_shanghai": "2026-11-05 18:24",
+  "last_checked_at_shanghai": "2026-11-05 18:44",
   "prior_scheduler_gpu_seconds": 2561,
   "prior_scheduler_gpu_hours": 0.7113888888888888,
   "optimizer_updates": 0,
   "initializer": "SidneyXie/pi05_robotwin",
   "revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
-  "user_preference": "Broad multi-task SFT with no RL tuning; continue Sidney for six-task setup",
+  "user_preference": "Broad multi-task SFT, no RL tuning. Maximize actual6000-series batch capacity or measured throughput.",
   "precision": "Native mixed BF16 with full FP32 vision/norms. FP32 full-model replay only if required to localize conversion drift.",
-  "next_action": "Verify12-worker restore, actual batch64 actor replay and two PPO iterations; preserve full native recovery boundaries.",
-  "job_id": "job-jc3wuk4oqs0c",
+  "next_action": "Measure native4GPU global2048 update throughput/memory at micro64,128,256,512; select fastest safe candidate and resume retained full-state PPO.",
+  "job_id": null,
   "source_commit": "1af04bb607095bffebb2fb1517e249c58f23afb8",
   "core_tests_passed": 23,
   "scene_instruction_binding_passed": true,
   "conversion_passed": true,
   "error": null,
   "bridge_scheduler_gpu_seconds_completed": 920,
-  "cumulative_scheduler_gpu_seconds_completed": 10855,
+  "cumulative_scheduler_gpu_seconds_completed": 13475,
   "completed_bridge_attempts": [
     {
       "attempt": "bridge01",
@@ -121,19 +121,23 @@
       "attempt": "train05",
       "job_id": "job-jc3wuk4oqs0c",
       "source_commit": "1af04bb607095bffebb2fb1517e249c58f23afb8",
-      "status": "submitted",
+      "status": "stopped_before_sgd_for_user_throughput_tuning",
       "gpus": 4,
       "maximum_minutes": 170,
       "resume_global_step": 0,
       "accounting_attempt": "train05",
       "micro_batch_size": 64,
       "gradient_accumulation": 8,
-      "frozen_vision_training_mode": false
+      "frozen_vision_training_mode": false,
+      "scheduler_gpu_seconds": 1828,
+      "scheduler_duration_seconds": 457,
+      "stopped_at_shanghai": "2026-11-05 18:31:00",
+      "optimizer_updates": 0
     }
   ],
   "config_validation_passed": true,
-  "additional_scheduler_gpu_seconds_completed": 8294,
-  "additional_envelope_gpu_hours": 14,
+  "additional_scheduler_gpu_seconds_completed": 10914,
+  "additional_envelope_gpu_hours": 18,
   "task_scope_limit_gpu_hours": 50,
   "resume_dir": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03/sidney-native-two/checkpoints/global_step_0",
   "shared_action_accounting_root": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03/action-accounting",
@@ -172,5 +176,15 @@
   "gradient_accumulation": 8,
   "backward_peak_allocated_bytes": 19054287360,
   "training_mode_logprob_max_abs_error": 0.0,
-  "active_maximum_minutes": 170
+  "active_maximum_minutes": 170,
+  "throughput_attempts": [
+    {
+      "attempt": "throughput01",
+      "job_id": "job-k55t1wh7gdpe",
+      "scheduler_gpu_seconds": 792,
+      "scheduler_duration_seconds": 198,
+      "stop_at_shanghai": "2026-11-05 18:41:00",
+      "outcome": "Unsupported repack state_indices argument; no usable timed updates"
+    }
+  ]
 }
