@@ -18,6 +18,7 @@ def main():
     import numpy as np
     import torch
     from safetensors.torch import load_file, load_model
+    from lerobot.configs import PreTrainedConfig
     from lerobot.policies.pi05.configuration_pi05 import PI05Config
     from lerobot.policies.pi05.modeling_pi05 import PI05Policy
     from lerobot.policies.factory import make_pre_post_processors
@@ -29,7 +30,8 @@ def main():
     assert sys.platform == 'linux' and os.uname().nodename.startswith('job-')
     assert torch.cuda.is_available() and torch.cuda.device_count() == 1
     torch.cuda.set_device(0)
-    cfg = PI05Config.from_pretrained(str(args.model))
+    cfg = PreTrainedConfig.from_pretrained(str(args.model))
+    assert isinstance(cfg, PI05Config)
     assert cfg.chunk_size == cfg.n_action_steps == 50
     assert cfg.num_inference_steps == 10 and not cfg.use_relative_actions
     assert tuple(cfg.output_features['action'].shape) == (14,)

@@ -1,15 +1,15 @@
 {
-  "status": "SECOND_ATTEMPT_FAILED_RUNTIME02_READY",
+  "status": "THIRD_ATTEMPT_FAILED_CONFIG_LOADER_FIXED",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
-  "job_id": "job-5rnpa5xvsxwm",
-  "job_name": "mwj_1105_robotwin_sidney_native_qual_r2",
-  "submitted_at_shanghai": "2026-11-05 14:03:43",
-  "last_checked_at_shanghai": "2026-11-05 14:10",
-  "observed_scheduler_status": "failed",
-  "source_commit": "caf637e707683dda365998133f8290314045cd23",
-  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r4",
-  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual02",
+  "job_id": "job-hzev0cgjz5co",
+  "job_name": "mwj_1105_robotwin_sidney_native_qual_r3",
+  "submitted_at_shanghai": "2026-11-05 14:14:05",
+  "last_checked_at_shanghai": "2026-11-05 14:17",
+  "observed_scheduler_status": "worker exited1; scheduler terminal pending verification",
+  "source_commit": "df425f4067299687daf1e3a914e1ebc24309c8e6",
+  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r5",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual03",
   "model_revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "allocation": {
     "workers": 1,
@@ -23,14 +23,14 @@
     "actual_gpu_type": "NVIDIA RPBZZZ6; CUDA/NVML/PCI mapping and tensor computation passed in qual02"
   },
   "budget": {
-    "gpu_hours_used_as_of_last_check": 0.04138888888888889,
+    "gpu_hours_used_as_of_last_check": null,
     "this_attempt_maximum_gpu_hours": 0.5,
     "initial_qualification_ceiling_gpu_hours": 4,
     "task_scope_incremental_ceiling_gpu_hours": 50,
-    "worker_gpu_seconds_measured": 54,
-    "conservative_allocated_gpu_hours_charge": 1.0,
+    "worker_gpu_seconds_measured": 151,
+    "conservative_allocated_gpu_hours_charge": 1.5,
     "scheduler_display_gpu_seconds": 149,
-    "usage_basis": "one GPU times scheduler displayed durations 60s+89s; worker process durations are separately retained"
+    "usage_basis": "151s total worker process time; scheduler first two durations149s, third duration pending"
   },
   "qualification": {
     "weight_hashes_verified": true,
@@ -45,9 +45,9 @@
     "physical_control_limit": 400,
     "scene_bank": "RLinf eval source-task bank, first success_seed"
   },
-  "next_action": "Submit qual03 with fresh runtime02 from reviewed committed main; numerical/import precheck then native H50/K10 phone-stand episode. Runtime02 metadata audit has zero non-extra requirement conflicts, but native behavior is unqualified. No PPO before native screen and explicit RLinf parity.",
+  "next_action": "Use native PreTrainedConfig registry loader, assert PI05Config type, then fresh qual04. Native model configuration values, weights, processors, H50/K10 and scientific scope unchanged; no model forward or PPO yet.",
   "monitor_interval_minutes": 20,
-  "queue_receipt": "RETRY-QUEUED.jpg",
+  "queue_receipt": "QUAL03-QUEUED.jpg",
   "attempts": [
     {
       "attempt": "qual01",
@@ -94,6 +94,25 @@
         "qual02/cpu-imports/RESULT.json",
         "qual02/cpu-imports.log",
         "qual02/EXIT.json"
+      ]
+    },
+    {
+      "attempt": "qual03",
+      "job_id": "job-hzev0cgjz5co",
+      "source_commit": "df425f4067299687daf1e3a914e1ebc24309c8e6",
+      "exit_code": 1,
+      "worker_gpu_seconds": 97,
+      "gpu_probe_passed": true,
+      "library_imports_passed": true,
+      "model_constructed": false,
+      "simulator_episodes": 0,
+      "optimizer_updates": 0,
+      "error": "Subclass PI05Config.from_pretrained rejects type discriminator; checkpoint requires PreTrainedConfig registry loader",
+      "evidence": [
+        "qual03/gpu-probe.json",
+        "qual03/cpu-imports/RESULT.json",
+        "qual03/cpu-imports.log",
+        "qual03/EXIT.json"
       ]
     }
   ],

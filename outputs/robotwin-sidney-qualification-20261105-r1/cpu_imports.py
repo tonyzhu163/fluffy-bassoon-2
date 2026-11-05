@@ -21,6 +21,7 @@ def main():
         import torch
         import transformers
         from safetensors.torch import load_file
+        from lerobot.configs import PreTrainedConfig
         from lerobot.policies.pi05.configuration_pi05 import PI05Config
         from lerobot.policies.pi05.modeling_pi05 import PI05Policy
         from lerobot.policies.factory import make_pre_post_processors
@@ -31,7 +32,8 @@ def main():
         assert Path(inspect.getfile(PI05Policy)).is_relative_to(source)
         model = Path('/mowenjie/fluffy-bassoon-2/cache/robotwin-sidney-qualification-20261105-r1')
         tokenizer = Path('/mowenjie/.cache/huggingface/hub/models--google--paligemma-3b-pt-224/snapshots/35e4f46485b4d07967e7e9935bc3786aad50687c')
-        cfg = PI05Config.from_pretrained(str(model))
+        cfg = PreTrainedConfig.from_pretrained(str(model))
+        assert isinstance(cfg, PI05Config)
         assert cfg.chunk_size == cfg.n_action_steps == 50
         assert cfg.num_inference_steps == 10 and not cfg.use_relative_actions
         cfg.device = 'cpu'
