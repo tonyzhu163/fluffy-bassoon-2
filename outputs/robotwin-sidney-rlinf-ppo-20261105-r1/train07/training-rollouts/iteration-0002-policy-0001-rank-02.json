@@ -1,0 +1,220 @@
+{
+  "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train07/training-rollouts/iteration-0002-policy-0001-rank-02.pt",
+  "sha256": "39f161665fb0c24c61e988293a06a05a03588f6c398d22b43a72a33a03c6eff4",
+  "completed": true,
+  "capture_format": "rlinf_native_ppo_history_capture_v1",
+  "compression": "none",
+  "bytes": 5783251519,
+  "collection_iteration": 2,
+  "producing_policy_iteration": 1,
+  "rank": 2,
+  "optimizer_steps_before": 20,
+  "fields": [
+    "actions",
+    "advantages",
+    "dones",
+    "forward_inputs",
+    "intervene_flags",
+    "loss_mask",
+    "loss_mask_sum",
+    "prev_logprobs",
+    "prev_values",
+    "returns",
+    "rewards",
+    "terminations",
+    "truncations",
+    "versions"
+  ],
+  "field_shapes": {
+    "forward_inputs": {
+      "denoise_inds": {
+        "shape": [
+          8,
+          256,
+          5
+        ],
+        "dtype": "torch.int64"
+      },
+      "observation/image": {
+        "shape": [
+          8,
+          256,
+          480,
+          640,
+          3
+        ],
+        "dtype": "torch.uint8"
+      },
+      "model_action": {
+        "shape": [
+          8,
+          256,
+          1600
+        ],
+        "dtype": "torch.float32"
+      },
+      "action": {
+        "shape": [
+          8,
+          256,
+          700
+        ],
+        "dtype": "torch.float32"
+      },
+      "observation/state": {
+        "shape": [
+          8,
+          256,
+          14
+        ],
+        "dtype": "torch.float64"
+      },
+      "observation/wrist_image": {
+        "shape": [
+          8,
+          256,
+          2,
+          480,
+          640,
+          3
+        ],
+        "dtype": "torch.uint8"
+      },
+      "tokenized_prompt": {
+        "shape": [
+          8,
+          256,
+          200
+        ],
+        "dtype": "torch.int64"
+      },
+      "chains": {
+        "shape": [
+          8,
+          256,
+          6,
+          50,
+          32
+        ],
+        "dtype": "torch.float32"
+      },
+      "tokenized_prompt_mask": {
+        "shape": [
+          8,
+          256,
+          200
+        ],
+        "dtype": "torch.bool"
+      }
+    },
+    "actions": {
+      "shape": [
+        8,
+        256,
+        700
+      ],
+      "dtype": "torch.float32"
+    },
+    "intervene_flags": {
+      "shape": [
+        8,
+        256,
+        700
+      ],
+      "dtype": "torch.bool"
+    },
+    "rewards": {
+      "shape": [
+        8,
+        256,
+        50
+      ],
+      "dtype": "torch.float32"
+    },
+    "terminations": {
+      "shape": [
+        9,
+        256,
+        50
+      ],
+      "dtype": "torch.bool"
+    },
+    "truncations": {
+      "shape": [
+        9,
+        256,
+        50
+      ],
+      "dtype": "torch.bool"
+    },
+    "dones": {
+      "shape": [
+        9,
+        256,
+        50
+      ],
+      "dtype": "torch.bool"
+    },
+    "prev_logprobs": {
+      "shape": [
+        8,
+        256,
+        50,
+        14
+      ],
+      "dtype": "torch.float32"
+    },
+    "prev_values": {
+      "shape": [
+        9,
+        256,
+        1
+      ],
+      "dtype": "torch.float32"
+    },
+    "versions": {
+      "shape": [
+        8,
+        256,
+        50,
+        14
+      ],
+      "dtype": "torch.float32"
+    },
+    "loss_mask": {
+      "shape": [
+        8,
+        256,
+        1
+      ],
+      "dtype": "torch.bool"
+    },
+    "loss_mask_sum": {
+      "shape": [
+        8,
+        256,
+        1
+      ],
+      "dtype": "torch.int64"
+    },
+    "advantages": {
+      "shape": [
+        8,
+        256,
+        1
+      ],
+      "dtype": "torch.float32"
+    },
+    "returns": {
+      "shape": [
+        8,
+        256,
+        1
+      ],
+      "dtype": "torch.float32"
+    }
+  },
+  "evaluation_data": false,
+  "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train07/resolved-native-config.json",
+  "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+}

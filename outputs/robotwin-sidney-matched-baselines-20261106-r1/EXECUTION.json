@@ -1,7 +1,7 @@
 {
-  "status": "qual02_group_identity_passed_collecting",
+  "status": "qual02_no_sync_guard_failed_gradient_probe_prepared",
   "cluster": "Baige Pro6K",
-  "last_checked_at_shanghai": "2026-11-06T03:19:25.498009+08:00",
+  "last_checked_at_shanghai": "2026-11-06T03:45:14.513082+08:00",
   "scientific_pair_admitted": false,
   "human_cumulative_gpu_hours": 50,
   "active_additional_engineering_gpu_hours": 23,
@@ -39,7 +39,7 @@
       "job_id": "job-l218ew6o4lfw",
       "name": "mwj_1106_robotwin_sidney_grpo_qual2",
       "source_commit": "92531a7a4cd2453bc3871e711da3d4cce5bb2f84",
-      "status": "initializing_after_all_preflights_passed",
+      "status": "failed_intermediate_frozen_gradient_view_guard",
       "created_at_shanghai": "2026-11-06 03:01:41",
       "gpus": 4,
       "cpus": 64,
@@ -58,7 +58,14 @@
       "group_identity_passed_groups": 32,
       "replicas_per_group": 8,
       "initial_full_checkpoint_completed": true,
-      "actual_optimizer_updates_verified": 0
+      "actual_optimizer_updates_verified": 0,
+      "ended_at_shanghai": "2026-11-06 03:19:11",
+      "scheduler_gpu_seconds": 4120,
+      "creation_to_release_gpu_seconds": 4200,
+      "worker_gpu_seconds": 4004,
+      "optimizer_updates": 0,
+      "finite_nonzero_policy_gradient_tensors_per_rank": 190,
+      "critic_gradient_tensors": 0
     }
   ],
   "prelaunch": {
@@ -73,5 +80,8 @@
   },
   "unchanged_engineering_pilot": "job-rxih2makcwv4",
   "retry_prepared": "qual02",
-  "control_accounting": "requested/conservative motor-command escrow; measured executed actions and physics substeps unknown; source/student admissionFalse"
+  "control_accounting": "requested/conservative motor-command escrow; measured executed actions and physics substeps unknown; source/student admissionFalse",
+  "completed_additional_scheduler_gpu_seconds": 60398,
+  "completed_additional_conservative_gpu_seconds": 60745,
+  "cumulative_scheduler_gpu_seconds": 62959
 }

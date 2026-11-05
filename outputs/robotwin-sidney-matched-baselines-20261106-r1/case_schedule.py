@@ -5,7 +5,7 @@ from pathlib import Path
 from types import MethodType
 
 import torch
-from fluffy_bassoon.meta_rl.rlinf_native_ppo import cpu_tree,tensor_hash,write
+from fluffy_bassoon.meta_rl.rlinf_native_ppo import cpu_tree,sha,tensor_hash,write
 from fluffy_bassoon.meta_rl.rlinf_native_ppo_runtime import save_tensor
 
 
@@ -82,12 +82,26 @@ def install(owner,physical,schedule,root):
                 public_observation_identity=observation_match,differences=differences))
         # Persist every actual replica before checking identity, including raw
         # state/physics needed to diagnose a failed exact-equality gate.
-        raw_receipt=save_tensor(root/'group-resets'/f'rank-{owner._rank:02d}-reset-{ordinal:04d}.pt',dict(
-            manifest_sha256=schedule.sha256,public_observation=cpu_tree(obs),replicas=raw))
-        passed=all(r['passed'] for r in receipt)
+        initial=root/'initial-states'/f'source-rank-{owner._rank:02d}-{owner._pilot_reset_ordinal-1:04d}.pt'
+        observation_sha=tensor_hash(obs)
+        raw_value=dict(manifest_sha256=schedule.sha256,replicas=raw,
+            public_observation_sha256=observation_sha)
+        reference_ok=False
+        if initial.is_file():
+            raw_value['public_observation_reference']=dict(path=str(initial),sha256=sha(initial))
+            stored=torch.load(initial,map_location='cpu',weights_only=False)
+            reference_ok=(tensor_hash(stored['initial_observation'])==observation_sha
+                ==stored['public_observation_sha256'])
+            del stored
+        else:
+            # Emergency evidence survives even if the native capture contract
+            # fails; normal operation references its existing177MB RGB bundle.
+            raw_value['public_observation']=cpu_tree(obs)
+        raw_receipt=save_tensor(root/'group-resets'/f'rank-{owner._rank:02d}-reset-{ordinal:04d}.pt',raw_value)
+        passed=all(r['passed'] for r in receipt) and reference_ok
         write(root/'group-resets'/f'rank-{owner._rank:02d}-reset-{ordinal:04d}.json',dict(
             manifest_sha256=schedule.sha256,reset_ordinal=ordinal,rank=owner._rank,groups=receipt,
-            raw_replicas=raw_receipt,passed=passed,
+            raw_replicas=raw_receipt,passed=passed,raw_public_reference_verified=reference_ok,
             group_public_reset_identity=all(r['public_observation_identity'] for r in receipt),
             group_exposed_articulation_identity=all(r['articulation_identity'] for r in receipt)))
         assert passed,'Common scene-group identity failed; raw replicas persisted before gate'

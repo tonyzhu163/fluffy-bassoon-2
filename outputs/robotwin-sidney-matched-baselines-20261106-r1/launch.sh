@@ -5,9 +5,14 @@ TASK_OUT=${2:?fresh output identity}
 TASK_PHASE=${3:?qualification or ppo or grpo}
 TASK_PLAN=${4:?admitted funding/storage contract}
 TASK_LIMIT=${5:?maximum worker seconds}
-[[ $TASK_PHASE == qualification || $TASK_PHASE == ppo || $TASK_PHASE == grpo ]]
+[[ $TASK_PHASE == gradient_probe || $TASK_PHASE == qualification || $TASK_PHASE == ppo || $TASK_PHASE == grpo ]]
 [[ $TASK_LIMIT =~ ^[0-9]+$ ]]
-if [[ $TASK_PHASE == qualification ]]; then
+TASK_CONFIG_MODE=$TASK_PHASE
+TASK_MINIMUM_HOST_GIB=1024
+if [[ $TASK_PHASE == gradient_probe ]]; then
+  [[ $TASK_LIMIT -le 840 ]]; TASK_ALGORITHM=grpo;TASK_CONFIG_MODE=qualification
+  TASK_MINIMUM_HOST_GIB=256
+elif [[ $TASK_PHASE == qualification ]]; then
   [[ $TASK_LIMIT -le 2640 ]]; TASK_ALGORITHM=grpo
 else
   [[ $TASK_LIMIT -le 10200 ]]; TASK_ALGORITHM=$TASK_PHASE
@@ -22,7 +27,7 @@ TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/pytho
 [[ ! -e $TASK_OUT && -f $TASK_PLAN ]]
 mkdir -p "$TASK_OUT"
 exec > "$TASK_OUT/worker.log" 2>&1
-export TASK_LIMIT
+export TASK_LIMIT TASK_CODE TASK_SOURCE
 export REPO_PATH=/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf
 export ROBOTWIN_PATH=/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin
 export ROBOTWIN_ASSETS_PATH=$ROBOTWIN_PATH ASSETS_PATH=$ROBOTWIN_PATH
@@ -55,8 +60,8 @@ trap finish EXIT
 "$TASK_PYTHON" "$TASK_CODE/scripts/[train]gpu_probe.py" --baige-container \
   --baige-exclusive-training --purpose training --expected-count 4 --output "$TASK_OUT/gpu-probe.json"
 export LYCO_BAIGE_GPU_MAP=$TASK_OUT/gpu-probe.json
-"$TASK_PYTHON" "$TASK_SHARED/host_memory.py" "$TASK_OUT" --minimum-gib 1024 --once
-"$TASK_PYTHON" "$TASK_SHARED/host_memory.py" "$TASK_OUT" --minimum-gib 1024 > "$TASK_OUT/host-memory.log" 2>&1 &
+"$TASK_PYTHON" "$TASK_SHARED/host_memory.py" "$TASK_OUT" --minimum-gib "$TASK_MINIMUM_HOST_GIB" --once
+"$TASK_PYTHON" "$TASK_SHARED/host_memory.py" "$TASK_OUT" --minimum-gib "$TASK_MINIMUM_HOST_GIB" > "$TASK_OUT/host-memory.log" 2>&1 &
 TASK_MEMORY_PID=$!
 [[ $(git -C "$REPO_PATH" rev-parse HEAD) == c605b9d55ed93a180119b099e6f836abff293b08 ]]
 [[ $(git -C "$ROBOTWIN_PATH" rev-parse HEAD) == dca9ec682688821c42944eacd7f5dd9bfb15396f ]]
@@ -67,26 +72,32 @@ if [[ ! -e /root/.sapien/physx/105.1-physx-5.3.1.patch0 ]]; then
   ln -s /mowenjie/fluffy-bassoon/inputs/maniskill-scene-assets-20261028-r1/physx/105.1-physx-5.3.1.patch0 /root/.sapien/physx/105.1-physx-5.3.1.patch0
 fi
 "$TASK_PYTHON" "$TASK_RUN/admission.py" "$TASK_PLAN" "$TASK_PHASE"
-if [[ $TASK_PHASE == qualification ]]; then
+if [[ $TASK_PHASE == qualification || $TASK_PHASE == gradient_probe ]]; then
   "$TASK_PYTHON" "$TASK_RUN/numerical_qualification.py" "$TASK_OUT"
   for TASK_METHOD in ppo grpo; do
     "$TASK_PYTHON" "$TASK_RUN/configuration.py" validate "$TASK_METHOD" scientific > "$TASK_OUT/config-$TASK_METHOD-scientific.json"
   done
 fi
-"$TASK_PYTHON" "$TASK_RUN/configuration.py" validate "$TASK_ALGORITHM" "$TASK_PHASE" > "$TASK_OUT/config-validation.json"
+"$TASK_PYTHON" "$TASK_RUN/configuration.py" validate "$TASK_ALGORITHM" "$TASK_CONFIG_MODE" > "$TASK_OUT/config-validation.json"
 TASK_PARENT_OUT=$TASK_OUT
-if [[ $TASK_PHASE == qualification ]]; then
+TASK_ENTRY=$TASK_RUN/paired_entry.py
+if [[ $TASK_PHASE == gradient_probe ]]; then
+  TASK_ENTRY=$TASK_RUN/gradient_probe.py
+  export TASK_FIXTURE=/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual02
+  export TASK_PROBE_MODE=train
+fi
+if [[ $TASK_PHASE == qualification || $TASK_PHASE == gradient_probe ]]; then
   export NATIVE_PPO_OUTPUT=$TASK_PARENT_OUT/train
   mkdir "$NATIVE_PPO_OUTPUT"
 fi
-mapfile -t TASK_OVERRIDES < <("$TASK_PYTHON" "$TASK_RUN/configuration.py" "$TASK_ALGORITHM" "$TASK_PHASE")
+mapfile -t TASK_OVERRIDES < <("$TASK_PYTHON" "$TASK_RUN/configuration.py" "$TASK_ALGORITHM" "$TASK_CONFIG_MODE")
 [[ ${#TASK_OVERRIDES[@]} -ge 18 ]]
 TASK_REMAINING=$((NATIVE_PPO_DEADLINE-$(date +%s)-60))
 [[ $TASK_REMAINING -gt 240 ]]
-timeout --signal=INT --kill-after=20s "$TASK_REMAINING" "$TASK_PYTHON" "$TASK_RUN/paired_entry.py" \
+timeout --signal=INT --kill-after=20s "$TASK_REMAINING" "$TASK_PYTHON" "$TASK_ENTRY" \
   --config-path "$TASK_CODE/configs/native_ppo" --config-name sidney_phone_two \
   "${TASK_OVERRIDES[@]}" > "$TASK_PARENT_OUT/train.log" 2>&1
-if [[ $TASK_PHASE == qualification ]]; then
+if [[ $TASK_PHASE == qualification || $TASK_PHASE == gradient_probe ]]; then
   TASK_RESUME=$TASK_PARENT_OUT/train/sidney-paired-grpo/checkpoints/global_step_1
   # This scheduler container is exclusive to this qualification. The completed
   # first process has saved its full boundary; release its Ray runtime before
@@ -94,12 +105,17 @@ if [[ $TASK_PHASE == qualification ]]; then
   "$TASK_PYTHON" -m ray.scripts.scripts stop --force > "$TASK_PARENT_OUT/ray-cleanup.log" 2>&1
   export NATIVE_PPO_OUTPUT=$TASK_PARENT_OUT/restore NATIVE_PPO_ATTEMPT=restore
   mkdir "$NATIVE_PPO_OUTPUT"
-  mapfile -t TASK_OVERRIDES < <("$TASK_PYTHON" "$TASK_RUN/configuration.py" grpo qualification "$TASK_RESUME")
+  if [[ $TASK_PHASE == gradient_probe ]]; then
+    export TASK_PROBE_MODE=restore TASK_PROBE_CHECKPOINT=$TASK_PARENT_OUT/train/checkpoint1
+    mapfile -t TASK_OVERRIDES < <("$TASK_PYTHON" "$TASK_RUN/configuration.py" grpo qualification)
+  else
+    mapfile -t TASK_OVERRIDES < <("$TASK_PYTHON" "$TASK_RUN/configuration.py" grpo qualification "$TASK_RESUME")
+  fi
   [[ ${#TASK_OVERRIDES[@]} -ge 18 ]]
   TASK_REMAINING=$((NATIVE_PPO_DEADLINE-$(date +%s)-60))
   [[ $TASK_REMAINING -gt 120 ]]
   TASK_RESTORE_STARTED=$(date +%s)
-  timeout --signal=INT --kill-after=20s "$TASK_REMAINING" "$TASK_PYTHON" "$TASK_RUN/paired_entry.py" \
+  timeout --signal=INT --kill-after=20s "$TASK_REMAINING" "$TASK_PYTHON" "$TASK_ENTRY" \
     --config-path "$TASK_CODE/configs/native_ppo" --config-name sidney_phone_two \
     "${TASK_OVERRIDES[@]}" > "$TASK_PARENT_OUT/restore.log" 2>&1
   printf '{"seconds":%s,"includes_fresh_workers_model_native_DCP_and_all_worker_sidecars":true}\n' \

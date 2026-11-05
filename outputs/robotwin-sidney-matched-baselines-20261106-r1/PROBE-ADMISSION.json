@@ -1,0 +1,81 @@
+{
+  "status": "admitted",
+  "phase_admitted": "gradient_probe_only",
+  "scientific_pair_admitted": false,
+  "recorded_at_shanghai": "2026-11-06T03:45:14.513082+08:00",
+  "human_cumulative_gpu_hours": 50,
+  "additional_engineering_gpu_hours": 23,
+  "previous_additional_engineering_gpu_hours": 20,
+  "legacy_gpu_seconds": 2561,
+  "completed_additional_conservative_gpu_seconds": 60745,
+  "gpu_reservations_seconds": {
+    "gradient_probe": 3600,
+    "qualification": 10800
+  },
+  "migration_reason": "Bounded one-round GRPO/group-reset/critic-free/native full recovery qualification after verified PPO20Adam-update boundary. Expanded planned2h to3h for independent process startup/recovery margin; scientific pair46h envelope remains inactive.",
+  "engineering_pilot": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train07",
+  "qualification_output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual03",
+  "initializer_sha256": {
+    "model.safetensors": "c71114641cf0819900f8b1d7b0568158a12e631b2ca08b2b19bc2d5b761b69b3",
+    "sidney-processors.json": "38ffadf70cf85cff5f8a0a4a6bf23e4886b33081b93f8bb2b20469b6cd571f5b"
+  },
+  "other_owners_and_floor_gib": 286,
+  "storage_reservations": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train07",
+      "maximum_gib": 125,
+      "closed": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual02",
+      "maximum_gib": 40,
+      "closed": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grad01",
+      "maximum_gib": 16,
+      "closed": false
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual03",
+      "maximum_gib": 40,
+      "closed": false
+    }
+  ],
+  "actual_device_gates_required": true,
+  "maximum_qualification_actions": 0,
+  "worker_seconds": 840,
+  "requested_wall_minutes": 14,
+  "gpus": 4,
+  "cpus": 64,
+  "memory_gib": 256,
+  "shared_memory_gib": 64,
+  "automatic_retry": false,
+  "source_commit": "bound separately in launch receipt; latest reviewed main",
+  "old_checkpoint_and_action_journals_unchanged": true,
+  "closed_qualification_attempts": [
+    {
+      "attempt": "qual01",
+      "job_id": "job-6koe87i8ibvf",
+      "scheduler_gpu_seconds": 360,
+      "creation_to_release_gpu_seconds": 424,
+      "worker_gpu_seconds": 184,
+      "physical_controls": 0,
+      "optimizer_updates": 0
+    },
+    {
+      "attempt": "qual02",
+      "job_id": "job-l218ew6o4lfw",
+      "scheduler_gpu_seconds": 4120,
+      "creation_to_release_gpu_seconds": 4200,
+      "worker_gpu_seconds": 4004,
+      "optimizer_updates": 0
+    }
+  ],
+  "probe_has_no_environment_workers": true,
+  "full_grouped_qualifier_still_required": true,
+  "prospective_science_pair_gpu_seconds": 82080,
+  "prospective_science_pair_cumulative_worst_gpu_seconds": 159786,
+  "prospective_science_pair_migration_active": false,
+  "current_pilot_maximum_reservation_closed": true
+}

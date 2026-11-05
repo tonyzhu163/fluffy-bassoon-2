@@ -14,6 +14,7 @@ import train_entry as shared
 from case_schedule import CaseSchedule,boundary_ordinal,install
 from paired_recipe import validate_pair
 from recovery_signature import actor_signature
+from gradient_audit import audit
 from fluffy_bassoon.meta_rl.rlinf_native_ppo import snapshot_rng,restore_rng,tensor_hash,write
 
 runtime=shared.runtime
@@ -34,6 +35,7 @@ class PairedActor(shared.SidneyActor):
     def init_worker(self):
         result=super().init_worker();initialize_rng(self,'actor')
         self._pair_first_replay=False
+        self._pair_audit_micro=0
         return result
 
     def pilot_capture(self,directory,*,retain_rollout=False):
@@ -45,6 +47,10 @@ class PairedActor(shared.SidneyActor):
     def pilot_restore(self,directory):
         import json
         result=super().pilot_restore(directory)
+        frozen=self._pilot_frozen_signature()
+        write(Path(self.cfg.native_pilot.output)/'recovery-frozen'/f'actor-{self._rank:02d}.json',dict(
+            expected=self._pilot_frozen_before,actual=frozen,unchanged=frozen==self._pilot_frozen_before))
+        assert frozen==self._pilot_frozen_before,'Frozen VLM differs after native checkpoint readback'
         expected=json.loads((Path(directory)/f'paired-actor-signature-{self._rank:02d}.json').read_text())
         actual=actor_signature(self,snapshot_rng())
         write(Path(self.cfg.native_pilot.output)/'recovery-signatures'/f'actor-{self._rank:02d}.json',dict(
@@ -76,18 +82,20 @@ class PairedActor(shared.SidneyActor):
         # Skip only SidneyActor's unconditional critic replay guard. The shared
         # PilotActor and original RLinf loss/backward/optimizer remain in use.
         result=runtime.PilotActor.train_micro_batch(self,micro_batch,metrics,is_last=is_last)
+        if self.optimizer_steps==0 and self._pair_audit_micro<8:
+            audit(self,is_last=is_last,ordinal=self._pair_audit_micro)
+            self._pair_audit_micro+=1
         if first:
             names=[]
             for name,param in self.model.named_parameters():
-                if not param.requires_grad:
-                    assert param.grad is None
-                elif param.grad is not None:
+                if param.requires_grad and param.grad is not None:
                     assert torch.isfinite(param.grad).all(),name
                     names.append(name)
             assert names and any('action_' in name or '.1.' in name for name in names)
             assert any('value_head' in name for name in names)==critic
             write(Path(self.cfg.native_pilot.output)/'paired-gradients'/f'rank-{self._rank:02d}.json',dict(
-                finite=True,frozen_parameters_without_gradients=True,critic_present=critic,parameters=names))
+                finite=True,frozen_parameters_without_nonzero_gradients=True,
+                frozen_parameters_excluded_from_optimizer=True,critic_present=critic,parameters=names))
         return result
 
 

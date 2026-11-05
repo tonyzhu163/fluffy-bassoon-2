@@ -1,10 +1,10 @@
 {
-  "status": "train07_first_iteration_complete_second_iteration_collecting",
+  "status": "two_iteration_ppo_complete40_native_updates",
   "cluster": "Baige Pro6K",
-  "last_checked_at_shanghai": "2026-11-06 02:43:10",
+  "last_checked_at_shanghai": "2026-11-06T03:45:14.513082+08:00",
   "prior_scheduler_gpu_seconds": 2561,
   "prior_scheduler_gpu_hours": 0.7113888888888888,
-  "optimizer_updates": 20,
+  "optimizer_updates": 40,
   "initializer": "SidneyXie/pi05_robotwin",
   "revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "user_preference": "Broad multi-task SFT, no RL tuning. Maximize actual6000-series batch capacity or measured throughput.",
@@ -171,7 +171,7 @@
       "attempt": "train07",
       "job_id": "job-rxih2makcwv4",
       "source_commit": "bb4c905a17ab7aaee03aa4772505732e7b623a51",
-      "status": "first_iteration_checkpoint_complete_second_iteration_collecting",
+      "status": "complete",
       "created_at_shanghai": "2026-11-06 01:34:45",
       "gpus": 4,
       "cpus": 64,
@@ -197,17 +197,17 @@
       "checkpoint_rng_tests_passed": 6,
       "worker_restoration_passed": 12,
       "camera_views_verified": 768,
-      "scene_binding_batches": 16,
-      "optimizer_updates": 20,
-      "completed_source_rounds": 4,
-      "resolved_source_controls": 409600,
+      "scene_binding_batches": 32,
+      "optimizer_updates": 40,
+      "completed_source_rounds": 8,
+      "resolved_source_controls": 819200,
       "observed_host_current_gib": 378.06,
-      "completed_rollout_iterations": 1,
+      "completed_rollout_iterations": 2,
       "actor_optimizer_steps": [
-        20,
-        20,
-        20,
-        20
+        40,
+        40,
+        40,
+        40
       ],
       "checkpoint1_integrity_files": 17,
       "checkpoint1_integrity_bytes": 11177195667,
@@ -217,13 +217,29 @@
       "first_iteration_actor_training_seconds": 532.2,
       "training_success_once": 0.17773438,
       "heldout_comparison": false,
-      "charged_source_motor_commands": 409600,
+      "charged_source_motor_commands": 819200,
       "measured_executed_source_motor_commands": null,
-      "physics_integration_substeps": null
+      "physics_integration_substeps": null,
+      "ended_at_shanghai": "2026-11-06 03:29:28",
+      "scheduler_gpu_seconds": 27484,
+      "creation_to_release_gpu_seconds": 27532,
+      "worker_gpu_seconds": 27448,
+      "charged_setup_allowances": 23040,
+      "total_new_conservative_slots": 842240,
+      "shared_lineage_total_conservative_slots": 1128960,
+      "unresolved_journal_calls": 0,
+      "canonical_rollout_receipts": 8,
+      "final_checkpoint_integrity_files": 17,
+      "final_checkpoint_integrity_bytes": 11177195539,
+      "frozen_after_unchanged_checks": 8,
+      "output_allocated_gib": 114.97007417678833,
+      "second_iteration_rollout_seconds": 2706.2,
+      "second_iteration_actor_training_seconds": 530.6,
+      "second_training_success_once": 0.20800781
     }
   ],
   "config_validation_passed": true,
-  "additional_scheduler_gpu_seconds_completed": 28794,
+  "additional_scheduler_gpu_seconds_completed": 60398,
   "additional_envelope_gpu_hours": 23,
   "task_scope_limit_gpu_hours": 50,
   "resume_dir": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03/sidney-native-two/checkpoints/global_step_0",
@@ -296,9 +312,9 @@
       "outcome": "All four candidates64/128/256/512 completed four native FSDP/PPO updates on all four ranks.64 fastest including conditional reference overhead;512 has only1.00GB reserved headroom."
     }
   ],
-  "active_gpu_jobs": 1,
-  "additional_scheduler_gpu_hours_completed": 7.998333333333333,
-  "cumulative_scheduler_gpu_hours_completed": 8.709722222222222,
+  "active_gpu_jobs": 0,
+  "additional_scheduler_gpu_hours_completed": 16.77722222222222,
+  "cumulative_scheduler_gpu_hours_completed": 17.488611111111112,
   "storage_admission": {
     "status": "admitted_combined_371GiB_threshold",
     "last_observed_free_gib": 702.76171875,
@@ -365,7 +381,7 @@
       "canonical_compression_enabled": false
     }
   ],
-  "additional_conservative_gpu_seconds_completed": 29013,
+  "additional_conservative_gpu_seconds_completed": 60745,
   "core_storage_tests_passed": 6,
   "maximum_cumulative_charged_actions": 1200000,
   "memory_diagnostics": [
@@ -525,9 +541,19 @@
         "worker_gpu_seconds": 184,
         "physical_controls": 0,
         "optimizer_updates": 0
+      },
+      {
+        "job_id": "job-l218ew6o4lfw",
+        "scheduler_gpu_seconds": 4120,
+        "creation_to_release_gpu_seconds": 4200,
+        "worker_gpu_seconds": 4004,
+        "optimizer_updates": 0,
+        "groups_initial_identity_passed": 32,
+        "replicas_per_group": 8
       }
     ],
     "retry_identity": "qual02"
   },
-  "action_accounting_measurement": "Requested/conservatively charged native motor commands; measured executed motor calls and physics substeps unknown. See train07/CONTROL-ACCOUNTING.md"
+  "action_accounting_measurement": "Requested/conservatively charged native motor commands; measured executed motor calls and physics substeps unknown. See train07/CONTROL-ACCOUNTING.md",
+  "released_current_pilot_reservation_gpu_seconds": 13508
 }
