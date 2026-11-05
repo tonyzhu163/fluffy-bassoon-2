@@ -1,0 +1,151 @@
+{
+  "checked_shanghai": "2026-11-05T17:06:18.932329+08:00",
+  "cluster": "Baige Pro6K",
+  "retry_source_commit": "27b97440e19fe953f56e6c09de7fc00e810abf58",
+  "preserved_contract_commit": "1c88834265cfadc511ba62cac48db0542ad0ebd1",
+  "models": {
+    "kv_bridge/ad": {
+      "job_id": "job-61n1pq1jr89k",
+      "scheduler_status": "Running",
+      "saved_update": 1300,
+      "best_validation_flow_loss": 0.1320802050177008,
+      "converged": false,
+      "actual_GPU_probe_passed": true,
+      "native_parameters_frozen": true
+    },
+    "kv_bridge/dpt": {
+      "job_id": "job-9tbyvcoeoho8",
+      "scheduler_status": "Running",
+      "saved_update": 100,
+      "best_validation_flow_loss": 0.11024990072473884,
+      "converged": false,
+      "actual_GPU_probe_passed": true,
+      "native_parameters_frozen": true,
+      "restored_update": 100,
+      "full_checkpoint_restore_verified": true,
+      "post_resume_saved_update_advanced": false,
+      "latest_worker_log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/workflows/kv_bridge/dpt/train-fit-kv-dpt-02-00.log",
+      "worker_failed": false,
+      "verified_storage_retry_warning_count": 0
+    },
+    "kv_bridge/dit": {
+      "job_id": "job-xhx370h5ad90",
+      "scheduler_status": "Running",
+      "saved_update": 900,
+      "best_validation_flow_loss": 0.13428561855107546,
+      "converged": false,
+      "actual_GPU_probe_passed": true,
+      "native_parameters_frozen": true,
+      "restored_update": 875,
+      "full_checkpoint_restore_verified": true,
+      "post_resume_saved_update_advanced": true,
+      "latest_worker_log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/workflows/kv_bridge/dit/train-fit-kv-dit-02-00.log",
+      "worker_failed": false,
+      "verified_storage_retry_warning_count": 0
+    },
+    "kv_bridge/ic_iql": {
+      "job_id": "job-d0z3ar9iwhfx",
+      "scheduler_status": "Running",
+      "saved_update": 700,
+      "best_validation_flow_loss": 0.13319079345092177,
+      "converged": false,
+      "actual_GPU_probe_passed": true,
+      "native_parameters_frozen": true,
+      "restored_update": 700,
+      "full_checkpoint_restore_verified": true,
+      "post_resume_saved_update_advanced": false,
+      "latest_worker_log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/workflows/kv_bridge/ic_iql/train-fit-kv-ic_iql-02-00.log",
+      "worker_failed": false,
+      "verified_storage_retry_warning_count": 0
+    },
+    "velocity_bridge/ad": {
+      "job_id": "job-2et0mh1b4csr",
+      "scheduler_status": "Running",
+      "saved_update": 328,
+      "best_validation_flow_loss": 0.1337536135688424,
+      "converged": false,
+      "actual_GPU_probe_passed": true,
+      "native_parameters_frozen": true,
+      "restored_update": 328,
+      "full_checkpoint_restore_verified": true,
+      "post_resume_saved_update_advanced": false,
+      "latest_worker_log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/workflows/velocity_bridge/ad/train-fit-vel-ad-02-00.log",
+      "worker_failed": false,
+      "verified_storage_retry_warning_count": 0
+    },
+    "velocity_bridge/dpt": {
+      "job_id": "job-srxiwrhs5iw3",
+      "scheduler_status": "Running",
+      "saved_update": 100,
+      "best_validation_flow_loss": 0.11041463864967227,
+      "converged": false,
+      "actual_GPU_probe_passed": true,
+      "native_parameters_frozen": true,
+      "restored_update": 100,
+      "full_checkpoint_restore_verified": true,
+      "post_resume_saved_update_advanced": false,
+      "latest_worker_log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/workflows/velocity_bridge/dpt/train-fit-vel-dpt-02-00.log",
+      "worker_failed": false,
+      "verified_storage_retry_warning_count": 0
+    },
+    "velocity_bridge/dit": {
+      "job_id": "job-k7bmvj2sjnus",
+      "scheduler_status": "Running",
+      "saved_update": 1,
+      "best_validation_flow_loss": 0.13599334051832557,
+      "converged": false,
+      "actual_GPU_probe_passed": true,
+      "native_parameters_frozen": true,
+      "restored_update": 1,
+      "full_checkpoint_restore_verified": true,
+      "post_resume_saved_update_advanced": false,
+      "latest_worker_log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/workflows/velocity_bridge/dit/train-fit-vel-dit-02-00.log",
+      "worker_failed": false,
+      "verified_storage_retry_warning_count": 0
+    },
+    "velocity_bridge/ic_iql": {
+      "job_id": "job-rseimb87nbjg",
+      "scheduler_status": "Running",
+      "saved_update": 1000,
+      "best_validation_flow_loss": 0.13386612641625106,
+      "converged": false,
+      "actual_GPU_probe_passed": true,
+      "native_parameters_frozen": true
+    }
+  },
+  "Linux_CPU_tests": {
+    "passed": 15,
+    "seconds": 84.13,
+    "files": [
+      "tests/test_flow_source_queries.py",
+      "tests/test_flow_bridge_train.py"
+    ]
+  },
+  "verified_real_source_members": 15,
+  "input_checkpoints_preserved": true,
+  "approved_GPU_hours": 150,
+  "charged_GPU_hours_conservative_creation_to_release": 99.72262739777779,
+  "maximum_committed_GPU_hours": 141.19555555555556,
+  "uncommitted_GPU_hours": 8.804444444444442,
+  "watcher": {
+    "pid": 2685729,
+    "command": [
+      "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+      "-B",
+      "/mowenjie/fluffy-bassoon-2/sources/steering-watch-33d165a0/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/WATCH.py",
+      "--auditor",
+      "/mowenjie/fluffy-bassoon-2/sources/steering-watch-33d165a0/outputs/robocasa-eight-hour-babysit-20261104-r1/AUDIT-ROLLOUT.py",
+      "--job-id",
+      "job-61n1pq1jr89k,job-rseimb87nbjg,job-9tbyvcoeoho8,job-xhx370h5ad90,job-d0z3ar9iwhfx,job-2et0mh1b4csr,job-srxiwrhs5iw3,job-k7bmvj2sjnus"
+    ],
+    "source_commit": "33d165a0f50073a9a25c4d0572dfd76cca84f110",
+    "started_unix": 1793868132.0574846,
+    "cadence_seconds": 1200,
+    "latest_worker_tracebacks_recorded": true,
+    "closed_wave_audit_and_verified_archive": true
+  },
+  "next_monitor_check_shanghai": "2026-11-05T17:22:23.756437+08:00",
+  "worker_diagnostic": "worker-kv-dit-syscall.json",
+  "remaining_bottleneck": "Mounted BOS archive pread spends substantial time waiting in FUSE; successful post-resume KV DIT update900 saved with frozen native parameters; no permanent corruption established",
+  "direct_download_check": "Anonymous HTTP403 and configured CLI metadata AccessDenied; mounted reads remain the authorized data path; no credentials extracted or changed"
+}

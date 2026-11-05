@@ -1,27 +1,32 @@
 {
   "cluster": "Baige Pro6K",
-  "job_id": "job-61n1pq1jr89k,job-9q09tv5vh5xe,job-9kwr019rpa4a,job-0uzh5p9v1dag,job-rzjllx4ofkbt,job-zje19i0f7rii,job-4ei8atjsuxi5,job-rseimb87nbjg",
-  "checked_shanghai": "2026-11-05T12:38:11.197970+08:00",
-  "charged_GPU_hours": 74.82043993333333,
-  "remaining_GPU_hours": 75.17956006666667,
+  "job_id": "job-61n1pq1jr89k,job-rseimb87nbjg,job-9tbyvcoeoho8,job-xhx370h5ad90,job-d0z3ar9iwhfx,job-2et0mh1b4csr,job-srxiwrhs5iw3,job-k7bmvj2sjnus",
+  "checked_shanghai": "2026-11-05T17:02:23.756437+08:00",
+  "charged_GPU_hours": 99.20001430444447,
+  "remaining_GPU_hours": 50.799985695555534,
   "methods": {
     "kv_bridge/ad": {
       "status": {
-        "update": 1,
-        "best_loss": 0.13430013810284436,
+        "update": 1300,
+        "best_loss": 0.1320802050177008,
         "plateau": {
-          "reference": 0.13430013810284436,
-          "stale_checks": 0,
+          "reference": 0.13214780599810183,
+          "stale_checks": 1,
           "converged": false
         },
         "converged": false,
-        "elapsed_seconds": 46.068832797929645,
+        "elapsed_seconds": 15402.376487108879,
         "stop_reason": "operational_checkpoint",
         "native_parameters_frozen": true,
         "interface": "kv_bridge",
         "objective": "ad"
       },
-      "checkpoint_mtime": 1793853235.4613295,
+      "checkpoint_mtime": 1793868796.1847827,
+      "latest_worker_log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/workflows/kv_bridge/ad/train-fit-kv-ad-01-02.log",
+      "latest_worker_log_mtime": 1793868796.119633,
+      "worker_failed": false,
+      "last_worker_error": null,
+      "workflow_result": null,
       "readouts": {
         "ID": null,
         "OOD": null
@@ -29,21 +34,26 @@
     },
     "kv_bridge/dpt": {
       "status": {
-        "update": 1,
-        "best_loss": 0.11170502356253564,
+        "update": 100,
+        "best_loss": 0.11024990072473884,
         "plateau": {
-          "reference": 0.11170502356253564,
+          "reference": 0.11024990072473884,
           "stale_checks": 0,
           "converged": false
         },
         "converged": false,
-        "elapsed_seconds": 119.06416392792016,
+        "elapsed_seconds": 982.9823796143755,
         "stop_reason": "operational_checkpoint",
         "native_parameters_frozen": true,
         "interface": "kv_bridge",
         "objective": "dpt"
       },
-      "checkpoint_mtime": 1793853347.8914442,
+      "checkpoint_mtime": 1793854211.8018308,
+      "latest_worker_log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/workflows/kv_bridge/dpt/train-fit-kv-dpt-02-00.log",
+      "latest_worker_log_mtime": 1793867380.7211003,
+      "worker_failed": false,
+      "last_worker_error": null,
+      "workflow_result": null,
       "readouts": {
         "ID": null,
         "OOD": null
@@ -51,66 +61,166 @@
     },
     "kv_bridge/dit": {
       "status": {
-        "update": 1,
-        "best_loss": 0.13605371792800725,
+        "update": 900,
+        "best_loss": 0.13428561855107546,
         "plateau": {
-          "reference": 0.13605371792800725,
+          "reference": 0.1349336220882833,
           "stale_checks": 0,
           "converged": false
         },
         "converged": false,
-        "elapsed_seconds": 131.77232408616692,
+        "elapsed_seconds": 14030.806233751588,
         "stop_reason": "operational_checkpoint",
         "native_parameters_frozen": true,
         "interface": "kv_bridge",
         "objective": "dit"
       },
-      "checkpoint_mtime": 1793853427.2935445,
+      "checkpoint_mtime": 1793868897.9433029,
+      "latest_worker_log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/workflows/kv_bridge/dit/train-fit-kv-dit-02-00.log",
+      "latest_worker_log_mtime": 1793868897.8699315,
+      "worker_failed": false,
+      "last_worker_error": null,
+      "workflow_result": null,
       "readouts": {
         "ID": null,
         "OOD": null
       }
     },
     "kv_bridge/ic_iql": {
-      "status": null,
-      "checkpoint_mtime": null,
+      "status": {
+        "update": 700,
+        "best_loss": 0.13319079345092177,
+        "plateau": {
+          "reference": 0.1334379797335714,
+          "stale_checks": 0,
+          "converged": false
+        },
+        "converged": false,
+        "elapsed_seconds": 10403.037725666538,
+        "stop_reason": "operational_checkpoint",
+        "native_parameters_frozen": true,
+        "interface": "kv_bridge",
+        "objective": "ic_iql"
+      },
+      "checkpoint_mtime": 1793864966.5011141,
+      "latest_worker_log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/workflows/kv_bridge/ic_iql/train-fit-kv-ic_iql-02-00.log",
+      "latest_worker_log_mtime": 1793867567.551916,
+      "worker_failed": false,
+      "last_worker_error": null,
+      "workflow_result": null,
       "readouts": {
         "ID": null,
         "OOD": null
       }
     },
     "velocity_bridge/ad": {
-      "status": null,
-      "checkpoint_mtime": null,
+      "status": {
+        "update": 328,
+        "best_loss": 0.1337536135688424,
+        "plateau": {
+          "reference": 0.13421811955049634,
+          "stale_checks": 0,
+          "converged": false
+        },
+        "converged": false,
+        "elapsed_seconds": 6331.129593232181,
+        "stop_reason": "operational_checkpoint",
+        "native_parameters_frozen": true,
+        "interface": "velocity_bridge",
+        "objective": "ad"
+      },
+      "checkpoint_mtime": 1793861002.0633733,
+      "latest_worker_log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/workflows/velocity_bridge/ad/train-fit-vel-ad-02-00.log",
+      "latest_worker_log_mtime": 1793867621.044932,
+      "worker_failed": false,
+      "last_worker_error": null,
+      "workflow_result": null,
       "readouts": {
         "ID": null,
         "OOD": null
       }
     },
     "velocity_bridge/dpt": {
-      "status": null,
-      "checkpoint_mtime": null,
+      "status": {
+        "update": 100,
+        "best_loss": 0.11041463864967227,
+        "plateau": {
+          "reference": 0.11041463864967227,
+          "stale_checks": 0,
+          "converged": false
+        },
+        "converged": false,
+        "elapsed_seconds": 2494.080171187874,
+        "stop_reason": "operational_checkpoint",
+        "native_parameters_frozen": true,
+        "interface": "velocity_bridge",
+        "objective": "dpt"
+      },
+      "checkpoint_mtime": 1793857164.937087,
+      "latest_worker_log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/workflows/velocity_bridge/dpt/train-fit-vel-dpt-02-00.log",
+      "latest_worker_log_mtime": 1793867698.436962,
+      "worker_failed": false,
+      "last_worker_error": null,
+      "workflow_result": null,
       "readouts": {
         "ID": null,
         "OOD": null
       }
     },
     "velocity_bridge/dit": {
-      "status": null,
-      "checkpoint_mtime": null,
+      "status": {
+        "update": 1,
+        "best_loss": 0.13599334051832557,
+        "plateau": {
+          "reference": 0.13599334051832557,
+          "stale_checks": 0,
+          "converged": false
+        },
+        "converged": false,
+        "elapsed_seconds": 254.8910420536995,
+        "stop_reason": "operational_checkpoint",
+        "native_parameters_frozen": true,
+        "interface": "velocity_bridge",
+        "objective": "dit"
+      },
+      "checkpoint_mtime": 1793858532.977593,
+      "latest_worker_log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/workflows/velocity_bridge/dit/train-fit-vel-dit-02-00.log",
+      "latest_worker_log_mtime": 1793867821.1085088,
+      "worker_failed": false,
+      "last_worker_error": null,
+      "workflow_result": null,
       "readouts": {
         "ID": null,
         "OOD": null
       }
     },
     "velocity_bridge/ic_iql": {
-      "status": null,
-      "checkpoint_mtime": null,
+      "status": {
+        "update": 1000,
+        "best_loss": 0.13386612641625106,
+        "plateau": {
+          "reference": 0.13446938898414373,
+          "stale_checks": 1,
+          "converged": false
+        },
+        "converged": false,
+        "elapsed_seconds": 9940.377410414629,
+        "stop_reason": "operational_checkpoint",
+        "native_parameters_frozen": true,
+        "interface": "velocity_bridge",
+        "objective": "ic_iql"
+      },
+      "checkpoint_mtime": 1793868314.0115683,
+      "latest_worker_log": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/workflows/velocity_bridge/ic_iql/train-fit-vel-ic_iql-01-01.log",
+      "latest_worker_log_mtime": 1793868313.942045,
+      "worker_failed": false,
+      "last_worker_error": null,
+      "workflow_result": null,
       "readouts": {
         "ID": null,
         "OOD": null
       }
     }
   },
-  "next_check_shanghai": "2026-11-05T12:58:11.197970+08:00"
+  "next_check_shanghai": "2026-11-05T17:22:23.756437+08:00"
 }
