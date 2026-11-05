@@ -1,5 +1,5 @@
 {
-  "checked_shanghai": "2026-11-06T00:06:30.007601+08:00",
+  "checked_shanghai": "2026-11-06T01:07:00.155236+08:00",
   "cluster": "Baige Pro6K",
   "status": "PFS_migrated_seven_fits_plateau_DIT_continuing_fitted_and_packed_qualification_passed",
   "source_commit": "0368b3fd44d0f5cb87c70439a823296832b69428",
@@ -58,21 +58,21 @@
       "job_id": "job-8nwofgy7ymu8",
       "scheduler_status": "Running",
       "restored_update": 5485,
-      "saved_update": 6200,
-      "post_resume_saved_updates": 715,
+      "saved_update": 7400,
+      "post_resume_saved_updates": 1915,
       "full_policy_Adam_sampler_global_and_flow_RNG_restore": true,
       "input_checkpoint_sha256": "3582499a3070153332981560235f190bb112419a6ca2dd54bf1c9b8f6eaaa192",
       "member_cache_manifest_sha256": "62606233074f623341acbddd3da5ea6c70865e01ab86f7a0a2fe34958d8afb12",
       "allocated_GPU_probe_passed": true,
       "native_parameters_frozen": true,
       "converged": false,
-      "best_validation_flow_loss": 0.1250764038413763,
+      "best_validation_flow_loss": 0.12326905317604542,
       "plateau": {
-        "reference": 0.1250764038413763,
-        "stale_checks": 0,
+        "reference": 0.12385996151715517,
+        "stale_checks": 5,
         "converged": false
       },
-      "equivalent_epochs": 0.09462759462759462,
+      "equivalent_epochs": 0.11294261294261294,
       "worker_traceback": false,
       "early_post_PFS_seconds_per_update_including_validation": 2.7855551072154885,
       "previous_PFS_job": {
@@ -243,7 +243,7 @@
   "next_check_shanghai": "2026-11-06T00:26:30.007601+08:00",
   "budget": {
     "approved_GPU_hours": 150,
-    "charged_GPU_hours": 124.4847134302778,
+    "charged_GPU_hours": 125.46948756555558,
     "maximum_committed_GPU_hours": 127.79444444444447,
     "uncommitted_GPU_hours": 22.205555555555534,
     "proposed_total_GPU_hours": 190,
@@ -263,5 +263,7 @@
     "minimum_free_PFS_GiB": 411,
     "source_cache_and_checkpoints_untouched": true,
     "raw_recovery": "SHA-verified tar plus complete member manifest and explicit stage-back; unchanged result/audit metadata retained hot"
-  }
+  },
+  "closed_fit_recovery_index": "finalized-fits-20261106-r1/INDEX.json",
+  "seven_closed_fits_complete_state_SHA_and_finite_RNG_checks": true
 }
