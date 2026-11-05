@@ -1,0 +1,448 @@
+{
+  "checked_shanghai": "2026-11-05T11:02:35.675219+08:00",
+  "cluster": "Baige Pro6K",
+  "job_id": "job-nvoaf376pbdj",
+  "original_fit_job_id": "job-967y1maorj80",
+  "learner_commit": "d71cb532",
+  "active_fit_jobs": [
+    "job-nvoaf376pbdj"
+  ],
+  "methods": {
+    "ad": {
+      "status": {
+        "converged": true,
+        "update": 14800,
+        "best_validation_nll": -198.26115429401398,
+        "plateau": {
+          "reference": -198.26115429401398,
+          "stale_checks": 10,
+          "converged": true
+        },
+        "elapsed_seconds": 20433.9906375492,
+        "stop_reason": "validation_plateau"
+      },
+      "latest_metric": {
+        "update": 14800,
+        "elapsed_seconds": 20433.9906375492,
+        "validation_nll": -198.20544576644897,
+        "nll": -286.9975280761719,
+        "gradient_norm": 722.4791259765625,
+        "update_seconds": 1.3127203034237027,
+        "valid_positions": 552,
+        "logical_batch_size": 8,
+        "execution_batch_size": 8,
+        "cuda_peak_allocated_bytes": 5791729664,
+        "plateau": {
+          "reference": -198.26115429401398,
+          "stale_checks": 10,
+          "converged": true
+        }
+      },
+      "recent_metrics_finite": true,
+      "metric_age_seconds": 27580.81,
+      "checkpoint_age_seconds": 27580.75,
+      "candidate_bytes": 22394505
+    },
+    "dpt": {
+      "status": {
+        "converged": true,
+        "update": 16200,
+        "best_validation_nll": -236.91089487075806,
+        "plateau": {
+          "reference": -236.6782808303833,
+          "stale_checks": 10,
+          "converged": true
+        },
+        "elapsed_seconds": 22778.291457260028,
+        "stop_reason": "validation_plateau"
+      },
+      "latest_metric": {
+        "update": 16200,
+        "elapsed_seconds": 22778.291457260028,
+        "validation_nll": -236.91089487075806,
+        "nll": -323.8204040527344,
+        "gradient_norm": 1191.13818359375,
+        "update_seconds": 1.3874183911830187,
+        "valid_positions": 768,
+        "logical_batch_size": 8,
+        "execution_batch_size": 8,
+        "cuda_peak_allocated_bytes": 5791580160,
+        "plateau": {
+          "reference": -236.6782808303833,
+          "stale_checks": 10,
+          "converged": true
+        }
+      },
+      "recent_metrics_finite": true,
+      "metric_age_seconds": 25229.73,
+      "checkpoint_age_seconds": 25229.61,
+      "candidate_bytes": 22394505
+    },
+    "dit": {
+      "status": {
+        "converged": false,
+        "phase": "actor",
+        "update": 11400,
+        "updates": {
+          "value": 2700,
+          "actor": 11400
+        },
+        "best_validation_loss": {
+          "value": 0.19111633393913507,
+          "actor": -179.4802303314209
+        },
+        "elapsed_seconds": 33154.3382664565,
+        "stop_reason": "operational_checkpoint"
+      },
+      "latest_metric": {
+        "phase": "actor",
+        "update": 11400,
+        "validation_loss": -178.78770637512207,
+        "loss": -215.4497833251953,
+        "nll": -214.84762573242188,
+        "weight_mean": 1.0053726434707642,
+        "weight_max": 1.1955853700637817,
+        "gradient_norm": 351.70697021484375
+      },
+      "recent_metrics_finite": true,
+      "metric_age_seconds": 110.93,
+      "checkpoint_age_seconds": 110.62,
+      "candidate_bytes": 22394825
+    },
+    "ic_iql": {
+      "status": {
+        "converged": false,
+        "phase": "actor",
+        "update": 11328,
+        "updates": {
+          "value": 2600,
+          "actor": 11328
+        },
+        "best_validation_loss": {
+          "value": 0.022269945475272834,
+          "actor": -175.88580799102783
+        },
+        "elapsed_seconds": 33124.97709573526,
+        "stop_reason": "operational_checkpoint"
+      },
+      "latest_metric": {
+        "phase": "actor",
+        "update": 11328,
+        "validation_loss": -174.70296531915665,
+        "loss": -203.92808532714844,
+        "nll": -208.74884033203125,
+        "weight_mean": 0.9836733341217041,
+        "weight_max": 1.1875479221343994,
+        "gradient_norm": 422.7967224121094
+      },
+      "recent_metrics_finite": true,
+      "metric_age_seconds": 14040.3,
+      "checkpoint_age_seconds": 14040.03,
+      "candidate_bytes": 22394825
+    }
+  },
+  "worker_release": {
+    "status": "operational_checkpoint",
+    "source_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
+    "hostname": "job-967y1maorj80-master-0",
+    "task": "joint",
+    "started_unix": 1793799397.1442041,
+    "ended_unix": 1793826181.967711,
+    "worker_GPU_hours": 29.760915007591247,
+    "scheduler_charge_pending": true,
+    "exit_codes": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "error_tails": {},
+  "source_budget": {
+    "approved_GPU_hours": 96,
+    "preparation_GPU_hours": 17.57,
+    "allocations": [
+      {
+        "job_id": "job-967y1maorj80",
+        "purpose": "four joint three-task direct-action meta learners",
+        "GPUs": 4,
+        "created_shanghai": "2026-11-04T21:36:20+08:00",
+        "released_shanghai": "2026-11-05T05:03:08+08:00",
+        "max_reservation_GPU_hours": 32,
+        "kind": "fit",
+        "conservative_GPU_hours": 29.786666666666665
+      },
+      {
+        "job_id": "job-kujwuyw5y6uv",
+        "purpose": "native six-episode qualification",
+        "GPUs": 1,
+        "created_shanghai": "2026-11-04T23:22:57+08:00",
+        "released_shanghai": "2026-11-04T23:38:22+08:00",
+        "conservative_GPU_hours": 0.2569444444444444
+      },
+      {
+        "job_id": "job-xj72fk0yxo5e",
+        "purpose": "native all-layer KV numerical and physical qualification",
+        "GPUs": 1,
+        "created_shanghai": "2026-11-05T00:24:10+08:00",
+        "released_shanghai": "2026-11-05T00:29:57+08:00",
+        "conservative_GPU_hours": 0.09638888888888889
+      },
+      {
+        "job_id": "job-icbta8h6gp49",
+        "purpose": "fixed130 final-policy anchor qualification ID",
+        "GPUs": 1,
+        "created_shanghai": "2026-11-05T00:53:47+08:00",
+        "released_shanghai": "2026-11-05T01:10:15+08:00",
+        "max_reservation_GPU_hours": 0.75,
+        "output": "gpu/native-final-ID-qualification-01",
+        "conservative_GPU_hours": 0.27444444444444444
+      },
+      {
+        "job_id": "job-p4bg9yk8vbcb",
+        "purpose": "production fixed B8 six-episode qualification, original anchor ID",
+        "GPUs": 1,
+        "created_shanghai": "2026-11-05T01:14:42+08:00",
+        "released_shanghai": "2026-11-05T01:31:31+08:00",
+        "max_reservation_GPU_hours": 0.75,
+        "output": "gpu/native-initial-ID-B8-qualification-01",
+        "conservative_GPU_hours": 0.2802777777777778
+      },
+      {
+        "job_id": "job-i7sjmb1kcwmm",
+        "purpose": "original frozen native anchor, full ID50 six-episode panel",
+        "GPUs": 2,
+        "replicas": 2,
+        "created_shanghai": "2026-11-05T01:50:52+08:00",
+        "released_shanghai": "2026-11-05T02:47:27+08:00",
+        "max_reservation_GPU_hours": 2.5,
+        "output": "gpu/native-initial-ID-final-01",
+        "conservative_GPU_hours": 1.886111111111111
+      },
+      {
+        "job_id": "job-3d830xecyx0s",
+        "purpose": "fixed130 native teacher anchor, full ID50 six-episode panel",
+        "GPUs": 2,
+        "replicas": 2,
+        "created_shanghai": "2026-11-05T01:52:51+08:00",
+        "released_shanghai": "2026-11-05T02:52:16+08:00",
+        "max_reservation_GPU_hours": 2.5,
+        "output": "gpu/native-final-ID-final-01",
+        "conservative_GPU_hours": 1.9805555555555556
+      },
+      {
+        "job_id": "job-rknv4x51ygqr",
+        "purpose": "frozen interim AD/DPT/DIT/IC-IQL native ID deployment qualification",
+        "GPUs": 4,
+        "replicas": 4,
+        "created_shanghai": "2026-11-05T02:17:50+08:00",
+        "released_shanghai": "2026-11-05T02:45:06+08:00",
+        "max_reservation_GPU_hours": 3,
+        "output": "gpu/direct-snapshot-ID-qualification-01",
+        "conservative_GPU_hours": 1.8177777777777777
+      },
+      {
+        "job_id": "job-e15gtr27kh0j",
+        "purpose": "original frozen native anchor, contracted two-task OOD50 six-episode panel",
+        "GPUs": 2,
+        "replicas": 2,
+        "created_shanghai": "2026-11-05T02:57:34+08:00",
+        "released_shanghai": "2026-11-05T03:39:51+08:00",
+        "max_reservation_GPU_hours": 2.5,
+        "output": "gpu/native-initial-OOD-final-01",
+        "conservative_GPU_hours": 1.4094444444444445
+      },
+      {
+        "job_id": "job-4cvxzc1m8cx2",
+        "purpose": "designated fixed130 OpenDrawer native teacher anchor, contracted two-task OOD50 panel",
+        "GPUs": 2,
+        "replicas": 2,
+        "created_shanghai": "2026-11-05T03:02:34+08:00",
+        "released_shanghai": "2026-11-05T03:47:11+08:00",
+        "max_reservation_GPU_hours": 2.5,
+        "output": "gpu/native-final-OOD-final-01",
+        "conservative_GPU_hours": 1.4872222222222222
+      },
+      {
+        "job_id": "job-zqllm5eqzgj3",
+        "purpose": "converged AD, full ID50 six-episode full-history and episode-reset panel",
+        "GPUs": 4,
+        "replicas": 4,
+        "created_shanghai": "2026-11-05T03:25:41+08:00",
+        "released_shanghai": "2026-11-05T04:21:44+08:00",
+        "max_reservation_GPU_hours": 5,
+        "output": "gpu/ad-ID-final-01",
+        "conservative_GPU_hours": 3.736666666666667
+      },
+      {
+        "job_id": "job-h62ufmu061kl",
+        "purpose": "converged DPT, full ID50 six-episode full-history and episode-reset panel",
+        "GPUs": 4,
+        "replicas": 4,
+        "created_shanghai": "2026-11-05T04:12:26+08:00",
+        "released_shanghai": "2026-11-05T05:07:23+08:00",
+        "max_reservation_GPU_hours": 5,
+        "output": "gpu/dpt-ID-final-01",
+        "conservative_GPU_hours": 3.6633333333333336
+      },
+      {
+        "job_id": "job-8htog8yitbyq",
+        "purpose": "converged AD, contracted two-task OOD50 full-history and episode-reset panel after audited ID",
+        "GPUs": 4,
+        "replicas": 4,
+        "created_shanghai": "2026-11-05T04:36:16+08:00",
+        "released_shanghai": "2026-11-05T05:16:37+08:00",
+        "max_reservation_GPU_hours": 5,
+        "output": "gpu/ad-OOD-final-01",
+        "conservative_GPU_hours": 2.69
+      },
+      {
+        "job_id": "job-gmk7n873l35e",
+        "purpose": "unchanged D71 full-checkpoint continuation, unfinished DIT and IC-IQL only",
+        "GPUs": 2,
+        "replicas": 1,
+        "created_shanghai": "2026-11-05T05:16:58+08:00",
+        "max_reservation_GPU_hours": 4,
+        "kind": "fit",
+        "output": "continuations/fit-continuation-01",
+        "released_shanghai": "2026-11-05T07:08:47+08:00",
+        "conservative_GPU_hours": 3.727222222222222
+      },
+      {
+        "job_id": "job-bwzckp4hz18i",
+        "purpose": "validation-converged frozen DPT, contracted OOD50 full/reset six-episode panel",
+        "GPUs": 4,
+        "replicas": 4,
+        "created_shanghai": "2026-11-05T05:22:41+08:00",
+        "max_reservation_GPU_hours": 5,
+        "output": "gpu/dpt-OOD-final-01",
+        "released_shanghai": "2026-11-05T06:03:23+08:00",
+        "conservative_GPU_hours": 2.7133333333333334
+      },
+      {
+        "job_id": "job-nvoaf376pbdj",
+        "purpose": "unchanged D71 full-checkpoint continuation02, unfinished DIT and IC-IQL only",
+        "GPUs": 2,
+        "replicas": 1,
+        "created_shanghai": "2026-11-05T10:58:16+08:00",
+        "max_reservation_GPU_hours": 4,
+        "kind": "fit",
+        "output": "continuations/fit-continuation-02",
+        "conservative_GPU_hours": 0.1442640103234185
+      }
+    ],
+    "creation_to_check_GPU_hours_upper": 73.52065289921231,
+    "remaining_GPU_hours_lower": 22.47934710078769,
+    "remaining_after_active_reservations_GPU_hours": 18.623611111111117,
+    "note": "Creation through scheduler release; unreleased allocations charged through this check"
+  },
+  "storage_free_GiB": 361.96875,
+  "scheduler_release_verified": false,
+  "GPU-PROBE.json": {
+    "status": "passed",
+    "purpose": "training",
+    "timing_comparison_eligible": false,
+    "allocation_type": "baige_container",
+    "hostname": "job-nvoaf376pbdj-master-0",
+    "probe_pid": 403,
+    "created_at_utc": "2026-11-05T02:58:59.612614+00:00",
+    "devices": [
+      {
+        "allocation_ordinal": 0,
+        "visibility_token": "0",
+        "cuda_uuid": "5d56c307-8c02-a2ee-c966-457292fa1906",
+        "cuda_name": "NVIDIA RPBZZZ6",
+        "cuda_total_bytes": 101973950464,
+        "pci_bus_id": "0000:61:00.0",
+        "uuid": "GPU-87e78213-ba41-4976-881d-ff4b42d0925d",
+        "inventory": {
+          "index": 0,
+          "uuid": "GPU-87e78213-ba41-4976-881d-ff4b42d0925d",
+          "name": "NVIDIA RPBZZZ6",
+          "memory_total_mib": 97887,
+          "memory_used_mib": 0,
+          "utilization_percent": 0,
+          "pci_bus_id": "00000000:61:00.0"
+        },
+        "allocation_check": {
+          "elements": 1048576,
+          "result": 2097152,
+          "touched_gpu_uuids": [
+            "GPU-87e78213-ba41-4976-881d-ff4b42d0925d"
+          ],
+          "own_pid_gpu_uuids": [
+            "GPU-87e78213-ba41-4976-881d-ff4b42d0925d"
+          ]
+        }
+      },
+      {
+        "allocation_ordinal": 1,
+        "visibility_token": "1",
+        "cuda_uuid": "799fcbb4-1ba8-60cd-833e-10478742af5b",
+        "cuda_name": "NVIDIA RPBZZZ6",
+        "cuda_total_bytes": 101973950464,
+        "pci_bus_id": "0000:62:00.0",
+        "uuid": "GPU-a119c7ab-4690-9623-f550-ed280bc36ccd",
+        "inventory": {
+          "index": 1,
+          "uuid": "GPU-a119c7ab-4690-9623-f550-ed280bc36ccd",
+          "name": "NVIDIA RPBZZZ6",
+          "memory_total_mib": 97887,
+          "memory_used_mib": 0,
+          "utilization_percent": 0,
+          "pci_bus_id": "00000000:62:00.0"
+        },
+        "allocation_check": {
+          "elements": 1048576,
+          "result": 2097152,
+          "touched_gpu_uuids": [
+            "GPU-87e78213-ba41-4976-881d-ff4b42d0925d",
+            "GPU-a119c7ab-4690-9623-f550-ed280bc36ccd"
+          ],
+          "own_pid_gpu_uuids": [
+            "GPU-87e78213-ba41-4976-881d-ff4b42d0925d",
+            "GPU-a119c7ab-4690-9623-f550-ed280bc36ccd"
+          ]
+        }
+      }
+    ],
+    "idle_utilization_required": false,
+    "exclusive_training_admission": true,
+    "admission_policy": "exclusive_scheduler_cuda_pci_pid_memory",
+    "utilization_role": "telemetry_only",
+    "utilization_telemetry": {
+      "GPU-87e78213-ba41-4976-881d-ff4b42d0925d": 0,
+      "GPU-a119c7ab-4690-9623-f550-ed280bc36ccd": 0
+    },
+    "maximum_initial_memory_mib": 256,
+    "gpu_identity_mapping": {
+      "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+      "assigned_nvml_uuids": [
+        "GPU-87e78213-ba41-4976-881d-ff4b42d0925d",
+        "GPU-a119c7ab-4690-9623-f550-ed280bc36ccd"
+      ]
+    },
+    "compute_processes_before": [],
+    "compute_processes_after": [
+      {
+        "gpu_uuid": "GPU-87e78213-ba41-4976-881d-ff4b42d0925d",
+        "pid": 403,
+        "process_name": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+        "memory_used_mib": "640"
+      },
+      {
+        "gpu_uuid": "GPU-a119c7ab-4690-9623-f550-ed280bc36ccd",
+        "pid": 403,
+        "process_name": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+        "memory_used_mib": "640"
+      }
+    ],
+    "topology": "\t\u001b[4mGPU0\tGPU1\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tPHB\tSYS\tSYS\tSYS\tSYS\t0-89\t0\t\tN/A\nGPU1\tPHB\t X \tSYS\tSYS\tSYS\tSYS\t0-89\t0\t\tN/A\nNIC0\tSYS\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
+  },
+  "CLOCK.json": null,
+  "continuation02_log_tails": {
+    "dit": "{\"phase\": \"actor\", \"update\": 11400, \"validation_loss\": -178.78770637512207, \"loss\": -215.4497833251953, \"nll\": -214.84762573242188, \"weight_mean\": 1.0053726434707642, \"weight_max\": 1.1955853700637817, \"gradient_norm\": 351.70697021484375}\n",
+    "ic_iql": "{\"phase\": \"actor\", \"update\": 11400, \"validation_loss\": -174.8568742275238, \"loss\": -193.4139862060547, \"nll\": -198.86328125, \"weight_mean\": 0.9836392998695374, \"weight_max\": 1.3746423721313477, \"gradient_norm\": 464.71405029296875}\n"
+  }
+}

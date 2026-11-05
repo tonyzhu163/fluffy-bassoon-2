@@ -1,17 +1,21 @@
 # Joint three-task training with four GPUs per preparation task
 
-**Status:** Joint fitting is RUNNING on Baige Pro6K as `job-967y1maorj80`,
-4 GPUs total (one per AD, DPT, DIT and IC-IQL), submitted 2026-11-04 21:36:20
-Shanghai. All four actual GPU probes pass; all four learners have finite
-validation results and complete resume checkpoints. AD/DPT reached update100
-at the 21:41 check. DIT/IC-IQL are in their value-learning phase. No convergence
-is declared. The same learner pin `d71cb532` and approved 96 GPU-hour ceiling apply.
+**Status, Nov5:** AD converged at14,800 updates and DPT at16,200 under the
+contracted validation plateau rule. Both value learners converged; the DIT and
+IC-IQL actors remain unfinished. Their full-state checkpoints at11,384/11,328
+actor updates passed the overnight CPU audit and the Nov5 resume hash checks.
+They resumed on Baige Pro6K as `job-nvoaf376pbdj`, created10:58:16 Shanghai,
+2 GPUs total, one per unfinished actor. AD/DPT are omitted from this allocation.
+Both actual GPU probes pass. The learner pin remains `d71cb532`; the previously
+qualified two-method wrapper is `038892d3`, attempt `fit-continuation-02`.
 
-All three preparations succeeded and released by 20:34:15, producing 599,040
-annotations for 17.57 conservative GPU-hours including startup failures. The
-current 8-hour fitting reservation costs at most32 GPU-hours, leaving46.43
-GPU-hours afterward if used in full. Worker monitoring is active every20minutes;
-next21:58 Shanghai. See [EXECUTION.json](EXECUTION.json).
+Preparation produced599,040 annotations for17.57 conservative GPU-hours.
+The shared ledger, including overnight native controls and AD/DPT evaluations,
+charged73.3764/96 GPU-hours before this continuation. Its two-hour limit reserves
+at most4 additional GPU-hours, leaving18.6236 after that reservation. Automatic
+retry is off. Checkpoints retain optimizer, sampler, RNG and plateau state.
+See [EXECUTION.json](EXECUTION.json), [resume preflight](CONTINUATION02-PREFLIGHT.json),
+and [evaluation counts](EVALUATION-SUMMARY-20261105.json).
 
 The three task jobs only prepare data. Each method then trains **one model on
 all three tasks together**: AD, DPT, DIT and IC-IQL use separate objectives and
@@ -86,10 +90,22 @@ and refuses to launch while `launch_hold` is true. Every allocation probes all
 four GPUs, retains scheduler `NVIDIA_VISIBLE_DEVICES` and binds workers through
 the attested CUDA/PCI mapping.
 
-This launcher covers the existing direct-action four-method baseline. Bridge
-training and closed-loop evaluation in the broader original plan remain pending
-implementation/qualification and must fit the same cumulative approved budget.
-The active Stage 1 PPO/GRPO allocation is unchanged.
+This launcher covers the direct-action four-method baseline. Overnight AD/DPT
+ID50 and two-task OOD50 simulator evaluations completed with full-history and
+episode-reset controls. These are direct-action results, distinct from learned
+steering through the frozen action expert. They show no consistent history
+advantage. All continuing work counts against the same96 GPU-hour ceiling.
+
+For this continuation, the immutable wrapper command is:
+
+```bash
+BABYSIT_CODE=/mowenjie/fluffy-bassoon-2/sources/babysit-continue-038892d3 BABYSIT_COMMIT=038892d3896b34b96b2a8da0faf835545a2375c7 BABYSIT_METHODS='dit ic_iql' BABYSIT_ATTEMPT=fit-continuation-02 bash /mowenjie/fluffy-bassoon-2/sources/babysit-continue-038892d3/outputs/robocasa-eight-hour-babysit-20261104-r1/CONTINUE-FITS.sh
+```
+
+The wrapper preserves the original learner and pooled-data identity. Resource
+limits are2 GPUs,32 CPUs,128 GiB RAM,16 GiB SHM and120 minutes. The canonical
+shared ledger is `outputs/robocasa-eight-hour-babysit-20261104-r1/META-ALLOCATION-LEDGER.json`
+on PFS. Reconcile scheduler release there before any subsequent allocation.
 
 ## Pooled-container migration, 2026-11-04
 

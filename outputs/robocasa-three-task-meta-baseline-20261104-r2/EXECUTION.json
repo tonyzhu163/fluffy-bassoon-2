@@ -1,9 +1,9 @@
 {
   "format": "robocasa_joint_three_task_execution_v1",
-  "checked_shanghai": "2026-11-04T21:41:43.498293+08:00",
-  "status": "joint_four_method_fitting_running",
+  "checked_shanghai": "2026-11-05T11:02:35.675219+08:00",
+  "status": "AD_DPT_converged_DIT_IC_IQL_resumed",
   "approved_ceiling_GPU_hours": 96.0,
-  "cumulative_scheduler_GPU_hours": 17.92944254777778,
+  "cumulative_scheduler_GPU_hours": 73.52065289921231,
   "jobs": {
     "job-30kj6dnpleas": {
       "task": "OpenDrawer",
@@ -67,31 +67,212 @@
     "job-967y1maorj80": {
       "task": "joint AD/DPT/DIT/IC-IQL across all three tasks",
       "attempt": "fit-4gpu-01",
-      "status": "Running",
+      "status": "Succeeded",
       "created_shanghai": "2026-11-04T21:36:20+08:00",
       "source_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
       "GPU_count": 4,
       "wall_minutes": 480,
       "reserved_GPU_hours": 32,
       "GPU_probe": "Passed actual allocation, CUDA/PCI/PID and tensor checks on all four GPUs",
-      "global_batch_per_method": 8
+      "global_batch_per_method": 8,
+      "job_id": "job-967y1maorj80",
+      "purpose": "four joint three-task direct-action meta learners",
+      "GPUs": 4,
+      "released_shanghai": "2026-11-05T05:03:08+08:00",
+      "max_reservation_GPU_hours": 32,
+      "kind": "fit",
+      "conservative_GPU_hours": 29.786666666666665
+    },
+    "job-kujwuyw5y6uv": {
+      "job_id": "job-kujwuyw5y6uv",
+      "purpose": "native six-episode qualification",
+      "GPUs": 1,
+      "created_shanghai": "2026-11-04T23:22:57+08:00",
+      "released_shanghai": "2026-11-04T23:38:22+08:00",
+      "conservative_GPU_hours": 0.2569444444444444,
+      "status": "Succeeded"
+    },
+    "job-xj72fk0yxo5e": {
+      "job_id": "job-xj72fk0yxo5e",
+      "purpose": "native all-layer KV numerical and physical qualification",
+      "GPUs": 1,
+      "created_shanghai": "2026-11-05T00:24:10+08:00",
+      "released_shanghai": "2026-11-05T00:29:57+08:00",
+      "conservative_GPU_hours": 0.09638888888888889,
+      "status": "Succeeded"
+    },
+    "job-icbta8h6gp49": {
+      "job_id": "job-icbta8h6gp49",
+      "purpose": "fixed130 final-policy anchor qualification ID",
+      "GPUs": 1,
+      "created_shanghai": "2026-11-05T00:53:47+08:00",
+      "released_shanghai": "2026-11-05T01:10:15+08:00",
+      "max_reservation_GPU_hours": 0.75,
+      "output": "gpu/native-final-ID-qualification-01",
+      "conservative_GPU_hours": 0.27444444444444444,
+      "status": "Succeeded"
+    },
+    "job-p4bg9yk8vbcb": {
+      "job_id": "job-p4bg9yk8vbcb",
+      "purpose": "production fixed B8 six-episode qualification, original anchor ID",
+      "GPUs": 1,
+      "created_shanghai": "2026-11-05T01:14:42+08:00",
+      "released_shanghai": "2026-11-05T01:31:31+08:00",
+      "max_reservation_GPU_hours": 0.75,
+      "output": "gpu/native-initial-ID-B8-qualification-01",
+      "conservative_GPU_hours": 0.2802777777777778,
+      "status": "Succeeded"
+    },
+    "job-i7sjmb1kcwmm": {
+      "job_id": "job-i7sjmb1kcwmm",
+      "purpose": "original frozen native anchor, full ID50 six-episode panel",
+      "GPUs": 2,
+      "replicas": 2,
+      "created_shanghai": "2026-11-05T01:50:52+08:00",
+      "released_shanghai": "2026-11-05T02:47:27+08:00",
+      "max_reservation_GPU_hours": 2.5,
+      "output": "gpu/native-initial-ID-final-01",
+      "conservative_GPU_hours": 1.886111111111111,
+      "status": "Succeeded"
+    },
+    "job-3d830xecyx0s": {
+      "job_id": "job-3d830xecyx0s",
+      "purpose": "fixed130 native teacher anchor, full ID50 six-episode panel",
+      "GPUs": 2,
+      "replicas": 2,
+      "created_shanghai": "2026-11-05T01:52:51+08:00",
+      "released_shanghai": "2026-11-05T02:52:16+08:00",
+      "max_reservation_GPU_hours": 2.5,
+      "output": "gpu/native-final-ID-final-01",
+      "conservative_GPU_hours": 1.9805555555555556,
+      "status": "Succeeded"
+    },
+    "job-rknv4x51ygqr": {
+      "job_id": "job-rknv4x51ygqr",
+      "purpose": "frozen interim AD/DPT/DIT/IC-IQL native ID deployment qualification",
+      "GPUs": 4,
+      "replicas": 4,
+      "created_shanghai": "2026-11-05T02:17:50+08:00",
+      "released_shanghai": "2026-11-05T02:45:06+08:00",
+      "max_reservation_GPU_hours": 3,
+      "output": "gpu/direct-snapshot-ID-qualification-01",
+      "conservative_GPU_hours": 1.8177777777777777,
+      "status": "Succeeded"
+    },
+    "job-e15gtr27kh0j": {
+      "job_id": "job-e15gtr27kh0j",
+      "purpose": "original frozen native anchor, contracted two-task OOD50 six-episode panel",
+      "GPUs": 2,
+      "replicas": 2,
+      "created_shanghai": "2026-11-05T02:57:34+08:00",
+      "released_shanghai": "2026-11-05T03:39:51+08:00",
+      "max_reservation_GPU_hours": 2.5,
+      "output": "gpu/native-initial-OOD-final-01",
+      "conservative_GPU_hours": 1.4094444444444445,
+      "status": "Succeeded"
+    },
+    "job-4cvxzc1m8cx2": {
+      "job_id": "job-4cvxzc1m8cx2",
+      "purpose": "designated fixed130 OpenDrawer native teacher anchor, contracted two-task OOD50 panel",
+      "GPUs": 2,
+      "replicas": 2,
+      "created_shanghai": "2026-11-05T03:02:34+08:00",
+      "released_shanghai": "2026-11-05T03:47:11+08:00",
+      "max_reservation_GPU_hours": 2.5,
+      "output": "gpu/native-final-OOD-final-01",
+      "conservative_GPU_hours": 1.4872222222222222,
+      "status": "Succeeded"
+    },
+    "job-zqllm5eqzgj3": {
+      "job_id": "job-zqllm5eqzgj3",
+      "purpose": "converged AD, full ID50 six-episode full-history and episode-reset panel",
+      "GPUs": 4,
+      "replicas": 4,
+      "created_shanghai": "2026-11-05T03:25:41+08:00",
+      "released_shanghai": "2026-11-05T04:21:44+08:00",
+      "max_reservation_GPU_hours": 5,
+      "output": "gpu/ad-ID-final-01",
+      "conservative_GPU_hours": 3.736666666666667,
+      "status": "Succeeded"
+    },
+    "job-h62ufmu061kl": {
+      "job_id": "job-h62ufmu061kl",
+      "purpose": "converged DPT, full ID50 six-episode full-history and episode-reset panel",
+      "GPUs": 4,
+      "replicas": 4,
+      "created_shanghai": "2026-11-05T04:12:26+08:00",
+      "released_shanghai": "2026-11-05T05:07:23+08:00",
+      "max_reservation_GPU_hours": 5,
+      "output": "gpu/dpt-ID-final-01",
+      "conservative_GPU_hours": 3.6633333333333336,
+      "status": "Succeeded"
+    },
+    "job-8htog8yitbyq": {
+      "job_id": "job-8htog8yitbyq",
+      "purpose": "converged AD, contracted two-task OOD50 full-history and episode-reset panel after audited ID",
+      "GPUs": 4,
+      "replicas": 4,
+      "created_shanghai": "2026-11-05T04:36:16+08:00",
+      "released_shanghai": "2026-11-05T05:16:37+08:00",
+      "max_reservation_GPU_hours": 5,
+      "output": "gpu/ad-OOD-final-01",
+      "conservative_GPU_hours": 2.69,
+      "status": "Succeeded"
+    },
+    "job-gmk7n873l35e": {
+      "job_id": "job-gmk7n873l35e",
+      "purpose": "unchanged D71 full-checkpoint continuation, unfinished DIT and IC-IQL only",
+      "GPUs": 2,
+      "replicas": 1,
+      "created_shanghai": "2026-11-05T05:16:58+08:00",
+      "max_reservation_GPU_hours": 4,
+      "kind": "fit",
+      "output": "continuations/fit-continuation-01",
+      "released_shanghai": "2026-11-05T07:08:47+08:00",
+      "conservative_GPU_hours": 3.727222222222222,
+      "status": "Succeeded"
+    },
+    "job-bwzckp4hz18i": {
+      "job_id": "job-bwzckp4hz18i",
+      "purpose": "validation-converged frozen DPT, contracted OOD50 full/reset six-episode panel",
+      "GPUs": 4,
+      "replicas": 4,
+      "created_shanghai": "2026-11-05T05:22:41+08:00",
+      "max_reservation_GPU_hours": 5,
+      "output": "gpu/dpt-OOD-final-01",
+      "released_shanghai": "2026-11-05T06:03:23+08:00",
+      "conservative_GPU_hours": 2.7133333333333334,
+      "status": "Succeeded"
+    },
+    "job-nvoaf376pbdj": {
+      "job_id": "job-nvoaf376pbdj",
+      "purpose": "unchanged D71 full-checkpoint continuation02, unfinished DIT and IC-IQL only",
+      "GPUs": 2,
+      "replicas": 1,
+      "created_shanghai": "2026-11-05T10:58:16+08:00",
+      "max_reservation_GPU_hours": 4,
+      "kind": "fit",
+      "output": "continuations/fit-continuation-02",
+      "conservative_GPU_hours": 0.1442640103234185,
+      "status": "Running"
     }
   },
   "queue": {
     "id": "aihcq-rh0wwk9muei4",
     "name": "\u7b97\u6cd5Z\u7ec4",
     "pool": "Pro6K",
-    "observed_available_GPUs": 63,
+    "observed_available_GPUs": 152,
     "accelerator_type": "NVIDIA RPBZZZ6",
     "four_GPU_template_max_CPUs": 87,
     "four_GPU_template_max_RAM_GiB": 899,
     "user_quota": "not configured; default queue resources",
     "queue_auto_stop": "21 days or GPU utilization <=10% for 12 hours; does not bind 4h/8h allocations",
-    "observed_available_CPUs": 2538,
-    "observed_available_RAM_GiB": 32355
+    "observed_available_CPUs": 4352,
+    "observed_available_RAM_GiB": 52271,
+    "observed_shanghai": "2026-11-05T10:56:00+08:00"
   },
   "storage": {
-    "PFS_free_GiB": 492.46875,
+    "PFS_free_GiB": 361.96875,
     "write_probe": "passed 2026-11-04 18:54 Shanghai",
     "quota_tool_available": false
   },
@@ -100,7 +281,7 @@
     "Linux_CPU_tests": 47,
     "pooled_fixture": "all eight datasets pass"
   },
-  "next_action": "Monitor every 20 minutes; continue checkpointed joint fitting until each method declares validation convergence, within the cumulative 96 GPU-hour cap. Verify scheduler release and cumulative charges before any continuation.",
+  "next_action": "Observe DIT and IC-IQL every20 minutes. Continue unchanged full-state resumes toward validation convergence; reconcile scheduler release and shared96GPUh ledger before each new allocation.",
   "learner_architecture": {
     "width": 256,
     "layers": 6,
@@ -116,15 +297,13 @@
   "deployed_code_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
   "submission_incident": "The first button click submitted despite an unchanged accessibility snapshot; pressing Return submitted again before the loading state appeared. Neither launch advanced beyond startup. Use one submit action and wait for scheduler acceptance before any further action.",
   "terminal_conservative_GPU_seconds": 63252.0,
-  "cumulative_scheduler_GPU_hours_note": "Terminal jobs: 672/3600=0.186667 GPU-hours; active creation-to-now charges added at each check.",
+  "cumulative_scheduler_GPU_hours_note": "Shared ledger includes preparation, all fitting, native controls and overnight AD/DPT ID/OOD evaluations. Active jobs charged through this check.",
   "corpus_mount": {
     "source": "bos://dexmal-mowenjie-data",
     "target": "/mnt/bos/adgfyl",
     "read_only": true
   },
-  "active_conservative_GPU_hours": 0.3594425477777778,
-  "maximum_preparation_reservation_including_failures_GPU_hours": 48.18666666666667,
-  "remaining_after_maximum_preparation_and_initial_fit_GPU_hours": 15.813333333333333,
+  "active_conservative_GPU_hours": 0.1442640103234254,
   "initial_advancement": "INITIAL-ADVANCEMENT.json",
   "monitor": {
     "script": "MONITOR.py",
@@ -138,7 +317,7 @@
     "last_check_shanghai": "2026-11-04T20:34:31.081586+08:00"
   },
   "last_worker_check": "CHECK-20261104-1914.json",
-  "next_worker_check_shanghai": "2026-11-04T21:58:06+08:00",
+  "next_worker_check_shanghai": "2026-11-05T11:20:00+08:00",
   "publication": {
     "status": "local_main_committed_remote_push_blocked",
     "last_published_training_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
@@ -155,9 +334,9 @@
     "steady_drawer_shard01_200_members_seconds": 290.28007221221924,
     "steady_B64_batch_seconds": 5.805601444244385,
     "global_learner_batch": 8,
-    "learner_updates": "not started"
+    "learner_updates": "AD14800/DPT16200 converged; DIT/IC-IQL actors continuing"
   },
-  "remaining_approved_GPU_hours": 78.07055745222222,
+  "remaining_approved_GPU_hours": 22.47934710078769,
   "pooling": {
     "status": "completed_and_verified",
     "GPU_hours": 0,
@@ -171,8 +350,6 @@
     "preflight": "POOLED-PREFLIGHT.json"
   },
   "preparation_final_conservative_GPU_hours": 17.57,
-  "maximum_charge_with_current_fit_GPU_hours": 49.57,
-  "continuation_budget_after_full_current_fit_GPU_hours": 46.43,
   "fit_monitor": {
     "pid": 2131068,
     "job_id": "job-967y1maorj80",
@@ -182,110 +359,177 @@
     "started_shanghai": "2026-11-04T21:38:06.174932+08:00",
     "interval_seconds": 1200,
     "scope": "Read-only metrics/checkpoint/worker status observations; scheduler release requires console",
-    "status": "running"
+    "status": "initial_fit_ended",
+    "replacement": "FIT-MONITOR.py with continuation allocation/probe/ledger arguments"
   },
-  "last_fit_check": "FIT-CHECK-20261104-2141.json",
+  "last_fit_check": "CONTINUATION02-ADVANCEMENT.json",
   "live_contract_validation": "FIT-CONTRACT-VALIDATION.json",
   "last_observed_methods": {
     "ad": {
-      "status": null,
-      "last_metrics": {
-        "update": 100,
-        "elapsed_seconds": 147.01798665802926,
-        "validation_nll": 280.01094818115234,
-        "nll": 272.79425048828125,
-        "gradient_norm": 64.8698501586914,
-        "update_seconds": 1.410680671222508,
-        "valid_positions": 576,
+      "status": {
+        "converged": true,
+        "update": 14800,
+        "best_validation_nll": -198.26115429401398,
+        "plateau": {
+          "reference": -198.26115429401398,
+          "stale_checks": 10,
+          "converged": true
+        },
+        "elapsed_seconds": 20433.9906375492,
+        "stop_reason": "validation_plateau"
+      },
+      "latest_metric": {
+        "update": 14800,
+        "elapsed_seconds": 20433.9906375492,
+        "validation_nll": -198.20544576644897,
+        "nll": -286.9975280761719,
+        "gradient_norm": 722.4791259765625,
+        "update_seconds": 1.3127203034237027,
+        "valid_positions": 552,
         "logical_batch_size": 8,
         "execution_batch_size": 8,
-        "cuda_peak_allocated_bytes": 5791531008,
+        "cuda_peak_allocated_bytes": 5791729664,
         "plateau": {
-          "reference": 280.01094818115234,
-          "stale_checks": 0,
-          "converged": false
+          "reference": -198.26115429401398,
+          "stale_checks": 10,
+          "converged": true
         }
       },
-      "resumable_checkpoint_present": true,
-      "checkpoint_mtime_unix": 1793799603.2274287
+      "recent_metrics_finite": true,
+      "metric_age_seconds": 27580.81,
+      "checkpoint_age_seconds": 27580.75,
+      "candidate_bytes": 22394505
     },
     "dpt": {
-      "status": null,
-      "last_metrics": {
-        "update": 100,
-        "elapsed_seconds": 141.11309914290905,
-        "validation_nll": 281.60266876220703,
-        "nll": 267.1791076660156,
-        "gradient_norm": 74.10948181152344,
-        "update_seconds": 1.3579041492193937,
-        "valid_positions": 576,
+      "status": {
+        "converged": true,
+        "update": 16200,
+        "best_validation_nll": -236.91089487075806,
+        "plateau": {
+          "reference": -236.6782808303833,
+          "stale_checks": 10,
+          "converged": true
+        },
+        "elapsed_seconds": 22778.291457260028,
+        "stop_reason": "validation_plateau"
+      },
+      "latest_metric": {
+        "update": 16200,
+        "elapsed_seconds": 22778.291457260028,
+        "validation_nll": -236.91089487075806,
+        "nll": -323.8204040527344,
+        "gradient_norm": 1191.13818359375,
+        "update_seconds": 1.3874183911830187,
+        "valid_positions": 768,
         "logical_batch_size": 8,
         "execution_batch_size": 8,
-        "cuda_peak_allocated_bytes": 5791531008,
+        "cuda_peak_allocated_bytes": 5791580160,
         "plateau": {
-          "reference": 281.60266876220703,
-          "stale_checks": 0,
-          "converged": false
+          "reference": -236.6782808303833,
+          "stale_checks": 10,
+          "converged": true
         }
       },
-      "resumable_checkpoint_present": true,
-      "checkpoint_mtime_unix": 1793799602.9704878
+      "recent_metrics_finite": true,
+      "metric_age_seconds": 25229.73,
+      "checkpoint_age_seconds": 25229.61,
+      "candidate_bytes": 22394505
     },
     "dit": {
       "status": {
         "converged": false,
-        "phase": "value",
-        "update": 0,
+        "phase": "actor",
+        "update": 11400,
         "updates": {
-          "value": 1,
-          "actor": 0
+          "value": 2700,
+          "actor": 11400
         },
         "best_validation_loss": {
-          "value": 1.0878925547003746,
-          "actor": null
+          "value": 0.19111633393913507,
+          "actor": -179.4802303314209
         },
-        "elapsed_seconds": 22.398940001614392,
+        "elapsed_seconds": 33154.3382664565,
         "stop_reason": "operational_checkpoint"
       },
-      "last_metrics": {
-        "phase": "value",
-        "update": 1,
-        "validation_loss": 1.0878925547003746,
-        "loss": 0.5365909337997437,
-        "q_loss": 0.2130657285451889,
-        "v_loss": 0.32352522015571594,
-        "gradient_norm": 7.9488701820373535
+      "latest_metric": {
+        "phase": "actor",
+        "update": 11400,
+        "validation_loss": -178.78770637512207,
+        "loss": -215.4497833251953,
+        "nll": -214.84762573242188,
+        "weight_mean": 1.0053726434707642,
+        "weight_max": 1.1955853700637817,
+        "gradient_norm": 351.70697021484375
       },
-      "resumable_checkpoint_present": true,
-      "checkpoint_mtime_unix": 1793799483.2916565
+      "recent_metrics_finite": true,
+      "metric_age_seconds": 110.93,
+      "checkpoint_age_seconds": 110.62,
+      "candidate_bytes": 22394825
     },
     "ic_iql": {
       "status": {
         "converged": false,
-        "phase": "value",
-        "update": 0,
+        "phase": "actor",
+        "update": 11328,
         "updates": {
-          "value": 1,
-          "actor": 0
+          "value": 2600,
+          "actor": 11328
         },
         "best_validation_loss": {
-          "value": 2.180100940167904,
-          "actor": null
+          "value": 0.022269945475272834,
+          "actor": -175.88580799102783
         },
-        "elapsed_seconds": 22.067511143162847,
+        "elapsed_seconds": 33124.97709573526,
         "stop_reason": "operational_checkpoint"
       },
-      "last_metrics": {
-        "phase": "value",
-        "update": 1,
-        "validation_loss": 2.180100940167904,
-        "loss": 0.13007856905460358,
-        "q_loss": 0.0918566957116127,
-        "v_loss": 0.038221873342990875,
-        "gradient_norm": 2.6821095943450928
+      "latest_metric": {
+        "phase": "actor",
+        "update": 11328,
+        "validation_loss": -174.70296531915665,
+        "loss": -203.92808532714844,
+        "nll": -208.74884033203125,
+        "weight_mean": 0.9836733341217041,
+        "weight_max": 1.1875479221343994,
+        "gradient_norm": 422.7967224121094
       },
-      "resumable_checkpoint_present": true,
-      "checkpoint_mtime_unix": 1793799489.9674191
+      "recent_metrics_finite": true,
+      "metric_age_seconds": 14040.3,
+      "checkpoint_age_seconds": 14040.03,
+      "candidate_bytes": 22394825
     }
+  },
+  "remaining_after_active_reservations_GPU_hours": 18.623611111111117,
+  "shared_budget_ledger": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/META-ALLOCATION-LEDGER.json",
+  "main_review": {
+    "commit": "451779b92880f9f18ab58f4506a9fdba1dc087a4",
+    "learner_changes_since_active_pin": false
+  },
+  "current_allocation": {
+    "job_id": "job-nvoaf376pbdj",
+    "attempt": "fit-continuation-02",
+    "created_shanghai": "2026-11-05T10:58:16+08:00",
+    "GPUs": 2,
+    "CPUs": 32,
+    "RAM_GiB": 128,
+    "SHM_GiB": 16,
+    "wall_minutes": 120,
+    "automatic_retry": false,
+    "methods": [
+      "dit",
+      "ic_iql"
+    ],
+    "wrapper_commit": "038892d3896b34b96b2a8da0faf835545a2375c7",
+    "GPU_probe_passed": true,
+    "scheduler_evidence": "evidence/CONTINUATION02-RUNNING.jpg"
+  },
+  "evaluation": {
+    "completed_methods": [
+      "ad",
+      "dpt"
+    ],
+    "cases_per_task": 50,
+    "readout": "direct-action heads; zero deployment optimizer updates",
+    "summary": "EVALUATION-SUMMARY-20261105.json",
+    "conclusion": "No consistent full-history advantage over episode reset; descriptive results."
   }
 }
