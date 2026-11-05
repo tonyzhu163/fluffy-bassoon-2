@@ -61,6 +61,8 @@ def main():
                   source_commit=os.environ['TASK_SOURCE'], lerobot_commit=LEROBOT_COMMIT,
                   model_revision='e49e2ab6c11f07511573b67261bd129e88d0a416',
                   horizon=400, chunk_size=50, flow_steps=10, assets=asset_receipt,
+                  camera_types=dict(head='Large_D435', wrist='Large_D435'),
+                  camera_rgb_shape=[480, 640, 3],
                   observation_capture='native RGB at every control boundary', started_unix=started)
     result = args.output / 'RESULT.json'
     save(result, report)
@@ -82,6 +84,10 @@ def main():
         os.chdir(robotwin)
         cfg = environment_config(rlinf, robotwin, args.task, int(cases[0]), 400,
                                  task_config_name='demo_clean', final_observation_only=False)
+        # Same calibrated D435 field of view, using RoboTwin's existing
+        # 640x480 preset to match the checkpoint's training image metadata.
+        cfg.task_config.camera.head_camera_type = 'Large_D435'
+        cfg.task_config.camera.wrist_camera_type = 'Large_D435'
         env = RoboTwinEnv(cfg, 1, seed_offset=0, total_num_processes=1, worker_info=None)
         _install_synchronous_vector_executor(env.venv)
         for episode_index, seed in enumerate(cases):

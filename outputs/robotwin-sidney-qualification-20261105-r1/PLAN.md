@@ -30,3 +30,11 @@ with wall-time limits. User-approved overall ceiling is the repository's
 50 GPU-hour incremental scope; record cumulative usage. No SGD in this run.
 Deploy committed scripts via Git to a fresh detached Baige worktree and record
 the exact commit before launch. Each attempt gets a new output directory.
+
+Camera profile for the native screen: the pinned RLinf RoboTwin preset uses
+D435 at320x240. Use the existing Large_D435 head/wrist presets at640x480,
+with the same37-degree field of view, matching Sidney's saved input metadata.
+This camera setting is explicit; do not label it the unmodified RLinf preset.
+Verify all twelve tasks' object-family files before another GPU allocation.
+An official-archive restore performs file I/O only and preserves matching
+existing assets; it does not overwrite conflicting shared files.

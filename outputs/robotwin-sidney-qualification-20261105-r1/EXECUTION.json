@@ -1,15 +1,15 @@
 {
-  "status": "THIRD_ATTEMPT_FAILED_CONFIG_LOADER_FIXED",
+  "status": "PROCESSORS_PASSED_ASSET_RESTORATION_REQUIRED",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
-  "job_id": "job-hzev0cgjz5co",
-  "job_name": "mwj_1105_robotwin_sidney_native_qual_r3",
-  "submitted_at_shanghai": "2026-11-05 14:14:05",
-  "last_checked_at_shanghai": "2026-11-05 14:17",
-  "observed_scheduler_status": "worker exited1; scheduler terminal pending verification",
-  "source_commit": "df425f4067299687daf1e3a914e1ebc24309c8e6",
-  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r5",
-  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual03",
+  "job_id": "job-wzqa96jpx90w",
+  "job_name": "mwj_1105_robotwin_sidney_native_qual_r4",
+  "submitted_at_shanghai": "2026-11-05 14:21:27",
+  "last_checked_at_shanghai": "2026-11-05 14:28",
+  "observed_scheduler_status": "worker exited1 after processor pass and asset preflight failure",
+  "source_commit": "fc3166565d8270826486eac5ede19a71dd6095ea",
+  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r6",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual04",
   "model_revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "allocation": {
     "workers": 1,
@@ -27,10 +27,10 @@
     "this_attempt_maximum_gpu_hours": 0.5,
     "initial_qualification_ceiling_gpu_hours": 4,
     "task_scope_incremental_ceiling_gpu_hours": 50,
-    "worker_gpu_seconds_measured": 151,
-    "conservative_allocated_gpu_hours_charge": 1.5,
-    "scheduler_display_gpu_seconds": 149,
-    "usage_basis": "151s total worker process time; scheduler first two durations149s, third duration pending"
+    "worker_gpu_seconds_measured": 172,
+    "conservative_allocated_gpu_hours_charge": 2.0,
+    "scheduler_display_gpu_seconds": 277,
+    "usage_basis": "172s total worker time; first three scheduler durations277s, fourth pending"
   },
   "qualification": {
     "weight_hashes_verified": true,
@@ -43,11 +43,22 @@
     "chunk_size": 50,
     "flow_steps": 10,
     "physical_control_limit": 400,
-    "scene_bank": "RLinf eval source-task bank, first success_seed"
+    "scene_bank": "RLinf eval source-task bank, first success_seed",
+    "processor_imports_passed": true,
+    "processor_numerical_checks_passed": true,
+    "camera_types": {
+      "head": "Large_D435",
+      "wrist": "Large_D435"
+    },
+    "camera_rgb_shape": [
+      480,
+      640,
+      3
+    ]
   },
-  "next_action": "Use native PreTrainedConfig registry loader, assert PI05Config type, then fresh qual04. Native model configuration values, weights, processors, H50/K10 and scientific scope unchanged; no model forward or PPO yet.",
+  "next_action": "Restore pinned official objects archive using non-overwriting installer on setup host; static all-twelve-task validation and camera-preset check before another GPU allocation. Then fresh qual05 for strict model loading, native queue parity and real episode.",
   "monitor_interval_minutes": 20,
-  "queue_receipt": "QUAL03-QUEUED.jpg",
+  "queue_receipt": "QUAL04-QUEUED.jpg",
   "attempts": [
     {
       "attempt": "qual01",
@@ -113,6 +124,34 @@
         "qual03/cpu-imports/RESULT.json",
         "qual03/cpu-imports.log",
         "qual03/EXIT.json"
+      ],
+      "scheduler_status": "failed",
+      "scheduler_ended_at_shanghai": "2026-11-05 14:16:25",
+      "scheduler_display_duration": "2 minutes8 seconds"
+    },
+    {
+      "attempt": "qual04",
+      "job_id": "job-wzqa96jpx90w",
+      "source_commit": "fc3166565d8270826486eac5ede19a71dd6095ea",
+      "exit_code": 1,
+      "worker_gpu_seconds": 21,
+      "gpu_probe_passed": true,
+      "processor_check_passed": true,
+      "state_normalization_max_abs": 0.0,
+      "action_unnormalization_max_abs": 2.9802322387695312e-08,
+      "token_shape": [
+        1,
+        200
+      ],
+      "model_constructed": false,
+      "simulator_episodes": 0,
+      "optimizer_updates": 0,
+      "error": "73 missing/wrong-size object-family files for twelve-task asset contract",
+      "evidence": [
+        "qual04/gpu-probe.json",
+        "qual04/cpu-imports/RESULT.json",
+        "qual04/qualification.log",
+        "qual04/EXIT.json"
       ]
     }
   ],
