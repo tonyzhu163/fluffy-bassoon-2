@@ -65,7 +65,6 @@ def main():
     with local.open('rb') as incoming, args.cold.open('xb') as outgoing:
         shutil.copyfileobj(incoming, outgoing, 8 << 20)
         outgoing.flush()
-        import os
         os.fsync(outgoing.fileno())
     cold_copy_seconds = time.monotonic() - start
     start = time.monotonic()
