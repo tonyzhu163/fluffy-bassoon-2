@@ -1,6 +1,6 @@
 {
   "checked_at_shanghai": "2026-11-05 23:06",
-  "status": "investigating_before_scientific_retry",
+  "status": "native_allocator_retention_confirmed_16scene_scale",
   "failed_attempt": "train06/job-42mdffft4wwc",
   "observed": {
     "host_limit_GiB": 512,
@@ -31,9 +31,8 @@
     "reset_close": "Configured clear_cache_freq1 and close_env(clear_cache=True), so investigate native lifetime/cache rather than assume missing close"
   },
   "remaining_hypotheses": [
-    "live simulator/render/robot/planner allocation per scene",
-    "native objects retained across reset",
-    "native allocator or driver cache not returned after release"
+    "64scene/full12worker peak headroom after reset-time trimming",
+    "best safe reset trim cadence and throughput overhead"
   ],
   "qualification": {
     "owner_thread": "01a1a9d3-d2ed-7163-8dbf-a55d4f009ea2",
@@ -67,5 +66,19 @@
       "envs_robot_robot.py": "1f4d0284eaf47fe5de2c0ba98a173b78beb83f2f2cc43409d37072a4774df4c8"
     },
     "actual_resolved_config_sha256": "a973e3fd346ae3875464745b0c358c67de5b93e919e61a33ecbbb14ee99c3815"
+  },
+  "findings": {
+    "second_reset_RSS_GiB": 27.9298591614,
+    "second_reset_live_glibc_GiB": 13.7892828733,
+    "second_reset_free_glibc_GiB": 13.3414773196,
+    "second_reset_after_trim_RSS_GiB": 15.1349754333,
+    "trim_RSS_release_GiB": 12.7948837281,
+    "after_close_delete_trim_RSS_GiB": 2.1727867126,
+    "retained_RGB_state_identity_passed_rounds": 2,
+    "fixed_hold_controls": 7200,
+    "python_heap_GiB_approx": 0.085,
+    "interpretation": "Reset frees large native buffers into glibc arenas; RSS retains them until trimming. Second-reset live heap stays near13.79GiB rather than doubling. MoreRAM alone is not required by these16scene results.",
+    "next": "Qualify peak-safe trimming at64scene scale with unchanged physics/rendering/RNG; batch-end trim may occur too late for512GiB/Ray95% guard",
+    "raw_result": "ROBOTWIN-MEMORY01-RESULT.json"
   }
 }
