@@ -1,9 +1,9 @@
 {
   "format": "robocasa_joint_three_task_execution_v1",
-  "checked_shanghai": "2026-11-05T11:02:35.675219+08:00",
+  "checked_shanghai": "2026-11-05T11:05:46.752421+08:00",
   "status": "AD_DPT_converged_DIT_IC_IQL_resumed",
   "approved_ceiling_GPU_hours": 96.0,
-  "cumulative_scheduler_GPU_hours": 73.52065289921231,
+  "cumulative_scheduler_GPU_hours": 73.62680690055555,
   "jobs": {
     "job-30kj6dnpleas": {
       "task": "OpenDrawer",
@@ -303,7 +303,7 @@
     "target": "/mnt/bos/adgfyl",
     "read_only": true
   },
-  "active_conservative_GPU_hours": 0.1442640103234254,
+  "active_conservative_GPU_hours": 0.25041801166666744,
   "initial_advancement": "INITIAL-ADVANCEMENT.json",
   "monitor": {
     "script": "MONITOR.py",
@@ -317,13 +317,11 @@
     "last_check_shanghai": "2026-11-04T20:34:31.081586+08:00"
   },
   "last_worker_check": "CHECK-20261104-1914.json",
-  "next_worker_check_shanghai": "2026-11-05T11:20:00+08:00",
+  "next_worker_check_shanghai": "2026-11-05T11:25:46+08:00",
   "publication": {
-    "status": "local_main_committed_remote_push_blocked",
-    "last_published_training_commit": "d71cb532f6cf4933a4a5e236e1b085bce74ce969",
-    "SSH_error": "Permission denied (publickey)",
-    "connected_GitHub_error": "403 Resource not accessible by integration",
-    "deployment": "Verified Git bundle; active training source unchanged"
+    "status": "main_push_succeeded",
+    "last_published_record_commit": "37364fae75d972d7876484e33ef5c0fc6a1644a3",
+    "deployment": "Verified Git bundle; active learner/wrapper unchanged; observation source37364fae"
   },
   "GPU_batch_qualification": {
     "files_per_batch": 4,
@@ -336,7 +334,7 @@
     "global_learner_batch": 8,
     "learner_updates": "AD14800/DPT16200 converged; DIT/IC-IQL actors continuing"
   },
-  "remaining_approved_GPU_hours": 22.47934710078769,
+  "remaining_approved_GPU_hours": 22.37319309944445,
   "pooling": {
     "status": "completed_and_verified",
     "GPU_hours": 0,
@@ -351,18 +349,34 @@
   },
   "preparation_final_conservative_GPU_hours": 17.57,
   "fit_monitor": {
-    "pid": 2131068,
-    "job_id": "job-967y1maorj80",
-    "attempt": "fit-4gpu-01",
-    "source_commit": "38f475b12fe82f658d19054ac7336068110697a2",
-    "script_sha256": "4a622c86fd1f26946cc4c379a78aa421f2547c5b509255d234f9991ec075f7a8",
-    "started_shanghai": "2026-11-04T21:38:06.174932+08:00",
+    "pid": 2603323,
+    "source_commit": "37364fae75d972d7876484e33ef5c0fc6a1644a3",
+    "job_id": "job-nvoaf376pbdj",
+    "attempt": "fit-continuation-02",
+    "started_shanghai": "2026-11-05T11:05:46.430906+08:00",
     "interval_seconds": 1200,
-    "scope": "Read-only metrics/checkpoint/worker status observations; scheduler release requires console",
-    "status": "initial_fit_ended",
-    "replacement": "FIT-MONITOR.py with continuation allocation/probe/ledger arguments"
+    "scope": "Bounded read-only metrics/checkpoint/probe/release/96GPUh-ledger observations; no launches or scheduler mutations",
+    "command": [
+      "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+      "/mowenjie/fluffy-bassoon-2/sources/joint-cont02-observe-37364fae/outputs/robocasa-three-task-meta-baseline-20261104-r2/FIT-MONITOR.py",
+      "--job-id",
+      "job-nvoaf376pbdj",
+      "--attempt",
+      "fit-continuation-02",
+      "--allocation-dir",
+      "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/continuations/fit-continuation-02",
+      "--release-json",
+      "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/joint/fits/RELEASED-fit-continuation-02.json",
+      "--gpu-count",
+      "2",
+      "--output-dir",
+      "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/fit-monitor-continuation02",
+      "--ledger",
+      "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/META-ALLOCATION-LEDGER.json"
+    ],
+    "status": "running"
   },
-  "last_fit_check": "CONTINUATION02-ADVANCEMENT.json",
+  "last_fit_check": "CONTINUATION02-VERIFIED.json",
   "live_contract_validation": "FIT-CONTRACT-VALIDATION.json",
   "last_observed_methods": {
     "ad": {
@@ -378,7 +392,7 @@
         "elapsed_seconds": 20433.9906375492,
         "stop_reason": "validation_plateau"
       },
-      "latest_metric": {
+      "last_metrics": {
         "update": 14800,
         "elapsed_seconds": 20433.9906375492,
         "validation_nll": -198.20544576644897,
@@ -395,10 +409,9 @@
           "converged": true
         }
       },
-      "recent_metrics_finite": true,
-      "metric_age_seconds": 27580.81,
-      "checkpoint_age_seconds": 27580.75,
-      "candidate_bytes": 22394505
+      "resumable_checkpoint_present": true,
+      "checkpoint_mtime_unix": 1793820174.9301593,
+      "last_metrics_finite": true
     },
     "dpt": {
       "status": {
@@ -413,7 +426,7 @@
         "elapsed_seconds": 22778.291457260028,
         "stop_reason": "validation_plateau"
       },
-      "latest_metric": {
+      "last_metrics": {
         "update": 16200,
         "elapsed_seconds": 22778.291457260028,
         "validation_nll": -236.91089487075806,
@@ -430,72 +443,69 @@
           "converged": true
         }
       },
-      "recent_metrics_finite": true,
-      "metric_age_seconds": 25229.73,
-      "checkpoint_age_seconds": 25229.61,
-      "candidate_bytes": 22394505
+      "resumable_checkpoint_present": true,
+      "checkpoint_mtime_unix": 1793822526.0667353,
+      "last_metrics_finite": true
     },
     "dit": {
       "status": {
         "converged": false,
         "phase": "actor",
-        "update": 11400,
+        "update": 11500,
         "updates": {
           "value": 2700,
-          "actor": 11400
+          "actor": 11500
         },
         "best_validation_loss": {
           "value": 0.19111633393913507,
-          "actor": -179.4802303314209
+          "actor": -181.7517185807228
         },
-        "elapsed_seconds": 33154.3382664565,
+        "elapsed_seconds": 33386.35975403059,
         "stop_reason": "operational_checkpoint"
       },
-      "latest_metric": {
+      "last_metrics": {
         "phase": "actor",
-        "update": 11400,
-        "validation_loss": -178.78770637512207,
-        "loss": -215.4497833251953,
-        "nll": -214.84762573242188,
-        "weight_mean": 1.0053726434707642,
-        "weight_max": 1.1955853700637817,
-        "gradient_norm": 351.70697021484375
+        "update": 11500,
+        "validation_loss": -181.7517185807228,
+        "loss": -186.50135803222656,
+        "nll": -186.25994873046875,
+        "weight_mean": 1.0071018934249878,
+        "weight_max": 1.2969377040863037,
+        "gradient_norm": 361.9335632324219
       },
-      "recent_metrics_finite": true,
-      "metric_age_seconds": 110.93,
-      "checkpoint_age_seconds": 110.62,
-      "candidate_bytes": 22394825
+      "resumable_checkpoint_present": true,
+      "checkpoint_mtime_unix": 1793847877.0569878,
+      "last_metrics_finite": true
     },
     "ic_iql": {
       "status": {
         "converged": false,
         "phase": "actor",
-        "update": 11328,
+        "update": 11400,
         "updates": {
           "value": 2600,
-          "actor": 11328
+          "actor": 11400
         },
         "best_validation_loss": {
           "value": 0.022269945475272834,
           "actor": -175.88580799102783
         },
-        "elapsed_seconds": 33124.97709573526,
+        "elapsed_seconds": 33291.649286906235,
         "stop_reason": "operational_checkpoint"
       },
-      "latest_metric": {
+      "last_metrics": {
         "phase": "actor",
-        "update": 11328,
-        "validation_loss": -174.70296531915665,
-        "loss": -203.92808532714844,
-        "nll": -208.74884033203125,
-        "weight_mean": 0.9836733341217041,
-        "weight_max": 1.1875479221343994,
-        "gradient_norm": 422.7967224121094
+        "update": 11400,
+        "validation_loss": -174.8568742275238,
+        "loss": -193.4139862060547,
+        "nll": -198.86328125,
+        "weight_mean": 0.9836392998695374,
+        "weight_max": 1.3746423721313477,
+        "gradient_norm": 464.71405029296875
       },
-      "recent_metrics_finite": true,
-      "metric_age_seconds": 14040.3,
-      "checkpoint_age_seconds": 14040.03,
-      "candidate_bytes": 22394825
+      "resumable_checkpoint_present": true,
+      "checkpoint_mtime_unix": 1793847757.8742158,
+      "last_metrics_finite": true
     }
   },
   "remaining_after_active_reservations_GPU_hours": 18.623611111111117,
