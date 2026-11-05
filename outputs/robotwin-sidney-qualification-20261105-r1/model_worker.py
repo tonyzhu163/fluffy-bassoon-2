@@ -26,6 +26,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--precision', choices=('bfloat16','float32'),default='bfloat16')
     args = parser.parse_args()
     assert sys.platform == 'linux' and os.uname().nodename.startswith('job-')
     assert torch.cuda.is_available() and torch.cuda.device_count() == 1
@@ -48,6 +49,7 @@ def main():
     cfg.device = 'cuda'
     cfg.compile_model = False
     cfg.gradient_checkpointing = False
+    cfg.dtype = args.precision
     policy = PI05Policy(cfg)
     # Unlike PI05Policy.from_pretrained, this fails on any loading error.
     # load_model understands safetensors' omission of shared/tied aliases.
@@ -75,6 +77,7 @@ def main():
                  unexpected_keys=list(unexpected), parameter_count=sum(p.numel() for p in policy.parameters()),
                  chunk_size=50, flow_steps=10, absolute_joint_actions=True,
                  normalization='saved MEAN_STD', compile_model=False,
+                 parameter_precision=args.precision,
                  deterministic_algorithms=True, attention='all eager', tf32=False,
                  cublas_workspace_config=os.environ['CUBLAS_WORKSPACE_CONFIG'],
                  torch=torch.__version__, python=sys.version, cuda_device=torch.cuda.get_device_name(0),
@@ -102,6 +105,12 @@ def main():
             return {k:tensor_hash(v) for k,v in processed.items() if isinstance(v,torch.Tensor)}
         inputs_before = input_hashes()
         buffers_before = {k:tensor_hash(v) for k,v in policy.named_buffers()}
+        prepared_images,_ = policy._preprocess_images(processed)
+        with target.with_suffix('.inputs.npz').open('wb') as handle:
+            np.savez(handle, images=np.stack([v.permute(0,2,3,1).cpu().numpy() for v in prepared_images],axis=1),
+                     state=processed['observation.state'].cpu().numpy(),
+                     tokens=processed['observation.language.tokens'].cpu().numpy(),
+                     token_mask=processed['observation.language.attention_mask'].cpu().numpy())
         state = batch['observation.state']
         expected = (state - stats['observation.state.mean']) / (stats['observation.state.std'] + 1e-8)
         torch.testing.assert_close(processed['observation.state'].cpu().reshape(14), expected.reshape(14), atol=1e-5, rtol=1e-5)

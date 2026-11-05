@@ -103,7 +103,14 @@ def main():
         for episode_index, seed in enumerate(cases):
             raw = initial_raw if episode_index == 0 else env.reset(env_seeds=[int(seed)])[0]
             actual_seed = int(env.venv.envs[0].task.ep_num)
+            assert actual_seed == int(seed), 'Qualification must not silently replace a bank scene'
+            subenv = env.venv.envs[0]
+            actual_scene_info = subenv.task.get_info()
+            assert subenv.episode_info_list == [actual_scene_info]
+            assert subenv.task.get_instruction() == raw['task_descriptions'][0]
             episode = dict(requested_seed=int(seed), actual_seed=actual_seed,
+                           actual_scene_info=actual_scene_info,
+                           instruction_binding='generated after reset from actual task.get_info()',
                            instruction=list(raw['task_descriptions']),
                            reset_sha256=_observation_hash(raw), chunks=[], physical_controls=0)
             report['episodes'].append(episode)
