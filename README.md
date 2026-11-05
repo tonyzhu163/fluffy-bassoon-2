@@ -5,7 +5,9 @@ substantially faster learning from sparse real-robot experience**. We study
 history-conditioned steering policies around frozen vision-language-action
 models. The paper stays about in-context RL. **The current first step is
 PPO with a learned video reward** ([Flora-Rewarder](docs/FLORA-PPO.md)),
-tested on LIBERO and reported on RoboCasa365. Transfer of the learned
+tested on LIBERO and RoboCasa365. **RoboTwin is an active benchmark arm**, with
+RLinf online RL and VLRLA-bridge as the reference baselines on VLRLA's six
+source tasks ([comparison protocol](docs/robotwin/rl-baselines.md)). Transfer of the learned
 adaptation procedure to real tasks is the fundamental question.
 
 **Start here:** [docs/README.md](docs/README.md) indexes the five documents:
@@ -36,8 +38,9 @@ Other earlier work, including CTM pilots, ManiSkill, RoboMimic and most
 of the LIBERO source40 pipeline,
 was removed on 2026-11-01 because it produced no usable evidence; git history
 keeps it. Literature reviews are in [docs/literature/](docs/literature/).
-RoboTwin docs are in [docs/robotwin/](docs/robotwin/), and all RoboTwin runs,
-plus dead runs that code still loads, are in [`outputs/archive/`](outputs/archive/).
+RoboTwin docs are in [docs/robotwin/](docs/robotwin/). Earlier RoboTwin runs
+remain in [`outputs/archive/`](outputs/archive/); new baseline work uses fresh
+run folders under `outputs/`.
 
 The repository was split from `tonyzhu163/fluffy-bassoon` (branch
 `lycoreco_rl`) on 2026-10-28; [PROVENANCE.md](PROVENANCE.md) lists every copied

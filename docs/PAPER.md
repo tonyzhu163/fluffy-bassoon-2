@@ -14,8 +14,11 @@ FINDINGS, run plans in `outputs/<run-id>/`, live state in
 Current source/student route: **action-expert Flow-SDE PPO → actual learning
 histories → AD/DPT action supervision → learned KV bridge through a frozen
 original VLA**. Source learning prioritizes a stronger PPO policy; it need not
-use the student's steering coordinates. Benchmark order and reward gates are
-in [FLORA-PPO.md](FLORA-PPO.md). The LIBERO40/90/Plus/Pro protocol below remains
+use the student's steering coordinates. Benchmark roles and reward gates are
+in [FLORA-PPO.md](FLORA-PPO.md). RoboTwin is also an active benchmark arm:
+use VLRLA's six source tasks, RLinf online RL and VLRLA-bridge as the baseline
+comparison, with the six remaining tasks held out from history training
+([protocol](robotwin/rl-baselines.md)). The LIBERO40/90/Plus/Pro protocol below remains
 the specification for that benchmark arm, not a replacement for the current
 RoboCasa qualification.
 
@@ -28,7 +31,8 @@ RoboCasa qualification.
   action-space supervision. Compare actual AD targets with paired final-teacher
   DPT-style targets. Velocity steering remains an optional interface comparison.
 - Evaluation: full-suite transfer to all 90 LIBERO90 tasks plus LIBERO-Plus
-  and LIBERO-Pro. One actual support episode → a separate query episode,
+  and LIBERO-Pro; RoboTwin uses the six-source/six-held-out VLRLA comparison
+  with RLinf online RL and VLRLA-bridge baselines. One actual support episode → a separate query episode,
   fixed motor/controller weights; compare query success and full cost against
   ordinary DSRL and controls for representation, architecture and feedback.
 - **Results: TBD.** No percentage gains, efficiency factors or novelty claim yet.
@@ -63,6 +67,12 @@ RoboCasa qualification.
 
 - Broad claims such as “first ICRL for VLAs” or “first frozen-VLA adaptation”
   are unsupported. Benchmark choice alone does not establish novelty.
+- The RoboTwin comparison uses a common pi0.5 initializer and task protocol
+  across native SFT, RLinf online RL and VLRLA-bridge. PPO collects source
+  learning histories; GRPO is the online-RL baseline in VLRLA's main table.
+  These simulator-reward comparisons are separate from the oracle-free Flora
+  claim. A locally reconstructed VLRLA baseline must be named as such until
+  official code, weights and evaluation details are verified.
 - Potential scientific distinction: **which process actually yields efficient,
   competitive robotic adaptation through a frozen motor?** Must survive prior
   art comparison and controlled experiments.

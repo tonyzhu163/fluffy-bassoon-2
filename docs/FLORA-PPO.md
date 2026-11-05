@@ -1,10 +1,11 @@
 # Flora-Rewarder PPO
 
-**Current first step (2026-11-01).** The paper stays about in-context RL for
-frozen VLAs ([PAPER.md](PAPER.md)). Before more ICRL work, get an ordinary RL
+The paper stays about in-context RL for frozen VLAs ([PAPER.md](PAPER.md)).
+The learned-reward arm starts with an ordinary RL
 loop working where the reward comes from a learned video rewarder instead of
 the simulator. That loop is the reward source later in-context learners need
-on tasks without a success checker.
+on tasks without a success checker. The RoboTwin RLinf/VLRLA simulator-reward
+baseline arm can proceed alongside this reward qualification.
 
 Live plan and status: [run plan](../outputs/flora-ppo-comparison-20261101-r1/PLAN.md),
 [coordination](../outputs/coordination.md).
@@ -36,7 +37,7 @@ left-only results retain their original protocol and cannot qualify a new
 three-view run. Camera changes require a new scoring/calibration identity,
 with simulator success kept outside the reward prompt.
 
-## Benchmarks, in order
+## Benchmark roles
 
 1. **LIBERO** is a test bed only, not a reported benchmark: pi0.5 leaves too
    little headroom. Use it to get the loop working, starting from RLinf's
@@ -46,7 +47,7 @@ with simulator success kept outside the reward prompt.
    on the frozen official OpenPI `pi05_libero` (C565) motor: native 3/16,
    untrained tied noise 9/16
    ([screen](../outputs/libero90-pi05-headroom-screen-20261101-r1/RESULTS.md)).
-2. **RoboCasa365** is the reported benchmark, using the RLinf-loadable
+2. **RoboCasa365** remains a reported benchmark, using the RLinf-loadable
    RoboCasa365 pi0.5 checkpoint, starting with atomic tasks from its 50-task
    evaluation subset; composite tasks come later. It is NVIDIA's GR00T
    benchmark, closer in appearance to the rewarder's likely training data and
@@ -64,9 +65,13 @@ with simulator success kept outside the reward prompt.
    factory and four-lane colocated memory guard now pass qualification
    ([audit](../outputs/robocasa-joint-lane-qualification-20261102-r5/PARENT-REVIEW.json));
    fresh50/task calibration and the joint before-panels are still pending.
-3. **RoboTwin** follows, for the comparison with VLRLA, the direct precedent
-   in [PAPER.md](PAPER.md). It needs its own Flora agreement check: two-arm
-   success is harder to judge from one camera.
+3. **RoboTwin** is an active comparison with **RLinf online RL and VLRLA**,
+   using VLRLA's six source tasks and retaining its six-task transfer split
+   ([baseline protocol](robotwin/rl-baselines.md)). Begin with simulator-reward
+   baselines and actual source-learning histories; this work can proceed
+   independently of RoboCasa Flora qualification. PPO is the paper's history
+   collector, while GRPO is its main-table online baseline. A Flora arm needs
+   its own agreement check on bimanual videos before reward optimization.
 4. **Real robots** come after a simulated sample-efficiency gain, with Flora
    labeling logged episodes offline and scoring live episodes online.
 

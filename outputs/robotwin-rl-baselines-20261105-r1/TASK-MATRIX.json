@@ -1,0 +1,106 @@
+{
+  "date": "2026-11-05",
+  "rlinf_commit": "77a521298f1d215971246c2d7a423720d9e76652",
+  "vlrla_paper": "https://arxiv.org/html/2610.19517v1#S5",
+  "method": "RLinf PPO source histories and RLinf GRPO online baseline; VLRLA-bridge in-context baseline",
+  "tasks": [
+    {
+      "task": "handover_mic",
+      "split": "source",
+      "upstream_train_seed_count": 1000,
+      "upstream_eval_seed_count": 150,
+      "seed_bank_status": "present_upstream",
+      "runtime_qualified_for_this_run": false
+    },
+    {
+      "task": "pick_diverse_bottles",
+      "split": "source",
+      "upstream_train_seed_count": 0,
+      "upstream_eval_seed_count": 0,
+      "seed_bank_status": "requires_planner_qualification",
+      "runtime_qualified_for_this_run": false
+    },
+    {
+      "task": "place_a2b_left",
+      "split": "source",
+      "upstream_train_seed_count": 1000,
+      "upstream_eval_seed_count": 150,
+      "seed_bank_status": "present_upstream",
+      "runtime_qualified_for_this_run": false
+    },
+    {
+      "task": "place_object_stand",
+      "split": "source",
+      "upstream_train_seed_count": 0,
+      "upstream_eval_seed_count": 0,
+      "seed_bank_status": "requires_planner_qualification",
+      "runtime_qualified_for_this_run": false
+    },
+    {
+      "task": "place_phone_stand",
+      "split": "source",
+      "upstream_train_seed_count": 1000,
+      "upstream_eval_seed_count": 150,
+      "seed_bank_status": "present_upstream",
+      "runtime_qualified_for_this_run": false
+    },
+    {
+      "task": "scan_object",
+      "split": "source",
+      "upstream_train_seed_count": 0,
+      "upstream_eval_seed_count": 0,
+      "seed_bank_status": "requires_planner_qualification",
+      "runtime_qualified_for_this_run": false
+    },
+    {
+      "task": "adjust_bottle",
+      "split": "held_out_from_history_training",
+      "upstream_train_seed_count": 1000,
+      "upstream_eval_seed_count": 150,
+      "seed_bank_status": "present_upstream",
+      "runtime_qualified_for_this_run": false
+    },
+    {
+      "task": "move_stapler_pad",
+      "split": "held_out_from_history_training",
+      "upstream_train_seed_count": 1000,
+      "upstream_eval_seed_count": 260,
+      "seed_bank_status": "present_upstream",
+      "runtime_qualified_for_this_run": false
+    },
+    {
+      "task": "place_a2b_right",
+      "split": "held_out_from_history_training",
+      "upstream_train_seed_count": 1000,
+      "upstream_eval_seed_count": 150,
+      "seed_bank_status": "present_upstream",
+      "runtime_qualified_for_this_run": false
+    },
+    {
+      "task": "place_dual_shoes",
+      "split": "held_out_from_history_training",
+      "upstream_train_seed_count": 0,
+      "upstream_eval_seed_count": 0,
+      "seed_bank_status": "requires_planner_qualification",
+      "runtime_qualified_for_this_run": false
+    },
+    {
+      "task": "place_empty_cup",
+      "split": "held_out_from_history_training",
+      "upstream_train_seed_count": 1000,
+      "upstream_eval_seed_count": 260,
+      "seed_bank_status": "present_upstream",
+      "runtime_qualified_for_this_run": false
+    },
+    {
+      "task": "stamp_seal",
+      "split": "held_out_from_history_training",
+      "upstream_train_seed_count": 0,
+      "upstream_eval_seed_count": 0,
+      "seed_bank_status": "requires_planner_qualification",
+      "runtime_qualified_for_this_run": false
+    }
+  ],
+  "scope": "Six seen source tasks first; six unseen tasks reserved for transfer. Task-specific adjust_bottle checkpoint only qualifies plumbing.",
+  "status": "SOURCE_AUDITED_NO_JOBS_LAUNCHED"
+}

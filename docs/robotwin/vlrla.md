@@ -1,6 +1,7 @@
 # RoboTwin setup for VLRLA-style adaptation
 
-RoboTwin 2.0 is the primary candidate for a bimanual, multi-episode comparison;
+RoboTwin 2.0 is an active bimanual, multi-episode comparison with
+[RLinf online RL and VLRLA-bridge](rl-baselines.md);
 LIBERO can qualify shared plumbing. [VLRLA v1](https://arxiv.org/html/2610.19517v1)
 is the reference: section 5 supplies the six seen/six unseen task split,
 Appendix A.1 the bridge, and A.2.1 the PPO history collector. Machine-readable
@@ -13,7 +14,9 @@ Use the RLinf-compatible RoboTwin branch, following the
 The existing qualified dependency pins are RLinf
 `c605b9d55ed93a180119b099e6f836abff293b08` and RoboTwin
 `dca9ec682688821c42944eacd7f5dd9bfb15396f`. Preserve the sources, assets
-and checkpoint files that earlier runs cite.
+and checkpoint files that earlier runs cite. These are historical qualified
+pins. New baseline runs audit the current RLinf release and record any runtime
+migration explicitly; the setup script below intentionally retains its pins.
 
 `scripts/setup/robotwin_vlrla.sh` creates a fresh Python environment with uv.
 It reuses the shared runtime read-only through a recorded `.pth` and installs
@@ -42,9 +45,10 @@ from the paper rather than implying a matched initializer is available.
 
 VLRLA-bridge freezes the VLM and action expert, learns a recurrent low-rank
 KV residual using flow matching, and retains memory across deployment
-episodes with fixed weights. Noise steering remains our primary interface;
-it is a different integration method. Both may share the tasks, histories
-and evaluation budgets, but the comparison must name the interface used.
+episodes with fixed weights. The current student route uses an action-supervised
+learned KV bridge; noise steering is an earlier interface comparison.
+They may share tasks, histories and evaluation budgets, but the comparison
+must name the interface used.
 
 Keep previous executed chunks, rewards and both termination flags aligned
 causally with the next decision. Preserve history through inner resets and

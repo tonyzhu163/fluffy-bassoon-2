@@ -13,11 +13,14 @@ git history before that date. RoboTwin docs are in
 | Official OpenPI **pi0.5 LIBERO40** | `gs://openpi-assets/checkpoints/pi05_libero`, config `pi05_libero`; staged receipt `ec064cce…d170`, motor parameter hash `c565…` | Flora PPO initialization ([FLORA-PPO.md](FLORA-PPO.md)), frozen-motor steering, DSRL, ICRL paper. Fine-tuned on LIBERO-Spatial/Object/Goal/10 (40 tasks, 1,693 demos). |
 | **RLinf pi0.5 LIBERO-130 SFT** | `RLinf/RLinf-Pi05-LIBERO-130-fullshot-SFT@6222623f`, weights SHA `4d9089c9…6683`, own `norm_stats.json` `dae37d79…30f1`; RLinf `e1a82eb`, `rlinf-openpi 0.1.1` | Earlier source-corpus pilots only. Trained on all 130 LIBERO tasks, so no LIBERO task is unseen by it; not allowed as the Flora PPO initializer. |
 | Original **Pi0** `pi0_libero` | H50 / execute 20 | DSRL replication only |
+| RoboTwin **pi0.5**, common initializer for all six source tasks | Exact checkpoint, normalization, task exposure and runtime must be bound before execution; the cached task-specific `adjust_bottle` release only qualifies plumbing | Active [RLinf / VLRLA baseline arm](robotwin/rl-baselines.md). Published RLinf task-specific checkpoints and the earlier Motus motor are distinct candidates, not interchangeable identities. |
 
 pi0.5 interface: 10-action chunks, 32 initial-noise coordinates, 10 Euler flow
 steps, decoding 7 LIBERO control coordinates. Inputs are two RGB views, 8 robot
 state coordinates and the instruction. During steering, the whole motor stays
-frozen. Check the parameter signature before and after every run.
+frozen. Check the parameter signature before and after every run. These
+dimensions describe LIBERO; RoboTwin uses its native three-camera,
+14-coordinate action interface and separately bound chunk/sampler settings.
 
 ## Steering interface and DSRL
 
