@@ -1,0 +1,18 @@
+{
+  "format": "remaining_shared_PFS_reservations_v1",
+  "protected_floor_GiB": 220,
+  "other_owner_contingency_GiB": 26,
+  "other_owner_contingency": "Retain20source+6fit buffer conservatively despite closedfits/source; no borrowing",
+  "readout_hot_cap_GiB": 40,
+  "robotwin_plan": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-matched-20261106-pair02/outputs/robotwin-sidney-matched-baselines-20261106-r1/PAIR-ADMISSION.json",
+  "robotwin_plan_sha256": "cb4e50a7baa7c3ab76051fc9c115ca4a3f2e2e87ba9f5d37c2c5b496e569f843",
+  "robotwin_per_arm_cap_GiB": 135,
+  "consumption_measure": "Unique regular-file allocated st_blocks*512 across each shared reservation root; never follow symlinks",
+  "formula": "220+26+max(0,40-current allocated readout+packing GiB)+sum(max(0,135-allocated RT arm GiB))",
+  "already_materialized_storage": "Already reflected in free space, deducted from the corresponding growth reservation once",
+  "science_commit": "87984718c9199797d31a158c47225cc695623afe",
+  "source_cache_policy": "37,440-member127GiB cache remains hot/protected",
+  "full_eight_model_contract_unchanged": true,
+  "approved_GPU_hours": 150,
+  "checked_shanghai": "2026-11-06T06:54:01.842162+08:00"
+}

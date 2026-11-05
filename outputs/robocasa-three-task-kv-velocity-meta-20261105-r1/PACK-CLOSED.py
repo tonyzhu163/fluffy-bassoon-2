@@ -6,6 +6,7 @@ checkpoint, incomplete wave or original artifact path is moved or deleted.
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path, PurePosixPath
 import shutil
 import sys
@@ -36,7 +37,14 @@ def main():
     if (result.get('optimizer_updates') != 0 or not result.get('native_parameters_frozen')
             or not audit['passed'] or audit['result_sha256'] != sha(args.bank / 'RESULT.json')):
         raise ValueError('Require an independent complete-wave audit before any cold qualification')
-    if shutil.disk_usage(root).free < 378 * 2**30:
+    forward = None
+    if os.environ.get('STEERING_STORAGE_ACCOUNTING'):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('pack_remaining_storage', Path(__file__).with_name('STORAGE-GUARD.py'))
+        guard = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(guard)
+        forward = guard.require_capacity()
+    if forward is None and shutil.disk_usage(root).free < 378 * 2**30:
         raise ValueError('Retain combined375GiB reserve plus3GiB temporary packing space')
     args.output.mkdir(parents=True, exist_ok=False)
     began = time.monotonic()
@@ -87,6 +95,7 @@ def main():
             raise ValueError('Original closed evidence changed; do not release anything')
     restored_seconds = time.monotonic() - start
     receipt = dict(passed=True, source=str(args.bank), cold=str(args.cold),
+        forward_storage=forward,
         archive_sha256=digest, archive_bytes=local.stat().st_size,
         payload_bytes=sum(row['bytes'] for row in inventory), files=inventory,
         pack_and_inventory_seconds=packed_seconds, cold_copy_seconds=cold_copy_seconds,

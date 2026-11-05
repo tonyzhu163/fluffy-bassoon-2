@@ -21,6 +21,12 @@ def main():
     p.add_argument('--deadline', type=float, required=True)
     p.add_argument('--attempt', required=True)
     args = p.parse_args()
+    storage_guard = None
+    if os.environ.get('STEERING_STORAGE_ACCOUNTING'):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('remaining_storage', Path(__file__).with_name('STORAGE-GUARD.py'))
+        storage_guard = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(storage_guard)
     minimum_free_gib = int(os.environ.get('STEERING_MIN_FREE_GIB', '220'))
     if minimum_free_gib < 96:
         raise ValueError('Retain at least96GiB shared hot-storage reserve')
@@ -144,9 +150,14 @@ def main():
                         _json(args.output / 'OPERATIONAL-CHECKPOINT.json', dict(completed=False,
                             completed_banks=len(results), next_bank=str(directory), binding_sha256=binding_digest))
                         return
-                    if shutil.disk_usage(root).free < minimum_free_gib * 2**30:
+                    forward = storage_guard.snapshot() if storage_guard else None
+                    if forward:
+                        _json(args.output / ('STORAGE-GUARD-' + args.attempt + '.json'), forward)
+                    below_capacity = (not forward['admitted']) if forward else (shutil.disk_usage(root).free < minimum_free_gib * 2**30)
+                    if below_capacity:
                         _json(args.output / 'OPERATIONAL-CHECKPOINT.json', dict(completed=False,
-                            reason='hot_storage_reserve', completed_banks=len(results),
+                            reason='forward_storage_reserve' if forward else 'hot_storage_reserve', completed_banks=len(results),
+                            forward_storage=forward,
                             next_bank=str(directory), minimum_free_GiB=minimum_free_gib,
                             binding_sha256=binding_digest))
                         return
