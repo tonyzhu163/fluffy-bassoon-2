@@ -23,7 +23,7 @@ automatic retry follows another failure.
 
 Combined shared admission uses the unchanged220GiB base (our200GiB floor plus
 20GiB headroom), Counter5GiB + Faucet15GiB outstanding output, and6GiB of the
-other owner's fit-only growth:246GiB of actual free PFS is required before
+other owner's fit-only growth plus8GiB CPU qualification scratch:254GiB of actual free PFS is required before
 concurrent starts. Completed archival or hardlink releases are counted only
 through fresh filesystem measurements. The active127GiB PFS source cache and
 all ACTIVE-DEPENDENCIES paths remain protected. Meta ID/OOD rollout writers and

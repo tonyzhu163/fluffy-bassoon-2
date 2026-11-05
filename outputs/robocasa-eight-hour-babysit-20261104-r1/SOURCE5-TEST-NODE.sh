@@ -68,7 +68,7 @@ if shared_path.exists():
         reserved+=intent['max_reservation_GPU_hours']
         test_reserved+=intent['max_reservation_GPU_hours']
         remaining+=intent['storage_reservation_GiB']*2**30
-    remaining+=shared['external_fit_only_growth_GiB']*2**30
+    remaining+=(shared['external_fit_only_growth_GiB']+shared.get('external_scratch_growth_GiB',0))*2**30
 assert reserved+(0 if included else 2.5)<=70
 assert test_reserved+(0 if included else 2.5)<=8
 fs=os.statvfs(run);free=fs.f_bavail*fs.f_frsize

@@ -53,7 +53,7 @@ for intent in shared['owned_intents']:
     if intent['output']==current or intent['output'] in registered:continue
     reserved+=intent['max_reservation_GPU_hours'];tests+=intent['max_reservation_GPU_hours']
     remaining+=intent['storage_reservation_GiB']*2**30
-remaining+=shared['external_fit_only_growth_GiB']*2**30
+remaining+=(shared['external_fit_only_growth_GiB']+shared.get('external_scratch_growth_GiB',0))*2**30
 assert reserved+(0 if included else 1.2)<=70 and tests+(0 if included else 1.2)<=8
 fs=os.statvfs(run);free=fs.f_bavail*fs.f_frsize;required=225*2**30+remaining
 assert free>=required

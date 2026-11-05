@@ -18,6 +18,8 @@
       "max_reservation_GPU_hours": 2.5
     }
   ],
-  "combined_required_before_any_own_output_GiB": 246,
-  "rule": "Add only unregistered other output intents; registered rows already account for growth. Reclaimed bytes are counted only through fresh statvfs."
+  "combined_required_before_any_own_output_GiB": 254,
+  "rule": "Add only unregistered other output intents; registered rows already account for growth. Reclaimed bytes are counted only through fresh statvfs.",
+  "external_scratch_growth_GiB": 8,
+  "scratch_note": "RoboTwin CPU-only qualification; large pilot remains held. Coordinator supplies remaining reservation updates."
 }
