@@ -214,6 +214,8 @@ critic:
   use_critic_model: False
 
 native_pilot:
+  maximum_actions: 1200000
+  previous_maximum_actions: 1000000
   sampling_record: full
   # Canonical chronological rollouts retain these images once. Whole-iteration
   # recovery consumes optimizer/sampler/RNG state; keep probability audit data

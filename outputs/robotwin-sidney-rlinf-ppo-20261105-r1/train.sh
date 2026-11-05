@@ -19,9 +19,9 @@ TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/pytho
 [[ -z $(git -C "$TASK_CODE" status --porcelain --untracked-files=no) ]]
 [[ ! -e $TASK_OUT && $TASK_PRIOR_GPU_SECONDS =~ ^[0-9]+$ ]]
 # Measured256-scene reset/rollout latency requires a longer continuation.
-# Eighteen additional GPU-hours including the requested throughput sweep;
+# Twenty additional GPU-hours including the host-memory retry;
 # this remains within the repository-authorized50GPUh task scope.
-[[ $((TASK_PRIOR_GPU_SECONDS+TASK_WORLD*(TASK_LIMIT+60))) -le 64800 ]]
+[[ $((TASK_PRIOR_GPU_SECONDS+TASK_WORLD*(TASK_LIMIT+60))) -le 72000 ]]
 mkdir -p "$TASK_OUT"
 exec > "$TASK_OUT/worker.log" 2>&1
 export TASK_SOURCE TASK_BRIDGE
@@ -43,10 +43,12 @@ export NATIVE_PPO_ATTEMPT=$(basename "$TASK_OUT")
 export NATIVE_PPO_MODEL=/mowenjie/fluffy-bassoon-2/cache/robotwin-sidney-rlinf-20261105-r1
 export NATIVE_PPO_INITIALIZER_REVISION=e49e2ab6c11f07511573b67261bd129e88d0a416
 TASK_STARTED=$(date +%s)
+TASK_MEMORY_PID=
 export NATIVE_PPO_DEADLINE=$((TASK_STARTED+TASK_LIMIT-60))
 finish() {
   TASK_RC=$?
   trap - EXIT
+  if [[ -n $TASK_MEMORY_PID ]]; then kill "$TASK_MEMORY_PID" 2>/dev/null || true; fi
   TASK_ENDED=$(date +%s)
   printf '{"exit_code":%s,"started_unix":%s,"ended_unix":%s,"worker_gpu_seconds":%s,"prior_bridge_gpu_seconds":%s}\n' \
     "$TASK_RC" "$TASK_STARTED" "$TASK_ENDED" "$((TASK_WORLD*(TASK_ENDED-TASK_STARTED)))" "$TASK_PRIOR_GPU_SECONDS" > "$TASK_OUT/EXIT.json"
@@ -55,6 +57,9 @@ trap finish EXIT
 "$TASK_PYTHON" "$TASK_CODE/scripts/[train]gpu_probe.py" --baige-container \
   --baige-exclusive-training --purpose training --expected-count "$TASK_WORLD" --output "$TASK_OUT/gpu-probe.json"
 export LYCO_BAIGE_GPU_MAP=$TASK_OUT/gpu-probe.json
+"$TASK_PYTHON" "$TASK_RUN_CODE/host_memory.py" "$TASK_OUT" --once
+"$TASK_PYTHON" "$TASK_RUN_CODE/host_memory.py" "$TASK_OUT" > "$TASK_OUT/host-memory.log" 2>&1 &
+TASK_MEMORY_PID=$!
 [[ $(git -C "$REPO_PATH" rev-parse HEAD) == c605b9d55ed93a180119b099e6f836abff293b08 ]]
 [[ $(git -C "$ROBOTWIN_PATH" rev-parse HEAD) == dca9ec682688821c42944eacd7f5dd9bfb15396f ]]
 [[ -z $(git -C "$REPO_PATH" status --porcelain --untracked-files=no) ]]
@@ -103,9 +108,28 @@ else:print(result['execution_microbatch'])
 PY
 )
 cd "$TASK_CODE"
+"$TASK_PYTHON" -m pytest -q tests/test_rlinf_native_ppo.py \
+  -k 'unresolved_calls or original_rollout or worker_rng or sampler_and_eval_rng or actor_sidecar_requires' > "$TASK_OUT/core-tests.log" 2>&1
 # Compose/validate the actual source configuration inside the allocation before
 # model initialization. It keeps global2048 and only tunes execution microbatch.
 "$TASK_PYTHON" "$TASK_RUN_CODE/validate_config.py" "$TASK_CODE" "$TASK_MICRO"
+"$TASK_PYTHON" - <<'PY'
+import hashlib,json,os
+from pathlib import Path
+root=Path(os.environ['NATIVE_PPO_ACCOUNTING_ROOT']);world=int(os.environ['NATIVE_PPO_WORLD'])
+rows=[]
+for rank in range(world):
+    files=[];charged=0
+    for path in sorted((root/f'rank-{rank:02d}').glob('*.json')):
+        raw=path.read_bytes();value=json.loads(raw)
+        assert value['rank_action_ceiling'] in (1000000//world,1200000//world)
+        amount=sum(call.get('executed_or_conservative',call['requested']) for call in value['calls'])
+        charged+=amount;files.append(dict(path=str(path),sha256=hashlib.sha256(raw).hexdigest(),charged=amount))
+    assert charged+(819200+30720)//world<=1200000//world
+    rows.append(dict(rank=rank,charged_before_attempt=charged,previous_files=files))
+Path(os.environ['NATIVE_PPO_OUTPUT'],'action-admission.json').write_text(json.dumps(dict(
+    maximum_actions=1200000,previous_maximum_actions=1000000,old_files_unchanged=True,ranks=rows),indent=2)+'\n')
+PY
 TASK_RECOMPUTE=false
 if [[ $TASK_MICRO != $((256/TASK_WORLD)) ]]; then TASK_RECOMPUTE=true; fi
 TASK_RESUME_ARGS=()

@@ -11,6 +11,8 @@ def validate_sidney(cfg):
     assert not cfg.actor.model.openpi_data.adapt_to_pi
     assert not cfg.actor.model.openpi_data.extra_delta_transform
     assert cfg.runner.val_check_interval==-1
+    assert cfg.native_pilot.maximum_actions==1200000
+    assert cfg.native_pilot.previous_maximum_actions==1000000
     for mode in ('train','eval'):
         assert cfg.env[mode].task_config.task_name=='place_phone_stand'
         assert cfg.env[mode].task_config.camera.head_camera_type=='Large_D435'
@@ -28,7 +30,7 @@ def validate_sidney(cfg):
         initializer_revision=REVISION,original_initializer_reproduction=False,
         micro_batch_size=micro,accumulation_steps=2048//(micro*world),
         nominal_before_after_actions=0,nominal_all_in_actions=819200,
-        maximum_aggregate_gpu_seconds=64800,
+        maximum_aggregate_gpu_seconds=72000,maximum_actions=1200000,
         probability_reference=('native RLinf actor recomputation' if cfg.algorithm.recompute_logprobs else 'same-batch native rollout probabilities'),
         precision='native mixed BF16; entire vision and norms FP32',
         baseline_reference='published Sidney SFT; no rebenchmark panel',

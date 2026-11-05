@@ -114,10 +114,16 @@ class ActionJournal:
     publishes valid_action_mask for training. Retrying uses a NEW attempt name
     under the SAME accounting root; old unresolved intents remain fully charged.
     """
-    def __init__(self, root, *, rank, world, attempt, maximum_actions=1000000):
+    def __init__(self, root, *, rank, world, attempt, maximum_actions=1000000,
+                 previous_maximum_actions=None):
         self.root = Path(root) / f'rank-{rank:02d}'
         self.root.mkdir(parents=True, exist_ok=True)
         self.limit = None if maximum_actions is None else int(maximum_actions) // int(world)
+        self.previous_limit = None
+        if previous_maximum_actions is not None:
+            if maximum_actions is None or not 0 < int(previous_maximum_actions) < int(maximum_actions):
+                raise ValueError('An explicit journal migration must increase a finite ceiling')
+            self.previous_limit = int(previous_maximum_actions) // int(world)
         self.attempt = attempt
         self.path = self.root / (attempt + '.json')
         if self.path.exists():
@@ -130,7 +136,8 @@ class ActionJournal:
 
     def _save(self):
         write(self.path, dict(format='rlinf_native_ppo_actions_v1', attempt=self.attempt,
-            rank_action_ceiling=self.limit, calls=self.rows))
+            rank_action_ceiling=self.limit, previous_rank_action_ceiling=self.previous_limit,
+            calls=self.rows))
 
     def charged(self):
         total = self._local_charged
@@ -142,7 +149,8 @@ class ActionJournal:
             cached = self._file_cache.get(path)
             if cached is None or cached[0] != key:
                 value = json.loads(path.read_text())
-                if value['rank_action_ceiling'] != self.limit:
+                if (value['rank_action_ceiling'] != self.limit
+                        and (self.previous_limit is None or value['rank_action_ceiling'] != self.previous_limit)):
                     raise ValueError('Cannot change rank partition while reusing action escrow')
                 amount = sum(row.get('executed_or_conservative', row['requested']) for row in value['calls'])
                 self._file_cache[path] = (key, amount)

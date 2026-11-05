@@ -1,7 +1,7 @@
 {
-  "status": "PPO_TRAIN06_SUBMITTED",
+  "status": "HOST_RAM_OOM_RETRY_PREPARATION",
   "cluster": "Baige Pro6K",
-  "last_checked_at_shanghai": "2026-11-05 19:54",
+  "last_checked_at_shanghai": "2026-11-05 23:01",
   "prior_scheduler_gpu_seconds": 2561,
   "prior_scheduler_gpu_hours": 0.7113888888888888,
   "optimizer_updates": 0,
@@ -9,15 +9,15 @@
   "revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "user_preference": "Broad multi-task SFT, no RL tuning. Maximize actual6000-series batch capacity or measured throughput.",
   "precision": "Native mixed BF16 with full FP32 vision/norms. FP32 full-model replay only if required to localize conversion drift.",
-  "next_action": "Verify actual4GPU probe, static recipe and12-worker restoration, then first actual optimizer steps and both complete rollout/update boundaries. Monitor at most20min apart. Micro64/accum8/global2048, fiveepochs, compressionOFF; full step0 and shared action ledger retained.",
-  "job_id": "job-42mdffft4wwc",
+  "next_action": "Fresh train07 with1024GiB hostRAM(actual>=896GiB), Ray guard unchanged,64/GPU\u00d7accum8/global2048/fiveepochs. Preserve step0 and all old journal charges via explicit1M\u21921.2M engineering migration; first-reset RGB/state checks before controls,10s host telemetry.",
+  "job_id": null,
   "source_commit": "a2c7180913b2946f39b33d1781f59b42531d5854",
   "core_tests_passed": 23,
   "scene_instruction_binding_passed": true,
   "conversion_passed": true,
   "error": null,
   "bridge_scheduler_gpu_seconds_completed": 920,
-  "cumulative_scheduler_gpu_seconds_completed": 19678,
+  "cumulative_scheduler_gpu_seconds_completed": 25554,
   "completed_bridge_attempts": [
     {
       "attempt": "bridge01",
@@ -138,7 +138,7 @@
       "attempt": "train06",
       "job_id": "job-42mdffft4wwc",
       "source_commit": "a2c7180913b2946f39b33d1781f59b42531d5854",
-      "status": "submitted",
+      "status": "failed_host_ram_oom_before_sgd",
       "gpus": 4,
       "cpus": 64,
       "memory_gib": 512,
@@ -155,12 +155,22 @@
       "conservative_prior_gpu_seconds": 18000,
       "maximum_additional_envelope_gpu_seconds": 59040,
       "created_at_shanghai": "2026-11-05 19:53:15",
-      "optimizer_updates": 0
+      "optimizer_updates": 0,
+      "scheduler_gpu_seconds": 5876,
+      "creation_to_release_gpu_seconds": 5944,
+      "worker_gpu_seconds": 5752,
+      "ended_at_shanghai": "2026-11-05 20:18:01",
+      "worker_ended_at_shanghai": "2026-11-05 20:17:33",
+      "host_memory_limit_gib": 512,
+      "ray_memory_fraction_at_failure": 0.95347,
+      "ray_memory_used_gib": 488.18,
+      "worker_restoration_passed": 12,
+      "scene_binding_batches": 8
     }
   ],
   "config_validation_passed": true,
-  "additional_scheduler_gpu_seconds_completed": 17117,
-  "additional_envelope_gpu_hours": 18,
+  "additional_scheduler_gpu_seconds_completed": 22993,
+  "additional_envelope_gpu_hours": 20,
   "task_scope_limit_gpu_hours": 50,
   "resume_dir": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03/sidney-native-two/checkpoints/global_step_0",
   "shared_action_accounting_root": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03/action-accounting",
@@ -232,9 +242,9 @@
       "outcome": "All four candidates64/128/256/512 completed four native FSDP/PPO updates on all four ranks.64 fastest including conditional reference overhead;512 has only1.00GB reserved headroom."
     }
   ],
-  "active_gpu_jobs": 1,
-  "additional_scheduler_gpu_hours_completed": 4.754722222222222,
-  "cumulative_scheduler_gpu_hours_completed": 5.466111111111111,
+  "active_gpu_jobs": 0,
+  "additional_scheduler_gpu_hours_completed": 6.3869444444444445,
+  "cumulative_scheduler_gpu_hours_completed": 7.098333333333334,
   "storage_admission": {
     "status": "admitted_combined_371GiB_threshold",
     "last_observed_free_gib": 412.734375,
@@ -300,6 +310,7 @@
       "canonical_compression_enabled": false
     }
   ],
-  "additional_conservative_gpu_seconds_completed": 17144,
-  "core_storage_tests_passed": 6
+  "additional_conservative_gpu_seconds_completed": 23088,
+  "core_storage_tests_passed": 6,
+  "maximum_cumulative_charged_actions": 1200000
 }

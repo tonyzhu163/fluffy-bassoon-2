@@ -383,7 +383,9 @@ class PilotEnvironment(SidecarMixin, EnvWorker):
         self._pilot_root = Path(self.cfg.native_pilot.output)
         self._pilot_journal = ActionJournal(self.cfg.native_pilot.accounting_root,
             rank=self._rank, world=int(self.cfg.native_pilot.world_size),
-            attempt=self.cfg.native_pilot.attempt)
+            attempt=self.cfg.native_pilot.attempt,
+            maximum_actions=self.cfg.native_pilot.get('maximum_actions',1000000),
+            previous_maximum_actions=self.cfg.native_pilot.get('previous_maximum_actions'))
 
         class RecordedRoboTwin(original):
             def __init__(env, *args, **kwargs):

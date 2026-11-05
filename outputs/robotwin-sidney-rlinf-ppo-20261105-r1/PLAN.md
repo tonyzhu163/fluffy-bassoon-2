@@ -86,3 +86,24 @@ user-requested throughput qualification; stay within AGENTS.md50GPUh scope.
 Train05 stopped before SGD; original full step0 boundary retained. Throughput01
 hit a state-selector API mismatch before timing; corrected and restarted in
 fresh throughput02, aborting any further non-memory harness error immediately.
+
+
+Host-memory retry migration after train06: Ray killed a worker at488.18/512GiB
+(95% host-memory threshold), before any scientific SGD. The four simulator
+workers each occupied102–107GiB. Request1024GiB hostRAM on the same four GPUs
+and require at least896GiB actual cgroup memory before model loading. Keep
+Ray's existing protection; record cgroup memory every10s and validate all768
+first-reset RGB views plus finite states before native action collection.
+The user accepted micro64/accum8/global2048; five epochs and all scientific
+settings stay unchanged. This is the same two-iteration phone-stand pilot.
+
+The18 additionalGPUh and1M charged-action values were our engineering
+envelopes, not user hard caps. Explicitly migrate to20 additionalGPUh and
+1.2M cumulative charged actions, still inside user AGENTS.md authorization
+up to50GPUh for the unchanged task. Preserve every earlier journal file and
+charge, including unresolved intents; new attempts may explicitly read the
+old1M ceiling while writing the new1.2M ceiling. Never reset the shared ledger.
+Train06 charged5876 allocatedGPU-seconds (5944 conservative creation-to-release);
+completed additional usage is22993GPU-seconds, cumulative25554 including legacy
+qualification. Conservative additional charge23088 leaves48912GPU-seconds
+inside the new20h envelope. A4GPU170min retry plus launch margin fits.

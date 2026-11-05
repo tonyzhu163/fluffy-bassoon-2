@@ -88,6 +88,26 @@ class SidneyEnvironment(runtime.PilotEnvironment):
                         actual_seed=int(sub.task.ep_num),actual_scene_info=info,
                         instruction=sub.task.get_instruction()))
                 write(root/'scene-bindings'/f'rank-{owner._rank:02d}-{owner._binding_ordinal:05d}.json',rows)
+                if owner._binding_ordinal==0:
+                    from PIL import Image
+                    raw=result[0];quality={}
+                    for key in ('main_images','wrist_images'):
+                        image=torch.as_tensor(raw[key]).cpu()
+                        assert image.dtype==torch.uint8 and image.shape[-1]==3
+                        flat=image.reshape(-1,*image.shape[-3:])[:,::16,::16].float().flatten(1)
+                        spread=flat.std(dim=1)
+                        assert bool((spread>1).all()),f'Blank camera observations: {key}'
+                        quality[key]=dict(shape=list(image.shape),minimum_image_std=float(spread.min()))
+                    assert bool(torch.isfinite(torch.as_tensor(raw['states'])).all())
+                    views=[torch.as_tensor(raw['main_images'][0]),*torch.as_tensor(raw['wrist_images'][0])]
+                    montage=Image.new('RGB',(sum(v.shape[1] for v in views),max(v.shape[0] for v in views)))
+                    offset=0
+                    for view in views:
+                        montage.paste(Image.fromarray(view.cpu().numpy()),(offset,0));offset+=view.shape[1]
+                    target=root/'camera-checks';target.mkdir(exist_ok=True)
+                    montage.save(target/f'rank-{owner._rank:02d}.jpg',quality=85)
+                    write(target/f'rank-{owner._rank:02d}.json',dict(passed=True,quality=quality,
+                        scene_instruction_bindings=len(rows),weights_or_rng_changed=False))
                 owner._binding_ordinal+=1
                 return result
             env.reset=MethodType(reset,env)
