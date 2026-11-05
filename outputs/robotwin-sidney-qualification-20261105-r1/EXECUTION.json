@@ -1,15 +1,15 @@
 {
-  "status": "PROCESSORS_PASSED_ASSET_RESTORATION_REQUIRED",
+  "status": "NATIVE_MODEL_LOADING",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
-  "job_id": "job-wzqa96jpx90w",
-  "job_name": "mwj_1105_robotwin_sidney_native_qual_r4",
-  "submitted_at_shanghai": "2026-11-05 14:21:27",
-  "last_checked_at_shanghai": "2026-11-05 14:28",
-  "observed_scheduler_status": "worker exited1 after processor pass and asset preflight failure",
-  "source_commit": "fc3166565d8270826486eac5ede19a71dd6095ea",
-  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r6",
-  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual04",
+  "job_id": "job-672dz8gc69pd",
+  "job_name": "mwj_1105_robotwin_sidney_native_qual_r5",
+  "submitted_at_shanghai": "2026-11-05 14:42:45",
+  "last_checked_at_shanghai": "2026-11-05 14:44",
+  "observed_scheduler_status": "allocated; GPU probe and processor checks passed; model worker loading",
+  "source_commit": "ee6d7f050a69ceaefe7247e4a2a55493a7940029",
+  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r8",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual05",
   "model_revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "allocation": {
     "workers": 1,
@@ -28,9 +28,13 @@
     "initial_qualification_ceiling_gpu_hours": 4,
     "task_scope_incremental_ceiling_gpu_hours": 50,
     "worker_gpu_seconds_measured": 172,
-    "conservative_allocated_gpu_hours_charge": 2.0,
+    "conservative_allocated_gpu_hours_charge": null,
     "scheduler_display_gpu_seconds": 277,
-    "usage_basis": "172s total worker time; first three scheduler durations277s, fourth pending"
+    "usage_basis": "Completed allocation durations60+89+128+50 seconds; current allocation is still running",
+    "worker_gpu_seconds_completed_attempts": 172,
+    "scheduler_display_gpu_seconds_completed_attempts": 327,
+    "gpu_hours_completed_attempts": 0.09083333333333334,
+    "active_attempt_maximum_gpu_hours": 0.5
   },
   "qualification": {
     "weight_hashes_verified": true,
@@ -56,9 +60,9 @@
       3
     ]
   },
-  "next_action": "Restore pinned official objects archive using non-overwriting installer on setup host; static all-twelve-task validation and camera-preset check before another GPU allocation. Then fresh qual05 for strict model loading, native queue parity and real episode.",
+  "next_action": "Watch strict native model loading, queue parity and real phone-stand episode; preserve active model/runtime/tokenizer/asset paths. After qualified native inference, source-task SFT screen and explicit RLinf conversion/parity before PPO.",
   "monitor_interval_minutes": 20,
-  "queue_receipt": "QUAL04-QUEUED.jpg",
+  "queue_receipt": "QUAL05-SUBMITTED.jpg",
   "attempts": [
     {
       "attempt": "qual01",
@@ -152,7 +156,21 @@
         "qual04/cpu-imports/RESULT.json",
         "qual04/qualification.log",
         "qual04/EXIT.json"
-      ]
+      ],
+      "scheduler_status": "failed",
+      "scheduler_ended_at_shanghai": "2026-11-05 14:22:27",
+      "scheduler_display_duration": "50 seconds"
+    },
+    {
+      "attempt": "qual05",
+      "job_id": "job-672dz8gc69pd",
+      "source_commit": "ee6d7f050a69ceaefe7247e4a2a55493a7940029",
+      "status": "model_loading",
+      "gpu_probe_passed": true,
+      "processor_check_passed": true,
+      "assets_passed": true,
+      "maximum_gpu_hours": 0.5,
+      "camera_profile": "Large_D435 head/wrists640x480"
     }
   ],
   "cpu_probe_attempt": {
@@ -162,5 +180,15 @@
     "tests_executed": false,
     "prepared_commit": "3a0597229c5e6d53f1d352bb0c4321d52605731c"
   },
-  "model_environment": "/mowenjie/fluffy-bassoon-2/envs/lerobot-sidney-92f96f33-20261105-r2"
+  "model_environment": "/mowenjie/fluffy-bassoon-2/envs/lerobot-sidney-92f96f33-20261105-r2",
+  "assets": {
+    "status": "installed_and_crc_verified",
+    "receipt": "assets02/ASSETS-READY.json",
+    "installed_files": 3042,
+    "preserved_matching_files": 6319,
+    "twelve_task_families": 23,
+    "twelve_task_files": 443,
+    "original_symlink_targets_preserved": "assets02/LINK-REPAIRS.json",
+    "active_restored_families": "/mowenjie/fluffy-bassoon-2/cache/robotwin-sidney-objects-20261105-r1/restored-families-assets02"
+  }
 }
