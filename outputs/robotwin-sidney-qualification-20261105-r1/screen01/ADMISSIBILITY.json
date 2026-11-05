@@ -1,0 +1,9 @@
+{
+  "status": "NOT_ADMITTED_AS_SFT_BASELINE",
+  "reason": "Scene/instruction mismatch: place_a2b_left first rendered scene is mouse+bell, but language names coffee-box+Rubiks cube.",
+  "cause": "Pinned upstream SubEnv.setup_task caches episode_info_list once. reset generates language from that cached metadata before constructing the new requested scene; the bounded retry wrapper retained this behavior.",
+  "scope": "Native strict weight loading and exact chunk/queue numerical parity remain valid execution evidence. Simulator successes under mismatched conditioning do not establish aligned SFT performance.",
+  "user_steering": "Use published Sidney SFT results as baseline reference; stop extra re-evaluation. Screen worker completed while stop request was processing. No PPO or optimizer updates.",
+  "next_step": "Repair scene/instruction binding and verify Sidney RLinf conversion for the PPO pilot; do not rerun broad SFT benchmark by default.",
+  "published_baseline": "https://huggingface.co/SidneyXie/pi05_robotwin/blob/e49e2ab6c11f07511573b67261bd129e88d0a416/README.md"
+}

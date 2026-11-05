@@ -1,12 +1,12 @@
 {
-  "status": "SOURCE_SCREEN_SUBMITTED",
+  "status": "NATIVE_EXECUTION_VERIFIED_EXTRA_SCREEN_NOT_ADMITTED",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
   "job_id": "job-klvqq2iitu40",
   "job_name": "mwj_1105_robotwin_sidney_native_qual_r9",
   "submitted_at_shanghai": "2026-11-05 15:41:37",
-  "last_checked_at_shanghai": "2026-11-05 15:50",
-  "observed_scheduler_status": "qual09 succeeded15:45:48; strict weights, exact same-noise API parity, one successful127-control episode",
+  "last_checked_at_shanghai": "2026-11-05 16:12",
+  "observed_scheduler_status": "screen job-u4corablmhdk stopped16:09:40; worker had completed exit0 before allocation release; no active jobs for this task",
   "source_commit": "2d67fb345fea369a8384d9bac8dfd61414195908",
   "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r13",
   "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual09",
@@ -23,14 +23,15 @@
     "actual_gpu_type": "NVIDIA RPBZZZ6; CUDA/NVML/PCI mapping and tensor computation passed in qual02"
   },
   "budget": {
-    "gpu_hours_used_as_of_last_check": 0.3877777777777778,
-    "worker_gpu_seconds_measured": 1070,
-    "scheduler_display_gpu_seconds": 1396,
-    "usage_basis": "Nine completed one-GPU scheduler durations60+89+128+50+210+230+189+209+231 seconds.",
+    "gpu_hours_used_as_of_last_check": 0.7113888888888888,
+    "worker_gpu_seconds_measured": 2224,
+    "scheduler_display_gpu_seconds": 2561,
+    "usage_basis": "Nine qualification scheduler durations1396s plus screen1165s=2561s on oneGPU; worker total2224s. Allocation released.",
     "initial_qualification_ceiling_gpu_hours": 4,
     "task_scope_incremental_ceiling_gpu_hours": 50,
     "next_attempt_maximum_gpu_hours": 0.5,
-    "active_attempt_maximum_gpu_hours": 0
+    "active_attempt_maximum_gpu_hours": 0,
+    "worker_gpu_hours_measured": 0.6177777777777778
   },
   "qualification": {
     "weight_hashes_verified": true,
@@ -68,9 +69,11 @@
     "buffers_unchanged": true,
     "deterministic_reference": true,
     "attention": "all eager",
-    "tf32": false
+    "tf32": false,
+    "sft_success_rate_qualified": false,
+    "interpretation": "Execution/numerical smoke only; scene-conditioned language not qualified."
   },
-  "next_action": "Run five existing source eval-bank scenes for each of handover_mic/place_a2b_left/place_phone_stand; retain native deterministic H50/K10. Remaining three scene banks and RLinf numerical conversion still pending.",
+  "next_action": "Repair scene/instruction binding and verify Sidney RLinf conversion for the PPO pilot; do not rerun broad SFT benchmark by default.",
   "monitor_interval_minutes": 20,
   "queue_receipt": "QUAL09-SUBMITTED.jpg",
   "attempts": [
@@ -296,7 +299,7 @@
     "active_restored_families": "/mowenjie/fluffy-bassoon-2/cache/robotwin-sidney-objects-20261105-r1/restored-families-assets02"
   },
   "screen": {
-    "status": "submitted",
+    "status": "worker_complete_not_admitted_as_baseline",
     "job_id": "job-u4corablmhdk",
     "job_name": "mwj_1105_robotwin_sidney_source_screen_r1",
     "submitted_at_shanghai": "2026-11-05 15:49:52",
@@ -309,6 +312,14 @@
       "place_phone_stand"
     ],
     "episodes_per_task": 5,
-    "maximum_gpu_hours": 0.5
+    "maximum_gpu_hours": 0.5,
+    "worker_gpu_seconds": 1154,
+    "optimizer_updates": 0,
+    "admissibility": "screen01/ADMISSIBILITY.json",
+    "scheduler_status": "stopped",
+    "completed_episodes": 15,
+    "scheduler_ended_at_shanghai": "2026-11-05 16:09:40",
+    "scheduler_display_gpu_seconds": 1165,
+    "stop_receipt": "SCREEN01-STOPPED.jpg"
   }
 }
