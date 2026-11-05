@@ -1,0 +1,61 @@
+{
+  "checked_unix": 1793892981.2390616,
+  "free_GiB": 690.8515625,
+  "memory01": {
+    "exists": true,
+    "EXIT.json": {
+      "exit_code": 0,
+      "worker_gpu_seconds": 395
+    },
+    "RESULT.json": {
+      "status": "complete",
+      "physical_controls": 7200
+    },
+    "latest_stage": "after_delete_trim"
+  },
+  "memory02": {
+    "exists": false
+  },
+  "kv_dit": {
+    "update": 5600,
+    "best_loss": 0.12629659310914576,
+    "plateau": {
+      "reference": 0.12729508220218122,
+      "stale_checks": 4,
+      "converged": false
+    },
+    "converged": false,
+    "elapsed_seconds": 31365.069755055476,
+    "stop_reason": "operational_checkpoint",
+    "native_parameters_frozen": true,
+    "interface": "kv_bridge",
+    "objective": "dit"
+  },
+  "qualification_dirs": [
+    "qualification-fitted-pfs03/velocity_bridge",
+    "qualification-fitted-pfs03/kv_bridge"
+  ],
+  "posttest_archive_files": [
+    "SOURCE5-POSTTEST-RETENTION-ASSESSMENT-01.json",
+    "SOURCE5-POSTTEST-ARCHIVE-CAPACITY-01.json",
+    "SOURCE5-POSTTEST-ARCHIVE-DEPENDENCIES-01.json",
+    "SOURCE5-POSTTEST-ARCHIVE-CODE-PREFLIGHT-01.json"
+  ],
+  "owner_updates": {
+    "source70_archive": {
+      "status": "final40recoveries_verified_cold_and_hotblocks_released;rawtestbanks_in_progress",
+      "verified_released_allocated_bytes": 20441694208,
+      "verified_released_GiB": 19.037811279296875,
+      "models_histories_membercache": "hot_and_protected",
+      "source_owner_actual_free_GiB_at2337": 690.84375
+    },
+    "meta": {
+      "B8_qualification_waves": "each48episodes_independent_raw/action/history/camera_audit_passed",
+      "KV_controls_per_second": 88.72,
+      "velocity_controls_per_second": 90.93,
+      "OOD_qualification": "deadline_partial_not_passed;separate6epfull/resetqualificationplannedwithin150",
+      "full_readout": "unadmitted_budget_and_storage_proposal_pending"
+    },
+    "robotwin": "64scene_trim_qualification_preparing;scientific_retry_held"
+  }
+}
