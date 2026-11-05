@@ -15,13 +15,13 @@
   ],
   "primary_comparison": "KV primary; velocity declared comparison",
   "fitted_deployment_qualification": {
-    "status": "required_not_started",
+    "status": "implementation_prepared_pending_deployed_preflight_and_actual_GPU_qualification",
     "GPUs": 1,
     "maximum_GPU_hours_per_interface": 0.25,
     "total_maximum_GPU_hours": 0.5,
     "maximum_hot_GiB": 4,
-    "cases": "Separate deterministic qualification cases from the original canonical ID/OOD constructors; main fixed50-case banks remain unchanged",
-    "episodes_per_interface": 24,
+    "cases": "Exact original canonical cases/draws in separate qualification output; B8 OpenDrawer full-memory plus B1 CloseFridge full-memory and episode-reset",
+    "episodes_per_interface": 60,
     "tasks": [
       "OpenDrawer",
       "CloseFridge"
@@ -39,7 +39,27 @@
       "Exact action-draw/query chronology, mapped binary controls, prior-history receipts and no future tokens",
       "Frozen expert and selected policy hashes unchanged; deployment constructs no optimizer and takes zero SGD steps",
       "Raw draws/commands/feedback/frames audited through frozen-steering path; older direct-action audit is not substituted"
-    ]
+    ],
+    "physical_controls_per_interface": 39600,
+    "waves": [
+      {
+        "task": "OpenDrawer",
+        "cases": 8,
+        "mode": "full"
+      },
+      {
+        "task": "CloseFridge",
+        "cases": 1,
+        "mode": "full"
+      },
+      {
+        "task": "CloseFridge",
+        "cases": 1,
+        "mode": "episode"
+      }
+    ],
+    "extra_native_comparison_forwards_per_wave": 2,
+    "zero_output_bridge_exact_parity_required": true
   },
   "readout": {
     "ID": [

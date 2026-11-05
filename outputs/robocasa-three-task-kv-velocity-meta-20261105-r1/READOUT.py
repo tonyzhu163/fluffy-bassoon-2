@@ -16,7 +16,7 @@ def main():
     p.add_argument('--commit', required=True)
     p.add_argument('--interface', choices=('kv_bridge', 'velocity_bridge'), required=True)
     p.add_argument('--objective', choices=('ad', 'dpt', 'dit', 'ic_iql'), required=True)
-    p.add_argument('--split', choices=('ID', 'OOD'), required=True)
+    p.add_argument('--split', choices=('ID', 'OOD', 'qualification'), required=True)
     p.add_argument('--deadline', type=float, required=True)
     p.add_argument('--attempt', required=True)
     args = p.parse_args()
@@ -68,9 +68,19 @@ def main():
         raise ValueError('The original frozen expert/normalization changed')
     stats = json.loads(norm.read_text()); stats = stats.get('norm_stats', stats)
     codec = FlowBridgeCodec.from_stats(stats, interface=args.interface)
-    motor = FlowBridgeMotor(native, codec, policy)
+    qualification = args.split == 'qualification'
+    if qualification:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('fitted_bridge_observer', Path(__file__).with_name('FITTED-CHECK.py'))
+        observer = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(observer)
+        motor = observer.observed_motor(native, codec, policy)
+    else:
+        motor = FlowBridgeMotor(native, codec, policy)
     native_versions = tensor_hash(_versions(native.model))
-    tasks = ('OpenDrawer', 'CloseToasterOvenDoor', 'CoffeeSetupMug') if args.split == 'ID' else ('CloseFridge', 'TurnOnMicrowave')
+    tasks = (('OpenDrawer', 'CloseFridge') if qualification else
+             ('OpenDrawer', 'CloseToasterOvenDoor', 'CoffeeSetupMug') if args.split == 'ID' else
+             ('CloseFridge', 'TurnOnMicrowave'))
     horizons = dict(OpenDrawer=600, CloseToasterOvenDoor=600, CoffeeSetupMug=600,
                     CloseFridge=900, TurnOnMicrowave=450)
     # Preserve the exact previously audited task horizons and case banks.
@@ -84,6 +94,13 @@ def main():
         support_episodes=[0, 1, 2, 3, 4, 5], memory_modes=['full', 'episode'],
         batch_contract='fixed_order_same_horizon_waves_v1',
         render_contract='bounded_two_intensity_levels', deployment_optimizer_updates=0)
+    if qualification:
+        binding.update(format='fitted_bridge_deployment_qualification_v1', cases_per_task=None,
+            separate_qualification_output=True, maximum_allocated_GPU_hours=.25,
+            waves=[dict(task='OpenDrawer', mode='full', cases=8),
+                   dict(task='CloseFridge', mode='full', cases=1),
+                   dict(task='CloseFridge', mode='episode', cases=1)],
+            purpose='Deployment, causal history and B8 throughput only; not the main ID/OOD benchmark')
     binding_path = args.output / 'BINDING.json'
     if binding_path.exists() and json.loads(binding_path.read_text()) != binding:
         raise ValueError('Do not mix immutable candidates or evaluation contracts when resuming')
@@ -93,12 +110,19 @@ def main():
     results, started = [], time.time()
     for mode in ('full', 'episode'):
         for task in tasks:
+            if qualification and task == 'OpenDrawer' and mode == 'episode':
+                continue
+            canonical_split = 'ID' if task in ('OpenDrawer', 'CloseToasterOvenDoor', 'CoffeeSetupMug') else 'OOD'
+            canonical = root / 'outputs/robocasa-eight-hour-babysit-20261104-r1/gpu' / ('canonical-final-' + canonical_split)
             task_number = ('OpenDrawer', 'CloseToasterOvenDoor', 'CoffeeSetupMug', 'CloseFridge', 'TurnOnMicrowave').index(task)
             for first in range(0, 50, 8):
-                cases = [dict(case=dict(bank='joint_meta_final_' + args.split, task=task, split='target',
+                if qualification and first:
+                    break
+                wave_size = 1 if qualification and task == 'CloseFridge' else 8
+                cases = [dict(case=dict(bank='joint_meta_final_' + canonical_split, task=task, split='target',
                     native_seed=64105000 + task_number * 10000 + slot, slot=slot, reset_ordinal=0,
                     counted=True, layout_source='native_target_constructor_seed_first_reset'), horizon=horizons[task])
-                    for slot in range(first, min(50, first + 8))]
+                    for slot in range(first, min(50, first + wave_size))]
                 directory = args.output / mode / task / f'bank-{first:03d}'
                 if (directory / 'RESULT.json').exists():
                     result = json.loads((directory / 'RESULT.json').read_text())
@@ -123,6 +147,8 @@ def main():
                         journal=journal, writer_factory=native_video_writer, binding=binding,
                         maximum_rgb_delta=2, memory_mode=mode, actual_attempts=6, fixed_case_order=True)
                     began = time.time()
+                    if qualification:
+                        motor.start_wave(mode, horizons[task])
                     rows = backend.run_bank(policy, cases, lanes=len(cases), attempts=6,
                                             deadline_unix=args.deadline - 90)
                     if (tensor_hash(_versions(native.model)) != native_versions
@@ -136,6 +162,10 @@ def main():
                         controls_charged=journal.charged(), actual_batch_sizes=backend.last_batch_sizes,
                         elapsed_seconds=time.time() - began, optimizer_updates=0,
                         native_parameters_frozen=True)
+                    if qualification:
+                        result['fitted_deployment_check'] = motor.finish_wave(cases=len(cases),
+                            horizon=horizons[task], output=directory / 'FITTED-DEPLOYMENT.json')
+                        result['physical_controls_per_second'] = len(cases) * 6 * horizons[task] / result['elapsed_seconds']
                     _json(directory / 'RESULT.json', result)
                 results.append({k: v for k, v in result.items()
                     if k not in ('episodes', 'references', 'cases', 'actual_batch_sizes')})
