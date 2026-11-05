@@ -114,6 +114,8 @@ to the [2026-11-03 snapshot](archive/coordination/coordination-20261103.md#ongoi
 
 | Eight-hour PPO/GRPO and meta-learning babysit | Codex | Baige; eight-hour watch closed; SOURCE5 approval received Nov5 | User approved70GPUh and the new three-test fixed-endpoint readiness gate. Counter/Faucet source preparation is checking checkpoint storage before launch; two owned closed OOD raw panels archiving. Main route is frozen-expert learned KV, with matched velocity-residual ablation; no more direct-action fitting. Existing closed meta total73.3764/96GPUh and resumes retained. AGENTS approval threshold changed to budgets above50GPUh; explicit caps remain binding. |
 
+| Four-epoch PPO40 versus GRPO40 | Owner chat `01a1a633`; Baige evaluation preparation, no allocation | **Nov5 11:10 Shanghai:** user authorized fixed final40 checkpoints on512 fresh shared cases plus SFT. New evaluation only, zero training, separate7.5GPUh ceiling. CPU identity checks and current queue availability next; broader four-epoch Counter/Faucet work remains with its approved70GPUh owner. [Plan](robocasa-ppo4-grpo40-test512-20261105-r1/PLAN.md). |
+
 ### Needs owner refresh
 
 - Native VLRLA-recipe PPO pilot: last recorded 2026-10-31 14:06 Shanghai as
