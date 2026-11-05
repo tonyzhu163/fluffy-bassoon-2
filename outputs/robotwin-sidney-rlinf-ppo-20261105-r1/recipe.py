@@ -16,7 +16,7 @@ def validate_sidney(cfg):
         assert cfg.env[mode].task_config.camera.head_camera_type=='Large_D435'
         assert cfg.env[mode].task_config.camera.wrist_camera_type=='Large_D435'
     micro=int(cfg.actor.micro_batch_size);world=int(cfg.native_pilot.world_size)
-    assert micro in (8,16,32) and 2048%(micro*world)==0
+    assert micro in (8,16,32,64) and 2048%(micro*world)==0
     copy=OmegaConf.create(OmegaConf.to_container(cfg,resolve=True))
     for mode in ('train','eval'):copy.env[mode].task_config.task_name='adjust_bottle'
     copy.actor.model.openpi.config_name='pi05_aloha_robotwin'

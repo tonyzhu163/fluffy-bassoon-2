@@ -9,6 +9,7 @@ TASK_WORLD=${5:-4}
 TASK_LIMIT=${6:-$((12000/TASK_WORLD))}
 TASK_RESUME=${7:-}
 TASK_ACCOUNTING=${8:-$TASK_OUT/action-accounting}
+TASK_CAPACITY=${9:-}
 [[ $TASK_LIMIT =~ ^[0-9]+$ && $TASK_LIMIT -le 10800 ]]
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_RUN_CODE=$TASK_CODE/outputs/robotwin-sidney-rlinf-ppo-20261105-r1
@@ -61,6 +62,7 @@ mkdir -p /root/.sapien/physx
 if [[ ! -e /root/.sapien/physx/105.1-physx-5.3.1.patch0 ]]; then
   ln -s /mowenjie/fluffy-bassoon/inputs/maniskill-scene-assets-20261028-r1/physx/105.1-physx-5.3.1.patch0 /root/.sapien/physx/105.1-physx-5.3.1.patch0
 fi
+export TASK_CAPACITY
 TASK_MICRO=$("$TASK_PYTHON" - <<'PY'
 import hashlib,json,os
 from pathlib import Path
@@ -77,7 +79,16 @@ for filename,key in [('model.safetensors','model_sha256'),('sidney-processors.js
         for block in iter(lambda:handle.read(8*1024**2),b''):h.update(block)
     assert h.hexdigest()==receipt[key]
 Path(os.environ['NATIVE_PPO_OUTPUT'],'bridge-admission.json').write_text(json.dumps(result,indent=2)+'\n')
-print(result['execution_microbatch'])
+capacity=os.environ.get('TASK_CAPACITY')
+if capacity:
+    qualified=json.loads((Path(capacity)/'RESULT.json').read_text())
+    assert qualified['status']=='complete' and qualified['optimizer_updates']==0
+    assert qualified['execution_microbatch']==64 and qualified['backward']['frozen_vlm_has_no_gradients']
+    assert qualified['backward']['logprob_max_abs_error']<=1e-3
+    assert qualified['backward']['policy_gradient_tensors']>0 and qualified['backward']['critic_gradient_tensors']>0
+    Path(os.environ['NATIVE_PPO_OUTPUT'],'capacity-admission.json').write_text(json.dumps(qualified,indent=2)+'\n')
+    print(64)
+else:print(result['execution_microbatch'])
 PY
 )
 cd "$TASK_CODE"
