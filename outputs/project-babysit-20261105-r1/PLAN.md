@@ -54,5 +54,18 @@ guard. Freeing space means verified archival of the responsible owner's closed
 artifacts; protect active caches, source archives and complete recoveries.
 Do not lower a guard or move an active dependency to admit another job.
 
+The coordinated fit-only/evaluation reservations are Counter recovery 5 GiB,
+Faucet TEST512 15 GiB, and eight checkpoint-only fits 6 GiB. SOURCE5 requires
+its 200 GiB floor plus 20 GiB extra headroom and its own 20 GiB future output,
+so tests plus fits require at least 246 GiB actual free before launch. Hold
+student ID/OOD rollout writes for separate admission. Count archival capacity
+only after byte/hash/readback verification and actual block release, and do
+not add previous reclamation to a free-space reading that already includes it.
+
+Schedule phases if all writers cannot fit concurrently: complete the pending
+Counter/Faucet tests and resume fit-only jobs when admitted; keep RoboTwin's
+large pilot held until its measured peak output and combined free space pass.
+Assess retention of newly closed artifacts only after their dependencies end.
+
 Live status belongs in the monitor's own row in `outputs/coordination.md`.
 Scientific results remain in their owners' evidence folders and FINDINGS.
