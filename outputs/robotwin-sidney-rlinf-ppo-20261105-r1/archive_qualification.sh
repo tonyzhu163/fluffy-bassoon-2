@@ -34,6 +34,7 @@ finish() {
 trap finish EXIT
 if [[ $TASK_GPUS == 1 ]]; then
   export FLUFFY_GPU_EXECUTION=baige
+  if [[ ${CUDA_VISIBLE_DEVICES+x} != x ]]; then export CUDA_VISIBLE_DEVICES=0; fi
   "$TASK_PYTHON" "$TASK_CODE/scripts/[train]gpu_probe.py" --baige-container \
     --baige-exclusive-training --purpose training --expected-count 1 --output "$TASK_OUT/gpu-probe.json"
 fi
