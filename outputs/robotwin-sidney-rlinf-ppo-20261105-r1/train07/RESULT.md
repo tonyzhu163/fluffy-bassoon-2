@@ -40,3 +40,5 @@ canonical histories and raw audit evidence remain in place.
 [result](RESULT.json), [exit](EXIT.json), [native metrics](all-iteration-metrics.txt).
 
 Post-close retention: the eight canonical rollout PTs were cold-copied with full byte/SHA readback and complete staged restoration before releasing 43.08858 GiB from PFS. Original metadata, restore pointers and all 36 checkpoint/boundary/worker files remain hot; the reported 114.97 GiB is the pre-archive snapshot. [Verified archive and restoration receipts](../../robotwin-sidney-matched-baselines-20261106-r1/train07-archive01/RESULT.md).
+
+A second post-close retention pass cold-copied all 256 simulator trace files with full cold and staged SHA256 readback before release, reclaiming another 43.53453 GiB. All 36 checkpoint/boundary/worker files stayed hot and unchanged. Original trace paths have restore pointers; see [the complete restoration inventory](../../robotwin-sidney-matched-baselines-20261106-r1/train07-traces-archive01/RESULT.md).
