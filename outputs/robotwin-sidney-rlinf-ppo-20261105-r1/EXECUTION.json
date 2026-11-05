@@ -1,7 +1,7 @@
 {
-  "status": "HOST_RAM_OOM_RETRY_PREPARATION",
+  "status": "USER_RAM_DEBUG_DIAGNOSTIC_RUNNING_PRODUCTION_HELD",
   "cluster": "Baige Pro6K",
-  "last_checked_at_shanghai": "2026-11-05 23:01",
+  "last_checked_at_shanghai": "2026-11-05 23:19",
   "prior_scheduler_gpu_seconds": 2561,
   "prior_scheduler_gpu_hours": 0.7113888888888888,
   "optimizer_updates": 0,
@@ -9,9 +9,9 @@
   "revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "user_preference": "Broad multi-task SFT, no RL tuning. Maximize actual6000-series batch capacity or measured throughput.",
   "precision": "Native mixed BF16 with full FP32 vision/norms. FP32 full-model replay only if required to localize conversion drift.",
-  "next_action": "Fresh train07 with1024GiB hostRAM(actual>=896GiB), Ray guard unchanged,64/GPU\u00d7accum8/global2048/fiveepochs. Preserve step0 and all old journal charges via explicit1M\u21921.2M engineering migration; first-reset RGB/state checks before controls,10s host telemetry.",
-  "job_id": null,
-  "source_commit": "a2c7180913b2946f39b33d1781f59b42531d5854",
+  "next_action": "User asks RAM diagnosis; hold production retry. Measure native scene1/4/8/16 RSS/PSS/anon/file and glibc arenas aroundconstructor,2resets,7200holds,GC/trim. NoVLA/noSGD;exactheldRGB/statebytechecks andallcharges retained. Review actual cause before production mitigation.",
+  "job_id": "job-gczjjcuo53sq",
+  "source_commit": "6f0262ff02305383f071c2f27dda1e1a289c1146",
   "core_tests_passed": 23,
   "scene_instruction_binding_passed": true,
   "conversion_passed": true,
@@ -58,8 +58,8 @@
     "maximum_minutes": 50,
     "bridge_charge_conservative_gpu_seconds": 950
   },
-  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train06",
-  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-train06",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/memory01",
+  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-memory01",
   "training_attempts": [
     {
       "attempt": "train01",
@@ -242,7 +242,7 @@
       "outcome": "All four candidates64/128/256/512 completed four native FSDP/PPO updates on all four ranks.64 fastest including conditional reference overhead;512 has only1.00GB reserved headroom."
     }
   ],
-  "active_gpu_jobs": 0,
+  "active_gpu_jobs": 1,
   "additional_scheduler_gpu_hours_completed": 6.3869444444444445,
   "cumulative_scheduler_gpu_hours_completed": 7.098333333333334,
   "storage_admission": {
@@ -312,5 +312,31 @@
   ],
   "additional_conservative_gpu_seconds_completed": 23088,
   "core_storage_tests_passed": 6,
-  "maximum_cumulative_charged_actions": 1200000
+  "maximum_cumulative_charged_actions": 1200000,
+  "memory_diagnostics": [
+    {
+      "attempt": "memory01",
+      "job_id": "job-gczjjcuo53sq",
+      "source_commit": "6f0262ff02305383f071c2f27dda1e1a289c1146",
+      "status": "submitted",
+      "created_at_shanghai": "2026-11-05 23:18:27",
+      "gpus": 1,
+      "cpus": 32,
+      "memory_gib": 256,
+      "maximum_minutes": 20,
+      "scenes": 16,
+      "maximum_physical_controls": 7200,
+      "maximum_setup_reset_allowance": 480,
+      "optimizer_updates": 0
+    }
+  ],
+  "engineering_migration": {
+    "additional_gpu_hours": 20,
+    "cumulative_action_ceiling": 1200000,
+    "previous_additional_gpu_hours": 18,
+    "previous_action_ceiling": 1000000,
+    "reason": "Failed hostRAM prefix plus bounded same-simulator diagnosis; unchanged two scientific iterations",
+    "user_gpu_hour_authorization": 50,
+    "old_journals_rewritten": false
+  }
 }
