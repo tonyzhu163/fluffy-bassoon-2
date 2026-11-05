@@ -94,6 +94,7 @@ slot=journal.begin(scenes*10,phase='memory-diagnostic/constructor-allowance')
 env=RoboTwinEnv(cfg,scenes,seed_offset=0,total_num_processes=4,worker_info=None)
 journal.finish(slot,scenes*10);sample(f'constructor_{scenes}_scenes')
 successful=False
+paired=None
 try:
     for round_index in range(3 if scenes==64 else 2):
         if scenes==64 and round_index==1:cfg.malloc_trim_reset_interval=1
@@ -135,6 +136,13 @@ try:
         assert motor_before==tensor_hash(obs['states'][:,None,:].repeat(1,50,1))
         report['events'].append(dict(round=round_index,allocator_observation_identity=True,
             python_numpy_torch_rng_identity=True,scene_identity=True,motor_input_identity=True))
+        if scenes==64 and round_index==1:
+            paired={key:obs[key].clone() for key in ('main_images','wrist_images','states')}
+        if scenes==64 and round_index==2:
+            changes={key:float((obs[key].float()-paired[key].float()).abs().max()) for key in paired}
+            assert changes['states']<=1e-6,'Per-scene trim changed matched reset joint state'
+            report['paired_reset_max_abs']=changes
+            report['paired_reset_rgb_bit_identity']=all(changes[key]==0 for key in ('main_images','wrist_images'))
         # Replay only a fixed absolute-joint hold, never model inference.
         count=8 if scenes==16 and round_index==0 else 1
         for chunk in range(count):
@@ -143,6 +151,14 @@ try:
             result=env.chunk_step(actions)
             mask=result[-1][-1].get('valid_action_mask');executed=int(mask.sum()) if mask is not None else scenes*50
             journal.finish(slot,executed);obs=result[0][-1]
+            if scenes==64 and round_index==1:
+                paired['after_hold_states']=obs['states'].clone()
+                paired['after_hold_rewards']=result[1].clone()
+            if scenes==64 and round_index==2:
+                error=float((obs['states']-paired['after_hold_states']).abs().max())
+                assert error<=1e-6 and torch.equal(result[1],paired['after_hold_rewards'])
+                report['paired_motor_prefix_state_max_abs']=error
+                report['paired_motor_prefix_reward_identity']=True
             sample(f'round{round_index}/chunk{chunk}',physical_controls=executed)
             del result,actions
         sample(f'round{round_index}/round_end')
