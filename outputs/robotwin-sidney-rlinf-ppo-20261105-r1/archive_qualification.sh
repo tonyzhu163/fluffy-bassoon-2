@@ -2,6 +2,8 @@
 set -Eeuo pipefail
 TASK_SOURCE=${1:?exact reviewed source}
 TASK_OUT=${2:?fresh output}
+TASK_GPUS=${3:-0}
+[[ $TASK_GPUS == 0 || $TASK_GPUS == 1 ]]
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_RUN_CODE=$TASK_CODE/outputs/robotwin-sidney-rlinf-ppo-20261105-r1
 TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python
@@ -9,7 +11,7 @@ TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/pytho
 [[ ! -e $TASK_OUT && -z $(git -C "$TASK_CODE" status --porcelain --untracked-files=no) ]]
 mkdir -p "$TASK_OUT"
 exec > "$TASK_OUT/worker.log" 2>&1
-export TASK_SOURCE TASK_OUT
+export TASK_SOURCE TASK_OUT TASK_GPUS
 export REPO_PATH=/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf
 export EMBODIED_PATH=$REPO_PATH/examples/embodiment
 export PYTHONPATH=$TASK_CODE/src:$REPO_PATH
@@ -26,9 +28,15 @@ TASK_STARTED=$(date +%s)
 finish() {
   TASK_RC=$?
   trap - EXIT
-  printf '{"exit_code":%s,"worker_seconds":%s,"gpu_seconds":0}\n' "$TASK_RC" "$(($(date +%s)-TASK_STARTED))" > "$TASK_OUT/EXIT.json"
+  TASK_ELAPSED=$(($(date +%s)-TASK_STARTED))
+  printf '{"exit_code":%s,"worker_seconds":%s,"allocated_gpus":%s,"worker_gpu_seconds":%s}\n' "$TASK_RC" "$TASK_ELAPSED" "$TASK_GPUS" "$((TASK_GPUS*TASK_ELAPSED))" > "$TASK_OUT/EXIT.json"
 }
 trap finish EXIT
+if [[ $TASK_GPUS == 1 ]]; then
+  export FLUFFY_GPU_EXECUTION=baige
+  "$TASK_PYTHON" "$TASK_CODE/scripts/[train]gpu_probe.py" --baige-container \
+    --baige-exclusive-training --purpose training --expected-count 1 --output "$TASK_OUT/gpu-probe.json"
+fi
 cd "$TASK_CODE"
 "$TASK_PYTHON" -m pytest -q tests/test_rlinf_native_ppo.py \
   -k 'original_rollout or worker_rng or sampler_and_eval_rng or native_history_multirank or actor_sidecar_requires' > "$TASK_OUT/tests.log" 2>&1

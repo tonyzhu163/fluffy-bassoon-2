@@ -49,6 +49,7 @@ def main():
     source=output.parent/'train03'
     boundary=source/'sidney-native-two/checkpoints/global_step_0'
     report=dict(status='running',scientific_optimizer_updates=0,source_commit=os.environ['TASK_SOURCE'],
+        allocated_gpus=int(os.environ.get('TASK_GPUS','0')),model_compute_device='cpu',
         canonical_compression='gzip level1, direct streaming without raw PFS staging',prefixes=[],boundary_files=[])
     write(output/'RESULT.json',report)
     assert shutil.disk_usage('/tmp').free>20*2**30
