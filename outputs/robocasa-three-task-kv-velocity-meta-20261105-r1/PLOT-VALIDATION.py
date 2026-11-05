@@ -13,6 +13,7 @@ args = p.parse_args()
 d = json.loads(args.snapshot.read_text())
 fig, axes = plt.subplots(2, 2, figsize=(12, 7.4), constrained_layout=True)
 summary = []
+maximum_update = max(model['status']['update'] for model in d['models'].values())
 for ax, method in zip(axes.flat, ('ad', 'dpt', 'dit', 'ic_iql')):
     for interface, label, color in [('kv_bridge', 'KV', '#2563eb'), ('velocity_bridge', 'Velocity', '#ea580c')]:
         model = d['models'][interface+'/'+method]; curve = model['curve']
@@ -33,7 +34,7 @@ for ax, method in zip(axes.flat, ('ad', 'dpt', 'dit', 'ic_iql')):
     ax.set_xlabel('Optimizer updates'); ax.set_ylabel('Validation flow loss')
     ax.grid(alpha=.18); ax.legend(frameon=False, loc='best')
     ax.ticklabel_format(axis='y', style='plain', useOffset=False)
-    ax.set_xlim(0, 1550)
+    ax.set_xlim(0, max(100, maximum_update*1.04))
 fig.suptitle('Frozen-expert steering: measured validation curves\n'
              'Fixed 128 held-out queries per check · lower loss is better · '+d['checked_shanghai'][:16].replace('T',' ')+' CST',
              fontsize=13)

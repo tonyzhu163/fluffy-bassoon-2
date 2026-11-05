@@ -1,0 +1,96 @@
+{
+  "passed": true,
+  "checked_shanghai": "2026-11-05T19:54:27.544960+08:00",
+  "source_commit": "0368b3fd44d0f5cb87c70439a823296832b69428",
+  "deployed_code": "/mowenjie/fluffy-bassoon-2/sources/steering-pfs-full-0368b3fd",
+  "python": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+  "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+  "actual_Hydra_config_and_defaults_composed": true,
+  "model_profile": {
+    "action_horizon": 50,
+    "denoising_steps": 10,
+    "active_action_dim": 12
+  },
+  "original_model_and_norm_SHA_verified": true,
+  "pooled_datasets": {
+    "ad_train": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/joint/preparation-uncompressed-cpu02/ad-train.npz",
+      "sha256": "d7732ada5d175fd4c07d6faef061deff87aa561ed46cac3b3033e9ec4c87f387",
+      "bytes": 6869645874
+    },
+    "ad_validation": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/joint/preparation-uncompressed-cpu02/ad-validation.npz",
+      "sha256": "82c833d3089c83968ffbb1da9c8e75bab7d7ba2a56eac06b4e6a88f8948c1c0a",
+      "bytes": 981379710
+    },
+    "dpt_train": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/joint/preparation-uncompressed-cpu02/dpt-train.npz",
+      "sha256": "cc2ef8aeb5e9fc878e0b39f00831c87575a391124dc507e3435360c3f722e480",
+      "bytes": 6869645874
+    },
+    "dpt_validation": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/joint/preparation-uncompressed-cpu02/dpt-validation.npz",
+      "sha256": "a375cfce98cfd848c0a5a74c5216b769ddaa9966739a0c975be9b5faf16b854b",
+      "bytes": 981379710
+    },
+    "dit_train": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/joint/preparation-uncompressed-cpu02/dit-train.npz",
+      "sha256": "d7732ada5d175fd4c07d6faef061deff87aa561ed46cac3b3033e9ec4c87f387",
+      "bytes": 6869645874
+    },
+    "dit_validation": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/joint/preparation-uncompressed-cpu02/dit-validation.npz",
+      "sha256": "82c833d3089c83968ffbb1da9c8e75bab7d7ba2a56eac06b4e6a88f8948c1c0a",
+      "bytes": 981379710
+    },
+    "ic_iql_train": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/joint/preparation-uncompressed-cpu02/ic_iql-train.npz",
+      "sha256": "d7732ada5d175fd4c07d6faef061deff87aa561ed46cac3b3033e9ec4c87f387",
+      "bytes": 6869645874
+    },
+    "ic_iql_validation": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/joint/preparation-uncompressed-cpu02/ic_iql-validation.npz",
+      "sha256": "82c833d3089c83968ffbb1da9c8e75bab7d7ba2a56eac06b4e6a88f8948c1c0a",
+      "bytes": 981379710
+    }
+  },
+  "core_identical_to20_CPU_pass_commit": "c9a82095ca927ed359c034b11ddaa16d014b7992",
+  "PFS_manifest_SHA_verified": true,
+  "BOS_pread_disabled": true,
+  "actual_deployed_PFS_reads": [
+    {
+      "task": "OpenDrawer",
+      "seconds": 0.2339361747726798,
+      "sha256": "3653802e3d60510f67fe9d30af8bb85692557a04eef9051d73f774d1e43f9ed0"
+    },
+    {
+      "task": "OpenDrawer",
+      "seconds": 0.1971847414970398,
+      "sha256": "07f844de3a0ee0353c228522da091d5acba05ea77bf1bc3456dcf2b21955cd66"
+    },
+    {
+      "task": "CloseToasterOvenDoor",
+      "seconds": 0.11948489770293236,
+      "sha256": "62667ba530871280cde02c0d4d7c9c788578ffd5313dce7b91e65634d42634f7"
+    },
+    {
+      "task": "CloseToasterOvenDoor",
+      "seconds": 0.18359812535345554,
+      "sha256": "288b40fbc88381c7fe96ca8265928ebdddce73b7a49b09a73c35b1d0079ebe90"
+    },
+    {
+      "task": "CoffeeSetupMug",
+      "seconds": 0.12779363058507442,
+      "sha256": "dfb16f5f2e4da56ea9f85a8401def8e0daf04de7e84b332716af8ee5aeb87f3c"
+    },
+    {
+      "task": "CoffeeSetupMug",
+      "seconds": 0.20744972303509712,
+      "sha256": "5e293e6602c2f29efe82c378f98bf6b5f28a00662d8cc34391dca2ace332820b"
+    }
+  ],
+  "all_eight_complete_input_checkpoints_SHA_unchanged": true,
+  "fit_only_CLI_and_wrapper_qualified": true,
+  "readout_writers": "held",
+  "free_PFS_GiB": 425.94140625
+}

@@ -1,0 +1,106 @@
+{
+  "status": "preparation_only_not_admitted",
+  "scientific_contract": "CONTRACT.json unchanged",
+  "implementation_source_commit": "0368b3fd44d0f5cb87c70439a823296832b69428",
+  "candidate_selection": "Only validation-converged candidate.pt selected by lowest held-out flow loss; never select using task-evaluation scores",
+  "interfaces": [
+    "kv_bridge",
+    "velocity_bridge"
+  ],
+  "methods": [
+    "ad",
+    "dpt",
+    "dit",
+    "ic_iql"
+  ],
+  "primary_comparison": "KV primary; velocity declared comparison",
+  "fitted_deployment_qualification": {
+    "status": "required_not_started",
+    "GPUs": 1,
+    "maximum_GPU_hours_per_interface": 0.25,
+    "total_maximum_GPU_hours": 0.5,
+    "maximum_hot_GiB": 4,
+    "cases": "Separate deterministic qualification cases from the original canonical ID/OOD constructors; main fixed50-case banks remain unchanged",
+    "episodes_per_interface": 24,
+    "tasks": [
+      "OpenDrawer",
+      "CloseFridge"
+    ],
+    "memory_modes": [
+      "full",
+      "episode"
+    ],
+    "actual_episodes_per_case": 6,
+    "checks": [
+      "Actual allocation CUDA/count probe and simulator episodes",
+      "Selected fitted checkpoint loaded through actual FlowBridgeCodec/FlowBridgeMotor and unchanged native expert",
+      "Fitted KV affects all18 real prefix-cache layers; fitted velocity residual applied at every denoising step",
+      "First query has zero previous episodes in both modes; full mode retains only prior feedback and episode mode clears at the boundary",
+      "Exact action-draw/query chronology, mapped binary controls, prior-history receipts and no future tokens",
+      "Frozen expert and selected policy hashes unchanged; deployment constructs no optimizer and takes zero SGD steps",
+      "Raw draws/commands/feedback/frames audited through frozen-steering path; older direct-action audit is not substituted"
+    ]
+  },
+  "readout": {
+    "ID": [
+      "OpenDrawer",
+      "CloseToasterOvenDoor",
+      "CoffeeSetupMug"
+    ],
+    "OOD": [
+      "CloseFridge",
+      "TurnOnMicrowave"
+    ],
+    "cases_per_task": 50,
+    "actual_episodes_per_case": 6,
+    "memory_modes": [
+      "full",
+      "episode"
+    ],
+    "support_episodes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "native_batch": 8,
+    "horizons": [
+      600,
+      600,
+      600,
+      900,
+      450
+    ],
+    "episodes_all_eight": 24000,
+    "policy_controls_all_eight": 15120000,
+    "GPU_hours_point_estimate_all_eight": 54.1,
+    "GPU_hours_point_estimate_each": 6.7625,
+    "unchanged_anchors": "Only hash-bound original-native and fixed130-native controls on the original cases/draws; verify identities during fitted qualification",
+    "planned_hot_reservation_GiB": 32,
+    "hot_reservation_status": "Provisional; measure fitted qualification wave size and archival latency, then reserve a bounded double buffer before any main readout",
+    "cold_archival": "Independent complete-wave raw/frame audit, SHA-verified cold readback and stable original paths; preserve every incomplete or unaudited wave"
+  },
+  "budget": {
+    "approved_GPU_hours": 150,
+    "charged_at_snapshot_GPU_hours": 122.7828620641667,
+    "maximum_committed_with_fits_GPU_hours": 123.55250000000001,
+    "uncommitted_at_reserved_fit_max_GPU_hours": 26.44749999999999,
+    "inference_only_all_eight_exceeds_current_remaining_GPU_hours": 26.882862064166694,
+    "admission": "No readout GPU allocation until actual released-fit reservations plus measured readout/qualification costs fit150; complete8-model54.1GPUh readout already exceeds remaining150 cap and requires new direct human budget authorization unless verified measured cost changes that conclusion",
+    "no_other_campaign_budget_borrowed": true,
+    "checked_shanghai": "2026-11-05T23:10:44.303431+08:00",
+    "gap_after_committed_fits_and_half_hour_qualification_GPU_hours": 28.152500000000003
+  },
+  "shared_storage": {
+    "protected_floor_GiB": 220,
+    "pilot_future_GiB": 125,
+    "source_tests_future_GiB": 20,
+    "metafits_future_GiB": 6,
+    "qualification_additional_GiB": 4,
+    "main_readout_additional_GiB": 32,
+    "conservative_full_main_threshold_GiB": 403,
+    "admission": "Reconcile current actual bytes and remaining reservations with owning chats; do not count already-consumed bytes twice. No new rollout writers admitted by this plan."
+  }
+}
