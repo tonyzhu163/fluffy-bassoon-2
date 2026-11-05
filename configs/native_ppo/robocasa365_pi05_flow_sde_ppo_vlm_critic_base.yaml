@@ -205,6 +205,7 @@ native_pilot:
   sampling_record: ${oc.env:ROBOCASA_FLOW_SAMPLING_RECORD,full}
   actor_batch_drop: ${oc.decode:${oc.env:ROBOCASA_FLOW_ACTOR_BATCH_DROP,'["forward_inputs.observation/image","forward_inputs.observation/wrist_image","forward_inputs.observation/extra_view_image","forward_inputs.chains"]'}}
   global_action_escrow: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_GLOBAL_ESCROW,false}}
+  fresh_eval_processes: ${oc.decode:${oc.env:ROBOCASA_FLOW_FRESH_EVAL_PROCESSES,false}}
   attempt: ${oc.env:TASK_ATTEMPT}
   deadline_unix: ${oc.decode:${oc.env:TASK_DEADLINE}}
   before_reference: ${oc.decode:${oc.env:ROBOCASA_SIM_PPO_BEFORE_REFERENCE,null}}

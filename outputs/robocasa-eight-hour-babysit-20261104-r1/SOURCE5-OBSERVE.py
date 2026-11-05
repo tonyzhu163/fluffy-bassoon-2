@@ -69,11 +69,13 @@ def observe():
         for file in sorted((output / 'updates').glob('iteration-*-rank-*.json'))[-2:]:
             updates.append(dict(path=str(file), record=read(file)))
         console = tail(output / 'console.log') or tail(output / 'node-00/console.log')
-        errors = console if any(word in console for word in ('Traceback', 'OutOfMemoryError', 'CUDA out of memory', 'RayTaskError')) else None
+        clock = read(output / 'clock.json') or read(output / 'node-00/CLOCK.json')
+        failed = clock is not None and clock.get('exit_code', 0) != 0
+        errors = console if failed or any(word in console for word in ('Traceback', 'OutOfMemoryError', 'CUDA out of memory', 'RayTaskError', 'Exception occurred')) else None
         allocations.append(dict(**row, conservative_GPU_hours=hours, manifest=manifest,
             probe_passed=bool(probe and probe.get('status') == 'passed'),
             progress=read(output / 'progress.json') or read(output / 'node-00/progress.json'),
-            clock=read(output / 'clock.json') or read(output / 'node-00/CLOCK.json'),
+            clock=clock,
             result=read(output / 'RESULT.json'),
             boundaries=boundaries, latest_actor_updates=updates, written_GiB=written/2**30,
             error_tail=errors, console_tail=console[-1600:]))

@@ -1,0 +1,9 @@
+{
+  "verified": false,
+  "qualification_only": true,
+  "GPU_hours": 0,
+  "audit_code_sha256": "2c513f624924c733e130a7545b433f9c283af8c1e9b42fc8d8a35b7a67d6da8a",
+  "reason": "Initial CPU audit incorrectly compared pre-environment sampler scores with saved physical commands. The qualified native prepare_actions thresholds coordinates6/11 at0.5 into -1/+1 before chunk recording; these two stages need separate checks. Native extra_view_images also has an explicit one-camera axis.",
+  "native_mapping": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1:rlinf/envs/action_utils.py:203-222",
+  "active_GPU_code_or_manifest_changed": false
+}

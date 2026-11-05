@@ -1,0 +1,259 @@
+{
+  "passed": true,
+  "checked_shanghai": "2026-11-05T12:13:26.541914+08:00",
+  "job_id": "job-jo6kx7qu29r4",
+  "GPU_probe": "passed8",
+  "initial_DEV": {
+    "completed": true,
+    "metrics": {
+      "reward": 0.0006250000442378223,
+      "success_once": 0.375,
+      "return": 0.375,
+      "episode_len": 600.0,
+      "success_at_end": 0.375,
+      "num_trajectories": 64
+    }
+  },
+  "progress": {
+    "completed_iterations": 3,
+    "target_iterations": 40,
+    "checked_unix": 1793851838.1342082,
+    "operator_checkpoint_exit": false
+  },
+  "actor_updates": [
+    {
+      "completed": true,
+      "rank": 0,
+      "producing_policy_iteration": 0,
+      "optimizer_steps_before": 0,
+      "optimizer_steps_after": 24,
+      "batch_shape": [
+        12,
+        64,
+        50,
+        12
+      ],
+      "losses": {
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 33.67869567871094,
+        "actor/policy_loss": -0.40687817335128784,
+        "actor/policy_loss_abs": 1.0680923461914062,
+        "actor/total_loss": -0.03685660660266876,
+        "critic/value_loss": 0.11202530562877655
+      },
+      "metrics": {
+        "actor/approx_kl": 0.013627195730805397,
+        "actor/clip_fraction": 0.21547427773475647,
+        "actor/clipped_ratio": 0.9949418902397156,
+        "actor/dual_cliped_ratio": 0.0,
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 33.67869567871094,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/policy_loss": -0.40687817335128784,
+        "actor/policy_loss_abs": 1.0680923461914062,
+        "actor/ratio": 1.0326950550079346,
+        "actor/ratio_abs": 0.1881457269191742,
+        "actor/total_loss": -0.03685660660266876,
+        "critic/lr": 9.999999747378752e-05,
+        "critic/value_clip_ratio": 0.6210801005363464,
+        "critic/value_loss": 0.11202530562877655,
+        "critic/explained_variance": -0.07777988910675049
+      },
+      "training_seconds": 114.96834452357143,
+      "cuda_peak_allocated_bytes": 17117409792,
+      "cuda_peak_reserved_bytes": 19723714560,
+      "frozen_vlm_unchanged": true
+    },
+    {
+      "completed": true,
+      "rank": 1,
+      "producing_policy_iteration": 0,
+      "optimizer_steps_before": 0,
+      "optimizer_steps_after": 24,
+      "batch_shape": [
+        12,
+        64,
+        50,
+        12
+      ],
+      "losses": {
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 33.67869567871094,
+        "actor/policy_loss": -0.40687817335128784,
+        "actor/policy_loss_abs": 1.0680923461914062,
+        "actor/total_loss": -0.03685660660266876,
+        "critic/value_loss": 0.11202530562877655
+      },
+      "metrics": {
+        "actor/approx_kl": 0.013627195730805397,
+        "actor/clip_fraction": 0.21547427773475647,
+        "actor/clipped_ratio": 0.9949418902397156,
+        "actor/dual_cliped_ratio": 0.0,
+        "actor/entropy_loss": 0.0,
+        "actor/grad_norm": 33.67869567871094,
+        "actor/lr": 4.999999873689376e-06,
+        "actor/policy_loss": -0.40687817335128784,
+        "actor/policy_loss_abs": 1.0680923461914062,
+        "actor/ratio": 1.0326950550079346,
+        "actor/ratio_abs": 0.1881457269191742,
+        "actor/total_loss": -0.03685660660266876,
+        "critic/lr": 9.999999747378752e-05,
+        "critic/value_clip_ratio": 0.6210801005363464,
+        "critic/value_loss": 0.11202530562877655,
+        "critic/explained_variance": -0.07777988910675049
+      },
+      "training_seconds": 114.96612320002168,
+      "cuda_peak_allocated_bytes": 17117409792,
+      "cuda_peak_reserved_bytes": 19723714560,
+      "frozen_vlm_unchanged": true
+    }
+  ],
+  "boundary": {
+    "completed": true,
+    "global_step": 1,
+    "workers": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/pilot/actor-00.pt",
+        "sha256": "63b8997ed0434a750e436d7bbce974bc27bc96c4d0226e5c08b98a7b436543ff"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/pilot/actor-01.pt",
+        "sha256": "b1e3d5b1a77c739fb687c7d3fd7841f03a7b70984c5f698cbaeb6f2befbdc862"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/pilot/rollout-00.pt",
+        "sha256": "501301598a3db0eddc075cd84605d7eaf79ebc35dee94b0c42d2af2d3b186fdd"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/pilot/rollout-01.pt",
+        "sha256": "5bc8b57a539a565379e10979c3aa56676b58bb71b7560a9c4195ef465adcfd3b"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/pilot/rollout-02.pt",
+        "sha256": "f996c2f4774e87caa740072f84b4eb5d87e03d5258d88724874cd8ad37addbdf"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/pilot/rollout-03.pt",
+        "sha256": "0a083ff41289ce9d6635bcd8b2344cfe9514f0caa534e9447b178a6698073a67"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/pilot/rollout-04.pt",
+        "sha256": "e81e995be284fb4889371e5ca6463f288b75703e4de681c2b6141bf33cb2bb18"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/pilot/rollout-05.pt",
+        "sha256": "db8fb46e59f559841912a35ac141b6c86c59c8311df0bf1fe67b213558c4aa5d"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/pilot/rollout-06.pt",
+        "sha256": "1315c26d0e0f7a4394831119ea9e47ec17bc5a9b35ec90701902f1014ce4f661"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/pilot/rollout-07.pt",
+        "sha256": "64145416e4a31a8f9055caef6c798f22efd66d4b0e8cb8bc03e26026b789d603"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/pilot/env-00.pt",
+        "sha256": "79659790119f18f1b49a20ef43f42f81990f5afc5baad4032e9c212952972f0e"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/pilot/env-01.pt",
+        "sha256": "40215e821dac8574d5be5e555bfe4fba7e6c0cdf98c0ab627d230ffb9f004c9f"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/pilot/env-02.pt",
+        "sha256": "4726c7fd373870aee051bfcc41e6995462cd169b9149a3477bddb807a2ea754a"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/pilot/env-03.pt",
+        "sha256": "67f04443a9bb5822f96f72c3ff4b32000e4ed4df050271e3b8c81e4448955d02"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/pilot/env-04.pt",
+        "sha256": "447a9fdba55852c49283d51ebfe6800348e1f57e304099aa7cda399167926890"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/pilot/env-05.pt",
+        "sha256": "395746ed7b833bcdd34b7ce5b1b2eb12269f464aed0ca8f3478c91a29e48e2e8"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/pilot/env-06.pt",
+        "sha256": "32c7a5dda28f845d3c3d28dfa53c3cadc47d4916dcf1a55fd4ac8405a4373e45"
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/pilot/env-07.pt",
+        "sha256": "c6803d1bcd9017339699fab9cb867c76e6dbc638b38f8e0a16d66480aecc7512"
+      }
+    ],
+    "actor_checkpoint_files": [
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/actor/dcp_checkpoint/.metadata",
+        "sha256": "b67ff9cc317556203862232603aaa74e3ec734474b135e692f9d696068657edd",
+        "bytes": 500328
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/actor/dcp_checkpoint/__0_0.distcp",
+        "sha256": "9536cea5e3c7c286efe4a439754eb086259c435ef24d53df86b54db09a671172",
+        "bytes": 4588051134
+      },
+      {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_1/actor/dcp_checkpoint/__1_0.distcp",
+        "sha256": "a8aa49c71399f357c7bd4226268ca7b18ad671643dfb2e53dd42d51910335b72",
+        "bytes": 4588471830
+      }
+    ],
+    "exact_resume_scope": "whole completed PPO iteration; fresh source reset",
+    "mid_iteration_physics_resume": false,
+    "source_admission": false
+  },
+  "initial_parity": [
+    {
+      "passed": true,
+      "finite": true,
+      "shape": [
+        16,
+        50,
+        12
+      ],
+      "action_dim": 12,
+      "tolerance": 0.001,
+      "max_abs_chunk_log_ratio": 0.0,
+      "max_abs_coordinate_log_ratio": 0.0,
+      "mean_abs_chunk_log_ratio": 0.0,
+      "value": {
+        "passed": true,
+        "finite": true,
+        "tolerance": 0.001,
+        "max_abs_value_delta": 0.0,
+        "mean_abs_value_delta": 0.0
+      },
+      "value_head_enabled": true,
+      "optimizer_steps": 0,
+      "before_backward": true
+    },
+    {
+      "passed": true,
+      "finite": true,
+      "shape": [
+        16,
+        50,
+        12
+      ],
+      "action_dim": 12,
+      "tolerance": 0.001,
+      "max_abs_chunk_log_ratio": 0.0,
+      "max_abs_coordinate_log_ratio": 0.0,
+      "mean_abs_chunk_log_ratio": 0.0,
+      "value": {
+        "passed": true,
+        "finite": true,
+        "tolerance": 0.001,
+        "max_abs_value_delta": 0.0,
+        "mean_abs_value_delta": 0.0
+      },
+      "value_head_enabled": true,
+      "optimizer_steps": 0,
+      "before_backward": true
+    }
+  ]
+}

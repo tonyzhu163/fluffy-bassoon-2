@@ -147,7 +147,12 @@ def family():
         manifest = folder / 'MANIFEST.json'
         assert result['completed'] and result['task'] == task and result['cases'] == 512
         assert result['manifest_sha256'] == native.sha(manifest)
-        results[task] = dict(result=str(folder / 'RESULT.json'), sha256=native.sha(folder / 'RESULT.json'), **result['primary'])
+        audit_path = folder / 'INDEPENDENT-AUDIT.json'
+        audit = native.read(audit_path)
+        assert audit['verified'] and not audit['qualification_only'] and audit['cases_per_policy'] == 512
+        assert audit['manifest_sha256'] == result['manifest_sha256'] and audit['combined_sha256'] == native.sha(folder / 'RESULT.json')
+        results[task] = dict(result=str(folder / 'RESULT.json'), sha256=native.sha(folder / 'RESULT.json'),
+            independent_audit=str(audit_path), independent_audit_sha256=native.sha(audit_path), **result['primary'])
     adjusted = 0.
     for index, task in enumerate(sorted(results, key=lambda task: results[task]['exact_McNemar_p'])):
         row = results[task]
