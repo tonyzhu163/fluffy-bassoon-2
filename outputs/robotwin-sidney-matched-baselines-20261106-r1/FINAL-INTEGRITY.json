@@ -1,0 +1,4822 @@
+{
+  "at_shanghai": "2026-11-06T07:45:02.354637+08:00",
+  "methods": {
+    "ppo": {
+      "status": "complete",
+      "EXIT": {
+        "exit_code": 0,
+        "started_unix": 1793914786,
+        "ended_unix": 1793922169,
+        "worker_gpu_seconds": 29532
+      },
+      "RESULT": {
+        "status": "complete",
+        "rollout_iterations": 2,
+        "algorithm": "ppo",
+        "case_manifest_sha256": "2d3af16ac50f5637af36975c0d795b8c77ee081da14755c5bc05be68219d5110",
+        "baseline_reference": "published Sidney SFT",
+        "new_sft_evaluation_episodes": 0,
+        "source_task": "place_phone_stand",
+        "group_size": 8,
+        "original_initializer_reproduction": false,
+        "paper_numeric_reproduction": false
+      },
+      "final_actor_restore": {
+        "status": "complete",
+        "algorithm": "ppo",
+        "optimizer_steps_per_rank": [
+          40,
+          40,
+          40,
+          40
+        ],
+        "independent_process": true,
+        "extra_optimizer_updates": 0,
+        "extra_simulator_controls": 0,
+        "weights_Adam_groups_scheduler_scaler_RNG_exact": true
+      },
+      "checkpoint_integrity": {
+        "0": {
+          "optimizer_steps_per_rank": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "data_files": []
+        },
+        "1": {
+          "optimizer_steps_per_rank": [
+            20,
+            20,
+            20,
+            20
+          ],
+          "data_files": []
+        },
+        "2": {
+          "optimizer_steps_per_rank": [
+            40,
+            40,
+            40,
+            40
+          ],
+          "data_files": [
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/sidney-paired-ppo/checkpoints/global_step_2/pilot/actor-00.pt",
+              "bytes": 120900177,
+              "sha256": "258d44bc957272710fe034e1abb1b6baeb3f17def56984d6ce166b9610ffa85b",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/sidney-paired-ppo/checkpoints/global_step_2/pilot/actor-01.pt",
+              "bytes": 120900177,
+              "sha256": "9e10df9f555edbcaab88a80c8bd565ea09967eae133ad4fca268442f0cb67786",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/sidney-paired-ppo/checkpoints/global_step_2/pilot/actor-02.pt",
+              "bytes": 120900113,
+              "sha256": "20c9dbcbdd98f83460e005bf669b9f9ca9948c2fca12d888d812e19d1ceae5e6",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/sidney-paired-ppo/checkpoints/global_step_2/pilot/actor-03.pt",
+              "bytes": 120900177,
+              "sha256": "28e4d3ec8658846efb69afcdec5cd3cca30ae123b8c0af2fe13e737651c03ab7",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/sidney-paired-ppo/checkpoints/global_step_2/pilot/rollout-00.pt",
+              "bytes": 14933,
+              "sha256": "f14dbb9f6b4e8f7e004529b53abb97b72abfd206507fe11d8ffa1f202115202a",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/sidney-paired-ppo/checkpoints/global_step_2/pilot/rollout-01.pt",
+              "bytes": 14869,
+              "sha256": "8f123ad14d1340d9329dfadc50cfee7e5395d495b07150e7cbb5ab93a76eae69",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/sidney-paired-ppo/checkpoints/global_step_2/pilot/rollout-02.pt",
+              "bytes": 14933,
+              "sha256": "64b5abedd757d29594b013268c0a0de906a98dbfb12f05b4da04fb916ffd3647",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/sidney-paired-ppo/checkpoints/global_step_2/pilot/rollout-03.pt",
+              "bytes": 14933,
+              "sha256": "72e2a8eab13851763c2f734e59d1cbcc2e6c6020dff056a2b3338122753692c1",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/sidney-paired-ppo/checkpoints/global_step_2/pilot/env-00.pt",
+              "bytes": 177006567,
+              "sha256": "0a975bb89f0ca0f1b5843552c447c1651892dcc51b24cf0c88ec799301cc8297",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/sidney-paired-ppo/checkpoints/global_step_2/pilot/env-01.pt",
+              "bytes": 177007143,
+              "sha256": "da93623c25a9b4c1c8145ab8b3ce1c5aeaec878e0dd7c114cd4a16f72fa26194",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/sidney-paired-ppo/checkpoints/global_step_2/pilot/env-02.pt",
+              "bytes": 177009127,
+              "sha256": "4730ccac57490bde0af000bae9db5cabb2cbe953fd28359f1742e556b52f77a7",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/sidney-paired-ppo/checkpoints/global_step_2/pilot/env-03.pt",
+              "bytes": 177008167,
+              "sha256": "7a76546a2cc821130cdc8bf7d01b947087c2e990e9e9e6e54077ea9d8c43e854",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/sidney-paired-ppo/checkpoints/global_step_2/actor/dcp_checkpoint/.metadata",
+              "bytes": 1152594,
+              "sha256": "06b9322acc99861d06fc30bde3af6a1f648a0c66b80ecf88da304c6bd0a9e78b",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/sidney-paired-ppo/checkpoints/global_step_2/actor/dcp_checkpoint/__0_0.distcp",
+              "bytes": 3327376199,
+              "sha256": "d8746c435b1ab3397cd00307ab739ac59284ceb431cf6e1c9f51f282ef170bb3",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/sidney-paired-ppo/checkpoints/global_step_2/actor/dcp_checkpoint/__1_0.distcp",
+              "bytes": 3326311958,
+              "sha256": "17243363844786fade8276ae382c0b19a8accb98585e944ee7befff54e336d6f",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/sidney-paired-ppo/checkpoints/global_step_2/actor/dcp_checkpoint/__2_0.distcp",
+              "bytes": 1665307300,
+              "sha256": "d77a3bed7d4e7b8477f671772cbfca0cca470f23e14a5dbcc15405ff686b7efc",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/sidney-paired-ppo/checkpoints/global_step_2/actor/dcp_checkpoint/__3_0.distcp",
+              "bytes": 1665354450,
+              "sha256": "da293526cf4c8649acab3d08c9ee7ae7a830c53bb172fc74714a2f76f6012439",
+              "matched": true
+            }
+          ]
+        }
+      },
+      "gradient_audits": [
+        {
+          "rank": 0,
+          "accumulation_microbatch": 0,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-00-micro-00.json",
+          "sha256": "311cb5b83b95b5f24f5d4d49d7b881e0d83943d2c348ec48fa94e868a00baa9b",
+          "bytes": 276405
+        },
+        {
+          "rank": 0,
+          "accumulation_microbatch": 1,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-00-micro-01.json",
+          "sha256": "aa11b2b1a69dc654373b233fc4933abc4a89da6e479a5942a83c7796c6403ef8",
+          "bytes": 276405
+        },
+        {
+          "rank": 0,
+          "accumulation_microbatch": 2,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-00-micro-02.json",
+          "sha256": "d9a5d054494e46cde1f392ba65d03b3b9bd13dbe001b9902c9c107b25b3d0580",
+          "bytes": 276405
+        },
+        {
+          "rank": 0,
+          "accumulation_microbatch": 3,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-00-micro-03.json",
+          "sha256": "b435378975aaeb2220ea6640715b3ee92c4260afe30fa8e1d500c3fe5136519b",
+          "bytes": 276405
+        },
+        {
+          "rank": 0,
+          "accumulation_microbatch": 4,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-00-micro-04.json",
+          "sha256": "335a1e12af8c4d8ce86355e2f162a613278891eef0960cc7862943c84cc76ea4",
+          "bytes": 276405
+        },
+        {
+          "rank": 0,
+          "accumulation_microbatch": 5,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-00-micro-05.json",
+          "sha256": "58e49dd9ec10bc3d0fbc6a0fb50a8db6a03496d937e008b9d6bb92e34c634f5c",
+          "bytes": 276405
+        },
+        {
+          "rank": 0,
+          "accumulation_microbatch": 6,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-00-micro-06.json",
+          "sha256": "c1a0e74f30313c0e516e051a6046307af75781d11d68040c43c521a4dbb6adf9",
+          "bytes": 276405
+        },
+        {
+          "rank": 0,
+          "accumulation_microbatch": 7,
+          "synchronized_boundary": true,
+          "frozen_non_none_views": 0,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-00-micro-07.json",
+          "sha256": "2327a2d2977704e71a0fadef326fe4f07e6c246d700ad09ea7035f3951dc1bb8",
+          "bytes": 214572
+        },
+        {
+          "rank": 1,
+          "accumulation_microbatch": 0,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-01-micro-00.json",
+          "sha256": "0d44078f1416ef2d1317a57b70a13ed09e6f7b4f56fbeb788e04a5ea9a9f857b",
+          "bytes": 275163
+        },
+        {
+          "rank": 1,
+          "accumulation_microbatch": 1,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-01-micro-01.json",
+          "sha256": "480591db6f50d55c017601634e3dbda9ab8cf75e9dc7a40f2cb6e2a2f8d65115",
+          "bytes": 275163
+        },
+        {
+          "rank": 1,
+          "accumulation_microbatch": 2,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-01-micro-02.json",
+          "sha256": "790437c2c73cf01ca5bdda353d26eb265bd991511e3b31383b71c937d4b4184d",
+          "bytes": 275163
+        },
+        {
+          "rank": 1,
+          "accumulation_microbatch": 3,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-01-micro-03.json",
+          "sha256": "57ab44a79ec48f794c5aa0bc82de666122bd303ea809f32abe4f33f65b4a56e9",
+          "bytes": 275163
+        },
+        {
+          "rank": 1,
+          "accumulation_microbatch": 4,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-01-micro-04.json",
+          "sha256": "e5fe67447b3761c2218a2783dc9c6bb325fa9b56203273112aa0556da0d15f44",
+          "bytes": 275163
+        },
+        {
+          "rank": 1,
+          "accumulation_microbatch": 5,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-01-micro-05.json",
+          "sha256": "2b0a0e2a7d5c1232c03f8604bd938aa1d4e0f26a1e0bf4c7078e60a6ad00ec9f",
+          "bytes": 275163
+        },
+        {
+          "rank": 1,
+          "accumulation_microbatch": 6,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-01-micro-06.json",
+          "sha256": "372f89c5e6c941ebe1c79b5e336ff3a18384e5824c8bcb53d18fda3366fb01de",
+          "bytes": 275163
+        },
+        {
+          "rank": 1,
+          "accumulation_microbatch": 7,
+          "synchronized_boundary": true,
+          "frozen_non_none_views": 0,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-01-micro-07.json",
+          "sha256": "82c0e2b3f354db986c3dc283f8bf89970534fc34b8d3056af237909eba3db5d8",
+          "bytes": 214050
+        },
+        {
+          "rank": 2,
+          "accumulation_microbatch": 0,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-02-micro-00.json",
+          "sha256": "9c3f3ceae0f89b440d7dcdd3b6a180e4eddf85cca2d43f9bbeae02df5d528480",
+          "bytes": 275163
+        },
+        {
+          "rank": 2,
+          "accumulation_microbatch": 1,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-02-micro-01.json",
+          "sha256": "771ae858beb7627c5003adea6a708acab7f3b8a6470913bdb987d7c59dd12031",
+          "bytes": 275163
+        },
+        {
+          "rank": 2,
+          "accumulation_microbatch": 2,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-02-micro-02.json",
+          "sha256": "2b3f1e8cee5ae650f9c7108d4dfc541b9bc7dcc5affb8c637ce792ae58973207",
+          "bytes": 275163
+        },
+        {
+          "rank": 2,
+          "accumulation_microbatch": 3,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-02-micro-03.json",
+          "sha256": "2ebfde41adfe9ce83e857fc8bcbc2790693ab8555b8eaaf4c5f39819333f287c",
+          "bytes": 275163
+        },
+        {
+          "rank": 2,
+          "accumulation_microbatch": 4,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-02-micro-04.json",
+          "sha256": "21acb23394f08fa210cd6b85dd5e9891a45daec9ffd210155956aaac185729be",
+          "bytes": 275163
+        },
+        {
+          "rank": 2,
+          "accumulation_microbatch": 5,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-02-micro-05.json",
+          "sha256": "508eb9b60769efc5d856fa7f324d96a02624edec49e2130b589f2c0fc2022b0c",
+          "bytes": 275163
+        },
+        {
+          "rank": 2,
+          "accumulation_microbatch": 6,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-02-micro-06.json",
+          "sha256": "09593c26e94913048ab9300bcab227ff571a456d3ac92761ce1c1e6de4c02494",
+          "bytes": 275163
+        },
+        {
+          "rank": 2,
+          "accumulation_microbatch": 7,
+          "synchronized_boundary": true,
+          "frozen_non_none_views": 0,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-02-micro-07.json",
+          "sha256": "fa4828c945ed0305e1d2a45f2738df21a4e93a1cae6e4fe9ab0bb5d137c148bb",
+          "bytes": 213870
+        },
+        {
+          "rank": 3,
+          "accumulation_microbatch": 0,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-03-micro-00.json",
+          "sha256": "bf776f0afc70c4737c1dc1d998d088e9a1b4013b0881ac77f82df5952f786cf6",
+          "bytes": 274419
+        },
+        {
+          "rank": 3,
+          "accumulation_microbatch": 1,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-03-micro-01.json",
+          "sha256": "cf8de8ffdff6117303006ad5d8fa226b22a6239a27b190214e001a68aed03688",
+          "bytes": 274419
+        },
+        {
+          "rank": 3,
+          "accumulation_microbatch": 2,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-03-micro-02.json",
+          "sha256": "d9053379be3a72488f5e2f5165628ab57c6293e1f36489ca3e53421694a7f156",
+          "bytes": 274419
+        },
+        {
+          "rank": 3,
+          "accumulation_microbatch": 3,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-03-micro-03.json",
+          "sha256": "ec254a6148f6bba04596e3226cb192df957ec13acda396c9d9a6efb3f6672da8",
+          "bytes": 274419
+        },
+        {
+          "rank": 3,
+          "accumulation_microbatch": 4,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-03-micro-04.json",
+          "sha256": "94415fd45320b3b224d51b3848bf8af451fd2e3bd8cd142767b85f595f5b4996",
+          "bytes": 274419
+        },
+        {
+          "rank": 3,
+          "accumulation_microbatch": 5,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-03-micro-05.json",
+          "sha256": "48bd7b8fb72481e9d30c962cb4d1a2601d95e2bf6a346e8bf7a5498a8c4ca04e",
+          "bytes": 274419
+        },
+        {
+          "rank": 3,
+          "accumulation_microbatch": 6,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-03-micro-06.json",
+          "sha256": "8d4d36c9a44873910eaaf899619b7182428bb81ee26e4b02bcc3da7c94f77073",
+          "bytes": 274419
+        },
+        {
+          "rank": 3,
+          "accumulation_microbatch": 7,
+          "synchronized_boundary": true,
+          "frozen_non_none_views": 0,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/gradient-audit/rank-03-micro-07.json",
+          "sha256": "73f3d257982200c13325e6c92656713efcae258e7e3ffc6a42d42ed1b99ecd3e",
+          "bytes": 213306
+        }
+      ],
+      "frozen_after_checks": 8,
+      "first_replay": [
+        {
+          "passed": true,
+          "logprob_max_abs": 0.0,
+          "critic_present": true,
+          "optimizer_steps": 0
+        },
+        {
+          "passed": true,
+          "logprob_max_abs": 0.0,
+          "critic_present": true,
+          "optimizer_steps": 0
+        },
+        {
+          "passed": true,
+          "logprob_max_abs": 0.0,
+          "critic_present": true,
+          "optimizer_steps": 0
+        },
+        {
+          "passed": true,
+          "logprob_max_abs": 0.0,
+          "critic_present": true,
+          "optimizer_steps": 0
+        }
+      ],
+      "trainable_update_evidence": [
+        {
+          "rank": 0,
+          "trained_parameter_hash_changed": true,
+          "nonzero_noncritic_first_gradient_tensors": 190
+        },
+        {
+          "rank": 1,
+          "trained_parameter_hash_changed": true,
+          "nonzero_noncritic_first_gradient_tensors": 190
+        },
+        {
+          "rank": 2,
+          "trained_parameter_hash_changed": true,
+          "nonzero_noncritic_first_gradient_tensors": 190
+        },
+        {
+          "rank": 3,
+          "trained_parameter_hash_changed": true,
+          "nonzero_noncritic_first_gradient_tensors": 190
+        }
+      ],
+      "group_reset_reports": 32,
+      "initial_groups": 256,
+      "all_raw_group_replica_sha256_match": true,
+      "canonical_runtime_SHA_receipts": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/training-rollouts/iteration-0001-policy-0000-rank-00.pt",
+          "sha256": "e767436a15fde77aba95a635e976d5576b9c15ebcc04ad96b725cdff3bf8c020",
+          "completed": true,
+          "capture_format": "rlinf_native_ppo_history_capture_v1",
+          "compression": "none",
+          "bytes": 5783251455,
+          "collection_iteration": 1,
+          "producing_policy_iteration": 0,
+          "rank": 0,
+          "optimizer_steps_before": 0,
+          "fields": [
+            "actions",
+            "advantages",
+            "dones",
+            "forward_inputs",
+            "intervene_flags",
+            "loss_mask",
+            "loss_mask_sum",
+            "prev_logprobs",
+            "prev_values",
+            "returns",
+            "rewards",
+            "terminations",
+            "truncations",
+            "versions"
+          ],
+          "field_shapes": {
+            "forward_inputs": {
+              "observation/image": {
+                "shape": [
+                  8,
+                  256,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "denoise_inds": {
+                "shape": [
+                  8,
+                  256,
+                  5
+                ],
+                "dtype": "torch.int64"
+              },
+              "chains": {
+                "shape": [
+                  8,
+                  256,
+                  6,
+                  50,
+                  32
+                ],
+                "dtype": "torch.float32"
+              },
+              "action": {
+                "shape": [
+                  8,
+                  256,
+                  700
+                ],
+                "dtype": "torch.float32"
+              },
+              "tokenized_prompt_mask": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.bool"
+              },
+              "observation/wrist_image": {
+                "shape": [
+                  8,
+                  256,
+                  2,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "tokenized_prompt": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.int64"
+              },
+              "model_action": {
+                "shape": [
+                  8,
+                  256,
+                  1600
+                ],
+                "dtype": "torch.float32"
+              },
+              "observation/state": {
+                "shape": [
+                  8,
+                  256,
+                  14
+                ],
+                "dtype": "torch.float64"
+              }
+            },
+            "actions": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.float32"
+            },
+            "intervene_flags": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.bool"
+            },
+            "rewards": {
+              "shape": [
+                8,
+                256,
+                50
+              ],
+              "dtype": "torch.float32"
+            },
+            "terminations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "truncations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "dones": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "prev_logprobs": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "prev_values": {
+              "shape": [
+                9,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "versions": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "loss_mask": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.bool"
+            },
+            "loss_mask_sum": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.int64"
+            },
+            "advantages": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "returns": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            }
+          },
+          "evaluation_data": false,
+          "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/resolved-native-config.json",
+          "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/training-rollouts/iteration-0001-policy-0000-rank-01.pt",
+          "sha256": "6e158a1dbb36924bbe70d5a6f059776915626d0fb457b9fb14ff94ca6d517f7a",
+          "completed": true,
+          "capture_format": "rlinf_native_ppo_history_capture_v1",
+          "compression": "none",
+          "bytes": 5783251431,
+          "collection_iteration": 1,
+          "producing_policy_iteration": 0,
+          "rank": 1,
+          "optimizer_steps_before": 0,
+          "fields": [
+            "actions",
+            "advantages",
+            "dones",
+            "forward_inputs",
+            "intervene_flags",
+            "loss_mask",
+            "loss_mask_sum",
+            "prev_logprobs",
+            "prev_values",
+            "returns",
+            "rewards",
+            "terminations",
+            "truncations",
+            "versions"
+          ],
+          "field_shapes": {
+            "forward_inputs": {
+              "model_action": {
+                "shape": [
+                  8,
+                  256,
+                  1600
+                ],
+                "dtype": "torch.float32"
+              },
+              "observation/wrist_image": {
+                "shape": [
+                  8,
+                  256,
+                  2,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "action": {
+                "shape": [
+                  8,
+                  256,
+                  700
+                ],
+                "dtype": "torch.float32"
+              },
+              "chains": {
+                "shape": [
+                  8,
+                  256,
+                  6,
+                  50,
+                  32
+                ],
+                "dtype": "torch.float32"
+              },
+              "denoise_inds": {
+                "shape": [
+                  8,
+                  256,
+                  5
+                ],
+                "dtype": "torch.int64"
+              },
+              "tokenized_prompt": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.int64"
+              },
+              "observation/state": {
+                "shape": [
+                  8,
+                  256,
+                  14
+                ],
+                "dtype": "torch.float64"
+              },
+              "observation/image": {
+                "shape": [
+                  8,
+                  256,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "tokenized_prompt_mask": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.bool"
+              }
+            },
+            "actions": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.float32"
+            },
+            "intervene_flags": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.bool"
+            },
+            "rewards": {
+              "shape": [
+                8,
+                256,
+                50
+              ],
+              "dtype": "torch.float32"
+            },
+            "terminations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "truncations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "dones": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "prev_logprobs": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "prev_values": {
+              "shape": [
+                9,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "versions": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "loss_mask": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.bool"
+            },
+            "loss_mask_sum": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.int64"
+            },
+            "advantages": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "returns": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            }
+          },
+          "evaluation_data": false,
+          "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/resolved-native-config.json",
+          "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/training-rollouts/iteration-0001-policy-0000-rank-02.pt",
+          "sha256": "c0c98b062f9776e9dd55c1e637acc9c04e57099083812bd4294b8275edf72e7a",
+          "completed": true,
+          "capture_format": "rlinf_native_ppo_history_capture_v1",
+          "compression": "none",
+          "bytes": 5783251431,
+          "collection_iteration": 1,
+          "producing_policy_iteration": 0,
+          "rank": 2,
+          "optimizer_steps_before": 0,
+          "fields": [
+            "actions",
+            "advantages",
+            "dones",
+            "forward_inputs",
+            "intervene_flags",
+            "loss_mask",
+            "loss_mask_sum",
+            "prev_logprobs",
+            "prev_values",
+            "returns",
+            "rewards",
+            "terminations",
+            "truncations",
+            "versions"
+          ],
+          "field_shapes": {
+            "forward_inputs": {
+              "observation/image": {
+                "shape": [
+                  8,
+                  256,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "chains": {
+                "shape": [
+                  8,
+                  256,
+                  6,
+                  50,
+                  32
+                ],
+                "dtype": "torch.float32"
+              },
+              "model_action": {
+                "shape": [
+                  8,
+                  256,
+                  1600
+                ],
+                "dtype": "torch.float32"
+              },
+              "denoise_inds": {
+                "shape": [
+                  8,
+                  256,
+                  5
+                ],
+                "dtype": "torch.int64"
+              },
+              "tokenized_prompt": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.int64"
+              },
+              "action": {
+                "shape": [
+                  8,
+                  256,
+                  700
+                ],
+                "dtype": "torch.float32"
+              },
+              "tokenized_prompt_mask": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.bool"
+              },
+              "observation/wrist_image": {
+                "shape": [
+                  8,
+                  256,
+                  2,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "observation/state": {
+                "shape": [
+                  8,
+                  256,
+                  14
+                ],
+                "dtype": "torch.float64"
+              }
+            },
+            "actions": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.float32"
+            },
+            "intervene_flags": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.bool"
+            },
+            "rewards": {
+              "shape": [
+                8,
+                256,
+                50
+              ],
+              "dtype": "torch.float32"
+            },
+            "terminations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "truncations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "dones": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "prev_logprobs": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "prev_values": {
+              "shape": [
+                9,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "versions": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "loss_mask": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.bool"
+            },
+            "loss_mask_sum": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.int64"
+            },
+            "advantages": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "returns": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            }
+          },
+          "evaluation_data": false,
+          "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/resolved-native-config.json",
+          "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/training-rollouts/iteration-0001-policy-0000-rank-03.pt",
+          "sha256": "54faee4d4f99c53e357ec6d2dc095ea0871c8da81e2ce57dc9365b5038fbdb87",
+          "completed": true,
+          "capture_format": "rlinf_native_ppo_history_capture_v1",
+          "compression": "none",
+          "bytes": 5783251543,
+          "collection_iteration": 1,
+          "producing_policy_iteration": 0,
+          "rank": 3,
+          "optimizer_steps_before": 0,
+          "fields": [
+            "actions",
+            "advantages",
+            "dones",
+            "forward_inputs",
+            "intervene_flags",
+            "loss_mask",
+            "loss_mask_sum",
+            "prev_logprobs",
+            "prev_values",
+            "returns",
+            "rewards",
+            "terminations",
+            "truncations",
+            "versions"
+          ],
+          "field_shapes": {
+            "forward_inputs": {
+              "observation/state": {
+                "shape": [
+                  8,
+                  256,
+                  14
+                ],
+                "dtype": "torch.float64"
+              },
+              "observation/image": {
+                "shape": [
+                  8,
+                  256,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "tokenized_prompt_mask": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.bool"
+              },
+              "observation/wrist_image": {
+                "shape": [
+                  8,
+                  256,
+                  2,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "denoise_inds": {
+                "shape": [
+                  8,
+                  256,
+                  5
+                ],
+                "dtype": "torch.int64"
+              },
+              "chains": {
+                "shape": [
+                  8,
+                  256,
+                  6,
+                  50,
+                  32
+                ],
+                "dtype": "torch.float32"
+              },
+              "model_action": {
+                "shape": [
+                  8,
+                  256,
+                  1600
+                ],
+                "dtype": "torch.float32"
+              },
+              "action": {
+                "shape": [
+                  8,
+                  256,
+                  700
+                ],
+                "dtype": "torch.float32"
+              },
+              "tokenized_prompt": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.int64"
+              }
+            },
+            "actions": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.float32"
+            },
+            "intervene_flags": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.bool"
+            },
+            "rewards": {
+              "shape": [
+                8,
+                256,
+                50
+              ],
+              "dtype": "torch.float32"
+            },
+            "terminations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "truncations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "dones": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "prev_logprobs": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "prev_values": {
+              "shape": [
+                9,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "versions": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "loss_mask": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.bool"
+            },
+            "loss_mask_sum": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.int64"
+            },
+            "advantages": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "returns": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            }
+          },
+          "evaluation_data": false,
+          "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/resolved-native-config.json",
+          "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/training-rollouts/iteration-0002-policy-0001-rank-00.pt",
+          "sha256": "31c0d9f1a98864e342f1a1ed337e32075055f292cefe30acf59072462d94054c",
+          "completed": true,
+          "capture_format": "rlinf_native_ppo_history_capture_v1",
+          "compression": "none",
+          "bytes": 5783251455,
+          "collection_iteration": 2,
+          "producing_policy_iteration": 1,
+          "rank": 0,
+          "optimizer_steps_before": 20,
+          "fields": [
+            "actions",
+            "advantages",
+            "dones",
+            "forward_inputs",
+            "intervene_flags",
+            "loss_mask",
+            "loss_mask_sum",
+            "prev_logprobs",
+            "prev_values",
+            "returns",
+            "rewards",
+            "terminations",
+            "truncations",
+            "versions"
+          ],
+          "field_shapes": {
+            "forward_inputs": {
+              "observation/image": {
+                "shape": [
+                  8,
+                  256,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "denoise_inds": {
+                "shape": [
+                  8,
+                  256,
+                  5
+                ],
+                "dtype": "torch.int64"
+              },
+              "chains": {
+                "shape": [
+                  8,
+                  256,
+                  6,
+                  50,
+                  32
+                ],
+                "dtype": "torch.float32"
+              },
+              "action": {
+                "shape": [
+                  8,
+                  256,
+                  700
+                ],
+                "dtype": "torch.float32"
+              },
+              "tokenized_prompt_mask": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.bool"
+              },
+              "observation/wrist_image": {
+                "shape": [
+                  8,
+                  256,
+                  2,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "tokenized_prompt": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.int64"
+              },
+              "model_action": {
+                "shape": [
+                  8,
+                  256,
+                  1600
+                ],
+                "dtype": "torch.float32"
+              },
+              "observation/state": {
+                "shape": [
+                  8,
+                  256,
+                  14
+                ],
+                "dtype": "torch.float64"
+              }
+            },
+            "actions": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.float32"
+            },
+            "intervene_flags": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.bool"
+            },
+            "rewards": {
+              "shape": [
+                8,
+                256,
+                50
+              ],
+              "dtype": "torch.float32"
+            },
+            "terminations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "truncations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "dones": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "prev_logprobs": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "prev_values": {
+              "shape": [
+                9,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "versions": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "loss_mask": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.bool"
+            },
+            "loss_mask_sum": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.int64"
+            },
+            "advantages": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "returns": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            }
+          },
+          "evaluation_data": false,
+          "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/resolved-native-config.json",
+          "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/training-rollouts/iteration-0002-policy-0001-rank-01.pt",
+          "sha256": "a8d7a275edd442b44792cef510a252cb665a18c0bb0675e677fba0c1e8e22bb1",
+          "completed": true,
+          "capture_format": "rlinf_native_ppo_history_capture_v1",
+          "compression": "none",
+          "bytes": 5783251431,
+          "collection_iteration": 2,
+          "producing_policy_iteration": 1,
+          "rank": 1,
+          "optimizer_steps_before": 20,
+          "fields": [
+            "actions",
+            "advantages",
+            "dones",
+            "forward_inputs",
+            "intervene_flags",
+            "loss_mask",
+            "loss_mask_sum",
+            "prev_logprobs",
+            "prev_values",
+            "returns",
+            "rewards",
+            "terminations",
+            "truncations",
+            "versions"
+          ],
+          "field_shapes": {
+            "forward_inputs": {
+              "model_action": {
+                "shape": [
+                  8,
+                  256,
+                  1600
+                ],
+                "dtype": "torch.float32"
+              },
+              "observation/wrist_image": {
+                "shape": [
+                  8,
+                  256,
+                  2,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "action": {
+                "shape": [
+                  8,
+                  256,
+                  700
+                ],
+                "dtype": "torch.float32"
+              },
+              "chains": {
+                "shape": [
+                  8,
+                  256,
+                  6,
+                  50,
+                  32
+                ],
+                "dtype": "torch.float32"
+              },
+              "denoise_inds": {
+                "shape": [
+                  8,
+                  256,
+                  5
+                ],
+                "dtype": "torch.int64"
+              },
+              "tokenized_prompt": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.int64"
+              },
+              "observation/state": {
+                "shape": [
+                  8,
+                  256,
+                  14
+                ],
+                "dtype": "torch.float64"
+              },
+              "observation/image": {
+                "shape": [
+                  8,
+                  256,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "tokenized_prompt_mask": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.bool"
+              }
+            },
+            "actions": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.float32"
+            },
+            "intervene_flags": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.bool"
+            },
+            "rewards": {
+              "shape": [
+                8,
+                256,
+                50
+              ],
+              "dtype": "torch.float32"
+            },
+            "terminations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "truncations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "dones": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "prev_logprobs": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "prev_values": {
+              "shape": [
+                9,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "versions": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "loss_mask": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.bool"
+            },
+            "loss_mask_sum": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.int64"
+            },
+            "advantages": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "returns": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            }
+          },
+          "evaluation_data": false,
+          "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/resolved-native-config.json",
+          "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/training-rollouts/iteration-0002-policy-0001-rank-02.pt",
+          "sha256": "7ff35ee93573f4c9cd9be10331d4d4c3d671333e4f562cf9996fe09db5bd4c14",
+          "completed": true,
+          "capture_format": "rlinf_native_ppo_history_capture_v1",
+          "compression": "none",
+          "bytes": 5783251431,
+          "collection_iteration": 2,
+          "producing_policy_iteration": 1,
+          "rank": 2,
+          "optimizer_steps_before": 20,
+          "fields": [
+            "actions",
+            "advantages",
+            "dones",
+            "forward_inputs",
+            "intervene_flags",
+            "loss_mask",
+            "loss_mask_sum",
+            "prev_logprobs",
+            "prev_values",
+            "returns",
+            "rewards",
+            "terminations",
+            "truncations",
+            "versions"
+          ],
+          "field_shapes": {
+            "forward_inputs": {
+              "observation/image": {
+                "shape": [
+                  8,
+                  256,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "chains": {
+                "shape": [
+                  8,
+                  256,
+                  6,
+                  50,
+                  32
+                ],
+                "dtype": "torch.float32"
+              },
+              "model_action": {
+                "shape": [
+                  8,
+                  256,
+                  1600
+                ],
+                "dtype": "torch.float32"
+              },
+              "denoise_inds": {
+                "shape": [
+                  8,
+                  256,
+                  5
+                ],
+                "dtype": "torch.int64"
+              },
+              "tokenized_prompt": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.int64"
+              },
+              "action": {
+                "shape": [
+                  8,
+                  256,
+                  700
+                ],
+                "dtype": "torch.float32"
+              },
+              "tokenized_prompt_mask": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.bool"
+              },
+              "observation/wrist_image": {
+                "shape": [
+                  8,
+                  256,
+                  2,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "observation/state": {
+                "shape": [
+                  8,
+                  256,
+                  14
+                ],
+                "dtype": "torch.float64"
+              }
+            },
+            "actions": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.float32"
+            },
+            "intervene_flags": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.bool"
+            },
+            "rewards": {
+              "shape": [
+                8,
+                256,
+                50
+              ],
+              "dtype": "torch.float32"
+            },
+            "terminations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "truncations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "dones": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "prev_logprobs": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "prev_values": {
+              "shape": [
+                9,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "versions": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "loss_mask": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.bool"
+            },
+            "loss_mask_sum": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.int64"
+            },
+            "advantages": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "returns": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            }
+          },
+          "evaluation_data": false,
+          "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/resolved-native-config.json",
+          "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/training-rollouts/iteration-0002-policy-0001-rank-03.pt",
+          "sha256": "7a06e7e612f2dc627c5a2e84ee74a516b1559f95ebf4600057a2b7f4f45b9ded",
+          "completed": true,
+          "capture_format": "rlinf_native_ppo_history_capture_v1",
+          "compression": "none",
+          "bytes": 5783251543,
+          "collection_iteration": 2,
+          "producing_policy_iteration": 1,
+          "rank": 3,
+          "optimizer_steps_before": 20,
+          "fields": [
+            "actions",
+            "advantages",
+            "dones",
+            "forward_inputs",
+            "intervene_flags",
+            "loss_mask",
+            "loss_mask_sum",
+            "prev_logprobs",
+            "prev_values",
+            "returns",
+            "rewards",
+            "terminations",
+            "truncations",
+            "versions"
+          ],
+          "field_shapes": {
+            "forward_inputs": {
+              "observation/state": {
+                "shape": [
+                  8,
+                  256,
+                  14
+                ],
+                "dtype": "torch.float64"
+              },
+              "observation/image": {
+                "shape": [
+                  8,
+                  256,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "tokenized_prompt_mask": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.bool"
+              },
+              "observation/wrist_image": {
+                "shape": [
+                  8,
+                  256,
+                  2,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "denoise_inds": {
+                "shape": [
+                  8,
+                  256,
+                  5
+                ],
+                "dtype": "torch.int64"
+              },
+              "chains": {
+                "shape": [
+                  8,
+                  256,
+                  6,
+                  50,
+                  32
+                ],
+                "dtype": "torch.float32"
+              },
+              "model_action": {
+                "shape": [
+                  8,
+                  256,
+                  1600
+                ],
+                "dtype": "torch.float32"
+              },
+              "action": {
+                "shape": [
+                  8,
+                  256,
+                  700
+                ],
+                "dtype": "torch.float32"
+              },
+              "tokenized_prompt": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.int64"
+              }
+            },
+            "actions": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.float32"
+            },
+            "intervene_flags": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.bool"
+            },
+            "rewards": {
+              "shape": [
+                8,
+                256,
+                50
+              ],
+              "dtype": "torch.float32"
+            },
+            "terminations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "truncations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "dones": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "prev_logprobs": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "prev_values": {
+              "shape": [
+                9,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "versions": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "loss_mask": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.bool"
+            },
+            "loss_mask_sum": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.int64"
+            },
+            "advantages": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "returns": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            }
+          },
+          "evaluation_data": false,
+          "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/resolved-native-config.json",
+          "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+        }
+      ],
+      "action_journals": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/action-accounting/rank-00/train.json",
+          "calls": 73,
+          "all_resolved": true,
+          "phase_counts": {
+            "constructor-allowance": 640,
+            "training/reset-allowance": 5120,
+            "training": 204800
+          },
+          "charged_conservative_slots": 210560
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/action-accounting/rank-01/train.json",
+          "calls": 73,
+          "all_resolved": true,
+          "phase_counts": {
+            "constructor-allowance": 640,
+            "training/reset-allowance": 5120,
+            "training": 204800
+          },
+          "charged_conservative_slots": 210560
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/action-accounting/rank-02/train.json",
+          "calls": 73,
+          "all_resolved": true,
+          "phase_counts": {
+            "constructor-allowance": 640,
+            "training/reset-allowance": 5120,
+            "training": 204800
+          },
+          "charged_conservative_slots": 210560
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/action-accounting/rank-03/train.json",
+          "calls": 73,
+          "all_resolved": true,
+          "phase_counts": {
+            "constructor-allowance": 640,
+            "training/reset-allowance": 5120,
+            "training": 204800
+          },
+          "charged_conservative_slots": 210560
+        }
+      ],
+      "conservative_slots": 842240,
+      "measured_executed_motor_counts": false,
+      "group_return_summary": [
+        {
+          "collection_iteration": 1,
+          "groups": 128,
+          "constant_groups": 61,
+          "positive_reward_episodes": 176
+        },
+        {
+          "collection_iteration": 2,
+          "groups": 128,
+          "constant_groups": 40,
+          "positive_reward_episodes": 224
+        }
+      ],
+      "native_metric_lines": [
+        "\u2502actor/run_training=546.4               \u2502actor_training=548.1                   \u2502cal_adv_and_returns=8.096             \u2502",
+        "\u2502env/run_interact_once=2843.4           \u2502generate_rollouts=2849.3               \u2502rollout/generate_one_epoch=2845.7     \u2502",
+        "\u2502rollout/predict=195.2                  \u2502rollout/rollout/generate=2847.8        \u2502rollout/sync_model_from_actor=5.641   \u2502",
+        "\u2502reward=0.0004296875                    \u2502success_once=0.171875                  \u2502                                      \u2502",
+        "\u2502actor/run_training=540.8               \u2502actor_training=542.6                   \u2502cal_adv_and_returns=7.913             \u2502",
+        "\u2502env/run_interact_once=3022.1           \u2502generate_rollouts=3027.8               \u2502rollout/generate_one_epoch=3023.2     \u2502",
+        "\u2502rollout/predict=196.9                  \u2502rollout/rollout/generate=3026.9        \u2502rollout/sync_model_from_actor=4.545   \u2502",
+        "\u2502reward=0.00054687494                   \u2502success_once=0.21875                   \u2502                                      \u2502"
+      ],
+      "allocated_bytes": 131389210112
+    },
+    "grpo": {
+      "status": "complete",
+      "EXIT": {
+        "exit_code": 0,
+        "started_unix": 1793914902,
+        "ended_unix": 1793922110,
+        "worker_gpu_seconds": 28832
+      },
+      "RESULT": {
+        "status": "complete",
+        "rollout_iterations": 2,
+        "algorithm": "grpo",
+        "case_manifest_sha256": "2d3af16ac50f5637af36975c0d795b8c77ee081da14755c5bc05be68219d5110",
+        "baseline_reference": "published Sidney SFT",
+        "new_sft_evaluation_episodes": 0,
+        "source_task": "place_phone_stand",
+        "group_size": 8,
+        "original_initializer_reproduction": false,
+        "paper_numeric_reproduction": false
+      },
+      "final_actor_restore": {
+        "status": "complete",
+        "algorithm": "grpo",
+        "optimizer_steps_per_rank": [
+          40,
+          40,
+          40,
+          40
+        ],
+        "independent_process": true,
+        "extra_optimizer_updates": 0,
+        "extra_simulator_controls": 0,
+        "weights_Adam_groups_scheduler_scaler_RNG_exact": true
+      },
+      "checkpoint_integrity": {
+        "0": {
+          "optimizer_steps_per_rank": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "data_files": []
+        },
+        "1": {
+          "optimizer_steps_per_rank": [
+            20,
+            20,
+            20,
+            20
+          ],
+          "data_files": []
+        },
+        "2": {
+          "optimizer_steps_per_rank": [
+            40,
+            40,
+            40,
+            40
+          ],
+          "data_files": [
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/sidney-paired-grpo/checkpoints/global_step_2/pilot/actor-00.pt",
+              "bytes": 120891728,
+              "sha256": "b847d7fcc26b1548ab1b6d3bac6d42ef52aa3084bdd310bc07d6d796a6475f0b",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/sidney-paired-grpo/checkpoints/global_step_2/pilot/actor-01.pt",
+              "bytes": 120891728,
+              "sha256": "81c6de1e9c71d7557b4017708adb5db203f28cea188d5125c7665912ed537e64",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/sidney-paired-grpo/checkpoints/global_step_2/pilot/actor-02.pt",
+              "bytes": 120891664,
+              "sha256": "3c4695bb848daf2258f9c0538c8be61da625f280914cf048c8ed5a15c303c068",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/sidney-paired-grpo/checkpoints/global_step_2/pilot/actor-03.pt",
+              "bytes": 120891728,
+              "sha256": "57b75b93ba624c3ad8dc5fcceb4f3d85615bd5ea287e9891ed5c06f20d6da3e8",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/sidney-paired-grpo/checkpoints/global_step_2/pilot/rollout-00.pt",
+              "bytes": 14933,
+              "sha256": "f14dbb9f6b4e8f7e004529b53abb97b72abfd206507fe11d8ffa1f202115202a",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/sidney-paired-grpo/checkpoints/global_step_2/pilot/rollout-01.pt",
+              "bytes": 14869,
+              "sha256": "8f123ad14d1340d9329dfadc50cfee7e5395d495b07150e7cbb5ab93a76eae69",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/sidney-paired-grpo/checkpoints/global_step_2/pilot/rollout-02.pt",
+              "bytes": 14933,
+              "sha256": "64b5abedd757d29594b013268c0a0de906a98dbfb12f05b4da04fb916ffd3647",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/sidney-paired-grpo/checkpoints/global_step_2/pilot/rollout-03.pt",
+              "bytes": 14933,
+              "sha256": "72e2a8eab13851763c2f734e59d1cbcc2e6c6020dff056a2b3338122753692c1",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/sidney-paired-grpo/checkpoints/global_step_2/pilot/env-00.pt",
+              "bytes": 177006503,
+              "sha256": "76d40e7261325f211a047f3c047ba2a5a14c193cb7c5a92e3a0b13cfb8442e7e",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/sidney-paired-grpo/checkpoints/global_step_2/pilot/env-01.pt",
+              "bytes": 177007143,
+              "sha256": "ae1c2fc106263c4d347bb17b7b628701a4cb4638f55cd0a96581190047b5c7c0",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/sidney-paired-grpo/checkpoints/global_step_2/pilot/env-02.pt",
+              "bytes": 177009127,
+              "sha256": "1a4df59abf60317f70055a113faafb8dce385afe8db06e3762fbd466bec263eb",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/sidney-paired-grpo/checkpoints/global_step_2/pilot/env-03.pt",
+              "bytes": 177008167,
+              "sha256": "c174f48f04ea815d5a0a93fde2086039aec6732da284b344406e0386627fbcec",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/sidney-paired-grpo/checkpoints/global_step_2/actor/dcp_checkpoint/.metadata",
+              "bytes": 1126413,
+              "sha256": "c76031f35f78f5f975f51c0faf1c991a09287e01a58a5b4c1dd1da7327710d58",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/sidney-paired-grpo/checkpoints/global_step_2/actor/dcp_checkpoint/__0_0.distcp",
+              "bytes": 3325269743,
+              "sha256": "fe22784aba394c4582dec7c1e9d590257e5c580b67dcafa587ae57011db8b85e",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/sidney-paired-grpo/checkpoints/global_step_2/actor/dcp_checkpoint/__1_0.distcp",
+              "bytes": 3324195751,
+              "sha256": "34fed92246736533f9833365f3114d8ca1dc99ebfd50d21c150b7435f5e56d14",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/sidney-paired-grpo/checkpoints/global_step_2/actor/dcp_checkpoint/__2_0.distcp",
+              "bytes": 1663202826,
+              "sha256": "3696c955f2f080bfa5a326c9260a7467b7d3596a2637e821c6b5707ba8e0c006",
+              "matched": true
+            },
+            {
+              "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/sidney-paired-grpo/checkpoints/global_step_2/actor/dcp_checkpoint/__3_0.distcp",
+              "bytes": 1663250478,
+              "sha256": "3cfa690ad2c23aabcf9fe147d7ed0dc4589a652ceff391854fdd0c9ea5d166d8",
+              "matched": true
+            }
+          ]
+        }
+      },
+      "gradient_audits": [
+        {
+          "rank": 0,
+          "accumulation_microbatch": 0,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-00-micro-00.json",
+          "sha256": "44363c095583f917d30ca302fda98f9db5c0697437f09f8afa2e157b682c4429",
+          "bytes": 276405
+        },
+        {
+          "rank": 0,
+          "accumulation_microbatch": 1,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-00-micro-01.json",
+          "sha256": "b8ff93a0ea29dcde653e91ac1d93e26eac565510419436ec8bf0c1fb4b7876a4",
+          "bytes": 276405
+        },
+        {
+          "rank": 0,
+          "accumulation_microbatch": 2,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-00-micro-02.json",
+          "sha256": "e22d7298979b81b16b0e17ae9a4e95529ad68ca7dcf2639065dbb8c859677589",
+          "bytes": 276405
+        },
+        {
+          "rank": 0,
+          "accumulation_microbatch": 3,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-00-micro-03.json",
+          "sha256": "20c9f6ccfe1aa9ab0827659fd9d251e74361d88332ab1801bbbf15b7d6447d06",
+          "bytes": 276405
+        },
+        {
+          "rank": 0,
+          "accumulation_microbatch": 4,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-00-micro-04.json",
+          "sha256": "7471f89e504fdf03f72b6095b87aa892c83a2945d1b2af59423ec7c1ea4656d6",
+          "bytes": 276405
+        },
+        {
+          "rank": 0,
+          "accumulation_microbatch": 5,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-00-micro-05.json",
+          "sha256": "97f721ffacb6b244e0e919068fe3c1209cd9b75d8c14a931a01d82f2ee51d06a",
+          "bytes": 276405
+        },
+        {
+          "rank": 0,
+          "accumulation_microbatch": 6,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-00-micro-06.json",
+          "sha256": "087b5bae88b878fde063bb709ff7fda7d1f47d4f91b4ec9455b00324c8624af8",
+          "bytes": 276405
+        },
+        {
+          "rank": 0,
+          "accumulation_microbatch": 7,
+          "synchronized_boundary": true,
+          "frozen_non_none_views": 0,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-00-micro-07.json",
+          "sha256": "2327a2d2977704e71a0fadef326fe4f07e6c246d700ad09ea7035f3951dc1bb8",
+          "bytes": 214572
+        },
+        {
+          "rank": 1,
+          "accumulation_microbatch": 0,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-01-micro-00.json",
+          "sha256": "4c05a5240ad81653ea883ed7cf011c2ccba6179269bd7ed51c58c5f738c1f03a",
+          "bytes": 275163
+        },
+        {
+          "rank": 1,
+          "accumulation_microbatch": 1,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-01-micro-01.json",
+          "sha256": "be9e928fa8cc30a996a0c80f5a8c5d72dc5673069c96c50194ef690f6573691d",
+          "bytes": 275163
+        },
+        {
+          "rank": 1,
+          "accumulation_microbatch": 2,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-01-micro-02.json",
+          "sha256": "cb28b9b339a08dc8db6d89a167152b6da0bbe949576047ba2e3b8918440f2eda",
+          "bytes": 275163
+        },
+        {
+          "rank": 1,
+          "accumulation_microbatch": 3,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-01-micro-03.json",
+          "sha256": "bc0e7fa116d80a54a98fda8f25bcdbf2feff31cdcd938d94f138039e6ee6dca2",
+          "bytes": 275163
+        },
+        {
+          "rank": 1,
+          "accumulation_microbatch": 4,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-01-micro-04.json",
+          "sha256": "dccdc47bec5b02ef92766755debf3c814e96fceaf06e7e25240af4ad27212b17",
+          "bytes": 275163
+        },
+        {
+          "rank": 1,
+          "accumulation_microbatch": 5,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-01-micro-05.json",
+          "sha256": "951f2da05524e16f2a250b35f14d75bbfdc387a853ee6f6fe6e555adb91e694b",
+          "bytes": 275163
+        },
+        {
+          "rank": 1,
+          "accumulation_microbatch": 6,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-01-micro-06.json",
+          "sha256": "20642b1a87130e4a87acd8be1853917ec900518d45a5b744e393f30ccdc72a0f",
+          "bytes": 275163
+        },
+        {
+          "rank": 1,
+          "accumulation_microbatch": 7,
+          "synchronized_boundary": true,
+          "frozen_non_none_views": 0,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-01-micro-07.json",
+          "sha256": "82c0e2b3f354db986c3dc283f8bf89970534fc34b8d3056af237909eba3db5d8",
+          "bytes": 214050
+        },
+        {
+          "rank": 2,
+          "accumulation_microbatch": 0,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-02-micro-00.json",
+          "sha256": "c89f200698501f8129ffb2840e7606256655fa5e68ff33527acc1add21a7a8ce",
+          "bytes": 275163
+        },
+        {
+          "rank": 2,
+          "accumulation_microbatch": 1,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-02-micro-01.json",
+          "sha256": "416e147352484862b0ffcb45197c4b037a879c91b99ff3968012b6ce34a7eb1c",
+          "bytes": 275163
+        },
+        {
+          "rank": 2,
+          "accumulation_microbatch": 2,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-02-micro-02.json",
+          "sha256": "da06998937a24d7070478b7edb05ebf1d2f7ea25ec7bc955c1a68bca897a9e7e",
+          "bytes": 275163
+        },
+        {
+          "rank": 2,
+          "accumulation_microbatch": 3,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-02-micro-03.json",
+          "sha256": "d80db2ceca0305ba1ab2b0a0a63a959b25b362aa2621399ae13bfd1da8ce1640",
+          "bytes": 275163
+        },
+        {
+          "rank": 2,
+          "accumulation_microbatch": 4,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-02-micro-04.json",
+          "sha256": "381c9de36e03cf3ac1454786fdfbb2d4e7e927266f9a1e789f7e820e8b6329df",
+          "bytes": 275163
+        },
+        {
+          "rank": 2,
+          "accumulation_microbatch": 5,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-02-micro-05.json",
+          "sha256": "6ab974df370780e615cf4a05811e655c936e0cf158617891b475f83978eebc9d",
+          "bytes": 275163
+        },
+        {
+          "rank": 2,
+          "accumulation_microbatch": 6,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-02-micro-06.json",
+          "sha256": "c53b060e4ac99fd763ab6daf8ae2ef81c7fe9a4271b81389b56f66d8eecbf1ed",
+          "bytes": 275163
+        },
+        {
+          "rank": 2,
+          "accumulation_microbatch": 7,
+          "synchronized_boundary": true,
+          "frozen_non_none_views": 0,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-02-micro-07.json",
+          "sha256": "fa4828c945ed0305e1d2a45f2738df21a4e93a1cae6e4fe9ab0bb5d137c148bb",
+          "bytes": 213870
+        },
+        {
+          "rank": 3,
+          "accumulation_microbatch": 0,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-03-micro-00.json",
+          "sha256": "08088b2374d21bf8f2e290cbeebd17ef04c19d24ad0000c408c20b2e0cc754e3",
+          "bytes": 274419
+        },
+        {
+          "rank": 3,
+          "accumulation_microbatch": 1,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-03-micro-01.json",
+          "sha256": "df592c32c29bf5e78a10df51027e0c1722b6eb8491db3862bfea821d858a7245",
+          "bytes": 274419
+        },
+        {
+          "rank": 3,
+          "accumulation_microbatch": 2,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-03-micro-02.json",
+          "sha256": "1a2ab4e27d2ece5d70afe7a4ca5578ef43968f12ee68beff31a3cb15590db44f",
+          "bytes": 274419
+        },
+        {
+          "rank": 3,
+          "accumulation_microbatch": 3,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-03-micro-03.json",
+          "sha256": "a1c5643afcd1daeccec5d43956640b4f40fff608e6559c4b06211c92030a3fe7",
+          "bytes": 274419
+        },
+        {
+          "rank": 3,
+          "accumulation_microbatch": 4,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-03-micro-04.json",
+          "sha256": "0be1b73fb48a902fca3a816b80f004d66959c62b7597dd27b0b61e40f58ac52a",
+          "bytes": 274419
+        },
+        {
+          "rank": 3,
+          "accumulation_microbatch": 5,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-03-micro-05.json",
+          "sha256": "173005acba6142ae3932ace0c6d78d542f67af2618420e625e5bbae5c1fc96d7",
+          "bytes": 274419
+        },
+        {
+          "rank": 3,
+          "accumulation_microbatch": 6,
+          "synchronized_boundary": false,
+          "frozen_non_none_views": 108,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-03-micro-06.json",
+          "sha256": "e6ba73a833391ccc51952fd422c3eeb461cd9078c30d0bbca24840fd9a1cd90f",
+          "bytes": 274419
+        },
+        {
+          "rank": 3,
+          "accumulation_microbatch": 7,
+          "synchronized_boundary": true,
+          "frozen_non_none_views": 0,
+          "frozen_nonzero_elements": 0,
+          "frozen_optimizer_members": 0,
+          "all_finite": true,
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/gradient-audit/rank-03-micro-07.json",
+          "sha256": "73f3d257982200c13325e6c92656713efcae258e7e3ffc6a42d42ed1b99ecd3e",
+          "bytes": 213306
+        }
+      ],
+      "frozen_after_checks": 8,
+      "first_replay": [
+        {
+          "passed": true,
+          "logprob_max_abs": 0.0,
+          "critic_present": false,
+          "optimizer_steps": 0
+        },
+        {
+          "passed": true,
+          "logprob_max_abs": 0.0,
+          "critic_present": false,
+          "optimizer_steps": 0
+        },
+        {
+          "passed": true,
+          "logprob_max_abs": 0.0,
+          "critic_present": false,
+          "optimizer_steps": 0
+        },
+        {
+          "passed": true,
+          "logprob_max_abs": 0.0,
+          "critic_present": false,
+          "optimizer_steps": 0
+        }
+      ],
+      "trainable_update_evidence": [
+        {
+          "rank": 0,
+          "trained_parameter_hash_changed": true,
+          "nonzero_noncritic_first_gradient_tensors": 190
+        },
+        {
+          "rank": 1,
+          "trained_parameter_hash_changed": true,
+          "nonzero_noncritic_first_gradient_tensors": 190
+        },
+        {
+          "rank": 2,
+          "trained_parameter_hash_changed": true,
+          "nonzero_noncritic_first_gradient_tensors": 190
+        },
+        {
+          "rank": 3,
+          "trained_parameter_hash_changed": true,
+          "nonzero_noncritic_first_gradient_tensors": 190
+        }
+      ],
+      "group_reset_reports": 32,
+      "initial_groups": 256,
+      "all_raw_group_replica_sha256_match": true,
+      "canonical_runtime_SHA_receipts": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/training-rollouts/iteration-0001-policy-0000-rank-00.pt",
+          "sha256": "a95a6d66b4b88d692d319b568ac1046a9949bf3204ec4fc2d7f54868d9eadcf6",
+          "completed": true,
+          "capture_format": "rlinf_native_ppo_history_capture_v1",
+          "compression": "none",
+          "bytes": 5783242956,
+          "collection_iteration": 1,
+          "producing_policy_iteration": 0,
+          "rank": 0,
+          "optimizer_steps_before": 0,
+          "fields": [
+            "actions",
+            "advantages",
+            "dones",
+            "forward_inputs",
+            "intervene_flags",
+            "loss_mask",
+            "loss_mask_sum",
+            "prev_logprobs",
+            "prev_values",
+            "rewards",
+            "terminations",
+            "truncations",
+            "versions"
+          ],
+          "field_shapes": {
+            "forward_inputs": {
+              "observation/state": {
+                "shape": [
+                  8,
+                  256,
+                  14
+                ],
+                "dtype": "torch.float64"
+              },
+              "tokenized_prompt_mask": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.bool"
+              },
+              "model_action": {
+                "shape": [
+                  8,
+                  256,
+                  1600
+                ],
+                "dtype": "torch.float32"
+              },
+              "tokenized_prompt": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.int64"
+              },
+              "observation/wrist_image": {
+                "shape": [
+                  8,
+                  256,
+                  2,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "chains": {
+                "shape": [
+                  8,
+                  256,
+                  6,
+                  50,
+                  32
+                ],
+                "dtype": "torch.float32"
+              },
+              "observation/image": {
+                "shape": [
+                  8,
+                  256,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "action": {
+                "shape": [
+                  8,
+                  256,
+                  700
+                ],
+                "dtype": "torch.float32"
+              },
+              "denoise_inds": {
+                "shape": [
+                  8,
+                  256,
+                  5
+                ],
+                "dtype": "torch.int64"
+              }
+            },
+            "actions": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.float32"
+            },
+            "intervene_flags": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.bool"
+            },
+            "rewards": {
+              "shape": [
+                8,
+                256,
+                50
+              ],
+              "dtype": "torch.float32"
+            },
+            "terminations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "truncations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "dones": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "prev_logprobs": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "prev_values": {
+              "shape": [
+                9,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "versions": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "loss_mask": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.bool"
+            },
+            "loss_mask_sum": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.int64"
+            },
+            "advantages": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            }
+          },
+          "evaluation_data": false,
+          "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/resolved-native-config.json",
+          "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/training-rollouts/iteration-0001-policy-0000-rank-01.pt",
+          "sha256": "8d244441af2a8c9a7779de27b64f38bf381efdb8eb8cd74a0181e516013e877a",
+          "completed": true,
+          "capture_format": "rlinf_native_ppo_history_capture_v1",
+          "compression": "none",
+          "bytes": 5783242992,
+          "collection_iteration": 1,
+          "producing_policy_iteration": 0,
+          "rank": 1,
+          "optimizer_steps_before": 0,
+          "fields": [
+            "actions",
+            "advantages",
+            "dones",
+            "forward_inputs",
+            "intervene_flags",
+            "loss_mask",
+            "loss_mask_sum",
+            "prev_logprobs",
+            "prev_values",
+            "rewards",
+            "terminations",
+            "truncations",
+            "versions"
+          ],
+          "field_shapes": {
+            "forward_inputs": {
+              "chains": {
+                "shape": [
+                  8,
+                  256,
+                  6,
+                  50,
+                  32
+                ],
+                "dtype": "torch.float32"
+              },
+              "observation/wrist_image": {
+                "shape": [
+                  8,
+                  256,
+                  2,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "tokenized_prompt": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.int64"
+              },
+              "observation/image": {
+                "shape": [
+                  8,
+                  256,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "action": {
+                "shape": [
+                  8,
+                  256,
+                  700
+                ],
+                "dtype": "torch.float32"
+              },
+              "model_action": {
+                "shape": [
+                  8,
+                  256,
+                  1600
+                ],
+                "dtype": "torch.float32"
+              },
+              "observation/state": {
+                "shape": [
+                  8,
+                  256,
+                  14
+                ],
+                "dtype": "torch.float64"
+              },
+              "tokenized_prompt_mask": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.bool"
+              },
+              "denoise_inds": {
+                "shape": [
+                  8,
+                  256,
+                  5
+                ],
+                "dtype": "torch.int64"
+              }
+            },
+            "actions": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.float32"
+            },
+            "intervene_flags": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.bool"
+            },
+            "rewards": {
+              "shape": [
+                8,
+                256,
+                50
+              ],
+              "dtype": "torch.float32"
+            },
+            "terminations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "truncations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "dones": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "prev_logprobs": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "prev_values": {
+              "shape": [
+                9,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "versions": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "loss_mask": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.bool"
+            },
+            "loss_mask_sum": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.int64"
+            },
+            "advantages": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            }
+          },
+          "evaluation_data": false,
+          "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/resolved-native-config.json",
+          "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/training-rollouts/iteration-0001-policy-0000-rank-02.pt",
+          "sha256": "3a32b9e89b9dac5c31fac32e1e3ad36f1bebeb0e251262bce8cb8a81b7d45900",
+          "completed": true,
+          "capture_format": "rlinf_native_ppo_history_capture_v1",
+          "compression": "none",
+          "bytes": 5783242956,
+          "collection_iteration": 1,
+          "producing_policy_iteration": 0,
+          "rank": 2,
+          "optimizer_steps_before": 0,
+          "fields": [
+            "actions",
+            "advantages",
+            "dones",
+            "forward_inputs",
+            "intervene_flags",
+            "loss_mask",
+            "loss_mask_sum",
+            "prev_logprobs",
+            "prev_values",
+            "rewards",
+            "terminations",
+            "truncations",
+            "versions"
+          ],
+          "field_shapes": {
+            "forward_inputs": {
+              "observation/state": {
+                "shape": [
+                  8,
+                  256,
+                  14
+                ],
+                "dtype": "torch.float64"
+              },
+              "tokenized_prompt_mask": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.bool"
+              },
+              "tokenized_prompt": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.int64"
+              },
+              "model_action": {
+                "shape": [
+                  8,
+                  256,
+                  1600
+                ],
+                "dtype": "torch.float32"
+              },
+              "observation/image": {
+                "shape": [
+                  8,
+                  256,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "chains": {
+                "shape": [
+                  8,
+                  256,
+                  6,
+                  50,
+                  32
+                ],
+                "dtype": "torch.float32"
+              },
+              "observation/wrist_image": {
+                "shape": [
+                  8,
+                  256,
+                  2,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "denoise_inds": {
+                "shape": [
+                  8,
+                  256,
+                  5
+                ],
+                "dtype": "torch.int64"
+              },
+              "action": {
+                "shape": [
+                  8,
+                  256,
+                  700
+                ],
+                "dtype": "torch.float32"
+              }
+            },
+            "actions": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.float32"
+            },
+            "intervene_flags": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.bool"
+            },
+            "rewards": {
+              "shape": [
+                8,
+                256,
+                50
+              ],
+              "dtype": "torch.float32"
+            },
+            "terminations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "truncations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "dones": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "prev_logprobs": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "prev_values": {
+              "shape": [
+                9,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "versions": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "loss_mask": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.bool"
+            },
+            "loss_mask_sum": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.int64"
+            },
+            "advantages": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            }
+          },
+          "evaluation_data": false,
+          "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/resolved-native-config.json",
+          "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/training-rollouts/iteration-0001-policy-0000-rank-03.pt",
+          "sha256": "756df350e2246a391cc04fad9fab802eacd9af5a0cdd6cd826994e05bed5bcb7",
+          "completed": true,
+          "capture_format": "rlinf_native_ppo_history_capture_v1",
+          "compression": "none",
+          "bytes": 5783242956,
+          "collection_iteration": 1,
+          "producing_policy_iteration": 0,
+          "rank": 3,
+          "optimizer_steps_before": 0,
+          "fields": [
+            "actions",
+            "advantages",
+            "dones",
+            "forward_inputs",
+            "intervene_flags",
+            "loss_mask",
+            "loss_mask_sum",
+            "prev_logprobs",
+            "prev_values",
+            "rewards",
+            "terminations",
+            "truncations",
+            "versions"
+          ],
+          "field_shapes": {
+            "forward_inputs": {
+              "chains": {
+                "shape": [
+                  8,
+                  256,
+                  6,
+                  50,
+                  32
+                ],
+                "dtype": "torch.float32"
+              },
+              "observation/wrist_image": {
+                "shape": [
+                  8,
+                  256,
+                  2,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "action": {
+                "shape": [
+                  8,
+                  256,
+                  700
+                ],
+                "dtype": "torch.float32"
+              },
+              "observation/state": {
+                "shape": [
+                  8,
+                  256,
+                  14
+                ],
+                "dtype": "torch.float64"
+              },
+              "tokenized_prompt": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.int64"
+              },
+              "denoise_inds": {
+                "shape": [
+                  8,
+                  256,
+                  5
+                ],
+                "dtype": "torch.int64"
+              },
+              "observation/image": {
+                "shape": [
+                  8,
+                  256,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "tokenized_prompt_mask": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.bool"
+              },
+              "model_action": {
+                "shape": [
+                  8,
+                  256,
+                  1600
+                ],
+                "dtype": "torch.float32"
+              }
+            },
+            "actions": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.float32"
+            },
+            "intervene_flags": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.bool"
+            },
+            "rewards": {
+              "shape": [
+                8,
+                256,
+                50
+              ],
+              "dtype": "torch.float32"
+            },
+            "terminations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "truncations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "dones": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "prev_logprobs": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "prev_values": {
+              "shape": [
+                9,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "versions": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "loss_mask": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.bool"
+            },
+            "loss_mask_sum": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.int64"
+            },
+            "advantages": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            }
+          },
+          "evaluation_data": false,
+          "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/resolved-native-config.json",
+          "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/training-rollouts/iteration-0002-policy-0001-rank-00.pt",
+          "sha256": "c7334f99c252afc131ab03c7e84446e11d6b4a4209ecdf427e12113a0b022026",
+          "completed": true,
+          "capture_format": "rlinf_native_ppo_history_capture_v1",
+          "compression": "none",
+          "bytes": 5783242956,
+          "collection_iteration": 2,
+          "producing_policy_iteration": 1,
+          "rank": 0,
+          "optimizer_steps_before": 20,
+          "fields": [
+            "actions",
+            "advantages",
+            "dones",
+            "forward_inputs",
+            "intervene_flags",
+            "loss_mask",
+            "loss_mask_sum",
+            "prev_logprobs",
+            "prev_values",
+            "rewards",
+            "terminations",
+            "truncations",
+            "versions"
+          ],
+          "field_shapes": {
+            "forward_inputs": {
+              "observation/state": {
+                "shape": [
+                  8,
+                  256,
+                  14
+                ],
+                "dtype": "torch.float64"
+              },
+              "tokenized_prompt_mask": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.bool"
+              },
+              "model_action": {
+                "shape": [
+                  8,
+                  256,
+                  1600
+                ],
+                "dtype": "torch.float32"
+              },
+              "tokenized_prompt": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.int64"
+              },
+              "observation/wrist_image": {
+                "shape": [
+                  8,
+                  256,
+                  2,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "chains": {
+                "shape": [
+                  8,
+                  256,
+                  6,
+                  50,
+                  32
+                ],
+                "dtype": "torch.float32"
+              },
+              "observation/image": {
+                "shape": [
+                  8,
+                  256,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "action": {
+                "shape": [
+                  8,
+                  256,
+                  700
+                ],
+                "dtype": "torch.float32"
+              },
+              "denoise_inds": {
+                "shape": [
+                  8,
+                  256,
+                  5
+                ],
+                "dtype": "torch.int64"
+              }
+            },
+            "actions": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.float32"
+            },
+            "intervene_flags": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.bool"
+            },
+            "rewards": {
+              "shape": [
+                8,
+                256,
+                50
+              ],
+              "dtype": "torch.float32"
+            },
+            "terminations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "truncations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "dones": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "prev_logprobs": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "prev_values": {
+              "shape": [
+                9,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "versions": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "loss_mask": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.bool"
+            },
+            "loss_mask_sum": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.int64"
+            },
+            "advantages": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            }
+          },
+          "evaluation_data": false,
+          "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/resolved-native-config.json",
+          "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/training-rollouts/iteration-0002-policy-0001-rank-01.pt",
+          "sha256": "bfd2134516819e2fe73c8772ba74577f825d787bf83bdb17a7d6f4d695e4bb50",
+          "completed": true,
+          "capture_format": "rlinf_native_ppo_history_capture_v1",
+          "compression": "none",
+          "bytes": 5783242992,
+          "collection_iteration": 2,
+          "producing_policy_iteration": 1,
+          "rank": 1,
+          "optimizer_steps_before": 20,
+          "fields": [
+            "actions",
+            "advantages",
+            "dones",
+            "forward_inputs",
+            "intervene_flags",
+            "loss_mask",
+            "loss_mask_sum",
+            "prev_logprobs",
+            "prev_values",
+            "rewards",
+            "terminations",
+            "truncations",
+            "versions"
+          ],
+          "field_shapes": {
+            "forward_inputs": {
+              "chains": {
+                "shape": [
+                  8,
+                  256,
+                  6,
+                  50,
+                  32
+                ],
+                "dtype": "torch.float32"
+              },
+              "observation/wrist_image": {
+                "shape": [
+                  8,
+                  256,
+                  2,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "tokenized_prompt": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.int64"
+              },
+              "observation/image": {
+                "shape": [
+                  8,
+                  256,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "action": {
+                "shape": [
+                  8,
+                  256,
+                  700
+                ],
+                "dtype": "torch.float32"
+              },
+              "model_action": {
+                "shape": [
+                  8,
+                  256,
+                  1600
+                ],
+                "dtype": "torch.float32"
+              },
+              "observation/state": {
+                "shape": [
+                  8,
+                  256,
+                  14
+                ],
+                "dtype": "torch.float64"
+              },
+              "tokenized_prompt_mask": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.bool"
+              },
+              "denoise_inds": {
+                "shape": [
+                  8,
+                  256,
+                  5
+                ],
+                "dtype": "torch.int64"
+              }
+            },
+            "actions": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.float32"
+            },
+            "intervene_flags": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.bool"
+            },
+            "rewards": {
+              "shape": [
+                8,
+                256,
+                50
+              ],
+              "dtype": "torch.float32"
+            },
+            "terminations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "truncations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "dones": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "prev_logprobs": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "prev_values": {
+              "shape": [
+                9,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "versions": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "loss_mask": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.bool"
+            },
+            "loss_mask_sum": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.int64"
+            },
+            "advantages": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            }
+          },
+          "evaluation_data": false,
+          "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/resolved-native-config.json",
+          "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/training-rollouts/iteration-0002-policy-0001-rank-02.pt",
+          "sha256": "c61c1dd5f7a39128a59e7f6e57eacad9dc2835a3fe495ff34c052a779e1a6334",
+          "completed": true,
+          "capture_format": "rlinf_native_ppo_history_capture_v1",
+          "compression": "none",
+          "bytes": 5783242956,
+          "collection_iteration": 2,
+          "producing_policy_iteration": 1,
+          "rank": 2,
+          "optimizer_steps_before": 20,
+          "fields": [
+            "actions",
+            "advantages",
+            "dones",
+            "forward_inputs",
+            "intervene_flags",
+            "loss_mask",
+            "loss_mask_sum",
+            "prev_logprobs",
+            "prev_values",
+            "rewards",
+            "terminations",
+            "truncations",
+            "versions"
+          ],
+          "field_shapes": {
+            "forward_inputs": {
+              "observation/state": {
+                "shape": [
+                  8,
+                  256,
+                  14
+                ],
+                "dtype": "torch.float64"
+              },
+              "tokenized_prompt_mask": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.bool"
+              },
+              "tokenized_prompt": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.int64"
+              },
+              "model_action": {
+                "shape": [
+                  8,
+                  256,
+                  1600
+                ],
+                "dtype": "torch.float32"
+              },
+              "observation/image": {
+                "shape": [
+                  8,
+                  256,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "chains": {
+                "shape": [
+                  8,
+                  256,
+                  6,
+                  50,
+                  32
+                ],
+                "dtype": "torch.float32"
+              },
+              "observation/wrist_image": {
+                "shape": [
+                  8,
+                  256,
+                  2,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "denoise_inds": {
+                "shape": [
+                  8,
+                  256,
+                  5
+                ],
+                "dtype": "torch.int64"
+              },
+              "action": {
+                "shape": [
+                  8,
+                  256,
+                  700
+                ],
+                "dtype": "torch.float32"
+              }
+            },
+            "actions": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.float32"
+            },
+            "intervene_flags": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.bool"
+            },
+            "rewards": {
+              "shape": [
+                8,
+                256,
+                50
+              ],
+              "dtype": "torch.float32"
+            },
+            "terminations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "truncations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "dones": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "prev_logprobs": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "prev_values": {
+              "shape": [
+                9,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "versions": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "loss_mask": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.bool"
+            },
+            "loss_mask_sum": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.int64"
+            },
+            "advantages": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            }
+          },
+          "evaluation_data": false,
+          "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/resolved-native-config.json",
+          "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/training-rollouts/iteration-0002-policy-0001-rank-03.pt",
+          "sha256": "b2cb0768573dbac234bd5c542f6ff0f4aa1de9639cd76f27992853c3fc1f83be",
+          "completed": true,
+          "capture_format": "rlinf_native_ppo_history_capture_v1",
+          "compression": "none",
+          "bytes": 5783242956,
+          "collection_iteration": 2,
+          "producing_policy_iteration": 1,
+          "rank": 3,
+          "optimizer_steps_before": 20,
+          "fields": [
+            "actions",
+            "advantages",
+            "dones",
+            "forward_inputs",
+            "intervene_flags",
+            "loss_mask",
+            "loss_mask_sum",
+            "prev_logprobs",
+            "prev_values",
+            "rewards",
+            "terminations",
+            "truncations",
+            "versions"
+          ],
+          "field_shapes": {
+            "forward_inputs": {
+              "chains": {
+                "shape": [
+                  8,
+                  256,
+                  6,
+                  50,
+                  32
+                ],
+                "dtype": "torch.float32"
+              },
+              "observation/wrist_image": {
+                "shape": [
+                  8,
+                  256,
+                  2,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "action": {
+                "shape": [
+                  8,
+                  256,
+                  700
+                ],
+                "dtype": "torch.float32"
+              },
+              "observation/state": {
+                "shape": [
+                  8,
+                  256,
+                  14
+                ],
+                "dtype": "torch.float64"
+              },
+              "tokenized_prompt": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.int64"
+              },
+              "denoise_inds": {
+                "shape": [
+                  8,
+                  256,
+                  5
+                ],
+                "dtype": "torch.int64"
+              },
+              "observation/image": {
+                "shape": [
+                  8,
+                  256,
+                  480,
+                  640,
+                  3
+                ],
+                "dtype": "torch.uint8"
+              },
+              "tokenized_prompt_mask": {
+                "shape": [
+                  8,
+                  256,
+                  200
+                ],
+                "dtype": "torch.bool"
+              },
+              "model_action": {
+                "shape": [
+                  8,
+                  256,
+                  1600
+                ],
+                "dtype": "torch.float32"
+              }
+            },
+            "actions": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.float32"
+            },
+            "intervene_flags": {
+              "shape": [
+                8,
+                256,
+                700
+              ],
+              "dtype": "torch.bool"
+            },
+            "rewards": {
+              "shape": [
+                8,
+                256,
+                50
+              ],
+              "dtype": "torch.float32"
+            },
+            "terminations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "truncations": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "dones": {
+              "shape": [
+                9,
+                256,
+                50
+              ],
+              "dtype": "torch.bool"
+            },
+            "prev_logprobs": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "prev_values": {
+              "shape": [
+                9,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            },
+            "versions": {
+              "shape": [
+                8,
+                256,
+                50,
+                14
+              ],
+              "dtype": "torch.float32"
+            },
+            "loss_mask": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.bool"
+            },
+            "loss_mask_sum": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.int64"
+            },
+            "advantages": {
+              "shape": [
+                8,
+                256,
+                1
+              ],
+              "dtype": "torch.float32"
+            }
+          },
+          "evaluation_data": false,
+          "resolved_config_path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/resolved-native-config.json",
+          "retention": "unshuffled/untrimmed original batch plus computed advantages/returns"
+        }
+      ],
+      "action_journals": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/action-accounting/rank-00/train.json",
+          "calls": 73,
+          "all_resolved": true,
+          "phase_counts": {
+            "constructor-allowance": 640,
+            "training/reset-allowance": 5120,
+            "training": 204800
+          },
+          "charged_conservative_slots": 210560
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/action-accounting/rank-01/train.json",
+          "calls": 73,
+          "all_resolved": true,
+          "phase_counts": {
+            "constructor-allowance": 640,
+            "training/reset-allowance": 5120,
+            "training": 204800
+          },
+          "charged_conservative_slots": 210560
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/action-accounting/rank-02/train.json",
+          "calls": 73,
+          "all_resolved": true,
+          "phase_counts": {
+            "constructor-allowance": 640,
+            "training/reset-allowance": 5120,
+            "training": 204800
+          },
+          "charged_conservative_slots": 210560
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/action-accounting/rank-03/train.json",
+          "calls": 73,
+          "all_resolved": true,
+          "phase_counts": {
+            "constructor-allowance": 640,
+            "training/reset-allowance": 5120,
+            "training": 204800
+          },
+          "charged_conservative_slots": 210560
+        }
+      ],
+      "conservative_slots": 842240,
+      "measured_executed_motor_counts": false,
+      "group_return_summary": [
+        {
+          "collection_iteration": 1,
+          "groups": 128,
+          "constant_groups": 61,
+          "positive_reward_episodes": 176
+        },
+        {
+          "collection_iteration": 2,
+          "groups": 128,
+          "constant_groups": 51,
+          "positive_reward_episodes": 184
+        }
+      ],
+      "native_metric_lines": [
+        "\u2502actor/run_training=535.2               \u2502actor_training=537.0                   \u2502cal_adv_and_returns=8.178             \u2502",
+        "\u2502env/run_interact_once=2836.4           \u2502generate_rollouts=2842.5               \u2502rollout/generate_one_epoch=2838.2     \u2502",
+        "\u2502rollout/predict=195.1                  \u2502rollout/rollout/generate=2840.7        \u2502rollout/sync_model_from_actor=5.794   \u2502",
+        "\u2502reward=0.0004296875                    \u2502success_once=0.171875                  \u2502                                      \u2502",
+        "\u2502actor/run_training=527.2               \u2502actor_training=529.0                   \u2502cal_adv_and_returns=7.897             \u2502",
+        "\u2502env/run_interact_once=2858.4           \u2502generate_rollouts=2864.4               \u2502rollout/generate_one_epoch=2860.3     \u2502",
+        "\u2502rollout/predict=191.2                  \u2502rollout/rollout/generate=2862.6        \u2502rollout/sync_model_from_actor=4.449   \u2502",
+        "\u2502reward=0.00044921873                   \u2502success_once=0.1796875                 \u2502                                      \u2502"
+      ],
+      "allocated_bytes": 131384253952
+    }
+  },
+  "status": "complete",
+  "all_256_cross_arm_initial_groups_exact": true,
+  "cross_arm_key": [
+    "policy_iteration",
+    "round_index",
+    "global_group"
+  ],
+  "free_gib": 361.44140625,
+  "verification_script_sha256": "014caff0a0ddd1db553d2727a2232445e48d8dc313c94f24de87dc2c7b82eff4"
+}
