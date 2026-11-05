@@ -58,7 +58,10 @@ def prepare(task, output, maximum_gpu_hours=1.2):
     console = (original / 'node-00/console.log').read_text(errors='replace')
     clock = read(original / 'node-00/CLOCK.json')
     storage_stop = 'assert fs.f_bavail*fs.f_frsize > 200 << 30' in console
-    assert clock['exit_code'] != 0 and (storage_stop or 'Insufficient time for next full bank' in console or clock['exit_code'] == 124)
+    deadline_stop = ('Insufficient time for next full bank' in console or
+                     'TimeoutError: Preserve last full boundary before allocation deadline' in console or
+                     clock['exit_code'] == 124)
+    assert clock['exit_code'] != 0 and (storage_stop or deadline_stop)
     retained, discarded, hashes = [], [], {}
     for bank in range(64):
         base = original / 'node-00/banks' / f'bank-{bank:03d}'
