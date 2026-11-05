@@ -1,0 +1,68 @@
+{
+  "checked_at_shanghai": "2026-11-05 23:06",
+  "status": "investigating_before_scientific_retry",
+  "failed_attempt": "train06/job-42mdffft4wwc",
+  "observed": {
+    "host_limit_GiB": 512,
+    "ray_memory_threshold": 0.95,
+    "environment_worker_RSS_GB_range": [
+      102.51,
+      107.67
+    ],
+    "environment_workers": 4,
+    "train_environments_per_worker": 64,
+    "object_store_spillable_bytes": 0,
+    "new_PPO_updates": 0,
+    "trace_prefixes_by_rank": {
+      "0": 8,
+      "1": 8,
+      "2": 8,
+      "3": 9
+    },
+    "second_reset_before_failure": true
+  },
+  "excluded_or_bounded": {
+    "intermediate_render_accumulation": "Inactive: pinned RoboTwinEnv default skip_intermediate_renders=True and actual resolved config has no override",
+    "video_wrapper": "Inactive: actual video_cfg.save_video=false; native VectorEnv overwrites eval_video_log=false",
+    "depth_pointcloud": "Both disabled in resolved config",
+    "current_RGB_batch_bytes_per_worker": 176947200,
+    "current_RGB_batch_GiB_per_worker": 0.164794921875,
+    "capture_copy_explanation": "Current RGB clones alone cannot explain100+GB per environment process",
+    "reset_close": "Configured clear_cache_freq1 and close_env(clear_cache=True), so investigate native lifetime/cache rather than assume missing close"
+  },
+  "remaining_hypotheses": [
+    "live simulator/render/robot/planner allocation per scene",
+    "native objects retained across reset",
+    "native allocator or driver cache not returned after release"
+  ],
+  "qualification": {
+    "owner_thread": "01a1a9d3-d2ed-7163-8dbf-a55d4f009ea2",
+    "planned_gpus": 1,
+    "planned_native_envs": 16,
+    "max_minutes": 20,
+    "model_and_SGD": false,
+    "measure": [
+      "RSS/USS/PSS",
+      "cgroup anonymous/file",
+      "mallinfo",
+      "1/4/8/16scene growth",
+      "constructor/reset/get_obs/close",
+      "gc.collect/malloc_trim comparison with rawRGB/state identity"
+    ],
+    "scientific_retry": "held;1024GiB request alone is not accepted as diagnosis"
+  },
+  "source_evidence": {
+    "RLinf_commit": "c605b9d55ed93a180119b099e6f836abff293b08",
+    "RoboTwin_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+    "local_read_only_copies": {
+      "robotwin_env.py": "9d468358e2286b55d807f8fe9569419f1ef4e343488b2f0bfd4eabd521fad210",
+      "vector_env.py": "3a068625f08e006162a5583ddf5175e42ad9ab7941d1016de89bbb7fe63ebc0d",
+      "env_worker.py": "7a64d7192f3e41ed18d598f24867506cc07e71edd025b3c3e76c3139e8d8fc7f",
+      "Base_Task.py": "6b3f74b038509ef989913b3f6f37c74e1d0b7156d201a1bf0100f9ccb6b0d46b",
+      "envs_camera_camera.py": "49ff2005d14749caa5fd9698d35f6f937664bde89cfdf0ab93675204c85bbf33",
+      "envs_robot_planner.py": "178a72a7b6ededee66e7f78ebc35e7c39c4a855a1d713b90a01a32868d49f24a",
+      "envs_robot_robot.py": "1f4d0284eaf47fe5de2c0ba98a173b78beb83f2f2cc43409d37072a4774df4c8"
+    },
+    "actual_resolved_config_sha256": "a973e3fd346ae3875464745b0c358c67de5b93e919e61a33ecbbb14ee99c3815"
+  }
+}
