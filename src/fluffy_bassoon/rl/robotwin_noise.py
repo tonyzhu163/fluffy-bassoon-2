@@ -269,7 +269,12 @@ def _setup_task_with_retry_limit(subenv, class_decorator, max_attempts=RESET_ATT
 
 def _reset_with_retry_limit(subenv, unstable_error, env_seed=None,
                             max_attempts=RESET_ATTEMPTS):
-    """Match pinned reset semantics, with a bound on unstable-scene retries."""
+    """Reset with bounded retries and bind language to the constructed scene.
+
+    Upstream caches setup-time object metadata. A later explicit seed can pick
+    different objects, so generate the instruction from this reset's get_info
+    rather than the cached scene that happened to initialize the SubEnv.
+    """
     with subenv.global_lock:
         with subenv.lock:
             if subenv.task is not None:
@@ -278,14 +283,19 @@ def _reset_with_retry_limit(subenv, unstable_error, env_seed=None,
                 subenv.task.close_env(clear_cache=should_clear)
             if env_seed is not None:
                 subenv.env_seed = env_seed
-            subenv.instruction = subenv.create_instruction()
-            subenv.args["instruction"] = subenv.instruction
+            subenv.instruction = None
+            setup_args = dict(subenv.args)
+            setup_args.pop("instruction", None)
             first_seed = subenv.env_seed
             last_error = None
             for trial_seed in range(first_seed, first_seed + max_attempts):
                 try:
                     subenv.task.setup_demo(now_ep_num=trial_seed, seed=trial_seed,
-                                          **subenv.args)
+                                          **setup_args)
+                    subenv.episode_info_list = [subenv.task.get_info()]
+                    subenv.instruction = subenv.create_instruction()
+                    subenv.args["instruction"] = subenv.instruction
+                    subenv.task.set_instruction(subenv.instruction)
                     subenv.task.step_lim = subenv.args["step_lim"]
                     subenv.task.run_steps = 0
                     subenv.task.reward_step = 0

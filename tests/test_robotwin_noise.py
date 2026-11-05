@@ -175,6 +175,9 @@ def retry_fixture(failures):
         def get_info(self):
             return {"actual_seed": attempts[-1][0]}
 
+        def set_instruction(self, instruction):
+            self.instruction = instruction
+
         def close_env(self, **kwargs):
             closed.append(kwargs)
 
@@ -225,6 +228,20 @@ def test_reset_retry_guard_bounds_instability_and_keeps_other_errors_immediate()
     with pytest.raises(FileNotFoundError, match="missing object"):
         _reset_with_retry_limit(subenv, UnstableScene, max_attempts=3)
     assert len(attempts) == 1
+
+
+def test_reset_instruction_tracks_new_scene_and_unstable_retry():
+    subenv, _, attempts, _ = retry_fixture([UnstableScene("unstable")])
+    subenv.episode_info_list = [{"actual_seed": 7}]
+    subenv.args["instruction"] = "stale scene 7"
+    subenv.create_instruction = lambda: f"scene {subenv.episode_info_list[0]['actual_seed']}"
+    _reset_with_retry_limit(subenv, UnstableScene, env_seed=11, max_attempts=3)
+    assert subenv.episode_info_list == [{"actual_seed": 12}]
+    assert subenv.instruction == subenv.task.instruction == subenv.args["instruction"] == "scene 12"
+    assert all("instruction" not in kwargs for _, kwargs in attempts)
+    _reset_with_retry_limit(subenv, UnstableScene, env_seed=29, max_attempts=3)
+    assert subenv.episode_info_list == [{"actual_seed": 29}]
+    assert subenv.instruction == subenv.task.instruction == subenv.args["instruction"] == "scene 29"
 
 
 def test_single_environment_scene_calls_keep_owner_thread_and_future_api():
