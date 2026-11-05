@@ -1,7 +1,7 @@
 {
-  "status": "PREPARING_NATIVE_REPEAT_DYNAMICS_DIAGNOSTIC_PRODUCTION_HELD",
+  "status": "RUNNING_NATIVE_REPEAT_DYNAMICS_DIAGNOSTIC_PRODUCTION_HELD",
   "cluster": "Baige Pro6K",
-  "last_checked_at_shanghai": "2026-11-06 00:56",
+  "last_checked_at_shanghai": "2026-11-06 01:01",
   "prior_scheduler_gpu_seconds": 2561,
   "prior_scheduler_gpu_hours": 0.7113888888888888,
   "optimizer_updates": 0,
@@ -10,8 +10,8 @@
   "user_preference": "Broad multi-task SFT, no RL tuning. Maximize actual6000-series batch capacity or measured throughput.",
   "precision": "Native mixed BF16 with full FP32 vision/norms. FP32 full-model replay only if required to localize conversion drift.",
   "next_action": "Freshmemory04 native-native-repeat plusperclose64scene diagnosis; exposedphysics/qvel/poses/contacts, identicalholdRNG, rawpercaseactions/outcomesBEFOREgates. Same1e-6andexactrewardgate. NoPPOuntilchosenmemorystrategyqualifies.",
-  "job_id": "job-dx2w7coo3lr3",
-  "source_commit": "7e19ae79cf53bfbe9aad9da6fac6e848c4b9d006",
+  "job_id": "job-lcwxw1uz7kdy",
+  "source_commit": "a9ee838c67eba8e22282739ee468ed15bee8670d",
   "core_tests_passed": 23,
   "scene_instruction_binding_passed": true,
   "conversion_passed": true,
@@ -58,8 +58,8 @@
     "maximum_minutes": 50,
     "bridge_charge_conservative_gpu_seconds": 950
   },
-  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/memory03",
-  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-memory03",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/memory04",
+  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-rlinf-ppo-20261105-memory04",
   "training_attempts": [
     {
       "attempt": "train01",
@@ -242,13 +242,13 @@
       "outcome": "All four candidates64/128/256/512 completed four native FSDP/PPO updates on all four ranks.64 fastest including conditional reference overhead;512 has only1.00GB reserved headroom."
     }
   ],
-  "active_gpu_jobs": 0,
+  "active_gpu_jobs": 1,
   "additional_scheduler_gpu_hours_completed": 7.350833333333333,
   "cumulative_scheduler_gpu_hours_completed": 8.062222222222223,
   "storage_admission": {
     "status": "admitted_combined_371GiB_threshold",
-    "last_observed_free_gib": 702.8515625,
-    "observed_at_shanghai": "2026-11-06 00:19",
+    "last_observed_free_gib": 702.81640625,
+    "observed_at_shanghai": "2026-11-06 00:58",
     "initial_checkpoint_bytes": 9985762432,
     "protected_checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03/sidney-native-two/checkpoints/global_step_0",
     "projected_incremental_bytes": 134217728000,
@@ -401,6 +401,24 @@
       "post_hold_failure_expression": "error<=1e-6 and torch.equal(result[1],paired[after_hold_rewards])",
       "candidate_final_state_reward_persisted_before_assert": false,
       "per_close_qualified": false
+    },
+    {
+      "attempt": "memory04",
+      "job_id": "job-lcwxw1uz7kdy",
+      "source_commit": "a9ee838c67eba8e22282739ee468ed15bee8670d",
+      "status": "submitted",
+      "created_at_shanghai": "2026-11-06 00:59:22",
+      "gpus": 1,
+      "cpus": 64,
+      "memory_gib": 256,
+      "maximum_minutes": 40,
+      "scenes": 64,
+      "profile_mode": "repeat",
+      "accounting_rank": 2,
+      "source_seed_offset": 0,
+      "maximum_physical_controls": 9600,
+      "maximum_setup_reset_allowance": 2560,
+      "optimizer_updates": 0
     }
   ],
   "engineering_migration": {
