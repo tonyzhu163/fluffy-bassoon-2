@@ -1,4 +1,5 @@
-"""Cold-archive only steps0/1 of the two released source attempts; retain hot10."""
+"""Archive verified obsolete source checkpoints; retain the latest complete recovery hot."""
+import argparse
 from concurrent.futures import ThreadPoolExecutor
 import fcntl
 import hashlib
@@ -27,26 +28,52 @@ def durable_json(path, value):
         os.fsync(stream.fileno())
 
 
-def main():
+def main(completed_task=None):
     assert sys.platform == 'linux'
+    archive_id = ('source5-early-checkpoints-01' if completed_task is None else
+                  f'source5-{completed_task}-intermediate-after40-01')
+    cold = COLD.with_name(archive_id)
     receipts = RUN / 'archives'
     receipts.mkdir(exist_ok=True)
-    lock = (receipts / 'source5-early-checkpoints-01.lock').open('a')
+    lock = (receipts / (archive_id + '.lock')).open('a')
     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-    assert not COLD.exists()
+    assert not cold.exists()
     ledger = json.loads((RUN / 'SOURCE5-ALLOCATION-LEDGER.json').read_text())
     plans, hot_recovery = [], []
-    for task, job in JOBS.items():
+    jobs = JOBS if completed_task is None else {completed_task: next(
+        row['job_id'] for row in ledger['allocations']
+        if row['task'] == completed_task and row['kind'] == 'source_resume')}
+    for task, job in jobs.items():
         allocation = next(row for row in ledger['allocations'] if row['job_id'] == job)
         assert allocation['task'] == task and allocation['scheduler_release_verified'] and allocation['released_shanghai']
         parent = RUN / 'source5' / task
-        recovery = parent / 'attempt-01' / task / 'checkpoints/global_step_10'
-        prepared = json.loads((parent / 'RESUME-PREPARED-01.json').read_text())
+        if completed_task is None:
+            recovery = parent / 'attempt-01' / task / 'checkpoints/global_step_10'
+            prepared = json.loads((parent / 'RESUME-PREPARED-01.json').read_text())
+            assert digest(recovery / 'pilot-boundary.json') == prepared['checkpoint_marker_sha256']
+            candidates = [(recovery.with_name(f'global_step_{step}'), step, allocation) for step in (0, 1)]
+        else:
+            output = parent / 'attempt-02'
+            assert json.loads((output / 'progress.json').read_text())['completed_iterations'] == 40
+            assert json.loads((output / 'after-evaluation.json').read_text())['completed']
+            assert json.loads((output / 'clock.json').read_text())['exit_code'] == 0
+            recovery = output / task / 'checkpoints/global_step_40'
+            latest = json.loads((recovery / 'pilot-boundary.json').read_text())
+            assert latest['completed'] and latest['global_step'] == 40 and len(latest['workers']) == 18
+            export = recovery / 'actor/model_state_dict/full_weights.pt'
+            assert export.is_file() and any(item['path'] == str(export) for item in latest['actor_checkpoint_files'])
+            for item in latest['workers'] + latest['actor_checkpoint_files']:
+                assert digest(Path(item['path'])) == item['sha256']
+            for rank in (0, 1):
+                update = json.loads((output / 'updates' / f'iteration-040-rank-{rank:02d}.json').read_text())
+                assert update['completed'] and update['optimizer_steps_after'] == 960 and update['frozen_vlm_unchanged']
+            original = next(row for row in ledger['allocations'] if row['job_id'] == JOBS[task])
+            assert original['scheduler_release_verified'] and original['released_shanghai']
+            candidates = [(parent / 'attempt-01' / task / 'checkpoints/global_step_10', 10, original)]
+            candidates += [(recovery.with_name(f'global_step_{step}'), step, allocation) for step in (11, 20, 30)]
         assert recovery.is_dir() and not recovery.is_symlink()
-        assert digest(recovery / 'pilot-boundary.json') == prepared['checkpoint_marker_sha256']
         hot_recovery.append(str(recovery))
-        for step in (0, 1):
-            source = recovery.with_name(f'global_step_{step}')
+        for source, step, owner in candidates:
             assert source.is_dir() and not source.is_symlink()
             marker = source / 'pilot-boundary.json'
             boundary = json.loads(marker.read_text())
@@ -56,10 +83,10 @@ def main():
             entries = list(source.rglob('*'))
             assert not any(path.is_symlink() for path in entries)
             assert {path for path in entries if path.is_file()} == set(expected)
-            plans.append(dict(source=source, target=COLD / task / source.name, expected=expected,
-                              job_id=job, released_shanghai=allocation['released_shanghai']))
-    COLD.parent.mkdir(parents=True, exist_ok=True)
-    probe = COLD.parent / 'source5-early-checkpoints-01.write-probe'
+            plans.append(dict(source=source, target=cold / task / source.name, expected=expected,
+                              job_id=owner['job_id'], released_shanghai=owner['released_shanghai']))
+    cold.parent.mkdir(parents=True, exist_ok=True)
+    probe = cold.parent / (archive_id + '.write-probe')
     payload = b'verified private cold checkpoint storage\n' * 32768
     with probe.open('xb') as stream:
         stream.write(payload)
@@ -67,7 +94,7 @@ def main():
         os.fsync(stream.fileno())
     assert digest(probe) == hashlib.sha256(payload).hexdigest()
     probe.unlink()
-    COLD.mkdir()
+    cold.mkdir()
     began = time.time()
     manifest = []
     for plan in plans:
@@ -96,7 +123,7 @@ def main():
         plan['files'] = files
         manifest.append(dict(source=str(source), target=str(target), job_id=plan['job_id'],
                              released_shanghai=plan['released_shanghai'], files=files))
-    durable_json(COLD / 'ARCHIVE-MANIFEST.json', dict(checkpoints=manifest, retained_hot_recovery=hot_recovery))
+    durable_json(cold / 'ARCHIVE-MANIFEST.json', dict(checkpoints=manifest, retained_hot_recovery=hot_recovery))
     swapped = []
     try:
         for plan in plans:
@@ -120,12 +147,14 @@ def main():
     assert all(Path(path).is_dir() and not Path(path).is_symlink() for path in hot_recovery)
     receipt = dict(completed=True, GPU_hours=0, checkpoints=manifest, retained_hot_recovery=hot_recovery,
         archived_bytes=sum(row['bytes'] for plan in plans for row in plan['files']),
-        manifest_sha256=digest(COLD / 'ARCHIVE-MANIFEST.json'), elapsed_seconds=time.time()-began,
+        manifest_sha256=digest(cold / 'ARCHIVE-MANIFEST.json'), elapsed_seconds=time.time()-began,
         original_paths_verified=True, complete_optimizer_sampler_RNG_retained=True,
         all_TRAIN_histories_remain_hot=True, cold_storage_requires_staging_for_future_GPU_use=True)
-    durable_json(receipts / 'source5-early-checkpoints-01.json', receipt)
+    durable_json(receipts / (archive_id + '.json'), receipt)
     print(json.dumps({key: value for key, value in receipt.items() if key != 'checkpoints'}))
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--completed-task', choices=tuple(JOBS))
+    main(parser.parse_args().completed_task)
