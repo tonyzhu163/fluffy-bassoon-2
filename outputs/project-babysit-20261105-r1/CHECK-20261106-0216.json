@@ -1,0 +1,159 @@
+{
+  "checked_unix": 1793902610.032722,
+  "free_GiB": 683.55859375,
+  "robotwin": {
+    "train07": {
+      "top_level_files": [
+        "action-admission.json",
+        "actor-invariants",
+        "bridge-admission.json",
+        "camera-checks",
+        "capacity-admission.json",
+        "collection-contract.json",
+        "config-validation.json",
+        "core-tests.log",
+        "environment-tests.log",
+        "gpu-probe.json",
+        "host-memory.json",
+        "host-memory.log",
+        "initial-states",
+        "memory-admission.json",
+        "operational-restore.json",
+        "renderers",
+        "resolved-native-config.json",
+        "resolved-pilot-contract.json",
+        "sampling",
+        "scene-bindings",
+        "tensorboard",
+        "traces",
+        "train.log",
+        "worker-gpus",
+        "worker.log",
+        "worker_logs"
+      ],
+      "gpu-probe.json": {
+        "sha256": "4ceee64dc159d75d3269950107acf781612d8796cad90dcd2617e1440b08fc91",
+        "status": "passed",
+        "hostname": "job-rxih2makcwv4-master-0",
+        "device_count": 4
+      },
+      "host-memory.json": {
+        "at_unix": 1793902603.5502849,
+        "limit_bytes": 1099511627776,
+        "current_bytes": 345566666752,
+        "peak_observed_bytes": 528766726144,
+        "minimum_allocation_bytes": 1099511627776,
+        "headroom_bytes": 753944961024,
+        "anonymous_bytes": 314532261888,
+        "file_cache_bytes": 16411787264,
+        "ray_memory_guard_unchanged": true
+      },
+      "operational-restore.json": {
+        "global_step": 0,
+        "worker_count": 12,
+        "all_restored": true
+      },
+      "camera-checks": {
+        "count": 8,
+        "recent_names": [
+          "rank-00.jpg",
+          "rank-00.json",
+          "rank-01.jpg",
+          "rank-01.json",
+          "rank-02.jpg",
+          "rank-02.json",
+          "rank-03.jpg",
+          "rank-03.json"
+        ]
+      },
+      "scene-bindings": {
+        "count": 12,
+        "recent_names": [
+          "rank-01-00001.json",
+          "rank-01-00002.json",
+          "rank-02-00000.json",
+          "rank-02-00001.json",
+          "rank-02-00002.json",
+          "rank-03-00000.json",
+          "rank-03-00001.json",
+          "rank-03-00002.json"
+        ]
+      },
+      "actor-invariants": {
+        "count": 4,
+        "recent_names": [
+          "rank-00-before.json",
+          "rank-01-before.json",
+          "rank-02-before.json",
+          "rank-03-before.json"
+        ]
+      }
+    }
+  },
+  "action_accounting": {
+    "rank-00": {
+      "total_charged": 160640,
+      "train07": [
+        {
+          "attempt": "train07",
+          "charged": 80000,
+          "calls": 29,
+          "last_phase": "training/reset-allowance",
+          "unresolved": 1
+        }
+      ]
+    },
+    "rank-01": {
+      "total_charged": 149120,
+      "train07": [
+        {
+          "attempt": "train07",
+          "charged": 80000,
+          "calls": 29,
+          "last_phase": "training/reset-allowance",
+          "unresolved": 1
+        }
+      ]
+    },
+    "rank-02": {
+      "total_charged": 152960,
+      "train07": [
+        {
+          "attempt": "train07",
+          "charged": 80000,
+          "calls": 29,
+          "last_phase": "training/reset-allowance",
+          "unresolved": 1
+        }
+      ]
+    },
+    "rank-03": {
+      "total_charged": 144000,
+      "train07": [
+        {
+          "attempt": "train07",
+          "charged": 80000,
+          "calls": 29,
+          "last_phase": "training/reset-allowance",
+          "unresolved": 1
+        }
+      ]
+    }
+  },
+  "kv_dit": {
+    "update": 8900,
+    "best_loss": 0.12170816049911082,
+    "plateau": {
+      "reference": 0.12175330985337496,
+      "stale_checks": 2,
+      "converged": false
+    },
+    "converged": false,
+    "elapsed_seconds": 40882.72654017061,
+    "stop_reason": "operational_checkpoint",
+    "native_parameters_frozen": true,
+    "interface": "kv_bridge",
+    "objective": "dit"
+  },
+  "readout_admission_present": false
+}
