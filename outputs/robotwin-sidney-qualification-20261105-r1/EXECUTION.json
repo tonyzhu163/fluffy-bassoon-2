@@ -1,15 +1,15 @@
 {
-  "status": "SIMULATOR_SCENE_READY_MODEL_LOADING",
+  "status": "NATIVE_REPEATABILITY_DIAGNOSIS",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
-  "job_id": "job-r8krjq3phd11",
-  "job_name": "mwj_1105_robotwin_sidney_native_qual_r6",
-  "submitted_at_shanghai": "2026-11-05 14:59:48",
-  "last_checked_at_shanghai": "2026-11-05 15:03",
-  "observed_scheduler_status": "allocated; scene reset and three640x480 views ready; model worker loading",
-  "source_commit": "41cf8bda1c5970742a3a573889e266b8d0c8fd90",
-  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r10",
-  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual06",
+  "job_id": "job-zefqo80g3831",
+  "job_name": "mwj_1105_robotwin_sidney_native_qual_r7",
+  "submitted_at_shanghai": "2026-11-05 15:15:49",
+  "last_checked_at_shanghai": "2026-11-05 15:25",
+  "observed_scheduler_status": "failed; identical-noise native predictions differ; no physical controls or SGD",
+  "source_commit": "f635a073c245987c8550ca36ef6cdd291b82574f",
+  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r11",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual07",
   "model_revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
   "allocation": {
     "workers": 1,
@@ -23,18 +23,13 @@
     "actual_gpu_type": "NVIDIA RPBZZZ6; CUDA/NVML/PCI mapping and tensor computation passed in qual02"
   },
   "budget": {
-    "gpu_hours_used_as_of_last_check": null,
-    "this_attempt_maximum_gpu_hours": 0.5,
+    "gpu_hours_used_as_of_last_check": 0.26555555555555554,
+    "worker_gpu_seconds_measured": 695,
+    "scheduler_display_gpu_seconds": 956,
+    "usage_basis": "Seven completed one-GPU scheduler durations:60+89+128+50+210+230+189 seconds. Worker elapsed695 seconds.",
     "initial_qualification_ceiling_gpu_hours": 4,
     "task_scope_incremental_ceiling_gpu_hours": 50,
-    "worker_gpu_seconds_measured": 172,
-    "conservative_allocated_gpu_hours_charge": null,
-    "scheduler_display_gpu_seconds": 277,
-    "usage_basis": "Five completed scheduler durations60+89+128+50+210 seconds; current allocation still running",
-    "worker_gpu_seconds_completed_attempts": 346,
-    "scheduler_display_gpu_seconds_completed_attempts": 537,
-    "gpu_hours_completed_attempts": 0.14916666666666667,
-    "active_attempt_maximum_gpu_hours": 0.5
+    "next_attempt_maximum_gpu_hours": 0.5
   },
   "qualification": {
     "weight_hashes_verified": true,
@@ -65,9 +60,9 @@
     "simulator_reset_passed": true,
     "three_nonblank_views_passed": true
   },
-  "next_action": "Inspect rendered scene and native model READY, then queue parity and advancing action chunks until episode completes. No PPO before native SFT qualification and explicit RLinf parity.",
+  "next_action": "Fresh qual08 tests deterministic algorithms, all-eager attention, TF32 disabled, explicit CUBLAS workspace and input/buffer hashes before any policy control.",
   "monitor_interval_minutes": 20,
-  "queue_receipt": "QUAL06-SUBMITTED.jpg",
+  "queue_receipt": "QUAL07-SUBMITTED.jpg",
   "attempts": [
     {
       "attempt": "qual01",
@@ -210,6 +205,25 @@
       ],
       "actual_render_pci": "0000:61:00.0",
       "maximum_gpu_hours": 0.5
+    },
+    {
+      "attempt": "qual07",
+      "job_id": "job-zefqo80g3831",
+      "source_commit": "f635a073c245987c8550ca36ef6cdd291b82574f",
+      "exit_code": 1,
+      "worker_gpu_seconds": 152,
+      "scheduler_display_duration": "3 minutes9 seconds",
+      "scheduler_ended_at_shanghai": "2026-11-05 15:19:21",
+      "strict_weight_load_passed": true,
+      "simulator_reset_passed": true,
+      "simulator_episodes": 0,
+      "physical_controls": 0,
+      "optimizer_updates": 0,
+      "error": "Identical shared Gaussian noise produces native chunk/queue decoded maxabs0.0047388077; third native call also differs. Parameter versions unchanged.",
+      "evidence": [
+        "qual07/native/episode-00-chunk-00-actions.parity.json",
+        "qual07/EXIT.json"
+      ]
     }
   ],
   "cpu_probe_attempt": {

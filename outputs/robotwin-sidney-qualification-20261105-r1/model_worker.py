@@ -30,6 +30,16 @@ def main():
     assert sys.platform == 'linux' and os.uname().nodename.startswith('job-')
     assert torch.cuda.is_available() and torch.cuda.device_count() == 1
     torch.cuda.set_device(0)
+    assert os.environ['CUBLAS_WORKSPACE_CONFIG'] == ':4096:8'
+    torch.use_deterministic_algorithms(True)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    torch.backends.cudnn.allow_tf32 = False
+    torch.backends.cuda.matmul.allow_tf32 = False
+    torch.backends.cuda.enable_flash_sdp(False)
+    torch.backends.cuda.enable_mem_efficient_sdp(False)
+    torch.backends.cuda.enable_cudnn_sdp(False)
+    torch.backends.cuda.enable_math_sdp(True)
     cfg = PreTrainedConfig.from_pretrained(str(args.model))
     assert isinstance(cfg, PI05Config)
     assert cfg.chunk_size == cfg.n_action_steps == 50
@@ -44,6 +54,11 @@ def main():
     missing, unexpected = load_model(policy, str(args.model / 'model.safetensors'), strict=True)
     assert not missing and not unexpected
     policy.eval().requires_grad_(False)
+    # Keep the attention implementation constant from the first call, including
+    # SigLIP. This is an explicit deterministic numerical-reference runtime.
+    for module in policy.modules():
+        if hasattr(getattr(module, 'config', None), '_attn_implementation'):
+            module.config._attn_implementation = 'eager'
     versions = {name: p._version for name, p in policy.named_parameters()}
     tokenizer = Path('/mowenjie/.cache/huggingface/hub/models--google--paligemma-3b-pt-224/snapshots/35e4f46485b4d07967e7e9935bc3786aad50687c')
     assert tokenizer.is_dir()
@@ -60,6 +75,8 @@ def main():
                  unexpected_keys=list(unexpected), parameter_count=sum(p.numel() for p in policy.parameters()),
                  chunk_size=50, flow_steps=10, absolute_joint_actions=True,
                  normalization='saved MEAN_STD', compile_model=False,
+                 deterministic_algorithms=True, attention='all eager', tf32=False,
+                 cublas_workspace_config=os.environ['CUBLAS_WORKSPACE_CONFIG'],
                  torch=torch.__version__, python=sys.version, cuda_device=torch.cuda.get_device_name(0),
                  normalization_keys=sorted(stats), optimizer_updates=0,
                  tokenizer_revision=tokenizer.name,
@@ -79,6 +96,12 @@ def main():
                 # LeRobot dataset contract: CHW float RGB in [0, 1].
                 batch[f'observation.images.{key}'] = torch.from_numpy(view.copy()).permute(2, 0, 1).float() / 255
         processed = pre(batch)
+        def tensor_hash(value):
+            return hashlib.sha256(value.detach().contiguous().view(torch.uint8).cpu().numpy().tobytes()).hexdigest()
+        def input_hashes():
+            return {k:tensor_hash(v) for k,v in processed.items() if isinstance(v,torch.Tensor)}
+        inputs_before = input_hashes()
+        buffers_before = {k:tensor_hash(v) for k,v in policy.named_buffers()}
         state = batch['observation.state']
         expected = (state - stats['observation.state.mean']) / (stats['observation.state.std'] + 1e-8)
         torch.testing.assert_close(processed['observation.state'].cpu().reshape(14), expected.reshape(14), atol=1e-5, rtol=1e-5)
@@ -122,6 +145,9 @@ def main():
                     attention_modes_after_queue=attention_modes(),
                     cuda_matmul_tf32=torch.backends.cuda.matmul.allow_tf32,
                     cudnn_tf32=torch.backends.cudnn.allow_tf32,cudnn_benchmark=torch.backends.cudnn.benchmark,
+                    deterministic_algorithms=torch.are_deterministic_algorithms_enabled(),
+                    inputs_before=inputs_before,inputs_after=input_hashes(),
+                    buffers_before=buffers_before,buffers_after={k:tensor_hash(v) for k,v in policy.named_buffers()},
                     parameters_unchanged=versions=={name:p._version for name,p in policy.named_parameters()})
                 if parity>1e-5:
                     repeated = policy.predict_action_chunk(processed,noise=noise.clone())

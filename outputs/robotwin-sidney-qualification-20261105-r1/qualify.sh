@@ -21,6 +21,7 @@ export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 HF_HUB_DISABLE_XET=1
 export ROBOT_PLATFORM=ALOHA MUJOCO_GL=egl PYOPENGL_PLATFORM=egl
 export OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 MKL_NUM_THREADS=4
 export FLUFFY_GPU_EXECUTION=baige NCCL_P2P_DISABLE=1
+export CUBLAS_WORKSPACE_CONFIG=:4096:8
 # Baige exposes its allocation through NVIDIA_VISIBLE_DEVICES but can leave
 # CUDA_VISIBLE_DEVICES unset. Preserve an explicit scheduler value; otherwise
 # select ordinal zero inside this one-GPU container. The unchanged probe still

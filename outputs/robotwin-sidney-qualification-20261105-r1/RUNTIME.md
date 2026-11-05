@@ -58,3 +58,11 @@ The metadata audit also pins Pillow12.0.0, packaging25.0 and fsspec2026.2.0
 to satisfy the installed LeRobot/datasets requirements; it reports zero
 non-extra requirement conflicts across the 15 inspected packages. This is
 metadata validation, not a successful native import or model qualification.
+
+## Deterministic reference retry (qual08)
+
+Qual07 shares one explicit Gaussian tensor between chunk and queue APIs, yet decoded predictions differ by maxabs0.0047388077. A third chunk prediction also changes. Parameter versions remain unchanged; no policy actions or SGD executed. This is not evidence of an incorrect checkpoint or of a specific CUDA defect.
+
+Qual08 holds weights, H50/K10, BF16 and saved mean/std fixed. It explicitly selects eager attention for all Transformers modules, enables Torch deterministic algorithms and cuDNN determinism, disables TF32 and fused SDP kernels, and sets CUBLAS_WORKSPACE_CONFIG=:4096:8 before Torch initialization. Input and model-buffer hashes localize hidden mutation. The original1e-5 parity tolerance is unchanged. These are numerical reference settings rather than the model card's compiled runtime.
+
+Reference: https://docs.pytorch.org/docs/2.7/notes/randomness.html
