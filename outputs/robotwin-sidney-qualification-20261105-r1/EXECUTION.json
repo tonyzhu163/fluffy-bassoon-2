@@ -1,0 +1,47 @@
+{
+  "status": "NATIVE_QUALIFICATION_QUEUED",
+  "cluster": "Baige Pro6K",
+  "queue": "aihcq-rh0wwk9muei4",
+  "job_id": "job-140tcms97d8x",
+  "job_name": "mwj_1105_robotwin_sidney_native_qual_r1",
+  "submitted_at_shanghai": "2026-11-05 13:43:37",
+  "last_checked_at_shanghai": "2026-11-05 13:44",
+  "observed_scheduler_status": "queued",
+  "source_commit": "34a3a4299c621c18fec6860d18fd7343a4c29ff7",
+  "worktree": "/mowenjie/fluffy-bassoon-2/sources/robotwin-sidney-qualification-20261105-r2",
+  "output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-qualification-20261105-r1/qual01",
+  "model_revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
+  "allocation": {
+    "workers": 1,
+    "gpus_per_worker": 1,
+    "cpu_cores": 8,
+    "memory_gib": 96,
+    "shared_memory_gib": 8,
+    "maximum_runtime_minutes": 30,
+    "automatic_fault_tolerance": false,
+    "scheduler_gpu_type": "NVIDIA RPBZZZ6",
+    "actual_gpu_type": "await allocated gpu_probe"
+  },
+  "budget": {
+    "gpu_hours_used_as_of_last_check": 0,
+    "this_attempt_maximum_gpu_hours": 0.5,
+    "initial_qualification_ceiling_gpu_hours": 4,
+    "task_scope_incremental_ceiling_gpu_hours": 50
+  },
+  "qualification": {
+    "weight_hashes_verified": true,
+    "runtime_installed": true,
+    "native_runtime_qualified": false,
+    "completed_simulator_episodes": 0,
+    "optimizer_updates": 0,
+    "task": "place_phone_stand",
+    "episodes": 1,
+    "chunk_size": 50,
+    "flow_steps": 10,
+    "physical_control_limit": 400,
+    "scene_bank": "RLinf eval source-task bank, first success_seed"
+  },
+  "next_action": "On allocation inspect gpu-probe.json, model strict-load/normalization/native-queue parity, advancing chunks and native RESULT/EXIT. Diagnose before retrying with a fresh output identity. After native qualification, expand source screen and qualify explicit RLinf conversion before PPO.",
+  "monitor_interval_minutes": 20,
+  "queue_receipt": "QUEUED.jpg"
+}
