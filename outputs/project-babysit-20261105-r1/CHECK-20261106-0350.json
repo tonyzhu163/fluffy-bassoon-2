@@ -1,0 +1,606 @@
+{
+  "checked_unix": 1793908225.0701094,
+  "free_GiB": 563.4375,
+  "robotwin": {
+    "train07": {
+      "top_level_files": [
+        "EXIT.json",
+        "RESULT.json",
+        "action-admission.json",
+        "actor-invariants",
+        "bridge-admission.json",
+        "camera-checks",
+        "capacity-admission.json",
+        "collection-contract.json",
+        "config-validation.json",
+        "core-tests.log",
+        "environment-tests.log",
+        "first-replay",
+        "gpu-probe.json",
+        "host-memory.json",
+        "host-memory.log",
+        "initial-states",
+        "loss-masks",
+        "memory-admission.json",
+        "metrics.log",
+        "operational-restore.json",
+        "renderers",
+        "resolved-native-config.json",
+        "resolved-pilot-contract.json",
+        "sampling",
+        "scene-bindings",
+        "sidney-native-two",
+        "tensorboard",
+        "traces",
+        "train.log",
+        "training-rollouts",
+        "worker-gpus",
+        "worker.log",
+        "worker_logs"
+      ],
+      "RESULT.json": {
+        "status": "complete",
+        "rollout_iterations": 2,
+        "baseline_reference": "published Sidney SFT",
+        "new_sft_evaluation_episodes": 0,
+        "source_task": "place_phone_stand",
+        "paper_numeric_reproduction": false
+      },
+      "EXIT.json": {
+        "exit_code": 0,
+        "started_unix": 1793900102,
+        "ended_unix": 1793906964,
+        "worker_gpu_seconds": 27448,
+        "prior_bridge_gpu_seconds": 30000
+      },
+      "gpu-probe.json": {
+        "sha256": "4ceee64dc159d75d3269950107acf781612d8796cad90dcd2617e1440b08fc91",
+        "status": "passed",
+        "hostname": "job-rxih2makcwv4-master-0",
+        "device_count": 4
+      },
+      "host-memory.json": {
+        "at_unix": 1793906954.7359793,
+        "limit_bytes": 1099511627776,
+        "current_bytes": 443302223872,
+        "peak_observed_bytes": 528766726144,
+        "minimum_allocation_bytes": 1099511627776,
+        "headroom_bytes": 656209403904,
+        "anonymous_bytes": 400553463808,
+        "file_cache_bytes": 16470630400,
+        "ray_memory_guard_unchanged": true
+      },
+      "operational-restore.json": {
+        "global_step": 0,
+        "worker_count": 12,
+        "all_restored": true
+      },
+      "camera-checks": {
+        "count": 8,
+        "recent_names": [
+          "rank-00.jpg",
+          "rank-00.json",
+          "rank-01.jpg",
+          "rank-01.json",
+          "rank-02.jpg",
+          "rank-02.json",
+          "rank-03.jpg",
+          "rank-03.json"
+        ]
+      },
+      "scene-bindings": {
+        "count": 32,
+        "recent_names": [
+          "rank-03-00000.json",
+          "rank-03-00001.json",
+          "rank-03-00002.json",
+          "rank-03-00003.json",
+          "rank-03-00004.json",
+          "rank-03-00005.json",
+          "rank-03-00006.json",
+          "rank-03-00007.json"
+        ]
+      },
+      "first-replay": {
+        "count": 4,
+        "recent_names": [
+          "rank-00.json",
+          "rank-01.json",
+          "rank-02.json",
+          "rank-03.json"
+        ]
+      },
+      "loss-masks": {
+        "count": 8,
+        "recent_names": [
+          "step-0-rank-00.json",
+          "step-0-rank-01.json",
+          "step-0-rank-02.json",
+          "step-0-rank-03.json",
+          "step-1-rank-00.json",
+          "step-1-rank-01.json",
+          "step-1-rank-02.json",
+          "step-1-rank-03.json"
+        ]
+      },
+      "actor-invariants": {
+        "count": 16,
+        "recent_names": [
+          "rank-02-before.json",
+          "rank-02-first-backward.json",
+          "rank-02-step-0-after.json",
+          "rank-02-step-1-after.json",
+          "rank-03-before.json",
+          "rank-03-first-backward.json",
+          "rank-03-step-0-after.json",
+          "rank-03-step-1-after.json"
+        ]
+      },
+      "completed_boundaries": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train07/sidney-native-two/checkpoints/global_step_1/pilot-boundary.json",
+          "completed": true,
+          "global_step": 1,
+          "worker_count": 12,
+          "actor_file_count": 5
+        },
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train07/sidney-native-two/checkpoints/global_step_2/pilot-boundary.json",
+          "completed": true,
+          "global_step": 2,
+          "worker_count": 12,
+          "actor_file_count": 5
+        }
+      ],
+      "frozen_after": [
+        {
+          "name": "rank-00-step-0-after.json",
+          "unchanged": true
+        },
+        {
+          "name": "rank-00-step-1-after.json",
+          "unchanged": true
+        },
+        {
+          "name": "rank-01-step-0-after.json",
+          "unchanged": true
+        },
+        {
+          "name": "rank-01-step-1-after.json",
+          "unchanged": true
+        },
+        {
+          "name": "rank-02-step-0-after.json",
+          "unchanged": true
+        },
+        {
+          "name": "rank-02-step-1-after.json",
+          "unchanged": true
+        },
+        {
+          "name": "rank-03-step-0-after.json",
+          "unchanged": true
+        },
+        {
+          "name": "rank-03-step-1-after.json",
+          "unchanged": true
+        }
+      ],
+      "first_replay": [
+        {
+          "name": "rank-00.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": {
+            "logprobs": 0.0,
+            "native_mean_vs_selected_value_max_abs": 0.3926909565925598
+          }
+        },
+        {
+          "name": "rank-01.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": {
+            "logprobs": 0.0,
+            "native_mean_vs_selected_value_max_abs": 0.2647531032562256
+          }
+        },
+        {
+          "name": "rank-02.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": {
+            "logprobs": 0.0,
+            "native_mean_vs_selected_value_max_abs": 0.13837507367134094
+          }
+        },
+        {
+          "name": "rank-03.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": {
+            "logprobs": 0.0,
+            "native_mean_vs_selected_value_max_abs": 0.12392216175794601
+          }
+        }
+      ]
+    },
+    "matched/qual01": {
+      "top_level_files": [
+        "EXIT.json",
+        "admission.json",
+        "config-validation.json",
+        "gpu-probe.json",
+        "host-memory.json",
+        "host-memory.log",
+        "learner-numerics.json",
+        "worker.log"
+      ],
+      "EXIT.json": {
+        "exit_code": 1,
+        "started_unix": 1793904466,
+        "ended_unix": 1793904512,
+        "worker_gpu_seconds": 184
+      },
+      "gpu-probe.json": {
+        "sha256": "482abfe865e86d265688aede7017825436c7cd01421c5045e79893c587dfe4d4",
+        "status": "passed",
+        "hostname": "job-6koe87i8ibvf-master-0",
+        "device_count": 4
+      },
+      "host-memory.json": {
+        "at_unix": 1793904507.081077,
+        "limit_bytes": 1099511627776,
+        "current_bytes": 1344892928,
+        "peak_observed_bytes": 1344892928,
+        "minimum_allocation_bytes": 1099511627776,
+        "headroom_bytes": 1098166734848,
+        "anonymous_bytes": 573140992,
+        "file_cache_bytes": 739614720,
+        "ray_memory_guard_unchanged": true
+      },
+      "completed_boundaries": [],
+      "frozen_after": [],
+      "first_replay": []
+    },
+    "matched/qual02": {
+      "top_level_files": [
+        "EXIT.json",
+        "action-accounting",
+        "admission.json",
+        "config-grpo-scientific.json",
+        "config-ppo-scientific.json",
+        "config-validation.json",
+        "gpu-probe.json",
+        "host-memory.json",
+        "host-memory.log",
+        "learner-numerics.json",
+        "train",
+        "train.log",
+        "worker.log"
+      ],
+      "EXIT.json": {
+        "exit_code": 255,
+        "started_unix": 1793905320,
+        "ended_unix": 1793906321,
+        "worker_gpu_seconds": 4004
+      },
+      "gpu-probe.json": {
+        "sha256": "1f06e79484b334a3dcd9508bc771ffa5a921bb83491a8a51fdafe8f0af939d57",
+        "status": "passed",
+        "hostname": "job-l218ew6o4lfw-master-0",
+        "device_count": 4
+      },
+      "host-memory.json": {
+        "at_unix": 1793906315.464739,
+        "limit_bytes": 1099511627776,
+        "current_bytes": 119914078208,
+        "peak_observed_bytes": 361386950656,
+        "minimum_allocation_bytes": 1099511627776,
+        "headroom_bytes": 979597549568,
+        "anonymous_bytes": 98075422720,
+        "file_cache_bytes": 8623964160,
+        "ray_memory_guard_unchanged": true
+      },
+      "completed_boundaries": [],
+      "frozen_after": [],
+      "first_replay": []
+    },
+    "matched/qual02/train": {
+      "top_level_files": [
+        "actor-invariants",
+        "boundary-timings",
+        "camera-checks",
+        "first-replay",
+        "group-resets",
+        "initial-states",
+        "loss-masks",
+        "paired-rng",
+        "renderers",
+        "resolved-native-config.json",
+        "sampling",
+        "scene-bindings",
+        "sidney-paired-grpo",
+        "tensorboard",
+        "traces",
+        "training-rollouts",
+        "worker-gpus",
+        "worker_logs"
+      ],
+      "camera-checks": {
+        "count": 8,
+        "recent_names": [
+          "rank-00.jpg",
+          "rank-00.json",
+          "rank-01.jpg",
+          "rank-01.json",
+          "rank-02.jpg",
+          "rank-02.json",
+          "rank-03.jpg",
+          "rank-03.json"
+        ]
+      },
+      "scene-bindings": {
+        "count": 4,
+        "recent_names": [
+          "rank-00-00000.json",
+          "rank-01-00000.json",
+          "rank-02-00000.json",
+          "rank-03-00000.json"
+        ]
+      },
+      "first-replay": {
+        "count": 4,
+        "recent_names": [
+          "rank-00.json",
+          "rank-01.json",
+          "rank-02.json",
+          "rank-03.json"
+        ]
+      },
+      "loss-masks": {
+        "count": 4,
+        "recent_names": [
+          "step-0-rank-00.json",
+          "step-0-rank-01.json",
+          "step-0-rank-02.json",
+          "step-0-rank-03.json"
+        ]
+      },
+      "actor-invariants": {
+        "count": 8,
+        "recent_names": [
+          "rank-00-before.json",
+          "rank-00-first-backward.json",
+          "rank-01-before.json",
+          "rank-01-first-backward.json",
+          "rank-02-before.json",
+          "rank-02-first-backward.json",
+          "rank-03-before.json",
+          "rank-03-first-backward.json"
+        ]
+      },
+      "completed_boundaries": [
+        {
+          "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual02/train/sidney-paired-grpo/checkpoints/global_step_0/pilot-boundary.json",
+          "completed": true,
+          "global_step": 0,
+          "worker_count": 12,
+          "actor_file_count": 5
+        }
+      ],
+      "frozen_after": [],
+      "first_replay": [
+        {
+          "name": "rank-00.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": null
+        },
+        {
+          "name": "rank-01.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": null
+        },
+        {
+          "name": "rank-02.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": null
+        },
+        {
+          "name": "rank-03.json",
+          "passed": true,
+          "optimizer_steps": 0,
+          "max_abs_error": null
+        }
+      ]
+    }
+  },
+  "action_accounting": {
+    "rank-00": {
+      "total_charged": 291200,
+      "train07": [
+        {
+          "attempt": "train07",
+          "charged": 210560,
+          "calls": 73,
+          "last_phase": "training",
+          "unresolved": 0
+        }
+      ]
+    },
+    "rank-01": {
+      "total_charged": 279680,
+      "train07": [
+        {
+          "attempt": "train07",
+          "charged": 210560,
+          "calls": 73,
+          "last_phase": "training",
+          "unresolved": 0
+        }
+      ]
+    },
+    "rank-02": {
+      "total_charged": 283520,
+      "train07": [
+        {
+          "attempt": "train07",
+          "charged": 210560,
+          "calls": 73,
+          "last_phase": "training",
+          "unresolved": 0
+        }
+      ]
+    },
+    "rank-03": {
+      "total_charged": 274560,
+      "train07": [
+        {
+          "attempt": "train07",
+          "charged": 210560,
+          "calls": 73,
+          "last_phase": "training",
+          "unresolved": 0
+        }
+      ]
+    }
+  },
+  "kv_dit": {
+    "update": 9700,
+    "best_loss": 0.12103313324041665,
+    "plateau": {
+      "reference": 0.12175330985337496,
+      "stale_checks": 10,
+      "converged": true
+    },
+    "converged": true,
+    "elapsed_seconds": 42998.10434502363,
+    "stop_reason": "validation_plateau",
+    "native_parameters_frozen": true,
+    "interface": "kv_bridge",
+    "objective": "dit"
+  },
+  "readout_admission_present": true,
+  "readout_admission": {
+    "approved_GPU_hours": 150,
+    "selected_candidates": [
+      "kv_bridge/ad",
+      "velocity_bridge/ad"
+    ],
+    "implementation_commit": "87984718c9199797d31a158c47225cc695623afe"
+  },
+  "readouts": {
+    "kv_bridge/ad/ID": {
+      "binding": {
+        "source_commit": "87984718c9199797d31a158c47225cc695623afe",
+        "selected_candidate_sha256": "f7085e4a6940546e32e46710314ac4fa4319e6179e69e23320e486d48345ad74",
+        "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+        "deployment_optimizer_updates": 0,
+        "cases_per_task": 50,
+        "support_episodes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "memory_modes": [
+          "full",
+          "episode"
+        ]
+      },
+      "PROGRESS.json": {
+        "completed": null,
+        "checked_unix": 1793907978.1765814,
+        "wave_count": 6,
+        "case_mode_count": 48,
+        "completed_episodes": 288,
+        "last_wave": {
+          "task": "OpenDrawer",
+          "mode": "full",
+          "elapsed_seconds": 350.70196175575256,
+          "optimizer_updates": 0,
+          "native_parameters_frozen": true
+        },
+        "reason": null
+      }
+    },
+    "velocity_bridge/ad/ID": {
+      "binding": {
+        "source_commit": "87984718c9199797d31a158c47225cc695623afe",
+        "selected_candidate_sha256": "04701478c2f3f850b8ce0329855f334732212d4186ae9502e4d97a08a3bab9ca",
+        "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+        "deployment_optimizer_updates": 0,
+        "cases_per_task": 50,
+        "support_episodes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "memory_modes": [
+          "full",
+          "episode"
+        ]
+      },
+      "PROGRESS.json": {
+        "completed": null,
+        "checked_unix": 1793908013.4693491,
+        "wave_count": 6,
+        "case_mode_count": 48,
+        "completed_episodes": 288,
+        "last_wave": {
+          "task": "OpenDrawer",
+          "mode": "full",
+          "elapsed_seconds": 331.8243489265442,
+          "optimizer_updates": 0,
+          "native_parameters_frozen": true
+        },
+        "reason": null
+      }
+    }
+  },
+  "readout_probes": {
+    "readout-pfs06-kv-ad": {
+      "status": "passed",
+      "hostname": "job-hi7e0c0yu7jv-master-0",
+      "device_count": 1
+    },
+    "readout-pfs06-vel-ad": {
+      "status": "passed",
+      "hostname": "job-jxj1wded8dns-master-0",
+      "device_count": 1
+    }
+  },
+  "packed_storage": {
+    "checked_unix": 1793908120.7794516,
+    "current_bytes": 991580275,
+    "peak_bytes": 1574883516,
+    "new_wave_soft_limit_bytes": 12884901888,
+    "reserved_hot_bytes": 42949672960,
+    "packed_archive_workers": 4,
+    "packed_archive_enabled": true
+  },
+  "meta_budget": {
+    "approved_GPU_hours": 150,
+    "actual_GPU_hours": 128.55702456944448,
+    "maximum_committed_GPU_hours": 142.2455555555556,
+    "uncommitted_GPU_hours": 7.7544444444444025,
+    "active": [
+      {
+        "job_id": "job-hi7e0c0yu7jv",
+        "max_reservation_GPU_hours": 7.5
+      },
+      {
+        "job_id": "job-jxj1wded8dns",
+        "max_reservation_GPU_hours": 7.5
+      }
+    ]
+  }
+}
