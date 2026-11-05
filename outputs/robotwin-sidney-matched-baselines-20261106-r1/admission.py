@@ -18,6 +18,16 @@ reserved=plan['completed_additional_conservative_gpu_seconds']+sum(plan['gpu_res
 assert reserved<=plan['additional_engineering_gpu_hours']*3600
 assert reserved+plan['legacy_gpu_seconds']<=50*3600
 assert plan['gpu_reservations_seconds'][phase]>=4*(int(os.environ['TASK_LIMIT'])+60)
+if phase=='gradient_probe':
+    diagnostic=Path(plan['optimizer_metadata_diagnostic_output'])
+    assert json.loads((diagnostic/'EXIT.json').read_text())['exit_code']==0
+    comparison=json.loads((diagnostic/'SEMANTIC-COMPARISON.json').read_text())
+    assert comparison['status']=='zero_update_optimizer_representation_explained'
+    assert len(comparison['ranks'])==4
+    for row in comparison['ranks']:
+        assert row['groups_order_hyperparameters_exact'] and row['owned_parameter_states_exact_ignoring_only_device']
+        for ref in row['files']:
+            assert hashlib.sha256((diagnostic/ref['path']).read_bytes()).hexdigest()==ref['sha256']
 
 pilot=Path(plan['engineering_pilot'])
 boundary=pilot/'sidney-native-two/checkpoints/global_step_1'
@@ -53,7 +63,7 @@ if phase not in ('qualification','gradient_probe','optimizer_probe'):
     assert numerical['status']=='complete'
     for rank in range(4):
         recovered=json.loads((qualification/'restore/recovery-signatures'/f'actor-{rank:02d}.json').read_text())
-        assert recovered['exact_identity'] and recovered['actual']['optimizer_steps']==1
+        assert recovered['semantic_identity'] and recovered['actual']['optimizer_steps']==1
         assert json.loads((qualification/'restore/recovery-frozen'/f'actor-{rank:02d}.json').read_text())['unchanged']
         grads=json.loads((qualification/'train/paired-gradients'/f'rank-{rank:02d}.json').read_text())
         assert grads['finite'] and grads['frozen_parameters_without_nonzero_gradients'] and not grads['critic_present']

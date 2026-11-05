@@ -14,6 +14,8 @@ import train_entry as shared
 from case_schedule import CaseSchedule,boundary_ordinal,install
 from paired_recipe import validate_pair
 from recovery_signature import actor_signature
+from optimizer_evidence import evidence
+from optimizer_semantics import semantic_digest
 from gradient_audit import audit
 from fluffy_bassoon.meta_rl.rlinf_native_ppo import snapshot_rng,restore_rng,tensor_hash,write
 
@@ -40,8 +42,10 @@ class PairedActor(shared.SidneyActor):
 
     def pilot_capture(self,directory,*,retain_rollout=False):
         result=super().pilot_capture(directory,retain_rollout=retain_rollout)
+        layout=evidence(self)
+        write(Path(directory)/f'paired-optimizer-layout-{self._rank:02d}.json',layout)
         write(Path(directory)/f'paired-actor-signature-{self._rank:02d}.json',
-            actor_signature(self,snapshot_rng()))
+            actor_signature(self,snapshot_rng(),optimizer_layout=layout))
         return result
 
     def pilot_restore(self,directory):
@@ -52,10 +56,19 @@ class PairedActor(shared.SidneyActor):
             expected=self._pilot_frozen_before,actual=frozen,unchanged=frozen==self._pilot_frozen_before))
         assert frozen==self._pilot_frozen_before,'Frozen VLM differs after native checkpoint readback'
         expected=json.loads((Path(directory)/f'paired-actor-signature-{self._rank:02d}.json').read_text())
-        actual=actor_signature(self,snapshot_rng())
+        saved_layout=json.loads((Path(directory)/f'paired-optimizer-layout-{self._rank:02d}.json').read_text())
+        assert expected['optimizer_semantic_version']==1
+        assert saved_layout['optimizer_sha256']==expected['optimizer_sha256']
+        assert semantic_digest(saved_layout)==expected['optimizer_semantic_sha256']
+        layout=evidence(self)
+        write(Path(self.cfg.native_pilot.output)/'recovery-optimizer-layout'/f'actor-{self._rank:02d}.json',layout)
+        actual=actor_signature(self,snapshot_rng(),optimizer_layout=layout)
+        semantic_identity={k:v for k,v in expected.items() if k!='optimizer_sha256'}=={
+            k:v for k,v in actual.items() if k!='optimizer_sha256'}
         write(Path(self.cfg.native_pilot.output)/'recovery-signatures'/f'actor-{self._rank:02d}.json',dict(
-            expected=expected,actual=actual,exact_identity=expected==actual))
-        assert expected==actual,'Native model/Adam/scheduler/scaler/RNG restoration differs'
+            expected=expected,actual=actual,exact_raw_identity=expected==actual,
+            semantic_identity=semantic_identity,empty_unowned_state_rule='opt01-measured-v1'))
+        assert semantic_identity,'Native model/owned Adam/groups/scheduler/scaler/RNG restoration differs'
         return result
 
     def train_micro_batch(self,micro_batch,metrics,*,is_last):

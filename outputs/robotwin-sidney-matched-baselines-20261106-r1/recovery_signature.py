@@ -25,9 +25,13 @@ def digest(value):
     return result.hexdigest()
 
 
-def actor_signature(actor,rng):
+def actor_signature(actor,rng,*,optimizer_layout=None):
+    from optimizer_evidence import evidence
+    from optimizer_semantics import semantic_digest
+    if optimizer_layout is None:optimizer_layout=evidence(actor)
     return dict(optimizer_steps=actor.optimizer_steps,
         trainable_parameters_sha256=digest({n:p for n,p in actor.model.named_parameters() if p.requires_grad}),
-        optimizer_sha256=digest(actor.optimizer.state_dict()),
+        optimizer_sha256=optimizer_layout['optimizer_sha256'],
+        optimizer_semantic_version=1,optimizer_semantic_sha256=semantic_digest(optimizer_layout),
         lr_scheduler_sha256=digest(actor.lr_scheduler.state_dict()),
         grad_scaler_sha256=digest(actor.grad_scaler.state_dict()),rng_sha256=digest(rng))

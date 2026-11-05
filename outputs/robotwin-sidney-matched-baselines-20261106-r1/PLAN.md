@@ -1,10 +1,6 @@
 # Matched Sidney PPO / GRPO bounded comparison
 
-Prepared2026-11-06 while the independent engineering PPO run is active.
-No GPU job has launched from this directory. The current training checkout and
-contract remain immutable. Launch gates and proposed budgets are in the
-parent pilot's MATCHED-PAIR-CONTRACT.json; engineering-envelope migration is
-not active, and the human50GPU-hour cumulative RoboTwin cap still applies.
+Updated Nov 6 after the two-iteration native PPO pilot completed. Qualification attempts qual01/qual02 and actor-only grad01/opt01 are closed; opt01 explains a zero-length FSDP optimizer representation difference. One actual gradient update with independent trained-state restore and the full twelve-worker/grouped runtime qualifier remain required. Scientific arms are held. The human cumulative RoboTwin cap remains 50 GPU-hours; see GRADIENT-ADMISSION.json for the bounded next step.
 
 Both fresh arms start from original broad Sidney SFT, never a PPO-updated
 expert. Use native mixedBF16/fullFP32vision+norms, three cameras,14D absolute
@@ -18,8 +14,8 @@ Random0 shuffles that list once, then selects256 distinct scene groups. Every
 round contains32 groups with8 contiguous replicas each;4rounds/iteration and
 2iterations give2048 episodes per arm. No evaluation or held-out-task seeds
 enter this manifest. Both methods must consume the same immutable case table,
-record actual requested/effective seeds, public reset identities, physical
-controls and distinct case coverage. No new simulator qualification is claimed
+record actual requested/effective seeds, public reset identities, conservative
+motor-command slots and distinct case coverage. No new simulator qualification is claimed
 by static subset preparation. This explicit case table replaces the earlier
 proposed reliance on method-dependent native sampler cursors; the new pair is
 a declared local protocol, not a numerical VLRLA reproduction.
@@ -52,12 +48,10 @@ current-run timing and charges before any explicit authored-envelope migration;
 never borrow another campaign's budget or exceed50cumulativeGPUh without the
 human's approval.
 
-Prepared wrapper source now includes case_schedule.py, paired_recipe.py and
-paired_entry.py. Only syntax/static source review has run on macOS. No model,
-learner numerics, group reset, GPU gradients or recovery qualification has run
-for this wrapper. Its launcher and actual-device qualification remain gated;
-these files do not constitute admission or a completed comparison.
+Actual qualification evidence: qual02 passed native learner numerical references, 32 groups × 8 exact within-group public reset/exposed-articulation identities and four old-logprob replays, then stopped before SGD on an invalid None-only intermediate frozen-gradient representation check. The current read-only audit records every frozen view at all eight accumulation boundaries; synchronized gradients must be None, all intermediate views finite zero/empty, and frozen parameters excluded from Adam. These gates still require an actual completed update.
 
-Qualification-only admission is now recorded in QUALIFICATION-ADMISSION.json:20→23additional engineering GPUh, human50cumulative unchanged. The qualification uses4GPU/64CPU/1024GiB/44min, with a45min creation/cleanup reservation (3GPUh). The prospective46h science-pair migration remains inactive; both arms await current PPO closure, successful qualification and fresh536GiB/resource admission. Post-model named actor/rollout RNG seed bases are22000/23000 plus rank; actor.seed1234 still controls model initialization.
+Grad01 then stopped before replay because only the native raw Adam digest differed. Opt01 reproduced the mismatch and measured the complete named state/group delta: only zero-length unowned state was dropped; owned state and all other signatures match exactly. New signatures retain the raw digest and an exact named comparison that validates empty dropped state. The next actor-only grad02 initializes fresh original SFT, requires all six legacy initializer signatures to equal qual02 checkpoint0, replays its immutable canonical batch, saves an actual step1 boundary and restores it in an independent process. No old fixture payload is modified. Full qual03 must subsequently qualify simulator groups/raw-reference deduplication, all twelve workers, and next case ordinal1.
+
+The active authored engineering envelope is 23 additional GPU-hours, human cumulative 50 unchanged. GRADIENT-ADMISSION.json reconciles closed actual charges and reserves one GPU-hour for grad02 and three for full qual03. The prospective 46-hour additional science envelope remains inactive. Both science arms await the actual gradient/full-runtime gates and fresh 536 GiB storage/resource admission. Post-model named actor/rollout RNG seed bases are 22000/23000 plus rank; actor.seed1234 controls model initialization.
 
 Control accounting limitation: requested/conservative native14D motor commands bound the escrow. The current fast path has measured_valid_mask=False; actual executed actions, post-success no-ops and internal physics substeps are not measured. The bounded pair may claim common native case/horizon, not measured physical-control matching. Full source/student corpus admission remainsFalse until passive duration/mask/raw action alignment is qualified under a fresh reviewed source without changing policy/loss/reset behavior. See parent train07/CONTROL-ACCOUNTING.md.

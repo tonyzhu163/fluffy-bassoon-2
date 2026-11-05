@@ -21,6 +21,18 @@ from fluffy_bassoon.meta_rl.rlinf_native_ppo import restore_rng,sha,write
 
 
 class ProbeActor(PairedActor):
+    def verify_fixture_initializer(self,directory):
+        # Fresh original SFT must exactly match the fixture's pre-SGD boundary,
+        # including its legacy raw optimizer hash. Do not rewrite old payloads.
+        expected=json.loads((Path(directory)/f'paired-actor-signature-{self._rank:02d}.json').read_text())
+        actual=actor_signature(self,snapshot_rng())
+        projected={k:actual[k] for k in expected}
+        report=dict(rank=self._rank,expected=expected,actual=projected,exact_identity=expected==projected,
+            original_SFT_freshly_initialized=True,fixture_checkpoint_mutated=False)
+        write(Path(self.cfg.native_pilot.output)/'fixture-initializer'/f'actor-{self._rank:02d}.json',report)
+        assert expected==projected,'Fresh original Sidney model/Adam/scheduler/scaler/RNG differs from fixture'
+        return report
+
     def describe_optimizer(self,label):
         value=evidence(self)
         write(Path(self.cfg.native_pilot.output)/'optimizer-layout'/f'{label}-rank-{self._rank:02d}.json',value)
@@ -94,8 +106,7 @@ def main(cfg):
                 optimizer_semantic_qualified=False))
         elif mode=='train':
             initial=source/'sidney-paired-grpo/checkpoints/global_step_0'
-            actor.load_checkpoint(str(initial/'actor')).wait()
-            restored=actor.pilot_restore(str(initial/'pilot')).wait()
+            restored=actor.verify_fixture_initializer(str(initial/'pilot')).wait()
             ranks=actor.replay_fixture(str(source)).wait()
             checkpoint=root/'checkpoint1';started=time.perf_counter()
             actor.save_checkpoint(str(checkpoint/'actor'),1).wait()
@@ -106,7 +117,7 @@ def main(cfg):
             write(root/'checkpoint-timing.json',dict(seconds=time.perf_counter()-started,
                 includes_native_DCP_sidecars_signatures_and_SHA256=True))
             write(root/'RESULT.json',dict(status='complete',actor_only=True,mode=mode,ranks=ranks,
-                initial_actors_restored=restored,optimizer_updates=1,new_simulator_controls=0,
+                initial_actors_exactly_match_fixture=restored,optimizer_updates=1,new_simulator_controls=0,
                 full_grouped_runtime_recovery_qualified=False))
         else:
             checkpoint=Path(os.environ['TASK_PROBE_CHECKPOINT'])
