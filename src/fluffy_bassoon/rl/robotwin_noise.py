@@ -281,6 +281,9 @@ def _reset_with_retry_limit(subenv, unstable_error, env_seed=None,
                 subenv.reset_count += 1
                 should_clear = subenv.reset_count % subenv.clear_cache_freq == 0
                 subenv.task.close_env(clear_cache=should_clear)
+                if getattr(subenv, '_fb2_trim_after_scene_close', False):
+                    import ctypes
+                    ctypes.CDLL('libc.so.6').malloc_trim(0)
             if env_seed is not None:
                 subenv.env_seed = env_seed
             subenv.instruction = None

@@ -95,8 +95,10 @@ env=RoboTwinEnv(cfg,scenes,seed_offset=0,total_num_processes=4,worker_info=None)
 journal.finish(slot,scenes*10);sample(f'constructor_{scenes}_scenes')
 successful=False
 try:
-    for round_index in range(2):
+    for round_index in range(3 if scenes==64 else 2):
         if scenes==64 and round_index==1:cfg.malloc_trim_reset_interval=1
+        if scenes==64 and round_index==2:
+            for subenv in env.venv.envs:subenv._fb2_trim_after_scene_close=True
         peak.update(rss_bytes=0,cgroup_bytes=0)
         slot=journal.begin(scenes*10,phase='memory-diagnostic/reset-allowance')
         obs,_=env.reset();journal.finish(slot,scenes*10)
@@ -117,6 +119,7 @@ try:
         del sub
         before=digest(obs);sample(f'round{round_index}/after_reset',observation_sha256=before,
             reset_peak=reset_peak,native_malloc_trim_reset_interval=int(cfg.get('malloc_trim_reset_interval',0)),
+            trim_after_each_scene_close=round_index==2,
             task_reachable_array_bytes=native_fields,
             largest_python_traces=[dict(bytes=s.size,count=s.count,trace=str(s.traceback))
                 for s in tracemalloc.take_snapshot().statistics('traceback')[:8]])
