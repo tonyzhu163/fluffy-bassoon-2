@@ -69,6 +69,22 @@ for name,expected in plan['initializer_sha256'].items():
     assert h.hexdigest()==expected,name
 
 if phase not in ('qualification','gradient_probe','optimizer_probe'):
+    commands=Path(plan['command_preflight_output'])
+    assert json.loads((commands/'EXIT.json').read_text())['exit_code']==0
+    check=json.loads((commands/'RESULT.json').read_text())
+    assert check['status']=='complete' and not check['cuda_initialized'] and not check['model_or_simulator_constructed']
+    assert {(r['algorithm'],r['phase']) for r in check['commands']}=={
+        (a,p) for a in ('ppo','grpo') for p in ('launch','actor_restore')}
+    for row in check['commands']:
+        assert row['parsed_override_count']==16 and row['shell_minimum_16_passed']
+        contract=row['required_fields_validated']
+        assert contract['global_batch_size']==2048 and contract['micro_batch_size']==64
+        assert contract['accumulation_steps']==8 and contract['maximum_adam_updates']==40
+        assert contract['case_manifest_sha256']=='2d3af16ac50f5637af36975c0d795b8c77ee081da14755c5bc05be68219d5110'
+    environment=Path(__file__).with_name('runtime_environment.sh')
+    assert hashlib.sha256(environment.read_bytes()).hexdigest()==plan['command_environment_sha256']
+    configuration=Path(__file__).with_name('configuration.py')
+    assert hashlib.sha256(configuration.read_bytes()).hexdigest()==plan['command_configuration_sha256']
     completed=json.loads((pilot/'RESULT.json').read_text())
     assert completed['status']=='complete' and completed['rollout_iterations']==2
     assert json.loads((pilot/'EXIT.json').read_text())['exit_code']==0

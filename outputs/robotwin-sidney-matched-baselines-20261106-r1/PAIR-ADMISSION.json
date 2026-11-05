@@ -1,13 +1,13 @@
 {
-  "status": "prepared_waiting_command_preflight",
+  "status": "admitted",
   "phase_admitted": "bounded_one_task_two_iteration_matched_PPO_GRPO_pair",
   "scientific_pair_admitted": true,
-  "recorded_at_shanghai": "2026-11-06T05:17:55.659184+08:00",
+  "recorded_at_shanghai": "2026-11-06T05:37:47.073182+08:00",
   "human_cumulative_gpu_hours": 50,
   "additional_engineering_gpu_hours": 46,
   "previous_additional_engineering_gpu_hours": 23,
   "legacy_gpu_seconds": 2561,
-  "completed_additional_conservative_gpu_seconds": 69314,
+  "completed_additional_conservative_gpu_seconds": 69362,
   "gpu_reservations_seconds": {
     "ppo": 41040,
     "grpo": 41040
@@ -65,6 +65,16 @@
       "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02",
       "maximum_gib": 135,
       "closed": false
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/commands01",
+      "maximum_gib": 1,
+      "closed": true
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/commands02",
+      "maximum_gib": 1,
+      "closed": true
     }
   ],
   "actual_device_gates_required": true,
@@ -148,12 +158,21 @@
       "worker_gpu_seconds": 31,
       "optimizer_updates": 0,
       "new_simulator_controls": 0
+    },
+    {
+      "attempt": "commands02",
+      "job_id": "job-cyqb6r38ps2i",
+      "scheduler_gpu_seconds": 31,
+      "creation_to_release_gpu_seconds": 48,
+      "worker_gpu_seconds": 13,
+      "optimizer_updates": 0,
+      "new_simulator_controls": 0
     }
   ],
   "probe_has_no_environment_workers": true,
   "full_grouped_qualifier_still_required": true,
   "prospective_science_pair_gpu_seconds": 82080,
-  "prospective_science_pair_cumulative_worst_gpu_seconds": 153955,
+  "prospective_science_pair_cumulative_worst_gpu_seconds": 154003,
   "prospective_science_pair_migration_active": true,
   "current_pilot_maximum_reservation_closed": true,
   "maximum_engineering_optimizer_updates": 1,
@@ -164,10 +183,13 @@
   "trained_actor_optimizer_restore_qualified": true,
   "full_twelve_worker_runtime_qualified": true,
   "archive_staging_included_gib": 0,
-  "completed_cumulative_actual_gpu_seconds": 71232,
+  "completed_cumulative_actual_gpu_seconds": 71263,
   "maximum_optimizer_updates_per_arm": 40,
   "maximum_actions_per_arm": 1000000,
   "scientific_source_corpus_admitted": false,
   "six_task_campaign_admitted": false,
-  "final_actor_step40_independent_restore_required": true
+  "final_actor_step40_independent_restore_required": true,
+  "command_preflight_output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/commands02",
+  "command_environment_sha256": "497b4bb4d50d954d0d3893a57f3b569d2152ad932e58ba6fee6ed8245ae00382",
+  "command_configuration_sha256": "38475610805bf08c328dcba194993e893ed891b1f4c40335897d6417dbc3c767"
 }
