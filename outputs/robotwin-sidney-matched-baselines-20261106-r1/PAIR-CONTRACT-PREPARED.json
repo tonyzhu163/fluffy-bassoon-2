@@ -127,15 +127,17 @@
     "host_memory": "Qualified native_batch_end route; actual cgroup minimum1024GiB, experimental per-scene callbackOFF and unchanged95%Rayguard"
   },
   "storage": {
-    "maximum_incremental_gib_per_arm": 125,
-    "pair_incremental_gib": 250,
+    "maximum_incremental_gib_per_arm": 135,
+    "pair_incremental_gib": 270,
     "other_owners_and_free_floor_gib": 286,
-    "fresh_required_free_gib_pair_after_current_PPO_closed": 536,
+    "fresh_required_free_gib_pair_after_current_PPO_closed": 556,
     "current_PPO_may_have_remaining_125GiB_reservation": false,
     "concurrent_required_free_gib_with_full_current_reservation": null,
     "qualification_scratch": "qual03 must close and actual bytes be reconciled before pair admission; closed train07 archive staging is now zero",
     "prepared_other_campaign_hot_reservation_gib": 40,
-    "qualification_scratch_reserved_gib": 40
+    "qualification_scratch_reserved_gib": 40,
+    "storage_migration_reason": "Fresh arms also retain initial step0; measured9.29327GiB plus continued pilot114.97 leaves125GiB too tight for metadata and scene-dependent gzip variation. Increase caps135each and fresh gate556; no compression bound assumed.",
+    "closed_duplicate_opt01_DCP_archival_prepared": true
   },
   "accounting": {
     "separate_fresh_run_and_action_ledger_per_arm": true,
