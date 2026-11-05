@@ -79,7 +79,13 @@ for row in ledger['allocations']:
     if row['job_id']==job:
         assert row['task']==target and row['GPUs']==8 and row['max_reservation_GPU_hours']==cap
         included=True
-reserved += sum(row['max_reservation_GPU_hours'] for row in ledger.get('pending_submissions',[]))
+for row in ledger.get('pending_submissions',[]):
+    reserved += row['max_reservation_GPU_hours']
+    if row['task']==target and row['kind'] in ('source_train','source_resume'):
+        task_reserved += row['max_reservation_GPU_hours']
+    if row['job_id']==job:
+        assert row['task']==target and row['GPUs']==8 and row['max_reservation_GPU_hours']==cap
+        included=True
 assert reserved + (0 if included else cap) <= 70
 assert task_reserved + (0 if included else cap) <= 30
 space=os.statvfs(run)

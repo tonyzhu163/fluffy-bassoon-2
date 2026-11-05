@@ -1,0 +1,217 @@
+{
+  "passed": true,
+  "qualification_scope": "CPU-resolved scientific contract and native actor FSDP validation; no accelerator qualification",
+  "source_commit": "033f6c8e3037c46535e76bb0b6a6cb925f02377f",
+  "GPU_hours": 0,
+  "models_loaded": 0,
+  "same_native_actor_fsdp_validation": true,
+  "initial_comparison_note": "Raw --cfg differs in framework-derived use_orig_params. Full native validate_cfg on development resource cannot map requested ranks0-7; no model or training started and local Ray processes exited. Used actual native validate_fsdp_cfg for exact actor comparison; full placement remains required in allocated8GPU job",
+  "tasks": {
+    "PickPlaceCounterToCabinet": {
+      "contract": {
+        "task": "PickPlaceCounterToCabinet",
+        "horizon": 600,
+        "chunk": 50,
+        "chunks_per_episode": 12,
+        "adv_type": "gae",
+        "loss_type": "actor_critic",
+        "group_size": 1,
+        "add_value_head": true,
+        "value_after_vlm": true,
+        "ignore_last": true,
+        "predicted_action_horizon": 50,
+        "denoising_steps": 10,
+        "likelihood_coordinates": 600,
+        "noise_level": 0.3,
+        "update_epochs": 4,
+        "train_envs": 128,
+        "rounds": 1,
+        "episodes_per_iteration": 128,
+        "scenes_per_iteration": 128,
+        "iterations": 40,
+        "eval_cases": 64,
+        "eval_interval": 10,
+        "eval_panels": 5,
+        "optimizer_steps_per_update": 24,
+        "total_optimizer_steps": 960,
+        "critic_only_optimizer_steps": 0,
+        "actor_optimizer_steps": 960,
+        "global_minibatch_chunks": 256,
+        "TRAIN_policy_controls": 3072000,
+        "gamma_per_decision": 0.99,
+        "gae_lambda_per_decision": 0.95,
+        "train_seed": 2200000,
+        "eval_seed": 620100,
+        "checkpoint_interval": 10,
+        "nominal_policy_controls": 3264000,
+        "reset_reserve_controls": 696320,
+        "maximum_actions": 4100000,
+        "physics_tick_limit": 93184
+      },
+      "scientific_contract_exact": true,
+      "actor_rollout_and_algorithm_exact": true,
+      "config_differences": [
+        {
+          "path": "/cluster/tracer",
+          "before": {
+            "enable": false
+          },
+          "after": null
+        },
+        {
+          "path": "/env/eval/video_cfg/video_base_dir",
+          "before": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/video/eval",
+          "after": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-02/video/eval"
+        },
+        {
+          "path": "/native_pilot/attempt",
+          "before": "source5-40-r1",
+          "after": "source5-40-r2"
+        },
+        {
+          "path": "/native_pilot/before_reference",
+          "before": null,
+          "after": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/RESUME-REFERENCE-01.json"
+        },
+        {
+          "path": "/native_pilot/before_reference_sha256",
+          "before": null,
+          "after": "34e99d8fa72d8d40c2070aa87fc30181c49d04082ad5598a1f34d6520ba2ef91"
+        },
+        {
+          "path": "/native_pilot/deadline_unix",
+          "before": 1793862296,
+          "after": 1
+        },
+        {
+          "path": "/native_pilot/fresh_eval_processes",
+          "before": null,
+          "after": true
+        },
+        {
+          "path": "/native_pilot/output",
+          "before": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01",
+          "after": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-02"
+        },
+        {
+          "path": "/runner/logger/log_path",
+          "before": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01",
+          "after": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-02"
+        },
+        {
+          "path": "/runner/per_worker_log",
+          "before": false,
+          "after": null
+        },
+        {
+          "path": "/runner/resume_dir",
+          "before": null,
+          "after": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/PickPlaceCounterToCabinet/attempt-01/PickPlaceCounterToCabinet/checkpoints/global_step_10"
+        }
+      ]
+    },
+    "TurnOnSinkFaucet": {
+      "contract": {
+        "task": "TurnOnSinkFaucet",
+        "horizon": 600,
+        "chunk": 50,
+        "chunks_per_episode": 12,
+        "adv_type": "gae",
+        "loss_type": "actor_critic",
+        "group_size": 1,
+        "add_value_head": true,
+        "value_after_vlm": true,
+        "ignore_last": true,
+        "predicted_action_horizon": 50,
+        "denoising_steps": 10,
+        "likelihood_coordinates": 600,
+        "noise_level": 0.3,
+        "update_epochs": 4,
+        "train_envs": 128,
+        "rounds": 1,
+        "episodes_per_iteration": 128,
+        "scenes_per_iteration": 128,
+        "iterations": 40,
+        "eval_cases": 64,
+        "eval_interval": 10,
+        "eval_panels": 5,
+        "optimizer_steps_per_update": 24,
+        "total_optimizer_steps": 960,
+        "critic_only_optimizer_steps": 0,
+        "actor_optimizer_steps": 960,
+        "global_minibatch_chunks": 256,
+        "TRAIN_policy_controls": 3072000,
+        "gamma_per_decision": 0.99,
+        "gae_lambda_per_decision": 0.95,
+        "train_seed": 2800000,
+        "eval_seed": 680100,
+        "checkpoint_interval": 10,
+        "nominal_policy_controls": 3264000,
+        "reset_reserve_controls": 696320,
+        "maximum_actions": 4100000,
+        "physics_tick_limit": 93184
+      },
+      "scientific_contract_exact": true,
+      "actor_rollout_and_algorithm_exact": true,
+      "config_differences": [
+        {
+          "path": "/cluster/tracer",
+          "before": {
+            "enable": false
+          },
+          "after": null
+        },
+        {
+          "path": "/env/eval/video_cfg/video_base_dir",
+          "before": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/video/eval",
+          "after": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-02/video/eval"
+        },
+        {
+          "path": "/native_pilot/attempt",
+          "before": "source5-40-r1",
+          "after": "source5-40-r2"
+        },
+        {
+          "path": "/native_pilot/before_reference",
+          "before": null,
+          "after": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/RESUME-REFERENCE-01.json"
+        },
+        {
+          "path": "/native_pilot/before_reference_sha256",
+          "before": null,
+          "after": "016189220008dc796fc1fbfbc5a24aa3d7519bca32b1ee649ed5c59560e33900"
+        },
+        {
+          "path": "/native_pilot/deadline_unix",
+          "before": 1793863949,
+          "after": 1
+        },
+        {
+          "path": "/native_pilot/fresh_eval_processes",
+          "before": null,
+          "after": true
+        },
+        {
+          "path": "/native_pilot/output",
+          "before": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01",
+          "after": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-02"
+        },
+        {
+          "path": "/runner/logger/log_path",
+          "before": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01",
+          "after": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-02"
+        },
+        {
+          "path": "/runner/per_worker_log",
+          "before": false,
+          "after": null
+        },
+        {
+          "path": "/runner/resume_dir",
+          "before": null,
+          "after": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_10"
+        }
+      ]
+    }
+  }
+}

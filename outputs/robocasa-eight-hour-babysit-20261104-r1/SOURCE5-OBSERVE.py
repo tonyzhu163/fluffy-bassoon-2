@@ -43,15 +43,17 @@ def observe():
         if manifest:
             assert manifest['hostname'] == row['job_id'] + '-master-0'
         probe = read(output / 'gpu-probe.json') or read(worker / 'GPU-PROBE.json')
-        written = 0
-        for parent, _, files in os.walk(output, followlinks=False):
-            for name in files:
-                path = Path(parent) / name
-                assert not path.is_symlink()
-                try:
-                    written += path.stat().st_size
-                except FileNotFoundError:
-                    pass
+        written = row.get('closed_written_bytes') if row.get('released_shanghai') else None
+        if written is None:
+            written = 0
+            for parent, _, files in os.walk(output, followlinks=False):
+                for name in files:
+                    path = Path(parent) / name
+                    assert not path.is_symlink()
+                    try:
+                        written += path.stat().st_size
+                    except FileNotFoundError:
+                        pass
         if not row.get('released_shanghai'):
             allowance = row['storage_reservation_GiB'] * 2**30
             assert written <= allowance
@@ -83,17 +85,19 @@ def observe():
     pending = []
     for row in ledger.get('pending_submissions', []):
         output = RUN / row['output']
-        worker = output / row['worker_subdir']
-        probe = read(worker / 'GPU-PROBE.json')
-        clock = read(worker / 'CLOCK.json')
+        worker = output / row.get('worker_subdir', '.')
+        probe = read(worker / 'GPU-PROBE.json') or read(worker / 'gpu-probe.json')
+        clock = read(worker / 'CLOCK.json') or read(worker / 'clock.json')
         cutoff = datetime.datetime.fromisoformat(row['last_confirmed_queued_shanghai']).timestamp()
-        upper = row['GPUs'] * ((clock['ended_unix'] if clock else now)-cutoff)/3600 if worker.exists() else 0.
+        ended = clock.get('ended_unix', clock.get('finished_unix')) if clock else now
+        started = (worker / 'console.log').exists()
+        upper = row['GPUs'] * (ended-cutoff)/3600 if started else 0.
         charged += upper
         reserved += max(upper, row['max_reservation_GPU_hours'])
         written = sum(p.stat().st_size for p in output.rglob('*') if p.is_file() and not p.is_symlink())
         remaining_storage += max(0, row['storage_reservation_GiB']*2**30-written)
-        pending.append(dict(**row, allocated_worker_artifacts=worker.exists(), probe_passed=bool(probe and probe.get('status')=='passed'),
-            clock=clock, progress=read(worker / 'PROGRESS.json'), result=read(worker / 'RESULT.json'),
+        pending.append(dict(**row, allocated_worker_artifacts=started, probe_passed=bool(probe and probe.get('status')=='passed'),
+            clock=clock, progress=read(worker / 'PROGRESS.json') or read(worker / 'progress.json'), result=read(worker / 'RESULT.json'),
             conservative_GPU_hours_since_confirmed_queue_cutoff=upper))
     fs = os.statvfs(ROOT)
     free = fs.f_bavail * fs.f_frsize

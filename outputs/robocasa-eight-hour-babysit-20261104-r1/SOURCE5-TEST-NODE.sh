@@ -49,6 +49,10 @@ for row in ledger['allocations']:
 for row in ledger.get('pending_submissions',[]):
     reserved+=row['max_reservation_GPU_hours']
     if row['kind']=='endpoint_test':test_reserved+=row['max_reservation_GPU_hours']
+    if row['job_id']==job:
+        assert row['kind']=='endpoint_test' and row['task']==task and row['GPUs']==1 and row['max_reservation_GPU_hours']==2.5
+        included=True
+        continue
     allowance=row['storage_reservation_GiB']*2**30
     written=sum(p.stat().st_size for p in (run/row['output']).rglob('*') if p.is_file() and not p.is_symlink())
     assert written<=allowance

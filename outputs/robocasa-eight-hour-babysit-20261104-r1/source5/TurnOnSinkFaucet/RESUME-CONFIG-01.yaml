@@ -1,0 +1,367 @@
+env:
+  train:
+    env_type: robocasa365
+    task_source: dataset_registry
+    dataset_source: human
+    split: target
+    task_soup: atomic_seen
+    task_mode: atomic
+    task_filter:
+    - TurnOnSinkFaucet
+    task_sampling_strategy: random
+    rotate_tasks_on_auto_reset: true
+    robot_name: PandaOmron
+    camera_names:
+    - robot0_agentview_left
+    - robot0_eye_in_hand
+    - robot0_agentview_right
+    render_camera: robot0_agentview_left
+    has_renderer: false
+    has_offscreen_renderer: true
+    ignore_done: true
+    use_object_obs: true
+    use_camera_obs: true
+    camera_depths: false
+    total_num_envs: 128
+    auto_reset: false
+    ignore_terminations: false
+    episode_horizon_source: max_episode_steps
+    max_steps_per_rollout_epoch: 600
+    max_episode_steps: 600
+    use_fixed_reset_state_ids: false
+    use_ordered_reset_state_ids: false
+    use_rel_reward: true
+    reward_coef: 1.0
+    is_eval: false
+    seed: 2800000
+    group_size: 1
+    seed_strategy: worker_offset
+    video_cfg:
+      save_video: false
+      info_on_video: true
+      video_base_dir: ../results/video/train
+    init_params:
+      camera_heights: 256
+      camera_widths: 256
+    observation:
+      main_camera_key: robot0_agentview_left_image
+      wrist_camera_key: robot0_eye_in_hand_image
+      extra_camera_keys:
+      - robot0_agentview_right_image
+      flip_images_vertical: true
+      state_layout:
+      - eef_pos
+      - eef_quat
+      - gripper_qpos
+      - gripper_qvel
+      - base_to_eef_pos
+      - base_to_eef_quat
+      - base_pos
+      - base_quat
+      state_key_map:
+        eef_pos: robot0_eef_pos
+        eef_quat: robot0_eef_quat
+        gripper_qpos: robot0_gripper_qpos
+        gripper_qvel: robot0_gripper_qvel
+        base_to_eef_pos: robot0_base_to_eef_pos
+        base_to_eef_quat: robot0_base_to_eef_quat
+        base_pos: robot0_base_pos
+        base_quat: robot0_base_quat
+    action_space:
+      env_action_dim: 12
+      openpi_valid_action_slice:
+      - 0
+      - 12
+      disable_base_control: false
+      base_mode_index: 11
+      binarize_gripper_control: true
+      gripper_index: 6
+      binarize_base_mode_control: true
+    rollout_epoch: 1
+  eval:
+    env_type: robocasa365
+    task_source: dataset_registry
+    dataset_source: human
+    split: target
+    task_soup: atomic_seen
+    task_mode: atomic
+    task_filter:
+    - TurnOnSinkFaucet
+    task_sampling_strategy: ordered
+    rotate_tasks_on_auto_reset: true
+    robot_name: PandaOmron
+    camera_names:
+    - robot0_agentview_left
+    - robot0_eye_in_hand
+    - robot0_agentview_right
+    render_camera: robot0_agentview_left
+    has_renderer: false
+    has_offscreen_renderer: true
+    ignore_done: true
+    use_object_obs: true
+    use_camera_obs: true
+    camera_depths: false
+    total_num_envs: 64
+    auto_reset: false
+    ignore_terminations: true
+    episode_horizon_source: max_episode_steps
+    max_steps_per_rollout_epoch: 600
+    max_episode_steps: 600
+    use_fixed_reset_state_ids: true
+    use_ordered_reset_state_ids: false
+    use_rel_reward: true
+    reward_coef: 1.0
+    is_eval: true
+    seed: 680100
+    group_size: 1
+    seed_strategy: worker_offset
+    video_cfg:
+      save_video: true
+      info_on_video: false
+      video_base_dir: /mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-02/video/eval
+    init_params:
+      camera_heights: 256
+      camera_widths: 256
+    observation:
+      main_camera_key: robot0_agentview_left_image
+      wrist_camera_key: robot0_eye_in_hand_image
+      extra_camera_keys:
+      - robot0_agentview_right_image
+      flip_images_vertical: true
+      state_layout:
+      - eef_pos
+      - eef_quat
+      - gripper_qpos
+      - gripper_qvel
+      - base_to_eef_pos
+      - base_to_eef_quat
+      - base_pos
+      - base_quat
+      state_key_map:
+        eef_pos: robot0_eef_pos
+        eef_quat: robot0_eef_quat
+        gripper_qpos: robot0_gripper_qpos
+        gripper_qvel: robot0_gripper_qvel
+        base_to_eef_pos: robot0_base_to_eef_pos
+        base_to_eef_quat: robot0_base_to_eef_quat
+        base_pos: robot0_base_pos
+        base_quat: robot0_base_quat
+    action_space:
+      env_action_dim: 12
+      openpi_valid_action_slice:
+      - 0
+      - 12
+      disable_base_control: false
+      base_mode_index: 11
+      binarize_gripper_control: true
+      gripper_index: 6
+      binarize_base_mode_control: true
+    rollout_epoch: 1
+  group_name: EnvGroup
+actor:
+  model:
+    model_type: openpi
+    precision: null
+    pi05: true
+    is_lora: false
+    lora_rank: 32
+    num_action_chunks: 50
+    action_dim: 12
+    use_proprio: true
+    num_steps: 10
+    add_value_head: true
+    openpi:
+      task: rl
+      config_name: pi05_robocasa365_pretrain_human300
+      num_images_in_input: 3
+      noise_level: 0.3
+      action_chunk: 50
+      num_steps: 10
+      train_expert_only: true
+      action_env_dim: 12
+      noise_method: flow_sde
+      add_value_head: true
+      value_after_vlm: true
+      value_vlm_mode: mean_token
+      detach_critic_input: true
+      model_action_dim: 32
+      paligemma_variant: gemma_2b
+      action_expert_variant: gemma_300m
+      max_token_len: 200
+      torch_compile: false
+      action_horizon: 50
+      ignore_last: true
+      discrete_state_input: true
+    model_path: /mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2
+    openpi_data:
+      norm_stats_path: /mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json
+      state_space: 16d
+      image_space: 3views
+      action_space: 12d
+      extra_delta_transform: false
+      use_quantile_norm: false
+      pad_before_normalization: true
+  fsdp_config:
+    strategy: fsdp
+    sharding_strategy: no_shard
+    gradient_checkpointing: false
+    cpu_offload: false
+    offload_pin_memory: false
+    reshard_after_forward: true
+    enable_gradient_accumulation: true
+    forward_prefetch: false
+    limit_all_gathers: false
+    backward_prefetch: null
+    use_orig_params: false
+    use_liger_kernel: false
+    mixed_precision:
+      param_dtype: null
+      reduce_dtype: null
+      buffer_dtype: null
+    wrappers: {}
+    mixed_precision_policies: {}
+    mixed_precision_rules: {}
+    amp_autocast:
+      enabled: false
+      precision: bf16
+    grad_scaler:
+      enabled: false
+  group_name: ActorGroup
+  training_backend: fsdp
+  micro_batch_size: 16
+  global_batch_size: 256
+  seed: 1234
+  enable_offload: false
+  optim:
+    lr: 5.0e-06
+    value_lr: 0.0001
+    adam_beta1: 0.9
+    adam_beta2: 0.95
+    adam_eps: 1.0e-08
+    weight_decay: 0.01
+    clip_grad: 1.0
+    critic_warmup_steps: 0
+weight_syncer:
+  type: patch
+  patch:
+    snapshot_device: cpu
+    delta_encoding: true
+    compression: none
+    init_sync:
+      enabled: true
+      prefixes: null
+      bucket_size: 134217728
+cluster:
+  num_nodes: 1
+  component_placement:
+    actor: 0-1
+    env,rollout: 0-7
+runner:
+  task_type: embodied
+  logger:
+    log_path: /mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-02
+    project_name: robocasa365_flow_sde_ppo_reuse4
+    experiment_name: TurnOnSinkFaucet
+    logger_backends:
+    - tensorboard
+  max_epochs: 40
+  max_steps: -1
+  use_training_pipeline: false
+  overlap_env_bootstrap: false
+  weight_sync_interval: 1
+  only_eval: false
+  val_check_interval: 10
+  save_interval: 10
+  resume_dir: /mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-01/TurnOnSinkFaucet/checkpoints/global_step_10
+  ckpt_path: null
+algorithm:
+  normalize_advantages: true
+  kl_penalty: kl
+  group_size: 1
+  reward_coef: 1.0
+  reward_type: chunk_level
+  logprob_type: chunk_level
+  entropy_type: token_level
+  update_epoch: 4
+  adv_type: gae
+  loss_type: actor_critic
+  loss_agg_func: token-mean
+  kl_beta: 0.0
+  entropy_bonus: 0
+  clip_ratio_high: 0.2
+  clip_ratio_low: 0.2
+  clip_ratio_c: 3.0
+  value_clip: 0.2
+  huber_delta: 10.0
+  gamma: 0.99
+  gae_lambda: 0.95
+  filter_rewards: false
+  rewards_lower_bound: 0.1
+  rewards_upper_bound: 0.9
+rollout:
+  group_name: RolloutGroup
+  generation_backend: huggingface
+  recompute_logprobs: false
+  enable_offload: false
+  pipeline_stage_num: 1
+  model:
+    model_type: openpi
+    precision: null
+    pi05: true
+    is_lora: false
+    lora_rank: 32
+    num_action_chunks: 50
+    action_dim: 12
+    use_proprio: true
+    num_steps: 10
+    add_value_head: true
+    openpi:
+      task: rl
+      config_name: pi05_robocasa365_pretrain_human300
+      num_images_in_input: 3
+      noise_level: 0.3
+      action_chunk: 50
+      num_steps: 10
+      train_expert_only: true
+      action_env_dim: 12
+      noise_method: flow_sde
+      add_value_head: true
+      value_after_vlm: true
+      value_vlm_mode: mean_token
+      detach_critic_input: true
+      model_action_dim: 32
+      paligemma_variant: gemma_2b
+      action_expert_variant: gemma_300m
+      max_token_len: 200
+      torch_compile: false
+      action_horizon: 50
+      ignore_last: true
+      discrete_state_input: true
+    model_path: /mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2
+    openpi_data:
+      norm_stats_path: /mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json
+      state_space: 16d
+      image_space: 3views
+      action_space: 12d
+      extra_delta_transform: false
+      use_quantile_norm: false
+      pad_before_normalization: true
+reward:
+  use_reward_model: false
+critic:
+  use_critic_model: false
+native_pilot:
+  output: /mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/attempt-02
+  accounting_root: /mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/accounting
+  world_size: 8
+  maximum_actions: 4100000
+  sampling_record: full
+  actor_batch_drop: []
+  global_action_escrow: true
+  fresh_eval_processes: true
+  attempt: source5-40-r2
+  deadline_unix: 1
+  before_reference: /mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet/RESUME-REFERENCE-01.json
+  before_reference_sha256: 016189220008dc796fc1fbfbc5a24aa3d7519bca32b1ee649ed5c59560e33900
+  full_model_export_steps:
+  - 40

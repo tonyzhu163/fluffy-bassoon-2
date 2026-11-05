@@ -14,7 +14,11 @@
       "released_shanghai": "2026-11-05T12:09:29+08:00",
       "scheduler_release_verified": true,
       "termination": "Failed during DEV10 XML fingerprint check; complete step10 recovery preserved",
-      "closed_conservative_GPU_hours": 5.702222222222222
+      "closed_conservative_GPU_hours": 5.702222222222222,
+      "closed_written_bytes": 29607280998,
+      "closed_storage_measured_shanghai": "2026-11-05T13:25:50.382542+08:00",
+      "closed_cold_archived_bytes": 19398298034,
+      "cold_archive_receipt_sha256": "722d55c7a302f4dfc1d5076814f7b57560fd6dcd1fceba0b3ed5ac84acc84626"
     },
     {
       "job_id": "job-jo6kx7qu29r4",
@@ -29,7 +33,11 @@
       "released_shanghai": "2026-11-05T12:35:41+08:00",
       "scheduler_release_verified": true,
       "termination": "Failed during DEV10 fingerprint check; complete step10 recovery preserved",
-      "closed_conservative_GPU_hours": 5.56
+      "closed_conservative_GPU_hours": 5.56,
+      "closed_written_bytes": 29267125048,
+      "closed_storage_measured_shanghai": "2026-11-05T13:25:50.382542+08:00",
+      "closed_cold_archived_bytes": 19398298796,
+      "cold_archive_receipt_sha256": "722d55c7a302f4dfc1d5076814f7b57560fd6dcd1fceba0b3ed5ac84acc84626"
     },
     {
       "job_id": "job-7lhczqc4c9yp",
@@ -77,5 +85,5 @@
     }
   ],
   "pending_reserved_GPU_hours": 1.0,
-  "queue_accounting": "Confirmed queued jobs reserve their bounded allowance but occupy zero GPUs; retain scheduler creation times. Move to allocations with an explicit conservative accounting_start_shanghai after the legacy diagnostic launch guards have run; that cutoff cannot precede the last confirmed queued observation. Both known diagnostic reservations together are1/2GPUh."
+  "queue_accounting": "Queued submissions reserve their bounded allowance and occupy zero GPUs at the last scheduler observation. Retain actual creation timestamps. After both legacy diagnostic launch guards run, use the last confirmed queued timestamp as the explicit conservative accounting_start_shanghai; do not substitute a later worker-start timestamp. Both known diagnostic reservations together are1/2GPUh."
 }
