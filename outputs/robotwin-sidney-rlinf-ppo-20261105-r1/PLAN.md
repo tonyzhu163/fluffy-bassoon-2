@@ -107,3 +107,13 @@ Train06 charged5876 allocatedGPU-seconds (5944 conservative creation-to-release)
 completed additional usage is22993GPU-seconds, cumulative25554 including legacy
 qualification. Conservative additional charge23088 leaves48912GPU-seconds
 inside the new20h envelope. A4GPU170min retry plus launch margin fits.
+
+User RAM-debug steering holds the production retry. Qualify oneGPU/16 real
+scenes without VLA/SGD, with at most7200 physical hold controls and480 setup/reset
+allowances, all charged in rank0 of the same original journal. Record
+RSS/PSS, cgroup anon/file and glibc live/free arenas around scene construction,
+resets, chunks, GC and malloc_trim. Check retained RGB/state bytes remain
+identical across allocator diagnostics; preserve native shader/camera settings.
+The20additionalGPUh planning envelope includes this≤0.3334GPUh diagnostic.
+The explicit1.2M action migration remains sufficient including all old charges
+and the unequal rank0 diagnostic plus two new scientific iterations.
