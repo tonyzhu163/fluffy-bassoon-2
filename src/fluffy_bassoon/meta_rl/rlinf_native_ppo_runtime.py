@@ -398,8 +398,14 @@ class PilotEnvironment(SidecarMixin, EnvWorker):
     def init_worker(self):
         # Install only in this owned EnvWorker process, before native creation.
         import rlinf.envs.sim.robotwin.robotwin_env as module
+        from fluffy_bassoon.rl.robotwin_execution import (
+            load_accounted_controller, install_accounted_controller,
+            collated_chunk_executions)
         original = module.RoboTwinEnv
         owner = self
+        controller_path = self.cfg.native_pilot.get('passive_controller_source')
+        controller = (load_accounted_controller(controller_path,
+            self.cfg.native_pilot.passive_controller_sha256) if controller_path else None)
         if self.cfg.native_pilot.get('bounded_io', False):
             self._init_pilot_io()
         self._pilot_phase = 'initialization'
@@ -435,6 +441,12 @@ class PilotEnvironment(SidecarMixin, EnvWorker):
                 result = super().reset(env_idx=env_idx, env_seeds=env_seeds)
                 owner._pilot_journal.finish(slot, int(count) * 10)
                 indices = list(range(env.num_envs)) if env_idx is None else list(env_idx)
+                if controller is not None:
+                    # Native offload can recreate SubEnvs. Bind every reset's
+                    # actual task instance, leaving external classes untouched.
+                    for index in indices:
+                        install_accounted_controller(env.venv.envs[index].task,
+                                                     controller, metadata=True)
                 env._pilot_episode_serial[indices] += 1
                 env._pilot_primitive_time[indices] = 0
                 env._pilot_current_observation = cpu_tree(result[0])
@@ -474,9 +486,14 @@ class PilotEnvironment(SidecarMixin, EnvWorker):
                 times = env._pilot_primitive_time.clone()
                 result = super().chunk_step(actions)
                 mask = result[-1][-1].get('valid_action_mask')
-                executed = int(mask.sum().item()) if mask is not None else requested
+                execution = (collated_chunk_executions(result[-1][-1],
+                    num_envs=env.num_envs, requested_targets=int(actions.shape[1]))
+                    if controller is not None else None)
+                physical_mask = (torch.tensor([row.valid_target_mask for row in execution],
+                    dtype=torch.bool) if execution is not None else mask)
+                executed = int(physical_mask.sum().item()) if physical_mask is not None else requested
                 owner._pilot_journal.finish(slot, executed)
-                duration = (mask.detach().cpu().sum(dim=-1).long() if mask is not None else
+                duration = (physical_mask.detach().cpu().sum(dim=-1).long() if physical_mask is not None else
                     torch.full((env.num_envs,), int(actions.shape[1]), dtype=torch.long))
                 trace = dict(phase=owner._pilot_phase, journal_cursor=slot,
                     evaluation_data=bool(env.cfg.is_eval),
@@ -490,7 +507,17 @@ class PilotEnvironment(SidecarMixin, EnvWorker):
                     executed_or_conservative_duration=duration, reset_state_ids=scene_ids,
                     current_observation=current,
                     proposed_motor_actions=submitted_actions, outputs=cpu_tree(result),
-                    measured_valid_mask=mask is not None,
+                    measured_valid_mask=physical_mask is not None,
+                    passive_physical_accounting=execution is not None,
+                    physical_execution=(None if execution is None else dict(
+                        valid_target_mask=physical_mask,
+                        completed_targets=[row.completed_targets for row in execution],
+                        delivered_targets=[row.delivered_targets for row in execution],
+                        partial_targets=[row.partial_targets for row in execution],
+                        physics_steps=[row.physics_steps for row in execution],
+                        timestep_seconds=[row.timestep_seconds for row in execution],
+                        duration_seconds=[row.duration_seconds for row in execution])),
+                    native_learner_valid_action_mask=cpu_tree(mask),
                     executed_or_conservative=executed)
                 path = owner._pilot_root / 'traces' / f'rank-{owner._rank:02d}' / f'{owner._pilot_trace_ordinal:05d}.pt.gz'
                 owner._submit_pilot_io(_write_trace_record, path, trace)

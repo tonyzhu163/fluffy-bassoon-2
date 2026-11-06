@@ -2,7 +2,8 @@
 import pytest
 from types import SimpleNamespace
 
-from fluffy_bassoon.rl.robotwin_execution import chunk_execution,install_accounted_controller
+from fluffy_bassoon.rl.robotwin_execution import (
+    chunk_execution, install_accounted_controller, collated_chunk_executions)
 
 
 def measured(completed, partial, physics, *, requested=4):
@@ -95,3 +96,31 @@ def test_instance_accounting_keeps_terminal_noop_duration_zero():
     assert info['fb2_physics_duration_seconds'] == 0
     assert not any(info['fb2_measured_valid_target_mask'])
     assert 'executed_action_count' not in info
+
+
+@pytest.mark.parametrize('auto_reset', [False, True])
+def test_vector_physics_retains_partial_and_noop_lanes_through_auto_reset(auto_reset):
+    packets = []
+    for info in (measured(1, 1, 7), measured(0, 0, 0)):
+        task = Task(([0.], [True], [False], info))
+        install_accounted_controller(task, CONTROLLER, metadata=True)
+        task.gen_sparse_reward_data([[0.] * 14 for _ in range(4)])
+        packets.append(info)
+    collated = {key: [packet[key] for packet in packets] for key in packets[0]}
+    # Native eval auto-reset moves all terminal lanes to final_info, including
+    # lanes which did not reset. The new reset info must never replace them.
+    native = dict(final_info=collated, reset_state_ids=[100, 101]) if auto_reset else collated
+    rows = collated_chunk_executions(native, num_envs=2, requested_targets=4)
+    assert [row.delivered_targets for row in rows] == [2, 0]
+    assert [row.physics_steps for row in rows] == [7, 0]
+    assert [row.duration_seconds for row in rows] == [7 * .004000000189989805, 0]
+    assert 'valid_action_mask' not in native and 'valid_action_mask' not in collated
+    collated['fb2_measured_valid_target_mask'][0] = (True,) * 4
+    with pytest.raises(ValueError, match='disagrees'):
+        collated_chunk_executions(native, num_envs=2, requested_targets=4)
+
+
+def test_vector_missing_lane_cannot_be_replaced_by_requested_count():
+    with pytest.raises(ValueError, match='incomplete'):
+        collated_chunk_executions(dict(fb2_execution=[measured(1, 1, 7)]),
+                                  num_envs=2, requested_targets=4)

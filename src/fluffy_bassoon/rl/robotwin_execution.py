@@ -106,3 +106,34 @@ def chunk_execution(info, *, requested_targets, timestep_seconds):
                                  or int(official) != delivered):
         raise ValueError('Full-observation native count disagrees with passive measurement')
     return ChunkExecution(**values, timestep_seconds=float(timestep_seconds))
+
+
+def collated_chunk_executions(info, *, num_envs, requested_targets):
+    """Read native vector info, including the terminal packet before auto-reset.
+
+    RLinf collates each field into a list and moves the complete terminal info
+    under ``final_info`` on auto-reset. Its official learner mask is unrelated
+    to these passive physical measurements and is never changed here.
+    """
+    if not isinstance(info, dict):
+        raise ValueError('Require native vector execution info')
+    packet = info.get('final_info', info)
+    fields = ('fb2_execution', 'fb2_physics_timestep_seconds',
+              'fb2_physics_duration_seconds', 'fb2_measured_valid_target_mask')
+    if (not isinstance(packet, dict) or type(num_envs) is not int or num_envs < 1
+            or any(not isinstance(packet.get(key), (list, tuple))
+                   or len(packet[key]) != num_envs for key in fields)):
+        raise ValueError('Missing or incomplete collated physical measurements')
+    rows = []
+    for index in range(num_envs):
+        row = chunk_execution(dict(fb2_execution=packet['fb2_execution'][index]),
+            requested_targets=requested_targets,
+            timestep_seconds=packet['fb2_physics_timestep_seconds'][index])
+        mask = packet['fb2_measured_valid_target_mask'][index]
+        if (not isinstance(mask, (list, tuple))
+                or any(type(value) is not bool for value in mask)
+                or tuple(mask) != row.valid_target_mask
+                or packet['fb2_physics_duration_seconds'][index] != row.duration_seconds):
+            raise ValueError('Collated mask/duration disagrees with physical measurements')
+        rows.append(row)
+    return tuple(rows)

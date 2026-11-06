@@ -111,3 +111,12 @@ reproduced update5 exactly. An independent CPU JSON comparison passed.
 ACTOR-SELECTION.json records256/accum2; scientific defaults remain unchanged
 until rollout/actor value-GAE and combined simulator footprint qualification.
 These scratch targets are synthetic; no teacher-learning result is claimed.
+
+CPUEXEC03 passed38 allocated-Linux core cases at ea88ee90 (84 distinct
+cases to date): passive controller binding preserves native fast/full feedback,
+commands, official mask presence and actual terminal/no-op physics duration.
+The native teacher integration now binds the qualified controller after each
+physical reset, covering recreated scenes; its vector reader follows terminal
+`final_info` through evaluation auto-reset. Both modes retain physical masks
+and durations separately from unchanged native learner masks. This integration
+needs the next Linux check and an actual native teacher rollout.
