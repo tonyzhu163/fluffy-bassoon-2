@@ -208,6 +208,17 @@ def test_setup_retry_guard_exposes_last_error_and_stops():
     assert not hasattr(subenv, "episode_info_list")
 
 
+def test_deferred_setup_constructs_no_scene_and_reset_binds_actual_language():
+    subenv, task, attempts, _ = retry_fixture([])
+    _setup_task_with_retry_limit(subenv, lambda name: task(), defer_scene=True)
+    assert attempts == [] and subenv.episode_info_list is None and subenv.instruction is None
+    subenv.create_instruction = lambda: f"scene {subenv.episode_info_list[0]['actual_seed']}"
+    _reset_with_retry_limit(subenv, UnstableScene, env_seed=29)
+    assert [seed for seed, _ in attempts] == [29]
+    assert subenv.episode_info_list == [{"actual_seed": 29}]
+    assert subenv.instruction == subenv.task.instruction == "scene 29"
+
+
 def test_reset_retry_guard_preserves_unstable_seed_selection_and_counters():
     subenv, _, attempts, closed = retry_fixture([UnstableScene("unstable")])
     _reset_with_retry_limit(subenv, UnstableScene, env_seed=11, max_attempts=3)

@@ -233,7 +233,8 @@ def _install_final_observation_capture(venv, update_obs=None):
         subenv._fb2_final_observation_only = True
 
 
-def _setup_task_with_retry_limit(subenv, class_decorator, max_attempts=RESET_ATTEMPTS):
+def _setup_task_with_retry_limit(subenv, class_decorator, max_attempts=RESET_ATTEMPTS,
+                                 *, defer_scene=False):
     """Preserve RoboTwin setup's seed order but expose persistent failures.
 
     The pinned upstream setup_task silently catches every Exception forever.
@@ -244,6 +245,13 @@ def _setup_task_with_retry_limit(subenv, class_decorator, max_attempts=RESET_ATT
     subenv.task = class_decorator(subenv.task_name)
     with subenv.global_lock:
         with subenv.lock:
+            if defer_scene:
+                # The owned reset below derives language from the actual reset's
+                # get_info. A throwaway setup scene supplies no remaining input.
+                # Leave it explicitly unavailable until a successful real reset.
+                subenv.episode_info_list = None
+                subenv.instruction = None
+                return
             first_seed = subenv.env_seed
             last_error = None
             for trial_seed in range(first_seed, first_seed + max_attempts):
@@ -316,15 +324,20 @@ def _reset_with_retry_limit(subenv, unstable_error, env_seed=None,
             ) from last_error
 
 
-def _install_reset_retry_limit():
+def _install_reset_retry_limit(*, defer_scene=False):
     """Patch only this process; external pinned source files remain unchanged."""
     from robotwin.envs import vector_env
 
+    if type(defer_scene) is not bool:
+        raise ValueError("Require an explicit boolean scene-setup profile")
     if getattr(vector_env.SubEnv, "_fb2_reset_attempts", None) == RESET_ATTEMPTS:
+        if getattr(vector_env.SubEnv, "_fb2_defer_setup_scene", False) != defer_scene:
+            raise RuntimeError("Select scene setup before construction in a fresh simulator process")
         return
 
     def setup_task(subenv):
-        return _setup_task_with_retry_limit(subenv, vector_env.class_decorator)
+        return _setup_task_with_retry_limit(subenv, vector_env.class_decorator,
+                                           defer_scene=defer_scene)
 
     def reset(subenv, env_seed=None):
         return _reset_with_retry_limit(subenv, vector_env.UnStableError, env_seed)
@@ -332,6 +345,7 @@ def _install_reset_retry_limit():
     vector_env.SubEnv.setup_task = setup_task
     vector_env.SubEnv.reset = reset
     vector_env.SubEnv._fb2_reset_attempts = RESET_ATTEMPTS
+    vector_env.SubEnv._fb2_defer_setup_scene = defer_scene
 
 
 def _sha256(path):
