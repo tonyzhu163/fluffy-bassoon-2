@@ -1,7 +1,8 @@
 """Core environment accounting; run on allocated Linux CPU resources."""
 import pytest
+from types import SimpleNamespace
 
-from fluffy_bassoon.rl.robotwin_execution import chunk_execution
+from fluffy_bassoon.rl.robotwin_execution import chunk_execution,install_accounted_controller
 
 
 def measured(completed, partial, physics, *, requested=4):
@@ -47,3 +48,50 @@ def test_missing_or_impossible_execution_is_never_used_as_a_transition(info):
 def test_duration_uses_a_real_scene_timestep(dt):
     with pytest.raises(ValueError):
         chunk_execution(measured(4, 0, 20), requested_targets=4, timestep_seconds=dt)
+
+
+class Task:
+    def __init__(self, result):
+        self.result = result
+        self.scene = SimpleNamespace(get_timestep=lambda: .004000000189989805)
+
+    def gen_sparse_reward_data(self, actions, *, collect_obs=False):
+        raise AssertionError('The class controller must remain untouched')
+
+
+CONTROLLER = compile('''def gen_sparse_reward_data(self, actions, *, collect_obs=False):
+    self.physical_actions = actions
+    self.full_observations = collect_obs
+    return self.result
+''', '<passively measured native boundary>', 'exec')
+
+
+@pytest.mark.parametrize('collect_obs', [False, True])
+def test_instance_accounting_preserves_commands_feedback_and_native_masks(collect_obs):
+    info = measured(1, 1, 7)
+    if collect_obs:
+        info['executed_action_count'] = 2
+    result = ([1.], [True], [False], info)
+    task = Task(result)
+    original = Task.gen_sparse_reward_data
+    actions = [[.1] * 14 for _ in range(4)]
+    install_accounted_controller(task, CONTROLLER, metadata=True)
+    assert task.gen_sparse_reward_data(actions, collect_obs=collect_obs) is result
+    assert task.physical_actions is actions and task.full_observations == collect_obs
+    assert Task.gen_sparse_reward_data is original
+    assert ('executed_action_count' in info) == collect_obs
+    assert info['fb2_measured_valid_target_mask'] == (True, True, False, False)
+    assert info['fb2_physics_duration_seconds'] == 7 * task.scene.get_timestep()
+    # Rebinding after a reset must use the original class globals each time.
+    install_accounted_controller(task, CONTROLLER, metadata=True)
+    assert task.gen_sparse_reward_data(actions) is result
+
+
+def test_instance_accounting_keeps_terminal_noop_duration_zero():
+    info = measured(0, 0, 0)
+    task = Task(([0.], [True], [False], info))
+    install_accounted_controller(task, CONTROLLER, metadata=True)
+    task.gen_sparse_reward_data([[0.] * 14 for _ in range(4)])
+    assert info['fb2_physics_duration_seconds'] == 0
+    assert not any(info['fb2_measured_valid_target_mask'])
+    assert 'executed_action_count' not in info

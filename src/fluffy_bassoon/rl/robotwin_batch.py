@@ -4,19 +4,17 @@ The same API serves residual training and evaluation. Physics never crosses a
 worker's owning thread; model work stays in the parent. Native batching is a
 declared numerical condition, not an assertion of singleton action equivalence.
 """
-import ast
 from dataclasses import asdict
 import hashlib
 from pathlib import Path
 import shutil
 import subprocess
 import time
-from types import MethodType
 
 import numpy as np
 import torch
 
-from .robotwin_execution import chunk_execution
+from .robotwin_execution import chunk_execution,load_accounted_controller,install_accounted_controller
 from .robotwin_motor import case_noise,stack_public_observations
 from .robotwin_production_process import ProductionSimulatorPool,_NativeSimulator,_cpu_tree
 
@@ -47,13 +45,7 @@ class FastMeasuredSimulator(_NativeSimulator):
     def __init__(self,config):
         super().__init__(config)
         options = config['worker_options'];path = Path(options['controller_source'])
-        if _sha(path) != options['controller_sha256']:
-            raise ValueError('Job-owned controller source changed')
-        nodes = [node for node in ast.walk(ast.parse(path.read_text()))
-                 if isinstance(node,ast.FunctionDef) and node.name == 'gen_sparse_reward_data']
-        if len(nodes) != 1:
-            raise ValueError('Require exactly one qualified native controller method')
-        self._controller = compile(ast.Module(body=nodes,type_ignores=[]),str(path),'exec')
+        self._controller = load_accounted_controller(path, options['controller_sha256'])
 
     def _environment_config(self,task,seed,limit):
         cfg = super()._environment_config(task,seed,limit)
@@ -67,9 +59,7 @@ class FastMeasuredSimulator(_NativeSimulator):
     def reset(self,task,seed):
         raw,info = super().reset(task,seed)
         native = self.env.venv.envs[0].task
-        original = type(native).gen_sparse_reward_data
-        namespace = dict(original.__globals__);exec(self._controller,namespace)
-        native.gen_sparse_reward_data = MethodType(namespace['gen_sparse_reward_data'],native)
+        install_accounted_controller(native, self._controller)
         from .robotwin_noise import _observation_hash
         info.update(public_observation_sha256=_observation_hash(raw),scene=native.get_info(),
             controller='native fast with passive execution accounting',

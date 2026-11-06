@@ -4,9 +4,54 @@ The pinned fast controller normally reports requested targets. The passive
 accounting patch adds a separate field without changing RLinf's loss masks.
 This reader never substitutes requested counts for missing measurements.
 """
+import ast
 from dataclasses import dataclass
+import hashlib
 from math import isfinite
 from numbers import Integral
+from pathlib import Path
+from types import MethodType
+
+
+def load_accounted_controller(source, expected_sha256):
+    """Compile the qualified job-owned method without importing another task."""
+    source = Path(source)
+    payload = source.read_bytes()
+    if hashlib.sha256(payload).hexdigest() != expected_sha256:
+        raise ValueError('Job-owned controller source changed')
+    nodes = [node for node in ast.walk(ast.parse(payload))
+             if isinstance(node, ast.FunctionDef) and node.name == 'gen_sparse_reward_data']
+    if len(nodes) != 1:
+        raise ValueError('Require exactly one qualified native controller method')
+    return compile(ast.Module(body=nodes, type_ignores=[]), str(source), 'exec')
+
+
+def install_accounted_controller(task, controller, *, metadata=False):
+    """Bind passive accounting to this task instance, including recreated scenes.
+
+    Native reward/termination and executed_action_count semantics are retained.
+    Optional extra fields let RLinf carry physical duration and delivered masks
+    through its ordinary info dictionary in both training and evaluation.
+    """
+    original = type(task).gen_sparse_reward_data
+    namespace = dict(original.__globals__)
+    exec(controller, namespace)
+    native = MethodType(namespace['gen_sparse_reward_data'], task)
+    if not metadata:
+        task.gen_sparse_reward_data = native
+        return
+
+    def measured(instance, chunk_actions, *args, **kwargs):
+        result = native(chunk_actions, *args, **kwargs)
+        info = result[3]
+        execution = chunk_execution(info, requested_targets=len(chunk_actions),
+                                    timestep_seconds=float(instance.scene.get_timestep()))
+        info['fb2_physics_timestep_seconds'] = execution.timestep_seconds
+        info['fb2_physics_duration_seconds'] = execution.duration_seconds
+        info['fb2_measured_valid_target_mask'] = execution.valid_target_mask
+        return result
+
+    task.gen_sparse_reward_data = MethodType(measured, task)
 
 
 @dataclass(frozen=True)
