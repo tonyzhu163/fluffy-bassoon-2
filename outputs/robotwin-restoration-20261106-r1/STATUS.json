@@ -1,7 +1,7 @@
 {
   "owner_chat": "01a1b024-f4ac-7181-af87-bac9fbee72bb",
-  "status": "cpu_accounting_qualified_gpu_validation_pending",
-  "new_gpu_jobs_launched": 0,
+  "status": "git_deployed_endpoint_export_queued",
+  "new_gpu_jobs_launched": 1,
   "new_gpu_hours": 0,
   "prior_robotwin_cumulative_cap_gpu_hours": 50,
   "prior_cost_and_reservations_must_be_refreshed": true,
@@ -21,17 +21,31 @@
     "chrome_apple_events_javascript": "disabled; preference left unchanged",
     "direct_public_github_https": "connection reset",
     "github_connector_read": "working",
-    "tailscale": "stopped; not changed"
+    "tailscale": "stopped; not changed",
+    "direct_baige_github_https": "working; fetched c464bdef directly, bundle not required",
+    "direct_mac_github_ssh": "working"
   },
   "baige": {
     "main_repository": "/mowenjie/fluffy-bassoon-2/repo",
-    "main_snapshot": "ee6c2e848",
+    "main_snapshot": "ee6c2e84838d69b6e5c39a68a10080b9b41794da",
     "origin_is_old_local_bundle": true,
-    "free_gib_approx": 359,
+    "free_gib_approx": 359.08984375,
     "existing_controller_diagnostic": "64/64 complete; chunk_seen3/16, single_seen3/16, chunk_taskname2/16, single_taskname0/16",
-    "endpoint_export_state": "only export01 exists; corrected retry pending",
+    "endpoint_export_state": "export02 job-ru8yx0o0eqsg queued at19:19:45; zero SGD; sourcec464bdef",
     "cpu_output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-restoration-20261106-r1/cpu01",
-    "restored_prefix_json_sha256": "4817685d1b91580568089006e4ccad22c7c3b2b0ab6a164a1e8425c2072e351b"
+    "restored_prefix_json_sha256": "4817685d1b91580568089006e4ccad22c7c3b2b0ab6a164a1e8425c2072e351b",
+    "qualification_source": "/mowenjie/fluffy-bassoon-2/sources/robotwin-restoration-20261106-qual01",
+    "qualification_commit": "c464bdefefbc38574fcd5b65cbf42bcb615d5849",
+    "qualification_source_clean": true,
+    "main_divergence_vs_github": {
+      "local_only": 1,
+      "github_only": 2112,
+      "main_preserved": true
+    }
   },
-  "cpu_qualification": "CPU01.json"
+  "cpu_qualification": "CPU01.json",
+  "git_deployment": "GIT-DEPLOYMENT.json",
+  "active_gpu_reservation_seconds": 7440,
+  "new_gpu_hours_note": "Queued allocation; actual usage pending closeout",
+  "budget_reconciliation": "BUDGET-RECONCILIATION.json"
 }
