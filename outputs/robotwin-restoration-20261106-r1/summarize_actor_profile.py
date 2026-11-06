@@ -7,9 +7,6 @@ import json
 from pathlib import Path
 
 
-def read(path):
-    return json.loads(path.read_text()) if path.exists() else None
-
 
 def comparable(rows):
     result = deepcopy(rows)
@@ -18,24 +15,26 @@ def comparable(rows):
     return result
 
 
-def summarize(root):
+def summarize(root, recovery_root=None):
     files = {}
 
-    def record(relative):
-        path = root / relative
-        value = read(path)
-        if value is not None:
-            files[relative] = hashlib.sha256(path.read_bytes()).hexdigest()
-        return value
+    def record(relative, *, base=None):
+        path = (root if base is None else base) / relative
+        if not path.exists():
+            return None
+        payload = path.read_bytes()
+        files[str(path)] = hashlib.sha256(payload).hexdigest()
+        return json.loads(payload)
 
     probe = record('gpu-probe.json')
     profile = record('profile/RESULT.json')
     preserved = record('CHECKPOINT-PRESERVED.json')
-    restore = record('restore/RESULT.json')
-    actual = record('restore/RESTORE-ACTUAL.json')
+    restore = record('restore/RESULT.json', base=recovery_root)
+    actual = record('restore/RESTORE-ACTUAL.json', base=recovery_root)
     expected = record('profile/RECOVERY-EXPECTED.json')
     report = dict(checked_utc=datetime.now(timezone.utc).isoformat(),
         source_commit=None if profile is None else profile['source_commit'],
+        recovery_source_commit=None if restore is None else restore['source_commit'],
         scientific_training=False, global_batch_size=2048,
         device_probe_passed=probe is not None and probe['status'] == 'passed' and len(probe['devices']) == 4,
         profile_status=None if profile is None else profile['status'],
@@ -89,5 +88,6 @@ def summarize(root):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('root', type=Path)
+    parser.add_argument('--recovery-root', type=Path)
     args = parser.parse_args()
-    print(json.dumps(summarize(args.root), indent=2, allow_nan=False))
+    print(json.dumps(summarize(args.root, args.recovery_root), indent=2, allow_nan=False))
