@@ -34,11 +34,18 @@ from pathlib import Path
 code,out=map(Path,sys.argv[1:]);p=json.loads((code/'outputs/robotwin-restoration-20261106-r1/EXECUTION-QUAL01-CONTRACT.json').read_text())
 assert p['closed_conservative_gpu_seconds']+sum(p['reserved_gpu_seconds'].values())<=180000
 assert p['reserved_gpu_seconds']['execution_qual01']==3660
-assert shutil.disk_usage(out).free>=350*2**30
+exports=Path('/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-endpoint-readout-20261106-r1/export02')
+export_used=sum(f.stat().st_blocks*512 for f in exports.rglob('*') if f.is_file())
+assert export_used<=24*2**30
+# Reserve only future export growth; bytes already on disk are in disk_usage.
+# Keep the entire future readout allowance and this check's own allowance.
+required=(310+12+4)*2**30+max(0,24*2**30-export_used)
+assert shutil.disk_usage(out).free>=required
 probe=out/'write-probe'
 with probe.open('xb') as f:f.write(b'robotwin-execution-qualification\n');f.flush();os.fsync(f.fileno())
 probe.unlink()
 (out/'admission.json').write_text(json.dumps(dict(free_gib=shutil.disk_usage(out).free/2**30,
+    required_free_gib=required/2**30,export_used_gib=export_used/2**30,
     worst_reserved_gpu_seconds=p['closed_conservative_gpu_seconds']+sum(p['reserved_gpu_seconds'].values()),
     optimizer_updates=0,model_sampler_calls=0,write_fsync=True))+'\n')
 PY
