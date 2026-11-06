@@ -48,3 +48,13 @@ a reset instrumentation harness error stopped motor02 before batching.
 backpressure and error propagation. Native rollout and environment workers
 share its opt-in `native_pilot.bounded_io` path in both train and eval; Linux
 checkpoint/trace checks and future production enablement remain pending.
+
+CPUIO01 passed10 allocated-Linux checkpoint/trace cases at771f16a5,
+including both native training/evaluation writes. Motor03 completed3 real
+Motus episodes and the full1..256 sweep. Every size fit with the operating
+reserve, but B2..256 violated the precommitted1e-3 singleton action tolerance
+(maxabs0.00747..0.09819). B1 remains selected. B256 measured56.78GiB reserved
+and33.95GiB free; this is the largest tested size, not a capacity ceiling.
+Do not call larger native batching a transparent equivalent optimization.
+BATCHMATH01 compares native batch/repeat/adapter and first-row preprocessing
+before any new numerical protocol or execution profile is selected.

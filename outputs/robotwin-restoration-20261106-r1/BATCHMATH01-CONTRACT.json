@@ -1,0 +1,27 @@
+{
+  "purpose": "Localize native-versus-adapter batch drift with identical real inputs, checkpoint, precision and explicit noise; no relaxation of old singleton gate",
+  "gpus": 1,
+  "scheduler_minutes": 15,
+  "reserved_gpu_seconds": 960,
+  "closed_conservative_gpu_seconds": 148360,
+  "all_worst_gpu_seconds": 149320,
+  "hard_cap_gpu_seconds": 180000,
+  "other_and_floor_gib": 286,
+  "maximum_output_gib": 0.5,
+  "minimum_free_gib": 286.5,
+  "model_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+  "norm_stats_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+  "input_panel": "first64 exact inputs and addressed initial noise from completed motor03",
+  "batch_candidates": [
+    1,
+    2,
+    8,
+    32,
+    64
+  ],
+  "native_adapter_tolerance": 1e-05,
+  "optimizer_updates": 0,
+  "simulator_actions": 0,
+  "runtime_basis": "completed motor03 actual-device probe and3 real episodes; this job is frozen tensor diagnosis, not another success evaluation",
+  "automatic_retries": false
+}
