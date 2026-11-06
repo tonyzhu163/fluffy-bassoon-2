@@ -1,6 +1,6 @@
 {
   "owner_chat": "01a1b024-f4ac-7181-af87-bac9fbee72bb",
-  "status": "native_motus_launch_failure_closed_corrected_retry_prepared",
+  "status": "corrected_native_motus_prefix02_admitted_pending_submit",
   "new_gpu_jobs_launched": 12,
   "prior_robotwin_cumulative_cap_gpu_hours": 50,
   "prior_cost_and_reservations_must_be_refreshed": false,
@@ -53,14 +53,14 @@
     "actor_storage": "No worker PFS outputs: verified project-only BOS signals/state plus job-local staging/caches; source/model/inputs read-only.",
     "closed_export_archive": "Complete2 files,15551132398 bytes recoverable with full cold+local readback;2217 files protected; no GPU charge.",
     "actor_profile_state": "Capacity complete at7df04cf7 and fresh recovery at5b511ed6 exact. Largest/fastest safe tested actor micro256/accum2/global2048;62.283GiB reserved/31.748GiB free,15.717s steady.512 rejected. Both allocations released; no activeGPU.",
-    "native_teacher_state": "PPO prefix01 job-pq7s6e5bb1ne stopped/released05:16:17 after pre-model TASK_OUT export error.4-GPU probe/1TiB host checks passed; zero model/simulator/SGD work. Original8f6d0359 worktree retained immutable. Corrected fresh prefix02 pending exact shell-export check."
+    "native_teacher_state": "Fresh prefix02 admitted after exact Linux shell-to-Python export check passed at56f26d8e. Native model/learner/worker runtime bytes still CPU-qualified95e4eeec. Source01 remains8f6d0359 immutable; its failed job released05:16:17 and976GPU-s charged. Retry template has automatic fault retries disabled."
   },
   "cpu_qualification": "CPU01.json",
   "git_deployment": "GIT-DEPLOYMENT.json",
   "active_gpu_reservation_seconds": 0,
   "new_gpu_hours_note": "All jobs released;154380GPU-s=42.88333GPUh cumulative;25620GPU-s remain under180000 cap. Planned retry15600GPU-s gives169980 worst.",
   "budget_reconciliation": "BUDGET-RECONCILIATION.json",
-  "last_checked_shanghai": "2026-11-07T05:16:17+08:00",
+  "last_checked_shanghai": "2026-11-07T05:20:00+08:00",
   "cumulative_closed_conservative_gpu_seconds": 154380,
   "worst_closed_plus_reserved_gpu_seconds": 154380,
   "execution_qualification": "EXECUTION01-COMPLETE.json",
@@ -98,5 +98,6 @@
   "native_teacher_contract": "MOTUSPPO02-CONTRACT.json",
   "native_teacher_cpu_qualification": "CPUMOTUS03.json",
   "planned_teacher_gpu_reservation_seconds": 15600,
-  "native_teacher_failed_attempt": "MOTUSPPO01-CLOSEOUT.json"
+  "native_teacher_failed_attempt": "MOTUSPPO01-CLOSEOUT.json",
+  "native_teacher_launch_qualification": "CPUEXPORT01.json"
 }
