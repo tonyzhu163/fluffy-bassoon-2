@@ -1,5 +1,5 @@
 {
-  "status": "running_startup",
+  "status": "initial_dev_complete",
   "cluster": "Baige Pro6K",
   "job_id": "job-rq59oi02rjzt",
   "job_name": "mwj_1107_robotwin_motus_ppo_prefix4",
@@ -22,7 +22,23 @@
   "worst_closed_plus_reserved_gpu_seconds": 173092,
   "hard_cap_gpu_seconds": 180000,
   "creation_to_release_watchdog_shanghai": "2026-11-07T07:35:32+08:00",
-  "last_checked_shanghai": "2026-11-07T06:33:50+08:00",
+  "last_checked_shanghai": "2026-11-07T06:41:25+08:00",
   "proof": "motusppo04-launch.png",
-  "progress": "Scheduler Running; startup and actual collection/SGD being checked; no learning result yet"
+  "progress": "Initial DEV and checkpoint completed; monitoring actual training collection and pre-SGD audits.",
+  "initial_dev": {
+    "completed": true,
+    "success_once": 0.25,
+    "return_value": 0.25,
+    "num_trajectories": 16,
+    "episode_len": 192.0,
+    "optimizer_updates": 0
+  },
+  "checkpoint0": {
+    "completed": true,
+    "data_bytes": 9159451026,
+    "seconds": 95.2791247619316,
+    "manifest_sha256": "aadf337e239d36a978d166b5f024e8fd0da5f2a5e5410e5b0dc604a68456d568",
+    "full_cold_readback": true,
+    "full_local_stageback": true
+  }
 }

@@ -130,3 +130,14 @@ flattened OpenVLA tokens. It was closed/charged before model/scene/SGD work.
 reference extension at the native shuffled-training hook; core CPU and actual
 FSDP qualification remain required. Enable eval-worker construction with native
 val_check_interval1 while the owned runner suppresses automatic duplicate panels.
+
+The shared original RoboCasa `json_metrics` conversion now lives in
+`meta_rl/rlinf_native_ppo.py` and is used by both simulator runtimes and every
+native RoboTwin evaluation mode. CPUMETRIC03 checks the actual Motus DEV
+writer with native aggregation, exact16 trajectory coverage, rejection of15
+trajectories and nonfinite metrics; these are run-local checks.
+DEV03-TRACE-AUDIT independently reads all24 real evaluation chunks across16
+cases:2838/3072 proposed targets delivered,2 partial targets,44335 physics
+steps and original pre-conversion reward/termination/truncation retained even
+through auto-reset. Four cases had positive raw rewards; no PPO update had
+occurred, so this is execution/feedback evidence and a baseline only.
