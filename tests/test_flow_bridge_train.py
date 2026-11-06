@@ -7,7 +7,7 @@ import torch
 from fluffy_bassoon.meta_rl.flow_history import FlowBridgeConfig, HistoryFlowSteeringPolicy
 from fluffy_bassoon.meta_rl.flow_bridge_train import (
     bridge_update, flow_batch_loss, query_context, query_weights, restore_resume,
-    save_resume, validate_batches)
+    save_resume, steering_effect, steering_gate, validate_batches)
 
 
 class Motor(torch.nn.Module):
@@ -125,3 +125,31 @@ def test_native_validation_keeps_required_graph_without_backward_or_updates(inte
     assert all(torch.equal(v, policy.state_dict()[k]) for k, v in before.items())
     assert all(p.grad is None for p in policy.parameters())
     assert all(p.grad is None for p in motor.parameters())
+
+
+@pytest.mark.parametrize('interface', ['kv_bridge', 'velocity_bridge'])
+def test_steering_gate_rejects_native_parity_and_admits_fitted_history_steering(interface):
+    policy, motor, batch, prepare = fixture(interface)
+    batch['starts'][2] = True
+    gate = dict(minimum_loss_reduction=1e-3, minimum_relative_steering=1e-3, minimum_history_fraction=1e-3)
+    initial = steering_effect(policy, motor, [batch], prepare)
+    assert initial['queries'] == 4
+    assert initial['steering_rms'] == 0. and initial['loss_reduction'] == pytest.approx(0., abs=1e-7)
+    assert initial['native_loss'] == pytest.approx(initial['steered_loss'])
+    assert not steering_gate(initial, **gate)['passed']
+    optimizer = torch.optim.AdamW(policy.parameters(), lr=3e-2, weight_decay=0.)
+    batch['weights'] = torch.ones(4)
+    for _ in range(30):
+        bridge_update(policy, motor, optimizer, batch, prepare, execution_batch_size=4)
+    fitted = steering_effect(policy, motor, [batch], prepare)
+    assert fitted['steered_loss'] < fitted['native_loss'] and fitted['relative_steering'] > 0
+    assert steering_gate(fitted, **dict(gate, minimum_history_fraction=0.))['passed']
+    history = steering_gate(fitted, **gate)
+    if interface == 'velocity_bridge':
+        assert history['passed']
+    else:
+        # This toy KV fit learns a context-independent edit; the gate must say so.
+        assert not history['passed'] and history['failures'][0].startswith('history_fraction')
+    assert all(p.grad is None for p in motor.parameters())
+    with pytest.raises(ValueError, match='threshold'):
+        steering_gate(fitted, **dict(gate, minimum_history_fraction=float('nan')))

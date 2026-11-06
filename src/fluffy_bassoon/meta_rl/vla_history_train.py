@@ -66,13 +66,19 @@ def parser():
 
 
 def advance_plateau(state, loss, update, *, minimum_updates, patience, relative_delta):
-    """Track material held-out improvement; state survives operational resumes."""
+    """Track material held-out improvement; state survives operational resumes.
+
+    An improvement is material when it exceeds ``relative_delta`` times the
+    reference loss magnitude. The threshold is truly relative: flooring the
+    scale at 1 made it an absolute 1e-3 for flow losses near 0.13 (about 0.8%),
+    which stopped steadily improving fits after a few percent of one epoch.
+    """
     if (not math.isfinite(loss) or minimum_updates < 1 or patience < 1
             or not math.isfinite(relative_delta) or relative_delta < 0):
         raise ValueError("Invalid validation plateau criterion")
     state = dict(state)
     reference = state.get("reference")
-    improved = reference is None or reference - loss > relative_delta * max(1., abs(reference))
+    improved = reference is None or reference - loss > relative_delta * max(abs(reference), 1e-12)
     if improved:
         state.update(reference=loss, stale_checks=0)
     elif update >= minimum_updates:

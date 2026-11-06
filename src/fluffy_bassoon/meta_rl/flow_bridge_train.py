@@ -16,7 +16,7 @@ from .warmstart import atomic_save
 RESUME_FORMAT = "native_flow_history_bridge_resume_v1"
 
 
-def query_context(policy, batch):
+def query_context(policy, batch, *, mode="full"):
     indices = batch["query_rel"]
     width = batch["tokens"].shape[1]
     if (indices.shape != (width,) or indices.dtype != torch.long
@@ -25,7 +25,7 @@ def query_context(policy, batch):
         raise ValueError("Require one valid causal query per history window")
     end = int(indices.max()) + 1
     contexts = policy.encode_sequence(batch["tokens"][:end], batch["valid"][:end],
-                                      batch["starts"][:end], mode="full")
+                                      batch["starts"][:end], mode=mode)
     return contexts[indices, torch.arange(width, device=indices.device)]
 
 
@@ -130,3 +130,75 @@ def validate_batches(policy, model, batches, prepare_queries):
     if not losses or not all(math.isfinite(x) for x in losses):
         raise FloatingPointError("Require finite held-out native flow losses")
     return sum(losses) / len(losses)
+
+
+@torch.enable_grad()
+def steering_effect(policy, model, batches, prepare_queries):
+    """Measure how far fitted steering moves the frozen expert on held-out queries.
+
+    Compares, at identical noisy actions and timesteps over active coordinates:
+    the unsteered native velocity, the steered velocity with full history, and
+    the steered velocity with episode-reset history. Losses are unweighted
+    flow-matching MSE against the action-derived target velocity. Run this
+    before any simulator readout: a fit whose steering is negligible will only
+    re-measure the native policy.
+    """
+    if model.training or any(p.requires_grad for p in model.parameters()):
+        raise ValueError("Require an eval-mode motor with every parameter frozen")
+    policy.eval()
+    active = policy.config.active_action_dim
+    sums = dict(native_loss=0., steered_loss=0., reset_loss=0., steering_sq=0.,
+                native_sq=0., history_sq=0.)
+    elements = 0
+    for batch in batches:
+        observation, cache, mask = prepare_queries(batch["query_indices"])
+        target, noise = batch["target_actions"].detach(), batch["noise"].detach()
+        tau = batch["timesteps"][:, None, None].to(target.dtype)
+        noisy = (1. - tau) * target + tau * noise
+        goal = (noise - target)[..., :active]
+        with torch.no_grad():
+            suffix = model.run_suffix(observation, noisy, batch["timesteps"].detach(), cache, mask)
+            native = model.velocity_from_suffix(suffix)[..., :active].float()
+        steered = {}
+        for mode in ("full", "episode"):
+            context = query_context(policy, batch, mode=mode)
+            steered[mode] = policy.predict_velocity(model, observation, noisy, batch["timesteps"],
+                cache, mask, context)[..., :active].detach().float()
+        full, reset = steered["full"], steered["episode"]
+        sums["native_loss"] += float((native - goal).square().sum())
+        sums["steered_loss"] += float((full - goal).square().sum())
+        sums["reset_loss"] += float((reset - goal).square().sum())
+        sums["steering_sq"] += float((full - native).square().sum())
+        sums["native_sq"] += float(native.square().sum())
+        sums["history_sq"] += float((full - reset).square().sum())
+        elements += goal.numel()
+    if not elements or not all(math.isfinite(v) for v in sums.values()):
+        raise FloatingPointError("Require finite held-out steering measurements")
+    native_loss, steered_loss = sums["native_loss"] / elements, sums["steered_loss"] / elements
+    steering_rms = math.sqrt(sums["steering_sq"] / elements)
+    return dict(
+        queries=sum(len(b["query_rel"]) for b in batches),
+        native_loss=native_loss, steered_loss=steered_loss, reset_loss=sums["reset_loss"] / elements,
+        loss_reduction=(native_loss - steered_loss) / native_loss if native_loss > 0 else 0.,
+        steering_rms=steering_rms,
+        relative_steering=steering_rms / max(math.sqrt(sums["native_sq"] / elements), 1e-12),
+        history_fraction=math.sqrt(sums["history_sq"] / elements) / max(steering_rms, 1e-12),
+    )
+
+
+def steering_gate(effect, *, minimum_loss_reduction, minimum_relative_steering,
+                  minimum_history_fraction):
+    """Admit a fitted candidate to simulator readout only if steering is material.
+
+    Thresholds are contract choices, recorded before seeing readout outcomes.
+    ``history_fraction`` is the full-versus-reset velocity difference relative
+    to the total steering; near zero means history cannot change behaviour.
+    """
+    checks = dict(loss_reduction=minimum_loss_reduction,
+                  relative_steering=minimum_relative_steering,
+                  history_fraction=minimum_history_fraction)
+    if any(not math.isfinite(v) or v < 0 for v in checks.values()):
+        raise ValueError("Require finite nonnegative gate thresholds")
+    failures = [f"{key} {effect[key]:.6g} < {minimum:.6g}"
+                for key, minimum in checks.items() if not effect[key] >= minimum]
+    return dict(passed=not failures, failures=failures, thresholds=checks)

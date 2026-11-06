@@ -87,6 +87,22 @@ def test_validation_plateau_counts_material_improvement_and_resumes_exactly():
     assert resumed['converged']
 
 
+def test_validation_plateau_is_relative_for_small_losses():
+    from fluffy_bassoon.meta_rl.vla_history_train import advance_plateau
+    options = dict(minimum_updates=1, patience=10, relative_delta=.001)
+    # Recorded KV-AD tail: a steady ~0.1% decline per check near loss 0.13 is still learning.
+    losses = [0.130915, 0.131028, 0.130977, 0.130731, 0.130536, 0.130456,
+              0.130450, 0.130268, 0.130118, 0.130038, 0.129984]
+    state = {}
+    for update, loss in enumerate(losses, 1):
+        state = advance_plateau(state, loss, update, **options)
+    assert not state['converged'] and state['reference'] < 0.1301
+    flat = dict(state)
+    for update in range(20, 30):
+        flat = advance_plateau(flat, state['reference'] * (1 - 5e-4), update, **options)
+    assert flat['converged']
+
+
 def test_static_query_is_identical_after_actual_support_feedback():
     torch.manual_seed(9)
     policy=HistoryNoisePolicy(HistoryConfig(3,2,width=8,layers=1,heads=2,context_length=4))
