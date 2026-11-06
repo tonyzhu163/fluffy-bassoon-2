@@ -17,7 +17,7 @@ from rlinf.workers.actor.embodied_fsdp_actor_worker import EmbodiedFSDPActor
 from rlinf.workers.env.env_worker import EnvWorker
 from rlinf.workers.rollout.hf.huggingface_worker import MultiStepRolloutWorker
 
-from .rlinf_native_ppo import (ActionJournal, cpu_tree, retained_batch, restore_rng, sha,
+from .rlinf_native_ppo import (ActionJournal, cpu_tree, json_metrics, retained_batch, restore_rng, sha,
     snapshot_rng, tensor_hash, validate_recipe, write)
 from .tensor_archive import write_tensor
 
@@ -610,7 +610,7 @@ class PilotRunner(EmbodiedRunner):
             self.rollout.pilot_evaluation_iteration(0).wait()
             self.env.pilot_phase('existing').wait()
             metrics = self.evaluate()
-            self._pilot_write('existing-evaluation.json', dict(completed=True, metrics=metrics,
+            self._pilot_write('existing-evaluation.json', dict(completed=True, metrics=json_metrics(metrics),
                 optimizer_updates=0, model_path=self.cfg.actor.model.model_path))
             self._finish_run()
             return
@@ -624,7 +624,7 @@ class PilotRunner(EmbodiedRunner):
             self.env.pilot_phase('before').wait()
             self.rollout.pilot_evaluation_iteration(0).wait()
             before = self.evaluate()
-            self._pilot_write('before-evaluation.json', dict(completed=True, global_step=0, metrics=before))
+            self._pilot_write('before-evaluation.json', dict(completed=True, global_step=0, metrics=json_metrics(before)))
             # Isolate collection RNG from the extra baseline evaluation. The
             # same rollout sampling RNG is restored for the after panel below.
             for group in (self.actor, self.rollout, self.env):
@@ -641,5 +641,5 @@ class PilotRunner(EmbodiedRunner):
         self.rollout.pilot_evaluation_iteration(self.global_step).wait()
         after = self.evaluate()
         pairing = self.env.pilot_pair_receipt().wait()
-        self._pilot_write('after-evaluation.json', dict(completed=True, global_step=2, metrics=after,
+        self._pilot_write('after-evaluation.json', dict(completed=True, global_step=2, metrics=json_metrics(after),
             pairing=pairing, model_selection='fixed iteration2', source6_pretraining_admission=False))
