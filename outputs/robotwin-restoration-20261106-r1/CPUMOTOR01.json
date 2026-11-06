@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "source_commit": "1b0caae384a09b4ee8d7f42da09cc24ef67ad26a",
+  "remote_output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-restoration-20261106-r1/cpumotor01",
+  "host": "aibox-rffe453e3884-5f96c78b88-rtvhb",
+  "distinct_core_tests_passed": 63,
+  "motor_tests_passed": 11,
+  "accounting_tests_passed": 16,
+  "native_controller_tests_passed": 36,
+  "invocations": [
+    {
+      "exit_code": 0,
+      "passed": 27,
+      "skipped": 36,
+      "seconds": 61.23,
+      "reason_for_skips": "Native source variables not set in the first invocation; all36 explicitly rerun below"
+    },
+    {
+      "exit_code": 0,
+      "passed": 36,
+      "skipped": 0,
+      "seconds": 0.71,
+      "reference_root": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin",
+      "patched_method_copy": "cpumotor01/native-method"
+    }
+  ],
+  "warning": "Existing dash pytest plugin uses deprecated hook declaration",
+  "real_model_or_accelerator_computation": false
+}

@@ -33,8 +33,8 @@ Implementation checkpoint: `rl/robotwin_motor.py` now provides the shared frozen
 ODE motor for residual train/eval, one native transform/prefix, explicit
 case-addressed initial noise, consumed observation tokens, device-resident
 features and frozen parameter/buffer checks. `tests/test_robotwin_motor.py`
-protects parity and gradient isolation; allocated Linux and real-native GPU
-qualification are pending. The real SAPIEN execution-accounting port passed
+protects parity and gradient isolation; 63 distinct allocated-Linux core checks passed (CPUMOTOR01.json); real-native GPU
+qualification is next. The real SAPIEN execution-accounting port passed
 `EXECUTION01-COMPLETE.json`; it preserves the original fast learner masks.
 This does not yet qualify image equivalence, the Flow-SDE teacher sampler,
 parallel scene throughput or corpus I/O.

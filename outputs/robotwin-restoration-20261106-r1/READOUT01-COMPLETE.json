@@ -1,0 +1,135 @@
+{
+  "status": "complete",
+  "job_id": "job-41cecbbnvkk4",
+  "source_commit": "c181bc728bcc563e59b0fc31f524f5f71508ccf1",
+  "remote_output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-endpoint-readout-20261106-r1/readout01",
+  "result_sha256": "6d5ff18abfa405226ee8b96bc1b7e9f339896c48ace985959f144f24e4bdd375",
+  "scheduler_state": "Succeeded",
+  "created_at_shanghai": "2026-11-06T23:32:47+08:00",
+  "released_at_shanghai": "2026-11-06T23:45:52+08:00",
+  "conservative_creation_to_release_gpu_seconds": 785,
+  "worker_gpu_seconds": 752,
+  "exit_code": 0,
+  "episodes": 48,
+  "requested_controls": 16500,
+  "measured_controls": null,
+  "frozen_parameter_versions_unchanged": true,
+  "calibration_max_abs_actions": {
+    "sft": 0,
+    "ppo40": 0,
+    "grpo40": 0
+  },
+  "calibration_max_abs_logprobs": {
+    "ppo40": 0,
+    "grpo40": 0
+  },
+  "successes_out_of_16": {
+    "sft": 5,
+    "ppo40": 5,
+    "grpo40": 2
+  },
+  "paired_outcomes_order": [
+    "sft",
+    "ppo40",
+    "grpo40"
+  ],
+  "paired_outcomes": [
+    [
+      1,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      1,
+      1,
+      0
+    ],
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      1
+    ]
+  ],
+  "protocol": {
+    "base": "Sidney H50 joint SFT",
+    "trained_endpoints": "independent PPO40/GRPO40 Adam steps",
+    "task": "place_phone_stand",
+    "seed_bank": "same16 precommitted EVAL cases",
+    "horizon": 400,
+    "chunk": 50,
+    "flow_steps": 5,
+    "sde_noise": 0.3,
+    "batch": 1,
+    "controller": "native fast",
+    "prompts": "generated seen",
+    "order": "rotated across3 arms",
+    "optimizer_updates_in_readout": 0
+  },
+  "claim": "Small fixed paired panel: no observed PPO gain; lower GRPO success. Does not establish an improving teacher trace or general benchmark ranking. Informative mixed outcomes remain available for offline objectives.",
+  "proof": "READOUT01-COMPLETE.png"
+}
