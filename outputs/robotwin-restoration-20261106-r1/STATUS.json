@@ -1,7 +1,7 @@
 {
   "owner_chat": "01a1b024-f4ac-7181-af87-bac9fbee72bb",
-  "status": "native_motus_prefix03_admitted_awaiting_submission",
-  "new_gpu_jobs_launched": 13,
+  "status": "native_motus_prefix03_running_startup",
+  "new_gpu_jobs_launched": 14,
   "prior_robotwin_cumulative_cap_gpu_hours": 50,
   "prior_cost_and_reservations_must_be_refreshed": false,
   "plan": "PLAN.md",
@@ -53,16 +53,16 @@
     "actor_storage": "No worker PFS outputs: verified project-only BOS signals/state plus job-local staging/caches; source/model/inputs read-only.",
     "closed_export_archive": "Complete2 files,15551132398 bytes recoverable with full cold+local readback;2217 files protected; no GPU charge.",
     "actor_profile_state": "Capacity complete at7df04cf7 and fresh recovery at5b511ed6 exact. Largest/fastest safe tested actor micro256/accum2/global2048;62.283GiB reserved/31.748GiB free,15.717s steady.512 rejected. Both allocations released; no activeGPU.",
-    "native_teacher_state": "Both failed attempts released. OpenPi reference and raw native feedback qualification complete:29 core cases and full native PPO/GRPO schema. Fresh prefix03 admitted; not yet submitted."
+    "native_teacher_state": "Prefix03 running at2f51830c after29 CPU cases and full native PPO/GRPO schema. Startup GPU/model/scene gates pending; no SGD result yet."
   },
   "cpu_qualification": "CPU01.json",
   "git_deployment": "GIT-DEPLOYMENT.json",
-  "active_gpu_reservation_seconds": 0,
-  "new_gpu_hours_note": "All jobs released;155068GPU-s cumulative,24932GPU-s remain under180000 cap. No GPU active or reserved.",
+  "active_gpu_reservation_seconds": 15600,
+  "new_gpu_hours_note": "155068GPU-s closed +15600 reserved=170668 worst under180000 cap; one active four-GPU job6vgt7ghc6kz3.9332GPU-s remains unreserved.",
   "budget_reconciliation": "BUDGET-RECONCILIATION.json",
-  "last_checked_shanghai": "2026-11-07T05:55:56+08:00",
+  "last_checked_shanghai": "2026-11-07T06:02:04+08:00",
   "cumulative_closed_conservative_gpu_seconds": 155068,
-  "worst_closed_plus_reserved_gpu_seconds": 155068,
+  "worst_closed_plus_reserved_gpu_seconds": 170668,
   "execution_qualification": "EXECUTION01-COMPLETE.json",
   "new_closed_conservative_gpu_hours": 4.1802777777777775,
   "qualified_scope": "Shared frozen Motus ODE at actualB2,2owned SAPIEN processes and physical/intent recovery; native four-rank Flow-SDE actor capacity/replay/frozen gradients, full owned state/RNG and next-update exact recovery. Scientific teacher GAE/value protocol, combined capacity and learned residual performance remain separate gates.",
@@ -97,9 +97,10 @@
   "native_teacher_entry": "motus_teacher_entry.py",
   "native_teacher_contract": "MOTUSPPO03-CONTRACT.json",
   "native_teacher_cpu_qualification": "CPUREPLAY02.json",
-  "planned_teacher_gpu_reservation_seconds": 15600,
+  "planned_teacher_gpu_reservation_seconds": 0,
   "native_teacher_failed_attempt": "MOTUSPPO01-CLOSEOUT.json",
   "native_teacher_launch_qualification": "CPUEXPORT01.json",
   "native_teacher_second_attempt": "MOTUSPPO02-CLOSEOUT.json",
-  "native_openpi_reference_qualification": "CPUREPLAY01.json"
+  "native_openpi_reference_qualification": "CPUREPLAY01.json",
+  "native_teacher_launch": "MOTUSPPO03-LAUNCH.json"
 }
