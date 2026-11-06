@@ -14,6 +14,8 @@ TASK_RUN=$TASK_CODE/outputs/robotwin-sidney-matched-baselines-20261106-r1
 TASK_SHARED=$TASK_CODE/outputs/robotwin-sidney-rlinf-ppo-20261105-r1
 TASK_LIMIT=2640
 source "$TASK_RUN/runtime_environment.sh"
+[[ $(git -C "$REPO_PATH" rev-parse HEAD) == c605b9d55ed93a180119b099e6f836abff293b08 ]]
+[[ -z $(git -C "$REPO_PATH" status --porcelain) ]]
 export TASK_OUT TASK_DEADLINE=$((TASK_STARTED+2640))
 export TASK_LOCAL=/tmp/mwj-robotwin-motus-actorprofile01
 export TASK_COLD=/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/actorprofile01

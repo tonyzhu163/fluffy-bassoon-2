@@ -103,7 +103,9 @@ class MotusBenchmarkActor(PilotActor):
                     mode='train',compute_values=True,rng=rng)
             self._fixture = cpu_tree(dict(forward_inputs=sampled['forward_inputs'],
                 native_logprobs=sampled['prev_logprobs'],native_mean_values=sampled['prev_values'],
-                actions=actions,source_files=files))
+                actions=actions,source_files=files,sampler=dict(kind='fixed real fixture repeated to512 rows',
+                    next_data_cursor=0,constructor_seed=1234,python_seed=50000+self._rank,
+                    gaussian_seed=60000+self._rank,gaussian_generator_state_after=rng.get_state())))
             model.cpu(); del sampled, actions, observations
             write_trace(self._local/f'fixture-rank-{self._rank}.pt.gz', self._fixture)
             gc.collect(); torch.cuda.empty_cache()
