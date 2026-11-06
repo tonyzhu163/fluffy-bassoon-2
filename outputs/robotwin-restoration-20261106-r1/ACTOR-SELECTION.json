@@ -1,0 +1,30 @@
+{
+  "status": "actor_systems_qualified",
+  "profile_source_commit": "7df04cf7981e17323d7b87dfc8c5a063c99c215c",
+  "recovery_source_commit": "5b511ed66aa281789d7ad1629570437250d18683",
+  "selected_micro_batch_size": 256,
+  "world_size": 4,
+  "gradient_accumulation": 2,
+  "global_batch_size": 2048,
+  "measured_steady_update_seconds": 15.71734619140625,
+  "reference_seconds": 14.16642951965332,
+  "reference_amortized_update_seconds": 18.550632095336915,
+  "peak_reserved_gib": 62.283203125,
+  "peak_allocated_gib": 49.20024871826172,
+  "minimum_conservative_free_gib": 31.74774169921875,
+  "reserve_gib": 8,
+  "rejected_micro512_free_gib": 0.00946044921875,
+  "full_boundary_and_next_update_recovery_exact": true,
+  "reference_rule": "Recompute unchanged-policy logprobs for the actual execution partition once before five epochs; do not use a different batch partition as an exact native likelihood reference.",
+  "scientific_config_default_unchanged": true,
+  "required_before_scientific_training": [
+    "Qualify actual rollout/actor likelihood partition and declared critic value/GAE protocol; systems synthetic returns do not qualify this.",
+    "Measure combined retained simulator, rollout model and actor footprint; actor-only headroom is not a full-iteration guarantee.",
+    "Use same measured native controller/accounting, bounded I/O and independent recovery in both training and eval."
+  ],
+  "capacity_scope": "Largest safe tested native execution divisor of the fixed global2048 grid, without activation checkpointing; not an absolute hardware ceiling or simulator capacity.",
+  "evidence": [
+    "ACTORPROFILE01-CLOSEOUT.json",
+    "ACTORRESTORE01-COMPLETE.json"
+  ]
+}

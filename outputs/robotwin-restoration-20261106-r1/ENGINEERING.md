@@ -96,3 +96,18 @@ existing lifecycle case to caller mutation of returned next state, both camera
 fields and instruction. The runtime keeps a private CPU snapshot for its next
 inference. This is CPU observation ownership coverage; active native actor
 profiling stays pinned to7df04cf7 and does not use this runtime.
+
+Native Motus actor capacity completed at7df04cf7 on four94.97GiB devices.
+Micro64/128/256/512 each completed4 global2048 updates per rank;256 is the
+largest safe tested divisor and fastest,15.717s steady and18.551s including
+reference cost amortized over5epochs. It reserved62.283GiB with31.748GiB
+conservative free.512 completed but left only0.00946GiB and is rejected.
+Initial native jointchunk likelihood replay was exact; frozen image eval,
+parameter immutability and accumulation gradient audits passed. Full9.53GB
+DCP/owned Adam/sampler/RNG/fixtures passed cold readback and local stageback.
+The first new-process restore failed before model load on Ray UNIX socket
+length; short-root recovery-only at5b511ed6 restored all owned state and
+reproduced update5 exactly. An independent CPU JSON comparison passed.
+ACTOR-SELECTION.json records256/accum2; scientific defaults remain unchanged
+until rollout/actor value-GAE and combined simulator footprint qualification.
+These scratch targets are synthetic; no teacher-learning result is claimed.

@@ -1,8 +1,8 @@
 {
-  "status": "actor_capacity_closed_recovery_only_prepared",
-  "closed_conservative_gpu_seconds": 152576,
+  "status": "actor_capacity_and_recovery_closed",
+  "closed_conservative_gpu_seconds": 153404,
   "cap_gpu_seconds": 180000,
-  "closed_conservative_gpu_hours": 42.382222222222225,
+  "closed_conservative_gpu_hours": 42.61222222222222,
   "components": [
     {
       "through_controller_diagnostic": 140019
@@ -36,10 +36,13 @@
     },
     {
       "actorprofile01_creation_to_release_gpu_seconds": 3756
+    },
+    {
+      "actorrestore01_creation_to_release_gpu_seconds": 828
     }
   ],
   "next_motor_qualification_reserved_gpu_seconds": 0,
-  "next_worst_gpu_seconds": 157616,
+  "next_worst_gpu_seconds": 153404,
   "maximum_new_output_gib": 0.5,
   "other_and_floor_gib": 286,
   "required_free_gib": null,
@@ -56,5 +59,7 @@
   "original_other_and_floor_allowance_unchanged": true,
   "maximum_new_output_filesystem": "project-only BOS; prior 286.5GiB PFS admission superseded by zero worker PFS output",
   "active_actor_profile_reserved_gpu_seconds": 0,
-  "planned_actor_restore_reserved_gpu_seconds": 5040
+  "planned_actor_restore_reserved_gpu_seconds": 0,
+  "active_actor_restore_reserved_gpu_seconds": 0,
+  "remaining_gpu_seconds": 26596
 }
