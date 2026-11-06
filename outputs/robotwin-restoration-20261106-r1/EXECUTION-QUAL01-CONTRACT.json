@@ -1,0 +1,44 @@
+{
+  "status": "prepared",
+  "closed_conservative_gpu_seconds": 140019,
+  "reserved_gpu_seconds": {
+    "endpoint_export02": 7440,
+    "endpoint_readout": 7260,
+    "execution_qual01": 3660
+  },
+  "all_reserved_worst_gpu_seconds": 158379,
+  "hard_cap_gpu_seconds": 180000,
+  "closed_prior_unused_initial_reservation_gpu_seconds": 11072,
+  "closed_controller_diagnostic_reservation_gpu_seconds": 14460,
+  "controller_diagnostic_creation_to_release_gpu_seconds": 3864,
+  "closed_cost_proof": "BUDGET-RECONCILIATION.json",
+  "scheduler_proof": "SCHEDULER-CLOSEOUT.txt",
+  "execution_qual01_gpus": 1,
+  "execution_qual01_cpus": 16,
+  "memory_gib": 128,
+  "shared_memory_gib": 16,
+  "max_wall_minutes": 60,
+  "automatic_retry": false,
+  "optimizer_updates": 0,
+  "model_sampler_calls": 0,
+  "output_cap_gib": 4,
+  "minimum_free_gib": 350,
+  "source_diagnostic": "robotwin-sidney-deployment-diagnostic-20261106-r1/eval01",
+  "coverage": [
+    "successful replay",
+    "timeout replay",
+    "already-successful no-op",
+    "already-at-limit no-op"
+  ],
+  "modes": [
+    "original_fast",
+    "patched_fast",
+    "original_full",
+    "patched_full"
+  ],
+  "maximum_replayed_requested_targets": 3200,
+  "maximum_noop_requested_targets": 400,
+  "patch_installation": "Exact method AST in job-owned instances, original globals; pristine external files untouched",
+  "qualification_is_student_corpus": false,
+  "qualification_is_benchmark": false
+}
