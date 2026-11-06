@@ -1,0 +1,67 @@
+{
+  "status": "learner_replay_inputs_complete",
+  "source_commit": "5965e02290abf797c16c21aff202df055b61f283",
+  "checked_at_shanghai": "2026-11-07T07:47:56+08:00",
+  "remote_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/collection-audit02/RESULT.json",
+  "remote_result_sha256": "a9ee32724f8c6e0b4bf3193425402ecc5639d171a00eee213f42f3018baea23b",
+  "native_decisions": 6144,
+  "full_compressed_bytes": 8938453335,
+  "seconds": 213.362128354609,
+  "cuda_initialized": false,
+  "gpu_seconds": 0,
+  "ranks": [
+    {
+      "rank": 0,
+      "sha256": "b6dbb6b077b79d6a214d931ca29d80b03454e328e13526b347a4f221d973b2c7",
+      "bytes": 2229922718,
+      "native_decisions": 1536,
+      "attested_gpu_visibility": 1,
+      "full_pre_sgd_rng": true,
+      "full_gzip_and_tensor_readback": true,
+      "independent_gae_passed": true
+    },
+    {
+      "rank": 1,
+      "sha256": "89fc1be1773e3420eab9139f74ece2f52f965748a30acb2944a428d2d9bd2a40",
+      "bytes": 2233288219,
+      "native_decisions": 1536,
+      "attested_gpu_visibility": 1,
+      "full_pre_sgd_rng": true,
+      "full_gzip_and_tensor_readback": true,
+      "independent_gae_passed": true
+    },
+    {
+      "rank": 2,
+      "sha256": "b88754f42ff555e07e94fe72042db63c3fc71c213d2a35ae7692316a6358c3dc",
+      "bytes": 2241024561,
+      "native_decisions": 1536,
+      "attested_gpu_visibility": 1,
+      "full_pre_sgd_rng": true,
+      "full_gzip_and_tensor_readback": true,
+      "independent_gae_passed": true
+    },
+    {
+      "rank": 3,
+      "sha256": "6244c3a94dcd4303c99d6bab55811d0a2a00ba55da11c717a4ff7a6c50d0570b",
+      "bytes": 2234217837,
+      "native_decisions": 1536,
+      "attested_gpu_visibility": 1,
+      "full_pre_sgd_rng": true,
+      "full_gzip_and_tensor_readback": true,
+      "independent_gae_passed": true
+    }
+  ],
+  "max_abs_advantage_reference_error": 8.76643317042299e-07,
+  "max_abs_return_reference_error": 2.0325955585320798e-07,
+  "qualification_receipts_passed": {
+    "native_values": 4,
+    "group_resets": 16,
+    "learner_reference": 4,
+    "first_replay": 4
+  },
+  "source_corpus_admitted": false,
+  "optimizer_updates_verified": false,
+  "exact_simulator_or_all_worker_resume": false,
+  "proof": "collection-audit02-current.png",
+  "next_action": "Restore full checkpoint0 actor/Adam/scheduler and original per-rank pre-SGD RNG, then use the unchanged native learner on these exact recorded batches. Require15 updates per rank, finite/frozen audits, complete new state readback and independent restore. Collector continuation needs an explicit whole-boundary migration; the missing post-collection environment state is not an exact all-worker resume."
+}

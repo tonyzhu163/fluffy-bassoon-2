@@ -531,3 +531,21 @@ qualifying its effect on the controller. A one-version corpus may support
 mixed-reward DIT/IQL and a static residual controllability check, but it cannot
 be admitted as AD learning-history data. The complete controlled AD/DIT/IQL
 comparison still requires its declared matched data and policy versions.
+
+
+## Saved-collection recovery boundary
+
+Prefix04 reached a complete chronological6144-decision collection and native
+pre-SGD probability-reference checks before its fixed worker limit. It did not
+produce a complete updated checkpoint. COLLECTION-AUDIT02-COMPLETE.json binds
+all4 cold-read batches, original per-rank pre-SGD RNG and independent GAE.
+A fresh learner-only recovery must restore checkpoint0 actor/Adam/scheduler,
+then restore those exact RNG states immediately before the native learner.
+Do not recollect, shrink global2048/five epochs, rerun GAE on a shuffled batch
+or continue from partial uncheckpointed updates. Require all15 native updates
+per rank, unchanged frozen parameters, complete owned Adam/scheduler/scaler/RNG
+and logical sampler state, full cold/local readback and independent recovery.
+The original pilot has no post-collection environment snapshot: a later online
+continuation needs an explicit new-boundary collector/RNG migration. Never call
+this an exact all-worker simulator resume or admit the first fixed policy as an
+AD learning history. Preserve the original failed contract and charged prefix.

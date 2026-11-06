@@ -1,5 +1,5 @@
 {
-  "status": "training_collection",
+  "status": "closed_runtime_limit",
   "cluster": "Baige Pro6K",
   "job_id": "job-rq59oi02rjzt",
   "job_name": "mwj_1107_robotwin_motus_ppo_prefix4",
@@ -22,7 +22,7 @@
   "worst_closed_plus_reserved_gpu_seconds": 173092,
   "hard_cap_gpu_seconds": 180000,
   "creation_to_release_watchdog_shanghai": "2026-11-07T07:35:32+08:00",
-  "last_checked_shanghai": "2026-11-07T07:12:50+08:00",
+  "last_checked_shanghai": "2026-11-07T07:47:56+08:00",
   "proof": "motusppo04-launch.png",
   "progress": "All4 B64 native value/likelihood replay checks and12 group-reset receipts passed. Third round collecting. First SGD remains unverified.",
   "initial_dev": {
@@ -45,7 +45,8 @@
   "latest_scheduler_proof": "motusppo04-current.png",
   "first_training_updates_verified": false,
   "last_native_check_shanghai": "2026-11-07T07:12:50+08:00",
-  "next_action": "Check by07:16 for fourth round and pre-SGD/actual-update receipts; preserve complete boundary checkpoints and active source. Collection reserve failed8GiB threshold; do not reuse profile as qualified.",
+  "next_action": "Use qualified saved collection for a fresh native learner replay; original checkpoint0 and source remain immutable.",
   "latest_collection_proof": "motusppo04-collection.png",
-  "sampled_collection_reserve_passed": false
+  "sampled_collection_reserve_passed": false,
+  "closeout": "MOTUSPPO04-CLOSEOUT.json"
 }
