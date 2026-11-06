@@ -2,6 +2,7 @@
 set -Eeuo pipefail
 TASK_SOURCE=${1:?reviewed source commit}
 TASK_OUT=${2:?fresh output identity}
+TASK_FUNDING=${3:?this attempt funding contract}
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_ENDPOINT=$TASK_CODE/outputs/robotwin-sidney-endpoint-readout-20261106-r1
 TASK_RUN=$TASK_CODE/outputs/robotwin-sidney-matched-baselines-20261106-r1
@@ -35,10 +36,10 @@ export LYCO_BAIGE_GPU_MAP=$TASK_OUT/gpu-probe.json
 TASK_MEMORY_PID=$!
 [[ $(git -C "$REPO_PATH" rev-parse HEAD) == c605b9d55ed93a180119b099e6f836abff293b08 ]]
 [[ -z $(git -C "$REPO_PATH" status --porcelain --untracked-files=no) ]]
-"$TASK_PYTHON" - "$TASK_ENDPOINT" "$TASK_OUT" <<'PY'
+"$TASK_PYTHON" - "$TASK_FUNDING" "$TASK_OUT" <<'PY'
 import json,os,shutil,sys
 from pathlib import Path
-run,out=map(Path,sys.argv[1:]);p=json.loads((run/'CONTRACT.json').read_text())
+plan_path,out=map(Path,sys.argv[1:]);p=json.loads(plan_path.read_text())
 assert p['carry_forward_worst_gpu_seconds']+p['export_reserved_gpu_seconds']+p['readout_reserved_gpu_seconds']<=180000
 assert p['export_reserved_gpu_seconds']==7440 and p['optimizer_updates']==0
 assert shutil.disk_usage(out).free>=334*2**30

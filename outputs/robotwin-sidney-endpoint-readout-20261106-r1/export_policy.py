@@ -121,8 +121,10 @@ def main():
     cfg.native_pilot.case_manifest_path=str(PAIRED/'CASES.json')
     cfg.runner.logger.log_path=str(args.output)
     cfg.runner.per_worker_log_path=str(args.output/'worker_logs')
+    # validate_cfg creates the worker log directory under this fresh arm root.
+    args.output.mkdir()
     cfg=validate_cfg(cfg);validate_pair(cfg)
-    args.output.mkdir();write(args.output/'resolved-native-config.json',OmegaConf.to_container(cfg,resolve=True))
+    write(args.output/'resolved-native-config.json',OmegaConf.to_container(cfg,resolve=True))
     cluster=Cluster(cluster_cfg=cfg.cluster,distributed_log_dir=cfg.runner.per_worker_log_path)
     placement=HybridComponentPlacement(cfg,cluster)
     actor=ExportActor.create_group(cfg).launch(cluster,name=cfg.actor.group_name,

@@ -1,0 +1,33 @@
+{
+  "task": "place_phone_stand",
+  "bank_path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RLinf/rlinf/envs/sim/robotwin/seeds/eval_seeds.json",
+  "bank_sha256": "194164f7380fd7cad2a8940ca93def01c2be865da265e4af1c463d73b2aa482f",
+  "cases": [
+    100100002,
+    100100003,
+    100100005,
+    100100006,
+    100100007,
+    100100009,
+    100100010,
+    100100013,
+    100100015,
+    100100017,
+    100100018,
+    100100020,
+    100100023,
+    100100027,
+    100100028,
+    100100029
+  ],
+  "horizon": 400,
+  "selection": "First16 pinned eval-bank cases, no outcome filtering",
+  "batch_size": 1,
+  "bank_role": "diagnostic evaluation; TRAIN disjoint",
+  "modes": [
+    "sft",
+    "ppo40",
+    "grpo40"
+  ],
+  "role": "Frozen fixed-endpoint readout with SFT repeat control"
+}
