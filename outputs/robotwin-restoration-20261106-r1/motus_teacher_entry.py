@@ -323,6 +323,7 @@ class MotusRunner(runtime.PilotRunner):
         self.env.pilot_phase(f'dev-{iteration:04d}',policy_iteration=iteration).wait()
         self.rollout.pilot_evaluation_iteration(iteration).wait()
         metrics = self.evaluate()
+        assert int(metrics['num_trajectories']) == 16, 'Incomplete native DEV panel'
         # Drain canonical train/eval writers without creating another checkpoint.
         for group in (self.rollout,self.env): group.set_global_step(iteration).wait()
         self._pilot_write(f'dev/iteration-{iteration:04d}.json',dict(completed=True,
