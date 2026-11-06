@@ -461,3 +461,73 @@ evaluation workers. The owned runner suppresses native automatic panels and
 runs only its declared initial/iteration DEV panels, avoiding duplicate queries.
 Full native schema validation on CPU substitutes only the declared four-rank
 placement metadata; every real job still runs actual Cluster/GPU validation.
+
+
+## Residual corpus and student handoff
+
+The existing `robotwin_history*.py` path is a different 1024-dimensional noise
+controller. Its action labels, token layout and horizon/clock checks must not
+be silently reused as decoded 14-dimensional residual labels. Reuse the causal
+decoder and numerical DIT/IQL primitives where their contracts agree; qualify
+new action/feedback tokenization and online reset handling on Linux.
+
+The pinned OpenPi training sampler records `forward_inputs.chains` as
+`[batch,6,32,32]`: entry0 is the original float32 Gaussian draw, followed by 5
+native denoising states. The original frozen Motus ODE proposal can therefore
+be reconstructed from that saved entry0 and the same public observation. Use
+the original Motus weights, transforms and fixed normalization, not the updated
+teacher expert. Verify sampled teacher decoded actions against the actually
+submitted full 32x14 command, and retain their link to chronological canonical
+batches before shuffle. The residual label is full `A_teacher - B_frozen` in
+decoded command units; denoising indices/noise are audit inputs, not residual
+steering labels. Every reconstruction records actual batch/row as well as
+motor/transform/noise hashes. Changing native batch shape is a numerical
+condition; the observed singleton drift rules out assuming arbitrary
+repartitioning is transparent. Lock one qualified profile for all student
+objectives and deployment comparisons before exporting the student dataset.
+
+Split the source case groups before normalization, window extraction or
+objective fitting. All 8 replicas of one scene belong to the same partition,
+and paired PPO/GRPO uses the same partition. A collection-slot split that puts
+replicas of the same seed on opposite sides is leakage. Precommit a grouped
+stream view by task/rank/local-group, ordered by teacher iteration, rollout
+round and replica index. Within a simultaneous vector round, replica order is
+a deterministic offline history view, not a claim that the teacher consumed
+one replica's feedback before acting in another. Four rounds x8 replicas give
+32 complete source episodes per version per group; 2 teacher versions give 64.
+Keep every failed episode. Source DEV panels never become student fit data.
+This explicitly retains the teacher/student exposure mismatch for the AD
+comparison instead of pretending that a student saw the teacher's whole pool.
+
+Each new decision token contains only current public visual/state/instruction
+features and the current frozen base proposal, plus shifted previous issued
+commands, measured delivered-prefix mask, real reward, separate termination/
+truncation, actual physics duration and the current episode-start bit. Keep the
+whole previous issued chunk available alongside its measured delivered mask:
+its tail can affect native TOPP execution. Current outcomes, teacher version,
+optimizer step and hidden simulator state never enter the current query.
+Full history preserves memory and terminal feedback across physical resets
+within a trial; episode-reset clears both; static training clears every
+history field and state on every decision. Merely clearing attention while
+leaving prior feedback embedded in an observation vector is not a static
+control. These behaviors need core causality/reset tests, not just manifests.
+
+The initial shared offline Bellman convention is finite physical episodes,
+gamma 0.99 per positive-duration issued chunk, no bootstrap across either
+termination or the declared H192 timeout, and no cross-episode Bellman edge.
+Memory may still carry across that boundary. Retain zero-duration terminal
+no-ops in the audit stream, but do not count them as extra physical decisions
+or fabricate next observations. Use actual environment rewards from the trace,
+not the actor's timeout-bootstrapped GAE reward tensor. Unexpected nonzero
+feedback on an unexecuted no-op requires diagnosis before export. Both DIT and
+IQL use this same convention; physics seconds are recorded separately rather
+than silently exponentiating gamma by integration steps.
+
+Before first fitting, derive and lock residual bounds using source TRAIN
+commands and native decoded arm/gripper units; report label coverage,
+saturation, residual/base magnitudes and all clipping. Keep the full requested
+chunk in actor/critic action inputs; do not zero the undelivered tail without
+qualifying its effect on the controller. A one-version corpus may support
+mixed-reward DIT/IQL and a static residual controllability check, but it cannot
+be admitted as AD learning-history data. The complete controlled AD/DIT/IQL
+comparison still requires its declared matched data and policy versions.
