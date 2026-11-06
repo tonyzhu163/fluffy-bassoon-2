@@ -120,3 +120,13 @@ physical reset, covering recreated scenes; its vector reader follows terminal
 `final_info` through evaluation auto-reset. Both modes retain physical masks
 and durations separately from unchanged native learner masks. This integration
 needs the next Linux check and an actual native teacher rollout.
+
+Prefix01 failed before model load on a launcher export and was closed/charged.
+The corrected exact shell/Python boundary passed on Linux. Prefix02 passed
+actual4-device/model-hash/BOS admission, then its native configuration guard
+correctly rejected OpenPi probability recomputation: c605's diagnostic assumes
+flattened OpenVLA tokens. It was closed/charged before model/scene/SGD work.
+`meta_rl/rlinf_openpi_replay.py` now implements the explicit continuous-shape
+reference extension at the native shuffled-training hook; core CPU and actual
+FSDP qualification remain required. Enable eval-worker construction with native
+val_check_interval1 while the owned runner suppresses automatic duplicate panels.

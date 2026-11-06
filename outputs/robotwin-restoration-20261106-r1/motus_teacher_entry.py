@@ -94,7 +94,15 @@ class MotusActor(runtime.PilotActor):
     def run_training(self):
         torch.cuda.reset_peak_memory_stats(self.device)
         started = time.monotonic()
-        result = super().run_training()
+        assert not self.cfg.algorithm.recompute_logprobs and self.cfg.native_pilot.recompute_openpi_logprobs
+        # c605 validation correctly restricts its flattened-token diagnostic to
+        # OpenVLA. Opt in only during this owned actor loop, whose hook below
+        # preserves the native split/order and handles continuous OpenPi shapes.
+        self.cfg.algorithm.recompute_logprobs = True
+        try:
+            result = super().run_training()
+        finally:
+            self.cfg.algorithm.recompute_logprobs = False
         free,total = torch.cuda.mem_get_info(self.device)
         write(Path(self.cfg.native_pilot.output)/'actor-memory'/
             f'iteration-{runtime.producing_iteration(self)+1:04d}-rank-{self._rank:02d}.json',
@@ -103,6 +111,10 @@ class MotusActor(runtime.PilotActor):
                 total_bytes=total,micro_batch=256,accumulation=2,global_batch=2048,
                 includes_recompute_and_five_native_epochs=True))
         return result
+
+    def recompute_prev_logprobs(self,batch_size_per_rank):
+        from fluffy_bassoon.meta_rl.rlinf_openpi_replay import recompute_openpi_logprobs
+        return recompute_openpi_logprobs(self,batch_size_per_rank)
 
     def train_micro_batch(self, micro_batch, metrics, *, is_last):
         critic = bool(self.cfg.actor.model.add_value_head)

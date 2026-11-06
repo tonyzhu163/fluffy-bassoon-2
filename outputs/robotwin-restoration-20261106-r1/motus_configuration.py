@@ -16,7 +16,8 @@ def overrides(algorithm):
         f'algorithm.loss_type={"actor_critic" if algorithm == "ppo" else "actor"}',
         f'actor.model.add_value_head={str(algorithm == "ppo").lower()}',
         'algorithm.group_size=8', 'env.train.group_size=8', 'actor.micro_batch_size=256',
-        '++algorithm.recompute_logprobs=true', 'env.train.enable_offload=true',
+        '++algorithm.recompute_logprobs=false', '+native_pilot.recompute_openpi_logprobs=true',
+        'runner.val_check_interval=1', 'env.train.enable_offload=true',
         'env.eval.enable_offload=true', 'env.eval.total_num_envs=16',
         '++env.train.skip_intermediate_renders=true', '++env.eval.skip_intermediate_renders=true',
         f'runner.logger.log_path={os.environ["TASK_LOCAL"]}/logs',
@@ -45,7 +46,8 @@ def validate(cfg):
         'algorithm.loss_type': 'actor_critic' if method == 'ppo' else 'actor',
         'actor.model.add_value_head': method == 'ppo',
         'algorithm.group_size': 8, 'env.train.group_size': 8,
-        'algorithm.recompute_logprobs': True, 'algorithm.filter_rewards': False,
+        'algorithm.recompute_logprobs': False, 'native_pilot.recompute_openpi_logprobs': True,
+        'runner.val_check_interval': 1, 'algorithm.filter_rewards': False,
         'actor.micro_batch_size': 256, 'actor.model.openpi.action_horizon': 32,
         'actor.model.openpi.action_chunk': 32, 'actor.model.num_action_chunks': 32,
         'actor.model.openpi_data.adapt_to_pi': True,
@@ -109,18 +111,36 @@ def validate(cfg):
         train_manifest_sha256=cfg.native_pilot.case_manifest_sha256, dev_manifest_sha256=cfg.native_pilot.dev_manifest_sha256,
         dev_episodes=16, dev_role='source-task development panel; never held-out transfer evaluation',
         value_protocol='native K-step mean rollout values, selected-step actor values; both independently audited',
-        likelihood_protocol='native actor recomputation once in actual shuffled SGD microbatches',
+        likelihood_protocol='OpenPi shape-aware reference at native post-shuffle hook, once before all epochs',
         original_initializer_reproduction=False, scientific_source_admission=False)
 
 
 if __name__ == '__main__':
-    if sys.argv[1] == 'validate':
+    if sys.argv[1] in ('validate','validate_schema'):
         from hydra import compose, initialize_config_dir
         rows = []
         for method in ('ppo', 'grpo'):
             with initialize_config_dir(version_base='1.1', config_dir=str(ROOT.parents[1]/'configs/native_ppo')):
                 cfg = compose(config_name='motus_phone_two', overrides=overrides(method))
-            rows.append(validate(cfg))
+            row = validate(cfg)
+            if sys.argv[1] == 'validate_schema':
+                # Run the complete upstream schema/scientific checks on Linux
+                # with only hardware placement replaced by the declared four
+                # ranks. Actual GPU/placement validation still runs in each job.
+                assert sys.platform == 'linux' and os.environ['CUDA_VISIBLE_DEVICES'] == ''
+                from unittest.mock import patch
+                import rlinf.config as native
+                class Placement:
+                    def get_world_size(self,role):
+                        assert role in ('actor','rollout','env')
+                        return 4
+                with patch.object(native,'Cluster',lambda *args,**kwargs: None), \
+                        patch.object(native,'HybridComponentPlacement',lambda *args,**kwargs: Placement()):
+                    cfg = native.validate_cfg(cfg)
+                assert cfg.runner.val_check_interval == 1 and not cfg.algorithm.recompute_logprobs
+                assert cfg.native_pilot.recompute_openpi_logprobs
+                row['full_native_schema_checked_with_declared_four_rank_placement'] = True
+            rows.append(row)
         print(json.dumps(dict(status='complete', configs=rows, hardware_validation=False,
                               model_or_simulator_constructed=False)))
     else:

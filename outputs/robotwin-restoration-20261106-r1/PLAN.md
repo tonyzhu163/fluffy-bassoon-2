@@ -438,3 +438,26 @@ MOTUSPPO01 reserves15600GPU-s including creation/release allowance against the
 closed153404/180000GPU-s cumulative cap. Worker timeout3300s,scheduler60min,
 creation-to-release watchdog3900s. Refresh actual scheduler creation time and
 watchdog when submitting; no whole six-task/student campaign funding is implied.
+
+### OpenPi reference compatibility correction
+
+Prefix02 exposed c605's explicit OpenVLA-only probability-reference guard
+before model loading. The original reference diagnostic reshapes flattened
+action tokens and cannot directly accept continuous OpenPi [N,H,A] outputs.
+Do not bypass that validator or call its token reshape on Motus. The owned
+actor now has an explicit `native_pilot.recompute_openpi_logprobs` extension:
+retain [N,H,A], use the native two-level post-shuffle SGD partition and native
+OpenPi forward arguments, replace old probabilities once before all5 epochs,
+and report a masked per-decision mean coordinate gap. The actor temporarily
+selects this owned hook at the native reference location; the driver/native
+configuration remains `algorithm.recompute_logprobs=false`. The learner,
+loss masks, GAE, optimizer and sampler remain pinned/unmodified. Numerical
+CPU cases must verify exact shuffled partitions, continuous coordinates,
+mask preservation, finite/all-masked behavior, failure atomicity and RNG.
+Actual FSDP unchanged-policy replay is still required before first SGD.
+
+Explicit DEV panels require `runner.val_check_interval=1` to construct native
+evaluation workers. The owned runner suppresses native automatic panels and
+runs only its declared initial/iteration DEV panels, avoiding duplicate queries.
+Full native schema validation on CPU substitutes only the declared four-rank
+placement metadata; every real job still runs actual Cluster/GPU validation.

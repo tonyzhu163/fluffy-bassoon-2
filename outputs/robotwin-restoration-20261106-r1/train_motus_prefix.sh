@@ -10,7 +10,7 @@ TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/pytho
 export GIT_OPTIONAL_LOCKS=0
 [[ $(git -C "$TASK_CODE" rev-parse HEAD) == "$TASK_SOURCE" ]]
 [[ -z $(git -C "$TASK_CODE" status --porcelain --untracked-files=no) ]]
-[[ $TASK_OUT == "$TASK_ARCHIVE/motusppo02-signals" && ! -e $TASK_OUT ]]
+[[ $TASK_OUT == "$TASK_ARCHIVE/motusppo03-signals" && ! -e $TASK_OUT ]]
 mkdir -p "$TASK_OUT"
 exec > "$TASK_OUT/worker.log" 2>&1
 TASK_STARTED=$(date +%s)
@@ -20,13 +20,13 @@ TASK_LIMIT=3300
 source "$TASK_RUN/runtime_environment.sh"
 TASK_DRIVER=$TASK_CODE/outputs/robotwin-restoration-20261106-r1
 export PYTHONPATH=$TASK_DRIVER:$PYTHONPATH
-export TASK_LOCAL=/tmp/rtmp2 TASK_COLD=$TASK_ARCHIVE/motusppo02
+export TASK_LOCAL=/tmp/rtmp3 TASK_COLD=$TASK_ARCHIVE/motusppo03
 export RAY_TMPDIR=$TASK_LOCAL/r
 export NATIVE_PPO_MODEL=/mowenjie/fluffy-bassoon-2/cache/robotwin-ppo-pilot-20261105-r1-restore02/pi05-motus-effc6e1a-r1
 export NATIVE_PPO_INITIALIZER_REVISION=effc6e1a99bd4d0edf9447e8ba313def67649cfe
 export NATIVE_PPO_DEADLINE=$((TASK_STARTED+TASK_LIMIT))
 export NATIVE_PPO_OUTPUT=$TASK_COLD/state NATIVE_PPO_ACCOUNTING_ROOT=$TASK_COLD/action-accounting
-export NATIVE_PPO_ATTEMPT=ppo-prefix02
+export NATIVE_PPO_ATTEMPT=ppo-prefix03
 TASK_MONITOR_PID=
 finish() {
   TASK_RC=$?
@@ -52,7 +52,7 @@ export LYCO_BAIGE_GPU_MAP=$TASK_OUT/gpu-probe.json
 import json,os,shutil,sys
 from pathlib import Path
 from fluffy_bassoon.meta_rl.rlinf_native_ppo import sha,write
-driver=Path(sys.argv[1]);contract=json.loads((driver/'MOTUSPPO02-CONTRACT.json').read_bytes())
+driver=Path(sys.argv[1]);contract=json.loads((driver/'MOTUSPPO03-CONTRACT.json').read_bytes())
 assert contract['status']=='admitted'
 assert contract['closed_conservative_gpu_seconds']+contract['reserved_gpu_seconds']==contract['all_worst_gpu_seconds']<=180000
 local,cold,out=map(lambda key:Path(os.environ[key]),('TASK_LOCAL','TASK_COLD','TASK_OUT'))
@@ -60,7 +60,7 @@ assert not local.exists() and not cold.exists()
 assert shutil.disk_usage(local.parent).free>=160*2**30
 archive=cold.parent
 assert archive.is_dir() and any(os.path.ismount(p) for p in (archive,Path('/mnt/bos/adgfyl'),Path('/mnt/bos')))
-probe=archive/'motusppo02-write-probe'
+probe=archive/'motusppo03-write-probe'
 with probe.open('xb') as stream:
  stream.write(b'robotwin-native-motus-teacher');stream.flush();os.fsync(stream.fileno())
 assert probe.read_bytes()==b'robotwin-native-motus-teacher'
