@@ -71,10 +71,22 @@ def main():
             assert value['rollout_epoch'] == 4 and not value['evaluation_data']
             assert value['dropped_fields'] == []
             rng = value['rng_before_sgd']
+            gpu_path = state/'worker-gpus'/f'actor-{rank:02d}.json'
+            gpu = json.loads(gpu_path.read_bytes())
+            assert gpu['role'] == 'actor' and gpu['rank'] == rank
+            visible = int(gpu['cuda_device_count'])
+            assert visible in (1, 4)
             assert set(rng) == {'python', 'numpy', 'torch', 'cuda'}
-            assert rng['torch'].dtype == torch.uint8 and len(rng['cuda']) == 4
+            assert rng['torch'].dtype == torch.uint8 and len(rng['cuda']) == visible
             assert all(s.dtype == torch.uint8 and s.numel() for s in rng['cuda'])
             batch = value['rollout_batch']
+            inspection = dict(rank=rank, attested_gpu_visibility=visible,
+                gpu_attestation_sha256=sha(gpu_path), saved_cuda_rng_states=len(rng['cuda']),
+                shapes={key: list(batch[key].shape) for key in
+                        ('rewards', 'dones', 'prev_values', 'prev_logprobs')},
+                chains_shape=list(batch['forward_inputs']['chains'].shape))
+            write(output/f'inspection-rank-{rank:02d}.json', inspection)
+            print(json.dumps(inspection), flush=True)
             assert batch['rewards'].shape[:2] == (6, 256)
             assert batch['dones'].shape[:2] == (7, 256)
             assert batch['prev_values'].shape[:2] == (7, 256)
@@ -90,6 +102,7 @@ def main():
                        sha256=info['sha256'], bytes=info['bytes'],
                        available_memory_before_bytes=available, native_decisions=6*256,
                        independent_learner_reference=reference, full_pre_sgd_rng=True,
+                       attested_gpu_visibility=visible,
                        dropped_fields=[], full_gzip_and_tensor_readback=True)
             report['ranks'].append(row)
             write(output/f'rank-{rank:02d}.json', row)

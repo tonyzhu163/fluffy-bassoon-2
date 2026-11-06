@@ -1,0 +1,16 @@
+{
+  "status": "failed_audit_assumption",
+  "source_commit": "c675e2276a68366a56fd202e4627af5170f3a6a3",
+  "remote_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/collection-audit01/RESULT.json",
+  "pid": 3139598,
+  "process_observed_terminal": true,
+  "verified_rank0_before_failure": [
+    "compressed bytes and original SHA match",
+    "full gzip and Torch tensor read",
+    "original collection0/iteration1 provenance and no dropped fields",
+    "all4 native-value/learner-reference/first-replay and16 group-reset receipts passed"
+  ],
+  "failure": "Audit assumed four visible CUDA RNG streams per actor. Native per-worker device visibility must instead be read from worker-gpus/actor-NN.json and matched to saved RNG.",
+  "gpu_seconds": 0,
+  "source_corpus_admitted": false
+}
