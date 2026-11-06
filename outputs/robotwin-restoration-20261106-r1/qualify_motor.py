@@ -85,7 +85,9 @@ def main():
     assert sys.platform == 'linux' and os.uname().nodename.startswith('job-')
     assert torch.cuda.device_count() == 1 and root.is_dir() and not (root/'RESULT.json').exists()
     torch.cuda.set_device(0)
-    contract = json.loads((code/'outputs/robotwin-restoration-20261106-r1/MOTOR01-CONTRACT.json').read_text())
+    contract_path = (Path(sys.argv[2]) if len(sys.argv) == 3 else
+                     code/'outputs/robotwin-restoration-20261106-r1/MOTOR01-CONTRACT.json')
+    contract = json.loads(contract_path.read_text())
     native, rlinf = Path(os.environ['ROBOTWIN_PATH']), Path(os.environ['REPO_PATH'])
     for folder, expected in ((native, 'dca9ec682688821c42944eacd7f5dd9bfb15396f'),
                              (rlinf, 'c605b9d55ed93a180119b099e6f836abff293b08')):

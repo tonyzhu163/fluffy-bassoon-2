@@ -7,6 +7,8 @@ by denoising. Residual heads run outside this module's no-grad boundary.
 """
 from dataclasses import dataclass
 import hashlib
+import os
+import threading
 
 import torch
 
@@ -17,6 +19,9 @@ PUBLIC_KEYS = ("main_images", "wrist_images", "states", "task_descriptions")
 def public_batch(observation):
     """Keep only the three cameras, proprioception and instruction, never truth."""
     result = {key: observation[key] for key in PUBLIC_KEYS}
+    # Native process workers send CPU NumPy arrays; in-process RLinf uses tensors.
+    for key in PUBLIC_KEYS[:3]:
+        result[key] = torch.as_tensor(result[key])
     state, main, wrists = result["states"], result["main_images"], result["wrist_images"]
     if (not torch.is_tensor(state) or state.ndim != 2 or state.shape[1] != 14
             or not len(state) or not state.is_floating_point() or not torch.isfinite(state).all()):
@@ -55,8 +60,8 @@ def case_noise(decision_ids, *, seed, horizon, action_dim, device):
     CPU and CUDA generators are separate numerical conditions.
     """
     identities = tuple(decision_ids)
-    if (not identities or len(set(identities)) != len(identities)
-            or any(not isinstance(key, str) or not key for key in identities)
+    if (not identities or any(not isinstance(key, str) or not key for key in identities)
+            or len(set(identities)) != len(identities)
             or type(seed) is not int or not 0 <= seed < 2**63
             or any(type(n) is not int or n < 1 for n in (horizon, action_dim))):
         raise ValueError("Require unique decision addresses, a seed and positive native noise dimensions")
@@ -102,6 +107,7 @@ class FrozenRoboTwinMotor:
         self.prefix_width, self.feature_dim = prefix_width, prefix_width + 14
         self.noise_shape = (model.action_horizon, model.action_dim)
         self._prepared, self._preparing = None, False
+        self._owner = (os.getpid(), threading.get_ident())
         self._signature = self._weights()
         self.prefix_calls = self.sample_calls = self.prepared_rows = self.sampled_rows = 0
 
@@ -110,13 +116,19 @@ class FrozenRoboTwinMotor:
                 for name, tensor in (*self.model.named_parameters(), *self.model.named_buffers())}
 
     def check_frozen(self):
+        self._check_owner()
         if (any(module.training for module in self.model.modules())
                 or any(p.requires_grad for p in self.model.parameters())
                 or self._weights() != self._signature):
             raise RuntimeError("Frozen RoboTwin motor weights, buffers or eval mode changed")
 
+    def _check_owner(self):
+        if self._owner != (os.getpid(), threading.get_ident()):
+            raise RuntimeError("Use the frozen motor only on its owning process/thread")
+
     @torch.no_grad()
     def prepare_batch(self, observation):
+        self._check_owner()
         if self._prepared is not None or self._preparing:
             raise RuntimeError("Consume the current prefix before preparing another observation")
         self.check_frozen()
@@ -161,6 +173,7 @@ class FrozenRoboTwinMotor:
     @torch.no_grad()
     def propose_batch(self, prepared, *, noise):
         """Decode exactly the supplied noise through the already-built prefix."""
+        self._check_owner()
         if self._prepared is None or prepared is not self._prepared:
             raise ValueError("Require the current unconsumed observation token")
         try:
@@ -184,6 +197,7 @@ class FrozenRoboTwinMotor:
             self._prepared = None
 
     def discard(self, prepared):
+        self._check_owner()
         if self._prepared is None or prepared is not self._prepared:
             raise ValueError("Discard only the current observation token")
         self._prepared = None

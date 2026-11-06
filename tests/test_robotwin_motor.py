@@ -1,5 +1,6 @@
 """Core batching/cache/gradient checks; run on allocated Linux CPU."""
 from types import SimpleNamespace
+from concurrent.futures import ThreadPoolExecutor
 
 import pytest
 import torch
@@ -163,3 +164,22 @@ def test_failed_preparation_does_not_leave_a_hook_or_stale_token():
     with pytest.raises(RuntimeError, match="native fault"):
         port.prepare_batch(observation(1))
     assert native.build_prefix_cache == original and port._prepared is None
+
+
+def test_numpy_process_observations_share_the_same_public_batch_path():
+    raw = public_batch(observation(2))
+    cpu = {key: value if key == "task_descriptions" else value.numpy() for key, value in raw.items()}
+    batched = stack_public_observations([{key: value[i:i+1] for key, value in cpu.items()}
+                                         for i in range(2)])
+    for key in ("main_images", "wrist_images", "states"):
+        assert torch.equal(batched[key], raw[key])
+
+
+def test_foreign_thread_cannot_consume_or_invalidate_the_current_prefix():
+    port = FrozenRoboTwinMotor(NativeMotor(), prefix_width=4)
+    _, token = port.prepare_batch(observation(1))
+    noise = torch.zeros(1, 32, 32)
+    with ThreadPoolExecutor(max_workers=1) as pool:
+        with pytest.raises(RuntimeError, match="owning"):
+            pool.submit(port.propose_batch, token, noise=noise).result()
+    assert port.propose_batch(token, noise=noise).shape == (1, 32, 14)
