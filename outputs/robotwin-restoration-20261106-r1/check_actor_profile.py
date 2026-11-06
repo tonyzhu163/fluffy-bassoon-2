@@ -6,14 +6,15 @@ import shutil
 
 from hydra import initialize_config_dir,compose
 from omegaconf import OmegaConf
-from rlinf.config import validate_cfg
 
 
 def main():
     code,root = Path(os.environ['TASK_CODE']),Path(os.environ['TASK_OUT'])
     assert os.environ['CUDA_VISIBLE_DEVICES'] == ''
     with initialize_config_dir(config_dir=str(code/'configs/native_ppo'),version_base='1.1'):
-        cfg = validate_cfg(compose(config_name='motus_phone_two',overrides=['actor.micro_batch_size=64']))
+        # Native validate_cfg also inspects the real accelerator rank inventory.
+        # It runs unchanged in profile_motus_actor.main on the four-GPU job.
+        cfg = compose(config_name='motus_phone_two',overrides=['actor.micro_batch_size=64'])
     expected = {
         'actor.global_batch_size':2048,'actor.micro_batch_size':64,
         'actor.model.num_action_chunks':32,'actor.model.openpi.action_horizon':32,
@@ -42,6 +43,7 @@ def main():
     assert selected['prompt'] == ['d','a','c','d']
     record = dict(status='passed',source_commit=os.environ['TASK_SOURCE'],resolved_fields=expected,
         model_computation=False,slicing_tensor_numpy_prompt_exact=True,
+        native_device_validation_deferred_to_actual_four_gpu_job=True,
         bos_mount_on_development={str(p):os.path.ismount(p) for p in (Path('/mnt/bos'),Path('/mnt/bos/adgfyl'))},
         hot_free_gib=shutil.disk_usage(root).free/2**30)
     (root/'RESULT.json').write_text(json.dumps(record,indent=2)+'\n')
