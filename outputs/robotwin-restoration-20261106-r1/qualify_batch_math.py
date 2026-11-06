@@ -40,10 +40,10 @@ def main():
     save(root/'RESULT.json',report)
 
     def snapshot(observation):
-        result = {key:getattr(observation,key)[:1].detach().cpu().clone()
+        result = {key:getattr(observation,key).detach().cpu().clone()
                   for key in ('state','tokenized_prompt','tokenized_prompt_mask')}
-        for key,value in observation.images.items(): result['image/'+key] = value[:1].detach().cpu().clone()
-        for key,value in observation.image_masks.items(): result['image_mask/'+key] = value[:1].detach().cpu().clone()
+        for key,value in observation.images.items(): result['image/'+key] = value.detach().cpu().clone()
+        for key,value in observation.image_masks.items(): result['image_mask/'+key] = value.detach().cpu().clone()
         return result
 
     try:
@@ -64,13 +64,20 @@ def main():
                 states=torch.from_numpy(state[None]).float(),task_descriptions=[prompt]))
         noise = case_noise([f'profile/{s}' for s in identities],seed=20261106,horizon=32,
                           action_dim=32,device=model.device)
-        singleton = []
+        singleton,singleton_inputs,singleton_features,singleton_errors = [],[],[],[]
         for i,raw in enumerate(rows):
             assert time.time() < float(os.environ['TASK_DEADLINE'])-60
             with torch.no_grad(): native,_ = model.predict_action_batch(raw,mode='eval',noise=noise[i:i+1])
             singleton.append(native.detach().cpu())
+            features,token = port.prepare_batch(raw)
+            singleton_inputs.append(snapshot(token.observation));singleton_features.append(features.cpu())
+            actual = port.propose_batch(token,noise=noise[i:i+1])
+            singleton_errors.append(float((native-actual).abs().max()))
+            del token,features,native,actual
         singleton = torch.cat(singleton)
-        first_preprocessed,first_feature = None,None
+        singleton_features = torch.cat(singleton_features)
+        singleton_inputs = {key:torch.cat([row[key] for row in singleton_inputs]) for key in singleton_inputs[0]}
+        report['singleton_native_adapter_max_abs'] = max(singleton_errors)
         for batch in contract['batch_candidates']:
             assert time.time() < float(os.environ['TASK_DEADLINE'])-60
             raw = stack_public_observations(rows[:batch]);draw = noise[:batch]
@@ -83,11 +90,11 @@ def main():
             row = dict(batch=batch,native_vs_port_max_abs=float((native-actions).abs().max()),
                 native_repeat_max_abs=float((native-repeat).abs().max()),
                 native_vs_singleton_max_abs=float((native.cpu()-singleton[:batch]).abs().max()))
-            if first_preprocessed is None:
-                first_preprocessed,first_feature = prepared,features[:1].cpu().clone()
-            row['first_row_preprocessing_exact'] = {key:torch.equal(value,first_preprocessed[key])
+            row['preprocessing_exact_by_field'] = {key:torch.equal(value,singleton_inputs[key][:batch])
                                                     for key,value in prepared.items()}
-            row['first_row_feature_max_abs_vs_singleton'] = float((features[:1].cpu()-first_feature).abs().max())
+            row['preprocessing_max_abs_by_field'] = {key:float((value.float()-singleton_inputs[key][:batch].float()).abs().max())
+                                                    for key,value in prepared.items()}
+            row['feature_max_abs_vs_singleton'] = float((features.cpu()-singleton_features[:batch]).abs().max())
             row['native_adapter_parity'] = row['native_vs_port_max_abs'] <= 1e-5
             row['native_repeat_exact'] = row['native_repeat_max_abs'] == 0
             report['batches'].append(row)
@@ -98,7 +105,7 @@ def main():
         port.check_frozen()
         report.update(status='complete',native_batch_adapter_parity=all(r['native_adapter_parity'] for r in report['batches']),
             native_batch_repeat_exact=all(r['native_repeat_exact'] for r in report['batches']),
-            first_row_preprocessing_exact=all(all(r['first_row_preprocessing_exact'].values()) for r in report['batches']),
+            all_rows_preprocessing_exact=all(all(r['preprocessing_exact_by_field'].values()) for r in report['batches']),
             frozen_parameter_and_buffer_versions_unchanged=True)
     except BaseException as error:
         report.update(status='failed',error_type=type(error).__name__,error=str(error));raise

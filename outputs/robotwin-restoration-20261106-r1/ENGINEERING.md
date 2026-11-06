@@ -56,5 +56,5 @@ reserve, but B2..256 violated the precommitted1e-3 singleton action tolerance
 (maxabs0.00747..0.09819). B1 remains selected. B256 measured56.78GiB reserved
 and33.95GiB free; this is the largest tested size, not a capacity ceiling.
 Do not call larger native batching a transparent equivalent optimization.
-BATCHMATH01 compares native batch/repeat/adapter and first-row preprocessing
+BATCHMATH01 compares native batch/repeat/adapter and all-row preprocessing
 before any new numerical protocol or execution profile is selected.
