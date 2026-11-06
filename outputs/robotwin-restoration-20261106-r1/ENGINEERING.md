@@ -38,3 +38,13 @@ qualification is next. The real SAPIEN execution-accounting port passed
 `EXECUTION01-COMPLETE.json`; it preserves the original fast learner masks.
 This does not yet qualify image equivalence, the Flow-SDE teacher sampler,
 parallel scene throughput or corpus I/O.
+
+The frozen motor now accepts native NumPy worker observations and enforces
+process/thread ownership. Thirteen motor checks pass at f8d13cdb (65 distinct
+core checks with the prior52). The first real Motus episode passed exact native
+action parity, residual gradient isolation and succeeded at160 requested targets;
+a reset instrumentation harness error stopped motor02 before batching.
+`meta_rl/background_io.py` adds bounded jobs/bytes, owned CPU snapshots,
+backpressure and error propagation. Native rollout and environment workers
+share its opt-in `native_pilot.bounded_io` path in both train and eval; Linux
+checkpoint/trace checks and future production enablement remain pending.

@@ -1,0 +1,30 @@
+{
+  "status": "failed_in_qualification_harness_after_first_successful_episode",
+  "job_id": "job-jowxw3s53l3c",
+  "source_commit": "f8d13cdb15a6564aae3ffef48979a97cb8ac3252",
+  "created_at_shanghai": "2026-11-07T00:18:20+08:00",
+  "released_at_shanghai": "2026-11-07T00:21:27+08:00",
+  "conservative_creation_to_release_gpu_seconds": 187,
+  "worker_gpu_seconds": 125,
+  "exit_code": 1,
+  "result_sha256": "8d21c85f7bf333895a46a78984bc609fc94060f48548a85c7d2c2ccbe6b9e020",
+  "storage_admission_free_gib": 313.8203125,
+  "required_free_gib": 287,
+  "native_singleton_action_max_abs_error": 0.0,
+  "residual_gradient_isolation": true,
+  "completed_episodes": 1,
+  "first_source_episode": {
+    "task": "place_phone_stand",
+    "seed": 100100002,
+    "requested_targets": 160,
+    "chunks": 5,
+    "success_reward": 1.0,
+    "terminated": true
+  },
+  "error": "Reset reused the task object whose instance-local measured wrapper was still installed; looking up __func__ on that wrapper failed",
+  "fix": "Bind the pristine class method for each episode and restore it at the completed boundary",
+  "batch_capacity_qualified": false,
+  "optimizer_updates": 0,
+  "automatic_retries": false,
+  "proof": "MOTOR02-FAILED.png"
+}

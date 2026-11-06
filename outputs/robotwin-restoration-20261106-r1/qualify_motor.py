@@ -152,7 +152,9 @@ def main():
             assert int(task.ep_num) == int(seed) and raw['task_descriptions'] == [task.get_instruction()]
             images = rgb(raw); assert all(float(v.std()) > 1 for v in images)
             Image.fromarray(np.concatenate(images, axis=1)).save(root/f'episode-{episode_index:02d}-initial.jpg')
-            original = task.gen_sparse_reward_data
+            # reset may reuse this task instance. Bind the pristine class method,
+            # not the previous episode's instance-local instrumentation closure.
+            original = type(task).gen_sparse_reward_data.__get__(task, type(task))
             namespace = dict(original.__func__.__globals__); exec(patched_code, namespace)
             patched_method = MethodType(namespace['gen_sparse_reward_data'], task)
             latest = []
@@ -196,6 +198,7 @@ def main():
             assert episode['chunks'][-1]['terminated'] or episode['chunks'][-1]['truncated']
             episode['complete'] = True
             Image.fromarray(np.concatenate(rgb(raw),axis=1)).save(root/f'episode-{episode_index:02d}-final.jpg')
+            task.gen_sparse_reward_data = original
             save(root/'RESULT.json', report)
         assert sum(c['execution']['physics_steps'] for e in report['episodes'] for c in e['chunks']) > 0
 

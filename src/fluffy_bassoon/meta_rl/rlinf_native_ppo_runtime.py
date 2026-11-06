@@ -30,6 +30,12 @@ def _write_sampling_record(path, record, env_obs_cpu, actions_cpu):
         torch.save(record, handle)
 
 
+def _write_trace_record(path, trace):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with gzip.open(path, 'xb', compresslevel=1) as handle:
+        torch.save(trace, handle)
+
+
 def save_tensor(path, value):
     path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
     write_tensor(path, value)
@@ -54,7 +60,20 @@ def producing_iteration(worker):
 class SidecarMixin:
     pilot_role = None
 
+    def _init_pilot_io(self):
+        if self.cfg.native_pilot.get('bounded_io', False):
+            from .background_io import BoundedWrites
+            self._pilot_bounded_io = BoundedWrites(
+                maximum_jobs=int(self.cfg.native_pilot.get('io_max_pending_jobs', 2)),
+                maximum_bytes=int(self.cfg.native_pilot.get('io_max_pending_bytes', 512*2**20)))
+        else:
+            self._pilot_io_pool = ThreadPoolExecutor(max_workers=2)
+            self._pilot_io_futures = []
+
     def _submit_pilot_io(self, fn, *args):
+        bounded = getattr(self, '_pilot_bounded_io', None)
+        if bounded is not None:
+            return bounded.submit(fn, *args)
         pool = getattr(self, '_pilot_io_pool', None)
         if pool is None:
             return fn(*args)
@@ -68,6 +87,12 @@ class SidecarMixin:
         self._pilot_io_futures = pending
 
     def _flush_pilot_io(self):
+        bounded = getattr(self, '_pilot_bounded_io', None)
+        if bounded is not None:
+            bounded.flush()
+            write(Path(self.cfg.native_pilot.output)/'io'/f'{self.pilot_role}-{self._rank:02d}.json',
+                  bounded.stats())
+            return
         for future in getattr(self, '_pilot_io_futures', ()):
             future.result()
         self._pilot_io_futures = []
@@ -284,8 +309,7 @@ class PilotRollout(SidecarMixin, MultiStepRolloutWorker):
         self._pilot_terminal_only = False
         self._pilot_eval_iteration = 0
         self._pilot_processed_state = None
-        self._pilot_io_pool = ThreadPoolExecutor(max_workers=2)
-        self._pilot_io_futures = []
+        self._init_pilot_io()
         original_train_prediction = self.hf_model._predict_train
 
         def recorded_train_prediction(observation, *args, **kwargs):
@@ -376,6 +400,8 @@ class PilotEnvironment(SidecarMixin, EnvWorker):
         import rlinf.envs.sim.robotwin.robotwin_env as module
         original = module.RoboTwinEnv
         owner = self
+        if self.cfg.native_pilot.get('bounded_io', False):
+            self._init_pilot_io()
         self._pilot_phase = 'initialization'
         self._pilot_reset_ordinal = 0
         self._pilot_trace_ordinal = 0
@@ -467,9 +493,7 @@ class PilotEnvironment(SidecarMixin, EnvWorker):
                     measured_valid_mask=mask is not None,
                     executed_or_conservative=executed)
                 path = owner._pilot_root / 'traces' / f'rank-{owner._rank:02d}' / f'{owner._pilot_trace_ordinal:05d}.pt.gz'
-                path.parent.mkdir(parents=True, exist_ok=True)
-                with gzip.open(path, 'xb', compresslevel=1) as handle:
-                    torch.save(trace, handle)
+                owner._submit_pilot_io(_write_trace_record, path, trace)
                 owner._pilot_trace_ordinal += 1
                 env._pilot_chunk_index += 1
                 env._pilot_current_observation = cpu_tree(result[0][-1])
