@@ -234,6 +234,14 @@ selective weight export and recovery sidecars into both execution modes.
 Exit: actual-device report and the chosen train/eval profiles; passive counts,
 likelihood/value replay, frozen gradients and independent full recovery pass.
 
+The actual Motus reference diagnosis is recorded in BATCHMATH01-COMPLETE.json.
+Native B1 and native batched execution are distinct numerical conditions, even
+with identical per-case noise and preprocessing. Do not relax the original
+singleton equivalence gate or call changes to actual batch shape transparent.
+For new residual training/evaluation, record actual batch size/row and tail
+policy and share that native protocol across methods. Log case-addressed noise
+separately: it preserves draws, not cross-batch action equality.
+
 ## Phase 3 — independent source histories, bounded pilot first
 
 Start place_phone_stand (existing scene bank); use independent PPO/GRPO
@@ -303,6 +311,18 @@ settings or an approved large campaign. Add a matched context-free student,
 episode-reset student and final-policy distillation control. KV/velocity/noise
 interfaces remain separately named comparisons. A frozen expert can propagate
 action-supervision gradients into a KV bridge; detaching it entirely is wrong.
+
+Preserve the full planned action chunk alongside the measured delivered prefix:
+native whole-chunk TOPP planning can make the undelivered tail affect the
+executed trajectory. Do not zero unexecuted request coordinates in a critic
+without qualification. Keep actual physics duration separate from wall time
+and request length. Retain zero-duration terminal no-ops for audit; they are
+not extra physical decisions. Before student fits, declare one shared Bellman
+clock for DIT/IQL and verify episode/trial boundaries; native teacher masks
+are not automatically physical corpus masks. The held-out normalization ban
+applies to newly fitted student statistics; the released joint base model's
+pretraining and fixed normalization may already cover those tasks and must be
+disclosed as base exposure.
 
 ## Phase 5 — frozen online adaptation and claim checks
 

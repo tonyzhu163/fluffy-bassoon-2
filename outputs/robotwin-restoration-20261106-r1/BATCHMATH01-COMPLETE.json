@@ -1,0 +1,29 @@
+{
+  "status": "complete",
+  "job_id": "job-ymt068fwii8d",
+  "source_commit": "3a8e8ccc516111ad4b5f720644a52cd42e510c16",
+  "created_at_shanghai": "2026-11-07T01:23:10+08:00",
+  "released_at_shanghai": "2026-11-07T01:25:40+08:00",
+  "scheduler_state": "Succeeded",
+  "exit_code": 0,
+  "worker_gpu_seconds": 111,
+  "conservative_creation_to_release_gpu_seconds": 150,
+  "result_sha256": "9426c71b895743048e0d219593a9a8affb738afa88bbfffceaa0f3fbd5978392",
+  "batches": [
+    1,
+    2,
+    8,
+    32,
+    64
+  ],
+  "native_batch_vs_adapter_max_abs": 0.0,
+  "native_batch_repeat_max_abs": 0.0,
+  "all_rows_preprocessing_exact": true,
+  "singleton_native_vs_adapter_max_abs": 0.0,
+  "largest_native_batch_vs_singleton_max_abs": 0.0939370405807495,
+  "feature_max_abs_vs_singleton": 0.24937057495117188,
+  "optimizer_updates": 0,
+  "simulator_actions": 0,
+  "conclusion": "Drift occurs inside native batched execution beyond preprocessing; no precision-specific cause established.",
+  "protocol": "Keep rejected singleton equivalence gate unchanged. New residual train/eval use explicitly recorded native actual batch/row; no batch-partition equivalence claim."
+}

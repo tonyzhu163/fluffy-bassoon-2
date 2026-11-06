@@ -16,6 +16,7 @@ import subprocess
 import sys
 import time
 import traceback
+from copy import deepcopy
 
 import numpy as np
 
@@ -63,8 +64,14 @@ class _NativeSimulator:
         self.elapsed = 0
         self.active = False
 
+    def _environment_config(self, task, seed, limit):
+        from .robotwin_noise import environment_config
+        return environment_config(self.config["rlinf_root"],self.config["robotwin_root"],task,seed,limit,
+            task_config_name=self.config["task_config_name"],
+            final_observation_only=self.config["final_observation_only"])
+
     def reset(self, task, seed):
-        from .robotwin_noise import (environment_config, _install_reset_retry_limit,
+        from .robotwin_noise import (_install_reset_retry_limit,
             _install_synchronous_vector_executor, _install_final_observation_capture)
         from fluffy_bassoon.baige_gpu import pci
         from rlinf.envs.sim.robotwin.robotwin_env import RoboTwinEnv
@@ -75,9 +82,7 @@ class _NativeSimulator:
         if self.env is not None and (self.task != task or self.episode_limit != limit):
             self.close()
         if self.env is None:
-            cfg = environment_config(self.config["rlinf_root"], self.config["robotwin_root"],
-                task, seed, limit, task_config_name=self.config["task_config_name"],
-                final_observation_only=self.config["final_observation_only"])
+            cfg = self._environment_config(task, seed, limit)
             self.env = RoboTwinEnv(cfg, 1, seed_offset=0, total_num_processes=1, worker_info=None)
             _install_synchronous_vector_executor(self.env.venv)
             if self.config["final_observation_only"]:
@@ -194,7 +199,7 @@ class ProductionSimulatorPool:
     def __init__(self, num_workers, *, rlinf_root, robotwin_root, output_dir,
                  task_episode_limits, final_observation_only=False,
                  task_config_name="demo_clean", timeout_seconds=120,
-                 _simulator_factory=None):
+                 _simulator_factory=None, worker_options=None):
         if (type(num_workers) is not int or num_workers < 1 or not task_episode_limits
                 or any(type(limit) is not int or limit < 1 for limit in task_episode_limits.values()) or not np.isfinite(timeout_seconds) or timeout_seconds <= 0):
             raise ValueError("Invalid simulator-pool size, horizon or timeout")
@@ -213,7 +218,7 @@ class ProductionSimulatorPool:
         common = dict(rlinf_root=str(Path(rlinf_root).resolve()),
                       robotwin_root=str(Path(robotwin_root).resolve()),
                       task_episode_limits=dict(task_episode_limits), final_observation_only=bool(final_observation_only),
-                      task_config_name=task_config_name)
+                      task_config_name=task_config_name,worker_options=deepcopy(worker_options or {}))
         try:
             for lane in range(num_workers):
                 parent, child = context.Pipe()

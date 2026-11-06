@@ -58,3 +58,13 @@ and33.95GiB free; this is the largest tested size, not a capacity ceiling.
 Do not call larger native batching a transparent equivalent optimization.
 BATCHMATH01 compares native batch/repeat/adapter and all-row preprocessing
 before any new numerical protocol or execution profile is selected.
+
+BATCHMATH01 completed at3a8e8ccc. Native batch and adapter actions are exact
+atB1,2,8,32,64; native repeats are exact. Every preprocessing field of all64
+rows matches its singleton reference. Native batch versus singleton drift
+therefore arises after preprocessing inside native execution; BF16 has not
+been isolated as the cause. Retain the original rejected equivalence gate.
+New residual train/eval explicitly record actual batch/row as their numerical
+condition. `rl/robotwin_batch.py` composes the frozen motor with owned spawned
+simulators, full requested actions and measured physical transitions. This
+shared runtime still needs Linux CPU and real concurrent-scene qualification.
