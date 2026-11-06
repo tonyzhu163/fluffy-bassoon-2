@@ -1,0 +1,71 @@
+--- a/envs/_base_task.py
++++ b/envs/_base_task.py
+@@ -1759,12 +1759,24 @@
+         truncation = np.array([0], dtype=np.int32)
+         collected_obs = []
+         action_len = chunk_actions.shape[0]
++        completed_actions = 0
++        steps_executed = 0
+ 
+         def build_result(
+             *,
+             valid_action_count=None,
+             reuse_last_observation=False,
+         ):
++            # Passive metadata: do not add the official executed_action_count
++            # key to the fast return, since RLinf uses it to change loss masks.
++            delivered = completed_actions if valid_action_count is None else valid_action_count
++            infos["fb2_execution"] = dict(
++                requested_targets=int(action_len),
++                completed_targets=int(completed_actions),
++                delivered_targets=int(delivered),
++                partial_targets=int(delivered - completed_actions),
++                physics_steps=int(steps_executed),
++            )
+             if not collect_obs:
+                 return reward, termination, truncation, infos
+ 
+@@ -1921,9 +1933,10 @@
+             right_gripper = right_gripper + region_right_gripper.tolist()
+         right_gripper = np.array(right_gripper)
+ 
+-        if collect_obs:
+-            left_action_end_steps = np.cumsum(left_gripper_step[1:])
+-            right_action_end_steps = np.cumsum(right_gripper_step[1:])
++        # These target boundaries do not depend on rendering or observation
++        # collection. Track them on the fast path without reading extra RGB.
++        left_action_end_steps = np.cumsum(left_gripper_step[1:])
++        right_action_end_steps = np.cumsum(right_gripper_step[1:])
+ 
+         now_left_id, now_right_id = 0, 0
+ 
+@@ -1974,6 +1987,16 @@
+                         break
+                     collected_obs.append(self.get_obs())
+                 completed_action_this_step = len(collected_obs) > completed_before
++                completed_actions = len(collected_obs)
++            else:
++                completed_before = completed_actions
++                while completed_actions < action_len:
++                    left_reached = now_left_id >= left_action_end_steps[completed_actions]
++                    right_reached = now_right_id >= right_action_end_steps[completed_actions]
++                    if not (left_reached and right_reached):
++                        break
++                    completed_actions += 1
++                completed_action_this_step = completed_actions > completed_before
+ 
+             if self.check_success():
+                 self.eval_success = True
+@@ -1981,10 +2004,9 @@
+                 infos["success"] = True
+                 reward = np.array([1], dtype=np.float32)
+                 termination = np.array([1], dtype=np.int32)
+-                valid_action_count = len(collected_obs)
++                valid_action_count = completed_actions
+                 if (
+-                    collect_obs
+-                    and not completed_action_this_step
++                    not completed_action_this_step
+                     and steps_executed > 0
+                     and valid_action_count < action_len
+                 ):

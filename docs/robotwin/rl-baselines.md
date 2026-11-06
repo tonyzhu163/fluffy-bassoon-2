@@ -84,7 +84,25 @@ guides explain the task presets and seed files. Generic task support does not
 imply every VLRLA task has a shipped preset, seed bank or common checkpoint.
 Audit those separately before launching a six-task run.
 
-Dated preparation, source snapshots and readiness:
+The new [restoration and objective-comparison plan](../../outputs/robotwin-restoration-20261106-r1/PLAN.md)
+incorporates the joint Motus initializer candidate and the requirement to port
+RoboCasa engineering to training and evaluation. Motus has native H32/delta
+joints; the qualified Sidney reference has H50/absolute joints. Qualify and
+name each motor/protocol separately, using one common motor per comparison.
+The [engineering audit](../../outputs/robotwin-restoration-20261106-r1/ENGINEERING.md)
+tracks batched inference, prefix reuse, device binding, memory capacity,
+probability replay, execution durations, artifact I/O and recovery.
+
+Separate the learning objective from the steering interface. For the new
+RoboTwin comparison, action residuals provide observable teacher-minus-base
+labels for AD, DIT-style weighting and offline actor-critic learning; the
+learned-KV bridge remains a separately named interface comparison. DPT needs
+qualified labels at the actual query observation. Improving PPO histories
+support an improving-process AD claim; informative mixed-quality experience
+can support DIT/offline value learning without that gate. All-zero rewards or
+insufficient action coverage still require diagnosis before fitting.
+
+Dated preparation, source snapshots and readiness (earlier audit):
 [`outputs/robotwin-rl-baselines-20261105-r1/PLAN.md`](../../outputs/robotwin-rl-baselines-20261105-r1/PLAN.md).
 Live ownership and jobs belong only in
 [`outputs/coordination.md`](../../outputs/coordination.md).

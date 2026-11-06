@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "platform": "allocated Baige Linux development instance",
+  "host": "aibox-rffe453e3884-5f96c78b88-rtvhb",
+  "tests_passed": 52,
+  "tests_failed": 0,
+  "seconds": 3.23,
+  "exit_code": 0,
+  "model_or_gpu_qualified": false,
+  "reference_commit": "dca9ec682688821c42944eacd7f5dd9bfb15396f",
+  "reference_source_sha256": "6b3f74b038509ef989913b3f6f37c74e1d0b7156d201a1bf0100f9ccb6b0d46b",
+  "remote_output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-restoration-20261106-r1/cpu01",
+  "screenshot": "CPU01.png",
+  "hashes": {
+    "patches/robotwin-dca9ec68-execution-accounting.patch": "8f5436a8197c73b470eb8cedec7e9a2f2722357c19f33e863721cec97cf7bbd2",
+    "src/fluffy_bassoon/rl/robotwin_execution.py": "3928473861a2352791d71cdd816c9fffd31c64a2d2851096f31efaa837ead0d9",
+    "tests/test_robotwin_execution.py": "573a6f134b366f725c8a8970be7e1f9a7bb526d1cc5eb4d582f98e128cec02be",
+    "tests/test_robotwin_native_execution.py": "ba2b8f25dd22d886314813f1d8d536988f0b4191b6f1bf7e5eee30784dad7b4d"
+  },
+  "coverage": "Actual native sparse-controller method against unmodified reference; command/physics/render traces, rewards, termination/truncation, full observations, success partial target, already-finished no-op, timeout and planner failure; metadata decoding rejects missing/inconsistent counts."
+}
