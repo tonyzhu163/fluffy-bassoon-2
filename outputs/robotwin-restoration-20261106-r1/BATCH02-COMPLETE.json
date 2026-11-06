@@ -1,0 +1,60 @@
+{
+  "status": "complete",
+  "job_id": "job-i16okekqp1iz",
+  "source_commit": "0fcf78415e1382c418e2ba643b13fb63296e488e",
+  "created_at_shanghai": "2026-11-07T02:10:56+08:00",
+  "released_at_shanghai": "2026-11-07T02:13:21+08:00",
+  "scheduler_state": "Succeeded",
+  "exit_code": 0,
+  "worker_gpu_seconds": 103,
+  "conservative_creation_to_release_gpu_seconds": 145,
+  "result_sha256": "49d28ab5d9b6f4ee26ee39a232ec55bfe11b6f7f61c2f6dca1ed039258ab7569",
+  "real_episodes_complete": 4,
+  "transitions": 24,
+  "requested_targets": 768,
+  "delivered_targets": 768,
+  "physics_steps": 12000,
+  "successes": 0,
+  "success_rate_claim": false,
+  "native_actual_batch_sizes": [
+    2
+  ],
+  "native_batch_action_max_abs_errors": [
+    0.0,
+    0.0
+  ],
+  "prefix_calls": 12,
+  "sample_calls": 12,
+  "sampled_rows": 24,
+  "max_public_state_motion": 2.424436569213867,
+  "head_gradient_isolation": true,
+  "frozen_parameter_and_buffer_versions_unchanged": true,
+  "owned_worker_pids": [
+    910,
+    911
+  ],
+  "parent_pid": 488,
+  "owned_workers_closed": true,
+  "independent_readback_pid": 1701,
+  "consecutive_public_observations_exact": true,
+  "fsynced_pre_dispatch_intents_exact": true,
+  "actual_gpu_total_gib": 94.97064209,
+  "parent_torch_peak_allocated_gib": 6.852320194,
+  "parent_torch_peak_reserved_gib": 6.986328125,
+  "all_process_gpu_minimum_free_gib": 78.70703125,
+  "cgroup_host_peak_gib": 17.798622131,
+  "io_submitted": 24,
+  "io_peak_jobs": 2,
+  "io_peak_payload_bytes": 11100778,
+  "io_maximum_payload_bytes": 67108864,
+  "io_drained": true,
+  "optimizer_updates": 0,
+  "native_scene_timestep_seconds": 0.004000000189989805,
+  "scope": "One frozen Motus H32/K5 ODE model, two concurrent process-owned native-fast scenes, two resets per lane, shared residual train/eval API. No teacher actor-update, learned residual, success improvement or large-scene capacity claim.",
+  "limits": [
+    "All four episodes timed out; no informative positive-return claim for this panel.",
+    "Actual tail batch1 covered by core CPU tests, not exercised in these equal-length real episodes.",
+    "Parent Torch peak excludes child allocations; device-wide minimum free includes them.",
+    "svulkan2 OIDN warnings occurred; all real camera and physical-motion checks passed."
+  ]
+}

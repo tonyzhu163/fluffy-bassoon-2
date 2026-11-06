@@ -76,3 +76,17 @@ immutable base/features, measured terminal partial targets/duration, missing
 measurement failure, process ownership and retained replies after peer failure
 passed. BATCH01-CONTRACT.json defines the next real two-scene qualification;
 these CPU checks alone do not qualify parallel SAPIEN execution.
+
+BATCH02 completed on actual Pro6K at0fcf7841 with two process-owned scenes,
+two resets per lane and one shared frozen motor. Four full H192 episodes
+(all timeouts) produced24 transitions/768 delivered targets/12000 physics
+steps. Native B2 comparison was exact,12prefix/12sample calls served24rows,
+zero residual preserved commands and head gradients stayed outside the motor.
+Training-head and evaluation-head checks used the same runtime. Fresh-process
+readback verified every pre-dispatch intent, transition and consecutive public
+observation. Owned workers closed; I/O drained at2jobs/11.10MB peak payload.
+GPU-wide free stayed78.71GiB; parent Torch reserved6.99GiB, host peak17.80GiB.
+This qualifies the shared residual runtime, not a trained learner, native
+Flow-SDE actor capacity, larger scene count, real unequal-length tail or
+success improvement. BATCH01's literal-timestep harness failure remains
+recorded and charged; actual native timestep is0.004000000189989805.
