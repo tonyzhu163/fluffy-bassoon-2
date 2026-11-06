@@ -1,6 +1,6 @@
 {
   "owner_chat": "01a1b024-f4ac-7181-af87-bac9fbee72bb",
-  "status": "motus_actor_profile_submitted",
+  "status": "motus_actor_profile_running_b64_passed",
   "new_gpu_jobs_launched": 10,
   "prior_robotwin_cumulative_cap_gpu_hours": 50,
   "prior_cost_and_reservations_must_be_refreshed": false,
@@ -51,14 +51,15 @@
     "batch_memory_state": "Native batch diagnosis complete: all-row preprocessing exact and native batched vs adapter action error0; native batch vs singleton drift remains. Largest tested inference B256 memory-safe; no parallel scene capacity claim.",
     "batch_runtime_state": "batch02 SUCCESS/released02:13:21;4 complete episodes/24 transitions/12000 physics steps, nativeB2 parity0, independent readback exact, workers closed",
     "actor_storage": "No worker PFS outputs: verified project-only BOS signals/state plus job-local staging/caches; source/model/inputs read-only.",
-    "closed_export_archive": "Complete2 files,15551132398 bytes recoverable with full cold+local readback;2217 files protected; no GPU charge."
+    "closed_export_archive": "Complete2 files,15551132398 bytes recoverable with full cold+local readback;2217 files protected; no GPU charge.",
+    "actor_profile_state": "job-dw6djbw0ox7p:4GPU probe/native validate_cfg pass. B64 completed4 updates on all4 ranks; initial native chunk likelihood error0, same-partition replay exact, frozen unchanged, memory reserve passed. Steady global2048 update median16.5238s; full checkpoint preservation and larger candidates pending."
   },
   "cpu_qualification": "CPU01.json",
   "git_deployment": "GIT-DEPLOYMENT.json",
   "active_gpu_reservation_seconds": 11040,
   "new_gpu_hours_note": "Closed148820GPU-s plus active11040GPU-s worst159860/180000; all failed/prior costs retained.",
   "budget_reconciliation": "BUDGET-RECONCILIATION.json",
-  "last_checked_shanghai": "2026-11-07T03:35:38+08:00",
+  "last_checked_shanghai": "2026-11-07T03:43:49+08:00",
   "cumulative_closed_conservative_gpu_seconds": 148820,
   "worst_closed_plus_reserved_gpu_seconds": 159860,
   "execution_qualification": "EXECUTION01-COMPLETE.json",
@@ -84,5 +85,6 @@
   "actor_cpu_qualification": "CPUACTOR03.json",
   "next_storage_recovery": "Closed inference-only exports; complete cold and local readback before release; native DCP/corpus/cache retained",
   "export_archive_qualification": "EXPORTS01-COMPLETE.json",
-  "actor_profile_launch": "ACTORPROFILE01-LAUNCH.json"
+  "actor_profile_launch": "ACTORPROFILE01-LAUNCH.json",
+  "cpu_batch_ownership_qualification": "CPUBATCH02.json"
 }
