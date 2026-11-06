@@ -48,7 +48,8 @@ def main():
     from rlinf.envs.sim.robotwin.robotwin_env import RoboTwinEnv
     import rlinf.models.embodiment.openpi as factory
     p=argparse.ArgumentParser();p.add_argument('--output',type=Path,required=True)
-    p.add_argument('--manifest',type=Path,required=True);p.add_argument('--exports',type=Path,required=True);args=p.parse_args()
+    p.add_argument('--manifest',type=Path,required=True);p.add_argument('--exports',type=Path,required=True)
+    p.add_argument('--storage-contract',type=Path);args=p.parse_args()
     assert sys.platform=='linux' and os.uname().nodename.startswith('job-') and torch.cuda.device_count()==1
     torch.cuda.set_device(0);deterministic_reference();install_rlinf_transforms()
     root=args.output;assert root.is_dir() and not (root/'RESULT.json').exists()
@@ -71,6 +72,13 @@ def main():
         requested_controls=0,measured_delivered_controls=None,physical_duration_measured=False,
         final_trained_policies=True,qualified_exports=str(args.exports),started_unix=time.time(),model_calibrations={})
     save(root/'RESULT.json',report);models={};envs={};param_versions={};requested=0
+
+    # Default retains the earlier operational guard. The explicit migration
+    # closes completed diagnostic reservations; acting/eval science is unchanged.
+    storage=None if args.storage_contract is None else json.loads(args.storage_contract.read_text())
+    def required_free(used):
+        floor=310 if storage is None else storage['other_and_floor_gib']+storage['concurrent_execution_qualification_cap_gib']
+        return floor*2**30+max(0,12*2**30-used)
 
     def deadline():assert time.time()<float(os.environ['TASK_DEADLINE'])-90,'Allocated readout deadline'
 
@@ -137,7 +145,7 @@ def main():
         report['models_loaded']=True;save(root/'RESULT.json',report)
         for ci,seed in enumerate(cases):
             used=sum(p.stat().st_blocks*512 for p in root.rglob('*') if p.is_file())
-            assert used<=12*2**30 and shutil.disk_usage(root).free>=310*2**30+max(0,12*2**30-used)
+            assert used<=12*2**30 and shutil.disk_usage(root).free>=required_free(used)
             order=MODES[ci%3:]+MODES[:ci%3];paired=None
             for mode in order:
                 deadline();directory=root/f'case-{ci:02d}'/mode;directory.mkdir(parents=True)

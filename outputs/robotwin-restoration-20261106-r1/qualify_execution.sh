@@ -37,9 +37,11 @@ assert p['reserved_gpu_seconds']['execution_qual01']==3660
 exports=Path('/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-endpoint-readout-20261106-r1/export02')
 export_used=sum(f.stat().st_blocks*512 for f in exports.rglob('*') if f.is_file())
 assert export_used<=24*2**30
-# Reserve only future export growth; bytes already on disk are in disk_usage.
-# Keep the entire future readout allowance and this check's own allowance.
-required=(310+12+4)*2**30+max(0,24*2**30-export_used)
+# Both initial/controller diagnostics and export have terminal closeouts.
+# Retain the original286GiB other-owner floor, future readout and own growth.
+assert json.loads((exports/'RESULT.json').read_text())['status']=='complete'
+assert json.loads((exports/'EXIT.json').read_text())['exit_code']==0
+required=(286+12+4)*2**30
 assert shutil.disk_usage(out).free>=required
 probe=out/'write-probe'
 with probe.open('xb') as f:f.write(b'robotwin-execution-qualification\n');f.flush();os.fsync(f.fileno())

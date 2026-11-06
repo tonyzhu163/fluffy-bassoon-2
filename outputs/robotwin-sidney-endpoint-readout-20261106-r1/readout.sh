@@ -53,15 +53,16 @@ assert hashlib.sha256((run/plan['parent_contract_file']).read_bytes()).hexdigest
 assert json.loads((exports/'RESULT.json').read_text())['plain_inference_weights_qualified']
 assert json.loads((exports/'EXIT.json').read_text())['exit_code']==0
 assert plan['reserved_gpu_seconds']==7260 and plan['optimizer_updates']==0
+assert plan['all_reserved_worst_gpu_seconds']<=50*3600
 assert hashlib.sha256((run/'READOUT-CASES.json').read_bytes()).hexdigest()==plan['case_manifest_sha256']
 free=shutil.disk_usage(out).free
-assert free>=(310+12)*2**30
+assert free>=plan['minimum_free_gib']*2**30
 probe=out/'write-probe'
 with probe.open('xb') as handle:
     handle.write(b'robotwin-frozen-endpoint-readout\n');handle.flush();os.fsync(handle.fileno())
 probe.unlink()
 (out/'admission.json').write_text(json.dumps(dict(status='complete',free_bytes=free,
-    required_free_bytes=322*2**30,cumulative_worst_gpu_seconds=parent['all_reserved_pessimistic_gpu_seconds'],
+    required_free_bytes=plan['minimum_free_gib']*2**30,cumulative_worst_gpu_seconds=plan['all_reserved_worst_gpu_seconds'],
     gpu_count=1,optimizer_updates=0,write_fsync=True))+'\n')
 PY
 mkdir -p /root/.sapien/physx
@@ -70,4 +71,5 @@ if [[ ! -e /root/.sapien/physx/105.1-physx-5.3.1.patch0 ]]; then
     /root/.sapien/physx/105.1-physx-5.3.1.patch0
 fi
 timeout --signal=INT --kill-after=30s 6840 "$TASK_PYTHON" "$TASK_RUN/evaluate_endpoints.py" \
-  --output "$TASK_OUT" --manifest "$TASK_RUN/READOUT-CASES.json" --exports "$TASK_EXPORTS"
+  --output "$TASK_OUT" --manifest "$TASK_RUN/READOUT-CASES.json" --exports "$TASK_EXPORTS" \
+  --storage-contract "$TASK_RUN/READOUT-CONTRACT.json"
