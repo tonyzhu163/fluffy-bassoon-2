@@ -209,7 +209,8 @@ class RoboTwinBatchRuntime:
                     execution=asdict(execution),physics_duration_seconds=execution.duration_seconds,
                     measured_valid_target_mask=np.asarray(execution.valid_target_mask,dtype=bool),
                     native_batch=dict(pending['metadata'],row=row),audit=info))
-                self._raw[lane] = observation;self._chunks[lane] += 1
+                # Transitions belong to the caller; retain a private next input.
+                self._raw[lane] = _cpu_tree(observation);self._chunks[lane] += 1
                 self._active[lane] = not (terminated or truncated)
             self._pending = None
             return transitions

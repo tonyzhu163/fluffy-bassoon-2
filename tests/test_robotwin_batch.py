@@ -21,10 +21,12 @@ def observation(seed):
 class Motor:
     noise_shape = (4,32)
     model = SimpleNamespace(device=torch.device('cpu'))
-    def __init__(self): self.calls = []
+    def __init__(self): self.calls = [];self.observations = []
     def check_frozen(self): pass
     def infer_batch(self,raw,*,noise):
         self.calls.append(noise.clone())
+        self.observations.append({key:(value.clone() if torch.is_tensor(value) else list(value))
+                                  for key,value in raw.items()})
         return noise[...,:14]+raw['states'][:,None],raw['states'].clone()
 
 
@@ -65,7 +67,15 @@ def test_one_batched_motor_call_owned_proposals_and_measured_feedback():
     assert rows[0]['physics_duration_seconds'] == .028
     assert rows[0]['requested_actions'].shape == (4,14)
     assert rows[0]['terminated'] and rows[0]['reward'] == 1.
+    # Learners may normalize or augment returned transitions in place.
+    for key in ('main_images','wrist_images','states'):
+        rows[1]['next_observation'][key].fill(99)
+    rows[1]['next_observation']['task_descriptions'][0] = 'caller annotation'
     base,_,meta = rt.infer()
+    assert torch.all(motor.observations[-1]['states'] == 2)
+    assert torch.all(motor.observations[-1]['main_images'] == 2)
+    assert torch.all(motor.observations[-1]['wrist_images'] == 0)
+    assert motor.observations[-1]['task_descriptions'] == ['place the phone on its stand']
     assert meta['lanes'] == [1] and meta['decision_ids'] == ['trial1/episode0/chunk-1']
     rows = rt.step(base)
     assert rows[0]['truncated']
