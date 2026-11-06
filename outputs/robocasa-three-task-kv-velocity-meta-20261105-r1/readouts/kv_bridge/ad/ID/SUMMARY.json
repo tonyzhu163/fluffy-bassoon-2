@@ -1,0 +1,607 @@
+{
+  "completed": true,
+  "interface": "kv_bridge",
+  "objective": "ad",
+  "split": "ID",
+  "selected_candidate_sha256": "f7085e4a6940546e32e46710314ac4fa4319e6179e69e23320e486d48345ad74",
+  "prior_episodes": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "cases_per_task": 50,
+  "curves": {
+    "CloseToasterOvenDoor": {
+      "full": {
+        "denominator": 50,
+        "first_success": [
+          14,
+          8,
+          15,
+          21,
+          16,
+          23
+        ],
+        "final_success": [
+          14,
+          7,
+          15,
+          21,
+          16,
+          23
+        ],
+        "ever_success": [
+          14,
+          17,
+          28,
+          34,
+          38,
+          42
+        ]
+      },
+      "episode": {
+        "denominator": 50,
+        "first_success": [
+          14,
+          15,
+          12,
+          22,
+          15,
+          17
+        ],
+        "final_success": [
+          14,
+          15,
+          12,
+          22,
+          15,
+          17
+        ],
+        "ever_success": [
+          14,
+          23,
+          29,
+          39,
+          41,
+          43
+        ]
+      }
+    },
+    "CoffeeSetupMug": {
+      "full": {
+        "denominator": 50,
+        "first_success": [
+          20,
+          21,
+          14,
+          21,
+          19,
+          14
+        ],
+        "final_success": [
+          19,
+          21,
+          14,
+          21,
+          19,
+          14
+        ],
+        "ever_success": [
+          20,
+          30,
+          36,
+          39,
+          42,
+          43
+        ]
+      },
+      "episode": {
+        "denominator": 50,
+        "first_success": [
+          19,
+          19,
+          14,
+          17,
+          24,
+          18
+        ],
+        "final_success": [
+          18,
+          19,
+          13,
+          16,
+          24,
+          18
+        ],
+        "ever_success": [
+          19,
+          27,
+          32,
+          36,
+          41,
+          43
+        ]
+      }
+    },
+    "OpenDrawer": {
+      "full": {
+        "denominator": 50,
+        "first_success": [
+          34,
+          36,
+          30,
+          30,
+          29,
+          33
+        ],
+        "final_success": [
+          34,
+          35,
+          29,
+          29,
+          29,
+          30
+        ],
+        "ever_success": [
+          34,
+          44,
+          47,
+          48,
+          48,
+          48
+        ]
+      },
+      "episode": {
+        "denominator": 50,
+        "first_success": [
+          34,
+          35,
+          35,
+          27,
+          30,
+          35
+        ],
+        "final_success": [
+          34,
+          35,
+          34,
+          26,
+          28,
+          35
+        ],
+        "ever_success": [
+          34,
+          44,
+          47,
+          47,
+          47,
+          47
+        ]
+      }
+    }
+  },
+  "paired_full_minus_reset": {
+    "CloseToasterOvenDoor": {
+      "0": {
+        "delta_percentage_points": 0.0,
+        "wins": 1,
+        "losses": 1,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -6.0,
+          6.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "1": {
+        "delta_percentage_points": -14.000000000000002,
+        "wins": 1,
+        "losses": 8,
+        "exact_McNemar_p": 0.0390625,
+        "paired_case_bootstrap95_percentage_points": [
+          -26.0,
+          -4.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "2": {
+        "delta_percentage_points": 6.0,
+        "wins": 8,
+        "losses": 5,
+        "exact_McNemar_p": 0.5810546875,
+        "paired_case_bootstrap95_percentage_points": [
+          -8.0,
+          20.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "3": {
+        "delta_percentage_points": -2.0,
+        "wins": 3,
+        "losses": 4,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -12.0,
+          8.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "4": {
+        "delta_percentage_points": 2.0,
+        "wins": 5,
+        "losses": 4,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -10.0,
+          14.000000000000002
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "5": {
+        "delta_percentage_points": 12.0,
+        "wins": 7,
+        "losses": 1,
+        "exact_McNemar_p": 0.0703125,
+        "paired_case_bootstrap95_percentage_points": [
+          2.0,
+          22.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      }
+    },
+    "CoffeeSetupMug": {
+      "0": {
+        "delta_percentage_points": 2.0,
+        "wins": 2,
+        "losses": 1,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -4.0,
+          10.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "1": {
+        "delta_percentage_points": 4.0,
+        "wins": 6,
+        "losses": 4,
+        "exact_McNemar_p": 0.75390625,
+        "paired_case_bootstrap95_percentage_points": [
+          -8.0,
+          16.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "2": {
+        "delta_percentage_points": 0.0,
+        "wins": 5,
+        "losses": 5,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -12.0,
+          12.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "3": {
+        "delta_percentage_points": 8.0,
+        "wins": 8,
+        "losses": 4,
+        "exact_McNemar_p": 0.3876953125,
+        "paired_case_bootstrap95_percentage_points": [
+          -6.0,
+          22.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "4": {
+        "delta_percentage_points": -10.0,
+        "wins": 2,
+        "losses": 7,
+        "exact_McNemar_p": 0.1796875,
+        "paired_case_bootstrap95_percentage_points": [
+          -22.0,
+          2.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "5": {
+        "delta_percentage_points": -8.0,
+        "wins": 3,
+        "losses": 7,
+        "exact_McNemar_p": 0.34375,
+        "paired_case_bootstrap95_percentage_points": [
+          -20.0,
+          4.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      }
+    },
+    "OpenDrawer": {
+      "0": {
+        "delta_percentage_points": 0.0,
+        "wins": 0,
+        "losses": 0,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          0.0,
+          0.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "1": {
+        "delta_percentage_points": 2.0,
+        "wins": 2,
+        "losses": 1,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -4.0,
+          8.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "2": {
+        "delta_percentage_points": -10.0,
+        "wins": 2,
+        "losses": 7,
+        "exact_McNemar_p": 0.1796875,
+        "paired_case_bootstrap95_percentage_points": [
+          -22.0,
+          0.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "3": {
+        "delta_percentage_points": 6.0,
+        "wins": 4,
+        "losses": 1,
+        "exact_McNemar_p": 0.375,
+        "paired_case_bootstrap95_percentage_points": [
+          -2.0,
+          14.000000000000002
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "4": {
+        "delta_percentage_points": -2.0,
+        "wins": 1,
+        "losses": 2,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -8.0,
+          4.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "5": {
+        "delta_percentage_points": -4.0,
+        "wins": 2,
+        "losses": 4,
+        "exact_McNemar_p": 0.6875,
+        "paired_case_bootstrap95_percentage_points": [
+          -14.000000000000002,
+          6.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      }
+    }
+  },
+  "source_banks": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/CloseToasterOvenDoor/bank-000/RESULT.json",
+      "sha256": "4f33444128b35f9c447b57edbafc430cf8eb96211f24139a3666fa5ec3614a2f",
+      "audit_sha256": "97ebde0c04cc5023253aef3d52c1d4763d83a8ac17100331fa74d2b4d1768dd0"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/CloseToasterOvenDoor/bank-008/RESULT.json",
+      "sha256": "f1e7235fd95a83f542f3d268f58b1ec930ba2015287939b0be06fc1b7a29f97a",
+      "audit_sha256": "9175c489166179adf55b6af9ad8ccb0d098c75b12c659e440b0480a2f1a8c146"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/CloseToasterOvenDoor/bank-016/RESULT.json",
+      "sha256": "a2f1911ba74a62bb3b3cd06a31e77c8a60a1ca2070742740001c793cc0a8e485",
+      "audit_sha256": "34daac077fe580d8a26045b4e5dc795bb820970c241051a57ff82d1bc18f58b4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/CloseToasterOvenDoor/bank-024/RESULT.json",
+      "sha256": "834df2bc77af5f020852c05fbc3e0ed0675216559de28a3badeecf74c4f9d53e",
+      "audit_sha256": "fac56c82d261015c527fbaf5eb3e9bfc2b91041224c423722b6cb352c4af6e84"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/CloseToasterOvenDoor/bank-032/RESULT.json",
+      "sha256": "951e9268d85a15408fe05b416069c7aec72f17976ed0d334729181d0eeb5aed7",
+      "audit_sha256": "f5f39acb9c411f72dc43f778bca87820a6732de44c72b6df8d22e53788030d60"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/CloseToasterOvenDoor/bank-040/RESULT.json",
+      "sha256": "761d6d5366b21f9e44e8c120fa709ceeedd1748e725ce940a4844c00af8ed0cc",
+      "audit_sha256": "59968b3569ed68ccb7ddd2a5631118e035ed0690e1eb7843857530eb349e9230"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/CloseToasterOvenDoor/bank-048/RESULT.json",
+      "sha256": "1bfaf9c237148e75a2bc40f407a27fa5b8644f3c264b1cc0844e831723d25ad0",
+      "audit_sha256": "1a71baa8ae20feea77fcf90441c0badf90cf660b23329ae1054bc074f7d75049"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/CoffeeSetupMug/bank-000/RESULT.json",
+      "sha256": "8828643cbe471f7a453152662065764328b9fd3a3fb1f2f94048a1120534ba83",
+      "audit_sha256": "2b77d40c0f3c440e8fcdadc88f762ca620ead1d68416b9aba88d2a6d49d11160"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/CoffeeSetupMug/bank-008/RESULT.json",
+      "sha256": "c59232c19c529682e6ecb295594c0a53437b8403f04442ef9b782b7faad26f27",
+      "audit_sha256": "50c1bde18205b93189c1a7364ebacb160711c28be4b2a1f939050b1294662064"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/CoffeeSetupMug/bank-016/RESULT.json",
+      "sha256": "50a65d641a4012bf504afcd9dca6071f026e5fc20b025290ed9acf31f21478a3",
+      "audit_sha256": "b5117ceaccd54646986123e8825c915fd2e848b3a8bb65cbf0ba97d9f98dd761"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/CoffeeSetupMug/bank-024/RESULT.json",
+      "sha256": "426c7c41748b1ff836f767ab8257814003a1097914463e9b1a0864fac8c1857b",
+      "audit_sha256": "dae1cb1d2cab0b62d268cdd75ad2187ad41c2270758e21cf908ae54216e46832"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/CoffeeSetupMug/bank-032/RESULT.json",
+      "sha256": "07da3fab2a39e6c2e917ff59526302f71d9944c27f1eba3f7d87a7cd78b73f1d",
+      "audit_sha256": "03428802b4a257699a7149a9c315a2ce900df95c28f3470e0d4b9b60f64fc733"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/CoffeeSetupMug/bank-040/RESULT.json",
+      "sha256": "3b028cb19b04e16b4d862ae29cda86a73bc806c2b8b9bc4c693da0d5b4d7789b",
+      "audit_sha256": "74b05e764cc66eea20bfc318a833dd70fc2886a16675d5e9cdff9cad26a8ed07"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/CoffeeSetupMug/bank-048/RESULT.json",
+      "sha256": "3b20235a81b2b8dd479aefb3a2c0e2f04a42f36dd61789ccdfc044526c23bf3a",
+      "audit_sha256": "b324bd48960a9f2594765ca93d81b3f95dd6f6fcb35d8b2704f7bafb8bc82060"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/OpenDrawer/bank-000/RESULT.json",
+      "sha256": "ab67d04207275e7ad498bacef4de7e2c4ccba34ac3c312634af4df41dc0a1f99",
+      "audit_sha256": "9c4b3a0ad316746bdb9a7c45eb8955a08b0cbf0a3ba65e5dec0bc71bcfdca557"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/OpenDrawer/bank-008/RESULT.json",
+      "sha256": "0c47fb0854db5969b2740d3ac376f0e168b07cf2a8516f37d8e773932a4aa544",
+      "audit_sha256": "c2721a7db2742da4ccdabf47634c0bbc4a6304b6a8bf68e37402bf08dd81c7a5"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/OpenDrawer/bank-016/RESULT.json",
+      "sha256": "698196caa540bf85caf6af8986dd1e81ac36e789cd19ec0a9833aa49d5e6998b",
+      "audit_sha256": "b0242e54c6728ef8a0ea8638eda77c31e01e8c325543c951f764ddb36d4cb310"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/OpenDrawer/bank-024/RESULT.json",
+      "sha256": "aa110bee0ffd5a6f9de1aebcf41d742beef2ef93c1d77a6edc3af9bcd4877708",
+      "audit_sha256": "f16d47912d7a8d76ec863922aee1f8605bf1c16c2160802e67026a532b0ca885"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/OpenDrawer/bank-032/RESULT.json",
+      "sha256": "9c798d235f008c8b74f8a2fb21c3f8a9835d48dda19ca1afb13c044b8dea512c",
+      "audit_sha256": "333ec19b74747229c5315854944c6068d7a5c2ea709d8630dc6422e4ddfc4ef0"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/OpenDrawer/bank-040/RESULT.json",
+      "sha256": "cf2db8e53f1ff5a796eebb09151b789aff2d08793b309bca2a5265564f93fe70",
+      "audit_sha256": "47576e6153df20683298ad9694220e333acd441ce5529ce33feea898f5e7cefa"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/episode/OpenDrawer/bank-048/RESULT.json",
+      "sha256": "8fe39f9a51fa5528b9368b59ff110f970679cde699abb88eb7094142c17b2608",
+      "audit_sha256": "ec3d0386a09e64d711401d32d54d4c4f7eb2970b6095de5aee802f2f0d04096e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/CloseToasterOvenDoor/bank-000/RESULT.json",
+      "sha256": "976a042d993b12667d4944ee816608ddb81bf266943705a013edf0351659950c",
+      "audit_sha256": "6073ff02ea785933b1ca14c4f9c723e0953b2b9fc57189c744502269f8caf2a0"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/CloseToasterOvenDoor/bank-008/RESULT.json",
+      "sha256": "7f0f6d33fbef059da01afcb03b76e8da1253949c05ca531f84641b1e04f87f41",
+      "audit_sha256": "8df551570ab1452545347ea932575a598482692716f44f0043fb7dda1bf74876"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/CloseToasterOvenDoor/bank-016/RESULT.json",
+      "sha256": "a0b887a1ec98791c9b087f01388c52be17dcb1971f3c74852c87293080ec8b11",
+      "audit_sha256": "d8e8b31f0742e555468c2056d0538794aa27450ec850b55298900af3f658d440"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/CloseToasterOvenDoor/bank-024/RESULT.json",
+      "sha256": "ffea0d14b99efce96a5cb70eb482fbf08e1614b9500a7f94a1b049f72022bbc7",
+      "audit_sha256": "c9237d10de8af45846790f06beec4c95900f8eeb3857af3815420ca1ea70a0f1"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/CloseToasterOvenDoor/bank-032/RESULT.json",
+      "sha256": "a66e6c83a0df3f76e7c058b3608fd52ea5b5065e9666da45f5e581bf70407a6e",
+      "audit_sha256": "a323a8f1f8ba1eb5f80c54881d61c534946190533f691c5690492d187eb12965"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/CloseToasterOvenDoor/bank-040/RESULT.json",
+      "sha256": "b5b8534c7b2df88545dde7920fb52ed58bdb32c39a79ea082d599ded74d3059c",
+      "audit_sha256": "cb7213e6f15ac45cd814e57fc8453357ee1c6f6d4521b1029644c57410ed6c92"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/CloseToasterOvenDoor/bank-048/RESULT.json",
+      "sha256": "9894cc606b8c94d9f5b38247c84d891e72713a09900f91b3721030130cdc7da6",
+      "audit_sha256": "d4be76b7c219931218793bce32777844a0450f10a12f20f3bf895ed46822a418"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/CoffeeSetupMug/bank-000/RESULT.json",
+      "sha256": "07e0952495fa51a51a2988090cd539b37a896d7a5002c23c38b7b38279c6c27d",
+      "audit_sha256": "19050e474c5620727964d47b528fa4a84050133f9d71c53166c3d9260f2fb730"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/CoffeeSetupMug/bank-008/RESULT.json",
+      "sha256": "b4e83698356634751a3d70a72ca0546078065581e060b601da5eac15a9ea1781",
+      "audit_sha256": "2a01495709bd61d7b73b76f7aaa69abc7c27d4b293e857b92df9644c13531638"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/CoffeeSetupMug/bank-016/RESULT.json",
+      "sha256": "23890113a93cda912d83713cc459e2613b7624c2e90d5719b4938dce2afa9d72",
+      "audit_sha256": "5ad997d48f9739d06a193455faf243398848758a9c3ba931de570282443a9151"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/CoffeeSetupMug/bank-024/RESULT.json",
+      "sha256": "c87e485c4c913bfe05c1a37707bd9eaf9224e04c3d4e62069ea472fc8afefc55",
+      "audit_sha256": "0584a1df1be730f2bebdc98196ffb41fa8ead7f014e2c364aabe64a6ea8ae9d0"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/CoffeeSetupMug/bank-032/RESULT.json",
+      "sha256": "24740823de76ce236ff23f0b47e0ba52a1f681b9014fa90abcc0e3d325162981",
+      "audit_sha256": "3a0e8e7fc318a0c97b83ad9cd9b36c7350699bdc876c9eec35dee87c2633375a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/CoffeeSetupMug/bank-040/RESULT.json",
+      "sha256": "abced688af4e6b80036e3fc61fe23bab3f938b2221f514e84a55bec420df449d",
+      "audit_sha256": "8c8d366e6f3ea33ce8328217acfa629d98afa8b6f725aa83914356618421b502"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/CoffeeSetupMug/bank-048/RESULT.json",
+      "sha256": "1d2dafa2f771b23c97cfa385b1252c1fefa3cf1fca4cb7623ded041a900fe7f2",
+      "audit_sha256": "4c5ae9cbe18aed0edfecc0ed739697ad907ecaaf1a1bf24f21700cda4c139bea"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/OpenDrawer/bank-000/RESULT.json",
+      "sha256": "773b841992db56410a58b0938d44618e1595963869714782fadf212ae714ebd9",
+      "audit_sha256": "fc4dcf1355f3a844de28aab4e3f5045d593adf3e59a2e84f5777cf8edb74ba8c"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/OpenDrawer/bank-008/RESULT.json",
+      "sha256": "4f0099157e968bb61388b82f2b2432aa7c48a7d91dbbe4ee83c2fbe9e745d91b",
+      "audit_sha256": "b3e2b805c08810cdfe2b4809addc4d64de5ec20301d9aef9d0765a800df8e2a4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/OpenDrawer/bank-016/RESULT.json",
+      "sha256": "32047e8b7ea61ade029c99e47bf9e4139769b173709f2e41a55063ab44e2a0de",
+      "audit_sha256": "27c89f6d463943c11c7e6224be32197e2c31a58ec52e474f0e3afccb53ddeb64"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/OpenDrawer/bank-024/RESULT.json",
+      "sha256": "eee01c358b5a1c11a494fb823780b89cd247722b1621cb61b697a6432a6a3655",
+      "audit_sha256": "b199f4053aed2801fa74176082369c1d4b566e8764e9b61e19f089556685b3f4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/OpenDrawer/bank-032/RESULT.json",
+      "sha256": "aa78b23bded9e2cb2258817b7f368aad3eb7db14d41e387ea6087b4f629b5bba",
+      "audit_sha256": "a4475b8f0bee8c676b8241005f661fab4f0faaf1235a8a00fdf8042409381c60"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/OpenDrawer/bank-040/RESULT.json",
+      "sha256": "7c5e5f36507e432547ed1b42dc195ed0904bd994d3f033729d5e0c7b40b05a44",
+      "audit_sha256": "0a7f1a5d2245020cf8d3f62a4b5c690c32d294c14605bbb5d4a5377960143291"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/full/OpenDrawer/bank-048/RESULT.json",
+      "sha256": "e3538a449a02da8f4ff3813b6c2184fc2c850910e03fd9bd60de576502d6f705",
+      "audit_sha256": "d31a6d9fcdc63f665b9963d254d70f62436477ff1a388bd513e8369cb88363d5"
+    }
+  ],
+  "episodes": 1800,
+  "native_parameters_frozen": true,
+  "deployment_optimizer_updates": 0
+}

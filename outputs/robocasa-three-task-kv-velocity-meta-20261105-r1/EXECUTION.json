@@ -1,7 +1,7 @@
 {
-  "checked_shanghai": "2026-11-06T09:57:06.218459+08:00",
+  "checked_shanghai": "2026-11-06T10:00:05.818694+08:00",
   "cluster": "Baige Pro6K",
-  "status": "all8_fits_complete_both_AD_readouts_complete_final_integrity_and_plots_pending",
+  "status": "all8_fits_complete_AD_KV_velocity_stage1_fully_verified_closed_other6_readouts_held",
   "source_commit": "07e3fbeef8ecc1f8f4ef405da747c8ea837f4a79",
   "preserved_learner_contract_commit": "1c88834265cfadc511ba62cac48db0542ad0ebd1",
   "member_cache": "/mowenjie/fluffy-bassoon-2/inputs/steering-source-members-20261105-pfs01",
@@ -249,7 +249,7 @@
   "maximum_committed_GPU_hours": 140.2711111111111,
   "approved_GPU_hours": 150,
   "failed_deployment_GPU_hours": 0.057777777777777775,
-  "free_PFS_GiB": 360.96875,
+  "free_PFS_GiB": 362.1796875,
   "storage_floor_GiB": 220,
   "CPU_tests_passed": 20,
   "full_PFS_members_verified": 37440,
@@ -279,10 +279,13 @@
     "previous_owned_watcher": 2881123,
     "actual_WATCH_PACKED_PACK_realbank_qualification": "migrations/pfs-members-01/PACK-GUARD-QUALIFICATION13.json",
     "transition_at_empty_archive_queue_and_idle_oldworker": true,
-    "active_scientific_GPU_code_unchanged": true
+    "active_scientific_GPU_code_unchanged": true,
+    "stopped": true,
+    "stop_receipt": "monitor/WATCH-STOP22.json",
+    "stopped_shanghai": "2026-11-06T10:00:05.818694+08:00"
   },
-  "next_monitor_check_shanghai": "2026-11-06T10:10:00+08:00",
-  "next_check_shanghai": "2026-11-06T10:10:00+08:00",
+  "next_monitor_check_shanghai": null,
+  "next_check_shanghai": null,
   "budget": {
     "approved_GPU_hours": 150,
     "charged_GPU_hours": 140.2711111111111,
@@ -298,7 +301,7 @@
     "stage1_authority": "Original150 human approval; admission READOUT-ADMISSION.json contains only AD KV and velocity keys",
     "peak_committed_GPU_hours": 144.715
   },
-  "evaluation": "Balanced AD interface pair selected before main outcomes, each full5task/50case/6episode/full-reset arm,3000episodes and1.89Mpolicycontrols. Stage1 executes existing approved150GPUh scope; full8model24k scientific matrix unchanged, remaining6held. Proposed190 not approved. No complete task-success panel yet.",
+  "evaluation": "Complete balanced AD KV/velocity arms only:6000episodes,3.78Mcontrols,18kvids,140banks; full8model24k matrix remains incomplete, other6held,190unapproved;0SGD/frozen original879science",
   "storage": {
     "member_cache_PFS_payloads": 37440,
     "member_cache_GiB": 127.068,
@@ -314,13 +317,15 @@
     "RT_future_growth_bytes": 0,
     "RT_resident_checkpoints_and_caches_retained": true,
     "terminal_RT_accounting": "STORAGE-ACCOUNTING-CLOSEOUT15.json",
-    "active_immutable_guard": "Existing07e3 processes retain unused RTcap remainder as conservative compatibility headroom; not admitted future growth; no healthy process restart",
+    "active_immutable_guard": "All guard processes closed after completed stage; historical policy12 retained unchanged",
     "conservative_current_required_free_PFS_GiB": 310.17099475860596,
-    "authoritative_current_required_free_PFS_GiB": 284.89785385131836
+    "authoritative_current_required_free_PFS_GiB": 246,
+    "terminal_shared_accounting": "STORAGE-ACCOUNTING-CLOSEOUT23.json",
+    "current_future_readout_growth_bytes": 0
   },
   "closed_fit_recovery_index": "finalized-fits-20261106-r1/INDEX.json",
   "seven_closed_fits_complete_state_SHA_and_finite_RNG_checks": true,
-  "next_action": "Run corrected final integrity checker, generate and inspect curves, safely close idle CPU archive worker, publish paired AD result",
+  "next_action": "No active admitted work; other6modelreadouts held,190unapproved; protected data and checkpoints retained",
   "all_eight_closed_fits_complete_state_SHA_and_finite_RNG_checks": true,
   "closed_fit_recovery_receipt": "migrations/pfs-members-01/ALL-EIGHT-FITS-RECOVERY08.json",
   "all_allocations_release_receipt": "migrations/pfs-members-01/ALL-EIGHT-FITS-RELEASE08.json",
@@ -534,5 +539,11 @@
     }
   },
   "peak_committed_GPU_hours": 144.715,
-  "budget_closeout": "migrations/pfs-members-01/STAGE1-BUDGET-CLOSEOUT21.json"
+  "budget_closeout": "migrations/pfs-members-01/STAGE1-BUDGET-CLOSEOUT21.json",
+  "all_55_meta_allocations_released": true,
+  "stage1_completion": "STAGE1-COMPLETE23.json",
+  "final_readout_report": "STAGE1-RESULT.md",
+  "final_integrity": "monitor/STAGE1-INTEGRITY22.json",
+  "archive_queue_empty": true,
+  "all_140_closed_banks_verified": true
 }

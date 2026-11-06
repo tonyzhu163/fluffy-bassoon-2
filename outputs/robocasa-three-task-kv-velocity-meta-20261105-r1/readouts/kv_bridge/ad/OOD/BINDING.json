@@ -1,0 +1,107 @@
+{
+  "format": "frozen_expert_eight_model_six_episode_readout_v1",
+  "interface": "kv_bridge",
+  "objective": "ad",
+  "source_commit": "87984718c9199797d31a158c47225cc695623afe",
+  "selected_candidate_sha256": "f7085e4a6940546e32e46710314ac4fa4319e6179e69e23320e486d48345ad74",
+  "trained_contract": {
+    "source_commit": "1c88834265cfadc511ba62cac48db0542ad0ebd1",
+    "interface": "kv_bridge",
+    "objective": "ad",
+    "config": {
+      "interface": "kv_bridge",
+      "observation_dim": 2073,
+      "history_action_dim": 600,
+      "width": 256,
+      "layers": 6,
+      "heads": 8,
+      "context_length": 192,
+      "kv_heads": 1,
+      "head_dim": 256,
+      "kv_rank": 4,
+      "kv_layers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "scale": 0.1,
+      "action_horizon": 50,
+      "model_action_dim": 32,
+      "active_action_dim": 12
+    },
+    "assembly_sha256": "fc3f388ef3feddde4c44ebd45ae9d7e73dab4a0fc58252c506315697be2a4758",
+    "train_sha256": "d7732ada5d175fd4c07d6faef061deff87aa561ed46cac3b3033e9ec4c87f387",
+    "validation_sha256": "82c833d3089c83968ffbb1da9c8e75bab7d7ba2a56eac06b4e6a88f8948c1c0a",
+    "native_model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+    "native_norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+    "sources": {
+      "OpenDrawer": {
+        "index_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/OpenDrawer/preparation/TAR-INDEX.json",
+        "index_sha256": "f9247d7ffa656f9072d4c07e1669b5105f444c61ca646a4f57d3407234b51fb5",
+        "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1/corpora/OpenDrawer/native-130-r1.tar"
+      },
+      "CloseToasterOvenDoor": {
+        "index_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/CloseToasterOvenDoor/preparation/TAR-INDEX.json",
+        "index_sha256": "187aa079fc2de7c14489b8adeb89e5b9638810bd62e95dfa8256f8647687ddfd",
+        "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1/corpora/CloseToasterOvenDoor/native-130-r1.tar"
+      },
+      "CoffeeSetupMug": {
+        "index_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2/CoffeeSetupMug/preparation/TAR-INDEX.json",
+        "index_sha256": "d652d7d84af4cc4a94b41dbfafba7be3af38489d6daf39bd4597b9f74463d2cd",
+        "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-flow-sde-10m-20261103-r1/corpora/CoffeeSetupMug/native-130-r1.tar"
+      }
+    },
+    "logical_batch": 8,
+    "max_episodes": 12,
+    "learning_rate": 0.0003,
+    "seed": 0,
+    "value_reference": null,
+    "value_reuse": "only independent converged Q/V used; direct-action actors never initialize or control a steering policy",
+    "target_space": "canonical mapped physical actions encoded with official32-coordinate native normalization",
+    "loss": "action-derived flow matching on active12 coordinates; one causal query per sampled history window",
+    "qualification_only": false,
+    "schedule": {
+      "minimum_updates": 1000,
+      "eval_every": 100,
+      "validation_batches": 16,
+      "patience": 10,
+      "relative_delta": 0.001,
+      "checkpoint_selection": "validation_flow_loss"
+    }
+  },
+  "model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+  "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+  "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+  "split": "OOD",
+  "cases_per_task": 50,
+  "support_episodes": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "memory_modes": [
+    "full",
+    "episode"
+  ],
+  "batch_contract": "fixed_order_same_horizon_waves_v1",
+  "render_contract": "bounded_two_intensity_levels",
+  "deployment_optimizer_updates": 0
+}

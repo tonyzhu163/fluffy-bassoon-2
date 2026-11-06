@@ -1,0 +1,607 @@
+{
+  "completed": true,
+  "interface": "velocity_bridge",
+  "objective": "ad",
+  "split": "ID",
+  "selected_candidate_sha256": "04701478c2f3f850b8ce0329855f334732212d4186ae9502e4d97a08a3bab9ca",
+  "prior_episodes": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "cases_per_task": 50,
+  "curves": {
+    "CloseToasterOvenDoor": {
+      "full": {
+        "denominator": 50,
+        "first_success": [
+          15,
+          17,
+          14,
+          12,
+          18,
+          21
+        ],
+        "final_success": [
+          15,
+          17,
+          14,
+          12,
+          18,
+          21
+        ],
+        "ever_success": [
+          15,
+          29,
+          33,
+          37,
+          39,
+          39
+        ]
+      },
+      "episode": {
+        "denominator": 50,
+        "first_success": [
+          16,
+          16,
+          14,
+          19,
+          17,
+          20
+        ],
+        "final_success": [
+          16,
+          16,
+          14,
+          19,
+          17,
+          20
+        ],
+        "ever_success": [
+          16,
+          29,
+          35,
+          40,
+          43,
+          46
+        ]
+      }
+    },
+    "CoffeeSetupMug": {
+      "full": {
+        "denominator": 50,
+        "first_success": [
+          21,
+          14,
+          15,
+          18,
+          16,
+          19
+        ],
+        "final_success": [
+          20,
+          14,
+          14,
+          16,
+          16,
+          19
+        ],
+        "ever_success": [
+          21,
+          28,
+          33,
+          36,
+          38,
+          40
+        ]
+      },
+      "episode": {
+        "denominator": 50,
+        "first_success": [
+          21,
+          15,
+          13,
+          18,
+          15,
+          19
+        ],
+        "final_success": [
+          20,
+          15,
+          12,
+          18,
+          15,
+          19
+        ],
+        "ever_success": [
+          21,
+          30,
+          35,
+          37,
+          42,
+          45
+        ]
+      }
+    },
+    "OpenDrawer": {
+      "full": {
+        "denominator": 50,
+        "first_success": [
+          35,
+          37,
+          32,
+          29,
+          29,
+          33
+        ],
+        "final_success": [
+          33,
+          35,
+          31,
+          29,
+          29,
+          28
+        ],
+        "ever_success": [
+          35,
+          45,
+          47,
+          48,
+          48,
+          48
+        ]
+      },
+      "episode": {
+        "denominator": 50,
+        "first_success": [
+          35,
+          36,
+          29,
+          30,
+          32,
+          34
+        ],
+        "final_success": [
+          32,
+          34,
+          27,
+          30,
+          31,
+          32
+        ],
+        "ever_success": [
+          35,
+          46,
+          47,
+          48,
+          48,
+          48
+        ]
+      }
+    }
+  },
+  "paired_full_minus_reset": {
+    "CloseToasterOvenDoor": {
+      "0": {
+        "delta_percentage_points": -2.0,
+        "wins": 0,
+        "losses": 1,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -6.0,
+          0.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "1": {
+        "delta_percentage_points": 2.0,
+        "wins": 6,
+        "losses": 5,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -12.0,
+          14.049999999999274
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "2": {
+        "delta_percentage_points": 0.0,
+        "wins": 4,
+        "losses": 4,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -12.0,
+          10.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "3": {
+        "delta_percentage_points": -14.000000000000002,
+        "wins": 1,
+        "losses": 8,
+        "exact_McNemar_p": 0.0390625,
+        "paired_case_bootstrap95_percentage_points": [
+          -26.0,
+          -4.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "4": {
+        "delta_percentage_points": 2.0,
+        "wins": 8,
+        "losses": 7,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -14.000000000000002,
+          18.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "5": {
+        "delta_percentage_points": 2.0,
+        "wins": 6,
+        "losses": 5,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -12.0,
+          14.000000000000002
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      }
+    },
+    "CoffeeSetupMug": {
+      "0": {
+        "delta_percentage_points": 0.0,
+        "wins": 1,
+        "losses": 1,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -6.0,
+          6.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "1": {
+        "delta_percentage_points": -2.0,
+        "wins": 7,
+        "losses": 8,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -16.0,
+          14.000000000000002
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "2": {
+        "delta_percentage_points": 4.0,
+        "wins": 6,
+        "losses": 4,
+        "exact_McNemar_p": 0.75390625,
+        "paired_case_bootstrap95_percentage_points": [
+          -8.0,
+          16.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "3": {
+        "delta_percentage_points": 0.0,
+        "wins": 5,
+        "losses": 5,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -12.0,
+          12.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "4": {
+        "delta_percentage_points": 2.0,
+        "wins": 6,
+        "losses": 5,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -12.0,
+          16.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "5": {
+        "delta_percentage_points": 0.0,
+        "wins": 7,
+        "losses": 7,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -14.000000000000002,
+          14.000000000000002
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      }
+    },
+    "OpenDrawer": {
+      "0": {
+        "delta_percentage_points": 0.0,
+        "wins": 0,
+        "losses": 0,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          0.0,
+          0.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "1": {
+        "delta_percentage_points": 2.0,
+        "wins": 5,
+        "losses": 4,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -10.0,
+          14.000000000000002
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "2": {
+        "delta_percentage_points": 6.0,
+        "wins": 6,
+        "losses": 3,
+        "exact_McNemar_p": 0.5078125,
+        "paired_case_bootstrap95_percentage_points": [
+          -6.0,
+          18.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "3": {
+        "delta_percentage_points": -2.0,
+        "wins": 5,
+        "losses": 6,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -16.0,
+          10.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "4": {
+        "delta_percentage_points": -6.0,
+        "wins": 1,
+        "losses": 4,
+        "exact_McNemar_p": 0.375,
+        "paired_case_bootstrap95_percentage_points": [
+          -14.000000000000002,
+          2.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "5": {
+        "delta_percentage_points": -2.0,
+        "wins": 4,
+        "losses": 5,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -14.000000000000002,
+          10.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      }
+    }
+  },
+  "source_banks": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/CloseToasterOvenDoor/bank-000/RESULT.json",
+      "sha256": "b7ea51855abbb59e98d20441f16ee94c0eaa091039ece8a577dbc97a89129cd3",
+      "audit_sha256": "27826ec2d56744a9e8e7db6174db2daa4a9aaf4e6b44ecfe723ad6cff97fd67f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/CloseToasterOvenDoor/bank-008/RESULT.json",
+      "sha256": "fbe298b2f356924f44e28be12c4a47618bf149ee4ec4e8d322969dcebc5b9014",
+      "audit_sha256": "e38f0f622123cdb7bc552b486a446564604395d281d365c1f7e750946c807755"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/CloseToasterOvenDoor/bank-016/RESULT.json",
+      "sha256": "7654094adc8f3c55d4a29d1ec21b0c477d1719785d25adf306bbb9dc4c52e6e7",
+      "audit_sha256": "c4f614bb63a4c4305b93bf741ca75fcaf520b25b4b5927c0532d8c16bf1a25ff"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/CloseToasterOvenDoor/bank-024/RESULT.json",
+      "sha256": "764986e7722ae9f66fd92958218779ebf1b56d54a563f3f5d759a9c468cc7b2c",
+      "audit_sha256": "270aa8b454a66e7943d431cb797086c5648477c9506c7c508583f559b2927e21"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/CloseToasterOvenDoor/bank-032/RESULT.json",
+      "sha256": "4a7eb93d2d1667b14bd4df4fb1be9d0e4bcae51e1d49aa12fec45511732df3d7",
+      "audit_sha256": "4d2f8aceb13b67c852690fb20bdd566ae33e68dc67437ba87f795a057f53af0a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/CloseToasterOvenDoor/bank-040/RESULT.json",
+      "sha256": "b1df74b2c6bca250bceeab3160eaa435add76f40e3f86afb2fbc087a336f25dd",
+      "audit_sha256": "9e9934476475df8353a6d5a4537c464bab0e15f48b117711e59a8d2357743b2e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/CloseToasterOvenDoor/bank-048/RESULT.json",
+      "sha256": "813d79e32389516d37c65168155ba6041067f5e731349f9892c219eee098245c",
+      "audit_sha256": "15484b4d9f21b17c5f97cadd2a3186d729345b5506f8ba72ee17e7e134c1e268"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/CoffeeSetupMug/bank-000/RESULT.json",
+      "sha256": "f4436c9dc5dff022b12c547a6676a8f9eaca8989865a26154370d879d746eaf7",
+      "audit_sha256": "6f53a6a20601e32355ddf7ccae4f6b20ddf49c1e05e3af042f20480ee8941208"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/CoffeeSetupMug/bank-008/RESULT.json",
+      "sha256": "6fd4df494219ac2b1df0b0cfa0a244402c78f75cbbde73a6ee9d18ab10da0856",
+      "audit_sha256": "2aa316b5c1b6ca9e1e487e104f98ee3bf07cb925e527b3588b915876d8bfcdfe"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/CoffeeSetupMug/bank-016/RESULT.json",
+      "sha256": "bece0c0235ca4e8eb138eba8befcbd4a38b369f7246f34e42b9e898d4910090e",
+      "audit_sha256": "29cf8e828fcfb5f7c2eda322365200cf2b2921471750c97e5e5c83aef26534ed"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/CoffeeSetupMug/bank-024/RESULT.json",
+      "sha256": "3d63f30047a5ad4f863abaaa07a83e62e9c155915208de309b3763048c8970de",
+      "audit_sha256": "bafb96c214f9545efe76fc81eb06e10fa2bf162928a34090f4969a70e3655ff6"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/CoffeeSetupMug/bank-032/RESULT.json",
+      "sha256": "dc1acf67f7a0197e7eb9019b27ab29419f7de5a79be5baa986436de9f987e3e5",
+      "audit_sha256": "7fdbdfc14890a23c994dd2a0e74017db11c411a612950efad9a21370b5f81512"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/CoffeeSetupMug/bank-040/RESULT.json",
+      "sha256": "758665fa44790adf394da949ed00c381e65f7121471e6d2db72cefde5e967e70",
+      "audit_sha256": "ee18976936b8b7281b1225144c603832342dd5df45fc09c63aa71fd49ce5aebe"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/CoffeeSetupMug/bank-048/RESULT.json",
+      "sha256": "3a421211624094ab8fdb944327537597a9dc871ac157e3bd557c23c5fe68f9b1",
+      "audit_sha256": "ee3bb53dc00e9d08ae65b753321bd19c92fd12896ad071311742a14123b4d5f7"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/OpenDrawer/bank-000/RESULT.json",
+      "sha256": "b57416facb751a1a851e75239b0a8eb8a7fb82e54bdd90ba741c2ca515c9891a",
+      "audit_sha256": "3e590620330ec9824eede4312c948febf83d7c2eef5bac47f63eda70d038d494"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/OpenDrawer/bank-008/RESULT.json",
+      "sha256": "abb4ba48135a55dcacbb1b7470dbbd8b910781ba1bba87df6d2171138b9c0e56",
+      "audit_sha256": "c08ae68e8e1d84eef88a522b614ccf326de09b30a710af9154bad233199ad0a4"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/OpenDrawer/bank-016/RESULT.json",
+      "sha256": "11eeb3ff9a00725941fa19bfa9cac265ff81cc0b5928df52e8c4244df631d8a8",
+      "audit_sha256": "f40d5d2ad13510cda4e38d0b420deb2bde2cee84b9795e40fd969cdd92086429"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/OpenDrawer/bank-024/RESULT.json",
+      "sha256": "5a091f28660f8be7b94f83db6fab8b4e65c3af93fa79bd4a42e5530a64cd233b",
+      "audit_sha256": "288488112c0df79dfee7a39cd4382a4df8e6a9180c0e2d1665130ffedcf0c5ef"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/OpenDrawer/bank-032/RESULT.json",
+      "sha256": "05bafd1007aedea1032ecbb3fd861dcf22a3fdbc999c63070ef7694484e505ae",
+      "audit_sha256": "7a49c55de91b090f80f1f55103283c1153849792453e4334d88d858c39c7d61b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/OpenDrawer/bank-040/RESULT.json",
+      "sha256": "45cced380953f23e61fc52a2479d6ab4a01ab475e883379fd08f7b1a50c19371",
+      "audit_sha256": "03b1f269b3414f79b2f26141d7fb4d5c602f29b515b95b5a5233d1c57f8ca8a3"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/episode/OpenDrawer/bank-048/RESULT.json",
+      "sha256": "55abcf1e37c18d9562676ebbb8865c0e07c7573c4200e384797bd141ccaabc41",
+      "audit_sha256": "bebf54b4f0d135fcd12c3f0ca62efa8c215723abcb58738a9d6330b033878fe0"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/CloseToasterOvenDoor/bank-000/RESULT.json",
+      "sha256": "64c330ba630e83db04e802f4d81384a8d96d7a0adb70266d2e92fa1d27b60675",
+      "audit_sha256": "2186b2dc80f19e6c11a9398866473eae32ffb96f4c1e110ace71ca5fc74f555e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/CloseToasterOvenDoor/bank-008/RESULT.json",
+      "sha256": "1d53ff0298f03dafeb89d19795f902334e6267c0ab287ddc9e52b5955372eaa2",
+      "audit_sha256": "b1810d2ceaa4bf244ba0c6b6eed7114a9cb31eae0bf829ea48010a61c521803c"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/CloseToasterOvenDoor/bank-016/RESULT.json",
+      "sha256": "3cb22627aea54ec0e6ddd68d17d9c9b6fe8bf902c8a6214f9eed719cfb68bb32",
+      "audit_sha256": "e54361a2678fd3e185fdd83968d51300b129037cb8cd6e577af7c8f4eaef1887"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/CloseToasterOvenDoor/bank-024/RESULT.json",
+      "sha256": "cd4fd7f0643590aec0822bbced7d06eb0222205d138b809af5545e6e113ea0a8",
+      "audit_sha256": "ac6c2b95c84f6f857c8755c27c1bd6be18f411af6450ba912390d59e23ea707a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/CloseToasterOvenDoor/bank-032/RESULT.json",
+      "sha256": "6af33c4ecb0547fdd84e5752c10c7610d60e24999c2efce4655a043f7767705c",
+      "audit_sha256": "4438f4ba38cf76746b8567eaa19ea520e69c3b1e8a7f0a3fca7ce8b44db124b1"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/CloseToasterOvenDoor/bank-040/RESULT.json",
+      "sha256": "3f73155ea6049023dc7539f3195c3731e8cff5c7b72eb1465d5093061f72d049",
+      "audit_sha256": "5efafd61c1bdc8ef05c928d451258b1ee3c09af6d2e724460dae7507618ad33b"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/CloseToasterOvenDoor/bank-048/RESULT.json",
+      "sha256": "39976fca2c98aba6020d2b531cf28cb2a0665812c860dc248bbba5cd493239b0",
+      "audit_sha256": "94eedcb7abe2e8de93a5588d9e5cd3a6d2aade8832bf7a9248b470cc901cb6ba"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/CoffeeSetupMug/bank-000/RESULT.json",
+      "sha256": "65cd489b74df3565591a2a6e3b5ce9dc50e7266487413743c4177223f31e42b1",
+      "audit_sha256": "63dc9dd9b9d34780f9ea99512f47de4b12ca6c5e8c2cbd54743f4549665a56e2"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/CoffeeSetupMug/bank-008/RESULT.json",
+      "sha256": "6ab9ce4653b4cf9b3e45f93ef38ced9301e162f767b3976cd438eb7cce7e1ca4",
+      "audit_sha256": "763e6c95b3fff339c23cd3af4af7353dd22966eef19e06390c0c2beab236887f"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/CoffeeSetupMug/bank-016/RESULT.json",
+      "sha256": "59357ec989d48e923e4a7b76189aafe16d261f0120a33903118982689678d4d6",
+      "audit_sha256": "6172306089a76ffa594a8b241a9c0c497a2ac18bd486921387a1a28805c3c1c5"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/CoffeeSetupMug/bank-024/RESULT.json",
+      "sha256": "de250303f1d1998767d047f53bfbda4f9a99a26e4ad9c263618937f749e5f9ef",
+      "audit_sha256": "e67db4aa16dd855b80b8d9f25a009a6cd47461f391af446da9cf9e06413456c5"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/CoffeeSetupMug/bank-032/RESULT.json",
+      "sha256": "4fdd3bda9efbf670bb5eaadee00a41b2d5c150c8a8e52bef3bf33e69de7371f5",
+      "audit_sha256": "f962988b50188344b14b9d50f79c6f67222c488bb759dbc826633fe2386bb342"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/CoffeeSetupMug/bank-040/RESULT.json",
+      "sha256": "338d61f8a2a1608f985c9b9a4ac05925ed8d79f9bf4bfd3f2847a120c1bfaecb",
+      "audit_sha256": "dc099673cfb8cb2f99ad798ac90601dee82abc203028f4fc77d44af8ab8b3a49"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/CoffeeSetupMug/bank-048/RESULT.json",
+      "sha256": "b6b8316c6c8bb0e3b9a4df721728ae24e8b538b1068ff795819bf25d102f541e",
+      "audit_sha256": "b33098852d6fc369053e15137777ac48ed95dda2f8a363326761d2f96816812e"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/OpenDrawer/bank-000/RESULT.json",
+      "sha256": "d42110d2be54c5ff23fc064ae28485696486620858a072e91a22105348564566",
+      "audit_sha256": "4478f5f082f3f780116582f5ee2266180d5c3f9ec7c0e46a2fcd202d55a51ffe"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/OpenDrawer/bank-008/RESULT.json",
+      "sha256": "83a6f52aa1cd7a02940fdea2297976f039bb59bcd4a5cd292422de48778d7886",
+      "audit_sha256": "1facf1f655f15cb02de7461911d7358213c60a47efc4d0b7cd630cc033479e90"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/OpenDrawer/bank-016/RESULT.json",
+      "sha256": "0e6987c5d8f136ab546500a7c7e16ceb16a4aacc13652c003f4cbe96e258c097",
+      "audit_sha256": "2d0b5e060442b8533257b6c8a5ff77619967d501c9dcd1423056cfeb4ecbce4a"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/OpenDrawer/bank-024/RESULT.json",
+      "sha256": "e18ca9d705a3611476365ba835ba8f43f4c0dc367af8856c60cf5545498de21e",
+      "audit_sha256": "5f32c69fb2623f49ba000f2573dc7769bc78b9bd71ead4ab6835890fd86b1607"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/OpenDrawer/bank-032/RESULT.json",
+      "sha256": "fdc8a9cdce3975c07049ef5140ad82f43ee23f4d7b69290b087f596028c93069",
+      "audit_sha256": "54debedc217f09777a5c413bbf352ea5b414ebdcd87b348c3f3681930c4e7b13"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/OpenDrawer/bank-040/RESULT.json",
+      "sha256": "791841c5cc00e3caf7103d78aef03d0a83b72717955e02cb8a902d97a3c70d36",
+      "audit_sha256": "13cb59063bbf2f0ca615ae2621d9916973cd969169c8a4fdd40791193d4e0992"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/full/OpenDrawer/bank-048/RESULT.json",
+      "sha256": "6d3888d9369e96528dc0a4ee22d5b2ec3b47c3da77811c55b9468f7f31730648",
+      "audit_sha256": "78b76ed70fc6193cece971e05ee8e90a060373ada7ab0cdb9cac2fa3b626b6d6"
+    }
+  ],
+  "episodes": 1800,
+  "native_parameters_frozen": true,
+  "deployment_optimizer_updates": 0
+}

@@ -1,0 +1,1283 @@
+{
+  "episodes": 6000,
+  "cases_per_task": 50,
+  "prior_episodes": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "plotted_outcome": "Success during each individual query episode; cumulative ever-success is separate",
+  "summaries": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/SUMMARY.json",
+      "sha256": "2c7dcf7b3d5380a78a9956364442031907468b7789b91ec9a1b316ce616f94de"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/OOD/SUMMARY.json",
+      "sha256": "b6b377de87cc396667f7bca55f779a841c60eff6853737e4c85f6e7027ddfed6"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/SUMMARY.json",
+      "sha256": "a2a0c8a94dc1938a90833571cd68ffdef6dc1a182051c60c28d78084481b6c71"
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/OOD/SUMMARY.json",
+      "sha256": "4c2a207dfb521664e2f8da2beb2cc35f76ef0e409becd21db1bd42abf31936d0"
+    }
+  ],
+  "interface_curves": {
+    "kv_bridge": {
+      "CloseToasterOvenDoor": {
+        "full": {
+          "denominator": 50,
+          "first_success": [
+            14,
+            8,
+            15,
+            21,
+            16,
+            23
+          ],
+          "final_success": [
+            14,
+            7,
+            15,
+            21,
+            16,
+            23
+          ],
+          "ever_success": [
+            14,
+            17,
+            28,
+            34,
+            38,
+            42
+          ]
+        },
+        "episode": {
+          "denominator": 50,
+          "first_success": [
+            14,
+            15,
+            12,
+            22,
+            15,
+            17
+          ],
+          "final_success": [
+            14,
+            15,
+            12,
+            22,
+            15,
+            17
+          ],
+          "ever_success": [
+            14,
+            23,
+            29,
+            39,
+            41,
+            43
+          ]
+        }
+      },
+      "CoffeeSetupMug": {
+        "full": {
+          "denominator": 50,
+          "first_success": [
+            20,
+            21,
+            14,
+            21,
+            19,
+            14
+          ],
+          "final_success": [
+            19,
+            21,
+            14,
+            21,
+            19,
+            14
+          ],
+          "ever_success": [
+            20,
+            30,
+            36,
+            39,
+            42,
+            43
+          ]
+        },
+        "episode": {
+          "denominator": 50,
+          "first_success": [
+            19,
+            19,
+            14,
+            17,
+            24,
+            18
+          ],
+          "final_success": [
+            18,
+            19,
+            13,
+            16,
+            24,
+            18
+          ],
+          "ever_success": [
+            19,
+            27,
+            32,
+            36,
+            41,
+            43
+          ]
+        }
+      },
+      "OpenDrawer": {
+        "full": {
+          "denominator": 50,
+          "first_success": [
+            34,
+            36,
+            30,
+            30,
+            29,
+            33
+          ],
+          "final_success": [
+            34,
+            35,
+            29,
+            29,
+            29,
+            30
+          ],
+          "ever_success": [
+            34,
+            44,
+            47,
+            48,
+            48,
+            48
+          ]
+        },
+        "episode": {
+          "denominator": 50,
+          "first_success": [
+            34,
+            35,
+            35,
+            27,
+            30,
+            35
+          ],
+          "final_success": [
+            34,
+            35,
+            34,
+            26,
+            28,
+            35
+          ],
+          "ever_success": [
+            34,
+            44,
+            47,
+            47,
+            47,
+            47
+          ]
+        }
+      },
+      "CloseFridge": {
+        "full": {
+          "denominator": 50,
+          "first_success": [
+            31,
+            31,
+            33,
+            39,
+            35,
+            33
+          ],
+          "final_success": [
+            30,
+            29,
+            31,
+            36,
+            34,
+            31
+          ],
+          "ever_success": [
+            31,
+            42,
+            46,
+            50,
+            50,
+            50
+          ]
+        },
+        "episode": {
+          "denominator": 50,
+          "first_success": [
+            29,
+            29,
+            30,
+            41,
+            35,
+            34
+          ],
+          "final_success": [
+            29,
+            27,
+            28,
+            39,
+            33,
+            30
+          ],
+          "ever_success": [
+            29,
+            43,
+            46,
+            48,
+            48,
+            50
+          ]
+        }
+      },
+      "TurnOnMicrowave": {
+        "full": {
+          "denominator": 50,
+          "first_success": [
+            10,
+            12,
+            8,
+            6,
+            4,
+            11
+          ],
+          "final_success": [
+            8,
+            10,
+            8,
+            4,
+            4,
+            8
+          ],
+          "ever_success": [
+            10,
+            19,
+            21,
+            23,
+            24,
+            28
+          ]
+        },
+        "episode": {
+          "denominator": 50,
+          "first_success": [
+            11,
+            13,
+            7,
+            6,
+            6,
+            12
+          ],
+          "final_success": [
+            8,
+            12,
+            7,
+            4,
+            5,
+            9
+          ],
+          "ever_success": [
+            11,
+            19,
+            21,
+            23,
+            24,
+            28
+          ]
+        }
+      }
+    },
+    "velocity_bridge": {
+      "CloseToasterOvenDoor": {
+        "full": {
+          "denominator": 50,
+          "first_success": [
+            15,
+            17,
+            14,
+            12,
+            18,
+            21
+          ],
+          "final_success": [
+            15,
+            17,
+            14,
+            12,
+            18,
+            21
+          ],
+          "ever_success": [
+            15,
+            29,
+            33,
+            37,
+            39,
+            39
+          ]
+        },
+        "episode": {
+          "denominator": 50,
+          "first_success": [
+            16,
+            16,
+            14,
+            19,
+            17,
+            20
+          ],
+          "final_success": [
+            16,
+            16,
+            14,
+            19,
+            17,
+            20
+          ],
+          "ever_success": [
+            16,
+            29,
+            35,
+            40,
+            43,
+            46
+          ]
+        }
+      },
+      "CoffeeSetupMug": {
+        "full": {
+          "denominator": 50,
+          "first_success": [
+            21,
+            14,
+            15,
+            18,
+            16,
+            19
+          ],
+          "final_success": [
+            20,
+            14,
+            14,
+            16,
+            16,
+            19
+          ],
+          "ever_success": [
+            21,
+            28,
+            33,
+            36,
+            38,
+            40
+          ]
+        },
+        "episode": {
+          "denominator": 50,
+          "first_success": [
+            21,
+            15,
+            13,
+            18,
+            15,
+            19
+          ],
+          "final_success": [
+            20,
+            15,
+            12,
+            18,
+            15,
+            19
+          ],
+          "ever_success": [
+            21,
+            30,
+            35,
+            37,
+            42,
+            45
+          ]
+        }
+      },
+      "OpenDrawer": {
+        "full": {
+          "denominator": 50,
+          "first_success": [
+            35,
+            37,
+            32,
+            29,
+            29,
+            33
+          ],
+          "final_success": [
+            33,
+            35,
+            31,
+            29,
+            29,
+            28
+          ],
+          "ever_success": [
+            35,
+            45,
+            47,
+            48,
+            48,
+            48
+          ]
+        },
+        "episode": {
+          "denominator": 50,
+          "first_success": [
+            35,
+            36,
+            29,
+            30,
+            32,
+            34
+          ],
+          "final_success": [
+            32,
+            34,
+            27,
+            30,
+            31,
+            32
+          ],
+          "ever_success": [
+            35,
+            46,
+            47,
+            48,
+            48,
+            48
+          ]
+        }
+      },
+      "CloseFridge": {
+        "full": {
+          "denominator": 50,
+          "first_success": [
+            33,
+            28,
+            37,
+            34,
+            35,
+            41
+          ],
+          "final_success": [
+            33,
+            26,
+            36,
+            33,
+            35,
+            35
+          ],
+          "ever_success": [
+            33,
+            42,
+            47,
+            47,
+            48,
+            48
+          ]
+        },
+        "episode": {
+          "denominator": 50,
+          "first_success": [
+            32,
+            35,
+            33,
+            35,
+            35,
+            39
+          ],
+          "final_success": [
+            31,
+            35,
+            29,
+            33,
+            34,
+            37
+          ],
+          "ever_success": [
+            32,
+            43,
+            46,
+            49,
+            49,
+            49
+          ]
+        }
+      },
+      "TurnOnMicrowave": {
+        "full": {
+          "denominator": 50,
+          "first_success": [
+            8,
+            11,
+            16,
+            7,
+            8,
+            12
+          ],
+          "final_success": [
+            5,
+            9,
+            15,
+            5,
+            8,
+            10
+          ],
+          "ever_success": [
+            8,
+            18,
+            25,
+            28,
+            29,
+            30
+          ]
+        },
+        "episode": {
+          "denominator": 50,
+          "first_success": [
+            7,
+            12,
+            7,
+            2,
+            8,
+            14
+          ],
+          "final_success": [
+            6,
+            9,
+            6,
+            2,
+            8,
+            12
+          ],
+          "ever_success": [
+            7,
+            17,
+            19,
+            20,
+            23,
+            27
+          ]
+        }
+      }
+    }
+  },
+  "paired_full_minus_reset": {
+    "kv_bridge": {
+      "CloseToasterOvenDoor": {
+        "0": {
+          "delta_percentage_points": 0.0,
+          "wins": 1,
+          "losses": 1,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -6.0,
+            6.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "1": {
+          "delta_percentage_points": -14.000000000000002,
+          "wins": 1,
+          "losses": 8,
+          "exact_McNemar_p": 0.0390625,
+          "paired_case_bootstrap95_percentage_points": [
+            -26.0,
+            -4.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "2": {
+          "delta_percentage_points": 6.0,
+          "wins": 8,
+          "losses": 5,
+          "exact_McNemar_p": 0.5810546875,
+          "paired_case_bootstrap95_percentage_points": [
+            -8.0,
+            20.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "3": {
+          "delta_percentage_points": -2.0,
+          "wins": 3,
+          "losses": 4,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -12.0,
+            8.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "4": {
+          "delta_percentage_points": 2.0,
+          "wins": 5,
+          "losses": 4,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -10.0,
+            14.000000000000002
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "5": {
+          "delta_percentage_points": 12.0,
+          "wins": 7,
+          "losses": 1,
+          "exact_McNemar_p": 0.0703125,
+          "paired_case_bootstrap95_percentage_points": [
+            2.0,
+            22.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        }
+      },
+      "CoffeeSetupMug": {
+        "0": {
+          "delta_percentage_points": 2.0,
+          "wins": 2,
+          "losses": 1,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -4.0,
+            10.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "1": {
+          "delta_percentage_points": 4.0,
+          "wins": 6,
+          "losses": 4,
+          "exact_McNemar_p": 0.75390625,
+          "paired_case_bootstrap95_percentage_points": [
+            -8.0,
+            16.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "2": {
+          "delta_percentage_points": 0.0,
+          "wins": 5,
+          "losses": 5,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -12.0,
+            12.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "3": {
+          "delta_percentage_points": 8.0,
+          "wins": 8,
+          "losses": 4,
+          "exact_McNemar_p": 0.3876953125,
+          "paired_case_bootstrap95_percentage_points": [
+            -6.0,
+            22.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "4": {
+          "delta_percentage_points": -10.0,
+          "wins": 2,
+          "losses": 7,
+          "exact_McNemar_p": 0.1796875,
+          "paired_case_bootstrap95_percentage_points": [
+            -22.0,
+            2.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "5": {
+          "delta_percentage_points": -8.0,
+          "wins": 3,
+          "losses": 7,
+          "exact_McNemar_p": 0.34375,
+          "paired_case_bootstrap95_percentage_points": [
+            -20.0,
+            4.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        }
+      },
+      "OpenDrawer": {
+        "0": {
+          "delta_percentage_points": 0.0,
+          "wins": 0,
+          "losses": 0,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            0.0,
+            0.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "1": {
+          "delta_percentage_points": 2.0,
+          "wins": 2,
+          "losses": 1,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -4.0,
+            8.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "2": {
+          "delta_percentage_points": -10.0,
+          "wins": 2,
+          "losses": 7,
+          "exact_McNemar_p": 0.1796875,
+          "paired_case_bootstrap95_percentage_points": [
+            -22.0,
+            0.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "3": {
+          "delta_percentage_points": 6.0,
+          "wins": 4,
+          "losses": 1,
+          "exact_McNemar_p": 0.375,
+          "paired_case_bootstrap95_percentage_points": [
+            -2.0,
+            14.000000000000002
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "4": {
+          "delta_percentage_points": -2.0,
+          "wins": 1,
+          "losses": 2,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -8.0,
+            4.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "5": {
+          "delta_percentage_points": -4.0,
+          "wins": 2,
+          "losses": 4,
+          "exact_McNemar_p": 0.6875,
+          "paired_case_bootstrap95_percentage_points": [
+            -14.000000000000002,
+            6.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        }
+      },
+      "CloseFridge": {
+        "0": {
+          "delta_percentage_points": 4.0,
+          "wins": 4,
+          "losses": 2,
+          "exact_McNemar_p": 0.6875,
+          "paired_case_bootstrap95_percentage_points": [
+            -6.0,
+            14.000000000000002
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "1": {
+          "delta_percentage_points": 4.0,
+          "wins": 7,
+          "losses": 5,
+          "exact_McNemar_p": 0.7744140625,
+          "paired_case_bootstrap95_percentage_points": [
+            -10.0,
+            18.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "2": {
+          "delta_percentage_points": 6.0,
+          "wins": 7,
+          "losses": 4,
+          "exact_McNemar_p": 0.548828125,
+          "paired_case_bootstrap95_percentage_points": [
+            -6.0,
+            18.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "3": {
+          "delta_percentage_points": -4.0,
+          "wins": 4,
+          "losses": 6,
+          "exact_McNemar_p": 0.75390625,
+          "paired_case_bootstrap95_percentage_points": [
+            -16.0,
+            8.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "4": {
+          "delta_percentage_points": 0.0,
+          "wins": 3,
+          "losses": 3,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -10.0,
+            10.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "5": {
+          "delta_percentage_points": -2.0,
+          "wins": 4,
+          "losses": 5,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -14.000000000000002,
+            10.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        }
+      },
+      "TurnOnMicrowave": {
+        "0": {
+          "delta_percentage_points": -2.0,
+          "wins": 1,
+          "losses": 2,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -10.0,
+            4.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "1": {
+          "delta_percentage_points": -2.0,
+          "wins": 2,
+          "losses": 3,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -10.0,
+            6.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "2": {
+          "delta_percentage_points": 2.0,
+          "wins": 2,
+          "losses": 1,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -4.0,
+            8.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "3": {
+          "delta_percentage_points": 0.0,
+          "wins": 2,
+          "losses": 2,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -8.0,
+            8.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "4": {
+          "delta_percentage_points": -4.0,
+          "wins": 1,
+          "losses": 3,
+          "exact_McNemar_p": 0.625,
+          "paired_case_bootstrap95_percentage_points": [
+            -12.0,
+            4.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "5": {
+          "delta_percentage_points": -2.0,
+          "wins": 0,
+          "losses": 1,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -6.0,
+            0.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        }
+      }
+    },
+    "velocity_bridge": {
+      "CloseToasterOvenDoor": {
+        "0": {
+          "delta_percentage_points": -2.0,
+          "wins": 0,
+          "losses": 1,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -6.0,
+            0.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "1": {
+          "delta_percentage_points": 2.0,
+          "wins": 6,
+          "losses": 5,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -12.0,
+            14.049999999999274
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "2": {
+          "delta_percentage_points": 0.0,
+          "wins": 4,
+          "losses": 4,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -12.0,
+            10.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "3": {
+          "delta_percentage_points": -14.000000000000002,
+          "wins": 1,
+          "losses": 8,
+          "exact_McNemar_p": 0.0390625,
+          "paired_case_bootstrap95_percentage_points": [
+            -26.0,
+            -4.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "4": {
+          "delta_percentage_points": 2.0,
+          "wins": 8,
+          "losses": 7,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -14.000000000000002,
+            18.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "5": {
+          "delta_percentage_points": 2.0,
+          "wins": 6,
+          "losses": 5,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -12.0,
+            14.000000000000002
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        }
+      },
+      "CoffeeSetupMug": {
+        "0": {
+          "delta_percentage_points": 0.0,
+          "wins": 1,
+          "losses": 1,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -6.0,
+            6.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "1": {
+          "delta_percentage_points": -2.0,
+          "wins": 7,
+          "losses": 8,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -16.0,
+            14.000000000000002
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "2": {
+          "delta_percentage_points": 4.0,
+          "wins": 6,
+          "losses": 4,
+          "exact_McNemar_p": 0.75390625,
+          "paired_case_bootstrap95_percentage_points": [
+            -8.0,
+            16.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "3": {
+          "delta_percentage_points": 0.0,
+          "wins": 5,
+          "losses": 5,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -12.0,
+            12.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "4": {
+          "delta_percentage_points": 2.0,
+          "wins": 6,
+          "losses": 5,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -12.0,
+            16.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "5": {
+          "delta_percentage_points": 0.0,
+          "wins": 7,
+          "losses": 7,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -14.000000000000002,
+            14.000000000000002
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        }
+      },
+      "OpenDrawer": {
+        "0": {
+          "delta_percentage_points": 0.0,
+          "wins": 0,
+          "losses": 0,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            0.0,
+            0.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "1": {
+          "delta_percentage_points": 2.0,
+          "wins": 5,
+          "losses": 4,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -10.0,
+            14.000000000000002
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "2": {
+          "delta_percentage_points": 6.0,
+          "wins": 6,
+          "losses": 3,
+          "exact_McNemar_p": 0.5078125,
+          "paired_case_bootstrap95_percentage_points": [
+            -6.0,
+            18.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "3": {
+          "delta_percentage_points": -2.0,
+          "wins": 5,
+          "losses": 6,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -16.0,
+            10.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "4": {
+          "delta_percentage_points": -6.0,
+          "wins": 1,
+          "losses": 4,
+          "exact_McNemar_p": 0.375,
+          "paired_case_bootstrap95_percentage_points": [
+            -14.000000000000002,
+            2.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "5": {
+          "delta_percentage_points": -2.0,
+          "wins": 4,
+          "losses": 5,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -14.000000000000002,
+            10.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        }
+      },
+      "CloseFridge": {
+        "0": {
+          "delta_percentage_points": 2.0,
+          "wins": 3,
+          "losses": 2,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -6.0,
+            10.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "1": {
+          "delta_percentage_points": -14.000000000000002,
+          "wins": 2,
+          "losses": 9,
+          "exact_McNemar_p": 0.0654296875,
+          "paired_case_bootstrap95_percentage_points": [
+            -26.0,
+            -2.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "2": {
+          "delta_percentage_points": 8.0,
+          "wins": 8,
+          "losses": 4,
+          "exact_McNemar_p": 0.3876953125,
+          "paired_case_bootstrap95_percentage_points": [
+            -6.0,
+            22.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "3": {
+          "delta_percentage_points": -2.0,
+          "wins": 5,
+          "losses": 6,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -14.000000000000002,
+            12.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "4": {
+          "delta_percentage_points": 0.0,
+          "wins": 4,
+          "losses": 4,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -12.0,
+            12.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "5": {
+          "delta_percentage_points": 4.0,
+          "wins": 5,
+          "losses": 3,
+          "exact_McNemar_p": 0.7265625,
+          "paired_case_bootstrap95_percentage_points": [
+            -6.0,
+            16.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        }
+      },
+      "TurnOnMicrowave": {
+        "0": {
+          "delta_percentage_points": 2.0,
+          "wins": 3,
+          "losses": 2,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -6.0,
+            10.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "1": {
+          "delta_percentage_points": -2.0,
+          "wins": 2,
+          "losses": 3,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -10.0,
+            6.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "2": {
+          "delta_percentage_points": 18.0,
+          "wins": 9,
+          "losses": 0,
+          "exact_McNemar_p": 0.00390625,
+          "paired_case_bootstrap95_percentage_points": [
+            8.0,
+            30.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "3": {
+          "delta_percentage_points": 10.0,
+          "wins": 5,
+          "losses": 0,
+          "exact_McNemar_p": 0.0625,
+          "paired_case_bootstrap95_percentage_points": [
+            2.0,
+            18.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "4": {
+          "delta_percentage_points": 0.0,
+          "wins": 3,
+          "losses": 3,
+          "exact_McNemar_p": 1.0,
+          "paired_case_bootstrap95_percentage_points": [
+            -10.0,
+            10.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        },
+        "5": {
+          "delta_percentage_points": -4.0,
+          "wins": 2,
+          "losses": 4,
+          "exact_McNemar_p": 0.6875,
+          "paired_case_bootstrap95_percentage_points": [
+            -14.000000000000002,
+            6.0
+          ],
+          "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+        }
+      }
+    }
+  }
+}
