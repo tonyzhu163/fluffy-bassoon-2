@@ -141,3 +141,18 @@ cases:2838/3072 proposed targets delivered,2 partial targets,44335 physics
 steps and original pre-conversion reward/termination/truncation retained even
 through auto-reset. Four cases had positive raw rewards; no PPO update had
 occurred, so this is execution/feedback evidence and a baseline only.
+
+Prefix04 retained all4 full chronological pre-SGD batches (about8.4GiB) and
+passed all4 native B64 value/likelihood and shuffled micro256 reference replay
+checks. The fixed55-minute worker limit interrupted completion before a new
+checkpoint; no complete updated state or iteration is claimed. Collection
+peaked88.65GiB/GPU, below the required8GiB free reserve. Do not reuse that
+combined profile as qualified. Preserve the immutable source and original data.
+
+`meta_rl/chunk_history.py` now defines the shared decoded-action token state
+machine: current frozen proposal/public features, shifted full issued commands,
+delivered mask, separate terminal/timeout, actual reward and physical seconds.
+CPUTOKENS01 passed6 Linux causality/reset/ownership cases. CPUTOKENS02 passed
+6 reset guard cases, including deferred temporary scene construction. Lazy
+setup is opt-in and remains disabled pending actual SAPIEN parity; this CPU
+result does not qualify its scene behavior or256-environment capacity.
