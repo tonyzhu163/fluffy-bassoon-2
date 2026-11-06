@@ -1,6 +1,6 @@
 {
   "owner_chat": "01a1b024-f4ac-7181-af87-bac9fbee72bb",
-  "status": "actor_cpu_composition_passed_archiving_closed_exports_for_storage",
+  "status": "actor_cpu_checks_passed_project_archive_route_prepared",
   "new_gpu_jobs_launched": 9,
   "prior_robotwin_cumulative_cap_gpu_hours": 50,
   "prior_cost_and_reservations_must_be_refreshed": false,
@@ -28,7 +28,7 @@
     "main_repository": "/mowenjie/fluffy-bassoon-2/repo",
     "main_snapshot": "ee6c2e84838d69b6e5c39a68a10080b9b41794da",
     "origin_is_old_local_bundle": true,
-    "free_gib_approx": 282.1875,
+    "free_gib_approx": 284.7421875,
     "existing_controller_diagnostic": "64/64 complete; chunk_seen3/16, single_seen3/16, chunk_taskname2/16, single_taskname0/16",
     "endpoint_export_state": "export02 SUCCESS; PPO40/GRPO40 all4 ranks restored, inference weights calibrated",
     "cpu_output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-restoration-20261106-r1/cpu01",
@@ -50,14 +50,15 @@
     "storage_recovery": "complete;512 traces fully cold-read+restored,87.50335GiB recovered,1172 files protected",
     "batch_memory_state": "Native batch diagnosis complete: all-row preprocessing exact and native batched vs adapter action error0; native batch vs singleton drift remains. Largest tested inference B256 memory-safe; no parallel scene capacity claim.",
     "batch_runtime_state": "batch02 SUCCESS/released02:13:21;4 complete episodes/24 transitions/12000 physics steps, nativeB2 parity0, independent readback exact, workers closed",
-    "actor_storage": "Project-only BOS prefix verified in job form; hot floor286.5 not met yet, no GPU allocation"
+    "actor_storage": "No worker PFS outputs: verified project-only BOS signals/state plus job-local staging/caches; source/model/inputs read-only.",
+    "closed_export_archive": "Complete2 files,15551132398 bytes recoverable with full cold+local readback;2217 files protected; no GPU charge."
   },
   "cpu_qualification": "CPU01.json",
   "git_deployment": "GIT-DEPLOYMENT.json",
   "active_gpu_reservation_seconds": 0,
   "new_gpu_hours_note": "All closed/failed costs retained; no active GPU reservation.",
   "budget_reconciliation": "BUDGET-RECONCILIATION.json",
-  "last_checked_shanghai": "2026-11-07T02:59:13+08:00",
+  "last_checked_shanghai": "2026-11-07T03:28:15+08:00",
   "cumulative_closed_conservative_gpu_seconds": 148820,
   "worst_closed_plus_reserved_gpu_seconds": 148820,
   "execution_qualification": "EXECUTION01-COMPLETE.json",
@@ -81,5 +82,6 @@
   "planned_actor_profile_gpu_reservation_seconds": 11040,
   "actor_profile_contract": "ACTORPROFILE01-CONTRACT.json",
   "actor_cpu_qualification": "CPUACTOR03.json",
-  "next_storage_recovery": "Closed inference-only exports; complete cold and local readback before release; native DCP/corpus/cache retained"
+  "next_storage_recovery": "Closed inference-only exports; complete cold and local readback before release; native DCP/corpus/cache retained",
+  "export_archive_qualification": "EXPORTS01-COMPLETE.json"
 }

@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 TASK_SOURCE=${1:?reviewed source commit}
-TASK_OUT=${2:?fresh hot output}
+TASK_OUT=${2:?fresh project BOS signals output}
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python
+TASK_ARCHIVE=/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1
 [[ $(uname -s) == Linux && $(hostname) == job-* ]]
 [[ $(git -C "$TASK_CODE" rev-parse HEAD) == "$TASK_SOURCE" ]]
+export GIT_OPTIONAL_LOCKS=0
 [[ -z $(git -C "$TASK_CODE" status --porcelain --untracked-files=no) && ! -e $TASK_OUT ]]
+[[ $TASK_OUT == "$TASK_ARCHIVE/actorprofile01-signals" ]]
+mountpoint -q "$TASK_ARCHIVE"
 mkdir -p "$TASK_OUT"
 exec > "$TASK_OUT/worker.log" 2>&1
 TASK_STARTED=$(date +%s)
@@ -41,13 +45,13 @@ from pathlib import Path
 from hashlib import sha256
 code,out=map(Path,sys.argv[1:]);p=json.loads((code/'outputs/robotwin-restoration-20261106-r1/ACTORPROFILE01-CONTRACT.json').read_text())
 assert p['closed_conservative_gpu_seconds']+p['reserved_gpu_seconds']==p['all_worst_gpu_seconds']<=180000
-assert shutil.disk_usage(out).free>=286.5*2**30
 local,cold=Path(os.environ['TASK_LOCAL']),Path(os.environ['TASK_COLD'])
 assert not local.exists() and not cold.exists()
 assert shutil.disk_usage(local.parent).free>=64*2**30
 bucket=Path('/mnt/bos/adgfyl')
 archive=cold.parent
 assert archive.is_dir() and any(os.path.ismount(path) for path in (archive,bucket,bucket.parent)), 'Persistent project BOS mount required before model work'
+assert out == archive/'actorprofile01-signals'
 probe=archive/'actorprofile01-write-probe'
 with probe.open('xb') as stream:stream.write(b'robotwin-native-actor-checkpoint\n');stream.flush();os.fsync(stream.fileno())
 assert probe.read_bytes()==b'robotwin-native-actor-checkpoint\n'
@@ -60,10 +64,15 @@ def sha(path):
  return h.hexdigest()
 assert sha(model/'model.safetensors')==p['model_sha256']
 assert sha(model/'assets/pi0.5_clean_randomize_joint_training/norm_stats.json')==p['norm_stats_sha256']
-(out/'admission.json').write_text(json.dumps(dict(hot_free_gib=shutil.disk_usage(out).free/2**30,
+(out/'admission.json').write_text(json.dumps(dict(shared_readonly_pfs_free_gib=shutil.disk_usage('/mowenjie/fluffy-bassoon-2').free/2**30,
  local_free_gib=shutil.disk_usage(local).free/2**30,bos_mounted=True,bos_write_read_fsync=True,
- model_hashes_verified=True,other_and_floor_gib=286,hot_output_cap_gib=.5,cold_checkpoint_cap_gib=32))+'\n')
+ model_hashes_verified=True,other_and_floor_gib=286,new_worker_pfs_output_bytes=0,
+ bos_signals_cap_gib=.5,cold_checkpoint_cap_gib=32))+'\n')
 PY
+export XDG_CACHE_HOME=$TASK_LOCAL/cache OPENPI_DATA_HOME=$TASK_LOCAL/openpi
+export HF_HOME=$TASK_LOCAL/hf TORCH_HOME=$TASK_LOCAL/torch
+mkdir -p "$XDG_CACHE_HOME" "$OPENPI_DATA_HOME" "$HF_HOME" "$TORCH_HOME"
+cd "$TASK_LOCAL"
 export TASK_PROFILE_PHASE=profile NATIVE_PPO_OUTPUT=$TASK_OUT/profile
 mkdir "$NATIVE_PPO_OUTPUT"
 TASK_PROFILE_RC=0
