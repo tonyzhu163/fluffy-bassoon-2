@@ -90,3 +90,9 @@ This qualifies the shared residual runtime, not a trained learner, native
 Flow-SDE actor capacity, larger scene count, real unequal-length tail or
 success improvement. BATCH01's literal-timestep harness failure remains
 recorded and charged; actual native timestep is0.004000000189989805.
+
+CPUBATCH02 passed the same19 runtime/motor cases at45d9d6e1, extending the
+existing lifecycle case to caller mutation of returned next state, both camera
+fields and instruction. The runtime keeps a private CPU snapshot for its next
+inference. This is CPU observation ownership coverage; active native actor
+profiling stays pinned to7df04cf7 and does not use this runtime.
