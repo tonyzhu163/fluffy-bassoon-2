@@ -132,6 +132,22 @@ def validate_batches(policy, model, batches, prepare_queries):
     return sum(losses) / len(losses)
 
 
+def episode_reset_batch(policy, batch):
+    """Copy of a full-history batch matching episode-reset deployment inputs.
+
+    ``encode_sequence(mode="episode")`` clears recurrent state at episode
+    starts, but the start tokens still carry the previous episode's action,
+    reward and done. Deployment and ``trial_tokens(mode="episode")`` zero
+    those fields, so do the same here.
+    """
+    start, end = policy.config.observation_dim, policy.core.input_dim - 1
+    if end - start != policy.config.history_action_dim + 2:
+        raise ValueError("Require [observation, previous action, reward, done, start] tokens")
+    tokens = batch["tokens"].clone()
+    tokens[..., start:end] = torch.where(batch["starts"][..., None], 0., tokens[..., start:end])
+    return dict(batch, tokens=tokens)
+
+
 @torch.enable_grad()
 def steering_effect(policy, model, batches, prepare_queries):
     """Measure how far fitted steering moves the frozen expert on held-out queries.
@@ -160,8 +176,9 @@ def steering_effect(policy, model, batches, prepare_queries):
             suffix = model.run_suffix(observation, noisy, batch["timesteps"].detach(), cache, mask)
             native = model.velocity_from_suffix(suffix)[..., :active].float()
         steered = {}
-        for mode in ("full", "episode"):
-            context = query_context(policy, batch, mode=mode)
+        reset_batch = episode_reset_batch(policy, batch)
+        for mode, source in (("full", batch), ("episode", reset_batch)):
+            context = query_context(policy, source, mode=mode)
             steered[mode] = policy.predict_velocity(model, observation, noisy, batch["timesteps"],
                 cache, mask, context)[..., :active].detach().float()
         full, reset = steered["full"], steered["episode"]

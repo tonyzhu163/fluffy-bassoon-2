@@ -7,7 +7,7 @@ import torch
 from fluffy_bassoon.meta_rl.flow_history import FlowBridgeConfig, HistoryFlowSteeringPolicy
 from fluffy_bassoon.meta_rl.flow_bridge_train import (
     bridge_update, flow_batch_loss, query_context, query_weights, restore_resume,
-    save_resume, steering_effect, steering_gate, validate_batches)
+    save_resume, steering_effect, steering_gate, validate_batches, episode_reset_batch)
 
 
 class Motor(torch.nn.Module):
@@ -153,3 +153,22 @@ def test_steering_gate_rejects_native_parity_and_admits_fitted_history_steering(
     assert all(p.grad is None for p in motor.parameters())
     with pytest.raises(ValueError, match='threshold'):
         steering_gate(fitted, **dict(gate, minimum_history_fraction=float('nan')))
+
+
+@pytest.mark.parametrize('interface', ['kv_bridge', 'velocity_bridge'])
+def test_episode_reset_input_drops_previous_episode_feedback(interface):
+    policy, _, batch, _ = fixture(interface)
+    batch['starts'][2] = True
+    reset = episode_reset_batch(policy, batch)
+    feedback = slice(16, 16 + 12 + 2)
+    assert torch.equal(reset['tokens'][2, :, feedback], torch.zeros(4, 14))
+    assert torch.equal(reset['tokens'][3:], batch['tokens'][3:])
+    assert torch.equal(reset['tokens'][2, :, :16], batch['tokens'][2, :, :16])
+    assert torch.equal(reset['tokens'][2, :, -1], batch['tokens'][2, :, -1])
+    assert not torch.equal(reset['tokens'], batch['tokens'])
+    # Only previous-episode feedback at the start differs: reset contexts must ignore it.
+    changed = deepcopy(batch)
+    changed['tokens'][2, :, feedback] = 1000.
+    torch.testing.assert_close(
+        query_context(policy, episode_reset_batch(policy, changed), mode='episode'),
+        query_context(policy, reset, mode='episode'))
