@@ -172,3 +172,16 @@ def test_episode_reset_input_drops_previous_episode_feedback(interface):
     torch.testing.assert_close(
         query_context(policy, episode_reset_batch(policy, changed), mode='episode'),
         query_context(policy, reset, mode='episode'))
+
+
+@pytest.mark.parametrize('interface', ['kv_bridge', 'velocity_bridge'])
+def test_steering_measurement_accepts_fully_frozen_exported_candidates(interface):
+    policy, motor, batch, prepare = fixture(interface)
+    expected = steering_effect(policy, motor, [batch], prepare)
+    policy.eval().requires_grad_(False)
+    before = {k: v.clone() for k, v in policy.state_dict().items()}
+    actual = steering_effect(policy, motor, [batch], prepare)
+    assert actual == expected
+    assert all(torch.equal(v, policy.state_dict()[k]) for k, v in before.items())
+    assert all(not p.requires_grad and p.grad is None for p in policy.parameters())
+    assert all(p.grad is None for p in motor.parameters())

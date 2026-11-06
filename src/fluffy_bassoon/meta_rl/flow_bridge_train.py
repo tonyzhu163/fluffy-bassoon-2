@@ -179,6 +179,11 @@ def steering_effect(policy, model, batches, prepare_queries):
         reset_batch = episode_reset_batch(policy, batch)
         for mode, source in (("full", batch), ("episode", reset_batch)):
             context = query_context(policy, source, mode=mode)
+            # Exported candidates freeze every policy parameter. The native KV
+            # primitive still requires a graph; a differentiable input supplies
+            # it without unfreezing candidate weights or accumulating gradients.
+            if policy.config.interface == "kv_bridge" and not context.requires_grad:
+                context = context.detach().requires_grad_(True)
             steered[mode] = policy.predict_velocity(model, observation, noisy, batch["timesteps"],
                 cache, mask, context)[..., :active].detach().float()
         full, reset = steered["full"], steered["episode"]
