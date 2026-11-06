@@ -38,8 +38,6 @@ def validate(cfg):
     from omegaconf import OmegaConf
     from fluffy_bassoon.meta_rl.rlinf_native_ppo import validate_recipe
     from fluffy_bassoon.rl.robotwin_noise import MOTUS_REVISION
-    sys.path.insert(0, str(PAIRED))
-    from case_schedule import CaseSchedule
     method = cfg.native_pilot.comparison_algorithm
     assert method in ('ppo', 'grpo')
     expected = {
@@ -75,11 +73,16 @@ def validate(cfg):
         assert actual == value, (key, actual, value)
     assert int(cfg.native_pilot.stop_after_iteration) in (1, 2)
     assert cfg.native_pilot.passive_controller_source and len(cfg.native_pilot.passive_controller_sha256) == 64
-    schedule = CaseSchedule(cfg.native_pilot.case_manifest_path, cfg.native_pilot.case_manifest_sha256)
+    case_bytes = Path(cfg.native_pilot.case_manifest_path).read_bytes()
+    assert hashlib.sha256(case_bytes).hexdigest() == cfg.native_pilot.case_manifest_sha256
+    schedule = json.loads(case_bytes)
+    assert schedule['task'] == 'place_phone_stand' and schedule['iterations'] == 2
+    assert schedule['rounds_per_iteration'] == 4 and schedule['environment_group_size'] == 8
+    assert len(schedule['groups']) == len({row['scene_seed'] for row in schedule['groups']}) == 256
     bank = Path(cfg.env.train.seeds_path).read_bytes()
-    assert hashlib.sha256(bank).hexdigest() == schedule.data['train_bank_sha256']
+    assert hashlib.sha256(bank).hexdigest() == schedule['train_bank_sha256']
     train = set(json.loads(bank)['place_phone_stand']['success_seeds'])
-    assert {r['scene_seed'] for r in schedule.data['groups']} <= train
+    assert {r['scene_seed'] for r in schedule['groups']} <= train
     dev_path = Path(cfg.native_pilot.dev_manifest_path)
     assert hashlib.sha256(dev_path.read_bytes()).hexdigest() == cfg.native_pilot.dev_manifest_sha256
     dev = json.loads(dev_path.read_bytes())
@@ -103,7 +106,7 @@ def validate(cfg):
         rounds_per_iteration=4, decisions_per_episode=6, decisions_per_iteration=6144,
         adam_updates_per_iteration=15, intended_iterations=2,
         admitted_stop_after_iteration=int(cfg.native_pilot.stop_after_iteration),
-        train_manifest_sha256=schedule.sha256, dev_manifest_sha256=cfg.native_pilot.dev_manifest_sha256,
+        train_manifest_sha256=cfg.native_pilot.case_manifest_sha256, dev_manifest_sha256=cfg.native_pilot.dev_manifest_sha256,
         dev_episodes=16, dev_role='source-task development panel; never held-out transfer evaluation',
         value_protocol='native K-step mean rollout values, selected-step actor values; both independently audited',
         likelihood_protocol='native actor recomputation once in actual shuffled SGD microbatches',

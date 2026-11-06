@@ -1,6 +1,6 @@
 {
   "owner_chat": "01a1b024-f4ac-7181-af87-bac9fbee72bb",
-  "status": "shared_motus_runtime_actor_capacity_and_recovery_qualified_next_teacher_pilot",
+  "status": "native_motus_teacher_prepared_cpu_qualification_passed_latest_launcher_check_pending",
   "new_gpu_jobs_launched": 11,
   "prior_robotwin_cumulative_cap_gpu_hours": 50,
   "prior_cost_and_reservations_must_be_refreshed": false,
@@ -52,14 +52,15 @@
     "batch_runtime_state": "batch02 SUCCESS/released02:13:21;4 complete episodes/24 transitions/12000 physics steps, nativeB2 parity0, independent readback exact, workers closed",
     "actor_storage": "No worker PFS outputs: verified project-only BOS signals/state plus job-local staging/caches; source/model/inputs read-only.",
     "closed_export_archive": "Complete2 files,15551132398 bytes recoverable with full cold+local readback;2217 files protected; no GPU charge.",
-    "actor_profile_state": "Capacity complete at7df04cf7 and fresh recovery at5b511ed6 exact. Largest/fastest safe tested actor micro256/accum2/global2048;62.283GiB reserved/31.748GiB free,15.717s steady.512 rejected. Both allocations released; no activeGPU."
+    "actor_profile_state": "Capacity complete at7df04cf7 and fresh recovery at5b511ed6 exact. Largest/fastest safe tested actor micro256/accum2/global2048;62.283GiB reserved/31.748GiB free,15.717s steady.512 rejected. Both allocations released; no activeGPU.",
+    "native_teacher_state": "No scientific GPU job launched.41 allocated-Linux core checks pass. Native Motus PPO/GRPO config, independent learner numerics and worker imports passed CPU preflight at0a20b858; source filesystem wait resolved. Latest launcher/memory telemetry static checks pending deployment."
   },
   "cpu_qualification": "CPU01.json",
   "git_deployment": "GIT-DEPLOYMENT.json",
   "active_gpu_reservation_seconds": 0,
   "new_gpu_hours_note": "All jobs closed/released;153404GPU-s=42.61222GPUh cumulative;26596GPU-s remain under180000 hard cap.",
   "budget_reconciliation": "BUDGET-RECONCILIATION.json",
-  "last_checked_shanghai": "2026-11-07T04:05:22+08:00",
+  "last_checked_shanghai": "2026-11-07T04:52:54+08:00",
   "cumulative_closed_conservative_gpu_seconds": 153404,
   "worst_closed_plus_reserved_gpu_seconds": 153404,
   "execution_qualification": "EXECUTION01-COMPLETE.json",
@@ -73,7 +74,7 @@
   "planned_batch_math_gpu_reservation_seconds": 0,
   "native_motor_result": "MOTOR03-COMPLETE.json",
   "bounded_io_qualification": "CPUIO01.json",
-  "distinct_core_cases_passed": 81,
+  "distinct_core_cases_passed": 87,
   "native_batch_math_result": "BATCHMATH01-COMPLETE.json",
   "cpu_batch_qualification": "CPUBATCH01.json",
   "planned_batch_runtime_gpu_reservation_seconds": 0,
@@ -91,5 +92,8 @@
   "actor_profile_closeout": "ACTORPROFILE01-CLOSEOUT.json",
   "actor_restore_contract": "ACTORRESTORE01-CONTRACT.json",
   "actor_restore_closeout": "ACTORRESTORE01-COMPLETE.json",
-  "actor_selection": "ACTOR-SELECTION.json"
+  "actor_selection": "ACTOR-SELECTION.json",
+  "cpu_native_vector_qualification": "CPUEXEC04.json",
+  "native_teacher_entry": "motus_teacher_entry.py",
+  "native_teacher_contract": "MOTUSPPO01-CONTRACT.json"
 }

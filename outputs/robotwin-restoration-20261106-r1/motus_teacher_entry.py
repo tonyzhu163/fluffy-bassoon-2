@@ -91,6 +91,19 @@ class MotusActor(runtime.PilotActor):
         assert report['passed'], 'Actual saved learner batch differs from independent reference'
         return result
 
+    def run_training(self):
+        torch.cuda.reset_peak_memory_stats(self.device)
+        started = time.monotonic()
+        result = super().run_training()
+        free,total = torch.cuda.mem_get_info(self.device)
+        write(Path(self.cfg.native_pilot.output)/'actor-memory'/
+            f'iteration-{runtime.producing_iteration(self)+1:04d}-rank-{self._rank:02d}.json',
+            dict(seconds=time.monotonic()-started,peak_allocated_bytes=torch.cuda.max_memory_allocated(self.device),
+                peak_reserved_bytes=torch.cuda.max_memory_reserved(self.device),free_bytes_at_end=free,
+                total_bytes=total,micro_batch=256,accumulation=2,global_batch=2048,
+                includes_recompute_and_five_native_epochs=True))
+        return result
+
     def train_micro_batch(self, micro_batch, metrics, *, is_last):
         critic = bool(self.cfg.actor.model.add_value_head)
         if not self._motus_first_replay:

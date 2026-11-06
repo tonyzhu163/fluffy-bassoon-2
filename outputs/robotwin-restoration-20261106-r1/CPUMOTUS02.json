@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "source_commit": "0a20b858f9848496232af4b2d37a29d2bb2805e0",
+  "remote_output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-restoration-20261106-r1/cpumotus02",
+  "started_shanghai": "2026-11-07T04:47:11+08:00",
+  "ended_shanghai": "2026-11-07T04:52:54+08:00",
+  "wall_seconds": 343,
+  "exit_code": 0,
+  "accelerator_computation": false,
+  "cuda_initialized": false,
+  "configurations": [
+    "ppo",
+    "grpo"
+  ],
+  "native_worker_and_runner_imports": true,
+  "model_or_simulator_constructed": false,
+  "model_numerical_qualification": false,
+  "source_bank_hashes_and_train_dev_nonoverlap_verified": true,
+  "controller_sha256": "6052edab6b597673a2a7ad1be7583aa98ecf0ed0db93c94afc05b78ebfb3e977",
+  "learner_reference": {
+    "device": "cpu",
+    "reference": "NumPy float64 independent recurrence and normalization against installed RLinf",
+    "ppo_advantages_max_abs": 2.43105900743501e-07,
+    "ppo_returns_max_abs": 8.01384449911069e-08,
+    "grpo_advantages_max_abs": 2.3982098862340706e-08,
+    "tolerance": 1e-05,
+    "tied_group_advantages_exact_zero": true
+  },
+  "evidence_sha256": {
+    "configs": "fba5ce5ae2001d18250fe3992cb3cb6b32cb2f322e0714f3c517f47845d88062",
+    "numerics": "df20455b954e8441527866365f93c371582d6db4d5b3a335ae979a7eaca0d275",
+    "imports": "1e97844ddb5890318104ef89b70d01cb3637d32de3c0948227cbfd20fd1190ef"
+  },
+  "delays": "Observed own Python process in D-state cxiWaitEventWait on shared filesystem; resolved without changing packages or GPU allocation.",
+  "prior_attempt": "cpumotus01 stopped on missing exported TASK_CPU_OUT before model imports; no GPU allocation."
+}

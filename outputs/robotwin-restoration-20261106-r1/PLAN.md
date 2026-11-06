@@ -396,3 +396,45 @@ recoverable unused payloads under retention policy and close reservations.
 None of these requires a new scientific decision from the user at planning
 time. A missing authenticated compute capability or required budget extension
 is reported precisely while all independent work continues.
+
+## Native Motus first-iteration launch boundary
+
+`motus_configuration.py` and `motus_teacher_entry.py` preserve native
+H32/H192,256 environments,four collection rounds,global2048 and five epochs.
+This gives6144 decisions/15 Adam updates per iteration. Native actor probability
+recomputation handles micro256/accum2 before all epochs. PPO retains native
+K-step mean rollout critic values and selected-step actor values, with an
+independent capture of both; it does not import Sidney transforms or another
+project's critic patch. An independent NumPy reference checks the actual saved
+PPO/GRPO learner batch before SGD. Group8 and the shared source case schedule
+apply to both algorithms.16 source DEV cases use the first16 pinned eval-bank
+seeds without outcome filtering and never select a best-of-panel checkpoint.
+
+The initial allocation stops at the first whole iteration of the intended
+two-iteration lineage, retaining15 updates and a complete resumable boundary.
+It is a measured prefix, not the completed paired comparison or source corpus
+admission. Checkpoint0/1 include native DCP,owned Adam/groups,scheduler/scaler,
+all worker RNG/samplers and case ordinal. Full cold readback and local stageback
+precede their receipts; independent new-process restoration remains required.
+
+Both training and evaluation bind the qualified passive controller after every
+reset, including scenes recreated by offload. Measured terminal masks and
+physics duration follow native terminal final_info without changing PPO masks.
+The native worker reads mode-specific enable_offload flags; explicitly enable
+both modes, since the historical top-level flag alone leaves scenes resident.
+Use native batch-end trimming, with per-scene close trimming disabled.
+
+All new worker writes use job-local staging or the existing project BOS archive;
+shared source/model/cache paths are read-only. Per-rank request journals have
+one writer per rank. Their500k-action whole-run envelope is precommitted; if an
+attempt's journal is unrecoverable, conservatively charge the entire envelope
+and admit no incomplete corpus boundary. Bound I/O to2jobs/512MiB, retain full
+chronological canonical batches before SGD, and drop duplicate sidecar inputs
+only after canonical SHA verification. Archive state/traces remain separate
+from the old Sidney corpus. New scientific launches still require latest-main
+review, actual four-GPU probe, capacity/quota/write checks and measured progress.
+
+MOTUSPPO01 reserves15600GPU-s including creation/release allowance against the
+closed153404/180000GPU-s cumulative cap. Worker timeout3300s,scheduler60min,
+creation-to-release watchdog3900s. Refresh actual scheduler creation time and
+watchdog when submitting; no whole six-task/student campaign funding is implied.
