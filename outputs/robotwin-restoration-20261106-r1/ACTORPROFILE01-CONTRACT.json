@@ -14,7 +14,7 @@
   "minimum_hot_free_gib": 286.5,
   "minimum_job_local_free_gib": 64,
   "maximum_cold_checkpoint_gib": 32,
-  "cold_mount_required": "/mnt/bos/adgfyl",
+  "cold_mount_required": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1",
   "model_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
   "norm_stats_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
   "action_horizon": 32,
@@ -46,5 +46,7 @@
   "recovery": "After first B64 four-update boundary save native DCP+optimizer and Pilot sampler/RNG/scaler/scheduler sidecars with exact input fixtures to job-local storage. Full cold readback and full local stageback precede larger candidates. Fresh process/actor group restores all owned Adam/groups/model/RNG and reproduces the next global update exactly. Raw optimizer hashes retained; only validated zero-step empty unowned entries excluded by measured native semantic layout contract.",
   "automatic_retries": false,
   "oom_policy": "stop this sweep; preserve each failed candidate and prior completed boundary. A separate restore phase may verify that boundary; never restart the failed candidate automatically.",
-  "launch_gate": "Linux composition/field and exact tensor/NumPy/prompt slicing checks; verified source, fresh queue/device limits, persistent cold checkpoint mount and hot/local storage guards; actual four-GPU probe and unchanged native validate_cfg inside the allocated job"
+  "launch_gate": "Linux composition/field and exact tensor/NumPy/prompt slicing checks; verified source, fresh queue/device limits, persistent cold checkpoint mount and hot/local storage guards; actual four-GPU probe and unchanged native validate_cfg inside the allocated job",
+  "verified_bos_source_prefix": "bos://dexmal-mowenjie-data/strong-plant-archives/robotwin-restoration-20261106-r1/",
+  "verified_existing_archive_child": "traces01/ matches completed ARCHIVE01"
 }

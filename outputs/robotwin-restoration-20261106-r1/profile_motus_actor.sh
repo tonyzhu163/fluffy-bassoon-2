@@ -46,8 +46,9 @@ local,cold=Path(os.environ['TASK_LOCAL']),Path(os.environ['TASK_COLD'])
 assert not local.exists() and not cold.exists()
 assert shutil.disk_usage(local.parent).free>=64*2**30
 bucket=Path('/mnt/bos/adgfyl')
-assert bucket.is_dir() and (os.path.ismount(bucket) or os.path.ismount(bucket.parent)), 'Persistent BOS mount required before model work'
-probe=bucket/'strong-plant-archives/robotwin-restoration-20261106-r1/actorprofile01-write-probe'
+archive=cold.parent
+assert archive.is_dir() and any(os.path.ismount(path) for path in (archive,bucket,bucket.parent)), 'Persistent project BOS mount required before model work'
+probe=archive/'actorprofile01-write-probe'
 with probe.open('xb') as stream:stream.write(b'robotwin-native-actor-checkpoint\n');stream.flush();os.fsync(stream.fileno())
 assert probe.read_bytes()==b'robotwin-native-actor-checkpoint\n'
 probe.unlink();local.mkdir()
