@@ -1,0 +1,24 @@
+{
+  "status": "failed_qualification_harness",
+  "job_id": "job-pxstsdqovycc",
+  "source_commit": "371966755ce07cc5d71889d6257ded244a3c6e1e",
+  "created_at_shanghai": "2026-11-07T02:02:34+08:00",
+  "released_at_shanghai": "2026-11-07T02:05:19+08:00",
+  "scheduler_state": "Failed",
+  "exit_code": 1,
+  "worker_gpu_seconds": 113,
+  "conservative_creation_to_release_gpu_seconds": 165,
+  "result_sha256": "f27945ccc65962c973dcc1aa3d07bab7c6b78475bd4823e7806eba0b200f17e3",
+  "initial_scene_workers": 2,
+  "initial_seeds": [
+    100100002,
+    100100003
+  ],
+  "actual_renderer_pci": "0000:a1:00.0",
+  "native_batch_action_max_abs_error": 0.0,
+  "head_gradient_isolation": true,
+  "real_complete_episodes": 0,
+  "reason": "Harness used exact equality to physics_steps*literal0.004 instead of the actual scene timestep. The qualified native timestep is0.004000000189989805.",
+  "limitation": "Failure occurred after first physical batch returned and before transition archives were submitted. No complete rollout, corpus recovery or parallel-runtime qualification claim.",
+  "fix": "Check timestep against1/250 with1e-6 relative tolerance, compute duration with exact reported timestep, fsync pre-dispatch intents and enqueue returned transitions before assertions. Fresh output batch02; same case/noise addresses and unchanged core runtime."
+}

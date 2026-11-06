@@ -21,7 +21,12 @@ def write_trace(path, value):
     temporary = path.with_name(path.name+'.writing')
     with gzip.open(temporary, 'wb', compresslevel=1) as stream:
         torch.save(value, stream)
+    with temporary.open('rb') as stream:
+        os.fsync(stream.fileno())
     temporary.replace(path)
+    descriptor = os.open(path.parent, os.O_RDONLY | os.O_DIRECTORY)
+    try: os.fsync(descriptor)
+    finally: os.close(descriptor)
 
 
 def main():
@@ -39,7 +44,8 @@ def main():
     assert sys.platform == 'linux' and os.uname().nodename.startswith('job-')
     assert torch.cuda.device_count() == 1 and root.is_dir() and not (root/'RESULT.json').exists()
     torch.cuda.set_device(0)
-    contract = json.loads((code/'outputs/robotwin-restoration-20261106-r1/BATCH01-CONTRACT.json').read_text())
+    contract_path = Path(sys.argv[2]) if len(sys.argv) == 3 else code/'outputs/robotwin-restoration-20261106-r1/BATCH01-CONTRACT.json'
+    contract = json.loads(contract_path.read_text())
     norm = MOTOR/'assets/pi0.5_clean_randomize_joint_training/norm_stats.json'
     assert sha(MOTOR/'model.safetensors') == contract['model_sha256']
     assert sha(norm) == contract['norm_stats_sha256']
@@ -128,8 +134,25 @@ def main():
                         with torch.no_grad(): correction = head(base, features)
                         assert torch.equal(correction.actions, base)
                     inference_seconds = time.monotonic()-tick
+                    # Durable request before physical dispatch; preserve returned
+                    # transitions before any qualification-only assertion can fail.
+                    from fluffy_bassoon.meta_rl.rlinf_native_ppo import cpu_tree
+                    intent = f'round-{round_index}-decision-{decision}-intent.pt.gz'
+                    write_trace(root/intent, cpu_tree(dict(native_batch=metadata,
+                        observations=runtime._pending['observations'],base_actions=base,
+                        requested_actions=correction.actions,public_features=features)))
                     tick = time.monotonic(); transitions = runtime.step(correction.actions)
                     step_seconds = time.monotonic()-tick
+                    paths = []
+                    for row, transition in enumerate(transitions):
+                        lane = metadata['lanes'][row]
+                        relative = f'round-{round_index}-decision-{decision}-lane-{lane}.pt.gz'
+                        writer.submit(write_trace, str(root/relative), transition)
+                        saved.append(relative); paths.append(relative)
+                    save(root/'TRACES.json', dict(paths=saved,complete=False))
+                    report['batches'].append(dict(mode=mode, **metadata, inference_seconds=inference_seconds,
+                        simulator_step_seconds=step_seconds,intent=intent))
+                    save(root/'RESULT.json', report)
                     for row, transition in enumerate(transitions):
                         lane = metadata['lanes'][row]
                         assert transition['audit']['worker_pid'] == pids[lane]
@@ -140,20 +163,18 @@ def main():
                         assert transition['execution']['requested_targets'] == 32
                         assert np.array_equal(transition['measured_valid_target_mask'],
                             np.arange(32) < transition['execution']['delivered_targets'])
-                        assert transition['physics_duration_seconds'] == transition['execution']['physics_steps']*.004
+                        timestep = transition['execution']['timestep_seconds']
+                        assert np.isclose(timestep, 1/250, rtol=1e-6, atol=0)
+                        assert transition['physics_duration_seconds'] == transition['execution']['physics_steps']*timestep
                         motion.append(float(np.abs(transition['next_observation']['states']-
                                                    transition['observation']['states']).max()))
-                        relative = f'round-{round_index}-decision-{decision}-lane-{lane}.pt.gz'
-                        writer.submit(write_trace, str(root/relative), transition)
-                        saved.append(relative)
+                        relative = paths[row]
                         episodes[lane]['chunks'].append(dict(path=relative, reward=transition['reward'],
                             execution=transition['execution'], terminated=transition['terminated'],
                             truncated=transition['truncated'], native_batch=transition['native_batch']))
                         if transition['terminated'] or transition['truncated']:
                             episodes[lane]['complete'] = True
                             image(transition['next_observation'], f'round-{round_index}-lane-{lane}-final.jpg')
-                    report['batches'].append(dict(mode=mode, **metadata, inference_seconds=inference_seconds,
-                        simulator_step_seconds=step_seconds))
                     save(root/'RESULT.json', report)
                     del correction, base, features, transitions
                 assert all(e['complete'] for e in episodes) and not any(runtime._active)
@@ -172,7 +193,7 @@ def main():
         for name in ('memory.peak', 'memory.current'):
             path = Path('/sys/fs/cgroup')/name
             if path.is_file(): report[name] = int(path.read_text())
-        save(root/'TRACES.json', dict(paths=saved))
+        save(root/'TRACES.json', dict(paths=saved,complete=True))
         subprocess.run([sys.executable, str(Path(__file__).with_name('verify_batch_traces.py')), str(root)], check=True)
         report.update(status='complete', fresh_process_readback=json.loads((root/'READBACK.json').read_text()))
     except BaseException as error:

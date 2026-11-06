@@ -3,6 +3,7 @@ set -Eeuo pipefail
 TASK_SOURCE=${1:?reviewed commit}
 TASK_OUT=${2:?fresh output identity}
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
+TASK_CONTRACT=${3:-$TASK_CODE/outputs/robotwin-restoration-20261106-r1/BATCH01-CONTRACT.json}
 TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python
 [[ $(uname -s) == Linux && $(hostname) == job-* ]]
 [[ $(git -C "$TASK_CODE" rev-parse HEAD) == "$TASK_SOURCE" ]]
@@ -28,10 +29,10 @@ trap finish EXIT
   --purpose evaluation --expected-count 1 --output "$TASK_OUT/gpu-probe.json"
 export LYCO_BAIGE_GPU_MAP=$TASK_OUT/gpu-probe.json
 "$TASK_PYTHON" "$TASK_SHARED/host_memory.py" "$TASK_OUT" --minimum-gib 128 --once
-"$TASK_PYTHON" - "$TASK_CODE" "$TASK_OUT" <<'PY'
+"$TASK_PYTHON" - "$TASK_CODE" "$TASK_OUT" "$TASK_CONTRACT" <<'PY'
 import json,os,shutil,sys
 from pathlib import Path
-code,out=map(Path,sys.argv[1:]);p=json.loads((code/'outputs/robotwin-restoration-20261106-r1/BATCH01-CONTRACT.json').read_text())
+code,out,contract=map(Path,sys.argv[1:]);p=json.loads(contract.read_text())
 assert p['closed_conservative_gpu_seconds']+p['reserved_gpu_seconds']==p['all_worst_gpu_seconds']<=180000
 assert p['minimum_free_gib']==p['other_and_floor_gib']+p['maximum_output_gib']==286.5
 free=shutil.disk_usage(out).free/2**30
@@ -48,4 +49,4 @@ if [[ ! -e /root/.sapien/physx/105.1-physx-5.3.1.patch0 ]]; then
     /root/.sapien/physx/105.1-physx-5.3.1.patch0
 fi
 timeout --signal=INT --kill-after=30s 1680 "$TASK_PYTHON" \
-  "$TASK_CODE/outputs/robotwin-restoration-20261106-r1/qualify_batch_runtime.py" "$TASK_OUT"
+  "$TASK_CODE/outputs/robotwin-restoration-20261106-r1/qualify_batch_runtime.py" "$TASK_OUT" "$TASK_CONTRACT"
