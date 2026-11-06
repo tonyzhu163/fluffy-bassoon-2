@@ -1,0 +1,12 @@
+{
+  "previous_verifier_commit": "bb8404185ff57120f509282b13cb42f52be42ce0",
+  "previous_verifier_sha256": "b3170b86e168fd1e2875518fabf495cc226d76bf7357a0076d25e1185ea64180",
+  "failure": "Checker incorrectly required all_prior_history_retained=True for episode-reset control as well as full history",
+  "diagnosis": "Original879auditor line126 sets all_prior_history_retained=not episode_reset",
+  "actual_all_140_audits_passed": true,
+  "all_140_initial_physical_states_matched": true,
+  "full_history_banks_retaining_history": 70,
+  "episode_reset_banks_correctly_not_retaining_history": 70,
+  "corrected_check": "memory_mode == mode and all_prior_history_retained == (mode == full)",
+  "scientific_jobs_and_original_audits_unchanged": true
+}

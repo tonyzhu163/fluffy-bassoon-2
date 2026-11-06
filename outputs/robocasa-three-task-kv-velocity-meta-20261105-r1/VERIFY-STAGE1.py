@@ -69,7 +69,9 @@ for interface, candidate in candidates.items():
                         assert case['horizon'] == tasks[task]
                         assert case['case']['native_seed'] == 64105000 + list(tasks).index(task) * 10000 + case['case']['slot']
                     assert audit['passed'] and audit['all_commands_and_draws_reproduced']
-                    assert audit['all_initial_physical_public_states_match'] and audit['all_prior_history_retained']
+                    assert audit['all_initial_physical_public_states_match']
+                    assert audit['memory_mode'] == mode
+                    assert audit['all_prior_history_retained'] == (mode == 'full')
                     assert audit['episodes'] == size * 6
                     assert audit['physical_controls'] == raw['controls_charged'] == size * 6 * tasks[task]
                     assert audit['complete_chunks'] == size * 6 * tasks[task] // 50

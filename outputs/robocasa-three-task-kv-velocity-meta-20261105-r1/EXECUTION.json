@@ -1,7 +1,7 @@
 {
-  "checked_shanghai": "2026-11-06T09:27:03.521002+08:00",
+  "checked_shanghai": "2026-11-06T09:57:06.218459+08:00",
   "cluster": "Baige Pro6K",
-  "status": "all_eight_fits_complete_stage1_AD_KV_and_velocity_readout_running_within_original150",
+  "status": "all8_fits_complete_both_AD_readouts_complete_final_integrity_and_plots_pending",
   "source_commit": "07e3fbeef8ecc1f8f4ef405da747c8ea837f4a79",
   "preserved_learner_contract_commit": "1c88834265cfadc511ba62cac48db0542ad0ebd1",
   "member_cache": "/mowenjie/fluffy-bassoon-2/inputs/steering-source-members-20261105-pfs01",
@@ -244,9 +244,9 @@
   "all_eight_full_restores_verified": true,
   "all_eight_have_new_saved_updates": true,
   "ID_OOD_rollout_writers": "Stage1 AD KV and AD velocity full-protocol arms only; remaining6modelkeys absent and blocked",
-  "active_GPUs": 2,
-  "charged_GPU_hours": 139.53723389000004,
-  "maximum_committed_GPU_hours": 144.71500000000003,
+  "active_GPUs": 0,
+  "charged_GPU_hours": 140.2711111111111,
+  "maximum_committed_GPU_hours": 140.2711111111111,
   "approved_GPU_hours": 150,
   "failed_deployment_GPU_hours": 0.057777777777777775,
   "free_PFS_GiB": 360.96875,
@@ -281,13 +281,13 @@
     "transition_at_empty_archive_queue_and_idle_oldworker": true,
     "active_scientific_GPU_code_unchanged": true
   },
-  "next_monitor_check_shanghai": "2026-11-06T09:47:00+08:00",
-  "next_check_shanghai": "2026-11-06T09:47:00+08:00",
+  "next_monitor_check_shanghai": "2026-11-06T10:10:00+08:00",
+  "next_check_shanghai": "2026-11-06T10:10:00+08:00",
   "budget": {
     "approved_GPU_hours": 150,
-    "charged_GPU_hours": 139.53723389000004,
-    "maximum_committed_GPU_hours": 144.71500000000003,
-    "uncommitted_GPU_hours": 5.284999999999968,
+    "charged_GPU_hours": 140.2711111111111,
+    "maximum_committed_GPU_hours": 140.2711111111111,
+    "uncommitted_GPU_hours": 9.72888888888889,
     "proposed_total_GPU_hours": 190,
     "proposal_authorized": false,
     "main_readout_GPU_hours_allowance": 57,
@@ -295,7 +295,8 @@
     "main_allowance_plus_actual_fit_GPU_hours": 184.24555555555554,
     "eight_7p5h_reservations_plus_actual_fit_GPU_hours": 187.24555555555554,
     "stage1_maximum_new_reservation_GPU_hours": 15,
-    "stage1_authority": "Original150 human approval; admission READOUT-ADMISSION.json contains only AD KV and velocity keys"
+    "stage1_authority": "Original150 human approval; admission READOUT-ADMISSION.json contains only AD KV and velocity keys",
+    "peak_committed_GPU_hours": 144.715
   },
   "evaluation": "Balanced AD interface pair selected before main outcomes, each full5task/50case/6episode/full-reset arm,3000episodes and1.89Mpolicycontrols. Stage1 executes existing approved150GPUh scope; full8model24k scientific matrix unchanged, remaining6held. Proposed190 not approved. No complete task-success panel yet.",
   "storage": {
@@ -319,14 +320,14 @@
   },
   "closed_fit_recovery_index": "finalized-fits-20261106-r1/INDEX.json",
   "seven_closed_fits_complete_state_SHA_and_finite_RNG_checks": true,
-  "next_action": "Continue both operational07 AD arms through3000episodes each, all raw audits/packedcold/staging queue and exact terminalcosts; original879science unchanged, other6keys blocked",
+  "next_action": "Run corrected final integrity checker, generate and inspect curves, safely close idle CPU archive worker, publish paired AD result",
   "all_eight_closed_fits_complete_state_SHA_and_finite_RNG_checks": true,
   "closed_fit_recovery_receipt": "migrations/pfs-members-01/ALL-EIGHT-FITS-RECOVERY08.json",
   "all_allocations_release_receipt": "migrations/pfs-members-01/ALL-EIGHT-FITS-RELEASE08.json",
   "final_validation_plot": "monitor/VALIDATION-FINAL08.png",
   "fit_final_implementation_commit": "9bef7583fa49a5ec6e3786e5e589748bd22c9948",
   "active_fit_GPUs": 0,
-  "active_evaluation_GPUs": 2,
+  "active_evaluation_GPUs": 0,
   "stage1_readout": {
     "stage": "original150-balanced-AD-pair",
     "implementation_commit": "87984718c9199797d31a158c47225cc695623afe",
@@ -346,7 +347,7 @@
         "attempt": "readout-pfs06-kv-ad",
         "admission": "outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/READOUT-ADMISSION.json",
         "candidate_sha256": "f7085e4a6940546e32e46710314ac4fa4319e6179e69e23320e486d48345ad74",
-        "status": "Running",
+        "status": "Succeeded",
         "scheduler_max_runtime_minutes": 450,
         "automatic_retry": false,
         "actual_allocated_GPU_probe_passed": true,
@@ -361,7 +362,9 @@
         "optimizer_updates": 0,
         "CPUs": 16,
         "RAM_GiB": 64,
-        "shared_memory_GiB": 8
+        "shared_memory_GiB": 8,
+        "released_shanghai": "2026-11-06T07:13:14+08:00",
+        "release_evidence": "Authenticated Baige scheduler endtime observed; complete-wave checkpoint1896episodes, packedheartbeatstale during correctedCPUworker rollback; scientificpanelnotcomplete"
       },
       "velocity_bridge/ad": {
         "job_id": "job-jxj1wded8dns",
@@ -376,7 +379,7 @@
         "attempt": "readout-pfs06-vel-ad",
         "admission": "outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/READOUT-ADMISSION.json",
         "candidate_sha256": "04701478c2f3f850b8ce0329855f334732212d4186ae9502e4d97a08a3bab9ca",
-        "status": "Running",
+        "status": "Succeeded",
         "scheduler_max_runtime_minutes": 450,
         "automatic_retry": false,
         "actual_allocated_GPU_probe_passed": true,
@@ -391,7 +394,9 @@
         "optimizer_updates": 0,
         "CPUs": 16,
         "RAM_GiB": 64,
-        "shared_memory_GiB": 8
+        "shared_memory_GiB": 8,
+        "released_shanghai": "2026-11-06T07:37:05+08:00",
+        "release_evidence": "Authenticated Baige scheduler endtime observed; complete-wave2088episodes, legacy411PFSgate; original879science preserved, nextOOD/full/CloseFridge/bank048"
       }
     },
     "proposed190_authorized": false,
@@ -464,9 +469,13 @@
       "scientific_code_commit": "87984718c9199797d31a158c47225cc695623afe",
       "purpose": "Continue unchanged3000episodeADKV arm after complete-wave1896 checkpoint; actualremainingPFS guard,original879bindings,0SGD",
       "candidate_sha256": "f7085e4a6940546e32e46710314ac4fa4319e6179e69e23320e486d48345ad74",
-      "status": "Running",
+      "status": "Succeeded",
       "scheduler_max_runtime_minutes": 300,
-      "automatic_retry": false
+      "automatic_retry": false,
+      "released_shanghai": "2026-11-06T09:54:02+08:00",
+      "scheduler_status": "Succeeded",
+      "completed_readout_episodes": 3000,
+      "release_evidence": "Baige refreshed task-list visible row; no manual termination"
     },
     "completed_episodes_before_resume": 1896,
     "maximum_committed_GPU_hours": 143.79166666666669,
@@ -491,9 +500,13 @@
       "scientific_code_commit": "87984718c9199797d31a158c47225cc695623afe",
       "purpose": "Complete unchanged3000episodeADvelocity arm after2088complete-wave checkpoint; original879bindings/0SGD, dynamicremainingPFSguard",
       "candidate_sha256": "04701478c2f3f850b8ce0329855f334732212d4186ae9502e4d97a08a3bab9ca",
-      "status": "Running",
+      "status": "Succeeded",
       "scheduler_max_runtime_minutes": 240,
-      "automatic_retry": false
+      "automatic_retry": false,
+      "released_shanghai": "2026-11-06T09:44:07+08:00",
+      "scheduler_status": "Succeeded",
+      "completed_readout_episodes": 3000,
+      "release_evidence": "Baige task-list visible row, observed09:48CST; no manual termination"
     },
     "completed_episodes_before_resume": 2088,
     "maximum_committed_GPU_hours": 144.71500000000003,
@@ -510,14 +523,16 @@
   },
   "progress": {
     "kv_bridge": {
-      "episodes": 2748,
+      "episodes": 3000,
       "ID_complete": true,
-      "OOD_complete": false
+      "OOD_complete": true
     },
     "velocity_bridge": {
-      "episodes": 2844,
+      "episodes": 3000,
       "ID_complete": true,
-      "OOD_complete": false
+      "OOD_complete": true
     }
-  }
+  },
+  "peak_committed_GPU_hours": 144.715,
+  "budget_closeout": "migrations/pfs-members-01/STAGE1-BUDGET-CLOSEOUT21.json"
 }
