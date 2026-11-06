@@ -68,3 +68,11 @@ New residual train/eval explicitly record actual batch/row as their numerical
 condition. `rl/robotwin_batch.py` composes the frozen motor with owned spawned
 simulators, full requested actions and measured physical transitions. This
 shared runtime still needs Linux CPU and real concurrent-scene qualification.
+
+CPUBATCH01 passed19 allocated-Linux checks at1248f550: six new runtime/process
+cases plus thirteen motor cases (81 distinct core cases including prior
+accounting/I/O checks). Selected lane order, complete proposal lifecycle,
+immutable base/features, measured terminal partial targets/duration, missing
+measurement failure, process ownership and retained replies after peer failure
+passed. BATCH01-CONTRACT.json defines the next real two-scene qualification;
+these CPU checks alone do not qualify parallel SAPIEN execution.
