@@ -83,6 +83,11 @@ def test_instance_accounting_preserves_commands_feedback_and_native_masks(collec
     assert ('executed_action_count' in info) == collect_obs
     assert info['fb2_measured_valid_target_mask'] == (True, True, False, False)
     assert info['fb2_physics_duration_seconds'] == 7 * task.scene.get_timestep()
+    assert info['fb2_native_feedback'] == dict(reward=[1.],terminated=[True],truncated=[False])
+    result[0][0] = .5
+    result[1][0] = False
+    assert info['fb2_native_feedback']['reward'] == [1.]
+    assert info['fb2_native_feedback']['terminated'] == [True]
     # Rebinding after a reset must use the original class globals each time.
     install_accounted_controller(task, CONTROLLER, metadata=True)
     assert task.gen_sparse_reward_data(actions) is result

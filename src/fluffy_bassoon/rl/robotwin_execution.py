@@ -5,6 +5,7 @@ accounting patch adds a separate field without changing RLinf's loss masks.
 This reader never substitutes requested counts for missing measurements.
 """
 import ast
+from copy import deepcopy
 from dataclasses import dataclass
 import hashlib
 from math import isfinite
@@ -49,6 +50,10 @@ def install_accounted_controller(task, controller, *, metadata=False):
         info['fb2_physics_timestep_seconds'] = execution.timestep_seconds
         info['fb2_physics_duration_seconds'] = execution.duration_seconds
         info['fb2_measured_valid_target_mask'] = execution.valid_target_mask
+        # Keep native feedback before RLinf's relative reward conversion and
+        # evaluation ignore_terminations/autoreset replace the learner packet.
+        info['fb2_native_feedback'] = deepcopy(dict(reward=result[0],
+            terminated=result[1],truncated=result[2]))
         return result
 
     task.gen_sparse_reward_data = MethodType(measured, task)
