@@ -1,0 +1,52 @@
+{
+  "format": "steering_effect_corrected_plateau_v1",
+  "authorization": "User yes to measuring the eight existing controllers, corrected refit, and enforcing the gate before evaluation",
+  "parent_run": "robocasa-three-task-kv-velocity-meta-20261105-r1",
+  "assembly_sha256": "fc3f388ef3feddde4c44ebd45ae9d7e73dab4a0fc58252c506315697be2a4758",
+  "native_model_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+  "native_norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+  "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+  "diagnostic": {
+    "interfaces": ["kv_bridge", "velocity_bridge"],
+    "objectives": ["ad", "dpt", "dit", "ic_iql"],
+    "validation_batches": 16,
+    "batch_size": 8,
+    "maximum_history_episodes": 12,
+    "validation_seed": 734001,
+    "flow_seed": 734001,
+    "loss": "Unweighted active-coordinate flow MSE on the original fixed 128 validation queries",
+    "comparison": "Native, full-history steering, and episode-reset steering on identical noisy actions and timesteps",
+    "new_simulator_controls": 0,
+    "optimizer_updates": 0,
+    "maximum_initial_allocation_GPU_hours": 1
+  },
+  "steering_gate": {
+    "minimum_loss_reduction": 0.01,
+    "minimum_relative_steering": 0.01,
+    "minimum_history_fraction": 0.01
+  },
+  "gate_interpretation": "Prospective practical screening thresholds fixed before candidate measurements; not statistical evidence of adaptation or robot success",
+  "refit": {
+    "primary_model": "kv_bridge/ad",
+    "initialization": "Clone preserved full terminal learner state into a fresh output; preserve policy, Adam and sampler/global/flow RNG",
+    "only_training_change": "Replay scheduled held-out losses with the corrected truly-relative plateau rule, then continue the same learner",
+    "minimum_updates": 1000,
+    "validation_every_updates": 100,
+    "validation_patience": 10,
+    "validation_relative_delta": 0.001,
+    "checkpoint_selection": "Lowest held-out flow loss, never simulator success",
+    "readout": "Only after corrected convergence and a candidate-bound gate result; original six held readouts remain held"
+  },
+  "budget": {
+    "parent_conservative_GPU_hours": 140.2711111111111,
+    "combined_hard_ceiling_GPU_hours": 150,
+    "maximum_all_new_attempts_GPU_hours": 9.72888888888889,
+    "billing": "All diagnostic, setup, queue, retries, refitting and readout allocations charged cumulatively; no other campaign budget borrowed"
+  },
+  "storage": {
+    "minimum_free_PFS_GiB": 220,
+    "concurrent_work_contingency_GiB": 60,
+    "new_output_reservation_GiB": 6,
+    "existing_inputs": "Read-only original source cache, models and eight finalized recoveries; no old run contract or active worktree changes"
+  }
+}
