@@ -4,17 +4,24 @@ Claude Code session (tonyzhu163). Analysis of
 [STAGE1-RESULT](../robocasa-three-task-kv-velocity-meta-20261105-r1/STAGE1-RESULT.md);
 code fix `bc56b849` on `main`. No GPU used.
 
-## Finding
+## Observation and hypothesis
 
-The AD KV/velocity readouts reproduce the frozen native SFT policy. Query-0
-successes (of 50) on Drawer/Toaster/Coffee/Fridge/Microwave: native SFT
-35/15/21/33/6, KV-AD 34/14/20/31/10, velocity-AD 35/15/21/33/8
-([native panel](../../docs/FINDINGS.md)). Full-history and reset curves
-match because the steering is negligible.
+Observed: AD KV/velocity query-0 success counts (of 50) on
+Drawer/Toaster/Coffee/Fridge/Microwave are close to the native SFT panel:
+native SFT 35/15/21/33/6, KV-AD 34/14/20/31/10, velocity-AD 35/15/21/33/8
+([native panel](../../docs/FINDINGS.md)), and full-history and reset curves
+are similar.
 
-Cause: `advance_plateau` used `relative_delta * max(1., abs(reference))`. With
-flow losses near 0.13 this is an absolute 1e-3 (about 0.8%) per patience
-window. From [VALIDATION-FINAL08.json](../robocasa-three-task-kv-velocity-meta-20261105-r1/monitor/VALIDATION-FINAL08.json):
+Hypothesis, not yet measured: the fitted steering is too small to change
+behaviour, so these readouts largely re-measure the native policy. Similar
+marginal counts do not show identical actions or per-case outcomes. Test this
+with `steering_effect` on the eight actual candidates and a controlled
+continuation/refit before treating it as the explanation.
+
+Verified separately (from logs): `advance_plateau` used
+`relative_delta * max(1., abs(reference))`. With flow losses near 0.13 this is
+an absolute 1e-3 (about 0.8%) per patience window, so the fits stopped early.
+From [VALIDATION-FINAL08.json](../robocasa-three-task-kv-velocity-meta-20261105-r1/monitor/VALIDATION-FINAL08.json):
 
 - KV-AD fell monotonically 0.130915 → 0.129984 over its last 10 checks
   (0.00093 total) and was declared converged at update 2,900. KV DPT/DIT/IC-IQL
@@ -42,6 +49,20 @@ the whole PPO run), which limits AD even when fitted.
 
 Existing runs are unaffected: they are pinned to their own commits.
 
+## Review follow-up (2026-11-06)
+
+[Review](../steering-fit-review-20261106-r1/README.md) of `933716fb`:
+
+- Reset input (fixed): the gate's episode-reset pass kept the previous
+  episode's action/reward/done in start tokens. `episode_reset_batch` now
+  zeroes them as deployment and `trial_tokens(mode="episode")` do, with a
+  regression test.
+- Enforcement (open, by design for the next run): the helpers have no
+  production caller. The next refit contract must bind thresholds before
+  readout and require a candidate-bound gate result at dispatch. Completed
+  runs keep their pinned scripts and contracts.
+- Causal wording (fixed above): negligible steering is a hypothesis until measured.
+
 ## Linux checks requested on Baige (CPU only, no GPU)
 
 macOS checks: 25/25 `tests/test_flow_bridge_train.py` +
@@ -57,8 +78,8 @@ Record the log here as `LINUX-TESTS.log`.
 
 ## Next steps (not launched)
 
-1. Keep the six held Stage 1 readouts held; as fitted they re-measure native.
+1. Keep the six held Stage 1 readouts held until the candidates are measured.
 2. Run `steering_effect` on the eight existing candidates (CPU-feasible on a
-   subset, or one short GPU slice) to confirm negligible steering.
+   subset, or one short GPU slice) to test the negligible-steering hypothesis.
 3. Check source streams for success improvement within 12-episode windows.
 4. Refit KV with the corrected plateau rule, gate it, then read out.
