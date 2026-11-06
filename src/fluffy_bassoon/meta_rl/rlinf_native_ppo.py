@@ -35,6 +35,12 @@ def write(path, value):
     temp.replace(path)
 
 
+def json_metrics(metrics):
+    """Preserve native metric values as JSON scalars/lists in both simulators."""
+    import numpy as np
+    return {key: np.asarray(value).tolist() for key, value in metrics.items()}
+
+
 def validate_recipe(cfg):
     """Accept execution accumulation changes only; never reduce scientific batch."""
     from omegaconf import OmegaConf

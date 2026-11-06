@@ -22,7 +22,7 @@ from rlinf.workers.actor.embodied_fsdp_actor_worker import EmbodiedFSDPActor
 from rlinf.workers.env.env_worker import EnvWorker
 
 from .rlinf_native_ppo import ActionJournal, cpu_tree, restore_rng, snapshot_rng, tensor_hash, write
-from .rlinf_native_ppo import sha
+from .rlinf_native_ppo import json_metrics, sha
 from .rlinf_native_ppo_runtime import PilotActor, PilotRollout, PilotRunner, save_tensor
 from .rlinf_robocasa_flow_ppo import (GlobalActionJournal, RESET_CONTROL_RESERVE, checkpoint_weight_export, first_success_reward,
     flow_contract, flow_episode_ids, flow_logprob_parity, flow_value_parity,
@@ -41,11 +41,6 @@ def unwrapped(env):
     while '_flow_round' not in vars(env):
         env = env.env
     return env
-
-
-def json_metrics(metrics):
-    """Native metric aggregation returns NumPy zero-dimensional arrays."""
-    return {key: np.asarray(value).tolist() for key, value in metrics.items()}
 
 
 def fresh_factory(factory, seed, physics_tick_limit):

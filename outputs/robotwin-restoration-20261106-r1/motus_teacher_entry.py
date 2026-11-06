@@ -1,7 +1,8 @@
 """Native Motus PPO/GRPO with common cases and shared train/eval engineering.
 
-No Sidney transforms or numerical patches. Learner, probability recomputation,
-Flow-SDE, GAE and reduction stay in the pinned RLinf source.
+No Sidney transforms or numerical patches. Flow-SDE, GAE, losses and reduction
+stay in pinned RLinf; the explicit OpenPi probability-reference hook preserves
+its actor partitioning while handling continuous action coordinates.
 """
 import json
 import os
@@ -29,7 +30,7 @@ from motus_configuration import validate
 from motus_learner_reference import audit as audit_learner
 from profile_checkpoint import verify as verify_archive
 from fluffy_bassoon.meta_rl import rlinf_native_ppo_runtime as runtime
-from fluffy_bassoon.meta_rl.rlinf_native_ppo import restore_rng, sha, snapshot_rng, write
+from fluffy_bassoon.meta_rl.rlinf_native_ppo import json_metrics, restore_rng, sha, snapshot_rng, write
 from fluffy_bassoon.meta_rl.rlinf_robocasa_flow_ppo import keep_frozen_image_encoder_in_eval
 from rlinf.config import validate_cfg
 from rlinf.runners.embodied_runner import EmbodiedRunner
@@ -325,7 +326,7 @@ class MotusRunner(runtime.PilotRunner):
         # Drain canonical train/eval writers without creating another checkpoint.
         for group in (self.rollout,self.env): group.set_global_step(iteration).wait()
         self._pilot_write(f'dev/iteration-{iteration:04d}.json',dict(completed=True,
-            producing_policy_iteration=iteration,metrics=metrics,episodes=16,optimizer_updates_during_eval=0,
+            producing_policy_iteration=iteration,metrics=json_metrics(metrics),episodes=16,optimizer_updates_during_eval=0,
             checkpoint_selection='fixed iteration2; this is a source DEV progress panel'))
         for group in (self.actor,self.rollout,self.env): group.pilot_rng(restore=True).wait()
 

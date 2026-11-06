@@ -1,0 +1,51 @@
+{
+  "status": "failed_released",
+  "job_id": "job-6vgt7ghc6kz3",
+  "source_commit": "2f51830cec625ae0bbd8b0c6de2dad28a43c1a6e",
+  "created_at_shanghai": "2026-11-07T06:00:02+08:00",
+  "running_at_shanghai": "2026-11-07T06:00:17+08:00",
+  "released_at_shanghai": "2026-11-07T06:10:08+08:00",
+  "gpus": 4,
+  "creation_to_release_seconds": 606,
+  "conservative_gpu_seconds": 2424,
+  "worker_exit": {
+    "exit_code": 1,
+    "started_unix": 1794002424,
+    "ended_unix": 1794002967,
+    "worker_gpu_seconds": 2172
+  },
+  "failure": "DEV0 evaluation returned native NumPy metric arrays; run-owned JSON receipt did not convert arrays. TypeError before first training iteration.",
+  "actual_gpu_probe_passed": true,
+  "model_hashes_verified": true,
+  "all_worker_initialization_completed": true,
+  "initial_evaluation_returned": true,
+  "completed_adam_updates": 0,
+  "checkpoint0": {
+    "cold": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motusppo03/checkpoints/global_step_0",
+    "data_bytes": 9159450898,
+    "manifest_sha256": "982eacae0fed79d357becb247b524c12cd55ced95a5bb612e6bfc4f1a9d75c62",
+    "full_cold_readback": true,
+    "full_local_stageback": true,
+    "seconds": 95.45840433146805,
+    "independent_process_restore_required": true
+  },
+  "sampled_resources": {
+    "samples": 468,
+    "host_peak_bytes": 144763240448,
+    "gpu_max_used_bytes": [
+      19899875328,
+      19943915520,
+      18620612608,
+      18622709760
+    ]
+  },
+  "proof": "motusppo03-closed.png",
+  "cumulative_closed_conservative_gpu_seconds": 157492,
+  "remaining_gpu_seconds": 22508,
+  "evidence_sha256": {
+    "train.log": "979ffc89bbd54985ef3f13886c7afc18fdbe1f7dc7083c1570b3b2f5a20c1e14",
+    "resources.json": "e50c7f4f2bed61e326e1235b371d74363112a35f75fc1e085d5466a35bbd56f2",
+    "gpu-probe.json": "2c7af8ccfd2ae5382d321d8281e86cde1822d4c415f1d2c48efe73fec40459b6",
+    "admission.json": "cfddbe8c4c84c5ee79344bf3bb83fa5adda6b64bc47ea02004911d5cfb6a4153"
+  }
+}
