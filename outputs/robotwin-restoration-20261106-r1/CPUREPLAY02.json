@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "source_commit": "9da407033b26fda789358f1510d1879a6024fc2f",
+  "remote_output": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-restoration-20261106-r1/cpureplay02",
+  "exit_code": 0,
+  "started_shanghai": "2026-11-07T05:53:46+08:00",
+  "ended_shanghai": "2026-11-07T05:54:04+08:00",
+  "wall_seconds": 18,
+  "tests_passed": 29,
+  "pytest_seconds": 1.63,
+  "warnings": 1,
+  "full_native_schema_algorithms": [
+    "ppo",
+    "grpo"
+  ],
+  "schema_hardware_mock": "Only Cluster and four-rank component placement substituted; all native scientific/model-family/FSDP validation retained",
+  "hardware_validation": false,
+  "model_or_simulator_constructed": false,
+  "cuda_initialized": false,
+  "bash_syntax_passed": true,
+  "evidence_sha256": {
+    "schema.json": "8c714b83705fafbcfbf99caedce3a87f30973c809960faf072fd926b4992911",
+    "core.log": "9e142cba3bce70ca9a11f7d2caad211d30bc7e91f26534e77bc890a1f51c2e67",
+    "imports.txt": "0aff63b3f3209d4a5443a3ce5308ce59593e4a6eae0b7733b367122087544502"
+  },
+  "core_behaviors": [
+    "seven continuous OpenPi replay partition, mask, RNG and atomic failure cases",
+    "22 native execution cases including train/eval binding, collated autoreset physical metadata, and original feedback deep-copy preservation"
+  ]
+}
