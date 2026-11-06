@@ -1,7 +1,7 @@
 {
   "owner_chat": "01a1b024-f4ac-7181-af87-bac9fbee72bb",
-  "status": "two_real_workers_native_batch_parity_passed_harness_timestep_fix_prepared",
-  "new_gpu_jobs_launched": 8,
+  "status": "shared_runtime_corrected_real_scene_qualification_starting",
+  "new_gpu_jobs_launched": 9,
   "prior_robotwin_cumulative_cap_gpu_hours": 50,
   "prior_cost_and_reservations_must_be_refreshed": false,
   "plan": "PLAN.md",
@@ -49,16 +49,16 @@
     "motor_state": "motor03 SUCCESS/released01:04:06:3 real H32/H192 episodes, native B1 parity0 and residual gradients/frozen versions pass; B2..256 fail unchanged singleton equivalence gate",
     "storage_recovery": "complete;512 traces fully cold-read+restored,87.50335GiB recovered,1172 files protected",
     "batch_memory_state": "Native batch diagnosis complete: all-row preprocessing exact and native batched vs adapter action error0; native batch vs singleton drift remains. Largest tested inference B256 memory-safe; no parallel scene capacity claim.",
-    "batch_runtime_state": "batch01 Failed/released02:05:19 after first real physical batch; exact nativeB2 parity0 and head gradients pass, literal timestep assertion corrected for fresh batch02"
+    "batch_runtime_state": "batch02 job-i16okekqp1iz submitted02:10:56 at0fcf7841; actual-device/host startup progressing02:11:25"
   },
   "cpu_qualification": "CPU01.json",
   "git_deployment": "GIT-DEPLOYMENT.json",
-  "active_gpu_reservation_seconds": 0,
+  "active_gpu_reservation_seconds": 1860,
   "new_gpu_hours_note": "All closed/failed costs retained; no active GPU reservation.",
   "budget_reconciliation": "BUDGET-RECONCILIATION.json",
-  "last_checked_shanghai": "2026-11-07T02:05:26+08:00",
+  "last_checked_shanghai": "2026-11-07T02:11:25+08:00",
   "cumulative_closed_conservative_gpu_seconds": 148675,
-  "worst_closed_plus_reserved_gpu_seconds": 148675,
+  "worst_closed_plus_reserved_gpu_seconds": 150535,
   "execution_qualification": "EXECUTION01-COMPLETE.json",
   "new_closed_conservative_gpu_hours": 2.358611111111111,
   "qualified_scope": "Measured real SAPIEN accounting and Motus H32 native ODE. Adapter equals native batch at B1..64; singleton equivalence rejected. Shared parallel runtime awaits CPU and real-device qualification.",
@@ -73,7 +73,7 @@
   "distinct_core_cases_passed": 81,
   "native_batch_math_result": "BATCHMATH01-COMPLETE.json",
   "cpu_batch_qualification": "CPUBATCH01.json",
-  "planned_batch_runtime_gpu_reservation_seconds": 1860,
-  "batch_runtime_launch": "BATCH01-LAUNCH.json",
+  "planned_batch_runtime_gpu_reservation_seconds": 0,
+  "batch_runtime_launch": "BATCH02-LAUNCH.json",
   "batch_runtime_closeout": "BATCH01-CLOSEOUT.json"
 }
