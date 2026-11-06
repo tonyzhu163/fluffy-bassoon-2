@@ -1,0 +1,27 @@
+{
+  "format": "closed_shared_reservation_accounting_v1",
+  "checked_shanghai": "2026-11-06T07:57:06.958338+08:00",
+  "protected_floor_GiB": 220,
+  "other_owner_contingency_GiB": 26,
+  "active_readout_hot_cap_GiB": 40,
+  "robotwin_future_growth_bytes": 0,
+  "robotwin_future_GPU_reservations": 0,
+  "robotwin_resident_checkpoints_and_caches_retained": true,
+  "resident_bytes_already_deducted_from_actual_filesystem_free": true,
+  "authoritative_required_free_formula": "220+26+max(0,40-current allocated readout+packing GiB); RTfuturegrowth0 after verified complete actor restore and terminal closeout",
+  "peer_authority_commit": "f1c725d8",
+  "peer_closure_proofs": {
+    "outputs/robotwin-sidney-matched-baselines-20261106-r1/BUDGET-CLOSEOUT.json": {
+      "sha256": "a5a296a085b15b04c67854c0e71336dfdff553c19982672be8a0b8db9289dbe0"
+    },
+    "outputs/robotwin-sidney-matched-baselines-20261106-r1/FINAL-INTEGRITY.json": {
+      "sha256": "d6a0db54a2e6da7e29d6fe1662e082d059fc20e33bdda591722d5daa9ed70a0a"
+    }
+  },
+  "active_immutable_guards": "STORAGE-ACCOUNTING12.json in existing07e3 GPU/CPU processes retains unused135-cap remainder only as conservative compatibility headroom until terminal. These bytes are NOT an admitted RTgrowth reservation. No healthy process is restarted solely to remove this harmless extra guard.",
+  "operational_safety": "Both authoritative and more-conservative active guard remain satisfied;220floor unchanged",
+  "no_new_robotwin_work_admitted": true,
+  "no_checkpoint_or_cache_moves": true,
+  "other_six_meta_models_admitted": false,
+  "meta_GPU_ceiling": 150
+}
