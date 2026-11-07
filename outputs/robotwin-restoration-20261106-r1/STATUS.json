@@ -1,6 +1,6 @@
 {
   "owner_chat": "01a1b024-f4ac-7181-af87-bac9fbee72bb",
-  "status": "full_reconstruction_row_identity_binding_prepared",
+  "status": "cpu_full_chain_identity_check_running",
   "new_gpu_jobs_launched": 23,
   "prior_robotwin_cumulative_cap_gpu_hours": 50,
   "prior_cost_and_reservations_must_be_refreshed": false,
@@ -64,7 +64,7 @@
   "active_gpu_reservation_seconds": 0,
   "new_gpu_hours_note": "178782GPU-s closed;0 active/reserved;1218 remain under180000 cap.",
   "budget_reconciliation": "BUDGET-RECONCILIATION.json",
-  "last_checked_shanghai": "2026-11-07T13:00:00+08:00",
+  "last_checked_shanghai": "2026-11-07T14:01:08+08:00",
   "cumulative_closed_conservative_gpu_seconds": 178782,
   "worst_closed_plus_reserved_gpu_seconds": 178782,
   "execution_qualification": "EXECUTION01-COMPLETE.json",
@@ -115,7 +115,7 @@
   "native_teacher_fourth_attempt": "MOTUSPPO04-CLOSEOUT.json",
   "decoded_history_core_qualification": "CPUTOKENS01.json",
   "deferred_scene_setup_cpu_qualification": "CPUTOKENS02.json",
-  "next_action": "Run CPU04 full-chain row-identity index and bind all6,144 source rows without assuming rollout and actor storage ranks/columns agree. Keep one-pass archive reads and strict CPU memory guard. Then validate all streamed input payloads and exact admitted launcher before1100GPU-s reconstruction; no newGPU launch yet.",
+  "next_action": "Verify CPU04 full-chain index and all96 native-B64 packets/6144 one-to-one canonical rows; inspect routing and physical no-op semantics. Then full CPU payload validation and exact launcher admission before the prepared1100GPU-s frozen reconstruction. No active GPU.",
   "native_collection_recovery_audit": "COLLECTION-AUDIT02-COMPLETE.json",
   "planned_learner_recovery_gpu_seconds": 0,
   "native_learner_recovery_contract": "MOTUSREPLAY01-CONTRACT.json",
@@ -149,7 +149,15 @@
   "decoded_chunk_objective_qualification": "CPUCHUNKOBJECTIVES01.json",
   "lifecycle_result": "LIFECYCLE01-COMPLETE.json",
   "lifecycle_cpu_readback": "LIFECYCLE01-READBACK01.json",
-  "cpu_reconstruction_process": null,
+  "cpu_reconstruction_process": {
+    "pid": 3531528,
+    "source_commit": "038057679019cbb70772d65169eb430caf78d9d3",
+    "source_path": "/mowenjie/fluffy-bassoon-2/sources/robotwin-restoration-20261107-chunkobjectives01",
+    "output": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpureconstruction04",
+    "log": "/tmp/rt-cpureconstruction04.log",
+    "cuda_visible_devices": "",
+    "gpu_seconds": 0
+  },
   "reconstruction_contract": "RECONSTRUCTION01-CONTRACT.json",
   "planned_reconstruction_gpu_seconds": 1100,
   "reconstruction_binding_failure": "CPURECONSTRUCTION03-CLOSEOUT.json"
