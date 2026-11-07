@@ -39,7 +39,7 @@ class ChunkFitConfig:
     weight_decay: float = 0.
 
     def __post_init__(self):
-        if (self.method not in ('ad', 'dit', 'ic_iql', 'static_behavior_cloning')
+        if (self.method not in ('ad', 'dit', 'ic_iql', 'static_behavior_cloning', 'history_behavior_cloning')
                 or self.mode not in MODES or type(self.seed) is not int or not 0 <= self.seed < 2**32
                 or any(type(v) is not int or v < 1 for v in
                        (self.batch_size, self.max_episodes, self.actor_updates))
@@ -47,12 +47,14 @@ class ChunkFitConfig:
                 or not math.isfinite(self.learning_rate) or self.learning_rate <= 0
                 or not math.isfinite(self.weight_decay) or self.weight_decay < 0):
             raise ValueError('Invalid decoded-student fitting configuration')
-        if self.method in ('ad', 'static_behavior_cloning') and self.value_updates != 0:
+        if self.method in ('ad', 'static_behavior_cloning', 'history_behavior_cloning') and self.value_updates != 0:
             raise ValueError('Imitation has no value-fitting stage')
         if self.method in ('dit', 'ic_iql') and self.value_updates < 1:
             raise ValueError('Value-weighted fitting requires a value stage')
         if self.method == 'static_behavior_cloning' and self.mode != 'static':
             raise ValueError('The context-free imitation control uses static mode')
+        if self.method == 'history_behavior_cloning' and self.mode == 'static':
+            raise ValueError('The history imitation control requires history conditioning')
 
 
 def sample_chunk_windows(trials, sampler, *, batch_size, max_episodes, context_length):
@@ -122,7 +124,8 @@ class ChunkTrainer:
         if fit_config.method == 'ad' and (not data.get('chronological_learning_histories')
                 or len(set(data.get('teacher_policy_versions', []))) < 2):
             raise ValueError('AD requires qualified chronological multi-version histories')
-        objective = 'ad' if fit_config.method == 'static_behavior_cloning' else fit_config.method
+        objective = ('ad' if fit_config.method in ('static_behavior_cloning', 'history_behavior_cloning')
+                     else fit_config.method)
         objective_config = objective_config or ChunkObjectiveConfig(objective)
         if objective_config.objective != objective or objective_config.discount != data.get('discount'):
             raise ValueError('Preserve the declared objective and physical return clock')

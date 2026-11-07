@@ -49,7 +49,7 @@ def write(path, value):
             time.sleep(.25)
 
 
-def physical_data():
+def physical_data(*, history_imitation=False):
     exported = json.loads((ROOT/'DECODEDHISTORY01-COMPLETE.json').read_bytes())
     bounds = json.loads((ROOT/'DECODED-FIT-BOUNDS02.json').read_bytes())
     for path, expected in ((Path(exported['export_result']),exported['export_result_sha256']),
@@ -106,6 +106,9 @@ def physical_data():
         student_dev_was_teacher_train=True,test_tensor_loaded=False,full_source_campaign_admitted=False,
         student_implementation_sha256={name:sha(ROOT.parents[1]/'src/fluffy_bassoon/meta_rl'/name)
             for name in ('causal_decoder.py','chunk_history.py','chunk_policy.py','chunk_value.py','chunk_training.py')})
+    if history_imitation:
+        contract['eligible_methods'] = [*contract['eligible_methods'],'history_behavior_cloning']
+        contract['history_imitation_admission'] = 'Same recorded action targets and public feedback as the pilot; single-policy behavior imitation, not chronological AD'
     return layout,statistics,data,contract
 
 
@@ -148,7 +151,7 @@ def run(args):
         learning_improvement_claim=False,online_deployment_qualified=False,checkpoints=[])
     write(output/'RESULT.json',report)
     try:
-        layout,statistics,data,data_contract = physical_data()
+        layout,statistics,data,data_contract = physical_data(history_imitation=args.method=='history_behavior_cloning')
         model = ChunkModelConfig(layout,**plan['model'])
         fitting = dict(plan['fitting'],method=args.method,
             mode='static' if args.method == 'static_behavior_cloning' else plan['mode'])
@@ -232,7 +235,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--contract',required=True)
     parser.add_argument('--output',required=True)
-    parser.add_argument('--method',required=True,choices=['dit','ic_iql','static_behavior_cloning'])
+    parser.add_argument('--method',required=True,choices=['dit','ic_iql','static_behavior_cloning','history_behavior_cloning'])
     parser.add_argument('--device',required=True,choices=['cpu','cuda'])
     parser.add_argument('--resume')
     parser.add_argument('--resume-sha256')

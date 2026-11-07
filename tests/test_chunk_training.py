@@ -93,27 +93,44 @@ def test_independent_resume_reproduces_next_update_in_both_stages(tmp_path, comp
 def test_actor_sampling_is_matched_across_value_objectives_and_static_control():
     value = trainer('ic_iql')
     control = trainer('static_behavior_cloning', value_updates=0)
+    history = trainer('history_behavior_cloning', value_updates=0)
     before = deepcopy(value.samplers['actor'].bit_generator.state)
     value.step([trial()]);value.step([trial()])
     assert_tree_equal(before, value.samplers['actor'].bit_generator.state)
     assert_tree_equal(value.samplers['actor'].bit_generator.state, control.samplers['actor'].bit_generator.state)
+    assert_tree_equal(history.samplers['actor'].bit_generator.state, control.samplers['actor'].bit_generator.state)
+    history.step([trial()]);control.step([trial()])
+    assert history.valid_positions == control.valid_positions
+    assert_tree_equal(history.samplers['actor'].bit_generator.state, control.samplers['actor'].bit_generator.state)
 
 
-def test_actor_export_preserves_density_statistics_and_contains_no_critic(tmp_path):
-    fitted = trainer('static_behavior_cloning', value_updates=0, actor_updates=1)
+@pytest.mark.parametrize('method', ['static_behavior_cloning', 'history_behavior_cloning'])
+def test_actor_export_preserves_density_statistics_and_contains_no_critic(tmp_path, method):
+    fitted = trainer(method, value_updates=0, actor_updates=1)
     fitted.step([trial()])
     path = tmp_path/'policy.pt'
     checksum = fitted.export_policy(path)
     policy, exported = load_chunk_policy(path, checksum, expected_contract=fitted.contract)
     assert set(exported) == {'format', 'contract', 'updates', 'policy'}
     assert_tree_equal(policy.state_dict(), fitted.learner.actor.state_dict())
-    tokens = chunk_batch([trial()], policy, mode='static')['tokens'][0]
+    tokens = chunk_batch([trial()], policy, mode=fitted.fit_config.mode)['tokens'][0]
     left, _, _ = policy.step(tokens, deterministic=True)
     right, _, _ = fitted.learner.actor.step(tokens, deterministic=True)
     assert torch.equal(left, right)
     assert not policy.training and all(not p.requires_grad for p in policy.parameters())
     with pytest.raises(RuntimeError, match='budget'):
         fitted.step([trial()])
+
+
+def test_single_policy_history_imitation_keeps_feedback_without_ad_admission():
+    fitted = trainer('history_behavior_cloning',value_updates=0)
+    assert fitted.objective_config.objective == 'ad' and fitted.fit_config.mode == 'full'
+    batch = chunk_batch([trial()],fitted.learner.actor,mode=fitted.fit_config.mode)
+    begin = fitted.learner.actor.config.layout.current_dim
+    assert not batch['tokens'][0,0,begin:-1].any()
+    assert batch['tokens'][2,0,begin:-1].abs().sum()>0
+    with pytest.raises(ValueError,match='chronological'):
+        trainer('ad',value_updates=0)
 
 
 def test_failed_update_cannot_replace_last_complete_checkpoint(tmp_path):

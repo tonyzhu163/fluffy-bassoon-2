@@ -1,0 +1,54 @@
+{
+  "intent": "student_fitting",
+  "model": {
+    "width": 512,
+    "layers": 6,
+    "heads": 8,
+    "context_length": 2048,
+    "initial_std": 0.5
+  },
+  "mode": "full",
+  "fitting": {
+    "seed": 0,
+    "batch_size": 8,
+    "max_episodes": 9,
+    "value_updates": 0,
+    "actor_updates": 1000,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0
+  },
+  "execution_batch_size": 8,
+  "retained_update_boundaries": [
+    1000
+  ],
+  "checkpoint_interval": 50,
+  "dataset": "decodedhistory01",
+  "statistics": "decoded-fit-bounds02",
+  "test_tensor_load_allowed": false,
+  "purpose": "Matched full-history behavior-imitation control on the same policy0 buffer; no chronologicalAD or meta-learning claim",
+  "methods": [
+    "history_behavior_cloning"
+  ],
+  "new_gpu_seconds": 0,
+  "maximum_new_output_gib": 4,
+  "fit_data_admitted_for_investigation": true,
+  "full_scientific_source_campaign_admitted": false,
+  "maximum_cpu_seconds": 7200,
+  "qualification": "Allocated-Linux core tests plus full6x512 actual-data two-update cold recovery required before1000actor fit",
+  "objective_by_method": {
+    "history_behavior_cloning": {
+      "objective": "ad",
+      "discount": 0.99,
+      "expectile": 0.7,
+      "temperature": 1.0,
+      "maximum_weight": 20.0,
+      "target_tau": 0.005,
+      "bellman_weight": 0.1
+    }
+  },
+  "extraction_equation": "min(exp(advantage/temperature),maximum_weight); log-weight floor -20",
+  "iql_effective_inverse_temperature": 3,
+  "method_identity": "Unweighted full-history behavior imitation; same actor architecture, initial seed, actor windows, stats and1000actor update budget as fit02; no fitted critic",
+  "prior_runtime_qualification": "CPUDECODEDFIT01.json",
+  "output_name": "decodedhistorybc01"
+}
