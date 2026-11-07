@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "source_commit": "9bb0437bbc74a05fee7a49c3558f0261a01aca18",
+  "remote_qualification": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpuchunkobjectives01/QUALIFICATION.json",
+  "remote_qualification_sha256": "2ae09ff3fbd2a5a5a761e6c2a4edefc8b30f17dc3f6330fba5d40c818a74bf65",
+  "checksum_asserted_on_linux": true,
+  "process_pid": 3428428,
+  "process_confirmed_gone": true,
+  "core_cases_passed": 37,
+  "new_decoded_objective_cases": 4,
+  "pytest_seconds": 13.03,
+  "gpu_seconds": 0,
+  "cuda_initialized": false,
+  "small_cpu_history_models_constructed": true,
+  "native_motus_or_simulator_constructed": false,
+  "objectives": [
+    "ad",
+    "dit",
+    "ic_iql"
+  ],
+  "coverage": [
+    "Complete positive-duration physical episodes and full requested residual tails",
+    "Separate termination/timeout boundaries, no cross-episode bootstrap; reject mismatched return clock",
+    "IQL losses and target EMA against constant-value numerical reference",
+    "Decoded density/advantage weights and actor/critic gradient isolation",
+    "Global valid-decision loss weighting across execution minibatch partitions"
+  ],
+  "dpt_requires_qualified_query_labels": true,
+  "source_corpus_or_full_student_fit_admitted": false,
+  "online_evaluation_qualified": false,
+  "raw_harness_metadata_correction": "QUALIFICATION.json explicitly corrects generic raw model_or_simulator_constructed=false: small CPU learners are constructed in unit tests; native Motus/SAPIEN are not.",
+  "proof": "cpuchunkobjectives01-passed.png"
+}

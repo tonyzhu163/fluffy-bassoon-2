@@ -216,3 +216,21 @@ the combined actor/rollout/environment memory profile remain unqualified.
 See SCENESETUP05-COMPLETE.json. No model calls or SGD ran. Constructor/reset
 timings are default-first with shared job caches; do not claim an isolated
 speedup or end-to-end training throughput from this replay.
+
+
+`meta_rl/chunk_value.py` now connects the decoded-chunk encoder and actor/Q/V
+models to AD, DIT-style and offline IQL losses. Complete positive-duration
+windows use the same full/episode/static resets as online queries. Both
+termination and H192 timeout stop Bellman edges; return-label clocks must
+match the declared gamma. Whole requested residual chunks remain action
+labels, including undelivered tails. IQL uses expectile0.7, temperature3,
+cap100 and target-Q EMA0.005; DIT-style uses temperature1/cap20 and the
+explicit0.1 Bellman auxiliary inherited from the existing value learner.
+Global valid-decision weighting and optimizer execution reuse the qualified
+shared helper. CPUCHUNKOBJECTIVES01 at9bb0437b passed37 Linux CPU cases,
+including4 new decoded-objective numerical/gradient/batch-partition checks.
+These tests construct small CPU models, with CUDA uninitialized; no native
+Motus or simulator is loaded. Corpus export/admission, complete fitting,
+checkpoint/online integration and real student evaluation remain pending.
+A one-version corpus is still inadmissible for chronological AD, and DPT is
+rejected until qualified same-query labels exist.
