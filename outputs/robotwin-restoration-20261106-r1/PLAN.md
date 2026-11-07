@@ -647,3 +647,15 @@ The5120-action ceiling includes explicit temporary/real setup allowances.
 Require8GiB sampled reserve and complete child closure. The2400GPU-s
 creation/release reservation gives worst179368/180000,632 unreserved.
 No model, SGD, student data or large-scene/combined-training claim is involved.
+
+
+SCENESETUP01 failed before simulator construction because the shared shell
+inserted a4-GPU fallback into a1-GPU container; the actual job probe rejected
+this and the allocation released10:33:41, charged62GPU-s. Preserve the failed
+source/outputs. SCENESETUP02 uses a fresh output/source and a fallback of0 only
+when scheduler visibility is unset. CPUSCENE03 atd0799d46 passed4 actual shell
+visibility cases, all24 source chunks/config/reference hashes, and6 reset tests
+on Linux with CUDA uninitialized. Its admitted2400GPU-s reservation gives
+worst179430/180000 against177030 closed, leaving570 unreserved.
+CPUCHUNKMODEL01 separately qualified11 decoded-history/model cases at4c7b9c24;
+student export/trainer/evaluation integration remains pending.
