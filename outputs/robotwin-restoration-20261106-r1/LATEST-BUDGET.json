@@ -1,8 +1,8 @@
 {
-  "status": "paired_source_PPO_and_GRPO_DEV_readouts_running",
-  "closed_conservative_gpu_seconds": 307078,
+  "status": "guard_fix_qualified_fresh_paired_DEV_prepared",
+  "closed_conservative_gpu_seconds": 319430,
   "cap_gpu_seconds": 360000,
-  "closed_conservative_gpu_hours": 85.29944444444445,
+  "closed_conservative_gpu_hours": 88.73055555555555,
   "components": [
     {
       "through_controller_diagnostic": 140019
@@ -132,10 +132,16 @@
     },
     {
       "motus_source_ppo_dev01_probe_argument_rejection_creation_to_release_gpu_seconds": 384
+    },
+    {
+      "motus_source_ppo_dev02_creation_to_release_gpu_seconds": 6480
+    },
+    {
+      "motus_source_grpo_dev01_creation_to_release_gpu_seconds": 5872
     }
   ],
   "next_motor_qualification_reserved_gpu_seconds": 0,
-  "next_worst_gpu_seconds": 335878,
+  "next_worst_gpu_seconds": 355430,
   "maximum_new_output_gib": 0.5,
   "other_and_floor_gib": 286,
   "required_free_gib": null,
@@ -154,19 +160,19 @@
   "active_actor_profile_reserved_gpu_seconds": 0,
   "planned_actor_restore_reserved_gpu_seconds": 0,
   "active_actor_restore_reserved_gpu_seconds": 0,
-  "remaining_gpu_seconds": 52922,
+  "remaining_gpu_seconds": 40570,
   "planned_learner_recovery_reserved_gpu_seconds": 0,
   "active_learner_recovery_reserved_gpu_seconds": 0,
   "planned_native_dev_reserved_gpu_seconds": 0,
   "active_native_dev_reserved_gpu_seconds": 0,
-  "remaining_unreserved_gpu_seconds": 24122,
+  "remaining_unreserved_gpu_seconds": 4570,
   "planned_scene_setup_reserved_gpu_seconds": 0,
   "active_scene_setup_reserved_gpu_seconds": 0,
   "planned_lifecycle_reserved_gpu_seconds": 0,
   "active_lifecycle_reserved_gpu_seconds": 0,
   "planned_frozen_reconstruction_reserved_gpu_seconds": 0,
   "active_frozen_reconstruction_reserved_gpu_seconds": 0,
-  "active_job_id": "job-r8g7o2hckok7",
+  "active_job_id": null,
   "cpu_reconstruction_input_cap_gib": 16,
   "gpu_reconstruction_output_cap_mib": 128,
   "physical_export_output_cap_mib": 128,
@@ -178,24 +184,7 @@
   "approval": "User replied raise up to 100 hrs to cumulative-cap request call_9991d141f4c9474cb3b968465bf752a5 on8November2026; cumulative total, no historical reset.",
   "planned_student_precision_gpu_seconds": 0,
   "active_student_precision_gpu_seconds": 0,
-  "active_jobs": [
-    {
-      "job_id": "job-r8g7o2hckok7",
-      "name": "mwj_1108_robotwin_source_ppodev2",
-      "reserve_gpu_seconds": 9600,
-      "source_commit": "93ee99f77febe7171d9f48887d369c20896c486a",
-      "created_detail": "2026-11-08T05:55:11+08:00",
-      "creation_to_release_watchdog_seconds": 1200
-    },
-    {
-      "job_id": "job-4a135ssarsjs",
-      "name": "mwj_1108_robotwin_source_grpodev1",
-      "reserve_gpu_seconds": 9600,
-      "source_commit": "93ee99f77febe7171d9f48887d369c20896c486a",
-      "created_detail": "2026-11-08T05:59:50+08:00",
-      "creation_to_release_watchdog_seconds": 1200
-    }
-  ],
+  "active_jobs": [],
   "prior_approved_cap_gpu_seconds": 219600,
   "planned_camera_probe_reserved_gpu_seconds": 0,
   "active_camera_probe_reserved_gpu_seconds": 0,
@@ -211,7 +200,7 @@
   "active_behavior_ppo_reserved_gpu_seconds": 0,
   "planned_behavior_grpo_reserved_gpu_seconds": 0,
   "active_behavior_grpo_reserved_gpu_seconds": 0,
-  "planned_source_dev_reserved_gpu_seconds": 0,
-  "planned_source_confirmation_reserved_gpu_seconds": 9600,
-  "active_source_dev_reserved_gpu_seconds": 19200
+  "planned_source_dev_reserved_gpu_seconds": 24000,
+  "planned_source_confirmation_reserved_gpu_seconds": 12000,
+  "active_source_dev_reserved_gpu_seconds": 0
 }

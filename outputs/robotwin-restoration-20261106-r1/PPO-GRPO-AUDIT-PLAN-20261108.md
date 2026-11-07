@@ -71,11 +71,18 @@ Native likelihood partition is now a numerical condition. Raising memory usage
 by changing it is inadmissible without exact joint-likelihood qualification;
 measure useful end-to-end throughput instead of filling VRAM for its own sake.
 
-At B32 qualification closeout, closed usage is241,294 GPU-seconds (67.026h).
-The next PPO job reserves43,200 GPU-seconds including startup/cleanup; worst total
-79.026h. Adding a full12h GRPO reservation gives91.026h worst total,
-leaving8.974h unreserved for evaluation. Reconcile each release before reusing
-its unused reservation.
+Both corrected two-collection training controls now passed independent cold checkpoint
+and numerical readback. The first full DEV readouts completed64 SFT cases each,
+then failed the optimizer representation guard before evaluating checkpoint2.
+Actual saved failing layouts proved only empty unowned entries were added by
+native RLinf offload/onload; every captured owned Adam descriptor and group stayed
+exact. Twelve Linux CPU core tests and the actual native functions qualify the
+narrow exception. All8 GPU guards and complete checkpoint2 readouts remain required.
+
+Closed usage is319,430 GPU-seconds (88.731h). Fresh PPO DEV03 and GRPO DEV02
+reserve12,000 GPU-seconds each; one selected disjoint confirmation reserves12,000.
+Worst total355,430 GPU-seconds (98.731h), leaving4,570 GPU-seconds unreserved.
+Worker limit1,350s, scheduler24min, creation-to-release watchdog1,500s perjob.
 Each new job has a fresh output identity and immutable reviewed main commit.
 Check advancing progress after launch and monitor at most20 minutes apart;
 inspect the exact owned job and preserve its latest complete checkpoint before
