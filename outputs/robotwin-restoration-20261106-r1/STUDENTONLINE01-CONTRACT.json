@@ -16,7 +16,10 @@
   "maximum_output_gib": 2,
   "local_staging_cap_gib": 16,
   "source_task": "place_phone_stand",
-  "source_dev_cases": null,
+  "source_dev_cases": [
+    100100002,
+    100100003
+  ],
   "case_selection": "First2 precommitted readout01 sourceDEV cases, same actual reset seeds and episode/chunk noise addresses across all4 arms",
   "arms": [
     "frozen_base",
@@ -35,8 +38,21 @@
   "episode_horizon": 192,
   "flow_steps": 5,
   "motor_noise_seed": 20261107,
-  "policy_exports": {},
-  "fit_readback_sha256": null,
+  "policy_exports": {
+    "ic_iql": {
+      "output_dir": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/decodedfit02/ic_iql",
+      "sha256": "e4bd5df1b7745e47ecd6a69496c5234c43ca8c1690086cfaf81481a1cca37aa6"
+    },
+    "dit": {
+      "output_dir": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/decodedfit02-dit-resume01",
+      "sha256": "ad6c32c6a4bf6760f4cf5f8fe95d05375a490e9ee1cb6417d2b805b80b012287"
+    },
+    "static_behavior_cloning": {
+      "output_dir": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/decodedfit02/static_behavior_cloning",
+      "sha256": "7b8038eaa7107c3e9c30e125136934ea67820321b564e54296a88470f6171f6e"
+    }
+  },
+  "fit_readback_sha256": "b83142ba9f311a5af749b337e607e520867fbf0344446c089b2aa3286799b751",
   "cpu_preflight_passed": false,
   "cpu_preflight_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpustudentonline01/RESULT.json",
   "cpu_preflight_sha256": null,
@@ -55,10 +71,18 @@
     "src/fluffy_bassoon/rl/robotwin_execution.py": "19e00b1cd9859f899a55866200f20620e8aeb62c4c2498316c7cc4b81f39a92b",
     "src/fluffy_bassoon/rl/robotwin_noise.py": "b26a220a1190a8ad6b653e49f4a3c8f2c6a66b057471056bf148e8dd8d68b7ea"
   },
-  "entry_sha256": "e7742e4a4ca4a4713f0750950586956eb195673dc1c7a7d5ad2e9fa38c0ff7bb",
+  "entry_sha256": "9a2ffafc44767b78bca3704cf840af53872535d4a0ac51d55405fed3b5f390ca",
   "launcher_sha256": "9c1eba8fba2f1d21a3d357917ea7e74b9d023f95055aaa9ba93c74858440bdfc",
   "optimizer_updates": 0,
   "test_data_allowed": false,
   "independent_cpu_replay_required": true,
-  "learning_improvement_claim": false
+  "learning_improvement_claim": false,
+  "cpu_replay_tolerances": {
+    "command_absolute": 1e-05,
+    "command_relative_to_radius": 0.001,
+    "state_absolute": 0.0001,
+    "state_relative": 0.0001
+  },
+  "cpu_replay_tolerance_rationale": "Predeclared CPU/GPU float32 tolerances: both action-unit and residual-envelope bounds; no cross-native-batch equivalence claim",
+  "independent_cpu_replay_entry_sha256": "c9fd6c0431f28632983b555698b16c642ee9ea64abd320b1e733130b0ec59309"
 }

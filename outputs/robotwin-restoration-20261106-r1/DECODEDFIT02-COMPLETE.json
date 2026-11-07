@@ -1,0 +1,66 @@
+{
+  "status": "complete_offline_fits_and_independent_cold_readback",
+  "checked_at_shanghai": "2026-11-07T17:25:21+08:00",
+  "fit_source": "1d8084bd91af44615c1ba9db73d8aa7a1f61e7f2",
+  "dit_resume_source": "6c2b0059e745505129d1ae3c51b1cbb1401fcbbb",
+  "readback_source": "3b937ed37a63eb98282d38e46bedfdcf9165a29c",
+  "readback_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/decodedfit02-readback01/RESULT.json",
+  "readback_sha256": "b83142ba9f311a5af749b337e607e520867fbf0344446c089b2aa3286799b751",
+  "readback_seconds": 66.9193508317694,
+  "updates": {
+    "ic_iql": {
+      "value": 1000,
+      "actor": 1000
+    },
+    "dit": {
+      "value": 1000,
+      "actor": 1000
+    },
+    "static_behavior_cloning": {
+      "value": 0,
+      "actor": 1000
+    }
+  },
+  "policy_exports": {
+    "ic_iql": {
+      "output_dir": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/decodedfit02/ic_iql",
+      "sha256": "e4bd5df1b7745e47ecd6a69496c5234c43ca8c1690086cfaf81481a1cca37aa6"
+    },
+    "dit": {
+      "output_dir": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/decodedfit02-dit-resume01",
+      "sha256": "ad6c32c6a4bf6760f4cf5f8fe95d05375a490e9ee1cb6417d2b805b80b012287"
+    },
+    "static_behavior_cloning": {
+      "output_dir": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/decodedfit02/static_behavior_cloning",
+      "sha256": "7b8038eaa7107c3e9c30e125136934ea67820321b564e54296a88470f6171f6e"
+    }
+  },
+  "full_learner_optimizer_sampler_rng_restored": true,
+  "frozen_exports_exact": true,
+  "actor_window_streams_match": true,
+  "actor_valid_positions_each": 203678,
+  "dit_original_exit": "OSError Errno16 EBUSY status metadata replacement at value953",
+  "dit_restored": {
+    "value": 950,
+    "actor": 0
+  },
+  "recorded_dit_updates951_through953_exact": true,
+  "all_fit_and_reader_processes_terminal": true,
+  "gpu_seconds": 0,
+  "test_tensor_loaded": false,
+  "teacher_forced_dev_decisions_each": 744,
+  "normalized_residual_mae_rounded": {
+    "zero_residual": 0.017616892,
+    "ic_iql": 0.023920638,
+    "dit": 0.023792786,
+    "static_behavior_cloning": 0.024213016
+  },
+  "diagnostic": "All fitted deterministic residual means have higher DEV target MAE than zero correction. NLL training differs from MAE; this is not a robot success or adaptation estimate.",
+  "robot_success_or_online_adaptation_qualified": false,
+  "full_source_campaign_complete": false,
+  "proofs": [
+    "decodedfit02-terminal-status.png",
+    "decodedfit02-readback-results.png",
+    "studentonline01-policy-bindings.png"
+  ]
+}

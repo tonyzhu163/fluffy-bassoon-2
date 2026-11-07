@@ -74,6 +74,7 @@ def main(args):
     norm = MOTOR/'assets/pi0.5_clean_randomize_joint_training/norm_stats.json'
     assert sha(MOTOR/'model.safetensors')==plan['model_sha256'] and sha(norm)==plan['norm_stats_sha256']
     report = dict(status='starting',source_commit=os.environ['TASK_SOURCE'],cases=cases,
+        contract_sha256=sha(ROOT/'STUDENTONLINE01-CONTRACT.json'),
         source_native_batch=64,deployment_native_batch=2,cross_batch_equivalence_claim=False,
         optimizer_updates=0,test_tensor_loaded=False,learning_improvement_claim=False,
         arms={},traces=[],started_unix=time.time())
