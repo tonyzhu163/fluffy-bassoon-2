@@ -1,5 +1,5 @@
 {
-  "status": "approved_pending_single_allocation_capacity",
+  "status": "admitted",
   "purpose": "Two fresh native PPO collect/update cycles and full combined optimized lifecycle qualification; no convergence claim from two cycles.",
   "budget_extension_approved": true,
   "approved_cap_gpu_seconds": 219600,
@@ -75,25 +75,33 @@
     "src/fluffy_bassoon/meta_rl/rlinf_native_ppo.py": "264e724900187b7c7df62869fb6bb859b6c0e050e2093121f81548c29b8f4bbc",
     "src/fluffy_bassoon/meta_rl/rlinf_openpi_replay.py": "1dc9c9c91e27ccbd2d09ae7cb0203dd0a5c3504e09ab1726b0fc992374a034bb",
     "outputs/robotwin-sidney-matched-baselines-20261106-r1/case_schedule.py": "2128ee24b0ff8b12da057e4742cf2ce3a842a0d4c5232e21644e3bf47ab975f8",
-    "configs/native_ppo/motus_phone_two.yaml": "2fc4453732d7a65bad98e05b59aba90935f93d58c4d87a878fe163949ab3b134"
+    "configs/native_ppo/motus_phone_two.yaml": "2fc4453732d7a65bad98e05b59aba90935f93d58c4d87a878fe163949ab3b134",
+    "src/fluffy_bassoon/rl/robotwin_batch.py": "9c4b03dbe6c2aae7595712f89a0e32243e0746371023b247d03254a669decfd7",
+    "patches/robotwin-dca9ec68-execution-accounting.patch": "8f5436a8197c73b470eb8cedec7e9a2f2722357c19f33e863721cec97cf7bbd2"
   },
   "linux_cpu_qualification_pending": false,
   "timing_basis": "Original four-round collection hit55min job limit with startup/DEV/checkpoint overhead; actual15-update learner603s; one DEV panel about4min; checkpoint0 archive/stageback95s.150min worker limit is a bounded two-iteration attempt, not an asserted optimized throughput.",
   "live_queue_storage_device_checks_required": true,
   "cpu_qualification": "CPUMOTUSOPTIMIZED01.json",
   "qualified_runtime_source_commit": "77d585dec7b794e265c620ca6b7c7f9d2b493a4d",
-  "resource_observation_shanghai": "2026-11-07T17:56:00+08:00",
-  "queue_available_gpus": 4,
-  "queue_available_cpu": 1608,
-  "queue_available_memory_gb": 26904,
+  "resource_observation_shanghai": "2026-11-07T18:56:59.260931+08:00",
+  "queue_available_gpus": 47,
+  "queue_available_cpu": 2460,
+  "queue_available_memory_gb": 34996,
   "queue_accelerator_type_observed": "RPBZZZ6",
   "budget_proposal": "MOTUSOPTIMIZED01-PROPOSAL.md",
   "approval_received_shanghai": "2026-11-07T17:52:01+08:00",
   "approval_text": "Approve61GPU-hours total",
   "approval_reference": "call_724084a3b2ff4bbf8c078ed55e12a1df",
   "free_gpu_distribution": [
+    8,
     2,
-    2
+    5
   ],
-  "single_allocation_placeable": false
+  "single_allocation_placeable": true,
+  "original14_native_source_bindings_unchanged": true,
+  "controller_generation_helper_ast_unchanged_from_qualification": true,
+  "accounting_patch_bytes_unchanged_from_qualification": true,
+  "additional_student_precision_reserved_gpu_seconds": 240,
+  "all_worst_including_other_reservations_gpu_seconds": 219451
 }

@@ -1,6 +1,6 @@
 # Next RoboTwin online PPO run
 
-User approved **61 GPU-hours total** on7November2026. Linux CPU qualification is complete; fresh resource admission and launch remain pending.
+User approved **61 GPU-hours total** on7November2026. Linux CPU qualification is complete; fresh single-allocation capacity is now available and the run is admitted; scheduler submission is next.
 
 Approved cumulative cap: **61 GPU-hours** (219600GPU-s). After the completed
 student runtime check, closed conservative usage is179611GPU-s (49.8919h).
@@ -68,3 +68,9 @@ new output identity, within the same approved cumulative cap. Successful
 training still requires an independent new-process restore and a controlled
 learning assessment; do not call a completed launcher a positive PPO result.
 No held-out task is trained. The complete project plan remains active.
+
+A separate240GPU-s numerical student qualification is reserved alongside this run.
+Worst-case combined usage is219451GPU-s,149GPU-s below the approved cap.
+The original14 native source bindings, entry and launcher remain unchanged.
+The controller-generation helper and accounting patch have also been pinned;
+the helper AST and patch bytes match the qualified version.
