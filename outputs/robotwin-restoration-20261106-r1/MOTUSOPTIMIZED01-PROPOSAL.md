@@ -1,11 +1,11 @@
 # Next RoboTwin online PPO run
 
-Prepared and Linux-CPU-qualified; **not admitted or launched**.
+User approved **61 GPU-hours total** on7November2026. Linux CPU qualification is complete; fresh resource admission and launch remain pending.
 
-Request: raise this task's cumulative GPU cap from **50 to 61 GPU-hours**.
-Closed conservative usage is179306GPU-s (49.8072h). This allocation reserves
-at most39600GPU-s (11h), giving a worst-case cumulative218906GPU-s
-(60.8072h), below the proposed219600GPU-s cap. Startup, cleanup and failed
+Approved cumulative cap: **61 GPU-hours** (219600GPU-s). After the completed
+student runtime check, closed conservative usage is179611GPU-s (49.8919h).
+This allocation reserves at most39600GPU-s (11h), giving a worst-case
+cumulative219211GPU-s (60.8919h),389GPU-s below the approved cap. Startup, cleanup and failed
 attempts count; scheduler fault retries remain disabled.
 
 The goal of this allocation is to verify the optimized full online cycle and
