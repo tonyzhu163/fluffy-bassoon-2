@@ -690,3 +690,20 @@ Motus or simulator is loaded. Corpus export/admission, complete fitting,
 checkpoint/online integration and real student evaluation remain pending.
 A one-version corpus is still inadmissible for chronological AD, and DPT is
 rejected until qualified same-query labels exist.
+
+
+LIFECYCLE01 at61e099b3 now qualifies reusable native offload at B4 in the
+actual shared train/eval setup hook. Four default/deferred x train/eval
+profiles each ran two collections of two episodes:64 episode replays on4
+unique retained cases,96 chunks and12 native offloads. Offload joins old
+executor threads and synchronizes allocated CUDA before native cache close,
+then creates an executor that subsequent resets/replays can use. All4 fresh
+processes exited0 with final executors closed. Evaluation matched all5 retained
+native output parts; default/deferred commands, outputs and measured physical
+execution matched within both modes. Independent CPU readback at9bb0437b
+verified126 JSON files,6 original traces, GPU/renderer binding and12720 charged
+conservative actions. Sampled minfree was94358208512 bytes; no model or SGD
+ran. Released12:53:16 Nov7, charged966GPU-s; cumulative178782/180000 leaves1218
+with none reserved. This qualifies opt-in repeated B4 offload, not the full
+four-round G8 collector,64-scene co-resident memory or long reset stress.
+See LIFECYCLE01-COMPLETE.json and LIFECYCLE01-READBACK01.json.

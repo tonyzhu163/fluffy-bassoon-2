@@ -1044,3 +1044,18 @@ final shutdown only, not64-scene co-resident training, recurrent offload,
 long reset stress, matched Motus GRPO or student adaptation.
 [Verified result and limits](../outputs/robotwin-restoration-20261106-r1/SCENESETUP05-COMPLETE.json),
 [independent readback](../outputs/robotwin-restoration-20261106-r1/SCENESETUP05-READBACK01.json).
+
+
+Reusable native RoboTwin offload now passes an opt-in B4 component check in
+both shared training and evaluation modes. Four default/deferred profiles
+completed64 episode replays on4 retained cases,96 chunks and12 native offloads.
+Every old executor joined before native cache destruction, each replacement
+served later resets/replays, and all4 child processes exited cleanly. Evaluation
+matched all5 retained native output parts; default/deferred full commands,
+outputs and measured execution matched in both modes. Independent CPU
+readback verified126 JSON files and6 original traces; renderer binding and
+sampled memory reserve passed. There were no model calls or SGD. This qualifies
+reusable B4 offload; full G8/four-round collection,64-scene actor/rollout
+coexistence and long uninterrupted reset stress remain unqualified.
+[Verified result](../outputs/robotwin-restoration-20261106-r1/LIFECYCLE01-COMPLETE.json),
+[independent readback](../outputs/robotwin-restoration-20261106-r1/LIFECYCLE01-READBACK01.json).
