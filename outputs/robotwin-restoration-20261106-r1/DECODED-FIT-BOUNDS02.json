@@ -1,0 +1,52 @@
+{
+  "status": "qualified_on_source_train_dev",
+  "source_commit": "d226ebf778eef2de5957e1cd95efe9877d277544",
+  "process_pid": 3565697,
+  "process_confirmed_gone": true,
+  "result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/decoded-fit-bounds02/RESULT.json",
+  "result_sha256": "041c36769afc548ab5e149edbb28194afae5a0b928a4d7766a9caf492b60f08c",
+  "result_sha256_asserted_on_linux": true,
+  "statistics": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/decoded-fit-bounds02/STATISTICS.pt.gz",
+  "statistics_sha256": "9c3f8c2a3c9b7163959da97feaf07a4c40e06bfe6a83e22186aa6c1e65618a0f",
+  "precommitted_global_margin_grid": [
+    1.5,
+    2,
+    4
+  ],
+  "source_dev_candidates": [
+    {
+      "margin": 1.5,
+      "coordinates_outside": 2
+    },
+    {
+      "margin": 2,
+      "coordinates_outside": 0
+    }
+  ],
+  "selected_global_margin": 2,
+  "global_margin_selected_on_source_dev": true,
+  "joint_envelopes_fitted_on_train_only": true,
+  "feature_normalization_unchanged": true,
+  "radius_rule": "max(2*TRAIN max absolute decoded residual over rows and horizon,0.001) per joint, broadcast H32",
+  "coverage": {
+    "TRAIN": {
+      "physical_decisions": 4455,
+      "coordinates_outside": 0
+    },
+    "DEV": {
+      "physical_decisions": 744,
+      "coordinates_outside": 0
+    }
+  },
+  "inverse_tanh_and_density_jacobian_finite": true,
+  "independent_numpy_torch_bound_reference_exact": true,
+  "original_data_and_statistics_unchanged": true,
+  "test_tensor_loaded_for_bound_selection": false,
+  "test_bound_coverage_not_rechecked_for_selected_profile": true,
+  "gpu_seconds": 0,
+  "model_calls": 0,
+  "optimizer_updates": 0,
+  "simulator_actions": 0,
+  "complete_ad_learning_histories": false,
+  "student_fit_or_deployment_qualified": false
+}

@@ -11,7 +11,6 @@
   "independent_audit_confirmed_gone": true,
   "independent_audit_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/decodedhistory01-readback01/RESULT.json",
   "independent_audit_sha256": "26281185165fc0c0e2f988f8b3477c9a21b52c8ffdcff7cda6b5eb72d26b934a",
-  "independent_audit_hash_assertion_pending": true,
   "complete_trials": 32,
   "complete_episodes": 1024,
   "physical_decisions": 5958,
@@ -42,7 +41,7 @@
   "episode_order_and_returns_match_preflight": true,
   "feature_statistics_match_float64_train_reference": true,
   "original_radii_match_independent_torch_reference": true,
-  "fitting_radius_qualification_pending": true,
+  "fitting_radius_qualification_pending": false,
   "available_teacher_policy_versions": [
     0
   ],
@@ -54,5 +53,16 @@
   "model_calls": 0,
   "optimizer_updates": 0,
   "simulator_actions": 0,
-  "next_action": "Qualify separately locked horizon-shared per-joint TRAIN-only radii on TRAIN/DEV without loading TEST; original dataset/statistics stay immutable."
+  "next_action": "Implement decoded-student trainer, complete optimizer/sampler/RNG recovery and frozen online adapter using this shared bound profile. One teacher policy version is not chronological AD improvement data; DPT needs qualified query labels.",
+  "independent_audit_sha256_asserted_on_linux": true,
+  "fitting_radius_profile": "DECODED-FIT-BOUNDS02.json",
+  "global_fitting_margin_selected_on_source_dev": 2,
+  "common_fitting_statistics_sha256": "9c3f8c2a3c9b7163959da97feaf07a4c40e06bfe6a83e22186aa6c1e65618a0f",
+  "dataset_partition_and_original_statistics_bytes": 79857128,
+  "data_integrity_qualified": true,
+  "eligible_data_uses": [
+    "dit",
+    "ic_iql",
+    "static_behavior_cloning"
+  ]
 }

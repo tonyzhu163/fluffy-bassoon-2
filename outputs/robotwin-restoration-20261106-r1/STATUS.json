@@ -1,6 +1,6 @@
 {
   "owner_chat": "01a1b024-f4ac-7181-af87-bac9fbee72bb",
-  "status": "frozen_reconstruction_released_cpu_readback_running",
+  "status": "verified_physical_history_handoff_ready",
   "new_gpu_jobs_launched": 24,
   "prior_robotwin_cumulative_cap_gpu_hours": 50,
   "prior_cost_and_reservations_must_be_refreshed": false,
@@ -64,7 +64,7 @@
   "active_gpu_reservation_seconds": 0,
   "new_gpu_hours_note": "179306GPU-s closed;0 active/reserved;694 remain under180000 cap.",
   "budget_reconciliation": "BUDGET-RECONCILIATION.json",
-  "last_checked_shanghai": "2026-11-07T14:41:42+08:00",
+  "last_checked_shanghai": "2026-11-07T15:08:53+08:00",
   "cumulative_closed_conservative_gpu_seconds": 179306,
   "worst_closed_plus_reserved_gpu_seconds": 179306,
   "execution_qualification": "EXECUTION01-COMPLETE.json",
@@ -115,7 +115,7 @@
   "native_teacher_fourth_attempt": "MOTUSPPO04-CLOSEOUT.json",
   "decoded_history_core_qualification": "CPUTOKENS01.json",
   "deferred_scene_setup_cpu_qualification": "CPUTOKENS02.json",
-  "next_action": "GPU reconstruction96/96 passed/released14:38:23 Shanghai,524GPU-s; all6144 rows/full14D residuals/teacherdecode/native parity/RNG/frozen checks pass. Independent CPU readback PID3559799 at4a45f885 is running; require all hashes/canonical original-noise/full-residual checks before physical-history export. No active GPU.",
+  "next_action": "Verified pilot physical histories now available:32 trials/1024 episodes/5958 decisions,24TRAIN/4DEV/4TEST; original-noise B64 proposals/full14D labels and TRAIN feature statistics independently pass. Source-DEV selects shared margin2 from precommitted grid, allTRAIN/DEV labels finite-density supported; TEST not used for that selection. Next implement/qualify decoded student trainer, optimizer/sampler/RNG recovery and shared frozen online adapter. Matched Motus GRPO, policy1 collection,64-scene combined memory and transfer remain pending.0 activeGPU;694GPU-s remain under50h cap.",
   "native_collection_recovery_audit": "COLLECTION-AUDIT02-COMPLETE.json",
   "planned_learner_recovery_gpu_seconds": 0,
   "native_learner_recovery_contract": "MOTUSREPLAY01-CONTRACT.json",
@@ -158,5 +158,8 @@
   "reconstruction_launch": "RECONSTRUCTION01-LAUNCH.json",
   "reconstruction_progress": "RECONSTRUCTION01-PROGRESS.json",
   "reconstruction_result": "RECONSTRUCTION01-COMPLETE.json",
-  "cpu_reconstruction_readback_pid": 3559799
+  "cpu_reconstruction_readback_pid": null,
+  "reconstruction_cpu_readback": "RECONSTRUCTION01-READBACK01.json",
+  "physical_history_export": "DECODEDHISTORY01-COMPLETE.json",
+  "decoded_fitting_bounds": "DECODED-FIT-BOUNDS02.json"
 }

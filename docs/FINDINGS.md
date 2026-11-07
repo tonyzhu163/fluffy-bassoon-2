@@ -1059,3 +1059,30 @@ reusable B4 offload; full G8/four-round collection,64-scene actor/rollout
 coexistence and long uninterrupted reset stress remain unqualified.
 [Verified result](../outputs/robotwin-restoration-20261106-r1/LIFECYCLE01-COMPLETE.json),
 [independent readback](../outputs/robotwin-restoration-20261106-r1/LIFECYCLE01-READBACK01.json).
+
+The retained Motus policy0 collection now has independently verified decoded
+source labels on place_phone_stand. All6144 behavior rows bind bijectively to
+four canonical actor files using their original denoising chains; actor storage
+ranks differ from rollout ranks. Frozen Motus reconstruction preserves actual
+native B64/row order and original Gaussians. All96 batches passed exact native
+adapter/teacher decoding, preprocessing, RNG and frozen-weight checks. Fresh
+CPU readback verified102 files, all original-noise bindings and full32x14
+residuals, including undelivered tails.
+
+The physical export contains32 grouped trials and1024 complete episodes:
+5958 positive-duration decisions and186 repeated post-terminal no-ops retained
+only in the audit. Raw physical returns are0 for894 episodes and1 for130.
+TRAIN/DEV/TEST contain24/4/4 trials and768/128/128 episodes; all were teacher
+TRAIN cases, so these student partitions do not establish teacher-unseen
+generalization. A fresh dataset audit matched every public feature, base and
+full issued label to frozen reconstruction and checked TRAIN statistics against
+an independent float64 reference. The common candidate fitting profile retains
+TRAIN-derived joint envelopes/feature normalization and selects global margin2
+on source DEV from a precommitted grid; TEST tensors did not participate.
+Only policy version0 exists: this enables offline DIT/IQL/static-imitation
+investigations, not chronological AD improvement histories, qualified DPT labels,
+a trained student or an adaptation claim. Full collector memory, matched Motus
+GRPO and frozen online student control remain separate qualifications.
+[Reconstruction and independent readback](../outputs/robotwin-restoration-20261106-r1/RECONSTRUCTION01-READBACK01.json),
+[verified physical histories](../outputs/robotwin-restoration-20261106-r1/DECODEDHISTORY01-COMPLETE.json),
+[common fitting profile and selection](../outputs/robotwin-restoration-20261106-r1/DECODED-FIT-BOUNDS02.json).
