@@ -1,0 +1,40 @@
+{
+  "intent": "student_fitting",
+  "model": {
+    "width": 512,
+    "layers": 6,
+    "heads": 8,
+    "context_length": 2048,
+    "initial_std": 0.5
+  },
+  "mode": "full",
+  "fitting": {
+    "seed": 0,
+    "batch_size": 8,
+    "max_episodes": 9,
+    "value_updates": 1000,
+    "actor_updates": 1000,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0
+  },
+  "execution_batch_size": 8,
+  "retained_update_boundaries": [
+    1000
+  ],
+  "checkpoint_interval": 50,
+  "dataset": "decodedhistory01",
+  "statistics": "decoded-fit-bounds02",
+  "test_tensor_load_allowed": false,
+  "purpose": "Fixed-budget one-policy source pilot: DIT/IQL and context-free control, fixed final checkpoint; robot/adaptation effects unproven",
+  "methods": [
+    "ic_iql",
+    "dit",
+    "static_behavior_cloning"
+  ],
+  "new_gpu_seconds": 0,
+  "maximum_new_output_gib": 12,
+  "fit_data_admitted_for_investigation": true,
+  "full_scientific_source_campaign_admitted": false,
+  "maximum_cpu_seconds": 7200,
+  "qualification": "CPUDECODEDFIT01.json"
+}

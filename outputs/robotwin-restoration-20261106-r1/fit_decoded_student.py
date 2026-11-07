@@ -83,7 +83,9 @@ def physical_data():
         motor_sha256=original['motor_sha256'],norm_stats_sha256=original['norm_stats_sha256'],
         native_batch=64,feature_contract=original['feature_contract'],residual_contract=original['residual_contract'],
         bellman_clock=original['bellman_clock'],global_margin_selected_on_dev=2,
-        student_dev_was_teacher_train=True,test_tensor_loaded=False,full_source_campaign_admitted=False)
+        student_dev_was_teacher_train=True,test_tensor_loaded=False,full_source_campaign_admitted=False,
+        student_implementation_sha256={name:sha(ROOT.parents[1]/'src/fluffy_bassoon/meta_rl'/name)
+            for name in ('causal_decoder.py','chunk_history.py','chunk_policy.py','chunk_value.py','chunk_training.py')})
     return layout,statistics,data,contract
 
 
