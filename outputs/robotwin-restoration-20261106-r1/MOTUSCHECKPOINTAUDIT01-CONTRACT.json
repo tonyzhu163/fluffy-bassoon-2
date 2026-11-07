@@ -1,10 +1,10 @@
 {
-  "status": "prepared_pending_Linux_CPU_preflight",
+  "status": "admitted",
   "purpose": "Measure unowned empty optimizer mapping after restored checkpoint1 save and reload; no SGD/no simulator; candidate normalization diagnostic only.",
-  "closed_conservative_gpu_seconds": 233110,
-  "other_active_reserved_gpu_seconds": 7680,
+  "closed_conservative_gpu_seconds": 235566,
+  "other_active_reserved_gpu_seconds": 0,
   "reserved_gpu_seconds": 5760,
-  "all_worst_gpu_seconds": 246550,
+  "all_worst_gpu_seconds": 241326,
   "approved_cap_gpu_seconds": 360000,
   "gpus": 8,
   "cpu_cores": 64,
@@ -43,7 +43,7 @@
   },
   "entry_sha256": "b9e9e079868f41acd26a0f6a5018f866a8f8ed90c06542954beebec017482a0d",
   "launcher_sha256": "2eb5c1080d8a4cb605a9c4713e6682230f9d884957af4b8bccd3fcd9930d556a",
-  "cpu_preflight_passed": false,
+  "cpu_preflight_passed": true,
   "optimizer_updates": 0,
   "simulator_actions": 0,
   "root_cause_established": false,
@@ -51,5 +51,8 @@
   "checkpoint1": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motusoptimized03/checkpoints/global_step_1",
   "checkpoint1_manifest_sha256": "dc81e593f08fd630dd4206761229f9f1793338e7536c310b941f2cfa9d97ad2c",
   "original_resolved_config": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motusoptimized03/state/resolved-native-config.json",
-  "production_optimizer_rule_changed": false
+  "production_optimizer_rule_changed": false,
+  "cpu_preflight_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpumotuscheckpointaudit01/RESULT.json",
+  "cpu_preflight_sha256": "f8b8cb107b40781f7eb5bae1f564b32e94b1c89769e992fbcac56523b6e3a659",
+  "cpu_preflight_source_commit": "aede161de2bae9c47078bfa4b417857496a0347e"
 }

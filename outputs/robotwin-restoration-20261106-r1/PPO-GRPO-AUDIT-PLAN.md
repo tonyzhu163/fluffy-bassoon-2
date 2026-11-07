@@ -19,20 +19,19 @@ retained. Only launch a concrete, qualified contract within the current ledger.
    validation while capturing checkpoint2. No complete checkpoint2 or DEV2.
    Closed16696GPU-s. Measure the rejected state representation, qualify a
    strict checkpoint fix and retain checkpoint1/new collection before retrying.
-4. Audit evaluation noise and likelihood bookkeeping. Training-loop DEV uses
-   fixed scenes and restores training RNG after evaluation; this alone does
-   not guarantee identical initial action noise across policy checkpoints.
-   Verify actual saved draws. Likewise, recomputation changes the stored old
-   logprob reference to the actor execution partition; quantify the original
-   rollout-versus-actor joint ratio, not just mean coordinate logprob gap.
-   Do not alter active contracts while investigating these limitations.
-   Complete the read-only8GPU joint-likelihood diagnostic and independent
-   CPU fixture reduction before admitting GRPO. Reserve2.133GPUh, zeroSGD.
-5. Run matched group8 native GRPO from the same SFT, scene manifest and action
-   budget. Two fresh collections, five epochs, global2048, micro256, native
-   B32/B2, H32/H192, noise.3, no critic or added reward. Preserve native masks
-   and reduction. Filter stays false to match the recorded paired port; this
-   is an explicit recipe choice. Reserve at most10.667GPUh including cleanup.
+4. Likelihood audit: completed8rank unchanged-policy replay and independent CPU
+   reduction. B32 exactly reproduces all5958 valid original rollout decisions;
+   B256 yields ratios0.520–1.883,11.279% outside[0.8,1.2],5.572% clipped surrogate
+   beforeSGD. Closed2456GPU-s. This establishes batch-partition probability
+   drift, not a causal learning-gain explanation. Stop the B256 learning lineage.
+   Training-loop DEV also needs explicit common noise across checkpoints.
+5. Qualify native checkpoint1 save/restore withoutSGD, then prepare fresh B32
+   source PPO and native group8 GRPO controls from the same SFT. Use micro32,
+   accumulation8/world8, global2048/fiveepochs, nativeB32/B2,H32/H192,noise.3.
+   Check the original behavior probability before any reference replacement.
+   Keep native masks and reduction; no added reward. The old unlaunched B256
+   GRPO contract is superseded. Profile update time before assigning the new
+   concrete run lengths and reserve; retain4GPUh for paired evaluation.
 6. A separate group1 PPO control restores the released scene-diversity choice,
    preserving native Motus action transforms. The pinned phone training bank
    contains1000 scenes. With1024 episodes, explicitly cycle24 scenes rather
@@ -51,18 +50,17 @@ retained. Only launch a concrete, qualified contract within the current ledger.
    training seed qualifies only that source run; repeat a training seed before
    claiming stability across training seeds or task families.
 
-After the closed resume, likelihood diagnostic and GRPO reservations, worst cumulative
-use is77.553h. These are reservations; reconcile actual closeouts before admission.
-Keep4GPUh for paired evaluation and readback/recovery. Up to16GPUh can fund
-the next qualified group1 PPO or targeted one-factor intervention; the ledger
-and actual measured costs decide its exact length. Do not spend the100h cap
-on an unrestricted parameter sweep. If no arm improves, report the negative
-results and identified limits; never rename execution checks as learning gains.
+Closed usage after the likelihood diagnostic is65.435h. The checkpoint roundtrip
+reserves at most1.6GPUh, worst67.035h. Budget corrected learning controls and
+paired evaluation against the remaining100h cumulative allowance after closeouts.
+Do not spend the cap on an unrestricted parameter sweep. If no arm improves,
+report the negative results and identified limits; never call execution checks
+learning gains.
 
 Use the RoboCasa-derived shared offload/reset lifecycle, process ownership,
 batched motor path, bounded I/O, explicit GPU/render binding, local caches and
-complete checkpoints in every arm. Micro256 is the fastest/largest safe tested
-actor partition;512 failed the reserve. Preserve global batch/loss/schedule,
+complete checkpoints in every arm. Micro256 was memory-qualified but fails the actual behavior-likelihood check;
+use micro32 with accumulation.512 failed the memory reserve. Preserve global batch/loss/schedule,
 and qualify native batch effects instead of treating higher VRAM occupancy as
 a learning objective. Monitor owned allocations every20min, verify progress
 after launch, and reconcile creation-to-release GPU cost on closeout.

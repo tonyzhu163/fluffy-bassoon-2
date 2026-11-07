@@ -105,3 +105,16 @@ the original behavior-policy probabilities at B32 andB256. Native chunk-level
 reduction sums448 coordinates. Existing coordinate-MAE and zero-ratio checks
 against a replaced actor reference are insufficient. Hold the matched Motus
 GRPO launch until this is measured; no numerical root cause is yet established.
+
+The read-only likelihood measurement and independent all8-fixture CPU reduction
+completed. With unchanged checkpoint0, actorB32 reproduces every original
+rollout coordinate exactly on5958 valid decisions. B256 instead produces
+joint ratios0.520–1.883, with11.279% outside[0.8,1.2] and5.572% activating
+the clipped surrogate before SGD. This establishes a causal execution-partition
+effect on likelihoods. The replacement actor reference had hidden it from the
+zero first-replay check. It does not yet establish a cause of the missing
+learning gain. Future source controls must use micro32/accumulation8 at world8
+(or separately qualify a numerically equivalent implementation) while retaining
+global2048/fiveepochs and original behavior-probability checks. See
+MOTUSJOINTAUDIT01-COMPLETE.json. The matched B256 GRPO proposal is superseded
+before launch; prepare a new explicitly named B32 arm after checkpoint repair.

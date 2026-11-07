@@ -133,7 +133,7 @@ loss masks. [Physical audit](../../outputs/robotwin-restoration-20261106-r1/CPUR
 | Exploration harms the initializer or fails to reach useful alternatives | Plausible, unisolated | Compare policy0 Flow-SDE and ODE on the same cases before changing noise. Different TRAIN/DEV scenes cannot isolate this gap. |
 | Critic quality or return/boundary semantics limit learning | Plausible, unisolated | Inspect explained variance, targets, values, advantage spread and episode boundaries; compare critic designs only after a stable control. |
 | SAPIEN camera clipping changes policy observations | Concrete difference from current upstream; no camera-only benefit on the small completed panel | Independent315-file readback passed: near0.1/H192:2/8; near0.01/H192:2/8; near0.1/H384:3/8; near0.01/H384:2/8. Preserve the active continuation's protocol; this exploratory panel does not establish equivalence. |
-| Numerical changes from larger batches contaminate likelihood ratios | Unresolved; existing diagnostic is insufficient | Measure the original rollout-versus-unchanged-actor joint ratio before further training. The native loss sums448 coordinates; coordinate MAE and a ratio against a recomputed reference do not qualify the original sampling probability. |
+| Numerical changes from larger batches contaminate likelihood ratios | Verified batch effect; contribution to missing learning gain unisolated | B32 exactly matches original behavior likelihoods; B256 puts11.279% of unchanged-policy ratios outside the clip interval. Use B32/accumulation8 and qualify a corrected learning control. |
 
 Our native-batch adapter matches its native reference exactly, but native
 batched outputs differ from singleton outputs. The diagnosis did not isolate
@@ -145,11 +145,15 @@ conditions. [Batch evidence](../../outputs/robotwin-restoration-20261106-r1/BATC
 The local replay hook replaces stored rollout log probabilities with an actor
 recomputation after shuffling. Its logged gap is mean absolute coordinate error.
 Pinned RLinf's chunk-level loss instead sums H32 times14 action coordinates.
-Consequently, the zero first-update ratio against the replacement reference
-does not establish a unit ratio against the actual behavior policy. A read-only
-checkpoint0 replay at actor batches32 and256 measures this before the matched
-Motus GRPO launch. The size and consequence of this difference remain unmeasured;
-it is not yet an established explanation for the lack of improvement.
+The completed read-only checkpoint0 measurement, independently reduced on CPU,
+finds exact original behavior probabilities at B32 on all5958 valid decisions.
+At B256, unchanged-policy joint ratios range0.520–1.883;11.279% lie outside
+[0.8,1.2] and5.572% activate the clipped surrogate before SGD. The replacement
+actor reference hid this discrepancy from the zero first-replay check.
+This establishes a numerical execution-partition problem; its contribution to
+missing learning gains still requires a corrected learning control. Use B32
+with gradient accumulation while preserving global2048 and five epochs.
+[Likelihood measurement](../../outputs/robotwin-restoration-20261106-r1/MOTUSJOINTAUDIT01-COMPLETE.json).
 
 Training-loop DEV snapshots and restores the current rollout RNG. Fixed scenes
 therefore preserve the training stream but do not by themselves impose common

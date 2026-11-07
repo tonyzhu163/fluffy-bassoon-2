@@ -1188,3 +1188,15 @@ and render binding passed, and all owned workers closed. These exploratory
 counts do not establish a camera fix, learning gain or a broadly preferred
 horizon. The unchanged checkpoint continuation retains its original protocol.
 [Paired probe and limits](../outputs/robotwin-restoration-20261106-r1/MOTUSCAMERA01-COMPLETE.json).
+
+A read-only Motus checkpoint0 replay isolates a likelihood error caused by actor
+execution batch size. On all5958 valid decisions, actorB32 reproduces the original
+B32 rollout log probabilities exactly. At actorB256, unchanged-policy chunk ratios
+range0.520–1.883;11.279% lie outside PPO's[0.8,1.2] clip interval and5.572% activate
+the clipped surrogate before SGD. All8 GPU fixtures and native summaries passed
+independent CPU reduction. Replacing the old probability with an actor reference
+hid this behavior-policy discrepancy from the first-replay zero-gap check.
+Future controls use B32 with accumulation8/world8, preserving global2048/fiveepochs;
+larger batches need numerical qualification. This establishes the batching effect
+on probabilities, not its causal contribution to the missing learning gain.
+[Likelihood audit](../outputs/robotwin-restoration-20261106-r1/MOTUSJOINTAUDIT01-COMPLETE.json).
