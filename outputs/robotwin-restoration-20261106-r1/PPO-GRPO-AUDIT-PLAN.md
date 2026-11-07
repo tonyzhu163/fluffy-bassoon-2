@@ -17,7 +17,7 @@ retained. Only launch a concrete, qualified contract within the current ledger.
    job-soabfzel6r9z restored24workers, collected policy1 data and completed all8
    actor updates, then failed in our empty-unowned optimizer-state signature
    validation while capturing checkpoint2. No complete checkpoint2 or DEV2.
-   Closed16688GPU-s. Measure the rejected state representation, qualify a
+   Closed16696GPU-s. Measure the rejected state representation, qualify a
    strict checkpoint fix and retain checkpoint1/new collection before retrying.
 4. Audit evaluation noise and likelihood bookkeeping. Training-loop DEV uses
    fixed scenes and restores training RNG after evaluation; this alone does
@@ -52,7 +52,7 @@ retained. Only launch a concrete, qualified contract within the current ledger.
    claiming stability across training seeds or task families.
 
 After the closed resume, likelihood diagnostic and GRPO reservations, worst cumulative
-use is77.551h. These are reservations; reconcile actual closeouts before admission.
+use is77.553h. These are reservations; reconcile actual closeouts before admission.
 Keep4GPUh for paired evaluation and readback/recovery. Up to16GPUh can fund
 the next qualified group1 PPO or targeted one-factor intervention; the ledger
 and actual measured costs decide its exact length. Do not spend the100h cap

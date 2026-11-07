@@ -5,8 +5,8 @@ learner, exact checkpoint recovery and a completed collect/update cycle are
 engineering evidence. They are not learning gains. The user requires an
 effective source control before further in-context student work; those later
 experiments now wait. The cumulative cap is100 GPU-hours, explicitly approved
-in the reply to call_9991d141f4c9474cb3b968465bf752a5. Closed use is233102 GPU-seconds=64.751h after the failed continuation;
-126898 remain. No GPU allocation is active; the likelihood audit is in CPU
+in the reply to call_9991d141f4c9474cb3b968465bf752a5. Closed use is233110 GPU-seconds=64.753h after the failed continuation;
+126890 remain. No GPU allocation is active; the likelihood audit is in CPU
 preflight. Historical costs are retained.
 
 Verified endpoints: earlier Sidney base/PPO/GRPO5/16,5/16,2/16; earlier recovered
