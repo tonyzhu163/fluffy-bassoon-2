@@ -16,19 +16,28 @@ class CaseSchedule:
         self.sha256=expected_sha256;self.data=json.loads(raw)
         assert self.data['task']=='place_phone_stand'
         assert self.data['iterations']==2 and self.data['rounds_per_iteration']==4
-        assert self.data['environment_group_size']==8 and len(self.data['groups'])==256
-        assert len({row['scene_seed'] for row in self.data['groups']})==256
+        group=self.data['environment_group_size']
+        assert group in (1,8) and len(self.data['groups'])==2048//group
+        assert all(row['replicas']==group for row in self.data['groups'])
+        if group==8:
+            assert len({row['scene_seed'] for row in self.data['groups']})==256
+        else:
+            for iteration in (0,1):
+                rows=[r for r in self.data['groups'] if r['policy_iteration']==iteration]
+                assert len(rows)==1024 and len({r['scene_seed'] for r in rows})==1000
 
     def rows(self,ordinal,rank,world=4):
         assert world in (4,8) and 0<=ordinal<8 and 0<=rank<world
         iteration,round_index=divmod(ordinal,4)
-        if world==8:
+        group=self.data['environment_group_size']
+        if world==8 or group==1:
             canonical=sorted((r for r in self.data['groups'] if r['policy_iteration']==iteration
                 and r['round_index']==round_index),key=lambda r:(r['rank'],r['local_group']))
-            assert len(canonical)==32
+            per_rank=256//world//group
+            assert len(canonical)==256//group
             return [dict(r,manifest_rank=r['rank'],manifest_local_group=r['local_group'],
                 rank=rank,local_group=i,execution_world_size=world)
-                for i,r in enumerate(canonical[rank*4:(rank+1)*4])]
+                for i,r in enumerate(canonical[rank*per_rank:(rank+1)*per_rank])]
         rows=sorted((r for r in self.data['groups'] if r['policy_iteration']==iteration
             and r['round_index']==round_index and r['rank']==rank),key=lambda r:r['local_group'])
         assert len(rows)==8 and [r['local_group'] for r in rows]==list(range(8))
@@ -53,13 +62,14 @@ def install(owner,physical,schedule,root):
         ordinal=owner._paired_reset_ordinal
         world=int(owner.cfg.native_pilot.world_size)
         rows=schedule.rows(ordinal,owner._rank,world)
-        seeds=[row['scene_seed'] for row in rows for _ in range(8)]
+        group=schedule.data['environment_group_size']
+        seeds=[row['scene_seed'] for row in rows for _ in range(group)]
         assert len(seeds)==env.num_envs==256//world
         env.reset_state_ids=torch.tensor(seeds,dtype=torch.long,device=env.reset_state_ids.device)
         result=original(env_idx=None,env_seeds=seeds);obs=result[0]
         receipt=[];raw=[]
         for row in rows:
-            start=row['local_group']*8;stop=start+8
+            start=row['local_group']*group;stop=start+group
             subs=env.venv.envs[start:stop]
             seeds_match=all(int(s.env_seed)==int(s.task.ep_num)==row['scene_seed'] for s in subs)
             prompts=list(obs['task_descriptions'][start:stop])
@@ -84,7 +94,7 @@ def install(owner,physical,schedule,root):
                 initial_public_observation_sha256=tensor_hash({k:obs[k][start]
                     for k in ('main_images','wrist_images','states')}),
                 exposed_articulation_sha256=tensor_hash(physics),
-                complete_native_physics_snapshot=False,replica_count=8,passed=passed,
+                complete_native_physics_snapshot=False,replica_count=group,passed=passed,
                 seeds_match=seeds_match,prompt_identity=len(set(prompts))==1,
                 scene_identity=scene_match,articulation_identity=physics_match,
                 public_observation_identity=observation_match,differences=differences))

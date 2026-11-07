@@ -9,17 +9,21 @@ ROOT = Path(__file__).resolve().parent
 PAIRED = ROOT.parent / 'robotwin-sidney-matched-baselines-20261106-r1'
 
 
-def overrides(algorithm, *, optimized_setup=False, behavior_matched=False):
+def overrides(algorithm, *, optimized_setup=False, behavior_matched=False, ppo_group1=False):
     assert algorithm in ('ppo', 'grpo')
     assert type(optimized_setup) is bool
     assert type(behavior_matched) is bool
+    assert type(ppo_group1) is bool
+    assert not ppo_group1 or (algorithm=='ppo' and behavior_matched)
+    group=1 if ppo_group1 else 8
     files = {name: ROOT / name for name in ('MOTUS-TRAIN-CASES.json', 'MOTUS-DEV-CASES.json')}
+    if ppo_group1:files['MOTUS-TRAIN-CASES.json']=ROOT/'MOTUS-PPO-GROUP1-CASES.json'
     result = [f'native_pilot.defer_scene_setup={str(optimized_setup).lower()}',
         f'native_pilot.recycle_scene_executor={str(optimized_setup).lower()}',
         f'algorithm.adv_type={"gae" if algorithm == "ppo" else "grpo"}',
         f'algorithm.loss_type={"actor_critic" if algorithm == "ppo" else "actor"}',
         f'actor.model.add_value_head={str(algorithm == "ppo").lower()}',
-        'algorithm.group_size=8', 'env.train.group_size=8',
+        f'algorithm.group_size={group}', f'env.train.group_size={group}',
         f'actor.micro_batch_size={32 if behavior_matched else 256}',
         '++algorithm.recompute_logprobs=false', '+native_pilot.recompute_openpi_logprobs=true',
         'runner.val_check_interval=1', 'env.train.enable_offload=true',
@@ -59,11 +63,13 @@ def validate(cfg):
     if behavior_matched:
         assert world == 8 and int(cfg.native_pilot.common_dev_noise_seed) == 31000
     micro = 32 if behavior_matched else 256
+    group=int(cfg.algorithm.group_size)
+    assert group in (1,8) and (group==8 or (method=='ppo' and behavior_matched))
     expected = {
         'algorithm.adv_type': 'gae' if method == 'ppo' else 'grpo',
         'algorithm.loss_type': 'actor_critic' if method == 'ppo' else 'actor',
         'actor.model.add_value_head': method == 'ppo',
-        'algorithm.group_size': 8, 'env.train.group_size': 8,
+        'algorithm.group_size': group, 'env.train.group_size': group,
         'algorithm.recompute_logprobs': False, 'native_pilot.recompute_openpi_logprobs': True,
         'runner.val_check_interval': 1, 'algorithm.filter_rewards': False,
         'actor.micro_batch_size': micro, 'actor.model.openpi.action_horizon': 32,
@@ -97,8 +103,14 @@ def validate(cfg):
     assert hashlib.sha256(case_bytes).hexdigest() == cfg.native_pilot.case_manifest_sha256
     schedule = json.loads(case_bytes)
     assert schedule['task'] == 'place_phone_stand' and schedule['iterations'] == 2
-    assert schedule['rounds_per_iteration'] == 4 and schedule['environment_group_size'] == 8
-    assert len(schedule['groups']) == len({row['scene_seed'] for row in schedule['groups']}) == 256
+    assert schedule['rounds_per_iteration'] == 4 and schedule['environment_group_size'] == group
+    assert len(schedule['groups']) == 2048//group
+    if group==8:
+        assert len({row['scene_seed'] for row in schedule['groups']}) == 256
+    else:
+        for iteration in (0,1):
+            rows=[r for r in schedule['groups'] if r['policy_iteration']==iteration]
+            assert len(rows)==1024 and len({r['scene_seed'] for r in rows})==1000
     bank = Path(cfg.env.train.seeds_path).read_bytes()
     assert hashlib.sha256(bank).hexdigest() == schedule['train_bank_sha256']
     train = set(json.loads(bank)['place_phone_stand']['success_seeds'])
@@ -132,20 +144,26 @@ def validate(cfg):
         value_protocol='native K-step mean rollout values, selected-step actor values; both independently audited',
         likelihood_protocol='OpenPi shape-aware reference at native post-shuffle hook, once before all epochs',
         original_behavior_likelihood_match_required=behavior_matched,
+        scene_group_size=group,
         common_dev_noise_seed=cfg.native_pilot.get('common_dev_noise_seed'),
         simulator_setup=setup,
         original_initializer_reproduction=False, scientific_source_admission=False)
 
 
 if __name__ == '__main__':
-    assert sys.argv[2:] in ([], ['--optimized-setup'])
-    optimized_setup = bool(sys.argv[2:])
+    options = sys.argv[2:]
+    assert len(options) == len(set(options)) and set(options) <= {'--optimized-setup','--behavior-matched','--ppo-group1'}
+    optimized_setup = '--optimized-setup' in options
+    behavior_matched = '--behavior-matched' in options
+    ppo_group1 = '--ppo-group1' in options
     if sys.argv[1] in ('validate','validate_schema'):
         from hydra import compose, initialize_config_dir
         rows = []
         for method in ('ppo', 'grpo'):
             with initialize_config_dir(version_base='1.1', config_dir=str(ROOT.parents[1]/'configs/native_ppo')):
-                cfg = compose(config_name='motus_phone_two', overrides=overrides(method, optimized_setup=optimized_setup))
+                cfg = compose(config_name='motus_phone_two', overrides=overrides(method,
+                    optimized_setup=optimized_setup,behavior_matched=behavior_matched,
+                    ppo_group1=ppo_group1 and method=='ppo'))
             row = validate(cfg)
             if sys.argv[1] == 'validate_schema':
                 # Run the complete upstream schema/scientific checks on Linux
@@ -168,4 +186,5 @@ if __name__ == '__main__':
         print(json.dumps(dict(status='complete', configs=rows, hardware_validation=False,
                               model_or_simulator_constructed=False)))
     else:
-        print('\n'.join(overrides(sys.argv[1], optimized_setup=optimized_setup)))
+        print('\n'.join(overrides(sys.argv[1], optimized_setup=optimized_setup,
+            behavior_matched=behavior_matched,ppo_group1=ppo_group1)))
