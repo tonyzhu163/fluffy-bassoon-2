@@ -6,6 +6,31 @@ the requirement to carry RoboCasa engineering into **both training and eval**.
 Record changing state in `STATUS.json` and only this owner's coordination row.
 Keep earlier runs, sources, checkpoints, reservations and human holds intact.
 
+## PPO evidence clarification — November 7
+
+The [primary-source review](../../docs/literature/robotwin-ppo-review.md)
+distinguishes the successful released task-specific adjust_bottle result from
+this joint-motor source-task port. Native15 Adam updates on one retained
+collection are not15 online iterations. The Motus DEV4/16->2/16 and earlier
+Sidney5/16->5/16 panels show no gain; sustained source-task PPO remains an
+unmet requirement. The released YAML's1000-epoch ceiling is not a recovered
+training history for its reported checkpoint.
+
+Next scientific-control priority: qualify the combined optimized
+collector/rollout/actor footprint and repeated lifecycle, then obtain fresh
+collection from policy1 and a second complete update boundary before extending
+a fixed-protocol learning curve. Keep the matchedgroup8 lineage immutable;
+group1 is a separately named PPO layout reference. Diagnose exploration and
+critic behavior on matched cases before changing scientific parameters.
+Continue the separately requested decoded-student integration without treating
+it as evidence that PPO converges. Preserve every original objective/phase below.
+
+Exact released adjust_bottle training would conflict with its held-out role in
+our source/transfer split. Preserve that split by default; changing it requires
+an explicit scientific-protocol decision. No new GPU work is launched by this
+review. The694GPU-s balance cannot fund meaningful four-device online training;
+prepare a concrete measured continuation contract before requesting extension.
+
 ## Intended result and decisions
 
 Restore a qualified RoboTwin training/evaluation path; collect independent

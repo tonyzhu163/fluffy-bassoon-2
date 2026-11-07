@@ -1,0 +1,98 @@
+{
+  "status": "complete_focused_primary_source_review",
+  "checked_at_shanghai": "2026-11-07T15:37:13+08:00",
+  "review": "docs/literature/robotwin-ppo-review.md",
+  "question": "Why has the transferred RLinf RoboTwin PPO recipe not produced a verified learning gain?",
+  "conclusions": [
+    "Official clean adjust_bottle task-specific pi0.5 PPO success is reported; it was not reproduced by our joint-motor source-task pilot.",
+    "Recovered Motus15 optimizer updates reuse one6144-slot collection; no sustained Motus online loop is verified.",
+    "Motus4/16->2/16 and earlier Sidney5/16->5/16 endpoint panels show no observed PPO gain.",
+    "Collector timeout is an execution failure; long-run convergence and exact original-release reproduction remain unproven.",
+    "A sustained source-task PPO control is the next scientific diagnostic; keep frozen-student work as its separately requested arm.",
+    "Exact adjust_bottle training conflicts with the current held-out task split; default preserves that split."
+  ],
+  "query_groups": [
+    "RLinf RoboTwin pi0.5 PPO 256 adjust_bottle 2048 training success rate",
+    "RLinf VLA reinforcement learning pi0.5 RoboTwin paper flow SDE PPO",
+    "RoboTwin PPO pi0.5 paper training; RoboTwin Flow-SDE; RoboTwin Flow-GRPO; RoboTwin PPO Motus",
+    "SimpleVLA-RL RoboTwin arxiv official; RLinf RoboTwin pi0.5 collapse"
+  ],
+  "primary_sources": [
+    {
+      "id": "RLinf official RoboTwin guide",
+      "url": "https://rlinf.readthedocs.io/en/latest/rst_source/examples/embodied/robotwin.html",
+      "scope": "Direct author-reported pi0.5 PPO result, clean adjust_bottle"
+    },
+    {
+      "id": "RLinf YAML",
+      "url": "https://github.com/RLinf/RLinf/blob/77a521298f1d215971246c2d7a423720d9e76652/examples/embodiment/config/robotwin_adjust_bottle_ppo_openpi_pi05.yaml",
+      "blob_sha": "20cf1d1366c47a039f3011107a7ecba2fd656879",
+      "current_default_branch_file_same_blob": true
+    },
+    {
+      "id": "RLinf inherited model",
+      "url": "https://github.com/RLinf/RLinf/blob/77a521298f1d215971246c2d7a423720d9e76652/examples/embodiment/config/model/pi0_5.yaml",
+      "blob_sha": "6df06155bdeee69cc6a230f3cd9e8e246b922a0c"
+    },
+    {
+      "id": "Motus model card",
+      "url": "https://huggingface.co/motus-robotics/pi0.5_robotwin2",
+      "scope": "Joint motor native H32/delta transforms and data"
+    },
+    {
+      "id": "VLRLA",
+      "url": "https://arxiv.org/html/2610.19517v1",
+      "scope": "Direct RoboTwin PPO data-collection protocol and distinct GRPO main-table baseline"
+    },
+    {
+      "id": "CFG-Policy",
+      "url": "https://arxiv.org/html/2610.14936v1",
+      "scope": "Direct RoboTwin Flow-SDE PPO comparison; different cadence/critic/checkpoint"
+    },
+    {
+      "id": "SimpleVLA-RL",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/cbfbcb4da14235bd69b134070898ae9d-Abstract-Conference.html",
+      "scope": "Direct RoboTwin benchmark, OpenVLA-OFT; conference abstract and official repository"
+    },
+    {
+      "id": "piRL",
+      "url": "https://arxiv.org/html/2510.25889v1",
+      "scope": "Adjacent flow-policy optimization; LIBERO/ManiSkill, not RoboTwin"
+    },
+    {
+      "id": "RLinf-VLA",
+      "url": "https://arxiv.org/html/2510.06710v1",
+      "scope": "Adjacent implementation/ablation evidence; RoboTwin/pi0.5 future work in inspected version"
+    },
+    {
+      "id": "SynthDemo-RL",
+      "url": "https://arxiv.org/html/2609.21650v1",
+      "scope": "Coverage evidence; separate single-arm Piper RoboTwin study"
+    }
+  ],
+  "exclusions": [
+    "Third-party summaries and GitHub forks used only as discovery aids, not evidence.",
+    "Flow-GRPO image generation is not direct RoboTwin policy PPO evidence.",
+    "RLinf issue1713 describes world-model PPO and unmerged work; not proof of simulator-recipe reproduction or a patch to copy.",
+    "LingbotVLA2 recipes use another model and numerical protocol; no silent pi0.5 migration.",
+    "No exact release training epoch or across-seed uncertainty located in inspected guide/linked model-card views; no claim that such logs exist nowhere."
+  ],
+  "local_evidence": [
+    "MOTUSPPO04-CLOSEOUT.json",
+    "MOTUSREPLAY01-COMPLETE.json",
+    "MOTUSDEV01-COMPLETE.json",
+    "READOUT01-COMPLETE.json",
+    "CPURECONSTRUCTION-PREFLIGHT01.json",
+    "BATCHMATH01-COMPLETE.json",
+    "SCENESETUP05-COMPLETE.json",
+    "ACTOR-SELECTION.json"
+  ],
+  "new_gpu_jobs": 0,
+  "closed_gpu_seconds": 179306,
+  "cap_gpu_seconds": 180000,
+  "remaining_gpu_seconds": 694,
+  "goal_complete": false,
+  "matched_motus_grpo_pending": true,
+  "full_student_fit_and_transfer_pending": true,
+  "next_action": "Prepare full optimized repeated collector/learner qualification and measured source-task online continuation; do not train held-out adjust_bottle by default or exceed current GPU cap."
+}
