@@ -18,8 +18,8 @@ not claim that every RoboCasa optimization transfers unchanged to SAPIEN.
 | Evaluation pairing | Common seeded progress panels with training RNG restored |64 DEV scenes; actual ODE draws recorded per chunk and compared as tensors | Native batch, cameras, horizon and controller stay fixed. Confirmation uses a disjoint64 cases after method selection. |
 
 PPO and GRPO completed two actual combined cycles and all three checkpoints.
-PPO's independent cold checkpoint/strict Adam and whole-batch NumPy audit
-passed; GRPO's independent audit is running. Source readout's
+Both independent cold checkpoint/strict Adam and whole-batch NumPy audits
+passed. Each covers three complete boundaries and both actual rollout batches. Source readout's
 CPU/native ODE observation and schemas passed; its full-model instrumentation,
 24-worker restoration and paired physical episodes remain to be checked in the
 readout allocation. Do not mark those pending gates as passed from code review.
