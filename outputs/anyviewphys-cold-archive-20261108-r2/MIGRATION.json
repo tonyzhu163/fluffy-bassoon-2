@@ -1,0 +1,37 @@
+{
+  "status": "prior_worker_retired_source_preserved",
+  "checked_unix": 1794070032.803256,
+  "prior_run": "anyviewphys-cold-archive-20261107-r1",
+  "new_run": "anyviewphys-cold-archive-20261108-r2",
+  "source_commit": "f288b42540689de793b4f068e914d7712552473b",
+  "preserved_packed_archive_bytes": 249659603127,
+  "exact_process_group": [
+    {
+      "pid": 3638113,
+      "state": "S",
+      "ppid": 1,
+      "pgrp": 3638113,
+      "start_ticks": 466460568,
+      "cmdline": "/root/miniforge/bin/python3 /mowenjie/fluffy-bassoon-2/outputs/anyviewphys-cold-archive-20261107-r1/archive.py "
+    },
+    {
+      "pid": 3644772,
+      "state": "D",
+      "ppid": 3638113,
+      "pgrp": 3638113,
+      "start_ticks": 466948487,
+      "cmdline": "tar --acls --xattrs --xattrs-include=* -I zstd -df /tmp/anyviewphys-cold-archive-20261107-r1/original.tar.zst -C /mowenjie "
+    },
+    {
+      "pid": 3644773,
+      "state": "S",
+      "ppid": 3644772,
+      "pgrp": 3638113,
+      "start_ticks": 466948488,
+      "cmdline": "zstd -d "
+    }
+  ],
+  "signal": "SIGTERM to verified own archival process group only",
+  "source_evictions": 0,
+  "unrelated_jobs_stopped": 0
+}
