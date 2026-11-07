@@ -54,6 +54,29 @@ def test_all_masked_reference_has_finite_zero_gap_and_still_replays_all_rows():
     assert len(worker.model.calls) == 6
 
 
+def test_behavior_guard_rejects_changed_partition_before_reference_replacement():
+    worker = actor(torch.ones(12,3,dtype=torch.bool))
+    # The behavior model used batches of2; increasing to4 changes likelihoods.
+    expected = worker.rollout_batch['forward_inputs']['row_ids'].float()+2
+    original = expected[:,None,None].expand(-1,3,2).clone()
+    worker.rollout_batch['prev_logprobs'] = original
+    worker.cfg.actor.micro_batch_size = 4
+    with pytest.raises(ValueError,match='behavior-policy likelihood differs'):
+        recompute_openpi_logprobs(worker,4,require_behavior_match=True)
+    assert worker.rollout_batch['prev_logprobs'] is original
+
+
+def test_behavior_guard_accepts_exact_valid_rows_and_reports_original_reference():
+    mask = torch.ones(12,3,dtype=torch.bool); mask[0] = False
+    worker = actor(mask)
+    expected = worker.rollout_batch['forward_inputs']['row_ids'].float()+2
+    worker.rollout_batch['prev_logprobs'] = expected[:,None,None].expand(-1,3,2).clone()
+    worker.rollout_batch['prev_logprobs'][0] = -1000  # Invalid rows cannot affect training.
+    result = recompute_openpi_logprobs(worker,4,require_behavior_match=True)
+    assert result['actor/original_behavior_logprob_max_abs'] == 0.
+    assert result['actor/original_behavior_ratio_outside_clip_fraction'] == 0.
+
+
 @pytest.mark.parametrize('failure', ['shape','nan'])
 def test_bad_reference_never_replaces_the_previous_likelihood(failure):
     worker = actor(torch.ones(12,3,dtype=torch.bool),failure)

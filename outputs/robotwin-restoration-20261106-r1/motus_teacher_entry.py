@@ -24,7 +24,7 @@ sys.path.insert(0, str(ROOT.parent/'robotwin-sidney-matched-baselines-20261106-r
 from case_schedule import CaseSchedule, boundary_ordinal, install as install_cases
 from gradient_audit import audit as audit_gradients
 from optimizer_evidence import evidence
-from recovery_signature import actor_signature
+from recovery_signature import actor_signature, digest
 from optimizer_semantics import semantic_digest
 from motus_configuration import validate
 from motus_learner_reference import audit as audit_learner
@@ -96,14 +96,15 @@ class MotusActor(runtime.PilotActor):
             f'iteration-{runtime.producing_iteration(self)+1:04d}-rank-{self._rank:02d}.json',
             dict(seconds=time.monotonic()-started,peak_allocated_bytes=torch.cuda.max_memory_allocated(self.device),
                 peak_reserved_bytes=torch.cuda.max_memory_reserved(self.device),free_bytes_at_end=free,
-                total_bytes=total,micro_batch=256,
-                accumulation=2048//(256*int(self.cfg.native_pilot.world_size)),global_batch=2048,
+                total_bytes=total,micro_batch=int(self.cfg.actor.micro_batch_size),
+                accumulation=2048//(int(self.cfg.actor.micro_batch_size)*int(self.cfg.native_pilot.world_size)),global_batch=2048,
                 includes_recompute_and_five_native_epochs=True))
         return result
 
     def recompute_prev_logprobs(self,batch_size_per_rank):
         from fluffy_bassoon.meta_rl.rlinf_openpi_replay import recompute_openpi_logprobs
-        return recompute_openpi_logprobs(self,batch_size_per_rank)
+        return recompute_openpi_logprobs(self,batch_size_per_rank,
+            require_behavior_match=self.cfg.native_pilot.get('require_behavior_likelihood_match',False))
 
     def train_micro_batch(self, micro_batch, metrics, *, is_last):
         critic = bool(self.cfg.actor.model.add_value_head)
@@ -124,7 +125,7 @@ class MotusActor(runtime.PilotActor):
                 else:
                     assert not any('value_head' in name for name,_ in self.model.named_parameters())
                 write(Path(self.cfg.native_pilot.output)/'first-replay'/f'rank-{self._rank:02d}.json',
-                    dict(passed=True,logprob_max_abs=error,micro_batch=256,optimizer_steps=self.optimizer_steps,
+                    dict(passed=True,logprob_max_abs=error,micro_batch=int(self.cfg.actor.micro_batch_size),optimizer_steps=self.optimizer_steps,
                          reference='native once-per-iteration recomputation before all5 epochs',critic_present=critic))
             finally:
                 restore_rng(rng)
@@ -170,6 +171,18 @@ class MotusRollout(runtime.PilotRollout):
         initialize_rng(self,'rollout')
         self._motus_value_audited = False
         return result
+
+    def pilot_common_dev_noise(self, iteration):
+        # The runner already saved the training stream. Reset the native B2
+        # evaluation stream explicitly so checkpoint comparisons share noise.
+        seed = int(self.cfg.native_pilot.common_dev_noise_seed)+self._rank
+        random.seed(seed); np.random.seed(seed)
+        torch.manual_seed(seed); torch.cuda.manual_seed_all(seed)
+        write(Path(self.cfg.native_pilot.output)/'dev-common-noise'/
+              f'iteration-{iteration:04d}-rank-{self._rank:02d}.json',
+              dict(seed=seed, rank=self._rank, iteration=iteration,
+                   initial_rng_sha256=digest(snapshot_rng()),
+                   protocol='same rank/native B2 scene order and initial sampling stream across checkpoints'))
 
     def _predict_rollout_actions(self,env_obs,mode='train',**kwargs):
         check = mode == 'train' and bool(self.cfg.actor.model.add_value_head) and not self._motus_value_audited
@@ -305,6 +318,8 @@ class MotusRunner(runtime.PilotRunner):
         self.update_rollout_weights()
         self.env.pilot_phase(f'dev-{iteration:04d}',policy_iteration=iteration).wait()
         self.rollout.pilot_evaluation_iteration(iteration).wait()
+        if self.cfg.native_pilot.get('common_dev_noise_seed') is not None:
+            self.rollout.pilot_common_dev_noise(iteration).wait()
         metrics = self.evaluate()
         assert int(metrics['num_trajectories']) == 16, 'Incomplete native DEV panel'
         # Drain canonical train/eval writers without creating another checkpoint.

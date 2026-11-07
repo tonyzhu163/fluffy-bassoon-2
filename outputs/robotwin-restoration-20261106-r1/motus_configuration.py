@@ -9,16 +9,18 @@ ROOT = Path(__file__).resolve().parent
 PAIRED = ROOT.parent / 'robotwin-sidney-matched-baselines-20261106-r1'
 
 
-def overrides(algorithm, *, optimized_setup=False):
+def overrides(algorithm, *, optimized_setup=False, behavior_matched=False):
     assert algorithm in ('ppo', 'grpo')
     assert type(optimized_setup) is bool
+    assert type(behavior_matched) is bool
     files = {name: ROOT / name for name in ('MOTUS-TRAIN-CASES.json', 'MOTUS-DEV-CASES.json')}
     result = [f'native_pilot.defer_scene_setup={str(optimized_setup).lower()}',
         f'native_pilot.recycle_scene_executor={str(optimized_setup).lower()}',
         f'algorithm.adv_type={"gae" if algorithm == "ppo" else "grpo"}',
         f'algorithm.loss_type={"actor_critic" if algorithm == "ppo" else "actor"}',
         f'actor.model.add_value_head={str(algorithm == "ppo").lower()}',
-        'algorithm.group_size=8', 'env.train.group_size=8', 'actor.micro_batch_size=256',
+        'algorithm.group_size=8', 'env.train.group_size=8',
+        f'actor.micro_batch_size={32 if behavior_matched else 256}',
         '++algorithm.recompute_logprobs=false', '+native_pilot.recompute_openpi_logprobs=true',
         'runner.val_check_interval=1', 'env.train.enable_offload=true',
         'env.eval.enable_offload=true', 'env.eval.total_num_envs=16',
@@ -31,6 +33,9 @@ def overrides(algorithm, *, optimized_setup=False):
         f'+native_pilot.passive_controller_source={os.environ["TASK_CONTROLLER"]}',
         f'+native_pilot.passive_controller_sha256={os.environ["TASK_CONTROLLER_SHA"]}',
         f'+native_pilot.checkpoint_archive={os.environ["TASK_COLD"]}/checkpoints']
+    if behavior_matched:
+        result += ['+native_pilot.require_behavior_likelihood_match=true',
+                   '+native_pilot.common_dev_noise_seed=31000']
     for prefix, name in (('case', 'MOTUS-TRAIN-CASES.json'), ('dev', 'MOTUS-DEV-CASES.json')):
         path = files[name]
         result += [f'+native_pilot.{prefix}_manifest_path={path}',
@@ -49,6 +54,11 @@ def validate(cfg):
     setup = {key: cfg.native_pilot.get(key, False) for key in
              ('defer_scene_setup', 'recycle_scene_executor')}
     assert all(type(value) is bool for value in setup.values()), setup
+    behavior_matched = cfg.native_pilot.get('require_behavior_likelihood_match', False)
+    assert type(behavior_matched) is bool
+    if behavior_matched:
+        assert world == 8 and int(cfg.native_pilot.common_dev_noise_seed) == 31000
+    micro = 32 if behavior_matched else 256
     expected = {
         'algorithm.adv_type': 'gae' if method == 'ppo' else 'grpo',
         'algorithm.loss_type': 'actor_critic' if method == 'ppo' else 'actor',
@@ -56,7 +66,7 @@ def validate(cfg):
         'algorithm.group_size': 8, 'env.train.group_size': 8,
         'algorithm.recompute_logprobs': False, 'native_pilot.recompute_openpi_logprobs': True,
         'runner.val_check_interval': 1, 'algorithm.filter_rewards': False,
-        'actor.micro_batch_size': 256, 'actor.model.openpi.action_horizon': 32,
+        'actor.micro_batch_size': micro, 'actor.model.openpi.action_horizon': 32,
         'actor.model.openpi.action_chunk': 32, 'actor.model.num_action_chunks': 32,
         'actor.model.openpi_data.adapt_to_pi': True,
         'actor.model.openpi_data.extra_delta_transform': True,
@@ -112,7 +122,7 @@ def validate(cfg):
             OmegaConf.update(common, f'env.{mode}.{field}', 400)
     validate_recipe(common)
     return dict(protocol='motus_native_h32', algorithm=method, source_task='place_phone_stand',
-        global_batch=2048, micro_batch=256, world=world, accumulation=2048//(256*world), update_epochs=5,
+        global_batch=2048, micro_batch=micro, world=world, accumulation=2048//(micro*world), update_epochs=5,
         native_train_batch=256//world, native_dev_batch=16//world,
         rounds_per_iteration=4, decisions_per_episode=6, decisions_per_iteration=6144,
         adam_updates_per_iteration=15, intended_iterations=2,
@@ -121,6 +131,8 @@ def validate(cfg):
         dev_episodes=16, dev_role='source-task development panel; never held-out transfer evaluation',
         value_protocol='native K-step mean rollout values, selected-step actor values; both independently audited',
         likelihood_protocol='OpenPi shape-aware reference at native post-shuffle hook, once before all epochs',
+        original_behavior_likelihood_match_required=behavior_matched,
+        common_dev_noise_seed=cfg.native_pilot.get('common_dev_noise_seed'),
         simulator_setup=setup,
         original_initializer_reproduction=False, scientific_source_admission=False)
 
