@@ -1,5 +1,7 @@
 # Additional cleanup review — November 7, 2026
 
+**Execution follow-up (2026-11-07 15:22:28 Shanghai):** The approved 323-file batch is complete: **17.21494 GiB reclaimed**, every original recoverable cold, and all protected hashes unchanged. [Execution results](../redundant-files-cleanup-20261107-r1/RESULT.md). The review below predates execution.
+
 **Next small cleanup candidates: 17.21 GiB. No payload was deleted in this follow-up.** Current PFS free space was 277.91 GiB at the fresh directory check. The earlier 207.70 GiB archival is complete and separate.
 
 | Priority | Candidate | GiB | Evidence and boundary |

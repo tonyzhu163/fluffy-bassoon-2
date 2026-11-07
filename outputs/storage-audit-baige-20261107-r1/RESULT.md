@@ -6,7 +6,7 @@
 
 **Most existing space is experiment output, while most recent growth is new project/model/input material.** AnyViewPhys occupies **269.25 GiB**, including models 135.26, runs 77.42, environments 35.19 and package caches 18.10. A new materialized steering-source cache occupies **127.22 GiB** under `fluffy-bassoon-2/inputs/`. Those two items together are 396.47 GiB and explain most of the increase from the Nov 4 census. The main project's output directory has actually fallen from 1105.38 to 1046.86 GiB over that interval, while individual new RoboTwin runs grew and legacy payloads were removed.
 
-Additional follow-up: [Next cleanup review](NEXT-CLEANUP.md) identifies **17.21 GiB** of duplicate downloads, an incomplete model and recoverable deployment bundles; no further payload deletion was performed.
+Additional follow-up: [Next cleanup review](NEXT-CLEANUP.md) identifies **17.21 GiB** of duplicate downloads, an incomplete model and recoverable deployment bundles. This approved follow-up is now complete, reclaiming **17.21494 GiB** with verified cold recovery; [execution results](../redundant-files-cleanup-20261107-r1/RESULT.md).
 
 Follow-up: [Outputs-only archive review](OUTPUTS-ARCHIVE-REVIEW.md) identifies **207.79 GiB** in the first batch, with exact paths, retained evidence and restore requirements.
 
