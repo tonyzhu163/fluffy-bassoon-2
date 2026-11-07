@@ -251,3 +251,26 @@ ran. Released12:53:16 Nov7, charged966GPU-s; cumulative178782/180000 leaves1218
 with none reserved. This qualifies opt-in repeated B4 offload, not the full
 four-round G8 collector,64-scene co-resident memory or long reset stress.
 See LIFECYCLE01-COMPLETE.json and LIFECYCLE01-READBACK01.json.
+
+
+The latest integrated profile is now qualified for one complete fresh eight-rank
+PPO cycle: native B32 training/B2 DEV, actor micro256/accumulation1, unchanged
+global2048 and five epochs. All8 actual learner references and15 Adam steps per
+rank passed. Complete checkpoint1 (58 files/9,958,082,409 bytes) passed cold and
+local readback; an independent CPU audit loaded all24 worker tensors and matched
+RNG visibility to each actual Ray worker. Actor rank0 update time was196.8s;
+maximum actor reserved memory was56.54GiB and minimum sampled whole-job free
+memory35.73GiB. The worker timeout interrupted the second collection, so repeated
+full cycles and GPU operational recovery remain pending. Do not fill unused GPU
+memory merely to reach the device limit: the selected execution partition is
+qualified, and larger co-resident scene/batch profiles require their own checks.
+See MOTUSOPTIMIZED03-CLOSEOUT.json and MOTUSOPTIMIZED03-BOUNDARY02.json.
+
+The same shared frozen motor, owned simulator processes, scoped FP32 controller
+precision, accounting, bounded train/eval I/O, feedback and cleanup paths also
+completed the five-control student check:20 new real episodes,130 trace files
+independently replayed with original tolerances and0 evaluation SGD. This is
+runtime qualification on two paired source DEV cases; it does not establish
+learning, adaptation or transfer. See STUDENTONLINE02-COMPLETE.json. The prepared
+PPO resume keeps these verified engineering settings and needs the explicit
+budget extension described in MOTUSRESUME01-PROPOSAL.md.

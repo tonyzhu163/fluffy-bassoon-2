@@ -1,0 +1,58 @@
+# Effective PPO/GRPO audit —8 November2026
+
+No effective RoboTwin PPO or GRPO control has been established. A working
+learner, exact checkpoint recovery and a completed collect/update cycle are
+engineering evidence. They are not learning gains. The user requires an
+effective source control before further in-context student work; those later
+experiments now wait. The cumulative cap is100 GPU-hours, explicitly approved
+in the reply to call_9991d141f4c9474cb3b968465bf752a5. Closed use stays215849
+GPU-seconds;144151 remain, with no active allocation or cost reset.
+
+Verified endpoints: earlier Sidney base/PPO/GRPO5/16,5/16,2/16; earlier recovered
+Motus base/updated4/16,2/16; latest fresh Motus base/updated3/16,4/16. No positive
+control is claimed. The last job completed only one fresh collection plus15
+Adam steps per rank, then timed out during collection2.
+
+The exact published experiment was not reproduced: task-specific adjust_bottle
+SFT became joint Motus on place_phone_stand; native50-target chunks became32;
+200-target wrapper became192; PPO groups changed1→8, reducing distinct reset
+scenes per1024-episode collection from1024 to128. Matched group8 is a valid
+separate comparison, not the unchanged released PPO recipe. Held-out task roles
+remain protected. The1000-epoch YAML ceiling is not evidence of the reported
+checkpoint's actual training duration.
+
+Actual first-cycle aggregate logs: approximate KL0.029, clip fraction0.159,
+ratio1.008, policy loss−0.108, critic explained variance−0.086, value clip
+ratio0.447, value loss0.056, logged pre-clip gradient norm11.353. These are
+rounded native aggregates over the collection/five epochs, not final-checkpoint
+critic measurements or per-update trends. Negative explained variance flags
+poor value prediction but does not alone establish causality. Actor trajectory
+receive time1388.1s versus training195.5s also identifies collection as the
+main measured wall-time cost. Full raw-batch/bootstrap diagnostic is next.
+
+The independent raw-reward GRPO reduction passed on1024 actual policy0 episodes:
+128 groups,73 tied/55 mixed-score,136 positive-score episodes, worst advantage
+error1.141e−7 against1e−5. Tied groups give exact-zero advantages. This shows
+nonzero available signal and substantial tied-group dilution, not a completed
+GRPO training run. No PPO critic timeout bootstrap was used. See
+GRPORAWGROUPAUDIT02-COMPLETE.json.
+
+A further simulator mismatch needs an isolated check: current RLinf upstream
+explicitly fixes SAPIEN3.0.1 wrist-camera clipping by changing near plane0.1m
+to0.01m. The installed RoboTwin camera source uses0.1m, and the pinned RLinf
+wrapper lacks that fix. Nonblank-camera checks do not detect missing gripper
+fingers. This is a concrete upstream difference, not yet a demonstrated cause
+of our low base success or an authorized silent migration of closed runs.
+Primary sources: https://rlinf.readthedocs.io/en/latest/rst_source/examples/embodied/robotwin.html
+and https://github.com/RLinf/RLinf/blob/main/rlinf/envs/sim/robotwin/robotwin_env.py
+The original model's expected cameras and actual paired images must be checked
+before choosing a fresh training protocol.
+
+Next decisions follow evidence: independently quantify actual raw rewards,
+PPO timeout bootstrap, values/targets and advantage separation; inspect horizon
+and actual observation fidelity; then choose a fresh qualified continuation or
+an explicitly named group1 source positive control. Preserve all old contracts
+and costs. Require advancing fresh on-policy cycles and a larger paired fixed
+source DEV panel; select on DEV only and confirm a claimed gain on disjoint
+source evaluation cases. One16-case fluctuation is insufficient. Do not change
+critic, noise, horizon, reward and grouping simultaneously and call it a fix.

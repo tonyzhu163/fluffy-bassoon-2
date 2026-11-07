@@ -10,16 +10,17 @@ external results. External percentages below are author-reported.
 RLinf reports successful pi0.5 PPO on RoboTwin. Our short transferred runs have
 not established a learning gain. These statements are compatible: our runs use
 different joint initializers, a different task, and much shorter training.
-The latest Motus result is **one recovered collection/update cycle**, not
-15 online collect/update cycles. Its negative small-panel result deserves
-follow-up; it does not demonstrate that the released recipe fails.
+The latest Motus result is **one fresh integrated collection/update cycle**,
+with15 Adam updates per rank and DEV3/16→4/16. An earlier recovered first
+batch gave DEV4/16→2/16. Neither panel establishes improvement or demonstrates
+that the released recipe fails.
 
 Three separate questions need separate evidence:
 
 | Question | Current answer |
 | --- | --- |
 | Can our learner update real rollout data and restore exactly? | Yes, for the qualified Motus first-batch learner boundary. |
-| Can the complete optimized collector/learner cycle run repeatedly at scale? | Not yet verified with the full combined memory footprint. |
+| Can the complete optimized collector/learner cycle run repeatedly at scale? | One8-rank B32 cycle passed the combined footprint; repeated cycles remain unverified. |
 | Does sustained PPO improve the selected joint motor on our source tasks? | Unresolved; the available endpoint panels show no gain. |
 
 ## Direct and adjacent literature
@@ -54,9 +55,9 @@ Matching this file does not establish that all imported dependencies match.
 | PPO scene group | 1 | 8, to match the planned GRPO comparison |
 | Environments/rounds | 256/4 | 256/4 |
 | Global optimization minibatch/epochs | 2048/5 | 2048/5 |
-| Per-device execution microbatch | 32 | 256 with accumulation2 across four devices |
+| Per-device execution microbatch | 32 | 256; accumulation2 on four devices,1 on eight devices |
 | Evaluation panel | 128 environments | 16 precommitted source DEV cases |
-| Sustained training | Config permits repeated outer epochs | One retained Motus collection batch; later learner recovery |
+| Sustained training | Config permits repeated outer epochs | Earlier retained-batch recovery; later one fresh8-rank cycle, second collection interrupted |
 
 The shared actor/value learning rates remain 5e-6/1e-4; gamma .99,
 lambda .95, clip .2, five Flow-SDE steps and noise .3 are retained. The official
