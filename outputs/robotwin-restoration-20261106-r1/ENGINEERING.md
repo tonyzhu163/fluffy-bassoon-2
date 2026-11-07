@@ -173,3 +173,16 @@ restored owned Adam/scheduler/scaler/RNG exactly and reproduced that control.
 Strict plain inference loading matched every tensor byte/dtype/shape and
 same-B4 logprobs/values exactly. GPU reserve passed throughout. Updated-policy
 simulator evaluation and memory-safe online collection remain unqualified.
+
+
+MOTUSDEV01 now qualifies updated-policy native simulator DEV at the original
+B4/rank: same native environment/rollout calls, measured controller, bounded
+train/eval writer and shared metric conversion. Four-rank original-SFT action
+calibration was exact0, initial observations matched and frozen parameter
+bytes stayed unchanged throughout0-SGD evaluation. All16 cases completed;
+updated2/16 versus baseline4/16 has1 paired gain/3 losses. Independent CPU
+readback validated all166 state files, both panels'48 traces/48 sampling files
+combined, command/observation continuity, physical metadata, raw terminal
+feedback and identical first Torch/CUDA RNG states. Sampled minfree was
+79.686GiB with15.286GiB maxused. This small evaluation profile does not qualify
+the failed64-scene/rank combined online training footprint or AD history.

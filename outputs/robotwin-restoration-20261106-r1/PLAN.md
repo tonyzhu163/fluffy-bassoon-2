@@ -600,3 +600,35 @@ shared with training DEV; launch no actor workers or training scenes. Require
 least8GiB sampled GPU reserve and independent trace readback. Keep this panel
 out of student fitting and held-out transfer claims. Close the scheduler's
 actual creation-to-release charge before allocating any remaining allowance.
+
+
+MOTUSDEV01-COMPLETE.json closes that panel: update15 policy2/16 versus
+baseline4/16, with1 paired gain and3 losses. All4 original SFT first-action
+checks were exactly0, all4 fresh initial observations matched, frozen weights
+were unchanged and evaluation used0 SGD. Independent CPU readback verified
+all166 new state files and both panels'24 traces/24 sampling files each,
+including actual commands/public observations, physical/terminal packets and
+identical first Torch/CUDA RNG states. This small source DEV panel shows no
+improvement; it does not select a checkpoint or qualify held-out transfer.
+The4GPU allocation closed09:19:52, charged2128 conservative GPU-seconds.
+Cumulative176968/180000 leaves3032, with none active or reserved.
+
+The next bounded repair should first qualify deferred setup against the16
+retained updated-policy trajectories on one allocated GPU, using fresh
+processes and the original4-row partitions. Replay the exact issued chunks,
+compare public observations/language and measured physics/feedback across
+the whole H192 episode, and retain default setup as the immutable reference.
+Measure constructor/reset time and memory. Keep actual intermediate render
+semantics, controller, native loss masks and finite reset guards unchanged.
+A proposed2400-second creation-to-release ceiling would fit3032 remaining,
+but is not admitted until its code, Linux checks, storage/action bounds and
+current resources are verified. A component-only64-scene measurement would
+not qualify a co-resident actor/rollout/environment training allocation.
+
+After setup parity, qualify the actual combined profile with the8GiB reserve
+and exact native B64 likelihood/value checks before collecting policy1. A
+pipeline-stage/batch change needs explicit numerical qualification rather than
+being described as transparent. Online continuation also requires the recorded
+new-boundary collector/RNG migration. The remaining3032GPU-s do not fund the
+matched six-source PPO/GRPO and student campaign; prepare a measured extension
+before exceeding the user's hard50GPU-hour cap.

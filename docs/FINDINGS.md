@@ -1015,3 +1015,18 @@ The shared frozen Motus residual runtime then passed a real two-process SAPIEN q
 Native Motus H32 Flow-SDE FSDP capacity on four94.97GiB Pro6K devices completed four scratch updates per candidate at fixed global2048. Micro64/128/256/512 steady updates took16.52/16.14/15.72/25.83s. Micro256/accum2 was both largest safe tested and fastest, peaking62.28GiB reserved with31.75GiB conservative free;512 completed but left only9.69MiB and is rejected by the8GiB reserve. Initial native joint-chunk likelihood replay was exact, frozen parameters stayed unchanged and gradient audits passed. The9.53GB full checkpoint/fixtures passed cold and local readback; a separate four-rank process restored every owned Adam/group, scheduler/scaler and RNG/sampler signature and reproduced the next global update exactly, independently rechecked on CPU. Ray socket length blocked the first restore before model load and was corrected with a short job-local root. The benchmark repeats64 distinct real observations/rank to512 with synthetic advantages/returns. It qualifies actor capacity/recovery, not scientific GAE/value alignment, combined simulator capacity or success improvement. [Capacity and costs](../outputs/robotwin-restoration-20261106-r1/ACTORPROFILE01-CLOSEOUT.json), [independent recovery](../outputs/robotwin-restoration-20261106-r1/ACTORRESTORE01-COMPLETE.json), [selection and remaining gates](../outputs/robotwin-restoration-20261106-r1/ACTOR-SELECTION.json).
 
 The joint Motus native learner completed its first actual6144-decision PPO batch at micro256/accum2/global2048 and five epochs:15 optimizer updates per rank, with frozen VLM checks passing. The19.085GB checkpoint passed full cold/local readback; fresh processes restored owned Adam, scheduler, scaler and RNG state exactly and reproduced the same unsaved next-update control. Plain inference weights matched all tensor bytes/dtypes/shapes and same-B4 likelihoods/values exactly. This recovers the learner from the timed-out collection without new simulator controls. Updated-policy simulator DEV, memory-safe combined collection and matched GRPO remain pending; the one-policy dataset is not AD learning-history admission. [Completed recovery and limits](../outputs/robotwin-restoration-20261106-r1/MOTUSREPLAY01-COMPLETE.json).
+
+The recovered Motus update15 policy completed a paired native16-case source
+DEV panel at the original B4/rank: **2/16 successes versus baseline4/16**,
+with1 paired gain and3 losses. All4 original-SFT first-action calibrations
+were exactly0, first simulator observations and Torch/CUDA RNG matched, and
+evaluation changed no parameters and used0 SGD. Independent Linux CPU
+readback verified all166 new state files, both panels'24 traces/24 sampling
+files each, command/observation alignment, measured physical durations and
+raw terminal feedback. This panel shows no improvement and makes no held-out
+transfer or AD-history claim. The shared native training/evaluation controller,
+bounded writer and metric path are exercised; combined online collection
+memory remains unqualified. The allocation released09:19:52 Nov7 and charged
+2128GPU-s; cumulative176968/180000 leaves3032 with none reserved. Evidence:
+[MOTUSDEV01-COMPLETE](../outputs/robotwin-restoration-20261106-r1/MOTUSDEV01-COMPLETE.json),
+[independent readback](../outputs/robotwin-restoration-20261106-r1/CPUDEV-READBACK02-COMPLETE.json).

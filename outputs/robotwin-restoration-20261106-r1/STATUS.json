@@ -1,6 +1,6 @@
 {
   "owner_chat": "01a1b024-f4ac-7181-af87-bac9fbee72bb",
-  "status": "paired_native_dev_complete_readback_pending",
+  "status": "paired_native_dev_verified_collection_repair_next",
   "new_gpu_jobs_launched": 17,
   "prior_robotwin_cumulative_cap_gpu_hours": 50,
   "prior_cost_and_reservations_must_be_refreshed": false,
@@ -54,18 +54,19 @@
     "closed_export_archive": "Complete2 files,15551132398 bytes recoverable with full cold+local readback;2217 files protected; no GPU charge.",
     "actor_profile_state": "Capacity complete at7df04cf7 and fresh recovery at5b511ed6 exact. Largest/fastest safe tested actor micro256/accum2/global2048;62.283GiB reserved/31.748GiB free,15.717s steady.512 rejected. Both allocations released; no activeGPU.",
     "native_teacher_state": "Failed/released07:26:05 after fixed worker timeout. Checkpoint0 and all4 full chronological collection files retained. All4 native training-batch pre-SGD references passed exact0. No complete checkpoint1 or iteration1 receipt; actual optimizer update count unverified. Audit durable collection for separate native learner replay; qualify deferred scene setup before next online rollout.",
-    "learner_recovery_state": "SUCCESS/released08:36:54; exact actual15 native updates/rank,19.085GB complete checkpoint cold+local readback, independent owned restore/nextupdate and plain inference export calibration0; no new simulator controls"
+    "learner_recovery_state": "SUCCESS/released08:36:54; exact actual15 native updates/rank,19.085GB complete checkpoint cold+local readback, independent owned restore/nextupdate and plain inference export calibration0; no new simulator controls",
+    "native_dev_state": "SUCCESS/released09:19:52, source2c1c9ada; fixed16 cases update15 policy2/16 vs SFT4/16;1gain/3loss;0SGD, paired initial observations+firstTorch/CUDA RNG exact, frozen4/4, all166 state files/48 traces+48 sampling files across both panels independently cold-read."
   },
   "cpu_qualification": "CPU01.json",
   "git_deployment": "GIT-DEPLOYMENT.json",
   "active_gpu_reservation_seconds": 0,
   "new_gpu_hours_note": "176968GPU-s closed;0 active/reserved;3032GPU-s (0.8422GPUh) remain under180000 cap.",
   "budget_reconciliation": "BUDGET-RECONCILIATION.json",
-  "last_checked_shanghai": "2026-11-07T09:23:00+08:00",
+  "last_checked_shanghai": "2026-11-07T09:30:00+08:00",
   "cumulative_closed_conservative_gpu_seconds": 176968,
   "worst_closed_plus_reserved_gpu_seconds": 176968,
   "execution_qualification": "EXECUTION01-COMPLETE.json",
-  "qualified_scope": "Shared frozen Motus ODE B2/two owned scenes; native actor capacity plus actual6144-decision15-update PPO learner recovery; full checkpoint cold/local readback, independent restore/next-update exact, strict plain export B4 likelihood/value error0. Updated-policy simulator DEV, memory-safe online collection and matched GRPO remain pending.",
+  "qualified_scope": "Actual6144-decision15-update native PPO learner with exact full checkpoint/fresh restore/nextupdate/export, plus fixed16-case native B4/rank simulator DEV with baseline action parity0, exact initial observations, unchanged frozen parameters and independent cold trace/RNG readback. Updated2/16 vs baseline4/16; no improvement. Combined online collection memory and matched native GRPO remain unqualified.",
   "planned_motor_gpu_reservation_seconds": 0,
   "worst_closed_plus_planned_gpu_seconds": 176968,
   "cpu_motor_qualification": "CPUMOTOR02.json",
@@ -112,7 +113,7 @@
   "native_teacher_fourth_attempt": "MOTUSPPO04-CLOSEOUT.json",
   "decoded_history_core_qualification": "CPUTOKENS01.json",
   "deferred_scene_setup_cpu_qualification": "CPUTOKENS02.json",
-  "next_action": "Independently cold-read all native DEV state files and48 paired baseline/updated sampling/trace files per panel on allocated Linux CPU. Verify physical/raw terminal packets, per-case outcomes and original first Torch/CUDA RNG before durable findings. Then qualify collection initialization/memory repair within remaining3032GPU-s.",
+  "next_action": "Prepare and Linux-qualify a bounded one-GPU deferred-setup SAPIEN replay against these16 retained cases; measure component initialization/memory before a new combined online profile. Preserve3032GPU-s remaining and require concrete admission before further allocation. Student decoded-history integration and multi-version/matched GRPO data remain pending.",
   "native_collection_recovery_audit": "COLLECTION-AUDIT02-COMPLETE.json",
   "planned_learner_recovery_gpu_seconds": 0,
   "native_learner_recovery_contract": "MOTUSREPLAY01-CONTRACT.json",
@@ -123,5 +124,7 @@
   "native_dev_contract": "MOTUSDEV01-CONTRACT.json",
   "native_dev_cpu_qualification": "CPUDEV01.json",
   "native_dev_launch": "MOTUSDEV01-LAUNCH.json",
-  "native_dev_progress": "MOTUSDEV01-PROGRESS.json"
+  "native_dev_progress": "MOTUSDEV01-PROGRESS.json",
+  "native_dev_result": "MOTUSDEV01-COMPLETE.json",
+  "native_dev_cpu_readback": "CPUDEV-READBACK02-COMPLETE.json"
 }
