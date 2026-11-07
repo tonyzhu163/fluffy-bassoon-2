@@ -47,12 +47,14 @@ def main():
     for method in ('ppo','grpo'):
         state = BASE/f'motusbehavior{method}01/state'
         plan = dict(algorithm=method,original_config=str(state/'resolved-native-config.json'),
-            source_state=str(state),output_identity=f'motus-source-{method}-dev01')
+            source_state=str(state),output_identity=f'motus-source-{method}-dev01',bank='dev')
         cfg = configuration(plan,Path('/tmp/readout-schema')/method)
         with patch.object(native,'Cluster',lambda *a,**k:None),patch.object(native,'HybridComponentPlacement',lambda *a,**k:Placement()):
             native.validate_cfg(cfg)
         assert cfg.env.eval.total_num_envs == 16 and cfg.env.eval.rollout_epoch == 1
         assert cfg.native_pilot.maximum_actions == 32768
+        assert cfg.native_pilot.readout_bank == 'dev'
+        assert configuration(dict(plan,bank='confirmation'),Path('/tmp/readout-confirm-schema')/method).native_pilot.readout_bank == 'confirmation'
         bank = Path(cfg.env.eval.seeds_path)
         assert sha(bank) == cases['full_source_sha256']
         assert json.loads(bank.read_bytes())['place_phone_stand']['success_seeds'][:128] == cases['dev']+cases['confirmation']
@@ -77,12 +79,12 @@ def main():
             for field in ('action','model_action'):
                 assert torch.equal(left['forward_sampling_fields'][field],right['forward_sampling_fields'][field])
     subprocess.run(['bash','-n',str(ROOT/'motus_source_readout.sh')],check=True)
-    output = BASE/'cpumotussourcereadout01';output.mkdir()
+    output = BASE/'cpumotussourcereadout02';output.mkdir()
     write(output/'RESULT.json',dict(status='passed_readout_code_and_native_ODE_observation_reference',
         source_commit=os.environ['TASK_SOURCE'],gpu_seconds=0,models_or_simulators_constructed=False,
         actual_pinned_ODE_loop_used=True,deterministic_suffix_stub=True,
         ODE_output_and_final_RNG_exact=True,recorded_noise_shape=list(noise.shape),
-        full_VLA_GPU_and_source_SFT_action_calibration_checked_in_actual_readout=True,
+        full_VLA_GPU_and_source_SFT_action_calibration_required_in_actual_readout=True,
         checkpoint2_input_admission_still_required=True,configurations=rows,
         source_SFT_baseline_all48_predictions_match=True,source_sampling_file_hashes=source_hashes,
         entry_sha256=sha(ROOT/'motus_source_readout.py'),launcher_sha256=sha(ROOT/'motus_source_readout.sh')))

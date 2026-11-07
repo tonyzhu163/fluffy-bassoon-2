@@ -88,7 +88,8 @@ class ReadoutRollout(teacher.MotusRollout):
     def _predict_rollout_actions(self,env_obs,mode='train',**kwargs):
         require_reserve(self)
         assert mode == 'eval'
-        first_panel = self._readout_label == 'policy-0000-panel-00'
+        first_panel = (self.cfg.native_pilot.readout_bank == 'dev'
+            and self._readout_label == 'policy-0000-panel-00')
         if first_panel:
             index = len(self._readout_noise)
             reference = Path(self.cfg.native_pilot.readout_reference_root)/'sampling'/f'rank-{self._rank:02d}'/f'{index:05d}.pt.gz'
@@ -181,6 +182,8 @@ def configuration(plan,output):
     cfg.native_pilot.passive_controller_source = os.environ['TASK_CONTROLLER']
     cfg.native_pilot.passive_controller_sha256 = os.environ['TASK_CONTROLLER_SHA']
     cfg.native_pilot.readout_reference_root = plan['source_state']
+    cfg.native_pilot.readout_bank = plan['bank']
+    assert plan['bank'] in ('dev','confirmation')
     assert cfg.env.eval.total_num_envs == 16 and cfg.env.eval.rollout_epoch == 1
     return cfg
 
