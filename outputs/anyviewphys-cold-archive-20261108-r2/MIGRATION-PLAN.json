@@ -1,0 +1,60 @@
+{
+  "checked_unix": 1794069786.6612186,
+  "state": {
+    "source_commit": "752b93aa63ef0b9e0dff6c43145591a1fc2ba6fc",
+    "filesystem_before": {
+      "total": 2199023255552,
+      "used": 2066181259264,
+      "free": 132841996288
+    },
+    "total_entries": 511379,
+    "source_allocated_bytes": 310140596224,
+    "source_unique_logical_bytes": 309619431863,
+    "phase": "comparing_archive_to_source",
+    "phase_started_unix": 1794066657.0496058,
+    "entries_done": 511379,
+    "hashed_bytes": 309619431863,
+    "checked_unix": 1794069783.1485517,
+    "pid": 3638113,
+    "child_pid": 3644772,
+    "archive_bytes": 0
+  },
+  "child": {
+    "pid": 3644772,
+    "args": [
+      "tar",
+      "--acls",
+      "--xattrs",
+      "--xattrs-include=*",
+      "-I",
+      "zstd",
+      "-df",
+      "/tmp/anyviewphys-cold-archive-20261107-r1/original.tar.zst",
+      "-C",
+      "/mowenjie"
+    ],
+    "started_unix": 1794066657.0605614
+  },
+  "processes": {
+    "3638113": {
+      "start_ticks": 466460568,
+      "cmdline": "/root/miniforge/bin/python3 /mowenjie/fluffy-bassoon-2/outputs/anyviewphys-cold-archive-20261107-r1/archive.py ",
+      "state": "S"
+    },
+    "3644772": {
+      "start_ticks": 466948487,
+      "cmdline": "tar --acls --xattrs --xattrs-include=* -I zstd -df /tmp/anyviewphys-cold-archive-20261107-r1/original.tar.zst -C /mowenjie ",
+      "state": "D"
+    }
+  },
+  "inventory": {
+    "SOURCE-INVENTORY.json": {
+      "bytes": 194040440,
+      "sha256": "e4df4866bade97a24d5ffccbfdc7d27853de03c3b0fd2e1fd7d778f660fdb0ae"
+    },
+    "METADATA.json": {
+      "bytes": 157983154,
+      "sha256": "e47fb84082dbcbe1efd3f022ccc9dd221497332c2607d56d63f2ed6702a810d1"
+    }
+  }
+}

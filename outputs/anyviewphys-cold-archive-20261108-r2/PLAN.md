@@ -1,0 +1,5 @@
+# AnyViewPhys cold archive — urgent continuation
+
+The user requested immediate space reclamation while keeping unrelated jobs running. The earlier run fully packed all511,379 entries and SHA256-hashed all unique source content, but its extra serial GNU tar comparison was too slow. Retire that worker with exact process/start-time guards and preserve its run evidence. Reuse its completed249,659,603,127-byte archive and pinned full source inventory under this new output identity.
+
+Skip the redundant tar comparison and repeated source hashing. Upload the complete archive to private BOS; independently read it all back with matching SHA256; extract that readback into fresh local staging; compare every member SHA256, mode, owner, nanosecond mtime, symlink and internal hardlink topology; recheck all source metadata/ctime and fresh scheduler/readers; only then quarantine and release the source. Reuse the already-qualified inode-aware release implementation. No unrelated workload is paused; no GPU is allocated.
