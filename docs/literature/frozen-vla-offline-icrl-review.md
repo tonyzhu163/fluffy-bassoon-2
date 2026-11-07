@@ -14,6 +14,16 @@ Informative action/reward coverage, a usable control interface and an honest
 online adaptation test are prerequisites. The current corpus supports a
 single-task pilot; it cannot yet establish cross-task meta-learning.
 
+For the immediate decision, distinguish **teacher optimization**, **student
+training objective**, and **control interface**. PPO/GRPO generate experience;
+AD/DPT/DIT/offline value learning determine what the student learns from it;
+residual actions, KV modification and proposal ranking determine how the
+student controls the frozen motor. Evidence for one choice does not select
+the other two. Our recommendation is a matched residual-interface comparison
+with trained static and history-imitation controls, alongside source PPO
+restoration. This is an experimental recommendation, not an established
+RoboTwin result.
+
 ## Scope and strength of evidence
 
 The review separates three problems: generating experience, learning from it,
@@ -37,6 +47,8 @@ the dated handoff are in the
 | [Yes, Q-learning Helps Offline In-Context RL, Tarasov et al., v5, 2026, §3–4 / Appendix B](https://arxiv.org/pdf/2502.17666v5) | Compares explicit RL objectives with AD across more than 150 datasets, including continuous IC-IQL and IC-TD3+BC. Reports about 30% average improvement on its metrics and stronger robustness with offline regularization; evaluates adaptation curves and normalized AUC. | Strong support for comparing objectives on matched data. Its numerical gains are not RoboTwin success-rate predictions. The shared backbone is trained by value losses; continuous actor gradients are detached from it. Our independent encoders are a different implementation. |
 | [Implicit Q-Learning, Kostrikov et al., 2021, §4](https://arxiv.org/html/2110.06169) | Uses an upper expectile value, in-dataset Bellman regression and advantage-weighted policy extraction. Value fitting avoids querying unseen actions. The implementation uses clipped double Q. | A suitable offline objective to adapt to causal history and decoded residual commands. It does not create absent behavior or guarantee good values under a deployment distribution shift. |
 | [Vintix II, Polubarov et al., v1, 2026, §3–4](https://arxiv.org/html/2604.05112v1) | Scales DPT with a flow action head: 709.7M transitions, 209 training tasks across ten domains and 46 held-out tasks. Noised demonstrator rollouts are relabeled at their visited query states. Distinguishes online interaction from offline demonstration prompts. | DPT is no longer supported only by small discrete examples. Its oracle-label requirement remains, and its data scale is far beyond our pilot. A flow head is a plausible later capacity comparison, not a substitute for collecting the labels. |
+| [Scalable In-Context Q-Learning, Liu et al., ICLR 2026](https://proceedings.iclr.cc/paper_files/paper/2026/hash/9e76870b97621b3153b84782062143ef-Abstract-Conference.html), [v3 §3–4](https://arxiv.org/html/2506.01299v3) | A pretrained dynamics/reward model encodes task prompts; a shared multi-head transformer learns Q, upper-expectile V and advantage-weighted policy extraction. It evaluates discrete and continuous tasks with parameters fixed during interaction. | A close value-based baseline, not a frozen-VLA result. Our separate encoders and raw history do not reproduce its learned task-prompt construction. Any prompt comparison must account for auxiliary world-model training. |
+| [State-Action Distillation, Chen and Paternain, TMLR 2025; v3 §4–5](https://arxiv.org/html/2410.19982v3) | Builds query-action labels using random-policy evaluations within a trust horizon. Experiments cover bandits and navigation, including visual Miniworld. Its MDP guarantee assumes that random-policy and optimal Q functions select the same maximizing actions. | A counterexample to requiring a strong trained teacher for every ICRL method. Its query-state resets, action enumeration and return coverage are additional resources; these are not present automatically in our continuous robot logs. |
 | [VLRLA, Shi et al., v1, October 2026, §4 / Appendix A](https://arxiv.org/html/2610.19517v1) | Adds cross-episode memory to a VLA. The bridge modifies frozen VLM KV conditioning and trains through the frozen action expert with an action-level flow loss. Its RoboTwin PPO collector uses 25 iterations, four rounds of 256 environments and five optimization epochs. | The closest architectural comparison. An action target can train an internal bridge without a recorded latent command. Frozen expert weights must still permit input gradients during bridge training. The main-table GRPO baseline and PPO history collector have different roles. |
 
 DIT is an ICML **2025** publication even though the inspected arXiv full-text
@@ -44,6 +56,16 @@ identifier begins `2601`. Bibliographic year and arXiv upload year should not
 be conflated. Vintix II and the latest offline IC-IQL revision also make older
 blanket claims that ICRL only works in tiny discrete domains inappropriate;
 neither supplies our missing frozen-Motus RoboTwin result.
+
+The additional sources sharpen the teacher-quality distinction. SAD obtains
+new labels by evaluating actions at selected query states; it does not turn an
+arbitrary fixed failure buffer into expert supervision. S-ICQL moves part of
+task inference into learned dynamics/reward prompts, adding a training stage
+and an ablation requirement. Its authors also retain a long-horizon prompt
+length limitation. Neither result justifies dropping coverage checks or
+calling a single-task fit cross-task meta-learning. Read each method's own
+versioned specification when comparing architectures: another paper's
+related-work description is insufficient implementation evidence.
 
 ## Source PPO versus GRPO: what the evidence licenses
 

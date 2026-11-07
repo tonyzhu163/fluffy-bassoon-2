@@ -185,5 +185,42 @@
   "new_model_training": false,
   "changed_runtime_code": false,
   "external_performance_numbers": "author_reported_only",
-  "full_restoration_goal_complete": false
+  "full_restoration_goal_complete": false,
+  "followup_literature_scan": {
+    "checked_at": "2026-11-07T17:18:25.919515+08:00",
+    "purpose": "Recheck direct RLinf evidence and broaden offline ICRL coverage with S-ICQL and SAD; no runtime or active contract changes",
+    "queries": [
+      "in context reinforcement learning frozen vision language action models offline reward history RoboTwin 2026",
+      "Random Policy Enables In-Context Reinforcement Learning within Trust Horizons",
+      "Scalable In-Context Q-Learning"
+    ],
+    "primary_sources": [
+      {
+        "url": "https://arxiv.org/html/2506.01299v3",
+        "inspected": "v3, 6 February 2026; sections3-5, including task-prompt construction and long-horizon limitation",
+        "supports": "S-ICQL uses world-model task prompts, joint multi-head Q/V/actor, expectile and advantage-weighted extraction; not a frozen-VLA reproduction"
+      },
+      {
+        "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/9e76870b97621b3153b84782062143ef-Abstract-Conference.html",
+        "inspected": "ICLR2026 publisher metadata",
+        "supports": "Published title, author list and venue"
+      },
+      {
+        "url": "https://arxiv.org/html/2410.19982v3",
+        "inspected": "v3, 2 May 2025; section4, Assumption2, Algorithms1-3 and section5 scope",
+        "supports": "SAD replaces trained-teacher labels with query-state random-policy evaluations; MDP argmax assumption and action-enumeration/reset costs"
+      }
+    ],
+    "rechecked": [
+      "RLinf official RoboTwin clean pi0.5 SFT85.94/PPO96.09; randomized OpenVLA-OFT results separate",
+      "RLinf pinned77a52129 task YAML: H50, global2048, micro32, task-specific SFT",
+      "AD and DPT original abstracts; DIT ICML2025 publisher method; offlineICRLv5 metadata and results; VLRLAv1 frozen-expert gradient path"
+    ],
+    "limits": [
+      "OpenReview PDF access returned browser-verification pages; primary arXiv full texts and publisher metadata used instead",
+      "No independent reproduction or systematic-search claim",
+      "No numerical robot outcome inferred from these sources"
+    ],
+    "new_gpu_seconds": 0
+  }
 }

@@ -67,3 +67,15 @@ qualification02 plus independent process recovery before fitting02 launches.
 The 1000 value/1000 actor updates, shared data/statistics/windows, full6×512
 architecture and CPU-only7200s bound are preserved. This remains an IQL-style
 single-Q/independent-encoder pilot, with no exact-method or robot-gain claim.
+
+## Additional baseline and data-requirement check
+
+The follow-up source scan adds S-ICQL (ICLR2026) and SAD (TMLR2025) to the
+review. S-ICQL is relevant prior work for value-based ICRL and learned task
+prompts; a comparison would need to count its auxiliary world-model training.
+SAD removes the trained-teacher requirement by collecting query-state action
+evaluations, with action enumeration, resets and a specific MDP Q-ranking
+assumption. It does not qualify the existing robot buffer as DPT labels or
+remove our reward/coverage requirements. Preserve the planned matched static
+and history-imitation controls and separate support/query evaluation. These
+references change the literature coverage, not the current compute contract.
