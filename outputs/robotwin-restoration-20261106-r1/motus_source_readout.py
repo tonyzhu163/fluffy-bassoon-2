@@ -223,6 +223,7 @@ def main():
             runner.global_step = step
             before = sorted(actor.readout_signature(f'policy-{step}-before').wait(),key=lambda r:r['rank'])
             assert len(before) == 8 and all(r['optimizer_steps'] == 15*step for r in before)
+            actor.pilot_rng().wait()
             runner.update_rollout_weights()
             report['restores'].append(dict(step=step,workers=restored,actor_before=before))
             for panel in range(4):
@@ -241,6 +242,7 @@ def main():
                     environments=environment,sampling=sampling,frozen_rollouts=frozen)
                 report['panels'].append(row)
                 write(output/f'panel-policy-{step:04d}-{panel:02d}.json',row)
+            actor.pilot_rng(restore=True).wait()
             after = sorted(actor.readout_signature(f'policy-{step}-after').wait(),key=lambda r:r['rank'])
             assert all(same_signature(a,b) for a,b in zip(before,after,strict=True))
             report['restores'][-1]['actor_after'] = after

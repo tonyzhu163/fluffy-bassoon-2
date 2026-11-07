@@ -32,7 +32,10 @@ def canonical_layout(layout):
             row['state'] = without_devices(state)
         else:
             assert row['parameter_shape'] == [0], name
-            if row['state_present']:
+            # Native RLinf offload/onload indexes its defaultdict for every
+            # original parameter, materializing {} for an unowned empty shard.
+            # It has no moments or updates; retain every owned-state check.
+            if row['state_present'] and state:
                 assert set(state) == {'step', 'exp_avg', 'exp_avg_sq'}, name
                 step = state['step']
                 assert step['kind'] == 'tensor' and step['shape'] == [] and step['numel'] == 1, name

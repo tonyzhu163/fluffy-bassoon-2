@@ -79,7 +79,7 @@ def main():
             for field in ('action','model_action'):
                 assert torch.equal(left['forward_sampling_fields'][field],right['forward_sampling_fields'][field])
     subprocess.run(['bash','-n',str(ROOT/'motus_source_readout.sh')],check=True)
-    output = BASE/'cpumotussourcereadout03';output.mkdir()
+    output = BASE/'cpumotussourcereadout04';output.mkdir()
     write(output/'RESULT.json',dict(status='passed_readout_code_and_native_ODE_observation_reference',
         source_commit=os.environ['TASK_SOURCE'],gpu_seconds=0,models_or_simulators_constructed=False,
         actual_pinned_ODE_loop_used=True,deterministic_suffix_stub=True,

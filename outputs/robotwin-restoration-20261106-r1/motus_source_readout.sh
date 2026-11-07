@@ -27,7 +27,7 @@ exec > "$TASK_OUT/worker.log" 2>&1
 TASK_STARTED=$(date +%s)
 TASK_RUN=$TASK_CODE/outputs/robotwin-sidney-matched-baselines-20261106-r1
 TASK_SHARED=$TASK_CODE/outputs/robotwin-sidney-rlinf-ppo-20261105-r1
-TASK_LIMIT=1000
+TASK_LIMIT=$("$TASK_PYTHON" -c 'import json,sys;p=json.load(open(sys.argv[1]));v=p["worker_timeout_seconds"];assert type(v) is int and 1000<=v<=1350;print(v)' "$TASK_READOUT_PLAN")
 if [[ ${CUDA_VISIBLE_DEVICES+x} != x ]]; then export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7; fi
 source "$TASK_RUN/runtime_environment.sh"
 export NATIVE_PPO_WORLD=8 NATIVE_PPO_PLACEMENT=0-7
