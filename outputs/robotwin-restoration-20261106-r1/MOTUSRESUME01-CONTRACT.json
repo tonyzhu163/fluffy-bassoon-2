@@ -65,8 +65,14 @@
   "learning_improvement_claim": false,
   "timing_basis": "Measured completed first-cycle actor loop196.8s/rank and checkpoint publication111.75s; previous48minworker included SFT startup/baseline checkpoint/DEV and part of cycle2. Proposed40minworker for one resumed cycle; reserve45mincreation-release including startup/cleanup. Completion remains conditional on measured throughput.",
   "operational_restore": "Native actorDCP/Adam/scheduler load, then all24 sidecars. Actor owned state/RNG fingerprint and sampler case ordinals must match before collection. Old partial actions remain charged in copied escrow; partial physics never resumes.",
-  "linux_cpu_qualification_pending": true,
+  "linux_cpu_qualification_pending": false,
   "cpu_boundary_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motusoptimized03-boundary02/RESULT.json",
   "cpu_boundary_sha256": "7878d8ae97a159c4fbd1443cb5ee3573d05d175376506a4fdcd714fa0d62b8bd",
-  "cpu_boundary_source": "baa413cb597dbd35ca61a69519c72092f44688bd"
+  "cpu_boundary_source": "baa413cb597dbd35ca61a69519c72092f44688bd",
+  "cpu_staging_qualification_passed": true,
+  "cpu_staging_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpumotusresume01/RESULT.json",
+  "cpu_staging_sha256": "d88067f5d2a40df66e3f2fccf1260a1df3e01d81906f53a53ab6fe19349cd4c9",
+  "cpu_staging_source": "930af7785b8917a852f42908935042fccb788432",
+  "budget_proposal": "MOTUSRESUME01-PROPOSAL.md",
+  "cpu_staging_qualification": "CPUMOTUSRESUME01.json"
 }

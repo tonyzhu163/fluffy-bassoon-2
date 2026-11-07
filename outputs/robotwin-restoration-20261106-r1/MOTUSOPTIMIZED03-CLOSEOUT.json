@@ -49,7 +49,9 @@
   "final_resource_sampled_reserve_passed": true,
   "final_host_peak_gib": 457.3360137939453,
   "final_sampled_minimum_free_gib": 35.7333984375,
-  "actor_rank0_cuda_free_bytes_at_end": 9706073536,
-  "actor_rank0_peak_reserved_bytes": 60156805120,
-  "direct_cuda_and_sampled_nvml_reserve_are_separate_measurements": true
+  "direct_cuda_and_sampled_nvml_reserve_are_separate_measurements": true,
+  "independent_cpu_boundary_readback": "MOTUSOPTIMIZED03-BOUNDARY02.json",
+  "minimum_actor_cuda_free_bytes_at_training_return": 96417284096,
+  "maximum_actor_torch_reserved_bytes": 60706258944,
+  "capacity_measurement_note": "Post-offload CUDA free at actor return and1s allocation-wide NVML minimum measure different times. Peak actor allocator reservation is separately reported."
 }

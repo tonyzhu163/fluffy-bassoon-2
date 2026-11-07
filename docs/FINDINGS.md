@@ -1150,3 +1150,19 @@ cleanup passed, with no SGD or TEST access. Every support episode failed; query
 success counts out of2 are0/1/1/1/0 in the listed arm order. These tiny source-case
 counts qualify execution only; they establish no adaptation, gain or transfer.
 [Real runtime and independent replay](../outputs/robotwin-restoration-20261106-r1/STUDENTONLINE02-COMPLETE.json).
+
+
+Fresh joint-Motus PPO now completes one integrated collect/update cycle with the
+shared optimized RoboTwin train/eval lifecycle. All8 ranks completed15 Adam
+updates with global batch2048, microbatch256/accumulation1 and five native epochs.
+All8 actual learner batches passed independent float64 reference checks. Native
+train/dev batches32/2 define a separate numerical condition from earlier64/4.
+Checkpoint1 passed full cold readback, local staging and an independent CPU audit
+of58 files/9,958,082,409 bytes and24 worker tensors, including actual per-worker
+CUDA RNG inventories, sampler ordinal4 and optimizer counts. The fixed16-case
+DEV result is3/16 initially and4/16 after this update, without a learning claim.
+The fixed worker timeout interrupted cycle2; repeated complete online cycles and
+an operational GPU restore remain unqualified. Preserve the first boundary and
+all partial-action charges for explicit same-world continuation.
+[Integrated cycle](../outputs/robotwin-restoration-20261106-r1/MOTUSOPTIMIZED03-CLOSEOUT.json),
+[independent boundary audit](../outputs/robotwin-restoration-20261106-r1/MOTUSOPTIMIZED03-BOUNDARY02.json).
