@@ -1,8 +1,8 @@
 {
-  "status": "frozen_reconstruction_active",
-  "closed_conservative_gpu_seconds": 178782,
+  "status": "frozen_reconstruction_released_cpu_audit_running",
+  "closed_conservative_gpu_seconds": 179306,
   "cap_gpu_seconds": 180000,
-  "closed_conservative_gpu_hours": 49.66166666666667,
+  "closed_conservative_gpu_hours": 49.80722222222222,
   "components": [
     {
       "through_controller_diagnostic": 140019
@@ -75,10 +75,13 @@
     },
     {
       "lifecycle01_creation_to_release_gpu_seconds": 966
+    },
+    {
+      "reconstruction01_creation_to_release_gpu_seconds": 524
     }
   ],
   "next_motor_qualification_reserved_gpu_seconds": 0,
-  "next_worst_gpu_seconds": 179882,
+  "next_worst_gpu_seconds": 179306,
   "maximum_new_output_gib": 0.5,
   "other_and_floor_gib": 286,
   "required_free_gib": null,
@@ -97,17 +100,20 @@
   "active_actor_profile_reserved_gpu_seconds": 0,
   "planned_actor_restore_reserved_gpu_seconds": 0,
   "active_actor_restore_reserved_gpu_seconds": 0,
-  "remaining_gpu_seconds": 1218,
+  "remaining_gpu_seconds": 694,
   "planned_learner_recovery_reserved_gpu_seconds": 0,
   "active_learner_recovery_reserved_gpu_seconds": 0,
   "planned_native_dev_reserved_gpu_seconds": 0,
   "active_native_dev_reserved_gpu_seconds": 0,
-  "remaining_unreserved_gpu_seconds": 118,
+  "remaining_unreserved_gpu_seconds": 694,
   "planned_scene_setup_reserved_gpu_seconds": 0,
   "active_scene_setup_reserved_gpu_seconds": 0,
   "planned_lifecycle_reserved_gpu_seconds": 0,
   "active_lifecycle_reserved_gpu_seconds": 0,
   "planned_frozen_reconstruction_reserved_gpu_seconds": 0,
-  "active_frozen_reconstruction_reserved_gpu_seconds": 1100,
-  "active_job_id": "job-42d8jon81g4m"
+  "active_frozen_reconstruction_reserved_gpu_seconds": 0,
+  "active_job_id": null,
+  "cpu_reconstruction_input_cap_gib": 16,
+  "gpu_reconstruction_output_cap_mib": 128,
+  "physical_export_output_cap_mib": 128
 }
