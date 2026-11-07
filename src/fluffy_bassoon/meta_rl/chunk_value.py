@@ -146,14 +146,17 @@ class ChunkHistoryLearner(nn.Module):
         return batch['starts'][time] if mode == 'episode' else None
 
     def _critic_sequence(self, model, batch, mode):
-        state, values = None, []
-        for time, token in enumerate(batch['tokens']):
-            valid = batch['valid'][time]
-            kwargs = dict(action=torch.where(valid[:, None, None], batch['actions'][time], 0.)) if model.action_value else {}
-            value, state = model.step(torch.where(valid[:, None], token, 0.), state,
-                reset=self._reset(batch, time, mode), **kwargs)
-            values.append(value)
-        return torch.stack(values)
+        kwargs = dict(action=batch['actions']) if model.action_value else {}
+        return model.sequence(batch['tokens'], reset=self._sequence_resets(batch, mode),
+                              valid=batch['valid'], **kwargs)
+
+    @staticmethod
+    def _sequence_resets(batch, mode):
+        if mode == 'static':
+            return torch.ones_like(batch['valid'])
+        reset = batch['starts'].clone() if mode == 'episode' else torch.zeros_like(batch['valid'])
+        reset[0] = True
+        return reset
 
     def value_loss(self, batch, *, mode='full'):
         if self.config.objective == 'ad':
@@ -182,14 +185,8 @@ class ChunkHistoryLearner(nn.Module):
             weights = (torch.ones_like(batch['rewards']) if self.config.objective == 'ad' else
                 importance_weights(self._critic_sequence(self.q, batch, mode)-
                                    self._critic_sequence(self.v, batch, mode), self.config))
-        state, losses = None, []
-        for time, token in enumerate(batch['tokens']):
-            active = valid[time]
-            logp, state = self.actor.log_prob(torch.where(active[:, None], token, 0.),
-                torch.where(active[:, None, None], batch['actions'][time], 0.), state,
-                reset=self._reset(batch, time, mode))
-            losses.append(-logp)
-        nll = torch.stack(losses)
+        nll = -self.actor.log_prob_sequence(batch['tokens'], batch['actions'],
+            reset=self._sequence_resets(batch, mode), valid=valid)
         return (weights*nll)[valid].mean(), dict(nll=nll[valid].mean().detach(),
             weight_mean=weights[valid].mean(), weight_max=weights[valid].max())
 

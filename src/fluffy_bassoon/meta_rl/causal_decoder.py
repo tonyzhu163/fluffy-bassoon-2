@@ -48,6 +48,20 @@ class _DecoderBlock(nn.Module):
         current = current + self.output(attended)
         return current + self.ffn(self.norm_ffn(current))
 
+    def sequence(self, current, bias, allowed):
+        """Train all tokens together without materializing a cache per step."""
+        batch, length, width = current.shape
+        normalized = self.norm_attention(current)
+        query = self.query(normalized).reshape(batch, length, self.heads, self.head_dim).transpose(1, 2)
+        key, value = self.key_value(normalized).chunk(2, dim=-1)
+        key, value = (entry.reshape(batch, length, self.heads, self.head_dim).transpose(1, 2)
+                      for entry in (key, value))
+        scores = torch.einsum('bhtd,bhsd->bhts', query, key)*self.head_dim**-.5 + bias[None]
+        scores = scores.masked_fill(~allowed[:, None], -torch.inf)
+        attended = torch.einsum('bhts,bhsd->bhtd', scores.softmax(-1), value)
+        current = current + self.output(attended.transpose(1, 2).reshape(batch, length, width))
+        return current + self.ffn(self.norm_ffn(current))
+
 
 class CausalDecoderCore(nn.Module):
     """Pre-norm causal decoder with ALiBi and a functional sliding-window cache.
@@ -74,6 +88,47 @@ class CausalDecoderCore(nn.Module):
         weight = self.input_projection.weight
         return dict(memory=weight.new_zeros(batch, len(self.layers), self.memory_length, self.output_dim),
                     length=torch.zeros(batch, device=weight.device, dtype=torch.long))
+
+    def sequence(self, observation, *, reset, valid):
+        """Full causal training from empty history, with lane-specific resets.
+
+        Inputs/outputs are time-major. This is the same layer/cache computation
+        as repeated forward calls, including the sliding attention window and
+        stored ALiBi biases, but padding scales with the selected sequence
+        length rather than allocating memory_length slots at every time step.
+        Incremental deployment continues to use forward and its owned cache.
+        """
+        weight = self.input_projection.weight
+        if (not torch.is_tensor(observation) or observation.ndim != 3
+                or min(observation.shape[:2]) < 1 or observation.shape[-1] != self.input_dim
+                or observation.dtype != weight.dtype or observation.device != weight.device):
+            raise ValueError('Require sequence [time,batch,input_dim] on the core dtype/device')
+        for flag in (reset, valid):
+            if (not torch.is_tensor(flag) or flag.shape != observation.shape[:2]
+                    or flag.dtype != torch.bool or flag.device != observation.device):
+                raise ValueError('Require explicit boolean sequence reset/valid masks')
+        if not valid[0].all() or (valid[1:] & ~valid[:-1]).any():
+            raise ValueError('Require a nonempty contiguous sequence prefix in each lane')
+        clean = torch.where(valid[..., None], observation, 0.)
+        if not torch.isfinite(clean).all():
+            raise ValueError('Require finite valid sequence observations')
+        length = len(observation)
+        positions = torch.arange(length, device=observation.device)
+        distances = positions[:, None]-positions[None]
+        causal = (distances >= 0) & (distances <= self.memory_length)
+        segments = reset.long().cumsum(0).transpose(0, 1)
+        allowed = causal[None] & (segments[:, :, None] == segments[:, None, :])
+        active = valid.transpose(0, 1)
+        allowed = allowed & active[:, :, None] & active[:, None, :]
+        # Trailing padded queries use a harmless self key; all-masked softmax
+        # would create NaNs even though their losses are excluded downstream.
+        allowed = allowed | (~active[:, :, None] & torch.eye(length, device=weight.device, dtype=torch.bool)[None])
+        # Index the saved bias, preserving its original floating-point rounding.
+        bias = self.alibi_bias[:, self.memory_length-distances.clamp(0, self.memory_length)].to(weight.dtype)
+        current = self.input_projection(clean.transpose(0, 1))
+        for layer in self.layers:
+            current = layer.sequence(current, bias, allowed)
+        return self.final_norm(current).transpose(0, 1)
 
     def forward(self, observation, state=None):
         weight = self.input_projection.weight

@@ -74,6 +74,21 @@ class ChunkHistoryBackbone(nn.Module):
         normalized = torch.cat(((tokens[:, :d]-self.feature_mean)/self.feature_std, tokens[:, d:]), -1)
         return self.core(normalized, state)
 
+    def encode_sequence(self, tokens, *, reset, valid):
+        if (tokens.ndim != 3 or tokens.shape[-1] != self.config.layout.token_dim
+                or reset.shape != tokens.shape[:2] or valid.shape != tokens.shape[:2]
+                or reset.dtype != torch.bool or valid.dtype != torch.bool
+                or reset.device != tokens.device or valid.device != tokens.device):
+            raise ValueError('Require decoded sequence tokens and boolean reset/valid masks')
+        tokens = torch.where(valid[..., None], tokens, 0.)
+        if not torch.isfinite(tokens).all():
+            raise ValueError('Require finite valid decoded sequence tokens')
+        begin, d = self.config.layout.current_dim, self.config.layout.feature_dim
+        tokens = torch.cat((tokens[..., :begin],
+            torch.where(reset[..., None], 0., tokens[..., begin:-1]), tokens[..., -1:]), -1)
+        normalized = torch.cat(((tokens[..., :d]-self.feature_mean)/self.feature_std, tokens[..., d:]), -1)
+        return self.core.sequence(normalized, reset=reset, valid=valid)
+
 
 class ChunkResidualPolicy(ChunkHistoryBackbone):
     """Diagonal Gaussian transformed to a bounded full decoded residual chunk."""
@@ -117,6 +132,17 @@ class ChunkResidualPolicy(ChunkHistoryBackbone):
         distribution, state = self.distribution(tokens, state, reset=reset)
         return self._decoded_log_prob(distribution, torch.atanh(scaled.flatten(1))), state
 
+    def log_prob_sequence(self, tokens, residual, *, reset, valid):
+        if residual.shape != (*tokens.shape[:2], *self.config.layout.command_shape):
+            raise ValueError('Require whole decoded residual sequence targets [T,B,H,A]')
+        residual = torch.where(valid[..., None, None], residual, 0.)
+        scaled = residual/self.residual_radius
+        if not torch.isfinite(scaled).all() or not (scaled.abs() < 1).all():
+            raise ValueError('Target reaches/exceeds fixed residual bounds; audit coverage, never silently clip labels')
+        features = self.encode_sequence(tokens, reset=reset, valid=valid)
+        distribution = Normal(self.actor(features), self.log_std.clamp(-5, 2).exp())
+        return self._decoded_log_prob(distribution, torch.atanh(scaled.flatten(2)))
+
 
 class ChunkHistoryCritic(ChunkHistoryBackbone):
     """Q receives the entire current decoded residual; V receives only history."""
@@ -138,3 +164,16 @@ class ChunkHistoryCritic(ChunkHistoryBackbone):
         elif action is not None:
             raise ValueError('V must not consume a current action or target')
         return self.head(features).squeeze(-1), state
+
+    def sequence(self, tokens, *, action=None, reset, valid):
+        features = self.encode_sequence(tokens, reset=reset, valid=valid)
+        if self.action_value:
+            if action is None or action.shape != (*tokens.shape[:2], *self.config.layout.command_shape):
+                raise ValueError('Q requires whole decoded residual sequence actions')
+            action = torch.where(valid[..., None, None], action, 0.)
+            if not torch.isfinite(action).all():
+                raise ValueError('Require finite valid Q actions')
+            features = torch.cat((features, action.flatten(2)), -1)
+        elif action is not None:
+            raise ValueError('V must not consume a current action or target')
+        return self.head(features).squeeze(-1)
