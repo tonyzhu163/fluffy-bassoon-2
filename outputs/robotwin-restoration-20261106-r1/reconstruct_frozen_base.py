@@ -42,6 +42,9 @@ def load_packet(binding, local):
 
 
 def stage(*, validate_payloads=False):
+    if validate_payloads:
+        assert os.uname().sysname == 'Linux' and os.environ['CUDA_VISIBLE_DEVICES'] == ''
+        assert not torch.cuda.is_initialized()
     plan = contract()
     source = BASE/'cpureconstruction04'
     assert sha(source/'RESULT.json') == plan['input_report_sha256']
@@ -52,7 +55,7 @@ def stage(*, validate_payloads=False):
     assert report['fixed_selection'] == dict(ranks=[0, 1, 2, 3], rounds=[0, 1, 2, 3], batch=64, chunks=6, policy_iteration=0)
     assert report['source_corpus_admitted'] is False and report['cuda_initialized'] is False
     local, output = Path(os.environ['TASK_LOCAL']), Path(os.environ['TASK_OUT'])
-    rows, episodes = [], []
+    rows, episodes, load_times = [], [], []
     physical_calls = noops = nonzero_noops = physics_steps = 0
     terminal_seen = episode_return = episode_ids = scene_ids = None
     for index, row in enumerate(report['packets']):
@@ -62,7 +65,9 @@ def stage(*, validate_payloads=False):
         assert (row['rank'], row['round_index'], row['chunk']) == (rank, round_index, chunk)
         assert row['full_teacher_command_and_final_chain_exact'] and row['canonical_gaussian_and_denoising_indices_exact']
         if validate_payloads:
+            started = time.monotonic()
             packet = load_packet(row, local)
+            load_times.append(time.monotonic()-started)
             assert tuple(packet['original_gaussian'].shape) == (64, 32, 32)
             assert packet['original_gaussian'].dtype == torch.float32
             assert torch.equal(packet['recorded_forward_action'].reshape(64, 32, 14), packet['teacher_actions'])
@@ -119,6 +124,7 @@ def stage(*, validate_payloads=False):
                     student_partition=packet['student_partition_per_row'][lane],
                     physical_return=float(episode_return[lane])) for lane in range(64))
             del packet
+            print('VALIDATED_INPUT_PACKET', index, 'load_seconds', load_times[-1], flush=True)
         rows.append(row)
     assert sum(row['bytes'] for row in rows) <= plan['input_staging_cap_gib']*2**30
     write(output/'INPUTS.json', dict(input_report_sha256=sha(source/'RESULT.json'),
@@ -134,6 +140,8 @@ def stage(*, validate_payloads=False):
             nonzero_feedback_noops=nonzero_noops, physics_steps=physics_steps,
             zero_duration_feedback_excluded_from_physical_returns=True,
             raw_native_flags_match_recorded_flags=True, all_1024_episodes_complete=True,
+            input_load_seconds=load_times, total_input_load_seconds=sum(load_times),
+            maximum_input_load_seconds=max(load_times),
             source_corpus_admitted=False, gpu_seconds=0,
             model_or_simulator_constructed=False, cuda_initialized=torch.cuda.is_initialized()))
 
