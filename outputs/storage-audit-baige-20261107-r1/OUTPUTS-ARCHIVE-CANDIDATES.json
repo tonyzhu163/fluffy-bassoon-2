@@ -1,0 +1,268 @@
+{
+  "format": "outputs_archive_candidates_v1",
+  "scope": "Discovery and archive planning only; no archive or payload reclamation performed.",
+  "source_root": "/mowenjie/fluffy-bassoon-2",
+  "proposed_cold_root": "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1",
+  "size_basis": "Full zero-error census2026-11-07 12:56:43\u201313:22:48 Shanghai; candidate directory presence refreshed independently. Parent/child selectors are disjoint. Totals are gross allocated bytes before retaining compact files.",
+  "preflight_unix": 1794030512.4707458,
+  "metadata_reader_check_unix": 1794030345.2561972,
+  "development_readers": [],
+  "first_batch": [
+    {
+      "id": "A_closed_qualification",
+      "label": "Earlier RoboTwin qualification payloads",
+      "classification": "qualification_superseded",
+      "allocated_bytes": 66785505280,
+      "paths": [
+        {
+          "relative_path": "outputs/robotwin-sidney-matched-baselines-20261106-r1/qual02/train",
+          "source": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual02/train",
+          "allocated_bytes": 23344065536,
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robotwin-sidney-matched-baselines-20261106-r1__qual02__train.tar.zst",
+          "restore_command": "tar --acls --xattrs -I zstd -xf /mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robotwin-sidney-matched-baselines-20261106-r1__qual02__train.tar.zst -C /mowenjie/fluffy-bassoon-2",
+          "present_on_PFS": true,
+          "symlink_root": false
+        },
+        {
+          "relative_path": "outputs/robotwin-sidney-matched-baselines-20261106-r1/qual03/train",
+          "source": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/qual03/train",
+          "allocated_bytes": 33453915136,
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robotwin-sidney-matched-baselines-20261106-r1__qual03__train.tar.zst",
+          "restore_command": "tar --acls --xattrs -I zstd -xf /mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robotwin-sidney-matched-baselines-20261106-r1__qual03__train.tar.zst -C /mowenjie/fluffy-bassoon-2",
+          "present_on_PFS": true,
+          "symlink_root": false
+        },
+        {
+          "relative_path": "outputs/robotwin-sidney-matched-baselines-20261106-r1/grad02/train",
+          "source": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grad02/train",
+          "allocated_bytes": 9987524608,
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robotwin-sidney-matched-baselines-20261106-r1__grad02__train.tar.zst",
+          "restore_command": "tar --acls --xattrs -I zstd -xf /mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robotwin-sidney-matched-baselines-20261106-r1__grad02__train.tar.zst -C /mowenjie/fluffy-bassoon-2",
+          "present_on_PFS": true,
+          "symlink_root": false
+        }
+      ],
+      "evidence": [
+        "robotwin-sidney-matched-baselines-20261106-r1/qual02/EXIT.json: exit255; qual03 and grad02 exit0",
+        "qual03/RESULT.md and matched baseline RESULT.md: grouped recovery and the later completed pair"
+      ],
+      "preserve": [
+        "Keep numerical gradient/parity records, logs, configs, integrity hashes and result JSON hot.",
+        "Archive old native DCP/Adam/worker/RNG boundaries in full, together with their original raw traces and reset inputs.",
+        "Current matched ppo02/grpo01 and endpoint-readout checkpoints are excluded."
+      ]
+    },
+    {
+      "id": "B_short_chunk",
+      "label": "Finished short-chunk benchmark checkpoints",
+      "classification": "closed_benchmark",
+      "allocated_bytes": 37175580672,
+      "paths": [
+        {
+          "relative_path": "outputs/robocasa-ppo-short-chunk-benchmark-20261104-r1/attempt-01/OpenDrawer",
+          "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-short-chunk-benchmark-20261104-r1/attempt-01/OpenDrawer",
+          "allocated_bytes": 37175580672,
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robocasa-ppo-short-chunk-benchmark-20261104-r1__attempt-01__OpenDrawer.tar.zst",
+          "restore_command": "tar --acls --xattrs -I zstd -xf /mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robocasa-ppo-short-chunk-benchmark-20261104-r1__attempt-01__OpenDrawer.tar.zst -C /mowenjie/fluffy-bassoon-2",
+          "present_on_PFS": true,
+          "symlink_root": false
+        }
+      ],
+      "evidence": [
+        "robocasa-ppo-short-chunk-benchmark-20261104-r1/RESULT.md",
+        "BENCH-AUDIT.json: one update complete; all22checkpointfiles verified; post-update evaluation outside scope"
+      ],
+      "preserve": [
+        "Retain both step0 and step1 complete boundaries in the cold archive, not only inference weights.",
+        "Keep benchmark timings, replay/gradient checks, markers, costs and resolved recipe hot.",
+        "The run's rollout/video/environment/sampling directories were already archived and are not counted again."
+      ]
+    },
+    {
+      "id": "C_dev_staging",
+      "label": "Finished DEV64 staged policy copies",
+      "classification": "closed_eval_staging",
+      "allocated_bytes": 27797176832,
+      "paths": [
+        {
+          "relative_path": "outputs/robocasa-ppo40-matched-dev64-20261104-r1/staging-r1",
+          "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo40-matched-dev64-20261104-r1/staging-r1",
+          "allocated_bytes": 27797176832,
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robocasa-ppo40-matched-dev64-20261104-r1__staging-r1.tar.zst",
+          "restore_command": "tar --acls --xattrs -I zstd -xf /mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robocasa-ppo40-matched-dev64-20261104-r1__staging-r1.tar.zst -C /mowenjie/fluffy-bassoon-2",
+          "present_on_PFS": true,
+          "symlink_root": false
+        }
+      ],
+      "evidence": [
+        "robocasa-ppo40-matched-dev64-20261104-r1/RESULT.md",
+        "READY-FOUR.json: four policy file hashes, original source boundaries and conversion recipe"
+      ],
+      "preserve": [
+        "Archive all four exact files: sft.pt, old.pt, new-ppo40-eval.pt, grpo40-eval.pt.",
+        "Keep READY.json, READY-FOUR.json, prepare.py, original source markers and per-case results hot.",
+        "Converted evaluation files are not byte-identical to their original actors; do not discard on filename/size equivalence."
+      ]
+    },
+    {
+      "id": "D_closed_ablation",
+      "label": "Completed ablation arms, suffix input and endpoint bulk",
+      "classification": "closed_reported_experiment",
+      "allocated_bytes": 91353978880,
+      "paths": [
+        {
+          "relative_path": "outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/E/attempt-02",
+          "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/E/attempt-02",
+          "allocated_bytes": 18291867648,
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robocasa-opendrawer-ppo-ablation-3m-20261104-r1__E__attempt-02.tar.zst",
+          "restore_command": "tar --acls --xattrs -I zstd -xf /mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robocasa-opendrawer-ppo-ablation-3m-20261104-r1__E__attempt-02.tar.zst -C /mowenjie/fluffy-bassoon-2",
+          "present_on_PFS": true,
+          "symlink_root": false
+        },
+        {
+          "relative_path": "outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/C/attempt-01",
+          "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/C/attempt-01",
+          "allocated_bytes": 19302490112,
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robocasa-opendrawer-ppo-ablation-3m-20261104-r1__C__attempt-01.tar.zst",
+          "restore_command": "tar --acls --xattrs -I zstd -xf /mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robocasa-opendrawer-ppo-ablation-3m-20261104-r1__C__attempt-01.tar.zst -C /mowenjie/fluffy-bassoon-2",
+          "present_on_PFS": true,
+          "symlink_root": false
+        },
+        {
+          "relative_path": "outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/D/attempt-01",
+          "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/D/attempt-01",
+          "allocated_bytes": 19335536640,
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robocasa-opendrawer-ppo-ablation-3m-20261104-r1__D__attempt-01.tar.zst",
+          "restore_command": "tar --acls --xattrs -I zstd -xf /mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robocasa-opendrawer-ppo-ablation-3m-20261104-r1__D__attempt-01.tar.zst -C /mowenjie/fluffy-bassoon-2",
+          "present_on_PFS": true,
+          "symlink_root": false
+        },
+        {
+          "relative_path": "outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/input-suffix-r1",
+          "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/input-suffix-r1",
+          "allocated_bytes": 16102158336,
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robocasa-opendrawer-ppo-ablation-3m-20261104-r1__input-suffix-r1.tar.zst",
+          "restore_command": "tar --acls --xattrs -I zstd -xf /mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robocasa-opendrawer-ppo-ablation-3m-20261104-r1__input-suffix-r1.tar.zst -C /mowenjie/fluffy-bassoon-2",
+          "present_on_PFS": true,
+          "symlink_root": false
+        },
+        {
+          "relative_path": "outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/eval-input-original40",
+          "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/eval-input-original40",
+          "allocated_bytes": 6949291008,
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robocasa-opendrawer-ppo-ablation-3m-20261104-r1__eval-input-original40.tar.zst",
+          "restore_command": "tar --acls --xattrs -I zstd -xf /mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robocasa-opendrawer-ppo-ablation-3m-20261104-r1__eval-input-original40.tar.zst -C /mowenjie/fluffy-bassoon-2",
+          "present_on_PFS": true,
+          "symlink_root": false
+        },
+        {
+          "relative_path": "outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/endpoint512",
+          "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/endpoint512",
+          "allocated_bytes": 11372635136,
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robocasa-opendrawer-ppo-ablation-3m-20261104-r1__endpoint512.tar.zst",
+          "restore_command": "tar --acls --xattrs -I zstd -xf /mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robocasa-opendrawer-ppo-ablation-3m-20261104-r1__endpoint512.tar.zst -C /mowenjie/fluffy-bassoon-2",
+          "present_on_PFS": true,
+          "symlink_root": false
+        }
+      ],
+      "evidence": [
+        "robocasa-opendrawer-ppo-ablation-3m-20261104-r1/EXECUTION.json: complete",
+        "RESULT.md, BUDGET-CLOSEOUT.json, E/C/D-COMPLETE.json and ENDPOINT-AUDIT.json",
+        "robocasa-ppo4-grpo40-test512-20261105-r1/RESULT.md: later consumer also complete"
+      ],
+      "preserve": [
+        "Keep the shared input-prefix-r1 initializer hot; it is explicitly excluded.",
+        "Preserve every cited step40 checkpoint and its complete recovery state in the cold archive.",
+        "Keep result/config/log files, per-case outcomes, native audits and all COLD-STORAGE/checkpoint sidecar records hot.",
+        "The later PPO4-vs-GRPO evaluator references E; its completed experiment must have an explicit restore pointer to the archived actor."
+      ]
+    }
+  ],
+  "deferred": [
+    {
+      "id": "E_old_pilots",
+      "label": "Earlier stopped/OOM RoboTwin pilots",
+      "classification": "defer_predecessor_dependency",
+      "allocated_bytes": 24492184064,
+      "paths": [
+        {
+          "relative_path": "outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03",
+          "source": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03",
+          "allocated_bytes": 16822801920,
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robotwin-sidney-rlinf-ppo-20261105-r1__train03.tar.zst",
+          "restore_command": "tar --acls --xattrs -I zstd -xf /mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robotwin-sidney-rlinf-ppo-20261105-r1__train03.tar.zst -C /mowenjie/fluffy-bassoon-2",
+          "present_on_PFS": true,
+          "symlink_root": false
+        },
+        {
+          "relative_path": "outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train06",
+          "source": "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train06",
+          "allocated_bytes": 7669382144,
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robotwin-sidney-rlinf-ppo-20261105-r1__train06.tar.zst",
+          "restore_command": "tar --acls --xattrs -I zstd -xf /mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robotwin-sidney-rlinf-ppo-20261105-r1__train06.tar.zst -C /mowenjie/fluffy-bassoon-2",
+          "present_on_PFS": true,
+          "symlink_root": false
+        }
+      ],
+      "evidence": [
+        "robotwin-sidney-rlinf-ppo-20261105-r1/EXECUTION.json: train03 stopped beforeSGD; train06 OOM beforeSGD; train07 completed40Adam"
+      ],
+      "preserve": [
+        "Train03 is the saved step0 predecessor and is explicitly marked protected in historical execution records.",
+        "Check every future recovery/archive qualification reader before tiering this predecessor; keep it out of the first batch."
+      ]
+    },
+    {
+      "id": "F_grpo_predecessor",
+      "label": "Earlier GRPO attempt checkpoint tree",
+      "classification": "defer_predecessor_dependency",
+      "allocated_bytes": 17134860800,
+      "paths": [
+        {
+          "relative_path": "outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/grpo/attempt-01/OpenDrawer",
+          "source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/grpo/attempt-01/OpenDrawer",
+          "allocated_bytes": 17134860800,
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robocasa-ppo-grpo-meta-stage1-20261104-r1__grpo__attempt-01__OpenDrawer.tar.zst",
+          "restore_command": "tar --acls --xattrs -I zstd -xf /mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261107-r1/outputs__robocasa-ppo-grpo-meta-stage1-20261104-r1__grpo__attempt-01__OpenDrawer.tar.zst -C /mowenjie/fluffy-bassoon-2",
+          "present_on_PFS": true,
+          "symlink_root": false
+        }
+      ],
+      "evidence": [
+        "robocasa-ppo40-matched-dev64-20261104-r1/prepare.py:add_grpo asserts attempt02 resumed attempt01 global_step10",
+        "Stage1 GRPO scheduler closeout: final attempt02 completed40 and released"
+      ],
+      "preserve": [
+        "This contains the step0 initializer and step10 resume ancestry for the published GRPO40 result.",
+        "Preserve hot in the first batch; only tier later with a separately verified complete recovery archive and dependency release."
+      ]
+    }
+  ],
+  "execution_gates": [
+    "Refresh all-cluster user scheduler inventory and actual job/step ownership before any hot reclamation. The development FD scan alone cannot see isolated scheduler pods.",
+    "Recheck no active/queued reader or current owner requires a selected hot path. Historical read-only references require an exact original-path restore mapping.",
+    "Take a stable per-file inventory; include complete model/optimizer/sampler/worker/RNG recovery state, permissions, hardlinks and symlinks.",
+    "Write a new private BOS archive with bounded local /tmp staging; do not create a second raw staging copy on nearly-full PFS.",
+    "Verify exact member coverage, archive-to-source byte comparison, full independent cold readback SHA256, and a complete staged restore against the inventory before releasing any payload.",
+    "First restore to fresh empty staging and compare all inventory members. Recreate only verified missing original-path payloads; abort on differing existing files and never overwrite later compact-record edits. The listed tar commands describe the original relative restore layout, not an unchecked overwrite operation.",
+    "Retain original-path cold pointers, compact configs/logs/results/numerical qualification files and referenced checkpoint boundary metadata; no blanket rm-rf of whole run folders.",
+    "Confirm unchanged source metadata and reader absence immediately before any release; record allocation actually reclaimed separately from concurrent df changes."
+  ],
+  "excluded_hot_paths": [
+    "outputs/robocasa-opendrawer-ppo-ablation-3m-20261104-r1/input-prefix-r1",
+    "outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02",
+    "outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01",
+    "outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train07",
+    "outputs/robocasa-flow-sde-critic-parity-20261104-r1",
+    "outputs/robocasa-joint-steering-kv-scale50-20261103-r1",
+    "outputs/robocasa-joint-steering-velocity-scale50-20261103-r1",
+    "outputs/robocasa-flow-sde-10m-per-task-20261103-r1",
+    "outputs/robocasa-opendrawer-flow-sde-20261102-r4",
+    "outputs/robocasa-eight-hour-babysit-20261104-r1/source5",
+    "All active Mikasa/AnyViewPhys outputs and shared inputs/caches/environments"
+  ],
+  "first_batch_allocated_bytes": 223112241664,
+  "deferred_allocated_bytes": 41627044864,
+  "payload_changes": false,
+  "GPU_allocations": 0
+}

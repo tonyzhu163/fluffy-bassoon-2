@@ -4,6 +4,8 @@
 
 **Most existing space is experiment output, while most recent growth is new project/model/input material.** AnyViewPhys occupies **269.25 GiB**, including models 135.26, runs 77.42, environments 35.19 and package caches 18.10. A new materialized steering-source cache occupies **127.22 GiB** under `fluffy-bassoon-2/inputs/`. Those two items together are 396.47 GiB and explain most of the increase from the Nov 4 census. The main project's output directory has actually fallen from 1105.38 to 1046.86 GiB over that interval, while individual new RoboTwin runs grew and legacy payloads were removed.
 
+Follow-up: [Outputs-only archive review](OUTPUTS-ARCHIVE-REVIEW.md) identifies **207.79 GiB** in the first batch, with exact paths, retained evidence and restore requirements.
+
 ## Complete allocation breakdown
 
 The census walked **5,880,296 entries**, including hidden roots, on Linux from **12:56:43 to 13:22:48** on Nov 7, with **zero read errors**. **260,593 hardlinked regular-file inodes** were counted once. Allocation is `st_blocks × 512`, rather than logical file size; symlinks are not followed and other filesystems and the empty `.snapshots` directory contents are excluded. Secret/chat roots expose only aggregate totals in the published breakdown.
