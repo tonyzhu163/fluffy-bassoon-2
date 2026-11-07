@@ -1,0 +1,17 @@
+{
+  "status": "failed_released_before_scene_setup",
+  "job_id": "job-96eev6qd8xcp",
+  "source_commit": "4c7b9c24b25a6ed43c97deb1bf1a5c1d7ac5b5dd",
+  "created_shanghai": "2026-11-07T10:32:39+08:00",
+  "released_shanghai": "2026-11-07T10:33:41+08:00",
+  "conservative_gpu_seconds": 62,
+  "worker_gpu_seconds": 1,
+  "worker_exit_code": 1,
+  "cause": "Scheduler container exposed one physical NVML GPU and no explicit CUDA_VISIBLE_DEVICES. The shared native four-rank runtime fallback inserted0,1,2,3; the expected-count1 probe rejected it.",
+  "model_calls": 0,
+  "simulator_episodes": 0,
+  "optimizer_updates": 0,
+  "qualified": false,
+  "retry": "New scenesetup02 identity defaults to0 only when scheduler visibility is unset; supplied visibility is preserved and still probed.",
+  "release_proof": "scenesetup01-released.png"
+}

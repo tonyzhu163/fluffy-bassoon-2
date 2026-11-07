@@ -20,7 +20,9 @@ PROFILES = [('default', 0)] + [('deferred', rank) for rank in range(4)]
 
 def contract():
     from fluffy_bassoon.meta_rl.rlinf_native_ppo import sha
-    plan = json.loads((ROOT/'SCENESETUP01-CONTRACT.json').read_bytes())
+    name = os.environ.get('TASK_CONTRACT', 'SCENESETUP01-CONTRACT.json')
+    assert name in ('SCENESETUP01-CONTRACT.json', 'SCENESETUP02-CONTRACT.json')
+    plan = json.loads((ROOT/name).read_bytes())
     assert plan['status'] in ('prepared', 'admitted')
     assert plan['closed_conservative_gpu_seconds']+plan['reserved_gpu_seconds'] <= 180000
     assert sha(BASE/'cpudev-readback02/RESULT.json') == plan['reference_readback_sha256']
@@ -84,7 +86,7 @@ def child(profile, rank, ordinal):
     write(directory/'RESULT.json', report)
     env = None
     journal = ActionJournal(output/'action-accounting', rank=ordinal, world=5,
-        attempt='scenesetup01', maximum_actions=5120)
+        attempt=output.name, maximum_actions=5120)
     started = time.monotonic()
     try:
         expected_pci = _install_allocated_renderer(directory/'renderers')

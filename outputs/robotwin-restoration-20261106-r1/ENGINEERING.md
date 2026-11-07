@@ -186,3 +186,20 @@ combined, command/observation continuity, physical metadata, raw terminal
 feedback and identical first Torch/CUDA RNG states. Sampled minfree was
 79.686GiB with15.286GiB maxused. This small evaluation profile does not qualify
 the failed64-scene/rank combined online training footprint or AD history.
+
+
+`meta_rl/chunk_policy.py` supplies decoded-chunk actor and Q/V backbones
+using the shared causal decoder and explicit ChunkHistoryLayout. Gaussian
+residuals are transformed with fixed per-coordinate native-unit radii; density
+includes the transform Jacobian and label-bound violations fail explicitly.
+Every reset clears both embedded feedback and decoder state. Q consumes the
+whole current residual, including its undelivered tail; V rejects action labels.
+CPUCHUNKMODEL01 passed11 Linux cases (5 new numerical/model cases plus the6
+encoder cases). This qualifies the model primitives, not student dataset
+export, optimization integration, learned control or frozen robot evaluation.
+
+SCENESETUP01 failed before scenes on a real expected-count probe: the shared
+launcher inserted its4-GPU default in a1-GPU container whose scheduler left
+CUDA_VISIBLE_DEVICES unset. Preserve that charged failure and use an explicit
+1-GPU fallback only when no scheduler setting exists; never overwrite supplied
+visibility. Retry02 remains subject to a fresh Linux shell boundary check.
