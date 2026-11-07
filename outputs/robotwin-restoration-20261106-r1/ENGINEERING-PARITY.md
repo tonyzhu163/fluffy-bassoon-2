@@ -19,10 +19,12 @@ not claim that every RoboCasa optimization transfers unchanged to SAPIEN.
 
 PPO and GRPO completed two actual combined cycles and all three checkpoints.
 Both independent cold checkpoint/strict Adam and whole-batch NumPy audits
-passed. Each covers three complete boundaries and both actual rollout batches. Source readout's
-CPU/native ODE observation and schemas passed; its full-model instrumentation,
-24-worker restoration and paired physical episodes remain to be checked in the
-readout allocation. Do not mark those pending gates as passed from code review.
+passed. Each covers three complete boundaries and both actual rollout batches.
+Both source DEV readouts subsequently passed full-model instrumentation, all24-worker
+restores for checkpoints0/2, all8 actor-state guards, and128 paired physical episodes.
+Independent CPU cold/physical/noise readbacks passed for both methods. These are
+actual GPU and cold-readback qualifications. Disjoint confirmation remains pending;
+the observed DEV gains do not establish an effective learner.
 
 Compilation, different model kernels, larger actor batches or changed sampling
 cadence require their own numerical qualification. They are not implicitly

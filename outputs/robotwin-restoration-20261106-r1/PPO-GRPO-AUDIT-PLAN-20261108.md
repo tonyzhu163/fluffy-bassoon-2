@@ -4,6 +4,16 @@ The current result is **no verified effective PPO or GRPO**. Continue source-tas
 learning controls before student/ICRL experiments. The user approved a cumulative
 100 GPU-hour cap; historical costs remain in `LATEST-BUDGET.json`.
 
+## Verified progress
+
+Both corrected two-collection controls and independent full-state/numerical
+readbacks passed. Full paired DEV readout also passed, including actual noise
+and physical traces: PPO6/64→10/64 (six gains,two losses,p=.2891),
+GRPO6/64→11/64 (five gains,no losses,p=.0625). Neither meets the source gate.
+The [precommitted selection](MOTUS-SOURCE-SELECTION.json) chooses GRPO for
+disjoint confirmation before any confirmation outcome. Preserve checkpoint2;
+student work remains paused while source effectiveness is unresolved.
+
 ## Evidence that changes the next action
 
 - Actual eight-rank GAE, episode routing, masks and reward coverage pass independent
@@ -79,10 +89,11 @@ native RLinf offload/onload; every captured owned Adam descriptor and group stay
 exact. Twelve Linux CPU core tests and the actual native functions qualify the
 narrow exception. All8 GPU guards and complete checkpoint2 readouts remain required.
 
-Closed usage is319,430 GPU-seconds (88.731h). Fresh PPO DEV03 and GRPO DEV02
-reserve12,000 GPU-seconds each; one selected disjoint confirmation reserves12,000.
-Worst total355,430 GPU-seconds (98.731h), leaving4,570 GPU-seconds unreserved.
-Worker limit1,350s, scheduler24min, creation-to-release watchdog1,500s perjob.
+Closed usage is337,838 GPU-seconds (93.844h). Selected GRPO confirmation
+reserves12,000 GPU-seconds, including startup/cleanup. Worst total349,838
+GPU-seconds (97.177h), leaving10,162 GPU-seconds unreserved. Worker limit1,350s,
+scheduler24min, creation-to-release watchdog1,500s. Reconcile its release before
+planning additional accelerator work;100h is a cumulative hard cap.
 Each new job has a fresh output identity and immutable reviewed main commit.
 Check advancing progress after launch and monitor at most20 minutes apart;
 inspect the exact owned job and preserve its latest complete checkpoint before

@@ -1,5 +1,5 @@
 {
-  "status": "actor_systems_qualified",
+  "status": "historical_systems_profile_qualified_but_rejected_for_on_policy_training",
   "profile_source_commit": "7df04cf7981e17323d7b87dfc8c5a063c99c215c",
   "recovery_source_commit": "5b511ed66aa281789d7ad1629570437250d18683",
   "selected_micro_batch_size": 256,
@@ -26,5 +26,12 @@
   "evidence": [
     "ACTORPROFILE01-CLOSEOUT.json",
     "ACTORRESTORE01-COMPLETE.json"
-  ]
+  ],
+  "scientific_training_admitted": false,
+  "superseded_for_training_by": "MOTUSJOINTAUDIT01-COMPLETE.json",
+  "supersession_reason": "Actual original behavior likelihoods match atB32 but drift atB256. Original selected_micro_batch_size and timing fields are historical capacity measurements only.",
+  "current_qualified_training_micro_batch": 32,
+  "current_qualified_training_accumulation": 8,
+  "current_qualified_training_world_size": 8,
+  "current_qualified_global_batch": 2048
 }
