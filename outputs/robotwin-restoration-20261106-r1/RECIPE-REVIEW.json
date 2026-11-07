@@ -1,21 +1,23 @@
 {
   "status": "complete_focused_primary_source_review",
-  "checked_at_shanghai": "2026-11-07T15:37:13+08:00",
+  "checked_at_shanghai": "2026-11-08T01:49:00+08:00",
   "review": "docs/literature/robotwin-ppo-review.md",
   "question": "Why has the transferred RLinf RoboTwin PPO recipe not produced a verified learning gain?",
   "conclusions": [
-    "Official clean adjust_bottle task-specific pi0.5 PPO success is reported; it was not reproduced by our joint-motor source-task pilot.",
-    "Recovered Motus15 optimizer updates reuse one6144-slot collection; no sustained Motus online loop is verified.",
-    "Motus4/16->2/16 and earlier Sidney5/16->5/16 endpoint panels show no observed PPO gain.",
-    "Collector timeout is an execution failure; long-run convergence and exact original-release reproduction remain unproven.",
-    "A sustained source-task PPO control is the next scientific diagnostic; keep frozen-student work as its separately requested arm.",
-    "Exact adjust_bottle training conflicts with the current held-out task split; default preserves that split."
+    "No effective PPO/GRPO control yet; one fresh integrated8rank Motus cycle is qualified, sustained gain remains unproved.",
+    "Actual8actor/192trace-batch reward and GAE audit passed;136positive-score episodes/1024 and no timeout bootstrap additions.",
+    "Latest RLinf-VLA v3 contains direct RoboTwin GRPO evidence; the prior v1 future-work limitation applies only to that old version.",
+    "Prism-GRPO addresses tied groups with additional quality rewards; log tied-group coverage before considering this separately named objective change.",
+    "Preserve the held-out task split and existing group8 boundary. Complete operational continuation before a separately named group1 PPO control.",
+    "Student work waits until effective source PPO/GRPO evidence, per current user instruction."
   ],
   "query_groups": [
     "RLinf RoboTwin pi0.5 PPO 256 adjust_bottle 2048 training success rate",
     "RLinf VLA reinforcement learning pi0.5 RoboTwin paper flow SDE PPO",
     "RoboTwin PPO pi0.5 paper training; RoboTwin Flow-SDE; RoboTwin Flow-GRPO; RoboTwin PPO Motus",
-    "SimpleVLA-RL RoboTwin arxiv official; RLinf RoboTwin pi0.5 collapse"
+    "SimpleVLA-RL RoboTwin arxiv official; RLinf RoboTwin pi0.5 collapse",
+    "site:github.com/RLinf/RLinf/issues RL training with pi0.5 and GRPO in RoboTwin is unstable",
+    "site:arxiv.org GRPO RoboTwin groups; Prism-GRPO; latest RLinf-VLA v3"
   ],
   "primary_sources": [
     {
@@ -68,6 +70,26 @@
       "id": "SynthDemo-RL",
       "url": "https://arxiv.org/html/2609.21650v1",
       "scope": "Coverage evidence; separate single-arm Piper RoboTwin study"
+    },
+    {
+      "id": "RLinf-VLA v3",
+      "url": "https://arxiv.org/html/2510.06710v3",
+      "scope": "Direct RoboTwin GRPO evidence in updated paper; OpenVLA-OFT, not joint Motus"
+    },
+    {
+      "id": "Prism-GRPO",
+      "url": "https://arxiv.org/html/2608.17423v1",
+      "scope": "Direct RoboTwin tied-group diagnosis; quality reward is a different objective"
+    },
+    {
+      "id": "RLinf issue1268",
+      "url": "https://github.com/RLinf/RLinf/issues/1268",
+      "scope": "Unresolved user report of pi05 GRPO instability on different H16/absolute-joint task; anecdotal, not controlled reproduction"
+    },
+    {
+      "id": "Pinned RLinf c605 recipe",
+      "url": "https://github.com/RLinf/RLinf/blob/c605b9d55ed93a180119b099e6f836abff293b08/examples/embodiment/config/robotwin_adjust_bottle_ppo_openpi_pi05.yaml",
+      "scope": "group1,200-target horizon,H50; matches recorded released YAML fields"
     }
   ],
   "exclusions": [

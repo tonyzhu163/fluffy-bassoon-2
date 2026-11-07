@@ -1,6 +1,6 @@
 # RoboTwin PPO: published evidence and our restoration gap
 
-Primary-source review, November 7, 2026. Question: why has transferring the
+Primary-source review, updated November 8, 2026. Question: why has transferring the
 recorded RLinf PPO recipe not produced a verified gain here? This is a focused
 literature/configuration audit, not a systematic review or a reproduction of
 external results. External percentages below are author-reported.
@@ -33,6 +33,8 @@ Three separate questions need separate evidence:
 | [SimpleVLA-RL, ICLR 2026](https://proceedings.iclr.cc/paper_files/paper/2026/hash/cbfbcb4da14235bd69b134070898ae9d-Abstract-Conference.html) | Reports RoboTwin improvements with OpenVLA-OFT and exploration-enhancing strategies. | Direct benchmark evidence, but a different policy family and training system. Its gains are not pi0.5 PPO reproduction evidence. |
 | [piRL](https://arxiv.org/html/2510.25889v1) | Flow-SDE/Flow-Noise policy optimization; LIBERO ablations compare PPO/GRPO, critic placement, noise, denoising and chunk length. | The inspected version evaluates LIBERO and ManiSkill, not RoboTwin. Its ablations motivate diagnostics, not guaranteed RoboTwin fixes. |
 | [RLinf-VLA](https://arxiv.org/html/2510.06710v1) | Explains chunk credit assignment, reset modes, valid-action masks and GRPO group returns. Its ablations find task-dependent effects of masking/filtering and sensitivity to rollout size. | This version lists RoboTwin and pi0/pi0.5 integration as future work. Its original OpenVLA/OpenVLA-OFT results are not the later RoboTwin pi0.5 result. |
+| [RLinf-VLA v3, August 2026](https://arxiv.org/html/2510.06710v3) | Updated direct RoboTwin evidence: six task-specific OpenVLA-OFT models average24.48%→84.63% with GRPO. Discusses success filtering, valid-action masking and trajectory-length normalization. | Replaces the earlier version's future-work limitation. It does not establish the same result for joint Motus. Its SFT and RL evaluation sampling differs; use matched sampling for our causal before/after comparison. |
+| [Prism-GRPO](https://arxiv.org/html/2608.17423v1) | Direct RoboTwin study of tied-group waste: same-scene groups8,512 rollouts/update,five training seeds; adds an execution-quality reward and reports22–56% fewer rollouts to the binary-GRPO peak. | Extra reward information changes the objective. It motivates measuring tied groups, not silently importing quality rewards into the binary-reward control. |
 | [SynthDemo-RL](https://arxiv.org/html/2609.21650v1) | Studies reward coverage: direct PPO leaves some initially zero-success LIBERO-PRO tasks unsolved. Its separate single-arm Piper RoboTwin study improves aggregate success after SFT plus RL, with one task unchanged. | Demonstrations, embodiment and tasks differ. It supports checking coverage, not concluding that our nonzero-reward data cannot support PPO. |
 
 The literature supports PPO as a credible method, while showing substantial
@@ -130,6 +132,7 @@ loss masks. [Physical audit](../../outputs/robotwin-restoration-20261106-r1/CPUR
 | Group8 reduces scene diversity relative to group1 | Verified layout change | Keep the matched group8 arm; add a separately named group1 PPO reference when affordable. |
 | Exploration harms the initializer or fails to reach useful alternatives | Plausible, unisolated | Compare policy0 Flow-SDE and ODE on the same cases before changing noise. Different TRAIN/DEV scenes cannot isolate this gap. |
 | Critic quality or return/boundary semantics limit learning | Plausible, unisolated | Inspect explained variance, targets, values, advantage spread and episode boundaries; compare critic designs only after a stable control. |
+| SAPIEN camera clipping changes policy observations | Concrete difference from current upstream; causality unproved | Current guide sets near0.01m because0.1m clips wrist-view gripper fingers. Our isolated frozen camera/horizon probe completed32 episodes; full readback precedes interpretation. |
 | Numerical changes from larger batches contaminate likelihood ratios | Known hazard, partly controlled | Retain matched execution-partition probability replay and pre-SGD ratio checks; do not assume batching is transparent. |
 
 Our native-batch adapter matches its native reference exactly, but native
@@ -146,10 +149,47 @@ simultaneously changing our noise, learning rate, critic and chunk length.
 Such a change would leave the cause of any improvement unresolved.
 [Primary ablations](https://arxiv.org/html/2510.25889v1#S5.SS3).
 
+The public [RLinf issue1268](https://github.com/RLinf/RLinf/issues/1268)
+also reports unstable pi0.5 Flow-SDE GRPO on a different RoboTwin task with
+absolute-joint H16 actions. No resolution was visible in the inspected issue.
+This is an implementation report, not controlled proof of a general algorithm
+failure, and its suggestion that updates are too conservative is the reporter's
+interpretation. It does not justify raising our learning rate from log scalars.
+
+## Formula and data-path audit
+
+Our pinned native chunk-level PPO uses summed chunk reward, gamma.99 and
+lambda.95. With native done flag d at the following chunk boundary,
+delta_t=R_t+.99(1-d_{t+1})V_{t+1}-V_t and
+A_t=delta_t+.99*.95(1-d_{t+1})A_{t+1}. Returns are A_t+V_t;
+advantages are normalized over valid native decisions with sample standard
+deviation and epsilon1e-5. Preserve the native likelihood reduction, value
+estimands, loss masks and optimizer weighting when changing execution batches.
+The independent float64 check operates on the actual post-routing actor buffer.
+
+For pinned GRPO, a scene's8 rollout scores are standardized with sample standard
+deviation and epsilon1e-6; the trajectory advantage is broadcast over its valid
+chunks. Equal scores give exactly zero advantages. These formulas and the
+actual model likelihood reference are separate checks: passing one does not
+qualify the other. Physical delivered-target masks are retained for analysis;
+they do not replace RLinf's native training loss masks.
+
+The complete actual PPO audit now matches all8 actor buffers to192 simulator
+trace batches by commands and observations. All GAE references pass,136/1024
+episodes have positive raw score, and every valid decision in those episodes
+has positive normalized advantage. Added timeout bootstrap is exactly zero.
+Initial critic explained variance versus raw Monte Carlo returns is near zero;
+the aggregate training log's negative explained variance does not isolate why
+the endpoint failed to improve. [Actual-batch evidence](../../outputs/robotwin-restoration-20261106-r1/MOTUSLEARNINGAUDIT02-COMPLETE.json).
+Counterfactual raw-reward GRPO arithmetic passes1e-5 on the same collection,
+with73/128 tied groups and55 informative groups. This is substantial dilution,
+not absence of all learning signal or a completed Motus GRPO experiment.
+[Raw-group evidence](../../outputs/robotwin-restoration-20261106-r1/GRPORAWGROUPAUDIT02-COMPLETE.json).
+
 ## Consequence for the next experiment
 
-Prioritize a stable multi-iteration **source-task PPO control** while retaining
-the decoded-student work as the separately requested arm. First qualify the
+Prioritize a stable multi-iteration **source-task PPO control**. The user's
+latest instruction requires effective PPO/GRPO before more student work. First qualify the
 optimized full collector/learner footprint and repeated offload/reset lifecycle.
 Then demonstrate iteration0 collection, update1, collection from policy1 and
 update2 before extending a predeclared learning curve. More SGD on the same
@@ -168,10 +208,10 @@ authorized by this review.
 Consult the [current ledger](../../outputs/robotwin-restoration-20261106-r1/LATEST-BUDGET.json)
 for approved compute and remaining allowance; the historical review budget is
 superseded. A concrete continuation contract and measured resource request must
-precede expenditure above the active cap. Offline DIT/IQL exploration can
-continue on the mixed-quality pilot data; completed fitting and frozen-runtime
-qualification do not establish adaptation or PPO convergence. The single-policy
-dataset is still not a chronological AD corpus.
+precede expenditure above the active cap. Completed offline DIT/IQL fitting and
+frozen-runtime qualification establish neither adaptation nor PPO convergence;
+further student experiments wait. The single-policy dataset is still not a
+chronological AD corpus.
 
 Search queries, source identities, exclusions and the dated implementation
 handoff are in the [review record](../../outputs/robotwin-restoration-20261106-r1/RECIPE-REVIEW.json).

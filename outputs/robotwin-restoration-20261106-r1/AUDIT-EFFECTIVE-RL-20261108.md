@@ -76,3 +76,15 @@ and cold readback passed; live queue reports60 free RPBZZZ6 GPUs,2774 CPU cores
 and38210GB memory at01:24–01:26 Shanghai. The probe requests1GPU/16CPU/128GiB,
 zero new worker PFS output and at most8GiB BOS. These are dated admission
 observations, not persistent hardware guarantees.
+
+Frozen camera/horizon probe and independent315-artifact readback completed.
+On the same8 DEV cases, near0.1/H192 gives2/8, near0.01/H192 gives2/8,
+near0.1/H384 gives3/8, near0.01/H384 gives2/8. Camera images change (wrist
+mean absolute pixel difference about3/255). Same-camera common horizon prefixes
+are exact, all32 physical episodes complete, and all owned workers close.
+This small panel does not establish a camera fix or justify migrating the old
+optimizer state. Finish the unchanged8rank/group8 checkpoint1 continuation to
+complete cycle2. Then run the separately named group1 PPO control and matched
+native group8 GRPO under an explicit remaining-budget plan. Keep student work
+waiting. Camera565GPU-s closeout raises closed use to216414GPU-s=60.115h;
+resume reserves21600GPU-s, worst238014GPU-s=66.115h under100h.

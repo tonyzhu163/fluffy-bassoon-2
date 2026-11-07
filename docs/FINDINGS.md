@@ -1178,3 +1178,13 @@ outcome. Initial critic explained variance versus raw Monte Carlo returns is
 near zero (−.055 to.019 across ranks). This narrows the failure audit; it does not
 establish an effective PPO/GRPO control or a causal diagnosis.
 [Actual learning-signal audit](../outputs/robotwin-restoration-20261106-r1/MOTUSLEARNINGAUDIT02-COMPLETE.json).
+
+A frozen Motus camera/horizon factorial probe completed32 episodes on8 paired
+source DEV cases, followed by independent cold readback of315 files/139 batches.
+Near0.1m scored2/8 at H192 and3/8 at H384; near0.01m scored2/8 at both horizons.
+Wrist images changed (mean absolute difference about3 pixel levels out of255).
+Same-camera common horizon prefixes, command intents, physical action accounting
+and render binding passed, and all owned workers closed. These exploratory
+counts do not establish a camera fix, learning gain or a broadly preferred
+horizon. The unchanged checkpoint continuation retains its original protocol.
+[Paired probe and limits](../outputs/robotwin-restoration-20261106-r1/MOTUSCAMERA01-COMPLETE.json).

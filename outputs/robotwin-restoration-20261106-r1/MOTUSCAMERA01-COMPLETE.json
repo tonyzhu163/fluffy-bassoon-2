@@ -1,0 +1,61 @@
+{
+  "status": "completed_and_independently_cold_verified",
+  "job_id": "job-vpl4j0kf1qht",
+  "source_commit": "1eff43a4ba9787ebd9a55da5ea08e8280c6aab1a",
+  "created_shanghai": "2026-11-08T01:31:19+08:00",
+  "released_shanghai": "2026-11-08T01:40:44+08:00",
+  "conservative_gpu_seconds": 565,
+  "worker_gpu_seconds": 538,
+  "exit_code": 0,
+  "episodes": 32,
+  "trace_batches": 139,
+  "files_cold_verified": 315,
+  "requested_targets": 7904,
+  "panels": {
+    "oldnear-short": {
+      "successes": 2,
+      "episodes": 8,
+      "requested": 1440,
+      "delivered": 1419,
+      "physics_steps": 22162
+    },
+    "fixednear-long": {
+      "successes": 2,
+      "episodes": 8,
+      "requested": 2592,
+      "delivered": 2560,
+      "physics_steps": 39987
+    },
+    "fixednear-short": {
+      "successes": 2,
+      "episodes": 8,
+      "requested": 1440,
+      "delivered": 1408,
+      "physics_steps": 21987
+    },
+    "oldnear-long": {
+      "successes": 3,
+      "episodes": 8,
+      "requested": 2432,
+      "delivered": 2410,
+      "physics_steps": 37645
+    }
+  },
+  "result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motuscamera01-signals/RESULT.json",
+  "result_sha256": "4df817b7d2cb34d4e62c0c898fba0414dc3f15ad9639ca06e9304fb99ad6817a",
+  "independent_readback_source": "9878ca0c8dc359eca3c7b448684b25464aa47203",
+  "readback": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motuscamera01-readback01/RESULT.json",
+  "readback_sha256": "ea90254b33a495058950e96b3ac8c5a64c003d04b9d24ee81f3990e8ed554a1f",
+  "same_camera_common_horizon_prefixes_exact": true,
+  "command_intents_and_consecutive_observations_exact": true,
+  "render_binding_passed": true,
+  "all_owned_workers_closed": true,
+  "sampled_reserve_passed": true,
+  "sampled_minimum_gpu_free_bytes": 84586528768,
+  "torch_peak_reserved_bytes": 7459569664,
+  "optimizer_updates": 0,
+  "learning_gain_claim": false,
+  "camera_causality_claim": false,
+  "interpretation": "Small exploratory8-case panel: camera change does not raise aggregate success at either horizon; oldnear longer horizon adds one success. Camera pixels change (wrist MAE about3/255), so the setting is not transparent. Preserve old protocol for exact boundary continuation; this does not rule out camera effects on other cases.",
+  "proof": "camera01-readback-passed.png"
+}
