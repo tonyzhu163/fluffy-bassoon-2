@@ -1,0 +1,120 @@
+{
+  "status": "prepared",
+  "purpose": "Real fixed-precision frozen support/query qualification with matched full-history imitation control,2sourceDEVcases/20episodes; no adaptation or statistical improvement claim.",
+  "gpus": 1,
+  "cpu_count": 16,
+  "host_memory_gib": 128,
+  "shared_memory_gib": 16,
+  "worker_seconds": 480,
+  "scheduler_minutes": 9,
+  "creation_to_release_watchdog_seconds": 600,
+  "reserved_gpu_seconds": 600,
+  "closed_conservative_gpu_seconds": 192207,
+  "all_worst_gpu_seconds": 219207,
+  "hard_cap_gpu_seconds": 219600,
+  "automatic_retries": false,
+  "maximum_output_gib": 2,
+  "local_staging_cap_gib": 16,
+  "source_task": "place_phone_stand",
+  "source_dev_cases": [
+    100100002,
+    100100003
+  ],
+  "case_selection": "Same first2 sourceDEVcases and fixedB2slots/noise addresses across5arms. Full-history imitation is a matched control, not chronologicalAD.",
+  "arms": [
+    "frozen_base",
+    "static_behavior_cloning",
+    "history_behavior_cloning",
+    "dit",
+    "ic_iql"
+  ],
+  "support_episodes": 1,
+  "separate_query_episodes": 1,
+  "maximum_real_episodes": 20,
+  "maximum_requested_targets": 3840,
+  "native_training_batch": 64,
+  "native_deployment_batch": 2,
+  "cross_batch_equivalence_claim": false,
+  "action_horizon": 32,
+  "episode_horizon": 192,
+  "flow_steps": 5,
+  "motor_noise_seed": 20261107,
+  "policy_exports": {
+    "ic_iql": {
+      "output_dir": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/decodedfit02/ic_iql",
+      "sha256": "e4bd5df1b7745e47ecd6a69496c5234c43ca8c1690086cfaf81481a1cca37aa6"
+    },
+    "dit": {
+      "output_dir": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/decodedfit02-dit-resume01",
+      "sha256": "ad6c32c6a4bf6760f4cf5f8fe95d05375a490e9ee1cb6417d2b805b80b012287"
+    },
+    "static_behavior_cloning": {
+      "output_dir": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/decodedfit02/static_behavior_cloning",
+      "sha256": "7b8038eaa7107c3e9c30e125136934ea67820321b564e54296a88470f6171f6e"
+    },
+    "history_behavior_cloning": {
+      "output_dir": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/decodedhistorybc01",
+      "sha256": "3f3baa4504db510f5c0a859ae5ece7a8fb8a0135b576ef0d94153355770f8472"
+    }
+  },
+  "fit_readback_sha256": "b83142ba9f311a5af749b337e607e520867fbf0344446c089b2aa3286799b751",
+  "cpu_preflight_passed": false,
+  "model_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+  "norm_stats_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+  "source_files": {
+    "src/fluffy_bassoon/meta_rl/chunk_controller.py": "900bf8c9334388227b5760b37f65a675df5477fb5e48e025f329152581a85eb2",
+    "src/fluffy_bassoon/meta_rl/chunk_robotwin.py": "0a836ce70a2240f7fb1b6187553e2d1690b3d4508aaaa5ff3ccdfc08d5dfe473",
+    "src/fluffy_bassoon/meta_rl/chunk_training.py": "73151a0499a3ba90fb177947d40a94424c17c0b3872665e9535f7207197e0e50",
+    "src/fluffy_bassoon/meta_rl/chunk_policy.py": "9e01b2a89c30911927072e579f3855c0e2b44f32d624c33b23be94749db14c61",
+    "src/fluffy_bassoon/meta_rl/chunk_history.py": "80b307ca9816f3d156deb2fbc1a0a8a13debd5773343db2ea329351de02be26b",
+    "src/fluffy_bassoon/meta_rl/causal_decoder.py": "379ab97d7a240c0ef4aad49038ed3e6f9df4cb036da124b8cc567f65a6d9e303",
+    "src/fluffy_bassoon/rl/robotwin_batch.py": "9c4b03dbe6c2aae7595712f89a0e32243e0746371023b247d03254a669decfd7",
+    "src/fluffy_bassoon/rl/robotwin_motor.py": "e88ff280f870ed4e09785d21ea614c326ad069b5c077cc3e3e64a4c420175f9f",
+    "src/fluffy_bassoon/rl/robotwin_production_process.py": "dac0ef1fdd2a986f5fcbde2ce7f20b16134d865f1a8acca300d3dcf565f56223",
+    "src/fluffy_bassoon/rl/robotwin_execution.py": "19e00b1cd9859f899a55866200f20620e8aeb62c4c2498316c7cc4b81f39a92b",
+    "src/fluffy_bassoon/rl/robotwin_noise.py": "b26a220a1190a8ad6b653e49f4a3c8f2c6a66b057471056bf148e8dd8d68b7ea",
+    "outputs/robotwin-restoration-20261106-r1/observe_motus_resources.py": "1a9ead62321757445601956d7dc10183569e9a7096e1e09e5c1e04e9138664a9",
+    "src/fluffy_bassoon/meta_rl/rlinf_native_ppo.py": "7b0e2427a2adfb1506238cfb09b2d0443472d64880ac6be40d657e3b941fe95f"
+  },
+  "entry_sha256": "af5d3a1533f72aad18e1ced2b659309db9df2d114455b04d5e82384ba4216215",
+  "launcher_sha256": "a2268e514a86a790b2900f751c5a22219df9ba138e833e41993819a40600c3c0",
+  "optimizer_updates": 0,
+  "test_data_allowed": false,
+  "independent_cpu_replay_required": true,
+  "learning_improvement_claim": false,
+  "cpu_replay_tolerances": {
+    "command_absolute": 1e-05,
+    "command_relative_to_radius": 0.001,
+    "state_absolute": 0.0001,
+    "state_relative": 0.0001
+  },
+  "cpu_replay_tolerance_rationale": "Predeclared CPU/GPU float32 tolerances: both action-unit and residual-envelope bounds; no cross-native-batch equivalence claim",
+  "independent_cpu_replay_entry_sha256": "c0393cdf786df28280f9044f12c7d678d2f708f217c866c87882b0c6f8ce532e",
+  "target_accelerator": "Baige Pro6K RPBZZZ6, about95GiB visible CUDA memory; vendor exposes this alias rather than RTX branding",
+  "qualified_cuda_name": "NVIDIA RPBZZZ6",
+  "qualified_cuda_total_bytes": 101973950464,
+  "current_queue_check": {
+    "checked_at_shanghai": "2026-11-07T17:32:00+08:00",
+    "gpus_maximum": 416,
+    "gpus_allocated": 412,
+    "gpus_free": 4,
+    "cpu_free": 1608,
+    "host_free_gb": 26904,
+    "resource_quota_rules_configured": false,
+    "proof": "studentonline01-queue-capacity.png"
+  },
+  "storage_check": {
+    "checked_at_shanghai": "2026-11-07T17:34:35+08:00",
+    "shared_pfs_free_gib": 236.5078125,
+    "archive_reported_free_gib": 262144.0,
+    "archive_write_fsync_passed": true,
+    "worker_new_pfs_output_bytes": 0,
+    "worker_local_free_gib_required": 16,
+    "proof": "studentonline01-storage-check.png"
+  },
+  "ppo_reserved_gpu_seconds": 26400,
+  "history_readback_sha256": "4e8b8b302bf322ab46462a1d92f96789ee8bbcd886eacf57851aa483b9605979",
+  "precision_readback_sha256": "1e66c24a08211768489d50a28e183b5909f774521b52a1acbdcee9baec9cc1d9",
+  "chronological_ad_qualified": false,
+  "required_student_precision": "scoped highest FP32 while preserving native motor ambient precision"
+}
