@@ -1,0 +1,11 @@
+{
+  "status": "failed_readback_harness_numpy_handling",
+  "pid": 3229919,
+  "confirmed_process_gone": true,
+  "source_commit": "028dd639e15d3ec6d392246029b388829b770eb0",
+  "all_new_state_files_cold_hash_read_reached": true,
+  "failure": "The native environment receives NumPy actions; the audit passed the ndarray directly to torch.isfinite instead of converting a read-only view.",
+  "native_run_and_data_unchanged": true,
+  "gpu_seconds": 0,
+  "next": "Convert submitted actions with torch.as_tensor before finite validation and run a fresh readback02 identity."
+}

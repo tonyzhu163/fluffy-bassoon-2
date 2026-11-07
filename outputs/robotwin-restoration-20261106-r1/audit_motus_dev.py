@@ -39,7 +39,7 @@ def panel(root, policy, seeds, *, first_rng=None):
             assert trace['rank'] == sampling['rank'] == rank
             assert trace['chunk_index'] == ordinal
             assert trace['reset_state_ids'].tolist() == seeds[rank*4:rank*4+4]
-            actions = trace['proposed_motor_actions']
+            actions = torch.as_tensor(trace['proposed_motor_actions'])
             assert actions.shape == (4, 32, 14) and torch.isfinite(actions).all()
             assert tensor_hash(actions) == sampling['actions_sha256']
             public = EnvOutput(obs=trace['current_observation']).to_dict()['obs']
@@ -89,6 +89,7 @@ def panel(root, policy, seeds, *, first_rng=None):
             report['trace_files'] += 1
             report['sampling_files'] += 1
             report['proposed_targets'] += actions.shape[0]*actions.shape[1]
+        print('PANEL_RANK_READ', policy, rank, flush=True)
         for index, seed in enumerate(seeds[rank*4:rank*4+4]):
             report['cases'].append(dict(seed=seed, rank=rank, batch_row=index,
                 success_once=bool(torch.as_tensor(final['success_once'])[index]),
