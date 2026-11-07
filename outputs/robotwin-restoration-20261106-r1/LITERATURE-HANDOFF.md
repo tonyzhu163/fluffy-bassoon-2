@@ -55,3 +55,15 @@ active source worktree, run contract, budget or optimizer setting.
 
 No accelerator work was launched for this review. The existing cumulative
 GPU cap and pending extension request are unchanged.
+
+## Execution follow-up
+
+The unlaunched full-fit01 preparation is superseded by DECODEDFIT02-CONTRACT.json.
+It explicitly selects inverse temperature beta3 through our temperature1/3,
+while preserving the already recorded beta1/3 runtime qualification. Core
+defaults and previous run contracts remain unchanged. The fitter accepts the
+per-method objective configuration and checks it through fresh full-model
+qualification02 plus independent process recovery before fitting02 launches.
+The 1000 value/1000 actor updates, shared data/statistics/windows, full6×512
+architecture and CPU-only7200s bound are preserved. This remains an IQL-style
+single-Q/independent-encoder pilot, with no exact-method or robot-gain claim.

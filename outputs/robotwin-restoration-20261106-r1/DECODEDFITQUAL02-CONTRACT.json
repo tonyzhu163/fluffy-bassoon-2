@@ -1,0 +1,72 @@
+{
+  "intent": "runtime_qualification",
+  "model": {
+    "width": 512,
+    "layers": 6,
+    "heads": 8,
+    "context_length": 2048,
+    "initial_std": 0.5
+  },
+  "mode": "full",
+  "fitting": {
+    "seed": 0,
+    "batch_size": 8,
+    "max_episodes": 9,
+    "value_updates": 2,
+    "actor_updates": 2,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0
+  },
+  "execution_batch_size": 8,
+  "retained_update_boundaries": [
+    1
+  ],
+  "checkpoint_interval": 50,
+  "dataset": "decodedhistory01",
+  "statistics": "decoded-fit-bounds02",
+  "test_tensor_load_allowed": false,
+  "purpose": "Full planned architecture on actual physical TRAIN/DEV; fresh-process next-update recovery and finite losses, not a converged fit or adaptation result",
+  "methods": [
+    "ic_iql",
+    "dit",
+    "static_behavior_cloning"
+  ],
+  "new_gpu_seconds": 0,
+  "maximum_new_output_gib": 12,
+  "fit_data_admitted_for_investigation": true,
+  "full_scientific_source_campaign_admitted": false,
+  "objective_by_method": {
+    "ic_iql": {
+      "objective": "ic_iql",
+      "discount": 0.99,
+      "expectile": 0.7,
+      "temperature": 0.3333333333333333,
+      "maximum_weight": 100.0,
+      "target_tau": 0.005,
+      "bellman_weight": 0.1
+    },
+    "dit": {
+      "objective": "dit",
+      "discount": 0.99,
+      "expectile": 0.7,
+      "temperature": 1.0,
+      "maximum_weight": 20.0,
+      "target_tau": 0.005,
+      "bellman_weight": 0.1
+    },
+    "static_behavior_cloning": {
+      "objective": "ad",
+      "discount": 0.99,
+      "expectile": 0.7,
+      "temperature": 1.0,
+      "maximum_weight": 20.0,
+      "target_tau": 0.005,
+      "bellman_weight": 0.1
+    }
+  },
+  "extraction_equation": "min(exp(advantage/temperature),maximum_weight); log-weight floor -20",
+  "iql_effective_inverse_temperature": 3,
+  "method_identity": "IQL-style single-Q and independent encoders; DIT-style causal feedback critic; full decoded residual actor",
+  "supersedes_prepared_contract": "DECODEDFITQUAL01-CONTRACT.json",
+  "prior_runtime_qualification": "CPUDECODEDFIT01.json"
+}

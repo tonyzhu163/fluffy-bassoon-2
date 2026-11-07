@@ -1,4 +1,5 @@
 """Run the three bounded offline pilot controls on allocated CPU resources."""
+import argparse
 import json
 import os
 from pathlib import Path
@@ -11,15 +12,17 @@ ROOT = Path(__file__).resolve().parent
 BASE = Path('/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1')
 
 
-def main():
+def main(args):
     assert sys.platform=='linux' and os.environ['CUDA_VISIBLE_DEVICES']==''
     code = ROOT.parents[1]
     source = subprocess.check_output(['git','-C',str(code),'rev-parse','HEAD'],text=True).strip()
     assert source==os.environ['TASK_SOURCE']
     assert not subprocess.check_output(['git','-C',str(code),'status','--porcelain','--untracked-files=no'])
-    plan = json.loads((ROOT/'DECODEDFIT01-CONTRACT.json').read_bytes())
+    contract = Path(args.contract).resolve()
+    plan = json.loads(contract.read_bytes())
     assert plan['intent']=='student_fitting'
-    output = BASE/'decodedfit01'
+    output = BASE/args.output_name
+    assert output.resolve().parent==BASE.resolve(),'Require a fresh direct project output'
     output.mkdir()
     started = time.monotonic()
     cores = len(os.sched_getaffinity(0))
@@ -52,7 +55,7 @@ def main():
             while waiting and len(running)<parallel:
                 name = waiting.pop(0)
                 command = [sys.executable,str(ROOT/'fit_decoded_student.py'),
-                    '--contract',str(ROOT/'DECODEDFIT01-CONTRACT.json'),
+                    '--contract',str(contract),
                     '--output',str(output/name),'--method',name,'--device','cpu']
                 stream = (output/(name+'.log')).open('x');streams.append(stream)
                 process = subprocess.Popen(command,stdout=stream,stderr=subprocess.STDOUT)
@@ -85,6 +88,17 @@ def main():
             raise RuntimeError('Inspect failed child before any fresh output/retry')
     except BaseException as error:
         report.update(status='failed',error_type=type(error).__name__,error=str(error))
+        # These handles are our own children. Preserve their last complete
+        # checkpoints and avoid orphaning computation after parent failure.
+        for name,process in running.items():
+            if process.poll() is None:
+                process.send_signal(__import__('signal').SIGINT)
+        for name,process in running.items():
+            try:
+                result = process.wait(timeout=30)
+            except subprocess.TimeoutExpired:
+                process.kill();result=process.wait()
+            report['children'][name].update(exit_code=result,status='stopped_after_parent_failure')
         raise
     finally:
         report['seconds'] = time.monotonic()-started
@@ -94,4 +108,7 @@ def main():
 
 
 if __name__=='__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--contract',default=str(ROOT/'DECODEDFIT01-CONTRACT.json'))
+    parser.add_argument('--output-name',default='decodedfit01')
+    main(parser.parse_args())

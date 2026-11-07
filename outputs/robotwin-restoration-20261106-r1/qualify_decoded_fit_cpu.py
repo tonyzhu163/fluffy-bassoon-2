@@ -1,4 +1,5 @@
 """Actual-data, full-architecture CPU integration and fresh-process recovery."""
+import argparse
 import json
 import os
 from pathlib import Path
@@ -11,12 +12,15 @@ ROOT = Path(__file__).resolve().parent
 BASE = Path('/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1')
 
 
-def main():
+def main(args):
     assert sys.platform == 'linux' and os.environ['CUDA_VISIBLE_DEVICES'] == ''
     code = ROOT.parents[1]
     assert subprocess.check_output(['git','-C',str(code),'rev-parse','HEAD'],text=True).strip()==os.environ['TASK_SOURCE']
     assert not subprocess.check_output(['git','-C',str(code),'status','--porcelain','--untracked-files=no'])
-    output = BASE/'cpudecodedfit01'
+    contract = Path(args.contract).resolve()
+    plan = json.loads(contract.read_bytes())
+    output = BASE/args.output_name
+    assert output.resolve().parent==BASE.resolve()
     output.mkdir()
     started = time.monotonic()
     report = dict(status='checking',source_commit=os.environ['TASK_SOURCE'],gpu_seconds=0,
@@ -29,7 +33,7 @@ def main():
 
     def child(name,method,*,resume=None):
         command = [sys.executable,str(ROOT/'fit_decoded_student.py'),
-            '--contract',str(ROOT/'DECODEDFITQUAL01-CONTRACT.json'),
+            '--contract',str(contract),
             '--output',str(output/name),'--method',method,'--device','cpu']
         if resume:
             command += ['--resume',str(resume[0]),'--resume-sha256',resume[1]]
@@ -43,6 +47,10 @@ def main():
         assert run.returncode==0 and value['status']=='complete_offline_runtime_qualification',value
         assert value['full_planned_architecture'] and value['frozen_export_exact']
         assert not value['cuda_initialized'] and not value['test_tensor_loaded']
+        settings = plan.get('objective_by_method',{}).get(method)
+        if settings is not None:
+            for key,expected in settings.items():
+                assert value['contract']['objective'][key]==expected
         return value
 
     save()
@@ -75,4 +83,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--contract',default=str(ROOT/'DECODEDFITQUAL01-CONTRACT.json'))
+    parser.add_argument('--output-name',default='cpudecodedfit01')
+    main(parser.parse_args())

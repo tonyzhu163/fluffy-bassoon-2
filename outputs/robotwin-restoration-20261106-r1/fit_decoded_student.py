@@ -20,6 +20,7 @@ import torch
 from fluffy_bassoon.meta_rl.chunk_history import ChunkHistoryLayout, trial_tokens
 from fluffy_bassoon.meta_rl.chunk_policy import ChunkModelConfig
 from fluffy_bassoon.meta_rl.chunk_training import ChunkFitConfig, ChunkTrainer, load_chunk_policy
+from fluffy_bassoon.meta_rl.chunk_value import ChunkObjectiveConfig
 from fluffy_bassoon.meta_rl.rlinf_native_ppo import sha, tensor_hash, write
 from fluffy_bassoon.meta_rl.tensor_archive import read_tensor
 from fluffy_bassoon.meta_rl.warmstart import checked_load
@@ -134,7 +135,10 @@ def run(args):
             mode='static' if args.method == 'static_behavior_cloning' else plan['mode'])
         if args.method == 'static_behavior_cloning':
             fitting['value_updates'] = 0
-        trainer = ChunkTrainer(model,ChunkFitConfig(**fitting),statistics,data_contract,device=args.device)
+        settings = plan.get('objective_by_method',{}).get(args.method)
+        objective = ChunkObjectiveConfig(**settings) if settings is not None else None
+        trainer = ChunkTrainer(model,ChunkFitConfig(**fitting),statistics,data_contract,
+                               objective_config=objective,device=args.device)
         expected_contract = trainer.contract
         if args.resume:
             if not args.resume_sha256:
