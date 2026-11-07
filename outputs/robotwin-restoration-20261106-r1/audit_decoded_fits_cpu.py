@@ -63,6 +63,13 @@ def main(args):
                 assert result['restored']==dict(path=str(root/'dit'/boundary['file']),
                     sha256=boundary['sha256'],updates=dict(value=950,actor=0))
                 assert result['contract']==origin['contract']
+                previous = [json.loads(line) for line in (root/'dit/updates.jsonl').read_text().splitlines()]
+                resumed = [json.loads(line) for line in (path/'updates.jsonl').read_text().splitlines()]
+                keys = ('phase','updates','valid_positions','loss','q_loss','v_loss','gradient_norm')
+                overlap = [row for row in previous if 950<sum(row['updates'].values())<=953]
+                assert len(overlap)==3
+                for before,after in zip(overlap,resumed[:3],strict=True):
+                    assert all(before[key]==after[key] for key in keys),'Operational resume changed learner updates'
             else:
                 assert result['source_commit']==parent['source_commit']
             assert result['contract']['data']==data_contract
@@ -109,6 +116,8 @@ def main(args):
                     zero_residual_normalized_mae=float((batch['actions']/policy.residual_radius).abs()[valid].mean()),
                     predicted_normalized_magnitude=float(scaled.abs()[valid].mean()),
                     predicted_coordinate_saturation_fraction=float((scaled.abs()[valid]>.95).float().mean()))
+                if method=='dit' and args.dit_resume:
+                    row['recorded_updates951_through953_match_resumed_exactly'] = True
                 if trainer.fit_config.value_updates:
                     q = trainer.learner._critic_sequence(trainer.learner.q,batch,mode)
                     v = trainer.learner._critic_sequence(trainer.learner.v,batch,mode)
