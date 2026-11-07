@@ -1,10 +1,10 @@
 {
-  "status": "prepared_pending_Linux_CPU_preflight",
+  "status": "admitted",
   "purpose": "Qualify actual retained policy1 B32/accumulation8 PPO update and checkpoint roundtrip; measure post-SGD unowned optimizer representation, no simulator.",
-  "closed_conservative_gpu_seconds": 235566,
-  "other_active_reserved_gpu_seconds": 5760,
+  "closed_conservative_gpu_seconds": 237526,
+  "other_active_reserved_gpu_seconds": 0,
   "reserved_gpu_seconds": 7680,
-  "all_worst_gpu_seconds": 249006,
+  "all_worst_gpu_seconds": 245206,
   "approved_cap_gpu_seconds": 360000,
   "gpus": 8,
   "cpu_cores": 64,
@@ -44,7 +44,7 @@
   },
   "entry_sha256": "73b7a2a8fc6b9b1f7ed508cd47d0e949ed4e7c9020bdf549550bc07212599e37",
   "launcher_sha256": "eac81b6071cfac3f752ee0169d377d62693f52ea8a0a7801b3550003917822b8",
-  "cpu_preflight_passed": false,
+  "cpu_preflight_passed": true,
   "optimizer_updates": 15,
   "simulator_actions": 0,
   "root_cause_established": false,
@@ -60,5 +60,8 @@
   "global_batch": 2048,
   "epochs": 5,
   "fresh_online_collection": false,
-  "preserved_checkpoint_scope": "Learner-only qualification: actor/Adam/scheduler/scaler/RNG plus actual policy1 collection references. No env/simulator/sampler constructed; not an admitted online continuation."
+  "preserved_checkpoint_scope": "Learner-only qualification: actor/Adam/scheduler/scaler/RNG plus actual policy1 collection references. No env/simulator/sampler constructed; not an admitted online continuation.",
+  "cpu_preflight_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpumotusbehaviorupdate01/RESULT.json",
+  "cpu_preflight_sha256": "df014c36213f2d108f763e65b8452b2fac6ec4fc1c82fb0ecc5304fc885699fd",
+  "cpu_preflight_source_commit": "f5fa7df9b171e7dcd30e693a47d47a421a307c6b"
 }
