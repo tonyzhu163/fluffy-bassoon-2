@@ -1,7 +1,7 @@
 {
   "owner_chat": "01a1b024-f4ac-7181-af87-bac9fbee72bb",
   "status": "auditing_effective_ppo_grpo_before_further_student_work",
-  "new_gpu_jobs_launched": 31,
+  "new_gpu_jobs_launched": 32,
   "prior_robotwin_cumulative_cap_gpu_hours": 50,
   "prior_cost_and_reservations_must_be_refreshed": false,
   "plan": "PLAN.md",
@@ -61,12 +61,12 @@
   },
   "cpu_qualification": "CPU01.json",
   "git_deployment": "GIT-DEPLOYMENT.json",
-  "active_gpu_reservation_seconds": 0,
+  "active_gpu_reservation_seconds": 1800,
   "new_gpu_hours_note": "215849GPU-s closed=59.9581h; alljobsreleased;144151GPU-s remain under approved100h cumulative cap.",
   "budget_reconciliation": "BUDGET-RECONCILIATION.json",
-  "last_checked_shanghai": "2026-11-08T01:26:00+08:00",
+  "last_checked_shanghai": "2026-11-08T01:34:21+08:00",
   "cumulative_closed_conservative_gpu_seconds": 215849,
-  "worst_closed_plus_reserved_gpu_seconds": 215849,
+  "worst_closed_plus_reserved_gpu_seconds": 217649,
   "execution_qualification": "EXECUTION01-COMPLETE.json",
   "qualified_scope": "One fresh integrated eight-rank Motus PPO collect/update cycle at native B32 train/B2 DEV; all8 actual learner references, 15 Adam updates/rank and full checkpoint1 cold/local readback passed. Exact CPU audit of58 files/24 worker tensors and actual resume staging/schema passed. Five frozen controls completed20 new simulator episodes with independent130-trace replay and original numerical tolerances. Sustained cycles, operational eight-GPU resume, matched Motus GRPO training, adaptation and held-out transfer remain unqualified.",
   "planned_motor_gpu_reservation_seconds": 0,
@@ -115,7 +115,7 @@
   "native_teacher_fourth_attempt": "MOTUSPPO04-CLOSEOUT.json",
   "decoded_history_core_qualification": "CPUTOKENS01.json",
   "deferred_scene_setup_cpu_qualification": "CPUTOKENS02.json",
-  "next_action": "Launch bounded frozen camera/horizon diagnostic after clean Git deployment; student work waits. Then choose group1 positive control using measured observation/horizon evidence; require sustained fresh cycles and larger paired source DEV plus disjoint confirmation.",
+  "next_action": "Monitor frozen camera/horizon probe job-vpl4j0kf1qht; independently cold-read all32 episodes before selecting next source PPO control. Student work waits.",
   "native_collection_recovery_audit": "COLLECTION-AUDIT02-COMPLETE.json",
   "planned_learner_recovery_gpu_seconds": 0,
   "native_learner_recovery_contract": "MOTUSREPLAY01-CONTRACT.json",
@@ -214,5 +214,6 @@
   "cpu_learning_audit_result": "MOTUSLEARNINGAUDIT02-COMPLETE.json",
   "camera_probe_cpu_qualification": "CPUMOTUSCAMERA01.json",
   "camera_probe_contract": "MOTUSCAMERA01-CONTRACT.json",
-  "camera_probe_job_id": null
+  "camera_probe_job_id": "job-vpl4j0kf1qht",
+  "camera_probe_launch": "MOTUSCAMERA01-LAUNCH.json"
 }
