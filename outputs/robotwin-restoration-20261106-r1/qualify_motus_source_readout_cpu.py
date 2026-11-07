@@ -10,7 +10,9 @@ from omegaconf import OmegaConf
 import torch
 
 from fluffy_bassoon.meta_rl.rlinf_native_ppo import sha, write
+from fluffy_bassoon.meta_rl.tensor_archive import read_tensor
 from motus_source_readout import configuration, observe_native_ODE, selected_seeds
+from recovery_signature import digest
 
 ROOT = Path(__file__).resolve().parent
 BASE = Path('/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1')
@@ -51,7 +53,29 @@ def main():
             native.validate_cfg(cfg)
         assert cfg.env.eval.total_num_envs == 16 and cfg.env.eval.rollout_epoch == 1
         assert cfg.native_pilot.maximum_actions == 32768
+        bank = Path(cfg.env.eval.seeds_path)
+        assert sha(bank) == cases['full_source_sha256']
+        assert json.loads(bank.read_bytes())['place_phone_stand']['success_seeds'][:128] == cases['dev']+cases['confirmation']
+        train = json.loads(Path(cfg.env.train.seeds_path).read_bytes())['place_phone_stand']['success_seeds']
+        assert not set(train) & set(cases['dev']+cases['confirmation'])
         rows.append(dict(algorithm=method,world_size=8,native_batch=2,episodes_per_checkpoint=64))
+    source_hashes = {}
+    for rank in range(8):
+        for prediction in range(6):
+            records = []
+            for method in ('ppo','grpo'):
+                path = BASE/f'motusbehavior{method}01/state/sampling/rank-{rank:02d}/{prediction:05d}.pt.gz'
+                saved = read_tensor(path)
+                assert saved['mode']=='eval' and saved['producing_policy_iteration']==0
+                source_hashes[f'{method}-rank-{rank:02d}-prediction-{prediction}'] = sha(path)
+                records.append(saved)
+            left,right = records
+            for field in ('public_observation_sha256','actions_sha256'):
+                assert left[field] == right[field], (rank,prediction,field)
+            assert digest(left['rng_before']) == digest(right['rng_before'])
+            assert digest(left['rng_after']) == digest(right['rng_after'])
+            for field in ('action','model_action'):
+                assert torch.equal(left['forward_sampling_fields'][field],right['forward_sampling_fields'][field])
     subprocess.run(['bash','-n',str(ROOT/'motus_source_readout.sh')],check=True)
     output = BASE/'cpumotussourcereadout01';output.mkdir()
     write(output/'RESULT.json',dict(status='passed_readout_code_and_native_ODE_observation_reference',
@@ -60,6 +84,7 @@ def main():
         ODE_output_and_final_RNG_exact=True,recorded_noise_shape=list(noise.shape),
         full_VLA_GPU_and_source_SFT_action_calibration_checked_in_actual_readout=True,
         checkpoint2_input_admission_still_required=True,configurations=rows,
+        source_SFT_baseline_all48_predictions_match=True,source_sampling_file_hashes=source_hashes,
         entry_sha256=sha(ROOT/'motus_source_readout.py'),launcher_sha256=sha(ROOT/'motus_source_readout.sh')))
 
 
