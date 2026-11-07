@@ -1166,3 +1166,15 @@ an operational GPU restore remain unqualified. Preserve the first boundary and
 all partial-action charges for explicit same-world continuation.
 [Integrated cycle](../outputs/robotwin-restoration-20261106-r1/MOTUSOPTIMIZED03-CLOSEOUT.json),
 [independent boundary audit](../outputs/robotwin-restoration-20261106-r1/MOTUSOPTIMIZED03-BOUNDARY02.json).
+
+A full CPU audit of the fresh Motus policy0 collection verified all8 actual actor
+buffers against192 simulator trace batches, resolving shared-channel actor/env
+routing by content rather than rank number. All actions and public observations
+matched exactly, and all8 independent GAE references passed. The1024 episodes
+contain136 with positive raw score and5958 valid decisions; all decisions from
+positive-score episodes have positive normalized advantage. Timeout bootstrap
+additions are exactly zero, so they do not explain this collection's learning
+outcome. Initial critic explained variance versus raw Monte Carlo returns is
+near zero (−.055 to.019 across ranks). This narrows the failure audit; it does not
+establish an effective PPO/GRPO control or a causal diagnosis.
+[Actual learning-signal audit](../outputs/robotwin-restoration-20261106-r1/MOTUSLEARNINGAUDIT02-COMPLETE.json).

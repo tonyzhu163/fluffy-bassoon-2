@@ -28,7 +28,7 @@ rounded native aggregates over the collection/five epochs, not final-checkpoint
 critic measurements or per-update trends. Negative explained variance flags
 poor value prediction but does not alone establish causality. Actor trajectory
 receive time1388.1s versus training195.5s also identifies collection as the
-main measured wall-time cost. Full raw-batch/bootstrap diagnostic is next.
+main measured wall-time cost. The full raw-batch diagnostic below has now completed.
 
 The independent raw-reward GRPO reduction passed on1024 actual policy0 episodes:
 128 groups,73 tied/55 mixed-score,136 positive-score episodes, worst advantage
@@ -56,3 +56,23 @@ and costs. Require advancing fresh on-policy cycles and a larger paired fixed
 source DEV panel; select on DEV only and confirm a claimed gain on disjoint
 source evaluation cases. One16-case fluctuation is insufficient. Do not change
 critic, noise, horizon, reward and grouping simultaneously and call it a fix.
+
+The corrected actual-batch learning audit completed on all8 actors. Native
+shared-channel transport maps actor ranks to env ranks0,6,5,3,4,7,1,2; all192
+batches of commands and public observations matched the resolved donors exactly.
+All8 independent GAE references passed. There are136 positive raw-score episodes
+out of1024 and5958 valid decisions. Every positive-score episode decision has
+positive normalized advantage (per-rank minima1.60–4.41). Added timeout bootstrap
+is exactly zero on this collection; omitting it changes no advantage signs.
+Initial critic explained variance against raw Monte Carlo returns is near zero
+(range−.055 to.019). Thus the audit does not support a reward mismatch,
+bootstrap-dominated signal or absent positive-advantage explanation here. It does
+not establish final-checkpoint critic quality or a causal failure mechanism.
+See MOTUSLEARNINGAUDIT02-COMPLETE.json and its full raw-result hash.
+
+The camera/horizon probe CPU preflight passed at9624f831; actual GPU/render
+qualification and paired frozen-policy outcomes are pending. Storage write/fsync
+and cold readback passed; live queue reports60 free RPBZZZ6 GPUs,2774 CPU cores
+and38210GB memory at01:24–01:26 Shanghai. The probe requests1GPU/16CPU/128GiB,
+zero new worker PFS output and at most8GiB BOS. These are dated admission
+observations, not persistent hardware guarantees.

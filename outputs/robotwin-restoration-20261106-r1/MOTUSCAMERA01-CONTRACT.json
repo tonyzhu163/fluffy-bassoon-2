@@ -1,5 +1,5 @@
 {
-  "status": "prepared",
+  "status": "admitted",
   "purpose": "Isolate missing upstream camera-near correction and short-horizon effects on frozen source SFT before further PPO; no student work or SGD.",
   "closed_conservative_gpu_seconds": 215849,
   "reserved_gpu_seconds": 1800,
@@ -73,12 +73,26 @@
   },
   "entry_sha256": "bfbd7812c5cc9fd0852ddfadceac81a49a2f2627ad6d0993c61f15f961caa7a8",
   "launcher_sha256": "82451c98ec711c05b17230c965ff8456c2801a1476ea5084f5bb825adf7d0a3a",
-  "cpu_preflight_passed": false,
+  "cpu_preflight_passed": true,
   "optimizer_updates": 0,
   "real_episodes": 32,
   "held_out_tasks_trained": [],
   "paired_physical_initial_identity_required": true,
   "same_camera_common_horizon_prefix_exact_required": true,
   "learning_gain_claim": false,
-  "independent_readback_required": true
+  "independent_readback_required": true,
+  "cpu_preflight_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpumotuscamera01/RESULT.json",
+  "cpu_preflight_sha256": "936602527dbe1b78014e6e7fe80732b107f440a69b3329234f0ff308b1c13ac1",
+  "cpu_preflight_source": "9624f831400d85b1ea731f0aa9ff8310923af385",
+  "admission_observations": {
+    "checked_shanghai": "2026-11-08T01:26:00+08:00",
+    "queue_id": "aihcq-rh0wwk9muei4",
+    "queue_free_gpus": 60,
+    "queue_free_cpu_cores": 2774,
+    "queue_free_memory_gb": 38210,
+    "actual_queue_accelerator": "RPBZZZ6",
+    "pfs_free_gib_approx": 68,
+    "worker_pfs_output_bytes": 0,
+    "bos_write_fsync_readback": true
+  }
 }
