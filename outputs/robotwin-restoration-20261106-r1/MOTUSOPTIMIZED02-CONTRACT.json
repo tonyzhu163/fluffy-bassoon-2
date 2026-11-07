@@ -1,5 +1,5 @@
 {
-  "status": "prepared",
+  "status": "admitted",
   "purpose": "Fresh8-rank native PPO,32 scenes/GPU instead of64 after combined-memory rejection. Preserve global batch/loss/schedule and complete2 fresh iterations; B32train/B2DEV is an explicit new native sampling condition.",
   "budget_extension_approved": true,
   "approved_cap_gpu_seconds": 219600,
@@ -79,7 +79,7 @@
     "src/fluffy_bassoon/rl/robotwin_batch.py": "9c4b03dbe6c2aae7595712f89a0e32243e0746371023b247d03254a669decfd7",
     "patches/robotwin-dca9ec68-execution-accounting.patch": "8f5436a8197c73b470eb8cedec7e9a2f2722357c19f33e863721cec97cf7bbd2"
   },
-  "linux_cpu_qualification_pending": true,
+  "linux_cpu_qualification_pending": false,
   "timing_basis": "One-hour worker attempt; no asserted throughput. Fresh eight-rank co-residency must pass original8GiB/8percent guard. Lower scenes perGPU; nativebatch condition and rank RNG streams explicitly changed; no equivalence claim to four-rank rollout.",
   "live_queue_storage_device_checks_required": true,
   "cpu_qualification": "CPUMOTUSOPTIMIZED02.json",
@@ -108,5 +108,8 @@
   "all_worst_including_student_precision_gpu_seconds": 216407,
   "native_train_batch": 32,
   "native_dev_batch": 2,
-  "full_combined_capacity_qualified": false
+  "full_combined_capacity_qualified": false,
+  "cpu_qualification_source": "96425b43153d4d6073cd3bc12879eae23d6a68f4",
+  "cpu_qualification_result": "cpumotusoptimized02/RESULT.json",
+  "cpu_qualification_sha256": "a09c006cd761a2ef343bcd2318ab0fc6ceb3aeca5b1d1aacd5b529f3b8dcb47e"
 }
