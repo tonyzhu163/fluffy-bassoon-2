@@ -1,0 +1,54 @@
+{
+  "status": "passed",
+  "source_commit": "6fc9b01b51650938803f661b83ebe443d1bd184d",
+  "process_pid": 3556158,
+  "process_confirmed_gone": true,
+  "exact_launcher_admission_block": true,
+  "source_clean_verified": true,
+  "model_and_norm_sha256_verified": true,
+  "source_file_sha256_verified": true,
+  "gpu_seconds": 0,
+  "model_calls": 0,
+  "simulator_actions": 0,
+  "optimizer_updates": 0,
+  "cuda_initialized": false,
+  "actual_gpu_allocation_not_qualified_by_cpu": true,
+  "qualification": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpureconstruction-preflight01/QUALIFICATION.json",
+  "qualification_sha256": "886a241ec1d56780faf6f9ccd66b990498dc1c7f2fdf0ec199d5c9f44b511afe",
+  "qualification_sha256_asserted_on_linux": true,
+  "payloads": 96,
+  "issued_command_rows": 6144,
+  "complete_physical_episodes": 1024,
+  "physical_decisions": 5958,
+  "physics_steps": 2947064,
+  "post_terminal_noops": 186,
+  "nonzero_feedback_noops": 186,
+  "physical_return_counts": {
+    "0": 894,
+    "1": 130
+  },
+  "physical_return_counts_by_student_partition": {
+    "TRAIN": {
+      "0": 664,
+      "1": 104
+    },
+    "DEV": {
+      "0": 110,
+      "1": 18
+    },
+    "TEST": {
+      "0": 120,
+      "1": 8
+    }
+  },
+  "physical_returns_exclude_repeated_terminal_feedback": true,
+  "wrapper_timeout_overlay_matches_exact_pinned_code": true,
+  "raw_feedback_preserved": true,
+  "total_input_load_seconds_rounded": 179.556,
+  "maximum_input_load_seconds_rounded": 2.511,
+  "total_seconds_rounded": 207.613,
+  "source_corpus_admitted": false,
+  "complete_ad_learning_histories": false,
+  "proof": "cpureconstruction-preflight01-passed.png",
+  "next_action": "Deploy reviewed latest main with unchanged qualified runtime files, check fresh queue capacity and run the1100GPU-s bounded frozen reconstruction; actual GPU probe/reserve and independent cold readback remain required."
+}
