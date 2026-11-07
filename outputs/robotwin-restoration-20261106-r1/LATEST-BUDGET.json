@@ -1,5 +1,5 @@
 {
-  "status": "corrected_B32_update_qualified_fresh_PPO_prepared",
+  "status": "fresh_B32_PPO_running_GRPO_prepared",
   "closed_conservative_gpu_seconds": 241294,
   "cap_gpu_seconds": 360000,
   "closed_conservative_gpu_hours": 67.0261111111111,
@@ -126,7 +126,7 @@
     }
   ],
   "next_motor_qualification_reserved_gpu_seconds": 0,
-  "next_worst_gpu_seconds": 284494,
+  "next_worst_gpu_seconds": 327694,
   "maximum_new_output_gib": 0.5,
   "other_and_floor_gib": 286,
   "required_free_gib": null,
@@ -150,14 +150,14 @@
   "active_learner_recovery_reserved_gpu_seconds": 0,
   "planned_native_dev_reserved_gpu_seconds": 0,
   "active_native_dev_reserved_gpu_seconds": 0,
-  "remaining_unreserved_gpu_seconds": 75506,
+  "remaining_unreserved_gpu_seconds": 32306,
   "planned_scene_setup_reserved_gpu_seconds": 0,
   "active_scene_setup_reserved_gpu_seconds": 0,
   "planned_lifecycle_reserved_gpu_seconds": 0,
   "active_lifecycle_reserved_gpu_seconds": 0,
   "planned_frozen_reconstruction_reserved_gpu_seconds": 0,
   "active_frozen_reconstruction_reserved_gpu_seconds": 0,
-  "active_job_id": null,
+  "active_job_id": "job-en3i89vxwfcn",
   "cpu_reconstruction_input_cap_gib": 16,
   "gpu_reconstruction_output_cap_mib": 128,
   "physical_export_output_cap_mib": 128,
@@ -169,7 +169,16 @@
   "approval": "User replied raise up to 100 hrs to cumulative-cap request call_9991d141f4c9474cb3b968465bf752a5 on8November2026; cumulative total, no historical reset.",
   "planned_student_precision_gpu_seconds": 0,
   "active_student_precision_gpu_seconds": 0,
-  "active_jobs": [],
+  "active_jobs": [
+    {
+      "job_id": "job-en3i89vxwfcn",
+      "name": "mwj_1108_robotwin_behaviorppo1",
+      "reserve_gpu_seconds": 43200,
+      "source_commit": "8740fdbe13fa7b0d1ae31e0e2da37aed1309d1fd",
+      "creation_queue": "2026-11-08T04:02:03+08:00",
+      "creation_to_release_watchdog_seconds": 5400
+    }
+  ],
   "prior_approved_cap_gpu_seconds": 219600,
   "planned_camera_probe_reserved_gpu_seconds": 0,
   "active_camera_probe_reserved_gpu_seconds": 0,
@@ -181,6 +190,8 @@
   "active_checkpoint_audit_reserved_gpu_seconds": 0,
   "planned_behavior_update_reserved_gpu_seconds": 0,
   "active_behavior_update_reserved_gpu_seconds": 0,
-  "planned_behavior_ppo_reserved_gpu_seconds": 43200,
-  "active_behavior_ppo_reserved_gpu_seconds": 0
+  "planned_behavior_ppo_reserved_gpu_seconds": 0,
+  "active_behavior_ppo_reserved_gpu_seconds": 43200,
+  "planned_behavior_grpo_reserved_gpu_seconds": 43200,
+  "active_behavior_grpo_reserved_gpu_seconds": 0
 }

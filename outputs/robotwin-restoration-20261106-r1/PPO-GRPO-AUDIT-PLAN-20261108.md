@@ -42,6 +42,8 @@ learning controls before student/ICRL experiments. The user approved a cumulativ
    native binary reward and optimizer/global batch. Preserve tied groups and
    native standardization. PPOgroup1 versus GRPOgroup8 compares complete recipes;
    it cannot isolate the advantage estimator at identical scene diversity.
+   It may run concurrently in a separate exclusive allocation after counting
+   both complete startup/cleanup reservations against the100h cap.
 5. Evaluate SFT and the preselected iteration2 checkpoint on 64 fixed source DEV
    scenes. Verify actual per-case/chunk initial Gaussian draws, native batch2,
    ordering, render settings, horizon and controller match across policies.
@@ -71,7 +73,9 @@ measure useful end-to-end throughput instead of filling VRAM for its own sake.
 
 At B32 qualification closeout, closed usage is241,294 GPU-seconds (67.026h).
 The next PPO job reserves43,200 GPU-seconds including startup/cleanup; worst total
-79.026h. Launch subsequent GRPO/evaluation only after reconciling actual use.
+79.026h. Adding a full12h GRPO reservation gives91.026h worst total,
+leaving8.974h unreserved for evaluation. Reconcile each release before reusing
+its unused reservation.
 Each new job has a fresh output identity and immutable reviewed main commit.
 Check advancing progress after launch and monitor at most20 minutes apart;
 inspect the exact owned job and preserve its latest complete checkpoint before
