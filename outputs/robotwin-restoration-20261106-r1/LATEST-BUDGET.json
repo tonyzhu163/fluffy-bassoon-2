@@ -1,5 +1,5 @@
 {
-  "status": "both_DEV_readbacks_passed_GRPO_selected_confirmation_pending",
+  "status": "selected_GRPO_disjoint_confirmation_running",
   "closed_conservative_gpu_seconds": 337838,
   "cap_gpu_seconds": 360000,
   "closed_conservative_gpu_hours": 93.84388888888888,
@@ -178,7 +178,7 @@
   "active_lifecycle_reserved_gpu_seconds": 0,
   "planned_frozen_reconstruction_reserved_gpu_seconds": 0,
   "active_frozen_reconstruction_reserved_gpu_seconds": 0,
-  "active_job_id": null,
+  "active_job_id": "job-5wbeqetkin5s",
   "cpu_reconstruction_input_cap_gib": 16,
   "gpu_reconstruction_output_cap_mib": 128,
   "physical_export_output_cap_mib": 128,
@@ -190,7 +190,34 @@
   "approval": "User replied raise up to 100 hrs to cumulative-cap request call_9991d141f4c9474cb3b968465bf752a5 on8November2026; cumulative total, no historical reset.",
   "planned_student_precision_gpu_seconds": 0,
   "active_student_precision_gpu_seconds": 0,
-  "active_jobs": [],
+  "active_jobs": [
+    {
+      "status": "running",
+      "job_id": "job-5wbeqetkin5s",
+      "name": "mwj_1108_robotwin_source_grpoconf1",
+      "source_commit": "3a6e463f348cd5d31efa97859c3b88a7e354251b",
+      "source_checkout": "/mowenjie/fluffy-bassoon-2/sources/robotwin-restoration-20261108-camera01",
+      "contract": "MOTUS-SOURCE-GRPO-CONFIRMATION01-CONTRACT.json",
+      "selection_commit": "a16c07b0e5d8fd000ef9c0a529fe05eb63ebe02b",
+      "created_detail": "2026-11-08T07:30:02+08:00",
+      "created_queue": "2026-11-08T07:30:03+08:00",
+      "running_queue": "2026-11-08T07:30:17+08:00",
+      "reserved_gpu_seconds": 12000,
+      "creation_to_release_watchdog_seconds": 1500,
+      "gpus": 8,
+      "cpu_cores": 128,
+      "host_memory_gib": 1024,
+      "shared_memory_gib": 256,
+      "scheduler_runtime_minutes": 24,
+      "automatic_fault_retries": false,
+      "optimizer_updates": 0,
+      "episodes_per_policy": 64,
+      "bank": "confirmation",
+      "DEV_selection_before_creation": true,
+      "original_training_sources_immutable": true,
+      "learning_gain_claim": false
+    }
+  ],
   "prior_approved_cap_gpu_seconds": 219600,
   "planned_camera_probe_reserved_gpu_seconds": 0,
   "active_camera_probe_reserved_gpu_seconds": 0,
@@ -207,6 +234,7 @@
   "planned_behavior_grpo_reserved_gpu_seconds": 0,
   "active_behavior_grpo_reserved_gpu_seconds": 0,
   "planned_source_dev_reserved_gpu_seconds": 0,
-  "planned_source_confirmation_reserved_gpu_seconds": 12000,
-  "active_source_dev_reserved_gpu_seconds": 0
+  "planned_source_confirmation_reserved_gpu_seconds": 0,
+  "active_source_dev_reserved_gpu_seconds": 0,
+  "active_source_confirmation_reserved_gpu_seconds": 12000
 }
