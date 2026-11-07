@@ -3,7 +3,6 @@
 This stages fixed rank0/round0, including every replica and every issued chunk.
 It does not admit student data, fit statistics, load a motor or act in a scene.
 """
-import gzip
 import json
 import os
 from pathlib import Path
@@ -26,8 +25,9 @@ ROOT = Path(__file__).resolve().parent
 
 
 def read_record(path):
-    with gzip.open(path, 'rb') as stream:
-        return torch.load(stream, map_location='cpu', weights_only=False)
+    # Decompress once: Torch's ZIP reader otherwise seeks repeatedly through
+    # a gzip stream, which re-reads remote archives for every tensor storage.
+    return read_tensor(path)
 
 
 def main():
