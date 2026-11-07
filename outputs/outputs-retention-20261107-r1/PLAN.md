@@ -1,0 +1,7 @@
+# Verified outputs cold archival — November 7, 2026
+
+Execute the user-approved first batch from the [outputs review](../storage-audit-baige-20261107-r1/OUTPUTS-ARCHIVE-REVIEW.md): 11 disjoint selected roots, about207.79GiB gross allocation. Both deferred predecessor lineages and every listed protected run/input/cache stay hot.
+
+Use two CPU-only archive workers and bounded local /tmp staging, with no accelerator allocation. For each immutable selected tree, record original metadata and file SHA256, create a complete tar.zst preserving relative paths and hardlinks, compare against source, upload privately, independently read back the entire BOS object, restore all members into fresh local staging, and verify exact coverage, bytes, mode/ownership/mtime, symlink targets and hardlink topology. Before release recheck scheduler freshness, visible readers and unchanged source inventory. Release only approved bulk regular files, keeping directories, compact records and numerical references hot. Cold restore pointers preserve every original-path mapping.
+
+Qualify the exact archive/restore/release code on Linux fixtures before real payloads; no model computation or tests on macOS. Deploy the verified source through a Git bundle/exported committed blob without changing the server repo worktree. Record exact commit/script digest and cumulative0GPU-hours. No training job is stopped or modified.
