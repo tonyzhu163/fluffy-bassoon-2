@@ -55,6 +55,11 @@ for name,expected in p['source_files'].items():assert sha(root.parents[1]/name)=
 assert sha(root/'evaluate_decoded_students.py')==p['entry_sha256']
 assert sha(root/'evaluate_decoded_students.sh')==p['launcher_sha256']
 assert sha(Path(p['cpu_preflight_result']))==p['cpu_preflight_sha256']
+probe=json.loads((Path(os.environ['TASK_OUT'])/'gpu-probe.json').read_bytes())
+assert probe['status']=='passed' and len(probe['devices'])==1
+device=probe['devices'][0]
+assert device['cuda_name']==p['qualified_cuda_name']
+assert device['cuda_total_bytes']>=90*2**30
 assert shutil.disk_usage(os.environ['TASK_LOCAL']).free>=16*2**30
 probe=Path(os.environ['TASK_OUT'])/'write-probe'
 with probe.open('xb') as f:f.write(b'trained-student-qualification');f.flush();os.fsync(f.fileno())

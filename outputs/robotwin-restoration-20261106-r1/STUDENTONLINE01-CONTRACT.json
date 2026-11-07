@@ -1,5 +1,5 @@
 {
-  "status": "prepared_pending_completed_fits_readback_and_cpu_preflight",
+  "status": "admitted",
   "purpose": "Actual frozen trained-student support/query runtime qualification on2 sourceDEV cases; no statistical performance claim",
   "gpus": 1,
   "cpu_count": 16,
@@ -53,9 +53,9 @@
     }
   },
   "fit_readback_sha256": "b83142ba9f311a5af749b337e607e520867fbf0344446c089b2aa3286799b751",
-  "cpu_preflight_passed": false,
+  "cpu_preflight_passed": true,
   "cpu_preflight_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpustudentonline01/RESULT.json",
-  "cpu_preflight_sha256": null,
+  "cpu_preflight_sha256": "c98e7d31e22824b66c773d5a5e295cf414bb8b73b7850a0aa475dd1e3fb96aed",
   "model_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
   "norm_stats_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
   "source_files": {
@@ -72,7 +72,7 @@
     "src/fluffy_bassoon/rl/robotwin_noise.py": "b26a220a1190a8ad6b653e49f4a3c8f2c6a66b057471056bf148e8dd8d68b7ea"
   },
   "entry_sha256": "9a2ffafc44767b78bca3704cf840af53872535d4a0ac51d55405fed3b5f390ca",
-  "launcher_sha256": "9c1eba8fba2f1d21a3d357917ea7e74b9d023f95055aaa9ba93c74858440bdfc",
+  "launcher_sha256": "63ece6fa58cdecdfa93d775903bd73ea26199ff7f2ac45044187f90162e5a9b2",
   "optimizer_updates": 0,
   "test_data_allowed": false,
   "independent_cpu_replay_required": true,
@@ -84,5 +84,28 @@
     "state_relative": 0.0001
   },
   "cpu_replay_tolerance_rationale": "Predeclared CPU/GPU float32 tolerances: both action-unit and residual-envelope bounds; no cross-native-batch equivalence claim",
-  "independent_cpu_replay_entry_sha256": "c9fd6c0431f28632983b555698b16c642ee9ea64abd320b1e733130b0ec59309"
+  "independent_cpu_replay_entry_sha256": "c9fd6c0431f28632983b555698b16c642ee9ea64abd320b1e733130b0ec59309",
+  "cpu_preflight_source": "ca36f56026951ff9716c311081cbc9f752672d99",
+  "target_accelerator": "Baige Pro6K RPBZZZ6, about95GiB visible CUDA memory; vendor exposes this alias rather than RTX branding",
+  "qualified_cuda_name": "NVIDIA RPBZZZ6",
+  "qualified_cuda_total_bytes": 101973950464,
+  "current_queue_check": {
+    "checked_at_shanghai": "2026-11-07T17:32:00+08:00",
+    "gpus_maximum": 416,
+    "gpus_allocated": 412,
+    "gpus_free": 4,
+    "cpu_free": 1608,
+    "host_free_gb": 26904,
+    "resource_quota_rules_configured": false,
+    "proof": "studentonline01-queue-capacity.png"
+  },
+  "storage_check": {
+    "checked_at_shanghai": "2026-11-07T17:34:35+08:00",
+    "shared_pfs_free_gib": 236.5078125,
+    "archive_reported_free_gib": 262144.0,
+    "archive_write_fsync_passed": true,
+    "worker_new_pfs_output_bytes": 0,
+    "worker_local_free_gib_required": 16,
+    "proof": "studentonline01-storage-check.png"
+  }
 }
