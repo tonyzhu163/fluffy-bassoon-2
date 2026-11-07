@@ -9,10 +9,13 @@ ROOT = Path(__file__).resolve().parent
 PAIRED = ROOT.parent / 'robotwin-sidney-matched-baselines-20261106-r1'
 
 
-def overrides(algorithm):
+def overrides(algorithm, *, optimized_setup=False):
     assert algorithm in ('ppo', 'grpo')
+    assert type(optimized_setup) is bool
     files = {name: ROOT / name for name in ('MOTUS-TRAIN-CASES.json', 'MOTUS-DEV-CASES.json')}
-    result = [f'algorithm.adv_type={"gae" if algorithm == "ppo" else "grpo"}',
+    result = [f'native_pilot.defer_scene_setup={str(optimized_setup).lower()}',
+        f'native_pilot.recycle_scene_executor={str(optimized_setup).lower()}',
+        f'algorithm.adv_type={"gae" if algorithm == "ppo" else "grpo"}',
         f'algorithm.loss_type={"actor_critic" if algorithm == "ppo" else "actor"}',
         f'actor.model.add_value_head={str(algorithm == "ppo").lower()}',
         'algorithm.group_size=8', 'env.train.group_size=8', 'actor.micro_batch_size=256',
@@ -41,6 +44,9 @@ def validate(cfg):
     from fluffy_bassoon.rl.robotwin_noise import MOTUS_REVISION
     method = cfg.native_pilot.comparison_algorithm
     assert method in ('ppo', 'grpo')
+    setup = {key: cfg.native_pilot.get(key, False) for key in
+             ('defer_scene_setup', 'recycle_scene_executor')}
+    assert all(type(value) is bool for value in setup.values()), setup
     expected = {
         'algorithm.adv_type': 'gae' if method == 'ppo' else 'grpo',
         'algorithm.loss_type': 'actor_critic' if method == 'ppo' else 'actor',
@@ -112,16 +118,19 @@ def validate(cfg):
         dev_episodes=16, dev_role='source-task development panel; never held-out transfer evaluation',
         value_protocol='native K-step mean rollout values, selected-step actor values; both independently audited',
         likelihood_protocol='OpenPi shape-aware reference at native post-shuffle hook, once before all epochs',
+        simulator_setup=setup,
         original_initializer_reproduction=False, scientific_source_admission=False)
 
 
 if __name__ == '__main__':
+    assert sys.argv[2:] in ([], ['--optimized-setup'])
+    optimized_setup = bool(sys.argv[2:])
     if sys.argv[1] in ('validate','validate_schema'):
         from hydra import compose, initialize_config_dir
         rows = []
         for method in ('ppo', 'grpo'):
             with initialize_config_dir(version_base='1.1', config_dir=str(ROOT.parents[1]/'configs/native_ppo')):
-                cfg = compose(config_name='motus_phone_two', overrides=overrides(method))
+                cfg = compose(config_name='motus_phone_two', overrides=overrides(method, optimized_setup=optimized_setup))
             row = validate(cfg)
             if sys.argv[1] == 'validate_schema':
                 # Run the complete upstream schema/scientific checks on Linux
@@ -144,4 +153,4 @@ if __name__ == '__main__':
         print(json.dumps(dict(status='complete', configs=rows, hardware_validation=False,
                               model_or_simulator_constructed=False)))
     else:
-        print('\n'.join(overrides(sys.argv[1])))
+        print('\n'.join(overrides(sys.argv[1], optimized_setup=optimized_setup)))

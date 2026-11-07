@@ -19,7 +19,6 @@ PROFILES = [('default', 0)] + [('deferred', rank) for rank in range(4)]
 
 
 def contract():
-    from fluffy_bassoon.meta_rl.rlinf_native_ppo import sha
     name = os.environ.get('TASK_CONTRACT', 'SCENESETUP01-CONTRACT.json')
     assert name in ('SCENESETUP01-CONTRACT.json', 'SCENESETUP02-CONTRACT.json',
                     'SCENESETUP03-CONTRACT.json', 'SCENESETUP04-CONTRACT.json',
@@ -27,16 +26,24 @@ def contract():
     plan = json.loads((ROOT/name).read_bytes())
     assert plan['status'] in ('prepared', 'admitted')
     assert plan['closed_conservative_gpu_seconds']+plan['reserved_gpu_seconds'] <= 180000
+    return plan, reference_manifest(plan)
+
+
+def reference_manifest(plan):
+    from fluffy_bassoon.meta_rl.rlinf_native_ppo import sha
     assert sha(BASE/'cpudev-readback02/RESULT.json') == plan['reference_readback_sha256']
     assert sha(REFERENCE/'FILES.json') == plan['reference_manifest_sha256']
-    return plan, json.loads((REFERENCE/'FILES.json').read_bytes())
+    return json.loads((REFERENCE/'FILES.json').read_bytes())
 
 
-def inputs(local):
+def inputs(local, *, plan=None):
     """Copy only immutable config/commands to local storage, checking both ends."""
     import shutil
     from fluffy_bassoon.meta_rl.rlinf_native_ppo import sha, write
-    plan, manifest = contract()
+    if plan is None:
+        plan, manifest = contract()
+    else:
+        manifest = reference_manifest(plan)
     selected = ['state/resolved-native-config.json'] + [
         f'state/traces/rank-{rank:02d}/{ordinal:05d}.pt.gz'
         for rank in range(4) for ordinal in range(6)]

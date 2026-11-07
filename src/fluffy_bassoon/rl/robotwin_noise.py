@@ -348,6 +348,41 @@ def _install_reset_retry_limit(*, defer_scene=False):
     vector_env.SubEnv._fb2_defer_setup_scene = defer_scene
 
 
+def _close_vector_with_executor_recycling(vector, original_close, clear_cache=True):
+    """Join scene users before native cache destruction; keep offload reusable."""
+    if not clear_cache:
+        return original_close(vector, clear_cache=False)
+    from concurrent.futures import ThreadPoolExecutor
+    import torch
+    pool = vector.env_thread_pool
+    synchronous = isinstance(pool, _SynchronousExecutor)
+    if not synchronous and not isinstance(pool, ThreadPoolExecutor):
+        raise RuntimeError('Unqualified RoboTwin executor lifecycle')
+    pool.shutdown(wait=True)
+    if torch.cuda.is_initialized():
+        torch.cuda.synchronize()
+    # Do not create a usable replacement after a failed native close.
+    result = original_close(vector, clear_cache=True)
+    vector.env_thread_pool = (_SynchronousExecutor() if synchronous else
+                              ThreadPoolExecutor(max_workers=vector.n_envs))
+    return result
+
+
+def _install_vector_executor_recycling():
+    """Opt-in process-local native offload fix; pinned source stays untouched."""
+    from robotwin.envs import vector_env
+    cls = vector_env.VectorEnv
+    if getattr(cls, '_fb2_recycles_executor', False):
+        return
+    original = cls.close
+
+    def close(vector, clear_cache=True):
+        return _close_vector_with_executor_recycling(vector, original, clear_cache)
+
+    cls.close = close
+    cls._fb2_recycles_executor = True
+
+
 def _sha256(path):
     digest = hashlib.sha256()
     with Path(path).open("rb") as stream:

@@ -61,6 +61,29 @@ def initialize_rng(worker, role):
              ode_case_noise_not_used=True))
 
 
+def configure_environment(worker):
+    """One simulator setup profile for native training and standalone eval."""
+    from fluffy_bassoon.rl.robotwin_noise import (
+        _install_allocated_renderer, _install_reset_retry_limit,
+        _install_vector_executor_recycling)
+    defer = worker.cfg.native_pilot.get('defer_scene_setup', False)
+    recycle = worker.cfg.native_pilot.get('recycle_scene_executor', False)
+    if type(defer) is not bool or type(recycle) is not bool:
+        raise ValueError('Simulator setup profiles require explicit booleans')
+    worker_setup(worker, 'env')
+    root = Path(worker.cfg.native_pilot.output)
+    _install_allocated_renderer(root/'renderers'/f'rank-{worker._rank:02d}')
+    _install_reset_retry_limit(defer_scene=defer)
+    if recycle:
+        _install_vector_executor_recycling()
+    from robotwin.envs.vector_env import SubEnv
+    SubEnv._fb2_trim_after_scene_close = False
+    write(root/'setup-profiles'/f'rank-{worker._rank:02d}.json', dict(
+        defer_scene_setup=defer, recycle_scene_executor=recycle,
+        shared_native_training_and_evaluation=True))
+    return root
+
+
 class MotusActor(runtime.PilotActor):
     def model_provider_func(self):
         model = super().model_provider_func()
@@ -222,13 +245,7 @@ class MotusRollout(runtime.PilotRollout):
 
 class MotusEnvironment(runtime.PilotEnvironment):
     def init_worker(self):
-        from fluffy_bassoon.rl.robotwin_noise import _install_allocated_renderer, _install_reset_retry_limit
-        worker_setup(self,'env')
-        root = Path(self.cfg.native_pilot.output)
-        _install_allocated_renderer(root/'renderers'/f'rank-{self._rank:02d}')
-        _install_reset_retry_limit()
-        from robotwin.envs.vector_env import SubEnv
-        SubEnv._fb2_trim_after_scene_close = False
+        root = configure_environment(self)
         result = super().init_worker()
         self._paired_reset_ordinal = 0
         self._motus_schedule = CaseSchedule(self.cfg.native_pilot.case_manifest_path,

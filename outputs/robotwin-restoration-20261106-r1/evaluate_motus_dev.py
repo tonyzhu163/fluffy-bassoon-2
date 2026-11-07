@@ -14,7 +14,7 @@ from omegaconf import OmegaConf
 import ray
 import torch
 
-from motus_teacher_entry import ROOT, MotusEnvironment, MotusRollout, worker_setup
+from motus_teacher_entry import ROOT, MotusEnvironment, MotusRollout, configure_environment
 from motus_configuration import validate
 from recovery_signature import digest
 from fluffy_bassoon.meta_rl import rlinf_native_ppo_runtime as runtime
@@ -54,9 +54,11 @@ def baseline(rank):
     return row, saved, public
 
 
-def configuration(output):
+def configuration(output, *, defer_scene_setup=False, recycle_scene_executor=False):
     original = json.loads((OLD/'state/resolved-native-config.json').read_bytes())
     cfg = OmegaConf.create(original)
+    cfg.native_pilot.defer_scene_setup = defer_scene_setup
+    cfg.native_pilot.recycle_scene_executor = recycle_scene_executor
     cfg.native_pilot.case_manifest_path = str(ROOT/'MOTUS-TRAIN-CASES.json')
     cfg.native_pilot.dev_manifest_path = str(ROOT/'MOTUS-DEV-CASES.json')
     validate(cfg)  # Qualify the original numerical recipe before eval-only wiring.
@@ -139,13 +141,7 @@ class EvaluationRollout(MotusRollout):
 
 class EvaluationEnvironment(runtime.PilotEnvironment):
     def init_worker(self):
-        from fluffy_bassoon.rl.robotwin_noise import _install_allocated_renderer, _install_reset_retry_limit
-        worker_setup(self, 'env')
-        root = Path(self.cfg.native_pilot.output)
-        _install_allocated_renderer(root/'renderers'/f'rank-{self._rank:02d}')
-        _install_reset_retry_limit()  # Qualified default; deferred setup remains off.
-        from robotwin.envs.vector_env import SubEnv
-        SubEnv._fb2_trim_after_scene_close = False
+        root = configure_environment(self)
         result = super().init_worker()
         assert self.only_eval and not self.enable_train and not self.env_list
         assert len(self.eval_env_list) == 1

@@ -210,6 +210,8 @@ critic:
   use_critic_model: False
 
 native_pilot:
+  defer_scene_setup: false
+  recycle_scene_executor: false
   bounded_io: true
   io_max_pending_jobs: 2
   io_max_pending_bytes: 536870912

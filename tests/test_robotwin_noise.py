@@ -1,5 +1,6 @@
 """Accounting/reset tests; run on allocated Linux, not the editing host."""
 from contextlib import nullcontext
+from concurrent.futures import ThreadPoolExecutor
 import threading
 from types import SimpleNamespace
 
@@ -9,6 +10,7 @@ import pytest
 from fluffy_bassoon.rl.robotwin_noise import (
     RobotwinNoiseEnv, _reset_with_retry_limit, _setup_task_with_retry_limit,
     _SynchronousExecutor, _install_synchronous_vector_executor,
+    _close_vector_with_executor_recycling,
     load_benchmark_episode_limits,
 )
 
@@ -301,3 +303,106 @@ def test_synchronous_scene_executor_propagates_errors_and_rejects_thread_migrati
 def test_synchronous_scene_executor_requires_single_physical_environment():
     with pytest.raises(RuntimeError, match="one physical environment"):
         _install_synchronous_vector_executor(SimpleNamespace(n_envs=2))
+
+
+def test_vector_offload_joins_pending_scene_users_before_cuda_and_close(monkeypatch):
+    import torch
+    events = []
+    release, started, joining, closed = (threading.Event() for _ in range(4))
+    pool = ThreadPoolExecutor(max_workers=2)
+    vector = SimpleNamespace(env_thread_pool=pool, n_envs=2)
+    original_shutdown = pool.shutdown
+
+    def shutdown(**kwargs):
+        joining.set()
+        original_shutdown(**kwargs)
+
+    pool.shutdown = shutdown
+
+    def pending():
+        started.set()
+        assert release.wait(5)
+        events.append('scene_task_finished')
+
+    future = pool.submit(pending)
+    assert started.wait(5)
+    monkeypatch.setattr(torch.cuda, 'is_initialized', lambda: True)
+    monkeypatch.setattr(torch.cuda, 'synchronize', lambda: events.append('cuda_drained'))
+
+    def native_close(instance, clear_cache):
+        assert future.done() and clear_cache
+        assert all(not thread.is_alive() for thread in pool._threads)
+        events.append('native_close')
+        closed.set()
+        return 'closed'
+
+    failures = []
+    results = []
+
+    def close():
+        try:
+            results.append(_close_vector_with_executor_recycling(vector, native_close))
+        except BaseException as error:
+            failures.append(error)
+
+    thread = threading.Thread(target=close)
+    thread.start()
+    try:
+        assert joining.wait(5) and not closed.is_set()
+        release.set()
+        thread.join(5)
+        assert not thread.is_alive() and not failures and results == ['closed']
+        assert events == ['scene_task_finished', 'cuda_drained', 'native_close']
+        assert vector.env_thread_pool is not pool
+        assert vector.env_thread_pool.submit(lambda: 7).result(5) == 7
+    finally:
+        release.set()
+        thread.join(5)
+        vector.env_thread_pool.shutdown(wait=True)
+
+
+def test_vector_soft_close_keeps_existing_executor(monkeypatch):
+    import torch
+    monkeypatch.setattr(torch.cuda, 'is_initialized', lambda: False)
+    pool = ThreadPoolExecutor(max_workers=1)
+    vector = SimpleNamespace(env_thread_pool=pool, n_envs=1)
+    calls = []
+    try:
+        result = _close_vector_with_executor_recycling(vector,
+            lambda instance, clear_cache: calls.append(clear_cache), False)
+        assert result is None and calls == [False] and vector.env_thread_pool is pool
+        assert pool.submit(lambda: 8).result(5) == 8
+    finally:
+        pool.shutdown(wait=True)
+
+
+def test_failed_native_close_leaves_executor_unusable(monkeypatch):
+    import torch
+    monkeypatch.setattr(torch.cuda, 'is_initialized', lambda: False)
+    pool = ThreadPoolExecutor(max_workers=1)
+    vector = SimpleNamespace(env_thread_pool=pool, n_envs=1)
+    cause = RuntimeError('native scene close failed')
+
+    def native_close(instance, clear_cache):
+        raise cause
+
+    with pytest.raises(RuntimeError) as failure:
+        _close_vector_with_executor_recycling(vector, native_close)
+    assert failure.value is cause and vector.env_thread_pool is pool
+    with pytest.raises(RuntimeError, match='shutdown'):
+        pool.submit(lambda: None)
+
+
+def test_recycled_synchronous_executor_keeps_scene_thread_affinity(monkeypatch):
+    import torch
+    monkeypatch.setattr(torch.cuda, 'is_initialized', lambda: False)
+    old = _SynchronousExecutor()
+    vector = SimpleNamespace(env_thread_pool=old, n_envs=1)
+    owner = threading.get_ident()
+    _close_vector_with_executor_recycling(vector, lambda instance, clear_cache: None)
+    assert isinstance(vector.env_thread_pool, _SynchronousExecutor)
+    assert vector.env_thread_pool is not old
+    assert vector.env_thread_pool.submit(threading.get_ident).result() == owner
+    with pytest.raises(RuntimeError, match='shut down'):
+        old.submit(lambda: None)
+    vector.env_thread_pool.shutdown()
