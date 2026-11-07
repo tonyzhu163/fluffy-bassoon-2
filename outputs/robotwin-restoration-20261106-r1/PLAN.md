@@ -577,3 +577,26 @@ B4 plain-export likelihood/value calibration. The allocation closed with
 Next qualify updated-policy simulator DEV on its fixed16 cases, then address
 the combined collection memory/initialization gate. This does not admit the
 existing single-policy collection as AD history or supply policy1 rollouts.
+
+
+## Paired updated-policy DEV admission
+
+CPUDEV01.json binds Linux-only import/configuration qualification at b05f2efa:
+full native evaluation schema, unchanged actor/algorithm/eval-environment, the
+complete effective rollout model and all4 actual original B4 inputs.
+CPUDEV-INPUTS01-CLOSEOUT.json preserves the rejected raw-vs-transport hash
+assumption; corrected cpudev-inputs02 verifies native EnvOutput packing and
+per-rank saved RNG. No model or simulator was constructed during these checks.
+
+MOTUSDEV01-CONTRACT.json admits4GPU/64CPU/256GiB/SHM64 for at most10 scheduler
+minutes,570 worker seconds and660 creation-to-release seconds. The2640GPU-s
+reservation gives worst177480/180000 and2520 unreserved. Use the complete
+update15 plain weights, original16 seeds, native B4/rank and saved baseline
+RNG. Require static original-SFT action calibration and exact first simulator
+observations before reporting a paired result. Native environment/rollout
+channel calls, measured controller, bounded writer and metric aggregation are
+shared with training DEV; launch no actor workers or training scenes. Require
+16 completed trajectories, zero SGD, frozen parameter bytes, I/O drain, at
+least8GiB sampled GPU reserve and independent trace readback. Keep this panel
+out of student fitting and held-out transfer claims. Close the scheduler's
+actual creation-to-release charge before allocating any remaining allowance.
