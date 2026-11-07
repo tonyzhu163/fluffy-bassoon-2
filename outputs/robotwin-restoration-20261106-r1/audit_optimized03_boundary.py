@@ -32,7 +32,7 @@ def audit():
             'native_pilot.stop_after_iteration=2', 'runner.resume_dir=/tmp/rtr1/global_step_1'])
     assert validate(cfg)['world']==8
     assert cfg.runner.resume_dir=='/tmp/rtr1/global_step_1'
-    output = BASE/'motusoptimized03-boundary01'; output.mkdir()
+    output = BASE/'motusoptimized03-boundary02'; output.mkdir()
     manifest = json.loads((CHECKPOINT/'MANIFEST.json').read_bytes())
     assert sha(CHECKPOINT/'MANIFEST.json') == MANIFEST_SHA
     assert manifest['global_step'] == 1 and len(manifest['files']) == 58
@@ -50,7 +50,10 @@ def audit():
             state = torch.load(pilot/f'{role}-{rank:02d}.pt', map_location='cpu', weights_only=False)
             assert state['role'] == role and state['rank'] == rank
             assert {'python', 'numpy', 'torch', 'cuda'} <= state['rng'].keys()
-            assert len(state['rng']['cuda']) == 8
+            device=json.loads((BASE/f'motusoptimized03/state/worker-gpus/{role}-{rank:02d}.json').read_bytes())
+            assert device['role']==role and device['rank']==rank
+            assert device['cuda_device_count'] in (1,8)
+            assert len(state['rng']['cuda']) == device['cuda_device_count']
             if role == 'actor':
                 assert state['optimizer_steps'] == 15 and state['optimizer_boundary']
             if role == 'env':
@@ -58,7 +61,7 @@ def audit():
                 schedule = json.loads((pilot/f'motus-case-schedule-env-{rank:02d}.json').read_bytes())
                 assert schedule['next_reset_ordinal'] == 4
             rows.append(dict(rank=rank, role=role, tensor_loaded=True,
-                             rng_present=True, global_step=state['global_step'], version=state['version']))
+                             rng_present=True, cuda_rng_devices=len(state['rng']['cuda']), global_step=state['global_step'], version=state['version']))
             del state; gc.collect()
     root = BASE/'motusoptimized03/state'
     references, memories = [], []
