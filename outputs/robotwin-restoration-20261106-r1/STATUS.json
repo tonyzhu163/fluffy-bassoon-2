@@ -1,6 +1,6 @@
 {
   "owner_chat": "01a1b024-f4ac-7181-af87-bac9fbee72bb",
-  "status": "lifecycle01_startup_verification_pending",
+  "status": "lifecycle01_advancing",
   "new_gpu_jobs_launched": 23,
   "prior_robotwin_cumulative_cap_gpu_hours": 50,
   "prior_cost_and_reservations_must_be_refreshed": false,
@@ -63,7 +63,7 @@
   "active_gpu_reservation_seconds": 1900,
   "new_gpu_hours_note": "177816GPU-s closed;1900 active reservation;worst179716/180000;284 unreserved.",
   "budget_reconciliation": "BUDGET-RECONCILIATION.json",
-  "last_checked_shanghai": "2026-11-07T12:38:00+08:00",
+  "last_checked_shanghai": "2026-11-07T12:43:08+08:00",
   "cumulative_closed_conservative_gpu_seconds": 177816,
   "worst_closed_plus_reserved_gpu_seconds": 179716,
   "execution_qualification": "EXECUTION01-COMPLETE.json",
@@ -114,7 +114,7 @@
   "native_teacher_fourth_attempt": "MOTUSPPO04-CLOSEOUT.json",
   "decoded_history_core_qualification": "CPUTOKENS01.json",
   "deferred_scene_setup_cpu_qualification": "CPUTOKENS02.json",
-  "next_action": "Verify actual allocated GPU probe and advancing simulator chunks in lifecycle01; keep pinned worktree immutable. Diagnose before any retry and preserve the50GPU-hour cumulative cap.",
+  "next_action": "Monitor lifecycle01 child process completion and all4 native train/eval default/deferred profiles; then independent Linux CPU cold readback using separate audit source, preserving active61e099b3 worktree. No combined-training-memory qualification yet.",
   "native_collection_recovery_audit": "COLLECTION-AUDIT02-COMPLETE.json",
   "planned_learner_recovery_gpu_seconds": 0,
   "native_learner_recovery_contract": "MOTUSREPLAY01-CONTRACT.json",
@@ -141,5 +141,8 @@
   "lifecycle_failed_cpu_check": "CPULIFECYCLE01-CLOSEOUT.json",
   "lifecycle_cpu_qualification": "CPULIFECYCLE02.json",
   "lifecycle_launch": "LIFECYCLE01-LAUNCH.json",
-  "lifecycle_launcher_cpu_qualification": "CPULIFECYCLE-ADMISSION03.json"
+  "lifecycle_launcher_cpu_qualification": "CPULIFECYCLE-ADMISSION03.json",
+  "lifecycle_progress": "LIFECYCLE01-PROGRESS.json",
+  "lifecycle_audit_entry": "audit_native_lifecycle.py",
+  "lifecycle_audit_source": "dd4c356fdbeda2c9835b2947b0a997405b33379e"
 }
