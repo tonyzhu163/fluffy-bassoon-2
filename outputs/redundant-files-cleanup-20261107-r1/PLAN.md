@@ -1,0 +1,7 @@
+# Approved redundant-file cleanup
+
+The user approved the reviewed 17.21 GiB batch: one duplicate restored-cache archive, the extracted object ZIP, an incomplete earlier model download and 320 recoverable deployment bundles. Exact selectors are immutable in PLAN.json. No additional corpus, checkpoint, rollout, environment or shared model eviction is included.
+
+Revalidate both copies of the existing cold cache archive. Preserve a new cold archive of every other selected original byte, including the incomplete download and deployment bundles. Compare the archive to its sources, fully read it back, restore it into empty local staging, and verify exact selected membership, SHA256, size, owner/mode/mtime and hardlinks. Verify bundle tips remain retained and their complete object closure is present. Qualify these file operations on a Linux fixture before launch.
+
+Hash the valid extracted motor, extracted simulator families, installed manifest, compact old-cache records and all unselected deployment bundles before and after cleanup. Check scheduler consumers and development-visible command/FD/mmap readers. Recheck each original stamp and SHA immediately before unlinking only the approved regular file. Keep all original directories and compact records. Count allocation only at the last hardlink. Record every release and its recovery mapping. Use separate local staging below 16 GiB, remove it on success, and allocate no GPU.
