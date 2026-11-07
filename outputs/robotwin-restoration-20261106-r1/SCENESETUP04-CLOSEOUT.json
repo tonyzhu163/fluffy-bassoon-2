@@ -1,0 +1,20 @@
+{
+  "status": "failed_released_before_simulator",
+  "job_id": "job-ti3icszkrduq",
+  "source_commit": "a3b6064cf4047d1175661123e37da27b3eca1ec1",
+  "created_shanghai": "2026-11-07T11:13:02+08:00",
+  "released_shanghai": "2026-11-07T11:14:08+08:00",
+  "conservative_gpu_seconds": 66,
+  "worker_gpu_seconds": 8,
+  "worker_exit_code": 1,
+  "actual_gpu_probe_passed": true,
+  "host_128gib_check_passed": true,
+  "exact_admission_block_passed": true,
+  "cause": "Sparse checkout omitted patches/robotwin-dca9ec68-execution-accounting.patch; controller source preparation failed before staging/model/scenes. CPU05 exercised admission but not controller heredoc.",
+  "model_calls": 0,
+  "simulator_episodes": 0,
+  "optimizer_updates": 0,
+  "cleanup_repair_tested": false,
+  "release_proof": "scenesetup04-released.png",
+  "next_attempt": "Fresh full Git checkout; CPU06 must execute exact admitted launcher and controller-preparation Python blocks plus retained-input/reset checks."
+}

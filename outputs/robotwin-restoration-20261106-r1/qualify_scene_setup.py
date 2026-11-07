@@ -22,7 +22,8 @@ def contract():
     from fluffy_bassoon.meta_rl.rlinf_native_ppo import sha
     name = os.environ.get('TASK_CONTRACT', 'SCENESETUP01-CONTRACT.json')
     assert name in ('SCENESETUP01-CONTRACT.json', 'SCENESETUP02-CONTRACT.json',
-                    'SCENESETUP03-CONTRACT.json', 'SCENESETUP04-CONTRACT.json')
+                    'SCENESETUP03-CONTRACT.json', 'SCENESETUP04-CONTRACT.json',
+                    'SCENESETUP05-CONTRACT.json')
     plan = json.loads((ROOT/name).read_bytes())
     assert plan['status'] in ('prepared', 'admitted')
     assert plan['closed_conservative_gpu_seconds']+plan['reserved_gpu_seconds'] <= 180000
