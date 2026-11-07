@@ -632,3 +632,18 @@ being described as transparent. Online continuation also requires the recorded
 new-boundary collector/RNG migration. The remaining3032GPU-s do not fund the
 matched six-source PPO/GRPO and student campaign; prepare a measured extension
 before exceeding the user's hard50GPU-hour cap.
+
+
+SCENESETUP01-CONTRACT.json now admits that bounded1GPU replay after
+CPUSCENE02 at3f7ac49a: all24 retained chunks cold/staged/read, exact original
+config/manifest/readback, shell syntax and6 allocated-Linux reset/setup cases
+passed with CUDA uninitialized. CPUSCENE01 preserves a rejected mistyped
+readback-hash literal; the archived receipt itself remained unchanged.
+Run a default rank0 control first, then all4 deferred reference ranks in
+separate processes. Preserve native constructor/offload/reset ordering, B4,
+intermediate-render profile and full requested chunks; compare all5 native
+output parts, including raw feedback and final/reset observations.
+The5120-action ceiling includes explicit temporary/real setup allowances.
+Require8GiB sampled reserve and complete child closure. The2400GPU-s
+creation/release reservation gives worst179368/180000,632 unreserved.
+No model, SGD, student data or large-scene/combined-training claim is involved.
