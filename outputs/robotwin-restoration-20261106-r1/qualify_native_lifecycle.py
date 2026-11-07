@@ -1,6 +1,6 @@
 """Fixed-command B4 lifecycle qualification in native train/eval modes.
 
-Two collections of four episodes per profile; explicit train resets versus
+Two collections of two episodes per profile; explicit train resets versus
 native evaluation auto-reset. Every collection ends in reusable native offload.
 This is environment qualification, never a model update or source corpus.
 """
@@ -130,7 +130,7 @@ def child(ordinal):
         offload('native-initial-offload')
         for collection in range(2):
             current = None
-            for episode in range(4):
+            for episode in range(2):
                 if current is None or mode == 'train':
                     current, _ = env.reset()
                 assert tensor_hash(current) == tensor_hash(saved[0]['current_observation'])
@@ -159,9 +159,9 @@ def child(ordinal):
                 print(json.dumps(dict(mode=mode, deferred=deferred,
                     collection=collection, episode=episode, passed=True)), flush=True)
             offload(f'collection-{collection}')
-        assert len(report['chunks']) == 48 and len(report['offloads']) == 3
+        assert len(report['chunks']) == 24 and len(report['offloads']) == 3
         assert all(row['resolved'] for row in journal.rows)
-        report.update(status='passed', episodes=32, vector_episodes=8,
+        report.update(status='passed', episodes=16, vector_episodes=4,
             charged_actions=journal.charged(), controlled_profile_equal=True,
             retained_eval_outputs_equal=mode == 'eval', loss_masks_unchanged=True,
             combined_training_memory_qualified=False)
@@ -200,8 +200,8 @@ def parent():
                 charged_actions=value['charged_actions']))
             write(output/'RESULT.json', report)
         assert sum(x['charged_actions'] for x in report['children']) <= plan['maximum_all_in_actions']
-        report.update(status='passed', episodes=128, vector_episodes=32,
-            vector_chunks=192, recurrent_offloads=12, modes=['train', 'eval'],
+        report.update(status='passed', episodes=64, vector_episodes=16,
+            vector_chunks=96, recurrent_offloads=12, modes=['train', 'eval'],
             source_corpus_admitted=False, combined_training_memory_qualified=False)
     except BaseException as error:
         report.update(status='failed', error_type=type(error).__name__, error=str(error))

@@ -1,14 +1,14 @@
 {
-  "status": "prepared",
+  "status": "admitted",
   "purpose": "Qualify reusable native offload with executor join/recreation, default/deferred setup, native train/eval wrapper modes",
   "world_size": 1,
   "simultaneous_scenes": 4,
   "profiles": 4,
   "collections_per_profile": 2,
-  "episodes_per_collection": 4,
-  "episodes": 128,
+  "episodes_per_collection": 2,
+  "episodes": 64,
   "unique_cases": 4,
-  "vector_chunks": 192,
+  "vector_chunks": 96,
   "chunk_horizon": 32,
   "episode_horizon": 192,
   "training_mode_fixture_group_size": 1,
@@ -38,8 +38,8 @@
   "prior_setup_qualification": "SCENESETUP05-COMPLETE.json",
   "reference_readback_sha256": "18e23528deac33df6453fe8a8ac7d168e12c40f4d967a78cd87d9baefb980808",
   "reference_manifest_sha256": "5511be7e32216709b0f457fd82679a6273244b553528988ddb53699f884927fb",
-  "entry_sha256": "bdcdb53afbd11b2385daeafe4abdf1a6640bd929fa491ba0e80ed21098599dc9",
-  "launcher_sha256": "191f8fd40b86320df2dd996aa9e4b90e83d19d9db81fc63b07c598cd043cb6ca",
+  "entry_sha256": "15f59681376ec95c2234bfa65bcd9a9dbb74c080ea0277d7adbbf30dc123bf57",
+  "launcher_sha256": "2dcb576b7d4335032bc4547f0802ad2e0ff3652a058dc08aa5b3af2ff2d80ee8",
   "observer_sha256": "e6b9994f34d60bb8a92a125c6ec2ac52cc70a5a79f1c7804e1b3218d703f15f8",
   "source_files": {
     "src/fluffy_bassoon/rl/robotwin_noise.py": "b26a220a1190a8ad6b653e49f4a3c8f2c6a66b057471056bf148e8dd8d68b7ea",
@@ -50,5 +50,7 @@
     "configs/native_ppo/motus_phone_two.yaml": "2fc4453732d7a65bad98e05b59aba90935f93d58c4d87a878fe163949ab3b134",
     "patches/robotwin-dca9ec68-execution-accounting.patch": "8f5436a8197c73b470eb8cedec7e9a2f2722357c19f33e863721cec97cf7bbd2",
     "src/fluffy_bassoon/rl/robotwin_native_setup.py": "be519711af0094895161abf7a62aa17e34860c0ff53959b5ae898bef1cded131"
-  }
+  },
+  "cpu_qualification": "CPULIFECYCLE02.json",
+  "bounded_fixture_note": "Two episodes per collection qualify executor reuse; four-round native training and long uninterrupted reset stress remain unqualified. Reduced from prepared128 episodes using prior measured setup/replay time to fit the remaining creation-to-release budget."
 }

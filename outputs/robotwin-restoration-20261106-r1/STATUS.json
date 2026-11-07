@@ -1,6 +1,6 @@
 {
   "owner_chat": "01a1b024-f4ac-7181-af87-bac9fbee72bb",
-  "status": "shared_lifecycle_cpu_qualification_pending",
+  "status": "shared_lifecycle_cpu_passed_admission_pending",
   "new_gpu_jobs_launched": 22,
   "prior_robotwin_cumulative_cap_gpu_hours": 50,
   "prior_cost_and_reservations_must_be_refreshed": false,
@@ -63,7 +63,7 @@
   "active_gpu_reservation_seconds": 0,
   "new_gpu_hours_note": "177816GPU-s closed;0 active/reserved;2184 remain under180000 cap.",
   "budget_reconciliation": "BUDGET-RECONCILIATION.json",
-  "last_checked_shanghai": "2026-11-07T12:23:00+08:00",
+  "last_checked_shanghai": "2026-11-07T12:35:00+08:00",
   "cumulative_closed_conservative_gpu_seconds": 177816,
   "worst_closed_plus_reserved_gpu_seconds": 177816,
   "execution_qualification": "EXECUTION01-COMPLETE.json",
@@ -114,7 +114,7 @@
   "native_teacher_fourth_attempt": "MOTUSPPO04-CLOSEOUT.json",
   "decoded_history_core_qualification": "CPUTOKENS01.json",
   "deferred_scene_setup_cpu_qualification": "CPUTOKENS02.json",
-  "next_action": "Run corrected CPU02 core/native schema/shared-hook checks, then exact admitted launcher/controller preparation. If passed, qualify repeated native offload in B4 train/eval control profiles within1900GPU-s; full co-resident64-scene training remains pending.",
+  "next_action": "Execute exact final launcher admission/controller blocks on Linux CPU, then qualify reusable native offload in64 repeated B4 episodes across train/eval default/deferred profiles within1900GPU-s; full co-resident64-scene training remains pending.",
   "native_collection_recovery_audit": "COLLECTION-AUDIT02-COMPLETE.json",
   "planned_learner_recovery_gpu_seconds": 0,
   "native_learner_recovery_contract": "MOTUSREPLAY01-CONTRACT.json",
@@ -138,5 +138,6 @@
   "scene_setup_cpu_readback": "SCENESETUP05-READBACK01.json",
   "planned_lifecycle_gpu_seconds": 1900,
   "lifecycle_contract": "LIFECYCLE01-CONTRACT.json",
-  "lifecycle_failed_cpu_check": "CPULIFECYCLE01-CLOSEOUT.json"
+  "lifecycle_failed_cpu_check": "CPULIFECYCLE01-CLOSEOUT.json",
+  "lifecycle_cpu_qualification": "CPULIFECYCLE02.json"
 }

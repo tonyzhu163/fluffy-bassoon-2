@@ -99,7 +99,7 @@ import json,sys
 from pathlib import Path
 from fluffy_bassoon.meta_rl.rlinf_native_ppo import sha,write
 root=Path(sys.argv[1]);r=json.loads((root/'RESULT.json').read_bytes())
-assert r['status']=='passed' and r['episodes']==128 and r['vector_chunks']==192
+assert r['status']=='passed' and r['episodes']==64 and r['vector_chunks']==96
 assert r['recurrent_offloads']==12 and len(r['children'])==4
 assert r['optimizer_updates']==r['model_calls']==0
 assert json.loads((root/'resources.json').read_bytes())['sampled_reserve_passed']
@@ -108,8 +108,8 @@ files={str(p.relative_to(root)):dict(bytes=p.stat().st_size,sha256=sha(p))
 assert sum(x['bytes'] for x in files.values()) <= 64*2**20
 assert sum(p.stat().st_size for p in root.glob('child-*.log')) <= 128*2**20
 write(root/'FILES.json',dict(files=files))
-write(root/'COMPLETE.json',dict(status='complete_native_lifecycle',episodes=128,
- vector_chunks=192,recurrent_offloads=12,model_calls=0,optimizer_updates=0,
+write(root/'COMPLETE.json',dict(status='complete_native_lifecycle',episodes=64,
+ vector_chunks=96,recurrent_offloads=12,model_calls=0,optimizer_updates=0,
  combined_training_memory_qualified=False,larger_scene_count_qualified=False,
  result_sha256=sha(root/'RESULT.json'),independent_readback_pending=True))
 PY
