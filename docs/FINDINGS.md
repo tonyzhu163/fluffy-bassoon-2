@@ -1234,3 +1234,25 @@ all earlier missing gain to that defect.
 [PPO cold and numerical audit](../outputs/robotwin-restoration-20261106-r1/MOTUSBEHAVIORPPO01-CLOSEOUT.json),
 [GRPO cold and numerical audit](../outputs/robotwin-restoration-20261106-r1/MOTUSBEHAVIORGRPO01-CLOSEOUT.json),
 [shared train/eval engineering](../outputs/robotwin-restoration-20261106-r1/ENGINEERING-PARITY.md).
+
+### Corrected Motus paired source DEV readout
+
+After two fresh native collections and30 Adam updates perrank, full independent
+64-scene paired source DEV readout passes for both corrected B32 controls. SFT
+is6/64 for both. PPO is10/64 (six gains,two losses,+6.25points, exact two-sided
+paired p=.2890625); GRPO is11/64 (five gains,no losses,+7.8125points,p=.0625).
+Neither meets the predeclared10-point/p<.05 effectiveness gate. GRPO was selected
+by the precommitted larger-DEV-gain rule for disjoint64-case confirmation, before
+that confirmation was launched. This is one training seed and no transfer claim.
+
+Both GPU jobs exited0 and released allocations. Each restored all24 workers for
+SFT and checkpoint2, preserved all8 actors' owned Adam/scheduler/scaler/RNG state
+without SGD, and retained native batch2/H192. Independent CPU readback cold-hashed
+every state file, checked all128 physical episodes, all192 paired actual Gaussian
+batch draws and32 initial batched scene observations, and recomputed the outcomes.
+The earlier empty-unowned optimizer representation guard failure was reproduced
+with native RLinf offload/onload and corrected narrowly;12 Linux core tests pass.
+
+Evidence: [PPO readback](../outputs/robotwin-restoration-20261106-r1/MOTUS-SOURCE-PPO-DEV03-READBACK.json),
+[GRPO readback](../outputs/robotwin-restoration-20261106-r1/MOTUS-SOURCE-GRPO-DEV02-READBACK.json),
+[method selection](../outputs/robotwin-restoration-20261106-r1/MOTUS-SOURCE-SELECTION.json).

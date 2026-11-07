@@ -15,9 +15,12 @@ actual unchanged-policy audit found batch-dependent likelihood drift. Corrected
 fresh B32/accumulation8 PPOgroup1 and GRPOgroup8 controls each completed two
 fresh collections and30 Adam updates per rank. Independent cold checkpoint and
 whole-batch advantage readbacks passed for both. Their small progress panels
-were PPO2/16→4/16→5/16 and GRPO2/16→4/16→3/16; the larger paired readout
-and disjoint confirmation remain pending. None of these small panels
-establishes improvement or demonstrates that the released recipe fails.
+were PPO2/16→4/16→5/16 and GRPO2/16→4/16→3/16. Independent64-scene
+paired DEV now gives SFT6/64, PPO10/64 (six gains,two losses,p=.2891), and
+GRPO11/64 (five gains,no losses,p=.0625). Full cold/physical/noise readbacks pass.
+GRPO is selected under the precommitted larger-gain rule; disjoint confirmation
+remains required. Neither DEV result meets the10-point/p<.05 source gate, nor
+demonstrates that the released recipe fails.
 
 Three separate questions need separate evidence:
 
@@ -25,7 +28,7 @@ Three separate questions need separate evidence:
 | --- | --- |
 | Can our learner update real rollout data and restore exactly? | Yes: the B32 actual-data update qualification passed15 new Adam steps/rank and independent cold checkpoint/owned-Adam readback on all8 actors. |
 | Can the complete optimized collector/learner cycle run repeatedly at scale? | Corrected PPO and GRPO each passed two fresh combined cycles; all three cold boundaries and both full actor batches independently verified. |
-| Does sustained PPO improve the selected joint motor on our source tasks? | Unresolved; corrected two-cycle endpoint panels are descriptive and paired DEV/confirmation remain required. |
+| Does sustained PPO improve the selected joint motor on our source tasks? | Not established; audited paired DEV improves6.25points with PPO and7.81points with GRPO, below the gate; confirmation pending. |
 
 ## Direct and adjacent literature
 
@@ -137,7 +140,9 @@ group; native offload/onload reproduces the mapping on a Linux CPU fixture.
 Twelve core checkpoint tests qualify a narrow equivalence between absent and
 empty state for unowned zero-length shards. Owned or unregistered parameters
 remain strict. This diagnoses the interrupted readout, not a learning failure;
-complete GPU checks on all actors and both checkpoints remain required.
+The corrected readouts subsequently passed all GPU guards for both checkpoints
+and both methods, plus independent cold/physical/noise readback. Confirmation
+remains pending.
 [Actual-layout and reference audit](../../outputs/robotwin-restoration-20261106-r1/MOTUS-EMPTY-STATE-AUDIT-CPU01.json).
 
 ## Ranked explanations and discriminating checks
