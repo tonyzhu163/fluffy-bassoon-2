@@ -549,3 +549,22 @@ The original pilot has no post-collection environment snapshot: a later online
 continuation needs an explicit new-boundary collector/RNG migration. Never call
 this an exact all-worker simulator resume or admit the first fixed policy as an
 AD learning history. Preserve the original failed contract and charged prefix.
+
+`replay_motus_learner.py` implements that learner-only boundary in a fresh
+allocation. It reads the original resolved configuration and requires exact
+actor/algorithm/rollout equality after full native validation. Each rank checks
+its collection hash and independent GAE, restores the recorded pre-SGD RNG,
+then executes the unchanged native shuffle and all15 optimizer updates. Keep
+micro256/accumulation2/global2048 and all5 epochs. No simulator actions are
+charged again or invented as new data.
+
+At update15, save full native DCP, owned Adam/scheduler/scaler/RNG sidecars,
+the logical sampler boundary, scheduled plain inference weights and a cloned
+512-row numerical-control fixture per rank. Complete the cold and local
+stageback checks before the unsaved update16 control. Fresh worker processes
+must restore update15 exactly, qualify the plain inference export at the same
+B4 partition and reproduce the same unsaved next update. The control never
+becomes a retained teacher version. This does not replace an updated-policy
+simulator DEV panel or the explicit collector migration needed for iteration2.
+The prepared recovery reserves9000 GPU-seconds against9176 remaining; validate
+the code, queue and exact deployment commit before admitting that allocation.

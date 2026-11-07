@@ -156,3 +156,12 @@ CPUTOKENS01 passed6 Linux causality/reset/ownership cases. CPUTOKENS02 passed
 6 reset guard cases, including deferred temporary scene construction. Lazy
 setup is opt-in and remains disabled pending actual SAPIEN parity; this CPU
 result does not qualify its scene behavior or256-environment capacity.
+
+The saved-collection recovery uses RoboCasa's `checkpoint_weight_export`
+schedule helper for the complete update15 boundary. Native DCP remains
+mandatory; plain weights additionally require strict tensor-byte/dtype/shape
+load and matched-B4 likelihood/value calibration. The recovery control runs
+only after durable checkpoint readback, then repeats in fresh processes.
+This actor-only allocation isolates learner capacity from the unqualified
+combined simulator memory peak. None of these new checks is claimed passed
+until the allocated execution produces its completion receipts.
