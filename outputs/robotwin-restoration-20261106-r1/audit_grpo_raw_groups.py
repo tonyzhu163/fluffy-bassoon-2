@@ -6,6 +6,8 @@ not the PPO actor buffers that include critic timeout terms.
 """
 import gc
 import gzip
+import hashlib
+import io
 import json
 import os
 from pathlib import Path
@@ -31,13 +33,14 @@ def main():
     native = Path(os.environ['REPO_PATH'])
     assert subprocess.check_output(['git', '-C', str(native), 'rev-parse', 'HEAD'], text=True).strip() == 'c605b9d55ed93a180119b099e6f836abff293b08'
     started = time.monotonic()
-    output = BASE/'grpo-rawgroupaudit01'; output.mkdir()
+    output = BASE/'grpo-rawgroupaudit02'; output.mkdir()
     report = dict(status='checking', source_commit=os.environ['TASK_SOURCE'],
         gpu_seconds=0, new_simulator_actions=0, model_calls=0, optimizer_updates=0,
         source_policy='optimized03 fresh Motus policy0 collected for PPO',
         source_native_batch=32, group_size=8, grouping='same reset case, eight replicas',
         critic_bootstrap_included=False, grpo_training_run=False, policy_improvement_claim=False,
         numerical_protocol='Counterfactual native GRPO reduction of recorded raw simulator rewards; no PPO actor rewards reused',
+        trace_loading='Read compressed bytes once; decompress once into seekable CPU memory before torch.load',
         ranks=[], files={}, groups=[])
     write(output/'RESULT.json', report)
     fixtures = []
@@ -53,8 +56,13 @@ def main():
             seeds[round_index] = [row['scene_seed'] for row in values for _ in range(8)]
         count = 0
         for path in sorted((SOURCE/f'traces/rank-{rank:02d}').glob('*.pt.gz')):
-            with gzip.open(path, 'rb') as handle:
+            # torch.load seeks inside its ZIP stream. Seeking a GzipFile can
+            # repeatedly decompress the same large image archive.
+            compressed = path.read_bytes()
+            digest = hashlib.sha256(compressed).hexdigest()
+            with io.BytesIO(gzip.decompress(compressed)) as handle:
                 trace = torch.load(handle, map_location='cpu', weights_only=False)
+            del compressed
             if trace['evaluation_data']:
                 del trace
                 continue
@@ -68,9 +76,10 @@ def main():
             assert raw.shape == ended.shape == (32, 32) and torch.isfinite(raw).all()
             rewards[round_index, chunk] = raw
             endings[round_index, chunk] = ended
-            report['files'][str(path)] = sha(path)
+            report['files'][str(path)] = digest
             count += 1
             del trace; gc.collect()
+            if count % 6 == 0: print('RAW_GROUP_ROUND_READ', rank, count // 6, flush=True)
             if count == 24: break  # Exclude later DEV and the interrupted policy1 collection.
         assert count == 24
         reward = torch.stack([torch.cat([rewards[r, c] for r in range(4)], dim=0) for c in range(6)])
@@ -101,7 +110,7 @@ def main():
             report['groups'].append(dict(rank=rank, round_index=round_index, local_group=local_group,
                 scene_seed=seeds[round_index][local_group*8], raw_scores=values.tolist(),
                 tied=bool(np.std(values, ddof=1) == 0),
-                successful_replicas=int((values > 0).sum())))
+                positive_score_replicas=int((values > 0).sum())))
         fixtures.append(dict(rank=rank, **batch))
         report['ranks'].append(dict(rank=rank, trace_chunks=count, native_reference=reference))
         write(output/'RESULT.json', report)
@@ -110,10 +119,11 @@ def main():
     # Small reward/mask fixture only; no images, model tensors or cached features.
     torch.save(fixtures, output/'raw-reward-fixtures.pt')
     report.update(status='passed_counterfactual_raw_reward_grpo_reduction',
-        total_episode_groups=128, total_episodes=1024, native_decisions=6144,
+        total_episode_groups=128, total_episodes=1024, recorded_decision_calls=6144,
+        valid_chunk_decisions=sum(row['native_reference']['valid_native_decisions'] for row in report['ranks']),
         tied_groups=sum(row['tied'] for row in report['groups']),
         mixed_score_groups=sum(not row['tied'] for row in report['groups']),
-        positive_score_episodes=sum(row['successful_replicas'] for row in report['groups']),
+        positive_score_episodes=sum(row['positive_score_replicas'] for row in report['groups']),
         worst_advantage_error=max(row['native_reference']['max_abs_error']['advantages'] for row in report['ranks']),
         fixture_sha256=sha(output/'raw-reward-fixtures.pt'), seconds=time.monotonic()-started)
     assert not torch.cuda.is_initialized()
