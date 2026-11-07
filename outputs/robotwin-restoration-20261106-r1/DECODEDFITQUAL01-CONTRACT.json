@@ -1,0 +1,38 @@
+{
+  "intent": "runtime_qualification",
+  "model": {
+    "width": 512,
+    "layers": 6,
+    "heads": 8,
+    "context_length": 2048,
+    "initial_std": 0.5
+  },
+  "mode": "full",
+  "fitting": {
+    "seed": 0,
+    "batch_size": 8,
+    "max_episodes": 9,
+    "value_updates": 2,
+    "actor_updates": 2,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0
+  },
+  "execution_batch_size": 8,
+  "retained_update_boundaries": [
+    1
+  ],
+  "checkpoint_interval": 50,
+  "dataset": "decodedhistory01",
+  "statistics": "decoded-fit-bounds02",
+  "test_tensor_load_allowed": false,
+  "purpose": "Full planned architecture on actual physical TRAIN/DEV; fresh-process next-update recovery and finite losses, not a converged fit or adaptation result",
+  "methods": [
+    "ic_iql",
+    "dit",
+    "static_behavior_cloning"
+  ],
+  "new_gpu_seconds": 0,
+  "maximum_new_output_gib": 12,
+  "fit_data_admitted_for_investigation": true,
+  "full_scientific_source_campaign_admitted": false
+}
