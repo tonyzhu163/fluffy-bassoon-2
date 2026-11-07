@@ -11,7 +11,7 @@ from pathlib import Path
 import subprocess
 import sys
 import time
-from types import MethodType
+from types import MethodType, SimpleNamespace
 
 import qualify_scene_setup as reference
 
@@ -40,11 +40,8 @@ def child(ordinal):
     from fluffy_bassoon.meta_rl.tensor_archive import read_tensor
     from fluffy_bassoon.rl.robotwin_execution import (
         load_accounted_controller, install_accounted_controller, collated_chunk_executions)
-    from fluffy_bassoon.rl.robotwin_noise import (
-        _install_allocated_renderer, _install_reset_retry_limit,
-        _install_vector_executor_recycling)
+    from motus_teacher_entry import configure_environment
     from rlinf.envs.sim.robotwin.robotwin_env import RoboTwinEnv
-    from robotwin.envs.vector_env import SubEnv
 
     mode, deferred = PROFILES[ordinal]
     plan = contract()
@@ -64,10 +61,10 @@ def child(ordinal):
     journal = ActionJournal(output/'action-accounting', rank=ordinal, world=4,
         attempt=output.name, maximum_actions=plan['maximum_all_in_actions'])
     try:
-        expected_pci = _install_allocated_renderer(directory/'renderers')
-        _install_reset_retry_limit(defer_scene=deferred)
-        _install_vector_executor_recycling()
-        SubEnv._fb2_trim_after_scene_close = False
+        configure_environment(SimpleNamespace(_rank=0, cfg=OmegaConf.create(dict(
+            native_pilot=dict(output=str(directory), defer_scene_setup=deferred,
+                              recycle_scene_executor=True)))))
+        expected_pci = pci(rows[0]['pci_bus_id'])
         cfg = OmegaConf.create(json.loads((local/'state/resolved-native-config.json').read_bytes())['env']['eval'])
         cfg.is_eval = mode == 'eval'
         cfg.auto_reset = cfg.ignore_terminations = mode == 'eval'
