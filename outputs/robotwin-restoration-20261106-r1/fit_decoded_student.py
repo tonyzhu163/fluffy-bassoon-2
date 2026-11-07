@@ -6,6 +6,7 @@ TEST is never opened. This pilot does not admit chronological AD or DPT.
 import argparse
 from dataclasses import asdict
 import gc
+import errno
 import json
 import os
 from pathlib import Path
@@ -21,13 +22,31 @@ from fluffy_bassoon.meta_rl.chunk_history import ChunkHistoryLayout, trial_token
 from fluffy_bassoon.meta_rl.chunk_policy import ChunkModelConfig
 from fluffy_bassoon.meta_rl.chunk_training import ChunkFitConfig, ChunkTrainer, load_chunk_policy
 from fluffy_bassoon.meta_rl.chunk_value import ChunkObjectiveConfig
-from fluffy_bassoon.meta_rl.rlinf_native_ppo import sha, tensor_hash, write
+from fluffy_bassoon.meta_rl.rlinf_native_ppo import sha, tensor_hash
 from fluffy_bassoon.meta_rl.tensor_archive import read_tensor
 from fluffy_bassoon.meta_rl.warmstart import checked_load
 
 
 ROOT = Path(__file__).resolve().parent
 BASE = Path('/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1')
+
+
+def write(path, value):
+    """Bound EBUSY retries on the archive mount without replaying any SGD."""
+    path = Path(path)
+    temporary = path.with_name(path.name+f'.{os.getpid()}-{time.monotonic_ns()}.tmp')
+    with temporary.open('x') as stream:
+        stream.write(json.dumps(value,indent=2,allow_nan=False)+'\n')
+        stream.flush();os.fsync(stream.fileno())
+    until = time.monotonic()+30
+    while True:
+        try:
+            temporary.replace(path)
+            return
+        except OSError as error:
+            if error.errno != errno.EBUSY or time.monotonic()>=until:
+                raise
+            time.sleep(.25)
 
 
 def physical_data():
@@ -148,9 +167,19 @@ def run(args):
             trainer = ChunkTrainer.restore(args.resume,args.resume_sha256,
                 expected_contract=expected_contract,device=args.device)
             report['restored'] = dict(path=args.resume,sha256=args.resume_sha256,updates=dict(trainer.updates))
+            origin_path = Path(args.resume).parent
+            origin = json.loads((origin_path/'RESULT.json').read_bytes())
+            initial = origin.get('lineage_initial_checkpoint')
+            if initial is None:
+                first = next(row for row in origin['checkpoints'] if row['update']==0)
+                initial = dict(path=str(origin_path/first['file']),sha256=first['sha256'])
+            if sha(initial['path']) != initial['sha256']:
+                raise ValueError('Initial learner lineage checkpoint changed')
+            report['lineage_initial_checkpoint'] = initial
         else:
             digest = trainer.save(output/'initial.pt')
             report['checkpoints'].append(dict(update=0,file='initial.pt',sha256=digest))
+            report['lineage_initial_checkpoint'] = dict(path=str(output/'initial.pt'),sha256=digest)
         report.update(status='fitting',contract=expected_contract,model_configuration=asdict(model),
             full_planned_architecture=(model.layers,model.width,model.heads,model.context_length)==(6,512,8,2048),
             starting_updates=dict(trainer.updates))
@@ -169,7 +198,8 @@ def run(args):
                     digest = trainer.save(output/name)
                     report['checkpoints'].append(dict(update=count,file=name,sha256=digest))
                 report.update(updates=dict(trainer.updates),valid_positions=dict(trainer.valid_positions),last_metrics=metrics)
-                write(output/'RESULT.json',report)
+                if boundary or count % 10 == 0 or trainer.phase=='complete':
+                    write(output/'RESULT.json',report)
                 print(json.dumps(dict(method=args.method,**metrics)),flush=True)
         last = report['checkpoints'][-1]
         report['final_checkpoint_identity'] = checkpoint_identity(output/last['file'],last['sha256'])

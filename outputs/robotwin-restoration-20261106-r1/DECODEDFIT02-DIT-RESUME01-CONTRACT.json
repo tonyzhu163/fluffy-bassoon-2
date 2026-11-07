@@ -1,0 +1,80 @@
+{
+  "intent": "student_fitting",
+  "model": {
+    "width": 512,
+    "layers": 6,
+    "heads": 8,
+    "context_length": 2048,
+    "initial_std": 0.5
+  },
+  "mode": "full",
+  "fitting": {
+    "seed": 0,
+    "batch_size": 8,
+    "max_episodes": 9,
+    "value_updates": 1000,
+    "actor_updates": 1000,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0
+  },
+  "execution_batch_size": 8,
+  "retained_update_boundaries": [
+    1000
+  ],
+  "checkpoint_interval": 50,
+  "dataset": "decodedhistory01",
+  "statistics": "decoded-fit-bounds02",
+  "test_tensor_load_allowed": false,
+  "purpose": "Fixed-budget one-policy source pilot: DIT/IQL and context-free control, fixed final checkpoint; robot/adaptation effects unproven",
+  "methods": [
+    "dit"
+  ],
+  "new_gpu_seconds": 0,
+  "maximum_new_output_gib": 4,
+  "fit_data_admitted_for_investigation": true,
+  "full_scientific_source_campaign_admitted": false,
+  "maximum_cpu_seconds": 3600,
+  "qualification": "CPUDECODEDFIT02.json",
+  "objective_by_method": {
+    "ic_iql": {
+      "objective": "ic_iql",
+      "discount": 0.99,
+      "expectile": 0.7,
+      "temperature": 0.3333333333333333,
+      "maximum_weight": 100.0,
+      "target_tau": 0.005,
+      "bellman_weight": 0.1
+    },
+    "dit": {
+      "objective": "dit",
+      "discount": 0.99,
+      "expectile": 0.7,
+      "temperature": 1.0,
+      "maximum_weight": 20.0,
+      "target_tau": 0.005,
+      "bellman_weight": 0.1
+    },
+    "static_behavior_cloning": {
+      "objective": "ad",
+      "discount": 0.99,
+      "expectile": 0.7,
+      "temperature": 1.0,
+      "maximum_weight": 20.0,
+      "target_tau": 0.005,
+      "bellman_weight": 0.1
+    }
+  },
+  "extraction_equation": "min(exp(advantage/temperature),maximum_weight); log-weight floor -20",
+  "iql_effective_inverse_temperature": 3,
+  "method_identity": "IQL-style single-Q and independent encoders; DIT-style causal feedback critic; full decoded residual actor",
+  "supersedes_prepared_contract": "DECODEDFIT01-CONTRACT.json",
+  "prior_runtime_qualification": "CPUDECODEDFIT01.json",
+  "operational_resume": {
+    "path": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/decodedfit02/dit/latest.pt",
+    "update": 950,
+    "sha256": "350909814c340bb33e1b8caa51ecc12e3d96710ebfbc2193179d56d033ab9121"
+  },
+  "scientific_settings_unchanged": true,
+  "output_name": "decodedfit02-dit-resume01",
+  "io_migration": "Unique metadata temporary files,30s EBUSY-only bounded retry and10update progress publication; no learner changes"
+}

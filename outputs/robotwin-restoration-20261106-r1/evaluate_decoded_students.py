@@ -18,7 +18,8 @@ import torch
 from fluffy_bassoon.meta_rl.chunk_controller import FrozenChunkController
 from fluffy_bassoon.meta_rl.chunk_robotwin import RoboTwinChunkSession
 from fluffy_bassoon.meta_rl.chunk_training import load_chunk_policy
-from fluffy_bassoon.meta_rl.rlinf_native_ppo import cpu_tree,sha,write
+from fluffy_bassoon.meta_rl.rlinf_native_ppo import cpu_tree,sha
+from fit_decoded_student import write
 from fluffy_bassoon.rl.robotwin_batch import RoboTwinBatchRuntime
 from fluffy_bassoon.rl.robotwin_motor import FrozenRoboTwinMotor
 from fluffy_bassoon.rl.robotwin_noise import model_config
@@ -38,7 +39,8 @@ def policies(plan):
     assert not audit['test_tensor_loaded']
     result = {}
     for method,binding in plan['policy_exports'].items():
-        path = BASE/'decodedfit02'/method
+        path = Path(binding['output_dir'])
+        assert path.resolve().is_relative_to(BASE.resolve())
         report = json.loads((path/'RESULT.json').read_bytes())
         assert sha(path/'policy.pt')==binding['sha256']==audit['methods'][method]['policy_sha256']
         policy,_ = load_chunk_policy(path/'policy.pt',binding['sha256'],
@@ -62,6 +64,7 @@ def main(args):
             policy_exports=plan['policy_exports'],source_dev_cases=cases,gpu_seconds=0,
             native_motus_or_simulator_constructed=False,robot_success_or_adaptation_qualified=False))
         return
+    del loaded;gc.collect()
     assert plan['status']=='admitted' and os.uname().nodename.startswith('job-')
     assert torch.cuda.device_count()==1
     torch.cuda.set_device(0)
@@ -91,8 +94,9 @@ def main(args):
             for arm in ('frozen_base','static_behavior_cloning','dit','ic_iql'):
                 deadline()
                 method = 'static_behavior_cloning' if arm=='frozen_base' else arm
-                policy,_ = load_chunk_policy(BASE/'decodedfit02'/method/'policy.pt',plan['policy_exports'][method]['sha256'],
-                    expected_contract=json.loads((BASE/'decodedfit02'/method/'RESULT.json').read_bytes())['contract'],device='cuda')
+                policy_root = Path(plan['policy_exports'][method]['output_dir'])
+                policy,_ = load_chunk_policy(policy_root/'policy.pt',plan['policy_exports'][method]['sha256'],
+                    expected_contract=json.loads((policy_root/'RESULT.json').read_bytes())['contract'],device='cuda')
                 if arm=='frozen_base':
                     with torch.no_grad():
                         policy.actor.weight.zero_();policy.actor.bias.zero_()

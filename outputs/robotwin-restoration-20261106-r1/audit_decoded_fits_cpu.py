@@ -14,11 +14,11 @@ import time
 
 import torch
 
-from fit_decoded_student import BASE, physical_data
+from fit_decoded_student import BASE, physical_data, write
 from fluffy_bassoon.meta_rl.chunk_training import ChunkTrainer, load_chunk_policy
 from fluffy_bassoon.meta_rl.chunk_value import chunk_batch
 from fluffy_bassoon.meta_rl.history_value import importance_weights
-from fluffy_bassoon.meta_rl.rlinf_native_ppo import sha, tensor_hash, write
+from fluffy_bassoon.meta_rl.rlinf_native_ppo import sha, tensor_hash
 from fluffy_bassoon.meta_rl.warmstart import checked_load
 
 
@@ -30,10 +30,16 @@ def main(args):
     assert not subprocess.check_output(['git','-C',str(code),'status','--porcelain','--untracked-files=no'])
     root = BASE/args.fit_name
     parent = json.loads((root/'RESULT.json').read_bytes())
-    assert parent['status']=='completed_offline_fits'
+    assert parent['status'] in ('completed_offline_fits','failed')
     assert set(parent['children'])=={'dit','ic_iql','static_behavior_cloning'}
-    assert all(row['exit_code']==0 and not Path('/proc',str(row['pid'])).exists()
-               for row in parent['children'].values())
+    assert all(not Path('/proc',str(row['pid'])).exists() for row in parent['children'].values())
+    if args.dit_resume:
+        original = json.loads((root/'dit/RESULT.json').read_bytes())
+        assert parent['status']=='failed' and original['error_type']=='OSError' and '[Errno 16]' in original['error']
+        assert all(row['exit_code']==0 for name,row in parent['children'].items() if name!='dit')
+    else:
+        assert parent['status']=='completed_offline_fits'
+        assert all(row['exit_code']==0 for row in parent['children'].values())
     output = BASE/args.output_name
     assert root.resolve().parent==output.resolve().parent==BASE.resolve()
     output.mkdir()
@@ -46,10 +52,19 @@ def main(args):
     try:
         _,_,data,data_contract = physical_data()
         for method in parent['children']:
-            path = root/method
+            path = BASE/args.dit_resume if method=='dit' and args.dit_resume else root/method
+            assert path.resolve().is_relative_to(BASE.resolve())
             result = json.loads((path/'RESULT.json').read_bytes())
             assert result['status']=='complete_offline_student_fitting'
-            assert result['source_commit']==parent['source_commit']
+            if method=='dit' and args.dit_resume:
+                origin = json.loads((root/'dit/RESULT.json').read_bytes())
+                boundary = origin['checkpoints'][-1]
+                assert boundary['update']==950
+                assert result['restored']==dict(path=str(root/'dit'/boundary['file']),
+                    sha256=boundary['sha256'],updates=dict(value=950,actor=0))
+                assert result['contract']==origin['contract']
+            else:
+                assert result['source_commit']==parent['source_commit']
             assert result['contract']['data']==data_contract
             assert result['updates']==dict(value=0 if method=='static_behavior_cloning' else 1000,actor=1000)
             assert not result['cuda_initialized'] and not result['test_tensor_loaded']
@@ -60,9 +75,11 @@ def main(args):
             sampler = tensor_hash(saved['rng']['sampler'])
             final_actor = tensor_hash({k:v for k,v in saved['learner'].items() if k.startswith('actor.')})
             del saved;gc.collect()
-            initial = result['checkpoints'][0]
-            assert initial['update']==0
-            saved = checked_load(path/initial['file'],initial['sha256'],weights_only=False)
+            initial = result.get('lineage_initial_checkpoint')
+            if initial is None:
+                first = result['checkpoints'][0];assert first['update']==0
+                initial = dict(path=str(path/first['file']),sha256=first['sha256'])
+            saved = checked_load(initial['path'],initial['sha256'],weights_only=False)
             assert tensor_hash({k:v for k,v in saved['learner'].items() if k.startswith('actor.')})!=final_actor
             del saved;gc.collect()
             trainer = ChunkTrainer.restore(path/last['file'],last['sha256'],
@@ -81,7 +98,8 @@ def main(args):
                 embedding = policy.encode_sequence(batch['tokens'],reset=reset,valid=valid)
                 predicted = policy.actor(embedding).tanh().reshape_as(batch['actions'])*policy.residual_radius
                 scaled = predicted/policy.residual_radius
-                row = dict(result_sha256=sha(path/'RESULT.json'),checkpoint_sha256=last['sha256'],
+                row = dict(output_dir=str(path),fit_source=result['source_commit'],
+                    result_sha256=sha(path/'RESULT.json'),checkpoint_sha256=last['sha256'],
                     policy_sha256=result['policy_sha256'],full_resume_restored=True,frozen_export_exact=True,
                     actor_changed_from_initial=True,updates=result['updates'],valid_positions=result['valid_positions'],
                     actor_sampler_sha256=sampler,source_dev_physical_decisions=int(valid.sum()),
@@ -124,4 +142,5 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--fit-name',default='decodedfit02')
     parser.add_argument('--output-name',default='decodedfit02-readback01')
+    parser.add_argument('--dit-resume')
     main(parser.parse_args())
