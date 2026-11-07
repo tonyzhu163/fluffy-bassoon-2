@@ -52,7 +52,9 @@ def stage(*, validate_payloads=False):
     assert report['fixed_selection'] == dict(ranks=[0, 1, 2, 3], rounds=[0, 1, 2, 3], batch=64, chunks=6, policy_iteration=0)
     assert report['source_corpus_admitted'] is False and report['cuda_initialized'] is False
     local, output = Path(os.environ['TASK_LOCAL']), Path(os.environ['TASK_OUT'])
-    rows = []
+    rows, episodes = [], []
+    physical_calls = noops = nonzero_noops = physics_steps = 0
+    terminal_seen = episode_return = episode_ids = scene_ids = None
     for index, row in enumerate(report['packets']):
         assert row['ordinal'] == index and row['packet'] == f'packet-{index:03d}.pt.gz'
         rank, within_rank = divmod(index, 24)
@@ -70,12 +72,70 @@ def stage(*, validate_payloads=False):
             assert tensor_hash(packet['teacher_actions']) == packet['teacher_command_sha256']
             assert packet['split_sha256'] == plan['student_case_split_sha256']
             assert (packet['rank'], packet['round_index'], packet['chunk']) == (rank, round_index, chunk)
+            execution = packet['physical_execution']
+            steps = torch.as_tensor(execution['physics_steps'])
+            seconds = torch.as_tensor(execution['duration_seconds'], dtype=torch.float64)
+            ticks = torch.as_tensor(execution['timestep_seconds'], dtype=torch.float64)
+            delivered = torch.as_tensor(execution['delivered_targets'])
+            completed = torch.as_tensor(execution['completed_targets'])
+            partial = torch.as_tensor(execution['partial_targets'])
+            mask = execution['valid_target_mask']
+            assert steps.shape == seconds.shape == ticks.shape == delivered.shape == (64,)
+            assert mask.shape == (64, 32) and mask.dtype == torch.bool
+            assert (steps >= 0).all() and torch.isfinite(seconds).all() and (ticks > 0).all()
+            assert torch.equal(seconds, steps*ticks)
+            assert torch.equal(completed+partial, delivered) and ((partial == 0) | (partial == 1)).all()
+            assert torch.equal(mask, torch.arange(32)[None, :] < delivered[:, None])
+            physical = steps > 0
+            assert torch.equal(physical, delivered > 0)
+            assert torch.equal(physical, torch.as_tensor(packet['physical_decision_mask']))
+            feedback = packet['native_feedback']
+            assert len(feedback) == 64
+            reward = torch.tensor([float(torch.as_tensor(row['reward']).item()) for row in feedback], dtype=torch.float64)
+            terminated = torch.tensor([bool(torch.as_tensor(row['terminated']).item()) for row in feedback])
+            truncated = torch.tensor([bool(torch.as_tensor(row['truncated']).item()) for row in feedback])
+            assert torch.isfinite(reward).all()
+            assert torch.equal(terminated, packet['native_terminated'].any(-1))
+            assert torch.equal(truncated, packet['native_truncated'].any(-1))
+            if chunk == 0:
+                terminal_seen = torch.zeros(64, dtype=torch.bool)
+                episode_return = torch.zeros(64, dtype=torch.float64)
+                episode_ids, scene_ids = packet['episode_serials'], packet['reset_state_ids']
+            assert torch.equal(packet['episode_serials'], episode_ids)
+            assert torch.equal(packet['reset_state_ids'], scene_ids)
+            assert not (physical & terminal_seen).any(), 'Physical activity continued in a completed source episode'
+            assert not (~physical & ~terminal_seen).any(), 'A zero-duration call is not post-terminal feedback'
+            assert torch.equal(torch.as_tensor(packet['post_terminal_noop_mask']), ~physical & terminal_seen)
+            episode_return += torch.where(physical, reward, 0.)
+            physical_calls += int(physical.sum())
+            noops += int((~physical).sum())
+            nonzero_noops += int((~physical & (reward != 0)).sum())
+            physics_steps += int(steps.sum())
+            terminal_seen |= terminated | truncated
+            if chunk == 5:
+                assert terminal_seen.all(), 'The retained source round contains an incomplete physical episode'
+                episodes.extend(dict(rank=rank, round_index=round_index, lane=lane,
+                    scene_seed=int(scene_ids[lane]), episode_serial=int(episode_ids[lane]),
+                    student_partition=packet['student_partition_per_row'][lane],
+                    physical_return=float(episode_return[lane])) for lane in range(64))
             del packet
         rows.append(row)
     assert sum(row['bytes'] for row in rows) <= plan['input_staging_cap_gib']*2**30
     write(output/'INPUTS.json', dict(input_report_sha256=sha(source/'RESULT.json'),
         packets=rows, input_report_exact=True, all_payloads_validated=validate_payloads,
         original_noise_rows=6144, native_batch=64, model_or_simulator_constructed=False))
+    if validate_payloads:
+        assert len(episodes) == 1024 and physical_calls+noops == 6144
+        assert noops == report['measured_zero_duration_calls'] == report['post_terminal_noops']
+        assert nonzero_noops == report['nonzero_feedback_noops'] and report['unexpected_zero_duration_calls'] == 0
+        write(output/'PHYSICAL-INPUTS.json', dict(status='passed',
+            input_report_sha256=sha(source/'RESULT.json'), episodes=episodes,
+            physical_decisions=physical_calls, post_terminal_noops=noops,
+            nonzero_feedback_noops=nonzero_noops, physics_steps=physics_steps,
+            zero_duration_feedback_excluded_from_physical_returns=True,
+            raw_native_flags_match_recorded_flags=True, all_1024_episodes_complete=True,
+            source_corpus_admitted=False, gpu_seconds=0,
+            model_or_simulator_constructed=False, cuda_initialized=torch.cuda.is_initialized()))
 
 
 def run():
