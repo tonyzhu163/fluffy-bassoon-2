@@ -43,7 +43,7 @@ def main():
     assert load(signals/'resources.json')['sampled_reserve_passed']
     cfg = load(state/'resolved-native-config.json')
     assert cfg['native_pilot']['require_behavior_likelihood_match']
-    assert cfg['actor']['micro_batch_size'] == 32 and cfg['native_pilot']['world_size'] == 8
+    assert cfg['actor']['micro_batch_size'] == 32 and int(cfg['native_pilot']['world_size']) == 8
     assert cfg['algorithm']['group_size'] == (1 if method == 'ppo' else 8)
     checkpoints = []
     signatures = {}

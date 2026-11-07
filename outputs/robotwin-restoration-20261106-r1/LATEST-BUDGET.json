@@ -1,8 +1,8 @@
 {
-  "status": "fresh_behavior_matched_PPO_and_GRPO_running",
-  "closed_conservative_gpu_seconds": 241294,
+  "status": "PPO_two_cycles_complete_GRPO_running_paired_readout_reserved",
+  "closed_conservative_gpu_seconds": 273814,
   "cap_gpu_seconds": 360000,
-  "closed_conservative_gpu_hours": 67.0261111111111,
+  "closed_conservative_gpu_hours": 76.05944444444444,
   "components": [
     {
       "through_controller_diagnostic": 140019
@@ -123,10 +123,13 @@
     },
     {
       "motusbehaviorupdate01_creation_to_release_gpu_seconds": 3768
+    },
+    {
+      "motusbehaviorppo01_creation_to_release_gpu_seconds": 32520
     }
   ],
   "next_motor_qualification_reserved_gpu_seconds": 0,
-  "next_worst_gpu_seconds": 327694,
+  "next_worst_gpu_seconds": 345814,
   "maximum_new_output_gib": 0.5,
   "other_and_floor_gib": 286,
   "required_free_gib": null,
@@ -145,19 +148,19 @@
   "active_actor_profile_reserved_gpu_seconds": 0,
   "planned_actor_restore_reserved_gpu_seconds": 0,
   "active_actor_restore_reserved_gpu_seconds": 0,
-  "remaining_gpu_seconds": 118706,
+  "remaining_gpu_seconds": 86186,
   "planned_learner_recovery_reserved_gpu_seconds": 0,
   "active_learner_recovery_reserved_gpu_seconds": 0,
   "planned_native_dev_reserved_gpu_seconds": 0,
   "active_native_dev_reserved_gpu_seconds": 0,
-  "remaining_unreserved_gpu_seconds": 32306,
+  "remaining_unreserved_gpu_seconds": 14186,
   "planned_scene_setup_reserved_gpu_seconds": 0,
   "active_scene_setup_reserved_gpu_seconds": 0,
   "planned_lifecycle_reserved_gpu_seconds": 0,
   "active_lifecycle_reserved_gpu_seconds": 0,
   "planned_frozen_reconstruction_reserved_gpu_seconds": 0,
   "active_frozen_reconstruction_reserved_gpu_seconds": 0,
-  "active_job_id": "job-en3i89vxwfcn",
+  "active_job_id": "job-pc1nstuaxxum",
   "cpu_reconstruction_input_cap_gib": 16,
   "gpu_reconstruction_output_cap_mib": 128,
   "physical_export_output_cap_mib": 128,
@@ -170,14 +173,6 @@
   "planned_student_precision_gpu_seconds": 0,
   "active_student_precision_gpu_seconds": 0,
   "active_jobs": [
-    {
-      "job_id": "job-en3i89vxwfcn",
-      "name": "mwj_1108_robotwin_behaviorppo1",
-      "reserve_gpu_seconds": 43200,
-      "source_commit": "8740fdbe13fa7b0d1ae31e0e2da37aed1309d1fd",
-      "creation_queue": "2026-11-08T04:02:03+08:00",
-      "creation_to_release_watchdog_seconds": 5400
-    },
     {
       "job_id": "job-pc1nstuaxxum",
       "name": "mwj_1108_robotwin_behaviorgrpo1",
@@ -200,7 +195,9 @@
   "planned_behavior_update_reserved_gpu_seconds": 0,
   "active_behavior_update_reserved_gpu_seconds": 0,
   "planned_behavior_ppo_reserved_gpu_seconds": 0,
-  "active_behavior_ppo_reserved_gpu_seconds": 43200,
+  "active_behavior_ppo_reserved_gpu_seconds": 0,
   "planned_behavior_grpo_reserved_gpu_seconds": 0,
-  "active_behavior_grpo_reserved_gpu_seconds": 43200
+  "active_behavior_grpo_reserved_gpu_seconds": 43200,
+  "planned_source_dev_reserved_gpu_seconds": 19200,
+  "planned_source_confirmation_reserved_gpu_seconds": 9600
 }

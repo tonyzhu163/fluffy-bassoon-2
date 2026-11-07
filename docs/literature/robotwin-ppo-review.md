@@ -10,17 +10,20 @@ external results. External percentages below are author-reported.
 RLinf reports successful pi0.5 PPO on RoboTwin. Our short transferred runs have
 not established a learning gain. These statements are compatible: our runs use
 different joint initializers, a different task, and much shorter training.
-The latest Motus result is **one fresh integrated collection/update cycle**,
-with15 Adam updates per rank and DEV3/16→4/16. An earlier recovered first
-batch gave DEV4/16→2/16. Neither panel establishes improvement or demonstrates
-that the released recipe fails.
+The earlier B256 actor lineage is unsuitable as an on-policy control: an
+actual unchanged-policy audit found batch-dependent likelihood drift. Corrected
+fresh B32/accumulation8 PPOgroup1 and GRPOgroup8 controls are running. At the
+latest checked boundary, each completed its first fresh collection and15 Adam
+updates per rank, with the small progress panel2/16→4/16. Their second cycles
+and independent larger readout remain pending. None of these small panels
+establishes improvement or demonstrates that the released recipe fails.
 
 Three separate questions need separate evidence:
 
 | Question | Current answer |
 | --- | --- |
-| Can our learner update real rollout data and restore exactly? | Yes, for the qualified Motus first-batch learner boundary. |
-| Can the complete optimized collector/learner cycle run repeatedly at scale? | One8-rank B32 cycle passed the combined footprint; repeated cycles remain unverified. |
+| Can our learner update real rollout data and restore exactly? | Yes: the B32 actual-data update qualification passed15 new Adam steps/rank and independent cold checkpoint/owned-Adam readback on all8 actors. |
+| Can the complete optimized collector/learner cycle run repeatedly at scale? | Corrected PPO and GRPO each passed one fresh combined cycle; repeated complete cycles remain unverified. |
 | Does sustained PPO improve the selected joint motor on our source tasks? | Unresolved; the available endpoint panels show no gain. |
 
 ## Direct and adjacent literature
@@ -48,18 +51,18 @@ The official experiment YAML was read through the GitHub connector. Its blob
 [`77a52129`](https://github.com/RLinf/RLinf/blob/77a521298f1d215971246c2d7a423720d9e76652/examples/embodiment/config/robotwin_adjust_bottle_ppo_openpi_pi05.yaml).
 Matching this file does not establish that all imported dependencies match.
 
-| Field | Released example | Executed Motus pilot |
-| --- | --- | --- |
-| Initializer | RLinf task-specific `adjust_bottle` SFT | Joint Motus pi0.5 |
-| Task | `adjust_bottle` | `place_phone_stand` |
-| Predicted/executed chunk | 50/50 | Native32/32 |
-| Wrapper horizon | 200 | 192 |
-| PPO scene group | 1 | 8, to match the planned GRPO comparison |
-| Environments/rounds | 256/4 | 256/4 |
-| Global optimization minibatch/epochs | 2048/5 | 2048/5 |
-| Per-device execution microbatch | 32 | 256; accumulation2 on four devices,1 on eight devices |
-| Evaluation panel | 128 environments | 16 precommitted source DEV cases |
-| Sustained training | Config permits repeated outer epochs | Earlier retained-batch recovery; later one fresh8-rank cycle, second collection interrupted |
+| Field | Released example | Earlier Motus pilot | Corrected fresh controls |
+| --- | --- | --- | --- |
+| Initializer | RLinf task-specific `adjust_bottle` SFT | Joint Motus pi0.5 | Fresh joint Motus pi0.5 |
+| Task | `adjust_bottle` | `place_phone_stand` | `place_phone_stand` |
+| Predicted/executed chunk | 50/50 | Native32/32 | Native32/32 |
+| Wrapper horizon | 200 | 192 | 192 |
+| PPO scene group | 1 | 8, to match the planned GRPO comparison | PPO1; GRPO8 |
+| Environments/rounds | 256/4 | 256/4 | 256/4 |
+| Global optimization minibatch/epochs | 2048/5 | 2048/5 | 2048/5 |
+| Per-device execution microbatch | 32 | 256; accumulation2 on four devices,1 on eight devices | 32; accumulation8 on eight devices; exact original behavior check each collection |
+| Evaluation panel | 128 environments | 16 precommitted source DEV cases | 16 loop diagnostics;64 DEV plus disjoint64 confirmation prepared |
+| Sustained training | Config permits repeated outer epochs | Earlier retained-batch recovery; later one fresh8-rank cycle, second collection interrupted | Two fresh collections preselected; final boundaries pending |
 
 The shared actor/value learning rates remain 5e-6/1e-4; gamma .99,
 lambda .95, clip .2, five Flow-SDE steps and noise .3 are retained. The official
@@ -105,8 +108,9 @@ outcomes:
   checkpoint1. Its DEV panel was3/16 initially and4/16 after the update. The
   fixed worker timeout interrupted the second collection. This qualifies one
   combined cycle, without establishing sustained learning or improvement.
-  Native B32 training/B2 evaluation is an explicit numerical condition distinct
-  from the earlier four-rank B64/B4 run.
+  Its rollout batch32/evaluation batch2 differed from the earlier four-rank
+  rollout64/evaluation4 run; its actor microbatch256 was subsequently rejected
+  by the unchanged-behavior likelihood audit.
   [Integrated-cycle closeout](../../outputs/robotwin-restoration-20261106-r1/MOTUSOPTIMIZED03-CLOSEOUT.json).
 * Earlier Sidney arms did complete two collections and 40 updates/rank.
   Their later fixed panel was base5/16, PPO5/16, GRPO2/16. Thus the full history
@@ -156,10 +160,14 @@ missing learning gains still requires a corrected learning control. Use B32
 with gradient accumulation while preserving global2048 and five epochs.
 [Likelihood measurement](../../outputs/robotwin-restoration-20261106-r1/MOTUSJOINTAUDIT01-COMPLETE.json).
 
-Training-loop DEV snapshots and restores the current rollout RNG. Fixed scenes
-therefore preserve the training stream but do not by themselves impose common
-initial action noise across checkpoints. Treat the latest3/16 to4/16 panels as
-descriptive. The earlier separately qualified MotusDEV01 comparison explicitly
+The earlier training-loop DEV snapshot/restored its current rollout RNG. Fixed
+scenes preserved the training stream but did not impose common initial action
+noise across checkpoints. Treat its3/16 to4/16 panels as descriptive. Corrected
+controls explicitly seed the native B2 evaluation stream31000+rank, restoring
+the training stream afterward. Larger readout records actual ODE Gaussian draws
+in place; its Linux numerical qualification preserves output and final RNG
+exactly. All48 original SFT prediction pixels/actions/RNG match across methods;
+full-model readout qualification remains required. The earlier separately qualified MotusDEV01 comparison explicitly
 restored baseline sampling RNG; its pairing evidence remains valid. Future
 source qualification will explicitly share case/chunk noise across policies.
 
