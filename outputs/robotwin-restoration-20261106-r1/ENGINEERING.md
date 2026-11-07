@@ -203,3 +203,16 @@ launcher inserted its4-GPU default in a1-GPU container whose scheduler left
 CUDA_VISIBLE_DEVICES unset. Preserve that charged failure and use an explicit
 1-GPU fallback only when no scheduler setting exists; never overwrite supplied
 visibility. Retry02 remains subject to a fresh Linux shell boundary check.
+
+SCENESETUP05 at2b8824fb now qualifies opt-in deferred setup at native B4
+against the retained updated-policy DEV commands: default4 cases plus all16
+deferred cases,30 chunks, all5 native output parts and measured execution
+exact. Five fresh processes completed explicit final cleanup after joining the
+executor and synchronizing CUDA before native offload. Independent CPU
+readback at149a134d cold-verified64 JSON files and24 unique source traces.
+This final-shutdown order is not a replacement for reusable per-iteration
+Offload: repeated training offload, long reset stress, larger scene counts and
+the combined actor/rollout/environment memory profile remain unqualified.
+See SCENESETUP05-COMPLETE.json. No model calls or SGD ran. Constructor/reset
+timings are default-first with shared job caches; do not claim an isolated
+speedup or end-to-end training throughput from this replay.

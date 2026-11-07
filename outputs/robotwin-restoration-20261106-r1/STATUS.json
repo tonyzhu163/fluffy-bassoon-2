@@ -1,6 +1,6 @@
 {
   "owner_chat": "01a1b024-f4ac-7181-af87-bac9fbee72bb",
-  "status": "scene_setup05_complete_independent_readback_pending",
+  "status": "deferred_setup_b4_verified_combined_training_pending",
   "new_gpu_jobs_launched": 22,
   "prior_robotwin_cumulative_cap_gpu_hours": 50,
   "prior_cost_and_reservations_must_be_refreshed": false,
@@ -55,18 +55,19 @@
     "actor_profile_state": "Capacity complete at7df04cf7 and fresh recovery at5b511ed6 exact. Largest/fastest safe tested actor micro256/accum2/global2048;62.283GiB reserved/31.748GiB free,15.717s steady.512 rejected. Both allocations released; no activeGPU.",
     "native_teacher_state": "Failed/released07:26:05 after fixed worker timeout. Checkpoint0 and all4 full chronological collection files retained. All4 native training-batch pre-SGD references passed exact0. No complete checkpoint1 or iteration1 receipt; actual optimizer update count unverified. Audit durable collection for separate native learner replay; qualify deferred scene setup before next online rollout.",
     "learner_recovery_state": "SUCCESS/released08:36:54; exact actual15 native updates/rank,19.085GB complete checkpoint cold+local readback, independent owned restore/nextupdate and plain inference export calibration0; no new simulator controls",
-    "native_dev_state": "SUCCESS/released09:19:52, source2c1c9ada; fixed16 cases update15 policy2/16 vs SFT4/16;1gain/3loss;0SGD, paired initial observations+firstTorch/CUDA RNG exact, frozen4/4, all166 state files/48 traces+48 sampling files across both panels independently cold-read."
+    "native_dev_state": "SUCCESS/released09:19:52, source2c1c9ada; fixed16 cases update15 policy2/16 vs SFT4/16;1gain/3loss;0SGD, paired initial observations+firstTorch/CUDA RNG exact, frozen4/4, all166 state files/48 traces+48 sampling files across both panels independently cold-read.",
+    "deferred_setup_state": "SUCCESS/released11:35:27; source2b8824fb, verifiedCPUreadback149a134d, default4+deferred16,30 chunks exact,5 processes cleanly closed."
   },
   "cpu_qualification": "CPU01.json",
   "git_deployment": "GIT-DEPLOYMENT.json",
   "active_gpu_reservation_seconds": 0,
   "new_gpu_hours_note": "177816GPU-s closed;0 active/reserved;2184 remain under180000 cap.",
   "budget_reconciliation": "BUDGET-RECONCILIATION.json",
-  "last_checked_shanghai": "2026-11-07T11:39:00+08:00",
+  "last_checked_shanghai": "2026-11-07T11:46:00+08:00",
   "cumulative_closed_conservative_gpu_seconds": 177816,
   "worst_closed_plus_reserved_gpu_seconds": 177816,
   "execution_qualification": "EXECUTION01-COMPLETE.json",
-  "qualified_scope": "Actual6144-decision15-update native PPO learner with exact full checkpoint/fresh restore/nextupdate/export, plus fixed16-case native B4/rank simulator DEV with baseline action parity0, exact initial observations, unchanged frozen parameters and independent cold trace/RNG readback. Updated2/16 vs baseline4/16; no improvement. Combined online collection memory and matched native GRPO remain unqualified.",
+  "qualified_scope": "Native15-update PPO learner/full restore/export plus paired16-case native DEV and environment-only B4 deferred setup replay: default4+deferred16 cases, all30 chunks/all5 output parts/physical execution exact,5 clean process closures,64 JSON files independently cold-read. Updated policy2/16 vs base4/16; combined64-scene online memory, matched Motus GRPO and student integration remain unqualified.",
   "planned_motor_gpu_reservation_seconds": 0,
   "worst_closed_plus_planned_gpu_seconds": 177816,
   "cpu_motor_qualification": "CPUMOTOR02.json",
@@ -113,7 +114,7 @@
   "native_teacher_fourth_attempt": "MOTUSPPO04-CLOSEOUT.json",
   "decoded_history_core_qualification": "CPUTOKENS01.json",
   "deferred_scene_setup_cpu_qualification": "CPUTOKENS02.json",
-  "next_action": "Finish independent CPU cold readback of30 matched chunks/24 unique references and all5 cleanup completions, then record verified deferred-setup scope. Combined64-scene training and matched GRPO remain pending.",
+  "next_action": "Integrate the qualified opt-in setup profile into shared native training/eval configuration, prepare combined64-scene memory and repeated lifecycle qualification with exact native B64 replay. Preserve prior collector boundary;2184GPU-s remain, broader teacher/student campaign requires a concrete budget extension.",
   "native_collection_recovery_audit": "COLLECTION-AUDIT02-COMPLETE.json",
   "planned_learner_recovery_gpu_seconds": 0,
   "native_learner_recovery_contract": "MOTUSREPLAY01-CONTRACT.json",
@@ -132,5 +133,7 @@
   "planned_scene_setup_gpu_seconds": 0,
   "scene_setup_failure": "SCENESETUP04-CLOSEOUT.json",
   "decoded_chunk_model_qualification": "CPUCHUNKMODEL01.json",
-  "scene_setup_launch": "SCENESETUP05-LAUNCH.json"
+  "scene_setup_launch": "SCENESETUP05-LAUNCH.json",
+  "scene_setup_result": "SCENESETUP05-COMPLETE.json",
+  "scene_setup_cpu_readback": "SCENESETUP05-READBACK01.json"
 }

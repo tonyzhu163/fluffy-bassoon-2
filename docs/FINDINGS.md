@@ -1030,3 +1030,17 @@ memory remains unqualified. The allocation released09:19:52 Nov7 and charged
 2128GPU-s; cumulative176968/180000 leaves3032 with none reserved. Evidence:
 [MOTUSDEV01-COMPLETE](../outputs/robotwin-restoration-20261106-r1/MOTUSDEV01-COMPLETE.json),
 [independent readback](../outputs/robotwin-restoration-20261106-r1/CPUDEV-READBACK02-COMPLETE.json).
+
+Deferred temporary scene setup preserves native Motus B4 environment behavior
+on the16 retained updated-policy DEV cases. A default4-case control and all16
+deferred cases replayed30 complete chunks with exact commands, all5 native
+output parts and measured physical execution. All5 fresh processes closed
+cleanly after executor join/CUDA synchronization/native offload; no model calls
+or SGD ran. Independent CPU readback verified64 JSON files and24 unique source
+traces. Default/deferred rank0 constructor times were9.35/3.20s, first resets
+30.58/26.16s and replay35.63/35.58s; default-first ordering and shared caches
+prevent an isolated speedup claim. This qualifies the opt-in B4 setup path and
+final shutdown only, not64-scene co-resident training, recurrent offload,
+long reset stress, matched Motus GRPO or student adaptation.
+[Verified result and limits](../outputs/robotwin-restoration-20261106-r1/SCENESETUP05-COMPLETE.json),
+[independent readback](../outputs/robotwin-restoration-20261106-r1/SCENESETUP05-READBACK01.json).
