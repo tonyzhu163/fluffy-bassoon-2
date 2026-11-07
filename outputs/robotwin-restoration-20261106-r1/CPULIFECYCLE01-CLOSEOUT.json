@@ -1,0 +1,16 @@
+{
+  "status": "failed_cpu_harness_missing_deadline",
+  "source_commit": "783612a94dad6eb5b0bcd8c27c0a4427415cc0c0",
+  "process_pid": 3357806,
+  "process_confirmed_gone": true,
+  "core_cases_passed": 50,
+  "new_core_cases": 4,
+  "default_ppo_grpo_native_schemas_passed": true,
+  "optimized_schema_and_hook_validation_complete": false,
+  "cause": "CPU harness exported NATIVE_PPO_DEADLINE but standalone evaluation configuration reads TASK_DEADLINE. Shared default hook ran, then evaluation configuration rejected the missing variable before model or simulator creation.",
+  "remote_output": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpulifecycle01",
+  "model_or_simulator_constructed": false,
+  "accelerator_allocation_created": false,
+  "gpu_seconds": 0,
+  "retry": "cpulifecycle02 from the latest clean source, with both deadline names supplied and the lightweight shared setup module"
+}

@@ -21,7 +21,7 @@ CODE = Path(os.environ['TASK_CODE'])
 BASE = reference.BASE
 RUN_ID = os.environ.get('TASK_CPU_CHECK_ID', 'cpulifecycle01')
 assert re.fullmatch(r'cpulifecycle[0-9]{2}', RUN_ID)
-LOCAL = Path('/tmp'/Path('rt-'+RUN_ID))
+LOCAL = Path('/tmp')/('rt-'+RUN_ID)
 OUT = BASE/RUN_ID
 
 
@@ -71,7 +71,8 @@ def main():
         assert controller['controller_sha256'] == json.loads((reference.REFERENCE/'controller.json').read_bytes())['controller_sha256']
         os.environ.update(TASK_CONTROLLER=controller['controller_source'],
             TASK_CONTROLLER_SHA=controller['controller_sha256'], TASK_LOCAL=str(LOCAL),
-            TASK_COLD=str(OUT/'unused-cold'))
+            TASK_COLD=str(OUT/'unused-cold'),
+            TASK_DEADLINE=os.environ['NATIVE_PPO_DEADLINE'])
         cfg = reference.inputs(LOCAL, plan=lifecycle.contract())
         assert cfg['env']['eval']['total_num_envs'] == 16
         for index in range(6):
