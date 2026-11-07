@@ -1,5 +1,7 @@
 # Outputs-only archive candidates — November 7, 2026
 
+**Execution follow-up (2026-11-07 14:53:57 Shanghai):** The approved 11-selection batch is complete, with **207.700 GiB reclaimed**, full cold readback/restoration verified and active/protected inputs retained. [Final results and restore mapping](../outputs-retention-20261107-r1/RESULT.md). Figures and no-mutation statements below describe the earlier discovery pass.
+
 **Recommended first batch: 207.79 GiB across 11 disjoint output-directory selections.** These are archive candidates with scientific evidence preserved, not disposable results. The exact selectors and proposed restore commands are in [the machine-readable manifest](OUTPUTS-ARCHIVE-CANDIDATES.json). No archive, hot-payload deletion or GPU work was performed in this discovery pass.
 
 Sizes use today's full census. All 14 first-batch/deferred roots were rechecked present as ordinary PFS directories, with no symlink roots, at **2026-11-07 13:48:32 Shanghai**. A separate development-container FD scan found zero readers of the reviewed roots; it does not see isolated scheduler pods, so execution must refresh scheduler/reader checks immediately before reclamation.

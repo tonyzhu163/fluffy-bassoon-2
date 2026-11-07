@@ -1,0 +1,45 @@
+{
+  "observed_shanghai": "2026-11-07T14:48:26+08:00",
+  "observed_unix": 1794034106.402051,
+  "source": "Authenticated existing Chrome storage-audit task list; Reload pressed; all clusters and queues; only my tasks; Created/Scheduled/Running/Stopping/Restarting/ToBeSubmitted; next page disabled",
+  "all_clusters": true,
+  "all_queues": true,
+  "complete": true,
+  "no_selected_candidate_consumers": true,
+  "jobs": [
+    {
+      "id": "job-f659zt7l8mmk",
+      "name": "mwj_1107_libero_dualrate_carry_R10K10_s1000_g8_2k_r1",
+      "state": "Running",
+      "gpus": 8
+    },
+    {
+      "id": "job-0rx3jv8c8cpq",
+      "name": "mwj_1107_libero_dualrate_carry_R4K4_s1000_g8_2k_r1",
+      "state": "Running",
+      "gpus": 8
+    },
+    {
+      "id": "job-a6hnsocn83r6",
+      "name": "mwj_1107_rt41_t12_carry_s1000_r3",
+      "state": "Running",
+      "gpus": 1
+    },
+    {
+      "id": "job-mj4dojnuvnjh",
+      "name": "mwj_1107_rt41_t1_carry_s1000_r2",
+      "state": "Running",
+      "gpus": 1
+    }
+  ],
+  "dependency_review": {
+    "new_robotwin_job": "job-42d8jon81g4m",
+    "input_archive": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpureconstruction04",
+    "motor": "/mowenjie/fluffy-bassoon-2/cache/robotwin-ppo-pilot-20261105-r1-restore02/pi05-motus-effc6e1a-r1",
+    "source_reference": "outputs/robotwin-restoration-20261106-r1/reconstruct_frozen_base.py",
+    "source_sha256": "81045b3c58570710473b7edb800ccf76069a996d9cdc9f2e9e4dce2b738907d0",
+    "selected_paths_referenced": false,
+    "basis": "Source BASE/MOTOR constants and admitted RECONSTRUCTION01-CONTRACT; all other jobs are original-project Mikasa/LIBERO or AnyViewPhys."
+  },
+  "changes_since_previous": "Four remaining jobs, all Running; queued eval, reconstruction, AnyViewPhys and R10K10 r4 no longer in active statuses. No new candidate consumer."
+}

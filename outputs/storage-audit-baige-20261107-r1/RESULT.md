@@ -1,5 +1,7 @@
 # Baige storage audit — November 7, 2026
 
+**Execution follow-up (2026-11-07 14:53:57 Shanghai):** The approved 11-selection batch is complete, with **207.700 GiB reclaimed**, full cold readback/restoration verified and active/protected inputs retained. [Final results and restore mapping](../outputs-retention-20261107-r1/RESULT.md). Figures and no-mutation statements below describe the earlier discovery pass.
+
 **The shared 2 TiB PFS is 95.8% used: 1962.45 GiB used and 85.55 GiB free at 2026-11-07 13:29:23 Asia/Shanghai.** This is byte pressure: inodes are 56% used (5,521,054 / 10,000,384). No project payload was deleted, archived, deduplicated or moved by this audit; no GPU was allocated.
 
 **Most existing space is experiment output, while most recent growth is new project/model/input material.** AnyViewPhys occupies **269.25 GiB**, including models 135.26, runs 77.42, environments 35.19 and package caches 18.10. A new materialized steering-source cache occupies **127.22 GiB** under `fluffy-bassoon-2/inputs/`. Those two items together are 396.47 GiB and explain most of the increase from the Nov 4 census. The main project's output directory has actually fallen from 1105.38 to 1046.86 GiB over that interval, while individual new RoboTwin runs grew and legacy payloads were removed.
