@@ -1192,11 +1192,25 @@ horizon. The unchanged checkpoint continuation retains its original protocol.
 A read-only Motus checkpoint0 replay isolates a likelihood error caused by actor
 execution batch size. On all5958 valid decisions, actorB32 reproduces the original
 B32 rollout log probabilities exactly. At actorB256, unchanged-policy chunk ratios
-range0.520–1.883;11.279% lie outside PPO's[0.8,1.2] clip interval and5.572% activate
-the clipped surrogate before SGD. All8 GPU fixtures and native summaries passed
+range0.520–1.883;11.279% lie outside PPO's[0.8,1.2] clip interval and5.572% would
+activate the clipped surrogate against the original behavior reference before SGD. All8 GPU fixtures and native summaries passed
 independent CPU reduction. Replacing the old probability with an actor reference
 hid this behavior-policy discrepancy from the first-replay zero-gap check.
 Future controls use B32 with accumulation8/world8, preserving global2048/fiveepochs;
 larger batches need numerical qualification. This establishes the batching effect
 on probabilities, not its causal contribution to the missing learning gain.
 [Likelihood audit](../outputs/robotwin-restoration-20261106-r1/MOTUSJOINTAUDIT01-COMPLETE.json).
+
+The corrected Motus B32/accum8 learner completed15 native Adam updates/rank on
+the actual saved policy1 collection and advanced all eight counters15→30. Original
+behavior coordinate errors and joint outside-clip fractions are exactly zero.
+All24 post-update/save/restore optimizer layouts match; independent CPU readback
+verifies every owned Adam descriptor/group and all33 retained learner checkpoint
+files (9.166GB). The original strict optimizer guard passes on every rank, with
+zero candidate empty-state normalizations; production validation is unchanged.
+The five-epoch update/recomputation takes188.4–194.7s/rank. This is retained-data
+learner qualification with no new simulator actions, not a new online cycle or
+evidence of success improvement. It does not establish the cause of the earlier
+B256 continuation's optimizer assertion.
+[Actual update and cold readback](../outputs/robotwin-restoration-20261106-r1/MOTUSBEHAVIORUPDATE01-COMPLETE.json).
+

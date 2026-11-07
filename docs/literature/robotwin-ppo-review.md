@@ -148,7 +148,8 @@ Pinned RLinf's chunk-level loss instead sums H32 times14 action coordinates.
 The completed read-only checkpoint0 measurement, independently reduced on CPU,
 finds exact original behavior probabilities at B32 on all5958 valid decisions.
 At B256, unchanged-policy joint ratios range0.520–1.883;11.279% lie outside
-[0.8,1.2] and5.572% activate the clipped surrogate before SGD. The replacement
+[0.8,1.2];5.572% would activate the clipped surrogate against the original
+behavior reference before SGD. The replacement
 actor reference hid this discrepancy from the zero first-replay check.
 This establishes a numerical execution-partition problem; its contribution to
 missing learning gains still requires a corrected learning control. Use B32
