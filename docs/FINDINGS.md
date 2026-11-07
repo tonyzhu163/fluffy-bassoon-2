@@ -1110,3 +1110,30 @@ All84 Linux core/numerical cases passed, including6 new integration cases,
 checks use small CPU models and fake simulator boundaries; an actual trained
 student simulator episode remains a separate qualification.
 [Integration evidence](../outputs/robotwin-restoration-20261106-r1/CPUCHUNKSESSION01.json).
+
+
+The four matched decoded students now complete their full offline fits on
+allocated Linux CPU:1000 actor updates each, with1000 value updates for
+DIT-style and IQL-style. Static imitation and full-history imitation use the
+same203678 valid positions and actor window stream. Fresh-process readback
+restored the complete learners, optimizers, samplers, counters and RNG, then
+checked frozen exports. On744 teacher-forced source DEV decisions, normalized
+command MAE is0.02378–0.02421, worse than the zero-residual baseline0.01762.
+This establishes completed fitting and recovery, with no robot improvement.
+Full-history imitation remains a control; one source policy version does not
+supply chronological AD histories.
+[Three fitted students and independent recovery](../outputs/robotwin-restoration-20261106-r1/DECODEDFIT02-COMPLETE.json),
+[matched history imitation](../outputs/robotwin-restoration-20261106-r1/DECODEDHISTORYBC01-COMPLETE.json).
+
+The original frozen-student simulator run exposed an FP32 precision mismatch:
+native model constructors select global matmul precision `high`, while the
+independent CPU replay used `highest`. Replaying recorded GPU commands under
+`high` reproduces them exactly. With student proposals scoped to `highest`,
+independent CPU readback across all four original arms and48 native B2 batches
+verifies maximum command error8.18e-7 and memory error1.53e-5, within the original
+tolerances. The production controller guard also matches the first recorded
+proposal exactly and restores ambient precision. This isolates and qualifies
+the recorded numerical fix; fresh fixed-precision physical episodes remain
+separate. Native B64 source data and B2 deployment are distinct numerical
+conditions; no singleton or cross-batch equivalence is claimed.
+[Four-arm precision qualification and independent CPU readback](../outputs/robotwin-restoration-20261106-r1/STUDENTPRECISIONALL01-COMPLETE.json).
