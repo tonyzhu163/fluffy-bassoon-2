@@ -25,7 +25,7 @@ Three separate questions need separate evidence:
 | --- | --- |
 | Can our learner update real rollout data and restore exactly? | Yes: the B32 actual-data update qualification passed15 new Adam steps/rank and independent cold checkpoint/owned-Adam readback on all8 actors. |
 | Can the complete optimized collector/learner cycle run repeatedly at scale? | Corrected PPO and GRPO each passed two fresh combined cycles; all three cold boundaries and both full actor batches independently verified. |
-| Does sustained PPO improve the selected joint motor on our source tasks? | Unresolved; the available endpoint panels show no gain. |
+| Does sustained PPO improve the selected joint motor on our source tasks? | Unresolved; corrected two-cycle endpoint panels are descriptive and paired DEV/confirmation remain required. |
 
 ## Direct and adjacent literature
 
@@ -127,14 +127,27 @@ no-op calls from physical experience. Reward coverage is therefore nonzero;
 Student physical masks remain distinct from the unchanged native teacher
 loss masks. [Physical audit](../../outputs/robotwin-restoration-20261106-r1/CPURECONSTRUCTION-PREFLIGHT01.json).
 
+The first64-case SFT readouts for the corrected controls stopped before loading
+checkpoint2. The failure was our optimizer evidence guard: native RLinf
+[`offload_optimizer` and `onload_optimizer`](https://github.com/RLinf/RLinf/blob/c605b9d55ed93a180119b099e6f836abff293b08/rlinf/hybrid_engines/fsdp/strategy/fsdp.py)
+index the optimizer's state mapping for every parameter. This can create an empty
+mapping for a registered zero-length FSDP shard without an Adam update. The
+actual rejected PPO layouts preserve every captured owned moment and parameter
+group; native offload/onload reproduces the mapping on a Linux CPU fixture.
+Twelve core checkpoint tests qualify a narrow equivalence between absent and
+empty state for unowned zero-length shards. Owned or unregistered parameters
+remain strict. This diagnoses the interrupted readout, not a learning failure;
+complete GPU checks on all actors and both checkpoints remain required.
+[Actual-layout and reference audit](../../outputs/robotwin-restoration-20261106-r1/MOTUS-EMPTY-STATE-AUDIT-CPU01.json).
+
 ## Ranked explanations and discriminating checks
 
 | Explanation | Evidence status | Next check |
 | --- | --- | --- |
 | Sustained online learning has not been tested adequately | Verified limitation, not a proof that more training will help | Run successive complete collect/update cycles; show new rollout data and checkpoint progression. |
 | New motor/task/cadence changes the learning problem | Verified protocol differences; causal effect unknown | Hold these fixed within a port experiment; report it separately from exact release reproduction. |
-| Combined scene/model memory and setup overhead obstruct training | Four-rank B64 reserve failed; eight-rank B32 passed one integrated cycle | Qualify repeated real cycles and exact full-state recovery. Actor-only capacity is insufficient. |
-| Group8 reduces scene diversity relative to group1 | Verified layout change | Keep the matched group8 arm; add a separately named group1 PPO reference when affordable. |
+| Combined scene/model memory and setup overhead obstruct training | Four-rank B64 reserve failed; corrected B32 PPO and GRPO each passed two integrated cycles | Cold training boundaries pass; qualify independent full-checkpoint readout. Actor-only capacity is insufficient. |
+| Group8 reduces scene diversity relative to group1 | Corrected group1 PPO uses the full1,000 TRAIN scenes per collection; group8 GRPO uses128 | Compare the completed recipes on paired DEV; their difference does not isolate only the advantage estimator. |
 | Exploration harms the initializer or fails to reach useful alternatives | Plausible, unisolated | Compare policy0 Flow-SDE and ODE on the same cases before changing noise. Different TRAIN/DEV scenes cannot isolate this gap. |
 | Critic quality or return/boundary semantics limit learning | Plausible, unisolated | Inspect explained variance, targets, values, advantage spread and episode boundaries; compare critic designs only after a stable control. |
 | SAPIEN camera clipping changes policy observations | Concrete difference from current upstream; no camera-only benefit on the small completed panel | Independent315-file readback passed: near0.1/H192:2/8; near0.01/H192:2/8; near0.1/H384:3/8; near0.01/H384:2/8. Preserve the active continuation's protocol; this exploratory panel does not establish equivalence. |
@@ -218,15 +231,22 @@ not absence of all learning signal or a completed Motus GRPO experiment.
 
 ## Consequence for the next experiment
 
-Prioritize a stable multi-iteration **source-task PPO control**. The user's
-latest instruction requires effective PPO/GRPO before more student work. First qualify the
-optimized full collector/learner footprint and repeated offload/reset lifecycle.
-Then demonstrate iteration0 collection, update1, collection from policy1 and
-update2 before extending a predeclared learning curve. More SGD on the same
-retained buffer cannot substitute for new on-policy collections. Record
+The corrected source-task PPO and GRPO controls each completed iteration0
+collection, update1, a new policy1 collection and update2. Independently verified
+cold checkpoints and full-batch numerical audits qualify that execution. The
+user requires effective PPO/GRPO before more student work, so the immediate gate
+is independent paired evaluation of SFT versus preselected checkpoint2, followed
+by disjoint confirmation after method selection. The small training panels do
+not select the method. Use measured useful throughput and preserve B32 likelihood
+semantics when scaling; filling accelerator memory is not a numerical qualification.
+
+If the corrected controls show no confirmed gain, retain the negative result and
+extend a predeclared fresh-data learning curve before a broad parameter sweep.
+Published RoboTwin studies use substantially more fresh-data iterations. More SGD
+on the same retained buffer cannot substitute for those collections. Record
 success, critic fit, advantage spread, KL/clip fraction and actual update/data
-counts at each boundary. Use a larger fixed DEV panel and multiple training
-seeds for a learning claim; choose the affordable scope from measured costs.
+counts at each boundary. Multiple training seeds remain necessary for stability
+claims; additional compute must stay within the approved cumulative allowance.
 
 An exact released `adjust_bottle` training control conflicts with this
 project's held-out split: `adjust_bottle` is currently a transfer task.

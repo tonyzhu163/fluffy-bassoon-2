@@ -1,0 +1,16 @@
+{
+  "status": "declared_before_corrected_checkpoint2_DEV_outcomes_observed",
+  "training_checkpoint": 2,
+  "methods": [
+    "ppo",
+    "grpo"
+  ],
+  "rule": "After both complete independent DEV readbacks, choose the larger paired success gain. If tied choose PPO. Commit selection before running the disjoint confirmation bank.",
+  "DEV_not_an_effectiveness_claim": true,
+  "confirmation_episodes_per_policy": 64,
+  "confirmation_minimum_paired_gain": 0.1,
+  "confirmation_exact_two_sided_paired_p_below": 0.05,
+  "one_training_seed_only": true,
+  "held_out_tasks_trained": [],
+  "approved_cumulative_GPU_seconds": 360000
+}
