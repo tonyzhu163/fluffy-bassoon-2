@@ -1,0 +1,41 @@
+{
+  "status": "continuing_preserved_failed_large_object_upload",
+  "checked_unix": 1794070902.4054947,
+  "prior_run": "anyviewphys-cold-archive-20261108-r2",
+  "new_run": "anyviewphys-cold-archive-20261108-r3",
+  "source_commit": "2e85003b990ef1b550ee94a593f290a8274ee622",
+  "prior_state": {
+    "source_commit": "f288b42540689de793b4f068e914d7712552473b",
+    "filesystem_before": {
+      "total": 2199023255552,
+      "used": 2112767393792,
+      "free": 86255861760
+    },
+    "total_entries": 511379,
+    "source_allocated_bytes": 310140596224,
+    "source_unique_logical_bytes": 309619431863,
+    "phase": "failed_preserved",
+    "phase_started_unix": 1794070516.2611687,
+    "entries_done": 511379,
+    "hashed_bytes": 309619431863,
+    "checked_unix": 1794070516.261171,
+    "pid": 3649939,
+    "archive_bytes": 249659603127,
+    "bytes_done": 167805714432,
+    "bytes_total": 249659603127,
+    "error": "OSError(5, 'Input/output error')"
+  },
+  "diagnosis": {
+    "checked_unix": 1794070644.1226876,
+    "tmp_free_GiB": 1438.1418724060059,
+    "failed_upload_completed_blocks": 10002,
+    "cold_partial_error": "[Errno 2] No such file or directory: '/mnt/bos/adgfyl/strong-plant-archives/anyviewphys-cold-archive-20261108-r2/anyviewphys.tar.zst'",
+    "full_local_archive_bytes": 249659603127,
+    "r2_worker_exited": true
+  },
+  "preserved_packed_archive_bytes": 249659603127,
+  "archive_part_bytes": 34359738368,
+  "source_evictions": 0,
+  "unrelated_jobs_stopped": 0,
+  "diagnosis_note": "Failure offset10002*16MiB is consistent with documented10000 BOS multipart part-number bound; mount internals were not inspected and this attribution is an inference. Failed object absent; original source and full local archive intact."
+}
