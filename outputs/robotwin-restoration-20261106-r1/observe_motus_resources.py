@@ -1,12 +1,15 @@
 """Observe only this exclusive job's attested GPUs and cgroup; no model calls."""
 import csv
+import copy
 import io
 import json
 import os
+import queue
 from pathlib import Path
 import signal
 import subprocess
 import sys
+import threading
 import time
 
 from fluffy_bassoon.baige_gpu import mapping
@@ -38,6 +41,32 @@ limit = limit_path.read_text().strip()
 limit = int(limit) if limit != 'max' else os.sysconf('SC_PAGE_SIZE')*os.sysconf('SC_PHYS_PAGES')
 report = dict(samples=0,interval_seconds=1,host_limit_bytes=limit,host_peak_bytes=0,gpus={},
               resolution_limit='NVML1s samples can miss transients; actor Torch allocator peaks are recorded separately')
+live = Path(os.environ.get('TASK_RESOURCE_LIVE',str(root/'resources.json')))
+archive = root/'resources.json'
+pending = queue.Queue(maxsize=1)
+archive_status = dict(last_error=None)
+
+
+def publish_archive():
+    while True:
+        value = pending.get()
+        if value is None:return
+        try:
+            write(archive,value)
+            archive_status['last_error']=None
+        except Exception as error:
+            archive_status['last_error']=f'{type(error).__name__}: {error}'
+
+
+publisher = threading.Thread(target=publish_archive,name='resource-archive',daemon=True)
+if live != archive:publisher.start()
+
+
+def offer(value):
+    try:pending.put_nowait(value)
+    except queue.Full:pass  # At most one bounded archive write is queued.
+
+
 last_saved = 0
 while True:
     output = subprocess.check_output(['nvidia-smi',f'--id={",".join(sorted(expected))}',
@@ -55,10 +84,20 @@ while True:
         gpu['maximum_utilization_percent'] = max(gpu['maximum_utilization_percent'],int(utilization))
     report.update(samples=report['samples']+1,at_unix=time.time(),
                   host_peak_bytes=max(report['host_peak_bytes'],int(current_path.read_text())))
-    if stopping or time.monotonic()-last_saved >= 10:
-        report['sampled_reserve_passed'] = all(row['minimum_free_bytes'] >= max(8*2**30,.08*row['total_bytes'])
-                                             for row in report['gpus'].values())
-        write(root/'resources.json',report)
+    report['sampled_reserve_passed'] = all(row['minimum_free_bytes'] >= max(8*2**30,.08*row['total_bytes'])
+                                         for row in report['gpus'].values())
+    report['archive_last_error'] = archive_status['last_error']
+    write(live,report)
+    if live != archive and (stopping or time.monotonic()-last_saved >= 10):
+        offer(copy.deepcopy(report))
         last_saved = time.monotonic()
-    if stopping: break
+    if stopping:
+        if live != archive:
+            until=time.monotonic()+35
+            try:pending.put(None,timeout=35)
+            except queue.Full:pass
+            publisher.join(max(0,until-time.monotonic()))
+            report['archive_writer_still_active_at_shutdown']=publisher.is_alive()
+            write(live,report)
+        break
     time.sleep(1)

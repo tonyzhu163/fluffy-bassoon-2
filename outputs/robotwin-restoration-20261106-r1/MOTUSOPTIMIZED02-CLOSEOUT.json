@@ -1,0 +1,27 @@
+{
+  "status": "observer_archive_ebusy_released",
+  "job_id": "job-knh97vl0cj4g",
+  "cluster": "Baige Pro6K",
+  "queue": "aihcq-rh0wwk9muei4",
+  "source_commit": "715afc6f4f24bc83a30e9b46478da4aca34bf9bf",
+  "created_shanghai": "2026-11-07T20:52:40+08:00",
+  "running_shanghai": "2026-11-07T20:52:55+08:00",
+  "released_shanghai": "2026-11-07T21:09:07+08:00",
+  "gpus": 8,
+  "conservative_creation_to_release_gpu_seconds": 7896,
+  "worker_gpu_seconds": 7496,
+  "worker_exit_code": 255,
+  "complete_checkpoints": [
+    0
+  ],
+  "completed_training_iterations": 0,
+  "dev_success_at_step0": "3/16",
+  "all_eight_group_reset_receipts_passed": true,
+  "minimum_free_gpu_gib": 44.83,
+  "host_peak_gib": 354.86573028564453,
+  "root_cause": "Observer died on BOS resources.json.tmp rename EBUSY; stale safety report rejected by30s guard. GPU/host reserve itself passed.",
+  "rejection_sha256": "34b75a695ae84a98bf155852988a404140cae29fd57e2aa04ad15bb6feab9bf3",
+  "recovery": "Job-local1s safety report; single bounded asynchronous archive writer; unique fsynced metadata temp with EBUSY-only bounded retry",
+  "proof": "motusoptimized02-released.png",
+  "learning_improvement_claim": false
+}

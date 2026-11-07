@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parent
 
 def require_reserve(worker):
     root = Path(os.environ['TASK_OUT'])
-    path = root/'resources.json'
+    path = Path(os.environ.get('TASK_RESOURCE_LIVE',str(root/'resources.json')))
     report = json.loads(path.read_bytes())
     fresh = 0 <= time.time()-report['at_unix'] <= 30
     passed = (fresh and len(report['gpus']) == int(worker.cfg.native_pilot.world_size) and report['samples'] > 0

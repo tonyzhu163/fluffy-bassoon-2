@@ -3,6 +3,7 @@
 The learner, GAE, masks, FSDP and sampler remain in the pinned RLinf checkout.
 Runtime imports live in rlinf_native_ppo_runtime, never in this metadata module.
 """
+import errno
 import hashlib
 import json
 import os
@@ -28,11 +29,24 @@ def sha(path):
 
 
 def write(path, value):
+    """Publish metadata atomically; retry only transient archive-mount EBUSY."""
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    temp = path.with_suffix(path.suffix + '.tmp')
-    temp.write_text(json.dumps(value, indent=2, allow_nan=False) + '\n')
-    temp.replace(path)
+    payload = (json.dumps(value, indent=2, allow_nan=False) + '\n').encode()
+    temp = path.with_name(path.name+f'.{os.getpid()}-{time.monotonic_ns()}.tmp')
+    with temp.open('xb') as handle:
+        handle.write(payload)
+        handle.flush()
+        os.fsync(handle.fileno())
+    until = time.monotonic()+30
+    while True:
+        try:
+            temp.replace(path)
+            return
+        except OSError as error:
+            if error.errno != errno.EBUSY or time.monotonic() >= until:
+                raise
+            time.sleep(.25)
 
 
 def json_metrics(metrics):
