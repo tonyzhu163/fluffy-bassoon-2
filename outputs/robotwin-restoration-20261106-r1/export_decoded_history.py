@@ -50,6 +50,10 @@ def export():
         split = json.loads((ROOT/'STUDENT-CASE-SPLIT.json').read_bytes())
         split_sha = sha(ROOT/'STUDENT-CASE-SPLIT.json')
         assert split_sha == plan['student_case_split_sha256']
+        source_config = json.loads((BASE/'motusppo04/state/resolved-native-config.json').read_bytes())
+        boundary = source_config['env']['train']
+        assert boundary['max_episode_steps'] == boundary['max_steps_per_rollout_epoch'] == 192
+        assert not boundary['auto_reset'] and not boundary['ignore_terminations']
         layout = ChunkHistoryLayout(2062, 32, 14)
         episodes, previous_next = {}, {}
         noops = physical = 0
@@ -96,7 +100,8 @@ def export():
                 feedback = packet['native_feedback'][lane]
                 reward = float(np.asarray(feedback['reward']).item())
                 terminated = bool(np.asarray(feedback['terminated']).item())
-                truncated = bool(np.asarray(feedback['truncated']).item())
+                raw_truncated = bool(np.asarray(feedback['truncated']).item())
+                truncated = raw_truncated or chunk == 5
                 assert np.isfinite(reward)
                 assert bool(packet['native_terminated'][lane].any()) == terminated
                 assert bool(packet['native_truncated'][lane].any()) == truncated
@@ -141,7 +146,7 @@ def export():
                 assert trial['episode_starts'].sum() == 32
                 trial_tokens(layout, **trial)
                 trials[partition].append(trial)
-                metadata.append(dict(trial_id=f'place_phone_stand/rank-{rank:02d}/group-{group:02d}',
+                metadata.append(dict(trial_id=f'{split["task"]}/rank-{rank:02d}/group-{group:02d}',
                     partition=partition, policy_versions=[0], episodes=32, physical_decisions=len(trial['rewards']),
                     episode_order='round then replica; simultaneous replicas are an offline ordering',
                     source_episodes=[{key:episode[key] for key in
@@ -185,6 +190,8 @@ def export():
             feature_contract='frozen masked mean 2048D public VLM prefix and normalized 14D current state',
             residual_contract='full issued decoded32x14 command minus same-row original-Gaussian frozen ODE proposal',
             bellman_clock='one positive-duration issued chunk; termination and timeout stop bootstrap',
+            wrapper_timeout_rule='raw simulator truncation OR configured H192 request clock; no-op calls remain excluded',
+            source_config_sha256=sha(BASE/'motusppo04/state/resolved-native-config.json'),
             full_planned_tails_retained=True, source_corpus_admitted=False,
             eligible_data_uses=['dit', 'ic_iql', 'static_behavior_cloning'], coverage=coverage,
             student_dev_test_were_teacher_train_cases=True, native_source_dev_panel_exported=False,

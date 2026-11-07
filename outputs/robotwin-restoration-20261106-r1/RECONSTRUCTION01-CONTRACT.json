@@ -1,5 +1,5 @@
 {
-  "status": "prepared",
+  "status": "admitted",
   "purpose": "Reconstruct the original frozen joint Motus ODE proposal and public features for the complete retained policy0 PPO collection at original native B64/row, validating normalized-model-to-issued-command decode.",
   "world_size": 1,
   "native_batch": 64,
@@ -28,12 +28,12 @@
   "input_staging_cap_gib": 16,
   "required_local_free_gib": 24,
   "output_cap_mib": 128,
-  "input_report_sha256": null,
+  "input_report_sha256": "5370b774224a25279c6a569f5f17adaa74e82cc5d031ee7eed16fdab3c42e1cd",
   "input_report": "cpureconstruction04/RESULT.json",
   "model_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
   "norm_stats_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
   "student_case_split_sha256": "4fe9140bf4ee9f92022f06bca820105a295eecf583f22b6a98238e40e91e2dbf",
-  "entry_sha256": "a976ea08f0bcc2c7c5f2678bc34daf0da22b5f3ac17611ca1bc6e006b2025d68",
+  "entry_sha256": "81045b3c58570710473b7edb800ccf76069a996d9cdc9f2e9e4dce2b738907d0",
   "launcher_sha256": "cf6f5d8254f667721e0419037858a9235f380e9fa7f35e6dd94dd076455140b4",
   "observer_sha256": "e6b9994f34d60bb8a92a125c6ec2ac52cc70a5a79f1c7804e1b3218d703f15f8",
   "source_files": {
@@ -46,5 +46,6 @@
   },
   "input_streaming_maximum_packets": 1,
   "decoded_input_packet_cap_mib": 512,
-  "cpu_input_qualification": "All96 payloads plus complete physical episode boundaries/raw flags/post-terminal no-op exclusion, before GPU launch"
+  "cpu_input_qualification": "All96 payloads plus complete physical episode boundaries/raw flags/post-terminal no-op exclusion, before GPU launch",
+  "physical_episode_boundary": "raw termination; raw truncation OR native wrapper H192 request timeout; positive-duration calls only, repeated terminal feedback audited separately"
 }

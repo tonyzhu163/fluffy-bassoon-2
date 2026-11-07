@@ -55,6 +55,10 @@ def stage(*, validate_payloads=False):
     assert report['fixed_selection'] == dict(ranks=[0, 1, 2, 3], rounds=[0, 1, 2, 3], batch=64, chunks=6, policy_iteration=0)
     assert report['source_corpus_admitted'] is False and report['cuda_initialized'] is False
     local, output = Path(os.environ['TASK_LOCAL']), Path(os.environ['TASK_OUT'])
+    source_config = json.loads((BASE/'motusppo04/state/resolved-native-config.json').read_bytes())
+    boundary = source_config['env']['train']
+    assert boundary['max_episode_steps'] == boundary['max_steps_per_rollout_epoch'] == 192
+    assert not boundary['auto_reset'] and not boundary['ignore_terminations']
     rows, episodes, load_times = [], [], []
     physical_calls = noops = nonzero_noops = physics_steps = 0
     terminal_seen = episode_return = episode_ids = scene_ids = None
@@ -98,7 +102,11 @@ def stage(*, validate_payloads=False):
             assert len(feedback) == 64
             reward = torch.tensor([float(torch.as_tensor(row['reward']).item()) for row in feedback], dtype=torch.float64)
             terminated = torch.tensor([bool(torch.as_tensor(row['terminated']).item()) for row in feedback])
-            truncated = torch.tensor([bool(torch.as_tensor(row['truncated']).item()) for row in feedback])
+            raw_truncated = torch.tensor([bool(torch.as_tensor(row['truncated']).item()) for row in feedback])
+            # Pinned RLinf increments its request clock even after physical
+            # termination, and ORs the H192 horizon into native truncation.
+            # Preserve raw flags; only positive-duration rows enter episodes.
+            truncated = raw_truncated | (chunk == 5)
             assert torch.isfinite(reward).all()
             assert torch.equal(terminated, packet['native_terminated'].any(-1))
             assert torch.equal(truncated, packet['native_truncated'].any(-1))
@@ -139,7 +147,10 @@ def stage(*, validate_payloads=False):
             physical_decisions=physical_calls, post_terminal_noops=noops,
             nonzero_feedback_noops=nonzero_noops, physics_steps=physics_steps,
             zero_duration_feedback_excluded_from_physical_returns=True,
-            raw_native_flags_match_recorded_flags=True, all_1024_episodes_complete=True,
+            raw_termination_exact_wrapper_timeout_overlay_exact=True,
+            wrapper_timeout_rule='raw simulator truncation OR configured H192 request clock; no-op calls remain excluded',
+            source_config_sha256=sha(BASE/'motusppo04/state/resolved-native-config.json'),
+            all_1024_episodes_complete=True,
             input_load_seconds=load_times, total_input_load_seconds=sum(load_times),
             maximum_input_load_seconds=max(load_times),
             source_corpus_admitted=False, gpu_seconds=0,
