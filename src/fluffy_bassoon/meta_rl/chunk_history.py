@@ -80,20 +80,33 @@ class ChunkHistoryEncoder:
         self.first = True
         self.previous_terminal = False
 
-    def query(self, features, base, *, episode_start):
+    def _check_query(self, episode_start):
         if self.pending:
             raise ValueError("A query already awaits physical feedback")
         if type(episode_start) not in (bool, np.bool_):
             raise ValueError("Require an explicit boolean physical episode start")
         if bool(episode_start) != (self.first or self.previous_terminal):
             raise ValueError("Physical episode start disagrees with terminal feedback")
+
+    def query_parts(self, *, episode_start):
+        """Return owned shifted feedback/reset for a device-resident prefix.
+
+        Tensor callers compose their current public features/base on device;
+        the physical feedback and reset state machine stays shared with query.
+        """
+        self._check_query(episode_start)
+        clear = self.first or self.mode == "static" or self.mode == "episode" and episode_start
+        feedback = np.zeros_like(self.previous) if clear else self.previous.copy()
+        self.pending = True
+        return feedback, bool(clear)
+
+    def query(self, features, base, *, episode_start):
+        self._check_query(episode_start)
         features = _float32(features, (self.layout.feature_dim,), "public features")
         base = _float32(base, self.layout.command_shape, "frozen proposal")
-        clear = self.first or self.mode == "static" or self.mode == "episode" and episode_start
-        feedback = np.zeros_like(self.previous) if clear else self.previous
+        feedback, clear = self.query_parts(episode_start=episode_start)
         token = np.concatenate((features, base.reshape(-1), feedback,
                                 np.array([episode_start], dtype=np.float32)))
-        self.pending = True
         return token, bool(clear)
 
     def observe(self, issued, delivered_mask, reward, *, terminated, truncated, physics_seconds):
