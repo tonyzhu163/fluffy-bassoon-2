@@ -77,9 +77,17 @@ class FrozenChunkController:
                     torch.as_tensor(feedback, device=parameter.device),
                     torch.as_tensor(starts[:, None], device=parameter.device, dtype=torch.float32)), -1).to(parameter.dtype)
                 before = self.state if self.state is not None else self.policy.core.initial_state(self.native_batch)
-                residual, _, after = self.policy.step(tokens, before,
-                    reset=torch.as_tensor(reset, device=parameter.device),
-                    deterministic=deterministic, generator=generator)
+                # Native OpenPI construction selects global "high" matmul
+                # precision. Keep the CPU-trained float32 student's arithmetic
+                # explicit, then restore the motor's ambient execution setting.
+                precision = torch.get_float32_matmul_precision()
+                try:
+                    torch.set_float32_matmul_precision('highest')
+                    residual, _, after = self.policy.step(tokens, before,
+                        reset=torch.as_tensor(reset, device=parameter.device),
+                        deterministic=deterministic, generator=generator)
+                finally:
+                    torch.set_float32_matmul_precision(precision)
                 mask = torch.as_tensor(active, device=parameter.device)
                 state = {key:torch.where(mask.reshape(-1, *([1]*(value.ndim-1))), value, before[key])
                          for key,value in after.items()}

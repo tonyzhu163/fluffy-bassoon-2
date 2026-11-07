@@ -1,0 +1,63 @@
+{
+  "status": "physical_runtime_completed_cpu_numerical_parity_failed",
+  "job_id": "job-2agwgo1ube0t",
+  "runtime_source": "3d9e914f7f810b3546c4b6c69e7a496895eebcc1",
+  "runtime_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/studentonline01-signals/RESULT.json",
+  "real_episodes": 16,
+  "native_batches": 48,
+  "physical_decisions_by_arm": {
+    "frozen_base": 24,
+    "static_behavior_cloning": 23,
+    "dit": 23,
+    "ic_iql": 24
+  },
+  "owned_workers_closed": true,
+  "frozen_checks_passed": true,
+  "gpu_probe_passed": true,
+  "creation_to_release_gpu_seconds": 305,
+  "worker_gpu_seconds": 272,
+  "released_shanghai": "2026-11-07T17:45:19+08:00",
+  "query_successes_of_two": {
+    "frozen_base": 0,
+    "static_behavior_cloning": 2,
+    "dit": 1,
+    "ic_iql": 0
+  },
+  "support_successes_of_two": {
+    "frozen_base": 0,
+    "static_behavior_cloning": 0,
+    "dit": 0,
+    "ic_iql": 0
+  },
+  "learning_or_adaptation_gain_qualified": false,
+  "cpu_replay": {
+    "result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/studentonline01-readback01/RESULT.json",
+    "status": "failed_memory_allclose",
+    "tolerances_unchanged": true
+  },
+  "cpu_diagnosis": {
+    "source": "e463c32c40d531123cfb198473fadfb5361a9ea0",
+    "result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/studentonline01-memorydiagnostic01/RESULT.json",
+    "status": "diagnostic_only_not_qualification",
+    "seconds": 17.13427183870226,
+    "maximum_command_errors_rounded": {
+      "frozen_base": 0,
+      "static_behavior_cloning": 0.001378775,
+      "dit": 0.001395226,
+      "ic_iql": 0.001246572
+    },
+    "observed_history_lengths_exact": true
+  },
+  "precision_source_evidence": "studentonline01-precision-sources.png",
+  "precision_source_findings": [
+    "Installed OpenPI pi0_pytorch.py line111 sets process-wide float32 matmul precision high",
+    "Pinned RLinf openpi/pi0.py line169 sets process-wide float32 matmul precision high"
+  ],
+  "precision_causality": "Plausible explanation from source inspection, not isolated experimentally on the GPU; original command/memory parity gates failed",
+  "next_action": "Scope highest precision to decoded student calls and restore native motor ambient setting; qualify core behavior on Linux and repeat GPU parity before declaring deployment qualified",
+  "proofs": [
+    "studentonline01-released.png",
+    "studentonline01-memorydiagnostic.png",
+    "studentonline01-precision-sources.png"
+  ]
+}

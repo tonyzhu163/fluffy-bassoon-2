@@ -143,3 +143,30 @@ def test_deployment_model_is_frozen_including_statistics_and_mode(change):
             value.add_(1)
     with pytest.raises(RuntimeError, match='Frozen decoded-controller'):
         control.propose(torch.zeros(2, 3), torch.zeros(2, 2, 2), episode_starts=np.ones(2, np.bool_))
+
+
+@pytest.mark.parametrize('fail', [False, True])
+def test_student_precision_is_explicit_and_motor_setting_is_restored(monkeypatch, fail):
+    control = controller()
+    original = control.policy.step
+
+    def checked_step(*args, **kwargs):
+        assert torch.get_float32_matmul_precision() == 'highest'
+        if fail:
+            raise RuntimeError('Injected policy failure')
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(control.policy, 'step', checked_step)
+    previous = torch.get_float32_matmul_precision()
+    try:
+        torch.set_float32_matmul_precision('high')
+        if fail:
+            with pytest.raises(RuntimeError, match='Injected policy failure'):
+                control.propose(torch.zeros(2, 3), torch.zeros(2, 2, 2),
+                    episode_starts=np.ones(2, np.bool_))
+        else:
+            control.propose(torch.zeros(2, 3), torch.zeros(2, 2, 2),
+                episode_starts=np.ones(2, np.bool_))
+        assert torch.get_float32_matmul_precision() == 'high'
+    finally:
+        torch.set_float32_matmul_precision(previous)
