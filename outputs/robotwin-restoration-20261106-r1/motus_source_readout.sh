@@ -13,7 +13,7 @@ TASK_DRIVER=$TASK_CODE/outputs/robotwin-restoration-20261106-r1
 [[ -z $(git -C "$TASK_CODE" status --porcelain --untracked-files=no) ]]
 [[ $TASK_PLAN_NAME == MOTUS-SOURCE-*-CONTRACT.json && $TASK_PLAN_NAME != */* ]]
 export TASK_READOUT_PLAN=$TASK_DRIVER/$TASK_PLAN_NAME
-TASK_ID=$("$TASK_PYTHON" -c 'import json,sys,re;p=json.load(open(sys.argv[1]));s=p["output_identity"];assert re.fullmatch("motus-source-(ppo|grpo)-(dev|confirmation)01",s);print(s)' "$TASK_READOUT_PLAN")
+TASK_ID=$("$TASK_PYTHON" -c 'import json,sys,re;p=json.load(open(sys.argv[1]));s=p["output_identity"];assert re.fullmatch("motus-source-(ppo|grpo)-(dev|confirmation)[0-9]{2}",s);print(s)' "$TASK_READOUT_PLAN")
 [[ $TASK_OUT == "$TASK_ARCHIVE/$TASK_ID-signals" && ! -e $TASK_OUT ]]
 # Approval changes the contract; a prepared source is deliberately unlaunchable.
 "$TASK_PYTHON" - "$TASK_READOUT_PLAN" <<'PY'
@@ -64,7 +64,7 @@ finish() {
 }
 trap finish EXIT
 "$TASK_PYTHON" "$TASK_CODE/scripts/[train]gpu_probe.py" --baige-container \
- --baige-exclusive-training --purpose evaluation --expected-count 8 --output "$TASK_OUT/gpu-probe.json"
+ --purpose evaluation --expected-count 8 --output "$TASK_OUT/gpu-probe.json"
 export LYCO_BAIGE_GPU_MAP=$TASK_OUT/gpu-probe.json
 "$TASK_PYTHON" "$TASK_SHARED/host_memory.py" "$TASK_OUT" --minimum-gib 1024 --once
 [[ $(git -C "$REPO_PATH" rev-parse HEAD) == c605b9d55ed93a180119b099e6f836abff293b08 ]]

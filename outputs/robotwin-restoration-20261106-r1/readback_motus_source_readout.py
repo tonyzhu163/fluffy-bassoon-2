@@ -3,6 +3,7 @@ import argparse
 import json
 import math
 import os
+import re
 from pathlib import Path
 
 import numpy as np
@@ -25,7 +26,7 @@ def main():
     assert os.uname().sysname == 'Linux' and os.environ['CUDA_VISIBLE_DEVICES'] == ''
     assert not torch.cuda.is_initialized()
     identity = args.identity
-    assert identity in [f'motus-source-{m}-{b}01' for m in ('ppo','grpo') for b in ('dev','confirmation')]
+    assert re.fullmatch(r'motus-source-(ppo|grpo)-(dev|confirmation)[0-9]{2}',identity)
     state = BASE/identity/'state';signals = BASE/(identity+'-signals')
     assert json.loads((signals/'EXIT.json').read_bytes())['exit_code'] == 0
     complete = json.loads((signals/'COMPLETE.json').read_bytes())
