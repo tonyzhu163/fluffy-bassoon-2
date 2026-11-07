@@ -30,7 +30,6 @@
   "new_iterations": 1,
   "world_size_migration": false,
   "retained_action_accounting": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motusoptimized03/action-accounting",
-  "retained_action_journal_hashes": {},
   "maximum_all_in_actions": 500000,
   "local_staging_cap_gib": 256,
   "bos_run_cap_gib": 192,
@@ -57,8 +56,8 @@
     "outputs/robotwin-restoration-20261106-r1/motus_optimized_entry.py": "87f52275417145f0025b3564e508902e11df9e68e5261bd0896155d57b065164"
   },
   "entry_sha256": "1f6f035ad3cc82b51dec5d1ca8ba249b666fdc7a708d63b646f9d50566f945dc",
-  "launcher_sha256": "addea2aa030363dcfaf0764a766ab9a8757f80af6e17bc52e7ae1cdbf02f9cfb",
-  "cpu_boundary_qualification_passed": false,
+  "launcher_sha256": "d3224f266d854ff6cb089c3a608a17e9e53825bdf201571d942bd87f320448c1",
+  "cpu_boundary_qualification_passed": true,
   "source_task": "place_phone_stand",
   "held_out_tasks_trained": [],
   "scientific_source_campaign_complete": false,
@@ -66,5 +65,8 @@
   "learning_improvement_claim": false,
   "timing_basis": "Measured completed first-cycle actor loop196.8s/rank and checkpoint publication111.75s; previous48minworker included SFT startup/baseline checkpoint/DEV and part of cycle2. Proposed40minworker for one resumed cycle; reserve45mincreation-release including startup/cleanup. Completion remains conditional on measured throughput.",
   "operational_restore": "Native actorDCP/Adam/scheduler load, then all24 sidecars. Actor owned state/RNG fingerprint and sampler case ordinals must match before collection. Old partial actions remain charged in copied escrow; partial physics never resumes.",
-  "linux_cpu_qualification_pending": true
+  "linux_cpu_qualification_pending": true,
+  "cpu_boundary_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motusoptimized03-boundary02/RESULT.json",
+  "cpu_boundary_sha256": "7878d8ae97a159c4fbd1443cb5ee3573d05d175376506a4fdcd714fa0d62b8bd",
+  "cpu_boundary_source": "baa413cb597dbd35ca61a69519c72092f44688bd"
 }

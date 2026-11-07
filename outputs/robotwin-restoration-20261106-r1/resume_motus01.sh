@@ -83,7 +83,7 @@ with probe.open('xb') as f:f.write(b'robotwin-optimized-ppo');f.flush();os.fsync
 assert probe.read_bytes()==b'robotwin-optimized-ppo';probe.unlink()
 local.mkdir();cold.mkdir();(cold/'state').mkdir()
 assert sha(Path(p['cpu_boundary_result']))==p['cpu_boundary_sha256']
-assert json.loads(Path(p['cpu_boundary_result']).read_bytes())['status']=='passed'
+boundary_audit=json.loads(Path(p['cpu_boundary_result']).read_bytes());assert boundary_audit['status']=='passed'
 checkpoint=Path(p['resume_checkpoint'])
 assert sha(checkpoint/'MANIFEST.json')==p['resume_manifest_sha256']
 manifest=json.loads((checkpoint/'MANIFEST.json').read_bytes())
@@ -95,8 +95,11 @@ assert sha(staged/'MANIFEST.json')==p['resume_manifest_sha256']
 # Preserve old resolved calls and unresolved intents without modifying closed source evidence.
 old=Path(p['retained_action_accounting'])
 shutil.copytree(old,cold/'action-accounting')
-for name,row in p['retained_action_journal_hashes'].items():
- assert sha(old/name)==row and sha(cold/'action-accounting'/name)==row
+assert len(boundary_audit['retained_action_escrow'])==8
+for rank_row in boundary_audit['retained_action_escrow']:
+ for name,digest in rank_row['journals'].items():
+  relative=Path(name).relative_to(old)
+  assert sha(old/relative)==digest and sha(cold/'action-accounting'/relative)==digest
 for rank in range(8):
  charged=0
  for path in (cold/f'action-accounting/rank-{rank:02d}').glob('*.json'):

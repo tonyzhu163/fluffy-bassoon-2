@@ -97,6 +97,14 @@ outcomes:
   of .625 under the no-change null, assuming independent pairs. This
   exploratory panel does not establish a general degradation claim or improvement.
   [Endpoint evidence](../../outputs/robotwin-restoration-20261106-r1/MOTUSDEV01-COMPLETE.json).
+* A later fresh optimized eight-rank Motus job completed one integrated
+  collect/update cycle with15 Adam steps on every rank and a full cold-verified
+  checkpoint1. Its DEV panel was3/16 initially and4/16 after the update. The
+  fixed worker timeout interrupted the second collection. This qualifies one
+  combined cycle, without establishing sustained learning or improvement.
+  Native B32 training/B2 evaluation is an explicit numerical condition distinct
+  from the earlier four-rank B64/B4 run.
+  [Integrated-cycle closeout](../../outputs/robotwin-restoration-20261106-r1/MOTUSOPTIMIZED03-CLOSEOUT.json).
 * Earlier Sidney arms did complete two collections and 40 updates/rank.
   Their later fixed panel was base5/16, PPO5/16, GRPO2/16. Thus the full history
   is not exclusively a failed launcher; we also have short runs with no
@@ -117,7 +125,7 @@ loss masks. [Physical audit](../../outputs/robotwin-restoration-20261106-r1/CPUR
 | --- | --- | --- |
 | Sustained online learning has not been tested adequately | Verified limitation, not a proof that more training will help | Run successive complete collect/update cycles; show new rollout data and checkpoint progression. |
 | New motor/task/cadence changes the learning problem | Verified protocol differences; causal effect unknown | Hold these fixed within a port experiment; report it separately from exact release reproduction. |
-| Combined scene/model memory and setup overhead obstruct training | Full-size reserve failed; optimized small-scene lifecycle passed | Qualify co-resident scenes, rollout and actor through repeated real cycles. Actor-only capacity is insufficient. |
+| Combined scene/model memory and setup overhead obstruct training | Four-rank B64 reserve failed; eight-rank B32 passed one integrated cycle | Qualify repeated real cycles and exact full-state recovery. Actor-only capacity is insufficient. |
 | Group8 reduces scene diversity relative to group1 | Verified layout change | Keep the matched group8 arm; add a separately named group1 PPO reference when affordable. |
 | Exploration harms the initializer or fails to reach useful alternatives | Plausible, unisolated | Compare policy0 Flow-SDE and ODE on the same cases before changing noise. Different TRAIN/DEV scenes cannot isolate this gap. |
 | Critic quality or return/boundary semantics limit learning | Plausible, unisolated | Inspect explained variance, targets, values, advantage spread and episode boundaries; compare critic designs only after a stable control. |
@@ -156,12 +164,13 @@ and subsequent claims. The autonomous default is to preserve the split and
 complete the acknowledged Motus source-task port. No held-out training is
 authorized by this review.
 
-The current 50-hour ledger has only 694 GPU-seconds remaining. That cannot
-fund a meaningful four-device online continuation. A concrete continuation
-contract and measured resource/budget request must precede expenditure above
-the cap. This review launches no accelerator work. Offline DIT/IQL exploration
-can continue on the mixed-quality pilot data; it does not establish PPO
-convergence, and the single-policy dataset is not a chronological AD corpus.
+Consult the [current ledger](../../outputs/robotwin-restoration-20261106-r1/LATEST-BUDGET.json)
+for approved compute and remaining allowance; the historical review budget is
+superseded. A concrete continuation contract and measured resource request must
+precede expenditure above the active cap. Offline DIT/IQL exploration can
+continue on the mixed-quality pilot data; completed fitting and frozen-runtime
+qualification do not establish adaptation or PPO convergence. The single-policy
+dataset is still not a chronological AD corpus.
 
 Search queries, source identities, exclusions and the dated implementation
 handoff are in the [review record](../../outputs/robotwin-restoration-20261106-r1/RECIPE-REVIEW.json).
