@@ -568,3 +568,12 @@ becomes a retained teacher version. This does not replace an updated-policy
 simulator DEV panel or the explicit collector migration needed for iteration2.
 The prepared recovery reserves9000 GPU-seconds against9176 remaining; validate
 the code, queue and exact deployment commit before admitting that allocation.
+
+MOTUSREPLAY01-COMPLETE.json now records completion of that boundary at
+c79bdc1d: all15 native updates/rank,19.085GB full checkpoint readback,
+independent owned-state restore and identical next-update control, with exact
+B4 plain-export likelihood/value calibration. The allocation closed with
+174840/180000 GPU-seconds consumed;5160 remain and none are reserved.
+Next qualify updated-policy simulator DEV on its fixed16 cases, then address
+the combined collection memory/initialization gate. This does not admit the
+existing single-policy collection as AD history or supply policy1 rollouts.

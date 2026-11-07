@@ -1,0 +1,61 @@
+{
+  "status": "complete_learner_recovery",
+  "cluster": "Baige Pro6K",
+  "job_id": "job-suv57so6p9fq",
+  "source_commit": "c79bdc1d616978d98e333d4540c624528e777031",
+  "created_at_shanghai": "2026-11-07T08:20:10+08:00",
+  "released_at_shanghai": "2026-11-07T08:36:54+08:00",
+  "scheduler_status": "Succeeded",
+  "scheduler_restarts": 0,
+  "exit_code": 0,
+  "gpus": 4,
+  "conservative_creation_to_release_gpu_seconds": 4016,
+  "worker_gpu_seconds": 3856,
+  "prior_closed_conservative_gpu_seconds": 170824,
+  "cumulative_closed_conservative_gpu_seconds": 174840,
+  "remaining_gpu_seconds": 5160,
+  "hard_cap_gpu_seconds": 180000,
+  "active_reserved_gpu_seconds": 0,
+  "native_decisions": 6144,
+  "retained_native_optimizer_steps_per_rank": [
+    15,
+    15,
+    15,
+    15
+  ],
+  "unsaved_recovery_control_step": 16,
+  "checkpoint": {
+    "cold": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motusreplay01/checkpoints/global_step_1",
+    "data_bytes": 19085086119,
+    "manifest_sha256": "b849ee24d5da5e5d1d6e7d9fb3734d8302eadd41115afbd00aa0555355fd90f7",
+    "full_cold_readback": true,
+    "full_local_stageback": true
+  },
+  "full_owned_restore_exact": true,
+  "next_update_exact": true,
+  "frozen_after_checks_passed": 4,
+  "inference_export": {
+    "qualified": true,
+    "sha256": "9bde8ab663be85c360aa828714792926a969e0c4531e9273b9c3d1eeafcd65fe",
+    "strict_plain_tensor_load": true,
+    "all_tensor_bytes_dtypes_shapes_exact": true,
+    "same_batch": 4,
+    "max_abs_error": {
+      "logprobs": 0.0,
+      "values": 0.0
+    },
+    "actor_state_unchanged": true
+  },
+  "training_phase_seconds": 603.3086075710598,
+  "restore_phase_seconds": 143.50937145389616,
+  "sampled_gpu_reserve_passed": true,
+  "new_simulator_controls": 0,
+  "exact_all_worker_simulator_resume": false,
+  "scientific_source_admission": false,
+  "complete_six_task_campaign": false,
+  "updated_policy_simulator_dev_pending": true,
+  "source_collection_audit": "COLLECTION-AUDIT02-COMPLETE.json",
+  "proof": "motusreplay01-complete.png",
+  "scheduler_proof": "motusreplay01-released.png",
+  "next_action": "Evaluate the qualified updated policy on the fixed16-case source DEV panel using the shared native measured controller, batching and bounded train/eval I/O. Qualify deferred scene setup before any new online teacher collection; collector/RNG continuation requires explicit migration."
+}

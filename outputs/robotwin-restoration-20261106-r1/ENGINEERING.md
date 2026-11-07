@@ -165,3 +165,11 @@ only after durable checkpoint readback, then repeats in fresh processes.
 This actor-only allocation isolates learner capacity from the unqualified
 combined simulator memory peak. None of these new checks is claimed passed
 until the allocated execution produces its completion receipts.
+
+MOTUSREPLAY01 completed all15 actual-data updates/rank at micro256 with the
+native global2048/five-epoch loop. The scheduled19.085GB checkpoint passed
+full cold/local readback before the unsaved control, and fresh processes
+restored owned Adam/scheduler/scaler/RNG exactly and reproduced that control.
+Strict plain inference loading matched every tensor byte/dtype/shape and
+same-B4 logprobs/values exactly. GPU reserve passed throughout. Updated-policy
+simulator evaluation and memory-safe online collection remain unqualified.
