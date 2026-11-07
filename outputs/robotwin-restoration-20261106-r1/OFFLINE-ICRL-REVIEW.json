@@ -1,0 +1,189 @@
+{
+  "status": "complete_primary_source_scoping_review",
+  "checked_at": "2026-11-07T16:27:57.323542+08:00",
+  "review": "docs/literature/frozen-vla-offline-icrl-review.md",
+  "scope": "Frozen joint VLA; PPO/GRPO source experience; AD/DPT/DIT/offlineIQL; control interfaces and honest online adaptation evaluation",
+  "review_type": "scoping; not systematic; no external result reproduced",
+  "local_code_commit_before_review": "fcac6c1f5f29da1fdfd41955a711d4e621a24f4b",
+  "query_groups": [
+    "Decision Importance Transformer in-context reinforcement learning; ICML2025 Dong",
+    "Yes Q-learning Helps Offline In-Context RL latest revision; continuous IQL architecture",
+    "Algorithm Distillation; DPT supervised pretraining query-state labels",
+    "VLRLA deployment-time adaptation frozen expert bridge PPO collector",
+    "VintixII DPT continuous flow matching",
+    "RLinf RoboTwin pi0.5 PPO and GRPO; RLinf-VLA group formula",
+    "What Can RL Bring to VLA Generalization PPO GRPO; piRL latest version",
+    "DSRL diffusion steering; PolicyDecorator; V-GPS value guidance; RoboTTT"
+  ],
+  "sources": [
+    {
+      "id": "AD",
+      "url": "https://arxiv.org/pdf/2210.14215v1",
+      "inspected": "v1; method and experiments",
+      "supports": "Improving-process action supervision, across-episode history"
+    },
+    {
+      "id": "DPT",
+      "url": "https://arxiv.org/pdf/2306.14892",
+      "inspected": "PDF; method and theory; NeurIPS2023 publisher page cross-checked",
+      "supports": "Same-query optimal/teacher action labels"
+    },
+    {
+      "id": "DIT",
+      "url": "https://proceedings.mlr.press/v267/dong25d.html",
+      "inspected": "ICML2025 publication metadata",
+      "supports": "Publication year and canonical reference"
+    },
+    {
+      "id": "DIT full text",
+      "url": "https://arxiv.org/html/2601.20116v1",
+      "inspected": "v1; sections4-5 and appendix",
+      "supports": "Behavior-advantage weighted likelihood and return-conditioned value context"
+    },
+    {
+      "id": "Offline IC-IQL",
+      "url": "https://arxiv.org/pdf/2502.17666v5",
+      "inspected": "v5; sections3-4 and AppendixB",
+      "supports": "RL objectives, continuous control, shared backbone, detached actor gradients"
+    },
+    {
+      "id": "IQL",
+      "url": "https://arxiv.org/html/2110.06169",
+      "inspected": "v1; section4",
+      "supports": "Expectile, Bellman regression, extraction, clipped double Q"
+    },
+    {
+      "id": "IQL actor implementation",
+      "url": "https://github.com/ikostrikov/implicit_q_learning/blob/master/actor.py",
+      "inspected": "Mutable master inspected via raw.githubusercontent.com on review date",
+      "supports": "Multiply advantage by temperature; clip weight100"
+    },
+    {
+      "id": "IQL MuJoCo configuration",
+      "url": "https://github.com/ikostrikov/implicit_q_learning/blob/master/configs/mujoco_config.py",
+      "inspected": "Mutable master inspected via raw.githubusercontent.com on review date",
+      "supports": "Temperature3, expectile.7"
+    },
+    {
+      "id": "IQL critic implementation",
+      "url": "https://github.com/ikostrikov/implicit_q_learning/blob/master/critic.py",
+      "inspected": "Mutable master inspected via raw.githubusercontent.com on review date",
+      "supports": "Two Q estimators, use minimum for V"
+    },
+    {
+      "id": "VintixII",
+      "url": "https://arxiv.org/html/2604.05112v1",
+      "inspected": "v1; sections3-4",
+      "supports": "Continuous DPT, query relabeling, scale, online versus offline evaluation"
+    },
+    {
+      "id": "VLRLA",
+      "url": "https://arxiv.org/html/2610.19517v1",
+      "inspected": "v1; section4 and AppendixA",
+      "supports": "Frozen expert input gradients; bridge; source PPO collector versus main-tableGRPO"
+    },
+    {
+      "id": "RLinf RoboTwin guide",
+      "url": "https://rlinf.readthedocs.io/en/latest/rst_source/examples/embodied/robotwin.html",
+      "inspected": "Mutable latest inspected on review date",
+      "supports": "Clean pi0.5 PPO result; randomized OpenVLA-OFT differs"
+    },
+    {
+      "id": "RLinf PPO configuration",
+      "url": "https://github.com/RLinf/RLinf/blob/77a521298f1d215971246c2d7a423720d9e76652/examples/embodiment/config/robotwin_adjust_bottle_ppo_openpi_pi05.yaml",
+      "inspected": "77a521298f1d215971246c2d7a423720d9e76652",
+      "supports": "Released layout and ceiling; prior exact inherited-config audit reused"
+    },
+    {
+      "id": "RL for VLA generalization",
+      "url": "https://papers.nips.cc/paper_files/paper/2025/file/8c0fabe372177d2aded596be2d3b4544-Paper-Conference.pdf",
+      "inspected": "NeurIPS2025; section4.1",
+      "supports": "Specific OpenVLA PPO/GRPO comparison, two seeds"
+    },
+    {
+      "id": "piRL",
+      "url": "https://arxiv.org/html/2510.25889v3",
+      "inspected": "v3; methodology and benchmark scope",
+      "supports": "Updated flow-policy evidence; not a Motus RoboTwin reproduction"
+    },
+    {
+      "id": "RLinf-VLA",
+      "url": "https://arxiv.org/html/2510.06710v1",
+      "inspected": "v1; sections3.4,4.2,5.2",
+      "supports": "PPO/GRPO formulas; group and reduction; placement dependence"
+    },
+    {
+      "id": "Policy Decorator",
+      "url": "https://arxiv.org/html/2412.13630v1",
+      "inspected": "v1; mechanism-level inspection",
+      "supports": "Residual-control precedent; not frozen-student ICRL"
+    },
+    {
+      "id": "DSRL",
+      "url": "https://arxiv.org/html/2506.15799v1",
+      "inspected": "v1; mechanism-level inspection",
+      "supports": "Frozen motor noise-space learning"
+    },
+    {
+      "id": "V-GPS",
+      "url": "https://arxiv.org/html/2410.13816v2",
+      "inspected": "v2; mechanism-level inspection",
+      "supports": "Offline value-guided action ranking"
+    },
+    {
+      "id": "ICRT",
+      "url": "https://arxiv.org/abs/2408.15980",
+      "inspected": "Abstract; adjacent distinction only",
+      "supports": "Demonstration-conditioned imitation differs from reward feedback"
+    },
+    {
+      "id": "RoboTTT",
+      "url": "https://research.nvidia.com/labs/gear/robottt/",
+      "inspected": "Author project mechanism and matching arXiv2607.15275 abstract",
+      "supports": "Inference gradient updates to fast weights"
+    },
+    {
+      "id": "Motus model card",
+      "url": "https://huggingface.co/motus-robotics/pi0.5_robotwin2",
+      "inspected": "Mutable card inspected on review date",
+      "supports": "H32 delta actions, multitaskSFT exposure and data count"
+    }
+  ],
+  "implementation_sha256": {
+    "src/fluffy_bassoon/meta_rl/chunk_value.py": "8731c8a31fe4d4aa91448bdfc4777538f5f5ad97e1d845d44685feec20368925",
+    "src/fluffy_bassoon/meta_rl/history_value.py": "b7fb60e0fbf6dc00b9e0fa46845ad0ffe0d75aa6871bb989a85e82aec96c23f8",
+    "src/fluffy_bassoon/meta_rl/chunk_policy.py": "9e01b2a89c30911927072e579f3855c0e2b44f32d624c33b23be94749db14c61",
+    "outputs/robotwin-restoration-20261106-r1/export_decoded_history.py": "77a4d4b00ce154cde88f6b0fe775112474c6bc3620a5fd4e776b5da6c9a7bc05",
+    "outputs/robotwin-restoration-20261106-r1/STUDENT-CASE-SPLIT.json": "4fe9140bf4ee9f92022f06bca820105a295eecf583f22b6a98238e40e91e2dbf"
+  },
+  "concrete_gaps": [
+    "IQL helper divides advantage bytemperature3; original authorMuJoCo implementation multiplies by3. Effective beta1/3 versus3.",
+    "OneQ plus EMA rather than clipped doubleQ; independent actor/Q/V encoders rather than shared IC-IQL backbone.",
+    "DIT-style raw feedback critic context and conventional Bellman auxiliary are adaptations to the inspected return-conditioned paper.",
+    "32 exported policy0 streams each contain4 distinct scene seeds, with8 simultaneous replicas/scene imposed in offline order.",
+    "Singlepolicy/singletask corpus is not chronologicalAD, qualifiedDPT or cross-taskmeta-training.",
+    "StudentDEV/TEST cases were source teacherTRAIN; selectedresidualmargin usesDEV; exact motorSFT taskexposure requiresdisclosure.",
+    "EpisodeBellmanvalues with cross-episodememory do not explicitly optimize support exploration for future query reward.",
+    "Real trained student simulator deployment and frozen support/query improvement remain unverified."
+  ],
+  "local_static_case_manifest_check": {
+    "policy_iteration": 0,
+    "streams": 32,
+    "distinct_scene_seeds_per_stream": 4,
+    "replicas_per_scene": 8
+  },
+  "exclusions_and_limits": [
+    "Secondary summaries and third-party implementations excluded as evidence.",
+    "Failed guessed RLinf source paths were not used to support native implementation details; qualified local independent reference and prior pinned audit were used.",
+    "Older review snapshots preserved as historical version-specific evidence.",
+    "No novelty-priority or exhaustive-paper-coverage claim.",
+    "No model tests or computation onmacOS; only document/staticJSON/source checks.",
+    "No active run contract or optimizer semantics changed by this review."
+  ],
+  "new_gpu_jobs": 0,
+  "new_gpu_seconds": 0,
+  "new_model_training": false,
+  "changed_runtime_code": false,
+  "external_performance_numbers": "author_reported_only",
+  "full_restoration_goal_complete": false
+}

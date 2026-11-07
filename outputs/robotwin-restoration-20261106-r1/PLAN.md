@@ -98,6 +98,17 @@ Decisions already resolvable without another approval:
    targets and physics integration steps are different measurements. Existing
    fast training lacks measured execution masks; it is not yet student data.
 
+## Literature follow-up for the offline learner
+
+The [primary-source objective review](../../docs/literature/frozen-vla-offline-icrl-review.md)
+and [dated handoff](LITERATURE-HANDOFF.md) identify reference-method differences
+that must be named before a new comparison: IQL inverse-temperature convention,
+single versus double Q, independent versus shared history encoders, DIT critic
+context, and the exported trial's four-scene/offline replica ordering. They
+preserve current pinned contracts and the source/held-out task split. A new
+original-beta3 IQL comparison requires a fresh contract; existing `temperature3`
+means `exp(advantage/3)`, not the author's `exp(3*advantage)`.
+
 ## Reference PPO and GRPO math
 
 The preserved RLinf pi0.5 reference uses 256 environments, four collection

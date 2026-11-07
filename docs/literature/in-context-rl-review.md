@@ -1,5 +1,11 @@
 # In-context RL: literature review and a CTM RL loop
 
+For the current RoboTwin objective comparison, see the 7 November
+[primary-source follow-up on offline ICRL for a frozen VLA](frozen-vla-offline-icrl-review.md).
+It checks AD/DPT/DIT/IC-IQL supervision, newer continuous-control evidence,
+the implemented IQL weighting convention and the online evaluation gaps.
+The snapshot and CTM proposal below remain historical context.
+
 Snapshot: 28 October 2026. Scope: RL², Algorithm Distillation, the ICRL
 survey, PEARL, MELD, AMAGO, TrMRL, Vintix, ECET and VLRLA, read for six
 questions: how in-context RL is implemented, how the RL loop is set up, where
