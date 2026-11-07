@@ -40,7 +40,7 @@ def child(ordinal):
     from fluffy_bassoon.meta_rl.tensor_archive import read_tensor
     from fluffy_bassoon.rl.robotwin_execution import (
         load_accounted_controller, install_accounted_controller, collated_chunk_executions)
-    from motus_teacher_entry import configure_environment
+    from fluffy_bassoon.rl.robotwin_native_setup import configure_environment
     from rlinf.envs.sim.robotwin.robotwin_env import RoboTwinEnv
 
     mode, deferred = PROFILES[ordinal]

@@ -19,8 +19,10 @@ import qualify_scene_setup as reference
 ROOT = Path(os.environ['TASK_DRIVER'])
 CODE = Path(os.environ['TASK_CODE'])
 BASE = reference.BASE
-LOCAL = Path('/tmp/rt-clcpu1')
-OUT = BASE/'cpulifecycle01'
+RUN_ID = os.environ.get('TASK_CPU_CHECK_ID', 'cpulifecycle01')
+assert re.fullmatch(r'cpulifecycle[0-9]{2}', RUN_ID)
+LOCAL = Path('/tmp'/Path('rt-'+RUN_ID))
+OUT = BASE/RUN_ID
 
 
 HOOK = r'''
@@ -33,12 +35,13 @@ from omegaconf import OmegaConf
 import motus_teacher_entry as teacher
 import evaluate_motus_dev as evaluation
 import fluffy_bassoon.rl.robotwin_noise as noise
+import fluffy_bassoon.rl.robotwin_native_setup as setup
 flag=json.loads(sys.argv[1]);out=Path(sys.argv[2])
 assert evaluation.configure_environment is teacher.configure_environment
 for cls in (teacher.MotusEnvironment,evaluation.EvaluationEnvironment):
  source=inspect.getsource(cls.init_worker)
  assert 'root = configure_environment(self)' in source
-with patch.object(teacher,'worker_setup',lambda *args:None),patch.object(noise,'_install_allocated_renderer',lambda path:None):
+with patch.object(setup,'worker_setup',lambda *args:None),patch.object(noise,'_install_allocated_renderer',lambda path:None):
  for mode in ('train','eval'):
   worker=SimpleNamespace(_rank=0,cfg=OmegaConf.create(dict(native_pilot=dict(
    output=str(out/mode),defer_scene_setup=flag,recycle_scene_executor=flag))))
