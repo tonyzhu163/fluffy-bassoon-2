@@ -1,3 +1,12 @@
+Current steering,8November2026: the user approved100 cumulative GPU-hours and
+requires an effective PPO/GRPO source control before proceeding with further
+student experiments. No effective control is established. The audit and live
+cost ledger supersede the earlier66h request and next-action paragraph below.
+See AUDIT-EFFECTIVE-RL-20261108.md and LATEST-BUDGET.json. Budget approval alone
+does not admit the old resume: its status is prepared_pending_learning_audit.
+No new GPU allocation is active. Inspect actual learning signal, simulator
+camera fidelity and recipe differences before choosing the next controlled run.
+
 # Restoration handoff after the integrated first cycle
 
 This supersedes earlier next-action paragraphs in PLAN.md without changing the

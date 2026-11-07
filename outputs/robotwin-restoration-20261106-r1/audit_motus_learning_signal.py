@@ -39,7 +39,7 @@ def main():
     assert sys.platform == 'linux' and os.environ['CUDA_VISIBLE_DEVICES'] == ''
     assert not torch.cuda.is_initialized()
     started = time.monotonic()
-    output = BASE/'motus-learningaudit01'; output.mkdir()
+    output = BASE/'motus-learningaudit02'; output.mkdir()
     raw_path = BASE/'grpo-rawgroupaudit02/raw-reward-fixtures.pt'
     raw_report = json.loads((raw_path.parent/'RESULT.json').read_bytes())
     assert raw_report['status'] == 'passed_counterfactual_raw_reward_grpo_reduction'
@@ -56,6 +56,7 @@ def main():
         report['logged_metrics'][key] = float(value)
     report['logged_metrics_scope'] = 'Native aggregate over first collection and five epochs; not a per-update time series or final-checkpoint critic evaluation'
     fixtures = []
+    used_environment_ranks = set()
     write(output/'RESULT.json', report)
     for rank in range(8):
         receipt_path = BASE/f'motusoptimized03/state/training-rollouts/iteration-0001-policy-0000-rank-{rank:02d}.json'
@@ -71,11 +72,37 @@ def main():
         assert saved['rank'] == rank and saved['optimizer_steps_before'] == 0
         batch = saved['rollout_batch']
         reference = audit(batch, 'ppo'); assert reference['passed'], reference
-        raw = raw_rows[rank]; assert raw['rank'] == rank
         done = batch['dones'].bool().any(-1).numpy()
         mask = batch['loss_mask'].bool().any(-1).numpy()
-        assert np.array_equal(done, raw['dones'].bool().any(-1).numpy())
-        assert np.array_equal(mask, raw['loss_mask'].bool().any(-1).numpy())
+        # Native actors pop whole trajectories from a shared channel; actor
+        # and environment rank numbers are not identity. Use boundaries only
+        # to shortlist, then verify every command and all public observations.
+        candidates = [row for row in raw_rows
+            if np.array_equal(done, row['dones'].bool().any(-1).numpy())
+            and np.array_equal(mask, row['loss_mask'].bool().any(-1).numpy())]
+        assert len(candidates) == 1, [row['rank'] for row in candidates]
+        raw = candidates[0]; environment_rank = raw['rank']
+        assert environment_rank not in used_environment_ranks
+        used_environment_ranks.add(environment_rank)
+        trace_paths = sorted(Path(name) for name in raw_report['files']
+            if '/traces/' in name and f'/rank-{environment_rank:02d}/' in name)
+        assert len(trace_paths) == 24
+        for ordinal, trace_path in enumerate(trace_paths):
+            compressed = trace_path.read_bytes()
+            assert hashlib.sha256(compressed).hexdigest() == raw_report['files'][str(trace_path)]
+            with io.BytesIO(gzip.decompress(compressed)) as handle:
+                trace = torch.load(handle, map_location='cpu', weights_only=False)
+            del compressed
+            round_index, chunk = divmod(ordinal, 6)
+            assert (trace['round_index'], trace['chunk_index']) == (round_index, chunk)
+            lanes = slice(round_index*32, (round_index+1)*32)
+            assert np.array_equal(batch['actions'][chunk, lanes].numpy().reshape(32,32,14),
+                                  np.asarray(trace['proposed_motor_actions']))
+            for actor_key, trace_key in (('observation/state','states'),
+                    ('observation/image','main_images'), ('observation/wrist_image','wrist_images')):
+                assert np.array_equal(batch['forward_inputs'][actor_key][chunk, lanes].numpy(),
+                                      np.asarray(trace['current_observation'][trace_key])), actor_key
+            del trace
         def arr(key): return batch[key].numpy().astype(np.float64)
         rewards = arr('rewards').sum(-1)
         raw_rewards = raw['rewards'].numpy().astype(np.float64).sum(-1)
@@ -96,7 +123,9 @@ def main():
         positive = np.broadcast_to(score[None, :] > 0, mask.shape) & mask
         zero = np.broadcast_to(score[None, :] == 0, mask.shape) & mask
         var = np.var(raw_mc[mask])
-        row = dict(rank=rank, native_gae_reference=reference,
+        row = dict(rank=rank, environment_rank=environment_rank,
+            all24_command_and_public_observation_batches_exact=True,
+            native_gae_reference=reference,
             raw_episode_scores=describe(score), positive_score_episodes=int((score>0).sum()),
             raw_rewards=describe(raw_rewards[mask]), native_rewards_with_bootstrap=describe(rewards[mask]),
             critic_values_before_sgd=describe(values[:-1][mask]), native_gae_return_targets=describe(returns[mask]),
@@ -118,6 +147,7 @@ def main():
         report['ranks'].append(row); write(output/'RESULT.json', report)
         print('LEARNING_SIGNAL_RANK_COMPLETE', rank, flush=True)
         del batch, saved; gc.collect()
+    assert used_environment_ranks == set(range(8))
     torch.save(fixtures, output/'learner-signal-fixtures.pt')
     report.update(status='completed_actual_batch_learning_signal_audit', seconds=time.monotonic()-started,
         fixture_sha256=sha(output/'learner-signal-fixtures.pt'),
