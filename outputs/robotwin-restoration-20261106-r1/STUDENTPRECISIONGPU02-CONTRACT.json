@@ -1,5 +1,5 @@
 {
-  "status": "prepared",
+  "status": "admitted",
   "purpose": "Complete IQL-only precision replay after the previous unchanged numerical checks passed three arms and hit its deadline. In-process input caching avoids repeated BOS reads; math and tolerances unchanged.",
   "gpus": 1,
   "cpu_cores": 16,
@@ -41,9 +41,12 @@
   },
   "gpu_production_controller_first_query_required": true,
   "fresh_robot_episodes_with_fixed_precision_qualified": false,
-  "cpu_preflight_passed": false,
+  "cpu_preflight_passed": true,
   "arms": [
     "ic_iql"
   ],
-  "prior_partial_result_sha256": "00dc212d6d7d4177b7f1b84395640eceb74a3173a4138da9cf685ae1247309a6"
+  "prior_partial_result_sha256": "00dc212d6d7d4177b7f1b84395640eceb74a3173a4138da9cf685ae1247309a6",
+  "cpu_preflight_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpustudentprecisiongpu02/RESULT.json",
+  "cpu_preflight_sha256": "d62c6e80cfc2d2f6dd423d4f22d0a21ce5a895e2eaded4306d74955b1578819d",
+  "cpu_preflight_source": "e6220ab550a440bbde267c3b6e993e28ee1d8b6a"
 }
