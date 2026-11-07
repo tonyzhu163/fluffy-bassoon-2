@@ -73,7 +73,7 @@ def main(args):
         for name,digest in plan['source_files'].items():assert file_sha(ROOT.parents[1]/name)==digest
         assert file_sha(ROOT/'evaluate_decoded_students02.py')==plan['entry_sha256']
         assert file_sha(ROOT/'evaluate_decoded_students02.sh')==plan['launcher_sha256']
-        fixture=BASE/'studentonline01-signals/frozen_base-episode-0-batch-00-intent.pt.gz'
+        fixture=BASE/'studentonline01-signals/frozen_base-episode-0-batch-01-intent.pt.gz'
         with gzip.open(fixture,'rb') as stream:intent=torch.load(stream,map_location='cpu',weights_only=False)
         features,bases=(torch.as_tensor(intent[k],dtype=torch.float32) for k in ('features','bases'))
         torch.set_float32_matmul_precision('high')
@@ -83,7 +83,7 @@ def main(args):
             assert commands.shape==(2,32,14) and torch.isfinite(commands).all()
             assert torch.get_float32_matmul_precision()=='high'
             controller._check()
-        root = BASE/'cpustudentonline02';root.mkdir()
+        root = BASE/'cpustudentonline03';root.mkdir()
         write(root/'RESULT.json',dict(status='passed',source_commit=os.environ['TASK_SOURCE'],
             policy_exports=plan['policy_exports'],source_dev_cases=cases,gpu_seconds=0,
             native_motus_or_simulator_constructed=False,robot_success_or_adaptation_qualified=False,
