@@ -1,5 +1,6 @@
 """Core frozen batched rollout and owned simulator-process checks on Linux CPU."""
 from dataclasses import asdict
+from copy import deepcopy
 import os
 from types import SimpleNamespace
 
@@ -113,6 +114,93 @@ def test_missing_execution_never_falls_back_to_requested_counts():
     assert rt.failed and rt._pending is not None
     with pytest.raises(RuntimeError): rt.infer()
     rt.close()
+
+
+def test_fixed_motor_slots_execute_only_active_physics_and_record_original_rows():
+    rt,motor,pool = runtime()
+    base,_,meta = rt.infer(fixed_native_batch=True)
+    rt.step(base)
+    base,_,meta = rt.infer(fixed_native_batch=True)
+    assert meta['batch_size']==2 and meta['lanes']==[0,1] and meta['active_lanes']==[1]
+    assert len(motor.calls)==2 and all(len(value)==2 for value in motor.calls)
+    rows = rt.step(base)
+    assert len(rows)==1 and rows[0]['native_batch']['row']==1
+    assert rows[0]['native_batch']['decision_ids'][1]=='trial1/episode0/chunk-1'
+    np.testing.assert_array_equal(rows[0]['requested_actions'],base[1].numpy())
+    assert pool.steps==[1,2] and not any(rt._active)
+    rt.close()
+
+
+def test_fixed_motor_batch_requires_initialized_slots_and_prevents_reordering():
+    rt = RoboTwinBatchRuntime(Motor(),Pool())
+    rt.reset('place_phone_stand',[11],case_ids=['only-first'],indices=[0])
+    with pytest.raises(RuntimeError,match='Initialize every'):
+        rt.infer(fixed_native_batch=True)
+    with pytest.raises(ValueError,match='original order'):
+        rt.infer(indices=[0],fixed_native_batch=True)
+    assert rt._pending is None
+    rt.close()
+
+
+def chunk_session(mode='full'):
+    from fluffy_bassoon.meta_rl.chunk_controller import FrozenChunkController
+    from fluffy_bassoon.meta_rl.chunk_history import ChunkHistoryLayout
+    from fluffy_bassoon.meta_rl.chunk_policy import ChunkModelConfig,ChunkResidualPolicy
+    from fluffy_bassoon.meta_rl.chunk_robotwin import RoboTwinChunkSession
+    torch.manual_seed(317)
+    model = ChunkModelConfig(ChunkHistoryLayout(14,4,14),width=8,layers=1,heads=2,context_length=8)
+    controller = FrozenChunkController(ChunkResidualPolicy(model,torch.full((4,14),.1)),
+                                      native_batch=2,mode=mode)
+    motor,pool = Motor(),Pool()
+    return RoboTwinChunkSession(RoboTwinBatchRuntime(motor,pool,seed=7),controller),motor,pool
+
+
+@pytest.mark.parametrize('mode',['full','episode','static'])
+def test_frozen_student_session_joins_physics_preserves_memory_and_resets_trials(mode):
+    session,motor,pool = chunk_session(mode)
+    control = session.controller
+    session.reset('place_phone_stand',[11,13],case_ids=['t0/support','t1/support'],new_trials=True)
+    commands,_,_ = session.propose()
+    session.step(commands)
+    state = deepcopy(control.state)
+    feedback = control.encoders[0].previous.copy()
+    commands,_,meta = session.propose()
+    assert meta['active_lanes']==[1] and meta['batch_size']==2
+    for key in state:
+        torch.testing.assert_close(control.state[key][0],state[key][0],rtol=0,atol=0)
+    np.testing.assert_array_equal(control.encoders[0].previous,feedback)
+    rows = session.step(commands)
+    assert rows[0]['native_batch']['row']==1 and pool.steps==[1,2]
+    assert control.state['length'].tolist()==([1,1] if mode=='static' else [1,2])
+    # Support feedback survives a new physical episode within the same trial.
+    session.reset('place_phone_stand',[11,13],case_ids=['t0/query','t1/query'])
+    commands,_,_ = session.propose()
+    assert control.state['length'].tolist()==([2,3] if mode=='full' else [1,1])
+    session.step(commands)
+    commands,_,_ = session.propose();session.step(commands)
+    old = deepcopy(control.state)
+    session.reset('place_phone_stand',[17],case_ids=['new-t0/support'],indices=[0],new_trials=True)
+    commands,_,_ = session.propose()
+    assert control.state['length'][0]==1
+    for key in old:
+        torch.testing.assert_close(control.state[key][1],old[key][1],rtol=0,atol=0)
+    session.step(commands)
+    assert all(len(value)==2 for value in motor.calls)
+    assert not any(p.requires_grad for p in control.policy.parameters())
+    session.close();assert pool.closed
+
+
+def test_student_command_tampering_is_rejected_before_any_physics_dispatch():
+    session,_,pool = chunk_session()
+    session.reset('place_phone_stand',[11,13],case_ids=['first','second'])
+    commands,_,_ = session.propose()
+    commands[0,-1,-1] += .01
+    with pytest.raises(ValueError,match='before physical dispatch'):
+        session.step(commands)
+    assert pool.steps==[0,0] and session.failed
+    with pytest.raises(RuntimeError,match='without automatic replay'):
+        session.step(commands)
+    session.close()
 
 
 class ProcessSimulator:

@@ -104,6 +104,8 @@ class RoboTwinBatchRuntime:
     native batch/prefix and one explicit draw per episode/chunk. A pending
     proposal cannot be reused or invalidated by another reset. The caller owns
     learner/history state, action escrows, checkpoint boundaries and raw writes.
+    With fixed_native_batch=True, inference retains initialized completed
+    slots while physical dispatch still selects active lanes only.
     """
     def __init__(self,motor,pool,*,seed=0):
         self.motor,self.pool,self.seed = motor,pool,seed
@@ -157,19 +159,26 @@ class RoboTwinBatchRuntime:
         except BaseException:
             self.failed = True;raise
 
-    def infer(self,*,indices=None):
+    def infer(self,*,indices=None,fixed_native_batch=False):
         self._check()
+        if type(fixed_native_batch) is not bool or fixed_native_batch and indices is not None:
+            raise ValueError('Fixed native slots require all initialized lanes in their original order')
         indices = [i for i,v in enumerate(self._active) if v] if indices is None else self._indices(indices)
         if self._pending is not None or not indices or any(not self._active[i] for i in indices):
             raise RuntimeError('Infer exactly once for selected active observations')
-        identities = [f'{self._cases[i]}/chunk-{self._chunks[i]}' for i in indices]
+        proposed = list(range(len(self._raw))) if fixed_native_batch else indices
+        if any(self._raw[i] is None for i in proposed):
+            raise RuntimeError('Initialize every fixed native slot before inference')
+        identities = [f'{self._cases[i]}/chunk-{self._chunks[i]}' for i in proposed]
         noise = case_noise(identities,seed=self.seed,horizon=self.horizon,
                           action_dim=self.motor.noise_shape[1],device=self.motor.model.device)
-        actions,features = self.motor.infer_batch(stack_public_observations([self._raw[i] for i in indices]),noise=noise)
+        actions,features = self.motor.infer_batch(stack_public_observations([self._raw[i] for i in proposed]),noise=noise)
         self.native_batches += 1
-        metadata = dict(native_batch=self.native_batches,batch_size=len(indices),lanes=list(indices),
+        metadata = dict(native_batch=self.native_batches,batch_size=len(proposed),lanes=list(proposed),
+            active_lanes=list(indices),fixed_native_batch=fixed_native_batch,
             decision_ids=identities,numerical_reference='native batched ODE at the recorded actual batch and row')
-        self._pending = dict(indices=list(indices),observations=[self._raw[i] for i in indices],
+        self._pending = dict(indices=list(indices),command_rows=[proposed.index(i) for i in indices],
+            observations=[self._raw[i] for i in proposed],
             base_actions=actions.detach().clone(),public_features=features.detach().clone(),metadata=_cpu_tree(metadata))
         return actions,features,metadata
 
@@ -179,12 +188,12 @@ class RoboTwinBatchRuntime:
         pending = self._pending;indices = pending['indices']
         commands = _cpu_tree(commands)
         commands = np.asarray(commands,dtype=np.float32)
-        if commands.shape != (len(indices),self.horizon,14) or not np.isfinite(commands).all():
+        if commands.shape != (len(pending['metadata']['lanes']),self.horizon,14) or not np.isfinite(commands).all():
             raise ValueError('Require one finite full native chunk per prepared row')
         try:
-            results = self.pool.step(commands,indices=indices)
+            results = self.pool.step(commands[pending['command_rows']],indices=indices)
             transitions = []
-            for row,(lane,result) in enumerate(zip(indices,results,strict=True)):
+            for lane,row,result in zip(indices,pending['command_rows'],results,strict=True):
                 observation,reward,terminated,truncated,info = result
                 measured = info['execution']
                 execution = chunk_execution({'fb2_execution':{k:v for k,v in measured.items() if k!='timestep_seconds'}},
