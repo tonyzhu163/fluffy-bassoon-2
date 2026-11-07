@@ -28,35 +28,53 @@ def contract():
     return plan
 
 
-def stage():
+def load_packet(binding, local):
+    """One checksummed CPU packet in flight; no full-corpus GPU-time staging."""
+    origin, destination = BASE/'cpureconstruction04'/binding['packet'], local/binding['packet']
+    assert not destination.exists() and origin.stat().st_size == binding['bytes']
+    shutil.copyfile(origin, destination)
+    assert destination.stat().st_size == binding['bytes'] and sha(destination) == binding['sha256']
+    packet = read_tensor(destination)
+    destination.unlink()
+    from fluffy_bassoon.meta_rl.background_io import _bytes
+    assert _bytes(packet) <= 512*2**20
+    return packet
+
+
+def stage(*, validate_payloads=False):
     plan = contract()
-    source = BASE/'cpureconstruction03'
+    source = BASE/'cpureconstruction04'
     assert sha(source/'RESULT.json') == plan['input_report_sha256']
     report = json.loads((source/'RESULT.json').read_bytes())
     assert report['status'] == 'inputs_bound' and len(report['packets']) == 96
     assert report['complete_native_b64_collection'] and report['original_gaussians_and_denoising_indices_match_canonical']
+    assert report['canonical_behavior_bijection'] and len(report['canonical_sources']) == 4
     assert report['fixed_selection'] == dict(ranks=[0, 1, 2, 3], rounds=[0, 1, 2, 3], batch=64, chunks=6, policy_iteration=0)
     assert report['source_corpus_admitted'] is False and report['cuda_initialized'] is False
     local, output = Path(os.environ['TASK_LOCAL']), Path(os.environ['TASK_OUT'])
     rows = []
     for index, row in enumerate(report['packets']):
         assert row['ordinal'] == index and row['packet'] == f'packet-{index:03d}.pt.gz'
-        origin, destination = source/row['packet'], local/row['packet']
-        assert not destination.exists() and origin.stat().st_size == row['bytes'] and sha(origin) == row['sha256']
-        shutil.copyfile(origin, destination)
-        assert sha(destination) == row['sha256']
-        packet = read_tensor(destination)
-        assert tuple(packet['original_gaussian'].shape) == (64, 32, 32)
-        assert packet['original_gaussian'].dtype == torch.float32
-        assert torch.equal(packet['recorded_forward_action'].reshape(64, 32, 14), packet['teacher_actions'])
-        assert tuple(packet['teacher_model_action'].shape) == (64, 1024)
-        assert tuple(packet['processed_model_state'].shape) == (64, 32)
-        assert tensor_hash(packet['current_observation']) == packet['current_observation_sha256']
-        assert tensor_hash(packet['teacher_actions']) == packet['teacher_command_sha256']
-        rows.append(dict(**row, original_gaussian_sha256=tensor_hash(packet['original_gaussian'])))
+        rank, within_rank = divmod(index, 24)
+        round_index, chunk = divmod(within_rank, 6)
+        assert (row['rank'], row['round_index'], row['chunk']) == (rank, round_index, chunk)
+        assert row['full_teacher_command_and_final_chain_exact'] and row['canonical_gaussian_and_denoising_indices_exact']
+        if validate_payloads:
+            packet = load_packet(row, local)
+            assert tuple(packet['original_gaussian'].shape) == (64, 32, 32)
+            assert packet['original_gaussian'].dtype == torch.float32
+            assert torch.equal(packet['recorded_forward_action'].reshape(64, 32, 14), packet['teacher_actions'])
+            assert tuple(packet['teacher_model_action'].shape) == (64, 1024)
+            assert tuple(packet['processed_model_state'].shape) == (64, 32)
+            assert tensor_hash(packet['current_observation']) == packet['current_observation_sha256']
+            assert tensor_hash(packet['teacher_actions']) == packet['teacher_command_sha256']
+            assert packet['split_sha256'] == plan['student_case_split_sha256']
+            assert (packet['rank'], packet['round_index'], packet['chunk']) == (rank, round_index, chunk)
+            del packet
+        rows.append(row)
     assert sum(row['bytes'] for row in rows) <= plan['input_staging_cap_gib']*2**30
     write(output/'INPUTS.json', dict(input_report_sha256=sha(source/'RESULT.json'),
-        packets=rows, all_hashes_and_full_forward_actions_exact=True,
+        packets=rows, input_report_exact=True, all_payloads_validated=validate_payloads,
         original_noise_rows=6144, native_batch=64, model_or_simulator_constructed=False))
 
 
@@ -91,14 +109,12 @@ def run():
         torch.cuda.reset_peak_memory_stats()
         for index, binding in enumerate(inputs['packets']):
             assert time.time() < int(os.environ['TASK_DEADLINE'])-60
-            path = local/binding['packet']
-            assert sha(path) == binding['sha256']
-            packet = read_tensor(path)
+            started = time.monotonic()
+            packet = load_packet(binding, local)
+            load_seconds = time.monotonic()-started
             noise = packet['original_gaussian'].to(model.device)
             noise_hash = tensor_hash(noise.cpu())
-            assert noise_hash == binding['original_gaussian_sha256']
             before_cpu, before_cuda = torch.get_rng_state(), torch.cuda.get_rng_state()
-            started = time.monotonic()
             native = None
             if index == 0:
                 with torch.no_grad():
@@ -135,6 +151,7 @@ def run():
                 chunk=packet['chunk'], bytes=destination.stat().st_size, sha256=sha(destination),
                 output=destination.name, teacher_decode_max_abs=decode_error,
                 preprocessed_state_exact=True, sampler_rng_unchanged=True,
+                input_load_seconds=load_seconds,
                 full_command_residual_max_abs=float(residual.abs().max()),
                 seconds=time.monotonic()-started)
             report['chunks'].append(row)
@@ -148,6 +165,7 @@ def run():
         report.update(status='passed', issued_command_rows=6144, model_sampler_rows=motor.sampled_rows+64,
             native_sampler_calls=motor.sample_calls+1, prefix_calls=motor.prefix_calls, sample_calls=motor.sample_calls,
             frozen_parameter_buffer_versions_unchanged=True, no_new_noise_draws=True,
+            input_streaming_maximum_packets=1, decoded_input_packet_cap_mib=512,
             all_teacher_decodes_exact=True, peak_allocated_bytes=torch.cuda.max_memory_allocated(),
             peak_reserved_bytes=torch.cuda.max_memory_reserved(), free_bytes_at_end=free,
             source_corpus_admitted=False, complete_student_dataset=False,
@@ -161,6 +179,11 @@ def run():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--stage', action='store_true')
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('--stage', action='store_true')
+    group.add_argument('--validate-inputs', action='store_true')
     args = parser.parse_args()
-    stage() if args.stage else run()
+    if args.stage or args.validate_inputs:
+        stage(validate_payloads=args.validate_inputs)
+    else:
+        run()

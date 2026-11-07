@@ -1,0 +1,16 @@
+{
+  "status": "failed_canonical_storage_coordinate_assumption",
+  "source_commit": "4fe53d5ddb6e6bbb3dcf60b959929c32adb284f7",
+  "process_pid": 3487652,
+  "process_confirmed_gone": true,
+  "gpu_seconds": 0,
+  "qualified_prefix_packets": 24,
+  "qualified_prefix_command_rows": 1536,
+  "qualified_prefix_rollout_rank": 0,
+  "zero_duration_calls_in_prefix": 84,
+  "nonzero_reward_noops_in_prefix": 84,
+  "failed_condition": "Exact chain equality against canonical actor rank1 at the assumed time/round block; the source reached READ_CANONICAL_COMPLETE1, then failed at stage_rank line70. Memory admission had passed.",
+  "original_data_unchanged": true,
+  "raw_log": "/tmp/rt-cpureconstruction03.log",
+  "next_action": "Build a compact full-chain index across all canonical actor ranks, then bind every raw sampler row by exact chain/denoise/action equality with one-to-one coverage. Preserve actual rollout B64/row independently of actor storage coordinates; diagnose terminal no-op feedback before student transition admission."
+}

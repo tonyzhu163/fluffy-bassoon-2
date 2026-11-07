@@ -1,0 +1,15 @@
+{
+  "status": "owned_cpu_reader_stopped_for_io_fix",
+  "source_commit": "43cbee1067fcfe5c48a56e561990a3eeca530d2d",
+  "process_pid": 3475084,
+  "gpu_seconds": 0,
+  "canonical_rank0_read_completed": true,
+  "source_packets_qualified": false,
+  "observed_process_rchar_bytes": 32404575501,
+  "observed_read_syscalls": 7360942,
+  "diagnosis": "Torch ZIP seek through gzip repeatedly re-decompressed remote sampling archives; switched the run-local reader to the existing one-pass read_tensor implementation before full-collection staging.",
+  "original_data_unchanged": true,
+  "raw_log": "/tmp/rt-cpureconstruction02.log",
+  "stop_scope": "Verified exact own Python command and PID before signalling; no motor, simulator, optimizer or sampler was running.",
+  "process_confirmed_gone": true
+}
