@@ -1137,3 +1137,16 @@ the recorded numerical fix; fresh fixed-precision physical episodes remain
 separate. Native B64 source data and B2 deployment are distinct numerical
 conditions; no singleton or cross-batch equivalence is claimed.
 [Four-arm precision qualification and independent CPU readback](../outputs/robotwin-restoration-20261106-r1/STUDENTPRECISIONALL01-COMPLETE.json).
+
+
+Fresh fixed-precision frozen-student control now passes real RoboTwin execution
+and independent CPU replay on two source DEV cases. Five arms (base, static
+imitation, full-history imitation, DIT-style and IQL-style) completed20 episodes,
+117 physical decisions,3692 delivered targets and57679 physics steps. Readback
+of130 trace files independently reconstructs tokens, physical observation chains,
+commands, feedback and support/query memory. Maximum command/memory errors are
+9.40e-7/1.53e-5 within the original tolerances. All frozen checks and owned-worker
+cleanup passed, with no SGD or TEST access. Every support episode failed; query
+success counts out of2 are0/1/1/1/0 in the listed arm order. These tiny source-case
+counts qualify execution only; they establish no adaptation, gain or transfer.
+[Real runtime and independent replay](../outputs/robotwin-restoration-20261106-r1/STUDENTONLINE02-COMPLETE.json).
