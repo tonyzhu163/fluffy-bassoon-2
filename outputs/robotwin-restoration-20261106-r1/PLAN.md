@@ -707,3 +707,41 @@ ran. Released12:53:16 Nov7, charged966GPU-s; cumulative178782/180000 leaves1218
 with none reserved. This qualifies opt-in repeated B4 offload, not the full
 four-round G8 collector,64-scene co-resident memory or long reset stress.
 See LIFECYCLE01-COMPLETE.json and LIFECYCLE01-READBACK01.json.
+
+## Next bounded handoff: original-noise reconstruction and physical histories
+
+`inspect_full_reconstruction_inputs.py` cold-reads the four original canonical
+actor files and binds all96 native B64 sampler/trace packets by full realized
+chain identity, denoising indices and issued commands. Actor storage rank and
+rollout rank are independent coordinates. Require one-to-one coverage of all
+6144 rows; preserve the original sampler B64 and row order for reconstruction.
+CPU04 owns its fresh immutable output. No model, simulator or GPU is involved.
+
+Before GPU admission, validate every staged payload on Linux CPU, including
+raw terminal/timeout flags, stable physical episode identities, measured
+duration and delivered masks. Require1024 complete episodes. Repeated
+zero-duration post-terminal feedback remains in the audit, outside physical
+decision counts and returns. Measure packet loading time before spending GPU
+time. RECONSTRUCTION01-CONTRACT.json reserves1100 creation-to-release GPU-s
+within the unchanged180000 cap, with970 worker seconds and automatic retries
+disabled. Verify exact original frozen weights, preprocessing, teacher action
+decode, first-batch native ODE parity, RNG preservation and full residuals.
+
+After independent cold CPU readback, `export_decoded_history.py` assembles
+32 complete source trials by task/rank/local-group, each ordered by round then
+replica (32 episodes). Use the precommitted24 TRAIN/4 DEV/4 TEST stream split;
+student DEV/TEST cases were exposed to the teacher as TRAIN and are disclosed
+as such. Native source DEV panels and held-out tasks remain excluded. Keep
+full issued32x14 action tails, pre-action2062D public features and same-row
+frozen proposals. The sole retained policy version0 supports investigation
+of DIT/IQL/static imitation; it is not chronological AD improvement data or
+qualified DPT query supervision.
+
+Precommit candidate residual radii per H,A coordinate as
+`max(1.1 * TRAIN max(abs(issued-base)), 0.001)` in native decoded units, using
+all full TRAIN labels. Fit feature mean/std on physical TRAIN rows only, with
+population std floored at1e-4. Report DEV/TEST bound violations without
+changing radii or clipping labels. These statistics and an exported corpus do
+not by themselves admit a fit: inspect actual reward variation, full physical
+coverage and fixed-bound feasibility first. Complete trainer recovery and
+frozen online control remain separate qualifications.
