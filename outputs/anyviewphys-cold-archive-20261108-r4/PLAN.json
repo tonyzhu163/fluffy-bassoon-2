@@ -1,0 +1,23 @@
+{
+  "run_id": "anyviewphys-cold-archive-20261108-r4",
+  "source": "/mowenjie/anyviewphys",
+  "cold_root": "/mnt/bos/adgfyl/strong-plant-archives/anyviewphys-cold-archive-20261108-r4",
+  "quarantine": "/mowenjie/.anyviewphys-release-anyviewphys-cold-archive-20261108-r4",
+  "authorization": "User explicitly requested archiving AnyViewPhys entirely now and retaining restoration capability. Full project only; preserve all bytes privately cold before releasing PFS.",
+  "inventory_source_commit": "4a85aef0d3a894d5cf00aa88f11c0d091c513c98",
+  "inventory_tree_sha256": "cb9d286379c7ff78e9721fca9fa3bb86e821327882b708943b4b7acb008bcb8b",
+  "tree_sha256": "dd8b9af730b8f435f14d3292364a2905e5fe21356c35fe1f6b001c26410df901",
+  "maximum_staging_bytes": 1099511627776,
+  "GPU_allocations": 0,
+  "runtime_migration": "R3 fully uploaded/read back all8 cold parts and extracted the entire archive. The private overlayfs scratch copy hash guard failed near the end of restored hashing after307384226682 bytes due an unlabelled stat/ctime assertion, not a reported source content mismatch. Resume existing cold parts/extracted scratch; syncfs first, require stable logical attributes+inode/link identity and complete reference SHA256 for all restored content; log only filesystem-local allocation/ctime drift. Keep strict original-source metadata/ctime comparison and qualified inode-aware release. No source bytes evicted before R4; no unrelated jobs stopped.",
+  "resume_archive": "/tmp/anyviewphys-cold-archive-20261108-r3/readback.tar.zst",
+  "prior_worker_pid": 3651109,
+  "packed_archive_bytes": 249659603127,
+  "source_inventory_sha256": "e4df4866bade97a24d5ffccbfdc7d27853de03c3b0fd2e1fd7d778f660fdb0ae",
+  "prior_run": "anyviewphys-cold-archive-20261108-r3",
+  "archive_part_bytes": 34359738368,
+  "reuse_verified_cold_and_restored_stage": true,
+  "prior_stage": "/tmp/anyviewphys-cold-archive-20261108-r3",
+  "prior_output": "/mowenjie/fluffy-bassoon-2/outputs/anyviewphys-cold-archive-20261108-r3",
+  "prior_cold_manifest": "/mnt/bos/adgfyl/strong-plant-archives/anyviewphys-cold-archive-20261108-r3/anyviewphys.tar.zst.parts.json"
+}
