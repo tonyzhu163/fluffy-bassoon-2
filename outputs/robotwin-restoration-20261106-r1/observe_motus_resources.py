@@ -16,7 +16,8 @@ from fluffy_bassoon.meta_rl.rlinf_native_ppo import write
 root = Path(sys.argv[1])
 assert sys.platform == 'linux' and os.uname().nodename.startswith('job-')
 expected = {row['uuid'] for row in mapping()}
-assert len(expected) == 4
+expected_count = int(sys.argv[2]) if len(sys.argv) > 2 else 4
+assert expected_count in (1, 4) and len(expected) == expected_count
 stopping = False
 
 
