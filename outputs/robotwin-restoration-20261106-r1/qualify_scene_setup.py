@@ -21,7 +21,8 @@ PROFILES = [('default', 0)] + [('deferred', rank) for rank in range(4)]
 def contract():
     from fluffy_bassoon.meta_rl.rlinf_native_ppo import sha
     name = os.environ.get('TASK_CONTRACT', 'SCENESETUP01-CONTRACT.json')
-    assert name in ('SCENESETUP01-CONTRACT.json', 'SCENESETUP02-CONTRACT.json', 'SCENESETUP03-CONTRACT.json')
+    assert name in ('SCENESETUP01-CONTRACT.json', 'SCENESETUP02-CONTRACT.json',
+                    'SCENESETUP03-CONTRACT.json', 'SCENESETUP04-CONTRACT.json')
     plan = json.loads((ROOT/name).read_bytes())
     assert plan['status'] in ('prepared', 'admitted')
     assert plan['closed_conservative_gpu_seconds']+plan['reserved_gpu_seconds'] <= 180000
@@ -61,6 +62,8 @@ def inputs(local):
 
 
 def child(profile, rank, ordinal):
+    import faulthandler
+    faulthandler.enable()
     import numpy as np
     import torch
     from omegaconf import OmegaConf
@@ -167,8 +170,24 @@ def child(profile, rank, ordinal):
         report.update(status='failed', error_type=type(error).__name__, error=str(error)); raise
     finally:
         if env is not None:
-            env.offload()
+            # Native vector tasks retain scene references on executor threads.
+            # Join those threads and drain CUDA before destroying scene/cache
+            # objects. Keep explicit offload: a process exit is not closure proof.
+            report['cleanup_phase'] = 'joining_executor'
+            write(directory/'RESULT.json', report)
+            print('CLEANUP_JOIN_EXECUTOR', flush=True)
             env.venv.env_thread_pool.shutdown(wait=True)
+            report['cleanup_phase'] = 'synchronizing_cuda'
+            write(directory/'RESULT.json', report)
+            print('CLEANUP_SYNCHRONIZE_CUDA', flush=True)
+            torch.cuda.synchronize()
+            report['cleanup_phase'] = 'offloading_scenes'
+            write(directory/'RESULT.json', report)
+            print('CLEANUP_OFFLOAD_SCENES', flush=True)
+            env.offload()
+            report['cleanup_phase'] = 'complete'
+            report['executor_joined_before_scene_offload'] = True
+            print('CLEANUP_COMPLETE', flush=True)
         report['seconds'] = time.monotonic()-started
         write(directory/'RESULT.json', report)
 
