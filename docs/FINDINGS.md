@@ -1086,3 +1086,27 @@ GRPO and frozen online student control remain separate qualifications.
 [Reconstruction and independent readback](../outputs/robotwin-restoration-20261106-r1/RECONSTRUCTION01-READBACK01.json),
 [verified physical histories](../outputs/robotwin-restoration-20261106-r1/DECODEDHISTORY01-COMPLETE.json),
 [common fitting profile and selection](../outputs/robotwin-restoration-20261106-r1/DECODED-FIT-BOUNDS02.json).
+
+## RoboTwin decoded student and fixed-slot runtime qualification (2026-11-07)
+
+The full planned decoded-history architecture (6 layers, width512,8 heads,
+context2048) fits real source TRAIN data on allocated Linux CPU for DIT-style,
+IQL-style and static imitation. Each qualification uses only2 actor updates
+(and2 value updates where applicable); it establishes runtime execution, not
+robot improvement. A fresh IQL process restored from the value phase, crossed
+into actor extraction and matched the final learner, both optimizers, counters,
+samplers and RNG exactly. Actor-only frozen exports matched exactly. The newer
+qualification explicitly uses inverse temperature beta3 through temperature1/3;
+the earlier beta1/3 qualification remains separate. TEST tensors were not loaded.
+[Actual-data qualification](../outputs/robotwin-restoration-20261106-r1/CPUDECODEDFIT02.json).
+
+The measured RoboTwin runtime now connects to the frozen decoded controller
+while retaining every initialized native motor slot and its row. Early-finished
+lanes take no physics steps or memory updates; measured feedback returns to the
+original slot. Episode resets retain full-mode memory, selected new-trial resets
+clear it, and altered full commands are rejected before physical dispatch.
+All84 Linux core/numerical cases passed, including6 new integration cases,
+6 existing batch/process cases and72 prior learner/model/history cases. These
+checks use small CPU models and fake simulator boundaries; an actual trained
+student simulator episode remains a separate qualification.
+[Integration evidence](../outputs/robotwin-restoration-20261106-r1/CPUCHUNKSESSION01.json).
