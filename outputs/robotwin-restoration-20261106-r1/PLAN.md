@@ -757,3 +757,12 @@ candidate before reading DEV, checks inverse-tanh/Jacobian finiteness on
 TRAIN/DEV, and never loads TEST tensors or adjusts its rule from coverage.
 Failure leaves fitting unqualified; no label clipping or implicit fallback.
 All compared student objectives must use the same locked fitting profile.
+
+The fixed1.1 horizon-shared candidate01 also excludes6 DEV coordinates and
+remains a failed, immutable qualification. Candidate02 retains the TRAIN-only
+per-joint envelopes and feature statistics, and precommits global margins
+`[1.5,2,4]`; source DEV finite-density coverage selects the first feasible
+margin. This is explicitly DEV hyperparameter selection, not a claim that the
+entire fitting profile is TRAIN-only. TEST tensors remain unloaded; original
+labels, exported statistics and teacher objectives remain unchanged. Freeze
+the resulting common candidate before any student fitting or comparison.

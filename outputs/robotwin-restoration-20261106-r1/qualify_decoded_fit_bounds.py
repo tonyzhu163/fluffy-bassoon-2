@@ -1,4 +1,4 @@
-"""Lock horizon-shared TRAIN joint bounds, then check TRAIN/DEV density support.
+"""Qualify horizon-shared joint bounds and explicit source-DEV margin selection.
 
 The original exported per-step bounds and labels stay immutable. This is a
 separate candidate fitting profile. TEST tensors never enter this procedure.
@@ -25,11 +25,13 @@ def qualify():
     code = ROOT.parents[1]
     assert subprocess.check_output(['git', '-C', str(code), 'rev-parse', 'HEAD'], text=True).strip() == os.environ['TASK_SOURCE']
     assert not subprocess.check_output(['git', '-C', str(code), 'status', '--porcelain', '--untracked-files=no'])
-    output = BASE/'decoded-fit-bounds01'
+    profile = os.environ.get('TASK_FIT_BOUNDS_ID', 'decoded-fit-bounds01')
+    assert profile in ('decoded-fit-bounds01', 'decoded-fit-bounds02')
+    output = BASE/profile
     output.mkdir()
     report = dict(status='checking', source_commit=os.environ['TASK_SOURCE'],
         gpu_seconds=0, model_calls=0, optimizer_updates=0, simulator_actions=0,
-        test_tensor_loaded=False, source_corpus_admitted=False)
+        test_tensor_loaded=False, source_corpus_admitted=False, profile=profile)
     try:
         source = BASE/'decodedhistory01'
         audit_path = BASE/'decodedhistory01-readback01/RESULT.json'
@@ -48,24 +50,45 @@ def qualify():
         original = read('train-statistics.pt.gz')
         residual = np.concatenate([row['issued']-row['bases'] for row in training])
         joint = np.abs(residual).max(axis=(0, 1))
-        radius = np.broadcast_to(np.maximum(joint*np.float32(1.1), np.float32(.001)), (32, 14)).copy()
-        reference = (torch.from_numpy(residual).abs().amax(dim=(0, 1))*1.1).clamp(min=.001)
+        margin, development = 1.1, None
+        if profile == 'decoded-fit-bounds02':
+            # The finite grid is fixed in Git before this qualification. DEV
+            # selects one global hyperparameter; no per-joint DEV statistic
+            # enters the envelopes and no TEST tensor is loaded.
+            development = read('dev.pt.gz')['trials']
+            dev_residual = np.concatenate([row['issued']-row['bases'] for row in development])
+            report['precommitted_global_margin_grid'] = [1.5, 2., 4.]
+            report['dev_margin_candidates'] = []
+            for margin in report['precommitted_global_margin_grid']:
+                candidate = np.maximum(joint*np.float32(margin), np.float32(.001))
+                outside = int((np.abs(dev_residual) >= candidate).sum())
+                report['dev_margin_candidates'].append(dict(margin=margin, coordinates_outside=outside))
+                if outside == 0:
+                    break
+            assert outside == 0, 'No precommitted margin covers source DEV'
+        radius = np.broadcast_to(np.maximum(joint*np.float32(margin), np.float32(.001)), (32, 14)).copy()
+        reference = (torch.from_numpy(residual).abs().amax(dim=(0, 1))*margin).clamp(min=.001)
         assert torch.equal(torch.from_numpy(radius), reference.expand(32, 14))
         statistics = dict(feature_mean=original['feature_mean'].clone(),
             feature_std=original['feature_std'].clone(), residual_radius=torch.from_numpy(radius),
-            fitted_partition='TRAIN', radius_rule='max(1.1*TRAIN max absolute residual over rows AND horizon,0.001) per joint; broadcast H32',
+            fitted_partition='TRAIN feature statistics and joint envelopes',
+            radius_rule='max(global_margin*TRAIN max absolute residual over rows AND horizon,0.001) per joint; broadcast H32',
+            global_margin=margin, global_margin_selection='source DEV finite-density coverage' if development is not None else 'precommitted constant',
             split_sha256=original['split_sha256'], no_label_clipping=True,
             original_export_statistics_sha256=sha(source/'train-statistics.pt.gz'),
             source_train_sha256=sha(source/'train.pt.gz'), test_tensor_loaded=False)
         path = output/'STATISTICS.pt.gz'
-        # Lock the candidate before reading DEV. Its rule and scale do not
-        # depend on DEV coverage or any TEST statistic.
+        # Profile01 locks its constant before DEV; profile02 explicitly selects
+        # one predeclared global margin on DEV. Both preserve TRAIN envelopes.
         write_tensor(path, statistics)
-        report.update(statistics_sha256=sha(path), statistics_locked_before_dev_read=True,
+        report.update(statistics_sha256=sha(path), statistics_locked_before_dev_read=development is None,
             dataset_audit_sha256=sha(audit_path), export_result_sha256=sha(source/'RESULT.json'),
-            feature_normalization_unchanged=True, bounds_fitted_on_train_only=True,
+            feature_normalization_unchanged=True, joint_envelopes_fitted_on_train_only=True,
+            global_margin=margin, global_margin_selected_on_dev=development is not None,
             radius_per_joint=radius[0].tolist(), coverage={})
-        for partition, data in [('TRAIN', training), ('DEV', read('dev.pt.gz')['trials'])]:
+        if development is None:
+            development = read('dev.pt.gz')['trials']
+        for partition, data in [('TRAIN', training), ('DEV', development)]:
             values = torch.from_numpy(np.concatenate([row['issued']-row['bases'] for row in data]))
             scaled = values/torch.from_numpy(radius)
             outside = int((scaled.abs() >= 1).sum())
