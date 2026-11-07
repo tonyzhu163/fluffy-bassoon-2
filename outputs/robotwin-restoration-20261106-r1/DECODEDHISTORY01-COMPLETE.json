@@ -1,0 +1,58 @@
+{
+  "status": "exported_and_independently_verified_physical_trials",
+  "producer_source_commit": "4a45f88526ffb1b3af88d93a752c7b18472e3c7f",
+  "producer_pid": 3560664,
+  "producer_confirmed_gone": true,
+  "export_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/decodedhistory01/RESULT.json",
+  "export_result_sha256": "c06815a5ed15b2a4658233b828511aeaf4bc2e10026ced7f377518686bc291e3",
+  "export_result_sha256_asserted_on_linux": true,
+  "independent_audit_source": "6a15077e7cbb84d44419af6a643eb059b9b63c21",
+  "independent_audit_pid": 3562853,
+  "independent_audit_confirmed_gone": true,
+  "independent_audit_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/decodedhistory01-readback01/RESULT.json",
+  "independent_audit_sha256": "26281185165fc0c0e2f988f8b3477c9a21b52c8ffdcff7cda6b5eb72d26b934a",
+  "independent_audit_hash_assertion_pending": true,
+  "complete_trials": 32,
+  "complete_episodes": 1024,
+  "physical_decisions": 5958,
+  "post_terminal_noops_excluded": 186,
+  "partitions": {
+    "TRAIN": {
+      "trials": 24,
+      "episodes": 768,
+      "physical_decisions": 4455
+    },
+    "DEV": {
+      "trials": 4,
+      "episodes": 128,
+      "physical_decisions": 744
+    },
+    "TEST": {
+      "trials": 4,
+      "episodes": 128,
+      "physical_decisions": 759
+    }
+  },
+  "original_per_step_radius_violations": {
+    "TRAIN": 0,
+    "DEV": 58,
+    "TEST": 45
+  },
+  "public_features_bases_and_full_labels_match_reconstruction": true,
+  "episode_order_and_returns_match_preflight": true,
+  "feature_statistics_match_float64_train_reference": true,
+  "original_radii_match_independent_torch_reference": true,
+  "fitting_radius_qualification_pending": true,
+  "available_teacher_policy_versions": [
+    0
+  ],
+  "complete_ad_learning_histories": false,
+  "dpt_query_labels": false,
+  "source_corpus_admitted": false,
+  "student_fit_or_deployment_qualified": false,
+  "gpu_seconds": 0,
+  "model_calls": 0,
+  "optimizer_updates": 0,
+  "simulator_actions": 0,
+  "next_action": "Qualify separately locked horizon-shared per-joint TRAIN-only radii on TRAIN/DEV without loading TEST; original dataset/statistics stay immutable."
+}

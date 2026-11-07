@@ -745,3 +745,15 @@ changing radii or clipping labels. These statistics and an exported corpus do
 not by themselves admit a fit: inspect actual reward variation, full physical
 coverage and fixed-bound feasibility first. Complete trainer recovery and
 frozen online control remain separate qualifications.
+
+The initial exported H,A-specific radius candidate excludes58 DEV coordinates
+(the immutable export also reports45 TEST coordinates). Before any student
+fit, qualify a separate horizon-shared joint profile: take the maximum absolute
+TRAIN residual over both rows and the32 chunk positions for each joint, scale
+by the same fixed1.1 and floor at0.001, then broadcast acrossH32. Physical joint
+units have a shared range across chunk positions. Preserve the original export,
+labels and statistics. `qualify_decoded_fit_bounds.py` writes this TRAIN-only
+candidate before reading DEV, checks inverse-tanh/Jacobian finiteness on
+TRAIN/DEV, and never loads TEST tensors or adjusts its rule from coverage.
+Failure leaves fitting unqualified; no label clipping or implicit fallback.
+All compared student objectives must use the same locked fitting profile.
