@@ -7,6 +7,7 @@ import gzip
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import time
 
@@ -31,11 +32,16 @@ def read_record(path):
 
 def main():
     assert os.uname().sysname == 'Linux' and os.environ['CUDA_VISIBLE_DEVICES'] == ''
-    assert not torch.cuda.is_initialized() and available_memory() >= 24*2**30
+    available = available_memory()
+    print(json.dumps(dict(cpu_memory_admission_available_bytes=available,
+        cuda_initialized=torch.cuda.is_initialized())), flush=True)
+    assert not torch.cuda.is_initialized() and available >= 24*2**30
     code = ROOT.parents[1]
     assert subprocess.check_output(['git', '-C', str(code), 'rev-parse', 'HEAD'], text=True).strip() == os.environ['TASK_SOURCE']
     assert not subprocess.check_output(['git', '-C', str(code), 'status', '--porcelain', '--untracked-files=no'])
-    output = BASE/'cpureconstruction01'
+    run_id = os.environ.get('TASK_CPU_RECON_ID', 'cpureconstruction01')
+    assert re.fullmatch(r'cpureconstruction[0-9]{2}', run_id)
+    output = BASE/run_id
     output.mkdir()
     report = dict(status='checking', source_commit=os.environ['TASK_SOURCE'], gpu_seconds=0,
         native_motus_or_simulator_constructed=False, source_corpus_admitted=False,
@@ -49,8 +55,10 @@ def main():
         assert audited['status'] == 'learner_replay_inputs_complete'
         binding = audited['ranks'][0]
         canonical_path = Path(binding['path'])
+        print('READ_CANONICAL_BEGIN', canonical_path, flush=True)
         assert canonical_path.stat().st_size == binding['bytes'] and sha(canonical_path) == binding['sha256']
         canonical = read_tensor(canonical_path)
+        print('READ_CANONICAL_COMPLETE', flush=True)
         assert canonical['rank'] == canonical['producing_policy_iteration'] == 0
         assert canonical['collection_iteration'] == 1 and canonical['optimizer_steps_before'] == 0
         assert canonical['dropped_fields'] == []
@@ -100,6 +108,8 @@ def main():
             assert tuple(chains.shape) == (64, 6, 32, 32) and chains.dtype == torch.float32
             assert torch.equal(chains, batch['forward_inputs']['chains'][index, :64])
             assert torch.equal(fields['denoise_inds'], batch['forward_inputs']['denoise_inds'][index, :64])
+            assert torch.equal(fields['action'].reshape(64, 32, 14), actions)
+            assert torch.equal(fields['model_action'].reshape(64, 32, 32), chains[:, -1])
             assert not sampling['evaluation_data'] and sampling['producing_policy_iteration'] == 0
             physics = collated_chunk_executions(trace['outputs'][4][-1], num_envs=64, requested_targets=32)
             info = trace['outputs'][4][-1]
