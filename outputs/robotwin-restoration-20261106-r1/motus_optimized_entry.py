@@ -25,7 +25,7 @@ def require_reserve(worker):
     path = root/'resources.json'
     report = json.loads(path.read_bytes())
     fresh = 0 <= time.time()-report['at_unix'] <= 30
-    passed = (fresh and len(report['gpus']) == 4 and report['samples'] > 0
+    passed = (fresh and len(report['gpus']) == int(worker.cfg.native_pilot.world_size) and report['samples'] > 0
               and report['sampled_reserve_passed']
               and report['host_peak_bytes'] < .9*report['host_limit_bytes'])
     if not passed:
@@ -77,9 +77,21 @@ def main(cfg):
         runner.init_workers()
         runner.run()
     finally:
+        primary_failure = __import__('sys').exc_info()[0] is not None
+        cleanup_errors = []
         for group in groups:
-            group._close()
-        ray.shutdown()
+            try:
+                if ray.is_initialized(): group._close()
+            except Exception as error:
+                cleanup_errors.append(dict(error_type=type(error).__name__,error=str(error)))
+        try:
+            ray.shutdown()
+        finally:
+            if cleanup_errors:
+                write(Path(os.environ['TASK_OUT'])/'cleanup-errors.json',
+                    dict(primary_failure_preserved=primary_failure,errors=cleanup_errors))
+        if cleanup_errors and not primary_failure:
+            raise RuntimeError('Worker cleanup failed; see cleanup-errors.json')
 
 
 if __name__ == '__main__':

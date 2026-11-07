@@ -44,6 +44,8 @@ def validate(cfg):
     from fluffy_bassoon.rl.robotwin_noise import MOTUS_REVISION
     method = cfg.native_pilot.comparison_algorithm
     assert method in ('ppo', 'grpo')
+    world = int(cfg.native_pilot.world_size)
+    assert world in (4, 8)
     setup = {key: cfg.native_pilot.get(key, False) for key in
              ('defer_scene_setup', 'recycle_scene_executor')}
     assert all(type(value) is bool for value in setup.values()), setup
@@ -59,7 +61,7 @@ def validate(cfg):
         'actor.model.openpi_data.adapt_to_pi': True,
         'actor.model.openpi_data.extra_delta_transform': True,
         'actor.model.openpi.torch_compile': False,
-        'native_pilot.world_size': 4, 'native_pilot.initializer_revision': MOTUS_REVISION,
+        'native_pilot.world_size': world, 'native_pilot.initializer_revision': MOTUS_REVISION,
         'native_pilot.maximum_actions': 500000, 'native_pilot.bounded_io': True,
         'native_pilot.sampling_record': 'full', 'native_pilot.canonical_compression': 'gzip',
         'env.eval.total_num_envs': 16,
@@ -110,7 +112,8 @@ def validate(cfg):
             OmegaConf.update(common, f'env.{mode}.{field}', 400)
     validate_recipe(common)
     return dict(protocol='motus_native_h32', algorithm=method, source_task='place_phone_stand',
-        global_batch=2048, micro_batch=256, world=4, accumulation=2, update_epochs=5,
+        global_batch=2048, micro_batch=256, world=world, accumulation=2048//(256*world), update_epochs=5,
+        native_train_batch=256//world, native_dev_batch=16//world,
         rounds_per_iteration=4, decisions_per_episode=6, decisions_per_iteration=6144,
         adam_updates_per_iteration=15, intended_iterations=2,
         admitted_stop_after_iteration=int(cfg.native_pilot.stop_after_iteration),
@@ -142,7 +145,7 @@ if __name__ == '__main__':
                 class Placement:
                     def get_world_size(self,role):
                         assert role in ('actor','rollout','env')
-                        return 4
+                        return int(cfg.native_pilot.world_size)
                 with patch.object(native,'Cluster',lambda *args,**kwargs: None), \
                         patch.object(native,'HybridComponentPlacement',lambda *args,**kwargs: Placement()):
                     cfg = native.validate_cfg(cfg)

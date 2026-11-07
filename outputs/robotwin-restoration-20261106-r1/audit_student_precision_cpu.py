@@ -24,6 +24,8 @@ def read(path):
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--preflight',action='store_true')
+    parser.add_argument('--partial',action='store_true')
+    parser.add_argument('--contract',default='STUDENTPRECISIONGPU03-CONTRACT.json')
     parser.add_argument('--out',required=True)
     args=parser.parse_args()
     assert sys.platform=='linux' and os.environ['CUDA_VISIBLE_DEVICES']==''
@@ -34,11 +36,18 @@ def main():
     write(out/'RESULT.json',report)
     try:
         physical_root=BASE/'studentonline01-signals'
-        plan=json.loads((ROOT/'STUDENTPRECISIONGPU02-CONTRACT.json').read_bytes())
+        plan=json.loads((ROOT/args.contract).read_bytes())
         assert sha(physical_root/'RESULT.json')==plan['physical_result_sha256']
         for name,digest in plan['source_files'].items():assert sha(ROOT.parents[1]/name)==digest
         assert sha(ROOT/'qualify_student_precision_gpu.py')==plan['entry_sha256']
-        assert sha(ROOT/'qualify_student_precision_gpu02.sh')==plan['launcher_sha256']
+        launcher=ROOT/plan['launcher_file']
+        assert sha(launcher)==plan['launcher_sha256']
+        # Exercise the actual launcher's source-hash assertions on Linux, using
+        # its literal filenames. No GPU declaration is synthesized here.
+        admission=launcher.read_text().split("<<'PY'\n",1)[1].split('\nPY',1)[0]
+        source_checks='\n'.join(line for line in admission.splitlines() if
+            line.startswith('for name,h in ') or line.startswith('assert sha('))
+        exec(compile(source_checks,str(launcher)+':source-hashes','exec'),dict(r=ROOT,p=plan,sha=sha))
         physical=json.loads((physical_root/'RESULT.json').read_bytes())
         student=json.loads((ROOT/'STUDENTONLINE01-CONTRACT.json').read_bytes())
         loaded=policies(student)
@@ -47,7 +56,9 @@ def main():
             targets=[('ic_iql',None)]
         else:
             targets=[]
-            for producer in ('studentprecisiongpu01-signals','studentprecisiongpu02-signals'):
+            producers=['studentprecisiongpu01-signals']
+            if not args.partial:producers.append(plan['output_name'])
+            for producer in producers:
                 source=BASE/producer
                 if not (source/'RESULT.json').exists():continue
                 result=json.loads((source/'RESULT.json').read_bytes())
@@ -57,7 +68,8 @@ def main():
                     assert sha(source/row['fixture'])==row['fixture_sha256']
                     targets.append((arm,(source,row)))
             assert len({arm for arm,_ in targets})==len(targets)
-            assert set(arm for arm,_ in targets)==set(student['arms'])
+            expected=set(student['arms'])-{'ic_iql'} if args.partial else set(student['arms'])
+            assert set(arm for arm,_ in targets)==expected
         with torch.no_grad():
             for arm,producer in targets:
                 method='static_behavior_cloning' if arm=='frozen_base' else arm
@@ -110,7 +122,8 @@ def main():
                 report['arms'][arm]=row;write(out/'RESULT.json',report)
         assert not torch.cuda.is_initialized()
         report.update(status='passed',preflight_only=args.preflight,
-            all_four_gpu_precision_qualified=not args.preflight,fresh_robot_episodes_still_required=True)
+            all_four_gpu_precision_qualified=not (args.preflight or args.partial),
+            partial_only=args.partial,fresh_robot_episodes_still_required=True)
     except BaseException as error:
         report.update(status='failed',error_type=type(error).__name__,error=str(error));raise
     finally:

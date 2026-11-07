@@ -13,7 +13,7 @@ def worker_setup(worker, role):
     import torch
     from fluffy_bassoon.baige_gpu import mapping, cuda_pci, pci
     count = torch.cuda.device_count()
-    assert count in (1, 4)
+    assert count in (1, 4, 8)
     torch.cuda.set_device(0 if count == 1 else worker._rank)
     actual = cuda_pci(torch.cuda.current_device())
     rows = [row for row in mapping() if pci(row['pci_bus_id']) == actual]

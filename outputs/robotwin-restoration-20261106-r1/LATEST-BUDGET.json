@@ -1,8 +1,8 @@
 {
-  "status": "ppo_running_iql_only_precision_prepared",
-  "closed_conservative_gpu_seconds": 179814,
+  "status": "eight_rank_ppo_and_iql_completion_prepared",
+  "closed_conservative_gpu_seconds": 184227,
   "cap_gpu_seconds": 219600,
-  "closed_conservative_gpu_hours": 49.94833333333333,
+  "closed_conservative_gpu_hours": 51.174166666666665,
   "components": [
     {
       "through_controller_diagnostic": 140019
@@ -84,10 +84,22 @@
     },
     {
       "studentprecisiongpu01_creation_to_release_gpu_seconds": 203
+    },
+    {
+      "studentprecisiongpu01_queue_cleanup_conservative_adjustment": 27
+    },
+    {
+      "studentprecisiongpu02_creation_to_release_gpu_seconds": 44
+    },
+    {
+      "studentonline01_queue_end_conservative_adjustment": 2
+    },
+    {
+      "motusoptimized01_creation_to_release_gpu_seconds": 4340
     }
   ],
   "next_motor_qualification_reserved_gpu_seconds": 0,
-  "next_worst_gpu_seconds": 219594,
+  "next_worst_gpu_seconds": 216407,
   "maximum_new_output_gib": 0.5,
   "other_and_floor_gib": 286,
   "required_free_gib": null,
@@ -106,31 +118,29 @@
   "active_actor_profile_reserved_gpu_seconds": 0,
   "planned_actor_restore_reserved_gpu_seconds": 0,
   "active_actor_restore_reserved_gpu_seconds": 0,
-  "remaining_gpu_seconds": 39786,
+  "remaining_gpu_seconds": 35373,
   "planned_learner_recovery_reserved_gpu_seconds": 0,
   "active_learner_recovery_reserved_gpu_seconds": 0,
   "planned_native_dev_reserved_gpu_seconds": 0,
   "active_native_dev_reserved_gpu_seconds": 0,
-  "remaining_unreserved_gpu_seconds": 6,
+  "remaining_unreserved_gpu_seconds": 3193,
   "planned_scene_setup_reserved_gpu_seconds": 0,
   "active_scene_setup_reserved_gpu_seconds": 0,
   "planned_lifecycle_reserved_gpu_seconds": 0,
   "active_lifecycle_reserved_gpu_seconds": 0,
   "planned_frozen_reconstruction_reserved_gpu_seconds": 0,
   "active_frozen_reconstruction_reserved_gpu_seconds": 0,
-  "active_job_id": "job-ogc0xheqiqvs",
+  "active_job_id": null,
   "cpu_reconstruction_input_cap_gib": 16,
   "gpu_reconstruction_output_cap_mib": 128,
   "physical_export_output_cap_mib": 128,
   "planned_student_online_reserved_gpu_seconds": 0,
   "active_student_online_reserved_gpu_seconds": 0,
   "student_online_contract": "STUDENTONLINE01-CONTRACT.json",
-  "planned_optimized_ppo_reserved_gpu_seconds": 0,
-  "active_optimized_ppo_reserved_gpu_seconds": 39600,
+  "planned_optimized_ppo_reserved_gpu_seconds": 32000,
+  "active_optimized_ppo_reserved_gpu_seconds": 0,
   "approval": "User approved61GPU-hours total in call_724084a3b2ff4bbf8c078ed55e12a1df reply,7November2026",
   "planned_student_precision_gpu_seconds": 180,
   "active_student_precision_gpu_seconds": 0,
-  "active_jobs": [
-    "job-ogc0xheqiqvs"
-  ]
+  "active_jobs": []
 }

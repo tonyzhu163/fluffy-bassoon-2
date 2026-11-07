@@ -1,0 +1,52 @@
+{
+  "status": "prepared",
+  "purpose": "Complete IQL-only precision replay after the previous unchanged numerical checks passed three arms and hit its deadline. In-process input caching avoids repeated BOS reads; math and tolerances unchanged.",
+  "gpus": 1,
+  "cpu_cores": 16,
+  "host_memory_gib": 128,
+  "shared_memory_gib": 16,
+  "worker_seconds": 120,
+  "scheduler_minutes": 2,
+  "creation_to_release_watchdog_seconds": 180,
+  "reserved_gpu_seconds": 180,
+  "closed_gpu_seconds": 184227,
+  "ppo_reserved_gpu_seconds": 32000,
+  "all_worst_gpu_seconds": 216407,
+  "hard_cap_gpu_seconds": 219600,
+  "automatic_fault_retries": false,
+  "new_robot_episodes": 0,
+  "optimizer_updates": 0,
+  "test_data_allowed": false,
+  "maximum_output_gib": 2,
+  "physical_result_sha256": "a16144363eea6326079043e1616985a49f844366d973de9982435a449e0991d9",
+  "source_files": {
+    "src/fluffy_bassoon/meta_rl/chunk_controller.py": "900bf8c9334388227b5760b37f65a675df5477fb5e48e025f329152581a85eb2",
+    "src/fluffy_bassoon/meta_rl/chunk_policy.py": "9e01b2a89c30911927072e579f3855c0e2b44f32d624c33b23be94749db14c61",
+    "src/fluffy_bassoon/meta_rl/chunk_training.py": "73151a0499a3ba90fb177947d40a94424c17c0b3872665e9535f7207197e0e50",
+    "src/fluffy_bassoon/meta_rl/chunk_history.py": "80b307ca9816f3d156deb2fbc1a0a8a13debd5773343db2ea329351de02be26b",
+    "src/fluffy_bassoon/meta_rl/causal_decoder.py": "379ab97d7a240c0ef4aad49038ed3e6f9df4cb036da124b8cc567f65a6d9e303",
+    "outputs/robotwin-restoration-20261106-r1/evaluate_decoded_students.py": "9a2ffafc44767b78bca3704cf840af53872535d4a0ac51d55405fed3b5f390ca",
+    "outputs/robotwin-restoration-20261106-r1/fit_decoded_student.py": "637527a5a62f194c45783f9aba4552c9676e42b9cf4739e217d920fae0038b31"
+  },
+  "entry_sha256": "b98c68172a2e424714a7c7cabbac9a874c77ebe8a0fca1f511639473e931e0cd",
+  "launcher_sha256": "ac533a1dfaa889273180320bd05ff688146a3c1882527142aa36fe1b197d6817",
+  "tolerances": {
+    "high_replay_command_absolute": 1e-05,
+    "high_replay_state_absolute": 1e-05,
+    "high_replay_state_relative": 1e-05,
+    "fixed_cpu_command_absolute": 1e-05,
+    "fixed_cpu_command_over_radius": 0.001,
+    "fixed_cpu_state_absolute": 0.0001,
+    "fixed_cpu_state_relative": 0.0001
+  },
+  "gpu_production_controller_first_query_required": true,
+  "fresh_robot_episodes_with_fixed_precision_qualified": false,
+  "cpu_preflight_passed": false,
+  "arms": [
+    "ic_iql"
+  ],
+  "prior_partial_result_sha256": "00dc212d6d7d4177b7f1b84395640eceb74a3173a4138da9cf685ae1247309a6",
+  "launcher_file": "qualify_student_precision_gpu03.sh",
+  "output_name": "studentprecisiongpu03-signals",
+  "admission_note": "Previous optimized PPO released. IQL-only replay plus planned8GPU/4000s PPO stay under approved61GPU-hours; admit only after cold Linux preflight."
+}

@@ -19,9 +19,16 @@ class CaseSchedule:
         assert self.data['environment_group_size']==8 and len(self.data['groups'])==256
         assert len({row['scene_seed'] for row in self.data['groups']})==256
 
-    def rows(self,ordinal,rank):
-        assert 0<=ordinal<8 and 0<=rank<4
+    def rows(self,ordinal,rank,world=4):
+        assert world in (4,8) and 0<=ordinal<8 and 0<=rank<world
         iteration,round_index=divmod(ordinal,4)
+        if world==8:
+            canonical=sorted((r for r in self.data['groups'] if r['policy_iteration']==iteration
+                and r['round_index']==round_index),key=lambda r:(r['rank'],r['local_group']))
+            assert len(canonical)==32
+            return [dict(r,manifest_rank=r['rank'],manifest_local_group=r['local_group'],
+                rank=rank,local_group=i,execution_world_size=world)
+                for i,r in enumerate(canonical[rank*4:(rank+1)*4])]
         rows=sorted((r for r in self.data['groups'] if r['policy_iteration']==iteration
             and r['round_index']==round_index and r['rank']==rank),key=lambda r:r['local_group'])
         assert len(rows)==8 and [r['local_group'] for r in rows]==list(range(8))
@@ -44,9 +51,10 @@ def install(owner,physical,schedule,root):
         # reset or autoreset may silently change the shared case chronology.
         assert env_idx is None and not env.auto_reset
         ordinal=owner._paired_reset_ordinal
-        rows=schedule.rows(ordinal,owner._rank)
+        world=int(owner.cfg.native_pilot.world_size)
+        rows=schedule.rows(ordinal,owner._rank,world)
         seeds=[row['scene_seed'] for row in rows for _ in range(8)]
-        assert len(seeds)==env.num_envs==64
+        assert len(seeds)==env.num_envs==256//world
         env.reset_state_ids=torch.tensor(seeds,dtype=torch.long,device=env.reset_state_ids.device)
         result=original(env_idx=None,env_seeds=seeds);obs=result[0]
         receipt=[];raw=[]

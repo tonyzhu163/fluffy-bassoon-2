@@ -96,7 +96,8 @@ class MotusActor(runtime.PilotActor):
             f'iteration-{runtime.producing_iteration(self)+1:04d}-rank-{self._rank:02d}.json',
             dict(seconds=time.monotonic()-started,peak_allocated_bytes=torch.cuda.max_memory_allocated(self.device),
                 peak_reserved_bytes=torch.cuda.max_memory_reserved(self.device),free_bytes_at_end=free,
-                total_bytes=total,micro_batch=256,accumulation=2,global_batch=2048,
+                total_bytes=total,micro_batch=256,
+                accumulation=2048//(256*int(self.cfg.native_pilot.world_size)),global_batch=2048,
                 includes_recompute_and_five_native_epochs=True))
         return result
 
@@ -220,8 +221,9 @@ class MotusEnvironment(runtime.PilotEnvironment):
         self._install_bindings(evaluation,root)
         install_cases(self,train,self._motus_schedule,root)
         dev = json.loads(Path(self.cfg.native_pilot.dev_manifest_path).read_bytes())['seeds']
-        seeds = dev[self._rank*4:(self._rank+1)*4]
-        assert len(seeds) == evaluation.num_envs == 4
+        per_rank = 16//int(self.cfg.native_pilot.world_size)
+        seeds = dev[self._rank*per_rank:(self._rank+1)*per_rank]
+        assert len(seeds) == evaluation.num_envs == per_rank
         original = evaluation.reset
         def reset(env,env_idx=None,env_seeds=None):
             indices = list(range(env.num_envs)) if env_idx is None else list(env_idx)
