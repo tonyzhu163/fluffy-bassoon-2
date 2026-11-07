@@ -1214,3 +1214,23 @@ evidence of success improvement. It does not establish the cause of the earlier
 B256 continuation's optimizer assertion.
 [Actual update and cold readback](../outputs/robotwin-restoration-20261106-r1/MOTUSBEHAVIORUPDATE01-COMPLETE.json).
 
+### Corrected Motus source learner execution
+
+Fresh PPO group1 and GRPO group8 controls each completed two1024-episode
+collections and30 native Adam updates per actor at micro32/accumulation8/world8.
+Both enforce exact original behavior likelihoods before every collection's
+update, preserving global2048 and five epochs. Independent Linux CPU readback
+verified every file in checkpoints0/1/2, all24 boundary optimizer layouts under
+the unchanged strict named-Adam rule, all64 scene-reset receipts, and both full
+post-routing actor batches against a separate NumPy advantage reference on all
+eight actors. Frozen VLM hashes remained unchanged; trainable shards changed.
+PPO used1000 unique TRAIN scenes per collection; GRPO used128 same-scene groups8,
+with73 then67 groups tied in raw reward. The training-loop16-case panels were
+PPO2→4→5 successes and GRPO2→4→3. These are exploratory progress panels; they
+establish neither source effectiveness nor convergence. A larger paired source
+readout and disjoint confirmation remain required. This verifies repeated
+collector/update execution after the B256 likelihood defect, without attributing
+all earlier missing gain to that defect.
+[PPO cold and numerical audit](../outputs/robotwin-restoration-20261106-r1/MOTUSBEHAVIORPPO01-CLOSEOUT.json),
+[GRPO cold and numerical audit](../outputs/robotwin-restoration-20261106-r1/MOTUSBEHAVIORGRPO01-CLOSEOUT.json),
+[shared train/eval engineering](../outputs/robotwin-restoration-20261106-r1/ENGINEERING-PARITY.md).

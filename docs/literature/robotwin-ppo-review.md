@@ -12,10 +12,11 @@ not established a learning gain. These statements are compatible: our runs use
 different joint initializers, a different task, and much shorter training.
 The earlier B256 actor lineage is unsuitable as an on-policy control: an
 actual unchanged-policy audit found batch-dependent likelihood drift. Corrected
-fresh B32/accumulation8 PPOgroup1 and GRPOgroup8 controls are running. At the
-latest checked boundary, each completed its first fresh collection and15 Adam
-updates per rank, with the small progress panel2/16→4/16. Their second cycles
-and independent larger readout remain pending. None of these small panels
+fresh B32/accumulation8 PPOgroup1 and GRPOgroup8 controls each completed two
+fresh collections and30 Adam updates per rank. Independent cold checkpoint and
+whole-batch advantage readbacks passed for both. Their small progress panels
+were PPO2/16→4/16→5/16 and GRPO2/16→4/16→3/16; the larger paired readout
+and disjoint confirmation remain pending. None of these small panels
 establishes improvement or demonstrates that the released recipe fails.
 
 Three separate questions need separate evidence:
@@ -23,7 +24,7 @@ Three separate questions need separate evidence:
 | Question | Current answer |
 | --- | --- |
 | Can our learner update real rollout data and restore exactly? | Yes: the B32 actual-data update qualification passed15 new Adam steps/rank and independent cold checkpoint/owned-Adam readback on all8 actors. |
-| Can the complete optimized collector/learner cycle run repeatedly at scale? | Corrected PPO and GRPO each passed one fresh combined cycle; repeated complete cycles remain unverified. |
+| Can the complete optimized collector/learner cycle run repeatedly at scale? | Corrected PPO and GRPO each passed two fresh combined cycles; all three cold boundaries and both full actor batches independently verified. |
 | Does sustained PPO improve the selected joint motor on our source tasks? | Unresolved; the available endpoint panels show no gain. |
 
 ## Direct and adjacent literature
@@ -62,7 +63,7 @@ Matching this file does not establish that all imported dependencies match.
 | Global optimization minibatch/epochs | 2048/5 | 2048/5 | 2048/5 |
 | Per-device execution microbatch | 32 | 256; accumulation2 on four devices,1 on eight devices | 32; accumulation8 on eight devices; exact original behavior check each collection |
 | Evaluation panel | 128 environments | 16 precommitted source DEV cases | 16 loop diagnostics;64 DEV plus disjoint64 confirmation prepared |
-| Sustained training | Config permits repeated outer epochs | Earlier retained-batch recovery; later one fresh8-rank cycle, second collection interrupted | Two fresh collections preselected; final boundaries pending |
+| Sustained training | Config permits repeated outer epochs | Earlier retained-batch recovery; later one fresh8-rank cycle, second collection interrupted | Two fresh collections complete; final cold boundaries independently verified |
 
 The shared actor/value learning rates remain 5e-6/1e-4; gamma .99,
 lambda .95, clip .2, five Flow-SDE steps and noise .3 are retained. The official

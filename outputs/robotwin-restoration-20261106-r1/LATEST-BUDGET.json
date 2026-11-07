@@ -1,5 +1,5 @@
 {
-  "status": "both_training_runs_independently_verified_eval_probe_fix_being_qualified",
+  "status": "paired_source_PPO_and_GRPO_DEV_readouts_running",
   "closed_conservative_gpu_seconds": 307078,
   "cap_gpu_seconds": 360000,
   "closed_conservative_gpu_hours": 85.29944444444445,
@@ -166,7 +166,7 @@
   "active_lifecycle_reserved_gpu_seconds": 0,
   "planned_frozen_reconstruction_reserved_gpu_seconds": 0,
   "active_frozen_reconstruction_reserved_gpu_seconds": 0,
-  "active_job_id": null,
+  "active_job_id": "job-r8g7o2hckok7",
   "cpu_reconstruction_input_cap_gib": 16,
   "gpu_reconstruction_output_cap_mib": 128,
   "physical_export_output_cap_mib": 128,
@@ -178,7 +178,24 @@
   "approval": "User replied raise up to 100 hrs to cumulative-cap request call_9991d141f4c9474cb3b968465bf752a5 on8November2026; cumulative total, no historical reset.",
   "planned_student_precision_gpu_seconds": 0,
   "active_student_precision_gpu_seconds": 0,
-  "active_jobs": [],
+  "active_jobs": [
+    {
+      "job_id": "job-r8g7o2hckok7",
+      "name": "mwj_1108_robotwin_source_ppodev2",
+      "reserve_gpu_seconds": 9600,
+      "source_commit": "93ee99f77febe7171d9f48887d369c20896c486a",
+      "created_detail": "2026-11-08T05:55:11+08:00",
+      "creation_to_release_watchdog_seconds": 1200
+    },
+    {
+      "job_id": "job-4a135ssarsjs",
+      "name": "mwj_1108_robotwin_source_grpodev1",
+      "reserve_gpu_seconds": 9600,
+      "source_commit": "93ee99f77febe7171d9f48887d369c20896c486a",
+      "created_detail": "2026-11-08T05:59:50+08:00",
+      "creation_to_release_watchdog_seconds": 1200
+    }
+  ],
   "prior_approved_cap_gpu_seconds": 219600,
   "planned_camera_probe_reserved_gpu_seconds": 0,
   "active_camera_probe_reserved_gpu_seconds": 0,
@@ -194,6 +211,7 @@
   "active_behavior_ppo_reserved_gpu_seconds": 0,
   "planned_behavior_grpo_reserved_gpu_seconds": 0,
   "active_behavior_grpo_reserved_gpu_seconds": 0,
-  "planned_source_dev_reserved_gpu_seconds": 19200,
-  "planned_source_confirmation_reserved_gpu_seconds": 9600
+  "planned_source_dev_reserved_gpu_seconds": 0,
+  "planned_source_confirmation_reserved_gpu_seconds": 9600,
+  "active_source_dev_reserved_gpu_seconds": 19200
 }
