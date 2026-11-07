@@ -20,7 +20,7 @@ def main():
     assert os.uname().nodename.startswith('job-') and torch.cuda.device_count()==1
     torch.cuda.set_device(0)
     out=Path(os.environ['TASK_OUT']);source=BASE/'studentonline01-signals'
-    plan=json.loads((ROOT/'STUDENTPRECISIONGPU01-CONTRACT.json').read_bytes())
+    plan=json.loads((ROOT/os.environ.get('TASK_PRECISION_CONTRACT','STUDENTPRECISIONGPU01-CONTRACT.json')).read_bytes())
     student=json.loads((ROOT/'STUDENTONLINE01-CONTRACT.json').read_bytes())
     assert sha(source/'RESULT.json')==plan['physical_result_sha256']
     physical=json.loads((source/'RESULT.json').read_bytes())
@@ -30,11 +30,14 @@ def main():
         optimizer_updates=0,new_robot_episodes=0,test_tensor_loaded=False,arms={},input_sha256={})
     write(out/'RESULT.json',report)
 
+    cache={}
     def read(name):
+        if name in cache:return cache[name]
         path=source/name
         assert path.resolve().parent==source.resolve()
         report['input_sha256'][name]=sha(path)
-        with gzip.open(path,'rb') as stream:return torch.load(stream,map_location='cpu',weights_only=False)
+        with gzip.open(path,'rb') as stream:cache[name]=torch.load(stream,map_location='cpu',weights_only=False)
+        return cache[name]
 
     def replay(policy,arm,device,precision):
         policy=copy.deepcopy(policy).to(device).eval().requires_grad_(False)
@@ -89,7 +92,9 @@ def main():
 
     try:
         with Memory(torch) as memory:
-            for arm in student['arms']:
+            selected=plan.get('arms',student['arms'])
+            assert selected and len(set(selected))==len(selected) and set(selected)<=set(student['arms'])
+            for arm in selected:
                 method='static_behavior_cloning' if arm=='frozen_base' else arm
                 policy=copy.deepcopy(loaded[method]) if arm=='frozen_base' else loaded[method]
                 if arm=='frozen_base':
