@@ -1,10 +1,10 @@
 {
-  "status": "prepared_pending_Linux_CPU_preflight",
+  "status": "admitted",
   "purpose": "Measure native joint likelihood drift between actual B32 rollout and unchanged checkpoint0 actor references at B256 and B32; zeroSGD/no simulator.",
-  "closed_conservative_gpu_seconds": 216414,
-  "other_active_reserved_gpu_seconds": 21600,
+  "closed_conservative_gpu_seconds": 233102,
+  "other_active_reserved_gpu_seconds": 0,
   "reserved_gpu_seconds": 7680,
-  "all_worst_gpu_seconds": 245694,
+  "all_worst_gpu_seconds": 240782,
   "approved_cap_gpu_seconds": 360000,
   "gpus": 8,
   "cpu_cores": 64,
@@ -39,12 +39,15 @@
     "src/fluffy_bassoon/meta_rl/tensor_archive.py": "f6d40b1a6ef8ddeb7c206ac8e3ed690e8c1f1b5109c074d4eb8ae2ace347f497"
   },
   "checkpoint0": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motusoptimized03/checkpoints/global_step_0",
-  "checkpoint0_manifest_sha256": null,
+  "checkpoint0_manifest_sha256": "0d3e14cb7f2d048167a08d973d11d7e93c8092ad06c75c4e97f26f7144cd9a8c",
   "entry_sha256": "991a9cdc12cd42e5e87e7155c36b7e69767e466fe011dcdd76d058b98b109b38",
   "launcher_sha256": "b92b4ff4034a913139e1e7318368325721b685a2f19c58cb19d36d5892a4bb1c",
-  "cpu_preflight_passed": false,
+  "cpu_preflight_passed": true,
   "optimizer_updates": 0,
   "simulator_actions": 0,
   "root_cause_established": false,
-  "learning_gain_claim": false
+  "learning_gain_claim": false,
+  "cpu_preflight_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpumotusjointaudit01/RESULT.json",
+  "cpu_preflight_sha256": "aa87a085260c412bf7e2d608b42d1c00d6189194c2f0c92bc1a75630709102f4",
+  "cpu_preflight_source_commit": "d3cd4192f09df8ca14b85470d37d06118e3ca7dd"
 }

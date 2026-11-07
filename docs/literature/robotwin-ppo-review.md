@@ -132,8 +132,8 @@ loss masks. [Physical audit](../../outputs/robotwin-restoration-20261106-r1/CPUR
 | Group8 reduces scene diversity relative to group1 | Verified layout change | Keep the matched group8 arm; add a separately named group1 PPO reference when affordable. |
 | Exploration harms the initializer or fails to reach useful alternatives | Plausible, unisolated | Compare policy0 Flow-SDE and ODE on the same cases before changing noise. Different TRAIN/DEV scenes cannot isolate this gap. |
 | Critic quality or return/boundary semantics limit learning | Plausible, unisolated | Inspect explained variance, targets, values, advantage spread and episode boundaries; compare critic designs only after a stable control. |
-| SAPIEN camera clipping changes policy observations | Concrete difference from current upstream; causality unproved | Current guide sets near0.01m because0.1m clips wrist-view gripper fingers. Our isolated frozen camera/horizon probe completed32 episodes; full readback precedes interpretation. |
-| Numerical changes from larger batches contaminate likelihood ratios | Known hazard, partly controlled | Retain matched execution-partition probability replay and pre-SGD ratio checks; do not assume batching is transparent. |
+| SAPIEN camera clipping changes policy observations | Concrete difference from current upstream; no camera-only benefit on the small completed panel | Independent315-file readback passed: near0.1/H192:2/8; near0.01/H192:2/8; near0.1/H384:3/8; near0.01/H384:2/8. Preserve the active continuation's protocol; this exploratory panel does not establish equivalence. |
+| Numerical changes from larger batches contaminate likelihood ratios | Unresolved; existing diagnostic is insufficient | Measure the original rollout-versus-unchanged-actor joint ratio before further training. The native loss sums448 coordinates; coordinate MAE and a ratio against a recomputed reference do not qualify the original sampling probability. |
 
 Our native-batch adapter matches its native reference exactly, but native
 batched outputs differ from singleton outputs. The diagnosis did not isolate
@@ -141,6 +141,22 @@ BF16 as the cause. This matters when profiling maximum memory usage:
 execution partition and actual batch/row must remain explicit numerical
 conditions. [Batch evidence](../../outputs/robotwin-restoration-20261106-r1/BATCHMATH01-COMPLETE.json),
 [actor selection](../../outputs/robotwin-restoration-20261106-r1/ACTOR-SELECTION.json).
+
+The local replay hook replaces stored rollout log probabilities with an actor
+recomputation after shuffling. Its logged gap is mean absolute coordinate error.
+Pinned RLinf's chunk-level loss instead sums H32 times14 action coordinates.
+Consequently, the zero first-update ratio against the replacement reference
+does not establish a unit ratio against the actual behavior policy. A read-only
+checkpoint0 replay at actor batches32 and256 measures this before the matched
+Motus GRPO launch. The size and consequence of this difference remain unmeasured;
+it is not yet an established explanation for the lack of improvement.
+
+Training-loop DEV snapshots and restores the current rollout RNG. Fixed scenes
+therefore preserve the training stream but do not by themselves impose common
+initial action noise across checkpoints. Treat the latest3/16 to4/16 panels as
+descriptive. The earlier separately qualified MotusDEV01 comparison explicitly
+restored baseline sampling RNG; its pairing evidence remains valid. Future
+source qualification will explicitly share case/chunk noise across policies.
 
 piRL motivates the exploration and critic checks above: it separates
 stochastic training from ODE evaluation, and its LIBERO ablations show

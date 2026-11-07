@@ -5,8 +5,9 @@ learner, exact checkpoint recovery and a completed collect/update cycle are
 engineering evidence. They are not learning gains. The user requires an
 effective source control before further in-context student work; those later
 experiments now wait. The cumulative cap is100 GPU-hours, explicitly approved
-in the reply to call_9991d141f4c9474cb3b968465bf752a5. Closed use stays215849
-GPU-seconds;144151 remain, with no active allocation or cost reset.
+in the reply to call_9991d141f4c9474cb3b968465bf752a5. Closed use is233102 GPU-seconds=64.751h after the failed continuation;
+126898 remain. No GPU allocation is active; the likelihood audit is in CPU
+preflight. Historical costs are retained.
 
 Verified endpoints: earlier Sidney base/PPO/GRPO5/16,5/16,2/16; earlier recovered
 Motus base/updated4/16,2/16; latest fresh Motus base/updated3/16,4/16. No positive
@@ -16,7 +17,8 @@ Adam steps per rank, then timed out during collection2.
 The exact published experiment was not reproduced: task-specific adjust_bottle
 SFT became joint Motus on place_phone_stand; native50-target chunks became32;
 200-target wrapper became192; PPO groups changed1→8, reducing distinct reset
-scenes per1024-episode collection from1024 to128. Matched group8 is a valid
+scenes per1024-episode collection to128. The pinned phone training bank has
+1000 scenes; a group1 control must explicitly cycle24 repeats. Matched group8 is a valid
 separate comparison, not the unchanged released PPO recipe. Held-out task roles
 remain protected. The1000-epoch YAML ceiling is not evidence of the reported
 checkpoint's actual training duration.
@@ -88,3 +90,18 @@ complete cycle2. Then run the separately named group1 PPO control and matched
 native group8 GRPO under an explicit remaining-budget plan. Keep student work
 waiting. Camera565GPU-s closeout raises closed use to216414GPU-s=60.115h;
 resume reserves21600GPU-s, worst238014GPU-s=66.115h under100h.
+
+The unchanged continuation restored all24 workers, collected fresh policy1
+trajectories on all8 actors and completed actor updates. It then failed in
+our checkpoint-signature validator before checkpoint2 could be archived or DEV2
+run. canonical_layout line36 rejects the optimizer-state keys of a zero-length
+unowned FSDP parameter; the actual rejected keys must be measured before
+changing the rule. This is a concrete checkpoint engineering failure, not a
+PPO formula diagnosis. Checkpoint1 and the fresh policy1 collection remain
+preserved; complete checkpoint2 is absent. See MOTUSRESUME01-CLOSEOUT.json.
+
+The next read-only check compares unchanged checkpoint0 likelihoods against
+the original behavior-policy probabilities at B32 andB256. Native chunk-level
+reduction sums448 coordinates. Existing coordinate-MAE and zero-ratio checks
+against a replaced actor reference are insufficient. Hold the matched Motus
+GRPO launch until this is measured; no numerical root cause is yet established.

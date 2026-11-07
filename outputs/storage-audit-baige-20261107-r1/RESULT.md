@@ -1,5 +1,7 @@
 # Baige storage audit — November 7, 2026
 
+**AnyViewPhys execution follow-up (2026-11-08 02:34:40 Shanghai):** The entire project is now cold archived with full part readback, whole-archive SHA256 and complete restored-member verification. All 511,379 original entries were released, reclaiming **288.841 GiB**; PFS had **355.95 GiB free** at final reconciliation. Combined with the earlier two cleanups, verified allocation released totals **513.756 GiB**. The original AnyViewPhys path is a restore stub; all unrelated jobs were left running. [Final archive result and restore guide](../anyviewphys-cold-archive-20261108-r4/RESULT.md). The discovery figures and protected-AnyViewPhys statements below describe the earlier audit snapshot.
+
 **Execution follow-up (2026-11-07 14:53:57 Shanghai):** The approved 11-selection batch is complete, with **207.700 GiB reclaimed**, full cold readback/restoration verified and active/protected inputs retained. [Final results and restore mapping](../outputs-retention-20261107-r1/RESULT.md). Figures and no-mutation statements below describe the earlier discovery pass.
 
 **The shared 2 TiB PFS is 95.8% used: 1962.45 GiB used and 85.55 GiB free at 2026-11-07 13:29:23 Asia/Shanghai.** This is byte pressure: inodes are 56% used (5,521,054 / 10,000,384). No project payload was deleted, archived, deduplicated or moved by this audit; no GPU was allocated.

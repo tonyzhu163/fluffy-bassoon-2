@@ -13,23 +13,26 @@ retained. Only launch a concrete, qualified contract within the current ledger.
 2. Camera/horizon isolation: completed32 frozen episodes and315-file independent
    readback. Original near0.1/H192:2/8; near0.01/H192:2/8; near0.1/H384:3/8;
    near0.01/H384:2/8. Keep original protocol for the existing continuation.
-3. Complete exact8rank/group8 PPO boundary1→2. Job-soabfzel6r9z uses reviewed
-   6ba14255, preserves all optimizer/RNG/sampler states and old action charges.
-   Reserve6GPUh; creation-to-release watchdog02:40:35 Shanghai8November.
-   Require24 exact worker restores, fresh policy1 collection,30 Adam steps per
-   rank, checkpoint2 cold/local verification and native-reference checks.
-4. Run matched group8 native GRPO from the same SFT, scene manifest and action
-   budget. Two fresh collections, five epochs, global2048, micro256, native
-   B32/B2, H32/H192, noise.3, no critic or added reward. Preserve native masks
-   and reduction. Filter stays false to match the recorded paired port; this
-   is an explicit recipe choice. Reserve at most10.667GPUh including cleanup.
-5. Audit evaluation noise and likelihood bookkeeping. Training-loop DEV uses
+3. Repair and qualify the complete8rank/group8 PPO boundary1→2. The unchanged
+   job-soabfzel6r9z restored24workers, collected policy1 data and completed all8
+   actor updates, then failed in our empty-unowned optimizer-state signature
+   validation while capturing checkpoint2. No complete checkpoint2 or DEV2.
+   Closed16688GPU-s. Measure the rejected state representation, qualify a
+   strict checkpoint fix and retain checkpoint1/new collection before retrying.
+4. Audit evaluation noise and likelihood bookkeeping. Training-loop DEV uses
    fixed scenes and restores training RNG after evaluation; this alone does
    not guarantee identical initial action noise across policy checkpoints.
    Verify actual saved draws. Likewise, recomputation changes the stored old
    logprob reference to the actor execution partition; quantify the original
    rollout-versus-actor joint ratio, not just mean coordinate logprob gap.
    Do not alter active contracts while investigating these limitations.
+   Complete the read-only8GPU joint-likelihood diagnostic and independent
+   CPU fixture reduction before admitting GRPO. Reserve2.133GPUh, zeroSGD.
+5. Run matched group8 native GRPO from the same SFT, scene manifest and action
+   budget. Two fresh collections, five epochs, global2048, micro256, native
+   B32/B2, H32/H192, noise.3, no critic or added reward. Preserve native masks
+   and reduction. Filter stays false to match the recorded paired port; this
+   is an explicit recipe choice. Reserve at most10.667GPUh including cleanup.
 6. A separate group1 PPO control restores the released scene-diversity choice,
    preserving native Motus action transforms. The pinned phone training bank
    contains1000 scenes. With1024 episodes, explicitly cycle24 scenes rather
@@ -48,7 +51,8 @@ retained. Only launch a concrete, qualified contract within the current ledger.
    training seed qualifies only that source run; repeat a training seed before
    claiming stability across training seeds or task families.
 
-After the current resume and GRPO reservations, worst cumulative use is76.782h.
+After the closed resume, likelihood diagnostic and GRPO reservations, worst cumulative
+use is77.551h. These are reservations; reconcile actual closeouts before admission.
 Keep4GPUh for paired evaluation and readback/recovery. Up to16GPUh can fund
 the next qualified group1 PPO or targeted one-factor intervention; the ledger
 and actual measured costs decide its exact length. Do not spend the100h cap
