@@ -1,10 +1,13 @@
 """Read-only exact tree inventory and content/metadata qualification helpers."""
 from pathlib import Path
-import hashlib, json, os, stat, time
+import collections, concurrent.futures, hashlib, json, os, stat, threading, time
 
 
 def stamp(path):
-    s = path.lstat()
+    return stat_stamp(path.lstat())
+
+
+def stat_stamp(s):
     return [s.st_mode, s.st_size, s.st_mtime_ns, s.st_uid, s.st_gid,
             s.st_dev, s.st_ino, s.st_nlink, s.st_blocks * 512]
 
@@ -26,33 +29,55 @@ def save(path, obj):
 
 
 def scan(source, anchor, progress=None):
-    rows, stack = [], [source]; device = source.lstat().st_dev
-    while stack:
-        p = stack.pop(); s = stamp(p)
-        assert s[5] == device, ('Nested filesystem is not included', str(p))
-        assert stat.S_ISREG(s[0]) or stat.S_ISDIR(s[0]) or stat.S_ISLNK(s[0]), ('Unsupported file type', str(p))
-        row = dict(path=p.relative_to(anchor).as_posix(), stamp=s, ctime_ns=p.lstat().st_ctime_ns)
-        if stat.S_ISLNK(s[0]): row['target'] = os.readlink(p)
-        if stat.S_ISDIR(s[0]): stack.extend(p.iterdir())
-        rows.append(row)
-        if progress: progress(len(rows), 0)
+    initial=source.lstat();device=initial.st_dev
+    def row(p,s):
+        value=stat_stamp(s);assert s.st_dev==device,('Nested filesystem is not included',str(p))
+        assert stat.S_ISREG(s.st_mode) or stat.S_ISDIR(s.st_mode) or stat.S_ISLNK(s.st_mode),('Unsupported file type',str(p))
+        result=dict(path=p.relative_to(anchor).as_posix(),stamp=value,ctime_ns=s.st_ctime_ns)
+        if stat.S_ISLNK(s.st_mode):result['target']=os.readlink(p)
+        return result
+    def directory(p):
+        found=[];children=[]
+        with os.scandir(p) as entries:
+            for entry in entries:
+                s=entry.stat(follow_symlinks=False);path=Path(entry.path);found.append(row(path,s))
+                if stat.S_ISDIR(s.st_mode):children.append(path)
+        return found,children
+    rows=[row(source,initial)];todo=collections.deque([source]);pending=set()
+    with concurrent.futures.ThreadPoolExecutor(max_workers=16) as pool:
+        while todo or pending:
+            while todo and len(pending)<32:pending.add(pool.submit(directory,todo.popleft()))
+            done,pending=concurrent.futures.wait(pending,return_when=concurrent.futures.FIRST_COMPLETED)
+            for future in done:
+                found,children=future.result();rows.extend(found);todo.extend(children)
+            if progress:progress(len(rows),0)
     return sorted(rows, key=lambda r: r['path'])
 
 
 def hash_rows(rows, anchor, progress=None):
-    cache = {}; total = 0
-    for n, row in enumerate(rows):
-        if not stat.S_ISREG(row['stamp'][0]): continue
-        p = anchor / row['path']; assert stamp(p) == row['stamp'] and p.lstat().st_ctime_ns == row['ctime_ns']
-        key = tuple(row['stamp'][5:7])
-        if key not in cache:
-            def bump(count):
-                nonlocal total
-                total += count
-                if progress: progress(n+1, total)
-            cache[key] = sha(p, bump)
-            assert stamp(p) == row['stamp'] and p.lstat().st_ctime_ns == row['ctime_ns']
-        row['sha256'] = cache[key]
+    groups={};cache={};total=finished=0;lock=threading.Lock()
+    for row in rows:
+        if stat.S_ISREG(row['stamp'][0]):groups.setdefault(tuple(row['stamp'][5:7]),row)
+    def worker(item):
+        nonlocal total,finished
+        key,row=item;p=anchor/row['path'];s=p.lstat();assert stat_stamp(s)==row['stamp'] and s.st_ctime_ns==row['ctime_ns']
+        def bump(count):
+            nonlocal total
+            with lock:
+                total+=count
+                if progress:progress(finished,total)
+        digest=sha(p,bump);s=p.lstat();assert stat_stamp(s)==row['stamp'] and s.st_ctime_ns==row['ctime_ns']
+        with lock:finished+=1
+        return key,digest
+    todo=collections.deque(groups.items());pending=set()
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
+        while todo or pending:
+            while todo and len(pending)<8:pending.add(pool.submit(worker,todo.popleft()))
+            done,pending=concurrent.futures.wait(pending,return_when=concurrent.futures.FIRST_COMPLETED)
+            for future in done:
+                key,digest=future.result();cache[key]=digest
+    for row in rows:
+        if stat.S_ISREG(row['stamp'][0]):row['sha256']=cache[tuple(row['stamp'][5:7])]
     if progress: progress(len(rows), total)
     return rows
 
@@ -65,9 +90,10 @@ def verify(expected, actual):
     assert [r['path'] for r in expected] == [r['path'] for r in actual], 'Member coverage differs'
     left, right = {}, {}
     for a, b in zip(expected, actual):
-        x, y = a['stamp'], b['stamp']; assert x[:5] == y[:5], ('mode/size/mtime/owner', a['path'])
+        x, y = a['stamp'], b['stamp']
+        assert x[0] == y[0] and x[2:5] == y[2:5], ('mode/mtime/owner', a['path'])
         if stat.S_ISREG(x[0]):
-            assert a['sha256'] == b['sha256'], ('content', a['path'])
+            assert x[1] == y[1] and a['sha256'] == b['sha256'], ('content', a['path'])
             left.setdefault(tuple(x[5:7]), []).append(a['path']); right.setdefault(tuple(y[5:7]), []).append(b['path'])
         elif stat.S_ISLNK(x[0]): assert a['target'] == b['target']
     assert sorted(sorted(v) for v in left.values()) == sorted(sorted(v) for v in right.values()), 'Internal hardlink topology differs'
