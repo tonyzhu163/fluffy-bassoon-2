@@ -68,7 +68,7 @@ Matching this file does not establish that all imported dependencies match.
 | Environments/rounds | 256/4 | 256/4 | 256/4 |
 | Global optimization minibatch/epochs | 2048/5 | 2048/5 | 2048/5 |
 | Per-device execution microbatch | 32 | 256; accumulation2 on four devices,1 on eight devices | 32; accumulation8 on eight devices; exact original behavior check each collection |
-| Evaluation panel | 128 environments | 16 precommitted source DEV cases | 16 loop diagnostics;64 DEV plus disjoint64 confirmation prepared |
+| Evaluation panel | 128 environments | 16 precommitted source DEV cases | 16 loop diagnostics;64 paired DEV and selected disjoint64 confirmation complete |
 | Sustained training | Config permits repeated outer epochs | Earlier retained-batch recovery; later one fresh8-rank cycle, second collection interrupted | Two fresh collections complete; final cold boundaries independently verified |
 
 The shared actor/value learning rates remain 5e-6/1e-4; gamma .99,
@@ -155,11 +155,11 @@ GRPO confirmation also passed every execution check but failed the learning gate
 | Sustained online learning has not been tested adequately | Verified limitation, not a proof that more training will help | Run successive complete collect/update cycles; show new rollout data and checkpoint progression. |
 | New motor/task/cadence changes the learning problem | Verified protocol differences; causal effect unknown | Hold these fixed within a port experiment; report it separately from exact release reproduction. |
 | Combined scene/model memory and setup overhead obstruct training | Four-rank B64 reserve failed; corrected B32 PPO and GRPO each passed two integrated cycles | Cold training boundaries pass; qualify independent full-checkpoint readout. Actor-only capacity is insufficient. |
-| Group8 reduces scene diversity relative to group1 | Corrected group1 PPO uses the full1,000 TRAIN scenes per collection; group8 GRPO uses128 | Compare the completed recipes on paired DEV; their difference does not isolate only the advantage estimator. |
+| Group8 reduces scene diversity relative to group1 | Corrected group1 PPO uses the full1,000 TRAIN scenes per collection; group8 GRPO uses128 | Paired DEV favors GRPO by one case; confirmation fails. Their difference does not isolate only the advantage estimator. |
 | Exploration harms the initializer or fails to reach useful alternatives | Plausible, unisolated | Compare policy0 Flow-SDE and ODE on the same cases before changing noise. Different TRAIN/DEV scenes cannot isolate this gap. |
 | Critic quality or return/boundary semantics limit learning | Plausible, unisolated | Inspect explained variance, targets, values, advantage spread and episode boundaries; compare critic designs only after a stable control. |
 | SAPIEN camera clipping changes policy observations | Concrete difference from current upstream; no camera-only benefit on the small completed panel | Independent315-file readback passed: near0.1/H192:2/8; near0.01/H192:2/8; near0.1/H384:3/8; near0.01/H384:2/8. Preserve the active continuation's protocol; this exploratory panel does not establish equivalence. |
-| Numerical changes from larger batches contaminate likelihood ratios | Verified batch effect; contribution to missing learning gain unisolated | B32 exactly matches original behavior likelihoods; B256 puts11.279% of unchanged-policy ratios outside the clip interval. Use B32/accumulation8 and qualify a corrected learning control. |
+| Numerical changes from larger batches contaminate likelihood ratios | Verified batch effect; contribution to missing learning gain unisolated | B32 exactly matches original behavior likelihoods; B256 puts11.279% of unchanged-policy ratios outside the clip interval. B32/accumulation8 corrected controls and endpoint readouts pass, but no confirmed learning gain. |
 
 Our native-batch adapter matches its native reference exactly, but native
 batched outputs differ from singleton outputs. The diagnosis did not isolate
@@ -189,7 +189,7 @@ controls explicitly seed the native B2 evaluation stream31000+rank, restoring
 the training stream afterward. Larger readout records actual ODE Gaussian draws
 in place; its Linux numerical qualification preserves output and final RNG
 exactly. All48 original SFT prediction pixels/actions/RNG match across methods;
-full-model readout qualification remains required. The earlier separately qualified MotusDEV01 comparison explicitly
+full-model readout qualification and independent physical/noise readbacks now pass. The earlier separately qualified MotusDEV01 comparison explicitly
 restored baseline sampling RNG; its pairing evidence remains valid. Future
 source qualification will explicitly share case/chunk noise across policies.
 
