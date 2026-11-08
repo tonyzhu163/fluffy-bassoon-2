@@ -95,9 +95,9 @@ def collect(contract_path):
     plan, candidates = declaration()
     contract = json.loads(Path(contract_path).read_bytes())
     assert contract['status'] == 'admitted' and contract['cpu_preflight_passed']
-    assert contract['budget_extension_approved']
     assert contract['closed_conservative_gpu_seconds']+contract['other_active_reserved_gpu_seconds']+contract['reserved_gpu_seconds'] <= contract['approved_cap_gpu_seconds']
-    assert contract['reserved_gpu_seconds'] == 18000 and contract['GPU_count'] == 1
+    assert contract['reserved_gpu_seconds'] in (3600, 18000) and contract['GPU_count'] == 1
+    if contract['approved_cap_gpu_seconds'] > 360000: assert contract['budget_extension_approved']
     assert sha(SCAN) == contract['scan_sha256']
     assert os.uname().sysname == 'Linux' and os.uname().nodename.startswith('job-')
     code = ROOT.parents[1]
@@ -116,7 +116,7 @@ def collect(contract_path):
     config = Path(contract['original_configuration'])
     assert sha(config) == contract['original_configuration_sha256']
     deadline = int(os.environ['TASK_DEADLINE'])
-    assert time.time()+180 < deadline <= time.time()+17400
+    assert time.time()+180 < deadline <= time.time()+contract['worker_timeout_seconds']
     output = Path(os.environ['TASK_OUT'])
     assert output.name == contract['output_identity'] and not output.exists()
     output.mkdir()

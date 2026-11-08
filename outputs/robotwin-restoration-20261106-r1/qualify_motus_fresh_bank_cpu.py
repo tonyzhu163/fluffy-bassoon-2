@@ -109,6 +109,10 @@ def main():
         contract = ROOT/'MOTUS-FRESH-SCENES01-CONTRACT.json'
         admission = json.loads(contract.read_bytes())
         for name, digest in admission['source_files'].items(): assert sha(code/name) == digest
+        subprocess.run(['bash', '-n', str(ROOT/'motus_fresh_bank.sh')], check=True)
+        assert admission['closed_conservative_gpu_seconds']+admission['reserved_gpu_seconds'] == admission['all_worst_gpu_seconds'] == 359798
+        assert admission['all_worst_gpu_seconds'] <= admission['approved_cap_gpu_seconds'] == 360000
+        assert admission['reserved_gpu_seconds'] == 3600 and admission['worker_timeout_seconds'] == 3100
         rejected(lambda: collect(contract))
         original = Path(admission['original_configuration'])
         cfg = json.loads(original.read_bytes())['env']['eval']
@@ -120,6 +124,7 @@ def main():
             physical_seed_substitution_rejected=True, failed_initial_reset_rejected=True,
             original_configuration_sha256=sha(original), prepared_GPU_collection_rejected=True,
             native_uint8_initial_packet_checks_passed=True, each_camera_required_nonblank=True,
+            bounded_one_GPU_launcher_Linux_bash_syntax_passed=True, current100h_cap_reservation_arithmetic_passed=True,
             original_sampler_inventory_not_edited=True, native_function_sha256=hashlib.sha256(ast.get_source_segment(native_source, method).encode()).hexdigest())
     except BaseException as error:
         report.update(status='failed', error_type=type(error).__name__, error=str(error)); raise
