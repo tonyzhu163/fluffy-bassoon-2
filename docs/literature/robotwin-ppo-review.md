@@ -75,9 +75,9 @@ cuRobo builds a table-only obstacle world; the MPLib path takes an early SAPIEN
 scene snapshot. Rebuilding MPLib after task actor loading adds grasped objects
 to its obstacle set and changes the expert's contact constraints. It is not an
 equivalent repair merely because geometry conversion succeeds. The native
-joint-action VLA path does not call this expert planner; current failures block
-fresh expert-qualified scene selection, without explaining the completed weak
-learning result. [Actual paired controls](../../outputs/robotwin-restoration-20261106-r1/MOTUS-PLANNER-CONTROL01-CLOSEOUT.json).
+joint-action VLA path does not call this expert planner; earlier expert failures blocked
+fresh scene selection. The isolated native backend now restores that path,
+without explaining the completed weak learning result. [Actual paired controls](../../outputs/robotwin-restoration-20261106-r1/MOTUS-PLANNER-CONTROL01-CLOSEOUT.json).
 
 Current [cuRobo documentation](https://nvlabs.github.io/curobo/latest/)
 describes a redesigned API. A restoration must pin and qualify the compatible
@@ -121,8 +121,11 @@ The isolated legacy backend now passes an actual4/4 old-scene expert control,
 versus preserved full-state MPLib0/4, with initial image/state hashes equal and
 native table-only collisions retained. Only stale asset-file paths change in
 local YAML copies. Independent device/asset/cleanup readback passes; no VLA or
-SGD runs. This supports a subsequent fresh policy-free scene scan, without
-establishing a source learning gain. [Expert evidence](../../outputs/robotwin-restoration-20261106-r1/MOTUS-CUROBO-CONTROL02-CLOSEOUT.json).
+SGD runs. A subsequent policy-free scan independently qualifies64 fresh
+expert/reset-valid scenes from84 ordered candidates, excluding all1000TRAIN
+and150oldEVAL seeds. The full prefix and20rejections are retained. This
+restores independent confirmation data without establishing a learning gain.
+[Fresh bank evidence](../../outputs/robotwin-restoration-20261106-r1/MOTUS-FRESH-SCENES05-CLOSEOUT.json). [Expert evidence](../../outputs/robotwin-restoration-20261106-r1/MOTUS-CUROBO-CONTROL02-CLOSEOUT.json).
 
 ## What actually happened in this repository
 

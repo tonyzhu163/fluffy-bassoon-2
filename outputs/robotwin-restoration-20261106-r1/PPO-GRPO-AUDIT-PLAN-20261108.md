@@ -101,43 +101,42 @@ are complete. GRPO's larger DEV curve is6/64→10/64→11/64; checkpoint2 versus
 has three gains/two losses and p=1.0. The small progress-panel regression was
 not supported by this larger comparison. Checkpoint2 confirmation stays negative.
 
-Closed usage is357870GPU-seconds (99.408333h);2130GPU-seconds remain in the
-100h cumulative cap. Native cuRobo now passes4/4 paired old-scene experts,
-with independent device/asset/physical/cleanup readback. The fresh04 ordered
-bank scan reserves2100GPU-seconds, with worst cumulative359970GPU-seconds
-(99.991667h), leaving30GPU-seconds unreserved. Only a complete64-scene,
-policy-free bank may be published. Further complete
-training needs additional approval. The prepared `MOTUS-LONGER-CURVE-PROPOSAL.md`
-requests155h cumulative for eight fresh GRPO collections through checkpoint10,
-fixed DEV and new confirmation, with Linux qualification before admission.
-The budget request is pending; it is not launch authorization.
-The explicit2→6 implementation is Linux CPU-qualified at403920c2; see
-`MOTUS-CURVE-GRPO-CPU02-READBACK.json`. All24 source sidecars/eight owned-Adam
-descriptors,48 source DEV files,40 schedule rounds and native loop routing pass.
-Source DEV prediction offsets must be measured per worker because native
-terminal-value calls add a variable number of sampling records. Actual resumed
-model predictions/SGD remain GPU requirements. The proposal records separate
-checkpoint6 input and extended-readout qualification before later stages.
-Fixed6/10 DEV readout code is now Linux CPU-qualified at7226b8db; see
-`MOTUS-CURVE-READOUT-CPU02.json`. Its pinned ODE numerical reference, original
-SFT recording provenance, explicit C0 schedule handling and actual old C0/C2
-cold restore records pass. The updated reader also passes all1857 files of the
-old checkpoint1 DEV run. Real6/10 inputs, GPU evaluation and a newly qualified
-confirmation scene bank remain outstanding; the prepared contracts reject launch.
-Each new job has a fresh output identity and immutable reviewed main commit.
+Closed usage is359665GPU-seconds (99.906944h);335GPU-seconds remain under
+100h. No GPU job is active. Native cuRobo passes4/4 paired old-scene experts;
+the complete policy-free fresh64 bank now passes independent CPU readback.
+Its84 ordered candidates retain20 rejections and the immutable83-row prefix.
+See `MOTUS-FRESH-SCENES05-CLOSEOUT.json` and
+`MOTUS-FRESH-CONFIRMATION-BANK.json`. This is scene validity, not effective RL.
 
-The separate fresh-bank expert issue now has a pinned isolated cuRobo0.7.8
-candidate: all5 extensions compile and pass actual CPU ABI imports, and two
-run-local YAML path repairs preserve every other field while verifying30 mesh
-files. Full MotionGen import constructs a CUDA tensor, so actual device and
-expert qualification are still required. See `MOTUS-CUROBO-CPU03.json`.
-Do not replace source training/evaluation or admit a new scene bank from these
-CPU checks. The second control additionally verifies the collision-sphere files
-and all absolute references, preserving the native table-only collision scope.
-It cannot qualify a fresh bank or a learning gain by itself.
-Check advancing progress after launch and monitor at most20 minutes apart;
-inspect the exact owned job and preserve its latest complete checkpoint before
-any intervention. Record live progress only in our row of `outputs/coordination.md`.
+Next steps, in order:
+
+1. Obtain the pending cumulative budget extension before further full training.
+   The revised longer-curve envelope is50GPUh:40training,6.667fixed DEV and
+   3.333fixed confirmation. Scene qualification is already paid in the99.907h.
+2. Finish current storage/queue/device admission and pin latest main. Continue
+   the verified C2→6 segment only; full C2 cold hashes/24sidecars/eight owned
+   Adam descriptors,48 original DEV files,40 schedule rounds and native loop
+   routing pass Linux CPU qualification at403920c2. Measured source DEV offsets
+   are worker-specific. Actual resumed model predictions/SGD remain GPU checks.
+3. Independently audit C6 and qualify its actual cold inputs before6→10. Preserve
+   global2048/fiveepochs/B32, native binary reward and fresh policy collections.
+   Run fixed existing-DEV endpoints6/10 through the LinuxCPU-qualified readout
+   (7226b8db), retaining full native state restores and common actual ODE draws.
+4. Implement the explicit fresh-C10 confirmation route and Linux-qualify its
+   bank binding, physical resets and C0 schedule migration. The current extended
+   reader accepts DEV only; changing `bank` alone must fail. Do not reuse old
+   confirmation. `MOTUS-FRESH-C10-CONFIRMATION-PROTOCOL.json` predeclares the new
+   qualified bank, original SFT versus fixedC10,128policyepisodes, nativeB2,
+   seed31000+100*panel+rank and unchanged≥10point/exact-p<.05 gate.
+5. Qualify actual C10 cold files and all24sidecars, then evaluate the new bank
+   once. Record a negative result if the gate fails. Require repeated training
+   seeds before stability claims; student and held-out work stay paused.
+
+All new jobs require fresh output identities and immutable reviewed main commits.
+The existing155h cumulative request is pending, not launch authorization. The
+50h stage envelope would reach149.906944h; the difference to155h is unallocated
+headroom, not an automatic retry reservation. Monitor advancing updates and
+complete artifacts at most20minutes apart; preserve verified full boundaries.
 
 Literature: `docs/literature/robotwin-ppo-review.md`; formulas and search/source
 identities: `RECIPE-REVIEW.json`; numerical measurements:

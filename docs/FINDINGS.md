@@ -1298,3 +1298,23 @@ publication occurs. This qualifies the native expert for subsequent policy-free
 scene selection; it does not establish PPO/GRPO effectiveness or explain the
 completed weak learning result.
 [Control and evidence](../outputs/robotwin-restoration-20261106-r1/MOTUS-CUROBO-CONTROL02-CLOSEOUT.json).
+
+### RoboTwin fresh confirmation bank qualified without policy outcomes
+
+The restored native cuRobo expert now qualifies the first64 valid scenes from84
+ordered source-task candidates, retaining all20 rejections and excluding all1000
+TRAIN and150 old EVAL seeds. A bounded scan's83-record/63-valid prefix is audited
+and copied unchanged; the continuation accepts only the next candidate100100325.
+Native expert success, exact physical-seed inference reset, finite state, all
+three cameras, allocated rendering and cleanup pass. Neither VLA calls nor SGD
+enter selection. The local manifest is byte-identical to the independently read
+Linux artifact. Native table-only collision settings and sampler inventories
+are retained. [Verified bank and raw audit hashes](../outputs/robotwin-restoration-20261106-r1/MOTUS-FRESH-SCENES05-CLOSEOUT.json),
+[manifest](../outputs/robotwin-restoration-20261106-r1/MOTUS-FRESH-CONFIRMATION-BANK.json).
+
+This resolves independent confirmation-data qualification, not PPO/GRPO
+learning effectiveness. Joint-action VLA execution does not call the expert
+planner. C2 GRPO's prior confirmation remains negative; the new bank is bound
+to original SFT versus fixedC10 before policy outcomes. Its explicit readout
+route, actual C10 checkpoint and GPU confirmation remain unqualified.
+[Predeclared protocol](../outputs/robotwin-restoration-20261106-r1/MOTUS-FRESH-C10-CONFIRMATION-PROTOCOL.json).
