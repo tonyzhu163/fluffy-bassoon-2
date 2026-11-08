@@ -1,5 +1,5 @@
 {
-  "status": "prepared",
+  "status": "admitted",
   "purpose": "Full measured qpos versus full measured qpos plus documented SapienPlanner world synchronization. Four old EVAL cases only; no VLA/SGD/fresh bank.",
   "output_identity": "motus-planner-control02",
   "seeds": [
@@ -12,9 +12,9 @@
     "full_state",
     "full_state_sync"
   ],
-  "cpu_preflight_passed": false,
+  "cpu_preflight_passed": true,
   "CPU_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpumotusplannersync01/RESULT.json",
-  "CPU_sha256": null,
+  "CPU_sha256": "b2ec991c80c2220263bfc66d25df6deac839310c755d2c9a6ab6487fc39b62b",
   "original_configuration": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motusbehaviorgrpo01/state/resolved-native-config.json",
   "original_configuration_sha256": "c264e4ee1050b19b2086089357275b6d4468962b9df371f79da64e289e51d912",
   "GPU_count": 1,
@@ -70,5 +70,8 @@
     "src/fluffy_bassoon/rl/robotwin_native_setup.py": "522b9d0fab4070ab9b708c6fd451498360a1766f39f96ebff3b21a68fbdc92e0",
     "src/fluffy_bassoon/baige_gpu.py": "6a59727447a13a9fb3424beaf92f0b61df9741c93d2a21f4798160af8a0be071"
   },
-  "approval": "Within explicit100 cumulative GPU-hours; one GPU for at most600 creation-to-release seconds, four old EVAL scenes only; no budget extension."
+  "approval": "Within explicit100 cumulative GPU-hours; one GPU for at most600 creation-to-release seconds, four old EVAL scenes only; no budget extension.",
+  "qualified_code_commit": "d543c1071deea3d6b766f67058f1899653032324",
+  "Linux_static_preflight_passed": true,
+  "queue_rechecked_before_admission": true
 }
