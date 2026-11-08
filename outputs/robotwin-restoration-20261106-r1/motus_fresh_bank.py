@@ -96,7 +96,10 @@ def collect(contract_path):
     contract = json.loads(Path(contract_path).read_bytes())
     assert contract['status'] == 'admitted' and contract['cpu_preflight_passed']
     assert contract['closed_conservative_gpu_seconds']+contract['other_active_reserved_gpu_seconds']+contract['reserved_gpu_seconds'] <= contract['approved_cap_gpu_seconds']
-    assert contract['reserved_gpu_seconds'] in (2100, 3600, 18000) and contract['GPU_count'] == 1
+    assert contract['GPU_count'] == 1
+    if contract.get('prefix_result'):
+        assert 0 < contract['reserved_gpu_seconds'] <= 600
+    else: assert contract['reserved_gpu_seconds'] in (2100,3600,18000)
     if contract['approved_cap_gpu_seconds'] > 360000: assert contract['budget_extension_approved']
     assert sha(SCAN) == contract['scan_sha256']
     assert os.uname().sysname == 'Linux' and os.uname().nodename.startswith('job-')
@@ -146,6 +149,9 @@ def collect(contract_path):
         policy_outcomes_observed=False, model_calls=0, optimizer_updates=0,
         native_success_seed_inventory_unchanged=True, records=[], cleanup_complete=False)
     write(output/'RESULT.json', report)
+    if contract.get('prefix_result'):
+        from motus_fresh_prefix import load
+        report['records'],report['prefix_provenance']=load(contract,candidates)
     env = None; restore_backend = None
     try:
         if contract.get('expert_backend') == 'curobo':
@@ -155,8 +161,8 @@ def collect(contract_path):
             cfg.task_config.planner_backend = 'curobo'
         env = RoboTwinEnv(cfg, 1, seed_offset=0, total_num_processes=1, worker_info=None)
         inventory = env.success_seeds.clone()
-        chosen = []
-        for seed in candidates:
+        chosen = [x['seed'] for x in report['records'] if accepted(x)]
+        for seed in candidates[len(report['records']):]:
             assert time.time()+180 < deadline, 'Stop before the cleanup/release margin'
             sub = env.venv.envs[0]
             sub.close(clear_cache=False)

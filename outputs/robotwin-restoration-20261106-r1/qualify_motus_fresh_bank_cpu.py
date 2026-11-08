@@ -43,9 +43,9 @@ class Task:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--identity', required=True)
-    parser.add_argument('--contract', choices=('MOTUS-FRESH-SCENES02-CONTRACT.json','MOTUS-FRESH-SCENES03-CONTRACT.json','MOTUS-FRESH-SCENES04-CONTRACT.json'), required=True)
+    parser.add_argument('--contract', choices=('MOTUS-FRESH-SCENES02-CONTRACT.json','MOTUS-FRESH-SCENES03-CONTRACT.json','MOTUS-FRESH-SCENES04-CONTRACT.json','MOTUS-FRESH-SCENES05-CONTRACT.json'), required=True)
     args = parser.parse_args()
-    wrapper_name={'MOTUS-FRESH-SCENES02-CONTRACT.json':'motus_fresh_bank.sh','MOTUS-FRESH-SCENES03-CONTRACT.json':'motus_fresh_bank_curobo03.sh','MOTUS-FRESH-SCENES04-CONTRACT.json':'motus_fresh_bank_curobo04.sh'}[args.contract]
+    wrapper_name={'MOTUS-FRESH-SCENES02-CONTRACT.json':'motus_fresh_bank.sh','MOTUS-FRESH-SCENES03-CONTRACT.json':'motus_fresh_bank_curobo03.sh','MOTUS-FRESH-SCENES04-CONTRACT.json':'motus_fresh_bank_curobo04.sh','MOTUS-FRESH-SCENES05-CONTRACT.json':'motus_fresh_bank_curobo05.sh'}[args.contract]
     assert re.fullmatch(r'cpumotusfreshbank[0-9]{2}', args.identity)
     assert os.uname().sysname == 'Linux' and os.environ['CUDA_VISIBLE_DEVICES'] == ''
     source = os.environ['TASK_SOURCE']; code = ROOT.parents[1]
@@ -116,7 +116,7 @@ def main():
         ledger=json.loads((ROOT/'LATEST-BUDGET.json').read_bytes())
         assert admission['closed_conservative_gpu_seconds']==ledger['closed_conservative_gpu_seconds']==sum(sum(x.values()) for x in ledger['components'])
         assert admission['all_worst_gpu_seconds'] <= admission['approved_cap_gpu_seconds'] == 360000
-        assert (admission['reserved_gpu_seconds'],admission['worker_timeout_seconds']) == ((2100,1800) if args.contract != 'MOTUS-FRESH-SCENES02-CONTRACT.json' else (3600,3100))
+        assert (admission['reserved_gpu_seconds'],admission['worker_timeout_seconds']) == ((440,340) if args.contract=='MOTUS-FRESH-SCENES05-CONTRACT.json' else ((2100,1800) if args.contract != 'MOTUS-FRESH-SCENES02-CONTRACT.json' else (3600,3100)))
         if args.contract != 'MOTUS-FRESH-SCENES02-CONTRACT.json':
             evidence=Path(admission['expert_control_readback'])
             assert sha(evidence)==admission['expert_control_readback_sha256']
@@ -141,7 +141,7 @@ def main():
         # Exercise the real shell environment without importing a device library.
         shared = code/'outputs/robotwin-sidney-matched-baselines-20261106-r1/runtime_environment.sh'
         wrapper = (ROOT/wrapper_name).read_text()
-        if args.contract == 'MOTUS-FRESH-SCENES04-CONTRACT.json':
+        if args.contract in ('MOTUS-FRESH-SCENES04-CONTRACT.json','MOTUS-FRESH-SCENES05-CONTRACT.json'):
             # Execute the actual launcher's first Python guard on a review-only
             # admitted copy. The source contract remains prepared and unlaunchable.
             import sys
@@ -165,6 +165,15 @@ def main():
             command += guard+'\nsource "$1"\nprintf "%s" "$CUDA_VISIBLE_DEVICES"'
             assert subprocess.check_output(['bash', '-c', command, 'fresh-scene-CVD', str(shared)], text=True) == expected
         rejected(lambda: collect(contract))
+        if args.contract=='MOTUS-FRESH-SCENES05-CONTRACT.json':
+            from motus_fresh_prefix import load
+            prefix,provenance=load(admission,candidates)
+            assert len(prefix)==83 and sum(accepted(x) for x in prefix)==63
+            assert provenance['next_candidate']==100100325
+            continuation=dict(seed=candidates[83],setup_demo_success=True,play_once_success=True,cost_time=0,expert_physical_seed=candidates[83],initial_reset_exact=True,initial_observation_sha256='c'*64)
+            final=select(prefix+[continuation],candidates)
+            assert final[:-1]==[x['seed'] for x in prefix if accepted(x)] and final[-1]==100100325
+            report['actual_immutable_prefix_qualified']=provenance
         original = Path(admission['original_configuration'])
         cfg = json.loads(original.read_bytes())['env']['eval']
         assert cfg['task_config']['task_name'] == plan['task'] and cfg['max_episode_steps'] == 192
