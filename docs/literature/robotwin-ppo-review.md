@@ -25,6 +25,14 @@ gate. Full process restores and independent trace/noise readbacks pass. No
 effective source learner is established; this does not demonstrate that the
 released recipe fails. [Confirmation evidence](../../outputs/robotwin-restoration-20261106-r1/MOTUS-SOURCE-GRPO-CONFIRMATION01-READBACK.json).
 
+
+The final independently verified GRPO existing-DEV curve is6/64→10/64→11/64
+across checkpoints0/1/2. Checkpoint2 versus1 has three gains/two losses and
+exact p=1.0; the suspected second-cycle regression from the16-scene progress
+panel is not supported by this larger comparison. All384 cross-run Gaussian
+hashes,64 initial B2 observation hashes and all64 SFT outcomes match.
+[Cross-run evidence](../../outputs/robotwin-restoration-20261106-r1/MOTUS-SOURCE-GRPO-CURVE01-READBACK.json).
+
 Three separate questions need separate evidence:
 
 | Question | Current answer |

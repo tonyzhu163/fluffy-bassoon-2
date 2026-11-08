@@ -10,9 +10,10 @@ Both corrected two-collection controls and independent full-state/numerical
 readbacks passed. Full paired DEV readout also passed, including actual noise
 and physical traces: PPO6/64→10/64 (six gains,two losses,p=.2891),
 GRPO6/64→11/64 (five gains,no losses,p=.0625). Neither meets the source gate.
-The [precommitted selection](MOTUS-SOURCE-SELECTION.json) chooses GRPO for
-disjoint confirmation before any confirmation outcome. Preserve checkpoint2;
-student work remains paused while source effectiveness is unresolved.
+The [precommitted selection](MOTUS-SOURCE-SELECTION.json) selected GRPO before
+disjoint confirmation; confirmation7/64→10/64,p=.581 failed the gate. The final
+GRPO DEV curve6→10→11 does not support the small-panel regression hypothesis.
+Student work remains paused while source effectiveness is unresolved.
 
 ## Evidence that changes the next action
 
@@ -87,7 +88,8 @@ then failed the optimizer representation guard before evaluating checkpoint2.
 Actual saved failing layouts proved only empty unowned entries were added by
 native RLinf offload/onload; every captured owned Adam descriptor and group stayed
 exact. Twelve Linux CPU core tests and the actual native functions qualify the
-narrow exception. All8 GPU guards and complete checkpoint2 readouts remain required.
+narrow exception. All8 GPU guards and complete checkpoint2 readouts subsequently
+passed for both methods; the selected confirmation passed execution checks too.
 
 Selected checkpoint2 GRPO confirmation is complete and independently verified:
 SFT7/64→10/64, eight gains/five losses, +4.6875points, paired p=.5810547.
