@@ -122,10 +122,12 @@ Next steps, in order:
    global2048/fiveepochs/B32, native binary reward and fresh policy collections.
    Run fixed existing-DEV endpoints6/10 through the LinuxCPU-qualified readout
    (7226b8db), retaining full native state restores and common actual ODE draws.
-4. Implement the explicit fresh-C10 confirmation route and Linux-qualify its
-   bank binding, physical resets and C0 schedule migration. The current extended
-   reader accepts DEV only; changing `bank` alone must fail. Do not reuse old
-   confirmation. `MOTUS-FRESH-C10-CONFIRMATION-PROTOCOL.json` predeclares the new
+4. The explicit fresh-C10 route now passes Linux CPU code/schema, reset-argument,
+   C0 schedule migration and pinned-ODE references at7f09bde7. See
+   `MOTUS-FRESH-READOUT-CPU01.json`; the full1857-file existing DEV reader also
+   passes `MOTUS-FRESH-READOUT-LEGACY01.json`. Actual C10 cold inputs must pass the separate
+   `--actual-inputs` qualification before admission. Changing `bank` alone or
+   reusing consumed confirmation remains rejected. `MOTUS-FRESH-C10-CONFIRMATION-PROTOCOL.json` predeclares the new
    qualified bank, original SFT versus fixedC10,128policyepisodes, nativeB2,
    seed31000+100*panel+rank and unchanged≥10point/exact-p<.05 gate.
 5. Qualify actual C10 cold files and all24sidecars, then evaluate the new bank

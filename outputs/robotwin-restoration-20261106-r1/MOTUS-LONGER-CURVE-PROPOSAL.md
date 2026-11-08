@@ -198,13 +198,13 @@ After the appropriate segment finishes:
    endpoints additionally require their complete cold source checkpoints.
 
 The present extension rejects checkpoint6/10 confirmation on the consumed
-bank. A future fresh-confirmation implementation must bind a newly qualified,
+bank. The explicit fresh-confirmation route binds the qualified,
 predeclared64-scene manifest and retain the existing native sampler inventory
 for checkpoint restoration; choose the new scenes through the explicit readout
 reset hook. Changing the native inventory would fail exact sampler restoration.
 Qualify that physical path before policy evaluation. The fresh64 bank now has independent expert/reset/device qualification. The
-explicit fresh-bank readout path and fixed checkpoint10 confirmation remain
-outstanding; the current extended reader deliberately accepts DEV only.
+explicit fresh-bank route is now Linux CPU-qualified; actual C10 inputs and
+the fixed checkpoint10 GPU confirmation remain outstanding.
 
 ## Qualified fresh confirmation bank and remaining route
 
@@ -223,9 +223,10 @@ unchanged. [Closeout and independent hashes](MOTUS-FRESH-SCENES05-CLOSEOUT.json)
 `MOTUS-FRESH-C10-CONFIRMATION-PROTOCOL.json` predeclares this bank, C0 versus
 fixedC10,128 policy episodes, native batch2, four panels/eight ranks,
 31000+100*panel+rank common RNG and the unchanged effectiveness gate. It is
-not a launch contract. Implement and Linux-qualify an explicit new-bank route
-in the sampler/reset wrapper, launcher and independent reader; preserve the
-current prohibition on consumed confirmation. Retain exact full C0/C10
+not a launch contract. The explicit new-bank route is now implemented and
+Linux CPU-qualified at7f09bde7; it preserves the prohibition on consumed
+confirmation. See `MOTUS-FRESH-READOUT-CPU01.json` and the prepared
+`MOTUS-SOURCE-GRPO-FRESHCONFIRMATION01-CONTRACT.json`. Retain exact full C0/C10
 restores and the separate original SFT calibration. Fresh scenes cannot be
 required to match old DEV images/actions. Verify paired physical states and
 actual initial Gaussian tensors across policies before interpreting outcomes.
@@ -236,3 +237,35 @@ failed and remain preserved in their receipts. Expert restoration does not
 explain the completed weak learning result: joint-action VLA execution does
 not call this expert planner. No collision relaxation, held-out task training,
 reward change or policy-dependent scene selection is authorized by this plan.
+
+
+The CPU qualification uses192 reset-argument references and384 calls through
+the pinned ODE loop with a deterministic suffix stub; all192 paired draws,
+outputs and final CPU RNG match. It also checks the actual fresh-bank proof,
+all48 original SFT files, existing C0/C2 cold restores and DEV6/10 schema.
+No actual future C10 checkpoint, fresh policy episode or learning gain is
+qualified by this receipt.
+
+After C10 training completes, bind its actual manifest SHA and independently
+verified training readback in the prepared fresh-confirmation contract. On the
+allocated Linux CPU, run `qualify_motus_fresh_readout_cpu.py --identity
+cpumotusfreshreadout02 --actual-inputs` with a new unused output identity and
+the pinned runtime. Bind that successful actual-input receipt separately from
+the code/schema receipt. Reconcile remaining reservations, storage and queue;
+only then admit the contract and deploy its exact commit through Git.
+
+The GPU launch uses `motus_source_readout.sh <commit>
+<project-BOS>/motus-source-grpo-freshconfirmation01-signals
+MOTUS-SOURCE-GRPO-FRESHCONFIRMATION01-CONTRACT.json`. After closure, run
+`readback_motus_source_readout.py motus-source-grpo-freshconfirmation01`
+on Linux CPU. The reader verifies every cold file,24worker restores/policy,
+strict owned Adam/RNG invariants, actual physical scene bindings, all trace
+transitions and actual paired initial Gaussian tensors before reducing the
+fixed64 paired outcomes. Report the predeclared gate unchanged. Neither code
+qualification nor budget approval alone admits missing C10 inputs.
+
+The new independent reader also passes the complete existing C1 DEV evidence:
+1857 cold files,128 episodes,128 actual scene-binding records and all384 actual
+Gaussian draws. It reproduces the previous6→10/64 result and p=.125 exactly;
+see `MOTUS-FRESH-READOUT-LEGACY01.json`. This compatibility check adds no GPU
+cost and does not consume the fresh confirmation bank.

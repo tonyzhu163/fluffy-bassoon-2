@@ -169,8 +169,8 @@ Cumulative usage is359665GPU-seconds=99.906944h;335GPU-seconds remain under
 100h, and no GPU job is active. The longer learning test cannot fit. The bank
 removes a confirmation-data blocker; it does not improve the trained policy.
 The [fixed-C10 protocol](MOTUS-FRESH-C10-CONFIRMATION-PROTOCOL.json) binds this
-bank before any policy outcome. Its explicit readout route, actual C10 inputs
-and full GPU confirmation are still outstanding.
+bank before any policy outcome. Its explicit route now passes Linux CPU qualification; actual C10 inputs
+and full GPU confirmation remain outstanding.
 
 The expert failure was a separate backend compatibility problem. Native VLA
 joint-action execution does not call this expert planner. Restoring the expert
@@ -193,3 +193,35 @@ their immutable receipts; none was silently installed into source training.
   and [ordered audit/experiment plan](PPO-GRPO-AUDIT-PLAN-20261108.md).
 - [Live cumulative ledger](LATEST-BUDGET.json); raw full artifacts remain on
   project BOS at the identities named in the receipts.
+
+## Fresh-C10 evaluator qualification
+
+The explicit fresh route is implemented in the source evaluator, launcher and
+independent reader. It binds the sealed protocol, local manifest, original raw
+qualification and independent audit hashes; only GRPO/C10 may use it. Unflagged,
+consumed-confirmation or non-C10 attempts are rejected. The original native
+sampler inventory is restored unchanged. A reset must deliver exactly the
+requested physical seed, and the independent reader now checks actual scene
+bindings for every policy/panel/rank as well as trace IDs.
+
+Linux CPU qualification at7f09bde7 passes192 full/partial/reordered reset
+references plus a rejected substituted seed,384 calls through the pinned native
+ODE loop,192 exact paired Gaussian tensors, unchanged outputs/final CPU RNG,
+all48 original SFT sampling files and the original C0 schedule migration guard.
+The ODE suffix is a deterministic stub; no full model or simulator is constructed.
+Existing DEV6/10 schema and actual old C0/C2 cold checkpoint/restore references
+also pass. The physical-seed reader checks128 actual old GPU scene-binding files
+covering64 panel/rank pairs. [CPU evidence](MOTUS-FRESH-READOUT-CPU01.json).
+
+The fresh confirmation contract stays prepared. Actual C10 files, full24-worker
+state and independent training readback must pass a separate input qualification
+before admission. The launcher rejects code/schema evidence substituted for
+that input receipt. A new full-model GPU readout and source effectiveness gate
+are still required; CPU qualification establishes neither learning nor actual
+fresh-bank policy performance.
+
+The updated independent reader then passed the full existing checkpoint1 DEV
+run:1857 cold files,128 episodes,128 actual scene-binding files and all384
+Gaussian draws. It reproduces SFT6/64→C1 10/64, four gains/no losses,p=.125.
+This is compatibility verification on existing data, not a new learning result
+or a fresh confirmation. [Full reader evidence](MOTUS-FRESH-READOUT-LEGACY01.json).
