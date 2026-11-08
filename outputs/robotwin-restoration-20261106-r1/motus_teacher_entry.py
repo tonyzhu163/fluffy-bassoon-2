@@ -376,8 +376,8 @@ class MotusRunner(runtime.PilotRunner):
             self._capture_boundary()
             self._dev(0)
         self.env.pilot_phase('training').wait()
-        # This boundary stop preserves the two-iteration scientific contract;
-        # a later job resumes the same full global batches and constant schedule.
+        # Stop only at the admitted boundary; a later job resumes the same
+        # full global batches and constant optimizer schedule.
         self.max_steps = int(self.cfg.native_pilot.stop_after_iteration)
         EmbodiedRunner.run(self)
         assert self.global_step == self.max_steps

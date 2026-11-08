@@ -71,7 +71,7 @@ import json,os,shutil,sys
 from pathlib import Path
 from fluffy_bassoon.meta_rl.rlinf_native_ppo import sha,write
 root=Path(sys.argv[1]);p=json.loads((root/'MOTUS-CURVE-GRPO-TRAIN01-CONTRACT.json').read_bytes())
-for key,name in [('entry_sha256','motus_curve_entry.py'),('launcher_sha256','train_motus_behaviorgrpo01.sh')]:
+for key,name in [('entry_sha256','motus_curve_entry.py'),('launcher_sha256','train_motus_curve01.sh')]:
  assert sha(root/name)==p[key]
 for name,expected in p['source_files'].items():assert sha(root.parents[1]/name)==expected
 assert sha(Path(p['cpu_preflight_result']))==p['cpu_preflight_sha256']
@@ -142,6 +142,7 @@ start,stop=p['start_iteration'],p['stop_iteration']
 assert r['status']=='completed_admitted_prefix' and r['completed_iterations']==stop and r['intended_iterations']==10
 assert r['native_adam_updates_per_rank']==15*stop
 assert len(json.loads((state/'operational-restore.json').read_bytes())['workers'])==24
+assert json.loads((state/'resume-baseline-reference.json').read_bytes())['all48_predictions_exact']
 for step in range(start+1,stop+1):
  assert json.loads((state/f'checkpoint-receipts/step-{step:04d}.json').read_bytes())['completed']
 for step in range(start,stop+1):
