@@ -107,6 +107,13 @@ training needs additional approval. The prepared `MOTUS-LONGER-CURVE-PROPOSAL.md
 requests155h cumulative for eight fresh GRPO collections through checkpoint10,
 fixed DEV and new confirmation, with Linux qualification before admission.
 The budget request is pending; it is not launch authorization.
+The explicit2→6 implementation is Linux CPU-qualified at403920c2; see
+`MOTUS-CURVE-GRPO-CPU02-READBACK.json`. All24 source sidecars/eight owned-Adam
+descriptors,48 source DEV files,40 schedule rounds and native loop routing pass.
+Source DEV prediction offsets must be measured per worker because native
+terminal-value calls add a variable number of sampling records. Actual resumed
+model predictions/SGD remain GPU requirements. The proposal records separate
+checkpoint6 input and extended-readout qualification before later stages.
 Each new job has a fresh output identity and immutable reviewed main commit.
 Check advancing progress after launch and monitor at most20 minutes apart;
 inspect the exact owned job and preserve its latest complete checkpoint before

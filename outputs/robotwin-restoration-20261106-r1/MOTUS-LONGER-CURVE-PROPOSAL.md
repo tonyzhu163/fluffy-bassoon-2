@@ -102,3 +102,45 @@ No additional GPU allocation is launched by this proposal. Approval of the
 155h cumulative envelope would permit the above source-task work, after these
 checks, without repeated per-job launch questions. It would not approve new
 held-out-task training, a new reward objective or student experiments.
+
+## Implemented continuation and remaining admission
+
+The first segment is implemented in `motus_curve.py`, `motus_curve_entry.py`
+and `train_motus_curve01.sh`: checkpoint2→6, four fresh collections,60 new
+Adam updates/rank, final counter90. The prepared contract reserves at most
+20GPUh including startup/release. Its worst cumulative total is118.943889h,
+which exceeds the approved100h and therefore remains unlaunchable.
+
+Actual Linux CPU qualification at commit
+`403920c2601842e524c6831bc862bb38f528befa` passes full checkpoint2 cold hashes,
+all24 worker sidecars/eight strict owned-Adam descriptors, all48 original
+checkpoint2 DEV reference files, all40 schedule rounds at four/eight ranks,
+the exact256-group prefix and all1000 TRAIN scenes before repeats. Actor,
+algorithm, rollout and environment sections match the original configuration.
+The pinned native loop runs with RPC stubs and correct fresh-data tags/counters
+for2→6 and6→10. This qualifies routing, not actual resumed SGD or the later
+checkpoint6 input. [CPU evidence](MOTUS-CURVE-GRPO-CPU02-READBACK.json).
+
+The original common prediction-offset assumption failed the first CPU check.
+Native terminal-value calls make training prediction counts worker-dependent.
+The corrected contract binds measured checkpoint2 DEV starts
+`[83,79,78,82,79,78,80,80]`; all six files per worker must be eval-policy2,
+nonterminal B2 predictions. The actual GPU baseline must then match original
+observations, motor actions and both RNG states exactly before fresh collection.
+
+After budget approval, perform the remaining storage/queue/device admission
+above, pin the admitted commit and start only this first segment. Verify live
+updates and preserve every complete cold boundary. Run the independent
+`readback_motus_curve_training.py` on the closed new output before accepting
+checkpoint6. The bounded launcher keeps two local checkpoints after verified
+cold copies and preserves the imported source checkpoint separately.
+
+The second2.5h allocation is a new contract, not an implicit retry: consume the
+actual checkpoint6 manifest, original configuration and measured per-worker
+final DEV references from segment1; independently qualify those inputs before
+6→10. Keep total training allocation≤40GPUh. Extend the paired readout's
+explicit checkpoint admission from its currently qualified0/1/2 range to fixed
+6 and10, qualify it on Linux, and retain its unchanged B2/noise/restore checks.
+Qualify/predeclare the new confirmation bank before inspecting its policy
+outcomes. None of these future inputs or full-model resumes is claimed passed
+by the present CPU receipt.

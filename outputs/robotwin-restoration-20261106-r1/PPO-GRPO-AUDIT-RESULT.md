@@ -117,6 +117,16 @@ a155h cumulative envelope; approval is pending. It adds eight fresh GRPO
 collections and fixed DEV/new confirmation, after Linux qualification and
 per-job admission. Do not launch above the explicit100h cap without approval.
 
+The first2→6 continuation is now implemented and Linux CPU-qualified. Checks
+cover checkpoint2 cold files/24 worker sidecars/eight owned-Adam descriptors,
+all48 original checkpoint2 DEV sampling files, exact schedule prefix/rotation,
+unchanged numerical sections and the pinned fresh-collection loop with RPC
+stubs. The first qualification rejected an incorrect common sampling offset;
+measured per-worker final DEV offsets now pass. Full-model resumed predictions
+and new SGD remain GPU checks, and the6→10 input needs its actual checkpoint6
+qualification. [Continuation CPU evidence](MOTUS-CURVE-GRPO-CPU02-READBACK.json).
+No additional GPU allocation or new learning result follows from CPU qualification.
+
 ## Evidence
 
 - [PPO training closeout](MOTUSBEHAVIORPPO01-CLOSEOUT.json) and
