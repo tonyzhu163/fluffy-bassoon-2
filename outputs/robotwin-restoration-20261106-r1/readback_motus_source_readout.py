@@ -14,6 +14,7 @@ from fluffy_bassoon.meta_rl.tensor_archive import read_tensor
 from fluffy_bassoon.rl.robotwin_execution import collated_chunk_executions
 import motus_teacher_entry
 from recovery_signature import digest
+from motus_curve_readout import result_steps,verify_readout_restores
 
 BASE = Path('/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1')
 ROOT = Path(__file__).resolve().parent
@@ -22,6 +23,7 @@ ROOT = Path(__file__).resolve().parent
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('identity')
+    parser.add_argument('--output-identity')
     args = parser.parse_args()
     assert os.uname().sysname == 'Linux' and os.environ['CUDA_VISIBLE_DEVICES'] == ''
     assert not torch.cuda.is_initialized()
@@ -41,8 +43,14 @@ def main():
     for name,expected in manifest['files'].items():
         path = state/name
         assert path.stat().st_size == expected['bytes'] and sha(path) == expected['sha256'], name
-    steps = result['checkpoints']
-    assert steps in ([0,1],[0,2])
+    steps = result_steps(result)
+    restored=verify_readout_restores(result)
+    if result.get('extended_source_curve_readout',False):
+        for rank in range(8):
+            migration=json.loads((state/'readout-case-migration'/f'env-{rank:02d}.json').read_bytes())
+            assert migration['original_SFT_checkpoint0'] and migration['read_only_DEV']
+            assert migration['next_reset_ordinal']==0 and migration['exact256_group_prefix_verified']
+            assert migration['native_sampler_and_RNG_restore_retained']
     cases = json.loads((ROOT/'MOTUS-SOURCE-READOUT-CASES.json').read_bytes())[result['bank']]
     noises,initial,episodes = {},{},{}
     physical = dict(delivered_targets=0,physics_steps=0,duration_seconds=0.)
@@ -126,7 +134,9 @@ def main():
     discordant = gains+losses
     pvalue = min(1.,2*sum(math.comb(discordant,k) for k in range(min(gains,losses)+1))/2**discordant) if discordant else 1.
     gain = (gains-losses)/64
-    output = BASE/(identity+'-readback01');output.mkdir()
+    output_identity=args.output_identity or identity+'-readback01'
+    assert re.fullmatch(r'[a-z][a-z0-9-]+',output_identity)
+    output = BASE/output_identity;output.mkdir()
     write(output/'RESULT.json',dict(status='passed_independent_paired_source_trace_noise_readback',
         source_commit=os.environ['TASK_SOURCE'],algorithm=result['algorithm'],bank=result['bank'],
         selected_training_iteration=steps[-1],
@@ -138,6 +148,8 @@ def main():
         gained_cases=gains,lost_cases=losses,paired_gain=gain,exact_two_sided_paired_p=pvalue,paired=paired,
         practical_and_statistical_threshold_passed=(gain>=.1 and pvalue<.05),
         effective_source_confirmation_passed=(result['bank']=='confirmation' and gain>=.1 and pvalue<.05),
+        extended_source_curve_readout=bool(result.get('extended_source_curve_readout',False)),
+        independent_restore_audit=restored,
         one_training_seed_only=True,held_out_transfer_claim=False,optimizer_updates=0,gpu_seconds=0,physical=physical))
     print('PAIRED_RESULT',gains,losses,'gain',gain,'p',pvalue,flush=True)
 

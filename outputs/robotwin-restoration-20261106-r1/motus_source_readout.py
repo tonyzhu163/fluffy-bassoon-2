@@ -26,15 +26,13 @@ from fluffy_bassoon.meta_rl.rlinf_native_ppo import cpu_tree, json_metrics, sha,
 from fluffy_bassoon.meta_rl.tensor_archive import read_tensor
 from rlinf.scheduler import Channel
 from rlinf.utils.metric_utils import compute_evaluate_metrics
+from motus_curve_readout import selected_steps, allowed_steps, original_sft_restore
 
 ROOT = Path(__file__).resolve().parent
 
 
 def selected_iterations(plan):
-    step = plan.get('selected_training_iteration', 2)
-    assert type(step) is int and step in (1, 2)
-    assert set(plan['checkpoints']) == {'0', str(step)}
-    return (0, step)
+    return selected_steps(plan)
 
 
 def selected_seeds(bank, panel, rank):
@@ -83,7 +81,7 @@ class ReadoutRollout(teacher.MotusRollout):
 
     def readout_begin(self, step, panel):
         self._flush_pilot_io()
-        assert 0 <= panel < 4 and step in (0,1,2)
+        assert 0 <= panel < 4 and step in allowed_steps(self.cfg)
         seed = 31000+100*panel+self._rank
         random.seed(seed);np.random.seed(seed);torch.manual_seed(seed);torch.cuda.manual_seed_all(seed)
         self._readout_label = f'policy-{step:04d}-panel-{panel:02d}'
@@ -134,6 +132,21 @@ class ReadoutRollout(teacher.MotusRollout):
 
 
 class ReadoutEnvironment(teacher.MotusEnvironment):
+    def pilot_restore(self,directory):
+        state=json.loads((Path(directory)/f'motus-case-schedule-env-{self._rank:02d}.json').read_bytes())
+        if original_sft_restore(self.cfg,self._motus_schedule,state,directory):
+            # Retain the original native sampler/RNG restore. Only this explicit
+            # C0 readout accepts the old manifest; training is never invoked.
+            result=runtime.PilotEnvironment.pilot_restore(self,directory)
+            self._paired_reset_ordinal=0
+            write(Path(self.cfg.native_pilot.output)/'readout-case-migration'/f'env-{self._rank:02d}.json',dict(
+                original_SFT_checkpoint0=True,read_only_DEV=True,next_reset_ordinal=0,
+                original_manifest_sha256=state['manifest_sha256'],
+                extended_manifest_sha256=self._motus_schedule.sha256,
+                exact256_group_prefix_verified=True,native_sampler_and_RNG_restore_retained=True))
+            return result
+        return super().pilot_restore(directory)
+
     def init_worker(self):
         root = teacher.configure_environment(self)
         result = runtime.PilotEnvironment.init_worker(self)
@@ -170,14 +183,21 @@ def same_signature(a,b):
 def configuration(plan,output):
     cfg = OmegaConf.create(json.loads(Path(plan['original_config']).read_bytes()))
     method = plan['algorithm']
-    for key,name in [('case','MOTUS-PPO-GROUP1-CASES.json' if method=='ppo' else 'MOTUS-TRAIN-CASES.json'),
+    extended=plan.get('extended_source_curve_readout',False)
+    if extended:
+        selected_iterations(plan)
+        assert cfg.native_pilot.extended_source_curve and method=='grpo'
+    case_name=('MOTUS-CURVE-GRPO-CASES.json' if extended else
+        'MOTUS-PPO-GROUP1-CASES.json' if method=='ppo' else 'MOTUS-TRAIN-CASES.json')
+    for key,name in [('case',case_name),
             ('dev','MOTUS-DEV-CASES.json')]:
         cfg.native_pilot[f'{key}_manifest_path'] = str(ROOT/name)
         assert sha(ROOT/name) == cfg.native_pilot[f'{key}_manifest_sha256']
     teacher.validate(cfg)
     assert cfg.native_pilot.require_behavior_likelihood_match and cfg.actor.micro_batch_size == 32
     assert cfg.native_pilot.world_size in (8,'8') and cfg.native_pilot.comparison_algorithm == method
-    assert not cfg.runner.resume_dir
+    if not extended:assert not cfg.runner.resume_dir
+    cfg.runner.resume_dir=None  # This entry restores only the two explicit read-only inputs.
     cfg.runner.logger.log_path = str(Path(os.environ['TASK_LOCAL'])/'logs')
     cfg.runner.logger.experiment_name = plan['output_identity']
     cfg.runner.per_worker_log_path = str(output/'workers')
@@ -188,8 +208,11 @@ def configuration(plan,output):
     cfg.native_pilot.maximum_actions = 32768
     cfg.native_pilot.passive_controller_source = os.environ['TASK_CONTROLLER']
     cfg.native_pilot.passive_controller_sha256 = os.environ['TASK_CONTROLLER_SHA']
-    cfg.native_pilot.readout_reference_root = plan['source_state']
+    cfg.native_pilot.readout_reference_root = (plan['source_SFT_reference_state'] if extended else plan['source_state'])
     cfg.native_pilot.readout_bank = plan['bank']
+    if extended:
+        cfg.native_pilot.extended_source_curve_readout=True
+        cfg.native_pilot.readout_selected_iteration=plan['selected_training_iteration']
     assert plan['bank'] in ('dev','confirmation')
     assert cfg.env.eval.total_num_envs == 16 and cfg.env.eval.rollout_epoch == 1
     return cfg
@@ -212,6 +235,10 @@ def main():
     groups = []
     report = dict(status='starting',algorithm=plan['algorithm'],bank=plan['bank'],panels=[],restores=[],
         optimizer_updates=0,source_commit=os.environ['TASK_SOURCE'],gain_claim=False)
+    if plan.get('extended_source_curve_readout',False):
+        report.update(extended_source_curve_readout=True,input_checkpoints=plan['checkpoints'],
+            original_SFT_reference_state=plan['source_SFT_reference_state'],
+            fixed_DEV_only=True,new_confirmation=False)
     try:
         for role,worker in [('actor',ReadoutActor),('rollout',ReadoutRollout),('env',ReadoutEnvironment)]:
             groups.append(worker.create_group(cfg).launch(cluster,name=cfg[role].group_name,

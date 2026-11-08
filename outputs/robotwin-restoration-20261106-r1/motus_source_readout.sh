@@ -20,6 +20,9 @@ TASK_ID=$("$TASK_PYTHON" -c 'import json,sys,re;p=json.load(open(sys.argv[1]));s
 import json,sys
 p=json.load(open(sys.argv[1]))
 assert p['status']=='admitted' and p['cpu_preflight_passed']
+if p.get('extended_source_curve_readout',False):
+ assert p['budget_extension_approved'] and p['endpoint_input_preflight_passed']
+ assert p['independent_training_readback_passed'] and p['bank']=='dev'
 assert p['closed_conservative_gpu_seconds']+p['other_active_reserved_gpu_seconds']+p['reserved_gpu_seconds']==p['all_worst_gpu_seconds']<=p['approved_cap_gpu_seconds']
 PY
 mkdir "$TASK_OUT"
@@ -88,9 +91,11 @@ with probe.open('xb') as f:f.write(b'robotwin-optimized-ppo');f.flush();os.fsync
 assert probe.read_bytes()==b'robotwin-optimized-ppo';probe.unlink()
 local.mkdir();cold.mkdir()
 assert sha(Path(p['cpu_preflight_result']))==p['cpu_preflight_sha256']
-selected=p.get('selected_training_iteration',2)
-assert type(selected) is int and selected in (1,2)
-steps=[0,selected]
+if p.get('extended_source_curve_readout',False):
+ assert sha(Path(p['endpoint_input_preflight_result']))==p['endpoint_input_preflight_sha256']
+ assert sha(Path(p['independent_training_readback_result']))==p['independent_training_readback_sha256']
+from motus_curve_readout import selected_steps
+steps=list(selected_steps(p))
 assert set(p['checkpoints'])==set(map(str,steps))
 for step in map(str,steps):
  receipt=p['checkpoints'][step];checkpoint=Path(receipt['path'])
