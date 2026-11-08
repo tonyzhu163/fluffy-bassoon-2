@@ -202,6 +202,16 @@ configuration and paired old-seed expert behavior before another fresh scan.
 No new GPU job is admitted by this CPU preparation, and the longer source
 learning experiment remains separately limited by the pending budget extension.
 
+The first isolated GPU control imported the full native cuRobo API on its
+allocated device, then stopped before any expert call because the native
+`collision_spheres` YAML also contained a stale absolute path. The first CPU
+path check covered the URDF and meshes but omitted this dependency. No expert
+scene, VLA action, SGD or scene-bank publication completed. Its123GPU-second
+creation-to-release cost brings closed usage to357635GPU-seconds. The next
+CPU qualification repairs only URDF/collision-file locations in local copies,
+checks every nested absolute reference and preserves all numerical/collision
+settings. Expert behavior is still unqualified. [Device control closeout](MOTUS-CUROBO-CONTROL01-CLOSEOUT.json).
+
 ## Evidence
 
 - [PPO training closeout](MOTUSBEHAVIORPPO01-CLOSEOUT.json) and

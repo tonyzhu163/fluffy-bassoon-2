@@ -101,8 +101,11 @@ are complete. GRPO's larger DEV curve is6/64→10/64→11/64; checkpoint2 versus
 has three gains/two losses and p=1.0. The small progress-panel regression was
 not supported by this larger comparison. Checkpoint2 confirmation stays negative.
 
-Closed usage is357512GPU-seconds (99.308889h);2488GPU-seconds remain in the
-100h cumulative cap. No GPU jobs are active or reserved. Further complete
+Closed usage is357635GPU-seconds (99.343056h);2365GPU-seconds remain in the
+100h cumulative cap. The first native cuRobo device control is closed after a
+stale collision-YAML path failure before expert planning. A second four-scene
+control reserves1800GPU-seconds, pending all-asset Linux CPU qualification;
+worst cumulative usage359435GPU-seconds (99.843056h). No GPU job is active. Further complete
 training needs additional approval. The prepared `MOTUS-LONGER-CURVE-PROPOSAL.md`
 requests155h cumulative for eight fresh GRPO collections through checkpoint10,
 fixed DEV and new confirmation, with Linux qualification before admission.
@@ -128,7 +131,9 @@ run-local YAML path repairs preserve every other field while verifying30 mesh
 files. Full MotionGen import constructs a CUDA tensor, so actual device and
 expert qualification are still required. See `MOTUS-CUROBO-CPU03.json`.
 Do not replace source training/evaluation or admit a new scene bank from these
-CPU checks. All owned GPU/CPU work is closed; no new GPU reservation is active.
+CPU checks. The second control additionally verifies the collision-sphere files
+and all absolute references, preserving the native table-only collision scope.
+It cannot qualify a fresh bank or a learning gain by itself.
 Check advancing progress after launch and monitor at most20 minutes apart;
 inspect the exact owned job and preserve its latest complete checkpoint before
 any intervention. Record live progress only in our row of `outputs/coordination.md`.
