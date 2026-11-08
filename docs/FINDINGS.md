@@ -1284,3 +1284,17 @@ confirmation remains negative; no effective PPO/GRPO or transfer is established.
 The GPU allocation is released and cumulative cost is98.943889GPUh.
 [Curve receipt](../outputs/robotwin-restoration-20261106-r1/MOTUS-SOURCE-GRPO-CURVE01-READBACK.json),
 [complete audit](../outputs/robotwin-restoration-20261106-r1/PPO-GRPO-AUDIT-RESULT.md).
+
+### Native RoboTwin expert backend positive control
+
+On four predeclared old `place_phone_stand` EVAL scenes, isolated cuRobo0.7.8
+completed4/4 experts versus0/4 for the preserved full-state MPLib control.
+Initial states and all policy-camera images match by hash. The native table-only
+collision world, spheres and numerical settings are retained; only stale URDF
+and collision-file locations change in run-local copies. Independent Linux
+readback verifies24 planner calls, allocated-device binding, at least88.96GiB
+CUDA free memory and complete cleanup. No VLA action, SGD or fresh-bank
+publication occurs. This qualifies the native expert for subsequent policy-free
+scene selection; it does not establish PPO/GRPO effectiveness or explain the
+completed weak learning result.
+[Control and evidence](../outputs/robotwin-restoration-20261106-r1/MOTUS-CUROBO-CONTROL02-CLOSEOUT.json).

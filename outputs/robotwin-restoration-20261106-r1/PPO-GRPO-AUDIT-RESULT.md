@@ -225,7 +225,12 @@ The next bounded scan uses the unchanged ascending fresh-candidate declaration,
 excludes all TRAIN/old EVAL scenes, and publishes only a complete64-scene bank
 with no policy outcomes. The Linux selection/native-flow/camera/storage CPU
 qualification passes; no fresh bank is established by these CPU checks.
-[Fresh scan contract](MOTUS-FRESH-SCENES03-CONTRACT.json).
+[Fresh scan contract](MOTUS-FRESH-SCENES04-CONTRACT.json).
+The third scan stopped before scenes on a launcher cap assertion typo, costing
+47GPU-seconds. The corrected fourth launcher executes its real admitted guard
+on CPU and reproduces the previous rejection before admission. Closed usage
+is now357870GPU-seconds; a2100GPU-second reserve remains under100h.
+[Guard qualification](MOTUS-FRESH-SCENES-CPU06.json).
 
 ## Evidence
 

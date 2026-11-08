@@ -69,7 +69,7 @@ Matching this file does not establish that all imported dependencies match.
 The expert backend is another dependency distinction. The pinned
 [RLinf installer](https://github.com/RLinf/RLinf/blob/c605b9d55ed93a180119b099e6f836abff293b08/requirements/install.sh#L3724)
 installs cuRobo for NVIDIA without an exact revision. Our qualified runtime
-uses MPLib and has no cuRobo installed. In the pinned
+uses MPLib; an isolated cuRobo backend is qualified separately. In the pinned
 [RoboTwin planner](https://github.com/RoboTwin-Platform/RoboTwin/blob/dca9ec682688821c42944eacd7f5dd9bfb15396f/envs/robot/planner.py),
 cuRobo builds a table-only obstacle world; the MPLib path takes an early SAPIEN
 scene snapshot. Rebuilding MPLib after task actor loading adds grasped objects
@@ -116,6 +116,13 @@ uses a VLM-side critic for pi0.5, and CFG-Policy also documents VLM features
 for that model. There are multiple published/released recipes here. A VLM
 critic is a reasonable separately tested candidate, not proof that the
 released RoboTwin expert-side critic is broken.
+
+The isolated legacy backend now passes an actual4/4 old-scene expert control,
+versus preserved full-state MPLib0/4, with initial image/state hashes equal and
+native table-only collisions retained. Only stale asset-file paths change in
+local YAML copies. Independent device/asset/cleanup readback passes; no VLA or
+SGD runs. This supports a subsequent fresh policy-free scene scan, without
+establishing a source learning gain. [Expert evidence](../../outputs/robotwin-restoration-20261106-r1/MOTUS-CUROBO-CONTROL02-CLOSEOUT.json).
 
 ## What actually happened in this repository
 
