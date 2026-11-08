@@ -65,8 +65,8 @@ that estimate with startup/cleanup margin and independent endpoint readouts:
 | One fixed confirmation readout |3.333|12000GPU-s including startup/cleanup|
 | Total additional envelope |55|Historical usage remains charged|
 
-Reconciled current closed use is99.206112GPUh after the bounded scene diagnostics;
-the full55h future envelope would reach154.206112GPUh. No GPU jobs remain active.
+Reconciled current closed use is99.308334GPUh after the bounded scene diagnostics;
+the full55h future envelope would reach154.308334GPUh. No GPU jobs remain active.
 
 Proposed cumulative cap: **155 GPU-hours**, up from100. Final admission must
 use the reconciled current ledger and preserve the total155h hard cap.
@@ -108,7 +108,7 @@ held-out-task training, a new reward objective or student experiments.
 The first segment is implemented in `motus_curve.py`, `motus_curve_entry.py`
 and `train_motus_curve01.sh`: checkpoint2→6, four fresh collections,60 new
 Adam updates/rank, final counter90. The prepared contract reserves at most
-20GPUh including startup/release. Its worst cumulative total is119.206112h,
+20GPUh including startup/release. Its worst cumulative total is119.308334h,
 which exceeds the approved100h and therefore remains unlaunchable.
 
 Actual Linux CPU qualification at commit
@@ -263,7 +263,7 @@ The first visibility-guard attempt charged61GPU-seconds. The corrected second
 attempt passed its actual one-GPU probe, constructed48 exact requested scenes,
 and recorded48 failed expert checks. Stop/release at11:27:36Shanghai charged
 618GPU-seconds; no bank, VLA call or optimizer update was produced. Closed
-usage is now356877GPU-seconds (99.206112h), leaving3123 seconds under100h. All
+usage is now356877GPU-seconds (99.308334h), leaving3123 seconds under100h. All
 raw records/logs and their hashes are preserved in
 `MOTUS-FRESH-SCENES02-CLOSEOUT.json`. The saved intermediate RESULT retains
 its last `collecting` status; the scheduler stop receipt governs the outcome.
@@ -296,3 +296,14 @@ calls fail, while every whole expert episode fails. No further scene scan is
 admitted. Closed357142GPU-s leaves2858 under100h. See
 `MOTUS-PLANNER-CONTROL01-CLOSEOUT.json`. Inspect actual planning-world
 synchronization and task failure stages before allocating another diagnostic.
+
+Subsequent world-sync control charged186GPU-s and failed before solving
+because the phone was absent from the early planning-world snapshot. Native
+post-setup reconstruction charged184GPU-s and failed before completing because
+scene-to-FCL conversion rejects task mesh scale0.078. Both have paired initial
+observations and independent readbacks; neither published a bank or used
+VLA/SGD. Closed357512GPU-s leaves2488 seconds, with no active reservation.
+See `MOTUS-PLANNER-CONTROL02-CLOSEOUT.json` and
+`MOTUS-PLANNER-CONTROL03-CLOSEOUT.json`. Qualify actual mesh-scale geometry on
+Linux CPU before another bounded GPU positive control. These bridge failures
+remain separate from the completed weak PPO/GRPO learning experiment.

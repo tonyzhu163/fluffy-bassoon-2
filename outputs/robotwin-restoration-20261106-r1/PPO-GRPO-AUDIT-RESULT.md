@@ -161,9 +161,20 @@ The next isolated candidate uses MPlib's documented
 before planning. Its installed SDK route passes Linux CPU references over all88
 actual38-DOF states and264 single/batch calls; this does not qualify geometry or
 expert success. [CPU reference](MOTUS-PLANNER-SYNC-CPU01.json). Require paired
-GPU controls before another fresh scan. Do not disable collision checks to
-force validity, reuse consumed confirmation as fresh, or claim that a planner
-repair has improved PPO/GRPO without new learning evidence.
+GPU controls before another fresh scan. The actual second control then fails
+all4 synchronization attempts before solving: the installed SDK reports the
+phone missing from PlanningWorld. The native initialization constructs planners
+before task actor loading. This is evidence for an incomplete scene snapshot;
+updating that snapshot alone is insufficient. [Second control](MOTUS-PLANNER-CONTROL02-CLOSEOUT.json).
+Post-setup reconstruction through the native constructor then fails all4
+controls before any repaired solver call: scene-to-FCL conversion rejects task
+mesh scale0.078. All initial observations remain paired; no collision or
+geometry was removed. [Third control](MOTUS-PLANNER-CONTROL03-CLOSEOUT.json).
+The upstream [conversion source](https://motion-planning-lib.readthedocs.io/latest/_modules/mplib/sapien_utils/conversion.html)
+also requires unit scale for convex meshes. A scale-preserving conversion needs
+numerical CPU qualification and actual GPU expert success before another scan. Do not disable collision checks to force validity, reuse
+consumed confirmation as fresh, or claim that a planner repair has improved
+PPO/GRPO without new learning evidence.
 
 ## Evidence
 
