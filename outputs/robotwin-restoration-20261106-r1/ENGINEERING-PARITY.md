@@ -23,8 +23,10 @@ passed. Each covers three complete boundaries and both actual rollout batches.
 Both source DEV readouts subsequently passed full-model instrumentation, all24-worker
 restores for checkpoints0/2, all8 actor-state guards, and128 paired physical episodes.
 Independent CPU cold/physical/noise readbacks passed for both methods. These are
-actual GPU and cold-readback qualifications. Disjoint confirmation remains pending;
-the observed DEV gains do not establish an effective learner.
+actual GPU and cold-readback qualifications. Disjoint confirmation also passed all execution and independent readback
+checks, but7/64→10/64 with p=.581 failed the effectiveness gate. The shared
+engineering optimizations now support valid training and evaluation; an effective
+learner remains unestablished.
 
 Compilation, different model kernels, larger actor batches or changed sampling
 cadence require their own numerical qualification. They are not implicitly

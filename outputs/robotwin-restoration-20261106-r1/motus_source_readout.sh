@@ -88,7 +88,11 @@ with probe.open('xb') as f:f.write(b'robotwin-optimized-ppo');f.flush();os.fsync
 assert probe.read_bytes()==b'robotwin-optimized-ppo';probe.unlink()
 local.mkdir();cold.mkdir()
 assert sha(Path(p['cpu_preflight_result']))==p['cpu_preflight_sha256']
-for step in ('0','2'):
+selected=p.get('selected_training_iteration',2)
+assert type(selected) is int and selected in (1,2)
+steps=[0,selected]
+assert set(p['checkpoints'])==set(map(str,steps))
+for step in map(str,steps):
  receipt=p['checkpoints'][step];checkpoint=Path(receipt['path'])
  assert sha(checkpoint/'MANIFEST.json')==receipt['manifest_sha256']
  manifest=json.loads((checkpoint/'MANIFEST.json').read_bytes())
@@ -97,7 +101,7 @@ for step in ('0','2'):
  for name,row in manifest['files'].items():
   assert (staged/name).stat().st_size==row['bytes'] and sha(staged/name)==row['sha256']
  assert sha(staged/'MANIFEST.json')==receipt['manifest_sha256']
-write(out/'input-staging.json',dict(checkpoints_staged=[0,2],full_data_readback=True,
+write(out/'input-staging.json',dict(checkpoints_staged=steps,full_data_readback=True,
  source_commit=os.environ['TASK_SOURCE'],optimizer_updates=0,simulator_actions=0))
 model=Path(os.environ['NATIVE_PPO_MODEL'])
 assert sha(model/'model.safetensors')==p['model_sha256']
@@ -108,7 +112,7 @@ if font.is_file():(local/font.name).symlink_to(font)
 write(out/'admission.json',dict(source_commit=os.environ['TASK_SOURCE'],model_hashes_verified=True,
  new_worker_pfs_output_bytes=0,bos_write_read_fsync=True,
  local_staging_cap_gib=p['local_staging_cap_gib'],bos_run_cap_gib=p['bos_run_cap_gib'],
- optimizer_updates=0,checkpoints_read_only=[0,2],native_eval_batch=2))
+ optimizer_updates=0,checkpoints_read_only=steps,native_eval_batch=2))
 PY
 export XDG_CACHE_HOME=$TASK_LOCAL/cache OPENPI_DATA_HOME=$TASK_LOCAL/openpi
 export HF_HOME=$TASK_LOCAL/hf TORCH_HOME=$TASK_LOCAL/torch TMPDIR=$TASK_LOCAL/tmp
@@ -139,6 +143,8 @@ from pathlib import Path
 from fluffy_bassoon.meta_rl.rlinf_native_ppo import sha,write
 out,state=map(Path,sys.argv[1:]);r=json.loads((state/'RESULT.json').read_bytes())
 assert r['status']=='complete_readonly_full_restore_paired_source_readout'
+plan=json.loads(Path(__import__('os').environ['TASK_READOUT_PLAN']).read_bytes())
+assert r['checkpoints']==[0,plan.get('selected_training_iteration',2)]
 assert r['episodes']==128 and r['optimizer_updates']==0 and len(r['panels'])==8
 assert r['actor_Adam_scheduler_scaler_RNG_unchanged']
 assert json.loads((out/'resources.json').read_bytes())['sampled_reserve_passed']

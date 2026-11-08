@@ -30,6 +30,13 @@ from rlinf.utils.metric_utils import compute_evaluate_metrics
 ROOT = Path(__file__).resolve().parent
 
 
+def selected_iterations(plan):
+    step = plan.get('selected_training_iteration', 2)
+    assert type(step) is int and step in (1, 2)
+    assert set(plan['checkpoints']) == {'0', str(step)}
+    return (0, step)
+
+
 def selected_seeds(bank, panel, rank):
     assert len(bank) == 64 and len(set(bank)) == 64
     assert 0 <= panel < 4 and 0 <= rank < 8
@@ -76,7 +83,7 @@ class ReadoutRollout(teacher.MotusRollout):
 
     def readout_begin(self, step, panel):
         self._flush_pilot_io()
-        assert 0 <= panel < 4 and step in (0,2)
+        assert 0 <= panel < 4 and step in (0,1,2)
         seed = 31000+100*panel+self._rank
         random.seed(seed);np.random.seed(seed);torch.manual_seed(seed);torch.cuda.manual_seed_all(seed)
         self._readout_label = f'policy-{step:04d}-panel-{panel:02d}'
@@ -212,7 +219,7 @@ def main():
         actor,rollout,env = groups
         runner = teacher.MotusRunner(cfg=cfg,actor=actor,rollout=rollout,env=env,reward=None)
         runner.init_workers()
-        for step in (0,2):
+        for step in (0,1,2):
             checkpoint = Path(os.environ['TASK_LOCAL'])/'checkpoints'/f'global_step_{step}'
             assert sha(checkpoint/'MANIFEST.json') == plan['checkpoints'][str(step)]['manifest_sha256']
             actor.load_checkpoint(str(checkpoint/'actor')).wait()
@@ -247,7 +254,7 @@ def main():
             assert all(same_signature(a,b) for a,b in zip(before,after,strict=True))
             report['restores'][-1]['actor_after'] = after
         report.update(status='complete_readonly_full_restore_paired_source_readout',episodes=128,
-            checkpoints=[0,2],full24worker_restores_each_policy=True,actor_Adam_scheduler_scaler_RNG_unchanged=True,
+            checkpoints=list(selected_iterations(plan)),full24worker_restores_each_policy=True,actor_Adam_scheduler_scaler_RNG_unchanged=True,
             independent_trace_noise_and_pair_readback_required=True,source_effectiveness_not_yet_claimed=True)
     finally:
         write(output/'RESULT.json',report)

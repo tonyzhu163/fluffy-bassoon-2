@@ -89,11 +89,19 @@ native RLinf offload/onload; every captured owned Adam descriptor and group stay
 exact. Twelve Linux CPU core tests and the actual native functions qualify the
 narrow exception. All8 GPU guards and complete checkpoint2 readouts remain required.
 
-Closed usage is337,838 GPU-seconds (93.844h). Selected GRPO confirmation
-reserves12,000 GPU-seconds, including startup/cleanup. Worst total349,838
-GPU-seconds (97.177h), leaving10,162 GPU-seconds unreserved. Worker limit1,350s,
-scheduler24min, creation-to-release watchdog1,500s. Reconcile its release before
-planning additional accelerator work;100h is a cumulative hard cap.
+Selected checkpoint2 GRPO confirmation is complete and independently verified:
+SFT7/64→10/64, eight gains/five losses, +4.6875points, paired p=.5810547.
+The predeclared effectiveness gate failed. Do not pool DEV and confirmation
+or reselect a checkpoint on confirmation. Student work remains paused.
+
+Closed usage is347,014 GPU-seconds (96.393h). One final checkpoint1 GRPO
+existing-DEV learning-curve diagnostic reserves12,000 GPU-seconds including
+startup/cleanup; it checks the second-cycle regression hypothesis without
+changing checkpoint2 confirmation. Worst total359,014 GPU-seconds (99.726h),
+leaving986 GPU-seconds unreserved. Worker limit1,350s, scheduler24min,
+creation-to-release watchdog1,500s. No additional complete training cycle fits
+safely. Reconcile this release and prepare any continuation before seeking a
+cap increase;100h is a cumulative hard cap.
 Each new job has a fresh output identity and immutable reviewed main commit.
 Check advancing progress after launch and monitor at most20 minutes apart;
 inspect the exact owned job and preserve its latest complete checkpoint before

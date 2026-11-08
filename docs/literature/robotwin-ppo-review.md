@@ -18,9 +18,12 @@ whole-batch advantage readbacks passed for both. Their small progress panels
 were PPO2/16→4/16→5/16 and GRPO2/16→4/16→3/16. Independent64-scene
 paired DEV now gives SFT6/64, PPO10/64 (six gains,two losses,p=.2891), and
 GRPO11/64 (five gains,no losses,p=.0625). Full cold/physical/noise readbacks pass.
-GRPO is selected under the precommitted larger-gain rule; disjoint confirmation
-remains required. Neither DEV result meets the10-point/p<.05 source gate, nor
-demonstrates that the released recipe fails.
+GRPO was selected under the precommitted larger-gain rule before disjoint
+confirmation. Confirmation gives SFT7/64→GRPO10/64, eight gains/five losses,
++4.6875points, exact paired p=.5810547. It fails the predeclared10-point/p<.05
+gate. Full process restores and independent trace/noise readbacks pass. No
+effective source learner is established; this does not demonstrate that the
+released recipe fails. [Confirmation evidence](../../outputs/robotwin-restoration-20261106-r1/MOTUS-SOURCE-GRPO-CONFIRMATION01-READBACK.json).
 
 Three separate questions need separate evidence:
 
@@ -28,7 +31,7 @@ Three separate questions need separate evidence:
 | --- | --- |
 | Can our learner update real rollout data and restore exactly? | Yes: the B32 actual-data update qualification passed15 new Adam steps/rank and independent cold checkpoint/owned-Adam readback on all8 actors. |
 | Can the complete optimized collector/learner cycle run repeatedly at scale? | Corrected PPO and GRPO each passed two fresh combined cycles; all three cold boundaries and both full actor batches independently verified. |
-| Does sustained PPO improve the selected joint motor on our source tasks? | Not established; audited paired DEV improves6.25points with PPO and7.81points with GRPO, below the gate; confirmation pending. |
+| Does sustained PPO improve the selected joint motor on our source tasks? | Not established; audited paired DEV improves6.25points with PPO and7.81points with GRPO, below the gate; selected GRPO confirmation+4.69points,p=.581 also fails. |
 
 ## Direct and adjacent literature
 
@@ -141,8 +144,8 @@ Twelve core checkpoint tests qualify a narrow equivalence between absent and
 empty state for unowned zero-length shards. Owned or unregistered parameters
 remain strict. This diagnoses the interrupted readout, not a learning failure;
 The corrected readouts subsequently passed all GPU guards for both checkpoints
-and both methods, plus independent cold/physical/noise readback. Confirmation
-remains pending.
+and both methods, plus independent cold/physical/noise readback. The selected
+GRPO confirmation also passed every execution check but failed the learning gate.
 [Actual-layout and reference audit](../../outputs/robotwin-restoration-20261106-r1/MOTUS-EMPTY-STATE-AUDIT-CPU01.json).
 
 ## Ranked explanations and discriminating checks
@@ -240,8 +243,8 @@ The corrected source-task PPO and GRPO controls each completed iteration0
 collection, update1, a new policy1 collection and update2. Independently verified
 cold checkpoints and full-batch numerical audits qualify that execution. The
 user requires effective PPO/GRPO before more student work, so the immediate gate
-is independent paired evaluation of SFT versus preselected checkpoint2, followed
-by disjoint confirmation after method selection. The small training panels do
+has been evaluated with paired SFT versus preselected checkpoint2 DEV and
+disjoint confirmation after method selection; confirmation did not pass. The small training panels do
 not select the method. Use measured useful throughput and preserve B32 likelihood
 semantics when scaling; filling accelerator memory is not a numerical qualification.
 

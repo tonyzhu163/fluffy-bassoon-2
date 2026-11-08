@@ -11,7 +11,7 @@ import torch
 
 from fluffy_bassoon.meta_rl.rlinf_native_ppo import sha, write
 from fluffy_bassoon.meta_rl.tensor_archive import read_tensor
-from motus_source_readout import configuration, observe_native_ODE, selected_seeds
+from motus_source_readout import configuration, observe_native_ODE, selected_seeds, selected_iterations
 from recovery_signature import digest
 
 ROOT = Path(__file__).resolve().parent
@@ -34,6 +34,9 @@ def main():
         result,noise = observe_native_ODE(MethodType(pinned.Pi0.sample_actions,fake),32,
             observation,num_steps=5)
         assert torch.equal(reference,result) and torch.equal(reference_rng,torch.get_rng_state())
+    for iteration in (1,2):
+        assert selected_iterations(dict(selected_training_iteration=iteration,checkpoints={'0':{},str(iteration):{}})) == (0,iteration)
+    assert selected_iterations(dict(checkpoints={'0':{},'2':{}})) == (0,2)
     cases = json.loads((ROOT/'MOTUS-SOURCE-READOUT-CASES.json').read_bytes())
     assert len(set(cases['dev']+cases['confirmation'])) == 128
     for name in ('dev','confirmation'):
@@ -79,13 +82,13 @@ def main():
             for field in ('action','model_action'):
                 assert torch.equal(left['forward_sampling_fields'][field],right['forward_sampling_fields'][field])
     subprocess.run(['bash','-n',str(ROOT/'motus_source_readout.sh')],check=True)
-    output = BASE/'cpumotussourcereadout04';output.mkdir()
+    output = BASE/'cpumotussourcereadout05';output.mkdir()
     write(output/'RESULT.json',dict(status='passed_readout_code_and_native_ODE_observation_reference',
         source_commit=os.environ['TASK_SOURCE'],gpu_seconds=0,models_or_simulators_constructed=False,
         actual_pinned_ODE_loop_used=True,deterministic_suffix_stub=True,
         ODE_output_and_final_RNG_exact=True,recorded_noise_shape=list(noise.shape),
         full_VLA_GPU_and_source_SFT_action_calibration_required_in_actual_readout=True,
-        checkpoint2_input_admission_still_required=True,configurations=rows,
+        selected_checkpoint_input_admission_still_required=True,checkpoint1_and2_selection_qualified=True,configurations=rows,
         source_SFT_baseline_all48_predictions_match=True,source_sampling_file_hashes=source_hashes,
         entry_sha256=sha(ROOT/'motus_source_readout.py'),launcher_sha256=sha(ROOT/'motus_source_readout.sh')))
 

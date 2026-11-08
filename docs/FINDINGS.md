@@ -1256,3 +1256,16 @@ with native RLinf offload/onload and corrected narrowly;12 Linux core tests pass
 Evidence: [PPO readback](../outputs/robotwin-restoration-20261106-r1/MOTUS-SOURCE-PPO-DEV03-READBACK.json),
 [GRPO readback](../outputs/robotwin-restoration-20261106-r1/MOTUS-SOURCE-GRPO-DEV02-READBACK.json),
 [method selection](../outputs/robotwin-restoration-20261106-r1/MOTUS-SOURCE-SELECTION.json).
+
+### Corrected Motus source confirmation did not pass
+
+The preselected two-cycle GRPO checkpoint2 completed the disjoint64-scene paired
+confirmation after DEV method selection was committed. SFT succeeded7/64,
+GRPO10/64: eight gained and five lost scenes, +4.6875 percentage points, exact
+two-sided paired p=.5810547. It fails the predeclared≥10-point and p<.05 gate.
+All24-worker restores per policy, all8 actor Adam/scheduler/scaler/RNG guards,
+cold file hashes, physical traces,192 paired actual noise tensors and32 initial
+B2 observations passed independent Linux readback. No effective PPO/GRPO source
+learner or held-out transfer is established. Student training remains paused.
+[Confirmation receipt](../outputs/robotwin-restoration-20261106-r1/MOTUS-SOURCE-GRPO-CONFIRMATION01-READBACK.json),
+[review](literature/robotwin-ppo-review.md).

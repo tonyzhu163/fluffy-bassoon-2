@@ -41,10 +41,12 @@ def main():
     for name,expected in manifest['files'].items():
         path = state/name
         assert path.stat().st_size == expected['bytes'] and sha(path) == expected['sha256'], name
+    steps = result['checkpoints']
+    assert steps in ([0,1],[0,2])
     cases = json.loads((ROOT/'MOTUS-SOURCE-READOUT-CASES.json').read_bytes())[result['bank']]
     noises,initial,episodes = {},{},{}
     physical = dict(delivered_targets=0,physics_steps=0,duration_seconds=0.)
-    for policy_ordinal,step in enumerate((0,2)):
+    for policy_ordinal,step in enumerate(steps):
         for panel in range(4):
             panel_rows = []
             for rank in range(8):
@@ -118,7 +120,7 @@ def main():
             native = next(v for v in result['panels'] if v['step'] == step and v['panel'] == panel)
             assert sum(v['success'] for v in panel_rows)/16 == native['metrics']['success_once']
             print(identity,step,panel,'independent traces/noise/outcomes passed',flush=True)
-    paired = [dict(seed=s,before=episodes[0,s]['success'],after=episodes[2,s]['success']) for s in cases]
+    paired = [dict(seed=s,before=episodes[0,s]['success'],after=episodes[steps[-1],s]['success']) for s in cases]
     gains = sum(not v['before'] and v['after'] for v in paired)
     losses = sum(v['before'] and not v['after'] for v in paired)
     discordant = gains+losses
@@ -127,6 +129,7 @@ def main():
     output = BASE/(identity+'-readback01');output.mkdir()
     write(output/'RESULT.json',dict(status='passed_independent_paired_source_trace_noise_readback',
         source_commit=os.environ['TASK_SOURCE'],algorithm=result['algorithm'],bank=result['bank'],
+        selected_training_iteration=steps[-1],
         GPU_result_sha256=sha(state/'RESULT.json'),all_state_files_cold_hashed=True,
         file_manifest_sha256=sha(signals/'FILES.json'),files=len(manifest['files']),
         actual_noise_all384_batch_draws_recorded=True,all192_paired_batch_draws_tensor_exact=True,
