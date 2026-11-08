@@ -146,10 +146,12 @@ def schema_reference(plans):
             configs.append(dict(step=step,native_B2_preserved=True,actual_pinned_ODE_loop_reference=True,
                 deterministic_suffix_stub=True,output_and_final_CPU_RNG_exact=True,paired_initial_draws_exact=True,
                 full_model_GPU_still_required=True,schema_fixture_not_actual_trained_checkpoint=True))
+            print('CURVE_READOUT_SCHEMA_AND_ODE_REFERENCE',step,'passed',flush=True)
         for step in (1,2):assert selected_steps(dict(selected_training_iteration=step,checkpoints={'0':{},str(step):{}}))==(0,step)
     legacy_plan=json.loads((ROOT/'MOTUS-SOURCE-GRPO-DEV02-CONTRACT.json').read_bytes())
     result=json.loads((BASE/'motus-source-grpo-dev02/state/RESULT.json').read_bytes())
     restores=[verify_one_restore(row['step'],row,legacy_plan['checkpoints'][str(row['step'])]) for row in result['restores']]
+    print('CURVE_READOUT_ACTUAL_C0_C2_COLD_RESTORE_AUDIT passed',flush=True)
     return dict(configurations=configs,all48_original_SFT_sampling_files=source_sft_references(plans[0]),
         actual_existing_GPU_C0_and_C2_restore_records_rechecked_against_full_cold_sources=restores,
         original0_1_2_selection_preserved=True,unflagged_or_confirmation6_10_rejected=True,
@@ -169,7 +171,10 @@ def main():
         GPU_readout_not_admitted=True)
     write(out/'RESULT.json',report)
     try:
-        plans=[json.loads((ROOT/name).read_bytes()) for name in CONTRACTS]
+        # Later endpoints must not depend on rewriting a previously admitted
+        # endpoint's immutable contract after code advances on main.
+        names=(args.contract,) if args.contract else CONTRACTS
+        plans=[json.loads((ROOT/name).read_bytes()) for name in names]
         for plan in plans:
             for name,expected in plan['source_files'].items():assert sha(code/name)==expected,name
             assert sha(ROOT/'motus_source_readout.py')==plan['entry_sha256']
