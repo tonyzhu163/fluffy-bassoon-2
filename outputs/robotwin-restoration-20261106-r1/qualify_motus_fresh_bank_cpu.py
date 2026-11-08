@@ -43,8 +43,9 @@ class Task:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--identity', required=True)
-    parser.add_argument('--contract', choices=('MOTUS-FRESH-SCENES02-CONTRACT.json','MOTUS-FRESH-SCENES03-CONTRACT.json'), required=True)
+    parser.add_argument('--contract', choices=('MOTUS-FRESH-SCENES02-CONTRACT.json','MOTUS-FRESH-SCENES03-CONTRACT.json','MOTUS-FRESH-SCENES04-CONTRACT.json'), required=True)
     args = parser.parse_args()
+    wrapper_name={'MOTUS-FRESH-SCENES02-CONTRACT.json':'motus_fresh_bank.sh','MOTUS-FRESH-SCENES03-CONTRACT.json':'motus_fresh_bank_curobo03.sh','MOTUS-FRESH-SCENES04-CONTRACT.json':'motus_fresh_bank_curobo04.sh'}[args.contract]
     assert re.fullmatch(r'cpumotusfreshbank[0-9]{2}', args.identity)
     assert os.uname().sysname == 'Linux' and os.environ['CUDA_VISIBLE_DEVICES'] == ''
     source = os.environ['TASK_SOURCE']; code = ROOT.parents[1]
@@ -110,12 +111,13 @@ def main():
         contract = ROOT/args.contract
         admission = json.loads(contract.read_bytes())
         for name, digest in admission['source_files'].items(): assert sha(code/name) == digest
-        subprocess.run(['bash', '-n', str(ROOT/('motus_fresh_bank_curobo03.sh' if args.contract.endswith('03-CONTRACT.json') else 'motus_fresh_bank.sh'))], check=True)
+        subprocess.run(['bash', '-n', str(ROOT/wrapper_name)], check=True)
         assert admission['closed_conservative_gpu_seconds']+admission['reserved_gpu_seconds'] == admission['all_worst_gpu_seconds']
-        assert admission['all_worst_gpu_seconds'] == (359923 if args.contract.endswith('03-CONTRACT.json') else 359859)
+        ledger=json.loads((ROOT/'LATEST-BUDGET.json').read_bytes())
+        assert admission['closed_conservative_gpu_seconds']==ledger['closed_conservative_gpu_seconds']==sum(sum(x.values()) for x in ledger['components'])
         assert admission['all_worst_gpu_seconds'] <= admission['approved_cap_gpu_seconds'] == 360000
-        assert (admission['reserved_gpu_seconds'],admission['worker_timeout_seconds']) == ((2100,1800) if args.contract.endswith('03-CONTRACT.json') else (3600,3100))
-        if args.contract.endswith('03-CONTRACT.json'):
+        assert (admission['reserved_gpu_seconds'],admission['worker_timeout_seconds']) == ((2100,1800) if args.contract != 'MOTUS-FRESH-SCENES02-CONTRACT.json' else (3600,3100))
+        if args.contract != 'MOTUS-FRESH-SCENES02-CONTRACT.json':
             evidence=Path(admission['expert_control_readback'])
             assert sha(evidence)==admission['expert_control_readback_sha256']
             control=json.loads(evidence.read_bytes())
@@ -138,7 +140,24 @@ def main():
             report['BOS_bucket_quota_inferred']=False
         # Exercise the real shell environment without importing a device library.
         shared = code/'outputs/robotwin-sidney-matched-baselines-20261106-r1/runtime_environment.sh'
-        wrapper = (ROOT/('motus_fresh_bank_curobo03.sh' if args.contract.endswith('03-CONTRACT.json') else 'motus_fresh_bank.sh')).read_text()
+        wrapper = (ROOT/wrapper_name).read_text()
+        if args.contract == 'MOTUS-FRESH-SCENES04-CONTRACT.json':
+            # Execute the actual launcher's first Python guard on a review-only
+            # admitted copy. The source contract remains prepared and unlaunchable.
+            import sys
+            guard=wrapper.split("<<'PY'"+chr(10),1)[1].split(chr(10)+'PY'+chr(10),1)[0]
+            shadow=dict(admission,status='admitted',cpu_preflight_passed=True)
+            stub=out/'review-only-admitted-guard-input.json';write(stub,shadow)
+            trial=subprocess.run([sys.executable,'-',str(stub)],input=guard,text=True,capture_output=True)
+            assert trial.returncode==0,trial.stderr
+            previous=(ROOT/'motus_fresh_bank_curobo03.sh').read_text()
+            old_guard=previous.split("<<'PY'"+chr(10),1)[1].split(chr(10)+'PY'+chr(10),1)[0]
+            old_input=ROOT/'MOTUS-FRESH-SCENES03-CONTRACT.json'
+            negative=subprocess.run([sys.executable,'-',str(old_input)],input=old_guard,text=True,capture_output=True)
+            assert negative.returncode==1 and 'AssertionError' in negative.stderr
+            report['actual_launcher_admitted_guard_CPU_passed']=True
+            report['guard_source_sha256']=hashlib.sha256(guard.encode()).hexdigest()
+            report['previous_launcher_guard_failure_reproduced']=dict(returncode=negative.returncode,stderr=negative.stderr,source_sha256=hashlib.sha256(old_guard.encode()).hexdigest())
         guard = 'if [[ ${CUDA_VISIBLE_DEVICES+x} != x ]]; then export CUDA_VISIBLE_DEVICES=0; fi'
         assert guard in wrapper and wrapper.index(guard) < wrapper.index('source "$TASK_RUN/runtime_environment.sh"')
         for previous, expected in ((None, '0'), ('scheduler-provided', 'scheduler-provided')):

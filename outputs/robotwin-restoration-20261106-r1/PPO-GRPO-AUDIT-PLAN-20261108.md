@@ -101,11 +101,12 @@ are complete. GRPO's larger DEV curve is6/64→10/64→11/64; checkpoint2 versus
 has three gains/two losses and p=1.0. The small progress-panel regression was
 not supported by this larger comparison. Checkpoint2 confirmation stays negative.
 
-Closed usage is357635GPU-seconds (99.343056h);2365GPU-seconds remain in the
-100h cumulative cap. The first native cuRobo device control is closed after a
-stale collision-YAML path failure before expert planning. A second four-scene
-control reserves1800GPU-seconds, pending all-asset Linux CPU qualification;
-worst cumulative usage359435GPU-seconds (99.843056h). No GPU job is active. Further complete
+Closed usage is357823GPU-seconds (99.395278h);2177GPU-seconds remain in the
+100h cumulative cap. Native cuRobo now passes4/4 paired old-scene experts,
+with independent device/asset/physical/cleanup readback. The fresh03 ordered
+bank scan reserves2100GPU-seconds, with worst cumulative359923GPU-seconds
+(99.978611h), leaving77GPU-seconds unreserved. Only a complete64-scene,
+policy-free bank may be published. Further complete
 training needs additional approval. The prepared `MOTUS-LONGER-CURVE-PROPOSAL.md`
 requests155h cumulative for eight fresh GRPO collections through checkpoint10,
 fixed DEV and new confirmation, with Linux qualification before admission.

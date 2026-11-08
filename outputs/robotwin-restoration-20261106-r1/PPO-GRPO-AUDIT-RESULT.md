@@ -212,6 +212,21 @@ CPU qualification repairs only URDF/collision-file locations in local copies,
 checks every nested absolute reference and preserves all numerical/collision
 settings. Expert behavior is still unqualified. [Device control closeout](MOTUS-CUROBO-CONTROL01-CLOSEOUT.json).
 
+The repaired native cuRobo control is now independently verified:4/4 complete
+expert successes on the four old EVAL scenes, compared with the preserved
+full-state MPLib0/4 control. All four initial state/image hashes match exactly.
+Native table-only collisions and all numerical settings are retained; only
+run-local URDF/collision-file paths change. There are24 completed planner calls,
+16 planner constructions and at least88.96GiB CUDA free memory. Cleanup and
+allocated-device proof pass. Its188GPU-second cost brings closed usage to
+357823GPU-seconds (99.395278h). This is an expert positive control, not a policy
+learning gain. [Verified expert control](MOTUS-CUROBO-CONTROL02-CLOSEOUT.json).
+The next bounded scan uses the unchanged ascending fresh-candidate declaration,
+excludes all TRAIN/old EVAL scenes, and publishes only a complete64-scene bank
+with no policy outcomes. The Linux selection/native-flow/camera/storage CPU
+qualification passes; no fresh bank is established by these CPU checks.
+[Fresh scan contract](MOTUS-FRESH-SCENES03-CONTRACT.json).
+
 ## Evidence
 
 - [PPO training closeout](MOTUSBEHAVIORPPO01-CLOSEOUT.json) and
