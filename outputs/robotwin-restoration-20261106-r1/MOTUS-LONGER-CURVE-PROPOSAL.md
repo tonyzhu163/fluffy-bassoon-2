@@ -65,8 +65,8 @@ that estimate with startup/cleanup margin and independent endpoint readouts:
 | One fixed confirmation readout |3.333|12000GPU-s including startup/cleanup|
 | Total additional envelope |55|Historical usage remains charged|
 
-Reconciled current closed use is98.943889GPUh; the full55h envelope would
-reach153.943889GPUh. No GPU jobs remain active.
+Reconciled current closed use is99.1325GPUh after the bounded scene diagnostics;
+the full55h future envelope would reach154.1325GPUh. No GPU jobs remain active.
 
 Proposed cumulative cap: **155 GPU-hours**, up from100. Final admission must
 use the reconciled current ledger and preserve the total155h hard cap.
@@ -108,7 +108,7 @@ held-out-task training, a new reward objective or student experiments.
 The first segment is implemented in `motus_curve.py`, `motus_curve_entry.py`
 and `train_motus_curve01.sh`: checkpoint2→6, four fresh collections,60 new
 Adam updates/rank, final counter90. The prepared contract reserves at most
-20GPUh including startup/release. Its worst cumulative total is118.943889h,
+20GPUh including startup/release. Its worst cumulative total is119.1325h,
 which exceeds the approved100h and therefore remains unlaunchable.
 
 Actual Linux CPU qualification at commit
@@ -257,3 +257,32 @@ explicit physical reset hook. It must not assume fresh scenes reproduce old
 DEV SFT pixels/actions. Shared B2 ODE/noise, full restores, paired outcome
 reader and the original effectiveness gate remain mandatory. Actual new
 scene qualification and that input-specific readout are still GPU work.
+
+
+The first visibility-guard attempt charged61GPU-seconds. The corrected second
+attempt passed its actual one-GPU probe, constructed48 exact requested scenes,
+and recorded48 failed expert checks. Stop/release at11:27:36Shanghai charged
+618GPU-seconds; no bank, VLA call or optimizer update was produced. Closed
+usage is now356877GPU-seconds (99.1325h), leaving3123 seconds under100h. All
+raw records/logs and their hashes are preserved in
+`MOTUS-FRESH-SCENES02-CLOSEOUT.json`. The saved intermediate RESULT retains
+its last `collecting` status; the scheduler stop receipt governs the outcome.
+
+MPLib reports invalid-start self/table collisions. Source inspection shows its
+wrapper passes only arm DOFs to an articulation planner, whose installed padding
+method fills omitted DOFs from its internal articulation state. A full measured
+qpos repair is isolated in `motus_planner_full_state.py`; its Linux numerical
+reference is in progress. This is a hypothesis about the failed qualification,
+not a demonstrated cause of the completed PPO/GRPO learning result. cuRobo is
+not installed in this runtime. Do not relax collisions or call these rejected
+scenes a valid confirmation bank.
+
+Before another scene scan, require Linux qualification of the actual installed
+padding/wrapper functions and GPU positive controls on predeclared old native
+validity seeds. Record both original and corrected expert behavior, actual joint
+vectors and collision diagnostics; verify unchanged initial physical state and
+allocated renderer. Stop early on a failed control. Only then scan the original
+fresh candidates in order, with no policy outcomes and no sampler-inventory edit.
+A later GPU contract must reserve at most the reconciled remaining3123 seconds
+and use a fresh identity. No new reservation is active. Longer source training
+continues to require the pending cumulative-cap extension.
