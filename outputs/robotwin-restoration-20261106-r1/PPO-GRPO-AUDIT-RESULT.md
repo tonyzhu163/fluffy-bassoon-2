@@ -127,6 +127,13 @@ and new SGD remain GPU checks, and the6→10 input needs its actual checkpoint6
 qualification. [Continuation CPU evidence](MOTUS-CURVE-GRPO-CPU02-READBACK.json).
 No additional GPU allocation or new learning result follows from CPU qualification.
 
+Fixed6/10 DEV readout code/schema and native ODE references are also Linux
+CPU-qualified, with explicit original-SFT calibration and C0 schedule handling.
+The new restore audit passes the actual old C0/C2 records and cold inputs; the
+updated trace reader reproduces the old checkpoint1 DEV result across all1857
+files. Actual future6/10 inputs and GPU evaluation are not qualified yet, and
+the fresh confirmation bank is still required. [Readout CPU evidence](MOTUS-CURVE-READOUT-CPU02.json).
+
 ## Evidence
 
 - [PPO training closeout](MOTUSBEHAVIORPPO01-CLOSEOUT.json) and

@@ -138,9 +138,68 @@ cold copies and preserves the imported source checkpoint separately.
 The second2.5h allocation is a new contract, not an implicit retry: consume the
 actual checkpoint6 manifest, original configuration and measured per-worker
 final DEV references from segment1; independently qualify those inputs before
-6→10. Keep total training allocation≤40GPUh. Extend the paired readout's
-explicit checkpoint admission from its currently qualified0/1/2 range to fixed
-6 and10, qualify it on Linux, and retain its unchanged B2/noise/restore checks.
+6→10. Keep total training allocation≤40GPUh. The paired readout now has
+explicit fixed6/10 DEV support, as described below; qualify its actual future
+inputs separately and retain its unchanged B2/noise/restore checks.
 Qualify/predeclare the new confirmation bank before inspecting its policy
 outcomes. None of these future inputs or full-model resumes is claimed passed
 by the present CPU receipt.
+
+## Fixed DEV readout preparation
+
+`MOTUS-SOURCE-GRPO-CURVEDEV06-CONTRACT.json` and
+`MOTUS-SOURCE-GRPO-CURVEDEV10-CONTRACT.json` are prepared contracts for the
+existing64-case DEV bank. Each uses the original SFT checkpoint0 versus the
+fixed endpoint, eight GPUs, native B2,128 total episodes, zero optimizer
+updates and a12000GPU-second creation-to-release reservation. Actual endpoint
+manifest hashes are deliberately unset; CPU qualification alone cannot admit
+these jobs. Checkpoint10 remains the primary longer-curve endpoint.
+
+Two provenance details are explicit in the implementation. SFT checkpoint0
+retains the original two-cycle schedule, while the new trained checkpoint
+uses the ten-cycle schedule. Only the read-only C0 path accepts the verified
+256-group prefix; the native sampler/RNG restore is retained. SFT calibration
+reads original SFT sampling files under `motusbehaviorgrpo01/state`, never the
+continuation's initial checkpoint2 recordings. The readout clears implicit
+training resume and restores only its two declared inputs.
+
+Linux qualification at `7226b8dbf0089dd3a63513ca041bbb91909b5baf` passes both
+endpoint schemas, actual pinned native ODE output/final-RNG references with a
+deterministic suffix stub, paired initial draws, original selection guards,
+all48 original SFT files, and the new source/actor restore audit against the
+real original checkpoint0/2 GPU records and complete cold sources. These are
+code/reference checks; no checkpoint6/10 model or simulator was constructed.
+[Verified CPU receipt](MOTUS-CURVE-READOUT-CPU02.json). The updated independent
+reader also passes all1857 files, eight physical/noise/outcome panels and actor
+before/after restore invariants on the completed old checkpoint1 DEV run. Its
+recorded6→10/64,p=.125 result is unchanged; this is compatibility evidence, not
+a new learning experiment. [Reader receipt](MOTUS-CURVE-READOUT-LEGACY01.json).
+
+After the appropriate segment finishes:
+
+1. Use `readback_motus_curve_training.py` with its actual training commit and
+   a fresh `<training-identity>-readback01` output. Require its full cold
+   boundaries/owned Adam checks and all fresh-collection NumPy references.
+2. Populate the matching prepared DEV contract from that verified result,
+   including actual endpoint manifest/configuration and training-readback hash.
+   Run `qualify_motus_curve_readout_cpu.py --contract <contract-basename>
+   --identity cpumotuscurvereadoutNN` with a fresh numeric suffix on Linux
+   with CUDA hidden. This
+   mode requires the real endpoint, all24 worker sidecars at each input,
+   counters90/150, unchanged numerical settings and original SFT references.
+3. Record that actual-input receipt separately from the present code/schema
+   receipt. Reconcile the current ledger, admit within the authorized
+   cap, commit on main and deploy the exact commit through Git. The launcher
+   rejects missing input qualification, training verification or budget approval.
+4. Run `readback_motus_source_readout.py <evaluation-identity>` on Linux after
+   release. It checks every output file, physical transition and actual paired
+   Gaussian, plus all worker restores and actor before/after signatures. New
+   endpoints additionally require their complete cold source checkpoints.
+
+The present extension rejects checkpoint6/10 confirmation on the consumed
+bank. A future fresh-confirmation implementation must bind a newly qualified,
+predeclared64-scene manifest and retain the existing native sampler inventory
+for checkpoint restoration; choose the new scenes through the explicit readout
+reset hook. Changing the native inventory would fail exact sampler restoration.
+Qualify that physical path before policy evaluation. The new bank, its GPU
+qualification and the fixed checkpoint10 confirmation remain outstanding.

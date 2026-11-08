@@ -114,6 +114,12 @@ Source DEV prediction offsets must be measured per worker because native
 terminal-value calls add a variable number of sampling records. Actual resumed
 model predictions/SGD remain GPU requirements. The proposal records separate
 checkpoint6 input and extended-readout qualification before later stages.
+Fixed6/10 DEV readout code is now Linux CPU-qualified at7226b8db; see
+`MOTUS-CURVE-READOUT-CPU02.json`. Its pinned ODE numerical reference, original
+SFT recording provenance, explicit C0 schedule handling and actual old C0/C2
+cold restore records pass. The updated reader also passes all1857 files of the
+old checkpoint1 DEV run. Real6/10 inputs, GPU evaluation and a newly qualified
+confirmation scene bank remain outstanding; the prepared contracts reject launch.
 Each new job has a fresh output identity and immutable reviewed main commit.
 Check advancing progress after launch and monitor at most20 minutes apart;
 inspect the exact owned job and preserve its latest complete checkpoint before
