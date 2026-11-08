@@ -113,15 +113,22 @@ def main():
                 if role=='env':assert len(saved['samplers'])==2
                 descriptors.append(dict(role=role,rank=rank,sha256=sha(path),saved_policy_tag=saved['producing_policy_iteration']))
                 del saved
+        print('CURVE_CPU_PREFIX_STATE_VERIFIED all24 worker sidecars and all8 owned Adam descriptors',flush=True)
         reference_hashes={}
         from fluffy_bassoon.meta_rl.tensor_archive import read_tensor
         for rank in range(8):
+            rank_root=Path(plan['resume_dev_sampling_root'])/f'rank-{rank:02d}'
+            first=plan['resume_dev_sampling_first_ordinals'][rank]
+            expected=[rank_root/f'{first+offset:05d}.pt.gz' for offset in range(6)]
+            assert sorted(rank_root.glob('*.pt.gz'))[-6:]==expected
             for offset in range(6):
-                path=Path(plan['resume_dev_sampling_root'])/f'rank-{rank:02d}'/f'{plan["resume_dev_sampling_first_ordinal"]+offset:05d}.pt.gz'
+                path=expected[offset]
                 saved=read_tensor(path)
                 assert saved['mode']=='eval' and saved['producing_policy_iteration']==2
+                assert saved['prediction_ordinal']==first+offset and saved['rank']==rank and not saved['terminal_value_only']
                 assert saved['forward_sampling_fields']['action'].shape==(2,448)
                 reference_hashes[str(path)]=sha(path)
+        print('CURVE_CPU_ALL48_SOURCE_DEV_REFERENCES_VERIFIED per-worker measured ordinals',flush=True)
         schedule=CaseSchedule(ROOT/'MOTUS-CURVE-GRPO-CASES.json',sha(ROOT/'MOTUS-CURVE-GRPO-CASES.json'))
         assert schedule.data==extended_schedule()
         prefix_rows=json.loads((ROOT/'MOTUS-TRAIN-CASES.json').read_bytes())['groups']
@@ -139,9 +146,8 @@ def main():
             def get_world_size(self,role):return 8
         original=json.loads(Path(plan['original_config']).read_bytes())
         configs=[];loops=[]
-        for start,stop in ((2,6),(6,10)):
-            cfg=configuration(dict(plan,start_iteration=start,stop_iteration=stop,
-                resume_dev_sampling_first_ordinal=60 if start==2 else 120))
+        for start,stop in ((2,6),):
+            cfg=configuration(plan)
             summary=validate_curve(cfg)
             current=OmegaConf.to_container(cfg,resolve=True)
             assert all(current[k]==original[k] for k in ('algorithm','actor','rollout','env'))
@@ -154,6 +160,10 @@ def main():
                 native.validate_cfg(cfg)
             assert segment_action_limit(start,stop)==801792
             configs.append(summary);loops.append(native_loop_reference(cfg,start,stop))
+        # This checks only the pinned loop's later counters. A second segment
+        # needs a new contract and measured per-rank references from actual C6.
+        loops.append(native_loop_reference(cfg,6,10))
+        print('CURVE_CPU_NATIVE_LOOP_VERIFIED fresh collect/update tags and counters',flush=True)
         # Preserve the original two-cycle config's validation path as well.
         legacy=OmegaConf.create(original)
         legacy.native_pilot.case_manifest_path=str(ROOT/'MOTUS-TRAIN-CASES.json')
@@ -172,6 +182,7 @@ def main():
             all8_strict_owned_Adam_descriptors=True,source_policy_tag1_will_advance_to_fresh_policy2=True,
             original256_group_prefix_exact=True,all40_rounds_four_and_eight_rank_case_order_exact=True,
             all1000_TRAIN_scenes_before_repeat=True,configurations=configs,native_loop_references=loops,
+            future_segment6_to10_requires_actual_checkpoint6_and_sampling_qualification=True,
             algorithm_actor_rollout_environment_fields_unchanged=True,
             numerical_LR_and_batch_mutations_rejected=True,original_two_cycle_guard_still_passes=True,
             native_runner_file=str(runner_path),native_runner_sha256=sha(runner_path),

@@ -38,7 +38,8 @@ class CurveRollout(CapacityRollout):
     def _predict_rollout_actions(self,env_obs,mode='train',**kwargs):
         check=(mode=='eval' and self._pilot_eval_iteration==int(self.cfg.native_pilot.segment_start_iteration))
         if check:
-            ordinal=int(self.cfg.native_pilot.curve_reference_first_ordinal)+self._curve_reference_count
+            assert self._curve_reference_count<6
+            ordinal=int(self.cfg.native_pilot.curve_reference_first_ordinals[self._rank])+self._curve_reference_count
             path=Path(self.cfg.native_pilot.curve_reference_root)/f'rank-{self._rank:02d}'/f'{ordinal:05d}.pt.gz'
             source=read_tensor(path)
             assert source['mode']=='eval' and source['producing_policy_iteration']==int(self.cfg.native_pilot.segment_start_iteration)

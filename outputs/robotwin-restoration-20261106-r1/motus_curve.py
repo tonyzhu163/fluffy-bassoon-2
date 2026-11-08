@@ -57,7 +57,8 @@ def validate_curve(cfg):
     assert cfg.native_pilot.intended_iterations==10
     assert cfg.runner.max_steps==cfg.runner.max_epochs==10
     assert cfg.native_pilot.keep_local_checkpoints==2
-    assert cfg.native_pilot.curve_reference_first_ordinal==(60 if start==2 else 120)
+    ordinals=list(cfg.native_pilot.curve_reference_first_ordinals)
+    assert len(ordinals)==8 and all(isinstance(n,int) and n>=0 for n in ordinals)
     assert Path(cfg.native_pilot.curve_reference_root).name=='sampling'
     assert cfg.native_pilot.maximum_actions==segment_action_limit(start,stop)
     assert cfg.native_pilot.comparison_algorithm=='grpo'
@@ -120,7 +121,7 @@ def configuration(plan):
         cfg.native_pilot[f'{kind}_manifest_sha256']=file_sha(ROOT/name)
     cfg.native_pilot.prefix_case_manifest_sha256=file_sha(ROOT/'MOTUS-TRAIN-CASES.json')
     cfg.native_pilot.curve_reference_root=plan['resume_dev_sampling_root']
-    cfg.native_pilot.curve_reference_first_ordinal=plan['resume_dev_sampling_first_ordinal']
+    cfg.native_pilot.curve_reference_first_ordinals=plan['resume_dev_sampling_first_ordinals']
     validate_curve(cfg)
     return cfg
 
