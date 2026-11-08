@@ -3,7 +3,9 @@ set -Eeuo pipefail
 export TASK_SOURCE=${1:?reviewed commit}
 export TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_DRIVER=$TASK_CODE/outputs/robotwin-restoration-20261106-r1
-TASK_PLAN=$TASK_DRIVER/MOTUS-FRESH-SCENES01-CONTRACT.json
+TASK_PLAN_NAME=${2:?fresh admitted contract basename}
+[[ $TASK_PLAN_NAME == MOTUS-FRESH-SCENES02-CONTRACT.json ]]
+TASK_PLAN=$TASK_DRIVER/$TASK_PLAN_NAME
 TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python
 TASK_BASE=/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1
 [[ $(uname -s) == Linux && $(hostname) == job-* ]]
@@ -17,9 +19,9 @@ assert p['reserved_gpu_seconds']==3600 and p['worker_timeout_seconds']==3100
 assert p['all_worst_gpu_seconds']==p['closed_conservative_gpu_seconds']+p['other_active_reserved_gpu_seconds']+p['reserved_gpu_seconds']<=p['approved_cap_gpu_seconds']==360000
 assert not p['budget_extension_approved']
 PY
-export TASK_OUT=$TASK_BASE/motus-fresh-scenes01
-TASK_SIGNALS=$TASK_BASE/motus-fresh-scenes01-signals
-export TASK_LOCAL=/tmp/rt-fresh-scenes01
+export TASK_OUT=$TASK_BASE/motus-fresh-scenes02
+TASK_SIGNALS=$TASK_BASE/motus-fresh-scenes02-signals
+export TASK_LOCAL=/tmp/rt-fresh-scenes02
 [[ ! -e $TASK_OUT && ! -e $TASK_SIGNALS && ! -e $TASK_LOCAL ]]
 mkdir "$TASK_SIGNALS"
 exec > "$TASK_SIGNALS/worker.log" 2>&1
@@ -35,6 +37,9 @@ trap finish EXIT
 export TASK_LIMIT=3100 TASK_DEADLINE=$((TASK_STARTED+3100))
 TASK_RUN=$TASK_CODE/outputs/robotwin-sidney-matched-baselines-20261106-r1
 TASK_SHARED=$TASK_CODE/outputs/robotwin-sidney-rlinf-ppo-20261105-r1
+# The shared source defaults to four IDs when the scheduler leaves CVD unset.
+# Its single allocated container device is logical0; preserve any explicit CVD.
+if [[ ${CUDA_VISIBLE_DEVICES+x} != x ]]; then export CUDA_VISIBLE_DEVICES=0; fi
 source "$TASK_RUN/runtime_environment.sh"
 export PYTHONPATH=$TASK_DRIVER:$PYTHONPATH
 "$TASK_PYTHON" "$TASK_CODE/scripts/[train]gpu_probe.py" --baige-container --purpose evaluation --expected-count 1 --output "$TASK_SIGNALS/gpu-probe.json"
@@ -51,7 +56,7 @@ assert digest(p['original_configuration'])==p['original_configuration_sha256']
 local=Path(os.environ['TASK_LOCAL']);out=Path(os.environ['TASK_OUT'])
 assert shutil.disk_usage(local.parent).free>=8*2**30
 assert any(os.path.ismount(x) for x in (out.parent,Path('/mnt/bos/adgfyl'),Path('/mnt/bos')))
-probe=out.parent/'motus-fresh-scenes01-write-probe'
+probe=out.parent/'motus-fresh-scenes02-write-probe'
 with probe.open('xb') as f:f.write(b'robotwin-fresh-scenes');f.flush();os.fsync(f.fileno())
 assert probe.read_bytes()==b'robotwin-fresh-scenes';probe.unlink()
 local.mkdir();(local/'assets').symlink_to(Path(os.environ['ROBOTWIN_PATH'])/'assets',target_is_directory=True)

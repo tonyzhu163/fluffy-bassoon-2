@@ -43,6 +43,7 @@ class Task:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--identity', required=True)
+    parser.add_argument('--contract', choices=('MOTUS-FRESH-SCENES02-CONTRACT.json',), required=True)
     args = parser.parse_args()
     assert re.fullmatch(r'cpumotusfreshbank[0-9]{2}', args.identity)
     assert os.uname().sysname == 'Linux' and os.environ['CUDA_VISIBLE_DEVICES'] == ''
@@ -106,13 +107,22 @@ def main():
         assert sha(seeds) == plan['full_eval_source_sha256']
         actual = json.loads(seeds.read_bytes())[plan['task']]['success_seeds']
         assert actual == plan['excluded_native_eval_seeds']
-        contract = ROOT/'MOTUS-FRESH-SCENES01-CONTRACT.json'
+        contract = ROOT/args.contract
         admission = json.loads(contract.read_bytes())
         for name, digest in admission['source_files'].items(): assert sha(code/name) == digest
         subprocess.run(['bash', '-n', str(ROOT/'motus_fresh_bank.sh')], check=True)
-        assert admission['closed_conservative_gpu_seconds']+admission['reserved_gpu_seconds'] == admission['all_worst_gpu_seconds'] == 359798
+        assert admission['closed_conservative_gpu_seconds']+admission['reserved_gpu_seconds'] == admission['all_worst_gpu_seconds'] == 359859
         assert admission['all_worst_gpu_seconds'] <= admission['approved_cap_gpu_seconds'] == 360000
         assert admission['reserved_gpu_seconds'] == 3600 and admission['worker_timeout_seconds'] == 3100
+        # Exercise the real shell environment without importing a device library.
+        shared = code/'outputs/robotwin-sidney-matched-baselines-20261106-r1/runtime_environment.sh'
+        wrapper = (ROOT/'motus_fresh_bank.sh').read_text()
+        guard = 'if [[ ${CUDA_VISIBLE_DEVICES+x} != x ]]; then export CUDA_VISIBLE_DEVICES=0; fi'
+        assert guard in wrapper and wrapper.index(guard) < wrapper.index('source "$TASK_RUN/runtime_environment.sh"')
+        for previous, expected in ((None, '0'), ('scheduler-provided', 'scheduler-provided')):
+            command = ('unset CUDA_VISIBLE_DEVICES\n' if previous is None else 'export CUDA_VISIBLE_DEVICES=scheduler-provided\n')
+            command += guard+'\nsource "$1"\nprintf "%s" "$CUDA_VISIBLE_DEVICES"'
+            assert subprocess.check_output(['bash', '-c', command, 'fresh-scene-CVD', str(shared)], text=True) == expected
         rejected(lambda: collect(contract))
         original = Path(admission['original_configuration'])
         cfg = json.loads(original.read_bytes())['env']['eval']
@@ -125,6 +135,7 @@ def main():
             original_configuration_sha256=sha(original), prepared_GPU_collection_rejected=True,
             native_uint8_initial_packet_checks_passed=True, each_camera_required_nonblank=True,
             bounded_one_GPU_launcher_Linux_bash_syntax_passed=True, current100h_cap_reservation_arithmetic_passed=True,
+            actual_shared_shell_unset_visibility_falls_back_to_one_and_explicit_visibility_preserved=True,
             original_sampler_inventory_not_edited=True, native_function_sha256=hashlib.sha256(ast.get_source_segment(native_source, method).encode()).hexdigest())
     except BaseException as error:
         report.update(status='failed', error_type=type(error).__name__, error=str(error)); raise

@@ -1,0 +1,73 @@
+{
+  "status": "prepared",
+  "purpose": "Policy-free native expert and exact-seed reset qualification; fresh fixed-C10 source confirmation bank; no VLA or SGD.",
+  "output_identity": "motus-fresh-scenes02",
+  "scan_sha256": "7ecff7be6e0b10585447150db8e6cc15ed336ed9221e74a5a8c40d9dcccfc826",
+  "cpu_preflight_passed": false,
+  "cpu_preflight_result": null,
+  "cpu_preflight_sha256": null,
+  "budget_extension_approved": false,
+  "original_configuration": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motusbehaviorgrpo01/state/resolved-native-config.json",
+  "original_configuration_sha256": "c264e4ee1050b19b2086089357275b6d4468962b9df371f79da64e289e51d912",
+  "GPU_count": 1,
+  "reserved_gpu_seconds": 3600,
+  "closed_conservative_gpu_seconds": 356259,
+  "other_active_reserved_gpu_seconds": 0,
+  "all_worst_gpu_seconds": 359859,
+  "approved_cap_gpu_seconds": 360000,
+  "requested_cap_gpu_seconds": 558000,
+  "worker_timeout_seconds": 3100,
+  "scheduler_runtime_minutes": 57,
+  "creation_to_release_watchdog_seconds": 3600,
+  "scheduler_automatic_fault_retries": false,
+  "local_staging_cap_gib": 8,
+  "bos_run_cap_mib": 64,
+  "actual_physics_qualified": false,
+  "source_files": {
+    "outputs/robotwin-restoration-20261106-r1/motus_fresh_bank.py": "7e4f4973df235a5e01a358f24bf266580716d1ae2c670fc1585368214d213a5e",
+    "outputs/robotwin-restoration-20261106-r1/qualify_motus_fresh_bank_cpu.py": "c44b33ebc6e28181920bfa9f3eda2f6c15aab06aab189d88308267c120fd3da8",
+    "outputs/robotwin-restoration-20261106-r1/MOTUS-FRESH-CONFIRMATION-SCAN.json": "7ecff7be6e0b10585447150db8e6cc15ed336ed9221e74a5a8c40d9dcccfc826",
+    "outputs/robotwin-restoration-20261106-r1/MOTUS-PHONE-TRAIN-SEED-BANK.json": "3ca878de1e96a30b0db078f7453b73efe69dffd7df885ccb04bddbda9d81867c",
+    "outputs/robotwin-restoration-20261106-r1/MOTUS-SOURCE-READOUT-CASES.json": "ca04bbb4a7a5ca92b10427e409f06ec3c361007f783854536d9bc6031732c864",
+    "src/fluffy_bassoon/rl/robotwin_noise.py": "b26a220a1190a8ad6b653e49f4a3c8f2c6a66b057471056bf148e8dd8d68b7ea",
+    "src/fluffy_bassoon/rl/robotwin_native_setup.py": "522b9d0fab4070ab9b708c6fd451498360a1766f39f96ebff3b21a68fbdc92e0",
+    "src/fluffy_bassoon/baige_gpu.py": "6a59727447a13a9fb3424beaf92f0b61df9741c93d2a21f4798160af8a0be071",
+    "outputs/robotwin-restoration-20261106-r1/motus_fresh_bank.sh": "0c8cd3dbbb857b81cc85d1caadbb5048c1b463fe88b61c1506466e4039defa06"
+  },
+  "cpu_cores": 21,
+  "host_memory_gib": 224,
+  "shared_memory_gib": 32,
+  "approval": "Within explicit100 cumulative GPU-hours; one GPU for at most3600 creation-to-release seconds; no budget extension approved.",
+  "qualified_code_commit": "3f0b985dab323a8f1b3231a08ab923b3831fe505",
+  "storage_preflight": {
+    "path": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/fresh-scenes-storage-preflight01/RESULT.json",
+    "sha256": "a2cb8f63ac0cf931af9230a9a72224d638a52dc73ee1a747ed0cc9304fbc1a2e",
+    "BOS_write_read_fsync_and_actual_headroom_bytes": 67108864,
+    "BOS_total_bucket_quota_not_inferred_from_FUSE": true,
+    "local_free_bytes": 1819306713088,
+    "project_free_bytes": 358365528064
+  },
+  "queue_admission": {
+    "queue": "aihcq-rh0wwk9muei4",
+    "pool": "Pro6K",
+    "actual_model_reported": "NVIDIA RPBZZZ6",
+    "available_gpus": 54,
+    "maximum_gpus": 416,
+    "free_CPU_cores": 2531,
+    "free_memory_GiB": 33962,
+    "one_GPU_template": {
+      "CPU_cores": 21,
+      "memory_GiB": 224
+    },
+    "check_date": "2026-11-08 Shanghai",
+    "allocated_gpu_probe_still_required": true
+  },
+  "previous_attempt": {
+    "identity": "motus-fresh-scenes01",
+    "job_id": "job-9gbkjyxw6gwy",
+    "creation": "2026-11-08T11:02:32+08:00",
+    "release": "2026-11-08T11:03:33+08:00",
+    "charged_gpu_seconds": 61,
+    "cause": "Shared runtime defaulted unset CUDA_VISIBLE_DEVICES to0,1,2,3; expected-count1 probe rejected before simulation."
+  }
+}
