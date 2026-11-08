@@ -1,5 +1,5 @@
 {
-  "status": "fresh04_native_curobo_scan_admitted_within_100h_no_active_job",
+  "status": "fresh04_native_curobo_scan_created_within_100h",
   "closed_conservative_gpu_seconds": 357870,
   "cap_gpu_seconds": 360000,
   "closed_conservative_gpu_hours": 99.40833333333333,
@@ -208,7 +208,7 @@
   "active_lifecycle_reserved_gpu_seconds": 0,
   "planned_frozen_reconstruction_reserved_gpu_seconds": 0,
   "active_frozen_reconstruction_reserved_gpu_seconds": 0,
-  "active_job_id": null,
+  "active_job_id": "job-tdmed4t504sh",
   "cpu_reconstruction_input_cap_gib": 16,
   "gpu_reconstruction_output_cap_mib": 128,
   "physical_export_output_cap_mib": 128,
@@ -220,7 +220,16 @@
   "approval": "User replied raise up to 100 hrs to cumulative-cap request call_9991d141f4c9474cb3b968465bf752a5 on8November2026; cumulative total, no historical reset.",
   "planned_student_precision_gpu_seconds": 0,
   "active_student_precision_gpu_seconds": 0,
-  "active_jobs": [],
+  "active_jobs": [
+    {
+      "job_id": "job-tdmed4t504sh",
+      "GPU_count": 1,
+      "source_commit": "b66c80b9cbf6b77d9746685143914c158f50398f",
+      "created_at": "2026-11-08T15:27:12+08:00",
+      "reserved_gpu_seconds": 2100,
+      "creation_to_release_deadline": "2026-11-08T16:02:12+08:00"
+    }
+  ],
   "prior_approved_cap_gpu_seconds": 219600,
   "planned_camera_probe_reserved_gpu_seconds": 0,
   "active_camera_probe_reserved_gpu_seconds": 0,
@@ -242,5 +251,6 @@
   "active_source_confirmation_reserved_gpu_seconds": 0,
   "planned_planner_control_reserved_gpu_seconds": 0,
   "active_planner_control_reserved_gpu_seconds": 0,
-  "planned_fresh_scene_reserved_gpu_seconds": 2100
+  "planned_fresh_scene_reserved_gpu_seconds": 0,
+  "active_fresh_scene_reserved_gpu_seconds": 2100
 }
