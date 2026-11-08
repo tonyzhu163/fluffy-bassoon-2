@@ -65,8 +65,8 @@ that estimate with startup/cleanup margin and independent endpoint readouts:
 | One fixed confirmation readout |3.333|12000GPU-s including startup/cleanup|
 | Total additional envelope |55|Historical usage remains charged|
 
-Reconciled current closed use is99.1325GPUh after the bounded scene diagnostics;
-the full55h future envelope would reach154.1325GPUh. No GPU jobs remain active.
+Reconciled current closed use is99.206112GPUh after the bounded scene diagnostics;
+the full55h future envelope would reach154.206112GPUh. No GPU jobs remain active.
 
 Proposed cumulative cap: **155 GPU-hours**, up from100. Final admission must
 use the reconciled current ledger and preserve the total155h hard cap.
@@ -108,7 +108,7 @@ held-out-task training, a new reward objective or student experiments.
 The first segment is implemented in `motus_curve.py`, `motus_curve_entry.py`
 and `train_motus_curve01.sh`: checkpoint2→6, four fresh collections,60 new
 Adam updates/rank, final counter90. The prepared contract reserves at most
-20GPUh including startup/release. Its worst cumulative total is119.1325h,
+20GPUh including startup/release. Its worst cumulative total is119.206112h,
 which exceeds the approved100h and therefore remains unlaunchable.
 
 Actual Linux CPU qualification at commit
@@ -263,7 +263,7 @@ The first visibility-guard attempt charged61GPU-seconds. The corrected second
 attempt passed its actual one-GPU probe, constructed48 exact requested scenes,
 and recorded48 failed expert checks. Stop/release at11:27:36Shanghai charged
 618GPU-seconds; no bank, VLA call or optimizer update was produced. Closed
-usage is now356877GPU-seconds (99.1325h), leaving3123 seconds under100h. All
+usage is now356877GPU-seconds (99.206112h), leaving3123 seconds under100h. All
 raw records/logs and their hashes are preserved in
 `MOTUS-FRESH-SCENES02-CLOSEOUT.json`. The saved intermediate RESULT retains
 its last `collecting` status; the scheduler stop receipt governs the outcome.
@@ -286,3 +286,13 @@ fresh candidates in order, with no policy outcomes and no sampler-inventory edit
 A later GPU contract must reserve at most the reconciled remaining3123 seconds
 and use a fresh identity. No new reservation is active. Longer source training
 continues to require the pending cumulative-cap extension.
+
+The paired old-seed planner control completed at12:07:17, charging265GPU-s.
+Native and full-state each fail all4 expert episodes, with identical initial
+observations and38-DOF articulation traces. All88 full-state planner calls
+retain exact measured non-arm state; the native6-DOF route does not. The repair
+alone is insufficient:84 individual full-state solver calls succeed and4 IK
+calls fail, while every whole expert episode fails. No further scene scan is
+admitted. Closed357142GPU-s leaves2858 under100h. See
+`MOTUS-PLANNER-CONTROL01-CLOSEOUT.json`. Inspect actual planning-world
+synchronization and task failure stages before allocating another diagnostic.

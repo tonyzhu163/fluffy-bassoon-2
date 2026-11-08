@@ -43,3 +43,25 @@ def install():
     MplibWrapperPlanner.plan_path = plan_path
     MplibWrapperPlanner.plan_batch = plan_batch
     MplibWrapperPlanner._fb2_full_measured_qpos = True
+
+
+def plan_path_sync(self, curr_joint_pos, target_gripper_pose, constraint_pose=None, arms_tag=None):
+    # MPlib's documented SAPIEN API updates articulations and objects from the scene.
+    # Preserve every collision check and use the existing full-qpos route afterward.
+    self.planner.update_from_simulation()
+    return plan_path(self, curr_joint_pos, target_gripper_pose, constraint_pose, arms_tag)
+
+
+def plan_batch_sync(self, curr_joint_pos, target_gripper_pose_list, constraint_pose=None, arms_tag=None):
+    results = [plan_path_sync(self, curr_joint_pos, target, constraint_pose, arms_tag)
+        for target in target_gripper_pose_list]
+    return dict(status=np.asarray(['Success' if r['status'] == 'Success' else 'Failure' for r in results], dtype=object),
+        position=np.asarray([r['position'] if r['status'] == 'Success' else np.array([]) for r in results], dtype=object),
+        velocity=np.asarray([r['velocity'] if r['status'] == 'Success' else np.array([]) for r in results], dtype=object))
+
+
+def install_sync():
+    from envs.robot.planner import MplibWrapperPlanner
+    MplibWrapperPlanner.plan_path = plan_path_sync
+    MplibWrapperPlanner.plan_batch = plan_batch_sync
+    MplibWrapperPlanner._fb2_full_measured_qpos = True

@@ -1,0 +1,48 @@
+{
+  "status": "verified_negative_paired_planner_control",
+  "job_id": "job-fiayid4g25ll",
+  "job_name": "mwj_1108_robotwin_planner_control01",
+  "source_commit": "cde99d4b65444b75cb72b800057a25fefb28a7a7",
+  "scheduler_status": "Succeeded",
+  "scientific_status": "failed_control",
+  "creation": "2026-11-08T12:02:52+08:00",
+  "release": "2026-11-08T12:07:17+08:00",
+  "creation_to_release_gpu_seconds": 265,
+  "worker_gpu_seconds": 229,
+  "raw_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motus-planner-control01/RESULT.json",
+  "raw_result_sha256": "88113f90979a0110bdd649985d951a0fd6512a435c01cc2bd0ffcfb1bd69b336",
+  "independent_readback": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motus-planner-control01-readback01/RESULT.json",
+  "independent_readback_sha256": "36fc814e39189ba6c843c2315eaef0626c0ad3ba366c10d9885d57684fe94f1b",
+  "seeds": [
+    100100002,
+    100100003,
+    100100005,
+    100100006
+  ],
+  "native_expert_successes": 0,
+  "full_state_expert_successes": 0,
+  "initial_observations_paired": true,
+  "actual_articulation_DOFs": 38,
+  "native_input_DOFs": 6,
+  "native_calls": 88,
+  "full_state_calls": 88,
+  "native_padded_state_matches_measured": 0,
+  "full_state_padded_state_matches_measured": 88,
+  "native_solver_statuses": {
+    "Success": 83,
+    "IK Failed! Cannot find valid solution.": 4,
+    "Fail": 1
+  },
+  "full_state_solver_statuses": {
+    "Success": 84,
+    "IK Failed! Cannot find valid solution.": 4
+  },
+  "collision_checks_retained": true,
+  "seed_inventory_unchanged": true,
+  "cleanup_complete": true,
+  "model_calls": 0,
+  "optimizer_updates": 0,
+  "fresh_bank_published": false,
+  "learning_effectiveness_tested": false,
+  "conclusion": "Full measured qpos fixes omitted-state contamination but alone does not resolve expert task failure; no new scene scan admitted."
+}

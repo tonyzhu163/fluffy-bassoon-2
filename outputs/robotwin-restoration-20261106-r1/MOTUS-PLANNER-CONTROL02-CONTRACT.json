@@ -1,0 +1,74 @@
+{
+  "status": "prepared",
+  "purpose": "Full measured qpos versus full measured qpos plus documented SapienPlanner world synchronization. Four old EVAL cases only; no VLA/SGD/fresh bank.",
+  "output_identity": "motus-planner-control02",
+  "seeds": [
+    100100002,
+    100100003,
+    100100005,
+    100100006
+  ],
+  "profiles": [
+    "full_state",
+    "full_state_sync"
+  ],
+  "cpu_preflight_passed": false,
+  "CPU_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpumotusplannersync01/RESULT.json",
+  "CPU_sha256": null,
+  "original_configuration": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motusbehaviorgrpo01/state/resolved-native-config.json",
+  "original_configuration_sha256": "c264e4ee1050b19b2086089357275b6d4468962b9df371f79da64e289e51d912",
+  "GPU_count": 1,
+  "reserved_gpu_seconds": 600,
+  "closed_conservative_gpu_seconds": 357142,
+  "other_active_reserved_gpu_seconds": 0,
+  "all_worst_gpu_seconds": 357742,
+  "approved_cap_gpu_seconds": 360000,
+  "budget_extension_approved": false,
+  "worker_timeout_seconds": 470,
+  "scheduler_runtime_minutes": 9,
+  "creation_to_release_watchdog_seconds": 600,
+  "scheduler_automatic_fault_retries": false,
+  "cpu_cores": 21,
+  "host_memory_gib": 224,
+  "shared_memory_gib": 32,
+  "local_staging_cap_gib": 8,
+  "bos_run_cap_mib": 64,
+  "pinned_sources": {
+    "REPO_PATH": "c605b9d55ed93a180119b099e6f836abff293b08",
+    "ROBOTWIN_PATH": "dca9ec682688821c42944eacd7f5dd9bfb15396f"
+  },
+  "storage_preflight": {
+    "path": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/fresh-scenes-storage-preflight01/RESULT.json",
+    "sha256": "a2cb8f63ac0cf931af9230a9a72224d638a52dc73ee1a747ed0cc9304fbc1a2e",
+    "BOS_write_read_fsync_and_actual_headroom_bytes": 67108864,
+    "BOS_total_bucket_quota_not_inferred_from_FUSE": true,
+    "local_free_bytes": 1819306713088,
+    "project_free_bytes": 358365528064
+  },
+  "queue_admission": {
+    "queue": "aihcq-rh0wwk9muei4",
+    "pool": "Pro6K",
+    "actual_model_reported": "NVIDIA RPBZZZ6",
+    "available_gpus": 54,
+    "maximum_gpus": 416,
+    "free_CPU_cores": 2531,
+    "free_memory_GiB": 33962,
+    "one_GPU_template": {
+      "CPU_cores": 21,
+      "memory_GiB": 224
+    },
+    "check_date": "2026-11-08 Shanghai",
+    "allocated_gpu_probe_still_required": true
+  },
+  "source_files": {
+    "outputs/robotwin-restoration-20261106-r1/motus_planner_control.py": "7cfef6a07b85774c52a336c595bc479c29963b9c28eb018e558ff0b1b9e6e947",
+    "outputs/robotwin-restoration-20261106-r1/motus_planner_control02.sh": "e5833cea913dbcc16fd1116dcc400c7a4983de76f86b86f2628d4d4eff33bfb7",
+    "outputs/robotwin-restoration-20261106-r1/motus_planner_full_state.py": "6d869e7dcdf5be3727bc0445acaa9d2def3c824184d5cd127d804946737b149f",
+    "outputs/robotwin-restoration-20261106-r1/qualify_motus_planner_sync_cpu.py": "4da0bb75d3e1dbdab562a94b3bda489932b0c594b393b09294edf78d9f8528d7",
+    "outputs/robotwin-restoration-20261106-r1/motus_fresh_bank.py": "7e4f4973df235a5e01a358f24bf266580716d1ae2c670fc1585368214d213a5e",
+    "src/fluffy_bassoon/rl/robotwin_noise.py": "b26a220a1190a8ad6b653e49f4a3c8f2c6a66b057471056bf148e8dd8d68b7ea",
+    "src/fluffy_bassoon/rl/robotwin_native_setup.py": "522b9d0fab4070ab9b708c6fd451498360a1766f39f96ebff3b21a68fbdc92e0",
+    "src/fluffy_bassoon/baige_gpu.py": "6a59727447a13a9fb3424beaf92f0b61df9741c93d2a21f4798160af8a0be071"
+  },
+  "approval": "Within explicit100 cumulative GPU-hours; one GPU for at most600 creation-to-release seconds, four old EVAL scenes only; no budget extension."
+}

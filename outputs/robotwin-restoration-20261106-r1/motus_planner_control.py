@@ -1,4 +1,5 @@
 """Paired native/full-state expert checks on four predeclared old EVAL scenes."""
+import argparse
 import hashlib
 import json
 import os
@@ -11,7 +12,7 @@ from motus_fresh_bank import check_initial_observation, sha, write
 ROOT = Path(__file__).resolve().parent
 
 
-def main():
+def main(contract_path):
     import numpy as np
     import torch
     from omegaconf import OmegaConf
@@ -21,9 +22,9 @@ def main():
     from rlinf.envs.sim.robotwin.robotwin_env import RoboTwinEnv
     from robotwin.envs.vector_env import SubEnv
     from envs.robot.planner import MplibPlanner, MplibWrapperPlanner
-    from motus_planner_full_state import install, full_qpos
+    from motus_planner_full_state import install, install_sync, full_qpos
 
-    contract = json.loads((ROOT/'MOTUS-PLANNER-CONTROL01-CONTRACT.json').read_bytes())
+    contract = json.loads(Path(contract_path).read_bytes())
     assert contract['status'] == 'admitted' and contract['GPU_count'] == 1
     assert contract['closed_conservative_gpu_seconds']+contract['reserved_gpu_seconds'] <= 360000
     assert os.uname().sysname == 'Linux' and os.uname().nodename.startswith('job-')
@@ -47,6 +48,8 @@ def main():
     config.group_size = 1
     assert config.task_config.task_name == 'place_phone_stand' and config.task_config.planner_backend == 'mplib'
     assert config.max_episode_steps == 192
+    profiles = contract['profiles']
+    assert profiles in (['native','full_state'], ['full_state','full_state_sync'])
     original = MplibPlanner.plan_path
     report = dict(status='running', source_commit=source, records=[], planner_calls=[],
         model_calls=0, optimizer_updates=0, native_seed_inventory_unchanged=True,
@@ -65,7 +68,7 @@ def main():
             measured=measured.tolist(), internal=internal.tolist(), padded=padded.tolist(),
             all_joints=list(self.all_joints), active_joints=list(self.active_joints_name),
             padded_matches_measured_rounded_arm=bool(np.array_equal(padded, expected)))
-        if active['profile'] == 'full_state':
+        if active['profile'].startswith('full_state'):
             assert value.shape == expected.shape
             np.testing.assert_array_equal(value, expected)
             np.testing.assert_array_equal(padded, expected)
@@ -78,8 +81,9 @@ def main():
 
     MplibPlanner.plan_path = tracked
     try:
-        for profile in ('native', 'full_state'):
+        for profile in profiles:
             if profile == 'full_state': install()
+            elif profile == 'full_state_sync': install_sync()
             env = RoboTwinEnv(config,1,seed_offset=0,total_num_processes=1,worker_info=None)
             inventory = env.success_seeds.clone()
             for seed in contract['seeds']:
@@ -101,15 +105,15 @@ def main():
                 write(out/'RESULT.json',report)
                 print('CONTROL',profile,seed,result,flush=True)
             env.venv.env_thread_pool.shutdown(wait=True); torch.cuda.synchronize(); env.offload(); env=None
-        native = [r for r in report['records'] if r['profile']=='native']
-        fixed = [r for r in report['records'] if r['profile']=='full_state']
+        native = [r for r in report['records'] if r['profile']==profiles[0]]
+        fixed = [r for r in report['records'] if r['profile']==profiles[1]]
         assert len(native)==len(fixed)==4
         paired = all(a['seed']==b['seed'] and a['initial_observation_sha256']==b['initial_observation_sha256'] for a,b in zip(native,fixed))
-        passes = {p:sum(r['play_once_success'] for r in report['records'] if r['profile']==p) for p in ('native','full_state')}
-        full_calls = [r for r in report['planner_calls'] if r['profile']=='full_state']
+        passes = {p:sum(r['play_once_success'] for r in report['records'] if r['profile']==p) for p in profiles}
+        full_calls = [r for r in report['planner_calls'] if r['profile']==profiles[1]]
         report.update(initial_observations_paired=paired,expert_successes=passes,
             full_state_calls=len(full_calls),
-            status='qualified_control' if paired and passes['full_state']>0 and full_calls else 'failed_control')
+            status='qualified_control' if paired and passes[profiles[1]]>0 and full_calls else 'failed_control')
         # The positive control only admits further scene investigation, not a bank or learning claim.
         report['fresh_bank_published']=False
         report['learning_effectiveness_tested']=False
@@ -124,4 +128,7 @@ def main():
     print('FINAL_CONTROL',report['status'],report.get('expert_successes'),sha(out/'RESULT.json'),flush=True)
 
 
-if __name__ == '__main__': main()
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--contract',type=Path,default=ROOT/'MOTUS-PLANNER-CONTROL01-CONTRACT.json')
+    main(parser.parse_args().contract)
