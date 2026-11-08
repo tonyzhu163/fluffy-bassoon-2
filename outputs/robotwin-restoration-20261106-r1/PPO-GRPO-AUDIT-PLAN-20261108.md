@@ -94,14 +94,17 @@ SFT7/64→10/64, eight gains/five losses, +4.6875points, paired p=.5810547.
 The predeclared effectiveness gate failed. Do not pool DEV and confirmation
 or reselect a checkpoint on confirmation. Student work remains paused.
 
-Closed usage is347,014 GPU-seconds (96.393h). One final checkpoint1 GRPO
-existing-DEV learning-curve diagnostic reserves12,000 GPU-seconds including
-startup/cleanup; it checks the second-cycle regression hypothesis without
-changing checkpoint2 confirmation. Worst total359,014 GPU-seconds (99.726h),
-leaving986 GPU-seconds unreserved. Worker limit1,350s, scheduler24min,
-creation-to-release watchdog1,500s. No additional complete training cycle fits
-safely. Reconcile this release and prepare any continuation before seeking a
-cap increase;100h is a cumulative hard cap.
+The final checkpoint1 existing-DEV diagnostic and independent cross-run audit
+are complete. GRPO's larger DEV curve is6/64→10/64→11/64; checkpoint2 versus1
+has three gains/two losses and p=1.0. The small progress-panel regression was
+not supported by this larger comparison. Checkpoint2 confirmation stays negative.
+
+Closed usage is356198GPU-seconds (98.943889h);3802GPU-seconds remain in the
+100h cumulative cap. No GPU jobs are active or reserved. Further complete
+training needs additional approval. The prepared `MOTUS-LONGER-CURVE-PROPOSAL.md`
+requests155h cumulative for eight fresh GRPO collections through checkpoint10,
+fixed DEV and new confirmation, with Linux qualification before admission.
+The budget request is pending; it is not launch authorization.
 Each new job has a fresh output identity and immutable reviewed main commit.
 Check advancing progress after launch and monitor at most20 minutes apart;
 inspect the exact owned job and preserve its latest complete checkpoint before

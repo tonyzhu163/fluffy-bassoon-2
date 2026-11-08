@@ -33,3 +33,9 @@ cadence require their own numerical qualification. They are not implicitly
 covered by this parity statement. Throughput and resource measurements should
 report actual useful collection/update time and peak allocation, rather than
 VRAM occupancy as an objective by itself.
+
+The final checkpoint1 DEV diagnostic also passed1857 cold state-file hashes,
+full restores and physical/noise readback. The independent cross-run comparison
+matched384 actual Gaussian hashes,64 initial B2 observation hashes and all64
+SFT outcomes across checkpoint1/2 readouts. The larger curve6→10→11 does not
+support a second-cycle regression claim; checkpoint2 confirmation remains negative.

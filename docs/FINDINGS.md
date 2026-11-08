@@ -1269,3 +1269,18 @@ B2 observations passed independent Linux readback. No effective PPO/GRPO source
 learner or held-out transfer is established. Student training remains paused.
 [Confirmation receipt](../outputs/robotwin-restoration-20261106-r1/MOTUS-SOURCE-GRPO-CONFIRMATION01-READBACK.json),
 [review](literature/robotwin-ppo-review.md).
+
+### Corrected Motus checkpoint learning curve
+
+The final exploratory GRPO checkpoint1 DEV readout passes full restoration,
+1857 cold state-file hashes and independent physical/noise/outcome verification:
+SFT6/64→10/64, four gains/no losses,p=.125. Together with checkpoint2's11/64,
+the matched DEV curve is6→10→11. An independent cross-run CPU comparison
+matches384 actual Gaussian draw hashes,64 initial B2 observation hashes and
+all64 SFT outcomes. Checkpoint2 gains three scenes and loses two versus1
+(p=1.0). This does not support the small progress-panel regression hypothesis
+or establish a reliable second-cycle improvement. The preselected checkpoint2
+confirmation remains negative; no effective PPO/GRPO or transfer is established.
+The GPU allocation is released and cumulative cost is98.943889GPUh.
+[Curve receipt](../outputs/robotwin-restoration-20261106-r1/MOTUS-SOURCE-GRPO-CURVE01-READBACK.json),
+[complete audit](../outputs/robotwin-restoration-20261106-r1/PPO-GRPO-AUDIT-RESULT.md).

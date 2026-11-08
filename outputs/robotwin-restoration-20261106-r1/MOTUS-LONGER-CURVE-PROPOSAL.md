@@ -65,6 +65,9 @@ that estimate with startup/cleanup margin and independent endpoint readouts:
 | One fixed confirmation readout |3.333|12000GPU-s including startup/cleanup|
 | Total additional envelope |55|Historical usage remains charged|
 
+Reconciled current closed use is98.943889GPUh; the full55h envelope would
+reach153.943889GPUh. No GPU jobs remain active.
+
 Proposed cumulative cap: **155 GPU-hours**, up from100. Final admission must
 use the reconciled current ledger and preserve the total155h hard cap.
 Reserving stages is not permission to overrun any job's declared watchdog.

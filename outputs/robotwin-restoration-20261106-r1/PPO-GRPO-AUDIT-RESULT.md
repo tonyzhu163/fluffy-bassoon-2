@@ -27,10 +27,15 @@ confirmation. A failed gate does not prove that the true effect is zero; it
 means a useful improvement has not been established by this experiment.
 There is only one training seed per method and no transfer result.
 
-A checkpoint1 GRPO existing-DEV diagnostic is running as `job-ghxn5fnfxfjd`.
-Its purpose is to check the exploratory second-cycle regression hypothesis,
-motivated by the small loop panel4/16→3/16. It cannot replace checkpoint2's
-negative confirmation or serve as a fresh confirmation after checkpoint search.
+The exploratory checkpoint1 GRPO readout also passed full restoration and
+independent cold/physical/noise verification: SFT6/64→10/64, four gains/no losses,
+paired p=.125. Cross-run CPU verification matches all384 actual Gaussian draw
+hashes,64 initial B2 observation hashes and all64 SFT outcomes. The larger DEV
+curve is6→10→11 successes across checkpoints0/1/2. Checkpoint2 gains three
+scenes and loses two relative to checkpoint1 (p=1.0); there is no evidence for
+the suspected second-cycle regression, or for a reliable second-cycle gain.
+[Checkpoint curve evidence](MOTUS-SOURCE-GRPO-CURVE01-READBACK.json). This
+exploratory comparison cannot replace checkpoint2's negative confirmation.
 
 ## Why the earlier attempts were misleading
 
@@ -93,11 +98,12 @@ batch/kernel/compile changes require numerical qualification before use.
 
 ## Next decision and compute boundary
 
-Close the checkpoint1 diagnostic with independent physical/noise/cold-file
-readback and exact creation-to-release cost. Current closed use is347014
-GPU-seconds (96.393h); its12000-GPU-second reservation gives a worst cumulative
-359014 GPU-seconds (99.726h). No additional complete training cycle fits safely
-inside100h. Historical costs are not reset by changing run identity.
+All current jobs and independent CPU audits are complete. The final diagnostic
+released its eight GPUs at08:32:21Shanghai, using9184 conservative GPU-seconds
+including startup/cleanup (worker8912). The cumulative ledger closes at356198
+GPU-seconds (98.943889h), leaving3802GPU-seconds (1.056111h) inside the100h cap.
+No GPU jobs are active and no additional complete training cycle fits safely.
+Historical costs are not reset by changing run identity.
 
 The next useful training experiment is a predeclared fresh-data learning curve,
 with horizon/exploration/critic uncertainty kept explicit and one factor changed
@@ -106,8 +112,10 @@ reward, native B32 likelihood, global2048/fiveepochs and the held-out split.
 Use existing DEV for model development; the consumed confirmation bank is
 retired from fresh claims. A new effectiveness claim needs a newly predeclared
 independent confirmation protocol, and stability needs multiple training seeds.
-Prepare the next concrete contract and resource estimate before seeking a cap
-increase. Do not launch above the explicit100h cap without approval.
+A [concrete longer-curve proposal](MOTUS-LONGER-CURVE-PROPOSAL.md) requests
+a155h cumulative envelope; approval is pending. It adds eight fresh GRPO
+collections and fixed DEV/new confirmation, after Linux qualification and
+per-job admission. Do not launch above the explicit100h cap without approval.
 
 ## Evidence
 
