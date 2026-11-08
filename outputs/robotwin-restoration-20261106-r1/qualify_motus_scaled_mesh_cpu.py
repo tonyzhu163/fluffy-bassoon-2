@@ -1,4 +1,5 @@
 """Actual CPU PhysX/FCL geometry versus analytic box collision/distance reference."""
+import argparse
 import hashlib
 import inspect
 import json
@@ -11,7 +12,7 @@ import numpy as np
 import sapien
 from sapien.physx import PhysxCpuSystem, PhysxRigidDynamicComponent, PhysxCollisionShapeConvexMesh, PhysxMaterial
 from mplib.sapien_utils import SapienPlanningWorld
-from mplib.collision_detection.fcl import FCLObject, CollisionObject, Sphere, distance, collide
+from mplib.collision_detection.fcl import FCLObject, CollisionObject, Sphere, DistanceRequest, distance, collide
 from mplib import Pose
 import torch
 
@@ -21,11 +22,12 @@ ROOT=Path(__file__).resolve().parent
 BASE=Path('/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1')
 
 
-def main():
+def main(identity):
     assert os.uname().sysname=='Linux' and os.environ['CUDA_VISIBLE_DEVICES']==''
     assert not torch.cuda.is_initialized()
     code=ROOT.parents[1];source=os.environ['TASK_SOURCE']
     assert subprocess.check_output(['git','-C',str(code),'rev-parse','HEAD'],text=True).strip()==source
+    request=DistanceRequest(distance_tolerance=1e-10)
     original=SapienPlanningWorld.convert_physx_component
     digest=hashlib.sha256(inspect.getsource(original).encode()).hexdigest()
     fixed=scaled_converter(original,digest)
@@ -69,10 +71,10 @@ f 2 7 6
             for axis in range(3):
                 point=np.zeros(3);point[axis]=3.
                 sphere=FCLObject('probe',Pose(p=point),[CollisionObject(Sphere(.05))],[Pose()])
-                measured=float(distance(converted,sphere).min_distance)
+                measured=float(distance(converted,sphere,request).min_distance)
                 expected=3.-float(shape.scale[axis])-.05
                 assert abs(measured-expected)<2e-6,(scale,axis,measured,expected)
-                if scale==[1.,1.,1.]:assert float(distance(upstream,sphere).min_distance)==measured
+                if scale==[1.,1.,1.]:assert float(distance(upstream,sphere,request).min_distance)==measured
                 for offset,expected_hit in ((.025,True),(.1,False)):
                     point[axis]=float(shape.scale[axis])+offset
                     sphere=FCLObject('probe',Pose(p=point),[CollisionObject(Sphere(.05))],[Pose()])
@@ -83,11 +85,14 @@ f 2 7 6
     report=dict(status='passed_actual_CPU_PhysX_FCL_scaled_convex_geometry_reference',source_commit=source,
         native_converter_source_sha256=digest,cases=rows,unit_geometry_matches_native=True,
         native_nonunit_rejection_reproduced=True,scaled_geometry_analytic_reference_passed=True,
-        collision_checks_retained=True,CPU_physics_only_scene=True,renderers_created=0,task_scenes_created=0,
+        collision_checks_retained=True,distance_request_tolerance=1e-10,CPU_physics_only_scene=True,renderers_created=0,task_scenes_created=0,
         models_loaded=0,GPU_seconds=0,triangle_mesh_numerical_qualification=False,GPU_expert_qualification_required=True)
-    out=BASE/'cpumotusmeshscale01';out.mkdir();p=out/'RESULT.json';p.write_text(json.dumps(report,indent=2)+'\n')
+    assert identity in ('cpumotusmeshscale02','cpumotusmeshscale03')
+    out=BASE/identity;out.mkdir();p=out/'RESULT.json';p.write_text(json.dumps(report,indent=2)+'\n')
     h=hashlib.sha256(p.read_bytes()).hexdigest();print('MESH_SCALE_CPU_PASS',p,[h[i:i+16] for i in range(0,64,16)],flush=True)
     print('NATIVE_CONVERTER_SHA256',[digest[i:i+16] for i in range(0,64,16)],flush=True)
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    parser=argparse.ArgumentParser();parser.add_argument('--identity',required=True)
+    main(parser.parse_args().identity)
