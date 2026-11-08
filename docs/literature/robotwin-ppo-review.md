@@ -66,6 +66,26 @@ The official experiment YAML was read through the GitHub connector. Its blob
 [`77a52129`](https://github.com/RLinf/RLinf/blob/77a521298f1d215971246c2d7a423720d9e76652/examples/embodiment/config/robotwin_adjust_bottle_ppo_openpi_pi05.yaml).
 Matching this file does not establish that all imported dependencies match.
 
+The expert backend is another dependency distinction. The pinned
+[RLinf installer](https://github.com/RLinf/RLinf/blob/c605b9d55ed93a180119b099e6f836abff293b08/requirements/install.sh#L3724)
+installs cuRobo for NVIDIA without an exact revision. Our qualified runtime
+uses MPLib and has no cuRobo installed. In the pinned
+[RoboTwin planner](https://github.com/RoboTwin-Platform/RoboTwin/blob/dca9ec682688821c42944eacd7f5dd9bfb15396f/envs/robot/planner.py),
+cuRobo builds a table-only obstacle world; the MPLib path takes an early SAPIEN
+scene snapshot. Rebuilding MPLib after task actor loading adds grasped objects
+to its obstacle set and changes the expert's contact constraints. It is not an
+equivalent repair merely because geometry conversion succeeds. The native
+joint-action VLA path does not call this expert planner; current failures block
+fresh expert-qualified scene selection, without explaining the completed weak
+learning result. [Actual paired controls](../../outputs/robotwin-restoration-20261106-r1/MOTUS-PLANNER-CONTROL01-CLOSEOUT.json).
+
+Current [cuRobo documentation](https://nvlabs.github.io/curobo/latest/)
+describes a redesigned API. A restoration must pin and qualify the compatible
+legacy MotionGen API, rather than following an unversioned install into a
+shared environment. A CPU build/import does not qualify accelerator kernels
+or successful expert episodes. Preserve the existing training/evaluation
+runtime while preparing an isolated backend control.
+
 | Field | Released example | Earlier Motus pilot | Corrected fresh controls |
 | --- | --- | --- | --- |
 | Initializer | RLinf task-specific `adjust_bottle` SFT | Joint Motus pi0.5 | Fresh joint Motus pi0.5 |

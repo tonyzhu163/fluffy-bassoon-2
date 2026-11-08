@@ -101,7 +101,7 @@ are complete. GRPO's larger DEV curve is6/64→10/64→11/64; checkpoint2 versus
 has three gains/two losses and p=1.0. The small progress-panel regression was
 not supported by this larger comparison. Checkpoint2 confirmation stays negative.
 
-Closed usage is356198GPU-seconds (98.943889h);3802GPU-seconds remain in the
+Closed usage is357512GPU-seconds (99.308889h);2488GPU-seconds remain in the
 100h cumulative cap. No GPU jobs are active or reserved. Further complete
 training needs additional approval. The prepared `MOTUS-LONGER-CURVE-PROPOSAL.md`
 requests155h cumulative for eight fresh GRPO collections through checkpoint10,
