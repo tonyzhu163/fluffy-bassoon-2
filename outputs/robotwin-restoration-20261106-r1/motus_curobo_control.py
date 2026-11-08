@@ -38,7 +38,8 @@ def main(contract_path):
     assert torch.__version__ == backend['torch_version']
     for row in backend['extension_modules'].values(): assert sha(row['file']) == row['sha256']
     path_evidence = json.loads(Path(p['path_result']).read_bytes())
-    for filename,digest in path_evidence['referenced_meshes'].items(): assert sha(filename) == digest
+    for key in ('referenced_meshes','referenced_assets'):
+        for filename,digest in path_evidence[key].items(): assert sha(filename) == digest
     reference = json.loads(Path(p['reference_control']).read_bytes())
     cases = {r['seed']:r for r in reference['records'] if r['profile']=='full_state'}
     assert sorted(cases) == sorted(p['seeds']) and len(cases) == 4
@@ -73,7 +74,7 @@ def main(contract_path):
             assert native.name in ('curobo_left.yml','curobo_right.yml')
             row = prepare(native,os.environ['ROBOTWIN_PATH'],Path(os.environ['TASK_LOCAL'])/'native-config'/native.name)
             expected = next(r for r in path_evidence['rows'] if r['native_yaml']==str(native))
-            for key in ('native_yaml_sha256','actual_urdf_sha256','only_urdf_path_changed'):
+            for key in ('native_yaml_sha256','actual_urdf_sha256','actual_collision_yaml_sha256','only_asset_paths_changed'):
                 assert row[key] == expected[key]
             report['path_repairs'].append(row); write(out/'RESULT.json',report)
             original_init(self,*args,yml_path=row['runtime_yaml'])
