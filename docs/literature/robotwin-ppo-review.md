@@ -207,6 +207,14 @@ This is an implementation report, not controlled proof of a general algorithm
 failure, and its suggestion that updates are too conservative is the reporter's
 interpretation. It does not justify raising our learning rate from log scalars.
 
+Native logged PPO KL is.040/.028 with clip fraction.173/.121 over the two
+corrected iterations; GRPO is.044/.026 and.083/.060. These are rounded native
+summary values, not independent recomputation. In the pinned
+[loss implementation](https://github.com/RLinf/RLinf/blob/c605b9d55ed93a180119b099e6f836abff293b08/rlinf/algorithms/losses.py#L261),
+`actor/clipped_ratio` is the masked mean of the clamped probability ratio, not
+the fraction of clipped samples. A value near.99 is not99% clipping.
+[Closed-log receipt](../../outputs/robotwin-restoration-20261106-r1/MOTUS-NATIVE-LOGGED-SCALARS01.json).
+
 ## Formula and data-path audit
 
 Our pinned native chunk-level PPO uses summed chunk reward, gamma.99 and

@@ -70,8 +70,9 @@ mixed groups. Neither reward shaping nor filtering was silently introduced.
 Native printed training scalars are diagnostic only: PPO approximate KL
 .040/.028, clip fraction.173/.121, critic explained variance−.049/.022;
 GRPO KL.044/.026 and clip fraction.083/.060. These rounded logs are not
-independent recomputation. `actor/clipped_ratio≈.99` is a separate metric and
-must not be described as99% clipping. Poor critic fit, exploration, horizon,
+independent recomputation. In pinned RLinf `algorithms/losses.py:261,315`,
+`actor/clipped_ratio≈.99` is the masked mean of the clamped probability ratio;
+it is not99% clipping. `actor/clip_fraction` measures surrogate clipping. Poor critic fit, exploration, horizon,
 scene diversity and over-updating remain plausible, unisolated explanations.
 
 ## Shared RoboCasa engineering is in the executed path
