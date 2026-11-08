@@ -203,3 +203,57 @@ for checkpoint restoration; choose the new scenes through the explicit readout
 reset hook. Changing the native inventory would fail exact sampler restoration.
 Qualify that physical path before policy evaluation. The new bank, its GPU
 qualification and the fixed checkpoint10 confirmation remain outstanding.
+
+## Fresh confirmation scene preparation
+
+The candidate scan is now committed in `MOTUS-FRESH-CONFIRMATION-SCAN.json`.
+It excludes all1000 native TRAIN seeds and all150 native EVAL seeds, including
+the22 unused seeds after the old128-case split. Scan candidate integers
+100100242 through100101265 in ascending order and stop at the first64 valid
+scenes. These numbers continue the source task's EVAL seed range; they are
+candidates, not a claim of already valid scenes. Record every attempted seed
+and rejection in the contiguous prefix. No VLA, rewarder, policy success or
+checkpoint-dependent signal may enter selection.
+
+`motus_fresh_bank.py` calls the unchanged pinned native `check_seeds`: scene
+setup, expert `play_once`, `plan_success` and `check_success`. It additionally
+requires the expert's actual physical seed and a fresh inference-style reset
+to equal the candidate. Validate finite state, each of three camera images,
+instruction/scene metadata and allocated renderer PCI. Abort on a reset or
+identity mismatch. A planner's ordinary invalid candidate is recorded and the
+scan advances; no substitute seed or incomplete bank is published. Keep the
+native success-seed inventory intact. Publish `BANK.json` only after64 valid
+scenes and joined/synchronized/offloaded simulator cleanup. The independent
+`--readback` reconstructs the exact selection from the full ordered records.
+
+`MOTUS-FRESH-SCENES01-CONTRACT.json` uses a narrower first attempt which fits
+the existing100h authorization: one GPU for at most3600 creation-to-release
+seconds,3100 worker seconds,57 scheduler minutes, no automatic retries,8GiB
+local staging and64MiB BOS output. Historical356198 plus3600 reserved equals
+359798GPU-seconds (99.943889h), below360000. The original proposal retains a
+5GPUh total scene allowance only if the155h cumulative extension is approved;
+this first attempt does not authorize spending the other4h. If fewer than64
+scenes qualify before the watchdog, preserve the records and publish no bank.
+
+Before this within-cap attempt, review latest main and qualify/pin its source files. Bind the
+actual original configuration SHA and verified Linux CPU receipt in the
+contract, retain all existing TRAIN/EVAL inventories, and stage its unchanged
+configuration and ordinary asset links on project/job NVMe. Check storage
+capacity/quota/write-read and actual queue resources, create fresh signal and
+output identities, and use the standard allocated `gpu_probe.py` evaluation
+check with expected-count1. Set `LYCO_BAIGE_GPU_MAP` to that actual job's probe;
+the collector verifies allocation mapping and renderer identity. Run
+`motus_fresh_bank.py --collect <admitted-contract>` under the declared worker,
+scheduler and creation-to-release watchdogs. Check progress and monitor at
+most20 minutes apart. Do not create another allocation to compensate for
+invalid scenes or timeout without reconciling budget and preserving evidence.
+
+If collection passes, run its `--readback <actual-output-directory>` on Linux
+CPU and commit the verified manifest/hash before either SFT or C10 policy is
+evaluated on it. The later confirmation readout needs an explicit new-bank
+flag and that verified manifest; it must keep old confirmation guards closed,
+restore complete C0/C10 state with unchanged sampler inventories, and use the
+explicit physical reset hook. It must not assume fresh scenes reproduce old
+DEV SFT pixels/actions. Shared B2 ODE/noise, full restores, paired outcome
+reader and the original effectiveness gate remain mandatory. Actual new
+scene qualification and that input-specific readout are still GPU work.
