@@ -15,9 +15,34 @@ from fluffy_bassoon.rl.robotwin_execution import collated_chunk_executions
 import motus_teacher_entry
 from recovery_signature import digest
 from motus_curve_readout import result_steps,verify_readout_restores
+from motus_fresh_readout import result_bank,FRESH_FIELDS
 
 BASE = Path('/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1')
 ROOT = Path(__file__).resolve().parent
+
+
+def verify_scene_bindings(state, steps, cases):
+    expected = {(step,panel,rank):set() for step in steps for panel in range(4) for rank in range(8)}
+    checked = 0
+    for path in sorted((Path(state)/'scene-bindings').glob('rank-*-reset-*.json')):
+        row = json.loads(path.read_bytes())
+        match = re.fullmatch(r'readout-policy-([0-9]{4})-panel-([0-9]{2})',row['phase'])
+        if match is None: continue
+        rank = int(re.fullmatch(r'rank-([0-9]{2})-reset-[0-9]+\.json',path.name).group(1))
+        step,panel = map(int,match.groups())
+        assert (step,panel,rank) in expected and row['evaluation_data']
+        assert row['three_camera_nonblank'] and row['controller_passively_measured']
+        seeds = cases[panel*16+rank*2:panel*16+rank*2+2]
+        assert len(row['bindings']) == 2
+        assert {binding['env_index'] for binding in row['bindings']} == {0,1}
+        for binding in row['bindings']:
+            index = binding['env_index']
+            assert binding['actual_seed'] == seeds[index], 'Physical seed differs from the declared readout case'
+            assert binding['instruction'].strip() and isinstance(binding['scene_info'],dict)
+            expected[step,panel,rank].add(index)
+        checked += 1
+    assert all(indices == {0,1} for indices in expected.values())
+    return dict(files=checked,panels_ranks=len(expected),all_physical_seeds_and_three_cameras_verified=True)
 
 
 def main():
@@ -28,7 +53,7 @@ def main():
     assert os.uname().sysname == 'Linux' and os.environ['CUDA_VISIBLE_DEVICES'] == ''
     assert not torch.cuda.is_initialized()
     identity = args.identity
-    assert re.fullmatch(r'motus-source-(ppo|grpo)-(dev|confirmation)[0-9]{2}',identity)
+    assert re.fullmatch(r'motus-source-(ppo|grpo)-(dev|confirmation|freshconfirmation)[0-9]{2}',identity)
     state = BASE/identity/'state';signals = BASE/(identity+'-signals')
     assert json.loads((signals/'EXIT.json').read_bytes())['exit_code'] == 0
     complete = json.loads((signals/'COMPLETE.json').read_bytes())
@@ -48,10 +73,14 @@ def main():
     if result.get('extended_source_curve_readout',False):
         for rank in range(8):
             migration=json.loads((state/'readout-case-migration'/f'env-{rank:02d}.json').read_bytes())
-            assert migration['original_SFT_checkpoint0'] and migration['read_only_DEV']
+            assert migration['original_SFT_checkpoint0']
+            if result.get('fresh_confirmation_readout',False):
+                assert migration['read_only_fresh_confirmation'] and not migration['read_only_DEV']
+            else:assert migration['read_only_DEV']
             assert migration['next_reset_ordinal']==0 and migration['exact256_group_prefix_verified']
             assert migration['native_sampler_and_RNG_restore_retained']
-    cases = json.loads((ROOT/'MOTUS-SOURCE-READOUT-CASES.json').read_bytes())[result['bank']]
+    cases = result_bank(result)
+    bindings = verify_scene_bindings(state,steps,cases)
     noises,initial,episodes = {},{},{}
     physical = dict(delivered_targets=0,physics_steps=0,duration_seconds=0.)
     for policy_ordinal,step in enumerate(steps):
@@ -147,9 +176,10 @@ def main():
         episodes=128,baseline_successes=sum(v['before'] for v in paired),updated_successes=sum(v['after'] for v in paired),
         gained_cases=gains,lost_cases=losses,paired_gain=gain,exact_two_sided_paired_p=pvalue,paired=paired,
         practical_and_statistical_threshold_passed=(gain>=.1 and pvalue<.05),
-        effective_source_confirmation_passed=(result['bank']=='confirmation' and gain>=.1 and pvalue<.05),
+        effective_source_confirmation_passed=(result['bank'] in ('confirmation','fresh_confirmation') and gain>=.1 and pvalue<.05),
+        **({key:result[key] for key in FRESH_FIELDS} if result.get('fresh_confirmation_readout',False) else {}),
         extended_source_curve_readout=bool(result.get('extended_source_curve_readout',False)),
-        independent_restore_audit=restored,
+        independent_restore_audit=restored,independent_scene_binding_audit=bindings,
         one_training_seed_only=True,held_out_transfer_claim=False,optimizer_updates=0,gpu_seconds=0,physical=physical))
     print('PAIRED_RESULT',gains,losses,'gain',gain,'p',pvalue,flush=True)
 

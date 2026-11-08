@@ -1,8 +1,9 @@
-"""Explicit fixed-DEV endpoint support; no confirmation-bank reuse or training."""
+"""Explicit fixed endpoints; fresh confirmation requires its separate sealed route."""
 import json
 from pathlib import Path
 
 from fluffy_bassoon.meta_rl.rlinf_native_ppo import sha
+from motus_fresh_readout import fresh_mode
 
 ROOT=Path(__file__).resolve().parent
 
@@ -11,9 +12,10 @@ def selected_steps(plan):
     step=plan.get('selected_training_iteration',2)
     extended=plan.get('extended_source_curve_readout',False)
     assert type(extended) is bool and type(step) is int
+    fresh=fresh_mode(plan)
     if extended:
-        assert plan['algorithm']=='grpo' and plan['bank']=='dev'
-        assert step in (6,10)
+        assert plan['algorithm']=='grpo'
+        assert (fresh and step==10) or (plan['bank']=='dev' and step in (6,10))
         assert plan['source_SFT_reference_state']==str(Path(plan['checkpoints']['0']['path']).parents[1]/'state')
     else:
         assert step in (1,2)
@@ -24,7 +26,9 @@ def selected_steps(plan):
 def allowed_steps(cfg):
     if cfg.native_pilot.get('extended_source_curve_readout',False):
         step=int(cfg.native_pilot.readout_selected_iteration)
-        assert step in (6,10) and cfg.native_pilot.readout_bank=='dev'
+        if cfg.native_pilot.get('fresh_confirmation_readout',False):
+            assert step==10 and cfg.native_pilot.readout_bank=='fresh_confirmation'
+        else:assert step in (6,10) and cfg.native_pilot.readout_bank=='dev'
         return (0,step)
     return (0,1,2)
 
@@ -35,7 +39,10 @@ def original_sft_restore(cfg,schedule,state,directory):
     boundary=Path(directory).parent.name
     if boundary!='global_step_0':return False
     prefix=ROOT/'MOTUS-TRAIN-CASES.json'
-    assert cfg.native_pilot.readout_bank=='dev'
+    assert cfg.native_pilot.readout_bank=='dev' or (
+        cfg.native_pilot.get('fresh_confirmation_readout',False)
+        and cfg.native_pilot.readout_bank=='fresh_confirmation'
+        and cfg.native_pilot.readout_selected_iteration==10)
     assert schedule.data['prefix_manifest_sha256']==sha(prefix)==state['manifest_sha256']
     assert state['next_reset_ordinal']==0
     assert schedule.data['groups'][:256]==json.loads(prefix.read_bytes())['groups']
@@ -44,10 +51,15 @@ def original_sft_restore(cfg,schedule,state,directory):
 
 def result_steps(result):
     steps=result['checkpoints']
+    fresh=fresh_mode(result)
     if result.get('extended_source_curve_readout',False):
-        assert result['algorithm']=='grpo' and result['bank']=='dev'
-        assert result['fixed_DEV_only'] and result['new_confirmation'] is False
-        assert steps in ([0,6],[0,10])
+        assert result['algorithm']=='grpo'
+        if fresh:
+            assert result['new_confirmation'] is True and result['fixed_DEV_only'] is False
+            assert steps==[0,10]
+        else:
+            assert result['bank']=='dev' and result['fixed_DEV_only']
+            assert result['new_confirmation'] is False and steps in ([0,6],[0,10])
         assert set(result['input_checkpoints'])==set(map(str,steps))
     else:assert steps in ([0,1],[0,2])
     return steps

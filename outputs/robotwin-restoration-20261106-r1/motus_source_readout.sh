@@ -13,7 +13,7 @@ TASK_DRIVER=$TASK_CODE/outputs/robotwin-restoration-20261106-r1
 [[ -z $(git -C "$TASK_CODE" status --porcelain --untracked-files=no) ]]
 [[ $TASK_PLAN_NAME == MOTUS-SOURCE-*-CONTRACT.json && $TASK_PLAN_NAME != */* ]]
 export TASK_READOUT_PLAN=$TASK_DRIVER/$TASK_PLAN_NAME
-TASK_ID=$("$TASK_PYTHON" -c 'import json,sys,re;p=json.load(open(sys.argv[1]));s=p["output_identity"];assert re.fullmatch("motus-source-(ppo|grpo)-(dev|confirmation)[0-9]{2}",s);print(s)' "$TASK_READOUT_PLAN")
+TASK_ID=$("$TASK_PYTHON" -c 'import json,sys,re;p=json.load(open(sys.argv[1]));s=p["output_identity"];assert re.fullmatch("motus-source-(ppo|grpo)-(dev|confirmation|freshconfirmation)[0-9]{2}",s);print(s)' "$TASK_READOUT_PLAN")
 [[ $TASK_OUT == "$TASK_ARCHIVE/$TASK_ID-signals" && ! -e $TASK_OUT ]]
 # Approval changes the contract; a prepared source is deliberately unlaunchable.
 "$TASK_PYTHON" - "$TASK_READOUT_PLAN" <<'PY'
@@ -22,7 +22,8 @@ p=json.load(open(sys.argv[1]))
 assert p['status']=='admitted' and p['cpu_preflight_passed']
 if p.get('extended_source_curve_readout',False):
  assert p['budget_extension_approved'] and p['endpoint_input_preflight_passed']
- assert p['independent_training_readback_passed'] and p['bank']=='dev'
+ assert p['independent_training_readback_passed']
+ assert p['bank']=='dev' or (p['bank']=='fresh_confirmation' and p['fresh_confirmation_readout'] is True and p['selected_training_iteration']==10)
 assert p['closed_conservative_gpu_seconds']+p['other_active_reserved_gpu_seconds']+p['reserved_gpu_seconds']==p['all_worst_gpu_seconds']<=p['approved_cap_gpu_seconds']
 PY
 mkdir "$TASK_OUT"
@@ -94,8 +95,16 @@ assert sha(Path(p['cpu_preflight_result']))==p['cpu_preflight_sha256']
 if p.get('extended_source_curve_readout',False):
  assert sha(Path(p['endpoint_input_preflight_result']))==p['endpoint_input_preflight_sha256']
  assert sha(Path(p['independent_training_readback_result']))==p['independent_training_readback_sha256']
+ inputs=json.loads(Path(p['endpoint_input_preflight_result']).read_bytes())
+ assert inputs['actual_endpoint_inputs_verified']
+ expected=('passed_actual_fresh_C10_checkpoint_inputs_CPU_qualification' if p.get('fresh_confirmation_readout',False)
+  else 'passed_actual_fixed_curve_DEV_checkpoint_input_CPU_qualification')
+ assert inputs['status']==expected
 from motus_curve_readout import selected_steps
 steps=list(selected_steps(p))
+if p.get('fresh_confirmation_readout',False):
+ from motus_fresh_readout import qualified_bank
+ assert len(qualified_bank(p))==64
 assert set(p['checkpoints'])==set(map(str,steps))
 for step in map(str,steps):
  receipt=p['checkpoints'][step];checkpoint=Path(receipt['path'])

@@ -27,6 +27,7 @@ from fluffy_bassoon.meta_rl.tensor_archive import read_tensor
 from rlinf.scheduler import Channel
 from rlinf.utils.metric_utils import compute_evaluate_metrics
 from motus_curve_readout import selected_steps, allowed_steps, original_sft_restore
+from motus_fresh_readout import fresh_mode, readout_bank, install_readout_reset, FRESH_FIELDS
 
 ROOT = Path(__file__).resolve().parent
 
@@ -140,7 +141,9 @@ class ReadoutEnvironment(teacher.MotusEnvironment):
             result=runtime.PilotEnvironment.pilot_restore(self,directory)
             self._paired_reset_ordinal=0
             write(Path(self.cfg.native_pilot.output)/'readout-case-migration'/f'env-{self._rank:02d}.json',dict(
-                original_SFT_checkpoint0=True,read_only_DEV=True,next_reset_ordinal=0,
+                original_SFT_checkpoint0=True,read_only_DEV=self.cfg.native_pilot.readout_bank=='dev',
+                read_only_fresh_confirmation=bool(self.cfg.native_pilot.get('fresh_confirmation_readout',False)),
+                next_reset_ordinal=0,
                 original_manifest_sha256=state['manifest_sha256'],
                 extended_manifest_sha256=self._motus_schedule.sha256,
                 exact256_group_prefix_verified=True,native_sampler_and_RNG_restore_retained=True))
@@ -158,14 +161,7 @@ class ReadoutEnvironment(teacher.MotusEnvironment):
         self._install_bindings(train,root);self._install_bindings(evaluation,root)
         install_cases(self,train,self._motus_schedule,root)
         assert evaluation.num_envs == 2
-        original = evaluation.reset
-        owner = self
-        def reset(env,env_idx=None,env_seeds=None):
-            indices = list(range(env.num_envs)) if env_idx is None else list(env_idx)
-            seeds = [owner._readout_selected[int(i)] for i in indices]
-            env.reset_state_ids[indices] = torch.tensor(seeds,dtype=torch.long,device=env.reset_state_ids.device)
-            return original(env_idx=env_idx,env_seeds=seeds)
-        evaluation.reset = MethodType(reset,evaluation)
+        install_readout_reset(self,evaluation)
         return result
 
     def readout_begin(self,bank,panel,step):
@@ -213,7 +209,10 @@ def configuration(plan,output):
     if extended:
         cfg.native_pilot.extended_source_curve_readout=True
         cfg.native_pilot.readout_selected_iteration=plan['selected_training_iteration']
-    assert plan['bank'] in ('dev','confirmation')
+    if fresh_mode(plan):
+        readout_bank(plan)
+        for key in FRESH_FIELDS:cfg.native_pilot[key]=plan[key]
+    assert plan['bank'] in ('dev','confirmation','fresh_confirmation')
     assert cfg.env.eval.total_num_envs == 16 and cfg.env.eval.rollout_epoch == 1
     return cfg
 
@@ -226,9 +225,8 @@ def main():
     cfg = configuration(plan,output)
     # Full native schema was qualified before the explicit read-only action cap.
     cfg = teacher.validate_cfg(cfg)
-    cases = json.loads((ROOT/'MOTUS-SOURCE-READOUT-CASES.json').read_bytes())
-    bank = cases[plan['bank']]
-    assert plan['bank'] in ('dev','confirmation') and len(bank) == 64
+    bank = readout_bank(plan)
+    assert len(bank) == 64
     if plan['bank'] == 'confirmation':assert plan['selection_committed_before_confirmation']
     cluster = teacher.Cluster(cluster_cfg=cfg.cluster,distributed_log_dir=cfg.runner.per_worker_log_path)
     placement = teacher.HybridComponentPlacement(cfg,cluster)
@@ -236,9 +234,12 @@ def main():
     report = dict(status='starting',algorithm=plan['algorithm'],bank=plan['bank'],panels=[],restores=[],
         optimizer_updates=0,source_commit=os.environ['TASK_SOURCE'],gain_claim=False)
     if plan.get('extended_source_curve_readout',False):
+        fresh=fresh_mode(plan)
         report.update(extended_source_curve_readout=True,input_checkpoints=plan['checkpoints'],
             original_SFT_reference_state=plan['source_SFT_reference_state'],
-            fixed_DEV_only=True,new_confirmation=False)
+            selected_training_iteration=plan['selected_training_iteration'],
+            fixed_DEV_only=not fresh,new_confirmation=fresh)
+        if fresh:report.update({key:plan[key] for key in FRESH_FIELDS})
     try:
         for role,worker in [('actor',ReadoutActor),('rollout',ReadoutRollout),('env',ReadoutEnvironment)]:
             groups.append(worker.create_group(cfg).launch(cluster,name=cfg[role].group_name,
