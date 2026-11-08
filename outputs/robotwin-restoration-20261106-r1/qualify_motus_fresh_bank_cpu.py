@@ -16,7 +16,7 @@ import threading
 import time
 from types import SimpleNamespace
 
-from motus_fresh_bank import ROOT, SCAN, sha, write, declaration, accepted, select, collect
+from motus_fresh_bank import ROOT, SCAN, sha, write, declaration, accepted, select, collect, check_initial_observation
 
 BASE = Path('/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1')
 
@@ -92,6 +92,16 @@ def main():
         rejected(lambda: accepted(dict(rows[1], SFT_success=True)))
         assert not accepted(dict(rows[1], expert_physical_seed=rows[1]['seed']+1))
         assert not accepted(dict(rows[1], initial_reset_exact=False, initial_observation_sha256=None))
+        import torch
+        assert not torch.cuda.is_initialized()
+        image = torch.arange(48, dtype=torch.uint8).reshape(1, 4, 4, 3)
+        observation = dict(states=torch.zeros(1, 14), main_images=image,
+            wrist_images=torch.stack([image, image], dim=1), task_descriptions=['place phone'])
+        check_initial_observation(observation)
+        black_wrist = observation['wrist_images'].clone(); black_wrist[0, 1] = 0
+        rejected(lambda: check_initial_observation(dict(observation, wrist_images=black_wrist)))
+        rejected(lambda: check_initial_observation(dict(observation, states=torch.full((1, 14), float('nan')))))
+        assert not torch.cuda.is_initialized()
         seeds = Path(os.environ['REPO_PATH'])/'rlinf/envs/sim/robotwin/seeds/eval_seeds.json'
         assert sha(seeds) == plan['full_eval_source_sha256']
         actual = json.loads(seeds.read_bytes())[plan['task']]['success_seeds']
@@ -109,6 +119,7 @@ def main():
             synthetic_first64_complete_prefix=96, missing_reordered_extra_or_policy_conditioned_rows_rejected=True,
             physical_seed_substitution_rejected=True, failed_initial_reset_rejected=True,
             original_configuration_sha256=sha(original), prepared_GPU_collection_rejected=True,
+            native_uint8_initial_packet_checks_passed=True, each_camera_required_nonblank=True,
             original_sampler_inventory_not_edited=True, native_function_sha256=hashlib.sha256(ast.get_source_segment(native_source, method).encode()).hexdigest())
     except BaseException as error:
         report.update(status='failed', error_type=type(error).__name__, error=str(error)); raise

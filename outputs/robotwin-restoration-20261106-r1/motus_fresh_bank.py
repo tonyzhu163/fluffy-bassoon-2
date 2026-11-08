@@ -78,6 +78,18 @@ def select(records, candidates, required=64):
     return chosen
 
 
+def check_initial_observation(obs):
+    """Qualify the actual native uint8 packet, including each wrist camera."""
+    import torch
+    assert torch.isfinite(obs['states']).all() and obs['states'].shape == (1, 14)
+    main, wrists = obs['main_images'], obs['wrist_images']
+    assert main.ndim == 4 and main.shape[0] == 1 and main.shape[-1] == 3
+    assert wrists.ndim == 5 and wrists.shape[:2] == (1, 2) and wrists.shape[-1] == 3
+    for image in (main[0], wrists[0, 0], wrists[0, 1]):
+        assert torch.isfinite(image).all() and image.float().std().item() > 0
+    assert isinstance(obs['task_descriptions'][0], str) and obs['task_descriptions'][0].strip()
+
+
 def collect(contract_path):
     # Imports which can initialize a device are confined to admitted collection.
     plan, candidates = declaration()
@@ -149,8 +161,8 @@ def collect(contract_path):
             if result['setup_demo_success'] and result['play_once_success'] and row['expert_physical_seed'] == seed:
                 actual = pci(sub.task.scene.render_system.device.pci_string.removeprefix('pci:'))
                 assert actual == expected_pci
-                # A bounded setup failure rejects this candidate; an identity,
-                # instruction or renderer mismatch aborts the qualification.
+                # A setup error, identity, instruction or renderer mismatch
+                # aborts the qualification and must be investigated.
                 try:
                     obs, _ = env.reset(env_seeds=[seed])
                 except Exception as error:
@@ -159,9 +171,7 @@ def collect(contract_path):
                 assert sub.task.get_instruction() == obs['task_descriptions'][0]
                 assert sub.episode_info_list == [sub.task.get_info()]
                 assert pci(sub.task.scene.render_system.device.pci_string.removeprefix('pci:')) == expected_pci
-                assert torch.isfinite(obs['states']).all() and obs['states'].shape == (1, 14)
-                assert obs['main_images'].std() > 0 and obs['wrist_images'].std() > 0
-                assert isinstance(obs['task_descriptions'][0], str) and obs['task_descriptions'][0].strip()
+                check_initial_observation(obs)
                 row.update(initial_reset_exact=True, initial_observation_sha256=tensor_hash(cpu_tree(obs)))
             assert torch.equal(inventory, env.success_seeds)
             if accepted(row): chosen.append(seed)
@@ -197,6 +207,9 @@ def readback(directory):
     assert result['cleanup_complete'] and result['model_calls'] == result['optimizer_updates'] == 0
     assert not result['policy_outcomes_observed'] and not bank['policy_outcomes_observed']
     assert result['native_success_seed_inventory_unchanged'] and bank['original_sampler_inventory_preserved']
+    plan, _ = declaration()
+    assert result['native_vector_env_sha256'] == plan['native_vector_env_sha256']
+    assert result['source_commit'] == bank['source_commit']
     assert bank['qualification_result_sha256'] == sha(path/'RESULT.json')
     assert result['scan_sha256'] == bank['scan_sha256'] == sha(SCAN)
     selected = select(result['records'], candidates)
