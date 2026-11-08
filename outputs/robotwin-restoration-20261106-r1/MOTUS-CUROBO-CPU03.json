@@ -1,0 +1,52 @@
+{
+  "status": "verified_isolated_CPU_build_ABI_and_native_asset_paths_GPU_qualification_outstanding",
+  "build_source_commit": "8f6c32f8e454e0ec7e4d2c79c59b67f91b3707a4",
+  "path_and_readback_source_commit": "fd0d1a01f02633c30d7dbef4d4e09ce82351b7c4",
+  "curobo_commit": "d64c4b005459db10c5dd867d8b30a87d5bda9bdb",
+  "curobo_version": "0.7.8",
+  "isolated_environment": "/mowenjie/fluffy-bassoon-2/robotwin-curobo-20261108-cpumotuscurobo03/env",
+  "raw_build_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpumotuscurobo03/RESULT.json",
+  "raw_build_sha256": "2c6e50c29ee96ef96c3556bbff52823bbf66976628286cc25d561dc364615f48",
+  "raw_build_status": "failed_CPU_preparation",
+  "raw_build_status_explanation": "The CUDA extensions built/installed successfully; the full MotionGen import then failed on its import-time default CUDA Pose because this CPU host has no visible GPU. The original failed status and log are preserved.",
+  "build_total_seconds": 774.5841405391693,
+  "independent_readback": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpumotuscuroboreadback01/RESULT.json",
+  "independent_readback_sha256": "bf7d3b3e87549145708b3e6afa1e6b4ab97d0147df0f4c88f176c0f536ce24ab",
+  "native_path_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpumotuscurobopaths01/RESULT.json",
+  "native_path_sha256": "32dcfb1ee8f545e370f62a0adac0722b06c284a534857820ffc248c19bb9c28b",
+  "actual_compiled_extensions": 5,
+  "actual_CPU_extension_imports_passed": 5,
+  "compiled_architectures": [
+    "9.0+PTX",
+    "12.0"
+  ],
+  "torch_version": "2.11.0+cu128",
+  "CUDA_toolkit": "12.8.93",
+  "cxx11_ABI": true,
+  "CUDA_initialized_in_independent_readback": false,
+  "full_MotionGen_import_passed": false,
+  "MotionGen_import_requires_GPU": true,
+  "CPU_kernel_numerical_qualification": false,
+  "GPU_kernel_qualification": false,
+  "expert_success_qualified": false,
+  "original_yaml_files_preserved": 2,
+  "run_local_yaml_changes": "Only the missing absolute URDF path is replaced; every other parsed configuration field matches exactly.",
+  "referenced_mesh_files_verified": 30,
+  "robot_geometry_changed": false,
+  "installed_in_training_or_evaluation": false,
+  "shared_environment_modified": false,
+  "GPU_seconds": 0,
+  "models_loaded": 0,
+  "simulator_scenes_created": 0,
+  "prior_preparation_attempts": {
+    "01": "Stopped on a setuptools constraint before installing cuRobo; fixed only in the isolated overlay.",
+    "02": "Stopped because the preparation checker retained already-activated extra markers in uv arguments, causing uv to skip those missing packages. Corrected in03; no GPU used."
+  },
+  "proof": "motus-curobo-cpu-qualified.png",
+  "next_step": "Review a fresh bounded allocated-device/native expert control, retain the table-only collision configuration and exact physical pairing; no fresh bank or learning gain is admitted by these CPU checks.",
+  "source_files": {
+    "outputs/robotwin-restoration-20261106-r1/prepare_motus_curobo_cpu.py": "741e9397ef350015b396fd3cd8b60aa50de1c1a0f5e241dde248a7066b5c09a1",
+    "outputs/robotwin-restoration-20261106-r1/motus_curobo_paths.py": "542712808c5c6538dc52be3b0d13c881b3d9bc03720b777984a355da8246071f",
+    "outputs/robotwin-restoration-20261106-r1/qualify_motus_curobo_paths_cpu.py": "33b75a51844d7efd7daead24922d8a40fa0d3c5a2a531f444587f8af95680b87"
+  }
+}

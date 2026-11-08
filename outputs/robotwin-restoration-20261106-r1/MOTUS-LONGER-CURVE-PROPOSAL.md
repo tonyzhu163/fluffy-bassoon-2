@@ -318,3 +318,13 @@ grasp constraints. Qualify intended contact semantics, complete geometry and
 actual four-seed expert success before scanning fresh candidates. Restore the
 native backend in an isolated uv environment if needed; preserve shared active
 environments. No further GPU contract or fresh-bank scan is admitted yet.
+
+Isolated native-backend preparation is now recorded in
+`MOTUS-CUROBO-CPU03.json`: cuRobo0.7.8 atd64c4b0 builds successfully and
+all5 extensions pass CPU ABI imports. Full MotionGen import requires a visible
+CUDA device, so it remains unqualified. Run-local copies repair only two stale
+URDF paths and verify all30 mesh files; shared assets/runtime stay unchanged.
+Native table-only collision semantics and paired expert success must pass an
+actual bounded device control before scene selection. These CPU checks add no
+GPU cost:357512 seconds closed,2488 remaining. They do not change the training
+recipe, its negative confirmation, or the pending155h request.

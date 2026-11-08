@@ -121,6 +121,14 @@ cold restore records pass. The updated reader also passes all1857 files of the
 old checkpoint1 DEV run. Real6/10 inputs, GPU evaluation and a newly qualified
 confirmation scene bank remain outstanding; the prepared contracts reject launch.
 Each new job has a fresh output identity and immutable reviewed main commit.
+
+The separate fresh-bank expert issue now has a pinned isolated cuRobo0.7.8
+candidate: all5 extensions compile and pass actual CPU ABI imports, and two
+run-local YAML path repairs preserve every other field while verifying30 mesh
+files. Full MotionGen import constructs a CUDA tensor, so actual device and
+expert qualification are still required. See `MOTUS-CUROBO-CPU03.json`.
+Do not replace source training/evaluation or admit a new scene bank from these
+CPU checks. All owned GPU/CPU work is closed; no new GPU reservation is active.
 Check advancing progress after launch and monitor at most20 minutes apart;
 inspect the exact owned job and preserve its latest complete checkpoint before
 any intervention. Record live progress only in our row of `outputs/coordination.md`.

@@ -164,8 +164,9 @@ expert success. [CPU reference](MOTUS-PLANNER-SYNC-CPU01.json). Require paired
 GPU controls before another fresh scan. The actual second control then fails
 all4 synchronization attempts before solving: the installed SDK reports the
 phone missing from PlanningWorld. The native initialization constructs planners
-before task actor loading. This is evidence for an incomplete scene snapshot;
-updating that snapshot alone is insufficient. [Second control](MOTUS-PLANNER-CONTROL02-CLOSEOUT.json).
+before task actor loading. Full-scene synchronization is incompatible with that
+early snapshot; the missing task actor alone does not establish a defect in the
+intended static collision world. [Second control](MOTUS-PLANNER-CONTROL02-CLOSEOUT.json).
 Post-setup reconstruction through the native constructor then fails all4
 controls before any repaired solver call: scene-to-FCL conversion rejects task
 mesh scale0.078. All initial observations remain paired; no collision or
@@ -186,6 +187,20 @@ recorded cuRobo/static-world semantics instead of treating any expanded world
 as automatically equivalent. No candidate is installed in training/evaluation. Do not disable collision checks to force validity, reuse
 consumed confirmation as fresh, or claim that a planner repair has improved
 PPO/GRPO without new learning evidence.
+
+The isolated native-backend preparation now pins cuRobo0.7.8 atd64c4b0.
+All5 CUDA extensions compile and pass independent CPU ABI imports against
+Torch2.11/CUDA12.8; no GPU kernel ran. The original build receipt retains its
+failed overall status because full MotionGen import constructs a default CUDA
+Pose and therefore fails on the CPU-only host. That is a device requirement,
+not a passed API/expert test. Two stale native YAML URDF paths are repaired
+only in run-local copies, with all other parsed fields equal and30 actual mesh
+files verified. Shared runtime/assets and source training/evaluation are
+unchanged. [Backend and path evidence](MOTUS-CUROBO-CPU03.json).
+The next control must qualify the full API, device kernels, native collision
+configuration and paired old-seed expert behavior before another fresh scan.
+No new GPU job is admitted by this CPU preparation, and the longer source
+learning experiment remains separately limited by the pending budget extension.
 
 ## Evidence
 
