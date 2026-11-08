@@ -118,7 +118,10 @@ Next steps, in order:
    Adam descriptors,48 original DEV files,40 schedule rounds and native loop
    routing pass Linux CPU qualification at403920c2. Measured source DEV offsets
    are worker-specific. Actual resumed model predictions/SGD remain GPU checks.
-3. Independently audit C6 and qualify its actual cold inputs before6→10. Preserve
+3. Independently audit C6 and qualify its actual cold inputs before6→10. The
+   separate second launcher and actual-input qualifier now pass code/schema
+   checks; see `MOTUS-CURVE-SEGMENT02-CODE-CPU01.json`. Actual C6 hashes and
+   per-worker prediction offsets stay unset until produced. Preserve
    global2048/fiveepochs/B32, native binary reward and fresh policy collections.
    Run fixed existing-DEV endpoints6/10 through the LinuxCPU-qualified readout
    (7226b8db), retaining full native state restores and common actual ODE draws.

@@ -1,0 +1,63 @@
+{
+  "status": "incomplete_pending_explicit_budget_extension",
+  "goal_completion_proven": false,
+  "previous_goal_turn_classification": "progress: implemented and Linux-qualified fresh confirmation route and complete legacy reader",
+  "this_turn_progress": "Implemented and Linux-qualified separate6to10 launch and input-qualification routes; corrected first prepared contract budget/scene metadata.",
+  "remaining_requirements": [
+    {
+      "requirement": "first_learning_segment",
+      "contract": "MOTUS-CURVE-GRPO-TRAIN01-CONTRACT.json",
+      "code_sources_match_qualified_hashes": true,
+      "status": "GPU_execution_outstanding",
+      "budget_extension_approved": false
+    },
+    {
+      "requirement": "second_learning_segment",
+      "contract": "MOTUS-CURVE-GRPO-TRAIN02-CONTRACT.json",
+      "code_sources_match_qualified_hashes": true,
+      "status": "GPU_execution_outstanding",
+      "budget_extension_approved": false
+    },
+    {
+      "requirement": "fixed_DEV6",
+      "contract": "MOTUS-SOURCE-GRPO-CURVEDEV06-CONTRACT.json",
+      "code_sources_match_qualified_hashes": true,
+      "status": "GPU_execution_outstanding",
+      "budget_extension_approved": false
+    },
+    {
+      "requirement": "fixed_DEV10",
+      "contract": "MOTUS-SOURCE-GRPO-CURVEDEV10-CONTRACT.json",
+      "code_sources_match_qualified_hashes": true,
+      "status": "GPU_execution_outstanding",
+      "budget_extension_approved": false
+    },
+    {
+      "requirement": "fresh_fixed_C10_confirmation",
+      "contract": "MOTUS-SOURCE-GRPO-FRESHCONFIRMATION01-CONTRACT.json",
+      "code_sources_match_qualified_hashes": true,
+      "status": "GPU_execution_outstanding",
+      "budget_extension_approved": false
+    }
+  ],
+  "existing_source_confirmation": "GRPO C2:7to10/64;8gains5losses;p.5810546875;effectiveness gate failed",
+  "fresh_bank_qualification": "complete:64valid/84ordered candidates;no TRAIN/oldEVAL overlap;no policy outcomes",
+  "literature_review": "docs/literature/robotwin-ppo-review.md",
+  "engineering_parity": "ENGINEERING-PARITY.md",
+  "closed_gpu_seconds": 359665,
+  "approved_cap_gpu_seconds": 360000,
+  "remaining_gpu_seconds": 335,
+  "next_stage_reserved_gpu_seconds": 72000,
+  "next_stage_worst_gpu_seconds": 431665,
+  "requested_cap_gpu_seconds": 558000,
+  "extension_approval_received": false,
+  "blocker": "The actual next learning stage exceeds the explicit100h cumulative cap; only explicit budget approval or a user-directed scope change permits further goal progress.",
+  "repeated_blocker_evidence": [
+    "69edb548: fresh bank qualified;155h request pending;99.906944h used",
+    "b3c072aa: fresh evaluator qualified;same cap and pending request",
+    "current second-segment audit: same cap, no extension received;independent code preparation now complete"
+  ],
+  "why_no_safe_substitute": "CPU/schema/RPC checks cannot produce fresh VLA rollout/update outcomes. Tiny or retained-buffer work would change the declared learning test and cannot establish the requested source effectiveness.",
+  "resume_point": "Current resource admission and exact Git deployment of prepared C2to6 segment after budget approval; actual C6/C10 dependent input checks follow their production.",
+  "student_and_held_out_training_authorized": false
+}

@@ -225,3 +225,22 @@ run:1857 cold files,128 episodes,128 actual scene-binding files and all384
 Gaussian draws. It reproduces SFT6/64→C1 10/64, four gains/no losses,p=.125.
 This is compatibility verification on existing data, not a new learning result
 or a fresh confirmation. [Full reader evidence](MOTUS-FRESH-READOUT-LEGACY01.json).
+
+## Remaining launch gap closed; actual learning still blocked by the cap
+
+The6→10 learner route existed, but its launcher was still hardcoded to2→6.
+A separate second contract/launcher and actual-C6 input qualifier now pass
+Linux CPU code/schema checks atd7cab428. The native loop uses fresh policies
+6/7/8/9 and counters90→150 under RPC stubs. The actual completion guard passes
+temporary receipt fixtures and rejects a second schedule migration, which C6
+must not need. Real C6 manifest/readback hashes and per-worker DEV offsets
+remain unset. [Second-segment qualification](MOTUS-CURVE-SEGMENT02-CODE-CPU01.json).
+
+Both learning segments, fixed DEV endpoints and fresh confirmation now have
+implemented routes with explicit missing-input guards. This is preparation,
+not verified future training. The next20GPUh segment would bring cumulative
+worst use to119.906944h, exceeding the explicit100h cap. Only335GPU-seconds
+remain; no full proposed training or evaluation stage fits. The existing155h
+request is unanswered. No additional preparatory CPU check can supply the
+missing fresh-policy learning outcomes or establish effectiveness. The exact
+resume action is budget approval, current resource admission, then C2→6.

@@ -136,15 +136,35 @@ updates and preserve every complete cold boundary. Run the independent
 checkpoint6. The bounded launcher keeps two local checkpoints after verified
 cold copies and preserves the imported source checkpoint separately.
 
-The second2.5h allocation is a new contract, not an implicit retry: consume the
-actual checkpoint6 manifest, original configuration and measured per-worker
-final DEV references from segment1; independently qualify those inputs before
-6→10. Keep total training allocation≤40GPUh. The paired readout now has
-explicit fixed6/10 DEV support, as described below; qualify its actual future
-inputs separately and retain its unchanged B2/noise/restore checks.
-Qualify/predeclare the new confirmation bank before inspecting its policy
-outcomes. None of these future inputs or full-model resumes is claimed passed
-by the present CPU receipt.
+The second segment now has its own `MOTUS-CURVE-GRPO-TRAIN02-CONTRACT.json`
+and `train_motus_curve02.sh`, keeping the first launcher's qualified code intact.
+Linux CPU qualification atd7cab428 passes the6→10 schema, unchanged numerical
+sections, native loop with RPC stubs and four fresh collection/update tags,
+90→150 optimizer counters, prepared-input rejection and the actual final
+launcher guard on disposable receipt fixtures. C6 already uses the extended
+schedule: phase2 correctly requires no second case migration. An unexpected
+migration is rejected. No model, SGD, real C6 state or GPU resume is qualified
+by these checks. [CPU evidence](MOTUS-CURVE-SEGMENT02-CODE-CPU01.json).
+
+After segment1 completes, use its independent training readback to bind the
+actual C6 manifest and source configuration. Measure each worker's final six
+DEV prediction ordinals from the real C6 output; do not copy the C2 offsets.
+Run `qualify_motus_curve_segment02_cpu.py --identity cpumotussegment02input01
+--actual-inputs` on allocated Linux CPU, using a fresh identity. It verifies
+the actual C0/C6 cold files, all24 sidecars at each input, owned Adam90,
+source config/readback provenance and all48 C6 DEV sampling files. Bind that
+receipt separately from code qualification before setting input admission true.
+The C6 hash, readback hash and offsets remain deliberately unset today.
+
+Reconcile the ledger after segment1 and its DEV readout; retain the total40GPUh
+training envelope. Only after real-input and budget/resource admission, deploy
+an exact main commit and launch `train_motus_curve02.sh <commit>
+<project-BOS>/motus-curve-grpo-train02-signals`. Independently close C10 with
+`readback_motus_curve_training.py --contract
+MOTUS-CURVE-GRPO-TRAIN02-CONTRACT.json --training-source <training-commit>
+--output-identity motus-curve-grpo-train02-readback01`. All actual full-model
+restores and new fresh learning remain GPU requirements. Keep held-out and
+student work paused until the source effectiveness gate passes.
 
 ## Fixed DEV readout preparation
 
@@ -199,7 +219,7 @@ After the appropriate segment finishes:
 
 The present extension rejects checkpoint6/10 confirmation on the consumed
 bank. The explicit fresh-confirmation route binds the qualified,
-predeclared64-scene manifest and retain the existing native sampler inventory
+predeclared64-scene manifest and retains the existing native sampler inventory
 for checkpoint restoration; choose the new scenes through the explicit readout
 reset hook. Changing the native inventory would fail exact sampler restoration.
 Qualify that physical path before policy evaluation. The fresh64 bank now has independent expert/reset/device qualification. The
