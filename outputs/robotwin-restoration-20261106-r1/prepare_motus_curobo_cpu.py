@@ -1,5 +1,6 @@
 """Build an isolated legacy expert backend; no simulator or GPU execution."""
 import configparser
+import argparse
 import hashlib
 import json
 import os
@@ -10,11 +11,12 @@ import sys
 import time
 
 
-def main():
+def main(identity):
     assert sys.platform == 'linux' and os.environ.get('CUDA_VISIBLE_DEVICES') == ''
     assert not os.uname().nodename.startswith('job-'), 'Use the allocated CPU development machine'
-    root = Path('/mowenjie/fluffy-bassoon-2/robotwin-curobo-20261108-cpu01')
-    cold = Path('/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpumotuscurobo01')
+    assert identity in ('cpumotuscurobo01','cpumotuscurobo02')
+    root = Path('/mowenjie/fluffy-bassoon-2/robotwin-curobo-20261108-'+identity)
+    cold = Path('/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1')/identity
     code = Path(os.environ['TASK_CODE'])
     source = os.environ['TASK_SOURCE']
     assert subprocess.check_output(['git','-C',str(code),'rev-parse','HEAD'],text=True).strip() == source
@@ -93,6 +95,10 @@ while pending:
 print(json.dumps({'missing':missing,'conflicts':conflicts,'visited':len(seen)}))
 '''
         requirements += ['ninja','packaging','setuptools>=45']
+        # The existing vendor environment has setuptools84 although a native
+        # dependency requires <82. Change the overlay build tool only, never
+        # the qualified framework, numerical packages or shared environment.
+        run([sys.executable,'-m','uv','pip','install','--python',python,'--no-deps','setuptools>=45,<82'],seconds=300)
         # Match the pinned RLinf installer rather than a changing Warp default.
         requirements = ['warp-lang==1.11.1' if x.startswith('warp-lang') else x for x in requirements]
         for _ in range(8):
@@ -133,4 +139,6 @@ print(json.dumps({'CUDA_initialized':False,'MotionGen':str(inspect.signature(Mot
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--identity',required=True)
+    main(parser.parse_args().identity)
