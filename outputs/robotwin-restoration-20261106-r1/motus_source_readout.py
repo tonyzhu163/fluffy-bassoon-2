@@ -219,7 +219,7 @@ def main():
         actor,rollout,env = groups
         runner = teacher.MotusRunner(cfg=cfg,actor=actor,rollout=rollout,env=env,reward=None)
         runner.init_workers()
-        for step in (0,1,2):
+        for step in selected_iterations(plan):
             checkpoint = Path(os.environ['TASK_LOCAL'])/'checkpoints'/f'global_step_{step}'
             assert sha(checkpoint/'MANIFEST.json') == plan['checkpoints'][str(step)]['manifest_sha256']
             actor.load_checkpoint(str(checkpoint/'actor')).wait()
