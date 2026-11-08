@@ -14,7 +14,7 @@ import time
 def main(identity):
     assert sys.platform == 'linux' and os.environ.get('CUDA_VISIBLE_DEVICES') == ''
     assert not os.uname().nodename.startswith('job-'), 'Use the allocated CPU development machine'
-    assert identity in ('cpumotuscurobo01','cpumotuscurobo02')
+    assert identity in ('cpumotuscurobo01','cpumotuscurobo02','cpumotuscurobo03')
     root = Path('/mowenjie/fluffy-bassoon-2/robotwin-curobo-20261108-'+identity)
     cold = Path('/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1')/identity
     code = Path(os.environ['TASK_CODE'])
@@ -89,7 +89,10 @@ while pending:
  if key in seen: continue
  seen.add(key)
  try: d=m.distribution(r.name)
- except m.PackageNotFoundError: missing.append(str(r)); continue
+ except m.PackageNotFoundError:
+  # The parent's extra has already activated this requirement. Keeping its
+  # marker in the uv command would make uv skip it under its own empty extra.
+  r.marker=None; missing.append(str(r)); continue
  if r.specifier and not r.specifier.contains(d.version,prereleases=True): conflicts.append([str(r),d.version]); continue
  pending.extend((x,tuple(r.extras) or ('',)) for x in (d.requires or []))
 print(json.dumps({'missing':missing,'conflicts':conflicts,'visited':len(seen)}))
