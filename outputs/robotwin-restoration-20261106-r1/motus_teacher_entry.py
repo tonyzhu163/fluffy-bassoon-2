@@ -282,10 +282,20 @@ class MotusEnvironment(runtime.PilotEnvironment):
 
     def pilot_restore(self,directory):
         state = json.loads((Path(directory)/f'motus-case-schedule-env-{self._rank:02d}.json').read_bytes())
-        assert state['manifest_sha256'] == self._motus_schedule.sha256
+        same_manifest=state['manifest_sha256']==self._motus_schedule.sha256
+        migration=(self.cfg.native_pilot.get('extended_source_curve',False)
+            and Path(directory).parent.name=='global_step_2'
+            and state['manifest_sha256']==self.cfg.native_pilot.prefix_case_manifest_sha256
+            and self._motus_schedule.data['prefix_manifest_sha256']==state['manifest_sha256'])
+        assert same_manifest or migration, 'Source-case schedule changed without a verified prefix migration'
         assert state['next_reset_ordinal'] == boundary_ordinal(directory,4)
         result = super().pilot_restore(directory)
         self._paired_reset_ordinal = state['next_reset_ordinal']
+        if not same_manifest:
+            write(Path(self.cfg.native_pilot.output)/'case-migration'/f'env-{self._rank:02d}.json',dict(
+                from_manifest_sha256=state['manifest_sha256'],to_manifest_sha256=self._motus_schedule.sha256,
+                exact_two_iteration_prefix_preserved=True,next_reset_ordinal=self._paired_reset_ordinal,
+                worker_RNG_restored=True,new_output_IO_ordinals_restart_at_zero=True))
         return result
 
 
@@ -312,6 +322,17 @@ class MotusRunner(runtime.PilotRunner):
             full_cold_readback=True,full_local_stageback=True,global_step=self.global_step,
             data_bytes=sum(row['bytes'] for row in manifest['files'].values()),
             seconds=time.monotonic()-started,independent_process_restore_still_required=True))
+        keep=self.cfg.native_pilot.get('keep_local_checkpoints')
+        if keep is not None:
+            assert self.cfg.native_pilot.get('extended_source_curve',False) and keep==2
+            owned=checkpoint.parent
+            paths=sorted(owned.glob('global_step_*'),key=lambda p:int(p.name.removeprefix('global_step_')))
+            for obsolete in paths[:-keep]:
+                step=int(obsolete.name.removeprefix('global_step_'))
+                prior=json.loads((Path(self.cfg.native_pilot.output)/'checkpoint-receipts'/f'step-{step:04d}.json').read_bytes())
+                assert obsolete.parent==owned and prior['completed'] and prior['full_cold_readback']
+                assert sha(Path(prior['cold'])/'MANIFEST.json')==prior['manifest_sha256']==sha(obsolete/'MANIFEST.json')
+                shutil.rmtree(obsolete)  # A verified complete cold copy is retained; latest two stay local.
 
     def _dev(self,iteration):
         for group in (self.actor,self.rollout,self.env): group.pilot_rng().wait()
@@ -326,7 +347,7 @@ class MotusRunner(runtime.PilotRunner):
         for group in (self.rollout,self.env): group.set_global_step(iteration).wait()
         self._pilot_write(f'dev/iteration-{iteration:04d}.json',dict(completed=True,
             producing_policy_iteration=iteration,metrics=json_metrics(metrics),episodes=16,optimizer_updates_during_eval=0,
-            checkpoint_selection='fixed iteration2; this is a source DEV progress panel'))
+            checkpoint_selection=f'fixed iteration{self.cfg.native_pilot.get("intended_iterations",2)}; this is a source DEV progress panel'))
         for group in (self.actor,self.rollout,self.env): group.pilot_rng(restore=True).wait()
 
     def _log_step_metrics(self,*args,**kwargs):
@@ -346,6 +367,10 @@ class MotusRunner(runtime.PilotRunner):
             for group in (self.actor,self.rollout,self.env):
                 rows.extend(group.pilot_restore(str(Path(resume)/'pilot')).wait())
             self._pilot_write('operational-restore.json',dict(global_step=self.global_step,workers=rows))
+            if self.cfg.native_pilot.get('extended_source_curve',False):
+                assert len(rows)==24 and all(r['restored'] for r in rows)
+                assert self.global_step==int(self.cfg.native_pilot.segment_start_iteration)
+                self._dev(self.global_step)
         else:
             self.update_rollout_weights()
             self._capture_boundary()
@@ -357,7 +382,7 @@ class MotusRunner(runtime.PilotRunner):
         EmbodiedRunner.run(self)
         assert self.global_step == self.max_steps
         self._pilot_write('RESULT.json',dict(status='completed_admitted_prefix',
-            completed_iterations=self.global_step,intended_iterations=2,
+            completed_iterations=self.global_step,intended_iterations=int(self.cfg.native_pilot.get('intended_iterations',2)),
             native_adam_updates_per_rank=15*self.global_step,algorithm=self.cfg.native_pilot.comparison_algorithm,
             scientific_source_admission=False,complete_six_task_campaign=False))
 

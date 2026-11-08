@@ -15,19 +15,25 @@ class CaseSchedule:
         assert hashlib.sha256(raw).hexdigest()==expected_sha256
         self.sha256=expected_sha256;self.data=json.loads(raw)
         assert self.data['task']=='place_phone_stand'
-        assert self.data['iterations']==2 and self.data['rounds_per_iteration']==4
+        iterations=self.data['iterations']
+        assert type(iterations) is int and iterations in (2,10)
+        assert self.data['rounds_per_iteration']==4
         group=self.data['environment_group_size']
-        assert group in (1,8) and len(self.data['groups'])==2048//group
+        assert group in (1,8) and len(self.data['groups'])==iterations*1024//group
         assert all(row['replicas']==group for row in self.data['groups'])
         if group==8:
-            assert len({row['scene_seed'] for row in self.data['groups']})==256
+            assert len({row['scene_seed'] for row in self.data['groups']})==(256 if iterations==2 else 1000)
+            for iteration in range(iterations):
+                rows=[r for r in self.data['groups'] if r['policy_iteration']==iteration]
+                assert len(rows)==128 and len({r['scene_seed'] for r in rows})==128
         else:
+            assert iterations==2
             for iteration in (0,1):
                 rows=[r for r in self.data['groups'] if r['policy_iteration']==iteration]
                 assert len(rows)==1024 and len({r['scene_seed'] for r in rows})==1000
 
     def rows(self,ordinal,rank,world=4):
-        assert world in (4,8) and 0<=ordinal<8 and 0<=rank<world
+        assert world in (4,8) and 0<=ordinal<4*self.data['iterations'] and 0<=rank<world
         iteration,round_index=divmod(ordinal,4)
         group=self.data['environment_group_size']
         if world==8 or group==1:
@@ -133,6 +139,6 @@ def boundary_ordinal(directory,rounds_per_iteration=4):
     # physics restoration, and the fixed four-round contract determines ordinal.
     checkpoint=Path(directory).parent
     step=int(checkpoint.name.removeprefix('global_step_'))
-    assert step in (0,1,2)
+    assert 0<=step<=10 and checkpoint.name==f'global_step_{step}'
     assert rounds_per_iteration in (1,4)
     return rounds_per_iteration*step

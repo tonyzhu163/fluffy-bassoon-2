@@ -48,6 +48,9 @@ def overrides(algorithm, *, optimized_setup=False, behavior_matched=False, ppo_g
 
 
 def validate(cfg):
+    if cfg.native_pilot.get('extended_source_curve',False):
+        from motus_curve import validate_curve
+        return validate_curve(cfg)
     from omegaconf import OmegaConf
     from fluffy_bassoon.meta_rl.rlinf_native_ppo import validate_recipe
     from fluffy_bassoon.rl.robotwin_noise import MOTUS_REVISION
