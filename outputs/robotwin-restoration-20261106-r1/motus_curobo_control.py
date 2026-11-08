@@ -37,6 +37,8 @@ def main(contract_path):
     assert backend['curobo_commit'] == p['curobo_commit']
     assert torch.__version__ == backend['torch_version']
     for row in backend['extension_modules'].values(): assert sha(row['file']) == row['sha256']
+    path_evidence = json.loads(Path(p['path_result']).read_bytes())
+    for filename,digest in path_evidence['referenced_meshes'].items(): assert sha(filename) == digest
     reference = json.loads(Path(p['reference_control']).read_bytes())
     cases = {r['seed']:r for r in reference['records'] if r['profile']=='full_state'}
     assert sorted(cases) == sorted(p['seeds']) and len(cases) == 4
@@ -49,7 +51,7 @@ def main(contract_path):
     report = dict(status='running',source_commit=source,records=[],planner_calls=[],path_repairs=[],
         reference_control_sha256=p['reference_control_sha256'],VLA_calls=0,optimizer_updates=0,
         native_seed_inventory_unchanged=True,collision_configuration='unmodified_native_table_only_curobo',
-        fresh_bank_published=False,learning_effectiveness_tested=False,cleanup_complete=False)
+        fresh_bank_published=False,learning_effectiveness_tested=False,cleanup_complete=False,resource_snapshots=[])
     env = None; original_init = None; originals = {}; active = {}
     try:
         # MotionGen creates a default CUDA Pose at import time; imports therefore
@@ -70,14 +72,19 @@ def main(contract_path):
             native = Path(kwargs['yml_path'])
             assert native.name in ('curobo_left.yml','curobo_right.yml')
             row = prepare(native,os.environ['ROBOTWIN_PATH'],Path(os.environ['TASK_LOCAL'])/'native-config'/native.name)
-            path_evidence = json.loads(Path(p['path_result']).read_bytes())
             expected = next(r for r in path_evidence['rows'] if r['native_yaml']==str(native))
             for key in ('native_yaml_sha256','actual_urdf_sha256','only_urdf_path_changed'):
                 assert row[key] == expected[key]
             report['path_repairs'].append(row); write(out/'RESULT.json',report)
             original_init(self,*args,yml_path=row['runtime_yaml'])
             for motor in (self.motion_gen,self.motion_gen_batch):
-                assert torch.device(motor.tensor_args.device) == torch.device('cuda:0')
+                device = torch.device(motor.tensor_args.device)
+                assert device.type == 'cuda' and device.index in (None,0)
+            free,total = torch.cuda.mem_get_info()
+            report['resource_snapshots'].append(dict(stage='native_planner_ready',seed=active.get('seed'),
+                cuda_free_bytes=free,cuda_total_bytes=total,torch_peak_allocated_bytes=torch.cuda.max_memory_allocated(),
+                torch_peak_reserved_bytes=torch.cuda.max_memory_reserved()))
+            assert free >= max(8*2**30,int(.08*total)), 'Native expert violates the qualified GPU reserve'
 
         CuroboPlanner.__init__ = runtime_init
         for name in ('plan_path','plan_batch'):
