@@ -98,11 +98,13 @@ batch/kernel/compile changes require numerical qualification before use.
 
 ## Next decision and compute boundary
 
-All current jobs and independent CPU audits are complete. The final diagnostic
-released its eight GPUs at08:32:21Shanghai, using9184 conservative GPU-seconds
-including startup/cleanup (worker8912). The cumulative ledger closes at356198
-GPU-seconds (98.943889h), leaving3802GPU-seconds (1.056111h) inside the100h cap.
-No GPU jobs are active and no additional complete training cycle fits safely.
+The corrected training, endpoint readouts and checkpoint-curve audits are
+complete. The final curve diagnostic released its eight GPUs at08:32:21Shanghai,
+using9184 conservative GPU-seconds including startup/cleanup. Later policy-free
+scene/planner diagnostics remain separate experiments. The cumulative cap stays
+100GPUh; the [ledger](LATEST-BUDGET.json) records their reconciled cost and
+[coordination](../coordination.md) records the current allocation. No complete
+additional source-training cycle fits the remaining approved allowance.
 Historical costs are not reset by changing run identity.
 
 The next useful training experiment is a predeclared fresh-data learning curve,
@@ -133,6 +135,35 @@ The new restore audit passes the actual old C0/C2 records and cold inputs; the
 updated trace reader reproduces the old checkpoint1 DEV result across all1857
 files. Actual future6/10 inputs and GPU evaluation are not qualified yet, and
 the fresh confirmation bank is still required. [Readout CPU evidence](MOTUS-CURVE-READOUT-CPU02.json).
+
+## Fresh-scene qualification is a separate unresolved issue
+
+The ordered, policy-free fresh confirmation scan recorded48 exact physical
+setups and zero expert passes before stopping. MPLib logs include invalid-start
+self/table collisions. No bank was published, and neither VLA sampling nor SGD
+ran. Existing training and DEV/confirmation used their original fixed inventories;
+this failure does not invalidate their observations or establish the cause of
+the weak learning result. [Scan closeout](MOTUS-FRESH-SCENES02-CLOSEOUT.json).
+
+A numerical reference and actual paired GPU control found a wrapper defect:
+six selected arm values are passed into a38-DOF articulation planner; native
+padding writes these at the vector prefix and imports the remaining internal
+state. Supplying the complete measured state fixes every one of88 recorded
+full-state calls. Nevertheless, both native and repaired routes fail all4
+predeclared old EVAL expert episodes, with identical initial pixels/states and
+collision checks retained. The repaired route has84 successful individual
+planner calls and4 failed IK calls; successful partial plans are insufficient
+for whole-task validity. The repair alone is not an accepted solution.
+[Paired negative control](MOTUS-PLANNER-CONTROL01-CLOSEOUT.json).
+
+The next isolated candidate uses MPlib's documented
+[`SapienPlanner.update_from_simulation`](https://motion-planning-lib.readthedocs.io/latest/reference/sapien_utils.html)
+before planning. Its installed SDK route passes Linux CPU references over all88
+actual38-DOF states and264 single/batch calls; this does not qualify geometry or
+expert success. [CPU reference](MOTUS-PLANNER-SYNC-CPU01.json). Require paired
+GPU controls before another fresh scan. Do not disable collision checks to
+force validity, reuse consumed confirmation as fresh, or claim that a planner
+repair has improved PPO/GRPO without new learning evidence.
 
 ## Evidence
 

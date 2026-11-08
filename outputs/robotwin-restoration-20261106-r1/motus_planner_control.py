@@ -22,6 +22,7 @@ def main(contract_path):
     from rlinf.envs.sim.robotwin.robotwin_env import RoboTwinEnv
     from robotwin.envs.vector_env import SubEnv
     from envs.robot.planner import MplibPlanner, MplibWrapperPlanner
+    from envs.place_phone_stand import place_phone_stand
     from motus_planner_full_state import install, install_sync, full_qpos
 
     contract = json.loads(Path(contract_path).read_bytes())
@@ -49,10 +50,11 @@ def main(contract_path):
     assert config.task_config.task_name == 'place_phone_stand' and config.task_config.planner_backend == 'mplib'
     assert config.max_episode_steps == 192
     profiles = contract['profiles']
-    assert profiles in (['native','full_state'], ['full_state','full_state_sync'])
+    assert profiles in (['native','full_state'], ['full_state','full_state_sync'], ['full_state','full_state_rebuild_sync'])
     original = MplibPlanner.plan_path
+    original_play = place_phone_stand.play_once
     report = dict(status='running', source_commit=source, records=[], planner_calls=[],
-        model_calls=0, optimizer_updates=0, native_seed_inventory_unchanged=True,
+        model_calls=0, optimizer_updates=0, native_seed_inventory_unchanged=True, scene_rebuilds=[],
         collision_checks_retained=True, cleanup_complete=False)
     active = {}; env = None
 
@@ -79,11 +81,24 @@ def main(contract_path):
         write(out/'RESULT.json', report)
         return result
 
+    def play_with_complete_scene(task):
+        if active['profile'] == 'full_state_rebuild_sync':
+            # The native setup loads task actors after Robot.set_planner.
+            # Reconstruct through the unmodified native API after setup and before expert motion.
+            task.robot.set_planner(scene=task.scene)
+            task.robot.left_planner.planner.update_from_simulation()
+            task.robot.right_planner.planner.update_from_simulation()
+            report['scene_rebuilds'].append(dict(seed=active['seed'], after_task_actor_loading=True,
+                initial_world_sync_passed=True, collision_checks_retained=True))
+            write(out/'RESULT.json', report)
+        return original_play(task)
+
+    place_phone_stand.play_once = play_with_complete_scene
     MplibPlanner.plan_path = tracked
     try:
         for profile in profiles:
             if profile == 'full_state': install()
-            elif profile == 'full_state_sync': install_sync()
+            elif profile in ('full_state_sync','full_state_rebuild_sync'): install_sync()
             env = RoboTwinEnv(config,1,seed_offset=0,total_num_processes=1,worker_info=None)
             inventory = env.success_seeds.clone()
             for seed in contract['seeds']:
@@ -123,6 +138,7 @@ def main(contract_path):
         if env is not None:
             env.venv.env_thread_pool.shutdown(wait=True); torch.cuda.synchronize(); env.offload()
         MplibPlanner.plan_path = original
+        place_phone_stand.play_once = original_play
         report['cleanup_complete']=True
         write(out/'RESULT.json',report)
     print('FINAL_CONTROL',report['status'],report.get('expert_successes'),sha(out/'RESULT.json'),flush=True)
