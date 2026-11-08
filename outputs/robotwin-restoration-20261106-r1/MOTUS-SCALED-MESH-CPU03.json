@@ -1,0 +1,49 @@
+{
+  "status": "passed_actual_CPU_PhysX_FCL_scaled_convex_geometry_reference",
+  "source_commit": "040b3202d61eca9daa775292d9a96f68561a7e45",
+  "raw_result": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/cpumotusmeshscale03/RESULT.json",
+  "raw_sha256": "9d2e09779ab0f2ac402381780da91089f388c244b8b46498abddbc5b64ee4090",
+  "native_converter_source_sha256": "d73838eee2f665c2e5696cc75e1feb8f212ad2367d862d3d3944b7382986efbd",
+  "analytic_distance_cases": 9,
+  "near_and_far_collision_checks": 18,
+  "scales": [
+    [
+      1.0,
+      1.0,
+      1.0
+    ],
+    [
+      0.078,
+      0.078,
+      0.078
+    ],
+    [
+      0.078,
+      0.156,
+      0.039
+    ]
+  ],
+  "unit_geometry_matches_native": true,
+  "native_nonunit_rejection_reproduced": true,
+  "maximum_analytic_distance_error": 3.5047531128373777e-06,
+  "analytic_distance_bound": 1e-05,
+  "distance_request_tolerance": 1e-10,
+  "collision_checks_retained": true,
+  "CPU_physics_only_scene": true,
+  "renderers_created": 0,
+  "task_scenes_created": 0,
+  "models_loaded": 0,
+  "GPU_seconds": 0,
+  "triangle_mesh_numerical_qualification": false,
+  "GPU_expert_qualification_required": true,
+  "installed_in_training_or_evaluation": false,
+  "source_files": {
+    "outputs/robotwin-restoration-20261106-r1/motus_scaled_mesh.py": "4846a3ffba54d5827a9871a7d0aebe843ca0f8647ab5243fdcbde3cdc180c109",
+    "outputs/robotwin-restoration-20261106-r1/qualify_motus_scaled_mesh_cpu.py": "5a24f7354302695bbbd988de411423ab4fb8e6ab0bda0c5288f7589e81935a29"
+  },
+  "prior_CPU_attempts": {
+    "01": "Unit-convex distance query differs from exact analytic distance by3.505e-6, above the initial2e-6 fixture bound. No GPU used.",
+    "02": "An explicit1e-10 request alone does not remove native convex approximation error. No GPU used.",
+    "03": "Retains exact native unit equivalence, a separate1e-5 analytic bound, and all collision checks. First two logs preserved beside the actual result."
+  }
+}

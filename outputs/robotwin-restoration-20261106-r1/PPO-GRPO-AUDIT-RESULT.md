@@ -172,7 +172,18 @@ mesh scale0.078. All initial observations remain paired; no collision or
 geometry was removed. [Third control](MOTUS-PLANNER-CONTROL03-CLOSEOUT.json).
 The upstream [conversion source](https://motion-planning-lib.readthedocs.io/latest/_modules/mplib/sapien_utils/conversion.html)
 also requires unit scale for convex meshes. A scale-preserving conversion needs
-numerical CPU qualification and actual GPU expert success before another scan. Do not disable collision checks to force validity, reuse
+numerical CPU qualification and actual GPU expert success before another scan.
+
+The opt-in conversion now passes actual Linux CPU PhysX/FCL checks on9
+axis/scale distance cases and18 near/far collision checks. Unit geometry matches
+native distance results exactly; scaled cases have maximum analytic error
+3.505e-6 under the explicit1e-5 bound. This qualifies convex geometry, not
+triangle meshes, task grasp contacts or expert success. [Geometry reference](MOTUS-SCALED-MESH-CPU03.json).
+Before another GPU control, audit intended collision scope: constructing after
+actor loading adds task objects absent from the original snapshot. That can
+change grasp feasibility. Retain intended expert contacts and compare the
+recorded cuRobo/static-world semantics instead of treating any expanded world
+as automatically equivalent. No candidate is installed in training/evaluation. Do not disable collision checks to force validity, reuse
 consumed confirmation as fresh, or claim that a planner repair has improved
 PPO/GRPO without new learning evidence.
 

@@ -272,7 +272,7 @@ MPLib reports invalid-start self/table collisions. Source inspection shows its
 wrapper passes only arm DOFs to an articulation planner, whose installed padding
 method fills omitted DOFs from its internal articulation state. A full measured
 qpos repair is isolated in `motus_planner_full_state.py`; its Linux numerical
-reference is in progress. This is a hypothesis about the failed qualification,
+reference passed; subsequent paired GPU controls remain negative. This is a hypothesis about the failed qualification,
 not a demonstrated cause of the completed PPO/GRPO learning result. cuRobo is
 not installed in this runtime. Do not relax collisions or call these rejected
 scenes a valid confirmation bank.
@@ -307,3 +307,14 @@ See `MOTUS-PLANNER-CONTROL02-CLOSEOUT.json` and
 `MOTUS-PLANNER-CONTROL03-CLOSEOUT.json`. Qualify actual mesh-scale geometry on
 Linux CPU before another bounded GPU positive control. These bridge failures
 remain separate from the completed weak PPO/GRPO learning experiment.
+
+The opt-in scaled-convex converter now passes actual CPU PhysX/FCL geometry
+references at040b3202:9 analytic distance cases and18 collision checks, with
+exact native unit equivalence and maximum analytic error3.505e-6. See
+`MOTUS-SCALED-MESH-CPU03.json`; no task expert or triangle-mesh qualification
+is implied. Before another allocation, reconcile collision scope with the
+recorded native cuRobo/static-world behavior: adding all task objects changes
+grasp constraints. Qualify intended contact semantics, complete geometry and
+actual four-seed expert success before scanning fresh candidates. Restore the
+native backend in an isolated uv environment if needed; preserve shared active
+environments. No further GPU contract or fresh-bank scan is admitted yet.
