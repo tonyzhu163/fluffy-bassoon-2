@@ -43,7 +43,7 @@ class Task:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--identity', required=True)
-    parser.add_argument('--contract', choices=('MOTUS-FRESH-SCENES02-CONTRACT.json',), required=True)
+    parser.add_argument('--contract', choices=('MOTUS-FRESH-SCENES02-CONTRACT.json','MOTUS-FRESH-SCENES03-CONTRACT.json'), required=True)
     args = parser.parse_args()
     assert re.fullmatch(r'cpumotusfreshbank[0-9]{2}', args.identity)
     assert os.uname().sysname == 'Linux' and os.environ['CUDA_VISIBLE_DEVICES'] == ''
@@ -110,13 +110,35 @@ def main():
         contract = ROOT/args.contract
         admission = json.loads(contract.read_bytes())
         for name, digest in admission['source_files'].items(): assert sha(code/name) == digest
-        subprocess.run(['bash', '-n', str(ROOT/'motus_fresh_bank.sh')], check=True)
-        assert admission['closed_conservative_gpu_seconds']+admission['reserved_gpu_seconds'] == admission['all_worst_gpu_seconds'] == 359859
+        subprocess.run(['bash', '-n', str(ROOT/('motus_fresh_bank_curobo03.sh' if args.contract.endswith('03-CONTRACT.json') else 'motus_fresh_bank.sh'))], check=True)
+        assert admission['closed_conservative_gpu_seconds']+admission['reserved_gpu_seconds'] == admission['all_worst_gpu_seconds']
+        assert admission['all_worst_gpu_seconds'] == (359923 if args.contract.endswith('03-CONTRACT.json') else 359859)
         assert admission['all_worst_gpu_seconds'] <= admission['approved_cap_gpu_seconds'] == 360000
-        assert admission['reserved_gpu_seconds'] == 3600 and admission['worker_timeout_seconds'] == 3100
+        assert (admission['reserved_gpu_seconds'],admission['worker_timeout_seconds']) == ((2100,1800) if args.contract.endswith('03-CONTRACT.json') else (3600,3100))
+        if args.contract.endswith('03-CONTRACT.json'):
+            evidence=Path(admission['expert_control_readback'])
+            assert sha(evidence)==admission['expert_control_readback_sha256']
+            control=json.loads(evidence.read_bytes())
+            assert control['status']=='passed_independent_four_scene_native_expert_control' and control['cuRobo_expert_successes']==4
+            assert control['initial_observations_paired'] and control['native_collision_configuration_unchanged']
+            assert admission['expert_backend']=='curobo'
+            import shutil
+            assert shutil.disk_usage('/tmp').free>=8*2**30
+            assert shutil.disk_usage('/mowenjie/fluffy-bassoon-2').free>=8*2**30
+            probe=out/'storage-write-probe'
+            payload=b'robotwin'* (8*2**20)
+            assert len(payload)==64*2**20
+            with probe.open('xb') as stream:
+                stream.write(payload);stream.flush();os.fsync(stream.fileno())
+            assert hashlib.sha256(probe.read_bytes()).digest()==hashlib.sha256(payload).digest()
+            probe.unlink()
+            report['storage_write_read_fsync_bytes']=len(payload)
+            report['project_free_bytes']=shutil.disk_usage('/mowenjie/fluffy-bassoon-2').free
+            report['local_free_bytes']=shutil.disk_usage('/tmp').free
+            report['BOS_bucket_quota_inferred']=False
         # Exercise the real shell environment without importing a device library.
         shared = code/'outputs/robotwin-sidney-matched-baselines-20261106-r1/runtime_environment.sh'
-        wrapper = (ROOT/'motus_fresh_bank.sh').read_text()
+        wrapper = (ROOT/('motus_fresh_bank_curobo03.sh' if args.contract.endswith('03-CONTRACT.json') else 'motus_fresh_bank.sh')).read_text()
         guard = 'if [[ ${CUDA_VISIBLE_DEVICES+x} != x ]]; then export CUDA_VISIBLE_DEVICES=0; fi'
         assert guard in wrapper and wrapper.index(guard) < wrapper.index('source "$TASK_RUN/runtime_environment.sh"')
         for previous, expected in ((None, '0'), ('scheduler-provided', 'scheduler-provided')):
