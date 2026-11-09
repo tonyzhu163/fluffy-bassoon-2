@@ -1,23 +1,25 @@
 {
   "run_id": "robocasa-sft-reproduction-20261109-r1",
   "owner_chat": "01a1be92-5e00-7df0-b90e-9719078be031",
-  "source_commit": "d7bf65f7c9da23f464d589e51c20ce7401dc8049",
-  "phase": "gpu04_completed_full_campaign_preparing",
+  "source_commit": "329fcded121cb1982289bd6fadaf7d07d033a513",
+  "phase": "campaign01_atomic_running",
   "cluster": "Baige Pro6K",
   "queue_id": "aihcq-rh0wwk9muei4",
-  "job_id": "job-yzlvc03puznn",
-  "job_name": "mwj_1109_robocasa_sft_parallel_qual04",
-  "scheduler_created_shanghai": "2026-11-09 13:25:06",
-  "scheduler_state_observed": "Succeeded / released at 2026-11-09 13:30:01",
+  "job_id": "job-zghi39i291dx",
+  "job_name": "mwj_1109_robocasa_sft_atomic900_r1",
+  "scheduler_created_shanghai": "2026-11-09 13:43:53",
+  "scheduler_state_observed": "Running; master0 and worker0/1 all Running",
   "resources": {
-    "gpus": 1,
-    "cpus": 21,
-    "ram_gib": 224,
-    "shm_gib": 16,
-    "maximum_minutes": 60,
+    "gpus": 3,
+    "containers": 3,
+    "gpus_per_container": 1,
+    "cpus_per_container": 21,
+    "ram_gib_per_container": 224,
+    "shm_gib_per_container": 16,
+    "maximum_minutes": 240,
     "retry": false
   },
-  "source_checkout": "/mowenjie/fluffy-bassoon-2/sources/robocasa-sft-reference-924a42af",
+  "source_checkout": "/mowenjie/fluffy-bassoon-2/sources/robocasa-sft-reference-329fcded",
   "openpi_commit": "ca4c6d710db75e276bc7c866a57bd7e4aee5b6e8",
   "robocasa_commit": "29f7ce8814c1547f5af762a0997fbd4b64848dd7",
   "model": "original Human300 step75000 JAX parameters; no conversion",
@@ -27,11 +29,26 @@
   "executed_controls_per_prediction": 5,
   "ode_steps": 10,
   "tasks": [
-    "OpenDrawer",
+    "OpenCabinet",
+    "PickPlaceCounterToCabinet",
+    "TurnOffStove",
+    "TurnOnSinkFaucet",
+    "OpenStandMixerHead",
+    "TurnOnMicrowave",
+    "CloseBlenderLid",
+    "PickPlaceSinkToCounter",
+    "CoffeeSetupMug",
+    "PickPlaceCounterToStove",
     "CloseToasterOvenDoor",
-    "CoffeeSetupMug"
+    "SlideDishwasherRack",
+    "CloseFridge",
+    "OpenDrawer",
+    "PickPlaceDrawerToCounter",
+    "PickPlaceToasterToCounter",
+    "NavigateKitchen",
+    "TurnOnElectricKettle"
   ],
-  "trials_per_task": 1,
+  "trials_per_task": 50,
   "training_updates": 0,
   "cpu_import_qualification": "passed native reference config imports on Baige",
   "deployment": "Git bundle verified against existing common ancestor; fresh detached sparse checkout; unchanged tracked source; Linux AST and shell syntax passed",
@@ -39,10 +56,11 @@
   "budget": {
     "maximum_gpu_hours": 50,
     "closed_gpu_seconds": 908,
-    "open_reservation_gpu_seconds_including_overhead": 0
+    "open_reservation_gpu_seconds_including_overhead": 44400,
+    "queue_charge": "Conservatively include creation-to-pod time; 3\u00d74h maximum plus up to 400 seconds each for observed queue/startup/release"
   },
-  "next_action": "Deploy eight-container campaign; 900 atomic trials first, then 1600 composites if the predeclared practical screen passes.",
-  "last_check_shanghai": "2026-11-09T13:40:47.165325+08:00",
+  "next_action": "Monitor complete 900-case atomic aggregate; then launch composites or fresh 1.0.0 comparison according to the predeclared practical screen.",
+  "last_check_shanghai": "2026-11-09T13:51:53.734722+08:00",
   "attempts": [
     {
       "attempt": "gpu01",
@@ -98,6 +116,20 @@
       "inference_batch_size": 1,
       "training_updates": 0,
       "controls_per_second": 37.50138449526944
+    },
+    {
+      "attempt": "campaign01",
+      "job_id": "job-zghi39i291dx",
+      "source_commit": "329fcded121cb1982289bd6fadaf7d07d033a513",
+      "created_shanghai": "2026-11-09 13:43:53",
+      "pods_created_shanghai": "2026-11-09 13:48:59",
+      "state": "Running",
+      "gpus": 3,
+      "trials": 900,
+      "model": "native original JAX",
+      "training_updates": 0
     }
-  ]
+  ],
+  "scheduler_pods_created_shanghai": "2026-11-09 13:48:59",
+  "gpu_probe": "PASS on all three distinct allocated NVIDIA RPBZZZ6 devices"
 }
