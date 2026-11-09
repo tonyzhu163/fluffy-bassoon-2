@@ -1,0 +1,63 @@
+{
+  "status": "running_model_startup",
+  "owner_chat": "01a1bf63-6694-7fe2-8124-f1516356db68",
+  "last_checked_at": "2026-11-09T16:35:54+08:00",
+  "source_commit_reviewed": "d59199917ac51eb6c0ab83c4a0926d9c3e6836c5",
+  "replay_implementation_commit": "857f4a94",
+  "attempt": "01",
+  "job_id": "job-x42r92kv2ls1",
+  "scheduler_submitted": true,
+  "new_gpu_seconds": 0,
+  "budget": {
+    "ledger": "outputs/robotwin-restoration-20261106-r1/LATEST-BUDGET.json",
+    "closed_gpu_seconds_before_replay": 9638,
+    "epoch_cap_gpu_seconds": 360000,
+    "planned_gpu_count": 1,
+    "planned_worker_limit_seconds": 2700,
+    "automatic_retry": false,
+    "reservation_made": true,
+    "reserved_gpu_seconds": 2700,
+    "worst_allocated_gpu_seconds_with_replay": 12338
+  },
+  "validation": {
+    "macos_static_python_ast": "passed",
+    "bash_syntax": "passed",
+    "git_deployment_bundle": "created_and_verified",
+    "linux_cpu_preflight": "passed",
+    "allocated_gpu_probe": "passed: exactly one NVIDIA RPBZZZ6, 101973950464 CUDA bytes, job-x42r92kv2ls1-master-0",
+    "queue_capacity_and_limits": "verified: RPBZZZ6, 4/416 GPUs free, 1595 CPU cores and 22107 GiB memory free at prelaunch inspection",
+    "project_and_bos_write_fsync_readback": "passed",
+    "quota": "quota command unavailable; capacity and write/readback checked",
+    "in_job_input_preflight": "passed"
+  },
+  "baige_observation": {
+    "observed_at": "2026-11-09T16:21:24+08:00",
+    "reference_runtime_directory_present": true,
+    "clean50_archive_present": true,
+    "project_pfs_available_human_readable": "211G",
+    "development_tmp_available_human_readable": "1.1T",
+    "quota_and_write_probe": "pending",
+    "note": "The project storage root is not a Git checkout; use a separate pinned checkout. No model execution or scheduler submission occurred."
+  },
+  "launch_requirement": "Pass the full verified checkout SHA to launch.sh: its HEAD comparison requires an exact full SHA. Review latest main again before launch.",
+  "next_action": "Verify allocation and in-job GPU probe, observe advancing replay progress, monitor through terminal status, independently read back all results and copy RESULT.json into this run directory.",
+  "deployed_code_path": "/mowenjie/fluffy-bassoon-2/sources/motus-replay-79981587-r1",
+  "scheduler_created_at": "2026-11-09T16:33:07+08:00",
+  "scheduler_name": "mwj_1109_motus_teacher_forced_replay01",
+  "gpu_count": 1,
+  "cpu_count": 21,
+  "memory_gib": 224,
+  "shared_memory_gib": 16,
+  "scheduler_max_runtime_minutes": 45,
+  "automatic_retry": false,
+  "connection_interruption": {
+    "observed": "Chrome disconnected during prerequisite inspection",
+    "resolved": "Browser connection restored after user requested retry; preflight and submission completed"
+  },
+  "scheduler_started_at": "2026-11-09T16:34:16+08:00",
+  "progress": {
+    "episodes_completed": 0,
+    "total_episodes": 20,
+    "note": "CPU-CHECK.json and gpu-probe.json visible; no closed PROGRESS.json yet. Do not read open BOS log files without a timeout."
+  }
+}
