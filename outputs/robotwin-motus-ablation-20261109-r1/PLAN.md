@@ -21,3 +21,21 @@ Every candidate seed starting at `100000` is screened once with native `setup_de
 4. `default_prompt_continuous_chunk` (`DEFAULT_PROMPT` + continuous-chunk `TOPP`)
 
 Decision-0 predicted action chunks are asserted bit-identical between `(raw_take_action, raw_continuous_chunk)` and between `(default_prompt_take_action, default_prompt_continuous_chunk)` so controller comparisons at decision 0 have zero policy-sampling variance.
+
+## Qualification and execution
+
+Before launch, rebased onto current `main` (`329fcded`) and adopted the isolated
+`motus-reference-openpi-20261109-r2` runtime. The earlier r1 runtime produced
+OIDN errors on Blackwell; r2 passed native clean/randomized expert rendering
+with OIDN 2.3.3 ([renderer evidence](../robotwin-motus-release-baseline-20261109-r1/RENDER01-READBACK.json)).
+The ablation pins the OIDN loader and libraries in its CPU manifest and rejects
+denoiser errors. Native simulator and policy settings remain unchanged.
+
+Run a two-pair GPU qualification, then ten paired seeds (40 policy episodes)
+after the qualification passes. The qualification is operational evidence;
+the ten-pair evaluation is the diagnostic comparison. Each allocation is one
+GPU for at most 60 minutes, automatic retry disabled; reserve at most two
+GPU-hours including startup. Record exact source, scheduler identities,
+completed pairs and actual usage in this run directory and the own coordination
+row. Larger sample sizes require a separately recorded decision; these small
+samples establish feasibility and diagnostic baseline levels only.

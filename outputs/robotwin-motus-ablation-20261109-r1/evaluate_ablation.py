@@ -80,9 +80,12 @@ def manifest(native, model):
     import openpi
     import transformers
     import curobo
+    import sapien
+    from sapien import _oidn_tricks
     from transformers.models.siglip import check
     assert transformers.__version__ == '4.53.2'
     assert check.check_whether_transformers_replace_is_installed_correctly()
+    assert _oidn_tricks.oidn_dll._name.endswith('libOpenImageDenoise.so.2.3.3')
     commit = subprocess.check_output(['git', '-C', str(native), 'rev-parse', 'HEAD'], text=True).strip()
     assert commit == NATIVE_COMMIT
     assert not subprocess.check_output(
@@ -113,6 +116,17 @@ def manifest(native, model):
         model_sha256=MODEL_SHA,
         norm_sha256=NORM_SHA,
         default_prompt=DEFAULT_PROMPT,
+        sapien_version=importlib.metadata.version('sapien'),
+        oidn_version='2.3.3',
+        oidn_loader_sha256=sha(Path(sapien.__file__).parent / '_oidn_tricks.py'),
+        oidn_libraries={
+            p: sha(Path(sapien.__file__).parent / 'oidn_library' / p)
+            for p in (
+                'libOpenImageDenoise.so.2.3.3',
+                'libOpenImageDenoise_core.so.2.3.3',
+                'libOpenImageDenoise_device_cuda.so.2.3.3',
+            )
+        },
         openpi_version=importlib.metadata.version('rlinf-openpi'),
         openpi_files=package_files,
         curobo_version=importlib.metadata.version('nvidia-curobo'),

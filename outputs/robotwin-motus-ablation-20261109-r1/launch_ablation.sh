@@ -11,7 +11,7 @@ TASK_LIMIT=3500
 if [[ $TASK_EPISODES -ge 20 ]]; then TASK_LIMIT=7200; fi
 TASK_OUT=/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motus-ablation-20261109-r1/$TASK_ID
 TASK_LOCAL=/tmp/rt-motus-ablation-$TASK_ID
-TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/motus-reference-openpi-20261109-r1/bin/python
+TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/motus-reference-openpi-20261109-r2/bin/python
 export TASK_CODE TASK_SOURCE TASK_OUT TASK_LOCAL TASK_LIMIT GIT_OPTIONAL_LOCKS=0
 [[ $(uname -s) == Linux && $(hostname) == job-* ]]
 [[ $(git -C "$TASK_CODE" rev-parse HEAD) == "$TASK_SOURCE" ]]
@@ -77,3 +77,7 @@ TASK_REMAINING=$((TASK_DEADLINE-$(date +%s)-60))
 timeout --signal=INT --kill-after=20s "$TASK_REMAINING" "$TASK_PYTHON" \
  "$TASK_CODE/outputs/robotwin-motus-ablation-20261109-r1/evaluate_ablation.py" \
  --output "$TASK_OUT" --episodes "$TASK_EPISODES" > "$TASK_OUT/evaluation.log" 2>&1
+if grep -Eq 'OIDN Error|unsupported device type|invalid handle' "$TASK_OUT/evaluation.log"; then
+ echo 'Native denoiser qualification failed' >&2
+ exit 1
+fi
