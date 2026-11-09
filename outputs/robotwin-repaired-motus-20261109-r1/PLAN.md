@@ -36,6 +36,12 @@ nonstationary full-chunk arm freezes. A failed gate triggers diagnosis.
 ## Stage 2: one-task PPO and GRPO
 
 Use fresh run identities and reviewed latest-main commits after Stage 1.
+Start with a fresh C0–C2 prefix for each method using `train_prefix.sh`; both
+launchers require the successful independent Stage 1 receipt. Each prefix has a
+150-minute worker limit and needs a 155-minute scheduler limit (20.667 GPU-hours
+reserved per eight-GPU job). Measure actual collection/update/checkpoint time
+and audit C2 before reserving C3–C10. These are fresh repaired lineages; none of
+the historical H192 checkpoints is resumed into them.
 Preserve B32/accum8/world8, global batch2048, five update epochs, exact behavior
 likelihood checks, GRPO reward filtering [0.1,0.9]/upper clip .28, and PPO VLM
 prefix critic with actual rollout/replay value parity. H384 means 12 decisions
