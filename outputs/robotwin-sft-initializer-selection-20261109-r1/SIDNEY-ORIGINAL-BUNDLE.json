@@ -1,0 +1,67 @@
+{
+  "status": "complete_verified",
+  "repo": "SidneyXie/pi05_robotwin",
+  "revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
+  "path": "/mowenjie/fluffy-bassoon-2/cache/sidney-pi05-robotwin-e49e2ab6-original-20261109-r1",
+  "selection": "Original upstream SFT inference bundle; no conversion",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "size": 1519,
+      "sha256": "11ad7efa24975ee4b0c3c3a38ed18737f0658a5f75a0a96787b576a78a023361"
+    },
+    {
+      "path": "README.md",
+      "size": 8596,
+      "sha256": "261e74bd3f5d796ac67d3bfaa090ea408846109a915b3411d350f1e67344136b"
+    },
+    {
+      "path": "config.json",
+      "size": 2469,
+      "sha256": "e6ce5bd5aef6640db61f2dbe41178a1aa669821c403b0b1f3cc34fe48bbc83a6"
+    },
+    {
+      "path": "model.safetensors",
+      "size": 9354050752,
+      "sha256": "9a5381c3260fc58fdb4b90d17b93f9090bcbfbcd8e0287f9bf2acea2477a2bc3"
+    },
+    {
+      "path": "policy_postprocessor.json",
+      "size": 778,
+      "sha256": "b381ea40d9ac6d3be9c0161f0ecbb323c17a794ac5c9887c8a67b8e162fc1db6"
+    },
+    {
+      "path": "policy_postprocessor_step_0_unnormalizer_processor.safetensors",
+      "size": 4624,
+      "sha256": "03f5dcff1c71f45d35caa328581a195754a95b8a176ab91760ed7fed3e1e9b4e"
+    },
+    {
+      "path": "policy_preprocessor.json",
+      "size": 2123,
+      "sha256": "47a1a4a378ede8d55f7500921f16e212efaddf12278946790ba870c41b01a8cb"
+    },
+    {
+      "path": "policy_preprocessor_step_3_normalizer_processor.safetensors",
+      "size": 4640,
+      "sha256": "209b233200b259fd339f913321085373a7283c9c739c230807d8677ab315cab7"
+    },
+    {
+      "path": "train_config.json",
+      "size": 7115,
+      "sha256": "2101bb5e5bde875cc04df83a9fd50c3023d783891a03f8e79742ee98efd462d7"
+    }
+  ],
+  "started_unix": 1794212299.0419345,
+  "ended_unix": 1794212393.0446239,
+  "training": {
+    "base": "lerobot/pi05_base",
+    "dataset": "lerobot/robotwin_unified",
+    "steps": 50000,
+    "batch_size": 16,
+    "resume": false
+  },
+  "native_action_horizon": 50,
+  "inference_steps": 10,
+  "action_convention": "absolute joints",
+  "normalization": "mean/std"
+}

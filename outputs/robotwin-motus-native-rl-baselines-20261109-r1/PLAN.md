@@ -35,3 +35,7 @@ RLinf objective/replay/value checks. Measure collection/update cost before
 reserving longer training. No history/student work or six-task expansion precedes
 the phone baselines. Detailed training batch/schedule will be fixed after the
 native bridge and measured capacity pass; no old stopped job is resumed.
+
+## User steering: SFT initializer selection
+
+The user raised similar public concerns about released Motus weight identity and requested RoboTwin SFT weights. The prepared Motus parity job was never deployed or launched; no CPU model construction, GPU computation or training occurred in this phase. Hold it while selecting a clearly documented SFT initializer. No paper/checkpoint mismatch is established by the public comments reviewed so far. The measured Motus27/25result remains a result for its exact pinned checkpoint/runtime, not an assertion about the paper weights.
