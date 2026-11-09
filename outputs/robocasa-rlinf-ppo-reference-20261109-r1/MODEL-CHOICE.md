@@ -1,94 +1,66 @@
-# Likelihood clarity and the frozen-VLA project
+# Retain frozen pi0.5 for in-context RL
 
-Research requested November9: verify a pi0.5 PPO formulation for RoboCasa and
-consider OpenVLA,prioritizing theoretical clarity. No model switch or new RL
-training has been launched. These are recommendations,not an adopted change
-to PAPER.md or a claim of demonstrated controller learning.
+The user's final instruction is to keep pi0.5: this project studies in-context
+RL with a frozen policy,not VLA fine-tuning. The earlier autoregressive
+OpenVLA migration recommendation is withdrawn. No model migration,cadence
+training ablation or new action-expert PPO/GRPO job has launched.
 
-## What exists
+## Method and adaptation boundary
 
-[piRL](https://arxiv.org/html/2510.25889v2) explicitly develops Flow-Noise and
-Flow-SDE PPO for pi0 and pi0.5. Its likelihoods describe stochastic denoising
-transitions or an augmented denoising trajectory. They must not be described
-as a directly available exact marginal density of decoded physical actions.
-The hybrid sampler uses one stochastic transition among deterministic ODE
-steps. Mathematical assumptions and the actual sampled/replayed variables
-must agree; replay equality alone does not establish this entire equivalence.
+- Keep the original pi0.5 VLM and action expert frozen during the ICRL
+  history/adapter learning stage and at deployment.
+- Train the history model and learned bridge offline with the declared
+  action supervision/flow-matching objective through the frozen expert.
+  Gradients reaching adapter inputs do not require updating VLA weights.
+- At deployment,freeze the history model and bridge too. Adaptation occurs
+  through completed interaction history and its derived conditioning/KV
+  activations. No deployment optimizer or parameter updates.
+- A separate support episode precedes the query episode. New trials clear
+  history; query outcomes cannot serve as their own support.
+- Historical full-expert PPO/GRPO runs may supply teacher histories or external
+  controls. Their gains do not establish ICRL,and this decision does not
+  authorize new VLA fine-tuning.
 
-[StructRL](https://amazon-science.github.io/StructRL/) reports pi0.5 PPO and
-GRPO on RoboCasa365 and releases a direct
-[sparse PPO launcher](https://github.com/amazon-science/StructRL/blob/6caba1f9538167e0752a7338663e45aac8df965d/launch/train_pi05_sparse_rl_ppo.sbatch).
-Its launcher overrides execution to50 controls and10 denoising steps; the
-paper describes10 executed controls. Its target-composite SFT initializer and
-large joint-task training budget also differ from our Human300 multitask
-checkpoint and task-specific pilots. Resolve those discrepancies before
-claiming exact reproduction. The C5 verified in the separate native SFT
-campaign is its original evaluator setting,not a universal PPO requirement.
+The core criterion is an improvement caused by actual history at fixed
+weights,on held-out cases/tasks. Compare own-history with reset-history,
+reward-blind and appropriate fixed-policy controls using matched episodes.
+A stronger SFT policy or an offline-improved teacher is a different result.
 
-## Which policy is easiest to define probabilistically
+## What the likelihood research establishes
 
-| Trainable policy | Likelihood | Main qualification |
-| --- | --- | --- |
-| Original autoregressive OpenVLA | Product of categorical action-token probabilities | Log the actual sampling distribution,token masks and complete sampled action tokens; verify an appropriate RoboCasa checkpoint and embodiment |
-| pi0.5 with denoising RL | Gaussian denoising-transition or joint-path probabilities | Specify the augmented process,all optimized random variables,slicing and hybrid sampling assumptions |
-| Stochastic controller with a frozen pi0.5 motor and fixed steering map | Explicit controller density over its sampled steering actions | Motor,decoder/basis and any other randomness must remain fixed with respect to the PPO parameters |
+[piRL](https://arxiv.org/html/2510.25889v2) supplies published Flow-Noise and
+Flow-SDE PPO formulations for pi0.5. [StructRL](https://amazon-science.github.io/StructRL/)
+reports direct RoboCasa365 pi0.5 PPO and GRPO and releases a sparse PPO
+launcher. These references answer whether such methods exist; they do not
+require the ICRL motor to be fine-tuned.
 
-Original [OpenVLA](https://arxiv.org/html/2406.09246v3) uses autoregressive
-discrete action tokens. [OpenVLA-OFT](https://arxiv.org/abs/2502.19645) instead
-uses parallel continuous L1 action regression in its main recipe; OFT does
-not automatically supply the original categorical policy likelihood. A
-continuous Gaussian head can be defined,but that is an explicit additional
-policy choice. The OpenVLA name alone does not settle the likelihood question.
+Original autoregressive [OpenVLA](https://arxiv.org/html/2406.09246v3) has
+explicit token probabilities,whereas [OpenVLA-OFT](https://arxiv.org/abs/2502.19645)
+uses continuous L1 action regression in its main recipe. That distinction
+matters for direct policy-gradient updates,but it is not a reason to replace
+the frozen pi0.5 motor in our current project. AD/DPT action supervision and
+flow matching through a frozen expert do not require computing its decoded
+physical-action marginal likelihood.
 
-## Fixed-map alternative with the current motor
+If PPO is later chosen for offline training of a stochastic controller,
+define its actual sampled action and normalized likelihood explicitly.
+With fixed motor and decoder F,a sampled Gaussian steering action z has
+ratio q_new(z|H)/q_old(z|H); F is absorbed into the transformed environment,
+as in the [DSRL latent-action MDP](https://arxiv.org/html/2506.15799v2#S4.SS1).
+If a decoder/KV basis is trained jointly,scoring only its input coefficients
+does not account for that changing transformation. That requires a suitable
+full policy definition; it does not justify a blanket model switch.
+A deterministic bridge trained by supervised flow matching is a separate
+legitimate objective.
 
-One option keeps the verified pi0.5 motor and evaluates an explicit controller policy
-q_psi(z|H),where H is the available observation/action/feedback history. A
-Gaussian (or a Gaussian followed by a fixed bounded map) gives a tractable
-sample density. With a frozen decoder F,the motor executes a=F(o,z),and PPO
-uses q_new(z|H)/q_old(z|H). No inverse of F or physical-action Jacobian is
-required: z is the action in the transformed environment. This follows the
-[DSRL latent-action MDP formulation](https://arxiv.org/html/2506.15799v2#S4.SS1).
-It is a probability-model recommendation,not a guarantee that PPO improves.
+## Reproduction settings remain separate
 
-The fixed-map condition matters. Jointly learning a decoder/KV basis while
-using only the probability ratio of its input coefficients would leave an
-unaccounted parameter-dependent action transformation. Learn/qualify and
-freeze such a map before that PPO phase,or define the policy distribution
-directly over the actual perturbations with a valid density. A deterministic
-history-to-KV bridge trained by supervised flow matching is a separate
-legitimate objective; it should not be relabeled as this Gaussian PPO policy.
+The original Human300 SFT evaluator uses prediction50/execution5,ODE10 and
+pretrain scenes. The current native SFT evaluation keeps these settings.
+The direct StructRL PPO launcher uses C50/K10,while its paper describes C10;
+its initializer and joint-task protocol also differ from our checkpoint.
+Thus C5 is the original SFT setting,not a universal PPO setting.
 
-## Recommendation for the project's learned KV bridge
-
-For PPO directly on a trainable learned KV bridge,the simplest likelihood
-formulation is an autoregressive action-token VLA. The frozen backbone plus
-trainable adapter defines a normalized categorical token distribution; its
-joint action-token probability is the product of the actual conditional
-sampling probabilities. Adapter parameters can change while their effect
-remains inside this likelihood. This avoids the fixed-decoder restriction
-of scoring only Gaussian steering coefficients. Correct action-token masks,
-temperature and termination must be included in rollout and replay.
-
-Thus the theoretical reference recommendation is original autoregressive
-OpenVLA,subject to first verifying a competent checkpoint and action interface
-for the chosen benchmark. Retain verified pi0.5 as a performance control.
-This is a project-design recommendation,not a claim that OpenVLA will achieve
-better success or a launch instruction. OpenVLA-OFT's L1 head does not supply
-the categorical-likelihood advantage. If preserving pi0.5 is a hard motor
-requirement,the explicit Gaussian fixed-map alternative above remains clean,
-and a complete stochastic denoising formulation is another option requiring
-its own full probability-model audit.
-
-The existing paper route currently learns full-expert source histories and
-distills them into a frozen-motor bridge. Replacing its source learner with
-controller PPO would be a design change. Retain full-expert piRL as a clearly
-labeled comparison/source option until that decision is explicit. If direct
-VLA-parameter PPO with the simplest likelihood is the central requirement,
-prefer an autoregressive token policy such as original OpenVLA,subject to
-first obtaining and verifying a competent checkpoint for the benchmark.
-
-Finally,likelihood clarity is distinct from controllability. Previous random
-steering maps did not establish useful adaptation. Require real control and
-held-out learning evidence; use a fixed stochastic untrained controller as a
-baseline and never equate zero Gaussian variance with a regular density.
+Retain the verified native pi0.5 motor and finish its benchmark reproduction.
+Do not interpret evaluator correctness,teacher improvement or clean
+controller likelihoods as evidence of held-out in-context adaptation.

@@ -22,6 +22,14 @@ comparison, with the six remaining tasks held out from history training
 the specification for that benchmark arm, not a replacement for the current
 RoboCasa qualification.
 
+The ICRL motor remains the original **frozen pi0.5**. Offline learning updates
+the history model and bridge while retaining the motor's weights. Deployment
+freezes those modules too: only interaction history and its derived
+conditioning/KV activations change. Full-expert PPO/GRPO teacher histories
+and online-RL comparisons are separate from the ICRL adaptation mechanism;
+their performance gains do not establish fixed-weight in-context learning.
+Autoregressive action likelihoods alone are not a reason to replace this motor.
+
 ## Abstract scaffold
 
 - Question: can a reusable steering controller turn a few deployment episodes

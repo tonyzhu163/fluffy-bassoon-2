@@ -1,9 +1,11 @@
-# Upstream settings before PPO cadence ablation
+# Historical PPO recipe audit and frozen-policy scope
 
-The user requested PPO C5 versus C50, then asked why the original settings
-were not used. Establish the upstream baseline first. No training allocation
-has been launched for this run. The separate native SFT reproduction continues
-under its own immutable manifest; existing held RL runs remain untouched.
+The user clarified the final goal: retain pi0.5 as a frozen ICRL policy.
+The new VLA fine-tuning/cadence-training proposal and OpenVLA migration
+recommendation are withdrawn. No training allocation has launched for this
+run. This file retains the recipe research and qualified compatibility fix;
+it is not an active training plan. The native SFT reproduction continues
+under its immutable manifest; existing held RL runs remain untouched.
 
 The original OpenPI SFT evaluation already uses C5. Its submission-linked
 [default](https://github.com/robocasa-benchmark/openpi/blob/ca4c6d710db75e276bc7c866a57bd7e4aee5b6e8/examples/robocasa/main.py#L34)
@@ -68,6 +70,7 @@ published flow-policy formulation; StructRL supplies direct RoboCasa outcome
 evidence and released code. Mathematical likelihood clarity and exact
 benchmark reproduction are separate questions. See [the model-choice audit](MODEL-CHOICE.md).
 No automatic new training or model migration follows from this research.
-Resolve the likelihood/model choice and paper/launcher discrepancy before
-any new learning run. The earlier C5/C50 selection is deferred by this latest
-instruction; the original SFT benchmark continues unchanged.
+The later explicit frozen-ICRL instruction supersedes the proposed C5/C50
+VLA-training comparison. Keep pi0.5; any future controller learning must
+preserve that motor and distinguish offline module fitting from deployment
+adaptation through history alone. The original SFT benchmark is unchanged.
