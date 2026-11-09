@@ -1,11 +1,11 @@
 {
   "status": "epoch2_sidney_native_sft_submitted",
-  "closed_conservative_gpu_seconds": 9638,
+  "closed_conservative_gpu_seconds": 10378,
   "cap_gpu_seconds": 360000,
-  "closed_conservative_gpu_hours": 2.6772222222222224,
-  "remaining_gpu_seconds": 350362,
-  "remaining_unreserved_gpu_seconds": 325462,
-  "next_worst_gpu_seconds": 24900,
+  "closed_conservative_gpu_hours": 2.8827777777777777,
+  "remaining_gpu_seconds": 349622,
+  "remaining_unreserved_gpu_seconds": 327422,
+  "next_worst_gpu_seconds": 22200,
   "components": [
     {
       "cluster": "Baige Pro6K",
@@ -138,6 +138,26 @@
       "randomized_successes": 25,
       "independent_readback_pending": false,
       "readback": "outputs/robotwin-motus-release-baseline-20261109-r1/PHONE100-READBACK.json"
+    },
+    {
+      "job_id": "job-x42r92kv2ls1",
+      "cluster": "Baige Pro6K",
+      "queue": "\u7b97\u6cd5Z\u7ec4",
+      "scheduler_status": "Succeeded",
+      "scheduler_created_at": "2026-11-09T16:33:07+08:00",
+      "scheduler_started_at": "2026-11-09T16:34:16+08:00",
+      "scheduler_ended_at": "2026-11-09T16:45:27+08:00",
+      "master_ended_at": "2026-11-09T16:45:21+08:00",
+      "observed_at": "2026-11-09T16:51:24+08:00",
+      "gpu_count": 1,
+      "gpus_released": true,
+      "restart_count": 0,
+      "automatic_retry": false,
+      "scheduler_runtime_limit_minutes": 45,
+      "worker_gpu_seconds": 662,
+      "conservative_allocation_gpu_seconds": 740,
+      "charge_basis": "One GPU, scheduler creation through terminal success, including queue and cleanup.",
+      "evidence": "replay01-succeeded.jpg"
     }
   ],
   "prior_cleared_epoch_gpu_seconds": 359665,
@@ -160,20 +180,6 @@
       "automatic_retry": false,
       "source_commit": "d51e68080620d669e6ae54022dcaf94ebf9978ee",
       "episodes_per_domain": 100
-    },
-    {
-      "job_id": "job-x42r92kv2ls1",
-      "identity": "motus-replay-20261109-r1/replay-01",
-      "cluster": "Baige Pro6K",
-      "gpus": 1,
-      "hardware": "NVIDIA RPBZZZ6",
-      "created_at": "2026-11-09T16:33:07+08:00",
-      "scheduler_started_at": "2026-11-09T16:34:16+08:00",
-      "scheduler_status": "Running",
-      "wall_minutes": 45,
-      "reserved_allocated_gpu_seconds": 2700,
-      "automatic_retry": false,
-      "source_commit": "d59199917ac51eb6c0ab83c4a0926d9c3e6836c5"
     }
   ],
   "ownership_and_data_preserved": true,

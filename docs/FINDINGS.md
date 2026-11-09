@@ -1389,3 +1389,26 @@ The job succeeded/released for7,464 conservative GPU-s; Epoch2 total is
 [Result, limits and sources](../outputs/robotwin-motus-release-baseline-20261109-r1/RESULT.md),
 [independent audit](../outputs/robotwin-motus-release-baseline-20261109-r1/PHONE100-READBACK.json),
 [frozen cases](../outputs/robotwin-motus-release-baseline-20261109-r1/PHONE100-CASES.json).
+
+
+## Released Motus pi0.5 teacher-forced replay (2026-11-09)
+
+On 20 clean phone expert demonstrations, the frozen release completed 644
+teacher-forced queries and 3,220 paired-variant inferences. Shift-1 32-target
+arm MAE was 0.015408 rad versus 0.078913 for holding state (80.48% lower).
+RGB-channel swapping increased this error by 2.63%, the scene prefix by
+26.25%, and wrist swapping by 169.81%; unseen instructions changed it by
+−0.62%. Holding state had lower first-target error (0.006085 versus 0.007164).
+This descriptive reconstruction supports useful action prediction on expert
+frames, while the cause of the native/published success gap and the exact
+training-pipeline identity remain unresolved.
+
+Independent Linux CPU reconstruction verified the complete query grid, both
+target alignments, all per-query metrics within their float32 serialization
+envelopes, aggregate summaries and raw-file identities. Maximum metric
+difference was 5.34e-8. The job succeeded and released its one GPU; conservative
+all-attempt cost was 740 GPU-seconds (0.20556 hours), with zero simulator
+calls or optimizer updates.
+[Result and limits](../outputs/robotwin-motus-replay-20261109-r1/RESULT.md),
+[raw result](../outputs/robotwin-motus-replay-20261109-r1/RESULT.json),
+[independent audit](../outputs/robotwin-motus-replay-20261109-r1/READBACK.json).
