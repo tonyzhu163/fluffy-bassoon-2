@@ -1,20 +1,20 @@
 {
-  "source_commit": "68b0564fc5a84731723c659cddbd87b1d88239d7",
-  "source_checkout": "/mowenjie/fluffy-bassoon-2/sources/robotwin-motus-release-baseline-20261109-native04",
+  "source_commit": "571bd49f3829f55e2e3cd94b314e78c537a1ef5a",
+  "source_checkout": "/mowenjie/fluffy-bassoon-2/sources/robotwin-motus-release-baseline-20261109-render01",
   "cluster": "Baige Pro6K",
-  "job_id": "job-qknqpnhv7bie",
-  "name": "mwj_1109_motus_release_native_smoke04",
-  "created_at": "2026-11-09T13:10:46+08:00",
-  "status": "Failed/released",
+  "job_id": "job-9yas4j8qoeh3",
+  "name": "mwj_1109_motus_native_renderer01",
+  "created_at": "2026-11-09T13:36:01+08:00",
+  "status": "Starting",
   "resources": {
     "gpus": 1,
     "cpu": 21,
     "memory_gib": 224,
     "shm_gib": 32,
-    "max_minutes": 60
+    "max_minutes": 15
   },
-  "output": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motus-release-baseline-20261109-r1/native-smoke-04",
-  "completed_episodes": 2,
+  "output": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motus-release-baseline-20261109-r1/native-render-01",
+  "completed_episodes": 0,
   "previous_failed_job": "job-7qpbhxebxnzf",
   "previous_conservative_gpu_seconds": 64,
   "attempts": [
@@ -67,14 +67,39 @@
       "strict_weight_load_passed": true,
       "strict_load_evidence": "Traceback is after successful create_trained_policy, CUDA transfer, eval/freeze assertions and version capture; see smoke03-loader.log.",
       "failure": "Missing simulator dependencies in isolated overlay; full native + cuRobo CPU import and config preflight passed after adding existing dependency layers."
+    },
+    {
+      "source_commit": "68b0564fc5a84731723c659cddbd87b1d88239d7",
+      "source_checkout": "/mowenjie/fluffy-bassoon-2/sources/robotwin-motus-release-baseline-20261109-native04",
+      "cluster": "Baige Pro6K",
+      "job_id": "job-qknqpnhv7bie",
+      "name": "mwj_1109_motus_release_native_smoke04",
+      "created_at": "2026-11-09T13:10:46+08:00",
+      "status": "Failed/released",
+      "resources": {
+        "gpus": 1,
+        "cpu": 21,
+        "memory_gib": 224,
+        "shm_gib": 32,
+        "max_minutes": 15
+      },
+      "output": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motus-release-baseline-20261109-r1/native-smoke-04",
+      "completed_episodes": 2,
+      "previous_failed_job": "job-7qpbhxebxnzf",
+      "previous_conservative_gpu_seconds": 64,
+      "runtime": "/mowenjie/fluffy-bassoon-2/envs/motus-reference-openpi-20261109-r1",
+      "ended_at": "2026-11-09T13:15:13+08:00",
+      "worker_gpu_seconds": 205,
+      "conservative_gpu_seconds": 267,
+      "clean_successes": 1,
+      "randomized_episodes": 0,
+      "result_is_baseline": false,
+      "failure": "Missing unseen textures; native OIDN2.0.1 failed on Blackwell. Preserve two clean episodes only as diagnostic; fixed native renderer and complete textures require fresh GPU qualification."
     }
   ],
-  "runtime": "/mowenjie/fluffy-bassoon-2/envs/motus-reference-openpi-20261109-r1",
-  "ended_at": "2026-11-09T13:15:13+08:00",
-  "worker_gpu_seconds": 205,
-  "conservative_gpu_seconds": 267,
-  "clean_successes": 1,
-  "randomized_episodes": 0,
+  "runtime": "/mowenjie/fluffy-bassoon-2/envs/motus-reference-openpi-20261109-r2",
   "result_is_baseline": false,
-  "failure": "Missing unseen textures; native OIDN2.0.1 failed on Blackwell. Preserve two clean episodes only as diagnostic; fixed native renderer and complete textures require fresh GPU qualification."
+  "kind": "native_renderer_qualification",
+  "model_constructed": false,
+  "policy_episodes": 0
 }

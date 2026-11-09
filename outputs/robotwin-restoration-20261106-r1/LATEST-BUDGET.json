@@ -1,5 +1,5 @@
 {
-  "status": "epoch2_native_renderer_qualification_ready",
+  "status": "epoch2_native_renderer01_starting",
   "closed_conservative_gpu_seconds": 1645,
   "cap_gpu_seconds": 360000,
   "closed_conservative_gpu_hours": 0.45694444444444443,
@@ -96,15 +96,18 @@
   "prior_cleared_epoch_gpu_hours": 99.90694444444445,
   "prior_cleared_epoch_ledger": "HISTORICAL-BUDGET-EPOCH1-THROUGH-20261108.json",
   "approval": "User cleared prior 359,665 GPU-s (99.91 GPU-h) epoch and approved a fresh 100 GPU-hour (360,000 GPU-s) budget on 2026-11-09T11:05:01+08:00 ('clear the existing gpu hours, i approve another 100 hours').",
-  "active_job_id": null,
-  "active_jobs": [],
+  "active_job_id": "job-9yas4j8qoeh3",
+  "active_jobs": [
+    {
+      "job_id": "job-9yas4j8qoeh3",
+      "identity": "native-render-01",
+      "gpus": 1,
+      "created_at": "2026-11-09T13:36:01+08:00",
+      "reserved_gpu_seconds": 900
+    }
+  ],
   "ownership_and_data_preserved": true,
-  "planned_job": {
-    "identity": "native-render-01",
-    "gpus": 1,
-    "reservation_gpu_seconds": 900,
-    "task": "OIDN2.3.3 native expert/render positive control in clean and randomized; no policy model"
-  },
+  "planned_job": null,
   "user_stopped_at": "2026-11-09T12:21:51+08:00",
   "user_resumed_scope": "Released pi0.5 SFT baseline first; then PPO and GRPO baselines"
 }
