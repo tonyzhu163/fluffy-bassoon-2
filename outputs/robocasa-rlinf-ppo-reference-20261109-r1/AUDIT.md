@@ -46,3 +46,28 @@ uses its shared horizon in reset receipts,episode completion and terminal
 observation archives. Copying the upstream400/750 settings into that wrapper
 would currently fail validation. Any support change must preserve existing
 same-horizon behavior and be numerically checked on Linux before training.
+This change is implemented at1502237e: phase-specific receipts,episode
+completion and terminal observations use the actual phase length. All68
+Linux CPU tests passed,including400/750 boundaries,likelihood/value checks,
+history/residual behavior and native simulator clocks. No GPU training ran.
+
+## Direct pi0.5 RoboCasa reference and the later model question
+
+The relevant direct pi0.5 RoboCasa PPO source is
+[StructRL's sparse-PPO launcher](https://github.com/amazon-science/StructRL/blob/6caba1f9538167e0752a7338663e45aac8df965d/launch/train_pi05_sparse_rl_ppo.sbatch),
+not just the pi0 OpenDrawer example above. It uses32GPUs,joint Composite-Seen
+training,a target-composite SFT initializer,and explicit C50/K10/VLM critic
+overrides. Its paper describes C10; its own reproduction guide maps this
+launcher to the pi0.5 Sparse-RL table row. Thus C5 is the original Human300
+SFT evaluator setting,not a universal original PPO setting. The local
+historical C50/K10 is insufficient by itself to establish recipe fidelity.
+
+The user next asked whether a pi0.5 PPO formulation exists,whether to switch
+to OpenVLA,and to prioritize theoretical cleanliness. piRL supplies the
+published flow-policy formulation; StructRL supplies direct RoboCasa outcome
+evidence and released code. Mathematical likelihood clarity and exact
+benchmark reproduction are separate questions. See [the model-choice audit](MODEL-CHOICE.md).
+No automatic new training or model migration follows from this research.
+Resolve the likelihood/model choice and paper/launcher discrepancy before
+any new learning run. The earlier C5/C50 selection is deferred by this latest
+instruction; the original SFT benchmark continues unchanged.
