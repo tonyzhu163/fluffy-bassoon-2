@@ -1,11 +1,11 @@
 {
-  "status": "epoch2_user_stopped_no_active_work",
+  "status": "epoch2_released_sft_baseline_preparing",
   "closed_conservative_gpu_seconds": 918,
   "cap_gpu_seconds": 360000,
   "closed_conservative_gpu_hours": 0.255,
   "remaining_gpu_seconds": 359082,
-  "remaining_unreserved_gpu_seconds": 359082,
-  "next_worst_gpu_seconds": 0,
+  "remaining_unreserved_gpu_seconds": 355482,
+  "next_worst_gpu_seconds": 3600,
   "components": [
     {
       "cluster": "Baige Pro6K",
@@ -42,6 +42,12 @@
   "active_job_id": null,
   "active_jobs": [],
   "ownership_and_data_preserved": true,
-  "planned_job": null,
-  "user_stopped_at": "2026-11-09T12:21:51+08:00"
+  "planned_job": {
+    "identity": "native-smoke-01",
+    "gpus": 1,
+    "reservation_gpu_seconds": 3600,
+    "task": "place_phone_stand, 2 clean + 2 randomized, direct OpenPI/native RoboTwin"
+  },
+  "user_stopped_at": "2026-11-09T12:21:51+08:00",
+  "user_resumed_scope": "Released pi0.5 SFT baseline first; then PPO and GRPO baselines"
 }
