@@ -1,10 +1,10 @@
 {
   "status": "epoch2_sidney_baseline_and_diagnostics_running",
-  "closed_conservative_gpu_seconds": 10378,
+  "closed_conservative_gpu_seconds": 10442,
   "cap_gpu_seconds": 360000,
-  "closed_conservative_gpu_hours": 2.8827777777777777,
-  "remaining_gpu_seconds": 349622,
-  "remaining_unreserved_gpu_seconds": 289622,
+  "closed_conservative_gpu_hours": 2.9005555555555556,
+  "remaining_gpu_seconds": 349558,
+  "remaining_unreserved_gpu_seconds": 289558,
   "next_worst_gpu_seconds": 60000,
   "components": [
     {
@@ -158,6 +158,29 @@
       "conservative_allocation_gpu_seconds": 740,
       "charge_basis": "One GPU, scheduler creation through terminal success, including queue and cleanup.",
       "evidence": "replay01-succeeded.jpg"
+    },
+    {
+      "job_id": "job-ungq6xir0lyy",
+      "job_name": "mwj_1109_sidney_wrist_random100_01",
+      "cluster": "Baige Pro6K",
+      "created_at": "2026-11-09T18:18:20+08:00",
+      "scheduler_status": "Failed",
+      "gpus": 1,
+      "hardware": "NVIDIA RPBZZZ6",
+      "queue_free_at_submission": 2,
+      "queue_max": 416,
+      "wall_minutes": 190,
+      "automatic_retry": false,
+      "source_commit": "db638a142253868b6bd413319a2b025af641a737",
+      "episodes": 100,
+      "wrist_near_m": 0.01,
+      "domain": "demo_randomized",
+      "scheduler_ended_at": "2026-11-09T18:19:24+08:00",
+      "gpus_released": true,
+      "worker_gpu_seconds": 11,
+      "conservative_allocation_gpu_seconds": 64,
+      "completed_episodes": 0,
+      "failure": "Package reorganization moved the renderer import. The evaluator exited before model loading. The retry imports fluffy_bassoon.robotwin.noise and passed a Linux import check."
     }
   ],
   "prior_cleared_epoch_gpu_seconds": 359665,
@@ -215,18 +238,18 @@
       "wrist_near_m": 0.01
     },
     {
-      "job_id": "job-ungq6xir0lyy",
-      "job_name": "mwj_1109_sidney_wrist_random100_01",
+      "job_id": "job-u3a36spfafs9",
+      "job_name": "mwj_1109_sidney_wrist_random100_02",
       "cluster": "Baige Pro6K",
-      "created_at": "2026-11-09T18:18:20+08:00",
+      "created_at": "2026-11-09T18:22:14+08:00",
       "scheduler_status": "starting",
       "gpus": 1,
       "hardware": "NVIDIA RPBZZZ6",
-      "queue_free_at_submission": 2,
+      "queue_free_at_submission": 3,
       "queue_max": 416,
       "wall_minutes": 190,
       "automatic_retry": false,
-      "source_commit": "db638a142253868b6bd413319a2b025af641a737",
+      "source_commit": "ad732b0c037c8608d340231530105cfafd9479a6",
       "episodes": 100,
       "wrist_near_m": 0.01,
       "domain": "demo_randomized"
