@@ -1361,3 +1361,31 @@ are released; qualification plus diagnostic cost 1,565 GPU-seconds (0.43472
 GPU-hours), with no training.
 [Result and limits](../outputs/robotwin-motus-ablation-20261109-r1/RESULT.md),
 [independent audit](../outputs/robotwin-motus-ablation-20261109-r1/ep10-01-READBACK.json).
+
+
+## Released Motus π0.5 native phone baseline (2026-11-09)
+
+The released `motus-robotics/pi0.5_robotwin2` checkpoint measured27/100 clean
+and25/100 randomized `place_phone_stand` successes under a documented native
+RoboTwin/OpenPI reconstruction. Wilson95% intervals are19.27–36.43% and
+17.55–34.30%. These results do not reproduce Motus Table14's49%/53%, and are
+one task rather than its50-task aggregate. The evaluation used the dated native
+controller, H32/K10, unseen instructions, native expert filtering from candidate
+seed100000 and400 delivered targets per episode.
+
+Independent Linux readback verifies200 episodes and lossless initial inputs,
+2,161 finite action chunks,66,062 delivered native targets, frozen parameter
+versions, zero optimizer updates,507 renderer receipts on the allocated GPU and
+zero denoiser errors. All120 phone/stand/ALOHA upstream files and the complete
+unseen texture split are verified. The exact π0.5 evaluation fork/config and its
+metadata-referenced training state transform remain unavailable in the reviewed
+release; the remaining gap is unresolved. Do not tune against these outcomes.
+
+The200 cases/prompts are frozen for later comparisons. PPO/GRPO require direct
+reference versus RLinf preprocessing/action qualification under this same native
+protocol; the paused custom waypoint recipe cannot be resumed unchanged.
+The job succeeded/released for7,464 conservative GPU-s; Epoch2 total is
+9,638GPU-s (2.6772/100GPU-h).
+[Result, limits and sources](../outputs/robotwin-motus-release-baseline-20261109-r1/RESULT.md),
+[independent audit](../outputs/robotwin-motus-release-baseline-20261109-r1/PHONE100-READBACK.json),
+[frozen cases](../outputs/robotwin-motus-release-baseline-20261109-r1/PHONE100-CASES.json).

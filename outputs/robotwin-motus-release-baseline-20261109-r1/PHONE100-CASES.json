@@ -1,0 +1,1417 @@
+{
+  "task": "place_phone_stand",
+  "purpose": "Frozen held-out SFT/PPO/GRPO evaluation cases; no training selection",
+  "source_commit": "e15b1ac9805c84b9b4f82d489cdde0eaf8d86e57",
+  "model_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+  "result_sha256": "0d6ed282983f4c2da87472e0257ba146f530afbb166176f0b3f84af0f72c552b",
+  "controller": "unmodified native Base_Task.take_action",
+  "action_horizon": 32,
+  "flow_steps": 10,
+  "step_limit": 400,
+  "settings": {
+    "demo_clean": [
+      {
+        "index": 0,
+        "seed": 100000,
+        "instruction": "Set the handheld phone with silver frame on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-000-seed-100000/initial-input.npz",
+        "initial_input_sha256": "f87eb29ebac89600b2f4d610e8f0698ffa272f66eea036284f5a7b3e907bdbaa"
+      },
+      {
+        "index": 1,
+        "seed": 100001,
+        "instruction": "Set the phone with rounded edges on the dark green phonestand.",
+        "initial_input_path": "demo_clean-001-seed-100001/initial-input.npz",
+        "initial_input_sha256": "4c9f5b4b5756e6befd008f7473cfb1734d0695f510e14e058b786450976b6c88"
+      },
+      {
+        "index": 2,
+        "seed": 100002,
+        "instruction": "Set the palm-sized phone with glossy finish on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-002-seed-100002/initial-input.npz",
+        "initial_input_sha256": "837c0bbe07393e93f7006469272c4abbe2ec0fdfdfdaf5f31a37b436dc29f425"
+      },
+      {
+        "index": 3,
+        "seed": 100005,
+        "instruction": "Set the handheld phone with silver frame on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-003-seed-100005/initial-input.npz",
+        "initial_input_sha256": "b0d835c754957eb301e72ba5ad503abe94f63ee741654abfa49ec150dcf94a48"
+      },
+      {
+        "index": 4,
+        "seed": 100006,
+        "instruction": "Set the phone with flat black screen on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-004-seed-100006/initial-input.npz",
+        "initial_input_sha256": "7a5f54a8ccfb9fa2ac828d25c83ea7804f71dd18a7157d7cf2f1926d7c2454dc"
+      },
+      {
+        "index": 5,
+        "seed": 100008,
+        "instruction": "Set the phone with shiny black back on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-005-seed-100008/initial-input.npz",
+        "initial_input_sha256": "07b135056ab8f22cfe8a2740c0e6b1a7c0049dc723c676906594c81e965138af"
+      },
+      {
+        "index": 6,
+        "seed": 100010,
+        "instruction": "Set the palm-sized phone with glossy finish on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_clean-006-seed-100010/initial-input.npz",
+        "initial_input_sha256": "e7fb5d86ecef94140305fc47b26302ac2c887b9b070df755d282f38e52b1e25e"
+      },
+      {
+        "index": 7,
+        "seed": 100012,
+        "instruction": "Set the phone with shiny black back on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-007-seed-100012/initial-input.npz",
+        "initial_input_sha256": "ee362df71a6fe67c0f4767a4b15e90a9e3cc741f456afe053e7a742386c18d43"
+      },
+      {
+        "index": 8,
+        "seed": 100014,
+        "instruction": "Set the handheld phone with silver frame on the angled brown phonestand.",
+        "initial_input_path": "demo_clean-008-seed-100014/initial-input.npz",
+        "initial_input_sha256": "b79e07d7e9febbce73936fde4f74036ef59fb0b2a4d2ed91d8e33d887f58e65d"
+      },
+      {
+        "index": 9,
+        "seed": 100015,
+        "instruction": "Set the smartphone with black display on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-009-seed-100015/initial-input.npz",
+        "initial_input_sha256": "f440368ba1348f8ffe1297de6ff566d534b4ffb62dd51619d5773d630e582d95"
+      },
+      {
+        "index": 10,
+        "seed": 100016,
+        "instruction": "Set the phone with rounded edges on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_clean-010-seed-100016/initial-input.npz",
+        "initial_input_sha256": "265de6c3d4cf10fb2ad1043e9ba46dfdc151acf2e2d562ae92410a27daf49bee"
+      },
+      {
+        "index": 11,
+        "seed": 100018,
+        "instruction": "Set the modern phone on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_clean-011-seed-100018/initial-input.npz",
+        "initial_input_sha256": "de4510695ca4dd291e878dfecb2aedf84a15a5b9b0832f9ec734411a1c158425"
+      },
+      {
+        "index": 12,
+        "seed": 100019,
+        "instruction": "Set the modern phone on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-012-seed-100019/initial-input.npz",
+        "initial_input_sha256": "93a034b91e2c1b29defb477b8e7d7885412425146611af79cf1dfbfb74f91751"
+      },
+      {
+        "index": 13,
+        "seed": 100020,
+        "instruction": "Set the modern phone on the angled brown phonestand.",
+        "initial_input_path": "demo_clean-013-seed-100020/initial-input.npz",
+        "initial_input_sha256": "0d85d504de554936d7946b34aa00e1a57cb85422aa92314e2974668c78712f43"
+      },
+      {
+        "index": 14,
+        "seed": 100021,
+        "instruction": "Set the modern phone on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_clean-014-seed-100021/initial-input.npz",
+        "initial_input_sha256": "2b9509c0bee47cd6efb28cfa359b91bd69b9d27eef5689428e037550633897ff"
+      },
+      {
+        "index": 15,
+        "seed": 100025,
+        "instruction": "Set the palm-sized phone with glossy finish on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-015-seed-100025/initial-input.npz",
+        "initial_input_sha256": "fd49d90fa3ec364f95ffeca2d7d951aac20990234e258a16248aeedd09756d7b"
+      },
+      {
+        "index": 16,
+        "seed": 100026,
+        "instruction": "Set the modern phone on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_clean-016-seed-100026/initial-input.npz",
+        "initial_input_sha256": "f7ca100c026ecf7ed9165dc7173a29940633b4aa630445b769a46cb23dd6c7d7"
+      },
+      {
+        "index": 17,
+        "seed": 100027,
+        "instruction": "Set the phone with shiny black back on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-017-seed-100027/initial-input.npz",
+        "initial_input_sha256": "e1d9d3a531930e71291df991f25f7ef3ebae1953a7c19ab3fd8e338ee433d25d"
+      },
+      {
+        "index": 18,
+        "seed": 100029,
+        "instruction": "Set the modern phone on the adjustable phone holder.",
+        "initial_input_path": "demo_clean-018-seed-100029/initial-input.npz",
+        "initial_input_sha256": "e2cd22a0fc49e3c0436f97ced25e5116652d03f5dce60b1fd9cfc04d2efe36d2"
+      },
+      {
+        "index": 19,
+        "seed": 100031,
+        "instruction": "Set the phone with rounded edges on the dark green phonestand.",
+        "initial_input_path": "demo_clean-019-seed-100031/initial-input.npz",
+        "initial_input_sha256": "d58a572e6e44c3e5e82bfc045860c012570cc6f143d6cef306902eca9703f8a5"
+      },
+      {
+        "index": 20,
+        "seed": 100032,
+        "instruction": "Set the modern phone on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-020-seed-100032/initial-input.npz",
+        "initial_input_sha256": "cb4204d3717ccdbf5ae28eca5fe95e4e97d80605f622c18c35faca40a6fba475"
+      },
+      {
+        "index": 21,
+        "seed": 100035,
+        "instruction": "Set the modern phone on the dark green phonestand.",
+        "initial_input_path": "demo_clean-021-seed-100035/initial-input.npz",
+        "initial_input_sha256": "2907b74990bf77121f2b075147283913aeb3296e55fa5870f4e04cec7adee33a"
+      },
+      {
+        "index": 22,
+        "seed": 100036,
+        "instruction": "Set the phone with shiny black back on the adjustable phone holder.",
+        "initial_input_path": "demo_clean-022-seed-100036/initial-input.npz",
+        "initial_input_sha256": "8ec350754e65e1f157e43da88d34d2c704d22e2c9d1802bbb81b6e44fb61c11b"
+      },
+      {
+        "index": 23,
+        "seed": 100037,
+        "instruction": "Set the handheld phone with silver frame on the angled brown phonestand.",
+        "initial_input_path": "demo_clean-023-seed-100037/initial-input.npz",
+        "initial_input_sha256": "a9138ab12a92f8b0f561a00d64ab23d94d7f9d19251eecee77baee7311857efd"
+      },
+      {
+        "index": 24,
+        "seed": 100038,
+        "instruction": "Set the rectangular silver phone with rounded edges on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-024-seed-100038/initial-input.npz",
+        "initial_input_sha256": "a9cfb4d0065c42b602d24010b6ee3020f51c894d21af3037cc9f828d1e0b7043"
+      },
+      {
+        "index": 25,
+        "seed": 100042,
+        "instruction": "Set the handheld phone with silver frame on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_clean-025-seed-100042/initial-input.npz",
+        "initial_input_sha256": "239f574d9d59e250b7538b29f0f8542c9f4646df5d278d91174fed2edf8fc3d2"
+      },
+      {
+        "index": 26,
+        "seed": 100043,
+        "instruction": "Set the rectangular silver phone with rounded edges on the dark green phonestand.",
+        "initial_input_path": "demo_clean-026-seed-100043/initial-input.npz",
+        "initial_input_sha256": "4eb2da9d136865bbcdc884c1ff0adea40a8cc57457c67927115931f284a42d2f"
+      },
+      {
+        "index": 27,
+        "seed": 100044,
+        "instruction": "Set the modern phone on the dark green phonestand.",
+        "initial_input_path": "demo_clean-027-seed-100044/initial-input.npz",
+        "initial_input_sha256": "bdaaaf40dc8d1f559ad747d780b1c2ecfd8cd98af4e25ebde6106086575f7940"
+      },
+      {
+        "index": 28,
+        "seed": 100046,
+        "instruction": "Set the phone with shiny black back on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-028-seed-100046/initial-input.npz",
+        "initial_input_sha256": "dcb2269a1fd8c1a92ccc1183249bfe05801794753f60df037dd2c4c1e4bdbd3b"
+      },
+      {
+        "index": 29,
+        "seed": 100047,
+        "instruction": "Set the palm-sized phone with glossy finish on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-029-seed-100047/initial-input.npz",
+        "initial_input_sha256": "4723cf29f89adb1eb33f1f173ee3d2b537254fb10f1d9329d3cc9cd903883769"
+      },
+      {
+        "index": 30,
+        "seed": 100048,
+        "instruction": "Set the rectangular silver phone with rounded edges on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_clean-030-seed-100048/initial-input.npz",
+        "initial_input_sha256": "9e9f5e175afdf9bd60bf851508954cd079321c3c6cd7091a7e45f30d0b992569"
+      },
+      {
+        "index": 31,
+        "seed": 100049,
+        "instruction": "Set the palm-sized phone with glossy finish on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_clean-031-seed-100049/initial-input.npz",
+        "initial_input_sha256": "179046bca3496bb011695cbf55ba3ae9050621b23642d700e02b78d49342fd95"
+      },
+      {
+        "index": 32,
+        "seed": 100050,
+        "instruction": "Set the smartphone with black display on the angled brown phonestand.",
+        "initial_input_path": "demo_clean-032-seed-100050/initial-input.npz",
+        "initial_input_sha256": "0af47a760b3836d47411daa9e628c3d5fed17a7fc60cc996f27c9dd9d93969ce"
+      },
+      {
+        "index": 33,
+        "seed": 100053,
+        "instruction": "Set the white-sided phone on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-033-seed-100053/initial-input.npz",
+        "initial_input_sha256": "23f7f0ca40b756fa9fd91a3193324e1abed331a8f9ae79e83faba58ae22e5c0a"
+      },
+      {
+        "index": 34,
+        "seed": 100054,
+        "instruction": "Set the phone with shiny black back on the dark green phonestand.",
+        "initial_input_path": "demo_clean-034-seed-100054/initial-input.npz",
+        "initial_input_sha256": "17826130447f2a8ec77fb65e26dda99df8a791efd9f6a43989404a34dc437fbe"
+      },
+      {
+        "index": 35,
+        "seed": 100057,
+        "instruction": "Set the rectangular phone on the dark green phonestand.",
+        "initial_input_path": "demo_clean-035-seed-100057/initial-input.npz",
+        "initial_input_sha256": "430d27376e4deb06767040048e3bc03f3d91532df9e036dcc0f4e4f6627f22b5"
+      },
+      {
+        "index": 36,
+        "seed": 100058,
+        "instruction": "Set the phone with rounded edges on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-036-seed-100058/initial-input.npz",
+        "initial_input_sha256": "34b590f5121d00a238c3601febf470ab2360eaa51d374da151127a20b61281eb"
+      },
+      {
+        "index": 37,
+        "seed": 100060,
+        "instruction": "Set the phone with shiny black back on the adjustable phone holder.",
+        "initial_input_path": "demo_clean-037-seed-100060/initial-input.npz",
+        "initial_input_sha256": "d82afc6305ac12c0b132e52efbe73a4945a975d2e74964a6ac4072c44500324a"
+      },
+      {
+        "index": 38,
+        "seed": 100061,
+        "instruction": "Set the rectangular silver phone with rounded edges on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-038-seed-100061/initial-input.npz",
+        "initial_input_sha256": "1ae9af2f5f6eac84553384bf9d4673d8924ccf6748e60657e88d433da5947a90"
+      },
+      {
+        "index": 39,
+        "seed": 100062,
+        "instruction": "Set the phone with shiny black back on the adjustable phone holder.",
+        "initial_input_path": "demo_clean-039-seed-100062/initial-input.npz",
+        "initial_input_sha256": "9d91c9f38b312a3dfb71bca28a47357f693f7f53d2627ec31a50654dab59e2b9"
+      },
+      {
+        "index": 40,
+        "seed": 100064,
+        "instruction": "Set the palm-sized phone with glossy finish on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-040-seed-100064/initial-input.npz",
+        "initial_input_sha256": "1134b937c9c08510f9ba7ff8479b4ae3c5a40cfb75f1ae568cc39b91f0173176"
+      },
+      {
+        "index": 41,
+        "seed": 100065,
+        "instruction": "Set the phone with rounded edges on the dark green phonestand.",
+        "initial_input_path": "demo_clean-041-seed-100065/initial-input.npz",
+        "initial_input_sha256": "f04d612e410da45e19760db464fb24332066ae21ca88510fab3febaf28ca645e"
+      },
+      {
+        "index": 42,
+        "seed": 100066,
+        "instruction": "Set the palm-sized phone with glossy finish on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-042-seed-100066/initial-input.npz",
+        "initial_input_sha256": "6ee46c86dd2306bce3d195d07cde639f40af75df598903710d9dc8beb27baa0e"
+      },
+      {
+        "index": 43,
+        "seed": 100067,
+        "instruction": "Set the rectangular silver phone with rounded edges on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_clean-043-seed-100067/initial-input.npz",
+        "initial_input_sha256": "9a6f5c22975ee68299743e7b4c6f602a184546d5b2a303526016633e7f8b45b2"
+      },
+      {
+        "index": 44,
+        "seed": 100069,
+        "instruction": "Set the phone with shiny black back on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-044-seed-100069/initial-input.npz",
+        "initial_input_sha256": "30bac19acb5962069279d72506c1c5e0c4bb8105b2f14233916e4272dcbc140d"
+      },
+      {
+        "index": 45,
+        "seed": 100070,
+        "instruction": "Set the phone with flat black screen on the adjustable phone holder.",
+        "initial_input_path": "demo_clean-045-seed-100070/initial-input.npz",
+        "initial_input_sha256": "4933061c280d2af9a9e27eaeb6e94fc9b61eb78cd96e8ff84c2340908f002606"
+      },
+      {
+        "index": 46,
+        "seed": 100071,
+        "instruction": "Set the smartphone with black display on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_clean-046-seed-100071/initial-input.npz",
+        "initial_input_sha256": "e0379f76ae2cec3d435b20ae08e6fb05ac08717e536c22e82c024d97c5c76895"
+      },
+      {
+        "index": 47,
+        "seed": 100072,
+        "instruction": "Set the handheld phone with silver frame on the angled brown phonestand.",
+        "initial_input_path": "demo_clean-047-seed-100072/initial-input.npz",
+        "initial_input_sha256": "9203872795be339c25f67d72858a52be2375400171510524c129c5bbb4202c4a"
+      },
+      {
+        "index": 48,
+        "seed": 100073,
+        "instruction": "Set the rectangular silver phone with rounded edges on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_clean-048-seed-100073/initial-input.npz",
+        "initial_input_sha256": "0f21d55790cd7aaca5dc7694e5333a4b2a9ae2a1e2aa9a35f62c2dade351f873"
+      },
+      {
+        "index": 49,
+        "seed": 100074,
+        "instruction": "Set the rectangular phone with curved edges on the angled brown phonestand.",
+        "initial_input_path": "demo_clean-049-seed-100074/initial-input.npz",
+        "initial_input_sha256": "cabddfaab9cc9fdb0003fb5ec8a4029a47f4a9415f1b621ddc249836c29904fb"
+      },
+      {
+        "index": 50,
+        "seed": 100076,
+        "instruction": "Set the phone with flat black screen on the dark green phonestand.",
+        "initial_input_path": "demo_clean-050-seed-100076/initial-input.npz",
+        "initial_input_sha256": "83d349099db527ae94816990d03913cfdd33021a8914cd061b4948817944f705"
+      },
+      {
+        "index": 51,
+        "seed": 100077,
+        "instruction": "Set the phone with shiny black back on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_clean-051-seed-100077/initial-input.npz",
+        "initial_input_sha256": "57193d04675593662155f504151bfaea50731f2a7a6e6903cc611433c267f616"
+      },
+      {
+        "index": 52,
+        "seed": 100078,
+        "instruction": "Set the palm-sized phone with glossy finish on the adjustable phone holder.",
+        "initial_input_path": "demo_clean-052-seed-100078/initial-input.npz",
+        "initial_input_sha256": "be2fa2bdea4053690a182303cd51ab8e7069711de8b7d31ba1f582156e175a6c"
+      },
+      {
+        "index": 53,
+        "seed": 100079,
+        "instruction": "Set the white-sided phone on the dark green phonestand.",
+        "initial_input_path": "demo_clean-053-seed-100079/initial-input.npz",
+        "initial_input_sha256": "4853fd15336c306c30cc9c107b77fa571e6bd333dc2c9dbd280e33c461e39e49"
+      },
+      {
+        "index": 54,
+        "seed": 100080,
+        "instruction": "Set the rectangular phone on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-054-seed-100080/initial-input.npz",
+        "initial_input_sha256": "faec9cb86a5b0c5593926bc6d0c6c97f2a4f7cddec986d380ac60f4d6e7de243"
+      },
+      {
+        "index": 55,
+        "seed": 100081,
+        "instruction": "Set the rectangular phone with curved edges on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-055-seed-100081/initial-input.npz",
+        "initial_input_sha256": "b7596c9578db46a636383ee1a5e605727f991ce4b98a611cfdc6136d291aa06c"
+      },
+      {
+        "index": 56,
+        "seed": 100082,
+        "instruction": "Set the rectangular silver phone with rounded edges on the adjustable phone holder.",
+        "initial_input_path": "demo_clean-056-seed-100082/initial-input.npz",
+        "initial_input_sha256": "ae117e6519c0d608e99d1dceb74ae92e9fad16331ce98d8022bb9a2dba0b8a83"
+      },
+      {
+        "index": 57,
+        "seed": 100083,
+        "instruction": "Set the handheld phone with silver frame on the adjustable phone holder.",
+        "initial_input_path": "demo_clean-057-seed-100083/initial-input.npz",
+        "initial_input_sha256": "c5fd62af293a2f08aaa06602f8f279cb325ab9b37739903f9ea11af417d43751"
+      },
+      {
+        "index": 58,
+        "seed": 100084,
+        "instruction": "Set the phone with rounded edges on the adjustable phone holder.",
+        "initial_input_path": "demo_clean-058-seed-100084/initial-input.npz",
+        "initial_input_sha256": "1c90fb2c3ef4df8180f7a8c0b1fa3fe7b3b6b944a71ff86a03fd041e39526361"
+      },
+      {
+        "index": 59,
+        "seed": 100085,
+        "instruction": "Set the modern phone on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-059-seed-100085/initial-input.npz",
+        "initial_input_sha256": "e6b708d9682df1a2b220f3aec0416c2bedfd7f8c4a64d420f3009f514e7c3a0a"
+      },
+      {
+        "index": 60,
+        "seed": 100087,
+        "instruction": "Set the phone with rounded edges on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-060-seed-100087/initial-input.npz",
+        "initial_input_sha256": "0004c44cc1d6027b618b3b959da4680193ad265be394f09cc5dcf776ad4e8c54"
+      },
+      {
+        "index": 61,
+        "seed": 100089,
+        "instruction": "Set the rectangular phone with curved edges on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-061-seed-100089/initial-input.npz",
+        "initial_input_sha256": "948df4cb586e134d2c2c27869563e7b225f86f3fe79b606b91de21f1e3fbbdd1"
+      },
+      {
+        "index": 62,
+        "seed": 100090,
+        "instruction": "Set the phone with rounded edges on the adjustable phone holder.",
+        "initial_input_path": "demo_clean-062-seed-100090/initial-input.npz",
+        "initial_input_sha256": "07fe61620be770225f0fa8026d89628eedaf2737013b010987265a3f5957eb1c"
+      },
+      {
+        "index": 63,
+        "seed": 100091,
+        "instruction": "Set the rectangular silver phone with rounded edges on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-063-seed-100091/initial-input.npz",
+        "initial_input_sha256": "94a99c1828d1547c59fb56bc3c35685e2462c31ee20e59c6255b06e7ce988404"
+      },
+      {
+        "index": 64,
+        "seed": 100092,
+        "instruction": "Set the smartphone with black display on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_clean-064-seed-100092/initial-input.npz",
+        "initial_input_sha256": "1cf38ad8223afb2fae73287d915ab44cb9fde67d03f6b321e0641d9888c46d85"
+      },
+      {
+        "index": 65,
+        "seed": 100094,
+        "instruction": "Set the handheld phone with silver frame on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-065-seed-100094/initial-input.npz",
+        "initial_input_sha256": "bca08b99cd9307dc2fec4fd0afdc9e6d8ef864660825a1e3cc3bbfbe974818e1"
+      },
+      {
+        "index": 66,
+        "seed": 100095,
+        "instruction": "Set the phone with flat black screen on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_clean-066-seed-100095/initial-input.npz",
+        "initial_input_sha256": "8b16a0328862daa80ea73044b928559756d2918834f95f3e9c6174b0e599841e"
+      },
+      {
+        "index": 67,
+        "seed": 100096,
+        "instruction": "Set the white-sided phone on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_clean-067-seed-100096/initial-input.npz",
+        "initial_input_sha256": "34b900d4c74001f821c8d5bfc275a229d5f5fd79b6fb532ff3c5107a37b94a98"
+      },
+      {
+        "index": 68,
+        "seed": 100097,
+        "instruction": "Set the handheld phone with silver frame on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-068-seed-100097/initial-input.npz",
+        "initial_input_sha256": "5abecabb4c42eba096fe1d01bb8f5b9b2d7ead3e0e33473b0b80840b57ac9390"
+      },
+      {
+        "index": 69,
+        "seed": 100098,
+        "instruction": "Set the modern phone on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-069-seed-100098/initial-input.npz",
+        "initial_input_sha256": "89f9dbd6ff1fc937cb12b4b2dfba831acea8b761000390da2dbd5ac77119d490"
+      },
+      {
+        "index": 70,
+        "seed": 100099,
+        "instruction": "Set the handheld phone with silver frame on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-070-seed-100099/initial-input.npz",
+        "initial_input_sha256": "75f9f3f994749712278f06a795e83437b4bcf50e01c45718cbc02ef2b6ec73fc"
+      },
+      {
+        "index": 71,
+        "seed": 100101,
+        "instruction": "Set the rectangular phone with curved edges on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-071-seed-100101/initial-input.npz",
+        "initial_input_sha256": "2cf48d33534cd6cdbe2de685ffd612c64e3e14e52b2f5162ccffa3653e03c223"
+      },
+      {
+        "index": 72,
+        "seed": 100102,
+        "instruction": "Set the phone with shiny black back on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_clean-072-seed-100102/initial-input.npz",
+        "initial_input_sha256": "8459e70b3f7b6ae025289fdb3765a333987cdbb3bf0d1e0f7257edafe69b7b52"
+      },
+      {
+        "index": 73,
+        "seed": 100103,
+        "instruction": "Set the rectangular phone with curved edges on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-073-seed-100103/initial-input.npz",
+        "initial_input_sha256": "d2c234eaaa8ff52e10d3f2d71b681badedda698fb0f10394ade43f045ac7dd3e"
+      },
+      {
+        "index": 74,
+        "seed": 100104,
+        "instruction": "Set the white-sided phone on the angled brown phonestand.",
+        "initial_input_path": "demo_clean-074-seed-100104/initial-input.npz",
+        "initial_input_sha256": "d93ef0f4af33dd38f9ee0fb386c8cd5fc559b9e8fdedcbe9da86db53c163be35"
+      },
+      {
+        "index": 75,
+        "seed": 100105,
+        "instruction": "Set the rectangular silver phone with rounded edges on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-075-seed-100105/initial-input.npz",
+        "initial_input_sha256": "e250569f0cbd7a0502225c7db198758ccbf7b676c719342ce21158f915ca9273"
+      },
+      {
+        "index": 76,
+        "seed": 100108,
+        "instruction": "Set the rectangular silver phone with rounded edges on the angled brown phonestand.",
+        "initial_input_path": "demo_clean-076-seed-100108/initial-input.npz",
+        "initial_input_sha256": "c1a53bb0fa11cfaec1f50b0ecd43e00f0fcd02347eee79bfc131fdec80dff82d"
+      },
+      {
+        "index": 77,
+        "seed": 100109,
+        "instruction": "Set the phone with shiny black back on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-077-seed-100109/initial-input.npz",
+        "initial_input_sha256": "143aa75e6ddde03fa6012cbfc62f03298849fd80eaa4d8dcf5596fbe60ac1aa6"
+      },
+      {
+        "index": 78,
+        "seed": 100110,
+        "instruction": "Set the rectangular silver phone with rounded edges on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-078-seed-100110/initial-input.npz",
+        "initial_input_sha256": "06f44fe9b555bac07d9719bcdc0b861d89829d189f09a6ecfdb28acc471f2455"
+      },
+      {
+        "index": 79,
+        "seed": 100111,
+        "instruction": "Set the handheld phone with silver frame on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-079-seed-100111/initial-input.npz",
+        "initial_input_sha256": "c246b77230dff14cc6205686746addcc8f744645623368a31df668dccf19bc65"
+      },
+      {
+        "index": 80,
+        "seed": 100112,
+        "instruction": "Set the phone with shiny black back on the angled brown phonestand.",
+        "initial_input_path": "demo_clean-080-seed-100112/initial-input.npz",
+        "initial_input_sha256": "960099b3538d57c726881dd9704d0633c25d7060bf2ba02f4ee4df4845ee7e69"
+      },
+      {
+        "index": 81,
+        "seed": 100113,
+        "instruction": "Set the handheld phone with silver frame on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-081-seed-100113/initial-input.npz",
+        "initial_input_sha256": "fe41b83643b6ac1a7101b395c314a5f7b3cc3e194606d3821f0ee52a0ffa6043"
+      },
+      {
+        "index": 82,
+        "seed": 100114,
+        "instruction": "Set the phone with shiny black back on the adjustable phone holder.",
+        "initial_input_path": "demo_clean-082-seed-100114/initial-input.npz",
+        "initial_input_sha256": "df30b946f146229215ebdbc472b4fde705069a8656cc0e429ad8ff300aa74fc0"
+      },
+      {
+        "index": 83,
+        "seed": 100116,
+        "instruction": "Set the rectangular phone on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_clean-083-seed-100116/initial-input.npz",
+        "initial_input_sha256": "a135a19c4c965fe82b7b3e090ca5fe7db47e381508abf9711eb832af580f5a42"
+      },
+      {
+        "index": 84,
+        "seed": 100117,
+        "instruction": "Set the white-sided phone on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-084-seed-100117/initial-input.npz",
+        "initial_input_sha256": "2508ee9bf88c436c3118a81edf61045818e85de73f8c65ad1f74cd20126aad6c"
+      },
+      {
+        "index": 85,
+        "seed": 100118,
+        "instruction": "Set the handheld phone with silver frame on the adjustable phone holder.",
+        "initial_input_path": "demo_clean-085-seed-100118/initial-input.npz",
+        "initial_input_sha256": "c4d1397cf177a603c00eef8c895d561761e96f9343136a10ce68ecbbf088e700"
+      },
+      {
+        "index": 86,
+        "seed": 100119,
+        "instruction": "Set the phone with rounded edges on the angled brown phonestand.",
+        "initial_input_path": "demo_clean-086-seed-100119/initial-input.npz",
+        "initial_input_sha256": "465d7527f53fa4d8c9bec8d70180bc688c17fe78908af536365528d9e65019aa"
+      },
+      {
+        "index": 87,
+        "seed": 100120,
+        "instruction": "Set the phone with rounded edges on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-087-seed-100120/initial-input.npz",
+        "initial_input_sha256": "a833eaccd2dc0249d3504c970762c81384b5eb2d5d8505e307c65420f1611ae5"
+      },
+      {
+        "index": 88,
+        "seed": 100121,
+        "instruction": "Set the palm-sized phone with glossy finish on the adjustable phone holder.",
+        "initial_input_path": "demo_clean-088-seed-100121/initial-input.npz",
+        "initial_input_sha256": "b6b3470b8d2ba1ade65267d14bc49926b7a6720d5273ad385f937416631ddc30"
+      },
+      {
+        "index": 89,
+        "seed": 100122,
+        "instruction": "Set the handheld phone with silver frame on the angled brown phonestand.",
+        "initial_input_path": "demo_clean-089-seed-100122/initial-input.npz",
+        "initial_input_sha256": "b5a9ab2c284a81bf8fe801b555077cdaa29f7a19f37ba231c8ce30f99bb0e191"
+      },
+      {
+        "index": 90,
+        "seed": 100124,
+        "instruction": "Set the rectangular silver phone with rounded edges on the angled brown phonestand.",
+        "initial_input_path": "demo_clean-090-seed-100124/initial-input.npz",
+        "initial_input_sha256": "cb521322eb056d4cb28aa6f15f52437c94f7763042c76c480cc7c8f2ec6ed575"
+      },
+      {
+        "index": 91,
+        "seed": 100125,
+        "instruction": "Set the phone with shiny black back on the angled brown phonestand.",
+        "initial_input_path": "demo_clean-091-seed-100125/initial-input.npz",
+        "initial_input_sha256": "dcd7fb02c102c211e1bb955c1beb476ef252e3652da29c78f492cd2c966f7cf4"
+      },
+      {
+        "index": 92,
+        "seed": 100126,
+        "instruction": "Set the handheld phone with silver frame on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_clean-092-seed-100126/initial-input.npz",
+        "initial_input_sha256": "a346bea90eb091ab6c39cd03c718dc3af4377b0e3e699062b301bac56371d0ab"
+      },
+      {
+        "index": 93,
+        "seed": 100128,
+        "instruction": "Set the rectangular phone on the adjustable phone holder.",
+        "initial_input_path": "demo_clean-093-seed-100128/initial-input.npz",
+        "initial_input_sha256": "49bc6647bcff3fc050572be4f2fbd6b9c30c3ef3f8252656e50a036f7f953856"
+      },
+      {
+        "index": 94,
+        "seed": 100129,
+        "instruction": "Set the rectangular silver phone with rounded edges on the adjustable phone holder.",
+        "initial_input_path": "demo_clean-094-seed-100129/initial-input.npz",
+        "initial_input_sha256": "48738bb8ae5c3b704ad49f54371d28327bca630be55ce06499d2de6fb2f7aa4b"
+      },
+      {
+        "index": 95,
+        "seed": 100130,
+        "instruction": "Set the rectangular phone with curved edges on the dark green phonestand.",
+        "initial_input_path": "demo_clean-095-seed-100130/initial-input.npz",
+        "initial_input_sha256": "1b8ec046d4a8bf2a328396178b9188f878c318ee9a2eb3cbcfe10bdfe64663b5"
+      },
+      {
+        "index": 96,
+        "seed": 100132,
+        "instruction": "Set the rectangular phone on the adjustable phone holder.",
+        "initial_input_path": "demo_clean-096-seed-100132/initial-input.npz",
+        "initial_input_sha256": "b40a6eb4f4e7edbbbf5dc25c1ef61e0a4c6410be0dadabae6032a11af155928a"
+      },
+      {
+        "index": 97,
+        "seed": 100133,
+        "instruction": "Set the rectangular phone with curved edges on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-097-seed-100133/initial-input.npz",
+        "initial_input_sha256": "22079ac679aa55a6d46af9898b0ab12b88f305907bedca903649414fd765fc4f"
+      },
+      {
+        "index": 98,
+        "seed": 100134,
+        "instruction": "Set the white-sided phone on the silver arm phonestand.",
+        "initial_input_path": "demo_clean-098-seed-100134/initial-input.npz",
+        "initial_input_sha256": "29bc0d56f1a1481cd22aa6f064c08669259d962ae2b4070d05a0688b63409a97"
+      },
+      {
+        "index": 99,
+        "seed": 100135,
+        "instruction": "Set the phone with rounded edges on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_clean-099-seed-100135/initial-input.npz",
+        "initial_input_sha256": "e87ecaed1508a944ebba51c3cfb3018a3b89f6319716a897ff137951f3c7487b"
+      }
+    ],
+    "demo_randomized": [
+      {
+        "index": 0,
+        "seed": 100000,
+        "instruction": "Set the rectangular phone with curved edges on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-000-seed-100000/initial-input.npz",
+        "initial_input_sha256": "68bb73d89be05b4356d694f32fc25d24de6363d48c471a12345456d389ed9f47"
+      },
+      {
+        "index": 1,
+        "seed": 100009,
+        "instruction": "Set the phone with rounded edges on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_randomized-001-seed-100009/initial-input.npz",
+        "initial_input_sha256": "53378ff25d988518bf81bbcfbf241b3543cc9c5169cef698afa67c03a595581d"
+      },
+      {
+        "index": 2,
+        "seed": 100010,
+        "instruction": "Set the phone with shiny black back on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-002-seed-100010/initial-input.npz",
+        "initial_input_sha256": "18c40d3bb68d8b463946b739f4238cf568924f4db7826e76404edd587196254e"
+      },
+      {
+        "index": 3,
+        "seed": 100012,
+        "instruction": "Set the rectangular phone on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_randomized-003-seed-100012/initial-input.npz",
+        "initial_input_sha256": "39b7073d7f287f85b14e213521a8acd3201b9afbfb991f0c8512eaadb6bb291c"
+      },
+      {
+        "index": 4,
+        "seed": 100013,
+        "instruction": "Set the phone with shiny black back on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_randomized-004-seed-100013/initial-input.npz",
+        "initial_input_sha256": "1196b2984cd0dc7e950e259d9414b5a4dfa3bfcd458e47535e5874a67820bedc"
+      },
+      {
+        "index": 5,
+        "seed": 100014,
+        "instruction": "Set the phone with shiny black back on the dark green phonestand.",
+        "initial_input_path": "demo_randomized-005-seed-100014/initial-input.npz",
+        "initial_input_sha256": "3f8cbe90ccd3aa512e3be3dae9d5f900244f08e61bd1d09e9048f9e8a51096f2"
+      },
+      {
+        "index": 6,
+        "seed": 100015,
+        "instruction": "Set the modern phone on the dark green phonestand.",
+        "initial_input_path": "demo_randomized-006-seed-100015/initial-input.npz",
+        "initial_input_sha256": "af163be0ba8238b8140976c025dad819e40020e554b7e16afd62e994b19be597"
+      },
+      {
+        "index": 7,
+        "seed": 100017,
+        "instruction": "Set the phone with rounded edges on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-007-seed-100017/initial-input.npz",
+        "initial_input_sha256": "4cc866251f982fb1e6a94261680693a75bb09d2ec6f42e6c23e8bb3a1346db8c"
+      },
+      {
+        "index": 8,
+        "seed": 100020,
+        "instruction": "Set the white-sided phone on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-008-seed-100020/initial-input.npz",
+        "initial_input_sha256": "77b53fbe8207cc72e9c1b8d41e871f35d0b641f7416e9832ea05d157d0bee929"
+      },
+      {
+        "index": 9,
+        "seed": 100021,
+        "instruction": "Set the phone with shiny black back on the adjustable phone holder.",
+        "initial_input_path": "demo_randomized-009-seed-100021/initial-input.npz",
+        "initial_input_sha256": "31a1db0f7f0c06d829a4817c81b4aac7e4b167d351f5b416c3a0d08a715300d0"
+      },
+      {
+        "index": 10,
+        "seed": 100022,
+        "instruction": "Set the palm-sized phone with glossy finish on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-010-seed-100022/initial-input.npz",
+        "initial_input_sha256": "1f13612f5e833cdbc93eed00a8090e341be05795f4bfaaaf502ef005c822e27d"
+      },
+      {
+        "index": 11,
+        "seed": 100023,
+        "instruction": "Set the rectangular phone on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-011-seed-100023/initial-input.npz",
+        "initial_input_sha256": "3706ad75fd7326ac1dc155396268fa27637b1ebfdebcf889bf516db07b02a678"
+      },
+      {
+        "index": 12,
+        "seed": 100024,
+        "instruction": "Set the phone with rounded edges on the angled brown phonestand.",
+        "initial_input_path": "demo_randomized-012-seed-100024/initial-input.npz",
+        "initial_input_sha256": "958a573816326a79f894f3a1ab08ca492c6460959aba7f21804009f5a900d5ee"
+      },
+      {
+        "index": 13,
+        "seed": 100025,
+        "instruction": "Set the rectangular phone with curved edges on the adjustable phone holder.",
+        "initial_input_path": "demo_randomized-013-seed-100025/initial-input.npz",
+        "initial_input_sha256": "ca52a2d0ad96d0947b36059957cf4791a1ae65c2716a4ccf958fdf8f98e48475"
+      },
+      {
+        "index": 14,
+        "seed": 100026,
+        "instruction": "Set the palm-sized phone with glossy finish on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-014-seed-100026/initial-input.npz",
+        "initial_input_sha256": "b76f407872c19ac08377cea37fe28c7488cd16229c3edb7e084d4db856ded879"
+      },
+      {
+        "index": 15,
+        "seed": 100027,
+        "instruction": "Set the modern phone on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-015-seed-100027/initial-input.npz",
+        "initial_input_sha256": "0062916075b335d4906e53e739a285698c79124bf8b984b501b4eff8d8bd17be"
+      },
+      {
+        "index": 16,
+        "seed": 100029,
+        "instruction": "Set the phone with shiny black back on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_randomized-016-seed-100029/initial-input.npz",
+        "initial_input_sha256": "c876aba99384c4808cf2d1059ce55052c300384e58a21060a479dba588ee53cc"
+      },
+      {
+        "index": 17,
+        "seed": 100030,
+        "instruction": "Set the phone with shiny black back on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-017-seed-100030/initial-input.npz",
+        "initial_input_sha256": "78bfcd54310260635b242c1f709ebd7802f8377c924e5f5bdb158839432afdac"
+      },
+      {
+        "index": 18,
+        "seed": 100031,
+        "instruction": "Set the rectangular phone on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-018-seed-100031/initial-input.npz",
+        "initial_input_sha256": "e0b642c5ec80cf151cec2aeaff02df070146ad5071ad55c246067cae49fb7ce0"
+      },
+      {
+        "index": 19,
+        "seed": 100032,
+        "instruction": "Set the smartphone with black display on the adjustable phone holder.",
+        "initial_input_path": "demo_randomized-019-seed-100032/initial-input.npz",
+        "initial_input_sha256": "7c640fdc48f31d0967fd65d938026a9923d7b587ef3cededfa4da0dc5462a443"
+      },
+      {
+        "index": 20,
+        "seed": 100035,
+        "instruction": "Set the modern phone on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_randomized-020-seed-100035/initial-input.npz",
+        "initial_input_sha256": "6f97e4eecc081d58f29ea5015649a5838b90a8adfd3f00907af6f0b860ffc910"
+      },
+      {
+        "index": 21,
+        "seed": 100037,
+        "instruction": "Set the white-sided phone on the adjustable phone holder.",
+        "initial_input_path": "demo_randomized-021-seed-100037/initial-input.npz",
+        "initial_input_sha256": "932f9ceac631192fe5c83061e5a64de6126c872e5be0610594b74cc7f7aa0007"
+      },
+      {
+        "index": 22,
+        "seed": 100041,
+        "instruction": "Set the rectangular phone on the angled brown phonestand.",
+        "initial_input_path": "demo_randomized-022-seed-100041/initial-input.npz",
+        "initial_input_sha256": "cd6f4c3a2804fd83313915105ac2d19930bf83485cb6462de9d96b27891457fe"
+      },
+      {
+        "index": 23,
+        "seed": 100042,
+        "instruction": "Set the white-sided phone on the angled brown phonestand.",
+        "initial_input_path": "demo_randomized-023-seed-100042/initial-input.npz",
+        "initial_input_sha256": "313aaeda47ff60ba73c735b1f4130981540c194ad57f086b8fe48c798362e30c"
+      },
+      {
+        "index": 24,
+        "seed": 100044,
+        "instruction": "Set the white-sided phone on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_randomized-024-seed-100044/initial-input.npz",
+        "initial_input_sha256": "fd112dab51b625b873f44a01bdcf6833eb85c07c130ceb70c84a92fc0c9359a1"
+      },
+      {
+        "index": 25,
+        "seed": 100046,
+        "instruction": "Set the rectangular silver phone with rounded edges on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-025-seed-100046/initial-input.npz",
+        "initial_input_sha256": "5b591a2c4c4c622a403ba276194fa34042f656e54dcb02c4340704d99ae2c7ca"
+      },
+      {
+        "index": 26,
+        "seed": 100047,
+        "instruction": "Set the white-sided phone on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-026-seed-100047/initial-input.npz",
+        "initial_input_sha256": "5b224cab543558b21f74b99d2e655d69210b24dadaf042d75afe76e7717b440e"
+      },
+      {
+        "index": 27,
+        "seed": 100048,
+        "instruction": "Set the phone with rounded edges on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-027-seed-100048/initial-input.npz",
+        "initial_input_sha256": "795fd8abd7b19e52814d7bcb40cefbd8ad230a3ccdce90d10e4915e7620c078c"
+      },
+      {
+        "index": 28,
+        "seed": 100050,
+        "instruction": "Set the phone with flat black screen on the adjustable phone holder.",
+        "initial_input_path": "demo_randomized-028-seed-100050/initial-input.npz",
+        "initial_input_sha256": "1af9bcb62a7efef96e0cafa0dc32b2f1e65b9cfc9480e1237dbd024cbdeb666c"
+      },
+      {
+        "index": 29,
+        "seed": 100052,
+        "instruction": "Set the phone with shiny black back on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-029-seed-100052/initial-input.npz",
+        "initial_input_sha256": "6ff7deb46405e732384c763ab8501bb0af503cc247452eca876004e8c3e1aec0"
+      },
+      {
+        "index": 30,
+        "seed": 100056,
+        "instruction": "Set the rectangular phone with curved edges on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_randomized-030-seed-100056/initial-input.npz",
+        "initial_input_sha256": "aeb618c7185a54d5836f364fa9bda18e33aaa84ac31e6edd15b3822566f366d6"
+      },
+      {
+        "index": 31,
+        "seed": 100057,
+        "instruction": "Set the rectangular phone on the adjustable phone holder.",
+        "initial_input_path": "demo_randomized-031-seed-100057/initial-input.npz",
+        "initial_input_sha256": "36c92aecbee9963003f288867d5c0d6ff23e16c328bbd48a953b051802a5814e"
+      },
+      {
+        "index": 32,
+        "seed": 100059,
+        "instruction": "Set the white-sided phone on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-032-seed-100059/initial-input.npz",
+        "initial_input_sha256": "f10838021f3f2acdf2eff47a6e3ecb1468d73f27b5c6668bc318cdd0cc7ec792"
+      },
+      {
+        "index": 33,
+        "seed": 100060,
+        "instruction": "Set the modern phone on the angled brown phonestand.",
+        "initial_input_path": "demo_randomized-033-seed-100060/initial-input.npz",
+        "initial_input_sha256": "99c5eff0d5f628bb00bb7d77c0eea260e6f218f3d5e30b57ab2d2abea2fbf7b8"
+      },
+      {
+        "index": 34,
+        "seed": 100063,
+        "instruction": "Set the phone with rounded edges on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_randomized-034-seed-100063/initial-input.npz",
+        "initial_input_sha256": "1ac30a92fd7bb8e22ba754b994bb958ef061fb2f1ea682ae1e0028c2e1a8463b"
+      },
+      {
+        "index": 35,
+        "seed": 100064,
+        "instruction": "Set the phone with rounded edges on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_randomized-035-seed-100064/initial-input.npz",
+        "initial_input_sha256": "5e91f09aaec03da1cbb61ae4a76778bb1ea717d5b5b8ef24b7ebf4bc0407848f"
+      },
+      {
+        "index": 36,
+        "seed": 100065,
+        "instruction": "Set the palm-sized phone with glossy finish on the angled brown phonestand.",
+        "initial_input_path": "demo_randomized-036-seed-100065/initial-input.npz",
+        "initial_input_sha256": "0e8a739c4638dab36906dedc66cddeba65ebe04734d048730fbc2250dbd8b9c5"
+      },
+      {
+        "index": 37,
+        "seed": 100067,
+        "instruction": "Set the rectangular silver phone with rounded edges on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-037-seed-100067/initial-input.npz",
+        "initial_input_sha256": "c6c828c11f17f89b789707193ff1dc765a927bca6a9420ad97c517b870eaaf5a"
+      },
+      {
+        "index": 38,
+        "seed": 100068,
+        "instruction": "Set the rectangular phone on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-038-seed-100068/initial-input.npz",
+        "initial_input_sha256": "cd8ffdb45663435eeaae38888b8cf15d3bf316f433612565980a302027ef5a31"
+      },
+      {
+        "index": 39,
+        "seed": 100070,
+        "instruction": "Set the phone with flat black screen on the dark green phonestand.",
+        "initial_input_path": "demo_randomized-039-seed-100070/initial-input.npz",
+        "initial_input_sha256": "812bc2469243b4a958f81c8c44b3f9926cd344ff8cfc21c3a7ec04ac335f7e09"
+      },
+      {
+        "index": 40,
+        "seed": 100071,
+        "instruction": "Set the palm-sized phone with glossy finish on the angled brown phonestand.",
+        "initial_input_path": "demo_randomized-040-seed-100071/initial-input.npz",
+        "initial_input_sha256": "4c82a8cc16b44b63826f8cd58307845772d0ccee0d25ad9afa4a8a7bbbe5ef75"
+      },
+      {
+        "index": 41,
+        "seed": 100073,
+        "instruction": "Set the rectangular phone with curved edges on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-041-seed-100073/initial-input.npz",
+        "initial_input_sha256": "4091288e5691c1a01153dfa78dd53e626f67d105b7e32ecf08177bb67a08bd9a"
+      },
+      {
+        "index": 42,
+        "seed": 100074,
+        "instruction": "Set the rectangular phone with curved edges on the adjustable phone holder.",
+        "initial_input_path": "demo_randomized-042-seed-100074/initial-input.npz",
+        "initial_input_sha256": "fcfde3050a7c65da08b818f6c4bd03f505ee6e2ab7868fdc15fd2bfa6af3ef09"
+      },
+      {
+        "index": 43,
+        "seed": 100075,
+        "instruction": "Set the phone with flat black screen on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-043-seed-100075/initial-input.npz",
+        "initial_input_sha256": "bb3d94ec5c1a487c835c655fd18d39648eb9a5c2f06c4a202d627b7af838e809"
+      },
+      {
+        "index": 44,
+        "seed": 100076,
+        "instruction": "Set the handheld phone with silver frame on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-044-seed-100076/initial-input.npz",
+        "initial_input_sha256": "ab451e614bdfc18b9ba5756e91414ddddeb128b6cf9dc81b13f014d34fdae646"
+      },
+      {
+        "index": 45,
+        "seed": 100077,
+        "instruction": "Set the phone with rounded edges on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-045-seed-100077/initial-input.npz",
+        "initial_input_sha256": "7b55e0a7f12827f4fcc368bbedfc057515454512233936ac4c3dbf3af8e00e14"
+      },
+      {
+        "index": 46,
+        "seed": 100078,
+        "instruction": "Set the handheld phone with silver frame on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-046-seed-100078/initial-input.npz",
+        "initial_input_sha256": "c9bcf8ca65bba24d061f89ea900697688dea0221f2031585bed59fd2efb2165d"
+      },
+      {
+        "index": 47,
+        "seed": 100083,
+        "instruction": "Set the phone with rounded edges on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_randomized-047-seed-100083/initial-input.npz",
+        "initial_input_sha256": "c50eba0c83537b47ebe731b4c24b175937cb7d16f203de65533d69094819db3d"
+      },
+      {
+        "index": 48,
+        "seed": 100086,
+        "instruction": "Set the rectangular phone on the adjustable phone holder.",
+        "initial_input_path": "demo_randomized-048-seed-100086/initial-input.npz",
+        "initial_input_sha256": "d5bc478878511cc75234b0c364db86106b08ca011038261647c06d347623e984"
+      },
+      {
+        "index": 49,
+        "seed": 100087,
+        "instruction": "Set the rectangular phone with curved edges on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-049-seed-100087/initial-input.npz",
+        "initial_input_sha256": "e4022e60db8aab9731aedf02396b7f5cb9149e01134f30f886d240c5e5382191"
+      },
+      {
+        "index": 50,
+        "seed": 100088,
+        "instruction": "Set the palm-sized phone with glossy finish on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-050-seed-100088/initial-input.npz",
+        "initial_input_sha256": "30c5b692903ed19b7c5f6e8eba64372421766a8637acc5e5ecc5a8aa20f9cdba"
+      },
+      {
+        "index": 51,
+        "seed": 100089,
+        "instruction": "Set the handheld phone with silver frame on the adjustable phone holder.",
+        "initial_input_path": "demo_randomized-051-seed-100089/initial-input.npz",
+        "initial_input_sha256": "0cdac8ba68fd58842ed8e083d93a9023f0d206accb287d8bc0a1fc94336ac350"
+      },
+      {
+        "index": 52,
+        "seed": 100090,
+        "instruction": "Set the rectangular phone on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-052-seed-100090/initial-input.npz",
+        "initial_input_sha256": "9e3dc4fda6b1722732b43a00898f92384b875eaaef6c152208d4f776e85a6c2c"
+      },
+      {
+        "index": 53,
+        "seed": 100091,
+        "instruction": "Set the white-sided phone on the adjustable phone holder.",
+        "initial_input_path": "demo_randomized-053-seed-100091/initial-input.npz",
+        "initial_input_sha256": "10ad9c8743781c543afc836b7f34c8a02ec453c4f1a0d711cafb804011699640"
+      },
+      {
+        "index": 54,
+        "seed": 100092,
+        "instruction": "Set the smartphone with black display on the dark green phonestand.",
+        "initial_input_path": "demo_randomized-054-seed-100092/initial-input.npz",
+        "initial_input_sha256": "ca8af63b82c2e9fc21d5ed5bc9a9490120d56d916b2c4628210e72817e5a418b"
+      },
+      {
+        "index": 55,
+        "seed": 100094,
+        "instruction": "Set the rectangular phone with curved edges on the dark green phonestand.",
+        "initial_input_path": "demo_randomized-055-seed-100094/initial-input.npz",
+        "initial_input_sha256": "48683f33eebefb4071e508ac462f6573d2c3f83ec51d65336b74ccc6d7031198"
+      },
+      {
+        "index": 56,
+        "seed": 100095,
+        "instruction": "Set the handheld phone with silver frame on the angled brown phonestand.",
+        "initial_input_path": "demo_randomized-056-seed-100095/initial-input.npz",
+        "initial_input_sha256": "dcd8e1dd2debaac8632e1d515950315f8f5b59eaea6f0684b9a8fce0444441f6"
+      },
+      {
+        "index": 57,
+        "seed": 100097,
+        "instruction": "Set the phone with shiny black back on the dark green phonestand.",
+        "initial_input_path": "demo_randomized-057-seed-100097/initial-input.npz",
+        "initial_input_sha256": "2a5067fa7b044394ab5bf2c39a6c0186331abf746d713d83623d1a943ea05753"
+      },
+      {
+        "index": 58,
+        "seed": 100098,
+        "instruction": "Set the modern phone on the angled brown phonestand.",
+        "initial_input_path": "demo_randomized-058-seed-100098/initial-input.npz",
+        "initial_input_sha256": "b9f09c23ae934954fe3f02d21f059ecdad110ce70b51dbdd0b687c0e24098fbd"
+      },
+      {
+        "index": 59,
+        "seed": 100100,
+        "instruction": "Set the white-sided phone on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-059-seed-100100/initial-input.npz",
+        "initial_input_sha256": "a5352b48c66b5bbe3d402068165daeb03592dc7be894470990db7a9237ae9ed5"
+      },
+      {
+        "index": 60,
+        "seed": 100102,
+        "instruction": "Set the handheld phone with silver frame on the adjustable phone holder.",
+        "initial_input_path": "demo_randomized-060-seed-100102/initial-input.npz",
+        "initial_input_sha256": "bc34cca3432bf9aecd225937ae3999e8a3320e3306a6a7f8b2b10e154523bd21"
+      },
+      {
+        "index": 61,
+        "seed": 100103,
+        "instruction": "Set the handheld phone with silver frame on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_randomized-061-seed-100103/initial-input.npz",
+        "initial_input_sha256": "e968228fcddea766fddaf3bdda8edf3685ff6076fe67b827f2a077f4de818dba"
+      },
+      {
+        "index": 62,
+        "seed": 100106,
+        "instruction": "Set the smartphone with black display on the dark green phonestand.",
+        "initial_input_path": "demo_randomized-062-seed-100106/initial-input.npz",
+        "initial_input_sha256": "1c2f3b103c374c79ab878b78b13b4c681c92dc7c50909a5cdb0dc5d26ae6511c"
+      },
+      {
+        "index": 63,
+        "seed": 100107,
+        "instruction": "Set the rectangular phone on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-063-seed-100107/initial-input.npz",
+        "initial_input_sha256": "cd8170be8dc8c960daa648bed129480d206e5e1b241907dd86035f2ca2d86d7b"
+      },
+      {
+        "index": 64,
+        "seed": 100111,
+        "instruction": "Set the rectangular phone on the angled brown phonestand.",
+        "initial_input_path": "demo_randomized-064-seed-100111/initial-input.npz",
+        "initial_input_sha256": "95e64ff42868fbd9ff73f60ad8e8f107fde299a4d281c902013adfdad03a2e01"
+      },
+      {
+        "index": 65,
+        "seed": 100112,
+        "instruction": "Set the phone with shiny black back on the dark green phonestand.",
+        "initial_input_path": "demo_randomized-065-seed-100112/initial-input.npz",
+        "initial_input_sha256": "c29b0f85def0fd1b1c94670cd0ebf0aaae7b944963d1d6441791df9c145efa51"
+      },
+      {
+        "index": 66,
+        "seed": 100113,
+        "instruction": "Set the rectangular silver phone with rounded edges on the angled brown phonestand.",
+        "initial_input_path": "demo_randomized-066-seed-100113/initial-input.npz",
+        "initial_input_sha256": "309655f9c2d270c7e59bd9d1cadc0365a7216bace29fe049e8fe2966336fc739"
+      },
+      {
+        "index": 67,
+        "seed": 100115,
+        "instruction": "Set the palm-sized phone with glossy finish on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-067-seed-100115/initial-input.npz",
+        "initial_input_sha256": "6f2312792004000c1ee76372fc21cbe8cd2284ba5b5947302959795704b67c35"
+      },
+      {
+        "index": 68,
+        "seed": 100118,
+        "instruction": "Set the rectangular phone on the dark green phonestand.",
+        "initial_input_path": "demo_randomized-068-seed-100118/initial-input.npz",
+        "initial_input_sha256": "a8a3292b137111b9444a18c35eb746ec5b8a19b7bb7b7a0a8940e68a60cc86f3"
+      },
+      {
+        "index": 69,
+        "seed": 100120,
+        "instruction": "Set the phone with shiny black back on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_randomized-069-seed-100120/initial-input.npz",
+        "initial_input_sha256": "9c6c2deed56ba190ed9db9d16ddde2cb55e7951631b126c1636659d60d491c9d"
+      },
+      {
+        "index": 70,
+        "seed": 100121,
+        "instruction": "Set the phone with rounded edges on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_randomized-070-seed-100121/initial-input.npz",
+        "initial_input_sha256": "f48cbd231920ad18498e24f5e423e3baf71223fde1158b2c3ec3234e86bedd3a"
+      },
+      {
+        "index": 71,
+        "seed": 100122,
+        "instruction": "Set the rectangular phone with curved edges on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-071-seed-100122/initial-input.npz",
+        "initial_input_sha256": "a9df5289cdc486e43fc68d4f82bff73feb6223bbc1ecde084c22c852ee0e88ac"
+      },
+      {
+        "index": 72,
+        "seed": 100124,
+        "instruction": "Set the rectangular phone on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-072-seed-100124/initial-input.npz",
+        "initial_input_sha256": "ed3f7ae1dd02222c589e670e17e611e0ca15130500c221e3857e1c404bacb0da"
+      },
+      {
+        "index": 73,
+        "seed": 100125,
+        "instruction": "Set the rectangular silver phone with rounded edges on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-073-seed-100125/initial-input.npz",
+        "initial_input_sha256": "f133cebb499eb792d82472ef2f94b652067e7fff44fc4af431fe689fd0de439f"
+      },
+      {
+        "index": 74,
+        "seed": 100126,
+        "instruction": "Set the modern phone on the angled brown phonestand.",
+        "initial_input_path": "demo_randomized-074-seed-100126/initial-input.npz",
+        "initial_input_sha256": "cfa69edf22ddb9770c94d76ed319664e57ac934b5f6d00314b9892a669d0a3a4"
+      },
+      {
+        "index": 75,
+        "seed": 100127,
+        "instruction": "Set the smartphone with black display on the adjustable phone holder.",
+        "initial_input_path": "demo_randomized-075-seed-100127/initial-input.npz",
+        "initial_input_sha256": "3d7337a0633b87c6f681a77c2b4e5faab379bc542fbebcb419944b211b7bd4fd"
+      },
+      {
+        "index": 76,
+        "seed": 100129,
+        "instruction": "Set the palm-sized phone with glossy finish on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-076-seed-100129/initial-input.npz",
+        "initial_input_sha256": "c63046b72291d3ca972287bb7ccddcb184941298d022fefc1fc37984ed0bac75"
+      },
+      {
+        "index": 77,
+        "seed": 100132,
+        "instruction": "Set the rectangular phone with curved edges on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-077-seed-100132/initial-input.npz",
+        "initial_input_sha256": "3f5e85975a4fb8a88c718260f30ceb69ed71a0adcc01f05ecbbce2763cabd531"
+      },
+      {
+        "index": 78,
+        "seed": 100133,
+        "instruction": "Set the phone with rounded edges on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_randomized-078-seed-100133/initial-input.npz",
+        "initial_input_sha256": "a1c0c2360b9f2f89920b3d36b8a67357c9c798fca46ed706b3ca1eae6074a32d"
+      },
+      {
+        "index": 79,
+        "seed": 100134,
+        "instruction": "Set the rectangular phone with curved edges on the adjustable phone holder.",
+        "initial_input_path": "demo_randomized-079-seed-100134/initial-input.npz",
+        "initial_input_sha256": "54a1b4b842a598ddf7f0d30dec143a68613f79a77eb12ce84647e443ac7790c1"
+      },
+      {
+        "index": 80,
+        "seed": 100135,
+        "instruction": "Set the rectangular silver phone with rounded edges on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_randomized-080-seed-100135/initial-input.npz",
+        "initial_input_sha256": "658a84ba06ab8c2f272c8228badd2c898da0cb2ad644aac94646a7d112e26a3f"
+      },
+      {
+        "index": 81,
+        "seed": 100136,
+        "instruction": "Set the phone with flat black screen on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_randomized-081-seed-100136/initial-input.npz",
+        "initial_input_sha256": "52fc8420a0f6d7c83c33ce96fc5a71f2ccddd732e6935840cdf4176c3dcb0ec0"
+      },
+      {
+        "index": 82,
+        "seed": 100138,
+        "instruction": "Set the palm-sized phone with glossy finish on the adjustable phone holder.",
+        "initial_input_path": "demo_randomized-082-seed-100138/initial-input.npz",
+        "initial_input_sha256": "013598c2f9d3f44f09d10b07555a3c81b2b65d92d2801bdcb5560256edbb28cf"
+      },
+      {
+        "index": 83,
+        "seed": 100139,
+        "instruction": "Set the modern phone on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-083-seed-100139/initial-input.npz",
+        "initial_input_sha256": "92866e27ab932ed8b42a7326de02ff004d1def85ccff116b0bc018867ed1cadb"
+      },
+      {
+        "index": 84,
+        "seed": 100140,
+        "instruction": "Set the phone with flat black screen on the dark green phonestand.",
+        "initial_input_path": "demo_randomized-084-seed-100140/initial-input.npz",
+        "initial_input_sha256": "689beeff23216a5feafa00aaa38f7c6d0f3b3b67be94ad6d57eec54dec80d1e5"
+      },
+      {
+        "index": 85,
+        "seed": 100141,
+        "instruction": "Set the phone with rounded edges on the angled brown phonestand.",
+        "initial_input_path": "demo_randomized-085-seed-100141/initial-input.npz",
+        "initial_input_sha256": "7eca963b62764de142f5ca45526d456ec754a70d9702d948bc866b3cc028b57f"
+      },
+      {
+        "index": 86,
+        "seed": 100143,
+        "instruction": "Set the rectangular phone on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-086-seed-100143/initial-input.npz",
+        "initial_input_sha256": "4a2742c88aeb710fa7db34a5d7020bd35fa8c67578d7e58bf0a1ab18239b2067"
+      },
+      {
+        "index": 87,
+        "seed": 100145,
+        "instruction": "Set the handheld phone with silver frame on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_randomized-087-seed-100145/initial-input.npz",
+        "initial_input_sha256": "6dc37d65df5efc95003f784d0876ce56285def9a576467758361775f69152820"
+      },
+      {
+        "index": 88,
+        "seed": 100146,
+        "instruction": "Set the smartphone with black display on the angled brown phonestand.",
+        "initial_input_path": "demo_randomized-088-seed-100146/initial-input.npz",
+        "initial_input_sha256": "8054fc48473273978434781b30e6a98617564bbc0cdafded4f52bbf2e1e4ecc6"
+      },
+      {
+        "index": 89,
+        "seed": 100148,
+        "instruction": "Set the rectangular phone with curved edges on the L-shaped smooth brown phonestand.",
+        "initial_input_path": "demo_randomized-089-seed-100148/initial-input.npz",
+        "initial_input_sha256": "11df55b32e8f302a260d10123a14bc62be7f6175932ed4b41dd8ab860e1535c8"
+      },
+      {
+        "index": 90,
+        "seed": 100149,
+        "instruction": "Set the smartphone with black display on the adjustable phone holder.",
+        "initial_input_path": "demo_randomized-090-seed-100149/initial-input.npz",
+        "initial_input_sha256": "4c88fb1374557232cdffa8a550eafb20fe9f6278aebc36f7d5fcb301ff602ea3"
+      },
+      {
+        "index": 91,
+        "seed": 100151,
+        "instruction": "Set the rectangular phone on the adjustable phone holder.",
+        "initial_input_path": "demo_randomized-091-seed-100151/initial-input.npz",
+        "initial_input_sha256": "0039d48c69672b62cf1c5bb4cce5c5a0300e8918a74e0dafb6702aa3fb000e77"
+      },
+      {
+        "index": 92,
+        "seed": 100154,
+        "instruction": "Set the phone with rounded edges on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-092-seed-100154/initial-input.npz",
+        "initial_input_sha256": "c88200d324de2811e6e297f755292168755b906cdbf78548c4d90182ea0ea277"
+      },
+      {
+        "index": 93,
+        "seed": 100157,
+        "instruction": "Set the phone with flat black screen on the dark green phonestand.",
+        "initial_input_path": "demo_randomized-093-seed-100157/initial-input.npz",
+        "initial_input_sha256": "b6e43c21616a76ee4ae85a492c761952ce627a283d0e6a34162f1a1574cde9c0"
+      },
+      {
+        "index": 94,
+        "seed": 100160,
+        "instruction": "Set the white-sided phone on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-094-seed-100160/initial-input.npz",
+        "initial_input_sha256": "885de089e5841063d40eb9dfbc5cf1a44e14c5ea9efffa7efae0e5a29d58f91d"
+      },
+      {
+        "index": 95,
+        "seed": 100161,
+        "instruction": "Set the palm-sized phone with glossy finish on the brown angled plastic phonestand.",
+        "initial_input_path": "demo_randomized-095-seed-100161/initial-input.npz",
+        "initial_input_sha256": "439a233e82fb1004d25f9ea793db6050453d6863bd4fe44dc9bc4c761d51de2f"
+      },
+      {
+        "index": 96,
+        "seed": 100165,
+        "instruction": "Set the rectangular phone on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-096-seed-100165/initial-input.npz",
+        "initial_input_sha256": "693b20e78c1136f835a3f66e0ec98a5ba99193147805eec5b245e3dc339b4370"
+      },
+      {
+        "index": 97,
+        "seed": 100166,
+        "instruction": "Set the modern phone on the angled brown phonestand.",
+        "initial_input_path": "demo_randomized-097-seed-100166/initial-input.npz",
+        "initial_input_sha256": "39fe1441f89238089c3875293b9b0d14299174115a067fff5796dba8482348ff"
+      },
+      {
+        "index": 98,
+        "seed": 100169,
+        "instruction": "Set the modern phone on the angled brown phonestand.",
+        "initial_input_path": "demo_randomized-098-seed-100169/initial-input.npz",
+        "initial_input_sha256": "d9ae2681235cab711ecde6a88b8a86eee9771c3cd68ba52eedb0535329bd360a"
+      },
+      {
+        "index": 99,
+        "seed": 100170,
+        "instruction": "Set the rectangular phone with curved edges on the silver arm phonestand.",
+        "initial_input_path": "demo_randomized-099-seed-100170/initial-input.npz",
+        "initial_input_sha256": "98fdd713c24db68b8028f8883e917d4651e2f5e9e1a033eadd4dcc0a205251a9"
+      }
+    ]
+  }
+}
