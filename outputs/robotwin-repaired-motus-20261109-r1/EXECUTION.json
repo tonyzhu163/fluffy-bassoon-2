@@ -1,5 +1,5 @@
 {
-  "status": "pilot_verified_failed_gate_dev64_01_startup_failed_retry_preparing",
+  "status": "user_stopped",
   "cluster": "Baige Pro6K",
   "job_id": "job-ybfb0p35524m",
   "job_name": "mwj_1109_motus_repaired_controller_pilot01",
@@ -16,9 +16,9 @@
     "scheduler_max_seconds": 5400,
     "automatic_retry": false
   },
-  "last_check": "2026-11-09T12:20:11+08:00",
-  "next_check": "2026-11-09T12:13:42+08:00",
-  "next_action": "Complete independent pilot audit and launch the originally authorized full DEV64 paired diagnostic; no Stage2 admission from the failed pilot.",
+  "last_check": "2026-11-09T12:21:51+08:00",
+  "next_check": null,
+  "next_action": "Await explicit user resume; no launches or monitoring scheduled.",
   "gpu_probe_sha256": "a2ab97ff267e9e634f3297f80eca8565e09a60944899ff2c8ca2a944a6c0beff",
   "budget_reserved_gpu_seconds": 5400,
   "stage2_launched": false,
@@ -30,7 +30,7 @@
   "pilot_gate_passed": false,
   "pilot_gpu_released": true,
   "stage1b": {
-    "status": "retry_preparing",
+    "status": "retry_draft_canceled_not_launched",
     "identity": "controller-dev64-02",
     "source_commit": "01cad48192005ca7e8abb4f787f8277685b3c2f1",
     "source_checkout": "/mowenjie/fluffy-bassoon-2/sources/robotwin-repaired-motus-20261109-dev6402",
@@ -50,8 +50,14 @@
       "gpu_probe_created": false,
       "failure": "The scheduler persisted the new launch command concatenated with the old command. TASK_CASES was 64exec, so the launcher rejected it before creating its output identity.",
       "retry": "Fresh controller-dev64-02 identity; use browser keyboard editor actions and inspect rendered editor text before submission."
-    }
+    },
+    "retry_source_checkout_ready": true,
+    "retry_browser_draft_canceled": true
   },
   "pilot_independent_readback_passed": true,
-  "closed_gpu_seconds": 918
+  "closed_gpu_seconds": 918,
+  "user_stopped_at": "2026-11-09T12:21:51+08:00",
+  "active_job_id": null,
+  "active_gpu_jobs": [],
+  "active_cpu_work": []
 }
