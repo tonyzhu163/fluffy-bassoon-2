@@ -1,10 +1,10 @@
 {
-  "status": "epoch2_released_sft_native_smoke02_starting",
-  "closed_conservative_gpu_seconds": 982,
+  "status": "epoch2_reference_runtime_preparing_smoke03",
+  "closed_conservative_gpu_seconds": 1214,
   "cap_gpu_seconds": 360000,
-  "closed_conservative_gpu_hours": 0.2727777777777778,
-  "remaining_gpu_seconds": 359018,
-  "remaining_unreserved_gpu_seconds": 355418,
+  "closed_conservative_gpu_hours": 0.3372222222222222,
+  "remaining_gpu_seconds": 358786,
+  "remaining_unreserved_gpu_seconds": 355186,
   "next_worst_gpu_seconds": 3600,
   "components": [
     {
@@ -45,24 +45,35 @@
       "conservative_allocation_gpu_seconds": 64,
       "completed_episodes": 0,
       "failure": "CUDA_VISIBLE_DEVICES absent; strict GPU probe rejected before model loading. Fix inherited scheduler visibility or default to0 in the exclusive one-GPU container."
+    },
+    {
+      "job_id": "job-ctf3b6anv631",
+      "identity": "native-smoke-02",
+      "scheduler_status": "Failed",
+      "created_at": "2026-11-09T12:45:18+08:00",
+      "scheduler_ended_at": "2026-11-09T12:49:10+08:00",
+      "gpu_count": 1,
+      "gpus_released": true,
+      "conservative_allocation_gpu_seconds": 232,
+      "worker_gpu_seconds": 168,
+      "completed_episodes": 0,
+      "gpu_probe_passed": true,
+      "failure": "Reference OpenPI requires Transformers4.53.2 plus bundled transformers_replace; shared runtime resolves4.55.4 without its sentinel. Direct model construction aborted before weights/episodes."
     }
   ],
   "prior_cleared_epoch_gpu_seconds": 359665,
   "prior_cleared_epoch_gpu_hours": 99.90694444444445,
   "prior_cleared_epoch_ledger": "HISTORICAL-BUDGET-EPOCH1-THROUGH-20261108.json",
   "approval": "User cleared prior 359,665 GPU-s (99.91 GPU-h) epoch and approved a fresh 100 GPU-hour (360,000 GPU-s) budget on 2026-11-09T11:05:01+08:00 ('clear the existing gpu hours, i approve another 100 hours').",
-  "active_job_id": "job-ctf3b6anv631",
-  "active_jobs": [
-    {
-      "job_id": "job-ctf3b6anv631",
-      "identity": "native-smoke-02",
-      "gpus": 1,
-      "created_at": "2026-11-09T12:45:18+08:00",
-      "reserved_gpu_seconds": 3600
-    }
-  ],
+  "active_job_id": null,
+  "active_jobs": [],
   "ownership_and_data_preserved": true,
-  "planned_job": null,
+  "planned_job": {
+    "identity": "native-smoke-03",
+    "gpus": 1,
+    "reservation_gpu_seconds": 3600,
+    "task": "same2+2 native SFT smoke, isolated reference Transformers runtime"
+  },
   "user_stopped_at": "2026-11-09T12:21:51+08:00",
   "user_resumed_scope": "Released pi0.5 SFT baseline first; then PPO and GRPO baselines"
 }

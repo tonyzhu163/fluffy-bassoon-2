@@ -48,6 +48,14 @@ avoids compilation setup; no custom sampler or policy-side noise injection.
 Pin/hash the actual package source. Bind rendering and inference to the same
 allocated GPU; retain scheduler visibility.
 
+Direct-loader qualification found that the shared environment resolves
+Transformers4.55.4, whereas this reference OpenPI loader requires4.53.2 plus
+its five bundled `transformers_replace` files. Use the isolated uv environment
+`motus-reference-openpi-20261109-r1`, with4.53.2 and those exact files copied
+from the installed OpenPI package. Shared dependencies are read through a
+`.pth`; do not modify the shared runtime. Validate the loader's own sentinel
+and hash all five replacements on Linux CPU before another GPU attempt.
+
 Match native evaluation seed0: candidate seeds begin100000; expert play_once
 must plan and succeed before policy evaluation; count100 accepted episodes
 per clean/randomized setting. Use native unseen language generation and

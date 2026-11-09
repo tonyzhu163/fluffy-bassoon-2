@@ -11,7 +11,7 @@ TASK_LIMIT=3300
 if [[ $TASK_EPISODES == 100 ]]; then TASK_ID=native-phone100-$TASK_ATTEMPT; TASK_LIMIT=21600; fi
 TASK_OUT=/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motus-release-baseline-20261109-r1/$TASK_ID
 TASK_LOCAL=/tmp/rt-motus-release-$TASK_ID
-TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python
+TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/motus-reference-openpi-20261109-r1/bin/python
 export TASK_CODE TASK_SOURCE TASK_OUT TASK_LOCAL TASK_LIMIT GIT_OPTIONAL_LOCKS=0
 [[ $(uname -s) == Linux && $(hostname) == job-* ]]
 [[ $(git -C "$TASK_CODE" rev-parse HEAD) == "$TASK_SOURCE" ]]

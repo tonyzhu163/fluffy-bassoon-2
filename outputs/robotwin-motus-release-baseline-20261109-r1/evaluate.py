@@ -48,6 +48,10 @@ def configuration(model):
 
 def manifest(native, model):
     import openpi
+    import transformers
+    from transformers.models.siglip import check
+    assert transformers.__version__ == '4.53.2'
+    assert check.check_whether_transformers_replace_is_installed_correctly()
     commit = subprocess.check_output(['git', '-C', str(native), 'rev-parse', 'HEAD'], text=True).strip()
     assert commit == NATIVE_COMMIT
     assert not subprocess.check_output(['git', '-C', str(native), 'status', '--porcelain',
@@ -62,7 +66,12 @@ def manifest(native, model):
         'script/eval_policy.py', 'description/utils/generate_episode_instructions.py',
         'task_config/_eval_step_limit.yml', 'task_config/demo_clean.yml', 'task_config/demo_randomized.yml')},
         model_sha256=MODEL_SHA, norm_sha256=NORM_SHA,
-        openpi_version=importlib.metadata.version('rlinf-openpi'), openpi_files=package_files)
+        openpi_version=importlib.metadata.version('rlinf-openpi'), openpi_files=package_files,
+        transformers_version=transformers.__version__, transformers_replacements={p:
+            sha(Path(transformers.__file__).parent/p) for p in (
+                'models/gemma/modeling_gemma.py', 'models/gemma/configuration_gemma.py',
+                'models/paligemma/modeling_paligemma.py', 'models/siglip/modeling_siglip.py',
+                'models/siglip/check.py')})
 
 
 def environment_args(native, setting):
@@ -118,6 +127,8 @@ def run(args):
         save(args.output/'CPU-QUALIFICATION.json', dict(status='passed', manifest=receipt,
              transformed_state_shape=[32], token_shape=[200], model_constructed=False))
         return
+    qualified = json.loads(Path(__file__).with_name('REFERENCE-CPU-QUALIFICATION.json').read_bytes())
+    assert qualified['status'] == 'passed' and receipt == qualified['manifest']
     assert sys.platform == 'linux' and os.uname().nodename.startswith('job-')
     assert torch.cuda.device_count() == 1
     torch.cuda.set_device(0)
@@ -163,7 +174,15 @@ def run(args):
                     info = task.play_once()
                     feasible = bool(task.plan_success and task.check_success())
                 except Exception as exc:
+                    if isinstance(exc, (FileNotFoundError, ImportError, AttributeError, TypeError, KeyError)):
+                        raise
                     rejected.append(dict(seed=seed, reason=type(exc).__name__, detail=str(exc)[:1000]))
+                    # Repeated infrastructure errors must not silently consume
+                    # the expert seed filter. Abort; retain every candidate.
+                    if (len(rejected) >= 5 and type(exc).__name__ != 'UnStableError'
+                            and len({(r['reason'], r.get('detail')) for r in rejected[-5:]}) == 1):
+                        save(args.output/'RESULT.json', report)
+                        raise RuntimeError('Repeated identical expert exception') from exc
                     task.close_env()
                     seed += 1
                     save(args.output/'RESULT.json', report)
