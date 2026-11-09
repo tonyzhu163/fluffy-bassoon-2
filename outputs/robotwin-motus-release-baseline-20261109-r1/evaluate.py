@@ -187,7 +187,7 @@ def run(args):
     assert sys.platform == 'linux' and os.uname().nodename.startswith('job-')
     assert torch.cuda.device_count() == 1
     torch.cuda.set_device(0)
-    from fluffy_bassoon.rl.robotwin_noise import _install_allocated_renderer
+    from fluffy_bassoon.robotwin.noise import _install_allocated_renderer
     _install_allocated_renderer(args.output/'renderers')
     if args.render_only:
         qualify_renderer(args, native, receipt)

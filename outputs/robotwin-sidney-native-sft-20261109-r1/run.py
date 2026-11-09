@@ -116,7 +116,7 @@ def episode(task, config, native, case, worker, scratch, directory, *,
 
 def run(out, count, diagnostic=False, wrist_near=None, wrist_domain="demo_clean"):
     import torch
-    from fluffy_bassoon.rl.robotwin_noise import _install_allocated_renderer
+    from fluffy_bassoon.robotwin.noise import _install_allocated_renderer
     assert torch.cuda.device_count() == 1 and os.uname().nodename.startswith('job-')
     torch.cuda.set_device(0)
     _install_allocated_renderer(out/'renderers')
