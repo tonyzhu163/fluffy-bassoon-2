@@ -58,7 +58,7 @@ def manifest(native, model):
     package = Path(openpi.__file__).parent
     package_files = {str(p.relative_to(package)): sha(p) for p in sorted(package.rglob('*.py'))}
     return dict(native_commit=commit, native_files={p: sha(native/p) for p in (
-        'envs/_base_task.py', 'envs/place_phone_stand.py', 'envs/robot.py',
+        'envs/_base_task.py', 'envs/place_phone_stand.py', 'envs/robot/robot.py',
         'script/eval_policy.py', 'description/utils/generate_episode_instructions.py',
         'task_config/_eval_step_limit.yml', 'task_config/demo_clean.yml', 'task_config/demo_randomized.yml')},
         model_sha256=MODEL_SHA, norm_sha256=NORM_SHA,
