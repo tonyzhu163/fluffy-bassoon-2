@@ -1,5 +1,5 @@
 {
-  "status": "epoch2_sidney_baseline_and_diagnostic_running",
+  "status": "epoch2_sidney_baseline_and_diagnostics_running",
   "closed_conservative_gpu_seconds": 10378,
   "cap_gpu_seconds": 360000,
   "closed_conservative_gpu_hours": 2.8827777777777777,
@@ -197,10 +197,26 @@
       "source_commit": "24fcc5b016f6d6f15cd7bad09cec9bd723873338",
       "max_episodes": 48,
       "probe_passed": true
+    },
+    {
+      "job_id": "job-bl6trvajosyw",
+      "job_name": "mwj_1109_sidney_wrist_clean100_01",
+      "cluster": "Baige Pro6K",
+      "created_at": "2026-11-09T18:00:59+08:00",
+      "scheduler_status": "starting",
+      "gpus": 1,
+      "hardware": "NVIDIA RPBZZZ6",
+      "queue_free_at_submission": 4,
+      "queue_max": 416,
+      "wall_minutes": 190,
+      "automatic_retry": false,
+      "source_commit": "8d921cef086b6c9ec99ec34c34289a9c9423277d",
+      "episodes": 100,
+      "wrist_near_m": 0.01
     }
   ],
   "ownership_and_data_preserved": true,
-  "planned_job": "sidney-wrist-01",
+  "planned_job": null,
   "user_stopped_at": "2026-11-09T12:21:51+08:00",
   "user_resumed_scope": "Released pi0.5 SFT baseline first; then PPO and GRPO baselines",
   "user_latest_scope": "Debug the clean phone-stand gap to the Sidney model card alongside the frozen baseline",
