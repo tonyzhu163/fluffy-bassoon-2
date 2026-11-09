@@ -37,6 +37,7 @@ export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TOKENIZERS_PARALLELISM=false
 export OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 MKL_NUM_THREADS=4
 export FLUFFY_GPU_EXECUTION=baige NCCL_P2P_DISABLE=1 JAX_PLATFORMS=cpu
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl PYTORCH_ALLOC_CONF=expandable_segments:True
+if [[ ${CUDA_VISIBLE_DEVICES+x} != x ]]; then export CUDA_VISIBLE_DEVICES=0; fi
 "$TASK_PYTHON" "$TASK_CODE/scripts/[train]gpu_probe.py" --baige-container \
  --purpose evaluation --expected-count 1 --output "$TASK_OUT/gpu-probe.json"
 export LYCO_BAIGE_GPU_MAP=$TASK_OUT/gpu-probe.json

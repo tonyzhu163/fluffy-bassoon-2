@@ -1,10 +1,10 @@
 {
   "status": "epoch2_released_sft_baseline_preparing",
-  "closed_conservative_gpu_seconds": 918,
+  "closed_conservative_gpu_seconds": 982,
   "cap_gpu_seconds": 360000,
-  "closed_conservative_gpu_hours": 0.255,
-  "remaining_gpu_seconds": 359082,
-  "remaining_unreserved_gpu_seconds": 355482,
+  "closed_conservative_gpu_hours": 0.2727777777777778,
+  "remaining_gpu_seconds": 359018,
+  "remaining_unreserved_gpu_seconds": 355418,
   "next_worst_gpu_seconds": 3600,
   "components": [
     {
@@ -33,6 +33,18 @@
       "gpu_probe_created": false,
       "failure": "The scheduler persisted the new launch command concatenated with the old command. TASK_CASES was 64exec, so the launcher rejected it before creating its output identity.",
       "retry": "Fresh controller-dev64-02 identity; use browser keyboard editor actions and inspect rendered editor text before submission."
+    },
+    {
+      "job_id": "job-7qpbhxebxnzf",
+      "identity": "native-smoke-01",
+      "scheduler_status": "Failed",
+      "created_at": "2026-11-09T12:41:41+08:00",
+      "scheduler_ended_at": "2026-11-09T12:42:45+08:00",
+      "gpu_count": 1,
+      "gpus_released": true,
+      "conservative_allocation_gpu_seconds": 64,
+      "completed_episodes": 0,
+      "failure": "CUDA_VISIBLE_DEVICES absent; strict GPU probe rejected before model loading. Fix inherited scheduler visibility or default to0 in the exclusive one-GPU container."
     }
   ],
   "prior_cleared_epoch_gpu_seconds": 359665,
@@ -43,7 +55,7 @@
   "active_jobs": [],
   "ownership_and_data_preserved": true,
   "planned_job": {
-    "identity": "native-smoke-01",
+    "identity": "native-smoke-02",
     "gpus": 1,
     "reservation_gpu_seconds": 3600,
     "task": "place_phone_stand, 2 clean + 2 randomized, direct OpenPI/native RoboTwin"
