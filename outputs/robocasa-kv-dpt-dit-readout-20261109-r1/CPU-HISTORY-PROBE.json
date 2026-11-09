@@ -1,0 +1,33 @@
+{
+  "test": "same synthetic current token and cache; 12 prior queries vs explicit reset",
+  "device": "cpu",
+  "simulator_episodes": 0,
+  "methods": {
+    "dpt": {
+      "candidate_sha256": "7a0c4f6c3fbb92f54c3b6f0d9a36828e8d16fce2e5970b73a23ce77e8286f217",
+      "history_queries": [
+        13,
+        1,
+        1
+      ],
+      "reset_exactly_matches_fresh": true,
+      "frozen": true,
+      "changed_layers": 18,
+      "maximum_history_vs_reset_kv_delta": 0.1140679121017456,
+      "context_max_abs_delta": 1.8780553340911865
+    },
+    "dit": {
+      "candidate_sha256": "7ccaae7048df38a90ced30530002469f1f73e1ee9cb37a17b07c8137cabb3721",
+      "history_queries": [
+        13,
+        1,
+        1
+      ],
+      "reset_exactly_matches_fresh": true,
+      "frozen": true,
+      "changed_layers": 18,
+      "maximum_history_vs_reset_kv_delta": 0.014614760875701904,
+      "context_max_abs_delta": 0.4536381959915161
+    }
+  }
+}

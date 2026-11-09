@@ -26,9 +26,13 @@ export STEERING_MIN_FREE_GIB=128 STEERING_WAVE_ALLOWANCE_SECONDS=300
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 NCCL_P2P_DISABLE=1
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl FLUFFY_GPU_EXECUTION=baige PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 PY=$ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
-"$PY" -B "$SCI/scripts/[train]gpu_probe.py" --expected-count 1 --purpose evaluation --baige-container --output "$TMP/GPU-PROBE.json"
-cp "$TMP/GPU-PROBE.json" "$ARCH/"
-"$PY" -c 'import torch; d=torch.cuda.get_device_name(0); print(d); assert "6000" in d and torch.cuda.device_count()==1'
+if [[ ! -v CUDA_VISIBLE_DEVICES ]]; then
+    # Baige exports the assigned UUID even when it omits the optional CUDA mask.
+    export CUDA_VISIBLE_DEVICES=${NVIDIA_VISIBLE_DEVICES:?scheduler must supply the allocated UUID}
+fi
+"$PY" -B "$SCI/scripts/[train]gpu_probe.py" --expected-count 1 --purpose evaluation --baige-container --output "$ARCH/GPU-PROBE.json"
+cp "$ARCH/GPU-PROBE.json" "$TMP/"
+"$PY" -c 'import torch; d=torch.cuda.get_device_name(0); print(d); assert ("6000" in d or d=="NVIDIA RPBZZZ6") and torch.cuda.device_count()==1'
 rc=0
 for m in dpt dit; do
     out=$TMP/$m
