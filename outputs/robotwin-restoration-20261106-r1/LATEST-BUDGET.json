@@ -1,5 +1,5 @@
 {
-  "status": "epoch2_reference_runtime_preparing_smoke03",
+  "status": "epoch2_released_sft_reference_smoke03_running",
   "closed_conservative_gpu_seconds": 1214,
   "cap_gpu_seconds": 360000,
   "closed_conservative_gpu_hours": 0.3372222222222222,
@@ -65,15 +65,18 @@
   "prior_cleared_epoch_gpu_hours": 99.90694444444445,
   "prior_cleared_epoch_ledger": "HISTORICAL-BUDGET-EPOCH1-THROUGH-20261108.json",
   "approval": "User cleared prior 359,665 GPU-s (99.91 GPU-h) epoch and approved a fresh 100 GPU-hour (360,000 GPU-s) budget on 2026-11-09T11:05:01+08:00 ('clear the existing gpu hours, i approve another 100 hours').",
-  "active_job_id": null,
-  "active_jobs": [],
+  "active_job_id": "job-1okslex6vg8f",
+  "active_jobs": [
+    {
+      "job_id": "job-1okslex6vg8f",
+      "identity": "native-smoke-03",
+      "gpus": 1,
+      "created_at": "2026-11-09T12:56:12+08:00",
+      "reserved_gpu_seconds": 3600
+    }
+  ],
   "ownership_and_data_preserved": true,
-  "planned_job": {
-    "identity": "native-smoke-03",
-    "gpus": 1,
-    "reservation_gpu_seconds": 3600,
-    "task": "same2+2 native SFT smoke, isolated reference Transformers runtime"
-  },
+  "planned_job": null,
   "user_stopped_at": "2026-11-09T12:21:51+08:00",
   "user_resumed_scope": "Released pi0.5 SFT baseline first; then PPO and GRPO baselines"
 }
