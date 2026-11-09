@@ -18,3 +18,9 @@ The reference LeRobot loader matched all 813 saved checkpoint tensors after conv
 ## Randomized scenes
 
 On the 100 randomized scenes, the same wrist-only correction raised success from **31/100 to 87/100**. Twenty-nine scenes succeeded with both settings, 58 only with the correction, two only with original clipping and 11 with neither. Exact paired p = 3.18 × 10⁻¹⁵. All 100 head-camera images and float32 reset joint vectors matched exactly, and all 100 first action chunks changed. The verifier checked 365 corrected action chunks. The Sidney model card reports only the clean result for this task. The initial randomized job exited before model loading after a renderer import moved. The corrected job completed all cases. [Randomized readback](WRIST-RANDOM-READBACK.json), [startup failure](WRIST-RANDOM-FIRST-EXIT.json).
+
+## Horizon, prompts and observed failures
+
+With the original 10 cm setting, the 16 scene-specific runs reproduced their original action chunks exactly through the 400-action cutoff. Five succeeded. Of the 11 failures, nine lifted the phone at least 2 cm but never brought the phone and stand reference points within the task's placement tolerance at an observed target boundary. One never lifted the phone 2 cm and one reached the positional tolerance without completing the task. All 11 still failed after 1,200 actions.
+
+The short task-name prompt scored 1/16 on the same scenes and 3/16 on the unfiltered sequential seed cohort. Across all 48 runs, 39 failed by 400 actions, and none recovered by 1,200. There were no reset errors. The prompt comparison had four discordant cases in favor of the scene-specific prompt (two-sided exact p = 0.125). The 16-case cohorts only support a diagnostic comparison. [Geometry traces, action checks and paired counts](DIAGNOSTIC-READBACK.json).

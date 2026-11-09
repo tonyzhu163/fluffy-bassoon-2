@@ -1,0 +1,64 @@
+{
+  "checked_at": "2026-11-09T19:24:11+08:00",
+  "arms": {
+    "ppo40": {
+      "status": "running",
+      "qualified": {
+        "arm": "ppo40",
+        "adam_step": 40,
+        "source_export_sha256": "043fa7435b8face4998aef631d96caef55808c99a3ca6867a3625157c84e2838",
+        "base_port_sha256": "c71114641cf0819900f8b1d7b0568158a12e631b2ca08b2b19bc2d5b761b69b3",
+        "output_sha256": "b70f64b327a353475f44e6dceea0d9de2902729ce995498035fb4bdc3dd5d937",
+        "exact_roundtrip_policy_tensors": 667,
+        "original_layout_tensors": 813,
+        "changed_port_tensors": 190,
+        "omitted_critic_tensors": [
+          "value_head.mlp.0.bias",
+          "value_head.mlp.0.weight",
+          "value_head.mlp.2.bias",
+          "value_head.mlp.2.weight",
+          "value_head.mlp.4.bias",
+          "value_head.mlp.4.weight",
+          "value_head.mlp.6.bias",
+          "value_head.mlp.6.weight"
+        ],
+        "extra_optimizer_steps": 0
+      },
+      "settings": {
+        "demo_clean": {
+          "n": 49,
+          "sft_successes": 37,
+          "endpoint_successes": 38,
+          "sft_only": 2,
+          "endpoint_only": 3
+        }
+      },
+      "exit": null
+    },
+    "grpo40": {
+      "status": "running",
+      "qualified": {
+        "arm": "grpo40",
+        "adam_step": 40,
+        "source_export_sha256": "ee68ab24cc0da7586374725ae2a0d8eade9e241c238cf76a4dfd7c521578cefe",
+        "base_port_sha256": "c71114641cf0819900f8b1d7b0568158a12e631b2ca08b2b19bc2d5b761b69b3",
+        "output_sha256": "28a4d1b83d159229269c1a3e0e5e0126bf4f81b6601a12e4969e359727a71776",
+        "exact_roundtrip_policy_tensors": 667,
+        "original_layout_tensors": 813,
+        "changed_port_tensors": 190,
+        "omitted_critic_tensors": [],
+        "extra_optimizer_steps": 0
+      },
+      "settings": {
+        "demo_clean": {
+          "n": 46,
+          "sft_successes": 34,
+          "endpoint_successes": 35,
+          "sft_only": 2,
+          "endpoint_only": 3
+        }
+      },
+      "exit": null
+    }
+  }
+}

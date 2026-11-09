@@ -1,11 +1,11 @@
 {
   "status": "epoch2_sidney_frozen_endpoint_evaluations",
-  "closed_conservative_gpu_seconds": 23656,
+  "closed_conservative_gpu_seconds": 29240,
   "cap_gpu_seconds": 360000,
-  "closed_conservative_gpu_hours": 6.571111111111111,
-  "remaining_gpu_seconds": 336344,
-  "remaining_unreserved_gpu_seconds": 276944,
-  "next_worst_gpu_seconds": 59400,
+  "closed_conservative_gpu_hours": 8.122222222222222,
+  "remaining_gpu_seconds": 330760,
+  "remaining_unreserved_gpu_seconds": 286360,
+  "next_worst_gpu_seconds": 44400,
   "components": [
     {
       "cluster": "Baige Pro6K",
@@ -248,20 +248,13 @@
       "worker_gpu_seconds": 2330,
       "independent_readback_pending": false,
       "evidence": "outputs/robotwin-sidney-gap-20261109-r1/WRIST-RANDOM-READBACK.json"
-    }
-  ],
-  "prior_cleared_epoch_gpu_seconds": 359665,
-  "prior_cleared_epoch_gpu_hours": 99.90694444444445,
-  "prior_cleared_epoch_ledger": "HISTORICAL-BUDGET-EPOCH1-THROUGH-20261108.json",
-  "approval": "User cleared prior 359,665 GPU-s (99.91 GPU-h) epoch and approved a fresh 100 GPU-hour (360,000 GPU-s) budget on 2026-11-09T11:05:01+08:00 ('clear the existing gpu hours, i approve another 100 hours').",
-  "active_job_id": "job-17obic7d5fe5",
-  "active_jobs": [
+    },
     {
       "job_id": "job-17obic7d5fe5",
       "job_name": "mwj_1109_sidney_phone_gap_01",
       "cluster": "Baige Pro6K",
       "created_at": "2026-11-09T17:49:53+08:00",
-      "scheduler_status": "running",
+      "scheduler_status": "Succeeded",
       "gpus": 1,
       "hardware": "NVIDIA RPBZZZ6",
       "queue_free_at_submission": 5,
@@ -270,8 +263,21 @@
       "automatic_retry": false,
       "source_commit": "24fcc5b016f6d6f15cd7bad09cec9bd723873338",
       "max_episodes": 48,
-      "probe_passed": true
-    },
+      "probe_passed": true,
+      "scheduler_ended_at": "2026-11-09T19:22:57+08:00",
+      "gpus_released": true,
+      "conservative_allocation_gpu_seconds": 5584,
+      "worker_gpu_seconds": 5547,
+      "independent_readback_pending": false,
+      "evidence": "outputs/robotwin-sidney-gap-20261109-r1/DIAGNOSTIC-READBACK.json"
+    }
+  ],
+  "prior_cleared_epoch_gpu_seconds": 359665,
+  "prior_cleared_epoch_gpu_hours": 99.90694444444445,
+  "prior_cleared_epoch_ledger": "HISTORICAL-BUDGET-EPOCH1-THROUGH-20261108.json",
+  "approval": "User cleared prior 359,665 GPU-s (99.91 GPU-h) epoch and approved a fresh 100 GPU-hour (360,000 GPU-s) budget on 2026-11-09T11:05:01+08:00 ('clear the existing gpu hours, i approve another 100 hours').",
+  "active_job_id": "job-nvcx32ct9vsc",
+  "active_jobs": [
     {
       "job_id": "job-nvcx32ct9vsc",
       "job_name": "mwj_1109_sidney_ppo40_native01",
