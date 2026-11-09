@@ -1,11 +1,11 @@
 {
   "status": "epoch2_sidney_baseline_and_diagnostics_running",
-  "closed_conservative_gpu_seconds": 10442,
+  "closed_conservative_gpu_seconds": 12790,
   "cap_gpu_seconds": 360000,
-  "closed_conservative_gpu_hours": 2.9005555555555556,
-  "remaining_gpu_seconds": 349558,
-  "remaining_unreserved_gpu_seconds": 289558,
-  "next_worst_gpu_seconds": 60000,
+  "closed_conservative_gpu_hours": 3.5527777777777776,
+  "remaining_gpu_seconds": 347210,
+  "remaining_unreserved_gpu_seconds": 298610,
+  "next_worst_gpu_seconds": 48600,
   "components": [
     {
       "cluster": "Baige Pro6K",
@@ -181,6 +181,28 @@
       "conservative_allocation_gpu_seconds": 64,
       "completed_episodes": 0,
       "failure": "Package reorganization moved the renderer import. The evaluator exited before model loading. The retry imports fluffy_bassoon.robotwin.noise and passed a Linux import check."
+    },
+    {
+      "job_id": "job-bl6trvajosyw",
+      "job_name": "mwj_1109_sidney_wrist_clean100_01",
+      "cluster": "Baige Pro6K",
+      "created_at": "2026-11-09T18:00:59+08:00",
+      "scheduler_status": "Succeeded",
+      "gpus": 1,
+      "hardware": "NVIDIA RPBZZZ6",
+      "queue_free_at_submission": 4,
+      "queue_max": 416,
+      "wall_minutes": 190,
+      "automatic_retry": false,
+      "source_commit": "8d921cef086b6c9ec99ec34c34289a9c9423277d",
+      "episodes": 100,
+      "wrist_near_m": 0.01,
+      "scheduler_ended_at": "2026-11-09T18:40:07+08:00",
+      "gpus_released": true,
+      "conservative_allocation_gpu_seconds": 2348,
+      "worker_gpu_seconds": 2303,
+      "independent_readback_pending": false,
+      "evidence": "outputs/robotwin-sidney-gap-20261109-r1/WRIST-CLEAN-READBACK.json"
     }
   ],
   "prior_cleared_epoch_gpu_seconds": 359665,
@@ -220,22 +242,6 @@
       "source_commit": "24fcc5b016f6d6f15cd7bad09cec9bd723873338",
       "max_episodes": 48,
       "probe_passed": true
-    },
-    {
-      "job_id": "job-bl6trvajosyw",
-      "job_name": "mwj_1109_sidney_wrist_clean100_01",
-      "cluster": "Baige Pro6K",
-      "created_at": "2026-11-09T18:00:59+08:00",
-      "scheduler_status": "starting",
-      "gpus": 1,
-      "hardware": "NVIDIA RPBZZZ6",
-      "queue_free_at_submission": 4,
-      "queue_max": 416,
-      "wall_minutes": 190,
-      "automatic_retry": false,
-      "source_commit": "8d921cef086b6c9ec99ec34c34289a9c9423277d",
-      "episodes": 100,
-      "wrist_near_m": 0.01
     },
     {
       "job_id": "job-u3a36spfafs9",
