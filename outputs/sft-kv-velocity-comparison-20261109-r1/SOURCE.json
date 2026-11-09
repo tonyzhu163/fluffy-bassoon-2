@@ -1,0 +1,244 @@
+{
+  "metric": "First success within each individual query episode; not cumulative ever-success",
+  "cases_per_task": 50,
+  "prior_episodes": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "steering_objective": "AD",
+  "memory": "full",
+  "sources": [
+    {
+      "path": "outputs/robocasa-eight-hour-babysit-20261104-r1/NATIVE-ANCHOR-ID-RESULT.json",
+      "sha256": "5c99da91ba239c7071ee188531ab46fd3424be2d359709704ffa46a86c74322f"
+    },
+    {
+      "path": "outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/ID/SUMMARY.json",
+      "sha256": "2c7dcf7b3d5380a78a9956364442031907468b7789b91ec9a1b316ce616f94de"
+    },
+    {
+      "path": "outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/ID/SUMMARY.json",
+      "sha256": "a2a0c8a94dc1938a90833571cd68ffdef6dc1a182051c60c28d78084481b6c71"
+    },
+    {
+      "path": "outputs/robocasa-eight-hour-babysit-20261104-r1/NATIVE-ANCHOR-OOD-RESULT.json",
+      "sha256": "21894e8033ab960c3cf503df8e0e4c8840075f298adbd761d5b226fda26bd055"
+    },
+    {
+      "path": "outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/kv_bridge/ad/OOD/SUMMARY.json",
+      "sha256": "b6b377de87cc396667f7bca55f779a841c60eff6853737e4c85f6e7027ddfed6"
+    },
+    {
+      "path": "outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/readouts/velocity_bridge/ad/OOD/SUMMARY.json",
+      "sha256": "4c2a207dfb521664e2f8da2beb2cc35f76ef0e409becd21db1bd42abf31936d0"
+    }
+  ],
+  "counts": {
+    "sft": {
+      "OpenDrawer": [
+        35,
+        32,
+        31,
+        28,
+        30,
+        34
+      ],
+      "CloseToasterOvenDoor": [
+        15,
+        18,
+        14,
+        21,
+        18,
+        21
+      ],
+      "CoffeeSetupMug": [
+        21,
+        13,
+        15,
+        18,
+        21,
+        15
+      ],
+      "CloseFridge": [
+        33,
+        32,
+        36,
+        34,
+        36,
+        36
+      ],
+      "TurnOnMicrowave": [
+        6,
+        9,
+        11,
+        5,
+        9,
+        8
+      ]
+    },
+    "kv": {
+      "OpenDrawer": [
+        34,
+        36,
+        30,
+        30,
+        29,
+        33
+      ],
+      "CloseToasterOvenDoor": [
+        14,
+        8,
+        15,
+        21,
+        16,
+        23
+      ],
+      "CoffeeSetupMug": [
+        20,
+        21,
+        14,
+        21,
+        19,
+        14
+      ],
+      "CloseFridge": [
+        31,
+        31,
+        33,
+        39,
+        35,
+        33
+      ],
+      "TurnOnMicrowave": [
+        10,
+        12,
+        8,
+        6,
+        4,
+        11
+      ]
+    },
+    "velocity": {
+      "OpenDrawer": [
+        35,
+        37,
+        32,
+        29,
+        29,
+        33
+      ],
+      "CloseToasterOvenDoor": [
+        15,
+        17,
+        14,
+        12,
+        18,
+        21
+      ],
+      "CoffeeSetupMug": [
+        21,
+        14,
+        15,
+        18,
+        16,
+        19
+      ],
+      "CloseFridge": [
+        33,
+        28,
+        37,
+        34,
+        35,
+        41
+      ],
+      "TurnOnMicrowave": [
+        8,
+        11,
+        16,
+        7,
+        8,
+        12
+      ]
+    }
+  },
+  "equal_task_mean_percent": {
+    "sft": [
+      44.0,
+      41.6,
+      42.8,
+      42.4,
+      45.6,
+      45.6
+    ],
+    "kv": [
+      43.6,
+      43.2,
+      40.0,
+      46.8,
+      41.2,
+      45.6
+    ],
+    "velocity": [
+      44.8,
+      42.8,
+      45.6,
+      40.0,
+      42.4,
+      50.4
+    ]
+  },
+  "after_five_preceding_episodes_percent": [
+    {
+      "task": "Drawer",
+      "split": "ID",
+      "sft": 68,
+      "kv": 66,
+      "velocity": 66
+    },
+    {
+      "task": "Toaster",
+      "split": "ID",
+      "sft": 42,
+      "kv": 46,
+      "velocity": 42
+    },
+    {
+      "task": "Coffee",
+      "split": "ID",
+      "sft": 30,
+      "kv": 28,
+      "velocity": 38
+    },
+    {
+      "task": "Fridge",
+      "split": "OOD",
+      "sft": 72,
+      "kv": 66,
+      "velocity": 82
+    },
+    {
+      "task": "Microwave",
+      "split": "OOD",
+      "sft": 16,
+      "kv": 22,
+      "velocity": 24
+    },
+    {
+      "task": "Equal-task mean",
+      "split": "ID + OOD",
+      "sft": 45.6,
+      "kv": 45.6,
+      "velocity": 50.4
+    }
+  ],
+  "limitations": [
+    "One fitted model per interface",
+    "No significance claim",
+    "Stage 1 fits precede the later stopping-rule repair",
+    "DPT task evaluations are not included because they were not completed"
+  ]
+}
