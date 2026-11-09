@@ -1,0 +1,214 @@
+{
+  "dataset_revision": "1287871839fae2296bc27b88a5457c3e1eba8e1f",
+  "dataset": "lerobot/robotwin_unified",
+  "roi_xyxy": [
+    60,
+    193,
+    120,
+    240
+  ],
+  "resolution": [
+    320,
+    240
+  ],
+  "metric": "pixels with mean RGB below 80 in the open fingertip region; descriptive visual check",
+  "training": [
+    {
+      "episode": 19250,
+      "dark_pixels": [
+        1097,
+        1062
+      ]
+    },
+    {
+      "episode": 19251,
+      "dark_pixels": [
+        1070,
+        1091
+      ]
+    },
+    {
+      "episode": 19252,
+      "dark_pixels": [
+        1072,
+        1089
+      ]
+    },
+    {
+      "episode": 19253,
+      "dark_pixels": [
+        1063,
+        1098
+      ]
+    },
+    {
+      "episode": 19254,
+      "dark_pixels": [
+        1075,
+        1088
+      ]
+    },
+    {
+      "episode": 19255,
+      "dark_pixels": [
+        1075,
+        1159
+      ]
+    },
+    {
+      "episode": 19256,
+      "dark_pixels": [
+        1075,
+        1102
+      ]
+    },
+    {
+      "episode": 19257,
+      "dark_pixels": [
+        1073,
+        1094
+      ]
+    },
+    {
+      "episode": 19258,
+      "dark_pixels": [
+        1073,
+        1089
+      ]
+    },
+    {
+      "episode": 19259,
+      "dark_pixels": [
+        1076,
+        1197
+      ]
+    },
+    {
+      "episode": 19260,
+      "dark_pixels": [
+        1069,
+        1091
+      ]
+    },
+    {
+      "episode": 19261,
+      "dark_pixels": [
+        1077,
+        1106
+      ]
+    },
+    {
+      "episode": 19262,
+      "dark_pixels": [
+        1080,
+        1094
+      ]
+    },
+    {
+      "episode": 19263,
+      "dark_pixels": [
+        1075,
+        1082
+      ]
+    },
+    {
+      "episode": 19264,
+      "dark_pixels": [
+        1062,
+        1085
+      ]
+    },
+    {
+      "episode": 19265,
+      "dark_pixels": [
+        1072,
+        1107
+      ]
+    }
+  ],
+  "evaluation": [
+    {
+      "case": "demo_clean-000-seed-100000",
+      "native": [
+        19,
+        12
+      ],
+      "corrected": [
+        1054,
+        1053
+      ]
+    },
+    {
+      "case": "demo_clean-001-seed-100001",
+      "native": [
+        19,
+        18
+      ],
+      "corrected": [
+        1022,
+        1062
+      ]
+    },
+    {
+      "case": "demo_clean-002-seed-100002",
+      "native": [
+        19,
+        14
+      ],
+      "corrected": [
+        1059,
+        1072
+      ]
+    },
+    {
+      "case": "demo_clean-003-seed-100005",
+      "native": [
+        18,
+        14
+      ],
+      "corrected": [
+        1040,
+        1052
+      ]
+    },
+    {
+      "case": "demo_clean-004-seed-100006",
+      "native": [
+        19,
+        17
+      ],
+      "corrected": [
+        1015,
+        1069
+      ]
+    },
+    {
+      "case": "demo_clean-005-seed-100008",
+      "native": [
+        19,
+        19
+      ],
+      "corrected": [
+        1036,
+        1058
+      ]
+    },
+    {
+      "case": "demo_clean-006-seed-100010",
+      "native": [
+        19,
+        18
+      ],
+      "corrected": [
+        1018,
+        1065
+      ]
+    }
+  ],
+  "source_videos": {
+    "cam_high": "videos/observation.images.cam_high/chunk-000/file-132.mp4",
+    "cam_left_wrist": "videos/observation.images.cam_left_wrist/chunk-000/file-080.mp4",
+    "cam_right_wrist": "videos/observation.images.cam_right_wrist/chunk-000/file-087.mp4"
+  },
+  "frame_selection": "First frame at or after from_timestamp + 0.001 seconds for each episode; ffmpeg scale to 320x240. Evaluation uses lossless native reset RGB."
+}
