@@ -50,9 +50,12 @@ def manifest(native, model):
     import openpi
     import transformers
     import curobo
+    import sapien
+    from sapien import _oidn_tricks
     from transformers.models.siglip import check
     assert transformers.__version__ == '4.53.2'
     assert check.check_whether_transformers_replace_is_installed_correctly()
+    assert _oidn_tricks.oidn_dll._name.endswith('libOpenImageDenoise.so.2.3.3')
     commit = subprocess.check_output(['git', '-C', str(native), 'rev-parse', 'HEAD'], text=True).strip()
     assert commit == NATIVE_COMMIT
     assert not subprocess.check_output(['git', '-C', str(native), 'status', '--porcelain',
@@ -68,6 +71,11 @@ def manifest(native, model):
         'task_config/_eval_step_limit.yml', 'task_config/demo_clean.yml', 'task_config/demo_randomized.yml')},
         model_sha256=MODEL_SHA, norm_sha256=NORM_SHA,
         openpi_version=importlib.metadata.version('rlinf-openpi'), openpi_files=package_files,
+        sapien_version=importlib.metadata.version('sapien'), oidn_version='2.3.3',
+        oidn_loader_sha256=sha(Path(sapien.__file__).parent/'_oidn_tricks.py'),
+        oidn_libraries={p: sha(Path(sapien.__file__).parent/'oidn_library'/p) for p in (
+            'libOpenImageDenoise.so.2.3.3', 'libOpenImageDenoise_core.so.2.3.3',
+            'libOpenImageDenoise_device_cuda.so.2.3.3')},
         curobo_version=importlib.metadata.version('nvidia-curobo'),
         curobo_core={p: sha(Path(curobo.__file__).parent/p) for p in (
             'wrap/reacher/motion_gen.py', 'types/robot.py', 'cuda_robot_model/cuda_robot_model.py')},
@@ -112,6 +120,41 @@ def panel(obs, path):
         for k in ('head_camera', 'left_camera', 'right_camera')], axis=1)).save(path)
 
 
+def qualify_renderer(args, native, receipt):
+    import numpy as np
+    from envs.place_phone_stand import place_phone_stand
+    report = dict(status='running', kind='native_renderer_qualification',
+        source_commit=os.environ['TASK_SOURCE'], manifest=receipt,
+        model_constructed=False, optimizer_updates=0, episodes=[], started_unix=time.time())
+    save(args.output/'RESULT.json', report)
+    for setting in ('demo_clean', 'demo_randomized'):
+        config = environment_args(native, setting)
+        task = place_phone_stand()
+        task.suc = task.test_num = 0
+        passed = False
+        for seed in range(100000, 100004):
+            assert time.time() < float(os.environ['TASK_DEADLINE']) - 90
+            task.setup_demo(now_ep_num=0, seed=seed, is_test=True, **config)
+            obs = task.get_obs()
+            panel(obs, args.output/f'{setting}-seed-{seed}.png')
+            images = [np.asarray(obs['observation'][k]['rgb'])
+                      for k in ('head_camera', 'left_camera', 'right_camera')]
+            assert all(x.dtype == np.uint8 and x.ndim == 3 and x.shape[-1] == 3 for x in images)
+            info = task.play_once()
+            passed = bool(task.plan_success and task.check_success())
+            report['episodes'].append(dict(setting=setting, seed=seed,
+                expert_passed=passed, image_shapes=[list(x.shape) for x in images],
+                image_ranges=[[int(x.min()), int(x.max())] for x in images]))
+            task.close_env()
+            save(args.output/'RESULT.json', report)
+            if passed:
+                break
+        assert passed, f'No native expert positive control for {setting}'
+        del task
+    report.update(status='complete', ended_unix=time.time())
+    save(args.output/'RESULT.json', report)
+
+
 def run(args):
     import numpy as np
     import torch
@@ -146,6 +189,9 @@ def run(args):
     torch.cuda.set_device(0)
     from fluffy_bassoon.rl.robotwin_noise import _install_allocated_renderer
     _install_allocated_renderer(args.output/'renderers')
+    if args.render_only:
+        qualify_renderer(args, native, receipt)
+        return
     from openpi.policies.policy_config import create_trained_policy
     policy = create_trained_policy(configuration(model), model, pytorch_device='cuda:0',
                                    sample_kwargs={'num_steps': 10})
@@ -212,6 +258,9 @@ def run(args):
                 episode_dir.mkdir()
                 obs = task.get_obs()
                 panel(obs, episode_dir/'initial.jpg')
+                native_input = encode(obs, instruction)
+                np.savez_compressed(episode_dir/'initial-input.npz',
+                    state=native_input['state'], prompt=np.asarray(instruction), **native_input['images'])
                 row = dict(seed=seed, instruction=instruction, expert_feasible=True,
                     initial_state=np.asarray(obs['joint_action']['vector']).tolist(),
                     decisions=[], complete=False, started_unix=time.time())
@@ -256,6 +305,7 @@ if __name__ == '__main__':
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--episodes', type=int, choices=(2, 100), default=2)
     parser.add_argument('--check-only', action='store_true')
+    parser.add_argument('--render-only', action='store_true')
     options = parser.parse_args()
     assert options.output.is_dir()
     run(options)

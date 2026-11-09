@@ -7,6 +7,7 @@ import shutil
 import sys
 
 SHARED_ASSETS = Path('/mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/assets')
+TEXTURE_CACHE = Path('/mowenjie/fluffy-bassoon-2/cache/motus-native-assets-20261109-r1')
 
 
 def sha(path):
@@ -59,7 +60,14 @@ def prepare(destination, receipt):
                             paths=paths, only_asset_paths_changed=True))
     config = destination/'embodiments/aloha-agilex/config.yml'
     assert yaml.safe_load(config.read_bytes())['planner'] == 'curobo'
+    textures = json.loads((TEXTURE_CACHE/'BACKGROUND-TEXTURES.json').read_bytes())
+    assert textures['full_archive_sha256_verified'] and textures['unseen_count'] > 0
+    assert len(list((TEXTURE_CACHE/'background_texture/unseen').glob('*.png'))) == textures['unseen_count']
+    assert not (destination/'background_texture').exists()
+    (destination/'background_texture').symlink_to(TEXTURE_CACHE/'background_texture', target_is_directory=True)
     receipt.write_text(json.dumps(dict(native_planner='curobo', robot_config_sha256=sha(config),
+        background_textures=dict(revision=textures['revision'], unseen_count=textures['unseen_count'],
+            archive_sha256=textures['archive_sha256'], manifest_sha256=sha(TEXTURE_CACHE/'BACKGROUND-TEXTURES.json')),
         shared_assets_unchanged=True, repairs=records), indent=2)+'\n')
 
 

@@ -3,15 +3,22 @@ set -Eeuo pipefail
 TASK_SOURCE=${1:?reviewed source commit}
 TASK_EPISODES=${2:-2}
 TASK_ATTEMPT=${3:-01}
+TASK_MODE=${4:-policy}
 [[ $TASK_EPISODES == 2 || $TASK_EPISODES == 100 ]]
 [[ $TASK_ATTEMPT =~ ^[0-9]{2}$ ]]
+[[ $TASK_MODE == policy || $TASK_MODE == render ]]
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_ID=native-smoke-$TASK_ATTEMPT
 TASK_LIMIT=3300
 if [[ $TASK_EPISODES == 100 ]]; then TASK_ID=native-phone100-$TASK_ATTEMPT; TASK_LIMIT=21600; fi
+TASK_EXTRA=()
+if [[ $TASK_MODE == render ]]; then
+ [[ $TASK_EPISODES == 2 ]]
+ TASK_ID=native-render-$TASK_ATTEMPT; TASK_LIMIT=840; TASK_EXTRA=(--render-only)
+fi
 TASK_OUT=/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motus-release-baseline-20261109-r1/$TASK_ID
 TASK_LOCAL=/tmp/rt-motus-release-$TASK_ID
-TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/motus-reference-openpi-20261109-r1/bin/python
+TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/motus-reference-openpi-20261109-r2/bin/python
 export TASK_CODE TASK_SOURCE TASK_OUT TASK_LOCAL TASK_LIMIT GIT_OPTIONAL_LOCKS=0
 [[ $(uname -s) == Linux && $(hostname) == job-* ]]
 [[ $(git -C "$TASK_CODE" rev-parse HEAD) == "$TASK_SOURCE" ]]
@@ -78,4 +85,8 @@ TASK_REMAINING=$((TASK_DEADLINE-$(date +%s)-60))
 [[ $TASK_REMAINING -gt 300 ]]
 timeout --signal=INT --kill-after=20s "$TASK_REMAINING" "$TASK_PYTHON" \
  "$TASK_CODE/outputs/robotwin-motus-release-baseline-20261109-r1/evaluate.py" \
- --output "$TASK_OUT" --episodes "$TASK_EPISODES" > "$TASK_OUT/evaluation.log" 2>&1
+ --output "$TASK_OUT" --episodes "$TASK_EPISODES" "${TASK_EXTRA[@]}" > "$TASK_OUT/evaluation.log" 2>&1
+if grep -Eq 'OIDN Error|unsupported device type|invalid handle' "$TASK_OUT/evaluation.log"; then
+ echo 'Native denoiser qualification failed' >&2
+ exit 1
+fi

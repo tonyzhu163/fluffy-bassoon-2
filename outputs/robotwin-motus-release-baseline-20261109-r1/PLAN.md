@@ -69,6 +69,26 @@ repair only the two stale absolute URDF/collision-sphere paths in each native
 cuRobo YAML. Verify that restoring those fields recovers the original mapping;
 record original/runtime and target file hashes. Shared assets remain intact.
 
+Smoke04 completed the two clean controls (one success, one400-action timeout),
+then stopped before randomized trials because the unseen texture split was
+absent. It also exposed OIDN2.0.1 CUDA initialization errors on Blackwell;
+those noisy observations cannot establish the released-model baseline.
+Use a new isolated `motus-reference-openpi-20261109-r2` runtime. Keep SAPIEN's
+compiled physics/render engine and native32-sample, depth8, OIDN settings;
+replace only the private OIDN loader/libraries with the official
+[2.3.3 release](https://github.com/RenderKit/oidn/releases/tag/v2.3.3), which
+adds Blackwell support. The shared SAPIEN environment remains unchanged.
+
+Textures come from the upstream `TianxingChen/RoboTwin2.0` archive at
+`39b4a57384f28b6ed0ea1118871ae302e67eae38` (June26,2025).
+All10,970,687,027 archive bytes were SHA256-verified against
+`54ede0fb5b783e0faa2bc98720d3affd6ca3bb9280b225b48c1aafaf31473070`.
+The complete1,000-file unseen split is retained, with per-file hashes/ZIP CRCs,
+in the project cache. Native `eval_mode=True` uses this split. Do not substitute
+training textures or a selected subset. Before another model run, qualify one
+native expert episode in each domain on the actual GPU and require zero
+denoiser errors. This renderer qualification constructs no policy model.
+
 Match native evaluation seed0: candidate seeds begin100000; expert play_once
 must plan and succeed before policy evaluation; count100 accepted episodes
 per clean/randomized setting. Use native unseen language generation and
