@@ -1,5 +1,5 @@
 {
-  "status": "epoch2_native_sft_smoke_qualified_phone100_waiting_capacity",
+  "status": "epoch2_native_phone100_running",
   "closed_conservative_gpu_seconds": 2174,
   "cap_gpu_seconds": 360000,
   "closed_conservative_gpu_hours": 0.6038888888888889,
@@ -128,17 +128,20 @@
   "prior_cleared_epoch_gpu_hours": 99.90694444444445,
   "prior_cleared_epoch_ledger": "HISTORICAL-BUDGET-EPOCH1-THROUGH-20261108.json",
   "approval": "User cleared prior 359,665 GPU-s (99.91 GPU-h) epoch and approved a fresh 100 GPU-hour (360,000 GPU-s) budget on 2026-11-09T11:05:01+08:00 ('clear the existing gpu hours, i approve another 100 hours').",
-  "active_job_id": null,
-  "active_jobs": [],
+  "active_job_id": "job-l12f2zavadif",
+  "active_jobs": [
+    {
+      "job_id": "job-l12f2zavadif",
+      "identity": "native-phone100-01",
+      "created_at": "2026-11-09T13:55:27+08:00",
+      "gpu_count": 1,
+      "reservation_gpu_seconds": 22200,
+      "scheduler_status": "Running",
+      "source_commit": "e15b1ac9805c84b9b4f82d489cdde0eaf8d86e57"
+    }
+  ],
   "ownership_and_data_preserved": true,
-  "planned_job": {
-    "identity": "native-phone100-01",
-    "gpus": 1,
-    "reservation_gpu_seconds": 22200,
-    "task": "Frozen released pi05,100 clean+100 randomized native phone episodes; scheduler370min; worker21600s",
-    "source_commit": "e15b1ac9805c84b9b4f82d489cdde0eaf8d86e57",
-    "capacity_status": "0/416; console rejected creation; no new job charged"
-  },
+  "planned_job": null,
   "user_stopped_at": "2026-11-09T12:21:51+08:00",
   "user_resumed_scope": "Released pi0.5 SFT baseline first; then PPO and GRPO baselines"
 }
