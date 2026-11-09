@@ -9,3 +9,7 @@ The first two arms estimate prompt and horizon effects on identical seeds. The t
 ## Paired wrist clipping test
 
 Training dataset revision 1287871839fae2296bc27b88a5457c3e1eba8e1f, phone episode 19250, has a visible dark fingertip in both wrist views. Its reset state equals the initial evaluation joint vector. In the SAPIEN 3.0.1 baseline the fingertip is mostly clipped. The original camera requests a 0.1 m near plane. Test the two wrist cameras at 0.01 m, leaving head-camera optics, poses, resolution, controller, 400 targets, original weights, noise seeds, and 100 frozen clean prompts and scenes fixed. Read the effective near value from both live camera objects. Compare aligned inputs, individual success switches and exact first action tensors against the frozen native baseline. Distinguish input appearance correction from measured policy success.
+
+## Randomized SFT baseline
+
+Repeat the 1 cm wrist setting on the 100 preselected randomized scenes. Use their frozen instructions, action-noise seeds and 400-target horizon, with the original released policy. Compare each episode to its 10 cm randomized partner and verify both wrists' clipping distances plus exact initial head RGB and joint state. The model card supplies a comparison value for clean phone stand only. Allocate one Pro6K GPU for at most 190 minutes.

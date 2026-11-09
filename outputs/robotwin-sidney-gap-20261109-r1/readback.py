@@ -39,12 +39,13 @@ def audit(root, reference, partial):
                        for x in ('OIDN Error','invalid handle','unsupported device type'))
     renderers = list((root/'renderers').glob('*.json'))
     assert renderers and all(load(p)['actual_render_pci'] == probe['devices'][0]['pci_bus_id'] for p in renderers)
-    baseline = load(reference/'RESULT.json')['settings']['demo_clean']
+    reference_settings = load(reference/'RESULT.json')['settings']
     wrist = 'wrist_near_m' in result
     report = dict(source_commit=result['source_commit'],partial=partial,settings={},renderers=len(renderers))
     total_chunks = 0
     initial_diffs, actions_changed, prefix_equal = [], 0, 0
     for mode,rows in result['settings'].items():
+        baseline = reference_settings[mode if wrist else 'demo_clean']
         if not partial:
             assert len(rows) == result['episodes_per_domain']
         complete = []
@@ -73,7 +74,8 @@ def audit(root, reference, partial):
                 continue
             ref = baseline[i]
             assert row['seed'] == ref['seed'] and row['actors'] == ref['actors']
-            ref_dir = reference/f"demo_clean-{i:03d}-seed-{row['seed']}"
+            domain = mode if wrist else 'demo_clean'
+            ref_dir = reference/f"{domain}-{i:03d}-seed-{row['seed']}"
             with np.load(directory/'initial.npz') as a, np.load(ref_dir/'initial.npz') as b:
                 assert np.array_equal(a['state'], b['state']) and np.array_equal(a['images'][0],b['images'][0])
                 assert a['instruction'].item() == row['instruction']
@@ -104,7 +106,8 @@ def audit(root, reference, partial):
             stats['late_success_targets']=[r['targets'] for r in complete if r['success'] and r['targets']>400]
         report['settings'][mode] = stats
     if wrist:
-        rows=result['settings']['demo_clean']
+        (mode, rows), = result['settings'].items()
+        baseline = reference_settings[mode]
         if rows:
             report['compared_to_native_400'] = pairs(group_flags(baseline[:len(rows)],400),group_flags(rows,400))
             report['wrist_reset_rgb_mae'] = np.mean(initial_diffs,axis=0).tolist()

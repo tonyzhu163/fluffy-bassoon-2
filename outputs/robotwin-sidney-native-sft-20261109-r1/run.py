@@ -114,7 +114,7 @@ def episode(task, config, native, case, worker, scratch, directory, *,
     return result
 
 
-def run(out, count, diagnostic=False, wrist_near=None):
+def run(out, count, diagnostic=False, wrist_near=None, wrist_domain="demo_clean"):
     import torch
     from fluffy_bassoon.rl.robotwin_noise import _install_allocated_renderer
     assert torch.cuda.device_count() == 1 and os.uname().nodename.startswith('job-')
@@ -153,7 +153,7 @@ def run(out, count, diagnostic=False, wrist_near=None):
                 diagnose(out, cases['demo_clean'], native, proc, scratch, report, count)
             else:
                 if wrist_near is not None:
-                    cases = {'demo_clean': cases['demo_clean']}
+                    cases = {wrist_domain: cases[wrist_domain]}
                     report['wrist_near_m'] = wrist_near
                 evaluate_settings(out, count, cases, native, proc, scratch, report, wrist_near)
             proc.stdin.close()
@@ -187,5 +187,8 @@ if __name__ == '__main__':
     args.add_argument('--episodes', type=int, choices=(2, 16, 100), required=True)
     args.add_argument('--diagnostic', action='store_true')
     args.add_argument('--wrist-near', type=float, choices=(.01,))
+    args.add_argument('--wrist-domain', choices=('demo_clean', 'demo_randomized'), default='demo_clean')
     parsed = args.parse_args()
-    run(parsed.output, parsed.episodes, parsed.diagnostic, parsed.wrist_near)
+    if parsed.wrist_domain == 'demo_randomized' and parsed.wrist_near is None:
+        args.error('--wrist-domain requires a wrist clipping distance')
+    run(parsed.output, parsed.episodes, parsed.diagnostic, parsed.wrist_near, parsed.wrist_domain)
