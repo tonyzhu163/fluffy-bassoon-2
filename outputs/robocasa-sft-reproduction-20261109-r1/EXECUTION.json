@@ -2,13 +2,13 @@
   "run_id": "robocasa-sft-reproduction-20261109-r1",
   "owner_chat": "01a1be92-5e00-7df0-b90e-9719078be031",
   "source_commit": "924a42aff387a50e33c4fc75d6a2fffbd4533278",
-  "phase": "gpu02_running_probe_passed",
+  "phase": "gpu03_preparing_after_normalizer_cpu_pass",
   "cluster": "Baige Pro6K",
   "queue_id": "aihcq-rh0wwk9muei4",
   "job_id": "job-px54jh4prhaf",
   "job_name": "mwj_1109_robocasa_sft_native_qual02",
   "scheduler_created_shanghai": "2026-11-09 13:04:52",
-  "scheduler_state_observed": "Running",
+  "scheduler_state_observed": "gpu02 Failed / released",
   "resources": {
     "gpus": 1,
     "cpus": 21,
@@ -38,11 +38,11 @@
   "cache": "project-specific copy of cached public tokenizer; SHA256 8986bb4f423f07f8c7f70d0dbe3526fb2316056c17bae71b1ea975e77a168fc6; original cache preserved",
   "budget": {
     "maximum_gpu_hours": 50,
-    "closed_gpu_seconds": 45,
-    "open_reservation_gpu_seconds_including_overhead": 3720
+    "closed_gpu_seconds": 288,
+    "open_reservation_gpu_seconds_including_overhead": 0
   },
-  "next_action": "Verify advancing native GPU load and real simulator episodes, then size 18-task x50 sweep from measured throughput. No parity or downgrade decision yet.",
-  "last_check_shanghai": "2026-11-09 13:05:44",
+  "next_action": "Deploy supported checkpoint-normalizer binding qualified on CPU, then fresh gpu03 native three-episode qualification",
+  "last_check_shanghai": "2026-11-09 13:11 Shanghai",
   "attempts": [
     {
       "attempt": "gpu01",
@@ -60,8 +60,13 @@
       "attempt": "gpu02",
       "job_id": "job-px54jh4prhaf",
       "source_commit": "924a42aff387a50e33c4fc75d6a2fffbd4533278",
-      "state": "Running",
-      "gpu_probe": "PASS; actual one allocated NVIDIA RPBZZZ6, 97887 MiB, own-PID allocation verified"
+      "state": "Failed",
+      "gpu_probe": "PASS; actual one allocated NVIDIA RPBZZZ6, 97887 MiB, own-PID allocation verified",
+      "terminal_shanghai": "2026-11-09 13:08:55",
+      "conservative_gpu_seconds": 243,
+      "model_forwards": 0,
+      "simulator_controls": 0,
+      "reason": "Native parameter restore completed; data-config fallback demanded missing training-dataset stats before inference; exact bundled normalizer binding passed CPU qualification"
     }
   ]
 }

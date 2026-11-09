@@ -1,0 +1,58 @@
+{"status": "passed", "purpose": "evaluation", "timing_comparison_eligible": false, "allocation_type": "baige_container", "hostname": "job-px54jh4prhaf-master-0", "probe_pid": 421, "created_at_utc": "2026-11-09T05:05:33.199814+00:00", "devices": [{"allocation_ordinal": 0, "visibility_token": "0", "cuda_uuid": "35603f48-751f-ce35-fa0b-81e94cbdf2b5", "cuda_name": "NVIDIA RPBZZZ6", "cuda_total_bytes": 101973950464, "pci_bus_id": "0000:a3:00.0", "uuid": "GPU-28757c4a-ecd6-1f30-c2ba-75fda37906a5", "inventory": {"index": 0, "uuid": "GPU-28757c4a-ecd6-1f30-c2ba-75fda37906a5", "name": "NVIDIA RPBZZZ6", "memory_total_mib": 97887.0, "memory_used_mib": 0.0, "utilization_percent": 0.0, "pci_bus_id": "00000000:A3:00.0"}, "allocation_check": {"elements": 1048576, "result": 2097152.0, "touched_gpu_uuids": ["GPU-28757c4a-ecd6-1f30-c2ba-75fda37906a5"], "own_pid_gpu_uuids": ["GPU-28757c4a-ecd6-1f30-c2ba-75fda37906a5"]}}], "idle_utilization_required": false, "exclusive_training_admission": false, "admission_policy": "exclusive_scheduler_evaluation", "utilization_role": "telemetry_only", "utilization_telemetry": {"GPU-28757c4a-ecd6-1f30-c2ba-75fda37906a5": 0.0}, "maximum_initial_memory_mib": 256, "gpu_identity_mapping": {"method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation", "assigned_nvml_uuids": ["GPU-28757c4a-ecd6-1f30-c2ba-75fda37906a5"]}, "compute_processes_before": [], "compute_processes_after": [{"gpu_uuid": "GPU-28757c4a-ecd6-1f30-c2ba-75fda37906a5", "pid": 421, "process_name": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python", "memory_used_mib": "640"}], "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"}
+[robosuite WARNING] No private macro file found! (macros.py:57)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:58)
+[robosuite WARNING] To setup, run: python /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (macros.py:59)
+[robosuite WARNING] Could not import robosuite_models. Some robots may not be available. If you want to use these robots, please install robosuite_models from source (https://github.com/ARISE-Initiative/robosuite_models) or through pip install. (__init__.py:30)
+[robosuite WARNING] Could not load the mink-based whole-body IK. Make sure you install related import properly (e.g. pip install mink==0.0.5), otherwise you will not be able to use the default IK controller setting for GR1 robot. (__init__.py:40)
+WARNING: mimicgen environments not imported since mimicgen is not installed!
+{"phase": "loading_native_original", "devices": ["cuda:0"], "robocasa_version": "1.0.1", "robocasa_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-sft-reproduction-20261109-r1/sources/robocasa/robocasa/__init__.py", "config_file": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-sft-reproduction-20261109-r1/sources/openpi/src/openpi/training/config.py", "normalization_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee", "model_backend": "native JAX", "training_updates": 0, "unix": 1794200890.6528783}
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/sources/robocasa-sft-reference-924a42af/outputs/robocasa-sft-reproduction-20261109-r1/reference_eval.py", line 174, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/sources/robocasa-sft-reference-924a42af/outputs/robocasa-sft-reproduction-20261109-r1/reference_eval.py", line 77, in main
+    policy = policy_config.create_trained_policy(native_config, args.checkpoint,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/outputs/robocasa-sft-reproduction-20261109-r1/sources/openpi/src/openpi/policies/policy_config.py", line 61, in create_trained_policy
+    data_config = train_config.data.create(train_config.assets_dirs, train_config.model)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/outputs/robocasa-sft-reproduction-20261109-r1/sources/openpi/src/openpi/training/config.py", line 584, in create
+    norm_stats = _groot_openpi_dataset._load_norm_stats_from_groot_mixture_dataset(self.data_dirs)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/outputs/robocasa-sft-reproduction-20261109-r1/sources/openpi/src/openpi/groot_utils/groot_openpi_dataset.py", line 402, in _load_norm_stats_from_groot_mixture_dataset
+    per_dataset_norm_stats.append(_load_norm_stats_from_groot_dataset(ds_meta))
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/outputs/robocasa-sft-reproduction-20261109-r1/sources/openpi/src/openpi/groot_utils/groot_openpi_dataset.py", line 263, in _load_norm_stats_from_groot_dataset
+    data = json.loads(path.read_text())
+                      ^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/cache/pythons/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/cache/pythons/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/outputs/robocasa-sft-reproduction-20261109-r1/sources/robocasa/datasets/v1.0/pretrain/atomic/AdjustToasterOvenTemperature/20250820/lerobot/meta/stats.json'
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/sources/robocasa-sft-reference-924a42af/outputs/robocasa-sft-reproduction-20261109-r1/reference_eval.py", line 174, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/sources/robocasa-sft-reference-924a42af/outputs/robocasa-sft-reproduction-20261109-r1/reference_eval.py", line 77, in main
+    policy = policy_config.create_trained_policy(native_config, args.checkpoint,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/outputs/robocasa-sft-reproduction-20261109-r1/sources/openpi/src/openpi/policies/policy_config.py", line 61, in create_trained_policy
+    data_config = train_config.data.create(train_config.assets_dirs, train_config.model)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/outputs/robocasa-sft-reproduction-20261109-r1/sources/openpi/src/openpi/training/config.py", line 584, in create
+    norm_stats = _groot_openpi_dataset._load_norm_stats_from_groot_mixture_dataset(self.data_dirs)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/outputs/robocasa-sft-reproduction-20261109-r1/sources/openpi/src/openpi/groot_utils/groot_openpi_dataset.py", line 402, in _load_norm_stats_from_groot_mixture_dataset
+    per_dataset_norm_stats.append(_load_norm_stats_from_groot_dataset(ds_meta))
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/outputs/robocasa-sft-reproduction-20261109-r1/sources/openpi/src/openpi/groot_utils/groot_openpi_dataset.py", line 263, in _load_norm_stats_from_groot_dataset
+    data = json.loads(path.read_text())
+                      ^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/cache/pythons/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/cache/pythons/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/mowenjie/fluffy-bassoon-2/outputs/robocasa-sft-reproduction-20261109-r1/sources/robocasa/datasets/v1.0/pretrain/atomic/AdjustToasterOvenTemperature/20250820/lerobot/meta/stats.json'

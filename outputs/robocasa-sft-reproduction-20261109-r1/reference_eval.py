@@ -25,6 +25,16 @@ def sha(path):
     return digest.hexdigest()
 
 
+def with_checkpoint_stats(train_config, stats):
+    """Skip training-data fallback using the exact bundled inference normalizer."""
+    import dataclasses
+    from openpi.training.config import DataConfig
+
+    base = train_config.data.base_config or DataConfig()
+    return dataclasses.replace(train_config, data=dataclasses.replace(
+        train_config.data, base_config=dataclasses.replace(base, norm_stats=stats)))
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', type=Path, required=True)
@@ -59,6 +69,7 @@ def main():
     from robocasa.utils.env_utils import convert_action
     from openpi.training import config
     from openpi.policies import policy_config
+    from openpi.shared import normalize
     from openpi_client import image_tools
 
     assert robocasa.__version__ == args.version
@@ -70,16 +81,19 @@ def main():
     assert native_config.model.action_dim == 32
     assert native_config.model.max_token_len == 200
     norm_hash = sha(args.checkpoint / 'assets/norm_stats.json')
+    norm_stats = normalize.load(args.checkpoint / 'assets')
+    native_config = with_checkpoint_stats(native_config, norm_stats)
     event(phase='loading_native_original', devices=[str(d) for d in devices],
           robocasa_version=robocasa.__version__, robocasa_file=robocasa.__file__,
           config_file=config.__file__, normalization_sha256=norm_hash,
           model_backend='native JAX', training_updates=0)
     policy = policy_config.create_trained_policy(native_config, args.checkpoint,
-                                               sample_kwargs={'num_steps': 10})
+                                               sample_kwargs={'num_steps': 10},
+                                               norm_stats=norm_stats)
     event(phase='loaded_native_original', load_seconds=time.time() - started)
     results = []
+    np.random.seed(7)
     for task in args.tasks:
-        np.random.seed(7)
         horizon = get_task_horizon(task)
         old_horizon = horizon if args.version == '1.0.0' else horizon * 2 // 3
         horizon = old_horizon * 3 // 2

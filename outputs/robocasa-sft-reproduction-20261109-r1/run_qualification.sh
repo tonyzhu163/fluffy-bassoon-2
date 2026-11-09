@@ -4,7 +4,7 @@ TASK_CODE=$1
 TASK_PIN=$2
 TASK_BASE=/mowenjie/fluffy-bassoon-2/outputs/robocasa-sft-reproduction-20261109-r1
 TASK_PY=/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python
-TASK_OUT=$TASK_BASE/${3:-gpu02}
+TASK_OUT=$TASK_BASE/${3:?fresh output identity required}
 test "$(git -C "$TASK_CODE" rev-parse HEAD)" = "$TASK_PIN"
 git -C "$TASK_CODE" diff --quiet
 test "$(git -C "$TASK_BASE/sources/openpi" rev-parse HEAD)" = ca4c6d710db75e276bc7c866a57bd7e4aee5b6e8
