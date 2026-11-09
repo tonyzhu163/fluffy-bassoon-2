@@ -113,7 +113,7 @@ def main():
                     child = subprocess.Popen([sys.executable, '-B', str(scripts/'reference_eval.py'),
                         '--checkpoint', checkpoint, '--output', str(stage_root/task), '--tasks', task,
                         '--trials', '50', '--maximum-seconds', str(max(1, int(deadline-time.time()))),
-                        '--version', '1.0.1', '--replan', '5', '--server-port', '18405'],
+                        '--version', plan['version'], '--replan', '5', '--server-port', '18405'],
                         stdout=stream, stderr=subprocess.STDOUT)
                     clients.append(child)
                 while any(child.poll() is None for child in clients):
@@ -147,7 +147,8 @@ def main():
                     successes = sum(x['success'] for x in records)
                     original = sum(x['success_original_horizon'] for x in records)
                     rate = successes/900
-                    decision = 'continue_composites' if abs(rate-.396) <= .05 else 'review_v100'
+                    mismatch = 'review_v100' if plan['version'] == '1.0.1' else 'reference_mismatch'
+                    decision = 'continue_composites' if abs(rate-.396) <= .05 else mismatch
                     save(gate, dict(episodes=900, successes=successes, success_rate=rate,
                          original_horizon_successes=original, reference_rate=.396,
                          practical_band=.05, decision=decision,

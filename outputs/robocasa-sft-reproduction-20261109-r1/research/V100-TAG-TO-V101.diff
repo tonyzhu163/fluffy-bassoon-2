@@ -1,0 +1,3922 @@
+diff --git a/robocasa/__init__.py b/robocasa/__init__.py
+index 3780cc5..2bdf322 100644
+--- a/robocasa/__init__.py
++++ b/robocasa/__init__.py
+@@ -1026,7 +1026,7 @@ assert (
+     robosuite_check
+ ), "robosuite version must be >=1.5.2 Please install the correct version"
+ 
+-__version__ = "1.0.0"
++__version__ = "1.0.1"
+ __logo__ = """
+       ;     /        ,--.
+      ["]   ["]  ,<  |__**|
+diff --git a/robocasa/demos/__init__.py b/robocasa/demos/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/demos/demo_kitchen_scenes.py b/robocasa/demos/demo_kitchen_scenes.py
+index 2c78585..0f63514 100644
+--- a/robocasa/demos/demo_kitchen_scenes.py
++++ b/robocasa/demos/demo_kitchen_scenes.py
+@@ -10,8 +10,13 @@ from robosuite.controllers import load_composite_controller_config
+ from robosuite.wrappers import VisualizationWrapper
+ from termcolor import colored
+ 
++import robocasa.macros as macros
+ from robocasa.models.scenes.scene_registry import LayoutType, StyleType
+ from robocasa.scripts.collect_demos import collect_human_trajectory
++from robocasa.wrappers.enclosing_wall_render_wrapper import (
++    EnclosingWallRenderWrapper,
++    install_enclosing_wall_hotkeys,
++)
+ 
+ 
+ def choose_option(
+@@ -76,6 +81,18 @@ if __name__ == "__main__":
+     )
+     parser.add_argument("--style", type=int, help="kitchen style (choose number 1-60)")
+     parser.add_argument("--robot", type=str, help="robot", default="PandaOmron")
++    parser.add_argument(
++        "--show-walls",
++        action="store_true",
++        help="render enclosing walls (default is to hide walls with enclosing_wall: true)",
++    )
++    parser.add_argument(
++        "--device",
++        type=str,
++        default="keyboard",
++        choices=["keyboard", "spacemouse"],
++        help="Teleop device (default: keyboard)",
++    )
+     args = parser.parse_args()
+ 
+     raw_layouts = dict(
+@@ -118,14 +135,30 @@ if __name__ == "__main__":
+         control_freq=20,
+         renderer=args.renderer,
+     )
++    env = EnclosingWallRenderWrapper(env, alpha=0.1, enabled=not args.show_walls)
++    install_enclosing_wall_hotkeys(env)
+ 
+     # Grab reference to controller config and convert it to json-encoded string
+     env_info = json.dumps(config)
+ 
+     # initialize device
+-    from robosuite.devices import Keyboard
+-
+-    device = Keyboard(env=env, pos_sensitivity=4.0, rot_sensitivity=4.0)
++    device = args.device
++    if device == "keyboard":
++        from robosuite.devices import Keyboard
++
++        device = Keyboard(env=env, pos_sensitivity=4.0, rot_sensitivity=4.0)
++    elif device == "spacemouse":
++        from robosuite.devices import SpaceMouse
++
++        device = SpaceMouse(
++            env=env,
++            pos_sensitivity=4.0,
++            rot_sensitivity=4.0,
++            vendor_id=macros.SPACEMOUSE_VENDOR_ID,
++            product_id=macros.SPACEMOUSE_PRODUCT_ID,
++        )
++    else:
++        raise ValueError
+ 
+     # collect demonstrations
+     while True:
+diff --git a/robocasa/demos/demo_objects.py b/robocasa/demos/demo_objects.py
+index e1923c6..a4332ca 100644
+--- a/robocasa/demos/demo_objects.py
++++ b/robocasa/demos/demo_objects.py
+@@ -20,10 +20,6 @@ from termcolor import colored
+ 
+ import robocasa
+ from robocasa.models.objects.kitchen_object_utils import sample_kitchen_object
+-from robocasa.scripts.download_kitchen_assets import (
+-    DOWNLOAD_ASSET_REGISTRY,
+-    download_and_extract_from_hf,
+-)
+ 
+ 
+ def edit_model_xml(xml_str):
+diff --git a/robocasa/demos/demo_tasks.py b/robocasa/demos/demo_tasks.py
+index a2a185d..ee505f8 100644
+--- a/robocasa/demos/demo_tasks.py
++++ b/robocasa/demos/demo_tasks.py
+@@ -13,6 +13,14 @@ from robocasa.scripts.dataset_scripts.playback_dataset import playback_dataset
+ from robocasa.utils.dataset_registry_utils import get_ds_path
+ 
+ 
++def get_ds_path_any_split(task, source="human"):
++    """Return dataset path trying pretrain first, then target (for tasks that only have target human demos, e.g. composite-unseen)."""
++    path = get_ds_path(task, source=source, split="pretrain")
++    if path is not None:
++        return path
++    return get_ds_path(task, source=source, split="target")
++
++
+ def choose_option(
+     options, option_name, show_keys=False, default=None, default_message=None
+ ):
+@@ -79,7 +87,7 @@ if __name__ == "__main__":
+     )
+     args = parser.parse_args()
+ 
+-    tasks = OrderedDict(
++    all_tasks = OrderedDict(
+         [
+             ("PickPlaceCounterToCabinet", "pick and place from counter to cabinet"),
+             ("PickPlaceCounterToSink", "pick and place from counter to sink"),
+@@ -95,31 +103,54 @@ if __name__ == "__main__":
+             ("RestockPantry", "restock cans in pantry"),
+             ("PreSoakPan", "prepare pan for washing"),
+             ("PrepareCoffee", "make coffee"),
++            (
++                "HotDogSetup",
++                "gather ingredients for a hot dog and place them on the dining table [Navigation]",
++            ),
++            (
++                "DeliverStraw",
++                "place the straw in the glass cup on the dining counter [Navigation]",
++            ),
++            (
++                "GatherTableware",
++                "gather tableware from around the kitchen [Navigation]",
++            ),
+         ]
+     )
++    tasks = OrderedDict(
++        (k, v)
++        for k, v in all_tasks.items()
++        if get_ds_path_any_split(k, source="human") is not None
++    )
++    if not tasks:
++        raise RuntimeError(
++            "No tasks with registered human demo paths. Check dataset registry and DATASET_BASE_PATH."
++        )
+ 
+     video_num = -1
+     while True:
+         if args.task is None:
+             task = choose_option(
+-                tasks, "task", default="PickPlaceCounterToCabinet", show_keys=True
++                tasks, "task", default=list(tasks.keys())[0], show_keys=True
+             )
+         else:
+             task = args.task
+         video_num += 1
+ 
+-        dataset = get_ds_path(task, source="human")
++        dataset = get_ds_path_any_split(task, source="human")
+         if dataset is None:
+             raise ValueError(f"No registered dataset path for task={task} source=human")
+ 
+         if os.path.exists(dataset) is False:
+-            # download dataset files
++            # download dataset files (try both splits so target-only tasks e.g. GatherTableware work)
+             print(
+                 colored(
+                     "Unable to find dataset locally. Downloading...", color="yellow"
+                 )
+             )
+-            download_datasets(tasks=[task], split=["pretrain"], source=["human"])
++            download_datasets(
++                tasks=[task], split=["pretrain", "target"], source=["human"]
++            )
+ 
+         dataset = dataset
+ 
+diff --git a/robocasa/demos/demo_teleop.py b/robocasa/demos/demo_teleop.py
+index e0060d1..2b77e17 100644
+--- a/robocasa/demos/demo_teleop.py
++++ b/robocasa/demos/demo_teleop.py
+@@ -10,6 +10,10 @@ from termcolor import colored
+ 
+ import robocasa.macros as macros
+ from robocasa.scripts.collect_demos import collect_human_trajectory
++from robocasa.wrappers.enclosing_wall_render_wrapper import (
++    EnclosingWallRenderWrapper,
++    install_enclosing_wall_hotkeys,
++)
+ 
+ 
+ def choose_option(
+@@ -72,6 +76,7 @@ if __name__ == "__main__":
+         type=str,
+         default="keyboard",
+         choices=["keyboard", "spacemouse"],
++        help="Teleop device (default: keyboard)",
+     )
+     args = parser.parse_args()
+ 
+@@ -125,16 +130,19 @@ if __name__ == "__main__":
+ 
+     # Wrap this with visualization wrapper
+     env = VisualizationWrapper(env)
++    env = EnclosingWallRenderWrapper(env, alpha=0.1, enabled=False)
++    install_enclosing_wall_hotkeys(env)
+ 
+     # Grab reference to controller config and convert it to json-encoded string
+     env_info = json.dumps(config)
+ 
+     # initialize device
+-    if args.device == "keyboard":
++    device = args.device
++    if device == "keyboard":
+         from robosuite.devices import Keyboard
+ 
+         device = Keyboard(env=env, pos_sensitivity=4.0, rot_sensitivity=4.0)
+-    elif args.device == "spacemouse":
++    elif device == "spacemouse":
+         from robosuite.devices import SpaceMouse
+ 
+         device = SpaceMouse(
+diff --git a/robocasa/environments/kitchen/composite/arranging_cabinets/__init__.py b/robocasa/environments/kitchen/composite/arranging_cabinets/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/environments/kitchen/composite/arranging_condiments/__init__.py b/robocasa/environments/kitchen/composite/arranging_condiments/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/environments/kitchen/composite/chopping_vegetables/__init__.py b/robocasa/environments/kitchen/composite/chopping_vegetables/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/environments/kitchen/composite/cleaning_sink/__init__.py b/robocasa/environments/kitchen/composite/cleaning_sink/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/environments/kitchen/composite/loading_dishwasher/__init__.py b/robocasa/environments/kitchen/composite/loading_dishwasher/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/environments/kitchen/composite/making_juice/__init__.py b/robocasa/environments/kitchen/composite/making_juice/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/environments/kitchen/composite/making_salads/__init__.py b/robocasa/environments/kitchen/composite/making_salads/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/environments/kitchen/composite/making_smoothies/__init__.py b/robocasa/environments/kitchen/composite/making_smoothies/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/environments/kitchen/composite/making_tea/__init__.py b/robocasa/environments/kitchen/composite/making_tea/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/environments/kitchen/composite/measuring_ingredients/__init__.py b/robocasa/environments/kitchen/composite/measuring_ingredients/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/environments/kitchen/composite/plating_food/__init__.py b/robocasa/environments/kitchen/composite/plating_food/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/environments/kitchen/composite/preparing_hot_chocolate/__init__.py b/robocasa/environments/kitchen/composite/preparing_hot_chocolate/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/environments/kitchen/composite/simmering_sauces/__init__.py b/robocasa/environments/kitchen/composite/simmering_sauces/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/environments/kitchen/composite/slicing_meat/__init__.py b/robocasa/environments/kitchen/composite/slicing_meat/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/models/assets/box_links/box_links_assets.json b/robocasa/models/assets/box_links/box_links_assets.json
+new file mode 100644
+index 0000000..1d88908
+--- /dev/null
++++ b/robocasa/models/assets/box_links/box_links_assets.json
+@@ -0,0 +1,9 @@
++{
++  "aigen_objs": "https://utexas.box.com/s/nwi1vrn5pgbo95kushkasa3nx1i012ff",
++  "fixtures": "https://utexas.box.com/s/zt9vbo38yb9f1alw9iuahck55hoa65y6",
++  "fixtures_lightwheel": "https://utexas.box.com/s/idbncsadpnaz1jfl4i6m8qejawk7p9pi",
++  "generative_textures": "https://utexas.box.com/s/ebaad09k82tmfmlq6ohdkmrh8izl9vn5",
++  "objaverse": "https://utexas.box.com/s/03eionyo8fk3a9dsksq9jb8du5lqfw8h",
++  "objects_lightwheel": "https://utexas.box.com/s/vckqvvkh1z8t69k8qcpcmee6k66stii4",
++  "textures": "https://utexas.box.com/s/4i85ileasdvstmlln5sbvzptz7keuoy1"
++}
+\ No newline at end of file
+diff --git a/robocasa/models/assets/box_links/box_links_ds.json b/robocasa/models/assets/box_links/box_links_ds.json
+new file mode 100644
+index 0000000..c176f71
+--- /dev/null
++++ b/robocasa/models/assets/box_links/box_links_ds.json
+@@ -0,0 +1,352 @@
++{
++  "pretrain/atomic/AdjustToasterOvenTemperature/20250820/lerobot.tar": "https://utexas.box.com/s/h0b3914va87p9d23o1efibppvvzc5j55",
++  "pretrain/atomic/AdjustWaterTemperature/20250820/lerobot.tar": "https://utexas.box.com/s/77clgoo7yroaco02944g39qz7ptvg2se",
++  "pretrain/atomic/CheesyBread/20250714/lerobot.tar": "https://utexas.box.com/s/nu8m0b1dsuj55c6anljlcr0fjm4fr6pz",
++  "pretrain/atomic/CloseBlenderLid/20250822/lerobot.tar": "https://utexas.box.com/s/1as1s7dfkjkix7wziaz8629u6dj24tm2",
++  "pretrain/atomic/CloseCabinet/20250819/lerobot.tar": "https://utexas.box.com/s/56pi6wwsjhqzza7ezke6jxz66kf6ph9d",
++  "pretrain/atomic/CloseDishwasher/20250820/lerobot.tar": "https://utexas.box.com/s/lkpqf4q36zwcne7yf3cfs7nuceha7rjc",
++  "pretrain/atomic/CloseDrawer/20250819/lerobot.tar": "https://utexas.box.com/s/nvrtrm29t0i438c1g1erlvqhxttnl46f",
++  "pretrain/atomic/CloseElectricKettleLid/20250820/lerobot.tar": "https://utexas.box.com/s/oz6gswnxtuov5smcaty1k6bsbpwaa7pa",
++  "pretrain/atomic/CloseFridge/20250819/lerobot.tar": "https://utexas.box.com/s/kd9kx4l400jyq06uyc0cqdmfclc1s7gx",
++  "pretrain/atomic/CloseFridgeDrawer/20250821/lerobot.tar": "https://utexas.box.com/s/qrz4lv549vz3eln4u1xx99i5kxfksmjo",
++  "pretrain/atomic/CloseMicrowave/20250819/lerobot.tar": "https://utexas.box.com/s/wiunvswubst88t8x7cy00udi4k7q78jr",
++  "pretrain/atomic/CloseOven/20250820/lerobot.tar": "https://utexas.box.com/s/ylq3hkrw6mfhtf9e8cagyb3popophtcc",
++  "pretrain/atomic/CloseStandMixerHead/20250820/lerobot.tar": "https://utexas.box.com/s/hniiw8kidpmnkvllg3ntyq56n06jd66f",
++  "pretrain/atomic/CloseToasterOvenDoor/20250820/lerobot.tar": "https://utexas.box.com/s/tvqrihp393juqfv1a2715cuennr1m2g2",
++  "pretrain/atomic/CoffeeServeMug/20250819/lerobot.tar": "https://utexas.box.com/s/ibwjkokuk5nbbty5tmted6x1ivhx8k2i",
++  "pretrain/atomic/CoffeeSetupMug/20250819/lerobot.tar": "https://utexas.box.com/s/0mka48bl1kornjb9osxotmb10535cojv",
++  "pretrain/atomic/LowerHeat/20250805/lerobot.tar": "https://utexas.box.com/s/uubz4x81m17z6zkhswobdt9o4n1m2x2z",
++  "pretrain/atomic/MakeIcedCoffee/20250801/lerobot.tar": "https://utexas.box.com/s/dsuxb9wtjgoet0taov69jddind8qpl6n",
++  "pretrain/atomic/NavigateKitchen/20250821/lerobot.tar": "https://utexas.box.com/s/4ja0a2cy1ph0193w9majd0ox51mdzj7z",
++  "pretrain/atomic/OpenBlenderLid/20250822/lerobot.tar": "https://utexas.box.com/s/hwmpnoj1vyfcs7gs8j8wpdivk7laimh8",
++  "pretrain/atomic/OpenCabinet/20250819/lerobot.tar": "https://utexas.box.com/s/xfg5pamn63h8r0mfjgx04sxi3jpyvy58",
++  "pretrain/atomic/OpenDishwasher/20250820/lerobot.tar": "https://utexas.box.com/s/cn13od342z0046si983deodgtxkimor9",
++  "pretrain/atomic/OpenDrawer/20250819/lerobot.tar": "https://utexas.box.com/s/1wh3r8fumly55x8orq4hynzdvui61adj",
++  "pretrain/atomic/OpenElectricKettleLid/20250820/lerobot.tar": "https://utexas.box.com/s/xywmovoafrygd4ry2mxdy56o9y3pt805",
++  "pretrain/atomic/OpenFridge/20250819/lerobot.tar": "https://utexas.box.com/s/8b1qfa4ql1zubpufz0xhobh9f8rslz1c",
++  "pretrain/atomic/OpenFridgeDrawer/20250821/lerobot.tar": "https://utexas.box.com/s/zfes13imtdxt0csy46cga4b0qi3ipr2w",
++  "pretrain/atomic/OpenMicrowave/20250819/lerobot.tar": "https://utexas.box.com/s/hsndmkr9gm4q00ay1sidjpbhixe6b82u",
++  "pretrain/atomic/OpenOven/20250820/lerobot.tar": "https://utexas.box.com/s/wm696hf03usgrjsqjkdmnbchfpf6ujvu",
++  "pretrain/atomic/OpenStandMixerHead/20250820/lerobot.tar": "https://utexas.box.com/s/bbcwsuneusxu2sx9skuai8oglkio8nca",
++  "pretrain/atomic/OpenToasterOvenDoor/20250820/lerobot.tar": "https://utexas.box.com/s/elr8b557cy5vc0pfgwt4wwt9lwj8sltj",
++  "pretrain/atomic/PackDessert/20250806/lerobot.tar": "https://utexas.box.com/s/lkqzakw9mwe0f22p7x22n6xlhvryqly9",
++  "pretrain/atomic/PickPlaceCabinetToCounter/20250819/lerobot.tar": "https://utexas.box.com/s/u4jnblpqftlg2e3nafmh426sjm3xdo3r",
++  "pretrain/atomic/PickPlaceCounterToBlender/20250822/lerobot.tar": "https://utexas.box.com/s/lp7pwe2cn245cp8568472d876xxb9bgs",
++  "pretrain/atomic/PickPlaceCounterToCabinet/20250819/lerobot.tar": "https://utexas.box.com/s/myhvbjtfii7at6itjepbivcuo1y8krbp",
++  "pretrain/atomic/PickPlaceCounterToDrawer/20250821/lerobot.tar": "https://utexas.box.com/s/ptft0eb0gc0q4o4k3zsl886a2zq18t2n",
++  "pretrain/atomic/PickPlaceCounterToMicrowave/20250819/lerobot.tar": "https://utexas.box.com/s/h1c72tmzbsmi28c5k0k7n5xa3houq9cm",
++  "pretrain/atomic/PickPlaceCounterToOven/20250819/lerobot.tar": "https://utexas.box.com/s/ts6s7u1xvzicffn0m7y4hkiqxnf6z17i",
++  "pretrain/atomic/PickPlaceCounterToSink/20250819/lerobot.tar": "https://utexas.box.com/s/9cv0clw8zw4sfahtu81g4uizpb0stpwa",
++  "pretrain/atomic/PickPlaceCounterToStandMixer/20250820/lerobot.tar": "https://utexas.box.com/s/owxa0ua7ivh8wx63zyfw9fvdb7n7gkdc",
++  "pretrain/atomic/PickPlaceCounterToStove/20250819/lerobot.tar": "https://utexas.box.com/s/ddqy3klmtxeai90ujtheqgqqydk0ngji",
++  "pretrain/atomic/PickPlaceCounterToToasterOven/20250819/lerobot.tar": "https://utexas.box.com/s/dck3ib92o64ugkt8cwbavn6rcrvc1hza",
++  "pretrain/atomic/PickPlaceDrawerToCounter/20250820/lerobot.tar": "https://utexas.box.com/s/5l71w2s7phg243r84z1t2tzjjlscpkbo",
++  "pretrain/atomic/PickPlaceFridgeDrawerToShelf/20250821/lerobot.tar": "https://utexas.box.com/s/59cwdh9mlx23pc9iyzfkf5hdqdrswybm",
++  "pretrain/atomic/PickPlaceFridgeShelfToDrawer/20250821/lerobot.tar": "https://utexas.box.com/s/al757bnhc6vcz6bqh9y9jnidvqhx8rr3",
++  "pretrain/atomic/PickPlaceMicrowaveToCounter/20250819/lerobot.tar": "https://utexas.box.com/s/a4o8dso8wwazjgnb0q334hq8bvbizdce",
++  "pretrain/atomic/PickPlaceSinkToCounter/20250819/lerobot.tar": "https://utexas.box.com/s/yeglgmnrbgv1omfsqr986llfxby06x2b",
++  "pretrain/atomic/PickPlaceStoveToCounter/20250819/lerobot.tar": "https://utexas.box.com/s/h1te73m68o9qkbqewf8vl3z1uqsuagwy",
++  "pretrain/atomic/PickPlaceToasterOvenToCounter/20250819/lerobot.tar": "https://utexas.box.com/s/okb7rqb42n57sddhcsucew4cc80gxyig",
++  "pretrain/atomic/PickPlaceToasterToCounter/20250819/lerobot.tar": "https://utexas.box.com/s/hw71b48mkju2vz173lsxkwqtilki9s4a",
++  "pretrain/atomic/PreheatOven/20250903/lerobot.tar": "https://utexas.box.com/s/pt3b31shfqc7cfl5b5eubv1tp49bzp12",
++  "pretrain/atomic/SlideDishwasherRack/20250820/lerobot.tar": "https://utexas.box.com/s/chykvqtpqe7nk63tfvq93y7fq1d36f0x",
++  "pretrain/atomic/SlideOvenRack/20250820/lerobot.tar": "https://utexas.box.com/s/76aplqbkkfxqor0425yk78sp81otjmtx",
++  "pretrain/atomic/SlideToasterOvenRack/20250820/lerobot.tar": "https://utexas.box.com/s/6cgnnedgfkpzwbx4mxs2q2qouodd4zik",
++  "pretrain/atomic/StartCoffeeMachine/20250819/lerobot.tar": "https://utexas.box.com/s/nuxedfa2q9c0ameuuv1p1p33bxawzk44",
++  "pretrain/atomic/TurnOffMicrowave/20250819/lerobot.tar": "https://utexas.box.com/s/kc6su1ons26ek376e0im6wtq8oon3omb",
++  "pretrain/atomic/TurnOffSinkFaucet/20250819/lerobot.tar": "https://utexas.box.com/s/rad2425851i9eehaoumh1op71mxrnh8z",
++  "pretrain/atomic/TurnOffStove/20250819/lerobot.tar": "https://utexas.box.com/s/felqfh6109b36y3b0q8a9w742csojtlk",
++  "pretrain/atomic/TurnOnBlender/20250822/lerobot.tar": "https://utexas.box.com/s/76lkwmzhcekpffs3cq7hbybsvdd55btl",
++  "pretrain/atomic/TurnOnElectricKettle/20250820/lerobot.tar": "https://utexas.box.com/s/183i98pu2opkn92cpihhhwiv0xiek9bc",
++  "pretrain/atomic/TurnOnMicrowave/20250819/lerobot.tar": "https://utexas.box.com/s/7alz6aevqinrny6ggbl83ld3ty3w27lf",
++  "pretrain/atomic/TurnOnSinkFaucet/20250819/lerobot.tar": "https://utexas.box.com/s/3anr1aa9obr6surhz83npcsz77fevfsb",
++  "pretrain/atomic/TurnOnStove/20250819/lerobot.tar": "https://utexas.box.com/s/l8my16o129y0yjyo5t16t6ijud2kmz7g",
++  "pretrain/atomic/TurnOnToaster/20250820/lerobot.tar": "https://utexas.box.com/s/scjjcg9tw9o9sf3rlk2gcc4vapnv7pfn",
++  "pretrain/atomic/TurnOnToasterOven/20250820/lerobot.tar": "https://utexas.box.com/s/nhqcpfvibyo5ctabai4ljn0buf64ob04",
++  "pretrain/atomic/TurnSinkSpout/20250820/lerobot.tar": "https://utexas.box.com/s/zhqk8q1zreou30hqmsmp4c6qikb9y34w",
++  "pretrain/composite/AddIceCubes/20250829/lerobot.tar": "https://utexas.box.com/s/7bhlkcddwr1l8llmwhafke9sev9wa9q9",
++  "pretrain/composite/AddLemonToFish/20250804/lerobot.tar": "https://utexas.box.com/s/yugrd06w3owah2uwlxosfwl7r16ug1o5",
++  "pretrain/composite/AddMarshmallow/20250805/lerobot.tar": "https://utexas.box.com/s/blggj43cbj6uslrv0pre5kwpje9l4ir9",
++  "pretrain/composite/AddSugarCubes/20250804/lerobot.tar": "https://utexas.box.com/s/5bw72z6qjfzjumwh19upm4j6nysozosk",
++  "pretrain/composite/AddSweetener/20250829/lerobot.tar": "https://utexas.box.com/s/s4nmxi8ziv9uocq3cifftk2r8rcwclxt",
++  "pretrain/composite/AdjustHeat/20250724/lerobot.tar": "https://utexas.box.com/s/0puhae1wholhhwdilkykeptr8tgnerqk",
++  "pretrain/composite/AfterwashSorting/20250723/lerobot.tar": "https://utexas.box.com/s/mneo7zcow8kn8b37q9ygkg4lt7v1pr68",
++  "pretrain/composite/AirDryFruit/20250718/lerobot.tar": "https://utexas.box.com/s/qdiq662sdj97kahwb5aifpxyzpq5zazp",
++  "pretrain/composite/AlcoholServingPrep/20250724/lerobot.tar": "https://utexas.box.com/s/9z95vrq0hhc46c4afb5n7wz90cz65202",
++  "pretrain/composite/AlignSilverware/20250801/lerobot.tar": "https://utexas.box.com/s/hehxcmkhgimd6gq3tk0yw4s8affptg85",
++  "pretrain/composite/ArrangeBreadBowl/20250903/lerobot.tar": "https://utexas.box.com/s/oqowgsjk3g8sfdli94upbfb6tg0pmvn0",
++  "pretrain/composite/ArrangeBuffetDessert/20250730/lerobot.tar": "https://utexas.box.com/s/fhkpbc36zibqic4o3i2sddiccjhh16yw",
++  "pretrain/composite/ArrangeDrinkware/20250902/lerobot.tar": "https://utexas.box.com/s/5zwti9sufin7v82dmch71b2pehx9mllz",
++  "pretrain/composite/ArrangeTeaAccompaniments/20250805/lerobot.tar": "https://utexas.box.com/s/c8qhs9pfh8aj6r7mmlyov5sleyz1pqu0",
++  "pretrain/composite/ArrangeUtensilsByType/20250805/lerobot.tar": "https://utexas.box.com/s/13rtrb8xsgbz52v5nxs2i81dnaop5stz",
++  "pretrain/composite/ArrangeVegetables/20250714/lerobot.tar": "https://utexas.box.com/s/v7tmmb50o074jp70vwqwuubmtmdg8u4v",
++  "pretrain/composite/AssembleCookingArray/20250721/lerobot.tar": "https://utexas.box.com/s/ozl7uc9ky3mp5nty4qc5w45lql4z7hle",
++  "pretrain/composite/BalancedMealPrep/20250729/lerobot.tar": "https://utexas.box.com/s/ow8prk8jxgdza4l21lrzjuleodrbievv",
++  "pretrain/composite/BeverageOrganization/20250725/lerobot.tar": "https://utexas.box.com/s/drfkohtidyu0bv8wclt6vjgaa92t80ww",
++  "pretrain/composite/BeverageSorting/20250718/lerobot.tar": "https://utexas.box.com/s/1n952ea1nnyg3qof43v6cd8kvv7hloft",
++  "pretrain/composite/BlendIngredients/20250829/lerobot.tar": "https://utexas.box.com/s/xsmclbdsf7zml31z7vpbk5zebeegxbsf",
++  "pretrain/composite/BlendMarinade/20250902/lerobot.tar": "https://utexas.box.com/s/dxcn56fvesy3vdivuzlfag5msh2votpz",
++  "pretrain/composite/BowlAndCup/20250715/lerobot.tar": "https://utexas.box.com/s/j84uudn4saei4ar94fky0drb7axd6nmu",
++  "pretrain/composite/BreadAndCheese/20250723/lerobot.tar": "https://utexas.box.com/s/zg3jy0bvoe74jyj6cvy887vzwz4teu4b",
++  "pretrain/composite/BreadSetupSlicing/20250719/lerobot.tar": "https://utexas.box.com/s/fqea7oxkdoaahpz9kragz5nkgzdqp35o",
++  "pretrain/composite/BuildAppetizerPlate/20250804/lerobot.tar": "https://utexas.box.com/s/swj9bwq2mob9vu9yauhbne3ik7hi6jyv",
++  "pretrain/composite/ButterOnPan/20250724/lerobot.tar": "https://utexas.box.com/s/915kyvpmdewgxojpcg3g5kvr8ly57x9b",
++  "pretrain/composite/CandleCleanup/20250721/lerobot.tar": "https://utexas.box.com/s/dvnicmp9ymv3vxg66urlglrkjt8y3nev",
++  "pretrain/composite/CerealAndBowl/20250725/lerobot.tar": "https://utexas.box.com/s/lco536op5fyrwjzsc7xxfy75jv1k712o",
++  "pretrain/composite/ChooseMeasuringCup/20250718/lerobot.tar": "https://utexas.box.com/s/ajoxenzikvnm172x4qw189klnddq8vqw",
++  "pretrain/composite/ChooseRipeFruit/20250901/lerobot.tar": "https://utexas.box.com/s/x9qchf2wjsjtbag4pvquvlvohft93bpa",
++  "pretrain/composite/CleanBoard/20250729/lerobot.tar": "https://utexas.box.com/s/vj84srf7b8uy64f5508xbw6nxgi8sjhl",
++  "pretrain/composite/CleanMicrowave/20250724/lerobot.tar": "https://utexas.box.com/s/mwtgbtjbynv6oh7cjapr5kx9yfu9uwdy",
++  "pretrain/composite/ClearClutter/20250723/lerobot.tar": "https://utexas.box.com/s/83pfng3pxnhn9ou015t9pcf77f9iehz3",
++  "pretrain/composite/ClearCuttingBoard/20250719/lerobot.tar": "https://utexas.box.com/s/4p9ct6266jpj2jqw4xsm0kb7afgfb1na",
++  "pretrain/composite/ClearFoodWaste/20250728/lerobot.tar": "https://utexas.box.com/s/yh5y492n81gwfpi2j4jy3wcskqk1zy17",
++  "pretrain/composite/ClearFreezer/20250807/lerobot.tar": "https://utexas.box.com/s/v894wsn2tuz05f6i3zr6coyqh2yoap15",
++  "pretrain/composite/ClearReceptaclesForCleaning/20250721/lerobot.tar": "https://utexas.box.com/s/gg05fzlfm9rgggmrapluetwu1irpt0e9",
++  "pretrain/composite/ClearSink/20250717/lerobot.tar": "https://utexas.box.com/s/d3iwn243mqikltc4l81xblulusvjl9a8",
++  "pretrain/composite/ClearSinkArea/20250728/lerobot.tar": "https://utexas.box.com/s/8d6zytcpik5guklabpofi625je7ldq7x",
++  "pretrain/composite/ClearSinkSpace/20250718/lerobot.tar": "https://utexas.box.com/s/7w352s4eyfxgmrbobboxwpmpij8y401x",
++  "pretrain/composite/CollectWashingSupplies/20250717/lerobot.tar": "https://utexas.box.com/s/yfgo2cb4fndkmj6y84bhxlq1lyfnsriz",
++  "pretrain/composite/ColorfulSalsa/20250719/lerobot.tar": "https://utexas.box.com/s/q2gmvb8f5obu1380t4hrlxlqv10kamvg",
++  "pretrain/composite/CondimentCollection/20250721/lerobot.tar": "https://utexas.box.com/s/hmfrcofr9pplihkhqcilt5ld747n8cnp",
++  "pretrain/composite/CookieDoughPrep/20250728/lerobot.tar": "https://utexas.box.com/s/5ezyquzoga60veietp9bsum29td2px1h",
++  "pretrain/composite/CoolBakedCake/20250729/lerobot.tar": "https://utexas.box.com/s/hc6h13e1tyc8oxznf38xyykafsfz66ox",
++  "pretrain/composite/CoolKettle/20250717/lerobot.tar": "https://utexas.box.com/s/ebnit3rlqizhyor9tv0o74m2l4ogj3cz",
++  "pretrain/composite/CreateChildFriendlyFridge/20250826/lerobot.tar": "https://utexas.box.com/s/lm4cf32r6rcrfvg0patq8hqqn0htxmp4",
++  "pretrain/composite/CupcakeCleanup/20250716/lerobot.tar": "https://utexas.box.com/s/9bfpf3m05spz0h38s9hoi09zk8qha5jt",
++  "pretrain/composite/CutBuffetPizza/20250730/lerobot.tar": "https://utexas.box.com/s/yxttkmjlyompptqsf0la0tk9ekong4ow",
++  "pretrain/composite/DateNight/20250725/lerobot.tar": "https://utexas.box.com/s/7mtkxa384u478ekt51kr04jbrfqfcug8",
++  "pretrain/composite/DefrostByCategory/20250716/lerobot.tar": "https://utexas.box.com/s/dlugbzf5nusmnvk59exolkwr6h6oy1mf",
++  "pretrain/composite/DeliverBrewedCoffee/20250904/lerobot.tar": "https://utexas.box.com/s/mcy34pc1u68eiy4q0houlmyuj1otu41l",
++  "pretrain/composite/DeliverStraw/20250723/lerobot.tar": "https://utexas.box.com/s/l16sxw1kzwyr20cdp4ajp2qvrzfcdwi1",
++  "pretrain/composite/DessertAssembly/20250719/lerobot.tar": "https://utexas.box.com/s/osjdopafvtzkczwq6npoi80p748oayzv",
++  "pretrain/composite/DessertUpgrade/20250724/lerobot.tar": "https://utexas.box.com/s/uiwskzewrw6qyw8hisrlbsc1k08ia4zj",
++  "pretrain/composite/DisplayMeatVariety/20250804/lerobot.tar": "https://utexas.box.com/s/3z74hueza7dgx4goev1zbfu6sw9b85bo",
++  "pretrain/composite/DistributeChicken/20250807/lerobot.tar": "https://utexas.box.com/s/ufs444tb9ymvypocfngbo43d07ccx31h",
++  "pretrain/composite/DivideBasins/20250718/lerobot.tar": "https://utexas.box.com/s/ulkczcktr8lyc2jy49inito7j7dk067q",
++  "pretrain/composite/DivideBuffetTrays/20250730/lerobot.tar": "https://utexas.box.com/s/kycj8e4082i8evj0psk1twzrsryj24k9",
++  "pretrain/composite/DrainVeggies/20250723/lerobot.tar": "https://utexas.box.com/s/u7o0fw0fem3apd74rlyb82t6v0lsfl00",
++  "pretrain/composite/DrinkwareConsolidation/20250723/lerobot.tar": "https://utexas.box.com/s/2906k0ajccihk4ftowdr44rpc9zdfhym",
++  "pretrain/composite/DryDishes/20250714/lerobot.tar": "https://utexas.box.com/s/oi8c8no4rezp446mrw0h81fbi2bhexwe",
++  "pretrain/composite/DryDrinkware/20250714/lerobot.tar": "https://utexas.box.com/s/q9kvcwcqjvwf2vzz9wi77su23fxhl5xs",
++  "pretrain/composite/DumpLeftovers/20250902/lerobot.tar": "https://utexas.box.com/s/4vjwov9w6r1f7bo0j18k24cw16qgdxgt",
++  "pretrain/composite/FillBlenderJug/20250902/lerobot.tar": "https://utexas.box.com/s/1yayxe5xrjhicq9qyxn9b86r2jvi4pub",
++  "pretrain/composite/FillKettle/20250721/lerobot.tar": "https://utexas.box.com/s/cqa9xfzp8ozpeqajr51ubdi627kklfhj",
++  "pretrain/composite/FilterMicrowavableItem/20250901/lerobot.tar": "https://utexas.box.com/s/whcnndwb07cxzsrzng3fhejdtv22etef",
++  "pretrain/composite/FoodCleanup/20250725/lerobot.tar": "https://utexas.box.com/s/1moxixv0bbmwoh1kdpo06k3v0lkqxqe7",
++  "pretrain/composite/FreezeBottledWaters/20250807/lerobot.tar": "https://utexas.box.com/s/j4044y9rgnfcrp99lzpb4drdcl079t1s",
++  "pretrain/composite/FreezeCookedFood/20250804/lerobot.tar": "https://utexas.box.com/s/2qssvaioehlcjxdlnvvi7vpnni9z2mmr",
++  "pretrain/composite/FreezeIceTray/20250807/lerobot.tar": "https://utexas.box.com/s/5ttkrbtnbs9tf5owdjb5744ghmmi0l9j",
++  "pretrain/composite/FreshProduceOrganization/20250828/lerobot.tar": "https://utexas.box.com/s/o2lcmssfrsk6l3imed5p1gr9du9vt12x",
++  "pretrain/composite/FryingPanAdjustment/20250714/lerobot.tar": "https://utexas.box.com/s/mxsqbzeapt1o4bfo1zsorgixiap0dg11",
++  "pretrain/composite/GarnishCupcake/20250804/lerobot.tar": "https://utexas.box.com/s/4tkusksmszi6k83abj6b0ipkcxccrl8n",
++  "pretrain/composite/GatherCuttingTools/20250730/lerobot.tar": "https://utexas.box.com/s/9vfl2ab72b01veu11mloj4wtdveq93er",
++  "pretrain/composite/GatherMarinadeIngredients/20250729/lerobot.tar": "https://utexas.box.com/s/bxh0m9f85mgsjkm9k5x1q4oy3h2eu40x",
++  "pretrain/composite/GatherVegetables/20250805/lerobot.tar": "https://utexas.box.com/s/xzvf77zxw160c4qzg9chq8lkv6s7zmwr",
++  "pretrain/composite/GetToastedBread/20250731/lerobot.tar": "https://utexas.box.com/s/0wluf4r2skmp6c3nach7ylajtkg3auof",
++  "pretrain/composite/HeatMug/20250725/lerobot.tar": "https://utexas.box.com/s/hh96botskw86q0mp6628uafhijyb7n87",
++  "pretrain/composite/HeatMultipleWater/20250714/lerobot.tar": "https://utexas.box.com/s/4yiwaew042z85280vn7p1hykiw1qlmtf",
++  "pretrain/composite/HotDogSetup/20250805/lerobot.tar": "https://utexas.box.com/s/xd6wxym9jbpdlk19zftxwigs89zhyahf",
++  "pretrain/composite/JuiceFruitReamer/20250902/lerobot.tar": "https://utexas.box.com/s/0w2b80cb7i4ept2fprzwvde2l0lg2nx7",
++  "pretrain/composite/KettleBoiling/20250725/lerobot.tar": "https://utexas.box.com/s/kd5n5f2n026z8v9rroxkx5rek6zqnicw",
++  "pretrain/composite/LemonSeasoningFish/20250731/lerobot.tar": "https://utexas.box.com/s/0hzn6396ryftaig5s5ehvyjayqe3cgqw",
++  "pretrain/composite/LineUpCondiments/20250731/lerobot.tar": "https://utexas.box.com/s/yxf2qjzwz6jq1e68f0nbjq9gxkzzwgyh",
++  "pretrain/composite/LoadCondimentsInFridge/20250826/lerobot.tar": "https://utexas.box.com/s/jzcpnkaiboe9mbiqees6hl4k9mff8u00",
++  "pretrain/composite/LoadDishwasher/20250717/lerobot.tar": "https://utexas.box.com/s/8kz74wy4atopdlghj0broqu3fwixqs3b",
++  "pretrain/composite/LoadFridgeByType/20250827/lerobot.tar": "https://utexas.box.com/s/o3k0klgzi239jonm2b65gld0pszx549r",
++  "pretrain/composite/LoadFridgeFifo/20250826/lerobot.tar": "https://utexas.box.com/s/dtd66wly46f912ctpn0m6ueia9j9ctpo",
++  "pretrain/composite/LoadPreparedFood/20250827/lerobot.tar": "https://utexas.box.com/s/qadmy8u426ug28owtbvmakrzs3xiqp1n",
++  "pretrain/composite/MakeFruitBowl/20250723/lerobot.tar": "https://utexas.box.com/s/uzx3vi603p84ob8cuht77xy41qrvcrd1",
++  "pretrain/composite/MakeLoadedPotato/20250724/lerobot.tar": "https://utexas.box.com/s/zvp198r72z9cvkxyrvf8c4dfei66pjav",
++  "pretrain/composite/MatchCupAndDrink/20250723/lerobot.tar": "https://utexas.box.com/s/fjwsvtovlfp5y5yv9mwgkbub3tfturf7",
++  "pretrain/composite/MaximizeFreezerSpace/20250807/lerobot.tar": "https://utexas.box.com/s/i73ch8ata1bza65fplvi91pumez2nzg5",
++  "pretrain/composite/MealPrepStaging/20250718/lerobot.tar": "https://utexas.box.com/s/w971x3fjyu3uax4e908lrzjd7c4qzbs7",
++  "pretrain/composite/MeatSkewerAssembly/20250804/lerobot.tar": "https://utexas.box.com/s/g5k93437jniujnz6th175r9xiv8g7lm7",
++  "pretrain/composite/MeatTransfer/20250721/lerobot.tar": "https://utexas.box.com/s/ndgwgo43ccly1izk800p9tw4b7f625bj",
++  "pretrain/composite/MicrowaveCorrectMeal/20250901/lerobot.tar": "https://utexas.box.com/s/yeq5r17dc7oj3n7o0f15noh6ooyexlh8",
++  "pretrain/composite/MicrowaveDefrostMeat/20250901/lerobot.tar": "https://utexas.box.com/s/77gpvw9gpal4vc55tu2n2lvmipj99n2x",
++  "pretrain/composite/MicrowaveThawing/20250715/lerobot.tar": "https://utexas.box.com/s/3dvquvh4btsrdkfz0k0igwf05p05mduy",
++  "pretrain/composite/MicrowaveThawingFridge/20250730/lerobot.tar": "https://utexas.box.com/s/blhajjjq5os5xrqpf09dulfmqw3idwk8",
++  "pretrain/composite/MixCakeFrosting/20250728/lerobot.tar": "https://utexas.box.com/s/b8o8dajqovn8a029mxn8xioq7i3vgwck",
++  "pretrain/composite/MixedFruitPlatter/20250804/lerobot.tar": "https://utexas.box.com/s/pln9wxhnpdgqmwbt2x31wg1rp59yyx6k",
++  "pretrain/composite/MoveFreezerToFridge/20250827/lerobot.tar": "https://utexas.box.com/s/ox0667zp3eujmqqkoqud5aj7bm148dkv",
++  "pretrain/composite/MoveFridgeToFreezer/20250807/lerobot.tar": "https://utexas.box.com/s/291259geqgla4fdlr5ut3gxfyr0d6gzi",
++  "pretrain/composite/MoveToCounter/20250729/lerobot.tar": "https://utexas.box.com/s/p3tvutqezobfcl1plg5ai18yvyzymh9e",
++  "pretrain/composite/MoveToFreezerDrawer/20250902/lerobot.tar": "https://utexas.box.com/s/nylfovvd8cpl6wfcyv0lfq7vit19k2d2",
++  "pretrain/composite/MultistepSteaming/20250724/lerobot.tar": "https://utexas.box.com/s/9qa27kouice7fourmkyqyxkwoyt1nhs2",
++  "pretrain/composite/OrganizeBakingIngredients/20250725/lerobot.tar": "https://utexas.box.com/s/jyby99ys8j5wy5si6j973ig3w3nyjxcs",
++  "pretrain/composite/OrganizeCleaningSupplies/20250723/lerobot.tar": "https://utexas.box.com/s/ppnprpidm7hkhq8lygnz5zdt0rw9spx8",
++  "pretrain/composite/OrganizeCoffeeCondiments/20250731/lerobot.tar": "https://utexas.box.com/s/yb9j477eq95ycevxcr608k3r7ixmphzv",
++  "pretrain/composite/OrganizeCondiments/20250731/lerobot.tar": "https://utexas.box.com/s/x3nkhiyjf3uqijk305xf0ksllr5hx74x",
++  "pretrain/composite/OrganizeMetallicUtensils/20250806/lerobot.tar": "https://utexas.box.com/s/7ic0d3392dqbg8f4ou3zn6pk5wlgwt78",
++  "pretrain/composite/OrganizeMugsByHandle/20250718/lerobot.tar": "https://utexas.box.com/s/57wmrs8ptxrxbjf5qzgv4mtk9p6sclqt",
++  "pretrain/composite/OrganizeVegetables/20250719/lerobot.tar": "https://utexas.box.com/s/3ctna3zmm17u0uk4yyzzjjsz9ehxbywk",
++  "pretrain/composite/OvenBroilFish/20250805/lerobot.tar": "https://utexas.box.com/s/26gcf4n0qttdpgj62ezvok2j0fg7b4v3",
++  "pretrain/composite/PackFoodByTemp/20250805/lerobot.tar": "https://utexas.box.com/s/kankr4c3t6aaw094ne5lyd0hubopp8y6",
++  "pretrain/composite/PackFruitContainer/20250806/lerobot.tar": "https://utexas.box.com/s/3ndn09lvvouh4dzvkiydyph6a3ag1otk",
++  "pretrain/composite/PackIdenticalLunches/20250805/lerobot.tar": "https://utexas.box.com/s/d7iqbnvt3it2zzpsnj7vmvqzqbp3ekzv",
++  "pretrain/composite/PastryDisplay/20250724/lerobot.tar": "https://utexas.box.com/s/7b26kutnj1nl9iomye2ouaabqrwvnzk2",
++  "pretrain/composite/PlaceBeveragesTogether/20250730/lerobot.tar": "https://utexas.box.com/s/xm4qz35tkd6x0qoiauf3n89u9xx1nji0",
++  "pretrain/composite/PlaceDishesBySink/20250717/lerobot.tar": "https://utexas.box.com/s/l5gqs9tr85fc1cxs5z0bnwsww86q1te4",
++  "pretrain/composite/PlaceEqualIceCubes/20250801/lerobot.tar": "https://utexas.box.com/s/h0xdckubips5ekm7rtddcrth1hvm6bx6",
++  "pretrain/composite/PlaceFoodInBowls/20250725/lerobot.tar": "https://utexas.box.com/s/i79zh38ulwckz2me0hgw1k9wtql7lcxz",
++  "pretrain/composite/PlaceIceInCup/20250801/lerobot.tar": "https://utexas.box.com/s/qm0vronu5nai2fp59ycl4j0ammkvy815",
++  "pretrain/composite/PlaceMeatInMarinade/20250728/lerobot.tar": "https://utexas.box.com/s/raixojfmklktk3rqplyafe2ycgwgphkb",
++  "pretrain/composite/PlaceMicrowaveSafeItem/20250901/lerobot.tar": "https://utexas.box.com/s/75uesuk16rqtfjv2qgw0d70gi7lzdr5b",
++  "pretrain/composite/PlaceStraw/20250829/lerobot.tar": "https://utexas.box.com/s/8xzodgok4zcjrxaj9y9lsgv58y57bqid",
++  "pretrain/composite/PlaceVegetablesEvenly/20250724/lerobot.tar": "https://utexas.box.com/s/m8e10abuldpa6nugbr4t2redp5ctrxb5",
++  "pretrain/composite/PlaceVeggiesInDrawer/20250826/lerobot.tar": "https://utexas.box.com/s/9atz4pnyqj94ab1a7ls3sfwpbmugv591",
++  "pretrain/composite/PlateSteakMeal/20250902/lerobot.tar": "https://utexas.box.com/s/d79m6geidmi2xupqntikwi5ac4yzseqz",
++  "pretrain/composite/PlateStoreDinner/20250730/lerobot.tar": "https://utexas.box.com/s/mhls773gjgktgbiqe5zgoxzkqkalan2t",
++  "pretrain/composite/PortionFruitBowl/20250807/lerobot.tar": "https://utexas.box.com/s/uh7fg38qak1n7vd0yuxp7swdib498nv3",
++  "pretrain/composite/PortionInTupperware/20250807/lerobot.tar": "https://utexas.box.com/s/8teiscmufhcsl27rdns3z2gm69pd7eww",
++  "pretrain/composite/PortionOnSize/20250806/lerobot.tar": "https://utexas.box.com/s/oomat2iy9gjj772swjdus9mayjaa7g25",
++  "pretrain/composite/PortionYogurt/20250806/lerobot.tar": "https://utexas.box.com/s/zukmov5hi74ps9bawih1pkou91mqkloi",
++  "pretrain/composite/PreheatPot/20250724/lerobot.tar": "https://utexas.box.com/s/pyujc7w2kpt4c5p17xilpvbeklsb1myd",
++  "pretrain/composite/PrepareBroilingStation/20250804/lerobot.tar": "https://utexas.box.com/s/s32xbho52fou893oad0oxyvwfrgmeo30",
++  "pretrain/composite/PrepareCheeseStation/20250728/lerobot.tar": "https://utexas.box.com/s/g5jm33jsy9w4ns4z6fyuhsw03y6echbh",
++  "pretrain/composite/PrepareCocktailStation/20250801/lerobot.tar": "https://utexas.box.com/s/zvvi2pl6x5i8fq4kmnpgbturg0kovxpv",
++  "pretrain/composite/PrepareCoffee/20250716/lerobot.tar": "https://utexas.box.com/s/beg5nc516vyihz0gt0zwtn78zncmgt68",
++  "pretrain/composite/PrepareDishwasher/20250717/lerobot.tar": "https://utexas.box.com/s/og4t33wybb3uj767mqqym5p5h1e0kl7x",
++  "pretrain/composite/PrepareDrinkStation/20250723/lerobot.tar": "https://utexas.box.com/s/up7ryitzm3ko1p4m9pqm6om7uihsm60m",
++  "pretrain/composite/PrepareSausageCheese/20250805/lerobot.tar": "https://utexas.box.com/s/kh3ft6i9iehlcqsg5xoyqg3c9eddxxto",
++  "pretrain/composite/PrepareSmoothie/20250829/lerobot.tar": "https://utexas.box.com/s/q4c20k5juk86u4ma5u483zxcv6jlpoc0",
++  "pretrain/composite/PrepareSoupServing/20250724/lerobot.tar": "https://utexas.box.com/s/rnrp7kzums9wbqpk9ujyadlwamanf8e5",
++  "pretrain/composite/PrepareStoringLeftovers/20250903/lerobot.tar": "https://utexas.box.com/s/z1io1lxfz1c2qmjonglxhe6su1iwfc4h",
++  "pretrain/composite/PrepareToast/20250714/lerobot.tar": "https://utexas.box.com/s/k71rtahwqnah8rqcebcsodonn9o9cnj3",
++  "pretrain/composite/PrepForSanitizing/20250715/lerobot.tar": "https://utexas.box.com/s/8m2mm6zpyg2sukq69tf12ywzq6tabfvj",
++  "pretrain/composite/PrepForTenderizing/20250721/lerobot.tar": "https://utexas.box.com/s/luyerko884ihq6zx7a0swopd11wm5owe",
++  "pretrain/composite/PrepFridgeForCleaning/20250805/lerobot.tar": "https://utexas.box.com/s/aee0z5enfmvq047xk90vas9j8qd8cyn9",
++  "pretrain/composite/PrepMarinatingMeat/20250714/lerobot.tar": "https://utexas.box.com/s/up3y7qd9wzatcgkajw346yqvg6ga8cq0",
++  "pretrain/composite/PrepSinkForCleaning/20250806/lerobot.tar": "https://utexas.box.com/s/o459l5cusqy9h4z469nlprx4dxrbaf2m",
++  "pretrain/composite/PreRinseStation/20250717/lerobot.tar": "https://utexas.box.com/s/4vxa07ubte4cfv2gi9vn89od57p0wa4l",
++  "pretrain/composite/PreSoakPan/20250715/lerobot.tar": "https://utexas.box.com/s/1xlv8w13i4vgmp3jht3zfv3gzlrcaeie",
++  "pretrain/composite/PressChicken/20250717/lerobot.tar": "https://utexas.box.com/s/coi5zljhhr38xy6z2i6ub2b4ei2lwj3z",
++  "pretrain/composite/PrewashFoodAssembly/20250714/lerobot.tar": "https://utexas.box.com/s/7nyoxt4jh7agq3wv24nxyogg49treviw",
++  "pretrain/composite/PrewashFoodSorting/20250718/lerobot.tar": "https://utexas.box.com/s/vh8fmlya2m84v88b0t51c0glu8enflxb",
++  "pretrain/composite/QuickThaw/20250725/lerobot.tar": "https://utexas.box.com/s/lxogye1vukb2fm4qwz2lz1h36uh2o167",
++  "pretrain/composite/RearrangeFridgeItems/20250827/lerobot.tar": "https://utexas.box.com/s/yegkod6y5hr504r64isql7kve6r1dhvg",
++  "pretrain/composite/RecycleBottlesBySize/20250717/lerobot.tar": "https://utexas.box.com/s/iu3cracjgnjmhsu9g04m0o9o7q128jn1",
++  "pretrain/composite/RecycleSodaCans/20250719/lerobot.tar": "https://utexas.box.com/s/47qrdebl39ubi1j4a62oijx44xppxltq",
++  "pretrain/composite/RecycleStackedYogurt/20250717/lerobot.tar": "https://utexas.box.com/s/452plfpku5cowmqog1xqon6os9vtrjrd",
++  "pretrain/composite/RefillCondimentStation/20250827/lerobot.tar": "https://utexas.box.com/s/557di3hlbralzzk26ulb64k1go1fl2v1",
++  "pretrain/composite/ReheatMeal/20250901/lerobot.tar": "https://utexas.box.com/s/yapx1ops8juyhfv7oyio4cjpuw5w2xys",
++  "pretrain/composite/RemoveBroiledFish/20250805/lerobot.tar": "https://utexas.box.com/s/ge267rod56nktxy262uca2j46vnvbvnm",
++  "pretrain/composite/RemoveCuttingBoardItems/20250805/lerobot.tar": "https://utexas.box.com/s/qbntqw2yxe5ekesjsp6sg581ex6irhx5",
++  "pretrain/composite/ReorganizeFrozenVegetables/20250807/lerobot.tar": "https://utexas.box.com/s/jmcm1er8l185d0v7hovbadwcxf77el4q",
++  "pretrain/composite/ResetCabinetDoors/20250731/lerobot.tar": "https://utexas.box.com/s/urt8vvdhasgo22ml6h5sc15bhovofpvt",
++  "pretrain/composite/RestockBowls/20250725/lerobot.tar": "https://utexas.box.com/s/8kw0hgo90hqoqtuvcq7jyq3i19kuiofy",
++  "pretrain/composite/RestockCannedFood/20250827/lerobot.tar": "https://utexas.box.com/s/wcfgowult2d4fe60xnqhi3s32r7dfvgf",
++  "pretrain/composite/RestockPantry/20250714/lerobot.tar": "https://utexas.box.com/s/biu3mm3x7x8ktcbwk399vjsj2zx1t22q",
++  "pretrain/composite/RestockSinkSupplies/20250827/lerobot.tar": "https://utexas.box.com/s/ddq7uojkrcd8lam4yl0jwg0pe9bbn1w0",
++  "pretrain/composite/RetrieveIceTray/20250801/lerobot.tar": "https://utexas.box.com/s/3kg9ajkhf1ltlzt6agk859br6glpjjec",
++  "pretrain/composite/RetrieveMeat/20250728/lerobot.tar": "https://utexas.box.com/s/sautv6ogcvr19v7lws2qypnd9jrfkp1l",
++  "pretrain/composite/ReturnHeatedFood/20250901/lerobot.tar": "https://utexas.box.com/s/wo9oew66ykmrdw3a075hok42466vq5v4",
++  "pretrain/composite/ReturnWashingSupplies/20250717/lerobot.tar": "https://utexas.box.com/s/y5fsvu63x7xw2mh1sle5dgcddcdpvkkc",
++  "pretrain/composite/RinseBowls/20250718/lerobot.tar": "https://utexas.box.com/s/iiidwoll6wd0ime8qti72tbfigrlad58",
++  "pretrain/composite/RinseCuttingBoard/20250805/lerobot.tar": "https://utexas.box.com/s/l9fkfsu8gxe25fadsnqcx7mjjt9p42xt",
++  "pretrain/composite/RinseSinkBasin/20250728/lerobot.tar": "https://utexas.box.com/s/nudgium0aqxihejjjarla8jovh07y82i",
++  "pretrain/composite/RotatePan/20250717/lerobot.tar": "https://utexas.box.com/s/j7ofplmyc2dsmqsrusz1hnigmqjagmer",
++  "pretrain/composite/SanitizePrepCuttingBoard/20250806/lerobot.tar": "https://utexas.box.com/s/7vwzm87zinrdbjccstdbzkw552ut47lj",
++  "pretrain/composite/ScalePortioning/20250807/lerobot.tar": "https://utexas.box.com/s/8hv6vse096my0aodw0ahlakr1xvzci4p",
++  "pretrain/composite/ScrubBowl/20250717/lerobot.tar": "https://utexas.box.com/s/8zdfl2c2p3ekhkiizkyepyan9b7fh3zd",
++  "pretrain/composite/ScrubCuttingBoard/20250805/lerobot.tar": "https://utexas.box.com/s/jc8godpy57ak41o0jkq62j1klyf26vz3",
++  "pretrain/composite/SearingMeat/20250716/lerobot.tar": "https://utexas.box.com/s/u7shh93ppdygs6ir6soprenim4mlsndo",
++  "pretrain/composite/SeasoningSpiceSetup/20250728/lerobot.tar": "https://utexas.box.com/s/97zcef047xudhjks0lpx84vsr5bw3pm8",
++  "pretrain/composite/SeasoningSteak/20250731/lerobot.tar": "https://utexas.box.com/s/506b2few6z4e5i82fblx491ef41xenbc",
++  "pretrain/composite/ServeSteak/20250718/lerobot.tar": "https://utexas.box.com/s/kp9o7s2gcbuza89n02d9eb2igxu0a62t",
++  "pretrain/composite/ServeTea/20250805/lerobot.tar": "https://utexas.box.com/s/2t87dmt65mb4glf4xp6ko1chyd01jr9b",
++  "pretrain/composite/ServeWarmCroissant/20250731/lerobot.tar": "https://utexas.box.com/s/sdzlozg0rormvuzx2g34z7vypjmf9wsk",
++  "pretrain/composite/SetBowlsForSoup/20250716/lerobot.tar": "https://utexas.box.com/s/fw4gcyex23jhsjliffl0kbrbmoi3e8ys",
++  "pretrain/composite/SetupBowls/20250801/lerobot.tar": "https://utexas.box.com/s/rjwfz53e25m3dfx2mm1oq2pfpn74yjnl",
++  "pretrain/composite/SetupButterPlate/20250801/lerobot.tar": "https://utexas.box.com/s/8glhu9018ja8k4x5ua5un3w85h6czgjc",
++  "pretrain/composite/SetUpCuttingStation/20250729/lerobot.tar": "https://utexas.box.com/s/0nr147sc88fu82wkyvj00rv9mcwa12j6",
++  "pretrain/composite/SetupFruitBowl/20250801/lerobot.tar": "https://utexas.box.com/s/xpw2uqt1v843gky5fxvxpatuez8bogfv",
++  "pretrain/composite/SetupFrying/20250724/lerobot.tar": "https://utexas.box.com/s/3d7k7zcaqqtfj5wnzn4bnznruboms1z5",
++  "pretrain/composite/SetupSodaBowl/20250801/lerobot.tar": "https://utexas.box.com/s/jajgugkgdmyzuawxxlxbxdln6ictozgv",
++  "pretrain/composite/SetUpSpiceStation/20250731/lerobot.tar": "https://utexas.box.com/s/9jibns3e9ri0kkksnyxpgty9p2sfsedp",
++  "pretrain/composite/SetupWineGlasses/20250801/lerobot.tar": "https://utexas.box.com/s/j6q08e8ol6pikjbyslnvxjn95kn6ecbs",
++  "pretrain/composite/ShakePan/20250724/lerobot.tar": "https://utexas.box.com/s/yg5hhjh1521va10dck2ofkz58vkouj5t",
++  "pretrain/composite/SimmeringSauce/20250715/lerobot.tar": "https://utexas.box.com/s/sqhg39x2z2mi2rfv77oyxyttb1siki70",
++  "pretrain/composite/SizeSorting/20250714/lerobot.tar": "https://utexas.box.com/s/mhloqjk1pw29kfnoy8jrejk83yqg4md3",
++  "pretrain/composite/SnackSorting/20250718/lerobot.tar": "https://utexas.box.com/s/2vo4uba9qmdknc9z3oj946o7n37js8me",
++  "pretrain/composite/SoakSponge/20250718/lerobot.tar": "https://utexas.box.com/s/24yx6pkr5yyds5kmngi85fzdpngm4une",
++  "pretrain/composite/SortingCleanup/20250723/lerobot.tar": "https://utexas.box.com/s/r7y52c3yasvhpt80bb4s9b41c949zxo1",
++  "pretrain/composite/SpicyMarinade/20250715/lerobot.tar": "https://utexas.box.com/s/22hvwfz9cb4h2ey9a30a7mop9o3jhxkf",
++  "pretrain/composite/StackBowlsCabinet/20250717/lerobot.tar": "https://utexas.box.com/s/fnjjfu3acr070vtyguse5m7jxbafjpzf",
++  "pretrain/composite/StackBowlsInSink/20250714/lerobot.tar": "https://utexas.box.com/s/kxwqgvz33ci5gvx9rfg9ymvkukigu83x",
++  "pretrain/composite/StackCans/20250731/lerobot.tar": "https://utexas.box.com/s/p9s63bxid9yfv5pynkakyqpumkyt9lto",
++  "pretrain/composite/StartElectricKettle/20250717/lerobot.tar": "https://utexas.box.com/s/78q2qyzab7wxlhh4h0c3b5yyszdmuyt0",
++  "pretrain/composite/SteamInMicrowave/20250714/lerobot.tar": "https://utexas.box.com/s/c90d5egodijwbnxkp16nerplt44qwmjp",
++  "pretrain/composite/StirVegetables/20250807/lerobot.tar": "https://utexas.box.com/s/204fynq18u6khjsfofr3pz29c15qq2vq",
++  "pretrain/composite/StockingBreakfastFoods/20250715/lerobot.tar": "https://utexas.box.com/s/mc5fzfnyjap1zg1y418zep50h0x1z86h",
++  "pretrain/composite/StoreDumplings/20250804/lerobot.tar": "https://utexas.box.com/s/1llso4sjiliq14xtskt45w6zue8tdtni",
++  "pretrain/composite/StoreLeftoversByType/20250804/lerobot.tar": "https://utexas.box.com/s/tsblp8zm30wi1l2grxktivohkoy050kl",
++  "pretrain/composite/StoreLeftoversInBowl/20250804/lerobot.tar": "https://utexas.box.com/s/usm5topmjl4ug65xq3ukknksj7z6by2x",
++  "pretrain/composite/StrainerSetup/20250805/lerobot.tar": "https://utexas.box.com/s/7h1brexq82lkfazpvd54lugqoc0s1crl",
++  "pretrain/composite/SweetenCoffee/20250904/lerobot.tar": "https://utexas.box.com/s/xriht54w25dcdxi0wyp2r7vb28ierb52",
++  "pretrain/composite/SweetenHotChocolate/20250805/lerobot.tar": "https://utexas.box.com/s/l93npikc8p722cbte26xuu67pmvjrvz6",
++  "pretrain/composite/SweetSavoryToastSetup/20250721/lerobot.tar": "https://utexas.box.com/s/d7swik71fk13mv4mlv6nrsbxsc3iva63",
++  "pretrain/composite/ThawInSink/20250721/lerobot.tar": "https://utexas.box.com/s/muxjr45e44w3es1fzm62sm4bmpp4woer",
++  "pretrain/composite/TiltPan/20250808/lerobot.tar": "https://utexas.box.com/s/ix6xd393g00a8kxwwvt987pkfjpwugip",
++  "pretrain/composite/ToastBagel/20250731/lerobot.tar": "https://utexas.box.com/s/5h8c4bkct5js1c9ztwvbejkmkcu69zp6",
++  "pretrain/composite/ToastBaguette/20250731/lerobot.tar": "https://utexas.box.com/s/xr6uuqj4s2nxjcsqpk0ii9h18ai3cvko",
++  "pretrain/composite/ToastOnCorrectRack/20250731/lerobot.tar": "https://utexas.box.com/s/g7mg6xdmcqub5697w5pt3wst4vqmbnsq",
++  "pretrain/composite/TongBuffetSetup/20250730/lerobot.tar": "https://utexas.box.com/s/4qgvp71elebxkkhwogelygz30tphief2",
++  "pretrain/composite/TransportCookware/20250717/lerobot.tar": "https://utexas.box.com/s/a795vtm9sbiyqcc1dnnupz39dbe7j697",
++  "pretrain/composite/TurnOffSimmeredSauceHeat/20250728/lerobot.tar": "https://utexas.box.com/s/0uq09kzublqx01mkd9cy5u1i7lbntxt6",
++  "pretrain/composite/VeggieDipPrep/20250718/lerobot.tar": "https://utexas.box.com/s/4mxytbxyld1tvwmmujtkfzxixsuo1hy9",
++  "pretrain/composite/WarmCroissant/20250724/lerobot.tar": "https://utexas.box.com/s/b46oo0iatl4x7x4d5o38rq5w6sqr2vnk",
++  "pretrain/composite/WashFish/20250805/lerobot.tar": "https://utexas.box.com/s/g17memlr0ibzfdul0ithrlwztcn60abz",
++  "pretrain/composite/WashLettuce/20250723/lerobot.tar": "https://utexas.box.com/s/5lwd8syx0wrim6jz8g4km267s7bsvsyz",
++  "pretrain/composite/YogurtDelightPrep/20250725/lerobot.tar": "https://utexas.box.com/s/oknhcxvuoc60ms7qg2417cbvhbjtsaek",
++  "target/atomic/CloseBlenderLid/20250822/lerobot.tar": "https://utexas.box.com/s/7anj5ckrlitmvwbexhh9elt9tof9v8sh",
++  "target/atomic/CloseFridge/20250816/lerobot.tar": "https://utexas.box.com/s/6yw8qwkwufg7di063v7e5zbcyhgn8nlf",
++  "target/atomic/CloseToasterOvenDoor/20250818/lerobot.tar": "https://utexas.box.com/s/86caoedy7compqenfh5a8ry62xebruyh",
++  "target/atomic/CoffeeSetupMug/20250813/lerobot.tar": "https://utexas.box.com/s/rhrr67a994a16o25iprsfec07a1wmwm2",
++  "target/atomic/NavigateKitchen/20250821/lerobot.tar": "https://utexas.box.com/s/z1td67netd0yyi9iiglws8hzxl9ueklj",
++  "target/atomic/OpenCabinet/20250813/lerobot.tar": "https://utexas.box.com/s/b15gbqq99i6kx8bogkdkq9lvurhbg9xw",
++  "target/atomic/OpenDrawer/20250816/lerobot.tar": "https://utexas.box.com/s/mpztcjagk0fqs7e5360znjvhs08hnyjp",
++  "target/atomic/OpenStandMixerHead/20250818/lerobot.tar": "https://utexas.box.com/s/uf8tqixdm6elig7t3kgqnioxdnunxxqd",
++  "target/atomic/PickPlaceCounterToCabinet/20250811/lerobot.tar": "https://utexas.box.com/s/ersnvqs6rcy6yge2fy5hmna7d954v9ty",
++  "target/atomic/PickPlaceCounterToStove/20250818/lerobot.tar": "https://utexas.box.com/s/9zy06e4dcaxezsq35l6qpe39zi0uaqvh",
++  "target/atomic/PickPlaceDrawerToCounter/20250820/lerobot.tar": "https://utexas.box.com/s/xec45dl0meig2yl1v4cmi1hqxw3eu74l",
++  "target/atomic/PickPlaceSinkToCounter/20250813/lerobot.tar": "https://utexas.box.com/s/gtxm57dfse72c6zwbel05zhjritt1scq",
++  "target/atomic/PickPlaceToasterToCounter/20250817/lerobot.tar": "https://utexas.box.com/s/4gn9j4llpxb2v8pk2r00im1a1zz7qqqm",
++  "target/atomic/SlideDishwasherRack/20250820/lerobot.tar": "https://utexas.box.com/s/4mrm925oekfrlfyjlg9c8wflqktwla6y",
++  "target/atomic/TurnOffStove/20250812/lerobot.tar": "https://utexas.box.com/s/xsvs8uazyfwoeqij298gsax3b400b4h8",
++  "target/atomic/TurnOnElectricKettle/20250817/lerobot.tar": "https://utexas.box.com/s/ctirlg0mryjz511rb2pntdgmwir2m3vw",
++  "target/atomic/TurnOnMicrowave/20250813/lerobot.tar": "https://utexas.box.com/s/ta8tufw9408tzx3fxffwr5lh1hknp8fz",
++  "target/atomic/TurnOnSinkFaucet/20250812/lerobot.tar": "https://utexas.box.com/s/g0gamv85pvi4ab220szfhr72wg7tioap",
++  "target/composite/ArrangeBreadBasket/20250809/lerobot.tar": "https://utexas.box.com/s/7jgzm2brzvyknka6xge83ot21rwws9rd",
++  "target/composite/ArrangeTea/20250812/lerobot.tar": "https://utexas.box.com/s/1slqmm2stz2g0a3bavj6ums7ek64ht2m",
++  "target/composite/BreadSelection/20250815/lerobot.tar": "https://utexas.box.com/s/6o1ox753ry7wavwhc4fh34y3v1pczx3r",
++  "target/composite/CategorizeCondiments/20250814/lerobot.tar": "https://utexas.box.com/s/xuzdf1lfm9vzeoipi56iorzg2tt53y1a",
++  "target/composite/CuttingToolSelection/20250814/lerobot.tar": "https://utexas.box.com/s/k05932wjpc1xjvg6wyfengklxj7fokq4",
++  "target/composite/DeliverStraw/20250813/lerobot.tar": "https://utexas.box.com/s/tza1gj7kvysu3b7v7pe3ccsi4by8qkey",
++  "target/composite/GarnishPancake/20250815/lerobot.tar": "https://utexas.box.com/s/wshjpqv739wxu0zu47mtnlzehmm6ktoq",
++  "target/composite/GatherTableware/20250815/lerobot.tar": "https://utexas.box.com/s/aihrp20s9yoc73ngob1l6royp5gspldb",
++  "target/composite/GetToastedBread/20250812/lerobot.tar": "https://utexas.box.com/s/zxh96llta6cdh9amc9wo2hbdu7u706q1",
++  "target/composite/HeatKebabSandwich/20250813/lerobot.tar": "https://utexas.box.com/s/wwot1hszlxuptxjvcwkpu4q2xpg2ogsx",
++  "target/composite/KettleBoiling/20250814/lerobot.tar": "https://utexas.box.com/s/r3rwnzdw6caab3vivwv6uknl9sr8ru6j",
++  "target/composite/LoadDishwasher/20250811/lerobot.tar": "https://utexas.box.com/s/k1qxg8rgjs0le1cnv98xylysh9t0dd8z",
++  "target/composite/MakeIceLemonade/20250813/lerobot.tar": "https://utexas.box.com/s/spj7rp3j0q8qu1ncj5lc8bosnebmlpwl",
++  "target/composite/PackIdenticalLunches/20250815/lerobot.tar": "https://utexas.box.com/s/ic9q7o0s99boxmpqcl04iurj9dyt2lck",
++  "target/composite/PanTransfer/20250817/lerobot.tar": "https://utexas.box.com/s/734jsqsgy5uu66gufuj6ltl0oyjybf28",
++  "target/composite/PortionHotDogs/20250816/lerobot.tar": "https://utexas.box.com/s/vggfiwfep4n0jnm59a18qq3tcvmn8ccd",
++  "target/composite/PrepareCoffee/20250812/lerobot.tar": "https://utexas.box.com/s/6h5x8zxnzdd20h9kz7h85mz1bfo3u1lv",
++  "target/composite/PreSoakPan/20250809/lerobot.tar": "https://utexas.box.com/s/krqwe33yytnrse06xchr5e41sap41xfv",
++  "target/composite/RecycleBottlesByType/20250812/lerobot.tar": "https://utexas.box.com/s/iexgdqiq7tahatl4y98zwi5wu1ejj1sf",
++  "target/composite/RinseSinkBasin/20250816/lerobot.tar": "https://utexas.box.com/s/blk33oaca11933xgre1sxemmtluo46eo",
++  "target/composite/ScrubCuttingBoard/20250816/lerobot.tar": "https://utexas.box.com/s/yixaacen8dwnvlqmm9rmgf301nnwq6gk",
++  "target/composite/SearingMeat/20250812/lerobot.tar": "https://utexas.box.com/s/p2tngueixoz7v9jup2cr7905vbbbs77r",
++  "target/composite/SeparateFreezerRack/20250815/lerobot.tar": "https://utexas.box.com/s/qf9mnd9kixmwt0hnciqtm8gpm3sqoy56",
++  "target/composite/SetUpCuttingStation/20250817/lerobot.tar": "https://utexas.box.com/s/pqckoqqbkthmoph3zm3vmmyq1st3owrh",
++  "target/composite/StackBowlsCabinet/20250815/lerobot.tar": "https://utexas.box.com/s/ifg8homjllollqodp7atye0mzq7bsazb",
++  "target/composite/SteamInMicrowave/20250814/lerobot.tar": "https://utexas.box.com/s/orr1n70ald5dsep2kpdfnxo7jogcjqls",
++  "target/composite/StirVegetables/20250814/lerobot.tar": "https://utexas.box.com/s/f54ihxkmiiihnxnjvia54or0vqqorriw",
++  "target/composite/StoreLeftoversInBowl/20250813/lerobot.tar": "https://utexas.box.com/s/n69gzwudustsz0hc3txhqzhclnbpab6r",
++  "target/composite/WaffleReheat/20250817/lerobot.tar": "https://utexas.box.com/s/d3bwmx0r6h4nyuv7qhizsyy2380cu230",
++  "target/composite/WashFruitColander/20250811/lerobot.tar": "https://utexas.box.com/s/8omrgv8mqo2p5s1hqjmas67p30etsiic",
++  "target/composite/WashLettuce/20250814/lerobot.tar": "https://utexas.box.com/s/jmcowh1gtmshr52sc55p2ww265y97doh",
++  "target/composite/WeighIngredients/20250812/lerobot.tar": "https://utexas.box.com/s/lbecgm6e5bk4icwylttsrkfxszh7d154"
++}
+\ No newline at end of file
+diff --git a/robocasa/scripts/__init__.py b/robocasa/scripts/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/scripts/collect_demos.py b/robocasa/scripts/collect_demos.py
+index 08015cb..fa5005a 100644
+--- a/robocasa/scripts/collect_demos.py
++++ b/robocasa/scripts/collect_demos.py
+@@ -31,6 +31,11 @@ import robocasa
+ import robocasa.macros as macros
+ from robocasa.models.fixtures import FixtureType
+ from robocasa.utils.robomimic.robomimic_dataset_utils import convert_to_robomimic_format
++from robocasa.wrappers.enclosing_wall_render_wrapper import (
++    EnclosingWallRenderWrapper,
++    EnclosingWallHotkeyHandler,
++    install_enclosing_wall_hotkeys,
++)
+ 
+ 
+ def is_empty_input_spacemouse(action_dict):
+@@ -109,10 +114,16 @@ def collect_human_trajectory(
+ 
+     discard_traj = False
+ 
++    wall_hotkeys = EnclosingWallHotkeyHandler(env)
++
+     # Loop until we get a reset from the input or the task completes
+     while True:
+         start = time.time()
+ 
++        # Enclosing-wall hotkeys (Esc toggles; [ / ] force opaque), consumed before stepping.
++        if wall_hotkeys.consume_pending(render=render):
++            continue
++
+         # Set active robot
+         active_robot = env.robots[device.active_robot]
+         active_arm = device.active_arm
+@@ -488,6 +499,9 @@ if __name__ == "__main__":
+     # Wrap this with visualization wrapper
+     env = VisualizationWrapper(env)
+ 
++    # Optional enclosing wall transparency toggle (Esc / [ / ]) for UI only
++    env = EnclosingWallRenderWrapper(env, alpha=0.15, enabled=False)
++
+     # Grab reference to controller config and convert it to json-encoded string
+     env_info = json.dumps(config)
+ 
+@@ -505,6 +519,9 @@ if __name__ == "__main__":
+         all_eps_directory = os.path.join(demo_dir, "episodes")
+         env = DataCollectionWrapper(env, all_eps_directory, use_env_xml_for_reset=True)
+ 
++    # Esc toggles wall transparency; '[' / ']' force it OFF (also mjviewer camera keys).
++    install_enclosing_wall_hotkeys(env)
++
+     # initialize device
+     device = args.device
+     if device is None:
+diff --git a/robocasa/scripts/dataset_scripts/__init__.py b/robocasa/scripts/dataset_scripts/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/scripts/dataset_scripts/playback_dataset.py b/robocasa/scripts/dataset_scripts/playback_dataset.py
+index e90363c..b45e11e 100644
+--- a/robocasa/scripts/dataset_scripts/playback_dataset.py
++++ b/robocasa/scripts/dataset_scripts/playback_dataset.py
+@@ -14,6 +14,10 @@ import robocasa
+ from pathlib import Path
+ import robocasa.utils.lerobot_utils as LU
+ 
++from robocasa.scripts.dataset_scripts.playback_utils import (
++    resolve_instruction_from_ep_meta,
++)
++
+ 
+ def playback_trajectory_with_env(
+     env,
+@@ -58,8 +62,9 @@ def playback_trajectory_with_env(
+ 
+     if verbose:
+         ep_meta = json.loads(initial_state["ep_meta"])
+-        lang = ep_meta.get("lang", None)
+-        if lang is not None:
++        # Use exact instruction from episode; resolve placeholders (e.g. {condiment_lang}) from object_cfgs if needed
++        lang = resolve_instruction_from_ep_meta(ep_meta)
++        if lang:
+             print(colored(f"Instruction: {lang}", "green"))
+         print(colored("Spawning environment...", "yellow"))
+     reset_to(env, initial_state)
+diff --git a/robocasa/scripts/dataset_scripts/playback_dataset_hdf5.py b/robocasa/scripts/dataset_scripts/playback_dataset_hdf5.py
+index 4288666..35e3579 100644
+--- a/robocasa/scripts/dataset_scripts/playback_dataset_hdf5.py
++++ b/robocasa/scripts/dataset_scripts/playback_dataset_hdf5.py
+@@ -12,6 +12,10 @@ import traceback
+ import robosuite
+ import robocasa
+ 
++from robocasa.scripts.dataset_scripts.playback_utils import (
++    resolve_instruction_from_ep_meta,
++)
++
+ 
+ def playback_trajectory_with_env(
+     env,
+@@ -56,8 +60,8 @@ def playback_trajectory_with_env(
+ 
+     if verbose:
+         ep_meta = json.loads(initial_state["ep_meta"])
+-        lang = ep_meta.get("lang", None)
+-        if lang is not None:
++        lang = resolve_instruction_from_ep_meta(ep_meta)
++        if lang:
+             print(colored(f"Instruction: {lang}", "green"))
+         print(colored("Spawning environment...", "yellow"))
+     reset_to(env, initial_state)
+diff --git a/robocasa/scripts/dataset_scripts/playback_utils.py b/robocasa/scripts/dataset_scripts/playback_utils.py
+new file mode 100644
+index 0000000..751b6aa
+--- /dev/null
++++ b/robocasa/scripts/dataset_scripts/playback_utils.py
+@@ -0,0 +1,55 @@
++"""
++Shared helpers for dataset playback (instruction resolution, etc.).
++Used by playback_dataset.py and playback_dataset_hdf5.py.
++"""
++
++
++def _format_cat_as_lang(cat):
++    """Format object category for display (mirrors object_utils.get_obj_lang logic)."""
++    if not cat:
++        return ""
++    lang = cat.replace("_", " ")
++    if lang == "kettle electric":
++        lang = "electric kettle"
++    elif lang == "kettle non electric":
++        lang = "kettle"
++    elif lang == "bread flat":
++        lang = "bread"
++    elif lang == "oil and vinegar bottle":
++        lang = "oil/vinegar bottle"
++    elif lang == "salt and pepper shaker":
++        lang = "salt/pepper shaker"
++    elif lang == "jug wide opening":
++        lang = "jug"
++    return lang
++
++
++def resolve_instruction_from_ep_meta(ep_meta):
++    """
++    Return the exact instruction for this episode. Uses ep_meta['lang'] when present.
++    If the stored lang contains placeholders (e.g. {condiment_lang}), resolve them
++    from ep_meta['object_cfgs'] so playback shows the concrete instruction (e.g. 'ketchup').
++    """
++    lang = ep_meta.get("lang") or ""
++    if not lang:
++        return None
++    # Already resolved (no placeholders)
++    if "{" not in lang:
++        return lang
++    # Build substitutions from object_cfgs: obj_name -> lang, and obj_name_lang -> lang
++    object_cfgs = ep_meta.get("object_cfgs") or []
++    subs = {}
++    for cfg in object_cfgs:
++        name = cfg.get("name")
++        info = cfg.get("info") or {}
++        cat = info.get("cat")
++        if name and cat is not None:
++            obj_lang = _format_cat_as_lang(cat)
++            subs[name] = obj_lang
++            subs[f"{name}_lang"] = obj_lang
++    if not subs:
++        return lang
++    try:
++        return lang.format(**subs)
++    except KeyError:
++        return lang
+diff --git a/robocasa/scripts/download_datasets.py b/robocasa/scripts/download_datasets.py
+index 4ffe243..fa43d58 100644
+--- a/robocasa/scripts/download_datasets.py
++++ b/robocasa/scripts/download_datasets.py
+@@ -1,9 +1,12 @@
+ import argparse
++import json
+ import os
+ import tarfile
++import urllib.request
+ from pathlib import Path
+ 
+ from termcolor import colored
++from tqdm import tqdm
+ 
+ import robocasa
+ from robocasa.utils.dataset_registry import (
+@@ -12,7 +15,55 @@ from robocasa.utils.dataset_registry import (
+ )
+ from robocasa.macros import DATASET_BASE_PATH
+ from robocasa.utils.dataset_registry_utils import get_ds_meta
+-from huggingface_hub import hf_hub_download
++
++# path to the box_links_ds.json shipped with robocasa
++BOX_LINKS_DS_PATH = os.path.join(
++    robocasa.__path__[0], "models", "assets", "box_links", "box_links_ds.json"
++)
++with open(BOX_LINKS_DS_PATH, "r") as f:
++    BOX_LINKS_DS = json.load(f)
++
++
++def _get_direct_download_url(shared_url, ext="tar"):
++    """
++    Convert a Box shared link into a direct-download URL.
++    e.g. https://utexas.box.com/s/abc123  →
++         https://utexas.box.com/shared/static/abc123.tar
++    """
++    shared_id = shared_url.rstrip("/").split("/")[-1]
++    base = shared_url.split("/s/")[0]
++    return f"{base}/shared/static/{shared_id}.{ext}"
++
++
++class DownloadProgressBar(tqdm):
++    def update_to(self, b=1, bsize=1, tsize=None):
++        if tsize is not None:
++            self.total = tsize
++        self.update(b * bsize - self.n)
++
++
++def download_url(url, download_dir, fname=None, check_overwrite=True):
++    """
++    Downloads the file at the given url into the directory specified by @download_dir.
++    Prints a progress bar during the download using tqdm.
++    """
++    if fname is None:
++        fname = url.split("/")[-1]
++    file_to_write = os.path.join(download_dir, fname)
++
++    if check_overwrite and os.path.exists(file_to_write):
++        user_response = input(
++            f"Warning: file {file_to_write} already exists. Overwrite? y/n "
++        )
++        assert user_response.lower() in {
++            "yes",
++            "y",
++        }, "Did not receive confirmation. Aborting download."
++
++    print(colored(f"Downloading to {file_to_write}", "yellow"))
++
++    with DownloadProgressBar(unit="B", unit_scale=True, miniters=1, desc=fname) as t:
++        urllib.request.urlretrieve(url, filename=file_to_write, reporthook=t.update_to)
+ 
+ 
+ def download_datasets(
+@@ -57,7 +108,7 @@ def download_datasets(
+                     continue
+ 
+                 if not dryrun:
+-                    download_and_extract_from_hf(
++                    download_and_extract_from_box(
+                         destination=ds_path,
+                     )
+                 else:
+@@ -65,37 +116,58 @@ def download_datasets(
+                 print()
+ 
+ 
+-def download_and_extract_from_hf(destination):
+-    """Download a tar file from HF and extract it to the destination path."""
++def download_and_extract_from_box(destination):
++    """Download a tar file from Box and extract it to the destination path."""
+     ds_path = Path(destination)
+     if DATASET_BASE_PATH is not None:
+         base_datasets_path = Path(DATASET_BASE_PATH) / "v1.0"
+     else:
+-        # Get the robocasa package path
+         robocasa_path = robocasa.__path__[0]
+-        # Construct the datasets path
+         base_datasets_path = Path(robocasa_path).parent / "datasets" / "v1.0"
+     relative_path = ds_path.relative_to(base_datasets_path)
+-    tar_filename = str(relative_path.parent / f"{relative_path.name}.tar")
++    # box_links_ds.json keys look like: pretrain/atomic/TaskName/20250820/lerobot.tar
++    tar_key = str(relative_path.parent / f"{relative_path.name}.tar")
+ 
+-    print(colored(f"Downloading {tar_filename}...", "green"))
++    if tar_key not in BOX_LINKS_DS:
++        print(colored(f"No Box link found for '{tar_key}' - skipping.", "red"))
++        return
++
++    shared_url = BOX_LINKS_DS[tar_key]
++    download_url_str = _get_direct_download_url(shared_url, ext="tar")
+ 
+-    # Download the single tar file
+-    tar_path = hf_hub_download(
+-        repo_id="nvidia/PhysicalAI-Robotics-Kitchen-Sim-Demos",
+-        repo_type="dataset",
+-        filename=tar_filename,
+-        revision="main",
+-    )
+     extract_dir = ds_path.parent
+     os.makedirs(extract_dir, exist_ok=True)
+ 
++    tar_download_path = os.path.join(str(extract_dir), f"{relative_path.name}.tar")
++
++    print(colored(f"Downloading {tar_key} from Box...", "green"))
++
++    download_success = False
++    for i in range(3):
++        try:
++            download_url(
++                url=download_url_str,
++                download_dir=str(extract_dir),
++                fname=f"{relative_path.name}.tar",
++                check_overwrite=False,
++            )
++            download_success = True
++            break
++        except Exception as e:
++            print(f"Error downloading after try #{i + 1}: {e}")
++
++    if not download_success:
++        print("Failed to download. Try again...")
++        if os.path.exists(tar_download_path):
++            os.remove(tar_download_path)
++        return
++
+     print(colored(f"Extracting to {extract_dir}...", "green"))
+-    with tarfile.open(tar_path, "r") as tar:
++    with tarfile.open(tar_download_path, "r") as tar:
+         tar.extractall(path=extract_dir)
+ 
+-    # clean up tar path to prevent cache from blowing up
+-    os.remove(tar_path)
++    # clean up tar file
++    os.remove(tar_download_path)
+ 
+     print(colored(f"Done: {ds_path}", "green"))
+ 
+diff --git a/robocasa/scripts/download_kitchen_assets.py b/robocasa/scripts/download_kitchen_assets.py
+index b5074a1..7adc476 100644
+--- a/robocasa/scripts/download_kitchen_assets.py
++++ b/robocasa/scripts/download_kitchen_assets.py
+@@ -1,75 +1,152 @@
+ import argparse
++import json
+ import os
+ import shutil
++import urllib.request
+ from pathlib import Path
+ from zipfile import ZipFile
+ 
+-from huggingface_hub import hf_hub_download
+ from termcolor import colored
++from tqdm import tqdm
+ 
+ import robocasa
+ 
+-ROBOCASA_ASSETS_HF_REPO = "robocasa/robocasa-assets"
+-LW_ASSETS_HF_REPO = "nvidia/PhysicalAI-Kitchen-Assets"
++# path to the box_links.json shipped with robocasa
++BOX_LINKS_PATH = os.path.join(
++    robocasa.__path__[0], "models", "assets", "box_links", "box_links_assets.json"
++)
++with open(BOX_LINKS_PATH, "r") as f:
++    BOX_LINKS = json.load(f)
++
++
++def _get_direct_download_url(shared_url):
++    """
++    Convert a Box shared link into a direct-download URL.
++    e.g. https://utexas.box.com/s/abc123  →
++         https://utexas.box.com/shared/static/abc123.zip
++    """
++    shared_id = shared_url.rstrip("/").split("/")[-1]
++    base = shared_url.split("/s/")[0]
++    return f"{base}/shared/static/{shared_id}.zip"
++
+ 
+ DOWNLOAD_ASSET_REGISTRY = {
+     ### textures ###
+     "tex": dict(
+         message="Downloading environment textures",
+-        hf_repo=ROBOCASA_ASSETS_HF_REPO,
+-        hf_filename="textures.zip",
++        url=_get_direct_download_url(BOX_LINKS["textures"]),
+         folder=os.path.join(robocasa.__path__[0], "models/assets/textures"),
+         check_folder_exists=False,
+     ),
+     "tex_generative": dict(
+         message="Downloading AI-generated environment textures",
+-        hf_repo=ROBOCASA_ASSETS_HF_REPO,
+-        hf_filename="generative_textures.zip",
++        url=_get_direct_download_url(BOX_LINKS["generative_textures"]),
+         folder=os.path.join(robocasa.__path__[0], "models/assets/generative_textures"),
+         check_folder_exists=False,
+     ),
+-    ### fixtures ###
+     "fixtures_lw": dict(
+         message="Downloading lightwheel fixtures",
+-        hf_repo=LW_ASSETS_HF_REPO,
+-        hf_filename="fixtures_lightwheel.zip",
++        url=_get_direct_download_url(BOX_LINKS["fixtures_lightwheel"]),
+         folder=os.path.join(robocasa.__path__[0], "models/assets/fixtures"),
+         check_folder_exists=False,
+     ),
+     ### objects ###
+     "objs_objaverse": dict(
+         message="Downloading objaverse objects",
+-        hf_repo=ROBOCASA_ASSETS_HF_REPO,
+-        hf_filename="objaverse.zip",
++        url=_get_direct_download_url(BOX_LINKS["objaverse"]),
+         folder=os.path.join(robocasa.__path__[0], "models/assets/objects/objaverse"),
+         check_folder_exists=False,
+     ),
+     "objs_aigen": dict(
+         message="Downloading AI-generated objects",
+-        hf_repo=ROBOCASA_ASSETS_HF_REPO,
+-        hf_filename="aigen_objs.zip",
++        url=_get_direct_download_url(BOX_LINKS["aigen_objs"]),
+         folder=os.path.join(robocasa.__path__[0], "models/assets/objects/aigen_objs"),
+         check_folder_exists=False,
+     ),
+     "objs_lw": dict(
+         message="Downloading lightwheel objects",
+-        hf_repo=LW_ASSETS_HF_REPO,
+-        hf_filename="objects_lightwheel.zip",
++        url=_get_direct_download_url(BOX_LINKS["objects_lightwheel"]),
+         folder=os.path.join(robocasa.__path__[0], "models/assets/objects/lightwheel"),
+         check_folder_exists=False,
+     ),
+ }
+ 
+ 
+-def download_and_extract_from_hf(
+-    hf_repo,
+-    hf_filename,
++class DownloadProgressBar(tqdm):
++    def update_to(self, b=1, bsize=1, tsize=None):
++        if tsize is not None:
++            self.total = tsize
++        self.update(b * bsize - self.n)
++
++
++def url_is_alive(url):
++    """
++    Checks that a given URL is reachable.
++    From https://gist.github.com/dehowell/884204.
++
++    Args:
++        url (str): url string
++
++    Returns:
++        is_alive (bool): True if url is reachable, False otherwise
++    """
++    request = urllib.request.Request(url)
++    request.get_method = lambda: "HEAD"
++
++    try:
++        urllib.request.urlopen(request)
++        return True
++    except urllib.request.HTTPError:
++        return False
++
++
++def download_url(url, download_dir, fname=None, check_overwrite=True):
++    """
++    First checks that @url is reachable, then downloads the file
++    at that url into the directory specified by @download_dir.
++    Prints a progress bar during the download using tqdm.
++
++    Modified from https://github.com/tqdm/tqdm#hooks-and-callbacks, and
++    https://stackoverflow.com/a/53877507.
++
++    Args:
++        url (str): url string
++        download_dir (str): path to directory where file should be downloaded
++        check_overwrite (bool): if True, will sanity check the download fpath to make sure a file of that name
++            doesn't already exist there
++    """
++    if fname is None:
++        # infer filename from url link
++        fname = url.split("/")[-1]
++    file_to_write = os.path.join(download_dir, fname)
++
++    # If we're checking overwrite and the path already exists,
++    # we ask the user to verify that they want to overwrite the file
++    if check_overwrite and os.path.exists(file_to_write):
++        user_response = input(
++            f"Warning: file {file_to_write} already exists. Overwrite? y/n "
++        )
++        assert user_response.lower() in {
++            "yes",
++            "y",
++        }, f"Did not receive confirmation. Aborting download."
++
++    print(colored(f"Downloading to {file_to_write}", "yellow"))
++
++    with DownloadProgressBar(unit="B", unit_scale=True, miniters=1, desc=fname) as t:
++        urllib.request.urlretrieve(url, filename=file_to_write, reporthook=t.update_to)
++
++
++def download_and_extract_zip(
++    url,
+     folder,
+     check_folder_exists=True,
++    prompt_before_download=False,
+     delete_old_folder=False,
+     message="Downloading...",
+ ):
+-    """Download a zip file from a HuggingFace repo and extract it."""
++    assert url.endswith(".zip")
++
+     download_dir = os.path.abspath(os.path.join(folder, os.pardir))
+     Path(download_dir).mkdir(parents=True, exist_ok=True)
+ 
+@@ -77,11 +154,27 @@ def download_and_extract_from_hf(
+         print(colored(f"Deleting existing folder: {folder}", "yellow"))
+         shutil.rmtree(folder)
+ 
++    download_path = os.path.join(
++        download_dir, "{}.zip".format(os.path.basename(folder))
++    )
++
+     print(colored(message, "yellow"))
+ 
+     # check if folder already exists
+     if check_folder_exists and os.path.exists(folder):
+         ans = input("{} already exists! \noverwrite? (y/n) ".format(folder))
++
++        if ans == "y":
++            print(colored("Proceeding.", "yellow"))
++        else:
++            print(colored("Skipping.\n", "yellow"))
++            return
++
++    if prompt_before_download:
++        ans = input(
++            "Assets to be downloaded may be a few Gb. Proceed? (y/n) ".format(folder)
++        )
++
+         if ans == "y":
+             print(colored("Proceeding.", "yellow"))
+         else:
+@@ -91,27 +184,27 @@ def download_and_extract_from_hf(
+     download_success = False
+     for i in range(3):
+         try:
+-            print(colored(f"Downloading {hf_filename} from {hf_repo}...", "yellow"))
+-            zip_path = hf_hub_download(
+-                repo_id=hf_repo,
+-                repo_type="dataset",
+-                filename=hf_filename,
+-                revision="main",
++            download_url(
++                url=url,
++                download_dir=download_dir,
++                fname=os.path.basename(download_path),
++                check_overwrite=False,
+             )
+             download_success = True
+             break
+-        except Exception as e:
+-            print(f"Error downloading after try #{i + 1}: {e}")
++        except Exception:
++            print("Error downloading after try #{}".format(i + 1))
+ 
+-    if not download_success:
++    if download_success is False:
+         print("Failed to download. Try again...")
+         return
+ 
+     print(colored("Extracting...", "yellow"))
+-    with ZipFile(zip_path, "r") as zip_ref:
++    with ZipFile(download_path, "r") as zip_ref:
+         zip_ref.extractall(path=download_dir)
+ 
+-    os.remove(zip_path)
++    # delete zip file
++    os.remove(download_path)
+ 
+     print(colored("Done.\n", "yellow"))
+ 
+@@ -133,7 +226,7 @@ def download_kitchen_assets(types):
+         else:
+             if ds_name not in types:
+                 continue
+-        download_and_extract_from_hf(**config)
++        download_and_extract_zip(**config)
+ 
+ 
+ if __name__ == "__main__":
+diff --git a/robocasa/utils/dataset_registry.py b/robocasa/utils/dataset_registry.py
+index a4774ea..b509880 100644
+--- a/robocasa/utils/dataset_registry.py
++++ b/robocasa/utils/dataset_registry.py
+@@ -11,14 +11,14 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+             mg_path="v1.0/pretrain/atomic/AdjustToasterOvenTemperature/20250820/mg/demo/2025-08-20-21-21-37",
+             human_path="v1.0/pretrain/atomic/AdjustToasterOvenTemperature/20250820",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     AdjustWaterTemperature=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/AdjustWaterTemperature/20250820/mg/demo/2025-08-20-21-21-50",
+             human_path="v1.0/pretrain/atomic/AdjustWaterTemperature/20250820",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     CloseBlenderLid=dict(
+         pretrain=dict(
+@@ -30,35 +30,35 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/atomic/CloseBlenderLid/20250822",
+         ),
+-        horizon=600,
++        horizon=900,
+     ),
+     CloseCabinet=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/CloseCabinet/20250819/mg/demo/2025-08-20-21-30-42",
+             human_path="v1.0/pretrain/atomic/CloseCabinet/20250819",
+         ),
+-        horizon=500,
++        horizon=750,
+     ),
+     CloseDishwasher=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/CloseDishwasher/20250820/mg/demo/2025-08-20-21-53-08",
+             human_path="v1.0/pretrain/atomic/CloseDishwasher/20250820",
+         ),
+-        horizon=200,
++        horizon=300,
+     ),
+     CloseDrawer=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/CloseDrawer/20250819/mg/demo/2025-08-20-21-53-15",
+             human_path="v1.0/pretrain/atomic/CloseDrawer/20250819",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     CloseElectricKettleLid=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/CloseElectricKettleLid/20250820/mg/demo/2025-08-20-21-53-23",
+             human_path="v1.0/pretrain/atomic/CloseElectricKettleLid/20250820",
+         ),
+-        horizon=200,
++        horizon=300,
+     ),
+     CloseFridge=dict(
+         pretrain=dict(
+@@ -70,35 +70,35 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/atomic/CloseFridge/20250816",
+         ),
+-        horizon=600,
++        horizon=900,
+     ),
+     CloseFridgeDrawer=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/CloseFridgeDrawer/20250821/mg/demo/2025-08-21-16-23-57",
+             human_path="v1.0/pretrain/atomic/CloseFridgeDrawer/20250821",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     CloseMicrowave=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/CloseMicrowave/20250819/mg/demo/2025-08-20-21-54-00",
+             human_path="v1.0/pretrain/atomic/CloseMicrowave/20250819",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     CloseOven=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/CloseOven/20250820/mg/demo/2025-08-20-21-54-06",
+             human_path="v1.0/pretrain/atomic/CloseOven/20250820",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     CloseStandMixerHead=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/CloseStandMixerHead/20250820/mg/demo/2025-08-20-21-54-11",
+             human_path="v1.0/pretrain/atomic/CloseStandMixerHead/20250820",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     CloseToasterOvenDoor=dict(
+         pretrain=dict(
+@@ -113,14 +113,14 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+         real=dict(
+             human_path="real_data/CloseToasterOvenDoor/",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     CoffeeServeMug=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/CoffeeServeMug/20250819/mg/demo/2025-08-20-21-54-30",
+             human_path="v1.0/pretrain/atomic/CoffeeServeMug/20250819",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     CoffeeSetupMug=dict(
+         pretrain=dict(
+@@ -132,7 +132,7 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/atomic/CoffeeSetupMug/20250813",
+         ),
+-        horizon=400,
++        horizon=600,
+     ),
+     NavigateKitchen=dict(
+         pretrain=dict(
+@@ -141,14 +141,14 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/atomic/NavigateKitchen/20250821",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     OpenBlenderLid=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/OpenBlenderLid/20250822/mg/demo/2025-08-22-13-33-18",
+             human_path="v1.0/pretrain/atomic/OpenBlenderLid/20250822",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     OpenCabinet=dict(
+         pretrain=dict(
+@@ -160,14 +160,14 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/atomic/OpenCabinet/20250813",
+         ),
+-        horizon=700,
++        horizon=1050,
+     ),
+     OpenDishwasher=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/OpenDishwasher/20250820/mg/demo/2025-08-20-21-54-51",
+             human_path="v1.0/pretrain/atomic/OpenDishwasher/20250820",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     OpenDrawer=dict(
+         pretrain=dict(
+@@ -179,42 +179,42 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/atomic/OpenDrawer/20250816",
+         ),
+-        horizon=500,
++        horizon=750,
+     ),
+     OpenElectricKettleLid=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/OpenElectricKettleLid/20250820/mg/demo/2025-08-20-21-55-09",
+             human_path="v1.0/pretrain/atomic/OpenElectricKettleLid/20250820",
+         ),
+-        horizon=200,
++        horizon=300,
+     ),
+     OpenFridge=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/OpenFridge/20250819/mg/demo/2025-08-20-21-55-16",
+             human_path="v1.0/pretrain/atomic/OpenFridge/20250819",
+         ),
+-        horizon=600,
++        horizon=900,
+     ),
+     OpenFridgeDrawer=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/OpenFridgeDrawer/20250821/mg/demo/2025-08-21-15-35-16",
+             human_path="v1.0/pretrain/atomic/OpenFridgeDrawer/20250821",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     OpenMicrowave=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/OpenMicrowave/20250819/mg/demo/2025-08-20-21-55-16",
+             human_path="v1.0/pretrain/atomic/OpenMicrowave/20250819",
+         ),
+-        horizon=400,
++        horizon=600,
+     ),
+     OpenOven=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/OpenOven/20250820/mg/demo/2025-08-20-21-55-18",
+             human_path="v1.0/pretrain/atomic/OpenOven/20250820",
+         ),
+-        horizon=200,
++        horizon=300,
+     ),
+     OpenStandMixerHead=dict(
+         pretrain=dict(
+@@ -226,28 +226,28 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/atomic/OpenStandMixerHead/20250818",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     OpenToasterOvenDoor=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/OpenToasterOvenDoor/mg/demo/2025-08-02-08-07-17",
+             human_path="v1.0/pretrain/atomic/OpenToasterOvenDoor/20250820",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     PickPlaceCabinetToCounter=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/PickPlaceCabinetToCounter/20250819/mg/demo/2025-08-20-21-56-18",
+             human_path="v1.0/pretrain/atomic/PickPlaceCabinetToCounter/20250819",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     PickPlaceCounterToBlender=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/PickPlaceCounterToBlender/20250822/mg/demo/2025-08-22-14-46-12",
+             human_path="v1.0/pretrain/atomic/PickPlaceCounterToBlender/20250822",
+         ),
+-        horizon=500,
++        horizon=750,
+     ),
+     PickPlaceCounterToCabinet=dict(
+         pretrain=dict(
+@@ -262,42 +262,42 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+         real=dict(
+             human_path="real_data/PickPlaceCounterToCabinet/",
+         ),
+-        horizon=500,
++        horizon=750,
+     ),
+     PickPlaceCounterToDrawer=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/PickPlaceCounterToDrawer/20250821/mg/demo/2025-08-21-15-44-03",
+             human_path="v1.0/pretrain/atomic/PickPlaceCounterToDrawer/20250821",
+         ),
+-        horizon=500,
++        horizon=750,
+     ),
+     PickPlaceCounterToMicrowave=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/PickPlaceCounterToMicrowave/20250819/mg/demo/2025-08-20-21-56-32",
+             human_path="v1.0/pretrain/atomic/PickPlaceCounterToMicrowave/20250819",
+         ),
+-        horizon=700,
++        horizon=1050,
+     ),
+     PickPlaceCounterToOven=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/PickPlaceCounterToOven/20250819/mg/demo/2025-08-20-21-56-41",
+             human_path="v1.0/pretrain/atomic/PickPlaceCounterToOven/20250819",
+         ),
+-        horizon=400,
++        horizon=600,
+     ),
+     PickPlaceCounterToSink=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/PickPlaceCounterToSink/20250819/mg/demo/2025-08-20-22-32-27",
+             human_path="v1.0/pretrain/atomic/PickPlaceCounterToSink/20250819",
+         ),
+-        horizon=400,
++        horizon=600,
+     ),
+     PickPlaceCounterToStandMixer=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/PickPlaceCounterToStandMixer/20250820/mg/demo/2025-08-20-22-33-43",
+             human_path="v1.0/pretrain/atomic/PickPlaceCounterToStandMixer/20250820",
+         ),
+-        horizon=400,
++        horizon=600,
+     ),
+     PickPlaceCounterToStove=dict(
+         pretrain=dict(
+@@ -309,14 +309,14 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/atomic/PickPlaceCounterToStove/20250818",
+         ),
+-        horizon=400,
++        horizon=600,
+     ),
+     PickPlaceCounterToToasterOven=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/PickPlaceCounterToToasterOven/20250819/mg/demo/2025-08-20-22-33-52",
+             human_path="v1.0/pretrain/atomic/PickPlaceCounterToToasterOven/20250819",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     PickPlaceDrawerToCounter=dict(
+         pretrain=dict(
+@@ -328,28 +328,28 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/atomic/PickPlaceDrawerToCounter/20250820",
+         ),
+-        horizon=500,
++        horizon=750,
+     ),
+     PickPlaceFridgeDrawerToShelf=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/PickPlaceFridgeDrawerToShelf/20250821/mg/demo/2025-08-21-15-16-21",
+             human_path="v1.0/pretrain/atomic/PickPlaceFridgeDrawerToShelf/20250821",
+         ),
+-        horizon=400,
++        horizon=600,
+     ),
+     PickPlaceFridgeShelfToDrawer=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/PickPlaceFridgeShelfToDrawer/20250821/mg/demo/2025-08-21-15-17-53",
+             human_path="v1.0/pretrain/atomic/PickPlaceFridgeShelfToDrawer/20250821",
+         ),
+-        horizon=400,
++        horizon=600,
+     ),
+     PickPlaceMicrowaveToCounter=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/PickPlaceMicrowaveToCounter/20250819/mg/demo/2025-08-20-22-33-47",
+             human_path="v1.0/pretrain/atomic/PickPlaceMicrowaveToCounter/20250819",
+         ),
+-        horizon=500,
++        horizon=750,
+     ),
+     PickPlaceSinkToCounter=dict(
+         pretrain=dict(
+@@ -361,21 +361,21 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/atomic/PickPlaceSinkToCounter/20250813",
+         ),
+-        horizon=600,
++        horizon=900,
+     ),
+     PickPlaceStoveToCounter=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/PickPlaceStoveToCounter/20250819/mg/demo/2025-08-21-09-59-52",
+             human_path="v1.0/pretrain/atomic/PickPlaceStoveToCounter/20250819",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     PickPlaceToasterOvenToCounter=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/PickPlaceToasterOvenToCounter/20250819/mg/demo/2025-08-21-10-00-21",
+             human_path="v1.0/pretrain/atomic/PickPlaceToasterOvenToCounter/20250819",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     PickPlaceToasterToCounter=dict(
+         pretrain=dict(
+@@ -390,14 +390,14 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+         real=dict(
+             human_path="real_data/PickPlaceToasterToCounter/",
+         ),
+-        horizon=400,
++        horizon=600,
+     ),
+     PreheatOven=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/PreheatOven/20250903/mg/demo/2025-09-04-10-51-08",
+             human_path="v1.0/pretrain/atomic/PreheatOven/20250903",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     SlideDishwasherRack=dict(
+         pretrain=dict(
+@@ -409,42 +409,42 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/atomic/SlideDishwasherRack/20250820",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     SlideOvenRack=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/SlideOvenRack/20250820/mg/demo/2025-08-20-21-57-16",
+             human_path="v1.0/pretrain/atomic/SlideOvenRack/20250820",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     SlideToasterOvenRack=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/SlideToasterOvenRack/20250820/mg/demo/2025-08-20-21-57-23",
+             human_path="v1.0/pretrain/atomic/SlideToasterOvenRack/20250820",
+         ),
+-        horizon=200,
++        horizon=300,
+     ),
+     StartCoffeeMachine=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/StartCoffeeMachine/20250819/mg/demo/2025-08-21-09-42-00",
+             human_path="v1.0/pretrain/atomic/StartCoffeeMachine/20250819",
+         ),
+-        horizon=200,
++        horizon=300,
+     ),
+     TurnOffMicrowave=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/TurnOffMicrowave/20250819/mg/demo/2025-08-21-09-46-12",
+             human_path="v1.0/pretrain/atomic/TurnOffMicrowave/20250819",
+         ),
+-        horizon=200,
++        horizon=300,
+     ),
+     TurnOffSinkFaucet=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/TurnOffSinkFaucet/20250819/mg/demo/2025-08-21-10-27-00",
+             human_path="v1.0/pretrain/atomic/TurnOffSinkFaucet/20250819",
+         ),
+-        horizon=200,
++        horizon=300,
+     ),
+     TurnOffStove=dict(
+         pretrain=dict(
+@@ -456,14 +456,14 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/atomic/TurnOffStove/20250812",
+         ),
+-        horizon=500,
++        horizon=750,
+     ),
+     TurnOnBlender=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/TurnOnBlender/20250822/mg/demo/2025-08-22-13-37-52",
+             human_path="v1.0/pretrain/atomic/TurnOnBlender/20250822",
+         ),
+-        horizon=200,
++        horizon=300,
+     ),
+     TurnOnElectricKettle=dict(
+         pretrain=dict(
+@@ -475,7 +475,7 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/atomic/TurnOnElectricKettle/20250817",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     TurnOnMicrowave=dict(
+         pretrain=dict(
+@@ -487,7 +487,7 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/atomic/TurnOnMicrowave/20250813",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     TurnOnSinkFaucet=dict(
+         pretrain=dict(
+@@ -499,59 +499,59 @@ ATOMIC_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/atomic/TurnOnSinkFaucet/20250812",
+         ),
+-        horizon=400,
++        horizon=600,
+     ),
+     TurnOnStove=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/TurnOnStove/20250819/mg/demo/2025-08-21-12-08-41",
+             human_path="v1.0/pretrain/atomic/TurnOnStove/20250819",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     TurnOnToaster=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/TurnOnToaster/20250820/mg/demo/2025-08-21-12-08-30",
+             human_path="v1.0/pretrain/atomic/TurnOnToaster/20250820",
+         ),
+-        horizon=200,
++        horizon=300,
+     ),
+     TurnOnToasterOven=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/TurnOnToasterOven/20250820/mg/demo/2025-08-21-12-35-58",
+             human_path="v1.0/pretrain/atomic/TurnOnToasterOven/20250820",
+         ),
+-        horizon=300,
++        horizon=450,
+     ),
+     TurnSinkSpout=dict(
+         pretrain=dict(
+             mg_path="v1.0/pretrain/atomic/TurnSinkSpout/20250820/mg/demo/2025-08-21-12-27-22",
+             human_path="v1.0/pretrain/atomic/TurnSinkSpout/20250820",
+         ),
+-        horizon=200,
++        horizon=300,
+     ),
+     MakeIcedCoffee=dict(  # was previously composite
+         pretrain=dict(
+             human_path="v1.0/pretrain/atomic/MakeIcedCoffee/20250801",
+         ),
+-        horizon=500,
++        horizon=750,
+     ),
+     CheesyBread=dict(  # was previously composite
+         pretrain=dict(
+             human_path="v1.0/pretrain/atomic/CheesyBread/20250714",
+         ),
+-        horizon=500,
++        horizon=750,
+     ),
+     LowerHeat=dict(  # was previously composite
+         pretrain=dict(
+             human_path="v1.0/pretrain/atomic/LowerHeat/20250805",
+         ),
+-        horizon=500,
++        horizon=750,
+     ),
+     PackDessert=dict(  # was previously composite
+         pretrain=dict(
+             human_path="v1.0/pretrain/atomic/PackDessert/20250806",
+         ),
+-        horizon=400,
++        horizon=600,
+     ),
+ )
+ 
+@@ -560,349 +560,349 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/AddIceCubes/20250829",
+         ),
+-        horizon=1100,
++        horizon=1650,
+     ),
+     AddLemonToFish=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/AddLemonToFish/20250804",
+         ),
+-        horizon=1400,
++        horizon=2100,
+     ),
+     AddMarshmallow=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/AddMarshmallow/20250805",
+         ),
+-        horizon=800,
++        horizon=1200,
+     ),
+     AddSugarCubes=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/AddSugarCubes/20250804",
+         ),
+-        horizon=600,
++        horizon=900,
+     ),
+     AddSweetener=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/AddSweetener/20250829",
+         ),
+-        horizon=800,
++        horizon=1200,
+     ),
+     AdjustHeat=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/AdjustHeat/20250724",
+         ),
+-        horizon=1500,
++        horizon=2250,
+     ),
+     AfterwashSorting=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/AfterwashSorting/20250723",
+         ),
+-        horizon=2000,
++        horizon=3000,
+     ),
+     AirDryFruit=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/AirDryFruit/20250718",
+         ),
+-        horizon=1900,
++        horizon=2850,
+     ),
+     AlcoholServingPrep=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/AlcoholServingPrep/20250724",
+         ),
+-        horizon=3100,
++        horizon=4650,
+     ),
+     AlignSilverware=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/AlignSilverware/20250801",
+         ),
+-        horizon=1700,
++        horizon=2550,
+     ),
+     ArrangeBreadBasket=dict(
+         target=dict(
+             human_path="v1.0/target/composite/ArrangeBreadBasket/20250809",
+         ),
+-        horizon=2900,
++        horizon=4350,
+     ),
+     ArrangeBreadBowl=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ArrangeBreadBowl/20250903",
+         ),
+-        horizon=900,
++        horizon=1350,
+     ),
+     ArrangeBuffetDessert=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ArrangeBuffetDessert/20250730",
+         ),
+-        horizon=2700,
++        horizon=4050,
+     ),
+     ArrangeDrinkware=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ArrangeDrinkware/20250902",
+         ),
+-        horizon=1100,
++        horizon=1650,
+     ),
+     ArrangeTea=dict(
+         target=dict(
+             human_path="v1.0/target/composite/ArrangeTea/20250812",
+         ),
+-        horizon=1500,
++        horizon=2250,
+     ),
+     ArrangeTeaAccompaniments=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ArrangeTeaAccompaniments/20250805",
+         ),
+-        horizon=1100,
++        horizon=1650,
+     ),
+     ArrangeUtensilsByType=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ArrangeUtensilsByType/20250805",
+         ),
+-        horizon=3400,
++        horizon=5100,
+     ),
+     ArrangeVegetables=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ArrangeVegetables/20250714",
+         ),
+-        horizon=1100,
++        horizon=1650,
+     ),
+     AssembleCookingArray=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/AssembleCookingArray/20250721",
+         ),
+-        horizon=2200,
++        horizon=3300,
+     ),
+     BalancedMealPrep=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/BalancedMealPrep/20250729",
+         ),
+-        horizon=1000,
++        horizon=1500,
+     ),
+     BeverageOrganization=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/BeverageOrganization/20250725",
+         ),
+-        horizon=3000,
++        horizon=4500,
+     ),
+     BeverageSorting=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/BeverageSorting/20250718",
+         ),
+-        horizon=3500,
++        horizon=5250,
+     ),
+     BlendIngredients=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/BlendIngredients/20250829",
+         ),
+-        horizon=1200,
++        horizon=1800,
+     ),
+     BlendMarinade=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/BlendMarinade/20250902",
+         ),
+-        horizon=2000,
++        horizon=3000,
+     ),
+     BowlAndCup=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/BowlAndCup/20250715",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     BreadAndCheese=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/BreadAndCheese/20250723",
+         ),
+-        horizon=600,
++        horizon=900,
+     ),
+     BreadSelection=dict(
+         target=dict(
+             human_path="v1.0/target/composite/BreadSelection/20250815",
+         ),
+-        horizon=1300,
++        horizon=1950,
+     ),
+     BreadSetupSlicing=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/BreadSetupSlicing/20250719",
+         ),
+-        horizon=800,
++        horizon=1200,
+     ),
+     BuildAppetizerPlate=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/BuildAppetizerPlate/20250804",
+         ),
+-        horizon=2700,
++        horizon=4050,
+     ),
+     ButterOnPan=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ButterOnPan/20250724",
+         ),
+-        horizon=900,
++        horizon=1350,
+     ),
+     CandleCleanup=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/CandleCleanup/20250721",
+         ),
+-        horizon=3000,
++        horizon=4500,
+     ),
+     CategorizeCondiments=dict(
+         target=dict(
+             human_path="v1.0/target/composite/CategorizeCondiments/20250814",
+         ),
+-        horizon=1100,
++        horizon=1650,
+     ),
+     CerealAndBowl=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/CerealAndBowl/20250725",
+         ),
+-        horizon=2900,
++        horizon=4350,
+     ),
+     ChooseMeasuringCup=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ChooseMeasuringCup/20250718",
+         ),
+-        horizon=1200,
++        horizon=1800,
+     ),
+     ChooseRipeFruit=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ChooseRipeFruit/20250901",
+         ),
+-        horizon=600,
++        horizon=900,
+     ),
+     CleanBoard=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/CleanBoard/20250729",
+         ),
+-        horizon=3200,
++        horizon=4800,
+     ),
+     CleanMicrowave=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/CleanMicrowave/20250724",
+         ),
+-        horizon=1400,
++        horizon=2100,
+     ),
+     ClearClutter=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ClearClutter/20250723",
+         ),
+-        horizon=2200,
++        horizon=3300,
+     ),
+     ClearCuttingBoard=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ClearCuttingBoard/20250719",
+         ),
+-        horizon=1200,
++        horizon=1800,
+     ),
+     ClearFoodWaste=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ClearFoodWaste/20250728",
+         ),
+-        horizon=1100,
++        horizon=1650,
+     ),
+     ClearFreezer=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ClearFreezer/20250807",
+         ),
+-        horizon=2400,
++        horizon=3600,
+     ),
+     ClearReceptaclesForCleaning=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ClearReceptaclesForCleaning/20250721",
+         ),
+-        horizon=2600,
++        horizon=3900,
+     ),
+     ClearSink=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ClearSink/20250717",
+         ),
+-        horizon=3300,
++        horizon=4950,
+     ),
+     ClearSinkArea=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ClearSinkArea/20250728",
+         ),
+-        horizon=2200,
++        horizon=3300,
+     ),
+     ClearSinkSpace=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ClearSinkSpace/20250718",
+         ),
+-        horizon=1200,
++        horizon=1800,
+     ),
+     CollectWashingSupplies=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/CollectWashingSupplies/20250717",
+         ),
+-        horizon=1800,
++        horizon=2700,
+     ),
+     ColorfulSalsa=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ColorfulSalsa/20250719",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     CondimentCollection=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/CondimentCollection/20250721",
+         ),
+-        horizon=1400,
++        horizon=2100,
+     ),
+     CookieDoughPrep=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/CookieDoughPrep/20250728",
+         ),
+-        horizon=1900,
++        horizon=2850,
+     ),
+     CoolBakedCake=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/CoolBakedCake/20250729",
+         ),
+-        horizon=2400,
++        horizon=3600,
+     ),
+     CoolKettle=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/CoolKettle/20250717",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     CreateChildFriendlyFridge=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/CreateChildFriendlyFridge/20250826",
+         ),
+-        horizon=2200,
++        horizon=3300,
+     ),
+     CupcakeCleanup=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/CupcakeCleanup/20250716",
+         ),
+-        horizon=700,
++        horizon=1050,
+     ),
+     CutBuffetPizza=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/CutBuffetPizza/20250730",
+         ),
+-        horizon=1300,
++        horizon=1950,
+     ),
+     CuttingToolSelection=dict(
+         target=dict(
+             human_path="v1.0/target/composite/CuttingToolSelection/20250814",
+         ),
+-        horizon=800,
++        horizon=1200,
+     ),
+     DateNight=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/DateNight/20250725",
+         ),
+-        horizon=3200,
++        horizon=4800,
+     ),
+     DefrostByCategory=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/DefrostByCategory/20250716",
+         ),
+-        horizon=2200,
++        horizon=3300,
+     ),
+     DeliverBrewedCoffee=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/DeliverBrewedCoffee/20250904",
+         ),
+-        horizon=700,
++        horizon=1050,
+     ),
+     DeliverStraw=dict(
+         pretrain=dict(
+@@ -911,7 +911,7 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/composite/DeliverStraw/20250813",
+         ),
+-        horizon=1700,
++        horizon=2550,
+     ),
+     DessertAssembly=dict(
+         pretrain=dict(
+@@ -920,157 +920,157 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         # target=dict( # cut this one out
+         #     human_path="v1.0/target/composite/DessertAssembly/20250809",
+         # ),
+-        horizon=900,
++        horizon=1350,
+     ),
+     DessertUpgrade=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/DessertUpgrade/20250724",
+         ),
+-        horizon=800,
++        horizon=1200,
+     ),
+     DisplayMeatVariety=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/DisplayMeatVariety/20250804",
+         ),
+-        horizon=2900,
++        horizon=4350,
+     ),
+     DistributeChicken=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/DistributeChicken/20250807",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     DivideBasins=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/DivideBasins/20250718",
+         ),
+-        horizon=1400,
++        horizon=2100,
+     ),
+     DivideBuffetTrays=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/DivideBuffetTrays/20250730",
+         ),
+-        horizon=4800,
++        horizon=7200,
+     ),
+     DrainVeggies=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/DrainVeggies/20250723",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     DrinkwareConsolidation=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/DrinkwareConsolidation/20250723",
+         ),
+-        horizon=2400,
++        horizon=3600,
+     ),
+     DryDishes=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/DryDishes/20250714",
+         ),
+-        horizon=1100,
++        horizon=1650,
+     ),
+     DryDrinkware=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/DryDrinkware/20250714",
+         ),
+-        horizon=900,
++        horizon=1350,
+     ),
+     DumpLeftovers=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/DumpLeftovers/20250902",
+         ),
+-        horizon=600,
++        horizon=900,
+     ),
+     FillBlenderJug=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/FillBlenderJug/20250902",
+         ),
+-        horizon=1000,
++        horizon=1500,
+     ),
+     FillKettle=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/FillKettle/20250721",
+         ),
+-        horizon=2200,
++        horizon=3300,
+     ),
+     FilterMicrowavableItem=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/FilterMicrowavableItem/20250901",
+         ),
+-        horizon=1100,
++        horizon=1650,
+     ),
+     FoodCleanup=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/FoodCleanup/20250725",
+         ),
+-        horizon=800,
++        horizon=1200,
+     ),
+     FreezeBottledWaters=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/FreezeBottledWaters/20250807",
+         ),
+-        horizon=2600,
++        horizon=3900,
+     ),
+     FreezeCookedFood=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/FreezeCookedFood/20250804",
+         ),
+-        horizon=1300,
++        horizon=1950,
+     ),
+     FreezeIceTray=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/FreezeIceTray/20250807",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     FreshProduceOrganization=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/FreshProduceOrganization/20250828",
+         ),
+-        horizon=1000,
++        horizon=1500,
+     ),
+     FryingPanAdjustment=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/FryingPanAdjustment/20250714",
+         ),
+-        horizon=800,
++        horizon=1200,
+     ),
+     GarnishCupcake=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/GarnishCupcake/20250804",
+         ),
+-        horizon=1200,
++        horizon=1800,
+     ),
+     GarnishPancake=dict(
+         target=dict(
+             human_path="v1.0/target/composite/GarnishPancake/20250815",
+         ),
+-        horizon=1800,
++        horizon=2700,
+     ),
+     GatherCuttingTools=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/GatherCuttingTools/20250730",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     GatherMarinadeIngredients=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/GatherMarinadeIngredients/20250729",
+         ),
+-        horizon=2200,
++        horizon=3300,
+     ),
+     GatherTableware=dict(
+         target=dict(
+             human_path="v1.0/target/composite/GatherTableware/20250815",
+         ),
+-        horizon=1500,
++        horizon=2250,
+     ),
+     GatherVegetables=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/GatherVegetables/20250805",
+         ),
+-        horizon=900,
++        horizon=1350,
+     ),
+     GetToastedBread=dict(
+         pretrain=dict(
+@@ -1079,37 +1079,37 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/composite/GetToastedBread/20250812",
+         ),
+-        horizon=2000,
++        horizon=3000,
+     ),
+     HeatKebabSandwich=dict(
+         target=dict(
+             human_path="v1.0/target/composite/HeatKebabSandwich/20250813",
+         ),
+-        horizon=1800,
++        horizon=2700,
+     ),
+     HeatMug=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/HeatMug/20250725",
+         ),
+-        horizon=1200,
++        horizon=1800,
+     ),
+     HeatMultipleWater=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/HeatMultipleWater/20250714",
+         ),
+-        horizon=2800,
++        horizon=4200,
+     ),
+     HotDogSetup=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/HotDogSetup/20250805",
+         ),
+-        horizon=2800,
++        horizon=4200,
+     ),
+     JuiceFruitReamer=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/JuiceFruitReamer/20250902",
+         ),
+-        horizon=400,
++        horizon=600,
+     ),
+     KettleBoiling=dict(
+         pretrain=dict(
+@@ -1118,25 +1118,25 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/composite/KettleBoiling/20250814",
+         ),
+-        horizon=1000,
++        horizon=1500,
+     ),
+     LemonSeasoningFish=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/LemonSeasoningFish/20250731",
+         ),
+-        horizon=1500,
++        horizon=2250,
+     ),
+     LineUpCondiments=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/LineUpCondiments/20250731",
+         ),
+-        horizon=2000,
++        horizon=3000,
+     ),
+     LoadCondimentsInFridge=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/LoadCondimentsInFridge/20250826",
+         ),
+-        horizon=2000,
++        horizon=3000,
+     ),
+     LoadDishwasher=dict(
+         pretrain=dict(
+@@ -1145,199 +1145,199 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/composite/LoadDishwasher/20250811",
+         ),
+-        horizon=1200,
++        horizon=1800,
+     ),
+     LoadFridgeByType=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/LoadFridgeByType/20250827",
+         ),
+-        horizon=1000,
++        horizon=1500,
+     ),
+     LoadFridgeFifo=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/LoadFridgeFifo/20250826",
+         ),
+-        horizon=1000,
++        horizon=1500,
+     ),
+     LoadPreparedFood=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/LoadPreparedFood/20250827",
+         ),
+-        horizon=1000,
++        horizon=1500,
+     ),
+     MakeFruitBowl=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/MakeFruitBowl/20250723",
+         ),
+-        horizon=2300,
++        horizon=3450,
+     ),
+     MakeIceLemonade=dict(
+         target=dict(
+             human_path="v1.0/target/composite/MakeIceLemonade/20250813",
+         ),
+-        horizon=2000,
++        horizon=3000,
+     ),
+     MakeLoadedPotato=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/MakeLoadedPotato/20250724",
+         ),
+-        horizon=2000,
++        horizon=3000,
+     ),
+     MatchCupAndDrink=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/MatchCupAndDrink/20250723",
+         ),
+-        horizon=2500,
++        horizon=3750,
+     ),
+     MaximizeFreezerSpace=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/MaximizeFreezerSpace/20250807",
+         ),
+-        horizon=1100,
++        horizon=1650,
+     ),
+     MealPrepStaging=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/MealPrepStaging/20250718",
+         ),
+-        horizon=2000,
++        horizon=3000,
+     ),
+     MeatSkewerAssembly=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/MeatSkewerAssembly/20250804",
+         ),
+-        horizon=800,
++        horizon=1200,
+     ),
+     MeatTransfer=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/MeatTransfer/20250721",
+         ),
+-        horizon=2300,
++        horizon=3450,
+     ),
+     MicrowaveCorrectMeal=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/MicrowaveCorrectMeal/20250901",
+         ),
+-        horizon=1000,
++        horizon=1500,
+     ),
+     MicrowaveDefrostMeat=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/MicrowaveDefrostMeat/20250901",
+         ),
+-        horizon=1200,
++        horizon=1800,
+     ),
+     MicrowaveThawing=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/MicrowaveThawing/20250715",
+         ),
+-        horizon=3100,
++        horizon=4650,
+     ),
+     MicrowaveThawingFridge=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/MicrowaveThawingFridge/20250730",
+         ),
+-        horizon=1800,
++        horizon=2700,
+     ),
+     MixCakeFrosting=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/MixCakeFrosting/20250728",
+         ),
+-        horizon=1700,
++        horizon=2550,
+     ),
+     MixedFruitPlatter=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/MixedFruitPlatter/20250804",
+         ),
+-        horizon=1700,
++        horizon=2550,
+     ),
+     MoveFreezerToFridge=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/MoveFreezerToFridge/20250827",
+         ),
+-        horizon=1000,
++        horizon=1500,
+     ),
+     MoveFridgeToFreezer=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/MoveFridgeToFreezer/20250807",
+         ),
+-        horizon=1100,
++        horizon=1650,
+     ),
+     MoveToCounter=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/MoveToCounter/20250729",
+         ),
+-        horizon=800,
++        horizon=1200,
+     ),
+     MoveToFreezerDrawer=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/MoveToFreezerDrawer/20250902",
+         ),
+-        horizon=1200,
++        horizon=1800,
+     ),
+     MultistepSteaming=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/MultistepSteaming/20250724",
+         ),
+-        horizon=2300,
++        horizon=3450,
+     ),
+     OrganizeBakingIngredients=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/OrganizeBakingIngredients/20250725",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     OrganizeCleaningSupplies=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/OrganizeCleaningSupplies/20250723",
+         ),
+-        horizon=2700,
++        horizon=4050,
+     ),
+     OrganizeCoffeeCondiments=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/OrganizeCoffeeCondiments/20250731",
+         ),
+-        horizon=1300,
++        horizon=1950,
+     ),
+     OrganizeCondiments=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/OrganizeCondiments/20250731",
+         ),
+-        horizon=1500,
++        horizon=2250,
+     ),
+     OrganizeMetallicUtensils=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/OrganizeMetallicUtensils/20250806",
+         ),
+-        horizon=2100,
++        horizon=3150,
+     ),
+     OrganizeMugsByHandle=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/OrganizeMugsByHandle/20250718",
+         ),
+-        horizon=900,
++        horizon=1350,
+     ),
+     OrganizeVegetables=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/OrganizeVegetables/20250719",
+         ),
+-        horizon=600,
++        horizon=900,
+     ),
+     OvenBroilFish=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/OvenBroilFish/20250805",
+         ),
+-        horizon=1000,
++        horizon=1500,
+     ),
+     PackFoodByTemp=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PackFoodByTemp/20250805",
+         ),
+-        horizon=3300,
++        horizon=4950,
+     ),
+     PackFruitContainer=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PackFruitContainer/20250806",
+         ),
+-        horizon=1300,
++        horizon=1950,
+     ),
+     PackIdenticalLunches=dict(
+         pretrain=dict(
+@@ -1346,61 +1346,61 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/composite/PackIdenticalLunches/20250815",
+         ),
+-        horizon=2600,
++        horizon=3900,
+     ),
+     PanTransfer=dict(
+         target=dict(
+             human_path="v1.0/target/composite/PanTransfer/20250817",
+         ),
+-        horizon=1200,
++        horizon=1800,
+     ),
+     PastryDisplay=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PastryDisplay/20250724",
+         ),
+-        horizon=700,
++        horizon=1050,
+     ),
+     PlaceBeveragesTogether=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PlaceBeveragesTogether/20250730",
+         ),
+-        horizon=2600,
++        horizon=3900,
+     ),
+     PlaceDishesBySink=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PlaceDishesBySink/20250717",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     PlaceEqualIceCubes=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PlaceEqualIceCubes/20250801",
+         ),
+-        horizon=1900,
++        horizon=2850,
+     ),
+     PlaceFoodInBowls=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PlaceFoodInBowls/20250725",
+         ),
+-        horizon=1700,
++        horizon=2550,
+     ),
+     PlaceIceInCup=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PlaceIceInCup/20250801",
+         ),
+-        horizon=800,
++        horizon=1200,
+     ),
+     PlaceMeatInMarinade=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PlaceMeatInMarinade/20250728",
+         ),
+-        horizon=2200,
++        horizon=3300,
+     ),
+     PlaceMicrowaveSafeItem=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PlaceMicrowaveSafeItem/20250901",
+         ),
+-        horizon=900,
++        horizon=1350,
+     ),
+     PlaceOnDishRack=dict(
+         pretrain=dict(
+@@ -1409,73 +1409,73 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         real=dict(
+             human_path="real_data/PlaceOnDishRack/",
+         ),
+-        horizon=1000,
++        horizon=1500,
+     ),
+     PlaceStraw=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PlaceStraw/20250829",
+         ),
+-        horizon=900,
++        horizon=1350,
+     ),
+     PlaceVegetablesEvenly=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PlaceVegetablesEvenly/20250724",
+         ),
+-        horizon=1000,
++        horizon=1500,
+     ),
+     PlaceVeggiesInDrawer=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PlaceVeggiesInDrawer/20250826",
+         ),
+-        horizon=1300,
++        horizon=1950,
+     ),
+     PlateSteakMeal=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PlateSteakMeal/20250902",
+         ),
+-        horizon=700,
++        horizon=1050,
+     ),
+     PlateStoreDinner=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PlateStoreDinner/20250730",
+         ),
+-        horizon=2600,
++        horizon=3900,
+     ),
+     PortionFruitBowl=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PortionFruitBowl/20250807",
+         ),
+-        horizon=1400,
++        horizon=2100,
+     ),
+     PortionHotDogs=dict(
+         target=dict(
+             human_path="v1.0/target/composite/PortionHotDogs/20250816",
+         ),
+-        horizon=1500,
++        horizon=2250,
+     ),
+     PortionInTupperware=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PortionInTupperware/20250807",
+         ),
+-        horizon=1300,
++        horizon=1950,
+     ),
+     PortionOnSize=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PortionOnSize/20250806",
+         ),
+-        horizon=1800,
++        horizon=2700,
+     ),
+     PortionYogurt=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PortionYogurt/20250806",
+         ),
+-        horizon=1400,
++        horizon=2100,
+     ),
+     PreRinseStation=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PreRinseStation/20250717",
+         ),
+-        horizon=1500,
++        horizon=2250,
+     ),
+     PreSoakPan=dict(
+         pretrain=dict(
+@@ -1484,61 +1484,61 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/composite/PreSoakPan/20250809",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     PreheatPot=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PreheatPot/20250724",
+         ),
+-        horizon=1800,
++        horizon=2700,
+     ),
+     PrepForSanitizing=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PrepForSanitizing/20250715",
+         ),
+-        horizon=2500,
++        horizon=3750,
+     ),
+     PrepForTenderizing=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PrepForTenderizing/20250721",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     PrepFridgeForCleaning=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PrepFridgeForCleaning/20250805",
+         ),
+-        horizon=2400,
++        horizon=3600,
+     ),
+     PrepMarinatingMeat=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PrepMarinatingMeat/20250714",
+         ),
+-        horizon=1900,
++        horizon=2850,
+     ),
+     PrepSinkForCleaning=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PrepSinkForCleaning/20250806",
+         ),
+-        horizon=1200,
++        horizon=1800,
+     ),
+     PrepareBroilingStation=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PrepareBroilingStation/20250804",
+         ),
+-        horizon=600,
++        horizon=900,
+     ),
+     PrepareCheeseStation=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PrepareCheeseStation/20250728",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     PrepareCocktailStation=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PrepareCocktailStation/20250801",
+         ),
+-        horizon=3500,
++        horizon=5250,
+     ),
+     PrepareCoffee=dict(
+         pretrain=dict(
+@@ -1550,199 +1550,199 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         real=dict(
+             human_path="real_data/PrepareCoffee/",
+         ),
+-        horizon=1200,
++        horizon=1800,
+     ),
+     PrepareDishwasher=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PrepareDishwasher/20250717",
+         ),
+-        horizon=900,
++        horizon=1350,
+     ),
+     PrepareDrinkStation=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PrepareDrinkStation/20250723",
+         ),
+-        horizon=3900,
++        horizon=5850,
+     ),
+     PrepareSausageCheese=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PrepareSausageCheese/20250805",
+         ),
+-        horizon=2400,
++        horizon=3600,
+     ),
+     PrepareSmoothie=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PrepareSmoothie/20250829",
+         ),
+-        horizon=1200,
++        horizon=1800,
+     ),
+     PrepareSoupServing=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PrepareSoupServing/20250724",
+         ),
+-        horizon=2300,
++        horizon=3450,
+     ),
+     PrepareStoringLeftovers=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PrepareStoringLeftovers/20250903",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     PrepareToast=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PrepareToast/20250714",
+         ),
+-        horizon=2500,
++        horizon=3750,
+     ),
+     PressChicken=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PressChicken/20250717",
+         ),
+-        horizon=1000,
++        horizon=1500,
+     ),
+     PrewashFoodAssembly=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PrewashFoodAssembly/20250714",
+         ),
+-        horizon=1100,
++        horizon=1650,
+     ),
+     PrewashFoodSorting=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/PrewashFoodSorting/20250718",
+         ),
+-        horizon=2400,
++        horizon=3600,
+     ),
+     QuickThaw=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/QuickThaw/20250725",
+         ),
+-        horizon=1100,
++        horizon=1650,
+     ),
+     RearrangeFridgeItems=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/RearrangeFridgeItems/20250827",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     RecycleBottlesBySize=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/RecycleBottlesBySize/20250717",
+         ),
+-        horizon=2500,
++        horizon=3750,
+     ),
+     RecycleBottlesByType=dict(
+         target=dict(
+             human_path="v1.0/target/composite/RecycleBottlesByType/20250812",
+         ),
+-        horizon=1900,
++        horizon=2850,
+     ),
+     RecycleSodaCans=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/RecycleSodaCans/20250719",
+         ),
+-        horizon=4500,
++        horizon=6750,
+     ),
+     RecycleStackedYogurt=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/RecycleStackedYogurt/20250717",
+         ),
+-        horizon=1400,
++        horizon=2100,
+     ),
+     RefillCondimentStation=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/RefillCondimentStation/20250827",
+         ),
+-        horizon=1300,
++        horizon=1950,
+     ),
+     ReheatMeal=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ReheatMeal/20250901",
+         ),
+-        horizon=1200,
++        horizon=1800,
+     ),
+     RemoveBroiledFish=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/RemoveBroiledFish/20250805",
+         ),
+-        horizon=1400,
++        horizon=2100,
+     ),
+     RemoveCuttingBoardItems=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/RemoveCuttingBoardItems/20250805",
+         ),
+-        horizon=500,
++        horizon=750,
+     ),
+     ReorganizeFrozenVegetables=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ReorganizeFrozenVegetables/20250807",
+         ),
+-        horizon=1800,
++        horizon=2700,
+     ),
+     ResetCabinetDoors=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ResetCabinetDoors/20250731",
+         ),
+-        horizon=2200,
++        horizon=3300,
+     ),
+     RestockBowls=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/RestockBowls/20250725",
+         ),
+-        horizon=2400,
++        horizon=3600,
+     ),
+     RestockCannedFood=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/RestockCannedFood/20250827",
+         ),
+-        horizon=700,
++        horizon=1050,
+     ),
+     RestockPantry=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/RestockPantry/20250714",
+         ),
+-        horizon=1700,
++        horizon=2550,
+     ),
+     RestockSinkSupplies=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/RestockSinkSupplies/20250827",
+         ),
+-        horizon=1500,
++        horizon=2250,
+     ),
+     RetrieveIceTray=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/RetrieveIceTray/20250801",
+         ),
+-        horizon=1700,
++        horizon=2550,
+     ),
+     RetrieveMeat=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/RetrieveMeat/20250728",
+         ),
+-        horizon=700,
++        horizon=1050,
+     ),
+     ReturnHeatedFood=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ReturnHeatedFood/20250901",
+         ),
+-        horizon=900,
++        horizon=1350,
+     ),
+     ReturnWashingSupplies=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ReturnWashingSupplies/20250717",
+         ),
+-        horizon=3400,
++        horizon=5100,
+     ),
+     RinseBowls=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/RinseBowls/20250718",
+         ),
+-        horizon=1900,
++        horizon=2850,
+     ),
+     RinseCuttingBoard=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/RinseCuttingBoard/20250805",
+         ),
+-        horizon=1500,
++        horizon=2250,
+     ),
+     RinseSinkBasin=dict(
+         pretrain=dict(
+@@ -1751,31 +1751,31 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/composite/RinseSinkBasin/20250816",
+         ),
+-        horizon=900,
++        horizon=1350,
+     ),
+     RotatePan=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/RotatePan/20250717",
+         ),
+-        horizon=400,
++        horizon=600,
+     ),
+     SanitizePrepCuttingBoard=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SanitizePrepCuttingBoard/20250806",
+         ),
+-        horizon=1400,
++        horizon=2100,
+     ),
+     ScalePortioning=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ScalePortioning/20250807",
+         ),
+-        horizon=1400,
++        horizon=2100,
+     ),
+     ScrubBowl=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ScrubBowl/20250717",
+         ),
+-        horizon=900,
++        horizon=1350,
+     ),
+     ScrubCuttingBoard=dict(
+         pretrain=dict(
+@@ -1784,7 +1784,7 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/composite/ScrubCuttingBoard/20250816",
+         ),
+-        horizon=800,
++        horizon=1200,
+     ),
+     SearingMeat=dict(
+         pretrain=dict(
+@@ -1793,37 +1793,37 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/composite/SearingMeat/20250812",
+         ),
+-        horizon=2900,
++        horizon=4350,
+     ),
+     SeasoningSpiceSetup=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SeasoningSpiceSetup/20250728",
+         ),
+-        horizon=2800,
++        horizon=4200,
+     ),
+     SeasoningSteak=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SeasoningSteak/20250731",
+         ),
+-        horizon=900,
++        horizon=1350,
+     ),
+     SeparateFreezerRack=dict(
+         target=dict(
+             human_path="v1.0/target/composite/SeparateFreezerRack/20250815",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     ServeSteak=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ServeSteak/20250718",
+         ),
+-        horizon=1400,
++        horizon=2100,
+     ),
+     ServeTea=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ServeTea/20250805",
+         ),
+-        horizon=900,
++        horizon=1350,
+     ),
+     ServeWarmCroissant=dict(
+         pretrain=dict(
+@@ -1832,13 +1832,13 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         real=dict(
+             human_path="real_data/ServeWarmCroissant/",
+         ),
+-        horizon=1200,
++        horizon=1800,
+     ),
+     SetBowlsForSoup=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SetBowlsForSoup/20250716",
+         ),
+-        horizon=3600,
++        horizon=5400,
+     ),
+     SetUpCuttingStation=dict(
+         pretrain=dict(
+@@ -1847,91 +1847,91 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/composite/SetUpCuttingStation/20250817",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     SetUpSpiceStation=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SetUpSpiceStation/20250731",
+         ),
+-        horizon=2700,
++        horizon=4050,
+     ),
+     SetupBowls=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SetupBowls/20250801",
+         ),
+-        horizon=1800,
++        horizon=2700,
+     ),
+     SetupButterPlate=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SetupButterPlate/20250801",
+         ),
+-        horizon=2700,
++        horizon=4050,
+     ),
+     SetupFruitBowl=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SetupFruitBowl/20250801",
+         ),
+-        horizon=2500,
++        horizon=3750,
+     ),
+     SetupFrying=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SetupFrying/20250724",
+         ),
+-        horizon=2100,
++        horizon=3150,
+     ),
+     SetupSodaBowl=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SetupSodaBowl/20250801",
+         ),
+-        horizon=2400,
++        horizon=3600,
+     ),
+     SetupWineGlasses=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SetupWineGlasses/20250801",
+         ),
+-        horizon=2100,
++        horizon=3150,
+     ),
+     ShakePan=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ShakePan/20250724",
+         ),
+-        horizon=400,
++        horizon=600,
+     ),
+     SimmeringSauce=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SimmeringSauce/20250715",
+         ),
+-        horizon=2300,
++        horizon=3450,
+     ),
+     SizeSorting=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SizeSorting/20250714",
+         ),
+-        horizon=1000,
++        horizon=1500,
+     ),
+     SnackSorting=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SnackSorting/20250718",
+         ),
+-        horizon=1300,
++        horizon=1950,
+     ),
+     SoakSponge=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SoakSponge/20250718",
+         ),
+-        horizon=1700,
++        horizon=2550,
+     ),
+     SortingCleanup=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SortingCleanup/20250723",
+         ),
+-        horizon=2000,
++        horizon=3000,
+     ),
+     SpicyMarinade=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SpicyMarinade/20250715",
+         ),
+-        horizon=3600,
++        horizon=5400,
+     ),
+     StackBowlsCabinet=dict(
+         pretrain=dict(
+@@ -1940,25 +1940,25 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/composite/StackBowlsCabinet/20250815",
+         ),
+-        horizon=1400,
++        horizon=2100,
+     ),
+     StackBowlsInSink=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/StackBowlsInSink/20250714",
+         ),
+-        horizon=900,
++        horizon=1350,
+     ),
+     StackCans=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/StackCans/20250731",
+         ),
+-        horizon=1200,
++        horizon=1800,
+     ),
+     StartElectricKettle=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/StartElectricKettle/20250717",
+         ),
+-        horizon=700,
++        horizon=1050,
+     ),
+     SteamInMicrowave=dict(
+         pretrain=dict(
+@@ -1967,7 +1967,7 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/composite/SteamInMicrowave/20250814",
+         ),
+-        horizon=1400,
++        horizon=2100,
+     ),
+     StirVegetables=dict(
+         pretrain=dict(
+@@ -1976,25 +1976,25 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/composite/StirVegetables/20250814",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     StockingBreakfastFoods=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/StockingBreakfastFoods/20250715",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     StoreDumplings=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/StoreDumplings/20250804",
+         ),
+-        horizon=2500,
++        horizon=3750,
+     ),
+     StoreLeftoversByType=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/StoreLeftoversByType/20250804",
+         ),
+-        horizon=1700,
++        horizon=2550,
+     ),
+     StoreLeftoversInBowl=dict(
+         pretrain=dict(
+@@ -2003,109 +2003,109 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/composite/StoreLeftoversInBowl/20250813",
+         ),
+-        horizon=1700,
++        horizon=2550,
+     ),
+     StrainerSetup=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/StrainerSetup/20250805",
+         ),
+-        horizon=1500,
++        horizon=2250,
+     ),
+     SweetSavoryToastSetup=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SweetSavoryToastSetup/20250721",
+         ),
+-        horizon=2700,
++        horizon=4050,
+     ),
+     SweetenCoffee=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SweetenCoffee/20250904",
+         ),
+-        horizon=1300,
++        horizon=1950,
+     ),
+     SweetenHotChocolate=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/SweetenHotChocolate/20250805",
+         ),
+-        horizon=1400,
++        horizon=2100,
+     ),
+     ThawInSink=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ThawInSink/20250721",
+         ),
+-        horizon=1000,
++        horizon=1500,
+     ),
+     TiltPan=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/TiltPan/20250808",
+         ),
+-        horizon=400,
++        horizon=600,
+     ),
+     ToastBagel=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ToastBagel/20250731",
+         ),
+-        horizon=1500,
++        horizon=2250,
+     ),
+     ToastBaguette=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ToastBaguette/20250731",
+         ),
+-        horizon=2600,
++        horizon=3900,
+     ),
+     ToastOnCorrectRack=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/ToastOnCorrectRack/20250731",
+         ),
+-        horizon=2600,
++        horizon=3900,
+     ),
+     TongBuffetSetup=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/TongBuffetSetup/20250730",
+         ),
+-        horizon=1600,
++        horizon=2400,
+     ),
+     TransportCookware=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/TransportCookware/20250717",
+         ),
+-        horizon=1900,
++        horizon=2850,
+     ),
+     TurnOffSimmeredSauceHeat=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/TurnOffSimmeredSauceHeat/20250728",
+         ),
+-        horizon=1000,
++        horizon=1500,
+     ),
+     VeggieDipPrep=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/VeggieDipPrep/20250718",
+         ),
+-        horizon=2100,
++        horizon=3150,
+     ),
+     WaffleReheat=dict(
+         target=dict(
+             human_path="v1.0/target/composite/WaffleReheat/20250817",
+         ),
+-        horizon=2700,
++        horizon=4050,
+     ),
+     WarmCroissant=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/WarmCroissant/20250724",
+         ),
+-        horizon=1100,
++        horizon=1650,
+     ),
+     WashFish=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/WashFish/20250805",
+         ),
+-        horizon=900,
++        horizon=1350,
+     ),
+     WashFruitColander=dict(
+         target=dict(
+             human_path="v1.0/target/composite/WashFruitColander/20250811",
+         ),
+-        horizon=2100,
++        horizon=3150,
+     ),
+     WashLettuce=dict(
+         pretrain=dict(
+@@ -2114,19 +2114,19 @@ COMPOSITE_TASK_DATASETS = OrderedDict(
+         target=dict(
+             human_path="v1.0/target/composite/WashLettuce/20250814",
+         ),
+-        horizon=1100,
++        horizon=1650,
+     ),
+     WeighIngredients=dict(
+         target=dict(
+             human_path="v1.0/target/composite/WeighIngredients/20250812",
+         ),
+-        horizon=2000,
++        horizon=3000,
+     ),
+     YogurtDelightPrep=dict(
+         pretrain=dict(
+             human_path="v1.0/pretrain/composite/YogurtDelightPrep/20250725",
+         ),
+-        horizon=1500,
++        horizon=2250,
+     ),
+ )
+ 
+diff --git a/robocasa/utils/robomimic/__init__.py b/robocasa/utils/robomimic/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/wrappers/__init__.py b/robocasa/wrappers/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/robocasa/wrappers/enclosing_wall_render_wrapper.py b/robocasa/wrappers/enclosing_wall_render_wrapper.py
+new file mode 100644
+index 0000000..e14486f
+--- /dev/null
++++ b/robocasa/wrappers/enclosing_wall_render_wrapper.py
+@@ -0,0 +1,319 @@
++from __future__ import annotations
++
++from typing import Dict, Optional
++
++import numpy as np
++import yaml
++from robosuite.wrappers import Wrapper
++from pynput.keyboard import Key, Listener
++
++import robocasa.models.scenes.scene_registry as SceneRegistry
++
++
++def _unwrap_env(env):
++    base = env
++    while hasattr(base, "env"):
++        base = base.env
++    return base
++
++
++def _find_enclosing_wall_render_wrapper(env) -> Optional["EnclosingWallRenderWrapper"]:
++    """Return the first EnclosingWallRenderWrapper in a Wrapper chain (if any)."""
++    base = env
++    while hasattr(base, "env"):
++        if isinstance(base, EnclosingWallRenderWrapper):
++            return base
++        base = base.env
++    return base if isinstance(base, EnclosingWallRenderWrapper) else None
++
++
++def _refresh_visualization_and_redraw(env, *, render: bool):
++    """Best-effort redraw after mutating wall alpha.
++
++    Some robosuite setups only apply visualization changes on explicit `env.visualize(...)`,
++    and mjviewer often redraws via `viewer.update()` inside the main loop. This helper makes
++    a best-effort attempt to update both without stepping the sim.
++    """
++    # Apply (or re-apply) visualize settings if possible
++    vis_settings = getattr(env, "vis_settings", None)
++    if not vis_settings and hasattr(env, "_visualizations"):
++        vis_settings = {vis: True for vis in getattr(env, "_visualizations")}
++    if vis_settings and hasattr(env, "visualize"):
++        env.visualize(vis_settings)
++
++    # Force a redraw without stepping
++    viewer = getattr(env, "viewer", None)
++    if viewer is not None:
++        viewer.update()
++    elif render and hasattr(env, "render"):
++        env.render()
++
++
++class EnclosingWallHotkeyHandler:
++    """Consume `install_enclosing_wall_hotkeys()` requests and apply wall changes.
++
++    Typical usage inside an interactive control loop:
++
++        handler = EnclosingWallHotkeyHandler(env)
++        while True:
++            if handler.consume_pending(render=render):
++                continue
++            # ... normal control loop ...
++    """
++
++    def __init__(self, env):
++        self.env = env
++        self._wrapper = _find_enclosing_wall_render_wrapper(env)
++
++    def consume_pending(self, *, render: bool) -> bool:
++        """Apply and clear any queued wall hotkey requests.
++
++        Returns:
++            True if a request was consumed (callers typically `continue` their loop).
++        """
++        force_opaque = bool(getattr(self.env, "_force_enclosing_walls_opaque", False))
++        toggle = bool(getattr(self.env, "_toggle_enclosing_walls", False))
++        if not force_opaque and not toggle:
++            return False
++
++        if force_opaque:
++            if self._wrapper is not None:
++                self._wrapper.set_enabled(False)
++            self.env._force_enclosing_walls_opaque = False
++            # If a toggle was also queued, drop it (force-off wins)
++            self.env._toggle_enclosing_walls = False
++            _refresh_visualization_and_redraw(self.env, render=render)
++            return True
++
++        # toggle
++        if self._wrapper is not None:
++            self._wrapper.toggle()
++        self.env._toggle_enclosing_walls = False
++        _refresh_visualization_and_redraw(self.env, render=render)
++        return True
++
++
++class EnclosingWallRenderWrapper(Wrapper):
++    """Visualization-only transparency override for enclosing walls.
++
++    In interactive viewers (e.g. robosuite's `mjviewer`), the renderer can redraw the scene
++    independently of `env.render()` / `env.step()`. To make the effect stable across camera
++    switches and user interactions, we apply a persistent alpha override to
++    `sim.model.geom_rgba[..., 3]` while enabled, and restore the original alpha values
++    when disabled.
++
++    This is still "demo safe" in `collect_demos.py` because demos save MJCF from `env.model.get_xml()`
++    (not the live `sim.model` values we adjust here), and state/action logging is unchanged.
++    """
++
++    def __init__(self, env, alpha: float = 0.1, enabled: bool = False):
++        super().__init__(env)
++        self.alpha = float(alpha)
++        self.enabled = False
++        self._geom_ids: Optional[np.ndarray] = None
++        self._saved_alpha: Dict[int, float] = {}
++        self._last_model_ptr = None
++        self.set_enabled(bool(enabled))
++
++    def __setattr__(self, name, value):
++        # Forward non-internal attribute sets to the underlying env when possible.
++        # This matters because robosuite Wrapper only forwards __getattr__ (not __setattr__),
++        # and callers commonly do things like `env.layout_and_style_ids = ...`.
++        if name.startswith("_") or name in {"env", "alpha", "enabled"}:
++            object.__setattr__(self, name, value)
++            return
++
++        if "env" in self.__dict__ and hasattr(self.__dict__["env"], name):
++            setattr(self.__dict__["env"], name, value)
++            return
++
++        object.__setattr__(self, name, value)
++
++    def toggle(self):
++        self.set_enabled(not self.enabled)
++
++    def set_enabled(self, enabled: bool):
++        enabled = bool(enabled)
++        if enabled == self.enabled:
++            return
++        self.enabled = enabled
++        self._apply_or_restore()
++
++    def visualize(self, vis_settings):
++        """
++        Delegates visualization to the wrapped env, then applies / restores the enclosing-wall
++        transparency override. This keeps wrapper-specific rendering logic out of the base env.
++        """
++        self.env.visualize(vis_settings)
++        self._apply_or_restore()
++
++    def reset(self, *args, **kwargs):
++        # Reset underlying env first, then refresh geom ids for the new model and re-apply if needed
++        ret = self.env.reset(*args, **kwargs)
++        self._geom_ids = None
++        self._saved_alpha = {}
++        self._last_model_ptr = None
++        if self.enabled:
++            self._apply_or_restore()
++        return ret
++
++    def _apply_or_restore(self):
++        base = _unwrap_env(self.env)
++        if not hasattr(base, "sim") or base.sim is None:
++            return
++
++        model = getattr(base.sim, "model", None)
++        if model is None:
++            return
++
++        # detect model reloads (hard resets) so we don't reuse stale ids / alpha
++        model_ptr = id(model)
++        if self._last_model_ptr != model_ptr:
++            self._geom_ids = None
++            self._saved_alpha = {}
++            self._last_model_ptr = model_ptr
++
++        geom_ids = self._get_enclosing_wall_geom_ids()
++        if geom_ids.size == 0:
++            return
++
++        if self.enabled:
++            # save originals once
++            for gi in geom_ids.tolist():
++                if int(gi) not in self._saved_alpha:
++                    self._saved_alpha[int(gi)] = float(model.geom_rgba[int(gi), 3])
++            model.geom_rgba[geom_ids, 3] = self.alpha
++        else:
++            # force walls fully opaque when disabled
++            model.geom_rgba[geom_ids, 3] = 1.0
++            self._saved_alpha = {}
++
++    @staticmethod
++    def _get_enclosing_wall_names_from_layout(layout_id: int) -> list[str]:
++        layout_path = SceneRegistry.get_layout_path(layout_id)
++        with open(layout_path, "r") as f:
++            layout_data = yaml.safe_load(f) or {}
++        walls = (layout_data.get("room") or {}).get("walls") or []
++        return [w.get("name") for w in walls if w.get("enclosing_wall", False) is True]
++
++    @staticmethod
++    def _match_geom_ids(model, enclosing_names: list[str]) -> np.ndarray:
++        """Return MuJoCo geom indices for all geometry belonging to enclosing walls.
++
++        Used to know which geoms to make transparent when the wrapper is enabled.
++        Matching is done in two steps:
++
++        1. Find body IDs: bodies whose name equals or is a variant of an enclosing
++           wall name (exact match, or prefix/suffix with underscore), then add all
++           descendant bodies in the model tree so child meshes are included.
++        2. Find geom IDs: geoms that belong to those bodies, or whose geom name
++           matches an enclosing wall name (same name rules as above).
++
++        Args:
++            model: MuJoCo model (e.g. sim.model).
++            enclosing_names: Wall names marked as enclosing in the layout YAML.
++
++        Returns:
++            1D array of geom indices (dtype int) for enclosing wall geometry.
++        """
++        if not enclosing_names:
++            return np.array([], dtype=int)
++
++        # Collect bodies that match enclosing wall names (exact or name_prefix_ / _name_suffix)
++        body_ids = set()
++        for b in range(model.nbody):
++            body_name = model.body_id2name(b)
++            if body_name is None:
++                continue
++            for ename in enclosing_names:
++                if (
++                    body_name == ename
++                    or body_name.startswith(ename + "_")
++                    or body_name.endswith("_" + ename)
++                ):
++                    body_ids.add(b)
++                    break
++
++        # Add all descendant bodies so child bodies/geoms (e.g. sub-meshes) are included
++        added = True
++        while added:
++            added = False
++            for b in range(model.nbody):
++                if b in body_ids:
++                    continue
++                parent = model.body_parentid[b]
++                if parent >= 0 and parent in body_ids:
++                    body_ids.add(b)
++                    added = True
++
++        # Geoms: include if attached to a matched body, or if geom name matches an enclosing name
++        geom_ids: list[int] = []
++        for i in range(model.ngeom):
++            if model.geom_bodyid[i] in body_ids:
++                geom_ids.append(i)
++                continue
++            gname = model.geom_id2name(i)
++            if gname is None:
++                continue
++            for ename in enclosing_names:
++                if (
++                    gname == ename
++                    or gname.startswith(ename + "_")
++                    or gname.endswith("_" + ename)
++                ):
++                    geom_ids.append(i)
++                    break
++        return np.array(geom_ids, dtype=int)
++
++    def _get_enclosing_wall_geom_ids(self) -> np.ndarray:
++        if self._geom_ids is not None:
++            return self._geom_ids
++
++        base = _unwrap_env(self.env)
++        if (
++            not hasattr(base, "sim")
++            or base.sim is None
++            or not hasattr(base, "layout_id")
++        ):
++            self._geom_ids = np.array([], dtype=int)
++            return self._geom_ids
++
++        enclosing_names = self._get_enclosing_wall_names_from_layout(
++            int(base.layout_id)
++        )
++        model = getattr(base.sim, "model", None)
++        if model is None:
++            self._geom_ids = np.array([], dtype=int)
++            return self._geom_ids
++
++        self._geom_ids = self._match_geom_ids(model, enclosing_names)
++        return self._geom_ids
++
++
++def install_enclosing_wall_hotkeys(env):
++    """Install hotkeys that request a wall toggle on `env`.
++
++    Hotkeys:
++      - Esc: toggle transparency on / off
++      - [ or ]: force transparency OFF (useful since mjviewer uses these for camera cycling)
++
++    Used by interactive loops that call `EnclosingWallHotkeyHandler.consume_pending()`.
++    """
++
++    # idempotent-ish: if already installed, no-op
++    if getattr(env, "_enclosing_wall_key_listener", None) is not None:
++        return
++
++    env._toggle_enclosing_walls = False
++    env._force_enclosing_walls_opaque = False
++
++    def _on_release(key):
++        if key == Key.esc:
++            env._toggle_enclosing_walls = True
++            return
++        if hasattr(key, "char") and key.char in {"[", "]"}:
++            env._force_enclosing_walls_opaque = True
++            return
++
++    env._enclosing_wall_key_listener = Listener(on_release=_on_release)
++    env._enclosing_wall_key_listener.start()
+diff --git a/setup.py b/setup.py
+index f0cbd62..c5c8c27 100644
+--- a/setup.py
++++ b/setup.py
+@@ -41,7 +41,7 @@ setup(
+     author="Soroush Nasiriany, Sepehr Nasiriany, Abhiram Maddukuri, Yuke Zhu",
+     url="https://github.com/robocasa/robocasa",
+     author_email="soroush@cs.utexas.edu",
+-    version="1.0.0",
++    version="1.0.1",
+     long_description=long_description,
+     long_description_content_type="text/markdown",
+ )

@@ -46,6 +46,22 @@ Consequently these are the matching pairs:
 The [official benchmark documentation](https://robocasa.ai/docs/build/html/benchmarking/benchmarking_overview.html)
 also describes the horizon increase and the two scene/object splits.
 
+The original `v1.0` tag predates the immediate 1.0.0 parent by nine commits.
+That intervening [tag-to-release diff](research/V100-TAG-TO-V101.diff) also
+includes asset/dataset download mirrors changing from Hugging Face to Box,
+demo/recording utilities, empty package initializers, and an optional enclosing
+wall render wrapper used by demos. No task physics/controller/reset/success
+implementation changed in that interval. The four-file statement above is
+specifically the final version-bump commit, not every change since the tag.
+The fallback source is prepared separately at the actual `v1.0` tag.
+
+The protected shared assets were checked against all 210 tracked release
+asset files: 209 match Git blob hashes exactly; only the dataset download URL
+index differs. No scene, fixture or geometry metadata differed. See
+[asset metadata audit](research/ASSET-METADATA-AUDIT.json). External downloaded
+asset archives remain the existing protected cache; the original submission
+does not provide archive checksums for a full historical asset comparison.
+
 ## Later commits still called 1.0.1
 
 Our previous simulator was pinned to `3443cdf3`, not the narrow release
@@ -78,7 +94,12 @@ Composite-Seen and 1.2% Composite-Unseen, giving 16.912% overall by task count.
 
 `atomic_seen` describes task identity; `pretrain` describes scene/object
 distribution. These must not be conflated. The reference uses the 50 target
-task identities in pretraining kitchens/objects.
+task identities in pretraining kitchens/objects. This is independently confirmed
+by the [official multi-task protocol](https://robocasa.ai/docs/build/html/benchmarking/multitask_learning.html),
+which lists the exact 39.6/7.1/1.2 π0.5 reference and explicitly evaluates OpenPI
+on `--args.split pretrain`. The separate foundation-model fine-tuning benchmark
+uses target scenes; its scene split must not be applied to this checkpoint's
+multi-task reference.
 
 The released code uses 224-pixel resize-with-padding, left/wrist/right RGB,
 the relative-eef/base/gripper state order, 10 ODE denoising steps, and native

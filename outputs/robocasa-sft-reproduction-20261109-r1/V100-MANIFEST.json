@@ -1,0 +1,57 @@
+{
+  "trials_per_task": 50,
+  "split": "pretrain",
+  "seed": 7,
+  "inference_batch_size": 1,
+  "replan": 5,
+  "ode_steps": 10,
+  "prediction_horizon": 50,
+  "atomic_reference": 0.396,
+  "atomic_practical_band": 0.05,
+  "version": "1.0.0",
+  "stages": [
+    "atomic_seen"
+  ],
+  "maximum_worker_seconds": 13320,
+  "maximum_policy_controls": 592500,
+  "shards": [
+    {
+      "rank": 0,
+      "atomic_seen": [
+        "OpenCabinet",
+        "PickPlaceCounterToCabinet",
+        "TurnOffStove",
+        "TurnOnSinkFaucet",
+        "OpenStandMixerHead",
+        "TurnOnMicrowave"
+      ],
+      "maximum_controls": 202500
+    },
+    {
+      "rank": 1,
+      "atomic_seen": [
+        "CloseBlenderLid",
+        "PickPlaceSinkToCounter",
+        "CoffeeSetupMug",
+        "PickPlaceCounterToStove",
+        "CloseToasterOvenDoor",
+        "SlideDishwasherRack"
+      ],
+      "maximum_controls": 195000
+    },
+    {
+      "rank": 2,
+      "atomic_seen": [
+        "CloseFridge",
+        "OpenDrawer",
+        "PickPlaceDrawerToCounter",
+        "PickPlaceToasterToCounter",
+        "NavigateKitchen",
+        "TurnOnElectricKettle"
+      ],
+      "maximum_controls": 195000
+    }
+  ],
+  "robocasa_source_directory": "robocasa-v100",
+  "robocasa_commit": "8f3c96ec8d1bfcd8126cad2bca887da98d30e997"
+}
