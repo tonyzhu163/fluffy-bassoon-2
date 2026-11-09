@@ -71,8 +71,16 @@ def main():
               for a in ACTIONS}
     metrics = {name: measure(panel, policy) for name, policy in policies.items()}
     metrics['reverse_feedback'] = measure(panel, policies['active'], reverse=True)
+    # These ceilings diagnose motor controllability. Neither is a deployable memory policy.
+    informed = [max(ACTIONS, key=lambda a: sum(q[a]['placed'][g] for _, q in dev))
+                for g in (0, 1)]
+    known_goal = sum(q[informed[g]]['placed'][g] for _, q in panel for g in (0, 1))
+    hindsight = sum(any(q[a]['placed'][g] for a in ACTIONS) for _, q in panel for g in (0, 1))
+    assert all(m['query'] <= hindsight for m in metrics.values())
     print(json.dumps(dict(split='held_out' if args.holdout else 'development', policies=policies,
-                          metrics=metrics, placements_by_prompt=counts), indent=2))
+                          metrics=metrics, placements_by_prompt=counts,
+                          goal_informed_prompts=informed, goal_informed_query=known_goal,
+                          hindsight_query_ceiling=hindsight), indent=2))
 
 
 if __name__ == '__main__':
