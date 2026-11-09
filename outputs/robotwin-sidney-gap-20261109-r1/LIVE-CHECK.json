@@ -1,8 +1,8 @@
 {
-  "checked_at": "2026-11-09T18:24:30+08:00",
+  "checked_at": "2026-11-09T19:05:31+08:00",
   "runs": {
     "baseline": {
-      "status": "running",
+      "status": "complete",
       "settings": {
         "demo_clean": {
           "n": 100,
@@ -10,30 +10,35 @@
           "reset_errors": 0
         },
         "demo_randomized": {
-          "n": 43,
-          "successes": 10,
+          "n": 100,
+          "successes": 31,
           "reset_errors": 0
         }
       },
-      "exit": null
+      "exit": {
+        "exit_code": 0,
+        "started_unix": 1794214563,
+        "ended_unix": 1794221805,
+        "worker_gpu_seconds": 7242
+      }
     },
     "gap": {
       "status": "running",
       "settings": {
         "scene_frozen": {
-          "n": 5,
+          "n": 13,
+          "successes": 5,
+          "reset_errors": 0,
+          "by400": 5
+        },
+        "short_frozen": {
+          "n": 13,
           "successes": 1,
           "reset_errors": 0,
           "by400": 1
         },
-        "short_frozen": {
-          "n": 5,
-          "successes": 0,
-          "reset_errors": 0,
-          "by400": 0
-        },
         "short_sequential": {
-          "n": 6,
+          "n": 13,
           "successes": 2,
           "reset_errors": 0,
           "by400": 2
@@ -42,20 +47,36 @@
       "exit": null
     },
     "wrist": {
-      "status": "running",
+      "status": "complete",
       "settings": {
         "demo_clean": {
-          "n": 54,
-          "successes": 39,
+          "n": 100,
+          "successes": 75,
           "reset_errors": 0
         }
       },
-      "exit": null
+      "exit": {
+        "exit_code": 0,
+        "started_unix": 1794218481,
+        "ended_unix": 1794220784,
+        "worker_gpu_seconds": 2303
+      }
     },
     "wrist_random": {
-      "status": "starting",
-      "settings": {},
-      "exit": null
+      "status": "complete",
+      "settings": {
+        "demo_randomized": {
+          "n": 100,
+          "successes": 87,
+          "reset_errors": 0
+        }
+      },
+      "exit": {
+        "exit_code": 0,
+        "started_unix": 1794219752,
+        "ended_unix": 1794222082,
+        "worker_gpu_seconds": 2330
+      }
     }
   }
 }
