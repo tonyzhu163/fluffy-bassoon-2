@@ -1,7 +1,8 @@
 # Repository guidance
 
-This repository studies in-context reinforcement learning for frozen VLAs; the
-current first step is learned-reward (Flora-Rewarder) PPO. Start with
+This repository studies in-context reinforcement learning for frozen VLAs on
+RoboCasa365 and RoboTwin. RLinf provides rollout and online baselines; shared
+offline learners adapt through history. Start with
 [docs/README.md](docs/README.md). It was split from `tonyzhu163/fluffy-bassoon`
 (branch `lycoreco_rl`); see [PROVENANCE.md](PROVENANCE.md). LycoReco work and runs pinned to fluffy-bassoon
 commits stay there.

@@ -10,9 +10,6 @@ Primary sources: [paper](https://arxiv.org/abs/2610.19517v1),
 [PDF](https://arxiv.org/pdf/2610.19517v1).
 The [source audit](../../outputs/archive/vlrla-protocol-20261029-r1/README.md) records
 retrieval identities, release searches and the public demonstration manifest.
-Our proposed DSRL experiments are a separate
-[design](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/frozen-vla-icrl-design.md).
-
 ## 1. Experimental stages and what learns
 
 The simulation pipeline has two distinct optimizations:

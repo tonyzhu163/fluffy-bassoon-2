@@ -3,10 +3,10 @@ from copy import deepcopy
 
 import pytest
 
-from fluffy_bassoon.meta_rl.flora_terminal_shards import gather_terminal_outputs, shard_episode_bank
-from fluffy_bassoon.meta_rl.rlinf_flora_ppo import parse_outputs
-from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import protocol
-from fluffy_bassoon.meta_rl.robocasa_video import REWARD_CAMERAS
+from fluffy_bassoon.robocasa.flora_terminal_shards import gather_terminal_outputs, shard_episode_bank
+from fluffy_bassoon.robocasa.flora_ppo import parse_outputs
+from fluffy_bassoon.robocasa.ppo import protocol
+from fluffy_bassoon.robocasa.video import REWARD_CAMERAS
 
 
 def bank():

@@ -4,7 +4,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from fluffy_bassoon.meta_rl.robocasa_video import EpisodeVideos, REWARD_CAMERAS, observation_frames, raw_frames
+from fluffy_bassoon.robocasa.video import EpisodeVideos, REWARD_CAMERAS, observation_frames, raw_frames
 
 
 def test_raw_and_public_observations_produce_identical_upright_camera_streams(tmp_path):

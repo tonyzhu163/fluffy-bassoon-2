@@ -6,7 +6,7 @@ import pytest
 import torch
 from torch import nn
 
-from fluffy_bassoon.rl.robotwin_motor import (
+from fluffy_bassoon.robotwin.motor import (
     FrozenRoboTwinMotor, case_noise, public_batch, stack_public_observations,
 )
 from fluffy_bassoon.rl.pi05_residual import ReactiveALOHAActionResidual

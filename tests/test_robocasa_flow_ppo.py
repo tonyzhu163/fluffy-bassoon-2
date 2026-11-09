@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from fluffy_bassoon.meta_rl.rlinf_robocasa_flow_ppo import first_success_reward
+from fluffy_bassoon.robocasa.flow_ppo import first_success_reward
 
 
 def test_transient_success_pays_once_without_later_chunk_cancellation():
@@ -21,7 +21,7 @@ def test_first_success_rejects_a_broadcast_latch():
         first_success_reward([True, False], False)
 
 
-from fluffy_bassoon.meta_rl.rlinf_robocasa_flow_ppo import (
+from fluffy_bassoon.robocasa.flow_ppo import (
     GlobalActionJournal, flow_contract, flow_episode_ids, flow_logprob_parity, flow_seeds,
     flow_value_parity, keep_frozen_image_encoder_in_eval, train_case_seeds,
     verify_grpo_group_reset)
@@ -66,7 +66,7 @@ def test_pre_sgd_value_parity_rejects_denoise_step_mean():
 
 def test_flow_factory_stabilizes_native_regions_before_constructor(monkeypatch):
     from types import SimpleNamespace
-    from fluffy_bassoon.meta_rl import rlinf_robocasa_flow_ppo_runtime as runtime
+    from fluffy_bassoon.robocasa import flow_ppo_runtime as runtime
     calls = []
     monkeypatch.setattr(runtime, 'stable_counter_regions', lambda: calls.append('regions'))
     monkeypatch.setattr(runtime, 'counted_native_factory', lambda factory, **kwargs: factory)
@@ -129,7 +129,7 @@ def test_phase_horizons_reject_partial_chunks_and_inconsistent_rollouts(phase, e
 @pytest.mark.parametrize('episode_length', [400, 750])
 def test_environment_finishes_at_its_own_phase_horizon(monkeypatch, tmp_path, episode_length):
     from types import SimpleNamespace
-    from fluffy_bassoon.meta_rl import rlinf_robocasa_flow_ppo_runtime as runtime
+    from fluffy_bassoon.robocasa import flow_ppo_runtime as runtime
     written = []
     monkeypatch.setattr(runtime, 'write', lambda path, value: written.append(value))
     class Original:
@@ -233,7 +233,7 @@ def test_global_journal_records_without_a_ceiling(tmp_path):
 
 
 def test_actor_batch_drop_removes_only_named_duplicates():
-    from fluffy_bassoon.meta_rl.rlinf_native_ppo import retained_batch
+    from fluffy_bassoon.rlinf.native_ppo import retained_batch
     batch = dict(prev_logprobs=1, forward_inputs={'observation/image': 2, 'chains': 3, 'action': 4})
     kept = retained_batch(batch, ['forward_inputs.observation/image', 'forward_inputs.chains'])
     assert kept == dict(prev_logprobs=1, forward_inputs={'action': 4})
@@ -309,7 +309,7 @@ def test_reconfigure_or_create_subproc_env_batches_pipe_commands_in_parallel(mon
     from types import SimpleNamespace
     import rlinf.envs.sim.robocasa.venv as robocasa_venv
     import rlinf.envs.venv as base_venv
-    from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo_env import reconfigure_or_create_subproc_env
+    from fluffy_bassoon.robocasa.ppo_env import reconfigure_or_create_subproc_env
 
     events = []
     created = []
@@ -354,7 +354,7 @@ def test_async_chunk_io_writes_and_flushes_deterministically(tmp_path):
     from concurrent.futures import ThreadPoolExecutor
     import gzip
     import torch
-    from fluffy_bassoon.meta_rl.rlinf_robocasa_flow_ppo_runtime import FlowEnvironment, _write_chunk_archive
+    from fluffy_bassoon.robocasa.flow_ppo_runtime import FlowEnvironment, _write_chunk_archive
 
     worker = object.__new__(FlowEnvironment)
     worker._flow_io_pool = ThreadPoolExecutor(max_workers=2)

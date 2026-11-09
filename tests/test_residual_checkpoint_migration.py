@@ -7,11 +7,11 @@ import pytest
 import torch
 
 from test_robocasa_residual import bound, learner
-from fluffy_bassoon.meta_rl.robocasa_residual import (
+from fluffy_bassoon.robocasa.residual import (
     collect_pending, install_terminal_labels, restore_checkpoint, save_checkpoint,
 )
 from fluffy_bassoon.meta_rl.residual_ppo import ppo_config_record, stack_records, update
-from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import rollout_migration_contract
+from fluffy_bassoon.robocasa.ppo import rollout_migration_contract
 
 
 @pytest.mark.parametrize('kind', ['eight_gpu_rollout_only', 'eight_gpu_evaluation_only'])

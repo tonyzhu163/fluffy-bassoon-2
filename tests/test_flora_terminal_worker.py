@@ -4,7 +4,7 @@ from types import SimpleNamespace as NS
 
 import pytest
 
-from fluffy_bassoon.meta_rl.flora_terminal_worker import TerminalWorker
+from fluffy_bassoon.robocasa.flora_terminal_worker import TerminalWorker
 
 
 def backend(batch_size=1, gpu_memory_utilization=.78):

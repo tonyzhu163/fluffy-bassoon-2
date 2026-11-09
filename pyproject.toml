@@ -5,23 +5,16 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "fluffy-bassoon-2"
 version = "0.1.0"
-description = "CTM in-context reinforcement learning: trial environments, recurrent learners and a frozen pi0.5 ManiSkill motor"
+description = "In-context reinforcement learning for frozen VLAs on RoboCasa and RoboTwin with RLinf"
 requires-python = ">=3.11,<3.13"
-# The ManiSkill motor runs in the separate RLinf environment described in
-# docs/maniskill-pi05-icrl.md (gymnasium, omegaconf, rlinf, mani-skill).
+# Native simulator and RLinf dependencies are installed in pinned benchmark runtimes.
 dependencies = ["torch>=2.7", "numpy"]
-
-[project.optional-dependencies]
-metaworld = ["metaworld==3.1.1", "mujoco==3.3.0", "matplotlib>=3.10,<3.11"]
 
 [dependency-groups]
 dev = ["pytest>=8"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
-
-[tool.setuptools.package-data]
-"*" = ["DESIGN.md", "EVALUATION.md", "README.md"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

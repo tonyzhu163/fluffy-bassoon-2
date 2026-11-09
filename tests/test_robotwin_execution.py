@@ -2,7 +2,7 @@
 import pytest
 from types import SimpleNamespace
 
-from fluffy_bassoon.rl.robotwin_execution import (
+from fluffy_bassoon.robotwin.execution import (
     chunk_execution, install_accounted_controller, collated_chunk_executions)
 
 

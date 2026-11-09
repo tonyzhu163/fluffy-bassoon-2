@@ -221,7 +221,7 @@ not silently replacing the agreed PPO comparison.
 The inspected local experiment is the
 [Flow-SDE positive-control plan](../../outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/PLAN.md),
 [actual result](../../outputs/robocasa-opendrawer-rlinf-sim-ppo-20261102-r1/RESULT.md)
-and [config](../../configs/native_ppo/robocasa365_opendrawer_pi05_sim_ppo.yaml).
+and [config](../../benchmarks/robocasa/configs/robocasa365_opendrawer_pi05_sim_ppo.yaml).
 It completed 18 updates / 2,304 TRAIN episodes / 921,600 TRAIN controls.
 TRAIN first-three vs last-three success was 57.55→58.33%. Held-out first
 success was 35→43/64, exact paired p=.18493. This is an uncertain positive
@@ -269,40 +269,6 @@ generalizing. **Do not apply StructRL's done-shift patch to our collector on
 this evidence.** The compact [numerical record](../../outputs/robocasa-ppo-literature-20261102-r1/GAE-CHECK.json)
 identifies the batch, source and function hashes.
 
-## What to qualify for frozen velocity/KV PPO
-
-The literature does not supply a verified drop-in successful RoboCasa PPO
-recipe for **our** frozen expert plus fixed 32-D KV/velocity maps. The
-following checks address that gap before increasing the history budget:
-
-1. **Check the entire initial stochastic policy.** A zero mean or zero output
-   layer can preserve deterministic native behavior while sampled codes with
-   std .5 already perturb it. Compare native, zero-code and the actual initial
-   exploration distribution on matched cases. Declare which components of
-   motor noise are optimized.
-2. **Verify controllability on the same map that PPO trains.** A different
-   final-layer perturbation is not a positive control for an all-layer
-   adapter. Fix the map and scale before comparing ordinary PPO and history
-   learners; retain exact sampled codes and likelihood inputs.
-3. **Validate PPO numerics on saved data.** Before any update, recomputed
-   likelihood ratios should be one for the same observations, sampled latent
-   transitions, exploration state and adapter parameters. Check positive and
-   negative advantages, clipping and reward propagation. Include the critic
-   parameter group and actual actor-output gradient/update sizes.
-4. **Choose a reference and change one mechanism at a time.** VLM-feature
-   critic, shorter replanning cadence, noise .5, or fewer PPO reuse epochs are
-   separate hypotheses. A combined change cannot diagnose the failed run.
-5. **Keep source improvement and multi-task transfer separate.** First show
-   improving held-out outcomes through the chosen interface. Then collect
-   chronological learning histories across several tasks, with a matched PPO
-   baseline and independent task/state/seed evaluation. A single drawer
-   teacher, even with a memory control, does not establish transferable ICRL.
-
-These are recommendations and qualification work, not authorization for a
-larger GPU campaign. Active evaluations retain their pinned code and contract.
-Flora optimization stays parked until reward validity and the simulator
-learning gate are satisfied.
-
 ## Adjacent literature and exclusion decisions
 
 | Source | What it contributes / why it is not a successful RoboCasa PPO recipe |
@@ -328,19 +294,3 @@ fix or successful reproduction. It is a failure report, not a tuned recipe.
 Duplicated RLinf fork READMEs, course advertisements, simulator-asset-only
 papers, and evaluation-only VLA leaderboards were excluded from the recipe
 evidence.
-
-## Decision
-
-Use StructRL's **sparse PPO baseline** as the strongest released external
-reference to reconstruct, with its exact SFT/data/launcher/patch boundaries
-made explicit. Use πRL to audit the π0.5 critic and stochastic likelihoods.
-Treat PolicyWeave and SEES as evidence that expert/adapter PPO can improve
-RoboCasa behavior under different data and task constructions. Use MiDAS as
-the relevant frozen-base alternative, with its different algorithm and
-demonstration budget preserved.
-
-Complete the boundary checks and establish a matched stochastic baseline,
-then test critic placement and action cadence through
-one declared interface. The search does not justify claiming that the actor
-LR is simply wrong, that sparse PPO must yield a large gain, or that a
-published expert-fine-tuning result validates our frozen steering controller.

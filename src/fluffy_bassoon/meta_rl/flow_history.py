@@ -14,7 +14,7 @@ import numpy as np
 import torch
 from torch import nn
 
-from ..rl.pi05_residual import ReactiveKVResidual, _add, velocity_with_kv_residual
+from fluffy_bassoon.rl.pi05_residual import ReactiveKVResidual, _add, velocity_with_kv_residual
 from .causal_decoder import CausalDecoderCore
 from .history_value import discounted_returns, importance_weights
 from .vla_history import MODES, save_dataset, trial_tokens, validate_trial

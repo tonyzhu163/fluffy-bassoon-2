@@ -1,4 +1,4 @@
-"""GTrXL equations, independent causal reference and recurrent PPO contracts.
+"""GTrXL equations and an independent causal reference.
 
 Run only on allocated Linux resources. Dense tests do not call the streaming
 block or gate forwards, so cache indexing, pre-normalization, gate algebra and
@@ -6,16 +6,13 @@ all parameter gradients are checked against a separate sequence computation.
 """
 
 from copy import deepcopy
-from io import BytesIO
 
-import gymnasium as gym
 import pytest
 import torch
 from torch import nn
 from torch.nn import functional as F
 
 from fluffy_bassoon.meta_rl.gtrxl import GRUResidualGate, GatedTransformerXLCore
-from fluffy_bassoon.meta_rl.ppo import RecurrentActorCritic
 
 
 def reference_gate(gate, residual, update):
@@ -70,13 +67,6 @@ def stream(core, observations):
         value, state = core(observations[:, time], state)
         values.append(value)
     return torch.stack(values, dim=1), state
-
-
-def make_policy(*, memory=8):
-    return RecurrentActorCritic(
-        GatedTransformerXLCore(3, width=8, memory_length=memory, heads=2),
-        gym.spaces.Discrete(3),
-    )
 
 
 def test_gate_matches_paper_formula_and_identity_bias_sign():
@@ -195,99 +185,6 @@ def test_state_is_functional_no_cross_trial_or_cross_lane_state_and_no_future_le
     torch.testing.assert_close(first[:, :3], changed_output[:, :3], rtol=2e-10, atol=2e-11)
     gradient = torch.autograd.grad(first[:, 2].sum(), observations)[0]
     assert not gradient[:, 3:].any()
-
-
-def test_policy_lane_reset_matches_dense_segment_mask_and_cuts_history_gradient():
-    torch.manual_seed(107)
-    policy = make_policy().double()
-    observations = torch.randn(6, 2, 3, dtype=torch.float64, requires_grad=True)
-    actions = torch.zeros(6, 2, dtype=torch.long)
-    resets = torch.zeros(6, 2, dtype=torch.bool)
-    resets[3, 0] = True
-    _, _, values = policy.evaluate_sequence(observations, actions, resets)
-    features = dense_reference(policy.core, observations.transpose(0, 1), resets.transpose(0, 1))
-    expected = F.linear(features, policy.critic.weight, policy.critic.bias).squeeze(-1).transpose(0, 1)
-    torch.testing.assert_close(values, expected, rtol=2e-10, atol=2e-11)
-    values[-1].sum().backward()
-    assert not observations.grad[:3, 0].any()
-    assert observations.grad[:3, 1].abs().sum() > 0
-    assert observations.grad[3:, 0].abs().sum() > 0
-
-
-def test_policy_likelihood_replay_is_exact_without_dropout_in_training_mode():
-    torch.manual_seed(108)
-    policy = make_policy()
-    observations = torch.randn(7, 2, 3)
-    resets = torch.zeros(7, 2, dtype=torch.bool)
-    resets[3, 0], resets[5, 1] = True, True
-    state, actions, likelihoods, values = None, [], [], []
-    policy.eval()
-    with torch.no_grad():
-        for time in range(len(observations)):
-            _, raw, likelihood, _, value, state = policy.step(observations[time], state, reset=resets[time])
-            actions.append(raw)
-            likelihoods.append(likelihood)
-            values.append(value)
-    policy.train()
-    replayed, _, replayed_values = policy.evaluate_sequence(observations, torch.stack(actions), resets)
-    torch.testing.assert_close(replayed, torch.stack(likelihoods), rtol=0, atol=0)
-    torch.testing.assert_close(replayed_values, torch.stack(values), rtol=0, atol=0)
-
-
-def test_policy_memory_and_optimizer_recovery_preserves_next_sample_and_update():
-    torch.manual_seed(109)
-    policy = make_policy()
-    optimizer = torch.optim.Adam(policy.parameters(), lr=3e-4)
-    observation = torch.randn(2, 3)
-    # Populate optimizer state before taking the complete recovery snapshot.
-    _, _, log_prob, _, value, _ = policy.step(observation)
-    (log_prob.sum() + value.square().mean()).backward()
-    optimizer.step()
-    optimizer.zero_grad(set_to_none=True)
-    with torch.no_grad():
-        state = None
-        for _ in range(3):
-            *_, state = policy.step(torch.randn(2, 3), state)
-    payload = BytesIO()
-    torch.save(dict(policy=policy.state_dict(), optimizer=optimizer.state_dict(), state=state,
-                    rng=torch.get_rng_state()), payload)
-    payload.seek(0)
-    saved = torch.load(payload, weights_only=False)
-    restored = make_policy()
-    restored.load_state_dict(saved["policy"])
-    restored_optimizer = torch.optim.Adam(restored.parameters(), lr=3e-4)
-    restored_optimizer.load_state_dict(saved["optimizer"])
-    state_before = {key: entry.clone() for key, entry in state.items()}
-    torch.set_rng_state(saved["rng"])
-    expected = policy.step(observation, state)
-    torch.set_rng_state(saved["rng"])
-    actual = restored.step(observation, saved["state"])
-    for expected_tensor, actual_tensor in zip(expected[:-1], actual[:-1], strict=True):
-        torch.testing.assert_close(actual_tensor, expected_tensor, rtol=0, atol=0)
-    for key in state:
-        torch.testing.assert_close(actual[-1][key], expected[-1][key], rtol=0, atol=0)
-        torch.testing.assert_close(state[key], state_before[key], rtol=0, atol=0)
-    (expected[2].sum() + expected[4].square().mean()).backward()
-    (actual[2].sum() + actual[4].square().mean()).backward()
-    optimizer.step()
-    restored_optimizer.step()
-    for key, value in policy.state_dict().items():
-        torch.testing.assert_close(restored.state_dict()[key], value, rtol=0, atol=0)
-    for original_group, recovered_group in zip(optimizer.param_groups, restored_optimizer.param_groups, strict=True):
-        for original_parameter, recovered_parameter in zip(original_group["params"], recovered_group["params"], strict=True):
-            original, recovered = optimizer.state[original_parameter], restored_optimizer.state[recovered_parameter]
-            assert original.keys() == recovered.keys()
-            for key in original:
-                torch.testing.assert_close(recovered[key], original[key], rtol=0, atol=0)
-
-
-def test_default_memory_covers_complete_four_attempt_can_trial():
-    core = GatedTransformerXLCore(55)
-    assert core.output_dim == 128 and len(core.layers) == 2 and core.layers[0].heads == 4
-    assert core.memory_length == 300 and core.memory_length >= 4 * (300 // 4)
-    state = core.initial_state(2)
-    assert state["memory"].shape == (2, 2, 300, 128)
-    assert state["length"].dtype == torch.long and not state["length"].any()
 
 
 @pytest.mark.parametrize("configuration", [dict(width=7), dict(heads=0), dict(heads=3), dict(ticks=2),

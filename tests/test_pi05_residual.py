@@ -15,7 +15,7 @@ from torch import nn
 from fluffy_bassoon.rl.pi05_residual import (
     ReactiveALOHAActionResidual, ReactiveKVResidual, velocity_with_kv_residual,
 )
-from fluffy_bassoon.rl.robotwin_noise import RobotwinNoiseEnv, _RoboTwinBackend
+from fluffy_bassoon.robotwin.noise import RobotwinNoiseEnv, _RoboTwinBackend
 
 
 def cache_inputs(dtype=torch.float32):
@@ -252,7 +252,7 @@ def test_backend_forwards_applied_commands_metadata_and_actual_duration(monkeypa
     instance.corpus_writer = SimpleNamespace(
         begin_decision=lambda noise, actions, metadata: captured.update(issued=actions.copy(), metadata=metadata),
         complete_native=lambda **values: captured.update(native=values))
-    monkeypatch.setattr("fluffy_bassoon.rl.robotwin_noise._capture_sparse_feedback", lambda task: nullcontext({}))
+    monkeypatch.setattr("fluffy_bassoon.robotwin.noise._capture_sparse_feedback", lambda task: nullcontext({}))
     _, _, terminated, _, info = instance.step(np.zeros((3, 32), np.float32), 3)
     record = captured["metadata"]["frozen_pi05_residual"]
     np.testing.assert_array_equal(captured["commands"].numpy()[0], record["actions"].numpy()[0])

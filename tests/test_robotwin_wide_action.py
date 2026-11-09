@@ -6,7 +6,7 @@ import json
 import pytest
 import torch
 
-from fluffy_bassoon.rl.robotwin_wide_action import WideActionResidual, ARM_INDICES, GRIPPER_INDICES
+from fluffy_bassoon.robotwin.wide_action import WideActionResidual, ARM_INDICES, GRIPPER_INDICES
 
 
 ARMS=list(ARM_INDICES);GRIPS=list(GRIPPER_INDICES)

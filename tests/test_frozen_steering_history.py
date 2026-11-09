@@ -194,7 +194,7 @@ def test_real_producer_serialization_has_zero_based_behavior_and_post_update_tea
     """Use producer execution, not a mirrored serialization fixture."""
     import time
     from test_joint_steering_ppo_worker import Environment, Motor, policy, request
-    from fluffy_bassoon.meta_rl.joint_steering_ppo_worker import collect_bank
+    from fluffy_bassoon.robocasa.joint_steering_ppo_worker import collect_bank
     dimension = 32 if arm == "velocity" else 1152
     arguments = dict(kind=arm, steering_dim=dimension, **({"kv_layers": 18} if arm == "kv_all_layers" else {}))
     spec = SteeringSource(arm, "source", "runtime", "motor", "norm", ("A", "B"),

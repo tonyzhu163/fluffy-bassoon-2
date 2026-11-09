@@ -6,11 +6,11 @@ import numpy as np
 import pytest
 import torch
 
-from fluffy_bassoon.meta_rl.flora_success import FloraSuccessRule, first_success, timing_metrics
+from fluffy_bassoon.robocasa.flora_success import FloraSuccessRule, first_success, timing_metrics
 from fluffy_bassoon.meta_rl.interface_ppo import InterfaceLearner, InterfaceSpec, collect
 from fluffy_bassoon.meta_rl.paired_evaluation import EvaluationPlan, evaluate, paired_readout
 from fluffy_bassoon.meta_rl.residual_history import HistoryResidualActor
-from fluffy_bassoon.meta_rl.robocasa_interface import FrozenRoboCasaInterface
+from fluffy_bassoon.robocasa.interface import FrozenRoboCasaInterface
 from fluffy_bassoon.meta_rl.vla_history import HistoryConfig, HistoryNoisePolicy
 
 
@@ -472,7 +472,7 @@ def test_training_windows_reach_128_actual_tokens():
 def test_native_first_success_closes_early_and_keeps_truth_out_of_flora_payload(tmp_path,arm):
     import json
     from test_robocasa_residual import Journal, Native, Writer
-    from fluffy_bassoon.meta_rl.robocasa_interface import RoboCasaInterfaceEnvironment
+    from fluffy_bassoon.robocasa.interface import RoboCasaInterfaceEnvironment
     class Prefix:
         def reset(self):
             self.frames = 0

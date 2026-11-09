@@ -1,8 +1,8 @@
 """Native RoboCasa terminal videos and graded reward numerical contract."""
 import pytest
-from fluffy_bassoon.meta_rl.rlinf_flora_ppo import baseline_validation, flora_jobs, parse_outputs
-from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import protocol
-from fluffy_bassoon.meta_rl.robocasa_video import REWARD_CAMERAS
+from fluffy_bassoon.robocasa.flora_ppo import baseline_validation, flora_jobs, parse_outputs
+from fluffy_bassoon.robocasa.ppo import protocol
+from fluffy_bassoon.robocasa.video import REWARD_CAMERAS
 
 
 def test_native_video_and_probability_grade_use_actual_horizon():
@@ -48,7 +48,7 @@ def test_eight_native_cases_require_headroom_and_both_score_classes():
 
 def test_prior_750_control_calibration_cannot_admit_600_control_training():
     from copy import deepcopy
-    from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import require_calibration_permission
+    from fluffy_bassoon.robocasa.ppo import require_calibration_permission
     expected=protocol('OpenDrawer',baseline_count=50)
     old=deepcopy(expected);old['horizon']=750
     calibration=dict(completed=True,protocol=old,count=50,initial_success_rate=.3,AUROC=.9,go=True)

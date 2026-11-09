@@ -2,7 +2,8 @@
 
 Every file below was copied byte for byte from [tonyzhu163/fluffy-bassoon](https://github.com/tonyzhu163/fluffy-bassoon)
 branch `lycoreco_rl` at commit `0df7d026cb72d1d047bbb261ef95dc1f5d2da9fa`, at the same path. Later commits in this
-repository change some of them; `git log --follow <path>` shows how.
+repository moved, changed or retired these files. This table records the split, not the current layout;
+see the [repository map](README.md) for maintained code.
 
 | Path | SHA256 at copy |
 | --- | --- |

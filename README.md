@@ -1,102 +1,29 @@
-# Learning to Steer: In-Context Reinforcement Learning for Frozen VLAs
+# In-context reinforcement learning for frozen VLAs
 
-Our central hypothesis is that **meta-training in simulation enables
-substantially faster learning from sparse real-robot experience**. We study
-history-conditioned steering policies around frozen vision-language-action
-models. The paper stays about in-context RL. **The current first step is
-PPO with a learned video reward** ([Flora-Rewarder](docs/FLORA-PPO.md)),
-tested on LIBERO and RoboCasa365. **RoboTwin is an active benchmark arm**, with
-RLinf online RL and VLRLA-bridge as the reference baselines on VLRLA's six
-source tasks ([comparison protocol](docs/robotwin/rl-baselines.md)). Transfer of the learned
-adaptation procedure to real tasks is the fundamental question.
+Can a frozen π0.5 policy improve on a new task using its own earlier attempts? This repository studies that question on **RoboCasa365 and RoboTwin**, with **RLinf** for rollout and online baselines. We train history models offline. At deployment all weights stay fixed; the learner receives the actions the robot actually executed and the feedback available at that point.
 
-**Start here:** [docs/README.md](docs/README.md) indexes the five documents:
-[paper plan](docs/PAPER.md), [findings to date](docs/FINDINGS.md),
-[Flora PPO](docs/FLORA-PPO.md) and [shared methods and code](docs/METHODS.md).
-Agents and collaborators also read [AGENTS.md](AGENTS.md) (clusters, storage,
-GPU rules) and the live [coordination file](outputs/coordination.md).
+| Layer | Code | Role |
+| --- | --- | --- |
+| RoboCasa365 | [Launchers and configs](benchmarks/robocasa/) · [adapter](src/fluffy_bassoon/robocasa/) | Atomic kitchen tasks for the current stage; composite tasks reserved for later transfer evaluation. |
+| RoboTwin | [Launchers and configs](benchmarks/robotwin/) · [adapter](src/fluffy_bassoon/robotwin/) | Bimanual control with separate source and held-out tasks. Motor release, camera order, action coordinates and controller must match within each comparison. |
+| RLinf | [Integration](src/fluffy_bassoon/rlinf/) · [revision-specific patches](patches/) | Native rollout and online PPO/GRPO baselines, action accounting, probability replay and checkpoint recovery. |
+| Meta-learning | [Learners](src/fluffy_bassoon/meta_rl/) · [frozen motor interfaces](src/fluffy_bassoon/rl/) | Algorithm Distillation (AD), Decision-Pretrained Transformer (DPT), DIT-style advantage weighting and in-context IQL. [Methods](docs/METHODS.md) identifies which objective each data format supports. |
 
-Simulation can support large PPO batches and many training updates. Real-robot
-experience is scarce, so meta-training should optimize improvement over the
-first few attempts on a new task. At deployment, adaptation may use retained
-experience in context, Flora-rewarded PPO updates, or both.
+Start with the [documentation index](docs/README.md) or the [verified findings](docs/FINDINGS.md). For a new run, read [AGENTS.md](AGENTS.md) and check [live ownership](outputs/coordination.md). Earlier experiments are reproducible from their recorded Git commits; [provenance](PROVENANCE.md) records the original repository split.
 
-The primary metric is real-task success versus the number of real attempts,
-with physical actions also reported and real-data budgets matched. Compare:
+## Getting started
 
-- An ordinary pretrained policy adapted with Flora-rewarded PPO.
-- A meta-learned module adapting through context with its weights frozen.
-- A meta-learned module adapting through context and Flora-rewarded PPO.
+On allocated Linux, `uv sync --locked` installs the shared learner and test dependencies. The simulator/RLinf environments are separate, pinned per benchmark. See [environment setup and tests](docs/METHODS.md#environments-and-tests).
 
-Context-reset controls use the same weights to isolate the contribution of
-retained experience. Measure task success independently of Flora's training
-score. Frozen-weight improvement tests in-context transfer; improvement with
-additional PPO tests the combined adaptation procedure. Simulator learning
-alone does not establish either result on a real robot.
-
-Other earlier work, including CTM pilots, ManiSkill, RoboMimic and most
-of the LIBERO source40 pipeline,
-was removed on 2026-11-01 because it produced no usable evidence; git history
-keeps it. Literature reviews are in [docs/literature/](docs/literature/).
-RoboTwin docs are in [docs/robotwin/](docs/robotwin/). Earlier RoboTwin runs
-remain in [`outputs/archive/`](outputs/archive/); new baseline work uses fresh
-run folders under `outputs/`.
-
-The repository was split from `tonyzhu163/fluffy-bassoon` (branch
-`lycoreco_rl`) on 2026-10-28; [PROVENANCE.md](PROVENANCE.md) lists every copied
-file and its source hash. The package names `fluffy_bassoon` and
-`lerobot_policy_ctm` are kept so the copied code stays byte-identical.
-
-## Environments and tests
-
-```bash
-uv sync
-uv run pytest
+```sh
+uv run python -m fluffy_bassoon.meta_rl --help
+uv run python -m fluffy_bassoon.meta_rl dpt --help
 ```
 
-CPU qualification means running software checks in an allocated Linux CPU
-step: numerical correctness, causal data flow, checkpoint recovery and driver
-control flow, often with small synthetic inputs. It does not establish GPU
-runtime readiness or robot performance. Keep reusable behavior tests in
-`tests/`; keep one-off experiment grids, launch receipts and run-specific
-bookkeeping in `outputs/<run-id>/`.
-
-Run tests on allocated Linux resources, not macOS. `tests/test_meta_rl_cuda.py`
-runs inside a GPU step. Robot runtimes are separate environments; see
-[docs/METHODS.md](docs/METHODS.md#environments-and-tests).
+A fit takes separate training and validation archives with hashes and a declared objective. Those commands describe the inputs; they do not launch a run.
 
 ## Artifact retention
 
-For new runs, save checkpoints at required final and evaluation boundaries and
-at a fixed update interval declared in the run. Retain only checkpoints that the
-paper or live work cites: checkpoints behind reported results with their
-sources and initializers, checkpoints awaiting evaluation, checkpoints required
-by active or queued work, and the latest complete recovery checkpoint of each
-active lineage. Prune other checkpoint payloads after checking live
-dependencies. Keep all configurations, logs and evaluation records.
+Keep verified results and links to their evidence in [FINDINGS](docs/FINDINGS.md). Keep live ownership and status in [coordination](outputs/coordination.md). Store dated contracts, configs, logs, evaluation records and compact audit summaries in `outputs/<run-id>/`; never reuse a run ID. Finish or archive work on its original source commit. Historical run scripts use the layout at that commit.
 
-`outputs/`, data, downloaded weights, run worktrees and caches are untracked.
-Keep the five core documents in `docs/` (plus `docs/literature/` and `docs/robotwin/`) ([index](docs/README.md)): per-run
-contracts in each run's `PLAN.md`, verified results in `docs/FINDINGS.md`, and
-raw evidence in `outputs/<run-id>/`. Never commit
-credentials or machine-local authentication configuration.
-
-Planning documents and compact result bundles are tracked exceptions in
-`outputs/` (force-add them):
-
-- `outputs/coordination.md` is the single live coordination file: question,
-  ground rules, current state, job status and plan. Every agent and server
-  updates this file instead of starting another one. Snapshot it to
-  `outputs/archive/coordination/coordination-<YYYYMMDD>.md` (links fixed for
-  the new location) when a phase closes or it passes about 300 lines, then
-  trim it to current work and point it at the snapshot.
-- Dated plans, handoffs and working notes live in `outputs/<run-id>/`. When
-  a run finishes, keep the folder only if FINDINGS cites it or live work loads
-  it. Otherwise delete it, or move it unchanged to `outputs/archive/<run-id>/`
-  if code still loads it. Git history keeps deleted runs; never reuse a run ID.
-- Track reports, plans, figures, curve data and audit summaries. Checkpoints,
-  raw trajectories, videos and bulk inputs stay untracked; for a file above
-  about 5 MB or a copy of another run's file, record its hash and cluster path
-  instead.
-- Git history keeps everything committed, so tracked scratch files (empty
-  locks, partial writes) may be deleted.
+Keep checkpoints supporting reported results and their initializers, checkpoints awaiting evaluation, those needed by active or queued work, and the latest complete resumable checkpoint for each active lineage. Save evaluation/final checkpoints and the recovery interval declared in the run. Before pruning any payload, check dependencies and recovery. Large checkpoints, data, caches and videos stay outside Git; record their hashes and locations. Keep evidence bundles cited by results or needed by another run. Remove superseded plans when neither code, evidence nor live work needs them.

@@ -7,7 +7,7 @@ import time
 import numpy as np
 import torch
 
-from .rlinf_native_ppo import cpu_tree
+from fluffy_bassoon.rlinf.native_ppo import cpu_tree
 
 
 def _bytes(value):

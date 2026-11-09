@@ -1,9 +1,7 @@
 """Mocked CPU checks for exclusive Baige training admission; run in allocation."""
-import ast
 from contextlib import contextmanager
 import importlib.util
 from pathlib import Path
-import re
 import sys
 from types import SimpleNamespace
 
@@ -164,25 +162,3 @@ def test_cli_training_opt_in_requires_baige_training(tmp_path,monkeypatch,argume
     with pytest.raises(SystemExit) as error:
         probe.main()
     assert error.value.code==2
-
-
-def sku_validator():
-    source=(ROOT/'scripts/diagnostics/can_dsrl_eight_gpu.sh').read_text().split("<<'PY'\n",1)[1].rsplit('\nPY',1)[0]
-    definition=next(node for node in ast.parse(source).body if isinstance(node,ast.FunctionDef) and node.name=='approved_baige_sku')
-    namespace={'re':re}
-    exec(compile(ast.Module(body=[definition],type_ignores=[]),'<isolated SKU validator>','exec'),namespace)
-    return namespace['approved_baige_sku']
-
-
-@pytest.mark.parametrize('name',['NVIDIA RPBZZZ6','NVIDIA RTX 6000 Ada Generation','NVIDIA RTX PRO 6000 Blackwell'])
-def test_approved_raw_sku_keeps_exact_names_without_marketing_inference(name):
-    result=sku_validator()([dict(cuda_name=name) for _ in range(8)])
-    assert result['raw_name']==name and result['raw_names']==[name]*8
-    assert result['marketing_model_decoded'] is False
-
-
-@pytest.mark.parametrize('names',[['NVIDIA RPBZZZ60']*8,['NVIDIA unknown']*8,
-    ['NVIDIA RPBZZZ6']*7,['NVIDIA RPBZZZ6']*7+['NVIDIA RTX 6000 Ada Generation']])
-def test_unapproved_or_mixed_raw_skus_are_rejected(names):
-    with pytest.raises(ValueError):
-        sku_validator()([dict(cuda_name=name) for name in names])

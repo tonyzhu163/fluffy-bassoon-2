@@ -11,9 +11,9 @@ import pytest
 import torch
 
 from fluffy_bassoon.meta_rl.interface_ppo import InterfaceSpec
-from fluffy_bassoon.meta_rl.joint_steering_ppo_worker import collect_bank, draw_seed, _qualify_cached, _calibrate_request
+from fluffy_bassoon.robocasa.joint_steering_ppo_worker import collect_bank, draw_seed, _qualify_cached, _calibrate_request
 from fluffy_bassoon.meta_rl.residual_ppo import ResidualActorCritic, ResidualPPOConfig, stack_records
-from fluffy_bassoon.meta_rl.robocasa_interface import FrozenRoboCasaInterface
+from fluffy_bassoon.robocasa.interface import FrozenRoboCasaInterface
 
 
 class Motor:
@@ -326,7 +326,7 @@ def test_native_scale_calibration_uses_only_one_reset_and_no_policy_controls(tmp
 def test_worker_restart_binds_saved_initializer_and_requalifies_new_allocation(tmp_path, monkeypatch, change, lanes):
     """A completed bank is never replayed or accepted under a different motor."""
     from dataclasses import asdict
-    import fluffy_bassoon.meta_rl.joint_steering_ppo_worker as worker
+    import fluffy_bassoon.robocasa.joint_steering_ppo_worker as worker
     directory = tmp_path / "workers/rank-00"
     directory.mkdir(parents=True)
     configuration = ResidualPPOConfig(2064, 32, width=8, layers=1, gamma=.99)
@@ -452,7 +452,7 @@ def test_48_synchronized_lanes_preserve_exact_rotating_case_order_and_every_phys
 
 def test_ready_episode_is_checkpointed_before_waiting_for_a_later_failing_lane(tmp_path, monkeypatch):
     import threading
-    import fluffy_bassoon.meta_rl.joint_steering_ppo_worker as worker
+    import fluffy_bassoon.robocasa.joint_steering_ppo_worker as worker
     durable = threading.Event()
     save = worker._save
     def observed_save(path, value, **kwargs):
@@ -490,7 +490,7 @@ def test_all_native_lanes_are_closed_even_when_one_close_fails(tmp_path):
 
 
 def test_recording_environment_releases_native_child_after_encoder_close_failure():
-    from fluffy_bassoon.meta_rl.joint_steering_ppo_worker import _RecordingEnvironment
+    from fluffy_bassoon.robocasa.joint_steering_ppo_worker import _RecordingEnvironment
     closed = []
     def fail_encoder():
         raise RuntimeError("encoder close failed")

@@ -6,7 +6,7 @@ import pytest
 import torch
 from torch.distributed import checkpoint as dcp
 
-from fluffy_bassoon.meta_rl.rlinf_robocasa_flow_ppo import checkpoint_weight_export
+from fluffy_bassoon.robocasa.flow_ppo import checkpoint_weight_export
 
 
 def test_dcp_without_extra_weights_reproduces_next_sample_and_adam_step(tmp_path):

@@ -148,7 +148,7 @@ def test_pairing_capacity_and_early_stop_fail_before_fabricated_completion():
 def test_physical_loop_consumes_the_real_native_interface_serial_api(kind):
     from test_interface_ppo import batch_native
     from fluffy_bassoon.meta_rl.interface_ppo import InterfaceSpec
-    from fluffy_bassoon.meta_rl.robocasa_interface import FrozenRoboCasaInterface
+    from fluffy_bassoon.robocasa.interface import FrozenRoboCasaInterface
     native, observation = batch_native()
     native.model.layers = 18
     observation = dict(states=observation["states"][:1])

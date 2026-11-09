@@ -14,7 +14,7 @@ import warnings
 import numpy as np
 import torch
 
-from .robocasa_residual import combine_observations, public_observation
+from fluffy_bassoon.robocasa.residual import combine_observations, public_observation
 from .vla_history import file_sha256
 
 

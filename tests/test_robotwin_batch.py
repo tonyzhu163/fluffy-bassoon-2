@@ -8,9 +8,9 @@ import numpy as np
 import pytest
 import torch
 
-from fluffy_bassoon.rl.robotwin_batch import RoboTwinBatchRuntime
-from fluffy_bassoon.rl.robotwin_execution import ChunkExecution
-from fluffy_bassoon.rl.robotwin_production_process import ProductionSimulatorPool,ProductionRPCError
+from fluffy_bassoon.robotwin.batch import RoboTwinBatchRuntime
+from fluffy_bassoon.robotwin.execution import ChunkExecution
+from fluffy_bassoon.robotwin.production_process import ProductionSimulatorPool,ProductionRPCError
 
 
 def observation(seed):
@@ -146,7 +146,7 @@ def chunk_session(mode='full'):
     from fluffy_bassoon.meta_rl.chunk_controller import FrozenChunkController
     from fluffy_bassoon.meta_rl.chunk_history import ChunkHistoryLayout
     from fluffy_bassoon.meta_rl.chunk_policy import ChunkModelConfig,ChunkResidualPolicy
-    from fluffy_bassoon.meta_rl.chunk_robotwin import RoboTwinChunkSession
+    from fluffy_bassoon.robotwin.chunk_adapter import RoboTwinChunkSession
     torch.manual_seed(317)
     model = ChunkModelConfig(ChunkHistoryLayout(14,4,14),width=8,layers=1,heads=2,context_length=8)
     controller = FrozenChunkController(ChunkResidualPolicy(model,torch.full((4,14),.1)),

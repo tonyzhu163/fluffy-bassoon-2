@@ -2,9 +2,9 @@
 from copy import deepcopy
 import pytest
 
-from fluffy_bassoon.meta_rl.flora_terminal_shards import baseline_episode_shard, gather_baseline_outputs
-from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import protocol
-from fluffy_bassoon.meta_rl.robocasa_video import REWARD_CAMERAS
+from fluffy_bassoon.robocasa.flora_terminal_shards import baseline_episode_shard, gather_baseline_outputs
+from fluffy_bassoon.robocasa.ppo import protocol
+from fluffy_bassoon.robocasa.video import REWARD_CAMERAS
 
 
 @pytest.mark.parametrize('world',[4,8])

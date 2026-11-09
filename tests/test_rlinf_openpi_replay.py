@@ -5,7 +5,7 @@ from types import SimpleNamespace
 import pytest
 import torch
 
-from fluffy_bassoon.meta_rl.rlinf_openpi_replay import recompute_openpi_logprobs
+from fluffy_bassoon.rlinf.openpi_replay import recompute_openpi_logprobs
 
 
 class Model:

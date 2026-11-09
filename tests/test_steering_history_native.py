@@ -10,9 +10,9 @@ import pytest
 import torch
 
 from fluffy_bassoon.meta_rl.interface_ppo import InterfaceSpec
-from fluffy_bassoon.meta_rl.rlinf_native_ppo import ActionJournal
-from fluffy_bassoon.meta_rl.robocasa_interface import FrozenRoboCasaInterface
-from fluffy_bassoon.meta_rl.steering_history_native import NativeAttemptBackend, attempt_noise, case_key
+from fluffy_bassoon.rlinf.native_ppo import ActionJournal
+from fluffy_bassoon.robocasa.interface import FrozenRoboCasaInterface
+from fluffy_bassoon.robocasa.steering_history_native import NativeAttemptBackend, attempt_noise, case_key
 from fluffy_bassoon.meta_rl.vla_history import HistoryConfig, HistoryNoisePolicy, file_sha256
 
 

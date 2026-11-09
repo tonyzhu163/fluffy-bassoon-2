@@ -1,7 +1,7 @@
 """Native lifecycle numerical check; imports classes but constructs no simulator."""
 from types import SimpleNamespace
 
-from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo_env import counted_native_factory
+from fluffy_bassoon.robocasa.ppo_env import counted_native_factory
 
 
 def test_clock_is_read_from_initialized_native_reset_not_constructor(monkeypatch):
@@ -63,8 +63,8 @@ def test_residual_factory_uses_declared_ppo_cap_and_preserves_native_ood(monkeyp
     from omegaconf import OmegaConf
     from rlinf.envs.sim.robocasa365.robocasa365_env import Robocasa365Env
     from rlinf.envs.sim.robocasa365.utils import resolve_robocasa365_episode_horizons
-    from fluffy_bassoon.meta_rl.robocasa_residual import native_environment_factory
-    from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import PPO_TASKS, OOD_TASKS, TASKS
+    from fluffy_bassoon.robocasa.residual import native_environment_factory
+    from fluffy_bassoon.robocasa.ppo import PPO_TASKS, OOD_TASKS, TASKS
     # Exercise the production factory and pinned native resolver without physics.
     captured=[]
     def capture(self, cfg, **kwargs):

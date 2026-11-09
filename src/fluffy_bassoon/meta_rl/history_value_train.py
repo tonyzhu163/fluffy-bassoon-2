@@ -27,11 +27,14 @@ from .warmstart import atomic_save
 RESUME_FORMAT = "frozen_history_value_resume_v1"
 
 
-def parser():
+def parser(objective=None):
     result = base_parser()
     result.description = __doc__
     result.set_defaults(max_episodes_per_window=9)
-    result.add_argument("--objective", choices=("dit", "ic_iql"), required=True)
+    if objective is None:
+        result.add_argument("--objective", choices=("dit", "ic_iql"), required=True)
+    else:
+        result.set_defaults(objective=objective)
     result.add_argument("--critic-updates", type=int, default=1000)
     result.add_argument("--discount", type=float, default=.99)
     result.add_argument("--expectile", type=float, default=.7)
@@ -82,8 +85,8 @@ def validate(learner, trials, *, phase, batch_size, batches, max_episodes, mode)
     return float(np.mean(losses))
 
 
-def main(argv=None):
-    args = parser().parse_args(argv)
+def main(argv=None, *, objective=None):
+    args = parser(objective).parse_args(argv)
     if sys.platform != "linux" or socket.gethostname() != args.expected_hostname:
         raise ValueError("Run computation on the identified allocated Linux host")
     if (args.full_trial_batches or args.max_episodes_per_window is None

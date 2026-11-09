@@ -1,1 +1,1 @@
-"""Cross-attempt learning environments for lycoreco_rl."""
+"""Offline meta-learning objectives, history models and deployment controls."""

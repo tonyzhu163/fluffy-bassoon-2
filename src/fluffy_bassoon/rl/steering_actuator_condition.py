@@ -216,7 +216,7 @@ def calibration_pair(*, physical_basis, physical_basis_sha256, arm_joint_bound, 
     For KV/noise this is only an external command-space reference, never a
     valid coefficient label. A2 is not used to select the natural A1 winner.
     """
-    from .robotwin_steering import normalize_arm
+    from fluffy_bassoon.robotwin.steering import normalize_arm
 
     selected_arm = normalize_arm(selected_arm)
     basis = np.asarray(physical_basis, dtype=np.float32)

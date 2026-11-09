@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 import torch
 
-from fluffy_bassoon.meta_rl.robocasa_residual import (
+from fluffy_bassoon.robocasa.residual import (
     FrozenRoboCasaMotor, RoboCasaResidualEnvironment, collect_pending,
     install_terminal_labels, restore_checkpoint, save_checkpoint,
 )
@@ -156,8 +156,8 @@ def test_full_native_horizon_and_video_are_truth_isolated(tmp_path):
     assert [writer.count for writer in env.writer.writers] == [601, 601, 601]
     assert [set(writer.values) for writer in env.writer.writers] == [{11}, {22}, {33}]
     assert [ref['camera'] for ref in info['videos']] == info['camera_order']
-    from fluffy_bassoon.meta_rl.rlinf_flora_ppo import flora_jobs
-    from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import protocol
+    from fluffy_bassoon.robocasa.flora_ppo import flora_jobs
+    from fluffy_bassoon.robocasa.ppo import protocol
     assert flora_jobs([info], protocol('OpenDrawer'))[0]['videos'] == [ref['path'] for ref in info['videos']]
     import json
     assert json.loads((tmp_path / "monitor/episode-000000.json").read_text())["simulator_final_success"] is True
@@ -216,7 +216,7 @@ def test_declared_native_horizons_keep_full_masks_and_all_three_frame_clocks(tmp
 
 
 def test_mixed_task_native_horizons_recover_only_at_full_episode_boundary(tmp_path):
-    from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import TASKS
+    from fluffy_bassoon.robocasa.ppo import TASKS
     cases=[dict(task='CoffeeSetupMug',native_seed=1),dict(task='CloseFridge',native_seed=2)]
     factory=lambda case:Native(horizon=TASKS[case['task']][0])
     env=RoboCasaResidualEnvironment(factory,cases,horizon=None,output=tmp_path/'first',
@@ -345,9 +345,9 @@ class StepNative(Native):
 
 
 def test_lane_collection_matches_serial_draws_ids_and_records(tmp_path):
-    from fluffy_bassoon.meta_rl.robocasa_residual import collect_pending_lanes
-    from fluffy_bassoon.meta_rl.robocasa_residual_parallel import draw_schedule, native_chunk_offsets
-    from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import TASKS
+    from fluffy_bassoon.robocasa.residual import collect_pending_lanes
+    from fluffy_bassoon.robocasa.residual_parallel import draw_schedule, native_chunk_offsets
+    from fluffy_bassoon.robocasa.ppo import TASKS
     stats = {key: dict(mean=[0.] * 32, std=[2.] * 32) for key in ("state", "actions")}
     cases = [dict(task=task, native_seed=index) for index, task in
              enumerate(["CoffeeSetupMug", "OpenDrawer", "OpenDrawer", "CoffeeSetupMug", "OpenDrawer"])]
@@ -399,7 +399,7 @@ def test_lane_collection_matches_serial_draws_ids_and_records(tmp_path):
 @pytest.mark.parametrize('failed_lane', [0, 1])
 def test_complete_lane_is_checkpointed_before_sibling_failure(tmp_path, failed_lane, monkeypatch):
     from concurrent.futures import Future
-    from fluffy_bassoon.meta_rl.robocasa_residual import collect_pending_lanes
+    from fluffy_bassoon.robocasa.residual import collect_pending_lanes
     # Both resets and both final steps belong to one deterministic batch. A
     # real executor can start one lane earlier; then its sibling is unfinished
     # when the failure occurs and correctly has no complete checkpoint yet.
@@ -471,7 +471,7 @@ import multiprocessing as mp
 import os
 import select
 import time
-from fluffy_bassoon.meta_rl.robocasa_residual import native_environment_factory
+from fluffy_bassoon.robocasa.residual import native_environment_factory
 
 mp.set_start_method("fork", force=True)
 reader, writer = os.pipe()

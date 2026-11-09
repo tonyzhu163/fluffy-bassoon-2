@@ -3,7 +3,7 @@ from copy import deepcopy
 import numpy as np
 import pytest
 
-from fluffy_bassoon.meta_rl.robocasa_pairing import (
+from fluffy_bassoon.robocasa.pairing import (
     canonical_case, compare_native_pair, public_snapshot, stable_counter_regions,
 )
 

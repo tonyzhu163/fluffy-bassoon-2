@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from fluffy_bassoon.meta_rl import rlinf_native_ppo as native
+from fluffy_bassoon.rlinf import native_ppo as native
 
 
 def test_busy_publication_retries_same_complete_payload(tmp_path, monkeypatch):

@@ -3,7 +3,7 @@ import numpy as np
 import pytest
 import torch
 
-from fluffy_bassoon.meta_rl.robocasa_residual import FrozenRoboCasaMotor
+from fluffy_bassoon.robocasa.residual import FrozenRoboCasaMotor
 
 
 class NativeShapeModel(torch.nn.Module):

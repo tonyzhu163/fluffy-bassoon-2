@@ -139,7 +139,7 @@ def _restore_rng(state, sampler):
         torch.cuda.set_rng_state_all(state["cuda"])
 
 
-def main(argv=None):
+def main(argv=None, *, objective=None):
     args = parser().parse_args(argv)
     if sys.platform != "linux" or socket.gethostname() != args.expected_hostname:
         raise ValueError("Run computation on the explicitly identified allocated Linux host")
@@ -165,6 +165,8 @@ def main(argv=None):
         raise ValueError("Require the exact clean reviewed source commit")
     train, train_manifest = load_dataset(args.train_data, expected_sha256=args.train_sha256)
     validation, validation_manifest = load_dataset(args.validation_data, expected_sha256=args.validation_sha256)
+    if objective is not None and train_manifest["objective"] != objective:
+        raise ValueError(f"Expected {objective} labels; train data declares {train_manifest['objective']}")
     if train_manifest["objective"] in ("dit", "ic_iql"):
         raise ValueError("Value objectives require history_value_train, not unweighted imitation")
     if (args.train_sha256 == args.validation_sha256

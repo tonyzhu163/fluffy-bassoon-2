@@ -6,8 +6,8 @@ import pytest
 import torch
 
 from fluffy_bassoon.meta_rl.residual_ppo import ResidualActorCritic, ResidualPPOConfig, stack_records, update
-from fluffy_bassoon.meta_rl.robocasa_residual import collect_pending, collect_pending_lanes, install_terminal_labels
-from fluffy_bassoon.meta_rl.robocasa_residual_parallel import ParallelResidualEnvironment, draw_schedule, native_chunk_offsets
+from fluffy_bassoon.robocasa.residual import collect_pending, collect_pending_lanes, install_terminal_labels
+from fluffy_bassoon.robocasa.residual_parallel import ParallelResidualEnvironment, draw_schedule, native_chunk_offsets
 from fluffy_bassoon.rl.action_residual import ResidualBound
 
 
@@ -45,7 +45,7 @@ class Lane:
         return dict(states=np.array([[self.index, self.steps//50]], np.float32))
 
     def reset(self):
-        from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import TASKS
+        from fluffy_bassoon.robocasa.ppo import TASKS
         self.horizon = TASKS[self.cases[self.cursor]['task']][0]
         self.steps, self.active = 0, True
         self.cursor += 1; self.resets += 1

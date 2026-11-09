@@ -7,7 +7,7 @@ from types import SimpleNamespace
 import numpy as np
 import pytest
 
-from fluffy_bassoon.rl.robotwin_noise import (
+from fluffy_bassoon.robotwin.noise import (
     RobotwinNoiseEnv, _reset_with_retry_limit, _setup_task_with_retry_limit,
     _SynchronousExecutor, _install_synchronous_vector_executor,
     _close_vector_with_executor_recycling,

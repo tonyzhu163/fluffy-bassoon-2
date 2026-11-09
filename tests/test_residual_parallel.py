@@ -7,8 +7,8 @@ import pytest
 import torch
 
 from fluffy_bassoon.meta_rl.residual_ppo import ResidualActorCritic, ResidualPPOConfig, stack_records, update
-from fluffy_bassoon.meta_rl.robocasa_residual import collect_pending, install_terminal_labels
-from fluffy_bassoon.meta_rl.robocasa_residual_parallel import (
+from fluffy_bassoon.robocasa.residual import collect_pending, install_terminal_labels
+from fluffy_bassoon.robocasa.residual_parallel import (
     ParallelResidualEnvironment, draw_schedule, episode_partitions, native_chunk_offsets,
 )
 from fluffy_bassoon.rl.action_residual import ResidualBound
@@ -148,7 +148,7 @@ def test_retained_eight_then_forty_two_keep_exact_fifty_motor_draw_stream():
 def test_uneven_worker_results_merge_all_episodes_and_preserve_recovery(tmp_path,monkeypatch,distributed,world):
     import time
     from fluffy_bassoon.meta_rl.warmstart import atomic_save
-    from fluffy_bassoon.meta_rl import robocasa_residual_parallel as module
+    from fluffy_bassoon.robocasa import residual_parallel as module
     policy,_=learner();bound=ResidualBound(12,tuple(range(6)),(.25,)*6)
     def child(command, **kwargs):
         request=torch.load(command[-1],weights_only=False)
@@ -166,7 +166,7 @@ def test_uneven_worker_results_merge_all_episodes_and_preserve_recovery(tmp_path
         attempt='core',source_commit='a'*40,episode_id_namespace='PPO-task-',
         deadline_unix=time.time()+60,closure_seconds=1)
     if distributed:
-        from fluffy_bassoon.meta_rl import rlinf_flora_ppo
+        from fluffy_bassoon.robocasa import flora_ppo as rlinf_flora_ppo
         original_write=rlinf_flora_ppo.write_new
         def queued(path,value):
             assert path.name.startswith('core-')
@@ -196,7 +196,7 @@ def test_uneven_worker_results_merge_all_episodes_and_preserve_recovery(tmp_path
 
 
 def test_joint_eighty_full_native_episodes_preserve_serial_gae_and_next_adam():
-    from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import PPO_TASKS
+    from fluffy_bassoon.robocasa.ppo import PPO_TASKS
     cases=[dict(task=task) for _ in range(16) for task in PPO_TASKS]
     offsets=native_chunk_offsets(cases)
     lengths=[b-a for a,b in zip(offsets,offsets[1:])]
@@ -230,7 +230,7 @@ def test_joint_eighty_full_native_episodes_preserve_serial_gae_and_next_adam():
 
 
 def test_single_and_dual_gpu_node_routing_keeps_distinct_worker_ownership():
-    from fluffy_bassoon.meta_rl.robocasa_residual_parallel import native_worker_rank
+    from fluffy_bassoon.robocasa.residual_parallel import native_worker_rank
     assert [native_worker_rank(node,0,1) for node in range(4)]==list(range(4))
     assert [native_worker_rank(node,local,2) for node in range(4) for local in range(2)]==list(range(8))
     for args in ((0,1,1),(0,0,4),(-1,0,1),(8,0,1),(0,True,1)):

@@ -74,7 +74,7 @@ def test_oversized_snapshot_is_rejected_before_enqueue():
 def test_native_training_and_evaluation_traces_use_owned_bounded_snapshots(tmp_path):
     from types import SimpleNamespace
     from omegaconf import OmegaConf
-    from fluffy_bassoon.meta_rl.rlinf_native_ppo_runtime import SidecarMixin, _write_trace_record
+    from fluffy_bassoon.rlinf.native_ppo_runtime import SidecarMixin, _write_trace_record
     class Environment(SidecarMixin):
         pilot_role = 'env'
     worker = Environment()

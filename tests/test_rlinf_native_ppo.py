@@ -6,7 +6,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from fluffy_bassoon.meta_rl.rlinf_native_ppo import (
+from fluffy_bassoon.rlinf.native_ppo import (
     ActionJournal, prior_gpu_charge, restore_rng, sha, snapshot_rng, validate_recipe,
 )
 
@@ -21,7 +21,7 @@ def recipe(monkeypatch, tmp_path):
             NATIVE_PPO_INITIALIZER_REVISION='fa8df6ed103db0f5549c122f3a17c00ba6426c98').items():
         monkeypatch.setenv(key, value)
     assert Path(os.environ['EMBODIED_PATH']).is_dir(), 'Use the actual pinned RLinf config checkout'
-    with initialize_config_dir(version_base='1.1', config_dir=str(code/'configs/native_ppo')):
+    with initialize_config_dir(version_base='1.1', config_dir=str(code/'benchmarks/robotwin/configs')):
         return compose(config_name='adjust_bottle_published_batch_two')
 
 
@@ -97,7 +97,7 @@ def test_worker_rng_roundtrip_cpu_no_models():
 def test_official_runtime_import_and_baseline_precedes_training(monkeypatch, tmp_path):
     # Import actual pinned native worker/runner dependencies on allocated CPU;
     # replace execution only, never construct actors, envs or a Ray cluster.
-    from fluffy_bassoon.meta_rl import rlinf_native_ppo_runtime as runtime
+    from fluffy_bassoon.rlinf import native_ppo_runtime as runtime
     events = []
     class Handle:
         def __init__(self, value=None):
@@ -137,7 +137,7 @@ def test_official_runtime_import_and_baseline_precedes_training(monkeypatch, tmp
 
 
 def test_boundary_capture_follows_official_environment_wait(monkeypatch):
-    from fluffy_bassoon.meta_rl import rlinf_native_ppo_runtime as runtime
+    from fluffy_bassoon.rlinf import native_ppo_runtime as runtime
     events = []
     runner = object.__new__(runtime.PilotRunner)
     runner._capture_boundary = lambda: events.append('capture')
@@ -148,7 +148,7 @@ def test_boundary_capture_follows_official_environment_wait(monkeypatch):
 
 def test_sampler_and_eval_rng_survive_whole_boundary_restore(tmp_path):
     import torch
-    from fluffy_bassoon.meta_rl.rlinf_native_ppo_runtime import SidecarMixin
+    from fluffy_bassoon.rlinf.native_ppo_runtime import SidecarMixin
     class FakeEnvironmentWorker(SidecarMixin):
         pilot_role = 'env'
     worker = FakeEnvironmentWorker()
@@ -176,7 +176,7 @@ def test_sampler_and_eval_rng_survive_whole_boundary_restore(tmp_path):
 @pytest.mark.parametrize('compression', ['none', 'gzip'])
 def test_original_rollout_is_saved_before_official_training_shuffle(monkeypatch, tmp_path, compression):
     import torch
-    from fluffy_bassoon.meta_rl import rlinf_native_ppo_runtime as runtime
+    from fluffy_bassoon.rlinf import native_ppo_runtime as runtime
     actor = object.__new__(runtime.PilotActor)
     from omegaconf import OmegaConf
     actor.cfg = SimpleNamespace(native_pilot=OmegaConf.create(dict(output=str(tmp_path),canonical_compression=compression)),
@@ -219,8 +219,8 @@ def test_original_rollout_is_saved_before_official_training_shuffle(monkeypatch,
 def test_actor_sidecar_requires_intact_canonical_images(tmp_path):
     import torch
     from omegaconf import OmegaConf
-    from fluffy_bassoon.meta_rl.rlinf_native_ppo import write
-    from fluffy_bassoon.meta_rl.rlinf_native_ppo_runtime import SidecarMixin
+    from fluffy_bassoon.rlinf.native_ppo import write
+    from fluffy_bassoon.rlinf.native_ppo_runtime import SidecarMixin
     from fluffy_bassoon.meta_rl.tensor_archive import read_tensor,write_tensor
     class Actor(SidecarMixin):
         pilot_role='actor'
@@ -253,8 +253,8 @@ def test_native_history_multirank_episode_contract(monkeypatch, tmp_path):
     import torch
     from rlinf.algorithms.registry import calculate_adv_and_returns
     from rlinf.utils.nested_dict_process import process_nested_dict_for_adv, process_nested_dict_for_train
-    from fluffy_bassoon.meta_rl import rlinf_native_ppo_runtime as runtime
-    from fluffy_bassoon.meta_rl.rlinf_native_ppo_data import reconstruct_rows, record_gaussian_parameters
+    from fluffy_bassoon.rlinf import native_ppo_runtime as runtime
+    from fluffy_bassoon.rlinf.native_ppo_data import reconstruct_rows, record_gaussian_parameters
 
     def observation(number):
         return dict(main_images=torch.full((1, 2, 2, 3), number, dtype=torch.uint8),

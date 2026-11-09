@@ -5,7 +5,7 @@ import struct
 import pytest
 import torch
 
-from fluffy_bassoon.rl.rlinf_checkpoint_compat import (
+from fluffy_bassoon.rlinf.checkpoint_compat import (
     LEGACY_PREFIX, NATIVE_PREFIX, NOISE_SHAPES, checkpoint_has_noise_head,
     map_legacy_noise_head, LEGACY_VALUE_PREFIX, NATIVE_VALUE_PREFIX, VALUE_SHAPES,
     checkpoint_has_value_head, map_legacy_value_head, map_legacy_rl_heads,
@@ -110,21 +110,3 @@ def test_header_selects_saved_critic_only_when_present(tmp_path, prefix):
 def test_invalid_headers_fail_before_factory_selection(tmp_path, content):
     path = tmp_path/'broken.safetensors';path.write_bytes(content)
     with pytest.raises(ValueError): checkpoint_has_noise_head(path)
-
-
-@pytest.mark.parametrize('trained_noise', [False, True])
-@pytest.mark.parametrize('trained_value', [False, True])
-def test_native_config_constructs_exactly_the_saved_auxiliary_heads(tmp_path, trained_noise, trained_value):
-    from fluffy_bassoon.rl.maniskill_pi05 import model_config
-    prefix = LEGACY_PREFIX if trained_noise else 'motor.'
-    fields = {prefix+'weight': dict(shape=[1], dtype='F32', data_offsets=[0, 4])}
-    if trained_value:
-        fields[LEGACY_VALUE_PREFIX+'0.weight'] = dict(shape=[1024,2048], dtype='F32', data_offsets=[4,8])
-    metadata = json.dumps(fields).encode()
-    (tmp_path/'model.safetensors').write_bytes(struct.pack('<Q', len(metadata)) + metadata + b'\0'*4)
-    cfg = model_config(tmp_path, tmp_path/'norm_stats.json')
-    assert cfg.openpi.noise_method == ('flow_noise' if trained_noise else 'flow_ode')
-    assert cfg.openpi.task == 'rl' and cfg.openpi.num_steps == 4
-    assert cfg.openpi.action_horizon == 8 and cfg.openpi.action_chunk == 5
-    assert cfg.add_value_head is trained_value and cfg.openpi.add_value_head is trained_value
-    assert cfg.openpi.value_after_vlm is True and cfg.openpi.torch_compile is False

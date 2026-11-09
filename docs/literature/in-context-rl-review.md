@@ -1,10 +1,10 @@
-# In-context RL: literature review and a CTM RL loop
+# In-context RL: literature review
 
 For the current RoboTwin objective comparison, see the 7 November
 [primary-source follow-up on offline ICRL for a frozen VLA](frozen-vla-offline-icrl-review.md).
 It checks AD/DPT/DIT/IC-IQL supervision, newer continuous-control evidence,
 the implemented IQL weighting convention and the online evaluation gaps.
-The snapshot and CTM proposal below remain historical context.
+The survey below is historical context. Current implementation details are in [Methods](../METHODS.md).
 
 Snapshot: 28 October 2026. Scope: RL², Algorithm Distillation, the ICRL
 survey, PEARL, MELD, AMAGO, TrMRL, Vintix, ECET and VLRLA, read for six
@@ -609,158 +609,6 @@ check of the base motor first. When the scene alone identifies the goal, vision
 dominates, which supports keeping the PoC's hidden variable in the action
 rotation. The pi0.5 paper ([arXiv 2504.16054](https://arxiv.org/abs/2504.16054))
 reports better language following than pi0; its numbers were not checked here.
-
-## Current state in this repository
-
-The supervised line (`lycoreco_main`) is behavior cloning only. A persistent
-CTM (`shared/persistent_ctm.py`) carries activated state, a 32-step
-pre-activation trace and synchronization accumulators across observations
-within an episode. Episode reset clears them. There is no reward channel.
-
-The RL work lives on `lycoreco_rl`, which also contains
-`codex/ctm-rl-posttraining`:
-
-| Area | What exists | Status at the 27 October handoff |
-| --- | --- | --- |
-| `src/fluffy_bassoon/rl/` | Complete-episode PPO post-training of the saved MIKASA CTM. Gaussian on the H4 first slot, sparse first-success reward, SFT anchor, full-episode BPTT, atomic recovery | Native update and recovery qualified; small runs went from 3/4 to 4/4 and reached 7/8 training successes. Not a benchmark result |
-| `src/fluffy_bassoon/meta_rl/` | RL²-style trials (`attempts`, carried state, previous action, reward, attempt_end, clock). Full-trial recurrent PPO, GRU, CTM control, CMM port, looped Transformer, Transformer-XL | Bandits learn. On Bernoulli, Transformer-XL scores 0.730 versus 0.669 for CTM and 0.738 for Thompson (one seed). Signed-gain reaching is unsolved |
-| `meta_rl/native_prefix.py`, `robot_train.py` | Frozen PaliGemma K/V frontend, demonstration warm-start, supervised-to-PPO transition with zero-initialized feedback columns | Fresh-head warm-starts failed the motor gate (0/16 at 3k) |
-| `rl/libero_motor.py`, `gain_budget.py` | Frozen legacy LIBERO CTM motor (388/400 historically, H20/E10) plus a hidden translation gain with exact support budgets | Motor gate job pending; adaptation training not started |
-
-The handoff notes a scientific gap: a gain can be identified from motion
-without reward. Recovering from a gain change is therefore system
-identification, not reward-driven ICRL.
-
-## Recommended CTM in-context RL loop
-
-**Superseded (2026-11-01):** the meta-learner is now a plain causal decoder,
-not a CTM or other recurrent core; see
-[PAPER.md](../PAPER.md). The CTM architecture below
-is kept as history.
-
-The goal is a CTM whose carried state turns *rewarded* experience across
-episodes into better behavior, with weights frozen at test time. The
-candidate loop keeps the competent frozen motor, adds a learned in-context
-module, and optionally uses distillation before recurrent PPO. The following
-architecture notes describe the older motor integration; use the current native
-bridge contract for deployment. The warm-start clarification above supersedes
-any implication that a trained recurrent teacher or supervised stage is required.
-
-### Architecture
-
-1. **Frozen perception and motor.** Use the frozen VLM and the legacy CTM
-   motor that passes the gate. Following VLRLA-bridge, do not replace the
-   motor head. Add a zero-initialized residual, either on its action-chunk
-   mean or on its conditioning token, so step zero reproduces the base policy
-   exactly. This matches the existing zero-initialized feedback-column
-   approach in `robot_train.py`.
-2. **In-context CTM.** A second, trainable CTM population (or the adapter
-   core) reads the per-step tokens below. Its state is **carried across
-   episodes within a trial** and reset only at trial start. The motor's own
-   execution state still resets at each physical start, as the handoff
-   specifies.
-3. **Per-step input token.** Use the native K/V readout and state8 (as in
-   `native_prefix.py`), the previous issued action chunk, the previous reward,
-   `attempt_end`, `absorbing`, and normalized clocks (attempt index, step).
-   Follow the existing rule that terminal feedback arrives together with the
-   next physical start.
-4. **Cross-episode summary (optional, ECET-inspired).** At each
-   `attempt_end`, write the CTM's output synchronization into a small FIFO of
-   episode tokens that later ticks can attend to. This guards against
-   synchronization decay (decay parameters are clamped to [0, 15]) erasing
-   evidence from early attempts in long trials.
-5. **Compute knob.** CTM ticks per observation stay a separate setting, and
-   tick-count effects on in-context improvement are an experiment of their
-   own.
-
-### Stage A: distill improving histories (AD/Vintix/VLRLA)
-
-Generate multi-episode trials where later episodes are better, then clone them:
-
-- **Noise distillation (cheapest, Vintix).** Roll out the competent motor with
-  structured noise annealed from high to zero across episodes of a trial.
-  For a hidden-task variant, start with a wrong task hypothesis and move to the
-  correct one after a rewarded episode. Per-task schedule tuning was needed in
-  Vintix.
-- **RL histories (VLRLA, AD).** Log trials from the existing `rl/` CTM PPO
-  post-training and keep failures. These are real improvement curves, but
-  costly.
-- **Hindsight relabels (VLRLA, AMAGO).** Relabel demos under an underspecified
-  instruction so that only reward reveals the target.
-- **Loss.** Use the motor's own objective (masked L1 or MSE on the action
-  chunk) over all frames of the trial, with full-trial or truncated BPTT
-  through the carried CTM state. The existing stream and TBPTT samplers
-  already support this per episode and need trial-level lanes.
-
-### Stage B: recurrent PPO on trials (RL²/ECET)
-
-Fine-tune the Stage A learner with `meta_rl/ppo.py` in meta mode:
-
-- A trial is K attempts of one hidden task, and memory and returns span the
-  attempts (gamma = GAE lambda = 1, as already implemented).
-- The actor is the residual Gaussian. Sample and score the latent, not the
-  clipped command, as in `rl/actor_critic.py`. Keep the SFT anchor and a small
-  learning rate.
-- The critic uses detached synchronization features. The single-trajectory
-  zero-critic issue already found applies here: keep advantage normalization
-  off for single-lane batches.
-- Keep absorbing padding with zeroed actor terms, and keep budget accounting
-  (support, query and settling actions charged separately).
-
-### Rewards
-
-- Start with sparse, latched success paid once at the attempt boundary
-  (MIKASA `success_once`, the LIBERO first-success reward). This matches
-  VLRLA and the existing collectors.
-- To test ICRL rather than system identification, use tasks where **only
-  reward** reveals the hidden variable. Examples: which of several identical
-  targets is correct, an underspecified instruction with a hidden goal
-  (VLRLA's relabeling), or a MIKASA ShellGame-style choice whose reward
-  depends on a trial-fixed hidden choice.
-- If sparse reward stalls, apply hindsight relabeling to goals actually
-  achieved (AMAGO). Keep any dense shaping out of the policy input and report
-  it separately.
-
-### Evaluation protocol
-
-1. **In-context improvement curve.** Report success at attempts 1..K with
-   frozen weights on held-out task instances, with greedy and sampled
-   policies.
-2. **Controls.** Use a same-checkpoint memory-reset lesion, a separately
-   trained episode-reset control under matched data and compute, the
-   unadapted motor, and a privileged oracle (true gain or true target).
-3. **Generalization splits.** Separate interpolation (held-out parameters
-   inside the training range) from extrapolation and from held-out tasks.
-4. **Cost accounting.** Report prior demos, meta-training interactions,
-   support, query and settling actions, and compute per lane.
-5. **Statistics.** Use three or more training seeds and paired seeds across
-   arms, with predeclared gates.
-
-### Benchmarks, in order
-
-1. **Compact (existing):** Bernoulli bandit, HiddenGainReach. Add Dark Room or
-   Key-to-Door to match AD, AMAGO and the survey.
-2. **Vector meta-RL comparability:** Meta-World ML1/ML10/ML45 and MuJoCo
-   AntDir/HalfCheetahVel with the compact CTM, so results line up with
-   TrMRL, ECET, AMAGO and Vintix.
-3. **Robot ICRL:** the LIBERO hidden-gain trial (system identification)
-   plus a reward-only hidden-target LIBERO or MIKASA trial (true ICRL).
-4. **External VLA comparison:** RoboTwin 2.0 tasks, to compare with VLRLA
-   under its protocol, if the stack can host it.
-
-### Main risks
-
-- **No competent motor.** Fresh-head warm-starts failed. Keep the legacy motor
-  gate as the precondition.
-- **Shortcuts.** Teacher-forced previous commands and observable task cues can
-  let the model skip memory. The existing no-command control and sanitized
-  `info` address part of this.
-- **Long-trial credit assignment.** Full-trial BPTT over K×H220 steps is
-  memory-heavy. Distillation first, plus truncated BPTT with carried state,
-  reduces that.
-- **Architecture claims.** The 24 October screen shows no CTM/CMM advantage
-  over Transformer-XL. Compare under matched parameters, state bytes and
-  tuning before claiming one.
 
 ## References
 

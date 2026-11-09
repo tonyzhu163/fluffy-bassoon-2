@@ -3,13 +3,13 @@ from copy import deepcopy
 
 import pytest
 
-from fluffy_bassoon.meta_rl.rlinf_flora_ppo import flora_jobs, parse_outputs
-from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import (
+from fluffy_bassoon.robocasa.flora_ppo import flora_jobs, parse_outputs
+from fluffy_bassoon.robocasa.ppo import (
     PPO_TASKS, TASKS, joint_arm_stopping, joint_episode_protocols, protocol,
     require_calibration_permission,
 )
-from fluffy_bassoon.meta_rl.robocasa_residual import install_terminal_labels
-from fluffy_bassoon.meta_rl.robocasa_video import REWARD_CAMERAS
+from fluffy_bassoon.robocasa.residual import install_terminal_labels
+from fluffy_bassoon.robocasa.video import REWARD_CAMERAS
 
 
 def bank():

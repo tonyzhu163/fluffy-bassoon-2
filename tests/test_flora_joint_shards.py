@@ -8,10 +8,10 @@ from types import SimpleNamespace
 
 import pytest
 
-from fluffy_bassoon.meta_rl.flora_terminal_shards import joint_episode_shard, gather_joint_terminal_outputs
-from fluffy_bassoon.meta_rl.rlinf_flora_ppo import digest, flora_jobs, parse_outputs, sha, write_new
-from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import PPO_TASKS, protocol
-from fluffy_bassoon.meta_rl.robocasa_video import REWARD_CAMERAS
+from fluffy_bassoon.robocasa.flora_terminal_shards import joint_episode_shard, gather_joint_terminal_outputs
+from fluffy_bassoon.robocasa.flora_ppo import digest, flora_jobs, parse_outputs, sha, write_new
+from fluffy_bassoon.robocasa.ppo import PPO_TASKS, protocol
+from fluffy_bassoon.robocasa.video import REWARD_CAMERAS
 
 
 def joint_bank():
@@ -59,7 +59,7 @@ def test_joint80_mixed_horizons_preserve_all_grades_and_reject_partial_or_wrong_
 
 
 def test_joint80_service_binds_task_map_pending_source_and_waits_for_all_official_rows(tmp_path,monkeypatch):
-    source=Path(__file__).resolve().parents[1]/'scripts/diagnostics/robocasa_residual_score.py'
+    source=Path(__file__).resolve().parents[1]/'benchmarks/robocasa/robocasa_residual_score.py'
     spec=importlib.util.spec_from_file_location('joint80_score_under_test',source)
     service=importlib.util.module_from_spec(spec);spec.loader.exec_module(service)
     original_sha=service.sha
@@ -100,7 +100,7 @@ def test_joint80_service_binds_task_map_pending_source_and_waits_for_all_officia
 
 
 def test_streamed_grades_are_reused_only_for_identical_jobs_and_finish_at_request(tmp_path,monkeypatch):
-    source=Path(__file__).resolve().parents[1]/'scripts/diagnostics/robocasa_residual_score.py'
+    source=Path(__file__).resolve().parents[1]/'benchmarks/robocasa/robocasa_residual_score.py'
     spec=importlib.util.spec_from_file_location('streamed_score_under_test',source)
     service=importlib.util.module_from_spec(spec);spec.loader.exec_module(service)
     original_sha=service.sha

@@ -1,8 +1,8 @@
 """Numerical paired-AUROC qualification for the prospectively sized native bank."""
 import pytest
 
-from fluffy_bassoon.meta_rl.rlinf_flora_ppo import baseline_validation
-from fluffy_bassoon.meta_rl.rlinf_robocasa_ppo import protocol
+from fluffy_bassoon.robocasa.flora_ppo import baseline_validation
+from fluffy_bassoon.robocasa.ppo import protocol
 
 
 def fifty_rows():

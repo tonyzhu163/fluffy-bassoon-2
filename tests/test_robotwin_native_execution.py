@@ -12,7 +12,7 @@ from types import SimpleNamespace
 import numpy as np
 import pytest
 
-from fluffy_bassoon.rl.robotwin_execution import chunk_execution
+from fluffy_bassoon.robotwin.execution import chunk_execution
 
 
 @pytest.fixture(scope='module')
@@ -111,8 +111,8 @@ def test_passive_fast_and_full_paths_preserve_native_physics_and_results(control
 
 
 def test_waypoint_controller_synchronizes_waypoints_and_recovers_topp_failures(tmp_path):
-    from fluffy_bassoon.rl.robotwin_batch import accounted_controller_source
-    from fluffy_bassoon.rl.robotwin_execution import load_accounted_controller
+    from fluffy_bassoon.robotwin.batch import accounted_controller_source
+    from fluffy_bassoon.robotwin.execution import load_accounted_controller
     root = os.environ.get('ROBOTWIN_REFERENCE_ROOT')
     if root is None:
         fallback = Path(__file__).resolve().parents[1] / (
