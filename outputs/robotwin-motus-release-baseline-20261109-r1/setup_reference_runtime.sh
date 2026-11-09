@@ -16,7 +16,9 @@ import os,shutil
 from pathlib import Path
 site=Path(os.environ['TASK_ENV'])/'lib/python3.11/site-packages'
 shared=Path(os.environ['TASK_SHARED'])
-(site/'motus_shared_dependencies.pth').write_text(str(shared)+'\n')
+simulator=Path('/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/lib/python3.11/site-packages')
+curobo=Path('/mowenjie/fluffy-bassoon-2/robotwin-curobo-20261108-cpumotuscurobo03/env/lib/python3.11/site-packages')
+(site/'motus_shared_dependencies.pth').write_text(str(curobo)+'\n'+str(simulator)+'\n'+str(shared)+'\n')
 source=shared/'openpi/models_pytorch/transformers_replace'
 files=list(source.rglob('*.py'));assert len(files)==5
 for path in files:

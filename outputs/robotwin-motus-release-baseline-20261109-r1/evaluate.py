@@ -49,6 +49,7 @@ def configuration(model):
 def manifest(native, model):
     import openpi
     import transformers
+    import curobo
     from transformers.models.siglip import check
     assert transformers.__version__ == '4.53.2'
     assert check.check_whether_transformers_replace_is_installed_correctly()
@@ -67,6 +68,9 @@ def manifest(native, model):
         'task_config/_eval_step_limit.yml', 'task_config/demo_clean.yml', 'task_config/demo_randomized.yml')},
         model_sha256=MODEL_SHA, norm_sha256=NORM_SHA,
         openpi_version=importlib.metadata.version('rlinf-openpi'), openpi_files=package_files,
+        curobo_version=importlib.metadata.version('nvidia-curobo'),
+        curobo_core={p: sha(Path(curobo.__file__).parent/p) for p in (
+            'wrap/reacher/motion_gen.py', 'types/robot.py', 'cuda_robot_model/cuda_robot_model.py')},
         transformers_version=transformers.__version__, transformers_replacements={p:
             sha(Path(transformers.__file__).parent/p) for p in (
                 'models/gemma/modeling_gemma.py', 'models/gemma/configuration_gemma.py',
@@ -113,6 +117,10 @@ def run(args):
     import torch
     native, model = Path(os.environ['NATIVE_SOURCE']), Path(os.environ['NATIVE_PPO_MODEL'])
     receipt = manifest(native, model)
+    # Import the complete native simulator before any model construction. In
+    # CPU qualification these imports instantiate no scene or policy model.
+    from envs.place_phone_stand import place_phone_stand
+    from generate_episode_instructions import generate_episode_descriptions
     if args.check_only:
         cfg = configuration(model)
         data = cfg.data.create(cfg.assets_dirs, cfg.model)
@@ -124,11 +132,15 @@ def run(args):
             transforms.Normalize(data.norm_stats, use_quantiles=True),
             *data.model_transforms.inputs])(sample)
         assert transformed['state'].shape == (32,) and transformed['tokenized_prompt'].shape == (200,)
+        for setting in ('demo_clean', 'demo_randomized'):
+            assert environment_args(native, setting)['left_embodiment_config']['planner'] == 'curobo'
         save(args.output/'CPU-QUALIFICATION.json', dict(status='passed', manifest=receipt,
-             transformed_state_shape=[32], token_shape=[200], model_constructed=False))
+             transformed_state_shape=[32], token_shape=[200], model_constructed=False,
+             native_simulator_imports_passed=True))
         return
     qualified = json.loads(Path(__file__).with_name('REFERENCE-CPU-QUALIFICATION.json').read_bytes())
-    assert qualified['status'] == 'passed' and receipt == qualified['manifest']
+    assert qualified['status'] == 'passed' and qualified['native_simulator_imports_passed']
+    assert receipt == qualified['manifest']
     assert sys.platform == 'linux' and os.uname().nodename.startswith('job-')
     assert torch.cuda.device_count() == 1
     torch.cuda.set_device(0)
@@ -144,8 +156,6 @@ def run(args):
     policy._model.requires_grad_(False)
     assert not policy._model.training
     versions = [(p, p._version) for p in policy._model.parameters()]
-    from envs.place_phone_stand import place_phone_stand
-    from generate_episode_instructions import generate_episode_descriptions
     report = dict(status='running', source_commit=os.environ['TASK_SOURCE'], manifest=receipt,
         purpose='Reconstructed direct evaluation of released frozen pi0.5; not maintainer-confirmed',
         sampler='OpenPI native ODE K10, native policy RNG, eager', action_horizon=32,

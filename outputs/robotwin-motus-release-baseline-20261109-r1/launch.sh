@@ -67,7 +67,8 @@ fi
 # Copy exact pinned native source into job-local NVMe; use existing shared
 # assets without modifying either their files or the upstream checkout.
 git -C "$NATIVE_SOURCE" archive HEAD envs task_config description script | tar -x -C "$TASK_LOCAL"
-ln -s /mowenjie/fluffy-bassoon-2/sources/robotwin-baseline-smoke-20261028-r1/RoboTwin/assets "$TASK_LOCAL/assets"
+"$TASK_PYTHON" "$TASK_CODE/outputs/robotwin-motus-release-baseline-20261109-r1/prepare_assets.py" \
+ "$TASK_LOCAL/assets" "$TASK_OUT/ASSET-PATHS.json"
 if [[ -f "$NATIVE_SOURCE/Times New Roman.ttf" ]]; then
  ln -s "$NATIVE_SOURCE/Times New Roman.ttf" "$TASK_LOCAL/Times New Roman.ttf"
 fi

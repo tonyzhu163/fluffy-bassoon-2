@@ -1,10 +1,10 @@
 {
-  "status": "epoch2_released_sft_reference_smoke03_running",
-  "closed_conservative_gpu_seconds": 1214,
+  "status": "epoch2_native_simulator_cpu_preflight_before_smoke04",
+  "closed_conservative_gpu_seconds": 1378,
   "cap_gpu_seconds": 360000,
-  "closed_conservative_gpu_hours": 0.3372222222222222,
-  "remaining_gpu_seconds": 358786,
-  "remaining_unreserved_gpu_seconds": 355186,
+  "closed_conservative_gpu_hours": 0.3827777777777778,
+  "remaining_gpu_seconds": 358622,
+  "remaining_unreserved_gpu_seconds": 355022,
   "next_worst_gpu_seconds": 3600,
   "components": [
     {
@@ -59,24 +59,36 @@
       "completed_episodes": 0,
       "gpu_probe_passed": true,
       "failure": "Reference OpenPI requires Transformers4.53.2 plus bundled transformers_replace; shared runtime resolves4.55.4 without its sentinel. Direct model construction aborted before weights/episodes."
+    },
+    {
+      "job_id": "job-1okslex6vg8f",
+      "identity": "native-smoke-03",
+      "scheduler_status": "Failed",
+      "created_at": "2026-11-09T12:56:12+08:00",
+      "scheduler_ended_at": "2026-11-09T12:58:56+08:00",
+      "gpu_count": 1,
+      "gpus_released": true,
+      "conservative_allocation_gpu_seconds": 164,
+      "worker_gpu_seconds": 115,
+      "completed_episodes": 0,
+      "gpu_probe_passed": true,
+      "strict_weights_loaded": true,
+      "failure": "Reference policy constructed and loaded; native simulator import then failed on Open3D because the isolated overlay omitted existing robotwin simulator site-packages. Add that existing dependency layer; qualify all native imports on CPU before retry."
     }
   ],
   "prior_cleared_epoch_gpu_seconds": 359665,
   "prior_cleared_epoch_gpu_hours": 99.90694444444445,
   "prior_cleared_epoch_ledger": "HISTORICAL-BUDGET-EPOCH1-THROUGH-20261108.json",
   "approval": "User cleared prior 359,665 GPU-s (99.91 GPU-h) epoch and approved a fresh 100 GPU-hour (360,000 GPU-s) budget on 2026-11-09T11:05:01+08:00 ('clear the existing gpu hours, i approve another 100 hours').",
-  "active_job_id": "job-1okslex6vg8f",
-  "active_jobs": [
-    {
-      "job_id": "job-1okslex6vg8f",
-      "identity": "native-smoke-03",
-      "gpus": 1,
-      "created_at": "2026-11-09T12:56:12+08:00",
-      "reserved_gpu_seconds": 3600
-    }
-  ],
+  "active_job_id": null,
+  "active_jobs": [],
   "ownership_and_data_preserved": true,
-  "planned_job": null,
+  "planned_job": {
+    "identity": "native-smoke-04",
+    "gpus": 1,
+    "reservation_gpu_seconds": 3600,
+    "task": "same2+2 SFT smoke; existing simulator dependency layer added after smoke03 strict weight load"
+  },
   "user_stopped_at": "2026-11-09T12:21:51+08:00",
   "user_resumed_scope": "Released pi0.5 SFT baseline first; then PPO and GRPO baselines"
 }

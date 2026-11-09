@@ -55,6 +55,19 @@ its five bundled `transformers_replace` files. Use the isolated uv environment
 from the installed OpenPI package. Shared dependencies are read through a
 `.pth`; do not modify the shared runtime. Validate the loader's own sentinel
 and hash all five replacements on Linux CPU before another GPU attempt.
+The overlay must also include the existing RoboTwin simulator dependency
+layer (Open3D and associated packages), before the base model dependencies.
+Smoke03 loaded the released weights successfully, then exposed that omitted
+layer at native import. Require complete native simulator imports on CPU
+before constructing a model in any subsequent allocation.
+The historical `Robot` module requires cuRobo, and the cached native ALOHA
+configuration selects it for expert planning. Include the existing qualified
+`nvidia-curobo==0.7.8` layer (source commit
+`d64c4b005459db10c5dd867d8b30a87d5bda9bdb`). Keep native expert planning;
+do not force the previous RLinf MPLIB backend. Build an owned asset view and
+repair only the two stale absolute URDF/collision-sphere paths in each native
+cuRobo YAML. Verify that restoring those fields recovers the original mapping;
+record original/runtime and target file hashes. Shared assets remain intact.
 
 Match native evaluation seed0: candidate seeds begin100000; expert play_once
 must plan and succeed before policy evaluation; count100 accepted episodes
