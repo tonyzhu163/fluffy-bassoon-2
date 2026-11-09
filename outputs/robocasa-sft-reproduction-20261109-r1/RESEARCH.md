@@ -141,3 +141,33 @@ of collection (37.50 controls/second), with a matching saved sampler count,
 first-input hashes and zero training updates. These seven diagnostic episodes
 qualify execution and throughput, not benchmark performance. See
 [the qualification audit](GPU04-AUDIT.json) and [campaign contract](CAMPAIGN.md).
+
+## Scope relative to PPO and GRPO
+
+Native SFT benchmark reproduction qualifies the released ODE evaluator. It
+does not establish equivalence of the converted RLinf Flow-SDE training path.
+The historical RL panels use target scenes, a 600-control cutoff and 50
+executed controls per prediction; this reference uses pretrain scenes, native
+extended horizons and five executed controls. Their success percentages have
+different denominators and protocols.
+
+The [512-case OpenDrawer audit](../robocasa-ppo4-grpo40-test512-20261105-r1/RESULT.md)
+supports matched evaluation of those specific checkpoints: SFT314/512,
+four-epoch PPO358/512 and GRPO328/512. Likelihood recomputation matched before
+updates, and the GRPO inference adapter preserved all667 actor tensors.
+PPO used960 optimizer steps versus GRPO240; each has one training seed.
+This supports a comparison of these recipes, without establishing an
+algorithm-wide ranking or independently validating every training component.
+
+The [critic replay](../robocasa-flow-sde-critic-parity-20261104-r1/RESULT.md)
+confirmed a PPO saved-value mismatch: rollout averaged ten suffix values,
+whereas the learner selected one. The selected-value correction passed
+numerical qualification; its isolated controlled learning comparison remains
+held and incomplete. The later [four-epoch PPO arms](../robocasa-opendrawer-ppo-ablation-3m-20261104-r1/RESULT.md)
+already use the corrected runtime and each passed80 real pre-update
+likelihood/value checks. The [completed GRPO audit](../robocasa-ppo-grpo-meta-stage1-20261104-r1/GRPO-RESULT.md)
+passed80 likelihood checks and independently rechecked320 raw reset snapshots
+spanning640 training groups. Critic-free GRPO avoids the specific historical
+critic mismatch. These are concrete validations of the tested OpenDrawer
+recipes; the unfinished causal comparison does not negate them. Neither
+PPO nor GRPO training is resumed by this SFT reproduction.
