@@ -27,8 +27,12 @@ export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 NCCL_P2P_DISAB
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl FLUFFY_GPU_EXECUTION=baige PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 PY=$ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
 if [[ ! -v CUDA_VISIBLE_DEVICES ]]; then
-    # Baige exports the assigned UUID even when it omits the optional CUDA mask.
-    export CUDA_VISIBLE_DEVICES=${NVIDIA_VISIBLE_DEVICES:?scheduler must supply the allocated UUID}
+    # Use the original runtime's sole container ordinal only after NVML proves it
+    # is the scheduler's single assigned UUID. The independent probe verifies PCI and CUDA UUID.
+    visible_uuid=$(nvidia-smi --query-gpu=uuid --format=csv,noheader)
+    test "$visible_uuid" = "${NVIDIA_VISIBLE_DEVICES:?scheduler must supply the allocated UUID}"
+    [[ "$visible_uuid" == GPU-* && "$visible_uuid" != *$'\n'* && "$visible_uuid" != *,* ]]
+    export CUDA_VISIBLE_DEVICES=0
 fi
 "$PY" -B "$SCI/scripts/[train]gpu_probe.py" --expected-count 1 --purpose evaluation --baige-container --output "$ARCH/GPU-PROBE.json"
 cp "$ARCH/GPU-PROBE.json" "$TMP/"
@@ -50,6 +54,8 @@ for m in dpt dit; do
     worker=$!
     while kill -0 "$worker" 2>/dev/null; do
         tail -c 3500 "$out/WORKER.log" >"$ARCH/$m-current.log"
+        # Journal rows distinguish initialization from issued and completed native actions.
+        find "$out" -path '*/rank-00/six-episode-*.json' -exec cp '{}' "$ARCH/$m-current-journal.json" \;
         if [[ -f "$out/PROGRESS.json" ]]; then cp "$out/PROGRESS.json" "$ARCH/$m-progress.json"; fi
         sleep 12
     done
