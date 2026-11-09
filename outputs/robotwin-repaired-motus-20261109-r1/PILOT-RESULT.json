@@ -1,0 +1,2238 @@
+{
+  "status": "completed",
+  "source_commit": "3f2228ee8299104c3813d53f5cf0b9159b34c39e",
+  "task": "place_phone_stand",
+  "cases": [
+    100100002,
+    100100003,
+    100100005,
+    100100006,
+    100100007,
+    100100009,
+    100100010,
+    100100013,
+    100100015,
+    100100017,
+    100100018,
+    100100020,
+    100100023,
+    100100027,
+    100100028,
+    100100029
+  ],
+  "cases_sha256": "ca04bbb4a7a5ca92b10427e409f06ec3c361007f783854536d9bc6031732c864",
+  "model_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+  "norm_stats_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+  "native_batch": 2,
+  "optimizer_updates": 0,
+  "motor_noise_seed": 20261109,
+  "profiles": {
+    "legacy_k5_h192": {
+      "name": "legacy_k5_h192",
+      "waypoint_controller": false,
+      "num_steps": 5,
+      "horizon": 192,
+      "controller_sha256": "6052edab6b597673a2a7ad1be7583aa98ecfbed0db93c94afc05b78ebfb3e977",
+      "episodes": [
+        {
+          "case": 100100002,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 3000
+        },
+        {
+          "case": 100100003,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 3000
+        },
+        {
+          "case": 100100005,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 3000
+        },
+        {
+          "case": 100100006,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 3000
+        },
+        {
+          "case": 100100007,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 3000
+        },
+        {
+          "case": 100100009,
+          "success": true,
+          "complete": true,
+          "decisions": 5,
+          "delivered_targets": 136,
+          "physics_steps": 2118
+        },
+        {
+          "case": 100100010,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 3000
+        },
+        {
+          "case": 100100013,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 3000
+        },
+        {
+          "case": 100100015,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 3000
+        },
+        {
+          "case": 100100017,
+          "success": true,
+          "complete": true,
+          "decisions": 4,
+          "delivered_targets": 123,
+          "physics_steps": 1922
+        },
+        {
+          "case": 100100018,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 3000
+        },
+        {
+          "case": 100100020,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 3000
+        },
+        {
+          "case": 100100023,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 3000
+        },
+        {
+          "case": 100100027,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 3000
+        },
+        {
+          "case": 100100028,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 3000
+        },
+        {
+          "case": 100100029,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 3000
+        }
+      ],
+      "resets": [
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100002,
+          "actual_seed": 100100002,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Move the palm-sized phone onto the phonestand with smooth texture."
+          ],
+          "worker_pid": 1571,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "3247e9354a5335df0f8bfd5dff7f20ce97e0a243d10a9c9707e2517ddb1bbf65",
+          "scene": {
+            "{A}": "077_phone/base1",
+            "{B}": "078_phonestand/base2",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "6052edab6b597673a2a7ad1be7583aa98ecfbed0db93c94afc05b78ebfb3e977"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100003,
+          "actual_seed": 100100003,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Lift the silver phone with black screen onto the compact phonestand."
+          ],
+          "worker_pid": 1572,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "efebd73ebc6b3a22aa8391562d02d290817862bdf5cec294b6754c278ca3df59",
+          "scene": {
+            "{A}": "077_phone/base1",
+            "{B}": "078_phonestand/base1",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "6052edab6b597673a2a7ad1be7583aa98ecfbed0db93c94afc05b78ebfb3e977"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100005,
+          "actual_seed": 100100005,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Put the sleek rectangular phone atop the phonestand with curved edges."
+          ],
+          "worker_pid": 1571,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "b851f5c283860189505be886d269f6dcb1eef38b6e59c659b3f8f1b5a27bcd87",
+          "scene": {
+            "{A}": "077_phone/base0",
+            "{B}": "078_phonestand/base2",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "6052edab6b597673a2a7ad1be7583aa98ecfbed0db93c94afc05b78ebfb3e977"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100006,
+          "actual_seed": 100100006,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Put the phone with smooth glossy screen atop the small green and silver stand."
+          ],
+          "worker_pid": 1572,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "ff8ec3761380833f770f9b7b976f38941361de9dcc1cc2157fd3106f3c693b11",
+          "scene": {
+            "{A}": "077_phone/base2",
+            "{B}": "078_phonestand/base1",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "6052edab6b597673a2a7ad1be7583aa98ecfbed0db93c94afc05b78ebfb3e977"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100007,
+          "actual_seed": 100100007,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Put the phone with smooth glossy screen atop the smooth brown phone holder."
+          ],
+          "worker_pid": 1571,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "ea524e3501ca3f4f4db6e46a1e6a7ca74119329fa92621dd15acca3ed095fc13",
+          "scene": {
+            "{A}": "077_phone/base2",
+            "{B}": "078_phonestand/base2",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "6052edab6b597673a2a7ad1be7583aa98ecfbed0db93c94afc05b78ebfb3e977"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100009,
+          "actual_seed": 100100009,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Move the glass and metal smartphone onto the light brown phonestand."
+          ],
+          "worker_pid": 1572,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "37a2f1ae69209655704fff9073f8bead685ec7edffdc954519ee2deb6315d198",
+          "scene": {
+            "{A}": "077_phone/base2",
+            "{B}": "078_phonestand/base2",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "6052edab6b597673a2a7ad1be7583aa98ecfbed0db93c94afc05b78ebfb3e977"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100010,
+          "actual_seed": 100100010,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Lift the compact phone with flat design onto the phone holder with cutout underneath."
+          ],
+          "worker_pid": 1571,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "0f8aebb47fc68ba42126d5d1b0007153f73990264c4ab54dc990a039ca314870",
+          "scene": {
+            "{A}": "077_phone/base1",
+            "{B}": "078_phonestand/base2",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "6052edab6b597673a2a7ad1be7583aa98ecfbed0db93c94afc05b78ebfb3e977"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100013,
+          "actual_seed": 100100013,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Move the phone with smooth glossy screen onto the compact phonestand."
+          ],
+          "worker_pid": 1572,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "24a34e6fcf01762ba3bc3c329c947c092740fa8bd0613452d83ceceda166c8cc",
+          "scene": {
+            "{A}": "077_phone/base2",
+            "{B}": "078_phonestand/base1",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "6052edab6b597673a2a7ad1be7583aa98ecfbed0db93c94afc05b78ebfb3e977"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100015,
+          "actual_seed": 100100015,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Carry the smooth-screen phone to the small plastic phonestand."
+          ],
+          "worker_pid": 1571,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "a221ef08e7d6fc3fa7e25e7ce053f69063617cd27bb8088712379f80e144baf1",
+          "scene": {
+            "{A}": "077_phone/base0",
+            "{B}": "078_phonestand/base2",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "6052edab6b597673a2a7ad1be7583aa98ecfbed0db93c94afc05b78ebfb3e977"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100017,
+          "actual_seed": 100100017,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Put the silver-edged phone atop the flat base phonestand."
+          ],
+          "worker_pid": 1572,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "c1eacb2395283df09a0084893fd497c01ed203a9eb909d5403da51f18be0d7ba",
+          "scene": {
+            "{A}": "077_phone/base2",
+            "{B}": "078_phonestand/base1",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "6052edab6b597673a2a7ad1be7583aa98ecfbed0db93c94afc05b78ebfb3e977"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100018,
+          "actual_seed": 100100018,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Move the phone with metallic body onto the green phone rack."
+          ],
+          "worker_pid": 1571,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "3ec1b2aefec2aea1632683b724f7de1bdb0a2ffbc305e02995394781fe872a81",
+          "scene": {
+            "{A}": "077_phone/base1",
+            "{B}": "078_phonestand/base1",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "6052edab6b597673a2a7ad1be7583aa98ecfbed0db93c94afc05b78ebfb3e977"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100020,
+          "actual_seed": 100100020,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Put the phone with screen and side buttons atop the green plastic holder."
+          ],
+          "worker_pid": 1572,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "6e0850d778da8b04b9856170e15864b786ed112aa3f92396b79a750ff86389d0",
+          "scene": {
+            "{A}": "077_phone/base1",
+            "{B}": "078_phonestand/base1",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "6052edab6b597673a2a7ad1be7583aa98ecfbed0db93c94afc05b78ebfb3e977"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100023,
+          "actual_seed": 100100023,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Put the phone with digital display atop the flat base phonestand."
+          ],
+          "worker_pid": 1571,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "12d31d5a371d8883dc9e79e22c3376d772545baecdf863dbac759bc454574e26",
+          "scene": {
+            "{A}": "077_phone/base0",
+            "{B}": "078_phonestand/base1",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "6052edab6b597673a2a7ad1be7583aa98ecfbed0db93c94afc05b78ebfb3e977"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100027,
+          "actual_seed": 100100027,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Carry the silver phone to the flat base phonestand."
+          ],
+          "worker_pid": 1572,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "86b99bd75b4f0ccdce7e6b8f10d92108fff2f38dab08acd74ac13fe7491c2c24",
+          "scene": {
+            "{A}": "077_phone/base1",
+            "{B}": "078_phonestand/base1",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "6052edab6b597673a2a7ad1be7583aa98ecfbed0db93c94afc05b78ebfb3e977"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100028,
+          "actual_seed": 100100028,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Carry the black and white phone to the phonestand with curved edges."
+          ],
+          "worker_pid": 1571,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "8f7ba2b2fa746095e1680c24cf8e386e7cf3e05b110f298982e7911cfce8af57",
+          "scene": {
+            "{A}": "077_phone/base0",
+            "{B}": "078_phonestand/base2",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "6052edab6b597673a2a7ad1be7583aa98ecfbed0db93c94afc05b78ebfb3e977"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100029,
+          "actual_seed": 100100029,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Carry the thin phone with smooth texture to the compact phonestand."
+          ],
+          "worker_pid": 1572,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "048c0ccbd586840078d3a7b2c2bf68896ddba2fd63580d6f43f00f7d53414c1b",
+          "scene": {
+            "{A}": "077_phone/base4",
+            "{B}": "078_phonestand/base1",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "6052edab6b597673a2a7ad1be7583aa98ecfbed0db93c94afc05b78ebfb3e977"
+        }
+      ],
+      "traces": [
+        {
+          "intent": "legacy_k5_h192-pair-00-decision-00-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-00-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-00-decision-01-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-00-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-00-decision-02-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-00-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-00-decision-03-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-00-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-00-decision-04-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-00-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-00-decision-05-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-00-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-01-decision-00-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-01-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-01-decision-01-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-01-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-01-decision-02-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-01-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-01-decision-03-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-01-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-01-decision-04-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-01-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-01-decision-05-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-01-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-02-decision-00-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-02-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-02-decision-01-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-02-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-02-decision-02-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-02-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-02-decision-03-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-02-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-02-decision-04-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-02-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-02-decision-05-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-02-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-03-decision-00-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-03-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-03-decision-01-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-03-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-03-decision-02-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-03-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-03-decision-03-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-03-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-03-decision-04-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-03-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-03-decision-05-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-03-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-04-decision-00-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-04-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-04-decision-01-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-04-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-04-decision-02-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-04-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-04-decision-03-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-04-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-04-decision-04-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-04-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-04-decision-05-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-04-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-05-decision-00-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-05-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-05-decision-01-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-05-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-05-decision-02-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-05-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-05-decision-03-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-05-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-05-decision-04-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-05-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-05-decision-05-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-05-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-06-decision-00-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-06-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-06-decision-01-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-06-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-06-decision-02-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-06-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-06-decision-03-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-06-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-06-decision-04-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-06-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-06-decision-05-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-06-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-07-decision-00-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-07-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-07-decision-01-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-07-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-07-decision-02-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-07-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-07-decision-03-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-07-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-07-decision-04-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-07-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "legacy_k5_h192-pair-07-decision-05-intent.pt.gz",
+          "transitions": "legacy_k5_h192-pair-07-decision-05-transitions.pt.gz"
+        }
+      ],
+      "started_unix": 1794196419.5889554,
+      "full_chunk_arm_freezes": 0,
+      "planner_failures": 0,
+      "empty_plans": 0,
+      "ended_unix": 1794196582.8591118,
+      "owned_workers_closed": true,
+      "frozen_model_unchanged": true,
+      "successes": 2,
+      "total_episodes": 16
+    },
+    "waypoint_k5_h192": {
+      "name": "waypoint_k5_h192",
+      "waypoint_controller": true,
+      "num_steps": 5,
+      "horizon": 192,
+      "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616",
+      "episodes": [
+        {
+          "case": 100100002,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 11589
+        },
+        {
+          "case": 100100003,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 13007
+        },
+        {
+          "case": 100100005,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 11401
+        },
+        {
+          "case": 100100006,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 14141
+        },
+        {
+          "case": 100100007,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 12092
+        },
+        {
+          "case": 100100009,
+          "success": true,
+          "complete": true,
+          "decisions": 4,
+          "delivered_targets": 119,
+          "physics_steps": 8506
+        },
+        {
+          "case": 100100010,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 12889
+        },
+        {
+          "case": 100100013,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 9385
+        },
+        {
+          "case": 100100015,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 12763
+        },
+        {
+          "case": 100100017,
+          "success": true,
+          "complete": true,
+          "decisions": 4,
+          "delivered_targets": 128,
+          "physics_steps": 9018
+        },
+        {
+          "case": 100100018,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 12554
+        },
+        {
+          "case": 100100020,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 12171
+        },
+        {
+          "case": 100100023,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 9935
+        },
+        {
+          "case": 100100027,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 12788
+        },
+        {
+          "case": 100100028,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 11895
+        },
+        {
+          "case": 100100029,
+          "success": false,
+          "complete": true,
+          "decisions": 6,
+          "delivered_targets": 192,
+          "physics_steps": 11868
+        }
+      ],
+      "resets": [
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100002,
+          "actual_seed": 100100002,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Move the palm-sized phone onto the phonestand with smooth texture."
+          ],
+          "worker_pid": 4526,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "3247e9354a5335df0f8bfd5dff7f20ce97e0a243d10a9c9707e2517ddb1bbf65",
+          "scene": {
+            "{A}": "077_phone/base1",
+            "{B}": "078_phonestand/base2",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100003,
+          "actual_seed": 100100003,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Lift the silver phone with black screen onto the compact phonestand."
+          ],
+          "worker_pid": 4527,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "efebd73ebc6b3a22aa8391562d02d290817862bdf5cec294b6754c278ca3df59",
+          "scene": {
+            "{A}": "077_phone/base1",
+            "{B}": "078_phonestand/base1",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100005,
+          "actual_seed": 100100005,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Put the sleek rectangular phone atop the phonestand with curved edges."
+          ],
+          "worker_pid": 4526,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "b851f5c283860189505be886d269f6dcb1eef38b6e59c659b3f8f1b5a27bcd87",
+          "scene": {
+            "{A}": "077_phone/base0",
+            "{B}": "078_phonestand/base2",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100006,
+          "actual_seed": 100100006,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Put the phone with smooth glossy screen atop the small green and silver stand."
+          ],
+          "worker_pid": 4527,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "ff8ec3761380833f770f9b7b976f38941361de9dcc1cc2157fd3106f3c693b11",
+          "scene": {
+            "{A}": "077_phone/base2",
+            "{B}": "078_phonestand/base1",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100007,
+          "actual_seed": 100100007,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Put the phone with smooth glossy screen atop the smooth brown phone holder."
+          ],
+          "worker_pid": 4526,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "ea524e3501ca3f4f4db6e46a1e6a7ca74119329fa92621dd15acca3ed095fc13",
+          "scene": {
+            "{A}": "077_phone/base2",
+            "{B}": "078_phonestand/base2",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100009,
+          "actual_seed": 100100009,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Move the glass and metal smartphone onto the light brown phonestand."
+          ],
+          "worker_pid": 4527,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "37a2f1ae69209655704fff9073f8bead685ec7edffdc954519ee2deb6315d198",
+          "scene": {
+            "{A}": "077_phone/base2",
+            "{B}": "078_phonestand/base2",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100010,
+          "actual_seed": 100100010,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Lift the compact phone with flat design onto the phone holder with cutout underneath."
+          ],
+          "worker_pid": 4526,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "0f8aebb47fc68ba42126d5d1b0007153f73990264c4ab54dc990a039ca314870",
+          "scene": {
+            "{A}": "077_phone/base1",
+            "{B}": "078_phonestand/base2",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100013,
+          "actual_seed": 100100013,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Move the phone with smooth glossy screen onto the compact phonestand."
+          ],
+          "worker_pid": 4527,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "24a34e6fcf01762ba3bc3c329c947c092740fa8bd0613452d83ceceda166c8cc",
+          "scene": {
+            "{A}": "077_phone/base2",
+            "{B}": "078_phonestand/base1",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100015,
+          "actual_seed": 100100015,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Carry the smooth-screen phone to the small plastic phonestand."
+          ],
+          "worker_pid": 4526,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "a221ef08e7d6fc3fa7e25e7ce053f69063617cd27bb8088712379f80e144baf1",
+          "scene": {
+            "{A}": "077_phone/base0",
+            "{B}": "078_phonestand/base2",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100017,
+          "actual_seed": 100100017,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Put the silver-edged phone atop the flat base phonestand."
+          ],
+          "worker_pid": 4527,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "c1eacb2395283df09a0084893fd497c01ed203a9eb909d5403da51f18be0d7ba",
+          "scene": {
+            "{A}": "077_phone/base2",
+            "{B}": "078_phonestand/base1",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100018,
+          "actual_seed": 100100018,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Move the phone with metallic body onto the green phone rack."
+          ],
+          "worker_pid": 4526,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "3ec1b2aefec2aea1632683b724f7de1bdb0a2ffbc305e02995394781fe872a81",
+          "scene": {
+            "{A}": "077_phone/base1",
+            "{B}": "078_phonestand/base1",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100020,
+          "actual_seed": 100100020,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Put the phone with screen and side buttons atop the green plastic holder."
+          ],
+          "worker_pid": 4527,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "6e0850d778da8b04b9856170e15864b786ed112aa3f92396b79a750ff86389d0",
+          "scene": {
+            "{A}": "077_phone/base1",
+            "{B}": "078_phonestand/base1",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100023,
+          "actual_seed": 100100023,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Put the phone with digital display atop the flat base phonestand."
+          ],
+          "worker_pid": 4526,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "12d31d5a371d8883dc9e79e22c3376d772545baecdf863dbac759bc454574e26",
+          "scene": {
+            "{A}": "077_phone/base0",
+            "{B}": "078_phonestand/base1",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100027,
+          "actual_seed": 100100027,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Carry the silver phone to the flat base phonestand."
+          ],
+          "worker_pid": 4527,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "86b99bd75b4f0ccdce7e6b8f10d92108fff2f38dab08acd74ac13fe7491c2c24",
+          "scene": {
+            "{A}": "077_phone/base1",
+            "{B}": "078_phonestand/base1",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100028,
+          "actual_seed": 100100028,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Carry the black and white phone to the phonestand with curved edges."
+          ],
+          "worker_pid": 4526,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "8f7ba2b2fa746095e1680c24cf8e386e7cf3e05b110f298982e7911cfce8af57",
+          "scene": {
+            "{A}": "077_phone/base0",
+            "{B}": "078_phonestand/base2",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100029,
+          "actual_seed": 100100029,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Carry the thin phone with smooth texture to the compact phonestand."
+          ],
+          "worker_pid": 4527,
+          "episode_limit": 192,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "048c0ccbd586840078d3a7b2c2bf68896ddba2fd63580d6f43f00f7d53414c1b",
+          "scene": {
+            "{A}": "077_phone/base4",
+            "{B}": "078_phonestand/base1",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        }
+      ],
+      "traces": [
+        {
+          "intent": "waypoint_k5_h192-pair-00-decision-00-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-00-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-00-decision-01-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-00-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-00-decision-02-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-00-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-00-decision-03-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-00-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-00-decision-04-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-00-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-00-decision-05-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-00-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-01-decision-00-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-01-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-01-decision-01-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-01-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-01-decision-02-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-01-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-01-decision-03-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-01-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-01-decision-04-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-01-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-01-decision-05-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-01-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-02-decision-00-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-02-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-02-decision-01-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-02-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-02-decision-02-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-02-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-02-decision-03-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-02-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-02-decision-04-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-02-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-02-decision-05-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-02-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-03-decision-00-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-03-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-03-decision-01-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-03-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-03-decision-02-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-03-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-03-decision-03-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-03-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-03-decision-04-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-03-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-03-decision-05-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-03-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-04-decision-00-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-04-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-04-decision-01-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-04-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-04-decision-02-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-04-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-04-decision-03-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-04-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-04-decision-04-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-04-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-04-decision-05-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-04-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-05-decision-00-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-05-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-05-decision-01-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-05-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-05-decision-02-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-05-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-05-decision-03-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-05-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-05-decision-04-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-05-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-05-decision-05-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-05-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-06-decision-00-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-06-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-06-decision-01-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-06-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-06-decision-02-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-06-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-06-decision-03-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-06-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-06-decision-04-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-06-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-06-decision-05-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-06-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-07-decision-00-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-07-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-07-decision-01-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-07-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-07-decision-02-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-07-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-07-decision-03-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-07-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-07-decision-04-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-07-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k5_h192-pair-07-decision-05-intent.pt.gz",
+          "transitions": "waypoint_k5_h192-pair-07-decision-05-transitions.pt.gz"
+        }
+      ],
+      "started_unix": 1794196607.7328277,
+      "full_chunk_arm_freezes": 0,
+      "planner_failures": 3,
+      "empty_plans": 0,
+      "ended_unix": 1794196805.9082494,
+      "owned_workers_closed": true,
+      "frozen_model_unchanged": true,
+      "successes": 2,
+      "total_episodes": 16
+    },
+    "waypoint_k10_h384": {
+      "name": "waypoint_k10_h384",
+      "waypoint_controller": true,
+      "num_steps": 10,
+      "horizon": 384,
+      "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616",
+      "episodes": [
+        {
+          "case": 100100002,
+          "success": false,
+          "complete": true,
+          "decisions": 12,
+          "delivered_targets": 384,
+          "physics_steps": 16041
+        },
+        {
+          "case": 100100003,
+          "success": false,
+          "complete": true,
+          "decisions": 12,
+          "delivered_targets": 384,
+          "physics_steps": 20004
+        },
+        {
+          "case": 100100005,
+          "success": false,
+          "complete": true,
+          "decisions": 12,
+          "delivered_targets": 384,
+          "physics_steps": 16964
+        },
+        {
+          "case": 100100006,
+          "success": false,
+          "complete": true,
+          "decisions": 12,
+          "delivered_targets": 384,
+          "physics_steps": 19313
+        },
+        {
+          "case": 100100007,
+          "success": false,
+          "complete": true,
+          "decisions": 12,
+          "delivered_targets": 384,
+          "physics_steps": 18587
+        },
+        {
+          "case": 100100009,
+          "success": true,
+          "complete": true,
+          "decisions": 5,
+          "delivered_targets": 133,
+          "physics_steps": 9037
+        },
+        {
+          "case": 100100010,
+          "success": false,
+          "complete": true,
+          "decisions": 12,
+          "delivered_targets": 384,
+          "physics_steps": 16852
+        },
+        {
+          "case": 100100013,
+          "success": false,
+          "complete": true,
+          "decisions": 12,
+          "delivered_targets": 384,
+          "physics_steps": 13092
+        },
+        {
+          "case": 100100015,
+          "success": true,
+          "complete": true,
+          "decisions": 4,
+          "delivered_targets": 124,
+          "physics_steps": 8416
+        },
+        {
+          "case": 100100017,
+          "success": true,
+          "complete": true,
+          "decisions": 4,
+          "delivered_targets": 127,
+          "physics_steps": 8607
+        },
+        {
+          "case": 100100018,
+          "success": false,
+          "complete": true,
+          "decisions": 12,
+          "delivered_targets": 384,
+          "physics_steps": 15633
+        },
+        {
+          "case": 100100020,
+          "success": false,
+          "complete": true,
+          "decisions": 12,
+          "delivered_targets": 384,
+          "physics_steps": 15321
+        },
+        {
+          "case": 100100023,
+          "success": false,
+          "complete": true,
+          "decisions": 12,
+          "delivered_targets": 384,
+          "physics_steps": 14301
+        },
+        {
+          "case": 100100027,
+          "success": false,
+          "complete": true,
+          "decisions": 12,
+          "delivered_targets": 384,
+          "physics_steps": 19614
+        },
+        {
+          "case": 100100028,
+          "success": false,
+          "complete": true,
+          "decisions": 12,
+          "delivered_targets": 384,
+          "physics_steps": 21169
+        },
+        {
+          "case": 100100029,
+          "success": false,
+          "complete": true,
+          "decisions": 12,
+          "delivered_targets": 384,
+          "physics_steps": 17438
+        }
+      ],
+      "resets": [
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100002,
+          "actual_seed": 100100002,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Move the palm-sized phone onto the phonestand with smooth texture."
+          ],
+          "worker_pid": 7708,
+          "episode_limit": 384,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "3247e9354a5335df0f8bfd5dff7f20ce97e0a243d10a9c9707e2517ddb1bbf65",
+          "scene": {
+            "{A}": "077_phone/base1",
+            "{B}": "078_phonestand/base2",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100003,
+          "actual_seed": 100100003,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Lift the silver phone with black screen onto the compact phonestand."
+          ],
+          "worker_pid": 7709,
+          "episode_limit": 384,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "efebd73ebc6b3a22aa8391562d02d290817862bdf5cec294b6754c278ca3df59",
+          "scene": {
+            "{A}": "077_phone/base1",
+            "{B}": "078_phonestand/base1",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100005,
+          "actual_seed": 100100005,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Put the sleek rectangular phone atop the phonestand with curved edges."
+          ],
+          "worker_pid": 7708,
+          "episode_limit": 384,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "b851f5c283860189505be886d269f6dcb1eef38b6e59c659b3f8f1b5a27bcd87",
+          "scene": {
+            "{A}": "077_phone/base0",
+            "{B}": "078_phonestand/base2",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100006,
+          "actual_seed": 100100006,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Put the phone with smooth glossy screen atop the small green and silver stand."
+          ],
+          "worker_pid": 7709,
+          "episode_limit": 384,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "ff8ec3761380833f770f9b7b976f38941361de9dcc1cc2157fd3106f3c693b11",
+          "scene": {
+            "{A}": "077_phone/base2",
+            "{B}": "078_phonestand/base1",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100007,
+          "actual_seed": 100100007,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Put the phone with smooth glossy screen atop the smooth brown phone holder."
+          ],
+          "worker_pid": 7708,
+          "episode_limit": 384,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "ea524e3501ca3f4f4db6e46a1e6a7ca74119329fa92621dd15acca3ed095fc13",
+          "scene": {
+            "{A}": "077_phone/base2",
+            "{B}": "078_phonestand/base2",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100009,
+          "actual_seed": 100100009,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Move the glass and metal smartphone onto the light brown phonestand."
+          ],
+          "worker_pid": 7709,
+          "episode_limit": 384,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "37a2f1ae69209655704fff9073f8bead685ec7edffdc954519ee2deb6315d198",
+          "scene": {
+            "{A}": "077_phone/base2",
+            "{B}": "078_phonestand/base2",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100010,
+          "actual_seed": 100100010,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Lift the compact phone with flat design onto the phone holder with cutout underneath."
+          ],
+          "worker_pid": 7708,
+          "episode_limit": 384,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "0f8aebb47fc68ba42126d5d1b0007153f73990264c4ab54dc990a039ca314870",
+          "scene": {
+            "{A}": "077_phone/base1",
+            "{B}": "078_phonestand/base2",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100013,
+          "actual_seed": 100100013,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Move the phone with smooth glossy screen onto the compact phonestand."
+          ],
+          "worker_pid": 7709,
+          "episode_limit": 384,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "24a34e6fcf01762ba3bc3c329c947c092740fa8bd0613452d83ceceda166c8cc",
+          "scene": {
+            "{A}": "077_phone/base2",
+            "{B}": "078_phonestand/base1",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100015,
+          "actual_seed": 100100015,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Carry the smooth-screen phone to the small plastic phonestand."
+          ],
+          "worker_pid": 7708,
+          "episode_limit": 384,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "a221ef08e7d6fc3fa7e25e7ce053f69063617cd27bb8088712379f80e144baf1",
+          "scene": {
+            "{A}": "077_phone/base0",
+            "{B}": "078_phonestand/base2",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100017,
+          "actual_seed": 100100017,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Put the silver-edged phone atop the flat base phonestand."
+          ],
+          "worker_pid": 7709,
+          "episode_limit": 384,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "c1eacb2395283df09a0084893fd497c01ed203a9eb909d5403da51f18be0d7ba",
+          "scene": {
+            "{A}": "077_phone/base2",
+            "{B}": "078_phonestand/base1",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100018,
+          "actual_seed": 100100018,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Move the phone with metallic body onto the green phone rack."
+          ],
+          "worker_pid": 7708,
+          "episode_limit": 384,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "3ec1b2aefec2aea1632683b724f7de1bdb0a2ffbc305e02995394781fe872a81",
+          "scene": {
+            "{A}": "077_phone/base1",
+            "{B}": "078_phonestand/base1",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100020,
+          "actual_seed": 100100020,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Put the phone with screen and side buttons atop the green plastic holder."
+          ],
+          "worker_pid": 7709,
+          "episode_limit": 384,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "6e0850d778da8b04b9856170e15864b786ed112aa3f92396b79a750ff86389d0",
+          "scene": {
+            "{A}": "077_phone/base1",
+            "{B}": "078_phonestand/base1",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100023,
+          "actual_seed": 100100023,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Put the phone with digital display atop the flat base phonestand."
+          ],
+          "worker_pid": 7708,
+          "episode_limit": 384,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "12d31d5a371d8883dc9e79e22c3376d772545baecdf863dbac759bc454574e26",
+          "scene": {
+            "{A}": "077_phone/base0",
+            "{B}": "078_phonestand/base1",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100027,
+          "actual_seed": 100100027,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Carry the silver phone to the flat base phonestand."
+          ],
+          "worker_pid": 7709,
+          "episode_limit": 384,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "86b99bd75b4f0ccdce7e6b8f10d92108fff2f38dab08acd74ac13fe7491c2c24",
+          "scene": {
+            "{A}": "077_phone/base1",
+            "{B}": "078_phonestand/base1",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100028,
+          "actual_seed": 100100028,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Carry the black and white phone to the phonestand with curved edges."
+          ],
+          "worker_pid": 7708,
+          "episode_limit": 384,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "8f7ba2b2fa746095e1680c24cf8e386e7cf3e05b110f298982e7911cfce8af57",
+          "scene": {
+            "{A}": "077_phone/base0",
+            "{B}": "078_phonestand/base2",
+            "{a}": "right"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        },
+        {
+          "task": "place_phone_stand",
+          "requested_seed": 100100029,
+          "actual_seed": 100100029,
+          "actual_render_pci": "0000:64:00.0",
+          "instruction": [
+            "Carry the thin phone with smooth texture to the compact phonestand."
+          ],
+          "worker_pid": 7709,
+          "episode_limit": 384,
+          "reset_policy_actions": 0,
+          "reset_internal_physics_steps": "not separately instrumented",
+          "public_observation_sha256": "048c0ccbd586840078d3a7b2c2bf68896ddba2fd63580d6f43f00f7d53414c1b",
+          "scene": {
+            "{A}": "077_phone/base4",
+            "{B}": "078_phonestand/base1",
+            "{a}": "left"
+          },
+          "controller": "native fast with passive execution accounting",
+          "controller_sha256": "2418ee0fe6607e2a692e1faf7eef1f079a92db7f6dc7f4e6ae7a935297dd6616"
+        }
+      ],
+      "traces": [
+        {
+          "intent": "waypoint_k10_h384-pair-00-decision-00-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-00-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-00-decision-01-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-00-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-00-decision-02-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-00-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-00-decision-03-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-00-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-00-decision-04-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-00-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-00-decision-05-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-00-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-00-decision-06-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-00-decision-06-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-00-decision-07-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-00-decision-07-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-00-decision-08-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-00-decision-08-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-00-decision-09-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-00-decision-09-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-00-decision-10-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-00-decision-10-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-00-decision-11-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-00-decision-11-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-01-decision-00-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-01-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-01-decision-01-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-01-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-01-decision-02-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-01-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-01-decision-03-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-01-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-01-decision-04-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-01-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-01-decision-05-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-01-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-01-decision-06-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-01-decision-06-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-01-decision-07-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-01-decision-07-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-01-decision-08-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-01-decision-08-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-01-decision-09-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-01-decision-09-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-01-decision-10-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-01-decision-10-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-01-decision-11-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-01-decision-11-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-02-decision-00-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-02-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-02-decision-01-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-02-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-02-decision-02-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-02-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-02-decision-03-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-02-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-02-decision-04-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-02-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-02-decision-05-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-02-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-02-decision-06-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-02-decision-06-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-02-decision-07-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-02-decision-07-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-02-decision-08-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-02-decision-08-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-02-decision-09-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-02-decision-09-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-02-decision-10-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-02-decision-10-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-02-decision-11-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-02-decision-11-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-03-decision-00-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-03-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-03-decision-01-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-03-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-03-decision-02-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-03-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-03-decision-03-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-03-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-03-decision-04-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-03-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-03-decision-05-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-03-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-03-decision-06-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-03-decision-06-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-03-decision-07-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-03-decision-07-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-03-decision-08-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-03-decision-08-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-03-decision-09-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-03-decision-09-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-03-decision-10-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-03-decision-10-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-03-decision-11-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-03-decision-11-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-04-decision-00-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-04-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-04-decision-01-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-04-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-04-decision-02-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-04-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-04-decision-03-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-04-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-05-decision-00-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-05-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-05-decision-01-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-05-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-05-decision-02-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-05-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-05-decision-03-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-05-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-05-decision-04-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-05-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-05-decision-05-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-05-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-05-decision-06-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-05-decision-06-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-05-decision-07-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-05-decision-07-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-05-decision-08-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-05-decision-08-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-05-decision-09-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-05-decision-09-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-05-decision-10-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-05-decision-10-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-05-decision-11-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-05-decision-11-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-06-decision-00-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-06-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-06-decision-01-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-06-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-06-decision-02-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-06-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-06-decision-03-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-06-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-06-decision-04-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-06-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-06-decision-05-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-06-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-06-decision-06-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-06-decision-06-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-06-decision-07-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-06-decision-07-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-06-decision-08-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-06-decision-08-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-06-decision-09-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-06-decision-09-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-06-decision-10-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-06-decision-10-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-06-decision-11-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-06-decision-11-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-07-decision-00-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-07-decision-00-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-07-decision-01-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-07-decision-01-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-07-decision-02-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-07-decision-02-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-07-decision-03-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-07-decision-03-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-07-decision-04-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-07-decision-04-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-07-decision-05-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-07-decision-05-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-07-decision-06-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-07-decision-06-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-07-decision-07-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-07-decision-07-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-07-decision-08-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-07-decision-08-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-07-decision-09-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-07-decision-09-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-07-decision-10-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-07-decision-10-transitions.pt.gz"
+        },
+        {
+          "intent": "waypoint_k10_h384-pair-07-decision-11-intent.pt.gz",
+          "transitions": "waypoint_k10_h384-pair-07-decision-11-transitions.pt.gz"
+        }
+      ],
+      "started_unix": 1794196830.497389,
+      "full_chunk_arm_freezes": 0,
+      "planner_failures": 8,
+      "empty_plans": 0,
+      "ended_unix": 1794197143.012415,
+      "owned_workers_closed": true,
+      "frozen_model_unchanged": true,
+      "successes": 3,
+      "total_episodes": 16
+    }
+  },
+  "started_unix": 1794196338.3757846,
+  "memory": {
+    "total_bytes": 101973950464,
+    "sampled_minimum_free_bytes": 73989947392,
+    "conservative_minimum_free_bytes": 73989947392,
+    "peak_allocated_bytes": 7323531776,
+    "peak_reserved_bytes": 7480541184,
+    "polling_seconds": 0.02
+  },
+  "gate_passed": false,
+  "independent_readback_pending": true,
+  "charged_requested_targets": 11328,
+  "ended_unix": 1794197143.235616
+}

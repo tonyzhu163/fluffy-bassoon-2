@@ -1,31 +1,52 @@
 {
-  "status": "epoch2_stage1_active_gpu_probe_passed",
-  "closed_conservative_gpu_seconds": 0,
+  "status": "epoch2_pilot_verified_dev64_retry_reserved",
+  "closed_conservative_gpu_seconds": 918,
   "cap_gpu_seconds": 360000,
-  "closed_conservative_gpu_hours": 0.0,
-  "remaining_gpu_seconds": 360000,
-  "remaining_unreserved_gpu_seconds": 354600,
+  "closed_conservative_gpu_hours": 0.255,
+  "remaining_gpu_seconds": 359082,
+  "remaining_unreserved_gpu_seconds": 353682,
   "next_worst_gpu_seconds": 5400,
-  "components": [],
+  "components": [
+    {
+      "cluster": "Baige Pro6K",
+      "job_id": "job-ybfb0p35524m",
+      "scheduler_status": "Succeeded",
+      "created_at": "2026-11-09T11:51:21+08:00",
+      "scheduler_ended_at": "2026-11-09T12:05:51+08:00",
+      "observed_at": "2026-11-09T12:10:21+08:00",
+      "gpus_released": 1,
+      "conservative_allocation_gpu_seconds": 870,
+      "charge_basis": "One GPU from scheduler creation through terminal end, conservatively including scheduling/startup.",
+      "worker_gpu_seconds": 838,
+      "independent_readback_pending": false
+    },
+    {
+      "job_id": "job-lh04r88pvued",
+      "identity": "controller-dev64-01",
+      "scheduler_status": "Failed",
+      "created_at": "2026-11-09T12:11:28+08:00",
+      "scheduler_ended_at": "2026-11-09T12:12:16+08:00",
+      "conservative_allocation_gpu_seconds": 48,
+      "gpu_count": 1,
+      "gpus_released": true,
+      "completed_episodes": 0,
+      "gpu_probe_created": false,
+      "failure": "The scheduler persisted the new launch command concatenated with the old command. TASK_CASES was 64exec, so the launcher rejected it before creating its output identity.",
+      "retry": "Fresh controller-dev64-02 identity; use browser keyboard editor actions and inspect rendered editor text before submission."
+    }
+  ],
   "prior_cleared_epoch_gpu_seconds": 359665,
   "prior_cleared_epoch_gpu_hours": 99.90694444444445,
   "prior_cleared_epoch_ledger": "HISTORICAL-BUDGET-EPOCH1-THROUGH-20261108.json",
   "approval": "User cleared prior 359,665 GPU-s (99.91 GPU-h) epoch and approved a fresh 100 GPU-hour (360,000 GPU-s) budget on 2026-11-09T11:05:01+08:00 ('clear the existing gpu hours, i approve another 100 hours').",
-  "active_job_id": "job-ybfb0p35524m",
-  "active_jobs": [
-    {
-      "job_id": "job-ybfb0p35524m",
-      "gpu_count": 1,
-      "reserved_gpu_seconds": 5400,
-      "source_commit": "3f2228ee8299104c3813d53f5cf0b9159b34c39e"
-    }
-  ],
+  "active_job_id": null,
+  "active_jobs": [],
   "ownership_and_data_preserved": true,
   "planned_job": {
-    "identity": "repaired-motus-20261109-r1/controller-pilot01",
+    "identity": "repaired-motus-20261109-r1/controller-dev64-02",
     "gpu_count": 1,
     "scheduler_max_seconds": 5400,
     "worker_max_seconds": 4800,
-    "source_commit": "3f2228ee8299104c3813d53f5cf0b9159b34c39e"
+    "source_commit": "01cad48192005ca7e8abb4f787f8277685b3c2f1"
   }
 }

@@ -1318,3 +1318,24 @@ planner. C2 GRPO's prior confirmation remains negative; the new bank is bound
 to original SFT versus fixedC10 before policy outcomes. Its explicit readout
 route, actual C10 checkpoint and GPU confirmation remain unqualified.
 [Predeclared protocol](../outputs/robotwin-restoration-20261106-r1/MOTUS-FRESH-C10-CONFIRMATION-PROTOCOL.json).
+
+## Repaired Motus controller pilot (2026-11-09)
+
+A fresh 16-scene place_phone_stand pilot with frozen joint Motus SFT and native
+B2 does not pass the predeclared 25% competence gate. Legacy K5/H192 and
+waypoint K5/H192 both succeed on the same2/16 scenes; waypoint K10/H384
+succeeds3/16 (one paired gain, no losses; exact two-sided McNemar p=1.0).
+No legacy planner failures or full-chunk arm freezes occur in these16 scenes.
+The waypoint arms recover3 and8 planner failures respectively, also with zero
+full-chunk freezes. This pilot does not substantiate the claim that legacy TOPP
+freezes explain low SFT success, or establish a controller performance recovery.
+
+Independent Linux CPU reduction verifies all48 complete episodes,354 decisions,
+11,258 delivered targets and482,431 physics steps; paired initial observations
+and K5 initial commands match exactly. All workers close, frozen checks pass,
+and the GPU allocation is released. Conservative cost is870 GPU-s. The earlier
+authorized full64-case DEV diagnostic remains separate; no PPO/GRPO training,
+student admission or held-out claim follows from this failed pilot.
+[Physical result](../outputs/robotwin-repaired-motus-20261109-r1/PILOT-RESULT.json),
+[independent readback](../outputs/robotwin-repaired-motus-20261109-r1/PILOT-READBACK.json),
+[scheduler closeout](../outputs/robotwin-repaired-motus-20261109-r1/PILOT-SCHEDULER-CLOSEOUT.json).

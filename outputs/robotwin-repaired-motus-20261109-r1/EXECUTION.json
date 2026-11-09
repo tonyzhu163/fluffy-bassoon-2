@@ -1,5 +1,5 @@
 {
-  "status": "stage1_allocated_gpu_probe_passed_episodes_pending",
+  "status": "pilot_verified_failed_gate_dev64_01_startup_failed_retry_preparing",
   "cluster": "Baige Pro6K",
   "job_id": "job-ybfb0p35524m",
   "job_name": "mwj_1109_motus_repaired_controller_pilot01",
@@ -16,10 +16,42 @@
     "scheduler_max_seconds": 5400,
     "automatic_retry": false
   },
-  "last_check": "2026-11-09T11:53:42+08:00",
+  "last_check": "2026-11-09T12:20:11+08:00",
   "next_check": "2026-11-09T12:13:42+08:00",
-  "next_action": "Verify advancing real episodes, independently reduce all paired traces, then apply the 4/16 and zero-freeze gate before Stage2.",
+  "next_action": "Complete independent pilot audit and launch the originally authorized full DEV64 paired diagnostic; no Stage2 admission from the failed pilot.",
   "gpu_probe_sha256": "a2ab97ff267e9e634f3297f80eca8565e09a60944899ff2c8ca2a944a6c0beff",
   "budget_reserved_gpu_seconds": 5400,
-  "stage2_launched": false
+  "stage2_launched": false,
+  "pilot_successes": {
+    "legacy_k5_h192": 2,
+    "waypoint_k5_h192": 2,
+    "waypoint_k10_h384": 3
+  },
+  "pilot_gate_passed": false,
+  "pilot_gpu_released": true,
+  "stage1b": {
+    "status": "retry_preparing",
+    "identity": "controller-dev64-02",
+    "source_commit": "01cad48192005ca7e8abb4f787f8277685b3c2f1",
+    "source_checkout": "/mowenjie/fluffy-bassoon-2/sources/robotwin-repaired-motus-20261109-dev6402",
+    "gate_successes": 16,
+    "cases": 64,
+    "reservation_gpu_seconds": 5400,
+    "failed_attempt": {
+      "job_id": "job-lh04r88pvued",
+      "identity": "controller-dev64-01",
+      "scheduler_status": "Failed",
+      "created_at": "2026-11-09T12:11:28+08:00",
+      "scheduler_ended_at": "2026-11-09T12:12:16+08:00",
+      "conservative_allocation_gpu_seconds": 48,
+      "gpu_count": 1,
+      "gpus_released": true,
+      "completed_episodes": 0,
+      "gpu_probe_created": false,
+      "failure": "The scheduler persisted the new launch command concatenated with the old command. TASK_CASES was 64exec, so the launcher rejected it before creating its output identity.",
+      "retry": "Fresh controller-dev64-02 identity; use browser keyboard editor actions and inspect rendered editor text before submission."
+    }
+  },
+  "pilot_independent_readback_passed": true,
+  "closed_gpu_seconds": 918
 }
