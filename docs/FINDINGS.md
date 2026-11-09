@@ -7,6 +7,8 @@ so they are not repeated. Their run folders were deleted, except RoboTwin's
 the pre-cleanup commit. Single-seed results are
 descriptive, and none establishes a CTM, memory or in-context-RL advantage.
 
+**Native RoboCasa Human300 atomic SFT reproduction agrees with the published reference (2026-11-09).** Original JAX step75000 yielded363/900 successes(40.33%) across all18 Atomic-Seen tasks×50, compared with39.6% published; descriptive95% Wilson interval37.18–43.57%. Native H50/C5/K10/pretrain execution used the released evaluator allowance: old registry×1.5, equivalent to1.0.1 registry×1. At the old cutoff,249/900(27.67%) succeeded. Independent Linux auditing reconciled all900 cases/input hashes, selected videos,96,003 native predictions and479,303 policy controls, with clean closures and zero training. This qualifies the native atomic evaluation path, not the remaining32 composite tasks or PPO/GRPO training. [Measured result and scope](../outputs/robocasa-sft-reproduction-20261109-r1/ATOMIC-RESULT.md), [version/protocol audit](../outputs/robocasa-sft-reproduction-20261109-r1/RESEARCH.md).
+
 The frozen-steering history pipeline now exports and fits AD, DPT, DIT and
 in-context IQL separately for velocity and all-layer K/V. Allocated-Linux CPU
 qualification passed 98 core cases, all eight synthetic fit/export/five-attempt

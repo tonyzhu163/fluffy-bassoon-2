@@ -1,0 +1,244 @@
+{
+  "passed": true,
+  "episodes": 900,
+  "successes": 363,
+  "success_rate": 0.4033333333333333,
+  "descriptive_wilson_95": [
+    0.37175996258286637,
+    0.4357283991182773
+  ],
+  "old_cutoff_successes": 249,
+  "old_cutoff_rate": 0.27666666666666667,
+  "old_cutoff_wilson_95": [
+    0.24843625356348337,
+    0.3067954786426074
+  ],
+  "controls": 479303,
+  "predictions": 96003,
+  "inference_batch_size": 1,
+  "training_updates": 0,
+  "tasks": [
+    {
+      "task": "OpenCabinet",
+      "stage": "atomic_seen",
+      "episodes": 50,
+      "successes": 22,
+      "old_cutoff_successes": 17,
+      "success_rate": 0.44
+    },
+    {
+      "task": "PickPlaceCounterToCabinet",
+      "stage": "atomic_seen",
+      "episodes": 50,
+      "successes": 35,
+      "old_cutoff_successes": 29,
+      "success_rate": 0.7
+    },
+    {
+      "task": "TurnOffStove",
+      "stage": "atomic_seen",
+      "episodes": 50,
+      "successes": 7,
+      "old_cutoff_successes": 3,
+      "success_rate": 0.14
+    },
+    {
+      "task": "TurnOnSinkFaucet",
+      "stage": "atomic_seen",
+      "episodes": 50,
+      "successes": 28,
+      "old_cutoff_successes": 9,
+      "success_rate": 0.56
+    },
+    {
+      "task": "OpenStandMixerHead",
+      "stage": "atomic_seen",
+      "episodes": 50,
+      "successes": 32,
+      "old_cutoff_successes": 24,
+      "success_rate": 0.64
+    },
+    {
+      "task": "TurnOnMicrowave",
+      "stage": "atomic_seen",
+      "episodes": 50,
+      "successes": 3,
+      "old_cutoff_successes": 2,
+      "success_rate": 0.06
+    },
+    {
+      "task": "CloseBlenderLid",
+      "stage": "atomic_seen",
+      "episodes": 50,
+      "successes": 1,
+      "old_cutoff_successes": 0,
+      "success_rate": 0.02
+    },
+    {
+      "task": "PickPlaceSinkToCounter",
+      "stage": "atomic_seen",
+      "episodes": 50,
+      "successes": 44,
+      "old_cutoff_successes": 44,
+      "success_rate": 0.88
+    },
+    {
+      "task": "CoffeeSetupMug",
+      "stage": "atomic_seen",
+      "episodes": 50,
+      "successes": 11,
+      "old_cutoff_successes": 1,
+      "success_rate": 0.22
+    },
+    {
+      "task": "PickPlaceCounterToStove",
+      "stage": "atomic_seen",
+      "episodes": 50,
+      "successes": 29,
+      "old_cutoff_successes": 20,
+      "success_rate": 0.58
+    },
+    {
+      "task": "CloseToasterOvenDoor",
+      "stage": "atomic_seen",
+      "episodes": 50,
+      "successes": 5,
+      "old_cutoff_successes": 0,
+      "success_rate": 0.1
+    },
+    {
+      "task": "SlideDishwasherRack",
+      "stage": "atomic_seen",
+      "episodes": 50,
+      "successes": 40,
+      "old_cutoff_successes": 38,
+      "success_rate": 0.8
+    },
+    {
+      "task": "CloseFridge",
+      "stage": "atomic_seen",
+      "episodes": 50,
+      "successes": 27,
+      "old_cutoff_successes": 13,
+      "success_rate": 0.54
+    },
+    {
+      "task": "OpenDrawer",
+      "stage": "atomic_seen",
+      "episodes": 50,
+      "successes": 34,
+      "old_cutoff_successes": 31,
+      "success_rate": 0.68
+    },
+    {
+      "task": "PickPlaceDrawerToCounter",
+      "stage": "atomic_seen",
+      "episodes": 50,
+      "successes": 24,
+      "old_cutoff_successes": 13,
+      "success_rate": 0.48
+    },
+    {
+      "task": "PickPlaceToasterToCounter",
+      "stage": "atomic_seen",
+      "episodes": 50,
+      "successes": 11,
+      "old_cutoff_successes": 0,
+      "success_rate": 0.22
+    },
+    {
+      "task": "NavigateKitchen",
+      "stage": "atomic_seen",
+      "episodes": 50,
+      "successes": 0,
+      "old_cutoff_successes": 0,
+      "success_rate": 0.0
+    },
+    {
+      "task": "TurnOnElectricKettle",
+      "stage": "atomic_seen",
+      "episodes": 50,
+      "successes": 10,
+      "old_cutoff_successes": 5,
+      "success_rate": 0.2
+    }
+  ],
+  "ranks": [
+    {
+      "rank": 0,
+      "uuid": "GPU-a827077c-35ab-fb2b-a1a4-fa68c55d3746",
+      "identity": {
+        "job": "job-zghi39i291dx",
+        "hostname": "job-zghi39i291dx-master-0",
+        "rank": 0,
+        "source_commit": "329fcded121cb1982289bd6fadaf7d07d033a513",
+        "started_unix": 1794203369.2756104,
+        "manifest_sha256": "56f176929e626f1edf945a3c2e801126daca4e97037779ae5f2f597cedfb39fa",
+        "rank_environment": {
+          "RANK": "0",
+          "WORLD_SIZE": "3"
+        }
+      },
+      "exit": {
+        "completed": true,
+        "rank": 0,
+        "training_updates": 0,
+        "started_unix": 1794203369.2756104,
+        "ended_unix": 1794207866.8893497,
+        "server_exit": 0
+      },
+      "predictions": 32998
+    },
+    {
+      "rank": 1,
+      "uuid": "GPU-d2198465-53f9-a75c-8df8-f3be9a3f1178",
+      "identity": {
+        "job": "job-zghi39i291dx",
+        "hostname": "job-zghi39i291dx-worker-0",
+        "rank": 1,
+        "source_commit": "329fcded121cb1982289bd6fadaf7d07d033a513",
+        "started_unix": 1794203369.2658691,
+        "manifest_sha256": "56f176929e626f1edf945a3c2e801126daca4e97037779ae5f2f597cedfb39fa",
+        "rank_environment": {
+          "RANK": "1",
+          "WORLD_SIZE": "3"
+        }
+      },
+      "exit": {
+        "completed": true,
+        "rank": 1,
+        "training_updates": 0,
+        "started_unix": 1794203369.2658691,
+        "ended_unix": 1794207866.8813002,
+        "server_exit": 0
+      },
+      "predictions": 30662
+    },
+    {
+      "rank": 2,
+      "uuid": "GPU-5bb0427b-15cb-aa2d-8241-ddbf93640d94",
+      "identity": {
+        "job": "job-zghi39i291dx",
+        "hostname": "job-zghi39i291dx-worker-1",
+        "rank": 2,
+        "source_commit": "329fcded121cb1982289bd6fadaf7d07d033a513",
+        "started_unix": 1794203369.2658741,
+        "manifest_sha256": "56f176929e626f1edf945a3c2e801126daca4e97037779ae5f2f597cedfb39fa",
+        "rank_environment": {
+          "RANK": "2",
+          "WORLD_SIZE": "3"
+        }
+      },
+      "exit": {
+        "completed": true,
+        "rank": 2,
+        "training_updates": 0,
+        "started_unix": 1794203369.2658741,
+        "ended_unix": 1794207866.7311664,
+        "server_exit": 0
+      },
+      "predictions": 32343
+    }
+  ],
+  "note": "Unpaired aggregate reproduction; Wilson interval is descriptive, not a formal equivalence claim"
+}
