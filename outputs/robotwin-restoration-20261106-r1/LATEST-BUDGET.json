@@ -1,17 +1,31 @@
 {
-  "status": "epoch2_cleared_100h_approved_no_active_gpu",
+  "status": "epoch2_stage1_active_gpu_probe_passed",
   "closed_conservative_gpu_seconds": 0,
   "cap_gpu_seconds": 360000,
   "closed_conservative_gpu_hours": 0.0,
   "remaining_gpu_seconds": 360000,
-  "remaining_unreserved_gpu_seconds": 360000,
-  "next_worst_gpu_seconds": 0,
+  "remaining_unreserved_gpu_seconds": 354600,
+  "next_worst_gpu_seconds": 5400,
   "components": [],
   "prior_cleared_epoch_gpu_seconds": 359665,
   "prior_cleared_epoch_gpu_hours": 99.90694444444445,
   "prior_cleared_epoch_ledger": "HISTORICAL-BUDGET-EPOCH1-THROUGH-20261108.json",
   "approval": "User cleared prior 359,665 GPU-s (99.91 GPU-h) epoch and approved a fresh 100 GPU-hour (360,000 GPU-s) budget on 2026-11-09T11:05:01+08:00 ('clear the existing gpu hours, i approve another 100 hours').",
-  "active_job_id": null,
-  "active_jobs": [],
-  "ownership_and_data_preserved": true
+  "active_job_id": "job-ybfb0p35524m",
+  "active_jobs": [
+    {
+      "job_id": "job-ybfb0p35524m",
+      "gpu_count": 1,
+      "reserved_gpu_seconds": 5400,
+      "source_commit": "3f2228ee8299104c3813d53f5cf0b9159b34c39e"
+    }
+  ],
+  "ownership_and_data_preserved": true,
+  "planned_job": {
+    "identity": "repaired-motus-20261109-r1/controller-pilot01",
+    "gpu_count": 1,
+    "scheduler_max_seconds": 5400,
+    "worker_max_seconds": 4800,
+    "source_commit": "3f2228ee8299104c3813d53f5cf0b9159b34c39e"
+  }
 }
