@@ -13,7 +13,7 @@ Use the [machine-readable split and reference settings](../../benchmarks/robotwi
 | `place_phone_stand` | `place_empty_cup` |
 | `scan_object` | `stamp_seal` |
 
-RLinf PPO provides a source-learning baseline and chronological data; GRPO is a separate online comparator. The [VLRLA protocol review](../literature/vlrla-protocol.md) describes the recurrent KV-bridge reference. Record whether a comparison uses released artifacts or a reconstruction. The task-specific `adjust_bottle` SFT release is a runtime check, not a common initializer for the six source tasks.
+RoboTwin uses native simulator rewards, as does the RoboCasa mechanism study. RLinf PPO provides a source-learning baseline and chronological data; GRPO is a separate online comparator. The [VLRLA protocol review](../literature/vlrla-protocol.md) describes the recurrent KV-bridge reference. Record whether a comparison uses released artifacts or a reconstruction. The task-specific `adjust_bottle` SFT release is a runtime check, not a common initializer for the six source tasks.
 
 ## Runtime setup
 

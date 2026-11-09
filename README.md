@@ -1,6 +1,6 @@
 # In-context reinforcement learning for frozen VLAs
 
-Can a frozen π0.5 policy improve on a new task using its own earlier attempts? This repository studies that question on **RoboCasa365 and RoboTwin**, with **RLinf** for rollout and online baselines. We train history models offline. At deployment all weights stay fixed; the learner receives the actions the robot actually executed and the feedback available at that point.
+Can a frozen π0.5 policy improve on a new task using its own earlier attempts? This repository studies that question on **RoboCasa365 and RoboTwin**, with **RLinf** for rollout and online baselines. Current experiments use native simulator rewards and train history models offline. At deployment all weights stay fixed; the learner receives the actions the robot actually executed and the feedback available at that point.
 
 | Layer | Code | Role |
 | --- | --- | --- |
