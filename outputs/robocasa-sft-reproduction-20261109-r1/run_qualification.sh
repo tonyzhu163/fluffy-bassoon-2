@@ -18,6 +18,7 @@ export PYTHONDONTWRITEBYTECODE=1 MUJOCO_EGL_DEVICE_ID=0
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
 export XLA_PYTHON_CLIENT_MEM_FRACTION=0.70
 export JAX_COMPILATION_CACHE_DIR="$TASK_BASE/jax-cache"
+export OPENPI_DATA_HOME="$TASK_BASE/openpi-cache"
 export PYTHONPATH="$TASK_BASE/sources/openpi/src:$TASK_BASE/sources/openpi/packages/openpi-client/src:$TASK_BASE/sources/robocasa:$TASK_CODE/src"
 "$TASK_PY" -B "$TASK_CODE/scripts/[train]gpu_probe.py" --expected-count 1 \
   --purpose evaluation --baige-container --output "$TASK_OUT/GPU-PROBE.json"
