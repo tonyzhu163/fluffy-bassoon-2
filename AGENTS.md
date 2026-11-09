@@ -1,7 +1,7 @@
 # Repository guidance
 
-This repository studies in-context reinforcement learning for frozen VLAs; the
-current first step is learned-reward (Flora-Rewarder) PPO. Start with
+This repository studies in-context reinforcement learning for frozen VLAs.
+Use native rewards in simulation. Flora-Rewarder is planned for physical-robot testing. Start with
 [docs/README.md](docs/README.md). It was split from `tonyzhu163/fluffy-bassoon`
 (branch `lycoreco_rl`); see [PROVENANCE.md](PROVENANCE.md). LycoReco work and runs pinned to fluffy-bassoon
 commits stay there.
@@ -23,9 +23,8 @@ runs per the [retention policy](README.md#artifact-retention).
   matching a reference). Do not add tests for one run's plans, admission,
   receipts, provenance, launch scripts or campaign bookkeeping; check those
   in the run itself and record the evidence in `outputs/<run-id>/`.
-- On macOS, run `proxy_on` (or `proxy_on_clash` if that proxy is down) in
-  the same shell before Git operations. Use interactive zsh (`zsh -ic`) when
-  needed to load the shell functions.
+- Use Git directly on Macs with direct access. On Macs that require a proxy,
+  run `proxy_on` or `proxy_on_clash` in the same shell as Git.
 - Keep the main clone on `main` and commit routine changes (fixes, docs,
   configs, small additions) directly to `main`. Use detached worktrees for
   commit-pinned runs.

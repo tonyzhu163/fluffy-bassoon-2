@@ -6,7 +6,7 @@ Five core documents, read in this order, plus two reference folders:
 | --- | --- |
 | [PAPER.md](PAPER.md) | The research question, paper outline, and the agreed design and claim boundaries |
 | [FINDINGS.md](FINDINGS.md) | Every result worth keeping, with evidence links, and the lessons that shape the next step |
-| [FLORA-PPO.md](FLORA-PPO.md) | Learned video reward (Flora-Rewarder) PPO, benchmark roles and reward qualification; RoboTwin also has a simulator-reward baseline arm |
+| [FLORA-PPO.md](FLORA-PPO.md) | Flora-Rewarder for future physical-robot testing, with earlier simulator reward studies and qualification evidence |
 | [METHODS.md](METHODS.md) | Shared motors, steering interface, DSRL recipe, LIBERO protocol, code layout and tests |
 | this README | Map and conventions |
 | [literature/](literature/) | Reviews of published work: [in-context RL literature review](literature/in-context-rl-review.md), [offline ICRL for a frozen VLA](literature/frozen-vla-offline-icrl-review.md), [VLRLA protocol](literature/vlrla-protocol.md), [DSRL recipe audit](literature/dsrl-recipe-audit.md), [frozen-VLA steering scoping review](literature/vla-steering-review.md), [RoboCasa PPO recipes and performance](literature/robocasa-ppo-review.md), [RoboTwin PPO evidence and restoration gap](literature/robotwin-ppo-review.md), [pretraining scale](literature/pretraining-scale.md), [scale references](literature/scale-references.md) |

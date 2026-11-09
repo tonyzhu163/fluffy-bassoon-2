@@ -3,12 +3,12 @@
 Our central hypothesis is that **meta-training in simulation enables
 substantially faster learning from sparse real-robot experience**. We study
 history-conditioned steering policies around frozen vision-language-action
-models. The paper stays about in-context RL. **The current first step is
-PPO with a learned video reward** ([Flora-Rewarder](docs/FLORA-PPO.md)),
-tested on LIBERO and RoboCasa365. **RoboTwin is an active benchmark arm**, with
-RLinf online RL and VLRLA-bridge as the reference baselines on VLRLA's six
-source tasks ([comparison protocol](docs/robotwin/rl-baselines.md)). Transfer of the learned
-adaptation procedure to real tasks is the fundamental question.
+models. The current experiments use **native simulator rewards** to test whether
+experience from one attempt helps a frozen policy succeed on its next attempt.
+RoboCasa supplies the initial mechanism tests. RoboTwin compares the policy
+with RLinf online RL and VLRLA-bridge on a common task split.
+[Simulation experiment plan](outputs/vlrla-feedback-plan-20261109-r1/PLAN.md) ·
+[RoboTwin comparison protocol](docs/robotwin/rl-baselines.md).
 
 **Start here:** [docs/README.md](docs/README.md) indexes the five documents:
 [paper plan](docs/PAPER.md), [findings to date](docs/FINDINGS.md),
@@ -18,7 +18,8 @@ GPU rules) and the live [coordination file](outputs/coordination.md).
 
 Simulation can support large PPO batches and many training updates. Real-robot
 experience is scarce, so meta-training should optimize improvement over the
-first few attempts on a new task. At deployment, adaptation may use retained
+first few attempts on a new task. When physical-robot testing begins, we plan
+to use Flora-Rewarder for episode feedback. At that stage, adaptation may use retained
 experience in context, Flora-rewarded PPO updates, or both.
 
 The primary metric is real-task success versus the number of real attempts,

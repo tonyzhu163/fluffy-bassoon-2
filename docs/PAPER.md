@@ -1,8 +1,10 @@
 # Learning to Steer: In-Context Reinforcement Learning for Frozen VLAs
 
 Working paper plan and durable decisions. **The design is specified; the
-central claim is unproven** (see [FINDINGS.md](FINDINGS.md)). Current first
-step: a working learned-reward RL loop ([FLORA-PPO.md](FLORA-PPO.md)). Shared
+central claim is unproven** (see [FINDINGS.md](FINDINGS.md)). Current experiments
+use native simulator rewards to test whether one attempt improves a separate
+query. See the [VLRLA comparison and feedback plan](../outputs/vlrla-feedback-plan-20261109-r1/PLAN.md).
+Flora-Rewarder is planned for physical-robot testing. Shared
 motors, interface and protocol: [METHODS.md](METHODS.md).
 
 Merged on 2026-11-01 from `paper/DRAFT.md` (outline sections; its run notes
@@ -14,8 +16,7 @@ FINDINGS, run plans in `outputs/<run-id>/`, live state in
 Current source/student route: **action-expert Flow-SDE PPO → actual learning
 histories → AD/DPT action supervision → learned KV bridge through a frozen
 original VLA**. Source learning prioritizes a stronger PPO policy; it need not
-use the student's steering coordinates. Benchmark roles and reward gates are
-in [FLORA-PPO.md](FLORA-PPO.md). RoboTwin is also an active benchmark arm:
+use the student's steering coordinates. RoboTwin is also an active benchmark arm:
 use VLRLA's six source tasks, RLinf online RL and VLRLA-bridge as the baseline
 comparison, with the six remaining tasks held out from history training
 ([protocol](robotwin/rl-baselines.md)). The LIBERO40/90/Plus/Pro protocol below remains
@@ -82,8 +83,7 @@ transfer evaluation; they are not part of the current ICRL training stage.
 - The RoboTwin comparison uses a common pi0.5 initializer and task protocol
   across native SFT, RLinf online RL and VLRLA-bridge. PPO collects source
   learning histories; GRPO is the online-RL baseline in VLRLA's main table.
-  These simulator-reward comparisons are separate from the oracle-free Flora
-  claim. A locally reconstructed VLRLA baseline must be named as such until
+  A locally reconstructed VLRLA baseline must be named as such until
   official code, weights and evaluation details are verified.
 - Potential scientific distinction: **which process actually yields efficient,
   competitive robotic adaptation through a frozen motor?** Must survive prior
@@ -137,14 +137,11 @@ their own contracts; the source/student construction is shared.
   qualification on the actual allocation remains required. Execute up to ten
   actions per chunk; count actual primitives. No new VLA SFT is required for
   this design.
-- **Oracle-free feedback.** The learner's only reward is one Flora-Rewarder
-  terminal label per episode, \((\text{expected score}-1)/4\), applied
-  identically to source learning, meta-training and target deployment (see
-  [the oracle-free reward decision](#oracle-free-reward)). Episodes run to a
-  fixed horizon; simulator success never terminates an episode or reaches the
-  learner. Within an episode \(r_i=0\); the terminal label arrives at the
-  episode boundary. Source critic timeout bootstrapping and student
-  episode-boundary feedback are distinct.
+- **Simulation feedback.** Source PPO and student histories use the native
+  simulator reward. At deployment the student receives only completed feedback.
+  Record reward timing, success termination, truncation and action duration for
+  each benchmark so a reward ablation can account for other observable outcome
+  cues. Flora enters at the [physical-robot stage](#oracle-free-reward).
 - Earlier runs used simulator chunk feedback (zero on achieved goal, otherwise
   −1, with success termination). Their histories and controllers are
   historical evidence only, not this contract.
@@ -466,27 +463,12 @@ their own contracts; the source/student construction is shared.
 - Planned source route: see the 2026-11-03 source-campaign decision above.
   Source improvement and final-actor expertise require independent
   evaluation; update counts alone prove neither.
-- <a id="oracle-free-reward"></a>**Oracle-free reward (2026-11-01).** The
-  claim is sample-efficient RL on real robots, which have no success checker.
-  A learner that reads simulator success anywhere cannot demonstrate that, so
-  Flora-Rewarder is the sole reward the learner sees: source histories, AD/DPT
-  inputs, direct meta-RL returns and target support feedback. Keep one rewarder
-  contract fixed across all of them: model revision, score mapping, camera
-  view, frame clock and terminal-only timing. A source/deployment mismatch
-  would teach one reward distribution and test on another.
-  - The simulator only measures ground truth: evaluation success, detecting
-    reward exploitation (Flora score rising while success stays flat), and a
-    per-task Flora agreement check (AUROC against truth) before a task enters
-    source or target sets. Agreement results are not learner inputs.
-  - A simulator-reward arm remains the positive control and upper bound, not
-    the method; it separates method failure from reward failure.
-  - Teacher selection or labels that use simulator success are privileged
-    oracle supervision and must be declared as such.
-  - Robot interactions (episodes, actions) are the primary efficiency measure;
-    Flora GPU cost is reported separately as compute.
-  - Limits: LIBERO renders are not real cameras (RoboCasa is the closer
-    appearance test), and simulator resets remain free. Until a real-robot run
-    the claim is a simulated proxy for oracle-free deployment.
+- <a id="oracle-free-reward"></a>**Feedback on physical robots.** Use native
+  rewards throughout the simulation study and disclose that supervision when
+  describing transfer. When physical-robot testing begins, qualify Flora on
+  real task videos against independently judged outcomes. Report physical
+  attempts, actions and feedback cost. The [earlier Flora studies](FLORA-PPO.md)
+  document the reward protocol and its known failure modes.
 - Fixed-teacher CND, direct RL²/PPO and supervised warm-start plus RL remain
   separate candidate conditions, with their own source cost and contracts.
 - Primary one-shot: **one complete support episode → a separate query

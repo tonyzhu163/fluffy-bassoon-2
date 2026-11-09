@@ -3,7 +3,8 @@
 RoboTwin is an active benchmark arm for the frozen-VLA adaptation study.
 Use the six source tasks from VLRLA, with RLinf providing ordinary online
 RL and source learning histories, and VLRLA-bridge providing the direct
-in-context baseline. The learned-reward RoboCasa work remains a separate arm.
+in-context baseline. RoboCasa tests whether a frozen policy uses the feedback
+from a specific attempt. Both benchmarks use native simulator rewards.
 The task split is already encoded in
 [`configs/robotwin_vlrla.json`](../../configs/robotwin_vlrla.json).
 
@@ -59,9 +60,8 @@ The earlier Motus/noise-steering runs remain historical evidence in
 - Pin RLinf, RoboTwin and this repository for execution. The latest upstream
   recipe is an audit input; an older qualified runtime needs an explicit
   migration and actual-device qualification before using changed code.
-- Use simulator reward for the RLinf/VLRLA comparison. This is an ordinary
-  simulation baseline; it does not establish the oracle-free Flora claim.
-  A learned-reward comparison needs independent RoboTwin reward qualification.
+- Use native simulator reward for source learning and support feedback.
+  Evaluate the subsequent query with the native task predicate.
 - Declare horizon, executed chunk, sampler and randomization identically
   across paired methods. The VLRLA collector specifies 400 controls, H50 and
   five flow steps. RLinf's released `adjust_bottle` pi0.5 recipe uses 200

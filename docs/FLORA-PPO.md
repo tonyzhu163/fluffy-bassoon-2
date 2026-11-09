@@ -1,14 +1,13 @@
 # Flora-Rewarder PPO
 
-The paper stays about in-context RL for frozen VLAs ([PAPER.md](PAPER.md)).
-The learned-reward arm starts with an ordinary RL
-loop working where the reward comes from a learned video rewarder instead of
-the simulator. That loop is the reward source later in-context learners need
-on tasks without a success checker. The RoboTwin RLinf/VLRLA simulator-reward
-baseline arm can proceed alongside this reward qualification.
+Flora-Rewarder is planned for physical-robot testing. Current RoboCasa and
+RoboTwin experiments use native simulator rewards throughout source learning,
+student fitting and deployment. The [simulation plan](../outputs/vlrla-feedback-plan-20261109-r1/PLAN.md)
+specifies the next comparison. The protocols and gates below document earlier
+learned-reward work for reference when physical testing begins.
 
-Live plan and status: [run plan](../outputs/flora-ppo-comparison-20261101-r1/PLAN.md),
-[coordination](../outputs/coordination.md).
+[Earlier Flora run plan](../outputs/flora-ppo-comparison-20261101-r1/PLAN.md) ·
+[project coordination](../outputs/coordination.md).
 
 ## Rewarder
 
@@ -210,11 +209,10 @@ memory use; a job fails before dispatch if that reservation is unavailable.
 See the [execution configuration](../configs/native_ppo/robocasa_residual_execution.json)
 and [allocated Linux core checks](../outputs/robocasa-rollout-batch-integration-20261102-r1/QUALIFICATION.json).
 
-## First test: LIBERO90 task 44, simulator reward vs Flora reward
+## Earlier LIBERO90 task 44 pilot with simulator and Flora rewards
 
-A single-seed pilot to decide whether the idea is worth pursuing; the
-[run plan](../outputs/flora-ppo-comparison-20261101-r1/PLAN.md) is authoritative.
-All other jobs are paused for it.
+The [original run plan](../outputs/flora-ppo-comparison-20261101-r1/PLAN.md)
+records this single-seed pilot.
 
 - **Policy:** the published PyTorch
   [`RLinf/RLinf-Pi05-LIBERO-SFT@45ccfcc4`](https://huggingface.co/RLinf/RLinf-Pi05-LIBERO-SFT/tree/45ccfcc4e28634f1576ebf78cab0fbe2fd82432d),
