@@ -39,7 +39,8 @@ def main():
     exit_receipt = json.loads((args.root/'EXIT.json').read_bytes())
     assert result['status'] == 'completed' and exit_receipt['exit_code'] == 0
     cases = result['cases']
-    assert len(cases) == len(set(cases)) == 16 and result['optimizer_updates'] == 0
+    count = len(cases)
+    assert count in (16, 64) and count == len(set(cases)) and result['optimizer_updates'] == 0
     outcomes, files, initial_commands, initial_observations = {}, {}, {}, {}
     total_decisions = total_delivered = total_physics = total_requested = 0
     from fluffy_bassoon.rl.robotwin_noise import _observation_hash
@@ -104,7 +105,7 @@ def main():
         assert failures == profile['planner_failures'] and empty == profile['empty_plans']
         assert sum(ep['success'] for ep in episodes.values()) == profile['successes']
         outcomes[name] = {str(case): ep['success'] for case, ep in episodes.items()}
-    assert len(initial_observations) == len(initial_commands) == 16
+    assert len(initial_observations) == len(initial_commands) == count
     assert total_requested == result['charged_requested_targets']
     comparisons = {}
     base = outcomes['legacy_k5_h192']
@@ -115,13 +116,13 @@ def main():
         p = min(1., 2*sum(math.comb(n,k) for k in range(min(wins,losses)+1))/2**n) if n else 1.
         comparisons[name] = dict(successes=sum(values.values()), total=len(cases), wins=wins,
                                   losses=losses, exact_two_sided_mcnemar_p=p)
-    gate = (comparisons['waypoint_k10_h384']['successes'] >= 4 and
+    gate = (comparisons['waypoint_k10_h384']['successes'] >= count//4 and
             all(p['full_chunk_arm_freezes'] == 0 for p in result['profiles'].values() if p['waypoint_controller']))
     assert gate == result['gate_passed']
     report = dict(status='passed_independent_linux_cpu_physical_trace_reduction',
                   result_sha256=digest(args.root/'RESULT.json'), source_commit=result['source_commit'],
-                  comparisons=comparisons, gate_passed=gate, paired_initial_observations=16,
-                  paired_k5_initial_commands_exact=True, complete_episodes=48,
+                  comparisons=comparisons, gate_passed=gate, paired_initial_observations=count,
+                  paired_k5_initial_commands_exact=True, complete_episodes=3*count,
                   decisions=total_decisions, delivered_targets=total_delivered,
                   physics_steps=total_physics, charged_requested_targets=total_requested,
                   files=files, optimizer_updates=0, gpu_seconds=0)

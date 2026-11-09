@@ -33,6 +33,21 @@ Advance only after all 48 episodes and independent trace reduction pass,
 repaired K10/H384 reaches at least 4/16, and the repaired arms have zero
 nonstationary full-chunk arm freezes. A failed gate triggers diagnosis.
 
+### Stage 1b: full DEV64 diagnostic (admitted after the pilot failed)
+
+The completed pilot is 2/16 legacy, 2/16 waypoint K5/H192, and 3/16 waypoint
+K10/H384. Its 4/16 gate failed; this does not admit Stage 2. Execute the full
+64-scene paired verification originally authorized in the handoff, with the
+same three frozen profiles, unchanged noise seed/identities and native B2.
+Use fresh identity `controller-dev64-01`; all 192 episodes are fresh, including
+the repeated first16. Do not pool the pilot with this panel. Predeclare the
+same 25% competence threshold (16/64), zero repaired full-chunk freezes, and
+complete independent trace reduction before launch. A failed full-bank gate
+holds training for a native-Motus parity diagnosis. This is an exploratory DEV
+screen, not the disjoint confirmation test or evidence of RL improvement.
+Reserve another1.5 GPU-hours (80-minute worker/90-minute scheduler cap),
+charged in the same100-hour epoch with the closed pilot cost retained.
+
 ## Stage 2: one-task PPO and GRPO
 
 Use fresh run identities and reviewed latest-main commits after Stage 1.

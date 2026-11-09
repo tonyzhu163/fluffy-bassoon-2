@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 TASK_SOURCE=${1:?reviewed source commit}
+TASK_CASES=${2:-16}
+[[ $TASK_CASES == 16 || $TASK_CASES == 64 ]]
+TASK_ID=controller-pilot01
+if [[ $TASK_CASES == 64 ]]; then TASK_ID=controller-dev64-01; fi
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_DRIVER=$TASK_CODE/outputs/robotwin-restoration-20261106-r1
-TASK_OUT=/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/repaired-motus-20261109-r1/controller-pilot01
-TASK_LOCAL=/tmp/rt-repaired-controller-pilot01
+TASK_OUT=/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/repaired-motus-20261109-r1/$TASK_ID
+TASK_LOCAL=/tmp/rt-repaired-$TASK_ID
 TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python
 export TASK_SOURCE TASK_CODE TASK_DRIVER TASK_OUT TASK_LOCAL GIT_OPTIONAL_LOCKS=0
 [[ $(uname -s) == Linux && $(hostname) == job-* ]]
@@ -70,4 +74,4 @@ TASK_REMAINING=$((TASK_DEADLINE-$(date +%s)-60))
 [[ $TASK_REMAINING -gt 300 ]]
 timeout --signal=INT --kill-after=20s "$TASK_REMAINING" "$TASK_PYTHON" \
  "$TASK_CODE/outputs/robotwin-repaired-motus-20261109-r1/verify_controller.py" \
- --output-dir "$TASK_OUT" --local-dir "$TASK_LOCAL" --max-cases 16 > "$TASK_OUT/evaluation.log" 2>&1
+ --output-dir "$TASK_OUT" --local-dir "$TASK_LOCAL" --max-cases "$TASK_CASES" > "$TASK_OUT/evaluation.log" 2>&1
