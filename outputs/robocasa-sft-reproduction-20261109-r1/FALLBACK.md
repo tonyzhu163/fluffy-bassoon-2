@@ -8,6 +8,9 @@ sources/robocasa-v100 checkout. Native Linux import passed with version1.0.0,
 OpenDrawer500 and CloseToasterOvenDoor300. Existing shared source/env/cache
 and campaign01 remain unchanged. The separate V100-MANIFEST.json preserves
 all18 tasks,50 cases/task,pretrain,seed7,three shards and at most four clients.
+The later launcher fills a free client slot as each task finishes, instead of
+waiting for a complete wave. Prediction batch and policy settings stay fixed;
+campaign01 keeps its original immutable wave schedule.
 
 Original JAX checkpoint/OpenPI code/H50/C5/K10 and batch-one inference remain
 fixed. Effective allowance remains old registry×1.5, with old cutoff success

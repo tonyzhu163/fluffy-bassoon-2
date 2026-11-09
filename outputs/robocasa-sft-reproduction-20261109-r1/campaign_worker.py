@@ -106,8 +106,19 @@ def main():
             assert names
             stage_root = out/stage
             stage_root.mkdir()
-            for offset in range(0, len(names), 4):
-                for task in names[offset:offset+4]:
+            pending = list(names)
+            while pending or clients:
+                check_peers()
+                if time.time() >= deadline or server.poll() is not None:
+                    raise RuntimeError('Deadline reached or native server exited')
+                for child in tuple(clients):
+                    code = child.poll()
+                    if code == 0:
+                        clients.remove(child)
+                    elif code is not None:
+                        raise RuntimeError(f'{stage} client failed with {code}')
+                while pending and len(clients) < 4:
+                    task = pending.pop(0)
                     stream = (stage_root/f'{task}.log').open('x')
                     client_logs.append(stream)
                     child = subprocess.Popen([sys.executable, '-B', str(scripts/'reference_eval.py'),
@@ -116,17 +127,8 @@ def main():
                         '--version', plan['version'], '--replan', '5', '--server-port', '18405'],
                         stdout=stream, stderr=subprocess.STDOUT)
                     clients.append(child)
-                while any(child.poll() is None for child in clients):
-                    check_peers()
-                    if time.time() >= deadline or server.poll() is not None:
-                        raise RuntimeError('Deadline reached or native server exited')
-                    if any(child.poll() not in (None, 0) for child in clients):
-                        raise RuntimeError(f'{stage} client failed')
+                if clients:
                     time.sleep(2)
-                failures = [child.returncode for child in clients]
-                clients = []
-                if any(failures):
-                    raise RuntimeError(f'{stage} clients exited {failures}')
             for task in names:
                 result = json.loads((stage_root/task/'RESULT.json').read_text())
                 assert result['completed'] and result['episodes'] == 50 and result['training_updates'] == 0
