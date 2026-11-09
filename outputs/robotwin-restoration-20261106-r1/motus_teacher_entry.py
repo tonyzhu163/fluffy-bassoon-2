@@ -73,7 +73,13 @@ class MotusActor(runtime.PilotActor):
 
     def compute_advantages_and_returns(self):
         result = super().compute_advantages_and_returns()
-        report = audit_learner(self.rollout_batch, self.cfg.native_pilot.comparison_algorithm)
+        report = audit_learner(
+            self.rollout_batch,
+            self.cfg.native_pilot.comparison_algorithm,
+            filter_rewards=bool(self.cfg.algorithm.get('filter_rewards', False)),
+            lower_bound=float(self.cfg.algorithm.get('rewards_lower_bound', .1)),
+            upper_bound=float(self.cfg.algorithm.get('rewards_upper_bound', .9)),
+        )
         write(Path(self.cfg.native_pilot.output)/'learner-reference'/
             f'iteration-{runtime.producing_iteration(self)+1:04d}-rank-{self._rank:02d}.json', report)
         assert report['passed'], 'Actual saved learner batch differs from independent reference'
@@ -122,6 +128,10 @@ class MotusActor(runtime.PilotActor):
                 assert error <= 1e-3, 'Native recomputed reference differs before first SGD'
                 if critic:
                     assert torch.isfinite(batch['prev_values']).all() and torch.isfinite(replay['values']).all()
+                    if self.cfg.native_pilot.get('require_value_parity', False):
+                        value_error = float((batch['prev_values'].float().reshape(-1) -
+                            replay['values'].float().reshape(-1)).abs().max())
+                        assert value_error <= 1e-3, 'Rollout and replay critic values differ before first SGD'
                 else:
                     assert not any('value_head' in name for name,_ in self.model.named_parameters())
                 write(Path(self.cfg.native_pilot.output)/'first-replay'/f'rank-{self._rank:02d}.json',
@@ -196,10 +206,13 @@ class MotusRollout(runtime.PilotRollout):
         if check:
             rng = snapshot_rng()
             try:
-                assert len(values) == 5
+                vlm_critic = bool(self.cfg.actor.model.openpi.get('value_after_vlm', False))
+                expected_calls = 1 if vlm_critic else int(self.cfg.actor.model.num_steps)
+                assert len(values) == expected_calls
                 raw = torch.stack(values,dim=1).float().squeeze(-1)
                 batch = len(raw)
-                picked = raw[torch.arange(batch,device=raw.device),result['forward_inputs']['denoise_inds'][:,0]]
+                picked = (raw[:, 0] if vlm_critic else
+                    raw[torch.arange(batch,device=raw.device),result['forward_inputs']['denoise_inds'][:,0]])
                 with torch.no_grad():
                     replay = self.hf_model(forward_inputs=result['forward_inputs'],compute_logprobs=True,
                         compute_entropy=False,compute_values=True,use_cache=False)
@@ -208,10 +221,14 @@ class MotusRollout(runtime.PilotRollout):
                 errors = dict(logprobs=float((replay['logprobs'].float()-result['prev_logprobs'].float()).abs().max()),
                     rollout_mean_values=float((mean-raw.mean(dim=1)).abs().max()),
                     selected_step_values=float((selected-picked).abs().max()))
-                passed = errors['logprobs'] <= 1e-3 and max(errors[k] for k in (
-                    'rollout_mean_values','selected_step_values')) <= 1e-4
+                value_parity_ok = (not self.cfg.native_pilot.get('require_value_parity', False)
+                    or float((mean-selected).abs().max()) <= 1e-4)
+                passed = (errors['logprobs'] <= 1e-3
+                    and max(errors[k] for k in ('rollout_mean_values','selected_step_values')) <= 1e-4
+                    and value_parity_ok)
                 write(Path(self.cfg.native_pilot.output)/'native-values'/f'rank-{self._rank:02d}.json',
                     dict(passed=passed,batch=batch,max_abs_error=errors,
+                         value_after_vlm=vlm_critic,
                          mean_vs_selected_max_abs=float((mean-selected).abs().max()),
                          estimands_preserved=True,extra_audit_rng_restored=True))
                 assert passed, 'Native Motus mean/selected critic or likelihood audit failed'
@@ -383,7 +400,8 @@ class MotusRunner(runtime.PilotRunner):
         assert self.global_step == self.max_steps
         self._pilot_write('RESULT.json',dict(status='completed_admitted_prefix',
             completed_iterations=self.global_step,intended_iterations=int(self.cfg.native_pilot.get('intended_iterations',2)),
-            native_adam_updates_per_rank=15*self.global_step,algorithm=self.cfg.native_pilot.comparison_algorithm,
+            native_adam_updates_per_rank=contract['adam_updates_per_iteration']*self.global_step,
+            algorithm=self.cfg.native_pilot.comparison_algorithm,
             scientific_source_admission=False,complete_six_task_campaign=False))
 
 

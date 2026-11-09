@@ -26,18 +26,23 @@ def _sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def accounted_controller_source(robotwin_root, output):
+def accounted_controller_source(robotwin_root, output, *, waypoint_controller=False):
     """Prepare a job-owned method copy; never edit the external native checkout."""
+    if type(waypoint_controller) is not bool:
+        raise ValueError('waypoint_controller must be a boolean')
     reference = Path(robotwin_root)/'envs/_base_task.py'
     if _sha(reference) != REFERENCE_SHA256:
         raise ValueError('Unqualified native controller preimage')
     output = Path(output)
     (output/'envs').mkdir(parents=True,exist_ok=False)
     target = output/'envs/_base_task.py';shutil.copyfile(reference,target)
-    patch = Path(__file__).resolve().parents[3]/'patches/robotwin-dca9ec68-execution-accounting.patch'
+    patch_name = ('robotwin-dca9ec68-waypoint-controller.patch'
+                  if waypoint_controller else 'robotwin-dca9ec68-execution-accounting.patch')
+    patch = Path(__file__).resolve().parents[3]/'patches'/patch_name
     subprocess.run(['patch','--fuzz=0','-p1','-d',str(output),'-i',str(patch)],check=True,
                    stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
-    return dict(controller_source=str(target.resolve()),controller_sha256=_sha(target))
+    return dict(controller_source=str(target.resolve()),controller_sha256=_sha(target),
+                waypoint_controller=waypoint_controller)
 
 
 class FastMeasuredSimulator(_NativeSimulator):

@@ -6,7 +6,7 @@ bootstrap; this audits the saved native recurrence, not a new timeout policy.
 import numpy as np
 
 
-def audit(batch, algorithm):
+def audit(batch, algorithm, *, filter_rewards=False, lower_bound=.1, upper_bound=.9):
     def array(key):
         return batch[key].detach().cpu().numpy()
     reward = array('rewards').astype(np.float64).sum(axis=-1)
@@ -39,15 +39,28 @@ def audit(batch, algorithm):
         for time in reversed(range(steps)):
             score = score * ~done[time+1] + reward[time]
         groups = score.reshape(-1, 8)
+        group_mean = groups.mean(axis=1, keepdims=True)
         std = groups.std(axis=1, ddof=1, keepdims=True)
-        group_advantage = ((groups-groups.mean(axis=1,keepdims=True))/(std+1e-6)).reshape(lanes)
+        if filter_rewards:
+            keep_group = (group_mean[:, 0] >= lower_bound) & (group_mean[:, 0] <= upper_bound)
+            keep_lane = np.repeat(keep_group, 8)
+            filtered_mask_zero = bool((~mask[:, ~keep_lane]).all())
+            mask = mask & keep_lane[None, :]
+        else:
+            keep_group = np.ones(len(groups), dtype=bool)
+            filtered_mask_zero = True
+        group_advantage = ((groups-group_mean)/(std+1e-6)).reshape(lanes)
         advantages = group_advantage[None,:] * mask
         errors = dict(advantages=float(np.max(np.abs(array('advantages')[...,0]-advantages))))
         report.update(tied_groups=int((std == 0).sum()),groups=int(len(groups)),
+                      retained_groups=int(keep_group.sum()),
+                      filter_rewards=bool(filter_rewards),
+                      filtered_groups_zero_mask=filtered_mask_zero,
                       minimum_score=float(score.min()),maximum_score=float(score.max()),
                       all_tied_advantages_exact_zero=bool((advantages[:,np.repeat(std[:,0] == 0,8)] == 0).all()))
     report.update(max_abs_error=errors,tolerance=1e-5,
-        passed=all(np.isfinite(error) and error <= 1e-5 for error in errors.values()))
+        passed=all(np.isfinite(error) and error <= 1e-5 for error in errors.values())
+            and (algorithm != 'grpo' or report['filtered_groups_zero_mask']))
     return report
 
 

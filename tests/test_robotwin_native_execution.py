@@ -108,3 +108,43 @@ def test_passive_fast_and_full_paths_preserve_native_physics_and_results(control
     assert execution.delivered_targets == reference[3]['executed_action_count']
     assert execution.physics_steps == fast_task.steps
     assert full[3]['fb2_execution'] == fast[3]['fb2_execution']
+
+
+def test_waypoint_controller_synchronizes_waypoints_and_recovers_topp_failures(tmp_path):
+    from fluffy_bassoon.rl.robotwin_batch import accounted_controller_source
+    from fluffy_bassoon.rl.robotwin_execution import load_accounted_controller
+    root = os.environ.get('ROBOTWIN_REFERENCE_ROOT')
+    if root is None:
+        fallback = Path(__file__).resolve().parents[1] / (
+            'outputs/robotwin-sidney-deployment-diagnostic-20261106-r1/upstream/RoboTwin')
+        if fallback.is_dir():
+            root = str(fallback)
+        else:
+            pytest.skip('Waypoint controller test needs ROBOTWIN_REFERENCE_ROOT')
+    meta = accounted_controller_source(root, tmp_path / 'waypoint', waypoint_controller=True)
+    assert meta['waypoint_controller'] is True
+    code = load_accounted_controller(meta['controller_source'], meta['controller_sha256'])
+    namespace = dict(np=np)
+    exec(code, namespace)
+    waypoint_fn = namespace['gen_sparse_reward_data']
+
+    # Normal 4-waypoint chunk: each waypoint plans a 2-point TOPP path, never
+    # calls compress_path/downsample_trajectory, and skips intermediate renders
+    # when collect_obs=False.
+    task = Task(success_step=None, failed_planner=False)
+    actions = np.arange(1, 4 * 14 + 1, dtype=np.float64).reshape(4, 14) / 100
+    reward, term, trunc, info = waypoint_fn(task, actions, collect_obs=False)
+    exec_info = chunk_execution(info, requested_targets=4, timestep_seconds=1 / 250)
+    assert exec_info.completed_targets == 4 and exec_info.delivered_targets == 4
+    assert exec_info.partial_targets == 0 and exec_info.physics_steps == 4 * 12
+    # Render is called only at the start and end of the chunk when collect_obs=False.
+    renders = [event for event in task.events if event[0] == 'render']
+    assert len(renders) == 2
+
+    # Non-stationary planner failure: fallback linear interpolation still drives
+    # the left arm joints instead of freezing the arm across the chunk.
+    failed_task = Task(success_step=None, failed_planner=True)
+    waypoint_fn(failed_task, actions, collect_obs=False)
+    left_arm_moves = [event for event in failed_task.events if event[:2] == ('arm', 'left')]
+    assert len(left_arm_moves) == 4 * 50
+    np.testing.assert_allclose(left_arm_moves[-1][2], actions[-1, :6])
