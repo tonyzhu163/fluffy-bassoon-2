@@ -187,7 +187,19 @@ def main():
             server_log.close()
         status.update(started_unix=started, ended_unix=time.time(),
                       server_exit=server.returncode if server is not None else None)
+        if server is not None and server.returncode != 0:
+            status.update(completed=False, error='Native server did not close successfully')
         save(out/'EXIT.json', status)
+        # The scheduler may finish a PyTorchJob as soon as its master exits.
+        # All peers must first preserve their final sampler and closure receipt.
+        if rank == 0 and status['completed']:
+            try:
+                for r in range(1, world):
+                    wait_file(a.output/f'rank-{r:02d}/EXIT.json', deadline+90)
+            except BaseException as error:
+                status.update(completed=False, error=f'{type(error).__name__}: {error}')
+                save(out/'EXIT.json', status)
+                raise
 
 
 if __name__ == '__main__':

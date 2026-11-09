@@ -37,6 +37,7 @@ def main():
         assert identity['manifest_sha256'] == sha(args.manifest)
         assert exit_record['completed'] and exit_record['training_updates'] == 0
         assert exit_record['server_exit'] == 0 and probe['status'] == 'passed'
+        assert sampler['normalization_sha256'] == '4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee'
         rank_cases = []
         for stage in plan['stages']:
             for task in shard[stage]:
@@ -80,6 +81,7 @@ def main():
     assert len({x['identity']['job'] for x in ranks}) == 1
     assert len({x['identity']['source_commit'] for x in ranks}) == 1
     n = len(cases)
+    assert n == len(tasks)*plan['trials_per_task']
     wins = sum(x['success'] for x in cases)
     old_wins = sum(x['success_original_horizon'] for x in cases)
     controls = sum(x['controls'] for x in cases)
