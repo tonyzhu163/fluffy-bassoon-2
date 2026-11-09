@@ -1,39 +1,61 @@
 {
-  "cluster": "Baige Pro6K",
-  "job_id": "job-17obic7d5fe5",
-  "checked_at": "2026-11-09T18:01:53+08:00",
-  "status": "running",
-  "source_commit": "24fcc5b016f6d6f15cd7bad09cec9bd723873338",
-  "gpu_probe": "passed",
-  "ready": "ready",
-  "loader": {
-    "expected_tensors": 813,
-    "missing": [],
-    "unequal": [],
-    "extra": [],
-    "comparison": "all original tensors compared after casting to the loaded parameter dtype",
-    "compile_model": false,
-    "torch_version": "2.7.1+cu128"
-  },
-  "exit": {},
-  "settings": {
-    "scene_frozen": {
-      "evaluated": 1,
-      "reset_errors": 0,
-      "by400": 1,
-      "by1200": 1
+  "checked_at": "2026-11-09T18:24:30+08:00",
+  "runs": {
+    "baseline": {
+      "status": "running",
+      "settings": {
+        "demo_clean": {
+          "n": 100,
+          "successes": 23,
+          "reset_errors": 0
+        },
+        "demo_randomized": {
+          "n": 43,
+          "successes": 10,
+          "reset_errors": 0
+        }
+      },
+      "exit": null
     },
-    "short_frozen": {
-      "evaluated": 2,
-      "reset_errors": 0,
-      "by400": 0,
-      "by1200": 0
+    "gap": {
+      "status": "running",
+      "settings": {
+        "scene_frozen": {
+          "n": 5,
+          "successes": 1,
+          "reset_errors": 0,
+          "by400": 1
+        },
+        "short_frozen": {
+          "n": 5,
+          "successes": 0,
+          "reset_errors": 0,
+          "by400": 0
+        },
+        "short_sequential": {
+          "n": 6,
+          "successes": 2,
+          "reset_errors": 0,
+          "by400": 2
+        }
+      },
+      "exit": null
     },
-    "short_sequential": {
-      "evaluated": 1,
-      "reset_errors": 0,
-      "by400": 1,
-      "by1200": 1
+    "wrist": {
+      "status": "running",
+      "settings": {
+        "demo_clean": {
+          "n": 54,
+          "successes": 39,
+          "reset_errors": 0
+        }
+      },
+      "exit": null
+    },
+    "wrist_random": {
+      "status": "starting",
+      "settings": {},
+      "exit": null
     }
   }
 }
