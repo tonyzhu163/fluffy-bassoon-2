@@ -33,11 +33,20 @@ def audit(root):
     assert result['manifest'] == qualified['manifest']
     assert load('ASSET-PATHS.json') == json.loads((reference/'CPU-ASSET-PATHS.json').read_bytes())
     assert set(result['settings']) == {'demo_clean', 'demo_randomized'}
+    renderers = sorted((root/'renderers').glob('*.json'))
+    assert renderers
+    for path in renderers:
+        renderer = json.loads(path.read_bytes())
+        assert renderer['expected_cuda_pci'] == probe['devices'][0]['pci_bus_id']
+        assert renderer['actual_render_pci'] == renderer['expected_cuda_pci']
+    log = (root/'evaluation.log').read_text(errors='replace')
+    assert not any(error in log for error in ('OIDN Error', 'unsupported device type', 'invalid handle'))
     summary = dict(status='passed', source_commit=result['source_commit'],
         result_sha256=sha(root/'RESULT.json'), gpu_probe_sha256=sha(root/'gpu-probe.json'),
         exit_sha256=sha(root/'EXIT.json'), frozen=True, optimizer_updates=0,
         scope='execution smoke only' if result['target_per_setting'] == 2 else 'phone stand100 trials per domain',
-        task='place_phone_stand', settings={}, action_files=[])
+        task='place_phone_stand', settings={}, action_files=[], initial_inputs=[],
+        allocated_renderer_receipts=len(renderers), denoiser_errors=0)
     for setting, data in result['settings'].items():
         episodes = data['episodes']
         assert len(episodes) == result['target_per_setting'] == data['completed']
@@ -58,6 +67,15 @@ def audit(root):
             folder = root/f'{setting}-{index:03d}-seed-{episode["seed"]}'
             assert json.loads((folder/'episode.json').read_bytes()) == episode
             assert (folder/'initial.jpg').is_file() and (folder/'final.jpg').is_file()
+            initial = folder/'initial-input.npz'
+            with np.load(initial, allow_pickle=False) as inputs:
+                assert set(inputs.files) == {'state', 'prompt', 'cam_high', 'cam_left_wrist', 'cam_right_wrist'}
+                assert np.array_equal(inputs['state'], episode['initial_state'])
+                assert inputs['prompt'].shape == () and str(inputs['prompt']) == episode['instruction']
+                for camera in ('cam_high', 'cam_left_wrist', 'cam_right_wrist'):
+                    value = inputs[camera]
+                    assert value.dtype == np.uint8 and value.shape == (3, 240, 320)
+            summary['initial_inputs'].append(dict(path=str(initial.relative_to(root)), sha256=sha(initial)))
             actions = sorted(folder.glob('actions-*.npy'))
             assert len(actions) == len(episode['decisions'])
             for j, path in enumerate(actions):
@@ -81,4 +99,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
     value = audit(args.root)
     args.output.write_text(json.dumps(value, indent=2)+'\n')
-    print(json.dumps({k:v for k,v in value.items() if k != 'action_files'}))
+    print(json.dumps({k:v for k,v in value.items() if k not in ('action_files', 'initial_inputs')}))
