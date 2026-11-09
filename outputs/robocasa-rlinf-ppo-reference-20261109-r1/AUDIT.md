@@ -73,4 +73,7 @@ No automatic new training or model migration follows from this research.
 The later explicit frozen-ICRL instruction supersedes the proposed C5/C50
 VLA-training comparison. Keep pi0.5; any future controller learning must
 preserve that motor and distinguish offline module fitting from deployment
-adaptation through history alone. The original SFT benchmark is unchanged.
+adaptation through history alone. The complete atomic SFT benchmark is
+verified. The extra composite evaluation was intentionally closed after the
+user clarified atomic-first scope; all allocations are released. No new
+VLA training,cadence ablation or model migration is pending.

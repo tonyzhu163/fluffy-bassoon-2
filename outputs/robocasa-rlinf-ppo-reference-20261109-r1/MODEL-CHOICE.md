@@ -61,6 +61,9 @@ The direct StructRL PPO launcher uses C50/K10,while its paper describes C10;
 its initializer and joint-task protocol also differ from our checkpoint.
 Thus C5 is the original SFT setting,not a universal PPO setting.
 
-Retain the verified native pi0.5 motor and finish its benchmark reproduction.
+Retain the verified native pi0.5 motor. Its complete atomic reproduction
+is verified; the composite continuation was intentionally closed after the
+user clarified atomic-first scope. Atomic tasks are the current learning
+stage,and composites are deferred transfer evaluation.
 Do not interpret evaluator correctness,teacher improvement or clean
 controller likelihoods as evidence of held-out in-context adaptation.

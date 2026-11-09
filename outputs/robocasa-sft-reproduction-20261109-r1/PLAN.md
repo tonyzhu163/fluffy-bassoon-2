@@ -1,5 +1,11 @@
 # Official Human300 π0.5 baseline reproduction
 
+**Closed at the atomic-first project boundary.** The complete atomic result
+is independently verified. The composite continuation was intentionally
+closed after the user clarified the current scope; no new training or
+composite sweep is pending. See [closeout](CLOSEOUT.md). The original
+prospective plan below is retained as provenance.
+
 Authorized by the user on 2026-11-09: try reproducing the baseline, investigate
 RoboCasa 1.0.1 changes, and use 1.0.0 if required. Owner: this chat
 `01a1be92-5e00-7df0-b90e-9719078be031`. Evaluation only, zero training.

@@ -2,13 +2,13 @@
   "run_id": "robocasa-sft-reproduction-20261109-r1",
   "owner_chat": "01a1be92-5e00-7df0-b90e-9719078be031",
   "source_commit": "d59199917ac51eb6c0ab83c4a0926d9c3e6836c5",
-  "phase": "campaign02_composites_running",
+  "phase": "closed_atomic_first_scope",
   "cluster": "Baige Pro6K",
   "queue_id": "aihcq-rh0wwk9muei4",
   "job_id": "job-omodtcqp0uzn",
   "job_name": "mwj_1109_robocasa_sft_composite1600_r1",
   "scheduler_created_shanghai": "2026-11-09 16:28:35",
-  "scheduler_state_observed": "Running; all4 distinct GPU probes passed/nativeB1servers ready/16 simulator clients advancing",
+  "scheduler_state_observed": "Failed via intentional operator-stop cleanup; all4 GPUs released",
   "resources": {
     "gpus": 4,
     "containers": 4,
@@ -68,12 +68,13 @@
   "cache": "project-specific copy of cached public tokenizer; SHA256 8986bb4f423f07f8c7f70d0dbe3526fb2316056c17bae71b1ea975e77a168fc6; original cache preserved",
   "budget": {
     "maximum_gpu_hours": 50,
-    "closed_gpu_seconds": 18416,
-    "open_reservation_gpu_seconds_including_overhead": 115680,
-    "queue_charge": "Earlier closed costs retain conservative creation-to-release accounting. New job queue delay is recorded separately; reservation covers allocated GPU execution plus startup/release."
+    "closed_gpu_seconds": 35532,
+    "open_reservation_gpu_seconds_including_overhead": 0,
+    "queue_charge": "Final closeout conservatively charges creation-to-scheduler-end for every attempt,including queued time. Actual campaign02 pod-to-end allocation13172 GPU-seconds is also recorded.",
+    "closed_gpu_hours": 9.87
   },
-  "next_action": "Continue native SFT composite1600 evaluation through complete category audit. Retain frozen pi0.5 for ICRL; no model migration or new VLA fine-tuning.",
-  "last_check_shanghai": "2026-11-09T17:15:39.984506+08:00",
+  "next_action": "No new allocation. Keep pi05 frozen; atomic-first ICRL training and held-out atomic evaluation are the subsequent project scope. Composite evaluation and VLA fine-tuning proposals withdrawn.",
+  "last_check_shanghai": "2026-11-09 17:42:10+08:00",
   "attempts": [
     {
       "attempt": "gpu01",
@@ -175,7 +176,7 @@
       "attempt": "campaign02",
       "job_id": "job-omodtcqp0uzn",
       "source_commit": "d59199917ac51eb6c0ab83c4a0926d9c3e6836c5",
-      "state": "Running",
+      "state": "Intentionally closed; all4 allocations released",
       "created_shanghai": "2026-11-09 16:28:35",
       "gpus": 4,
       "maximum_allocated_seconds": 28800,
@@ -185,18 +186,33 @@
       "retry": false,
       "actual_gpu_probes_passed": 4,
       "native_servers_ready": 4,
-      "episodes_completed": 123,
-      "controls_completed": 358170,
+      "episodes_completed": 227,
+      "controls_completed": 664974,
       "actual_gpu_uuids": [
         "GPU-29b634fc-424f-415e-83bb-2a5615d8f25f",
         "GPU-d2198465-53f9-a75c-8df8-f3be9a3f1178",
         "GPU-5bb0427b-15cb-aa2d-8241-ddbf93640d94",
         "GPU-1574e5d0-0de1-9154-cb56-47ad19b9abe6"
-      ]
+      ],
+      "scheduler_terminal_shanghai": "2026-11-09 17:39:54",
+      "pods_created_shanghai": "2026-11-09 16:44:42",
+      "pods_ended_shanghai": "2026-11-09 17:39:35",
+      "total_native_predictions": 138941,
+      "policy_control_upper_bound": 694705,
+      "conservative_gpu_seconds": 17116,
+      "allocated_pod_gpu_seconds": 13172,
+      "server_exits": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "sampler_rng_saved": 4,
+      "partial_audit": "COMPOSITES-STOP-AUDIT.json"
     }
   ],
   "gpu_probe": "PASS on4 distinct allocated RPBZZZ6 GPUs",
-  "completed_episodes_last_check": 123,
+  "completed_episodes_last_check": 227,
   "atomic_successes": 363,
   "atomic_success_rate": 0.4033333333333333,
   "old_cutoff_successes": 249,
@@ -214,5 +230,8 @@
     "GPU-5bb0427b-15cb-aa2d-8241-ddbf93640d94",
     "GPU-1574e5d0-0de1-9154-cb56-47ad19b9abe6"
   ],
-  "icrl_motor_decision": "User clarified: keep pi0.5 frozen; offline history/bridge learning, fixed deployment weights, adaptation through history/KV activations only."
+  "icrl_motor_decision": "User clarified: keep pi0.5 frozen; offline history/bridge learning, fixed deployment weights, adaptation through history/KV activations only.",
+  "scheduler_terminal_shanghai": "2026-11-09 17:39:54",
+  "scheduler_pods_ended_shanghai": "2026-11-09 17:39:35",
+  "active_gpus": 0
 }

@@ -1,0 +1,143 @@
+{
+  "passed": true,
+  "job_id": "job-omodtcqp0uzn",
+  "status": "intentionally closed after user scope clarification; incomplete benchmark",
+  "training_updates": 0,
+  "stop": {
+    "kind": "operator_stop",
+    "completed": false,
+    "job_id": "job-omodtcqp0uzn",
+    "requested_shanghai": "2026-11-09T17:39:11.158715+08:00",
+    "unix": 1794217151.1587465,
+    "reason": "User clarified atomic-first frozen-pi0.5 ICRL scope; stop the unnecessary composite-only SFT evaluation. Zero training updates.",
+    "mechanism": "Use existing check_peers fail-fast cleanup. This is an operator control receipt, not a worker result or benchmark case.",
+    "training_updates": 0
+  },
+  "completed_diagnostic_cases": 227,
+  "completed_policy_controls": 664974,
+  "completed_case_predictions": 133000,
+  "total_native_predictions": 138941,
+  "policy_control_upper_bound": 694705,
+  "sampler_rng_preserved_on_all_four": true,
+  "original_frozen_checkpoint_preserved": true,
+  "optimizer": "not applicable: evaluation only",
+  "ranks": [
+    {
+      "rank": 0,
+      "uuid": "GPU-29b634fc-424f-415e-83bb-2a5615d8f25f",
+      "completed_cases": 55,
+      "completed_policy_controls": 163916,
+      "completed_case_predictions": 32784,
+      "sampler_calls": 33888,
+      "incomplete_case_sampler_calls": 1104,
+      "exit": {
+        "completed": false,
+        "rank": 0,
+        "training_updates": 0,
+        "error": "RuntimeError: Peer failed: /mowenjie/fluffy-bassoon-2/outputs/robocasa-sft-reproduction-20261109-r1/campaign02/rank-operator/EXIT.json: User clarified atomic-first frozen-pi0.5 ICRL scope; stop the unnecessary composite-only SFT evaluation. Zero training updates.",
+        "started_unix": 1794213903.3857877,
+        "ended_unix": 1794217155.3259957,
+        "server_exit": 0
+      },
+      "sampler": {
+        "calls": 33888,
+        "rng_key": [
+          1795411500,
+          3992404169
+        ],
+        "unix": 1794217153.1741993,
+        "original_checkpoint": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1",
+        "normalization_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+        "training_updates": 0
+      }
+    },
+    {
+      "rank": 1,
+      "uuid": "GPU-d2198465-53f9-a75c-8df8-f3be9a3f1178",
+      "completed_cases": 63,
+      "completed_policy_controls": 179108,
+      "completed_case_predictions": 35825,
+      "sampler_calls": 37774,
+      "incomplete_case_sampler_calls": 1949,
+      "exit": {
+        "completed": false,
+        "rank": 1,
+        "training_updates": 0,
+        "error": "RuntimeError: Peer failed: /mowenjie/fluffy-bassoon-2/outputs/robocasa-sft-reproduction-20261109-r1/campaign02/rank-02/EXIT.json: RuntimeError: Peer failed: /mowenjie/fluffy-bassoon-2/outputs/robocasa-sft-reproduction-20261109-r1/campaign02/rank-operator/EXIT.json: User clarified atomic-first frozen-pi0.5 ICRL scope; stop the unnecessary composite-only SFT evaluation. Zero training updates.",
+        "started_unix": 1794213906.5667648,
+        "ended_unix": 1794217155.5537934,
+        "server_exit": 0
+      },
+      "sampler": {
+        "calls": 37774,
+        "rng_key": [
+          4109320322,
+          3995510701
+        ],
+        "unix": 1794217153.7459242,
+        "original_checkpoint": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1",
+        "normalization_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+        "training_updates": 0
+      }
+    },
+    {
+      "rank": 2,
+      "uuid": "GPU-5bb0427b-15cb-aa2d-8241-ddbf93640d94",
+      "completed_cases": 55,
+      "completed_policy_controls": 161401,
+      "completed_case_predictions": 32281,
+      "sampler_calls": 33994,
+      "incomplete_case_sampler_calls": 1713,
+      "exit": {
+        "completed": false,
+        "rank": 2,
+        "training_updates": 0,
+        "error": "RuntimeError: Peer failed: /mowenjie/fluffy-bassoon-2/outputs/robocasa-sft-reproduction-20261109-r1/campaign02/rank-operator/EXIT.json: User clarified atomic-first frozen-pi0.5 ICRL scope; stop the unnecessary composite-only SFT evaluation. Zero training updates.",
+        "started_unix": 1794213906.566865,
+        "ended_unix": 1794217155.6982167,
+        "server_exit": 0
+      },
+      "sampler": {
+        "calls": 33994,
+        "rng_key": [
+          473162817,
+          3944098553
+        ],
+        "unix": 1794217153.8389742,
+        "original_checkpoint": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1",
+        "normalization_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+        "training_updates": 0
+      }
+    },
+    {
+      "rank": 3,
+      "uuid": "GPU-1574e5d0-0de1-9154-cb56-47ad19b9abe6",
+      "completed_cases": 54,
+      "completed_policy_controls": 160549,
+      "completed_case_predictions": 32110,
+      "sampler_calls": 33285,
+      "incomplete_case_sampler_calls": 1175,
+      "exit": {
+        "completed": false,
+        "rank": 3,
+        "training_updates": 0,
+        "error": "RuntimeError: Peer failed: /mowenjie/fluffy-bassoon-2/outputs/robocasa-sft-reproduction-20261109-r1/campaign02/rank-operator/EXIT.json: User clarified atomic-first frozen-pi0.5 ICRL scope; stop the unnecessary composite-only SFT evaluation. Zero training updates.",
+        "started_unix": 1794213906.5667586,
+        "ended_unix": 1794217155.6230483,
+        "server_exit": 0
+      },
+      "sampler": {
+        "calls": 33285,
+        "rng_key": [
+          2267401425,
+          4064509965
+        ],
+        "unix": 1794217153.6787722,
+        "original_checkpoint": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1",
+        "normalization_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+        "training_updates": 0
+      }
+    }
+  ],
+  "note": "Completed cases/input/video hashes retained. Interrupted episodes excluded; this is not a 1600-case score or exact in-flight simulator continuation. Upper bound charges all returned predictions at5 controls,including unexecuted tails."
+}

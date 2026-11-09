@@ -30,6 +30,10 @@ and online-RL comparisons are separate from the ICRL adaptation mechanism;
 their performance gains do not establish fixed-weight in-context learning.
 Autoregressive action likelihoods alone are not a reason to replace this motor.
 
+The current RoboCasa learning stage is **atomic-first**. Keep atomic source
+training and held-out atomic evaluation separate. Composite tasks are a later
+transfer evaluation; they are not part of the current ICRL training stage.
+
 ## Abstract scaffold
 
 - Question: can a reusable steering controller turn a few deployment episodes

@@ -1,5 +1,12 @@
 # Complete native composite evaluation: campaign02
 
+**CLOSED EARLY after the user clarified atomic-first project scope.** All four
+GPU allocations ended17:39:35 Shanghai onNovember9. Retained227 completed
+diagnostic episodes and all four sampler/RNG receipts; zero training updates.
+This is not a complete1600-case benchmark result. See
+[scope and cost closeout](CLOSEOUT.md) and [partial-data audit](COMPOSITES-STOP-AUDIT.json).
+The prospective contract below remains as execution provenance,not a new run.
+
 Atomic900 passed its prospective practical screen:363/900=40.33% versus39.6%.
 The four-longest-task capacity probe completed16,650 controls and3,330 native
 batch-one predictions in387.909 seconds of collection:42.922 controls/s.
