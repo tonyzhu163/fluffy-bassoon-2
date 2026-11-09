@@ -44,6 +44,7 @@ def main():
     parser.add_argument('--maximum-seconds', type=int, default=3000)
     parser.add_argument('--version', choices=['1.0.0', '1.0.1'], default='1.0.1')
     parser.add_argument('--replan', type=int, default=5)
+    parser.add_argument('--server-port', type=int)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     started = time.time()
@@ -61,35 +62,43 @@ def main():
         print(json.dumps(value), flush=True)
 
     import numpy as np
-    import jax
     import gymnasium as gym
     import imageio.v2 as imageio
     import robocasa
     from robocasa.utils.dataset_registry_utils import get_task_horizon
     from robocasa.utils.env_utils import convert_action
-    from openpi.training import config
-    from openpi.policies import policy_config
-    from openpi.shared import normalize
     from openpi_client import image_tools
 
     assert robocasa.__version__ == args.version
-    devices = jax.devices()
-    assert len(devices) == 1 and devices[0].platform == 'gpu', devices
-    native_config = config.get_config('pi05_pretrain_human300')
-    assert native_config.model.pi05
-    assert native_config.model.action_horizon == 50
-    assert native_config.model.action_dim == 32
-    assert native_config.model.max_token_len == 200
     norm_hash = sha(args.checkpoint / 'assets/norm_stats.json')
-    norm_stats = normalize.load(args.checkpoint / 'assets')
-    native_config = with_checkpoint_stats(native_config, norm_stats)
-    event(phase='loading_native_original', devices=[str(d) for d in devices],
-          robocasa_version=robocasa.__version__, robocasa_file=robocasa.__file__,
-          config_file=config.__file__, normalization_sha256=norm_hash,
-          model_backend='native JAX', training_updates=0)
-    policy = policy_config.create_trained_policy(native_config, args.checkpoint,
-                                               sample_kwargs={'num_steps': 10},
-                                               norm_stats=norm_stats)
+    if args.server_port is None:
+        import jax
+        from openpi.training import config
+        from openpi.policies import policy_config
+        from openpi.shared import normalize
+
+        devices = jax.devices()
+        assert len(devices) == 1 and devices[0].platform == 'gpu', devices
+        native_config = config.get_config('pi05_pretrain_human300')
+        assert native_config.model.pi05
+        assert native_config.model.action_horizon == 50
+        assert native_config.model.action_dim == 32
+        assert native_config.model.max_token_len == 200
+        norm_stats = normalize.load(args.checkpoint / 'assets')
+        native_config = with_checkpoint_stats(native_config, norm_stats)
+        event(phase='loading_native_original', devices=[str(d) for d in devices],
+              robocasa_version=robocasa.__version__, robocasa_file=robocasa.__file__,
+              config_file=config.__file__, normalization_sha256=norm_hash,
+              model_backend='native JAX', training_updates=0)
+        policy = policy_config.create_trained_policy(native_config, args.checkpoint,
+                                                   sample_kwargs={'num_steps': 10},
+                                                   norm_stats=norm_stats)
+    else:
+        from openpi_client.websocket_client_policy import WebsocketClientPolicy
+        policy = WebsocketClientPolicy('127.0.0.1', args.server_port)
+        event(phase='connected_native_server', port=args.server_port,
+              normalization_sha256=norm_hash, inference_batch_size=1,
+              robocasa_file=robocasa.__file__, training_updates=0)
     event(phase='loaded_native_original', load_seconds=time.time() - started)
     results = []
     np.random.seed(7)

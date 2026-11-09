@@ -2,7 +2,7 @@
   "run_id": "robocasa-sft-reproduction-20261109-r1",
   "owner_chat": "01a1be92-5e00-7df0-b90e-9719078be031",
   "source_commit": "924a42aff387a50e33c4fc75d6a2fffbd4533278",
-  "phase": "gpu03_preparing_after_normalizer_cpu_pass",
+  "phase": "gpu03_completed_parallel_qualification_preparing",
   "cluster": "Baige Pro6K",
   "queue_id": "aihcq-rh0wwk9muei4",
   "job_id": "job-px54jh4prhaf",
@@ -41,7 +41,7 @@
     "closed_gpu_seconds": 288,
     "open_reservation_gpu_seconds_including_overhead": 0
   },
-  "next_action": "Deploy supported checkpoint-normalizer binding qualified on CPU, then fresh gpu03 native three-episode qualification",
+  "next_action": "Qualify four concurrent simulator clients with the released WebSocket server, retaining native batch-one inference; measure throughput before sizing the full sweep.",
   "last_check_shanghai": "2026-11-09 13:11 Shanghai",
   "attempts": [
     {
@@ -67,6 +67,18 @@
       "model_forwards": 0,
       "simulator_controls": 0,
       "reason": "Native parameter restore completed; data-config fallback demanded missing training-dataset stats before inference; exact bundled normalizer binding passed CPU qualification"
+    },
+    {
+      "attempt": "gpu03",
+      "job_id": "job-6igryb0p7ndn",
+      "source_commit": "3f5c8bcaab48782cfc7f4c879cac3d537a51271e",
+      "wrapper_exit": 0,
+      "episodes": 3,
+      "controls": 1744,
+      "successes": 1,
+      "training_updates": 0,
+      "wrapped_gpu_seconds": 300,
+      "scheduler_closeout": "pending UI verification"
     }
   ]
 }
