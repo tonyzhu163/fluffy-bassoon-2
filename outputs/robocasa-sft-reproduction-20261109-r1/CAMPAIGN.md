@@ -1,40 +1,37 @@
-# Frozen native 50-task reproduction campaign
+# Frozen native baseline reproduction campaign01
 
-The native batch-one inference server and four simultaneous simulator clients
-passed GPU04 qualification. Campaign01 extends that qualified path without
-changing model precision, inference batch, camera/state transforms or actions.
-Original checkpoint, norm stats and public source pins remain as in PLAN.md.
+The native batch-one server and four simultaneous simulator clients passed
+GPU04 qualification. Campaign01 uses that qualified path for the complete
+18-task atomic set. All policy/checkpoint/source settings remain as in PLAN.md.
 
-- Eight exclusive Baige containers, each one allocated GPU, 21 CPU, 224 GiB
-  RAM and 16 GiB shared memory; six-hour scheduler maximum; retry disabled.
-- 50 episodes per task, seed 7, pretrain scenes/objects, H50 prediction,
-  five executed controls and ten ODE steps. No optimization or training.
-- Static manifest covers all 18 atomic and 16+16 composite tasks exactly once.
-  All 317 registry horizons were checked; primary allowance is the new registry
-  (equivalent to the old registry times 1.5); old cutoff is also saved.
-- Stage 1 is all 900 atomic episodes. Only a complete aggregate within five
-  percentage points of 39.6% continues to composites. Outside that prospective
-  practical band, workers close and save sampler state for a fresh 1.0.0
-  comparison. This screen does not establish statistical equivalence.
-- Stage 2 is all 1,600 composite episodes, four simulator processes per GPU.
-  Native inference remains batch one. Eight separate sampler streams and
-  interleaved requests mean this is aggregate reproduction, not exact replay
-  of the original evaluator's random-number sequence.
-- Each rank verifies its in-step GPU probe; all eight distinct UUIDs and matching
-  source/manifest/job identities are required before model loading. Peer failure
-  closes the other workers; no automatic retry. Fresh output identity required.
-- Every completed case saves success time, both horizon outcomes, action digest,
-  input hash and input NPZ. Selected videos and server RNG state are retained.
-  Deadline is 5.7 hours after worker start with finite episode closure reserves.
+- Fresh queue snapshot: three idle NVIDIA RPBZZZ6 GPUs, no pending queue.
+  Allocate three exclusive containers, each one GPU, 21 CPU, 224 GiB RAM,
+  16 GiB shared memory; four-hour scheduler maximum; retry disabled.
+- All 18 Atomic-Seen tasks, 50 episodes each, seed 7, pretrain scenes/objects,
+  H50 prediction, five executed controls, ten ODE steps, native batch one.
+  Balanced task shards run waves of at most four simulator processes.
+- Primary allowance is the new registry (old registry times 1.5). Preserve
+  success at the old cutoff too. Zero optimization or training.
+- All 900 complete cases are required for the prospective practical screen:
+  within five percentage points of 39.6% -> prepare the remaining 1,600
+  composite cases with a fresh capacity/budget check; otherwise -> fresh
+  detached 1.0.0 comparison. Workers close after this atomic stage either way.
+  This screen does not establish statistical equivalence.
+- Each rank verifies its actual in-step GPU probe. Three distinct UUIDs and
+  matching source/manifest/job identities are required before model loading.
+  Peer failure closes remaining workers; no automatic retry.
+- Each completed case records success time, both cutoffs, action/input hashes
+  and first input NPZ. Selected videos and native sampler RNG are retained.
+  Worker deadline is 3.7 hours with finite episode closure reserves.
+- Separate sampler streams and interleaved requests establish aggregate
+  reproduction, not exact replay of the original evaluator RNG sequence.
 
-Worst-case controls are 4,522,500. Measured qualification throughput projects
-33.50 GPU-hours before task-mix/reset/startup overhead. Reservation is 48
-GPU-hours plus a conservative 0.267-hour startup/release allowance. Closed
-qualification allocations cost 908 GPU-seconds (0.2522 GPU-hours), giving a
-maximum reservation charge of 48.519 GPU-hours, within this task's cumulative
-50 GPU-hour limit. Monitor actual cumulative usage and advancing cases at least
-every 20 minutes. Do not open a further allocation without recomputing the
-remaining budget.
+The full 50-task manifest is preserved as FULL-MANIFEST.json. The active
+manifest covers only this complete atomic stage. Qualified collection rate
+is 37.50 controls/second; task mix, waves and reset costs may change throughput.
+This stage reserves 12 GPU-hours plus 0.10 hour startup/release allowance.
+Closed qualification cost is 908 GPU-seconds (0.2522 hours). Subsequent jobs
+must be sized from actual closed usage within the cumulative 50 GPU-hour cap.
 
-Manifest and launcher are committed and deployed to a fresh detached checkout
-before scheduling. Immutable active source is never updated in place.
+Commit and deploy through Git before scheduling; never edit active sources.
+Inspect advancing episodes at least every 20 minutes through closure.

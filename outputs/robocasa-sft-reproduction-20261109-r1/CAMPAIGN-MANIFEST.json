@@ -6,128 +6,50 @@
   "replan": 5,
   "ode_steps": 10,
   "prediction_horizon": 50,
-  "maximum_policy_controls": 4522500,
-  "stages": [
-    "atomic_seen",
-    "composites"
-  ],
   "atomic_reference": 0.396,
   "atomic_practical_band": 0.05,
   "version": "1.0.1",
+  "stages": [
+    "atomic_seen"
+  ],
+  "maximum_worker_seconds": 13320,
+  "maximum_policy_controls": 592500,
   "shards": [
     {
       "rank": 0,
       "atomic_seen": [
         "OpenCabinet",
-        "SlideDishwasherRack"
+        "PickPlaceCounterToCabinet",
+        "TurnOffStove",
+        "TurnOnSinkFaucet",
+        "OpenStandMixerHead",
+        "TurnOnMicrowave"
       ],
-      "composites": [
-        "StoreLeftoversInBowl",
-        "PrepareCoffee",
-        "WaffleReheat",
-        "CategorizeCondiments"
-      ],
-      "maximum_controls": 577500
+      "maximum_controls": 202500
     },
     {
       "rank": 1,
       "atomic_seen": [
         "CloseBlenderLid",
+        "PickPlaceSinkToCounter",
+        "CoffeeSetupMug",
+        "PickPlaceCounterToStove",
         "CloseToasterOvenDoor",
-        "TurnOnElectricKettle"
+        "SlideDishwasherRack"
       ],
-      "composites": [
-        "DeliverStraw",
-        "WashLettuce",
-        "HeatKebabSandwich",
-        "SeparateFreezerRack"
-      ],
-      "maximum_controls": 555000
+      "maximum_controls": 195000
     },
     {
       "rank": 2,
       "atomic_seen": [
         "CloseFridge",
-        "NavigateKitchen",
-        "TurnOnMicrowave"
-      ],
-      "composites": [
-        "PreSoakPan",
-        "LoadDishwasher",
-        "WashFruitColander",
-        "PanTransfer"
-      ],
-      "maximum_controls": 547500
-    },
-    {
-      "rank": 3,
-      "atomic_seen": [
-        "PickPlaceSinkToCounter",
-        "OpenStandMixerHead"
-      ],
-      "composites": [
-        "SearingMeat",
-        "ScrubCuttingBoard",
-        "GarnishPancake",
-        "ArrangeTea"
-      ],
-      "maximum_controls": 592500
-    },
-    {
-      "rank": 4,
-      "atomic_seen": [
         "OpenDrawer",
-        "CoffeeSetupMug"
-      ],
-      "composites": [
-        "PackIdenticalLunches",
-        "RinseSinkBasin",
-        "MakeIceLemonade",
-        "BreadSelection"
-      ],
-      "maximum_controls": 577500
-    },
-    {
-      "rank": 5,
-      "atomic_seen": [
-        "PickPlaceCounterToCabinet",
-        "PickPlaceCounterToStove"
-      ],
-      "composites": [
-        "GetToastedBread",
-        "KettleBoiling",
-        "ArrangeBreadBasket",
-        "CuttingToolSelection"
-      ],
-      "maximum_controls": 570000
-    },
-    {
-      "rank": 6,
-      "atomic_seen": [
         "PickPlaceDrawerToCounter",
-        "PickPlaceToasterToCounter"
+        "PickPlaceToasterToCounter",
+        "NavigateKitchen",
+        "TurnOnElectricKettle"
       ],
-      "composites": [
-        "SetUpCuttingStation",
-        "SteamInMicrowave",
-        "WeighIngredients",
-        "PortionHotDogs"
-      ],
-      "maximum_controls": 555000
-    },
-    {
-      "rank": 7,
-      "atomic_seen": [
-        "TurnOffStove",
-        "TurnOnSinkFaucet"
-      ],
-      "composites": [
-        "StirVegetables",
-        "StackBowlsCabinet",
-        "RecycleBottlesByType",
-        "GatherTableware"
-      ],
-      "maximum_controls": 547500
+      "maximum_controls": 195000
     }
   ]
 }

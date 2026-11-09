@@ -54,12 +54,13 @@ def main():
     m = re.fullmatch(r'(job-.+)-(master|worker)-(\d+)', socket.gethostname())
     assert m is not None
     rank = 0 if m[2] == 'master' and m[3] == '0' else int(m[3]) + 1
-    assert 0 <= rank < 8 and (m[2] != 'master' or rank == 0)
+    world = len(plan['shards'])
+    assert 0 <= rank < world and (m[2] != 'master' or rank == 0)
     a.output.mkdir(parents=True, exist_ok=True)
     out = a.output / f'rank-{rank:02d}'
     out.mkdir(exist_ok=False)
     failure_root = a.output
-    deadline = started + 20520
+    deadline = started + plan['maximum_worker_seconds']
     save(out/'IDENTITY.json', dict(job=m[1], hostname=socket.gethostname(), rank=rank,
          source_commit=a.pin, started_unix=started,
          manifest_sha256=hashlib.sha256(a.manifest.read_bytes()).hexdigest(),
@@ -74,12 +75,12 @@ def main():
                     '--expected-count', '1', '--purpose', 'evaluation', '--baige-container',
                     '--output', str(out/'GPU-PROBE.pending.json')], check=True)
         (out/'GPU-PROBE.pending.json').replace(out/'GPU-PROBE.json')
-        for r in range(8):
+        for r in range(world):
             wait_file(a.output/f'rank-{r:02d}/GPU-PROBE.json', started+900)
-        probes = [json.loads((a.output/f'rank-{r:02d}/GPU-PROBE.json').read_text()) for r in range(8)]
-        identities = [json.loads((a.output/f'rank-{r:02d}/IDENTITY.json').read_text()) for r in range(8)]
+        probes = [json.loads((a.output/f'rank-{r:02d}/GPU-PROBE.json').read_text()) for r in range(world)]
+        identities = [json.loads((a.output/f'rank-{r:02d}/IDENTITY.json').read_text()) for r in range(world)]
         assert all(x['status'] == 'passed' for x in probes)
-        assert len({x['devices'][0]['uuid'] for x in probes}) == 8
+        assert len({x['devices'][0]['uuid'] for x in probes}) == world
         assert {x['job'] for x in identities} == {m[1]}
         assert {x['source_commit'] for x in identities} == {a.pin}
         assert len({x['manifest_sha256'] for x in identities}) == 1
@@ -100,31 +101,32 @@ def main():
                     raise
                 time.sleep(1)
         shard = plan['shards'][rank]
-        for stage in ('atomic_seen', 'composites'):
+        for stage in plan['stages']:
             names = shard[stage]
-            assert 1 <= len(names) <= 4
+            assert names
             stage_root = out/stage
             stage_root.mkdir()
-            for task in names:
-                stream = (stage_root/f'{task}.log').open('x')
-                client_logs.append(stream)
-                child = subprocess.Popen([sys.executable, '-B', str(scripts/'reference_eval.py'),
-                    '--checkpoint', checkpoint, '--output', str(stage_root/task), '--tasks', task,
-                    '--trials', '50', '--maximum-seconds', str(max(1, int(deadline-time.time()))),
-                    '--version', '1.0.1', '--replan', '5', '--server-port', '18405'],
-                    stdout=stream, stderr=subprocess.STDOUT)
-                clients.append(child)
-            while any(child.poll() is None for child in clients):
-                check_peers()
-                if time.time() >= deadline or server.poll() is not None:
-                    raise RuntimeError('Deadline reached or native server exited')
-                if any(child.poll() not in (None, 0) for child in clients):
-                    raise RuntimeError(f'{stage} client failed')
-                time.sleep(2)
-            failures = [child.returncode for child in clients]
-            clients = []
-            if any(failures):
-                raise RuntimeError(f'{stage} clients exited {failures}')
+            for offset in range(0, len(names), 4):
+                for task in names[offset:offset+4]:
+                    stream = (stage_root/f'{task}.log').open('x')
+                    client_logs.append(stream)
+                    child = subprocess.Popen([sys.executable, '-B', str(scripts/'reference_eval.py'),
+                        '--checkpoint', checkpoint, '--output', str(stage_root/task), '--tasks', task,
+                        '--trials', '50', '--maximum-seconds', str(max(1, int(deadline-time.time()))),
+                        '--version', '1.0.1', '--replan', '5', '--server-port', '18405'],
+                        stdout=stream, stderr=subprocess.STDOUT)
+                    clients.append(child)
+                while any(child.poll() is None for child in clients):
+                    check_peers()
+                    if time.time() >= deadline or server.poll() is not None:
+                        raise RuntimeError('Deadline reached or native server exited')
+                    if any(child.poll() not in (None, 0) for child in clients):
+                        raise RuntimeError(f'{stage} client failed')
+                    time.sleep(2)
+                failures = [child.returncode for child in clients]
+                clients = []
+                if any(failures):
+                    raise RuntimeError(f'{stage} clients exited {failures}')
             for task in names:
                 result = json.loads((stage_root/task/'RESULT.json').read_text())
                 assert result['completed'] and result['episodes'] == 50 and result['training_updates'] == 0
@@ -132,10 +134,10 @@ def main():
             if stage == 'atomic_seen':
                 gate = a.output/'ATOMIC-GATE.json'
                 if rank == 0:
-                    for r in range(8):
+                    for r in range(world):
                         wait_file(a.output/f'rank-{r:02d}/atomic_seen-DONE.json', deadline-180, server)
                     records = []
-                    for r in range(8):
+                    for r in range(world):
                         for task in plan['shards'][r]['atomic_seen']:
                             folder = a.output/f'rank-{r:02d}/atomic_seen'/task
                             cases = [json.loads(f.read_text()) for f in folder.glob(f'{task}-*.json')]
