@@ -41,8 +41,8 @@ claiming competence recovery. No PPO, GRPO or other training was launched here.
 
 ## Execution timing and limits
 
-Median policy-episode wall times, including episode I/O but excluding expert
-screening/model loading, were 35.64/10.94 s for raw native/continuous execution
+Median recorded policy-episode wall times, including decision I/O but excluding
+expert screening and model loading, were 35.64/10.94 s for raw native/continuous execution
 and 36.66/12.24 s for prefixed native/continuous execution. These measure the
 complete execution paths, not isolated TOPP or inference speed. The waypoint
 budget is matched; physical integration time is part of the controller factor
