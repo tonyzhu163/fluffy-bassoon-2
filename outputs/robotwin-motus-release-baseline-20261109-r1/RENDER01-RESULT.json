@@ -1,0 +1,177 @@
+{
+  "status": "complete",
+  "kind": "native_renderer_qualification",
+  "source_commit": "571bd49f3829f55e2e3cd94b314e78c537a1ef5a",
+  "manifest": {
+    "native_commit": "fa8d97b0f33bb894eae16df5a8175490f5b977a7",
+    "native_files": {
+      "envs/_base_task.py": "448f7152b65cb9102217cf5463aa821d72810ca56f63d5a797ec7bd43e23e101",
+      "envs/place_phone_stand.py": "719cf84ebf997b8d15d0ef9f997d439da62d64067a292b6008433da3536a0216",
+      "envs/robot/robot.py": "3dcd80acc8cab489a4c5edb507cc460dab1724be0226b8d5c4c1b218dee605cb",
+      "script/eval_policy.py": "8b16c766a9c401163418b425e413ebe7f4127d6b132b9c7c4d6b6f8752d57681",
+      "description/utils/generate_episode_instructions.py": "ef428fa9066c3025d41e2fabcbf894d1d4313bd12bee0a300d19d3d7d1158f24",
+      "task_config/_eval_step_limit.yml": "41c62bd26184977bae45aee555edd0cc21de5cddf560c2595921fc23a1e3b551",
+      "task_config/demo_clean.yml": "8ee5d0d07daecf7599b8d89b44776b700c7c60da24cd6317e176e6798d8cb11e",
+      "task_config/demo_randomized.yml": "a5a371f17188f602ff611154efce5299836a01a5e16d4b0f9b4bdbf6c714eb89"
+    },
+    "model_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+    "norm_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+    "openpi_version": "0.1.1",
+    "openpi_files": {
+      "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "conftest.py": "626672e385fb276396c119e2220421065c58f8ec602401e8bf2ae509f9fffaf3",
+      "models/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "models/gemma.py": "7e42ada4ae7e9995f0ef3e33a0c224758323c2015e2d9d72ec15726a8a001d2a",
+      "models/gemma_fast.py": "563c6e1ffd8afa31c406bcb8894a605e87df88f6c075d398d97a57af6bc3aefa",
+      "models/lora.py": "ced28716950c34d84a1a6d0b03b1d9550000732721df884818080b6e78cb3289",
+      "models/lora_test.py": "a0f10525de7773310402b3ffa636e88ffff7035f3179b140aacc6809c122f085",
+      "models/model.py": "0d74bc1d8f4623ac3d8e543710b8bf75f9b95e588a3ebf6127c659e001385cff",
+      "models/model_test.py": "f8e71f195045d4e3ef1ddfafb2337fa52e5aa2f89bce1fde62f5cbfb67121f21",
+      "models/pi0.py": "24b32d7c6ed5e409459afa8ca5af96a4dae09c2dcdf48e828907e411f4f12342",
+      "models/pi0_config.py": "e15d71586f1a561b35c5651227607613fb16d2df411f3708b1c9d36b02544285",
+      "models/pi0_fast.py": "627332a555046f2744ef144c45f8bd3361a9820cf68854a4528d0fdbba7e9aa3",
+      "models/pi0_test.py": "5082873014a7fc45fb8414f517909e1c24cdafea980a1fb612e0aea6058ed0fe",
+      "models/siglip.py": "14b4df0be280d5769fb0dc31a40cde27525dbb1980cc998c28475d62fa3cad32",
+      "models/tokenizer.py": "965be8b3c393a6811875bbc32da9e01a5d01cc2f87802de801cf7293e049748c",
+      "models/tokenizer_test.py": "5abd179ce883420e39d4d18b33d0123290af752da243003aa48a3bc06dbb9517",
+      "models/utils/fsq_tokenizer.py": "88866638ee4775f46a222561a957bd35e20600fe38c5888b587016ad77b1065f",
+      "models/vit.py": "d285d057636c3cba2d1fd3b37693b18075ad4b9c3b47bbde807c34c6c376ac93",
+      "models_pytorch/gemma_pytorch.py": "08fd8d750519f0fb44fc5173311e50a30f4c8f32c02e51244b4f8e47b32cd52f",
+      "models_pytorch/pi0_pytorch.py": "0c7b9f1de02ed886da49035e3fa1b38efea46eb6209489cb4f594f777f97b70c",
+      "models_pytorch/preprocessing_pytorch.py": "6a44e91be2d7a724c6140d2cc98ed0a631b8d38bbb29f63b380a0a19f903bbf6",
+      "models_pytorch/transformers_replace/models/gemma/configuration_gemma.py": "26fd0d0f52730ab32b6f337eb73ae9a26cb71ae0915bc49eced1d0e2ed8d0ec6",
+      "models_pytorch/transformers_replace/models/gemma/modeling_gemma.py": "17eeb54e277939e58cd6f8a92719a275e36baf0c9f463b2754227d42f87aedde",
+      "models_pytorch/transformers_replace/models/paligemma/modeling_paligemma.py": "c945d330b829264f927f3ee5339f977238631772de07a28e855e265bb85fd53c",
+      "models_pytorch/transformers_replace/models/siglip/check.py": "466e8eb7887ac5ccc98118a3169298d6ab65a284d834bae74751e3854dbc4245",
+      "models_pytorch/transformers_replace/models/siglip/modeling_siglip.py": "ef2e99500f263fdd78db9d4d9a255e29d844eb92f53c25ad640f8056700ef84b",
+      "policies/aloha_policy.py": "50d7ad972d80142ecb0f03b0780dacfd3af212946f4c9aac31a204b02db4543d",
+      "policies/droid_policy.py": "7d0893555964d485e231f70084125084a99495705ddd74b29461229d524fff26",
+      "policies/libero_policy.py": "ad01e5be74516d9ec9aeb1f76294d5c9f7f7179a60f1f7fbbb35e7646534f81a",
+      "policies/policy.py": "a2ac5236e23b11d0f5a840d4a8fef148d89dba921d5452ec5dfcd5a6ffa46f20",
+      "policies/policy_config.py": "aaf42ab04a33b6c91d2447926211646c33ebd8ebfa427f026d7b6c4f7c45ec52",
+      "policies/policy_test.py": "9dbb20963600367a7e7abfc97d1e326916777c57a87b39b1bc4070ba64676683",
+      "serving/websocket_policy_server.py": "1370d345e6c3c5b8f15573050e485e60a5b423d1df33e24b237805e6b442b026",
+      "shared/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "shared/array_typing.py": "6524945566eab3eb97b75a6280ba4724617b4d028c55f05172b283c3de68a026",
+      "shared/download.py": "8711d466cdaec488633e5509a000af6a7411b2d56f7ce6161f718f2389aa7786",
+      "shared/download_test.py": "234ee70ab2501a1421f6c44cbd83c1e16747597023319ae1446bed9d44f17072",
+      "shared/image_tools.py": "0f8fcb355288119e56acb56d550c1cc1f3a9edddceb0dc5b319f955943ef7767",
+      "shared/image_tools_test.py": "842374579dc9f4c2907da5e8bb555efe5a3f4902b659720c8e90115863dd59fe",
+      "shared/nnx_utils.py": "4da7111ba3011c4d1c381c9ed17257771df6a50ed89182647c3fb6f79208005e",
+      "shared/normalize.py": "6c2cea4946fb07e51801530400d2b2fd94730e195cd290d6b6960114eca9739d",
+      "shared/normalize_test.py": "fda27a21cf37f337b12bcab71229407c2a349c5965c33f278bdc468ed03f58af",
+      "training/checkpoints.py": "3cc32682ec3609e9075dabd991488edb9d7f6c045443f58963d733f99c468dbd",
+      "training/config.py": "b54b77a123537bcb304ffe4ad3ed191ee065890f8d7d6a0973d13a0231b93cec",
+      "training/data_loader.py": "af6f1c1b097dc435ceceb646827826f956e8f719290c1d31fdf6b68477b1fd8b",
+      "training/data_loader_test.py": "a0cf1bc293e8b0eb9bc5516bc05d30d9940da06c94fcfa1addca7267f8358815",
+      "training/droid_rlds_dataset.py": "9480e75ab2dbcc16d9219ed0f0982b057e5ba555b1b2b5abc692956568bdc722",
+      "training/misc/roboarena_config.py": "914acdd74ccf90e6779c13a5093140595c7e4f687e9e0b167439446a81d74c01",
+      "training/optimizer.py": "cfb5d6f6aec61fbe961287b4015c652260628a0ed4682a0dbdc271b8e65431fa",
+      "training/sharding.py": "2384acbb4c33b1796294efdb088c6cd1a1f6100f505e636434e3c0c894f7def6",
+      "training/utils.py": "b684e674343f86ef5e976f279a586d3fe2f885e901f396ac899ed136abc7eca6",
+      "training/weight_loaders.py": "a54ac3222f81f8c6233241bc16b6f369c9416cdaa83f7058f96f7ddcfde1a3b4",
+      "transforms.py": "a1b94e9e72849a18834778f229c6bb389a495eb7fbe0aa800edea728b9424ff4",
+      "transforms_test.py": "d76f3ee8c5d7dc1c6fb6cb3b36b45ef30dd1de1ab5bc054bcb03deb79dcc06a8"
+    },
+    "sapien_version": "3.0.1",
+    "oidn_version": "2.3.3",
+    "oidn_loader_sha256": "274d911550611b89ef48b302edbaafcb886db81ba05046ed39c1f7b48c770ac9",
+    "oidn_libraries": {
+      "libOpenImageDenoise.so.2.3.3": "9ac9dcd18318cae879efb01c14cff72c2c4275428a15e5ab6e94c8ff8a43c4dc",
+      "libOpenImageDenoise_core.so.2.3.3": "eadb2437d6ac4a88e5746980495ba1091f7d14745e3000b82a9382093d22f351",
+      "libOpenImageDenoise_device_cuda.so.2.3.3": "12b3ff87cfa4b6a90481b757f5a56ee69380a45e3dcaeadf8dd22cb73d4f714a"
+    },
+    "curobo_version": "0.7.8",
+    "curobo_core": {
+      "wrap/reacher/motion_gen.py": "348ee2fa858b1d651a70fa2b2b5a5d4e240ea724b7817d7769473c3f7a7e46e8",
+      "types/robot.py": "375051c0893dc422f55d727b2294f06e6c057a6c0ecbbb718e8ebe324a8a940e",
+      "cuda_robot_model/cuda_robot_model.py": "3ebf45845292a044c2999290a1ead6a5147f09e4cc509174459f6309df594201"
+    },
+    "transformers_version": "4.53.2",
+    "transformers_replacements": {
+      "models/gemma/modeling_gemma.py": "17eeb54e277939e58cd6f8a92719a275e36baf0c9f463b2754227d42f87aedde",
+      "models/gemma/configuration_gemma.py": "26fd0d0f52730ab32b6f337eb73ae9a26cb71ae0915bc49eced1d0e2ed8d0ec6",
+      "models/paligemma/modeling_paligemma.py": "c945d330b829264f927f3ee5339f977238631772de07a28e855e265bb85fd53c",
+      "models/siglip/modeling_siglip.py": "ef2e99500f263fdd78db9d4d9a255e29d844eb92f53c25ad640f8056700ef84b",
+      "models/siglip/check.py": "466e8eb7887ac5ccc98118a3169298d6ab65a284d834bae74751e3854dbc4245"
+    }
+  },
+  "model_constructed": false,
+  "optimizer_updates": 0,
+  "episodes": [
+    {
+      "setting": "demo_clean",
+      "seed": 100000,
+      "expert_passed": true,
+      "image_shapes": [
+        [
+          240,
+          320,
+          3
+        ],
+        [
+          240,
+          320,
+          3
+        ],
+        [
+          240,
+          320,
+          3
+        ]
+      ],
+      "image_ranges": [
+        [
+          17,
+          255
+        ],
+        [
+          22,
+          255
+        ],
+        [
+          56,
+          255
+        ]
+      ]
+    },
+    {
+      "setting": "demo_randomized",
+      "seed": 100000,
+      "expert_passed": true,
+      "image_shapes": [
+        [
+          240,
+          320,
+          3
+        ],
+        [
+          240,
+          320,
+          3
+        ],
+        [
+          240,
+          320,
+          3
+        ]
+      ],
+      "image_ranges": [
+        [
+          14,
+          255
+        ],
+        [
+          11,
+          255
+        ],
+        [
+          17,
+          255
+        ]
+      ]
+    }
+  ],
+  "started_unix": 1794202698.3032603,
+  "ended_unix": 1794202758.7282438
+}

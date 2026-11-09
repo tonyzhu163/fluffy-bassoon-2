@@ -1,11 +1,11 @@
 {
-  "status": "epoch2_native_renderer01_starting",
-  "closed_conservative_gpu_seconds": 1645,
+  "status": "epoch2_native_renderer_qualified_sft_smoke05_ready",
+  "closed_conservative_gpu_seconds": 1850,
   "cap_gpu_seconds": 360000,
-  "closed_conservative_gpu_hours": 0.45694444444444443,
-  "remaining_gpu_seconds": 358355,
-  "remaining_unreserved_gpu_seconds": 357455,
-  "next_worst_gpu_seconds": 900,
+  "closed_conservative_gpu_hours": 0.5138888888888888,
+  "remaining_gpu_seconds": 358150,
+  "remaining_unreserved_gpu_seconds": 354550,
+  "next_worst_gpu_seconds": 3600,
   "components": [
     {
       "cluster": "Baige Pro6K",
@@ -90,24 +90,37 @@
       "randomized_episodes": 0,
       "result_is_baseline": false,
       "failure": "Unseen background texture directory absent. Both clean episodes completed, but OIDN2.0.1 cannot initialize CUDA on Blackwell and reports invalid handles; render and randomized assets must be fixed before a baseline claim."
+    },
+    {
+      "job_id": "job-9yas4j8qoeh3",
+      "identity": "native-render-01",
+      "scheduler_status": "Succeeded",
+      "created_at": "2026-11-09T13:36:01+08:00",
+      "scheduler_ended_at": "2026-11-09T13:39:26+08:00",
+      "gpu_count": 1,
+      "gpus_released": true,
+      "conservative_allocation_gpu_seconds": 205,
+      "worker_gpu_seconds": 181,
+      "native_expert_episodes": 2,
+      "positive_expert_episodes": 2,
+      "policy_episodes": 0,
+      "denoiser_errors": 0,
+      "readback": "outputs/robotwin-motus-release-baseline-20261109-r1/RENDER01-READBACK.json"
     }
   ],
   "prior_cleared_epoch_gpu_seconds": 359665,
   "prior_cleared_epoch_gpu_hours": 99.90694444444445,
   "prior_cleared_epoch_ledger": "HISTORICAL-BUDGET-EPOCH1-THROUGH-20261108.json",
   "approval": "User cleared prior 359,665 GPU-s (99.91 GPU-h) epoch and approved a fresh 100 GPU-hour (360,000 GPU-s) budget on 2026-11-09T11:05:01+08:00 ('clear the existing gpu hours, i approve another 100 hours').",
-  "active_job_id": "job-9yas4j8qoeh3",
-  "active_jobs": [
-    {
-      "job_id": "job-9yas4j8qoeh3",
-      "identity": "native-render-01",
-      "gpus": 1,
-      "created_at": "2026-11-09T13:36:01+08:00",
-      "reserved_gpu_seconds": 900
-    }
-  ],
+  "active_job_id": null,
+  "active_jobs": [],
   "ownership_and_data_preserved": true,
-  "planned_job": null,
+  "planned_job": {
+    "identity": "native-smoke-05",
+    "gpus": 1,
+    "reservation_gpu_seconds": 3600,
+    "task": "frozen direct OpenPI pi05,2clean+2randomized, qualified native renderer and assets"
+  },
   "user_stopped_at": "2026-11-09T12:21:51+08:00",
   "user_resumed_scope": "Released pi0.5 SFT baseline first; then PPO and GRPO baselines"
 }
