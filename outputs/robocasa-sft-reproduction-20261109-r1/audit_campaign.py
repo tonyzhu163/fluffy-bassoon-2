@@ -92,6 +92,22 @@ def main():
                  controls=controls, predictions=sum(x['predictions'] for x in cases),
                  inference_batch_size=1, training_updates=0, tasks=tasks, ranks=ranks,
                  note='Unpaired aggregate reproduction; Wilson interval is descriptive, not a formal equivalence claim')
+    if 'task_categories' in plan:
+        assert {x['task'] for x in tasks} == set(plan['task_categories'])
+        assert len(tasks) == len(plan['task_categories'])
+        categories = {}
+        for category, reference in plan['official_references'].items():
+            selected = [x for x in tasks if plan['task_categories'][x['task']] == category]
+            count = sum(x['episodes'] for x in selected)
+            success = sum(x['successes'] for x in selected)
+            original = sum(x['old_cutoff_successes'] for x in selected)
+            assert len(selected) == 16 and count == 800
+            categories[category] = dict(tasks=16, episodes=count, successes=success,
+                success_rate=success/count, descriptive_wilson_95=wilson(success,count),
+                old_cutoff_successes=original, old_cutoff_rate=original/count,
+                reference_rate=reference, difference_pp=100*(success/count-reference))
+        assert sum(x['episodes'] for x in categories.values()) == n
+        value['categories'] = categories
     target = args.output/'INDEPENDENT-AUDIT.json'
     assert not target.exists()
     target.write_text(json.dumps(value,indent=2)+'\n')

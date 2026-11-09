@@ -171,3 +171,14 @@ spanning640 training groups. Critic-free GRPO avoids the specific historical
 critic mismatch. These are concrete validations of the tested OpenDrawer
 recipes; the unfinished causal comparison does not negate them. Neither
 PPO nor GRPO training is resumed by this SFT reproduction.
+
+The user subsequently requested PPO cadence testing, selected PPO first,
+then asked why the original settings were not being used. Upstream baseline
+reproduction now takes precedence over the proposed C5/C50 ablation. No new
+RL job has launched. Original OpenPI's submission-linked evaluator defines
+`replan_steps=5` and enqueues only that slice of each prediction; its maintainer
+confirms this was the reported experimental setting. The historical local
+C50/K10/noise0.3 recipe must not be called an upstream recipe reproduction.
+The inspected RLinf RoboCasa365 PPO recipe uses C5/K5/four epochs/pretrain,
+but selects pi0 and two cameras. Its required model/camera/checkpoint changes
+for Human300 pi0.5 must be declared rather than silently called exact parity.

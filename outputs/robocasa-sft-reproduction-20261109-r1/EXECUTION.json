@@ -2,13 +2,13 @@
   "run_id": "robocasa-sft-reproduction-20261109-r1",
   "owner_chat": "01a1be92-5e00-7df0-b90e-9719078be031",
   "source_commit": "4a4c6cce87cf4022d9886b294d737b3b2c3a1f31",
-  "phase": "gpu05_composite_qualification_running",
+  "phase": "gpu05_composite_qualification_complete",
   "cluster": "Baige Pro6K",
   "queue_id": "aihcq-rh0wwk9muei4",
   "job_id": "job-fjbgnmxm6ivr",
   "job_name": "mwj_1109_robocasa_sft_composite_qual05",
   "scheduler_created_shanghai": "2026-11-09 15:28:34",
-  "scheduler_state_observed": "Running; real GPU probe passed, native server ready, all four simulators advancing",
+  "scheduler_state_observed": "Succeeded; scheduler and GPU release verified",
   "resources": {
     "gpus": 1,
     "cpus": 21,
@@ -39,12 +39,12 @@
   "cache": "project-specific copy of cached public tokenizer; SHA256 8986bb4f423f07f8c7f70d0dbe3526fb2316056c17bae71b1ea975e77a168fc6; original cache preserved",
   "budget": {
     "maximum_gpu_hours": 50,
-    "closed_gpu_seconds": 15434,
-    "open_reservation_gpu_seconds_including_overhead": 1920,
-    "queue_charge": "Closed earlier attempts retain conservative creation-to-release accounting. GPU05 had 42m05s queued before allocation; record this separately from allocated GPU time. Reserve 1920 allocated GPU-seconds including startup/release."
+    "closed_gpu_seconds": 18416,
+    "open_reservation_gpu_seconds_including_overhead": 0,
+    "queue_charge": "Closed attempts retain conservative creation-to-release accounting. GPU05 includes2523 queued seconds; actual pod-to-release time459 GPU-seconds is recorded separately."
   },
-  "next_action": "Monitor queue/allocation, verify actual GPU/model/episodes, audit composite collection speed before sizing1600-case sweep.",
-  "last_check_shanghai": "2026-11-09 16:13:15+08:00",
+  "next_action": "Fresh queue capacity check, then 4-container composite1600 evaluation: maximum8h each, 32GPUh plus startup/release; total conservative task ceiling remains50GPUh. RL recipe audit precedes any new PPO training.",
+  "last_check_shanghai": "2026-11-09 16:21:07+08:00",
   "attempts": [
     {
       "attempt": "gpu01",
@@ -124,7 +124,7 @@
       "attempt": "gpu05",
       "job_id": "job-fjbgnmxm6ivr",
       "created_shanghai": "2026-11-09 15:28:34",
-      "state": "Running",
+      "state": "Succeeded / released",
       "source_commit": "4a4c6cce87cf4022d9886b294d737b3b2c3a1f31",
       "maximum_seconds": 1800,
       "gpus": 1,
@@ -133,14 +133,22 @@
       "training_updates": 0,
       "pods_created_shanghai": "2026-11-09 16:10:37",
       "running_shanghai": "2026-11-09 16:10:45",
-      "episodes_completed": 0
+      "episodes_completed": 4,
+      "terminal_shanghai": "2026-11-09 16:18:16",
+      "controls": 16650,
+      "predictions": 3330,
+      "conservative_gpu_seconds": 2982,
+      "allocated_to_release_gpu_seconds": 459,
+      "queue_seconds": 2523,
+      "independent_audit": "GPU05-AUDIT.json passed"
     }
   ],
   "scheduler_pods_created_shanghai": "2026-11-09 16:10:37",
   "gpu_probe": "PASS; one allocated NVIDIA RPBZZZ6 GPU-a827077c-35ab-fb2b-a1a4-fa68c55d3746",
-  "completed_episodes_last_check": 0,
+  "completed_episodes_last_check": 4,
   "atomic_successes": 363,
   "atomic_success_rate": 0.4033333333333333,
   "old_cutoff_successes": 249,
-  "scheduler_running_shanghai": "2026-11-09 16:10:45"
+  "scheduler_running_shanghai": "2026-11-09 16:10:45",
+  "scheduler_terminal_shanghai": "2026-11-09 16:18:16"
 }

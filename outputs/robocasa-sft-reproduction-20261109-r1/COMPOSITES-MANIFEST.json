@@ -1,0 +1,113 @@
+{
+  "trials_per_task": 50,
+  "split": "pretrain",
+  "seed": 7,
+  "inference_batch_size": 1,
+  "replan": 5,
+  "ode_steps": 10,
+  "prediction_horizon": 50,
+  "maximum_policy_controls": 3930000,
+  "maximum_worker_seconds": 28440,
+  "stages": [
+    "composites"
+  ],
+  "version": "1.0.1",
+  "robocasa_source_directory": "robocasa",
+  "robocasa_commit": "29f7ce8814c1547f5af762a0997fbd4b64848dd7",
+  "official_references": {
+    "composite_seen": 0.071,
+    "composite_unseen": 0.012
+  },
+  "task_categories": {
+    "DeliverStraw": "composite_seen",
+    "GetToastedBread": "composite_seen",
+    "KettleBoiling": "composite_seen",
+    "LoadDishwasher": "composite_seen",
+    "PackIdenticalLunches": "composite_seen",
+    "PreSoakPan": "composite_seen",
+    "PrepareCoffee": "composite_seen",
+    "RinseSinkBasin": "composite_seen",
+    "ScrubCuttingBoard": "composite_seen",
+    "SearingMeat": "composite_seen",
+    "SetUpCuttingStation": "composite_seen",
+    "StackBowlsCabinet": "composite_seen",
+    "SteamInMicrowave": "composite_seen",
+    "StirVegetables": "composite_seen",
+    "StoreLeftoversInBowl": "composite_seen",
+    "WashLettuce": "composite_seen",
+    "ArrangeBreadBasket": "composite_unseen",
+    "ArrangeTea": "composite_unseen",
+    "BreadSelection": "composite_unseen",
+    "CategorizeCondiments": "composite_unseen",
+    "CuttingToolSelection": "composite_unseen",
+    "GarnishPancake": "composite_unseen",
+    "GatherTableware": "composite_unseen",
+    "HeatKebabSandwich": "composite_unseen",
+    "MakeIceLemonade": "composite_unseen",
+    "PanTransfer": "composite_unseen",
+    "PortionHotDogs": "composite_unseen",
+    "RecycleBottlesByType": "composite_unseen",
+    "SeparateFreezerRack": "composite_unseen",
+    "WaffleReheat": "composite_unseen",
+    "WashFruitColander": "composite_unseen",
+    "WeighIngredients": "composite_unseen"
+  },
+  "shards": [
+    {
+      "rank": 0,
+      "composites": [
+        "ArrangeBreadBasket",
+        "MakeIceLemonade",
+        "HeatKebabSandwich",
+        "SetUpCuttingStation",
+        "PortionHotDogs",
+        "BreadSelection",
+        "PrepareCoffee",
+        "ScrubCuttingBoard"
+      ],
+      "maximum_controls": 982500
+    },
+    {
+      "rank": 1,
+      "composites": [
+        "SearingMeat",
+        "WeighIngredients",
+        "DeliverStraw",
+        "PreSoakPan",
+        "StirVegetables",
+        "LoadDishwasher",
+        "PanTransfer",
+        "KettleBoiling"
+      ],
+      "maximum_controls": 990000
+    },
+    {
+      "rank": 2,
+      "composites": [
+        "WaffleReheat",
+        "GetToastedBread",
+        "RecycleBottlesByType",
+        "SeparateFreezerRack",
+        "ArrangeTea",
+        "StackBowlsCabinet",
+        "CategorizeCondiments",
+        "RinseSinkBasin"
+      ],
+      "maximum_controls": 982500
+    },
+    {
+      "rank": 3,
+      "composites": [
+        "PackIdenticalLunches",
+        "WashFruitColander",
+        "GarnishPancake",
+        "StoreLeftoversInBowl",
+        "GatherTableware",
+        "SteamInMicrowave",
+        "WashLettuce",
+        "CuttingToolSelection"
+      ],
+      "maximum_controls": 975000
+    }
+  ]
+}
