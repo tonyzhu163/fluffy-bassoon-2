@@ -114,7 +114,7 @@ def episode(task, config, native, case, worker, scratch, directory, *,
     return result
 
 
-def run(out, count, diagnostic=False, wrist_near=None, wrist_domain="demo_clean"):
+def run(out, count, diagnostic=False, wrist_near=None, wrist_domain="demo_clean", endpoint=None):
     import torch
     from fluffy_bassoon.robotwin.noise import _install_allocated_renderer
     assert torch.cuda.device_count() == 1 and os.uname().nodename.startswith('job-')
@@ -132,6 +132,18 @@ def run(out, count, diagnostic=False, wrist_near=None, wrist_domain="demo_clean"
                   native_commit=NATIVE_COMMIT, lerobot_commit=LEROBOT_COMMIT, optimizer_updates=0,
                   episodes_per_domain=count, settings={})
     save(out/'RESULT.json', report)
+    model_path = Path(bundle['path'])
+    if endpoint:
+        assert not diagnostic and wrist_near == .01 and wrist_domain == 'both'
+        prepare = OUTPUTS/'robotwin-sidney-native-endpoints-20261109-r1/prepare_endpoint.py'
+        dest = scratch/'trained-native-policy'
+        with (out/'endpoint-load.log').open('w') as log:
+            convert_python = '/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python'
+            subprocess.run([convert_python, str(prepare), endpoint, str(model_path), str(dest),
+                            str(out/'ENDPOINT.json')], stdout=log, stderr=subprocess.STDOUT,
+                           check=True, timeout=1800)
+        report['endpoint'] = json.loads((out/'ENDPOINT.json').read_bytes())
+        model_path = dest
     if diagnostic:
         loader = OUTPUTS/'robotwin-sidney-gap-20261109-r1/check_loader.py'
         with (out/'loader.log').open('w') as log:
@@ -139,7 +151,7 @@ def run(out, count, diagnostic=False, wrist_near=None, wrist_domain="demo_clean"
                            env=dict(os.environ, PYTHONPATH=str(LEROBOT/'src')), stdout=log,
                            stderr=subprocess.STDOUT, check=True, timeout=600)
     with (out/'model.log').open('w') as log:
-        proc = subprocess.Popen([MODEL_PYTHON, str(QUAL/'model_worker.py'), '--model', bundle['path'],
+        proc = subprocess.Popen([MODEL_PYTHON, str(QUAL/'model_worker.py'), '--model', str(model_path),
                                  '--output', str(out)], stdin=subprocess.PIPE, stdout=log, stderr=subprocess.STDOUT,
                                 text=True, env=dict(os.environ, PYTHONPATH=str(LEROBOT/'src')))
         try:
@@ -153,7 +165,8 @@ def run(out, count, diagnostic=False, wrist_near=None, wrist_domain="demo_clean"
                 diagnose(out, cases['demo_clean'], native, proc, scratch, report, count)
             else:
                 if wrist_near is not None:
-                    cases = {wrist_domain: cases[wrist_domain]}
+                    if wrist_domain != 'both':
+                        cases = {wrist_domain: cases[wrist_domain]}
                     report['wrist_near_m'] = wrist_near
                 evaluate_settings(out, count, cases, native, proc, scratch, report, wrist_near)
             proc.stdin.close()
@@ -187,8 +200,9 @@ if __name__ == '__main__':
     args.add_argument('--episodes', type=int, choices=(2, 16, 100), required=True)
     args.add_argument('--diagnostic', action='store_true')
     args.add_argument('--wrist-near', type=float, choices=(.01,))
-    args.add_argument('--wrist-domain', choices=('demo_clean', 'demo_randomized'), default='demo_clean')
+    args.add_argument('--wrist-domain', choices=('demo_clean', 'demo_randomized', 'both'), default='demo_clean')
+    args.add_argument('--endpoint', choices=('ppo40', 'grpo40'))
     parsed = args.parse_args()
     if parsed.wrist_domain == 'demo_randomized' and parsed.wrist_near is None:
         args.error('--wrist-domain requires a wrist clipping distance')
-    run(parsed.output, parsed.episodes, parsed.diagnostic, parsed.wrist_near, parsed.wrist_domain)
+    run(parsed.output, parsed.episodes, parsed.diagnostic, parsed.wrist_near, parsed.wrist_domain, parsed.endpoint)
