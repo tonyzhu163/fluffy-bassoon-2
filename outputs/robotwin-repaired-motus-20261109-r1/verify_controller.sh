@@ -3,7 +3,7 @@ set -Eeuo pipefail
 TASK_SOURCE=${1:?reviewed source commit}
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_DRIVER=$TASK_CODE/outputs/robotwin-restoration-20261106-r1
-TASK_OUT=/mnt/bos/adgfyl/strong-plant-archives/robotwin-repaired-motus-20261109-r1/controller-pilot01
+TASK_OUT=/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/repaired-motus-20261109-r1/controller-pilot01
 TASK_LOCAL=/tmp/rt-repaired-controller-pilot01
 TASK_PYTHON=/mowenjie/fluffy-bassoon-2/envs/robotwin-vlrla-20261029-r1/bin/python
 export TASK_SOURCE TASK_CODE TASK_DRIVER TASK_OUT TASK_LOCAL GIT_OPTIONAL_LOCKS=0
@@ -48,6 +48,7 @@ probe=json.loads((Path(os.environ['TASK_OUT'])/'gpu-probe.json').read_bytes())
 assert probe['status']=='passed' and len(probe['devices'])==1
 assert probe['devices'][0]['cuda_total_bytes']>=90*2**30
 assert shutil.disk_usage(os.environ['TASK_LOCAL']).free>=32*2**30
+assert os.path.ismount('/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1') or os.path.ismount('/mnt/bos/adgfyl')
 path=Path(os.environ['TASK_OUT'])/'write-probe'
 with path.open('xb') as f:f.write(b'repaired-controller-pilot');f.flush();os.fsync(f.fileno())
 assert path.read_bytes()==b'repaired-controller-pilot';path.unlink()
