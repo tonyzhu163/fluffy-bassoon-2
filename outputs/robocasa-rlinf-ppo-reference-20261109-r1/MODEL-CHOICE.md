@@ -40,9 +40,9 @@ not automatically supply the original categorical policy likelihood. A
 continuous Gaussian head can be defined,but that is an explicit additional
 policy choice. The OpenVLA name alone does not settle the likelihood question.
 
-## Recommendation for this project's frozen motor
+## Fixed-map alternative with the current motor
 
-Keep the verified pi0.5 motor while evaluating an explicit controller policy
+One option keeps the verified pi0.5 motor and evaluates an explicit controller policy
 q_psi(z|H),where H is the available observation/action/feedback history. A
 Gaussian (or a Gaussian followed by a fixed bounded map) gives a tractable
 sample density. With a frozen decoder F,the motor executes a=F(o,z),and PPO
@@ -58,6 +58,27 @@ freeze such a map before that PPO phase,or define the policy distribution
 directly over the actual perturbations with a valid density. A deterministic
 history-to-KV bridge trained by supervised flow matching is a separate
 legitimate objective; it should not be relabeled as this Gaussian PPO policy.
+
+## Recommendation for the project's learned KV bridge
+
+For PPO directly on a trainable learned KV bridge,the simplest likelihood
+formulation is an autoregressive action-token VLA. The frozen backbone plus
+trainable adapter defines a normalized categorical token distribution; its
+joint action-token probability is the product of the actual conditional
+sampling probabilities. Adapter parameters can change while their effect
+remains inside this likelihood. This avoids the fixed-decoder restriction
+of scoring only Gaussian steering coefficients. Correct action-token masks,
+temperature and termination must be included in rollout and replay.
+
+Thus the theoretical reference recommendation is original autoregressive
+OpenVLA,subject to first verifying a competent checkpoint and action interface
+for the chosen benchmark. Retain verified pi0.5 as a performance control.
+This is a project-design recommendation,not a claim that OpenVLA will achieve
+better success or a launch instruction. OpenVLA-OFT's L1 head does not supply
+the categorical-likelihood advantage. If preserving pi0.5 is a hard motor
+requirement,the explicit Gaussian fixed-map alternative above remains clean,
+and a complete stochastic denoising formulation is another option requiring
+its own full probability-model audit.
 
 The existing paper route currently learns full-expert source histories and
 distills them into a frozen-motor bridge. Replacing its source learner with
