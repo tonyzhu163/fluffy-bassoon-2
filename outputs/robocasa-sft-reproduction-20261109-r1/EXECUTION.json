@@ -57,10 +57,11 @@
     "maximum_gpu_hours": 50,
     "closed_gpu_seconds": 908,
     "open_reservation_gpu_seconds_including_overhead": 44400,
-    "queue_charge": "Conservatively include creation-to-pod time; 3\u00d74h maximum plus up to 400 seconds each for observed queue/startup/release"
+    "queue_charge": "Conservatively include creation-to-pod time; 3\u00d74h maximum plus up to 400 seconds each for observed queue/startup/release",
+    "cumulative_live_upper_gpu_seconds": 10841
   },
   "next_action": "Monitor complete 900-case atomic aggregate; then launch composites or fresh 1.0.0 comparison according to the predeclared practical screen.",
-  "last_check_shanghai": "2026-11-09 14:06:52+08:00",
+  "last_check_shanghai": "2026-11-09T14:39:03.040616+08:00",
   "attempts": [
     {
       "attempt": "gpu01",
@@ -132,5 +133,5 @@
   ],
   "scheduler_pods_created_shanghai": "2026-11-09 13:48:59",
   "gpu_probe": "PASS on all three distinct allocated NVIDIA RPBZZZ6 devices",
-  "completed_episodes_last_check": 280
+  "completed_episodes_last_check": 629
 }

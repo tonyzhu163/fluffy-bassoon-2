@@ -101,6 +101,11 @@ on `--args.split pretrain`. The separate foundation-model fine-tuning benchmark
 uses target scenes; its scene split must not be applied to this checkpoint's
 multi-task reference.
 
+A [May 4 maintainer reply](https://github.com/robocasa-benchmark/openpi/issues/1)
+also explicitly confirms that the reported experiments kept the default
+`replan_steps=5`. This supports H5 independently of the released script's
+argument defaults. The same thread records the public π0.5-config release.
+
 The released code uses 224-pixel resize-with-padding, left/wrist/right RGB,
 the relative-eef/base/gripper state order, 10 ODE denoising steps, and native
 binary gripper/base-mode conversion. Its `Args.task_set` / `args.task_soup`
