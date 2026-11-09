@@ -117,3 +117,7 @@ Continue the previously approved100GPU-hour Epoch2 cap. Already closed:
 918GPU-s=.255h. Reserve at most1GPU-hour for the first native smoke; inspect
 its actual rate before reserving the full evaluation. No new100h reset.
 Update the existing single LATEST-BUDGET ledger and our coordination row.
+
+## Frozen smoke qualification
+
+Native-smoke05 (`job-4tj08qs57c6x`, source `a3110e7b`) completed2clean+2randomized episodes. Independent Linux readback passed: all43action chunks finite32x14,1,325native targets delivered, frozen parameter versions unchanged, optimizer updates0, qualified runtime/assets identical. Clean1/2, randomized0/2 are execution diagnostics only. Scheduler succeeded13:48:58 Shanghai; creation-to-terminal charge324GPU-s. Proceed unchanged to100+100 phone episodes; reserve22,200GPU-s (370min scheduler,21,600s worker) within the existing100h cap.

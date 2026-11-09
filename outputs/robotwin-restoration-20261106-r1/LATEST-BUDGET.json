@@ -1,11 +1,11 @@
 {
-  "status": "epoch2_native_renderer_qualified_sft_smoke05_ready",
-  "closed_conservative_gpu_seconds": 1850,
+  "status": "epoch2_native_sft_smoke_qualified_phone100_ready",
+  "closed_conservative_gpu_seconds": 2174,
   "cap_gpu_seconds": 360000,
-  "closed_conservative_gpu_hours": 0.5138888888888888,
-  "remaining_gpu_seconds": 358150,
-  "remaining_unreserved_gpu_seconds": 354550,
-  "next_worst_gpu_seconds": 3600,
+  "closed_conservative_gpu_hours": 0.6038888888888889,
+  "remaining_gpu_seconds": 357826,
+  "remaining_unreserved_gpu_seconds": 335626,
+  "next_worst_gpu_seconds": 22200,
   "components": [
     {
       "cluster": "Baige Pro6K",
@@ -106,6 +106,22 @@
       "policy_episodes": 0,
       "denoiser_errors": 0,
       "readback": "outputs/robotwin-motus-release-baseline-20261109-r1/RENDER01-READBACK.json"
+    },
+    {
+      "job_id": "job-4tj08qs57c6x",
+      "identity": "native-smoke-05",
+      "scheduler_status": "Succeeded",
+      "created_at": "2026-11-09T13:43:34+08:00",
+      "scheduler_ended_at": "2026-11-09T13:48:58+08:00",
+      "gpu_count": 1,
+      "gpus_released": true,
+      "conservative_allocation_gpu_seconds": 324,
+      "worker_gpu_seconds": 285,
+      "completed_episodes": 4,
+      "clean_successes": 1,
+      "randomized_successes": 0,
+      "result_is_baseline": false,
+      "readback": "outputs/robotwin-motus-release-baseline-20261109-r1/SMOKE05-READBACK.json"
     }
   ],
   "prior_cleared_epoch_gpu_seconds": 359665,
@@ -116,10 +132,10 @@
   "active_jobs": [],
   "ownership_and_data_preserved": true,
   "planned_job": {
-    "identity": "native-smoke-05",
+    "identity": "native-phone100-01",
     "gpus": 1,
-    "reservation_gpu_seconds": 3600,
-    "task": "frozen direct OpenPI pi05,2clean+2randomized, qualified native renderer and assets"
+    "reservation_gpu_seconds": 22200,
+    "task": "Frozen released pi05,100 clean+100 randomized native phone episodes; scheduler370min; worker21600s"
   },
   "user_stopped_at": "2026-11-09T12:21:51+08:00",
   "user_resumed_scope": "Released pi0.5 SFT baseline first; then PPO and GRPO baselines"
