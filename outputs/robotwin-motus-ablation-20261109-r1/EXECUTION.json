@@ -1,12 +1,12 @@
 {
-  "status": "running",
+  "status": "complete",
   "cluster": "Baige Pro6K",
   "source_commit": "250c15775bfd2245cd03aafa4d7ac0cafe0b354e",
   "source_checkout": "/mowenjie/fluffy-bassoon-2/sources/robotwin-motus-ablation-20261109-r2",
   "job_id": "job-wgabk7r9kn52",
   "name": "mwj_1109_motus_ablation_ep10_01",
   "created_at": "2026-11-09T14:07:12+08:00",
-  "last_check": "2026-11-09T14:10:39+08:00",
+  "last_check": "2026-11-09T14:32:50+08:00",
   "output": "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motus-ablation-20261109-r1/ablation-ep10-01",
   "resources": {
     "gpus": 1,
@@ -17,33 +17,19 @@
     "automatic_retry": false
   },
   "target_pairs": 10,
-  "completed_pairs": 0,
+  "completed_pairs": 10,
   "gpu_probe_passed": true,
   "strict_policy_load_passed": true,
   "runtime_manifest_matches_qualified": true,
   "optimizer_updates": 0,
   "budget": {
     "cap_gpu_seconds": 7200,
-    "closed_conservative_gpu_seconds": 322,
-    "current_reservation_gpu_seconds": 3600,
-    "further_reserved_gpu_seconds": 0,
-    "conservative_total_with_reservation": 3922
+    "closed_conservative_gpu_seconds": 1565,
+    "worker_gpu_seconds": 1495,
+    "reserved_gpu_seconds": 0,
+    "remaining_gpu_seconds": 5635
   },
-  "next_action": "Complete ten paired seeds (40 policy episodes), independently audit and close scheduler usage",
-  "last_saved_episodes": [
-    {
-      "path": "default_prompt_take_action-000-seed-100000/episode.json",
-      "decisions": 13,
-      "complete": true,
-      "success": false
-    },
-    {
-      "path": "raw_take_action-000-seed-100000/episode.json",
-      "decisions": 13,
-      "complete": true,
-      "success": false
-    }
-  ],
+  "next_action": "Retain audited diagnostic evidence; no further allocations under this run",
   "attempts": [
     {
       "job_id": "job-drxzlm19htrf",
@@ -69,5 +55,32 @@
       "independent_readback": "ep2-01-READBACK.json"
     }
   ],
-  "next_check_by": "2026-11-09T14:30:39+08:00"
+  "scheduler_status": "Succeeded",
+  "ended_at": "2026-11-09T14:27:55+08:00",
+  "gpus_released": true,
+  "active_jobs": [],
+  "completed_policy_episodes": 40,
+  "worker_gpu_seconds": 1211,
+  "independent_readback": "ep10-01-READBACK.json",
+  "decision0_controller_chunks_bit_identical": true,
+  "frozen_parameters_unchanged": true,
+  "denoiser_errors": 0,
+  "arms": {
+    "raw_take_action": {
+      "successes": 1,
+      "episodes": 10
+    },
+    "default_prompt_take_action": {
+      "successes": 2,
+      "episodes": 10
+    },
+    "raw_continuous_chunk": {
+      "successes": 1,
+      "episodes": 10
+    },
+    "default_prompt_continuous_chunk": {
+      "successes": 1,
+      "episodes": 10
+    }
+  }
 }

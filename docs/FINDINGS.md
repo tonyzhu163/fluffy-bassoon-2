@@ -1339,3 +1339,22 @@ student admission or held-out claim follows from this failed pilot.
 [Physical result](../outputs/robotwin-repaired-motus-20261109-r1/PILOT-RESULT.json),
 [independent readback](../outputs/robotwin-repaired-motus-20261109-r1/PILOT-READBACK.json),
 [scheduler closeout](../outputs/robotwin-repaired-motus-20261109-r1/PILOT-SCHEDULER-CLOSEOUT.json).
+
+## Released Motus prompt/controller diagnostic (2026-11-09)
+
+On ten paired expert-feasible `place_phone_stand/demo_clean` scenes, released
+Motus π0.5 scored raw1/10 under native `take_action` and1/10 under continuous
+chunk TOPP; prefixing the checkpoint DEFAULT_PROMPT scored2/10 and1/10.
+Continuous execution gained no successes and lost one prefixed native success.
+All four descriptive paired exact tests have p=1.0; this small panel establishes
+neither a prompt/controller gain nor a benchmark-level SFT reproduction.
+
+Independent Linux readback verifies all40 episodes/478 decisions,14,699
+recorded delivered waypoints, exact initial states and byte-identical decision0
+chunks between same-prompt controller arms. Weights stayed frozen, all484
+continuous-arm plans used TOPP and denoiser errors were zero. Physical time is
+part of the controller factor rather than a matched budget. Both allocations
+are released; qualification plus diagnostic cost1,565GPU-s (0.43472GPUh), with
+no training. [Result and limits](../outputs/robotwin-motus-ablation-20261109-r1/RESULT.md),
+[independent audit](../outputs/robotwin-motus-ablation-20261109-r1/ep10-01-READBACK.json).
+

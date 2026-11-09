@@ -71,7 +71,9 @@ def audit(root, reference):
         for left, right in ((arms[0], arms[2]), (arms[1], arms[3])):
             paths = [root / f'{a}-{i:03d}-seed-{pair["seed"]}' / 'actions-000.npy'
                      for a in (left, right)]
-            assert np.array_equal(*(np.load(p, allow_pickle=False) for p in paths))
+            chunks = [np.load(p, allow_pickle=False) for p in paths]
+            assert chunks[0].dtype == chunks[1].dtype
+            assert chunks[0].tobytes() == chunks[1].tobytes()
         assert pair['decision0_chunk_l2']['raw_controller_diff'] == 0
         assert pair['decision0_chunk_l2']['default_prompt_controller_diff'] == 0
     renderers = [load(p) for p in (root / 'renderers').glob('*.json')]

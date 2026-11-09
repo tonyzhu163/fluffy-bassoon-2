@@ -1,0 +1,5888 @@
+{
+  "status": "complete",
+  "source_commit": "250c15775bfd2245cd03aafa4d7ac0cafe0b354e",
+  "manifest": {
+    "native_commit": "fa8d97b0f33bb894eae16df5a8175490f5b977a7",
+    "native_files": {
+      "envs/_base_task.py": "448f7152b65cb9102217cf5463aa821d72810ca56f63d5a797ec7bd43e23e101",
+      "envs/place_phone_stand.py": "719cf84ebf997b8d15d0ef9f997d439da62d64067a292b6008433da3536a0216",
+      "envs/robot/robot.py": "3dcd80acc8cab489a4c5edb507cc460dab1724be0226b8d5c4c1b218dee605cb",
+      "script/eval_policy.py": "8b16c766a9c401163418b425e413ebe7f4127d6b132b9c7c4d6b6f8752d57681",
+      "description/utils/generate_episode_instructions.py": "ef428fa9066c3025d41e2fabcbf894d1d4313bd12bee0a300d19d3d7d1158f24",
+      "task_config/_eval_step_limit.yml": "41c62bd26184977bae45aee555edd0cc21de5cddf560c2595921fc23a1e3b551",
+      "task_config/demo_clean.yml": "8ee5d0d07daecf7599b8d89b44776b700c7c60da24cd6317e176e6798d8cb11e"
+    },
+    "model_sha256": "de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb",
+    "norm_sha256": "1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb",
+    "default_prompt": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: ",
+    "sapien_version": "3.0.1",
+    "oidn_version": "2.3.3",
+    "oidn_loader_sha256": "274d911550611b89ef48b302edbaafcb886db81ba05046ed39c1f7b48c770ac9",
+    "oidn_libraries": {
+      "libOpenImageDenoise.so.2.3.3": "9ac9dcd18318cae879efb01c14cff72c2c4275428a15e5ab6e94c8ff8a43c4dc",
+      "libOpenImageDenoise_core.so.2.3.3": "eadb2437d6ac4a88e5746980495ba1091f7d14745e3000b82a9382093d22f351",
+      "libOpenImageDenoise_device_cuda.so.2.3.3": "12b3ff87cfa4b6a90481b757f5a56ee69380a45e3dcaeadf8dd22cb73d4f714a"
+    },
+    "openpi_version": "0.1.1",
+    "openpi_files": {
+      "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "conftest.py": "626672e385fb276396c119e2220421065c58f8ec602401e8bf2ae509f9fffaf3",
+      "models/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "models/gemma.py": "7e42ada4ae7e9995f0ef3e33a0c224758323c2015e2d9d72ec15726a8a001d2a",
+      "models/gemma_fast.py": "563c6e1ffd8afa31c406bcb8894a605e87df88f6c075d398d97a57af6bc3aefa",
+      "models/lora.py": "ced28716950c34d84a1a6d0b03b1d9550000732721df884818080b6e78cb3289",
+      "models/lora_test.py": "a0f10525de7773310402b3ffa636e88ffff7035f3179b140aacc6809c122f085",
+      "models/model.py": "0d74bc1d8f4623ac3d8e543710b8bf75f9b95e588a3ebf6127c659e001385cff",
+      "models/model_test.py": "f8e71f195045d4e3ef1ddfafb2337fa52e5aa2f89bce1fde62f5cbfb67121f21",
+      "models/pi0.py": "24b32d7c6ed5e409459afa8ca5af96a4dae09c2dcdf48e828907e411f4f12342",
+      "models/pi0_config.py": "e15d71586f1a561b35c5651227607613fb16d2df411f3708b1c9d36b02544285",
+      "models/pi0_fast.py": "627332a555046f2744ef144c45f8bd3361a9820cf68854a4528d0fdbba7e9aa3",
+      "models/pi0_test.py": "5082873014a7fc45fb8414f517909e1c24cdafea980a1fb612e0aea6058ed0fe",
+      "models/siglip.py": "14b4df0be280d5769fb0dc31a40cde27525dbb1980cc998c28475d62fa3cad32",
+      "models/tokenizer.py": "965be8b3c393a6811875bbc32da9e01a5d01cc2f87802de801cf7293e049748c",
+      "models/tokenizer_test.py": "5abd179ce883420e39d4d18b33d0123290af752da243003aa48a3bc06dbb9517",
+      "models/utils/fsq_tokenizer.py": "88866638ee4775f46a222561a957bd35e20600fe38c5888b587016ad77b1065f",
+      "models/vit.py": "d285d057636c3cba2d1fd3b37693b18075ad4b9c3b47bbde807c34c6c376ac93",
+      "models_pytorch/gemma_pytorch.py": "08fd8d750519f0fb44fc5173311e50a30f4c8f32c02e51244b4f8e47b32cd52f",
+      "models_pytorch/pi0_pytorch.py": "0c7b9f1de02ed886da49035e3fa1b38efea46eb6209489cb4f594f777f97b70c",
+      "models_pytorch/preprocessing_pytorch.py": "6a44e91be2d7a724c6140d2cc98ed0a631b8d38bbb29f63b380a0a19f903bbf6",
+      "models_pytorch/transformers_replace/models/gemma/configuration_gemma.py": "26fd0d0f52730ab32b6f337eb73ae9a26cb71ae0915bc49eced1d0e2ed8d0ec6",
+      "models_pytorch/transformers_replace/models/gemma/modeling_gemma.py": "17eeb54e277939e58cd6f8a92719a275e36baf0c9f463b2754227d42f87aedde",
+      "models_pytorch/transformers_replace/models/paligemma/modeling_paligemma.py": "c945d330b829264f927f3ee5339f977238631772de07a28e855e265bb85fd53c",
+      "models_pytorch/transformers_replace/models/siglip/check.py": "466e8eb7887ac5ccc98118a3169298d6ab65a284d834bae74751e3854dbc4245",
+      "models_pytorch/transformers_replace/models/siglip/modeling_siglip.py": "ef2e99500f263fdd78db9d4d9a255e29d844eb92f53c25ad640f8056700ef84b",
+      "policies/aloha_policy.py": "50d7ad972d80142ecb0f03b0780dacfd3af212946f4c9aac31a204b02db4543d",
+      "policies/droid_policy.py": "7d0893555964d485e231f70084125084a99495705ddd74b29461229d524fff26",
+      "policies/libero_policy.py": "ad01e5be74516d9ec9aeb1f76294d5c9f7f7179a60f1f7fbbb35e7646534f81a",
+      "policies/policy.py": "a2ac5236e23b11d0f5a840d4a8fef148d89dba921d5452ec5dfcd5a6ffa46f20",
+      "policies/policy_config.py": "aaf42ab04a33b6c91d2447926211646c33ebd8ebfa427f026d7b6c4f7c45ec52",
+      "policies/policy_test.py": "9dbb20963600367a7e7abfc97d1e326916777c57a87b39b1bc4070ba64676683",
+      "serving/websocket_policy_server.py": "1370d345e6c3c5b8f15573050e485e60a5b423d1df33e24b237805e6b442b026",
+      "shared/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "shared/array_typing.py": "6524945566eab3eb97b75a6280ba4724617b4d028c55f05172b283c3de68a026",
+      "shared/download.py": "8711d466cdaec488633e5509a000af6a7411b2d56f7ce6161f718f2389aa7786",
+      "shared/download_test.py": "234ee70ab2501a1421f6c44cbd83c1e16747597023319ae1446bed9d44f17072",
+      "shared/image_tools.py": "0f8fcb355288119e56acb56d550c1cc1f3a9edddceb0dc5b319f955943ef7767",
+      "shared/image_tools_test.py": "842374579dc9f4c2907da5e8bb555efe5a3f4902b659720c8e90115863dd59fe",
+      "shared/nnx_utils.py": "4da7111ba3011c4d1c381c9ed17257771df6a50ed89182647c3fb6f79208005e",
+      "shared/normalize.py": "6c2cea4946fb07e51801530400d2b2fd94730e195cd290d6b6960114eca9739d",
+      "shared/normalize_test.py": "fda27a21cf37f337b12bcab71229407c2a349c5965c33f278bdc468ed03f58af",
+      "training/checkpoints.py": "3cc32682ec3609e9075dabd991488edb9d7f6c045443f58963d733f99c468dbd",
+      "training/config.py": "b54b77a123537bcb304ffe4ad3ed191ee065890f8d7d6a0973d13a0231b93cec",
+      "training/data_loader.py": "af6f1c1b097dc435ceceb646827826f956e8f719290c1d31fdf6b68477b1fd8b",
+      "training/data_loader_test.py": "a0cf1bc293e8b0eb9bc5516bc05d30d9940da06c94fcfa1addca7267f8358815",
+      "training/droid_rlds_dataset.py": "9480e75ab2dbcc16d9219ed0f0982b057e5ba555b1b2b5abc692956568bdc722",
+      "training/misc/roboarena_config.py": "914acdd74ccf90e6779c13a5093140595c7e4f687e9e0b167439446a81d74c01",
+      "training/optimizer.py": "cfb5d6f6aec61fbe961287b4015c652260628a0ed4682a0dbdc271b8e65431fa",
+      "training/sharding.py": "2384acbb4c33b1796294efdb088c6cd1a1f6100f505e636434e3c0c894f7def6",
+      "training/utils.py": "b684e674343f86ef5e976f279a586d3fe2f885e901f396ac899ed136abc7eca6",
+      "training/weight_loaders.py": "a54ac3222f81f8c6233241bc16b6f369c9416cdaa83f7058f96f7ddcfde1a3b4",
+      "transforms.py": "a1b94e9e72849a18834778f229c6bb389a495eb7fbe0aa800edea728b9424ff4",
+      "transforms_test.py": "d76f3ee8c5d7dc1c6fb6cb3b36b45ef30dd1de1ab5bc054bcb03deb79dcc06a8"
+    },
+    "curobo_version": "0.7.8",
+    "curobo_core": {
+      "wrap/reacher/motion_gen.py": "348ee2fa858b1d651a70fa2b2b5a5d4e240ea724b7817d7769473c3f7a7e46e8",
+      "types/robot.py": "375051c0893dc422f55d727b2294f06e6c057a6c0ecbbb718e8ebe324a8a940e",
+      "cuda_robot_model/cuda_robot_model.py": "3ebf45845292a044c2999290a1ead6a5147f09e4cc509174459f6309df594201"
+    },
+    "transformers_version": "4.53.2",
+    "transformers_replacements": {
+      "models/gemma/modeling_gemma.py": "17eeb54e277939e58cd6f8a92719a275e36baf0c9f463b2754227d42f87aedde",
+      "models/gemma/configuration_gemma.py": "26fd0d0f52730ab32b6f337eb73ae9a26cb71ae0915bc49eced1d0e2ed8d0ec6",
+      "models/paligemma/modeling_paligemma.py": "c945d330b829264f927f3ee5339f977238631772de07a28e855e265bb85fd53c",
+      "models/siglip/modeling_siglip.py": "ef2e99500f263fdd78db9d4d9a255e29d844eb92f53c25ad640f8056700ef84b",
+      "models/siglip/check.py": "466e8eb7887ac5ccc98118a3169298d6ab65a284d834bae74751e3854dbc4245"
+    }
+  },
+  "setting": "demo_clean",
+  "target_episodes": 10,
+  "first_candidate_seed": 100000,
+  "arms": {
+    "raw_take_action": {
+      "prompt_mode": "raw",
+      "controller": "take_action",
+      "completed": 10,
+      "successes": 1,
+      "success_rate": 0.1,
+      "episodes": [
+        {
+          "arm": "raw_take_action",
+          "prompt_mode": "raw",
+          "controller": "take_action",
+          "seed": 100000,
+          "instruction": "Set the rectangular silver phone with rounded edges on the dark green phonestand.",
+          "prompt_text": "Set the rectangular silver phone with rounded edges on the dark green phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100000000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100000001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100000002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100000003,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 4,
+              "noise_seed": 100000004,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 5,
+              "noise_seed": 100000005,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 6,
+              "noise_seed": 100000006,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 7,
+              "noise_seed": 100000007,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 8,
+              "noise_seed": 100000008,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 9,
+              "noise_seed": 100000009,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 10,
+              "noise_seed": 100000010,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 11,
+              "noise_seed": 100000011,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 12,
+              "noise_seed": 100000012,
+              "requested": 32,
+              "delivered": 16
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794204523.6850379,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794204560.024336
+        },
+        {
+          "arm": "raw_take_action",
+          "prompt_mode": "raw",
+          "controller": "take_action",
+          "seed": 100001,
+          "instruction": "Set the phone with rounded edges on the adjustable phone holder.",
+          "prompt_text": "Set the phone with rounded edges on the adjustable phone holder.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100001000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100001001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100001002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100001003,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 4,
+              "noise_seed": 100001004,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 5,
+              "noise_seed": 100001005,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 6,
+              "noise_seed": 100001006,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 7,
+              "noise_seed": 100001007,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 8,
+              "noise_seed": 100001008,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 9,
+              "noise_seed": 100001009,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 10,
+              "noise_seed": 100001010,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 11,
+              "noise_seed": 100001011,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 12,
+              "noise_seed": 100001012,
+              "requested": 32,
+              "delivered": 16
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794204645.5378137,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794204683.0469682
+        },
+        {
+          "arm": "raw_take_action",
+          "prompt_mode": "raw",
+          "controller": "take_action",
+          "seed": 100002,
+          "instruction": "Set the palm-sized phone with glossy finish on the angled brown phonestand.",
+          "prompt_text": "Set the palm-sized phone with glossy finish on the angled brown phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100002000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100002001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100002002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100002003,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 4,
+              "noise_seed": 100002004,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 5,
+              "noise_seed": 100002005,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 6,
+              "noise_seed": 100002006,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 7,
+              "noise_seed": 100002007,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 8,
+              "noise_seed": 100002008,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 9,
+              "noise_seed": 100002009,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 10,
+              "noise_seed": 100002010,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 11,
+              "noise_seed": 100002011,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 12,
+              "noise_seed": 100002012,
+              "requested": 32,
+              "delivered": 16
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794204734.2903707,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794204768.3963761
+        },
+        {
+          "arm": "raw_take_action",
+          "prompt_mode": "raw",
+          "controller": "take_action",
+          "seed": 100005,
+          "instruction": "Set the rectangular silver phone with rounded edges on the L-shaped smooth brown phonestand.",
+          "prompt_text": "Set the rectangular silver phone with rounded edges on the L-shaped smooth brown phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100005000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100005001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100005002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100005003,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 4,
+              "noise_seed": 100005004,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 5,
+              "noise_seed": 100005005,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 6,
+              "noise_seed": 100005006,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 7,
+              "noise_seed": 100005007,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 8,
+              "noise_seed": 100005008,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 9,
+              "noise_seed": 100005009,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 10,
+              "noise_seed": 100005010,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 11,
+              "noise_seed": 100005011,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 12,
+              "noise_seed": 100005012,
+              "requested": 32,
+              "delivered": 16
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794204855.404526,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794204891.3447301
+        },
+        {
+          "arm": "raw_take_action",
+          "prompt_mode": "raw",
+          "controller": "take_action",
+          "seed": 100006,
+          "instruction": "Set the smartphone with black display on the dark green phonestand.",
+          "prompt_text": "Set the smartphone with black display on the dark green phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100006000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100006001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100006002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100006003,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 4,
+              "noise_seed": 100006004,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 5,
+              "noise_seed": 100006005,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 6,
+              "noise_seed": 100006006,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 7,
+              "noise_seed": 100006007,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 8,
+              "noise_seed": 100006008,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 9,
+              "noise_seed": 100006009,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 10,
+              "noise_seed": 100006010,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 11,
+              "noise_seed": 100006011,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 12,
+              "noise_seed": 100006012,
+              "requested": 32,
+              "delivered": 16
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794204978.443004,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205012.7621958
+        },
+        {
+          "arm": "raw_take_action",
+          "prompt_mode": "raw",
+          "controller": "take_action",
+          "seed": 100008,
+          "instruction": "Set the phone with shiny black back on the silver arm phonestand.",
+          "prompt_text": "Set the phone with shiny black back on the silver arm phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100008000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100008001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100008002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100008003,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 4,
+              "noise_seed": 100008004,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 5,
+              "noise_seed": 100008005,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 6,
+              "noise_seed": 100008006,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 7,
+              "noise_seed": 100008007,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 8,
+              "noise_seed": 100008008,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 9,
+              "noise_seed": 100008009,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 10,
+              "noise_seed": 100008010,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 11,
+              "noise_seed": 100008011,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 12,
+              "noise_seed": 100008012,
+              "requested": 32,
+              "delivered": 16
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205098.0198128,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205134.6438138
+        },
+        {
+          "arm": "raw_take_action",
+          "prompt_mode": "raw",
+          "controller": "take_action",
+          "seed": 100010,
+          "instruction": "Set the phone with rounded edges on the L-shaped smooth brown phonestand.",
+          "prompt_text": "Set the phone with rounded edges on the L-shaped smooth brown phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100010000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100010001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100010002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100010003,
+              "requested": 32,
+              "delivered": 31
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205221.5360255,
+          "success": true,
+          "delivered_targets": 127,
+          "step_limit": 400,
+          "ended_unix": 1794205234.19242
+        },
+        {
+          "arm": "raw_take_action",
+          "prompt_mode": "raw",
+          "controller": "take_action",
+          "seed": 100012,
+          "instruction": "Set the palm-sized phone with glossy finish on the brown angled plastic phonestand.",
+          "prompt_text": "Set the palm-sized phone with glossy finish on the brown angled plastic phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100012000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100012001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100012002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100012003,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 4,
+              "noise_seed": 100012004,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 5,
+              "noise_seed": 100012005,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 6,
+              "noise_seed": 100012006,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 7,
+              "noise_seed": 100012007,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 8,
+              "noise_seed": 100012008,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 9,
+              "noise_seed": 100012009,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 10,
+              "noise_seed": 100012010,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 11,
+              "noise_seed": 100012011,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 12,
+              "noise_seed": 100012012,
+              "requested": 32,
+              "delivered": 16
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205312.3160503,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205348.6577332
+        },
+        {
+          "arm": "raw_take_action",
+          "prompt_mode": "raw",
+          "controller": "take_action",
+          "seed": 100014,
+          "instruction": "Set the modern phone on the brown angled plastic phonestand.",
+          "prompt_text": "Set the modern phone on the brown angled plastic phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100014000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100014001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100014002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100014003,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 4,
+              "noise_seed": 100014004,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 5,
+              "noise_seed": 100014005,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 6,
+              "noise_seed": 100014006,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 7,
+              "noise_seed": 100014007,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 8,
+              "noise_seed": 100014008,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 9,
+              "noise_seed": 100014009,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 10,
+              "noise_seed": 100014010,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 11,
+              "noise_seed": 100014011,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 12,
+              "noise_seed": 100014012,
+              "requested": 32,
+              "delivered": 16
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205420.2949224,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205455.6390803
+        },
+        {
+          "arm": "raw_take_action",
+          "prompt_mode": "raw",
+          "controller": "take_action",
+          "seed": 100015,
+          "instruction": "Set the phone with flat black screen on the adjustable phone holder.",
+          "prompt_text": "Set the phone with flat black screen on the adjustable phone holder.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100015000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100015001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100015002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100015003,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 4,
+              "noise_seed": 100015004,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 5,
+              "noise_seed": 100015005,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 6,
+              "noise_seed": 100015006,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 7,
+              "noise_seed": 100015007,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 8,
+              "noise_seed": 100015008,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 9,
+              "noise_seed": 100015009,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 10,
+              "noise_seed": 100015010,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 11,
+              "noise_seed": 100015011,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 12,
+              "noise_seed": 100015012,
+              "requested": 32,
+              "delivered": 16
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205540.8197286,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205575.880077
+        }
+      ]
+    },
+    "default_prompt_take_action": {
+      "prompt_mode": "default_prefix",
+      "controller": "take_action",
+      "completed": 10,
+      "successes": 2,
+      "success_rate": 0.2,
+      "episodes": [
+        {
+          "arm": "default_prompt_take_action",
+          "prompt_mode": "default_prefix",
+          "controller": "take_action",
+          "seed": 100000,
+          "instruction": "Set the rectangular silver phone with rounded edges on the dark green phonestand.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the rectangular silver phone with rounded edges on the dark green phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100000000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100000001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100000002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100000003,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 4,
+              "noise_seed": 100000004,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 5,
+              "noise_seed": 100000005,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 6,
+              "noise_seed": 100000006,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 7,
+              "noise_seed": 100000007,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 8,
+              "noise_seed": 100000008,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 9,
+              "noise_seed": 100000009,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 10,
+              "noise_seed": 100000010,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 11,
+              "noise_seed": 100000011,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 12,
+              "noise_seed": 100000012,
+              "requested": 32,
+              "delivered": 16
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794204565.8976085,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794204604.1733518
+        },
+        {
+          "arm": "default_prompt_take_action",
+          "prompt_mode": "default_prefix",
+          "controller": "take_action",
+          "seed": 100001,
+          "instruction": "Set the phone with rounded edges on the adjustable phone holder.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the phone with rounded edges on the adjustable phone holder.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100001000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100001001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100001002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100001003,
+              "requested": 32,
+              "delivered": 13
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794204688.7938094,
+          "success": true,
+          "delivered_targets": 109,
+          "step_limit": 400,
+          "ended_unix": 1794204700.680033
+        },
+        {
+          "arm": "default_prompt_take_action",
+          "prompt_mode": "default_prefix",
+          "controller": "take_action",
+          "seed": 100002,
+          "instruction": "Set the palm-sized phone with glossy finish on the angled brown phonestand.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the palm-sized phone with glossy finish on the angled brown phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100002000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100002001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100002002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100002003,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 4,
+              "noise_seed": 100002004,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 5,
+              "noise_seed": 100002005,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 6,
+              "noise_seed": 100002006,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 7,
+              "noise_seed": 100002007,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 8,
+              "noise_seed": 100002008,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 9,
+              "noise_seed": 100002009,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 10,
+              "noise_seed": 100002010,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 11,
+              "noise_seed": 100002011,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 12,
+              "noise_seed": 100002012,
+              "requested": 32,
+              "delivered": 16
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794204774.090085,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794204811.3045814
+        },
+        {
+          "arm": "default_prompt_take_action",
+          "prompt_mode": "default_prefix",
+          "controller": "take_action",
+          "seed": 100005,
+          "instruction": "Set the rectangular silver phone with rounded edges on the L-shaped smooth brown phonestand.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the rectangular silver phone with rounded edges on the L-shaped smooth brown phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100005000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100005001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100005002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100005003,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 4,
+              "noise_seed": 100005004,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 5,
+              "noise_seed": 100005005,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 6,
+              "noise_seed": 100005006,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 7,
+              "noise_seed": 100005007,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 8,
+              "noise_seed": 100005008,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 9,
+              "noise_seed": 100005009,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 10,
+              "noise_seed": 100005010,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 11,
+              "noise_seed": 100005011,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 12,
+              "noise_seed": 100005012,
+              "requested": 32,
+              "delivered": 16
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794204896.9366453,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794204936.9491358
+        },
+        {
+          "arm": "default_prompt_take_action",
+          "prompt_mode": "default_prefix",
+          "controller": "take_action",
+          "seed": 100006,
+          "instruction": "Set the smartphone with black display on the dark green phonestand.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the smartphone with black display on the dark green phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100006000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100006001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100006002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100006003,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 4,
+              "noise_seed": 100006004,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 5,
+              "noise_seed": 100006005,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 6,
+              "noise_seed": 100006006,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 7,
+              "noise_seed": 100006007,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 8,
+              "noise_seed": 100006008,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 9,
+              "noise_seed": 100006009,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 10,
+              "noise_seed": 100006010,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 11,
+              "noise_seed": 100006011,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 12,
+              "noise_seed": 100006012,
+              "requested": 32,
+              "delivered": 16
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205018.4199128,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205053.2998736
+        },
+        {
+          "arm": "default_prompt_take_action",
+          "prompt_mode": "default_prefix",
+          "controller": "take_action",
+          "seed": 100008,
+          "instruction": "Set the phone with shiny black back on the silver arm phonestand.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the phone with shiny black back on the silver arm phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100008000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100008001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100008002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100008003,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 4,
+              "noise_seed": 100008004,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 5,
+              "noise_seed": 100008005,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 6,
+              "noise_seed": 100008006,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 7,
+              "noise_seed": 100008007,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 8,
+              "noise_seed": 100008008,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 9,
+              "noise_seed": 100008009,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 10,
+              "noise_seed": 100008010,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 11,
+              "noise_seed": 100008011,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 12,
+              "noise_seed": 100008012,
+              "requested": 32,
+              "delivered": 16
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205140.3540204,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205178.4537618
+        },
+        {
+          "arm": "default_prompt_take_action",
+          "prompt_mode": "default_prefix",
+          "controller": "take_action",
+          "seed": 100010,
+          "instruction": "Set the phone with rounded edges on the L-shaped smooth brown phonestand.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the phone with rounded edges on the L-shaped smooth brown phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100010000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100010001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100010002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100010003,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 4,
+              "noise_seed": 100010004,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 5,
+              "noise_seed": 100010005,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 6,
+              "noise_seed": 100010006,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 7,
+              "noise_seed": 100010007,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 8,
+              "noise_seed": 100010008,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 9,
+              "noise_seed": 100010009,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 10,
+              "noise_seed": 100010010,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 11,
+              "noise_seed": 100010011,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 12,
+              "noise_seed": 100010012,
+              "requested": 32,
+              "delivered": 16
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205239.8383298,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205274.7540748
+        },
+        {
+          "arm": "default_prompt_take_action",
+          "prompt_mode": "default_prefix",
+          "controller": "take_action",
+          "seed": 100012,
+          "instruction": "Set the palm-sized phone with glossy finish on the brown angled plastic phonestand.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the palm-sized phone with glossy finish on the brown angled plastic phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100012000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100012001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100012002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100012003,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 4,
+              "noise_seed": 100012004,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 5,
+              "noise_seed": 100012005,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 6,
+              "noise_seed": 100012006,
+              "requested": 32,
+              "delivered": 27
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205354.2663937,
+          "success": true,
+          "delivered_targets": 219,
+          "step_limit": 400,
+          "ended_unix": 1794205376.9613469
+        },
+        {
+          "arm": "default_prompt_take_action",
+          "prompt_mode": "default_prefix",
+          "controller": "take_action",
+          "seed": 100014,
+          "instruction": "Set the modern phone on the brown angled plastic phonestand.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the modern phone on the brown angled plastic phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100014000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100014001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100014002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100014003,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 4,
+              "noise_seed": 100014004,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 5,
+              "noise_seed": 100014005,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 6,
+              "noise_seed": 100014006,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 7,
+              "noise_seed": 100014007,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 8,
+              "noise_seed": 100014008,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 9,
+              "noise_seed": 100014009,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 10,
+              "noise_seed": 100014010,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 11,
+              "noise_seed": 100014011,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 12,
+              "noise_seed": 100014012,
+              "requested": 32,
+              "delivered": 16
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205461.1840296,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205499.2799273
+        },
+        {
+          "arm": "default_prompt_take_action",
+          "prompt_mode": "default_prefix",
+          "controller": "take_action",
+          "seed": 100015,
+          "instruction": "Set the phone with flat black screen on the adjustable phone holder.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the phone with flat black screen on the adjustable phone holder.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "decision_idx": 0,
+              "noise_seed": 100015000,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 1,
+              "noise_seed": 100015001,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 2,
+              "noise_seed": 100015002,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 3,
+              "noise_seed": 100015003,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 4,
+              "noise_seed": 100015004,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 5,
+              "noise_seed": 100015005,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 6,
+              "noise_seed": 100015006,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 7,
+              "noise_seed": 100015007,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 8,
+              "noise_seed": 100015008,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 9,
+              "noise_seed": 100015009,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 10,
+              "noise_seed": 100015010,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 11,
+              "noise_seed": 100015011,
+              "requested": 32,
+              "delivered": 32
+            },
+            {
+              "decision_idx": 12,
+              "noise_seed": 100015012,
+              "requested": 32,
+              "delivered": 16
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205581.5013335,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205617.605517
+        }
+      ]
+    },
+    "raw_continuous_chunk": {
+      "prompt_mode": "raw",
+      "controller": "continuous_chunk",
+      "completed": 10,
+      "successes": 1,
+      "success_rate": 0.1,
+      "episodes": [
+        {
+          "arm": "raw_continuous_chunk",
+          "prompt_mode": "raw",
+          "controller": "continuous_chunk",
+          "seed": 100000,
+          "instruction": "Set the rectangular silver phone with rounded edges on the dark green phonestand.",
+          "prompt_text": "Set the rectangular silver phone with rounded edges on the dark green phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1027,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1027,
+              "right_n_step": 814,
+              "decision_idx": 0,
+              "noise_seed": 100000000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 703,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 703,
+              "right_n_step": 696,
+              "decision_idx": 1,
+              "noise_seed": 100000001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 671,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 627,
+              "right_n_step": 671,
+              "decision_idx": 2,
+              "noise_seed": 100000002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1170,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1170,
+              "right_n_step": 864,
+              "decision_idx": 3,
+              "noise_seed": 100000003
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 808,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 808,
+              "right_n_step": 546,
+              "decision_idx": 4,
+              "noise_seed": 100000004
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 619,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 619,
+              "right_n_step": 571,
+              "decision_idx": 5,
+              "noise_seed": 100000005
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 597,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 597,
+              "right_n_step": 568,
+              "decision_idx": 6,
+              "noise_seed": 100000006
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 566,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 566,
+              "right_n_step": 496,
+              "decision_idx": 7,
+              "noise_seed": 100000007
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 627,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 627,
+              "right_n_step": 538,
+              "decision_idx": 8,
+              "noise_seed": 100000008
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 659,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 659,
+              "right_n_step": 573,
+              "decision_idx": 9,
+              "noise_seed": 100000009
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 609,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 609,
+              "right_n_step": 601,
+              "decision_idx": 10,
+              "noise_seed": 100000010
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 617,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 603,
+              "right_n_step": 617,
+              "decision_idx": 11,
+              "noise_seed": 100000011
+            },
+            {
+              "requested": 16,
+              "delivered": 16,
+              "physics_steps": 350,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 350,
+              "right_n_step": 262,
+              "decision_idx": 12,
+              "noise_seed": 100000012
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794204609.868408,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794204620.4503264
+        },
+        {
+          "arm": "raw_continuous_chunk",
+          "prompt_mode": "raw",
+          "controller": "continuous_chunk",
+          "seed": 100001,
+          "instruction": "Set the phone with rounded edges on the adjustable phone holder.",
+          "prompt_text": "Set the phone with rounded edges on the adjustable phone holder.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1022,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 750,
+              "right_n_step": 1022,
+              "decision_idx": 0,
+              "noise_seed": 100001000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 866,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 640,
+              "right_n_step": 866,
+              "decision_idx": 1,
+              "noise_seed": 100001001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1043,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 705,
+              "right_n_step": 1043,
+              "decision_idx": 2,
+              "noise_seed": 100001002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 626,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 584,
+              "right_n_step": 626,
+              "decision_idx": 3,
+              "noise_seed": 100001003
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 695,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 695,
+              "right_n_step": 607,
+              "decision_idx": 4,
+              "noise_seed": 100001004
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 630,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 542,
+              "right_n_step": 630,
+              "decision_idx": 5,
+              "noise_seed": 100001005
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 976,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 976,
+              "right_n_step": 590,
+              "decision_idx": 6,
+              "noise_seed": 100001006
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 667,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 667,
+              "right_n_step": 572,
+              "decision_idx": 7,
+              "noise_seed": 100001007
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 709,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 674,
+              "right_n_step": 709,
+              "decision_idx": 8,
+              "noise_seed": 100001008
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 663,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 644,
+              "right_n_step": 663,
+              "decision_idx": 9,
+              "noise_seed": 100001009
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 617,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 617,
+              "right_n_step": 576,
+              "decision_idx": 10,
+              "noise_seed": 100001010
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 711,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 711,
+              "right_n_step": 510,
+              "decision_idx": 11,
+              "noise_seed": 100001011
+            },
+            {
+              "requested": 16,
+              "delivered": 16,
+              "physics_steps": 339,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 339,
+              "right_n_step": 307,
+              "decision_idx": 12,
+              "noise_seed": 100001012
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794204706.2463913,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794204717.2770243
+        },
+        {
+          "arm": "raw_continuous_chunk",
+          "prompt_mode": "raw",
+          "controller": "continuous_chunk",
+          "seed": 100002,
+          "instruction": "Set the palm-sized phone with glossy finish on the angled brown phonestand.",
+          "prompt_text": "Set the palm-sized phone with glossy finish on the angled brown phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 930,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 930,
+              "right_n_step": 633,
+              "decision_idx": 0,
+              "noise_seed": 100002000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 705,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 705,
+              "right_n_step": 623,
+              "decision_idx": 1,
+              "noise_seed": 100002001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1058,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1058,
+              "right_n_step": 666,
+              "decision_idx": 2,
+              "noise_seed": 100002002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 654,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 654,
+              "right_n_step": 583,
+              "decision_idx": 3,
+              "noise_seed": 100002003
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 699,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 699,
+              "right_n_step": 533,
+              "decision_idx": 4,
+              "noise_seed": 100002004
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 591,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 591,
+              "right_n_step": 469,
+              "decision_idx": 5,
+              "noise_seed": 100002005
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 634,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 582,
+              "right_n_step": 634,
+              "decision_idx": 6,
+              "noise_seed": 100002006
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 778,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 778,
+              "right_n_step": 600,
+              "decision_idx": 7,
+              "noise_seed": 100002007
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 624,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 624,
+              "right_n_step": 557,
+              "decision_idx": 8,
+              "noise_seed": 100002008
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 667,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 667,
+              "right_n_step": 590,
+              "decision_idx": 9,
+              "noise_seed": 100002009
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 691,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 691,
+              "right_n_step": 651,
+              "decision_idx": 10,
+              "noise_seed": 100002010
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 596,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 596,
+              "right_n_step": 594,
+              "decision_idx": 11,
+              "noise_seed": 100002011
+            },
+            {
+              "requested": 16,
+              "delivered": 16,
+              "physics_steps": 292,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 292,
+              "right_n_step": 236,
+              "decision_idx": 12,
+              "noise_seed": 100002012
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794204816.9781234,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794204827.490696
+        },
+        {
+          "arm": "raw_continuous_chunk",
+          "prompt_mode": "raw",
+          "controller": "continuous_chunk",
+          "seed": 100005,
+          "instruction": "Set the rectangular silver phone with rounded edges on the L-shaped smooth brown phonestand.",
+          "prompt_text": "Set the rectangular silver phone with rounded edges on the L-shaped smooth brown phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 980,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 980,
+              "right_n_step": 705,
+              "decision_idx": 0,
+              "noise_seed": 100005000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 715,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 715,
+              "right_n_step": 638,
+              "decision_idx": 1,
+              "noise_seed": 100005001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1254,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1254,
+              "right_n_step": 782,
+              "decision_idx": 2,
+              "noise_seed": 100005002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 865,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 865,
+              "right_n_step": 702,
+              "decision_idx": 3,
+              "noise_seed": 100005003
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 661,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 661,
+              "right_n_step": 659,
+              "decision_idx": 4,
+              "noise_seed": 100005004
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 672,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 672,
+              "right_n_step": 611,
+              "decision_idx": 5,
+              "noise_seed": 100005005
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 637,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 570,
+              "right_n_step": 637,
+              "decision_idx": 6,
+              "noise_seed": 100005006
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 600,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 600,
+              "right_n_step": 546,
+              "decision_idx": 7,
+              "noise_seed": 100005007
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 739,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 739,
+              "right_n_step": 650,
+              "decision_idx": 8,
+              "noise_seed": 100005008
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 628,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 628,
+              "right_n_step": 615,
+              "decision_idx": 9,
+              "noise_seed": 100005009
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 724,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 724,
+              "right_n_step": 673,
+              "decision_idx": 10,
+              "noise_seed": 100005010
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1014,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1014,
+              "right_n_step": 501,
+              "decision_idx": 11,
+              "noise_seed": 100005011
+            },
+            {
+              "requested": 16,
+              "delivered": 16,
+              "physics_steps": 286,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 276,
+              "right_n_step": 286,
+              "decision_idx": 12,
+              "noise_seed": 100005012
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794204942.541346,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794204953.6059766
+        },
+        {
+          "arm": "raw_continuous_chunk",
+          "prompt_mode": "raw",
+          "controller": "continuous_chunk",
+          "seed": 100006,
+          "instruction": "Set the smartphone with black display on the dark green phonestand.",
+          "prompt_text": "Set the smartphone with black display on the dark green phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1029,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 637,
+              "right_n_step": 1029,
+              "decision_idx": 0,
+              "noise_seed": 100006000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 836,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 591,
+              "right_n_step": 836,
+              "decision_idx": 1,
+              "noise_seed": 100006001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1016,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 838,
+              "right_n_step": 1016,
+              "decision_idx": 2,
+              "noise_seed": 100006002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1023,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 657,
+              "right_n_step": 1023,
+              "decision_idx": 3,
+              "noise_seed": 100006003
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 583,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 583,
+              "right_n_step": 581,
+              "decision_idx": 4,
+              "noise_seed": 100006004
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 692,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 692,
+              "right_n_step": 678,
+              "decision_idx": 5,
+              "noise_seed": 100006005
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 651,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 485,
+              "right_n_step": 651,
+              "decision_idx": 6,
+              "noise_seed": 100006006
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 655,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 655,
+              "right_n_step": 613,
+              "decision_idx": 7,
+              "noise_seed": 100006007
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 647,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 514,
+              "right_n_step": 647,
+              "decision_idx": 8,
+              "noise_seed": 100006008
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 667,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 667,
+              "right_n_step": 542,
+              "decision_idx": 9,
+              "noise_seed": 100006009
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 599,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 599,
+              "right_n_step": 584,
+              "decision_idx": 10,
+              "noise_seed": 100006010
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 725,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 725,
+              "right_n_step": 704,
+              "decision_idx": 11,
+              "noise_seed": 100006011
+            },
+            {
+              "requested": 16,
+              "delivered": 16,
+              "physics_steps": 372,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 334,
+              "right_n_step": 372,
+              "decision_idx": 12,
+              "noise_seed": 100006012
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205058.9012768,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205070.2067115
+        },
+        {
+          "arm": "raw_continuous_chunk",
+          "prompt_mode": "raw",
+          "controller": "continuous_chunk",
+          "seed": 100008,
+          "instruction": "Set the phone with shiny black back on the silver arm phonestand.",
+          "prompt_text": "Set the phone with shiny black back on the silver arm phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 991,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 991,
+              "right_n_step": 654,
+              "decision_idx": 0,
+              "noise_seed": 100008000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1056,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1056,
+              "right_n_step": 691,
+              "decision_idx": 1,
+              "noise_seed": 100008001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 756,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 756,
+              "right_n_step": 553,
+              "decision_idx": 2,
+              "noise_seed": 100008002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1054,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1054,
+              "right_n_step": 712,
+              "decision_idx": 3,
+              "noise_seed": 100008003
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 763,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 763,
+              "right_n_step": 564,
+              "decision_idx": 4,
+              "noise_seed": 100008004
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 656,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 656,
+              "right_n_step": 576,
+              "decision_idx": 5,
+              "noise_seed": 100008005
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 644,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 644,
+              "right_n_step": 578,
+              "decision_idx": 6,
+              "noise_seed": 100008006
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 606,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 513,
+              "right_n_step": 606,
+              "decision_idx": 7,
+              "noise_seed": 100008007
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 615,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 606,
+              "right_n_step": 615,
+              "decision_idx": 8,
+              "noise_seed": 100008008
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 657,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 657,
+              "right_n_step": 546,
+              "decision_idx": 9,
+              "noise_seed": 100008009
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 651,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 651,
+              "right_n_step": 597,
+              "decision_idx": 10,
+              "noise_seed": 100008010
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 590,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 590,
+              "right_n_step": 563,
+              "decision_idx": 11,
+              "noise_seed": 100008011
+            },
+            {
+              "requested": 16,
+              "delivered": 16,
+              "physics_steps": 328,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 328,
+              "right_n_step": 308,
+              "decision_idx": 12,
+              "noise_seed": 100008012
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205184.1119132,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205194.9308698
+        },
+        {
+          "arm": "raw_continuous_chunk",
+          "prompt_mode": "raw",
+          "controller": "continuous_chunk",
+          "seed": 100010,
+          "instruction": "Set the phone with rounded edges on the L-shaped smooth brown phonestand.",
+          "prompt_text": "Set the phone with rounded edges on the L-shaped smooth brown phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1050,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 707,
+              "right_n_step": 1050,
+              "decision_idx": 0,
+              "noise_seed": 100010000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 859,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 614,
+              "right_n_step": 859,
+              "decision_idx": 1,
+              "noise_seed": 100010001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 832,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 724,
+              "right_n_step": 832,
+              "decision_idx": 2,
+              "noise_seed": 100010002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 803,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 661,
+              "right_n_step": 810,
+              "decision_idx": 3,
+              "noise_seed": 100010003
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205280.412528,
+          "success": true,
+          "delivered_targets": 128,
+          "step_limit": 400,
+          "ended_unix": 1794205284.1053374
+        },
+        {
+          "arm": "raw_continuous_chunk",
+          "prompt_mode": "raw",
+          "controller": "continuous_chunk",
+          "seed": 100012,
+          "instruction": "Set the palm-sized phone with glossy finish on the brown angled plastic phonestand.",
+          "prompt_text": "Set the palm-sized phone with glossy finish on the brown angled plastic phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 961,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 961,
+              "right_n_step": 803,
+              "decision_idx": 0,
+              "noise_seed": 100012000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 727,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 727,
+              "right_n_step": 689,
+              "decision_idx": 1,
+              "noise_seed": 100012001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1071,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1071,
+              "right_n_step": 675,
+              "decision_idx": 2,
+              "noise_seed": 100012002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 886,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 886,
+              "right_n_step": 573,
+              "decision_idx": 3,
+              "noise_seed": 100012003
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 659,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 659,
+              "right_n_step": 525,
+              "decision_idx": 4,
+              "noise_seed": 100012004
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 612,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 591,
+              "right_n_step": 612,
+              "decision_idx": 5,
+              "noise_seed": 100012005
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 593,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 593,
+              "right_n_step": 520,
+              "decision_idx": 6,
+              "noise_seed": 100012006
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 591,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 591,
+              "right_n_step": 561,
+              "decision_idx": 7,
+              "noise_seed": 100012007
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 602,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 602,
+              "right_n_step": 549,
+              "decision_idx": 8,
+              "noise_seed": 100012008
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 764,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 764,
+              "right_n_step": 653,
+              "decision_idx": 9,
+              "noise_seed": 100012009
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 921,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 921,
+              "right_n_step": 748,
+              "decision_idx": 10,
+              "noise_seed": 100012010
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 690,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 690,
+              "right_n_step": 688,
+              "decision_idx": 11,
+              "noise_seed": 100012011
+            },
+            {
+              "requested": 16,
+              "delivered": 16,
+              "physics_steps": 324,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 324,
+              "right_n_step": 277,
+              "decision_idx": 12,
+              "noise_seed": 100012012
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205382.531006,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205393.8694823
+        },
+        {
+          "arm": "raw_continuous_chunk",
+          "prompt_mode": "raw",
+          "controller": "continuous_chunk",
+          "seed": 100014,
+          "instruction": "Set the modern phone on the brown angled plastic phonestand.",
+          "prompt_text": "Set the modern phone on the brown angled plastic phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 964,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 964,
+              "right_n_step": 681,
+              "decision_idx": 0,
+              "noise_seed": 100014000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 789,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 789,
+              "right_n_step": 626,
+              "decision_idx": 1,
+              "noise_seed": 100014001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 894,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 894,
+              "right_n_step": 780,
+              "decision_idx": 2,
+              "noise_seed": 100014002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 897,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 897,
+              "right_n_step": 686,
+              "decision_idx": 3,
+              "noise_seed": 100014003
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 629,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 629,
+              "right_n_step": 543,
+              "decision_idx": 4,
+              "noise_seed": 100014004
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 700,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 700,
+              "right_n_step": 649,
+              "decision_idx": 5,
+              "noise_seed": 100014005
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 757,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 757,
+              "right_n_step": 710,
+              "decision_idx": 6,
+              "noise_seed": 100014006
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 678,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 636,
+              "right_n_step": 678,
+              "decision_idx": 7,
+              "noise_seed": 100014007
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 675,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 663,
+              "right_n_step": 675,
+              "decision_idx": 8,
+              "noise_seed": 100014008
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 791,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 791,
+              "right_n_step": 638,
+              "decision_idx": 9,
+              "noise_seed": 100014009
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 680,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 680,
+              "right_n_step": 600,
+              "decision_idx": 10,
+              "noise_seed": 100014010
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 697,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 697,
+              "right_n_step": 610,
+              "decision_idx": 11,
+              "noise_seed": 100014011
+            },
+            {
+              "requested": 16,
+              "delivered": 16,
+              "physics_steps": 335,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 310,
+              "right_n_step": 335,
+              "decision_idx": 12,
+              "noise_seed": 100014012
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205504.8344312,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205515.6815913
+        },
+        {
+          "arm": "raw_continuous_chunk",
+          "prompt_mode": "raw",
+          "controller": "continuous_chunk",
+          "seed": 100015,
+          "instruction": "Set the phone with flat black screen on the adjustable phone holder.",
+          "prompt_text": "Set the phone with flat black screen on the adjustable phone holder.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1046,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 808,
+              "right_n_step": 1046,
+              "decision_idx": 0,
+              "noise_seed": 100015000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 763,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 560,
+              "right_n_step": 763,
+              "decision_idx": 1,
+              "noise_seed": 100015001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1010,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 675,
+              "right_n_step": 1010,
+              "decision_idx": 2,
+              "noise_seed": 100015002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 647,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 647,
+              "right_n_step": 586,
+              "decision_idx": 3,
+              "noise_seed": 100015003
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 716,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 716,
+              "right_n_step": 615,
+              "decision_idx": 4,
+              "noise_seed": 100015004
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 788,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 788,
+              "right_n_step": 719,
+              "decision_idx": 5,
+              "noise_seed": 100015005
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1174,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 852,
+              "right_n_step": 1174,
+              "decision_idx": 6,
+              "noise_seed": 100015006
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1039,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 774,
+              "right_n_step": 1039,
+              "decision_idx": 7,
+              "noise_seed": 100015007
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 845,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 762,
+              "right_n_step": 845,
+              "decision_idx": 8,
+              "noise_seed": 100015008
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 640,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 638,
+              "right_n_step": 640,
+              "decision_idx": 9,
+              "noise_seed": 100015009
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 742,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 742,
+              "right_n_step": 584,
+              "decision_idx": 10,
+              "noise_seed": 100015010
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 656,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 581,
+              "right_n_step": 656,
+              "decision_idx": 11,
+              "noise_seed": 100015011
+            },
+            {
+              "requested": 16,
+              "delivered": 16,
+              "physics_steps": 328,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 308,
+              "right_n_step": 328,
+              "decision_idx": 12,
+              "noise_seed": 100015012
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205623.170739,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205634.5648801
+        }
+      ]
+    },
+    "default_prompt_continuous_chunk": {
+      "prompt_mode": "default_prefix",
+      "controller": "continuous_chunk",
+      "completed": 10,
+      "successes": 1,
+      "success_rate": 0.1,
+      "episodes": [
+        {
+          "arm": "default_prompt_continuous_chunk",
+          "prompt_mode": "default_prefix",
+          "controller": "continuous_chunk",
+          "seed": 100000,
+          "instruction": "Set the rectangular silver phone with rounded edges on the dark green phonestand.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the rectangular silver phone with rounded edges on the dark green phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1138,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1138,
+              "right_n_step": 928,
+              "decision_idx": 0,
+              "noise_seed": 100000000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 832,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 832,
+              "right_n_step": 684,
+              "decision_idx": 1,
+              "noise_seed": 100000001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 807,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 807,
+              "right_n_step": 794,
+              "decision_idx": 2,
+              "noise_seed": 100000002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 845,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 845,
+              "right_n_step": 799,
+              "decision_idx": 3,
+              "noise_seed": 100000003
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 980,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 980,
+              "right_n_step": 685,
+              "decision_idx": 4,
+              "noise_seed": 100000004
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1146,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1146,
+              "right_n_step": 756,
+              "decision_idx": 5,
+              "noise_seed": 100000005
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1040,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1040,
+              "right_n_step": 825,
+              "decision_idx": 6,
+              "noise_seed": 100000006
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 959,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 959,
+              "right_n_step": 811,
+              "decision_idx": 7,
+              "noise_seed": 100000007
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 802,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 802,
+              "right_n_step": 712,
+              "decision_idx": 8,
+              "noise_seed": 100000008
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 752,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 704,
+              "right_n_step": 752,
+              "decision_idx": 9,
+              "noise_seed": 100000009
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 811,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 811,
+              "right_n_step": 711,
+              "decision_idx": 10,
+              "noise_seed": 100000010
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1036,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1036,
+              "right_n_step": 641,
+              "decision_idx": 11,
+              "noise_seed": 100000011
+            },
+            {
+              "requested": 16,
+              "delivered": 16,
+              "physics_steps": 432,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 432,
+              "right_n_step": 347,
+              "decision_idx": 12,
+              "noise_seed": 100000012
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794204626.0362885,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794204638.2873313
+        },
+        {
+          "arm": "default_prompt_continuous_chunk",
+          "prompt_mode": "default_prefix",
+          "controller": "continuous_chunk",
+          "seed": 100001,
+          "instruction": "Set the phone with rounded edges on the adjustable phone holder.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the phone with rounded edges on the adjustable phone holder.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1014,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1007,
+              "right_n_step": 1014,
+              "decision_idx": 0,
+              "noise_seed": 100001000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 925,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 819,
+              "right_n_step": 925,
+              "decision_idx": 1,
+              "noise_seed": 100001001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 956,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 834,
+              "right_n_step": 956,
+              "decision_idx": 2,
+              "noise_seed": 100001002
+            },
+            {
+              "requested": 32,
+              "delivered": 20,
+              "physics_steps": 531,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 750,
+              "right_n_step": 870,
+              "decision_idx": 3,
+              "noise_seed": 100001003
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794204722.9067183,
+          "success": true,
+          "delivered_targets": 116,
+          "step_limit": 400,
+          "ended_unix": 1794204726.5692124
+        },
+        {
+          "arm": "default_prompt_continuous_chunk",
+          "prompt_mode": "default_prefix",
+          "controller": "continuous_chunk",
+          "seed": 100002,
+          "instruction": "Set the palm-sized phone with glossy finish on the angled brown phonestand.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the palm-sized phone with glossy finish on the angled brown phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1006,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1006,
+              "right_n_step": 906,
+              "decision_idx": 0,
+              "noise_seed": 100002000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 963,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 963,
+              "right_n_step": 839,
+              "decision_idx": 1,
+              "noise_seed": 100002001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1102,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1102,
+              "right_n_step": 800,
+              "decision_idx": 2,
+              "noise_seed": 100002002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 861,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 861,
+              "right_n_step": 808,
+              "decision_idx": 3,
+              "noise_seed": 100002003
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 985,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 985,
+              "right_n_step": 750,
+              "decision_idx": 4,
+              "noise_seed": 100002004
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 820,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 781,
+              "right_n_step": 820,
+              "decision_idx": 5,
+              "noise_seed": 100002005
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 781,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 722,
+              "right_n_step": 781,
+              "decision_idx": 6,
+              "noise_seed": 100002006
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 871,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 871,
+              "right_n_step": 706,
+              "decision_idx": 7,
+              "noise_seed": 100002007
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 925,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 925,
+              "right_n_step": 773,
+              "decision_idx": 8,
+              "noise_seed": 100002008
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 965,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 965,
+              "right_n_step": 695,
+              "decision_idx": 9,
+              "noise_seed": 100002009
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 996,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 996,
+              "right_n_step": 652,
+              "decision_idx": 10,
+              "noise_seed": 100002010
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 884,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 884,
+              "right_n_step": 715,
+              "decision_idx": 11,
+              "noise_seed": 100002011
+            },
+            {
+              "requested": 16,
+              "delivered": 16,
+              "physics_steps": 492,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 484,
+              "right_n_step": 492,
+              "decision_idx": 12,
+              "noise_seed": 100002012
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794204833.1538503,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794204845.1680236
+        },
+        {
+          "arm": "default_prompt_continuous_chunk",
+          "prompt_mode": "default_prefix",
+          "controller": "continuous_chunk",
+          "seed": 100005,
+          "instruction": "Set the rectangular silver phone with rounded edges on the L-shaped smooth brown phonestand.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the rectangular silver phone with rounded edges on the L-shaped smooth brown phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1052,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1052,
+              "right_n_step": 807,
+              "decision_idx": 0,
+              "noise_seed": 100005000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 881,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 881,
+              "right_n_step": 811,
+              "decision_idx": 1,
+              "noise_seed": 100005001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1023,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1023,
+              "right_n_step": 712,
+              "decision_idx": 2,
+              "noise_seed": 100005002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 956,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 956,
+              "right_n_step": 885,
+              "decision_idx": 3,
+              "noise_seed": 100005003
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 851,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 823,
+              "right_n_step": 851,
+              "decision_idx": 4,
+              "noise_seed": 100005004
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 899,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 899,
+              "right_n_step": 715,
+              "decision_idx": 5,
+              "noise_seed": 100005005
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1056,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1056,
+              "right_n_step": 792,
+              "decision_idx": 6,
+              "noise_seed": 100005006
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 757,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 757,
+              "right_n_step": 716,
+              "decision_idx": 7,
+              "noise_seed": 100005007
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 817,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 728,
+              "right_n_step": 817,
+              "decision_idx": 8,
+              "noise_seed": 100005008
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 820,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 820,
+              "right_n_step": 797,
+              "decision_idx": 9,
+              "noise_seed": 100005009
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 851,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 779,
+              "right_n_step": 851,
+              "decision_idx": 10,
+              "noise_seed": 100005010
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 969,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 969,
+              "right_n_step": 797,
+              "decision_idx": 11,
+              "noise_seed": 100005011
+            },
+            {
+              "requested": 16,
+              "delivered": 16,
+              "physics_steps": 541,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 541,
+              "right_n_step": 405,
+              "decision_idx": 12,
+              "noise_seed": 100005012
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794204959.319173,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794204971.538837
+        },
+        {
+          "arm": "default_prompt_continuous_chunk",
+          "prompt_mode": "default_prefix",
+          "controller": "continuous_chunk",
+          "seed": 100006,
+          "instruction": "Set the smartphone with black display on the dark green phonestand.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the smartphone with black display on the dark green phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1001,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 799,
+              "right_n_step": 1001,
+              "decision_idx": 0,
+              "noise_seed": 100006000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 901,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 716,
+              "right_n_step": 901,
+              "decision_idx": 1,
+              "noise_seed": 100006001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 915,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 642,
+              "right_n_step": 915,
+              "decision_idx": 2,
+              "noise_seed": 100006002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 951,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 800,
+              "right_n_step": 951,
+              "decision_idx": 3,
+              "noise_seed": 100006003
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 752,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 752,
+              "right_n_step": 700,
+              "decision_idx": 4,
+              "noise_seed": 100006004
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 718,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 661,
+              "right_n_step": 718,
+              "decision_idx": 5,
+              "noise_seed": 100006005
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 814,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 756,
+              "right_n_step": 814,
+              "decision_idx": 6,
+              "noise_seed": 100006006
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 865,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 787,
+              "right_n_step": 865,
+              "decision_idx": 7,
+              "noise_seed": 100006007
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 820,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 820,
+              "right_n_step": 796,
+              "decision_idx": 8,
+              "noise_seed": 100006008
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 897,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 897,
+              "right_n_step": 840,
+              "decision_idx": 9,
+              "noise_seed": 100006009
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 831,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 831,
+              "right_n_step": 806,
+              "decision_idx": 10,
+              "noise_seed": 100006010
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 892,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 892,
+              "right_n_step": 841,
+              "decision_idx": 11,
+              "noise_seed": 100006011
+            },
+            {
+              "requested": 16,
+              "delivered": 16,
+              "physics_steps": 488,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 425,
+              "right_n_step": 488,
+              "decision_idx": 12,
+              "noise_seed": 100006012
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205075.8411443,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205088.0989468
+        },
+        {
+          "arm": "default_prompt_continuous_chunk",
+          "prompt_mode": "default_prefix",
+          "controller": "continuous_chunk",
+          "seed": 100008,
+          "instruction": "Set the phone with shiny black back on the silver arm phonestand.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the phone with shiny black back on the silver arm phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1017,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1017,
+              "right_n_step": 837,
+              "decision_idx": 0,
+              "noise_seed": 100008000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1001,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1001,
+              "right_n_step": 765,
+              "decision_idx": 1,
+              "noise_seed": 100008001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 836,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 836,
+              "right_n_step": 701,
+              "decision_idx": 2,
+              "noise_seed": 100008002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1022,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1022,
+              "right_n_step": 652,
+              "decision_idx": 3,
+              "noise_seed": 100008003
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1181,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1181,
+              "right_n_step": 876,
+              "decision_idx": 4,
+              "noise_seed": 100008004
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1122,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1122,
+              "right_n_step": 837,
+              "decision_idx": 5,
+              "noise_seed": 100008005
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 809,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 809,
+              "right_n_step": 686,
+              "decision_idx": 6,
+              "noise_seed": 100008006
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 999,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 999,
+              "right_n_step": 831,
+              "decision_idx": 7,
+              "noise_seed": 100008007
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 800,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 783,
+              "right_n_step": 800,
+              "decision_idx": 8,
+              "noise_seed": 100008008
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 819,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 819,
+              "right_n_step": 616,
+              "decision_idx": 9,
+              "noise_seed": 100008009
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1003,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1003,
+              "right_n_step": 848,
+              "decision_idx": 10,
+              "noise_seed": 100008010
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 879,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 698,
+              "right_n_step": 879,
+              "decision_idx": 11,
+              "noise_seed": 100008011
+            },
+            {
+              "requested": 16,
+              "delivered": 16,
+              "physics_steps": 560,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 560,
+              "right_n_step": 424,
+              "decision_idx": 12,
+              "noise_seed": 100008012
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205200.6026826,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205212.9120197
+        },
+        {
+          "arm": "default_prompt_continuous_chunk",
+          "prompt_mode": "default_prefix",
+          "controller": "continuous_chunk",
+          "seed": 100010,
+          "instruction": "Set the phone with rounded edges on the L-shaped smooth brown phonestand.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the phone with rounded edges on the L-shaped smooth brown phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1115,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 958,
+              "right_n_step": 1115,
+              "decision_idx": 0,
+              "noise_seed": 100010000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1086,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 878,
+              "right_n_step": 1086,
+              "decision_idx": 1,
+              "noise_seed": 100010001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 934,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 772,
+              "right_n_step": 934,
+              "decision_idx": 2,
+              "noise_seed": 100010002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1056,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 692,
+              "right_n_step": 1056,
+              "decision_idx": 3,
+              "noise_seed": 100010003
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 802,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 802,
+              "right_n_step": 765,
+              "decision_idx": 4,
+              "noise_seed": 100010004
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 815,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 712,
+              "right_n_step": 815,
+              "decision_idx": 5,
+              "noise_seed": 100010005
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 853,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 757,
+              "right_n_step": 853,
+              "decision_idx": 6,
+              "noise_seed": 100010006
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 850,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 850,
+              "right_n_step": 795,
+              "decision_idx": 7,
+              "noise_seed": 100010007
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 778,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 778,
+              "right_n_step": 736,
+              "decision_idx": 8,
+              "noise_seed": 100010008
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 947,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 947,
+              "right_n_step": 901,
+              "decision_idx": 9,
+              "noise_seed": 100010009
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1178,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1178,
+              "right_n_step": 991,
+              "decision_idx": 10,
+              "noise_seed": 100010010
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1061,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1061,
+              "right_n_step": 873,
+              "decision_idx": 11,
+              "noise_seed": 100010011
+            },
+            {
+              "requested": 16,
+              "delivered": 16,
+              "physics_steps": 622,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 622,
+              "right_n_step": 449,
+              "decision_idx": 12,
+              "noise_seed": 100010012
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205289.833631,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205302.2087026
+        },
+        {
+          "arm": "default_prompt_continuous_chunk",
+          "prompt_mode": "default_prefix",
+          "controller": "continuous_chunk",
+          "seed": 100012,
+          "instruction": "Set the palm-sized phone with glossy finish on the brown angled plastic phonestand.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the palm-sized phone with glossy finish on the brown angled plastic phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 991,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 991,
+              "right_n_step": 946,
+              "decision_idx": 0,
+              "noise_seed": 100012000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 908,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 908,
+              "right_n_step": 845,
+              "decision_idx": 1,
+              "noise_seed": 100012001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1111,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1111,
+              "right_n_step": 825,
+              "decision_idx": 2,
+              "noise_seed": 100012002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1049,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1049,
+              "right_n_step": 730,
+              "decision_idx": 3,
+              "noise_seed": 100012003
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 794,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 792,
+              "right_n_step": 794,
+              "decision_idx": 4,
+              "noise_seed": 100012004
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 845,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 845,
+              "right_n_step": 778,
+              "decision_idx": 5,
+              "noise_seed": 100012005
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 874,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 792,
+              "right_n_step": 874,
+              "decision_idx": 6,
+              "noise_seed": 100012006
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1260,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1260,
+              "right_n_step": 1250,
+              "decision_idx": 7,
+              "noise_seed": 100012007
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 739,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 638,
+              "right_n_step": 739,
+              "decision_idx": 8,
+              "noise_seed": 100012008
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 726,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 726,
+              "right_n_step": 711,
+              "decision_idx": 9,
+              "noise_seed": 100012009
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 728,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 728,
+              "right_n_step": 689,
+              "decision_idx": 10,
+              "noise_seed": 100012010
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 697,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 697,
+              "right_n_step": 638,
+              "decision_idx": 11,
+              "noise_seed": 100012011
+            },
+            {
+              "requested": 16,
+              "delivered": 16,
+              "physics_steps": 363,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 363,
+              "right_n_step": 336,
+              "decision_idx": 12,
+              "noise_seed": 100012012
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205399.4176514,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205412.0218318
+        },
+        {
+          "arm": "default_prompt_continuous_chunk",
+          "prompt_mode": "default_prefix",
+          "controller": "continuous_chunk",
+          "seed": 100014,
+          "instruction": "Set the modern phone on the brown angled plastic phonestand.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the modern phone on the brown angled plastic phonestand.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 982,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 982,
+              "right_n_step": 736,
+              "decision_idx": 0,
+              "noise_seed": 100014000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 837,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 837,
+              "right_n_step": 769,
+              "decision_idx": 1,
+              "noise_seed": 100014001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1047,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1047,
+              "right_n_step": 728,
+              "decision_idx": 2,
+              "noise_seed": 100014002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1134,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1134,
+              "right_n_step": 777,
+              "decision_idx": 3,
+              "noise_seed": 100014003
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 728,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 680,
+              "right_n_step": 728,
+              "decision_idx": 4,
+              "noise_seed": 100014004
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 799,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 799,
+              "right_n_step": 683,
+              "decision_idx": 5,
+              "noise_seed": 100014005
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1149,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1149,
+              "right_n_step": 628,
+              "decision_idx": 6,
+              "noise_seed": 100014006
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1144,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1144,
+              "right_n_step": 662,
+              "decision_idx": 7,
+              "noise_seed": 100014007
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1097,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1097,
+              "right_n_step": 648,
+              "decision_idx": 8,
+              "noise_seed": 100014008
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 843,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 843,
+              "right_n_step": 709,
+              "decision_idx": 9,
+              "noise_seed": 100014009
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 867,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 867,
+              "right_n_step": 824,
+              "decision_idx": 10,
+              "noise_seed": 100014010
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1026,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 1026,
+              "right_n_step": 665,
+              "decision_idx": 11,
+              "noise_seed": 100014011
+            },
+            {
+              "requested": 16,
+              "delivered": 16,
+              "physics_steps": 430,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 430,
+              "right_n_step": 297,
+              "decision_idx": 12,
+              "noise_seed": 100014012
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205521.2129703,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205533.352369
+        },
+        {
+          "arm": "default_prompt_continuous_chunk",
+          "prompt_mode": "default_prefix",
+          "controller": "continuous_chunk",
+          "seed": 100015,
+          "instruction": "Set the phone with flat black screen on the adjustable phone holder.",
+          "prompt_text": "The whole scene is in a realistic, industrial art style with three views: a fixed rear camera, a movable left arm camera, and a movable right arm camera. The aloha robot is currently performing the following task: Set the phone with flat black screen on the adjustable phone holder.",
+          "expert_feasible": true,
+          "initial_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "decisions": [
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1132,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 940,
+              "right_n_step": 1132,
+              "decision_idx": 0,
+              "noise_seed": 100015000
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 857,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 841,
+              "right_n_step": 857,
+              "decision_idx": 1,
+              "noise_seed": 100015001
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 746,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 737,
+              "right_n_step": 746,
+              "decision_idx": 2,
+              "noise_seed": 100015002
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 777,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 777,
+              "right_n_step": 764,
+              "decision_idx": 3,
+              "noise_seed": 100015003
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 792,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 792,
+              "right_n_step": 767,
+              "decision_idx": 4,
+              "noise_seed": 100015004
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 861,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 756,
+              "right_n_step": 861,
+              "decision_idx": 5,
+              "noise_seed": 100015005
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 857,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 758,
+              "right_n_step": 857,
+              "decision_idx": 6,
+              "noise_seed": 100015006
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 969,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 754,
+              "right_n_step": 969,
+              "decision_idx": 7,
+              "noise_seed": 100015007
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1071,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 771,
+              "right_n_step": 1071,
+              "decision_idx": 8,
+              "noise_seed": 100015008
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 850,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 798,
+              "right_n_step": 850,
+              "decision_idx": 9,
+              "noise_seed": 100015009
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 1076,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 834,
+              "right_n_step": 1076,
+              "decision_idx": 10,
+              "noise_seed": 100015010
+            },
+            {
+              "requested": 32,
+              "delivered": 32,
+              "physics_steps": 927,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 808,
+              "right_n_step": 927,
+              "decision_idx": 11,
+              "noise_seed": 100015011
+            },
+            {
+              "requested": 16,
+              "delivered": 16,
+              "physics_steps": 663,
+              "left_mode": "topp",
+              "right_mode": "topp",
+              "left_n_step": 492,
+              "right_n_step": 663,
+              "decision_idx": 12,
+              "noise_seed": 100015012
+            }
+          ],
+          "complete": true,
+          "started_unix": 1794205640.12823,
+          "success": false,
+          "delivered_targets": 400,
+          "step_limit": 400,
+          "ended_unix": 1794205652.1387694
+        }
+      ]
+    }
+  },
+  "paired_seeds": [
+    {
+      "episode_index": 0,
+      "seed": 100000,
+      "instruction": "Set the rectangular silver phone with rounded edges on the dark green phonestand.",
+      "outcomes": {
+        "raw_take_action": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "default_prompt_take_action": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "raw_continuous_chunk": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "default_prompt_continuous_chunk": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        }
+      },
+      "decision0_chunk_l2": {
+        "raw_controller_diff": 0.0,
+        "default_prompt_controller_diff": 0.0,
+        "default_vs_raw_l2": 0.312735
+      }
+    },
+    {
+      "episode_index": 1,
+      "seed": 100001,
+      "instruction": "Set the phone with rounded edges on the adjustable phone holder.",
+      "outcomes": {
+        "raw_take_action": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "default_prompt_take_action": {
+          "success": true,
+          "delivered_targets": 109,
+          "decisions": 4
+        },
+        "raw_continuous_chunk": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "default_prompt_continuous_chunk": {
+          "success": true,
+          "delivered_targets": 116,
+          "decisions": 4
+        }
+      },
+      "decision0_chunk_l2": {
+        "raw_controller_diff": 0.0,
+        "default_prompt_controller_diff": 0.0,
+        "default_vs_raw_l2": 0.455434
+      }
+    },
+    {
+      "episode_index": 2,
+      "seed": 100002,
+      "instruction": "Set the palm-sized phone with glossy finish on the angled brown phonestand.",
+      "outcomes": {
+        "raw_take_action": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "default_prompt_take_action": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "raw_continuous_chunk": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "default_prompt_continuous_chunk": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        }
+      },
+      "decision0_chunk_l2": {
+        "raw_controller_diff": 0.0,
+        "default_prompt_controller_diff": 0.0,
+        "default_vs_raw_l2": 0.292823
+      }
+    },
+    {
+      "episode_index": 3,
+      "seed": 100005,
+      "instruction": "Set the rectangular silver phone with rounded edges on the L-shaped smooth brown phonestand.",
+      "outcomes": {
+        "raw_take_action": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "default_prompt_take_action": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "raw_continuous_chunk": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "default_prompt_continuous_chunk": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        }
+      },
+      "decision0_chunk_l2": {
+        "raw_controller_diff": 0.0,
+        "default_prompt_controller_diff": 0.0,
+        "default_vs_raw_l2": 0.231687
+      }
+    },
+    {
+      "episode_index": 4,
+      "seed": 100006,
+      "instruction": "Set the smartphone with black display on the dark green phonestand.",
+      "outcomes": {
+        "raw_take_action": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "default_prompt_take_action": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "raw_continuous_chunk": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "default_prompt_continuous_chunk": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        }
+      },
+      "decision0_chunk_l2": {
+        "raw_controller_diff": 0.0,
+        "default_prompt_controller_diff": 0.0,
+        "default_vs_raw_l2": 0.267006
+      }
+    },
+    {
+      "episode_index": 5,
+      "seed": 100008,
+      "instruction": "Set the phone with shiny black back on the silver arm phonestand.",
+      "outcomes": {
+        "raw_take_action": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "default_prompt_take_action": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "raw_continuous_chunk": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "default_prompt_continuous_chunk": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        }
+      },
+      "decision0_chunk_l2": {
+        "raw_controller_diff": 0.0,
+        "default_prompt_controller_diff": 0.0,
+        "default_vs_raw_l2": 0.346052
+      }
+    },
+    {
+      "episode_index": 6,
+      "seed": 100010,
+      "instruction": "Set the phone with rounded edges on the L-shaped smooth brown phonestand.",
+      "outcomes": {
+        "raw_take_action": {
+          "success": true,
+          "delivered_targets": 127,
+          "decisions": 4
+        },
+        "default_prompt_take_action": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "raw_continuous_chunk": {
+          "success": true,
+          "delivered_targets": 128,
+          "decisions": 4
+        },
+        "default_prompt_continuous_chunk": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        }
+      },
+      "decision0_chunk_l2": {
+        "raw_controller_diff": 0.0,
+        "default_prompt_controller_diff": 0.0,
+        "default_vs_raw_l2": 0.618938
+      }
+    },
+    {
+      "episode_index": 7,
+      "seed": 100012,
+      "instruction": "Set the palm-sized phone with glossy finish on the brown angled plastic phonestand.",
+      "outcomes": {
+        "raw_take_action": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "default_prompt_take_action": {
+          "success": true,
+          "delivered_targets": 219,
+          "decisions": 7
+        },
+        "raw_continuous_chunk": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "default_prompt_continuous_chunk": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        }
+      },
+      "decision0_chunk_l2": {
+        "raw_controller_diff": 0.0,
+        "default_prompt_controller_diff": 0.0,
+        "default_vs_raw_l2": 0.486486
+      }
+    },
+    {
+      "episode_index": 8,
+      "seed": 100014,
+      "instruction": "Set the modern phone on the brown angled plastic phonestand.",
+      "outcomes": {
+        "raw_take_action": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "default_prompt_take_action": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "raw_continuous_chunk": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "default_prompt_continuous_chunk": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        }
+      },
+      "decision0_chunk_l2": {
+        "raw_controller_diff": 0.0,
+        "default_prompt_controller_diff": 0.0,
+        "default_vs_raw_l2": 0.636188
+      }
+    },
+    {
+      "episode_index": 9,
+      "seed": 100015,
+      "instruction": "Set the phone with flat black screen on the adjustable phone holder.",
+      "outcomes": {
+        "raw_take_action": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "default_prompt_take_action": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "raw_continuous_chunk": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        },
+        "default_prompt_continuous_chunk": {
+          "success": false,
+          "delivered_targets": 400,
+          "decisions": 13
+        }
+      },
+      "decision0_chunk_l2": {
+        "raw_controller_diff": 0.0,
+        "default_prompt_controller_diff": 0.0,
+        "default_vs_raw_l2": 0.293908
+      }
+    }
+  ],
+  "rejected_candidates": [
+    {
+      "seed": 100003,
+      "reason": "expert_not_successful"
+    },
+    {
+      "seed": 100004,
+      "reason": "expert_not_successful"
+    },
+    {
+      "seed": 100007,
+      "reason": "expert_not_successful"
+    },
+    {
+      "seed": 100009,
+      "reason": "expert_not_successful"
+    },
+    {
+      "seed": 100011,
+      "reason": "expert_not_successful"
+    },
+    {
+      "seed": 100013,
+      "reason": "expert_not_successful"
+    }
+  ],
+  "started_unix": 1794204500.8387904,
+  "frozen_parameters_unchanged": true,
+  "ended_unix": 1794205652.7318676
+}
