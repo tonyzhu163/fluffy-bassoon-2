@@ -45,12 +45,14 @@ def main():
     parser.add_argument('--version', choices=['1.0.0', '1.0.1'], default='1.0.1')
     parser.add_argument('--replan', type=int, default=5)
     parser.add_argument('--server-port', type=int)
+    parser.add_argument('--video-episodes', type=int, default=2)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     started = time.time()
     deadline = started + args.maximum_seconds
     assert socket.gethostname().startswith('job-'), 'Use a scheduler allocation'
     assert args.trials > 0 and args.replan == 5
+    assert args.video_episodes >= 0
     journal = args.output / 'events.jsonl'
 
     def event(**value):
@@ -125,7 +127,7 @@ def main():
                 action_digest = hashlib.sha256()
                 first_inputs = args.output / f'{task}-{episode:03d}-first.npz'
                 video_path = args.output / f'{task}-{episode:03d}.mp4'
-                writer = imageio.get_writer(video_path, fps=20) if episode < 2 else None
+                writer = imageio.get_writer(video_path, fps=20) if episode < args.video_episodes else None
                 episode_started = time.time()
                 try:
                     for control in range(horizon):
