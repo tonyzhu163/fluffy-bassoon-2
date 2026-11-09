@@ -111,7 +111,7 @@ def native_class(original, owner):
             self._flow_key = f'{phase}-i{owner._flow_iteration:03d}-round{self._flow_round:02d}'
             self._flow_root = Path(owner.cfg.native_pilot.output) / 'environment' / f'rank-{owner._rank:02d}'
             case = dict(task=contract['task'], seeds=self.env_seeds, split=str(self.cfg.split),
-                        horizon=contract['horizon'])
+                        horizon=int(self.cfg.max_episode_steps))
             snapshot = public_snapshot(observation, case, self.env.get_env_attr('_flow_physical'))
             if not is_eval and contract['group_size'] > 1:
                 verify_grpo_group_reset(snapshot, contract['group_size'])
@@ -133,7 +133,7 @@ def native_class(original, owner):
                 for i, succeeded in enumerate(self.success_once):
                     if succeeded and self._flow_first_success[i] is None:
                         self._flow_first_success[i] = self._flow_steps
-            horizon = owner._flow_contract['horizon']
+            horizon = int(self.cfg.max_episode_steps)
             if self._flow_steps == horizon:
                 counts = self.env.get_env_attr('_flora_accounting')
                 assert all(c['controls'] - c['reset_controls'] == horizon for c in counts)
@@ -159,7 +159,7 @@ def native_class(original, owner):
             owner._flow_journal.finish(token, requested)
             contract = owner._flow_contract
             after = cpu_tree(result[0][-1])
-            last = self._flow_steps == contract['horizon']
+            last = self._flow_steps == int(self.cfg.max_episode_steps)
             path = self._flow_root / (self._flow_key + f'-chunk{self._flow_steps // contract["chunk"]:02d}.pt.gz')
             payload = dict(phase=owner._flow_phase, iteration=owner._flow_iteration,
                 round=self._flow_round, seeds=list(self.env_seeds),

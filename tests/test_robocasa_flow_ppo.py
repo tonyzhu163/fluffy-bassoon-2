@@ -100,6 +100,61 @@ def test_ten_million_contract_arithmetic():
     assert contract['physics_tick_limit'] == (600 + 128) * 128
 
 
+def test_distinct_training_and_evaluation_episode_lengths():
+    cfg = flow_config(maximum=None)
+    cfg['env']['train'].update(max_episode_steps=400, max_steps_per_rollout_epoch=400)
+    cfg['env']['eval'].update(max_episode_steps=750, max_steps_per_rollout_epoch=750)
+    cfg['actor']['model']['num_action_chunks'] = 5
+    cfg['actor']['global_batch_size'] = 2048
+    contract = flow_contract(cfg)
+    assert contract['horizon'] == 400 and contract['eval_horizon'] == 750
+    assert contract['chunks_per_episode'] == 80 and contract['eval_chunks_per_episode'] == 150
+    assert contract['optimizer_steps_per_update'] == 20
+    assert contract['TRAIN_policy_controls'] == 130 * 128 * 400
+    assert contract['nominal_policy_controls'] == 130 * 128 * 400 + 2 * 64 * 750
+    assert contract['physics_tick_limit'] == (750 + 128) * 128
+
+
+@pytest.mark.parametrize('phase,episode,rollout', [
+    ('train', 400, 405), ('eval', 750, 745), ('eval', 751, 751), ('train', 0, 0),
+])
+def test_phase_horizons_reject_partial_chunks_and_inconsistent_rollouts(phase, episode, rollout):
+    cfg = flow_config(maximum=None)
+    cfg['actor']['model']['num_action_chunks'] = 5
+    cfg['env'][phase].update(max_episode_steps=episode, max_steps_per_rollout_epoch=rollout)
+    with pytest.raises(ValueError, match='Each phase horizon'):
+        flow_contract(cfg)
+
+
+@pytest.mark.parametrize('episode_length', [400, 750])
+def test_environment_finishes_at_its_own_phase_horizon(monkeypatch, tmp_path, episode_length):
+    from types import SimpleNamespace
+    from fluffy_bassoon.meta_rl import rlinf_robocasa_flow_ppo_runtime as runtime
+    written = []
+    monkeypatch.setattr(runtime, 'write', lambda path, value: written.append(value))
+    class Original:
+        def step(self, actions, auto_reset):
+            return 'native step'
+    owner = SimpleNamespace(_flow_contract={'horizon': 400}, _flow_phase='evaluation',
+                            _flow_iteration=0, _rank=0)
+    wrapped = object.__new__(runtime.native_class(Original, owner))
+    wrapped.cfg = SimpleNamespace(max_episode_steps=episode_length)
+    wrapped._flow_steps = 0
+    wrapped.success_once = [False]
+    wrapped._flow_first_success = [None]
+    wrapped.current_info_list = [{'success': False}]
+    wrapped._flow_episode_ids, wrapped.env_seeds = ['case'], [123]
+    wrapped._flow_root, wrapped._flow_key, wrapped._flow_initial = tmp_path, 'case', {}
+    wrapped.env = SimpleNamespace(get_env_attr=lambda key: [dict(
+        controls=wrapped._flow_steps + 3, reset_controls=3)])
+    for _ in range(episode_length - 1):
+        assert wrapped.step(actions=object()) == 'native step'
+        assert not written
+    wrapped.step(actions=object())
+    assert len(written) == 1 and written[0]['completed']
+    assert written[0]['rows'][0]['native_counts']['controls'] == episode_length + 3
+
+
 @pytest.mark.parametrize('chunk,batch,epochs,iterations,steps', [
     (50, 256, 1, 40, 240),
     (50, 256, 4, 40, 960),

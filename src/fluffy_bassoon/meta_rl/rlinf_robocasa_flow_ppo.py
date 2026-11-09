@@ -216,9 +216,12 @@ def flow_contract(cfg):
     if (int(_get(cfg, 'actor.model.openpi.num_steps', denoising_steps)) != denoising_steps
             or int(_get(cfg, 'rollout.model.num_steps', denoising_steps)) != denoising_steps):
         raise ValueError('Actor/rollout denoising steps must agree')
-    if (horizon != int(train['max_steps_per_rollout_epoch']) or horizon != int(evaluation['max_episode_steps'])
-            or horizon != int(evaluation['max_steps_per_rollout_epoch']) or horizon % chunk):
-        raise ValueError('Train/eval horizons must agree and be a whole number of chunks')
+    eval_horizon = int(evaluation['max_episode_steps'])
+    if (horizon < 1 or eval_horizon < 1
+            or horizon != int(train['max_steps_per_rollout_epoch'])
+            or eval_horizon != int(evaluation['max_steps_per_rollout_epoch'])
+            or horizon % chunk or eval_horizon % chunk):
+        raise ValueError('Each phase horizon must match its rollout length and contain whole chunks')
     envs, rounds = int(train['total_num_envs']), int(train['rollout_epoch'])
     episodes = envs * rounds
     adv_type = str(_get(cfg, 'algorithm.adv_type', 'gae'))
@@ -265,7 +268,7 @@ def flow_contract(cfg):
     if eval_interval < 1 or iterations % eval_interval:
         raise ValueError('Evaluation interval must divide the iteration count')
     eval_panels = 1 + iterations // eval_interval
-    policy = iterations * episodes * horizon + eval_panels * eval_cases * horizon
+    policy = iterations * episodes * horizon + eval_panels * eval_cases * eval_horizon
     resets = (iterations * episodes + eval_panels * eval_cases) * RESET_CONTROL_RESERVE
     maximum = _get(cfg, 'native_pilot.maximum_actions')
     if maximum is not None and int(maximum) < policy + resets:
@@ -273,7 +276,9 @@ def flow_contract(cfg):
     noise_level = float(_get(cfg, 'actor.model.openpi.noise_level', 0.3))
     if not np.isfinite(noise_level) or noise_level <= 0:
         raise ValueError('Flow-SDE noise_level must be finite and positive')
-    return dict(task=task, horizon=horizon, chunk=chunk, chunks_per_episode=horizon // chunk,
+    return dict(task=task, horizon=horizon, eval_horizon=eval_horizon,
+                chunk=chunk, chunks_per_episode=horizon // chunk,
+                eval_chunks_per_episode=eval_horizon // chunk,
                 adv_type=adv_type, loss_type=loss_type, group_size=group_size,
                 add_value_head=value_head,
                 value_after_vlm=bool(_get(cfg, 'actor.model.openpi.value_after_vlm', False)),
@@ -295,7 +300,7 @@ def flow_contract(cfg):
                 train_seed=train_seed, eval_seed=eval_seed, checkpoint_interval=interval,
                 nominal_policy_controls=policy, reset_reserve_controls=resets,
                 maximum_actions=None if maximum is None else int(maximum),
-                physics_tick_limit=(horizon + RESET_CONTROL_RESERVE) * 128)
+                physics_tick_limit=(max(horizon, eval_horizon) + RESET_CONTROL_RESERVE) * 128)
 
 
 def train_case_seeds(contract, *, iteration, round_index, rank, local_envs):
