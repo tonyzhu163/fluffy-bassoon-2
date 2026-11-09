@@ -14,12 +14,11 @@ def read(path):
         return {}
 
 
-def snapshot(root):
+def snapshot(root, arms=("dpt","dit")):
     probe = read(root / "GPU-PROBE.json")
     record = dict(checked_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
                   job=root.name, allocation_probe=probe.get("status"), methods={})
-    for method in ["dpt","dit"]:
-        log = root / f"{method}-current.log"
+    for method in arms:
         progress = read(root / f"{method}-PROGRESS.json") or read(root / f"{method}-progress.json")
         final = read(root / f"{method}-RESULT.json")
         journal = read(root / f"{method}-current-journal.json")
@@ -58,13 +57,15 @@ def verify_exports(root, record):
 if __name__ == "__main__":
     p=argparse.ArgumentParser(description=__doc__);p.add_argument("root",type=Path)
     p.add_argument("--until",type=int,default=0,help="UTC epoch for bounded observation; zero prints once")
+    p.add_argument("--pilot", action="store_true", help="Observe DIT full, DPT reset, DIT reset")
     a=p.parse_args()
+    arms=("dit-full","dpt-reset","dit-reset") if a.pilot else ("dpt","dit")
     if not a.until:
-        print(json.dumps(snapshot(a.root),indent=2))
+        print(json.dumps(snapshot(a.root,arms),indent=2))
     else:
         out=a.root/"cpu-observations";out.mkdir(exist_ok=False)
         while True:
-            observation=snapshot(a.root)
+            observation=snapshot(a.root,arms)
             done=all(v["exported_exit"] for v in observation["methods"].values())
             if done or time.time()>=a.until:
                 verify_exports(a.root,observation)

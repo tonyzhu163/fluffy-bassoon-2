@@ -17,9 +17,9 @@
 +    if drawer_mode:
 +        if (not qualification or Path('/tmp').resolve() not in args.output.resolve().parents
 +                or args.output.stat().st_dev == root.stat().st_dev
-+                or not (os.statvfs(root).f_flag & os.ST_RDONLY)
++                or shutil.disk_usage(root).free < 96 * 2**30
 +                or storage_guard is not None or minimum_free_gib < 220):
-+            raise ValueError('Require read-only shared inputs and separate worker scratch with 220 GiB reserve')
++            raise ValueError('Require 96 GiB for native temporary XML and separate 220 GiB output scratch')
      native_versions = tensor_hash(_versions(native.model))
      tasks = (('OpenDrawer', 'CloseFridge') if qualification else
               ('OpenDrawer', 'CloseToasterOvenDoor', 'CoffeeSetupMug') if args.split == 'ID' else

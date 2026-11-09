@@ -21,7 +21,8 @@ echo write-readback >"$ARCH/volume-probe"
 test "$(cat "$ARCH/volume-probe")" = write-readback
 export STEERING_CODE=$SCI STEERING_COMMIT=$PIN RLINF_PATH=$ROOT/sources/critic-selected-a1229239-r1
 export PYTHONPATH=$SCI/src:$RLINF_PATH OPENPI_DATA_HOME=$ROOT/setups/robocasa365-native-20261101-r1/cache/.cache/openpi
-# Check the writable local volume for every bank. Shared inputs must be mounted read-only.
+# Raw output stays on local scratch; stock RoboCasa briefly writes XML beside its meshes.
+# Keep its input-volume floor and check it again for every bank.
 export GIT_OPTIONAL_LOCKS=0
 export STEERING_MIN_FREE_GIB=220 STEERING_WAVE_ALLOWANCE_SECONDS=300
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 NCCL_P2P_DISABLE=1
