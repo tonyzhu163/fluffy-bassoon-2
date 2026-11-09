@@ -6,7 +6,7 @@ TASK_ATTEMPT=${3:-01}
 TASK_MODE=${4:-policy}
 [[ $TASK_EPISODES == 2 || $TASK_EPISODES == 100 || ( $TASK_EPISODES == 16 && $TASK_MODE == gap ) ]]
 [[ $TASK_ATTEMPT =~ ^[0-9]{2}$ ]]
-[[ $TASK_MODE == policy || $TASK_MODE == render || $TASK_MODE == sidney || $TASK_MODE == gap ]]
+[[ $TASK_MODE == policy || $TASK_MODE == render || $TASK_MODE == sidney || $TASK_MODE == gap || $TASK_MODE == wrist ]]
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_ID=native-smoke-$TASK_ATTEMPT
 TASK_LIMIT=3300
@@ -19,7 +19,7 @@ fi
 TASK_OUT=/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motus-release-baseline-20261109-r1/$TASK_ID
 TASK_LOCAL=/tmp/rt-motus-release-$TASK_ID
 TASK_EVALUATOR=$TASK_CODE/outputs/robotwin-motus-release-baseline-20261109-r1/evaluate.py
-if [[ $TASK_MODE == sidney || $TASK_MODE == gap ]]; then
+if [[ $TASK_MODE == sidney || $TASK_MODE == gap || $TASK_MODE == wrist ]]; then
  TASK_EVALUATOR=$TASK_CODE/outputs/robotwin-sidney-native-sft-20261109-r1/run.py
  TASK_OUT=/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/sidney-native-sft-20261109-r1/$TASK_ID
  TASK_LOCAL=/tmp/rt-sidney-sft-$TASK_ID
@@ -32,6 +32,13 @@ if [[ $TASK_MODE == gap ]]; then
  TASK_LOCAL=/tmp/rt-sidney-gap-$TASK_ATTEMPT
  TASK_EXTRA=(--diagnostic)
  TASK_LIMIT=14400
+fi
+if [[ $TASK_MODE == wrist ]]; then
+ [[ $TASK_EPISODES == 100 ]]
+ TASK_OUT=/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/sidney-gap-20261109-r1/wrist-$TASK_ATTEMPT
+ TASK_LOCAL=/tmp/rt-sidney-wrist-$TASK_ATTEMPT
+ TASK_EXTRA=(--wrist-near 0.01)
+ TASK_LIMIT=10800
 fi
 export TASK_CODE TASK_SOURCE TASK_OUT TASK_LOCAL TASK_LIMIT GIT_OPTIONAL_LOCKS=0
 [[ $(uname -s) == Linux && $(hostname) == job-* ]]

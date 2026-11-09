@@ -48,7 +48,7 @@ def bind_instruction(task, native, prompt):
 
 
 def episode(task, config, native, case, worker, scratch, directory, *,
-            horizon=400, short_prompt=False, trace_class=None):
+            horizon=400, short_prompt=False, trace_class=None, wrist_near=None):
     seed, index, prompt = case['seed'], case['index'], case['instruction']
     task.setup_demo(now_ep_num=index, seed=seed, is_test=True, **config)
     assert task.step_lim == 400 and task.take_action_cnt == 0
@@ -59,6 +59,11 @@ def episode(task, config, native, case, worker, scratch, directory, *,
         actors = [f'077_phone/base{task.phone_id}', f'078_phonestand/base{task.stand_id}']
     else:
         actors = bind_instruction(task, native, prompt)
+    if wrist_near is not None:
+        for camera in (task.cameras.left_camera, task.cameras.right_camera):
+            assert np.isclose(camera.near, .1)
+            camera.set_near(wrist_near)
+            assert np.isclose(camera.near, wrist_near)
     trace = trace_class(task) if trace_class else None
     directory.mkdir()
     obs = task.get_obs()
@@ -98,6 +103,8 @@ def episode(task, config, native, case, worker, scratch, directory, *,
     assert task.eval_success or task.take_action_cnt == horizon
     result = dict(index=index, seed=seed, instruction=prompt, actors=actors, chunks=chunks,
                   success=bool(task.eval_success), targets=task.take_action_cnt)
+    if wrist_near is not None:
+        result['wrist_near_m'] = [float(cam.near) for cam in (task.cameras.left_camera, task.cameras.right_camera)]
     if trace is not None:
         result.update(at_400=trace.at_400, final_trace=trace.summary(),
                       success_by_400=bool(task.eval_success and task.take_action_cnt <= 400))
@@ -107,7 +114,7 @@ def episode(task, config, native, case, worker, scratch, directory, *,
     return result
 
 
-def run(out, count, diagnostic=False):
+def run(out, count, diagnostic=False, wrist_near=None):
     import torch
     from fluffy_bassoon.rl.robotwin_noise import _install_allocated_renderer
     assert torch.cuda.device_count() == 1 and os.uname().nodename.startswith('job-')
@@ -145,7 +152,10 @@ def run(out, count, diagnostic=False):
                 from diagnostic import diagnose
                 diagnose(out, cases['demo_clean'], native, proc, scratch, report, count)
             else:
-                evaluate_settings(out, count, cases, native, proc, scratch, report)
+                if wrist_near is not None:
+                    cases = {'demo_clean': cases['demo_clean']}
+                    report['wrist_near_m'] = wrist_near
+                evaluate_settings(out, count, cases, native, proc, scratch, report, wrist_near)
             proc.stdin.close()
             assert proc.wait(timeout=60) == 0
             report['status'] = 'complete'
@@ -156,7 +166,7 @@ def run(out, count, diagnostic=False):
                 proc.wait(timeout=30)
 
 
-def evaluate_settings(out, count, cases, native, proc, scratch, report):
+def evaluate_settings(out, count, cases, native, proc, scratch, report, wrist_near):
     from envs.place_phone_stand import place_phone_stand
     for setting, rows in cases.items():
         config = environment_args(native, setting)
@@ -166,7 +176,7 @@ def evaluate_settings(out, count, cases, native, proc, scratch, report):
         episodes = report['settings'][setting] = []
         for case in rows[:count]:
             directory = out/f"{setting}-{case['index']:03d}-seed-{case['seed']}"
-            episodes.append(episode(task, config, native, case, proc, scratch, directory))
+            episodes.append(episode(task, config, native, case, proc, scratch, directory, wrist_near=wrist_near))
             save(out/'RESULT.json', report)
         del task
 
@@ -176,5 +186,6 @@ if __name__ == '__main__':
     args.add_argument('--output', type=Path, required=True)
     args.add_argument('--episodes', type=int, choices=(2, 16, 100), required=True)
     args.add_argument('--diagnostic', action='store_true')
+    args.add_argument('--wrist-near', type=float, choices=(.01,))
     parsed = args.parse_args()
-    run(parsed.output, parsed.episodes, parsed.diagnostic)
+    run(parsed.output, parsed.episodes, parsed.diagnostic, parsed.wrist_near)
