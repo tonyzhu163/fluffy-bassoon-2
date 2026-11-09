@@ -1,0 +1,54 @@
+--- READOUT.py
++++ READOUT.py
+@@ -17,7 +17,7 @@
+     p.add_argument('--interface', choices=('kv_bridge', 'velocity_bridge'), required=True)
+     p.add_argument('--objective', choices=('ad', 'dpt', 'dit', 'ic_iql'), required=True)
+     p.add_argument('--split', choices=('ID', 'OOD', 'qualification'), required=True)
+-    p.add_argument('--qualification-phase', choices=('deployment', 'ood-full', 'reset'), default='deployment')
++    p.add_argument('--qualification-phase', choices=('deployment', 'ood-full', 'reset', 'drawer-full', 'drawer-reset'), default='deployment')
+     p.add_argument('--deadline', type=float, required=True)
+     p.add_argument('--attempt', required=True)
+     args = p.parse_args()
+@@ -86,6 +86,13 @@
+         motor = observer.observed_motor(native, codec, policy)
+     else:
+         motor = FlowBridgeMotor(native, codec, policy)
++    drawer_mode = {'drawer-full':'full', 'drawer-reset':'episode'}.get(args.qualification_phase)
++    if drawer_mode:
++        if (not qualification or Path('/tmp').resolve() not in args.output.resolve().parents
++                or args.output.stat().st_dev == root.stat().st_dev
++                or not (os.statvfs(root).f_flag & os.ST_RDONLY)
++                or storage_guard is not None or minimum_free_gib < 220):
++            raise ValueError('Require read-only shared inputs and separate worker scratch with 220 GiB reserve')
+     native_versions = tensor_hash(_versions(native.model))
+     tasks = (('OpenDrawer', 'CloseFridge') if qualification else
+              ('OpenDrawer', 'CloseToasterOvenDoor', 'CoffeeSetupMug') if args.split == 'ID' else
+@@ -109,6 +116,8 @@
+                  [dict(task='OpenDrawer', mode='full', cases=8),
+                   dict(task='CloseFridge', mode='full', cases=1),
+                   dict(task='CloseFridge', mode='episode', cases=1)])
++        if drawer_mode:
++            waves = [dict(task='OpenDrawer', mode=drawer_mode, cases=8)]
+         binding.update(format='fitted_bridge_deployment_qualification_v1', cases_per_task=None,
+             separate_qualification_output=True, maximum_allocated_GPU_hours=.25,
+             qualification_phase=args.qualification_phase, waves=waves,
+@@ -126,7 +135,9 @@
+                 continue
+             if qualification and args.qualification_phase == 'ood-full' and (mode != 'full' or task != 'CloseFridge'):
+                 continue
+-            if qualification and task == 'OpenDrawer' and mode == 'episode':
++            if drawer_mode and (task != 'OpenDrawer' or mode != drawer_mode):
++                continue
++            if qualification and not drawer_mode and task == 'OpenDrawer' and mode == 'episode':
+                 continue
+             canonical_split = 'ID' if task in ('OpenDrawer', 'CloseToasterOvenDoor', 'CoffeeSetupMug') else 'OOD'
+             canonical = root / 'outputs/robocasa-eight-hour-babysit-20261104-r1/gpu' / ('canonical-final-' + canonical_split)
+@@ -153,7 +164,7 @@
+                     forward = storage_guard.snapshot() if storage_guard else None
+                     if forward:
+                         _json(args.output / ('STORAGE-GUARD-' + args.attempt + '.json'), forward)
+-                    below_capacity = (not forward['admitted']) if forward else (shutil.disk_usage(root).free < minimum_free_gib * 2**30)
++                    below_capacity = (not forward['admitted']) if forward else (shutil.disk_usage(args.output if drawer_mode else root).free < minimum_free_gib * 2**30)
+                     if below_capacity:
+                         _json(args.output / 'OPERATIONAL-CHECKPOINT.json', dict(completed=False,
+                             reason='forward_storage_reserve' if forward else 'hot_storage_reserve', completed_banks=len(results),
