@@ -2,6 +2,7 @@
 import argparse
 import gzip
 import hashlib
+import io
 import json
 import math
 import os
@@ -20,8 +21,10 @@ def digest(path):
 
 
 def load(path):
-    with gzip.open(path, 'rb') as stream:
-        return torch.load(stream, map_location='cpu', weights_only=False)
+    # Torch's ZIP reader seeks repeatedly; seeking through a gzip/FUSE stream
+    # repeatedly decompresses and re-reads the object. Decode once into RAM.
+    return torch.load(io.BytesIO(gzip.decompress(path.read_bytes())),
+                      map_location='cpu', weights_only=False)
 
 
 def array(value):
@@ -120,6 +123,7 @@ def main():
             all(p['full_chunk_arm_freezes'] == 0 for p in result['profiles'].values() if p['waypoint_controller']))
     assert gate == result['gate_passed']
     report = dict(status='passed_independent_linux_cpu_physical_trace_reduction',
+                  auditor_sha256=digest(Path(__file__)),
                   result_sha256=digest(args.root/'RESULT.json'), source_commit=result['source_commit'],
                   comparisons=comparisons, gate_passed=gate, paired_initial_observations=count,
                   paired_k5_initial_commands_exact=True, complete_episodes=3*count,

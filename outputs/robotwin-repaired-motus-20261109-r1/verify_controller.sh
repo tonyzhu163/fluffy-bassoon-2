@@ -2,9 +2,11 @@
 set -Eeuo pipefail
 TASK_SOURCE=${1:?reviewed source commit}
 TASK_CASES=${2:-16}
+TASK_ATTEMPT=${3:-01}
 [[ $TASK_CASES == 16 || $TASK_CASES == 64 ]]
+[[ $TASK_ATTEMPT =~ ^[0-9]{2}$ ]]
 TASK_ID=controller-pilot01
-if [[ $TASK_CASES == 64 ]]; then TASK_ID=controller-dev64-01; fi
+if [[ $TASK_CASES == 64 ]]; then TASK_ID=controller-dev64-$TASK_ATTEMPT; fi
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_DRIVER=$TASK_CODE/outputs/robotwin-restoration-20261106-r1
 TASK_OUT=/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/repaired-motus-20261109-r1/$TASK_ID
