@@ -23,6 +23,11 @@ def public_feature(path):
 
 def trials(root):
     rows = [json.loads(p.read_text()) for p in root.glob('episode-*.json')]
+    if len(rows) != 64 or any('tape_sha256' not in r for r in rows):
+        raise ValueError('Require all 64 common-tape replays from the revised mechanical control')
+    for pair in range(8):
+        neutral = [r for r in rows if r['pair'] == pair and r['compensation'] == -1]
+        assert len(neutral) == 2 and len({r['trajectory_sha256'] for r in neutral}) == 1
     out = []
     for pair, sign in itertools.product(range(8), (-1, 1)):
         group = [r for r in rows if r['pair'] == pair and r['sign'] == sign]
@@ -31,6 +36,7 @@ def trials(root):
         query = {r['compensation'] * sign: r for r in group if r['role'] == 'query'}
         assert set(query) == {-1, 0, 1}
         assert len({q['paired_initial_sha256'] for q in query.values()}) == 1
+        assert len({q['tape_sha256'] for q in query.values()}) == 1
         feature = public_feature(root / f"trial-{support['ordinal']:03d}/public/trajectory.npz")
         out.append(dict(pair=pair, sign=sign, feature=feature, query=query))
     return out
