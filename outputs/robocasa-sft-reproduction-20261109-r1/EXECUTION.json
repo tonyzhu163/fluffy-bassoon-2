@@ -1,14 +1,14 @@
 {
   "run_id": "robocasa-sft-reproduction-20261109-r1",
   "owner_chat": "01a1be92-5e00-7df0-b90e-9719078be031",
-  "source_commit": "924a42aff387a50e33c4fc75d6a2fffbd4533278",
-  "phase": "gpu03_completed_parallel_qualification_preparing",
+  "source_commit": "d7bf65f7c9da23f464d589e51c20ce7401dc8049",
+  "phase": "gpu04_completed_full_campaign_preparing",
   "cluster": "Baige Pro6K",
   "queue_id": "aihcq-rh0wwk9muei4",
-  "job_id": "job-px54jh4prhaf",
-  "job_name": "mwj_1109_robocasa_sft_native_qual02",
-  "scheduler_created_shanghai": "2026-11-09 13:04:52",
-  "scheduler_state_observed": "gpu02 Failed / released",
+  "job_id": "job-yzlvc03puznn",
+  "job_name": "mwj_1109_robocasa_sft_parallel_qual04",
+  "scheduler_created_shanghai": "2026-11-09 13:25:06",
+  "scheduler_state_observed": "Succeeded / released at 2026-11-09 13:30:01",
   "resources": {
     "gpus": 1,
     "cpus": 21,
@@ -38,11 +38,11 @@
   "cache": "project-specific copy of cached public tokenizer; SHA256 8986bb4f423f07f8c7f70d0dbe3526fb2316056c17bae71b1ea975e77a168fc6; original cache preserved",
   "budget": {
     "maximum_gpu_hours": 50,
-    "closed_gpu_seconds": 288,
+    "closed_gpu_seconds": 908,
     "open_reservation_gpu_seconds_including_overhead": 0
   },
-  "next_action": "Qualify four concurrent simulator clients with the released WebSocket server, retaining native batch-one inference; measure throughput before sizing the full sweep.",
-  "last_check_shanghai": "2026-11-09 13:11 Shanghai",
+  "next_action": "Deploy eight-container campaign; 900 atomic trials first, then 1600 composites if the predeclared practical screen passes.",
+  "last_check_shanghai": "2026-11-09T13:40:47.165325+08:00",
   "attempts": [
     {
       "attempt": "gpu01",
@@ -78,7 +78,26 @@
       "successes": 1,
       "training_updates": 0,
       "wrapped_gpu_seconds": 300,
-      "scheduler_closeout": "pending UI verification"
+      "scheduler_closeout": "Succeeded / released",
+      "terminal_state": "Succeeded",
+      "created_shanghai": "2026-11-09 13:13:26",
+      "terminal_shanghai": "2026-11-09 13:18:51",
+      "conservative_gpu_seconds": 325
+    },
+    {
+      "attempt": "gpu04",
+      "job_id": "job-yzlvc03puznn",
+      "source_commit": "d7bf65f7c9da23f464d589e51c20ce7401dc8049",
+      "terminal_state": "Succeeded",
+      "created_shanghai": "2026-11-09 13:25:06",
+      "terminal_shanghai": "2026-11-09 13:30:01",
+      "conservative_gpu_seconds": 295,
+      "episodes": 4,
+      "controls": 2832,
+      "predictions": 567,
+      "inference_batch_size": 1,
+      "training_updates": 0,
+      "controls_per_second": 37.50138449526944
     }
   ]
 }

@@ -86,12 +86,18 @@ binary gripper/base-mode conversion. Its `Args.task_set` / `args.task_soup`
 CLI typo is bypassed by explicitly selecting the saved task list. No action
 or observation transformation is changed to fix that typo.
 
-There is a remaining public-provenance limitation: the submission date is
-April 2, while its linked code commit is dated May 4 and already includes the
-1.5 multiplier. The public submission gives aggregates, not its actual
-per-case logs or environment/dependency commit. Record success before both
-the old and extended horizons; do not assert that the metadata alone proves
-which allowance generated those percentages.
+The submission date is April 2, while its linked code commit is dated May 4.
+Following the evaluator's file history resolves much of the horizon question:
+the initial RoboCasa365 evaluator at
+[`43fd9da0`, February 17](https://github.com/robocasa-benchmark/openpi/blob/43fd9da0bdad94a2d409f5601b4b878f5ca59070/examples/robocasa/main.py)
+already used `int(task_horizon * 1.5)`, explicitly to give the policy more
+time, along with replan5/pretrain/50 trials. The April 16 π0.5-support
+commit retains that allowance and adds the right-camera input; see the
+[saved file-history diff](research/EVALUATOR-PI05-HISTORY.diff).
+Thus the extended allowance is the primary released-recipe comparison, and
+the original-registry cutoff is a secondary diagnostic. The public submission
+still provides aggregates rather than its original per-case logs and full
+dependency pins; the source history does not prove exact episode replay.
 
 ## Prepared execution
 
@@ -102,8 +108,10 @@ discrete state input. Original checkpoint and shared assets remain in place.
 Fresh source checkouts use the protected assets through a local symlink;
 the tracked asset metadata was preserved separately.
 
-The next measurement is a one-GPU, one-hour maximum qualification with
-native original JAX loading and three real pretrain-split episodes. Its
-result determines batch/worker capacity and the 18-task sweep allocation.
-See [the full contract](PLAN.md). No version downgrade or benchmark parity
-is claimed before the corresponding measurements.
+Native qualification completed three episodes, followed by four concurrent
+simulator clients against the official batch-one WebSocket policy server.
+The latter completed 2,832 controls / 567 native predictions in 75.52 seconds
+of collection (37.50 controls/second), with a matching saved sampler count,
+first-input hashes and zero training updates. These seven diagnostic episodes
+qualify execution and throughput, not benchmark performance. See
+[the qualification audit](GPU04-AUDIT.json) and [campaign contract](CAMPAIGN.md).
