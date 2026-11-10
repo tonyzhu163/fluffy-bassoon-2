@@ -35,7 +35,7 @@ def public_tokens(support_obs, delivered_actions, native_rewards, query_obs):
 
 
 def measured_label(candidates, branches, *, trial_id, decision_sha256):
-    """Native success first, smallest absolute miss among successes second; abstain on ties."""
+    """A unique native success wins. Resolve multiple successes only from measured misses."""
     candidates = tuple(candidates)
     if (len(candidates) < 2 or any(type(c) is not str or not c for c in candidates)
             or len(set(candidates)) != len(candidates) or len(branches) != len(candidates)):
@@ -47,13 +47,15 @@ def measured_label(candidates, branches, *, trial_id, decision_sha256):
         if (row['trial_id'] != trial_id or row['decision_sha256'] != decision_sha256
                 or row['restore_verified'] is not True):
             raise ValueError('Every measured branch must match the verified query and trial')
-        candidate, success, miss = row['candidate'], row['native_success'], row['signed_miss_m']
+        candidate, success, miss = row['candidate'], row['native_success'], row.get('signed_miss_m')
         if (candidate not in candidates or candidate in outcomes or type(success) is not bool
-                or type(miss) not in (int, float) or not np.isfinite(miss)):
+                or (miss is not None and (type(miss) not in (int, float) or not np.isfinite(miss)))):
             raise ValueError('Invalid or duplicate branch measurement')
-        outcomes[candidate] = (success, abs(miss))
+        outcomes[candidate] = (success, abs(miss) if miss is not None else None)
     wins = [i for i, c in enumerate(candidates) if outcomes[c][0]]
-    if not wins:
+    if len(wins) == 1:
+        return wins[0]
+    if not wins or any(outcomes[candidates[i]][1] is None for i in wins):
         return None
     distance = min(outcomes[candidates[i]][1] for i in wins)
     best = [i for i in wins if outcomes[candidates[i]][1] == distance]

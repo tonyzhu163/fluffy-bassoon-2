@@ -59,7 +59,7 @@ def test_native_branch_targets_preserve_delivered_controls_and_select_by_id(tmp_
              support_obs=np.zeros((1, 2), np.float32), delivered_actions=np.ones((1, 1), np.float32),
              native_rewards=np.zeros(1, np.float32), query_obs=np.zeros(2, np.float32))
     rows = [dict(candidate=c, trial_id="trial", restore_verified=True, decision_sha256=digest,
-                 native_success=c == "right", signed_miss_m=0., executed_actions=actions[-7:].tolist())
+                 native_success=c == "right", executed_actions=actions[-7:].tolist())
             for c in reversed(candidates)]
     rows[1].pop("executed_actions")
     evidence = tmp_path / "branches.json"
@@ -71,6 +71,11 @@ def test_native_branch_targets_preserve_delivered_controls_and_select_by_id(tmp_
         assert example["query_label"] == 1
         np.testing.assert_array_equal(example["query_flow_target"], targets[1])
         np.testing.assert_array_equal(example["query_delivered"], masks[1])
+    rows[1]["native_success"] = True
+    assert measured_label(candidates, rows, trial_id="trial", decision_sha256=digest) is None
+    rows[1]["signed_miss_m"] = 0.
+    assert measured_label(candidates, rows, trial_id="trial", decision_sha256=digest) is None
+    rows[1]["native_success"] = False
     rows[0]["native_success"] = False
     evidence.write_text(json.dumps(rows))
     empty = tmp_path / "abstention.npz"
