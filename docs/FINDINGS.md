@@ -20,6 +20,8 @@ In the [compact-table follow-up](../outputs/robocasa-compact-bowls-20261109-r1/R
 
 In an eight-seed OpenDrawer screen, two scenes opened under the frozen native policy. Both exact nominal replays matched. Both scenes still opened with either sign of a five-control, 4 cm lateral offset and zero correction. Nineteen of 20 branches opened across all five residual choices. The only timeout came after adding a correction that reinforced the offset. All four uncorrected branches succeeded, leaving no failures on which to measure rescue. [Matched drawer results](../outputs/robocasa-drawer-authority-20261110-r1/RESULT.md).
 
+A held lateral correction opened two of six natural OpenDrawer failures. Both rescued at −2 cm, the same sign as their nominal lateral misses. The best fixed offset matched the best per-scene choice. All eight archived command tapes replayed exactly, all eight native outcomes reproduced under fresh inference, and all six matched zero-offset continuations failed. [Paired evidence and videos](../outputs/icrl-idea-checks-20261110-r1/RESCUE.md).
+
 On two OpenDrawer scenes crossed with two noise seeds, normal effort and doubled post-grasp translation each opened 3/4 drawers at normal damping, 3/4 at 8× and 0/4 at 64×. Three pairs still grasped at 64×. The added translation changed no paired native success outcome. [Stiffness measurements](../outputs/icrl-idea-checks-20261110-r1/STIFF.md).
 
 For historical Flow-SDE teachers, the [critic parity audit](../outputs/robocasa-flow-sde-critic-parity-20261104-r1/RESULT.md) found that rollout and replay could use different denoising-step values even when likelihoods matched. Record the RLinf revision and critic definition when comparing these runs.

@@ -37,7 +37,7 @@ Before a large collection, verify on development scenes that returning to the de
 | | RoboCasa365 | RoboTwin | LIBERO plus/pro |
 | --- | --- | --- | --- |
 | Role | Primary: build and train here | Transfer test and comparison on VLRLA's tasks | Third embodiment; untouched transfer test |
-| Candidate latent | End-effector offset on handle tasks | Per-arm offset, or which arm is miscalibrated | Released S18 offsets |
+| Candidate latent | Outcome-revealed property selected by E1. Use visible offsets as a comparison. | Per-arm offset, or which arm is miscalibrated | Released S18 offsets |
 | Return to decision point | Verified: seed reset plus command replay matches every public state | SAPIEN seed reset and command replay matched on [two clean phone-stand scenes](outputs/robotwin-e1-replay-20261110-r1/RESULT.md) | MuJoCo; not yet checked here |
 | Known obstacle | No handle acquisition under offset on two pilot tapes | Phone stand is at 75–87% SFT; choose lower-success tasks | S18 perturbs reported positions, not the physical command, with one direction for all 40 tasks |
 
@@ -63,9 +63,10 @@ Test splits: fresh scenes in the seen property range (main endpoint); a held-out
 - **Native failures are mostly not scene-persistent.** In the Stage 1 readout, six attempts per scene with history cleared give an intraclass correlation of 0.05–0.16 for success across five tasks. A minority of scenes fail every time. [Analysis and plan](outputs/icrl-idea-checks-20261110-r1/PLAN.md).
 - **A visible offset is absorbed.** On Nov 10 both openable drawer scenes still opened under a 4 cm offset with no correction.
 - **The natural drawer failures have a signed miss.** Five of six failing scenes never grasped and held a steady 1–4 cm lateral miss.
+- **Natural-failure rescue.** A held −2 cm offset opened two of the six failing drawers. It matched the sign of both misses. Choosing a different offset on each scene added no native successes over this fixed correction. The three-rescue threshold was missed. [Paired rescue results](outputs/icrl-idea-checks-20261110-r1/RESCUE.md).
 - **Stiffness changed outcomes.** Normal and doubled post-grasp translation each opened 3/4 drawers at ordinary damping, 3/4 at 8× and 0/4 at 64×. The tested translation multiplier gave no native rescue. [Stiffness measurements](outputs/icrl-idea-checks-20261110-r1/STIFF.md).
 
-The remaining checks measure native scene persistence and whether a held lateral offset rescues natural drawer failures.
+The native persistence panel measures how often the same scene fails across motor-noise seeds. Neither drawer intervention currently qualifies a property for the 100-trial collection.
 
 ## Claim
 
@@ -95,13 +96,13 @@ A frozen VLA trained on constructed histories corrects its next attempt from one
 
 The Nov 9 pilots are small but unfavourable. Frozen π0.5 released to the right regardless of the requested bowl, while a scripted carry reached the requested side in 6 of 8 continuations ([compact bowls](outputs/robocasa-compact-bowls-20261109-r1/RESULT.md)). The drawer offset changed the lateral miss but produced no handle acquisition on the two tapes examined ([hidden-goal pilot](outputs/robocasa-meta-feedback-20261109-r1/RESULT.md)).
 
-On Nov 10, the frozen policy opened the drawer on two of eight development seeds. On both openings, either sign of a 4 cm lateral offset still allowed native success without correction. The five-control offset ended 36 and 63 controls before the first two-finger grasp. Repeat the small paired test with the offset active through gripper closure before collecting 100 trials. [Matched drawer results](outputs/robocasa-drawer-authority-20261110-r1/RESULT.md).
+On Nov 10, the frozen policy opened the drawer on two of eight development seeds. On both openings, either sign of a 4 cm lateral offset still allowed native success without correction. The five-control offset ended 36 and 63 controls before the first two-finger grasp. The subsequent held-offset test on the six natural failures is reported above. [Matched drawer results](outputs/robocasa-drawer-authority-20261110-r1/RESULT.md).
 
 For one task and one latent, branch a fixed set of alternatives from saved query states on development scenes. Compare three actuators: KV or velocity steering of the frozen expert, a bounded residual on the decoded action, and a choice among scripted corrections.
 
 **Go** with the weakest actuator for which some alternative succeeds on a clear majority of states where the uncorrected action fails. **No-go** if none does; the paper then waits on a different latent or task.
 
-**Latent-prediction diagnostic.** On the same development trials, fit a small supervised head that predicts the imposed offset from the support-history tokens, and a second from the current query observation alone. Hold out whole scenes. This separates the two failure modes:
+**Latent-prediction diagnostic.** On the same development trials, fit a small supervised head that predicts the imposed property value from the support-history tokens, and a second from the current query observation alone. Hold out whole scenes. This separates the two failure modes:
 
 - History head fails: the information is not in the tokens. Change what enters context before fitting any policy.
 - History head succeeds but no alternative succeeds: the limit is control authority.
@@ -111,7 +112,7 @@ The head uses the true latent as its label, so it is a diagnostic and an upper b
 
 ### E2. Constructed histories, primary
 
-- **Latent.** A continuous 2D lateral end-effector offset, fixed through support and query. The query uses a fresh starting pose.
+- **Latent.** Choose a continuous property only after E1 demonstrates both a native rescue and an advantage over the best fixed correction. Draw the property independently of the scene and hold it fixed through support and a fresh query pose.
 - **Corpus.** One real support episode, then the query state with all branched alternatives and their outcomes. Whole trials stay together across the train/validation split.
 - **Main learner.** DPT-style: predict the measured best alternative at the query, given the support history. Three independent fits.
 - **Label-source arms on the same pairs.**
@@ -121,11 +122,11 @@ The head uses the true latent as its label, so it is a diagnostic and an upper b
 - **Diagnostic.** The latent-prediction head from E1, refit on each learner's history representation, reported beside its success rate.
 - **Query conditions.** Own history; donor with a nearby latent; donor with a distant latent; episode reset; trained memoryless; trained reward-blind; native SFT retries.
 - **Primary endpoint.** Paired difference in native query success after one support, own history minus distant-latent donor, pooled across tasks.
-- **Mechanism readout.** Signed commanded displacement at first grasp against the imposed offset.
+- **Mechanism readout.** Measure the chosen correction against the imposed property. For the visible offset comparison, record signed commanded displacement at first grasp.
 
 ### E3. Does it generalise?
 
-1. A held-out region of offset direction and magnitude.
+1. A held-out region of the selected property range.
 2. A held-out task with a different handle.
 3. A second latent family, chosen after E1.
 
