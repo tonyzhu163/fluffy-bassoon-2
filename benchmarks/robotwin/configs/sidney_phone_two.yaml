@@ -215,6 +215,8 @@ critic:
   use_critic_model: False
 
 native_pilot:
+  # Sidney's demonstrations show the fingertips; the stock 10 cm plane clips them.
+  wrist_near: 0.01
   memory_strategy: per_scene_close
   trim_after_scene_close: true
   maximum_actions: 1200000

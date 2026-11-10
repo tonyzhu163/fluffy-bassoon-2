@@ -142,3 +142,33 @@ def collated_chunk_executions(info, *, num_envs, requested_targets):
             raise ValueError('Collated mask/duration disagrees with physical measurements')
         rows.append(row)
     return tuple(rows)
+
+
+def install_wrist_near(camera_class, near):
+    """Create both wrist cameras with ``near`` metres before any image is taken.
+
+    Pinned RoboTwin hard-codes a 10 cm near plane, which clips the gripper
+    fingertips that Sidney's training demonstrations show. Wrapping
+    ``load_camera`` applies the setting when cameras are built, so the first
+    reset observation already uses it. The checkout itself is not edited.
+    """
+    if isinstance(near, bool) or not isinstance(near, (int, float)) or not isfinite(near) or not 0 < near <= .1:
+        raise ValueError('Wrist near plane must be in (0, 0.1] metres')
+    original = camera_class.load_camera
+    installed = getattr(original, '_fb2_wrist_near', None)
+    if installed is not None:
+        if installed != near:
+            raise ValueError('A different wrist near plane is already installed in this process')
+        return
+
+    def load_camera(self, scene):
+        result = original(self, scene)
+        if getattr(self, 'collect_wrist_camera', True):
+            for camera in (self.left_camera, self.right_camera):
+                camera.set_near(near)
+                if abs(camera.near - near) > 1e-9:
+                    raise RuntimeError('Renderer did not accept the wrist near plane')
+        return result
+
+    load_camera._fb2_wrist_near = near
+    camera_class.load_camera = load_camera

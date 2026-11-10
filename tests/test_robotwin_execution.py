@@ -129,3 +129,26 @@ def test_vector_missing_lane_cannot_be_replaced_by_requested_count():
     with pytest.raises(ValueError, match='incomplete'):
         collated_chunk_executions(dict(fb2_execution=[measured(1, 1, 7)]),
                                   num_envs=2, requested_targets=4)
+
+
+def test_wrist_near_applies_when_cameras_are_built():
+    from fluffy_bassoon.robotwin.execution import install_wrist_near
+
+    class Lens:
+        near = .1
+        def set_near(self, value):
+            self.near = value
+
+    class Camera:
+        collect_wrist_camera = True
+        def load_camera(self, scene):
+            self.left_camera, self.right_camera, self.head_camera = Lens(), Lens(), Lens()
+
+    install_wrist_near(Camera, .01)
+    install_wrist_near(Camera, .01)  # idempotent for the same value
+    rig = Camera(); rig.load_camera(None)
+    assert (rig.left_camera.near, rig.right_camera.near, rig.head_camera.near) == (.01, .01, .1)
+    with pytest.raises(ValueError, match='different'):
+        install_wrist_near(Camera, .02)
+    with pytest.raises(ValueError, match='near plane'):
+        install_wrist_near(type('Other', (), dict(load_camera=lambda self, scene: None)), .5)

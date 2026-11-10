@@ -408,6 +408,16 @@ class PilotEnvironment(SidecarMixin, EnvWorker):
             self.cfg.native_pilot.passive_controller_sha256) if controller_path else None)
         if self.cfg.native_pilot.get('bounded_io', False):
             self._init_pilot_io()
+        wrist_near = self.cfg.native_pilot.get('wrist_near')
+        if wrist_near is not None:
+            # Applied when RoboTwin builds its cameras, in training and evaluation alike.
+            import os, sys
+            from fluffy_bassoon.robotwin.execution import install_wrist_near
+            if os.environ['ROBOTWIN_PATH'] not in sys.path:
+                sys.path.insert(0, os.environ['ROBOTWIN_PATH'])
+            from envs.camera.camera import Camera
+            install_wrist_near(Camera, float(wrist_near))
+        self._pilot_wrist_near = None if wrist_near is None else float(wrist_near)
         self._pilot_phase = 'initialization'
         self._pilot_reset_ordinal = 0
         self._pilot_trace_ordinal = 0
@@ -447,6 +457,13 @@ class PilotEnvironment(SidecarMixin, EnvWorker):
                     for index in indices:
                         install_accounted_controller(env.venv.envs[index].task,
                                                      controller, metadata=True)
+                if owner._pilot_wrist_near is not None:
+                    # Fail loudly if the simulator built its cameras some other way.
+                    for index in indices:
+                        cameras = env.venv.envs[index].task.cameras
+                        for camera in (cameras.left_camera, cameras.right_camera):
+                            if abs(float(camera.near) - owner._pilot_wrist_near) > 1e-9:
+                                raise RuntimeError('Wrist camera near plane differs from native_pilot.wrist_near')
                 env._pilot_episode_serial[indices] += 1
                 env._pilot_primitive_time[indices] = 0
                 env._pilot_current_observation = cpu_tree(result[0])
@@ -456,6 +473,7 @@ class PilotEnvironment(SidecarMixin, EnvWorker):
                         env._pilot_round_index = getattr(owner, '_pilot_next_source_round', 0)
                         owner._pilot_next_source_round = env._pilot_round_index + 1
                 reset = dict(task_key=env.task_name, evaluation_data=bool(env.cfg.is_eval),
+                    wrist_near_m=owner._pilot_wrist_near,
                     producing_policy_iteration=producing_iteration(owner),
                     round_index=env._pilot_round_index, rank=owner._rank,
                     reset_env_indices=indices, reset_state_ids=env.reset_state_ids.clone(),

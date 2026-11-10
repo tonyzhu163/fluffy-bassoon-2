@@ -1,6 +1,6 @@
 # ICML plan: constructed histories for in-context adaptation of a frozen VLA
 
-Revised November 10, 2026. This plan replaces the PPO-then-distil pipeline as the main line and responds to the [VLRLA reviews](https://openreview.net/forum?id=6ZrDl6noHg). It builds on the [simulation experiment plan](outputs/vlrla-feedback-plan-20261109-r1/PLAN.md). No compute reservation or launch is attached. The ICML 2027 deadline is assumed to be late January 2027 and has not been checked.
+Revised November 10, 2026. This plan replaces the PPO-then-distil pipeline as the main line and responds to the [VLRLA reviews](https://openreview.net/forum?id=6ZrDl6noHg). It builds on the [simulation experiment plan](outputs/vlrla-feedback-plan-20261109-r1/PLAN.md). No compute reservation or launch is attached. ICML 2027 has not published a call for papers as of November 10, 2026; aggregators project January 16 (abstract) and January 22 (paper) from the 2026 cycle.
 
 ## Why the pipeline changes
 
@@ -32,16 +32,16 @@ One trial is built in seven steps, identical on every benchmark.
 6. **Write the record.** Support history, query observation, every alternative with its outcome, and the index of the best. The latent value, object poses and unchosen-branch outcomes go in an evaluator-only file the student never reads.
 7. **Split by whole trial and by scene.** Hold out a latent region, whole scenes and at least one task before fitting or normalisation.
 
-Before a large collection, verify on development scenes that restoring a state and replaying the same action reproduces the same outcome. Otherwise branch outcomes are noise.
+Before a large collection, verify on development scenes that returning to the decision point and repeating the same action reproduces the same outcome. Otherwise branch outcomes are noise. On RoboCasa this already holds for reset-by-seed plus exact command replay: the [bowl fork script](outputs/robocasa-compact-bowls-20261109-r1/fork_grasp.py) asserts every public state equal to the original trace before branching.
 
 | | RoboCasa365 | RoboTwin | LIBERO plus/pro |
 | --- | --- | --- | --- |
 | Role | Primary: build and train here | Transfer test and comparison on VLRLA's tasks | Third embodiment; untouched transfer test |
 | Candidate latent | End-effector offset on handle tasks | Per-arm offset, or which arm is miscalibrated | Released S18 offsets |
-| State restore | MuJoCo save/restore; canonical reset snapshots already in use | SAPIEN; exact restore not yet qualified here | MuJoCo; not yet checked here |
+| Return to decision point | Verified: seed reset plus command replay matches every public state | SAPIEN; replay determinism not yet qualified here | MuJoCo; not yet checked here |
 | Known obstacle | No handle acquisition under offset on two pilot tapes | Phone stand is at 75–87% SFT; choose lower-success tasks | S18 perturbs reported positions, not the physical command, with one direction for all 40 tasks |
 
-S18's single direction gives no pairs with opposite correct answers, so it cannot be training data without a custom variant. If SAPIEN restore is not deterministic, RoboTwin supplies support and query episodes for evaluation only. The LIBERO column rests on the [Nov 9 plan's static check](outputs/vlrla-feedback-plan-20261109-r1/PLAN.md) and has not been re-verified.
+S18's single direction gives no pairs with opposite correct answers, so it cannot be training data without a custom variant. If SAPIEN restore is not deterministic, RoboTwin supplies support and query episodes for evaluation only. The [pinned S18 code](https://github.com/LIBERO-Pro-Team/LIBERO-Pro2.0/blob/e5500c690c1498eca1b7050350654964190cdf70/simulator-source/libero/libero/envs/nonphysical_perturbations.py#L3213-L3247) was re-read on November 10 and adds offsets only to observation keys containing `eef_pos` or `joint_pos`. The single direction across 40 tasks rests on the [Nov 9 static check](outputs/vlrla-feedback-plan-20261109-r1/PLAN.md) and was not re-counted.
 
 **First build.** One task and one latent on RoboCasa, about 100 trials with five alternatives each. Measure restore determinism, how often any alternative succeeds, and controls per trial. This is the same run as E1 and prices the full corpus.
 
@@ -65,9 +65,9 @@ A frozen VLA trained on constructed histories corrects its next attempt from one
 
 ### E0. Prerequisites in code
 
-- Move the 1 cm wrist near plane into the RoboTwin training environment. It currently exists only in the [evaluation script](outputs/robotwin-sidney-native-sft-20261109-r1/run.py).
-- Let the checked-in runner accept the Sidney phone-stand recipe; `validate_recipe` admits only the two-iteration `adjust_bottle` pilot.
-- Add a query-label path for the student interface used in E2.
+- **Done, untested on Linux:** `native_pilot.wrist_near` sets the wrist near plane when RoboTwin builds its cameras, in training and evaluation, and every reset checks it. The Sidney config sets 1 cm. Pinned RoboTwin hard-codes 10 cm. Qualify it on Baige with the unit test and one real episode before any PPO/GRPO baseline.
+- **Open:** `validate_recipe` on `main` admits only the two-iteration `adjust_bottle` pilot. The Sidney PPO/GRPO arms ran from run-pinned source. Generalise the check when the E5 baseline is contracted, with its Linux tests.
+- **Open:** a query-label path for the student interface, chosen after E1 picks the actuator.
 
 ### E1. Control authority (go/no-go)
 
@@ -131,7 +131,7 @@ Success versus delivered physical actions at 0, 1, 2, 4 and 8 supports for nativ
 | Dec 8 | E2 development readout, three fits | No own-over-donor effect means no main-track submission |
 | Dec 22 | E3 items 1 and 2; E4 | |
 | Jan 9 | E2 confirmation on fresh cases; E5 | |
-| Late Jan | Submission | Deadline to be confirmed |
+| Jan 16 / Jan 22 | Abstract / paper | Projected dates; confirm when the call is posted |
 
 Dates are proposals, not derived from measured throughput.
 
