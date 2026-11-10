@@ -28,6 +28,8 @@ On eight development scenes per task, four native Human300 π0.5 retries from ex
 
 Across eight CloseDrawer development scenes and two noise seeds, the native policy, a stationary wait, and either lateral base movement each closed 10/16 drawers. A forward move closed 7/16, losing three native successes. No movement or wait rescued a native failure. A per-scene oracle also closed 10/16. Of the three recurrent failures, one never made gripper contact, one barely moved the drawer after contact, and one reached about 60% open before stalling. [Matched corrections and camera evidence](../outputs/robocasa-closedrawer-corrections-20261110-r1/RESULT.md).
 
+A memoryless LoRA student trained on the final Drawer130, Toaster130 and Faucet40 PPO actions reduced held-out native flow-matching error from 0.08113 to 0.07887. DPT + LoRA scored 0.08207 with the matching prior SFT attempt and 0.08262 with a different same-task attempt. The paired 95% interval for the own-history improvement included zero across 48 held-out reset scenes. The pilot measured offline imitation with one fit per arm. [Three-teacher RoboCasa pilot](../outputs/robocasa-three-ppo-dpt-lora-20261110-r1/RESULT.md).
+
 For historical Flow-SDE teachers, the [critic parity audit](../outputs/robocasa-flow-sde-critic-parity-20261104-r1/RESULT.md) found that rollout and replay could use different denoising-step values even when likelihoods matched. Record the RLinf revision and critic definition when comparing these runs.
 
 ## RoboTwin
