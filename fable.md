@@ -63,8 +63,9 @@ Test splits: fresh scenes in the seen property range (main endpoint); a held-out
 - **Native failures are mostly not scene-persistent.** In the Stage 1 readout, six attempts per scene with history cleared give an intraclass correlation of 0.05–0.16 for success across five tasks. A minority of scenes fail every time. [Analysis and plan](outputs/icrl-idea-checks-20261110-r1/PLAN.md).
 - **A visible offset is absorbed.** On Nov 10 both openable drawer scenes still opened under a 4 cm offset with no correction.
 - **The natural drawer failures have a signed miss.** Five of six failing scenes never grasped and held a steady 1–4 cm lateral miss.
+- **Stiffness changed outcomes.** Normal and doubled post-grasp translation each opened 3/4 drawers at ordinary damping, 3/4 at 8× and 0/4 at 64×. The tested translation multiplier gave no native rescue. [Stiffness measurements](outputs/icrl-idea-checks-20261110-r1/STIFF.md).
 
-Three checks are written and ready to launch on Baige, under three GPU-hours in total: scene persistence across four tasks, rescue of the natural drawer failures by a held lateral offset, and a stiff-drawer property with an effort correction. Their go and no-go rules are in the plan above.
+The remaining checks measure native scene persistence and whether a held lateral offset rescues natural drawer failures.
 
 ## Claim
 
