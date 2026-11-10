@@ -26,6 +26,8 @@ On two OpenDrawer scenes crossed with two noise seeds, normal effort and doubled
 
 On eight development scenes per task, four native Human300 π0.5 retries from exactly matched starts gave scene ICCs of 1.00 for CloseDrawer, 0.885 for OpenDrawer, 0.222 for CloseFridge and −0.067 for TurnOnMicrowave. All eight CloseDrawer scenes had unanimous outcomes, including three that failed on every attempt. Seven of eight OpenDrawer scenes had unanimous outcomes. This measures repeatability at a fixed starting scene. The effect of support history on a fresh query remains open. [128 native episodes and per-scene counts](../outputs/icrl-idea-checks-20261110-r1/PERSISTENCE.md).
 
+Across eight CloseDrawer development scenes and two noise seeds, the native policy, a stationary wait, and either lateral base movement each closed 10/16 drawers. A forward move closed 7/16, losing three native successes. No movement or wait rescued a native failure. A per-scene oracle also closed 10/16. Of the three recurrent failures, one never made gripper contact, one barely moved the drawer after contact, and one reached about 60% open before stalling. [Matched corrections and camera evidence](../outputs/robocasa-closedrawer-corrections-20261110-r1/RESULT.md).
+
 For historical Flow-SDE teachers, the [critic parity audit](../outputs/robocasa-flow-sde-critic-parity-20261104-r1/RESULT.md) found that rollout and replay could use different denoising-step values even when likelihoods matched. Record the RLinf revision and critic definition when comparing these runs.
 
 ## RoboTwin
