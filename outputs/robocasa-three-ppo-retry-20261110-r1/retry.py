@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
 from pathlib import Path
 import time
 from types import SimpleNamespace
@@ -104,6 +105,18 @@ def run(args):
     assert sha(source) == "63cfcb66da28bb9d421b6c0363093b7e532f151d1a029439de858285a36cf397"
     ck = torch.load(source, weights_only=False, map_location="cpu")
     assert ck["step"] == 576 and ck["contract"]["data_sha256"] == sha(PILOT / "data-01/dataset.json")
+    for name, step in (("memoryless", args.memoryless_step), ("dpt", args.dpt_step)):
+        if step == 576:
+            continue
+        candidate = args.curves / "seed-991" / f"step-{step:04d}/checkpoint.pt"
+        fitted = torch.load(candidate, weights_only=False, map_location="cpu")
+        assert fitted["step"] == step and fitted["contract"]["seed"] == 991
+        assert fitted["contract"]["data_sha256"] == ck["contract"]["data_sha256"]
+        assert torch.equal(fitted["history_mean"], ck["history_mean"]) and torch.equal(fitted["history_scale"], ck["history_scale"])
+        for key in ck["students"]:
+            if key.startswith(f"adapters.{name}.") or (name == "dpt" and key.startswith(("encoder.", "project."))):
+                ck["students"][key] = fitted["students"][key]
+
     original_banks = json.loads((PILOT / "data-01/dataset.json").read_text())["banks"]
     old_xml = {scene for b in original_banks for scene in b["scenes"]}
     old_seeds = {seed for b in original_banks for seed in b["seeds"]}
@@ -113,7 +126,7 @@ def run(args):
                                             "physics_tick_limit":(600+50)*128},
                             _rank=0, _flow_iteration=0, _flow_phase="support",
                             _submit_flow_io=recorder.record)
-    owner.cfg = OmegaConf.create({"native_pilot":{"fresh_eval_processes":False, "output":str(args.out),
+    owner.cfg = OmegaConf.create({"native_pilot":{"fresh_eval_processes":True, "output":str(args.out),
                                 "deadline_unix":time.time()+86400}})
     owner._flow_journal = ActionJournal(args.out / "accounting", rank=0, world=1, attempt="retry",
                                        maximum_actions=120000)
@@ -133,7 +146,24 @@ def run(args):
             history = None
             panels = {}
             donor_lane = (torch.arange(8) + 1 + bank%7) % 8
-            for arm in ("support", *sequence):
+            arms = ["support", *(k for k in sequence if k in args.arms)]
+            if args.reuse:
+                original = args.reuse / f"{args.task}-{bank}" / f"bank-{bank:02d}"
+                # Copy the original canonical snapshot, so the existing strict physical
+                # comparison must pass before spending any query controls.
+                shutil.copytree(original / "canonical-eval", folder / "canonical-eval")
+                previous = json.loads((original / "support.json").read_text())
+                assert [item["seed"] for item in previous["episodes"]] == seeds
+                support = torch.load(original / "support.pt", weights_only=True)
+                assert support.shape[:2] == (8,12) and torch.isfinite(support).all()
+                history = ((support - ck["history_mean"]) / ck["history_scale"]).clamp(-12,12).cuda()
+                panels["support"], scenes = previous, previous["scene_xml"]
+                assert old_xml.isdisjoint(scenes) and len(set(scenes)) == 8
+                old_xml.update(scenes)
+                save(folder / "support.json", previous)
+                save(folder / "support-source.json", dict(path=str(original), tensor_sha256=sha(original / "support.pt")))
+                arms.remove("support")
+            for arm in arms:
                 owner._flow_phase = arm
                 recorder.start(arm)
                 students.select(None, None)
@@ -178,8 +208,8 @@ def run(args):
                 panels[arm] = panel
                 save(folder / (arm+".json"), panel)
                 print(args.task, bank, arm, "success", int(rewards.sum()), "/ 8", flush=True)
-            assert len({panels[k]["noise_sha256"] for k in ARMS}) == 1
-            assert panels["support"]["noise_sha256"] != panels["own"]["noise_sha256"]
+            assert len({panels[k]["noise_sha256"] for k in args.arms}) == 1
+            assert panels["support"]["noise_sha256"] != panels[args.arms[0]]["noise_sha256"]
             save(folder/"complete.json", {"seeds":seeds,"arms":list(panels),"order":list(sequence)})
         save(args.out/"complete.json", {"task":args.task,"banks":list(range(args.first_bank,args.end_bank)),
                                        "charged_controls":owner._flow_journal.charged()})
@@ -195,4 +225,9 @@ if __name__ == "__main__":
     parser.add_argument("task", choices=TASKS)
     parser.add_argument("--first-bank", type=int, default=0)
     parser.add_argument("--end-bank", type=int, default=4)
+    parser.add_argument("--reuse", type=Path)
+    parser.add_argument("--curves", type=Path)
+    parser.add_argument("--memoryless-step", type=int, default=576)
+    parser.add_argument("--dpt-step", type=int, default=576)
+    parser.add_argument("--arms", choices=ARMS, nargs="+", default=list(ARMS))
     run(parser.parse_args())

@@ -40,7 +40,7 @@ export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
 export ROBOCASA_NATIVE_OUTPUT=$out
 py=$root/setups/robocasa365-native-20261101-r1/env/bin/python
 "$py" -B "$code/scripts/[train]gpu_probe.py" --expected-count 1 --output "$out/gpu.json" --purpose evaluation --baige-container
-timeout --kill-after=20 4500 "$py" -Bu "$code/$run/retry.py" "$code" "$out" "$task" --first-bank "$bank" --end-bank "$((bank+1))"
+timeout --kill-after=20 4500 "$py" -Bu "$code/$run/retry.py" "$code" "$out" "$task" --first-bank "$bank" --end-bank "$((bank+1))" --reuse "$root/$run/attempt-01"
 if [[ $index == 0 ]]; then
     while (( $(date +%s) - started < 4750 )); do
         if [[ $(find "$group" -mindepth 2 -maxdepth 2 -name complete.json | wc -l) == 12 ]]; then exit 0; fi
