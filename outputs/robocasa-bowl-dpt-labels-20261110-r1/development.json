@@ -1,0 +1,1080 @@
+{
+  "fit": {
+    "seed": 991,
+    "steps": [
+      128,
+      512,
+      1024
+    ],
+    "batch_size": 6,
+    "code": "bf64c1eff73375f633cf014559b025794b36e3fb",
+    "given_side_in_prompt": false,
+    "history_encoder": "2-layer, 4-head causal transformer, width 128, ALiBi",
+    "training_labels": "ab92a6eb2b7a46cd18415b5295cce9d4d9cd2cffd3ec68943da7e1ff89e2a76a",
+    "validation_labels": "064aa98e1f4caf9cbdcdace602e198e8a032694827849adb88f003d117873c53",
+    "trainable": {
+      "memoryless": 139264,
+      "dpt": 696448
+    }
+  },
+  "fit_clock": {
+    "exit_code": 0,
+    "started": 1794330546,
+    "ended": 1794331028
+  },
+  "development_scenes": [
+    987400,
+    987401,
+    987402,
+    987404,
+    987405,
+    987406,
+    987409,
+    987410
+  ],
+  "selection": {
+    "development": {
+      "128": {
+        "memoryless": {
+          "native": 2,
+          "masked_error": 0.14810717316965263
+        },
+        "own": {
+          "native": 1,
+          "masked_error": 0.15771725326776503
+        }
+      },
+      "512": {
+        "memoryless": {
+          "native": 0,
+          "masked_error": 0.12729203552007676
+        },
+        "own": {
+          "native": 1,
+          "masked_error": 0.15057092023392518
+        }
+      },
+      "1024": {
+        "memoryless": {
+          "native": 3,
+          "masked_error": 0.10599762834608555
+        },
+        "own": {
+          "native": 3,
+          "masked_error": 0.12004098383088907
+        }
+      }
+    },
+    "memoryless": 1024,
+    "own": 1024
+  },
+  "selection_sha256": "53b9058425dc510a79b8e0d42afca79aae0742135b73e80adba032cfb4587741",
+  "simulator_report": {
+    "128": {
+      "episode_seconds": 1959,
+      "completed_episodes": 24,
+      "checkpoint_sha256": "dd5d200a666f9439f469a533b4f9716d82e9e54fe4bf935500a987b6c9f9bccf",
+      "rows": [
+        {
+          "query": 987400,
+          "support": 987401,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            true,
+            false
+          ],
+          "prefix_controls": 198,
+          "executed": 236
+        },
+        {
+          "query": 987400,
+          "support": 987401,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            true,
+            false
+          ],
+          "prefix_controls": 198,
+          "executed": 231
+        },
+        {
+          "query": 987400,
+          "support": 987401,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            true,
+            false
+          ],
+          "prefix_controls": 198,
+          "executed": 231
+        },
+        {
+          "query": 987401,
+          "support": 987400,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 188,
+          "executed": 312
+        },
+        {
+          "query": 987401,
+          "support": 987400,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 188,
+          "executed": 312
+        },
+        {
+          "query": 987401,
+          "support": 987400,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 188,
+          "executed": 312
+        },
+        {
+          "query": 987402,
+          "support": 987404,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 209,
+          "executed": 291
+        },
+        {
+          "query": 987402,
+          "support": 987404,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 209,
+          "executed": 291
+        },
+        {
+          "query": 987402,
+          "support": 987404,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 209,
+          "executed": 291
+        },
+        {
+          "query": 987404,
+          "support": 987402,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 378,
+          "executed": 122
+        },
+        {
+          "query": 987404,
+          "support": 987402,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 378,
+          "executed": 122
+        },
+        {
+          "query": 987404,
+          "support": 987402,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 378,
+          "executed": 122
+        },
+        {
+          "query": 987405,
+          "support": 987406,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            true
+          ],
+          "prefix_controls": 221,
+          "executed": 229
+        },
+        {
+          "query": 987405,
+          "support": 987406,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 221,
+          "executed": 279
+        },
+        {
+          "query": 987405,
+          "support": 987406,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 221,
+          "executed": 279
+        },
+        {
+          "query": 987406,
+          "support": 987405,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 253,
+          "executed": 247
+        },
+        {
+          "query": 987406,
+          "support": 987405,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 253,
+          "executed": 247
+        },
+        {
+          "query": 987406,
+          "support": 987405,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 253,
+          "executed": 247
+        },
+        {
+          "query": 987409,
+          "support": 987410,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 319,
+          "executed": 181
+        },
+        {
+          "query": 987409,
+          "support": 987410,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 319,
+          "executed": 181
+        },
+        {
+          "query": 987409,
+          "support": 987410,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 319,
+          "executed": 181
+        },
+        {
+          "query": 987410,
+          "support": 987409,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 228,
+          "executed": 272
+        },
+        {
+          "query": 987410,
+          "support": 987409,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 228,
+          "executed": 272
+        },
+        {
+          "query": 987410,
+          "support": 987409,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 228,
+          "executed": 272
+        }
+      ]
+    },
+    "512": {
+      "episode_seconds": 2095,
+      "completed_episodes": 24,
+      "checkpoint_sha256": "0eb419d9aaa56b0f8c0a419903e028665d60fcfb8811c9abdd8b43492bdd1c58",
+      "rows": [
+        {
+          "query": 987400,
+          "support": 987401,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 198,
+          "executed": 302
+        },
+        {
+          "query": 987400,
+          "support": 987401,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            true,
+            false
+          ],
+          "prefix_controls": 198,
+          "executed": 222
+        },
+        {
+          "query": 987400,
+          "support": 987401,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            true,
+            false
+          ],
+          "prefix_controls": 198,
+          "executed": 222
+        },
+        {
+          "query": 987401,
+          "support": 987400,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 188,
+          "executed": 312
+        },
+        {
+          "query": 987401,
+          "support": 987400,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 188,
+          "executed": 312
+        },
+        {
+          "query": 987401,
+          "support": 987400,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 188,
+          "executed": 312
+        },
+        {
+          "query": 987402,
+          "support": 987404,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 209,
+          "executed": 291
+        },
+        {
+          "query": 987402,
+          "support": 987404,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 209,
+          "executed": 291
+        },
+        {
+          "query": 987402,
+          "support": 987404,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 209,
+          "executed": 291
+        },
+        {
+          "query": 987404,
+          "support": 987402,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 378,
+          "executed": 122
+        },
+        {
+          "query": 987404,
+          "support": 987402,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 378,
+          "executed": 122
+        },
+        {
+          "query": 987404,
+          "support": 987402,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 378,
+          "executed": 122
+        },
+        {
+          "query": 987405,
+          "support": 987406,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 221,
+          "executed": 279
+        },
+        {
+          "query": 987405,
+          "support": 987406,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 221,
+          "executed": 279
+        },
+        {
+          "query": 987405,
+          "support": 987406,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 221,
+          "executed": 279
+        },
+        {
+          "query": 987406,
+          "support": 987405,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 253,
+          "executed": 247
+        },
+        {
+          "query": 987406,
+          "support": 987405,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 253,
+          "executed": 247
+        },
+        {
+          "query": 987406,
+          "support": 987405,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 253,
+          "executed": 247
+        },
+        {
+          "query": 987409,
+          "support": 987410,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 319,
+          "executed": 181
+        },
+        {
+          "query": 987409,
+          "support": 987410,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 319,
+          "executed": 181
+        },
+        {
+          "query": 987409,
+          "support": 987410,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 319,
+          "executed": 181
+        },
+        {
+          "query": 987410,
+          "support": 987409,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 228,
+          "executed": 272
+        },
+        {
+          "query": 987410,
+          "support": 987409,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 228,
+          "executed": 272
+        },
+        {
+          "query": 987410,
+          "support": 987409,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 228,
+          "executed": 272
+        }
+      ]
+    },
+    "1024": {
+      "episode_seconds": 2031,
+      "completed_episodes": 24,
+      "checkpoint_sha256": "c6924671d598207a5c191b2548b2471867197f546d6ad37282050430c44d8388",
+      "rows": [
+        {
+          "query": 987400,
+          "support": 987401,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            true,
+            false
+          ],
+          "prefix_controls": 198,
+          "executed": 209
+        },
+        {
+          "query": 987400,
+          "support": 987401,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            true,
+            false
+          ],
+          "prefix_controls": 198,
+          "executed": 180
+        },
+        {
+          "query": 987400,
+          "support": 987401,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            true,
+            false
+          ],
+          "prefix_controls": 198,
+          "executed": 172
+        },
+        {
+          "query": 987401,
+          "support": 987400,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 188,
+          "executed": 312
+        },
+        {
+          "query": 987401,
+          "support": 987400,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 188,
+          "executed": 312
+        },
+        {
+          "query": 987401,
+          "support": 987400,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 188,
+          "executed": 312
+        },
+        {
+          "query": 987402,
+          "support": 987404,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            true
+          ],
+          "prefix_controls": 209,
+          "executed": 182
+        },
+        {
+          "query": 987402,
+          "support": 987404,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 209,
+          "executed": 291
+        },
+        {
+          "query": 987402,
+          "support": 987404,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 209,
+          "executed": 291
+        },
+        {
+          "query": 987404,
+          "support": 987402,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 378,
+          "executed": 122
+        },
+        {
+          "query": 987404,
+          "support": 987402,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 378,
+          "executed": 122
+        },
+        {
+          "query": 987404,
+          "support": 987402,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 378,
+          "executed": 122
+        },
+        {
+          "query": 987405,
+          "support": 987406,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            true
+          ],
+          "prefix_controls": 221,
+          "executed": 188
+        },
+        {
+          "query": 987405,
+          "support": 987406,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            true
+          ],
+          "prefix_controls": 221,
+          "executed": 214
+        },
+        {
+          "query": 987405,
+          "support": 987406,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            true
+          ],
+          "prefix_controls": 221,
+          "executed": 212
+        },
+        {
+          "query": 987406,
+          "support": 987405,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 253,
+          "executed": 247
+        },
+        {
+          "query": 987406,
+          "support": 987405,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            true,
+            false
+          ],
+          "prefix_controls": 253,
+          "executed": 184
+        },
+        {
+          "query": 987406,
+          "support": 987405,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            true,
+            false
+          ],
+          "prefix_controls": 253,
+          "executed": 183
+        },
+        {
+          "query": 987409,
+          "support": 987410,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 319,
+          "executed": 181
+        },
+        {
+          "query": 987409,
+          "support": 987410,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 319,
+          "executed": 181
+        },
+        {
+          "query": 987409,
+          "support": 987410,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 319,
+          "executed": 181
+        },
+        {
+          "query": 987410,
+          "support": 987409,
+          "arm": "memoryless",
+          "goal": null,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 228,
+          "executed": 272
+        },
+        {
+          "query": 987410,
+          "support": 987409,
+          "arm": "own",
+          "goal": 0,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 228,
+          "executed": 272
+        },
+        {
+          "query": 987410,
+          "support": 987409,
+          "arm": "own",
+          "goal": 1,
+          "placed": [
+            false,
+            false
+          ],
+          "prefix_controls": 228,
+          "executed": 272
+        }
+      ]
+    }
+  },
+  "readout": {
+    "128": {
+      "step": 128,
+      "fit_seed": 991,
+      "training_rows": 96,
+      "training_scenes": 24,
+      "split": "validation-01",
+      "all": {
+        "n": 16,
+        "encoder": 12,
+        "encoder_flipped": 4,
+        "encoder_masked": 8,
+        "public_motion": 16,
+        "public_motion_flipped": 0,
+        "public_motion_masked": 8
+      },
+      "placed": {
+        "n": 16,
+        "encoder": 12,
+        "encoder_flipped": 4,
+        "encoder_masked": 8,
+        "public_motion": 16,
+        "public_motion_flipped": 0,
+        "public_motion_masked": 8
+      },
+      "timeout": {
+        "n": 0,
+        "encoder": 0,
+        "encoder_flipped": 0,
+        "encoder_masked": 0,
+        "public_motion": 0,
+        "public_motion_flipped": 0,
+        "public_motion_masked": 0
+      }
+    },
+    "512": {
+      "step": 512,
+      "fit_seed": 991,
+      "training_rows": 96,
+      "training_scenes": 24,
+      "split": "validation-01",
+      "all": {
+        "n": 16,
+        "encoder": 8,
+        "encoder_flipped": 8,
+        "encoder_masked": 8,
+        "public_motion": 16,
+        "public_motion_flipped": 0,
+        "public_motion_masked": 8
+      },
+      "placed": {
+        "n": 16,
+        "encoder": 8,
+        "encoder_flipped": 8,
+        "encoder_masked": 8,
+        "public_motion": 16,
+        "public_motion_flipped": 0,
+        "public_motion_masked": 8
+      },
+      "timeout": {
+        "n": 0,
+        "encoder": 0,
+        "encoder_flipped": 0,
+        "encoder_masked": 0,
+        "public_motion": 0,
+        "public_motion_flipped": 0,
+        "public_motion_masked": 0
+      }
+    },
+    "1024": {
+      "step": 1024,
+      "fit_seed": 991,
+      "training_rows": 96,
+      "training_scenes": 24,
+      "split": "validation-01",
+      "all": {
+        "n": 16,
+        "encoder": 8,
+        "encoder_flipped": 8,
+        "encoder_masked": 8,
+        "public_motion": 16,
+        "public_motion_flipped": 0,
+        "public_motion_masked": 8
+      },
+      "placed": {
+        "n": 16,
+        "encoder": 8,
+        "encoder_flipped": 8,
+        "encoder_masked": 8,
+        "public_motion": 16,
+        "public_motion_flipped": 0,
+        "public_motion_masked": 8
+      },
+      "timeout": {
+        "n": 0,
+        "encoder": 0,
+        "encoder_flipped": 0,
+        "encoder_masked": 0,
+        "public_motion": 0,
+        "public_motion_flipped": 0,
+        "public_motion_masked": 0
+      }
+    }
+  },
+  "readout_parity": {
+    "projected_features_identical_to_fitted_student": true,
+    "rows": 6,
+    "width": 128,
+    "device": "cpu"
+  },
+  "final_panel_migration": {
+    "cause": "Allocated GPU is not idle or has a leaked context: {'index': 0, 'uuid': 'GPU-94aeec8e-e273-2e68-a616-7844463e4c09', 'name': 'NVIDIA GeForce RTX 4090', 'memory_total_mib': 24564.0, 'memory_used_mib': 1.0, 'utilization_percent': 54.0, 'pci_bus_id': '00000000:A2:00.0'}",
+    "attempt_seconds": 3,
+    "preserved": [
+      "fit",
+      "step-0128",
+      "step-0512"
+    ],
+    "new_panel": "resume-01/step-1024",
+    "no_episodes_in_failed_panel": true
+  }
+}
