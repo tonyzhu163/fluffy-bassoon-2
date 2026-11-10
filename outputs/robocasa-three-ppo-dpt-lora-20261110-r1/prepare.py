@@ -69,7 +69,7 @@ def support_token(obs, actions, rewards, term, trunc, chunk):
 
 
 def prepare_bank(task, step, rank, folder, codec, archive, entries):
-    paths, seeds, states = [], None, None
+    paths, seeds, states, scenes = [], None, None, None
     for phase, version in (("before", 0), ("after", step)):
         prefix = f"{phase}-i{version:03d}-round00-"
         def read(name):
@@ -85,6 +85,10 @@ def prepare_bank(task, step, rank, folder, codec, archive, entries):
             seeds = current
         else:
             assert current == seeds
+            snapshot = torch.load(io.BytesIO(read("initial.pt")), map_location="cpu", weights_only=False)
+            assert list(snapshot["case"]["seeds"]) == seeds
+            scenes = [item["xml_sha256"] for item in snapshot["physical"]]
+            assert len(scenes) == 8 and all(len(s) == 64 for s in scenes)
             match = json.loads(read("initial.json"))["report"]
             assert all(match[k] for k in ("matched", "physical_state_exact", "public_state_exact"))
         tokens = []
@@ -110,7 +114,7 @@ def prepare_bank(task, step, rank, folder, codec, archive, entries):
                            folder / f"query-{chunk:02d}.pt")
         if phase == "before":
             torch.save(torch.stack(tokens, dim=1), folder / "support.pt")
-    return {"task": task, "rank": rank, "seeds": seeds, "sources": paths}
+    return {"task": task, "rank": rank, "seeds": seeds, "scenes": scenes, "sources": paths}
 
 
 def main():
@@ -142,6 +146,9 @@ def main():
         held = {s for _, _, s in sorted(cases, key=lambda x: digest(f"{task}/{x[2]}/split1".encode()))[:16]}
         for b, lane, seed in cases:
             b.setdefault("split", []).append("validation" if seed in held else "train")
+    by_split = {split: {scene for b in banks for scene, part in zip(b["scenes"], b["split"]) if part == split}
+                for split in ("train", "validation")}
+    assert by_split["train"].isdisjoint(by_split["validation"]), "Scene XML appears in both partitions"
     (out / "dataset.json").write_text(json.dumps({"tasks": TASKS, "banks": banks}, indent=2))
     print("Dataset complete", flush=True)
 
