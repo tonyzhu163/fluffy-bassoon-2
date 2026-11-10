@@ -50,7 +50,12 @@ else
 fi
 if [[ $index == 0 ]]; then
     while (( $(date +%s) - started < 4750 )); do
-        if [[ $(find "$group" -mindepth 2 -maxdepth 2 -name complete.json | wc -l) == "$workers" ]]; then exit 0; fi
+        if [[ $(find "$group" -mindepth 2 -maxdepth 2 -name complete.json | wc -l) == "$workers" ]]; then
+            if [[ $mode == schedule ]]; then
+                "$py" -Bu "$code/$run/final_readout.py" "$group" "$root/$run/attempt-02" "$root/$run/curves-01"
+            fi
+            exit 0
+        fi
         if find "$group" -name clock.json -exec grep -lE '"exit_code":[1-9]' {} + | grep -q .; then exit 1; fi
         sleep 4
     done
