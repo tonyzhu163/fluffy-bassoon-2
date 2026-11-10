@@ -23,6 +23,10 @@ We compared ½, 1, 2, 4 and 8 epochs on 24 development scenes before scoring the
 | 4 | .07851 | .08013 | 11 | 12 | 14 |
 | 8 | .07824 | .07988 | 13 | 11 | 12 |
 
+![Offline imitation error and simulator retry success across five training durations](duration.png)
+
+Offline lines are means across three fits, with shading from the lowest to highest fit. Native development points use the original fit and the same 24 scenes at each duration.
+
 | Locked checkpoints | Drawer / 24 | Toaster / 24 | Faucet / 24 | All / 72 | Recovered / 41 failures |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Frozen π0.5 retry | 13 | 4 | 12 | 29 | 14 |
