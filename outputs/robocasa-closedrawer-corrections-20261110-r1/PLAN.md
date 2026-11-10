@@ -1,0 +1,11 @@
+# Does CloseDrawer need different corrections on different scenes?
+
+Use all eight registered development scenes (983000–983007). Three failed every native attempt and five always succeeded in the [original panel](../icrl-idea-checks-20261110-r1/PERSISTENCE.md). Evaluate two of its four motor-noise seeds independently, using the recorded starting signature for each scene. Every native reference must reproduce the archived outcome. Keep the native reward, ten denoising steps, five controls per inference and the 600-control limit.
+
+Choose the action before the first control. The native policy gets all 600 controls. The other four arms get a common 40-control prelude with the gripper open and the arm held relative to the base. Use either zero base motion, negative local Y, positive local Y, or positive local X. For each moving arm command 0.45 in magnitude until public horizontal displacement reaches 12 cm or the prelude ends. Then hand control to the same frozen policy, with the same noise at each control index. Measure actual displacement. A stationary prelude controls for delay and arm posture. These are scripted mobile-base alternatives through the normal simulator action interface.
+
+Across the 80 episodes, report native success, best fixed alternative including native and waiting, and the best alternative chosen per scene, held fixed across its two noise seeds. Report rescues and lost successes separately. As a repeatability check, select on one noise seed and score on the other, reversing the split. Break ties in the declared arm order (native, wait, negative Y, positive Y, positive X). Choosing after seeing both seeds gives an upper bound. A reproducible advantage over the best fixed choice warrants further investigation. Moving closer or closing partway is diagnostic only.
+
+Keep the first gripper–drawer contact, closest handle distance, normalized opening trace, prompt side, realized base displacement and first-seed videos to explain the failures. The policy sees only its usual observations. Selecting per scene here does not measure the value of support history on fresh query poses.
+
+Run one Baige Pro6K GPU for each noise seed. Estimate 1–2 GPU-hours total. Use a new worker ID for every attempt. Results and any migration are recorded here.
