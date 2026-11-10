@@ -42,5 +42,6 @@ case "$mode" in
          "$py" -Bu "$here/fit_bowl.py" "$code" "$train" "$valid" "$out" "$@" ;;
     eval) checkpoint=$1; source=$2; admission=$3; shift 3
           "$py" -Bu "$here/eval_bowl.py" "$code" "$checkpoint" "$source" "$admission" "$out" "$@" ;;
+    direction) "$py" -Bu "$here/paired_direction.py" "$code" "$1" "$2" "$3" "$out" ;;
     *) exit 2 ;;
 esac

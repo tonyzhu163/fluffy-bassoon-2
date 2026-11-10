@@ -51,7 +51,7 @@ def measure(args):
             for values in context:
                 h=normalize_history(values,weights["mean"],weights["scale"])
                 student.select("dpt",torch.from_numpy(h[None]).cuda())
-                proposal,_=native.predict_action_batch(raw,mode="eval",noise=noise)
+                proposal,_=native.predict_action_batch(raw,mode="eval",noise=noise.clone())
                 pred.append(proposal[0,:count,:3].detach().float().cpu().numpy())
             pred=np.stack(pred)
             if not complete:
