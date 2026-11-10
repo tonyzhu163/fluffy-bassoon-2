@@ -52,6 +52,14 @@ For one task and one latent, branch a fixed set of alternatives from saved query
 
 **Go** with the weakest actuator for which some alternative succeeds on a clear majority of states where the uncorrected action fails. **No-go** if none does; the paper then waits on a different latent or task.
 
+**Latent-prediction diagnostic.** On the same development trials, fit a small supervised head that predicts the imposed offset from the support-history tokens, and a second from the current query observation alone. Hold out whole scenes. This separates the two failure modes:
+
+- History head fails: the information is not in the tokens. Change what enters context before fitting any policy.
+- History head succeeds but no alternative succeeds: the limit is control authority.
+- Current-observation head succeeds: the latent is visible without history, so the setting cannot test adaptation.
+
+The head uses the true latent as its label, so it is a diagnostic and an upper bound, not a method arm.
+
 ### E2. Constructed histories, primary
 
 - **Latent.** A continuous 2D lateral end-effector offset, fixed through support and query. The query uses a fresh starting pose.
@@ -61,6 +69,7 @@ For one task and one latent, branch a fixed set of alternatives from saved query
   - Behaviour cloning of the action actually taken.
   - Outcome-weighted imitation, with weights from measured branch outcomes and no learned critic.
 - **External baseline.** AD on PPO histories (the VLRLA recipe), from the existing RoboCasa corpus.
+- **Diagnostic.** The latent-prediction head from E1, refit on each learner's history representation, reported beside its success rate.
 - **Query conditions.** Own history; donor with a nearby latent; donor with a distant latent; episode reset; trained memoryless; trained reward-blind; native SFT retries.
 - **Primary endpoint.** Paired difference in native query success after one support, own history minus distant-latent donor, pooled across tasks.
 - **Mechanism readout.** Signed commanded displacement at first grasp against the imposed offset.
@@ -108,7 +117,7 @@ New PPO teacher campaigns as a data source, the four-learner comparison, DIT and
 ## Risks
 
 - **No control authority.** E1 tests it first. A stronger actuator weakens the "frozen expert" framing and must be reported as such.
-- **The latent is visible in the current observation.** Then history adds nothing. Check with a current-inputs-only predictor before any large fit.
+- **The latent is visible in the current observation.** Then history adds nothing. The current-observation head in E1 checks this before any large fit.
 - **Constructed-rule objection.** E3 decides whether the result is more than one synthetic perturbation.
 - **Simulator-only labels.** Branching is unavailable on a real robot. The claim is limited to training in simulation and adapting from ordinary episodes at deployment.
 - **Compute.** E2 exceeds 50 GPU-hours. Price it from E1 throughput and get approval before launch.
