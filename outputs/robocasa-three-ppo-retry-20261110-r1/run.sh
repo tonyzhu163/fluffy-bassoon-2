@@ -18,7 +18,10 @@ else
 fi
 job=${BASH_REMATCH[1]}
 tasks=(OpenDrawer CloseToasterOvenDoor TurnOnSinkFaucet)
-test "$index" -lt 12
+mode=${4:-fixed}
+workers=12
+if [[ $mode == schedule ]]; then workers=9; fi
+test "$index" -lt "$workers"
 task=${tasks[index%3]}
 bank=$((index / 3))
 group=$root/$run/$3
@@ -40,10 +43,14 @@ export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
 export ROBOCASA_NATIVE_OUTPUT=$out
 py=$root/setups/robocasa365-native-20261101-r1/env/bin/python
 "$py" -B "$code/scripts/[train]gpu_probe.py" --expected-count 1 --output "$out/gpu.json" --purpose evaluation --baige-container
-timeout --kill-after=20 4500 "$py" -Bu "$code/$run/retry.py" "$code" "$out" "$task" --first-bank "$bank" --end-bank "$((bank+1))" --reuse "$root/$run/attempt-01"
+if [[ $mode == schedule ]]; then
+    timeout --kill-after=20 4500 "$py" -Bu "$code/$run/schedule_native.py" "$code" "$out" "$task" "$bank" "$root/$run/attempt-01" "$root/$run/attempt-02" "$root/$run/curves-01"
+else
+    timeout --kill-after=20 4500 "$py" -Bu "$code/$run/retry.py" "$code" "$out" "$task" --first-bank "$bank" --end-bank "$((bank+1))" --reuse "$root/$run/attempt-01"
+fi
 if [[ $index == 0 ]]; then
     while (( $(date +%s) - started < 4750 )); do
-        if [[ $(find "$group" -mindepth 2 -maxdepth 2 -name complete.json | wc -l) == 12 ]]; then exit 0; fi
+        if [[ $(find "$group" -mindepth 2 -maxdepth 2 -name complete.json | wc -l) == "$workers" ]]; then exit 0; fi
         if find "$group" -name clock.json -exec grep -lE '"exit_code":[1-9]' {} + | grep -q .; then exit 1; fi
         sleep 4
     done
