@@ -57,7 +57,7 @@ def normalize_history(history, mean, scale):
     return out
 
 
-@lru_cache(maxsize=12)
+@lru_cache(maxsize=72)
 def query_archive(path):
     with np.load(path) as archive:
         return archive["frames"],archive["states"]
