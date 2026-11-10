@@ -92,7 +92,7 @@ A frozen VLA trained on constructed histories can use one support episode to cho
 
 - **Wrist cameras and SAPIEN replay.** Both 1 cm wrist cameras and the action-50 fork reproduced on two clean phone-stand cases in the [Baige replay](outputs/robotwin-e1-replay-20261110-r1/RESULT.md). New tasks and randomized scenes need their own check.
 - **Recipe validation.** The [native validator](src/fluffy_bassoon/rlinf/native_ppo.py) checks the original `adjust_bottle` recipe and Sidney phone-stand PPO or grouped GRPO. E5 still needs its task selection, common scene schedule, and an equal delivered-action budget.
-- **Student query labels.** The [query-label module](src/fluffy_bassoon/meta_rl/constructed_queries.py) exports a branch index for a categorical diagnostic. The proposed π0.5 LoRA trainer also needs the corresponding action target in the checkpoint’s native coordinates and a mask for delivered controls. Support observations, actions and rewards form the input. An all-failure panel or an unresolved tie supplies no target. E1 chooses the candidate actions.
+- **Student query labels.** The exporter writes the selected physical branch in π0.5’s native action coordinates and masks each undelivered control when given the checkpoint action statistics. The categorical branch index remains available. A unique native success needs no distance estimate, and an unresolved or all-failure panel yields an empty supervision mask. On the compact-bowl pilot, all 351 exported chunks and masks matched the original physical labels bit for bit. [Query-label module](src/fluffy_bassoon/meta_rl/constructed_queries.py) · [Real-branch validation](outputs/robocasa-bowl-dpt-labels-20261110-r1/query-target-evidence.json).
 
 ### E1. Control authority (go/no-go)
 

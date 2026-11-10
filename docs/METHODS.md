@@ -26,6 +26,8 @@ Run `python -m fluffy_bassoon.meta_rl METHOD --help` for the trajectory-archive 
 
 The [flow bridge](../src/fluffy_bassoon/meta_rl/flow_bridge_train.py) fits action-derived flow targets through the frozen expert. The [decoded chunk trainer](../src/fluffy_bassoon/meta_rl/chunk_training.py) supports AD, DIT, IC-IQL and cloning controls on masked physical chunks; it has no DPT query-label path. Do not substitute a behavior action for a missing teacher query. Keep episode termination, padding and delivered-action masks separate. Resume requires the optimizer, sampler, RNG and learned state, not just exported actor weights.
 
+For constructed RoboCasa queries, the exporter matches the trial and decision observation across branches. Supplying `--action-stats` adds the selected branch’s H50 × 32 normalized action target and a 50-control validity mask. The input is its sequence of delivered twelve-coordinate commands after binary gripper and mode mapping. The categorical-only format is still supported. [Constructed-query exporter](../src/fluffy_bassoon/meta_rl/constructed_queries.py).
+
 ## Environments and tests
 
 Use `uv sync --locked` on allocated Linux for the shared Python environment. A quick learner check is:
