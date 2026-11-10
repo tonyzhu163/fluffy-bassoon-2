@@ -4,4 +4,4 @@
 
 | Work | Cluster / job / source | Last check, progress and next action |
 | --- | --- | --- |
-| E1 drawer and persistence checks | Baige, one GPU per job, source `9c0036ea`. Pro6K rescue `job-m1eub51tsxw8`, stiffness `job-19vkb4r2o74v`, fridge/microwave persistence `job-b77hmbv1y3za`. RTX 4090 drawer persistence `job-l6cm0l16a6j8`. | Nov 10 14:12 Shanghai. All four queued. The original drawer persistence request stopped before allocation. Qualify the 4090 using its in-job probe and native repeated episodes. [Protocol](icrl-idea-checks-20261110-r1/PLAN.md). |
+| E1 drawer and persistence checks | Baige Pro6K, one GPU each. Stiffness `job-19vkb4r2o74v` at `9c0036ea`, rescue `job-x15mur4ftoja` at `0b1c3bde`. At `ad9003d7`: fridge `job-8ag444u5qo0v`, microwave `job-98bqpnji9q24`, opening `job-gdoxow8fa5ii`, closing `job-7s99ojrfztfz`. | Nov 10 14:27 Shanghai. Stiffness and archive replay advancing. Persistence is queued with pre-action native reset checks. The 4090 request stopped before allocation. [Protocol](icrl-idea-checks-20261110-r1/PLAN.md). |
