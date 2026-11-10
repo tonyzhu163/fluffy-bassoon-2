@@ -45,6 +45,27 @@ S18's single direction gives no pairs with opposite correct answers, so it canno
 
 **First build.** One task and one latent on RoboCasa, about 100 trials with five alternatives each. Measure restore determinism, how often any alternative succeeds, and controls per trial. This is the same run as E1 and prices the full corpus.
 
+### What varies in the full corpus
+
+| Factor | Values | Purpose |
+| --- | --- | --- |
+| Hidden property | Revealed only by an attempt's outcome: handle stiffness or pull distance, object mass, surface friction, ambiguous goal | The case where history should matter |
+| | Visible within an episode: end-effector offset | Contrast case; the policy self-corrects |
+| | None (native task) | Null case |
+| Property value | Continuous, drawn per trial | Avoids a two-class rule |
+| Scene | Independent seeds for support and query | The property must transfer across poses |
+| Task | Three or four per benchmark, chosen by a success band fixed in advance | Answers the task-selection objection |
+
+Test splits: fresh scenes in the seen property range (main endpoint); a held-out region of the range; one held-out task per benchmark; one held-out property family. Every test trial is scored under own history, near-value donor, far-value donor, empty history, trained memoryless, reward-masked, an oracle given the property, and native retries. Report the learner as the fraction of the gap between the frozen policy and the oracle that it closes.
+
+### Evidence so far and the next checks
+
+- **Native failures are mostly not scene-persistent.** In the Stage 1 readout, six attempts per scene with history cleared give an intraclass correlation of 0.05–0.16 for success across five tasks. A minority of scenes fail every time. [Analysis and plan](outputs/icrl-idea-checks-20261110-r1/PLAN.md).
+- **A visible offset is absorbed.** On Nov 10 both openable drawer scenes still opened under a 4 cm offset with no correction.
+- **The natural drawer failures have a signed miss.** Five of six failing scenes never grasped and held a steady 1–4 cm lateral miss.
+
+Three checks are written and ready to launch on Baige, under three GPU-hours in total: scene persistence across four tasks, rescue of the natural drawer failures by a held lateral offset, and a stiff-drawer property with an effort correction. Their go and no-go rules are in the plan above.
+
 ## Claim
 
 A frozen VLA trained on constructed histories corrects its next attempt from one support episode, and the correction depends on which support episode it saw. On native benchmark tasks, where nothing persists across resets, history does not help.
