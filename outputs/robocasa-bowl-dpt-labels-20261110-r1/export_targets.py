@@ -6,20 +6,15 @@ from pathlib import Path
 
 import numpy as np
 
-from fluffy_bassoon.meta_rl.flow_history import DirectActionCodec, native_flow_targets
-from readout import label_chunks, read
+from fluffy_bassoon.meta_rl.constructed_queries import native_branch_chunks
+from readout import read
 
 
 def native_targets(data, stats):
-    chunks, delivered = label_chunks(data)
     # The gym wrapper maps released gripper/mode scores to signed physical controls.
-    physical = chunks.copy()
-    physical[..., [6,11]] = np.where(physical[..., [6,11]] >= .5, 1., -1.)
-    codec = DirectActionCodec.from_stats(stats)
-    normalized = native_flow_targets(codec.encode(physical), codec, stats["actions"])
-    assert normalized.shape == (len(chunks),50,32)
-    assert np.isfinite(normalized).all() and delivered.any(1).all()
-    return normalized, delivered
+    physical = np.asarray(data["commands"], dtype=np.float32).copy()
+    physical[:, [6,11]] = np.where(physical[:, [6,11]] >= .5, 1., -1.)
+    return native_branch_chunks(physical, data["offsets"][:-1], stats)
 
 
 def common_boundary(left, right):

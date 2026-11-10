@@ -3,6 +3,9 @@
 `python -m fluffy_bassoon.meta_rl.constructed_queries PUBLIC.npz BRANCHES.json OUT.npz`
 exports one matched trial. Candidate order is fixed for an actuator. Training uses
 one classification target at the fresh query, after reading the support episode.
+With --action-stats, also export the winning branch’s normalized RoboCasa action
+chunk and its delivered-control mask. Evidence stores canonical post-mapping
+commands in executed_actions, starting at the matched decision observation.
 """
 import argparse
 import json
@@ -57,17 +60,55 @@ def measured_label(candidates, branches, *, trial_id, decision_sha256):
     return best[0] if len(best) == 1 else None
 
 
-def export_query(public, evidence, output):
+def native_branch_chunks(executed_actions, offsets, action_stats):
+    """Encode only executed RoboCasa controls following each pre-action query boundary."""
+    from .flow_history import BINARY, DirectActionCodec, native_flow_targets
+
+    commands = np.asarray(executed_actions, dtype=np.float32)
+    offsets = np.asarray(offsets)
+    if (commands.ndim != 2 or commands.shape[1] != 12 or not np.isfinite(commands).all()
+            or not np.isin(commands[:, list(BINARY)], (-1., 1.)).all()):
+        raise ValueError('Expected finite mapped [controls,12] actions with signed binary coordinates')
+    if (offsets.ndim != 1 or offsets.dtype.kind not in 'iu'
+            or np.any(offsets < 0) or np.any(offsets >= len(commands))
+            or np.any(offsets[1:] <= offsets[:-1])):
+        raise ValueError('Require increasing pre-action offsets inside the executed trajectory')
+    physical = np.zeros((len(offsets), 50, 12), dtype=np.float32)
+    physical[..., list(BINARY)] = -1.
+    mask = np.zeros(physical.shape[:2], dtype=bool)
+    for i, start in enumerate(offsets):
+        segment = commands[int(start):int(start) + 50]
+        physical[i, :len(segment)] = segment
+        mask[i, :len(segment)] = True
+    stats = action_stats.get('norm_stats', action_stats)
+    codec = DirectActionCodec.from_stats(stats)
+    target = native_flow_targets(codec.encode(physical), codec, stats['actions'])
+    return target, mask
+
+
+def export_query(public, evidence, output, *, action_stats=None):
     with np.load(public, allow_pickle=False) as src:
         trial, decision = str(src['trial_id'].item()), str(src['decision_sha256'].item())
         candidates = src['candidate_ids'].tolist()
         tokens = public_tokens(src['support_obs'], src['delivered_actions'], src['native_rewards'], src['query_obs'])
     rows = json.loads(Path(evidence).read_text())
     label = measured_label(candidates, rows, trial_id=trial, decision_sha256=decision)
+    extra = {}
+    if action_stats is not None:
+        if label is None:
+            target = np.zeros((50, 32), dtype=np.float32)
+            mask = np.zeros(50, dtype=bool)
+        else:
+            winner = next(row for row in rows if row['candidate'] == candidates[label])
+            if 'executed_actions' not in winner:
+                raise ValueError('The measured winner is missing its executed query actions')
+            targets, masks = native_branch_chunks(winner['executed_actions'], [0], action_stats)
+            target, mask = targets[0], masks[0]
+        extra = {'query_flow_target': target, 'query_delivered': mask}
     # Keep ambiguous and all-failure trials for coverage without teaching a fabricated action.
     with Path(output).open('xb') as f:
         np.savez_compressed(f, trial_id=trial, decision_sha256=decision, candidate_ids=candidates,
-                            tokens=tokens, query_label=np.int64(-1 if label is None else label))
+                            tokens=tokens, query_label=np.int64(-1 if label is None else label), **extra)
 
 
 def query_batch(paths, candidate_ids):
@@ -113,5 +154,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('public', 'evidence', 'output'):
         parser.add_argument(name, type=Path)
+    parser.add_argument('--action-stats', type=Path, help='Include a masked native π0.5 action target using checkpoint statistics')
     args = parser.parse_args()
-    export_query(args.public, args.evidence, args.output)
+    stats = json.loads(args.action_stats.read_text()) if args.action_stats else None
+    export_query(args.public, args.evidence, args.output, action_stats=stats)
