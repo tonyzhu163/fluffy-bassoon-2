@@ -24,6 +24,8 @@ A held lateral correction opened two of six natural OpenDrawer failures. Both re
 
 On two OpenDrawer scenes crossed with two noise seeds, normal effort and doubled post-grasp translation each opened 3/4 drawers at normal damping, 3/4 at 8× and 0/4 at 64×. Three pairs still grasped at 64×. The added translation changed no paired native success outcome. [Stiffness measurements](../outputs/icrl-idea-checks-20261110-r1/STIFF.md).
 
+On eight development scenes per task, four native Human300 π0.5 retries from exactly matched starts gave scene ICCs of 1.00 for CloseDrawer, 0.885 for OpenDrawer, 0.222 for CloseFridge and −0.067 for TurnOnMicrowave. All eight CloseDrawer scenes had unanimous outcomes, including three that failed on every attempt. Seven of eight OpenDrawer scenes had unanimous outcomes. This measures repeatability at a fixed starting scene. The effect of support history on a fresh query remains open. [128 native episodes and per-scene counts](../outputs/icrl-idea-checks-20261110-r1/PERSISTENCE.md).
+
 For historical Flow-SDE teachers, the [critic parity audit](../outputs/robocasa-flow-sde-critic-parity-20261104-r1/RESULT.md) found that rollout and replay could use different denoising-step values even when likelihoods matched. Record the RLinf revision and critic definition when comparing these runs.
 
 ## RoboTwin

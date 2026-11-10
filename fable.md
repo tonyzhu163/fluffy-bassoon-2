@@ -60,17 +60,18 @@ Test splits: fresh scenes in the seen property range (main endpoint); a held-out
 
 ### Evidence so far and the next checks
 
-- **Native failures are mostly not scene-persistent.** In the Stage 1 readout, six attempts per scene with history cleared give an intraclass correlation of 0.05–0.16 for success across five tasks. A minority of scenes fail every time. [Analysis and plan](outputs/icrl-idea-checks-20261110-r1/PLAN.md).
+- **Stage 1 AD retries.** Under the AD policy with history cleared, six attempts per scene gave an intraclass correlation of 0.05–0.16 for success across five tasks. A minority of scenes fail every time. [Analysis and plan](outputs/icrl-idea-checks-20261110-r1/PLAN.md).
 - **A visible offset is absorbed.** On Nov 10 both openable drawer scenes still opened under a 4 cm offset with no correction.
 - **The natural drawer failures have a signed miss.** Five of six failing scenes never grasped and held a steady 1–4 cm lateral miss.
 - **Natural-failure rescue.** A held −2 cm offset opened two of the six failing drawers. It matched the sign of both misses. Choosing a different offset on each scene added no native successes over this fixed correction. The three-rescue threshold was missed. [Paired rescue results](outputs/icrl-idea-checks-20261110-r1/RESCUE.md).
 - **Stiffness changed outcomes.** Normal and doubled post-grasp translation each opened 3/4 drawers at ordinary damping, 3/4 at 8× and 0/4 at 64×. The tested translation multiplier gave no native rescue. [Stiffness measurements](outputs/icrl-idea-checks-20261110-r1/STIFF.md).
+- **Native policy retries.** On eight exact starts per task and four motor-noise seeds per start, all eight CloseDrawer scenes and seven OpenDrawer scenes had the same outcome on every attempt. Scene ICCs were 1.00 for CloseDrawer, 0.885 for OpenDrawer, 0.222 for CloseFridge and −0.067 for TurnOnMicrowave. With the latter two tasks, many failures were expected from their low overall success rate. [Native persistence panel](outputs/icrl-idea-checks-20261110-r1/PERSISTENCE.md).
 
-The native persistence panel measures how often the same scene fails across motor-noise seeds. Neither drawer intervention currently qualifies a property for the 100-trial collection.
+Keep the 100-trial collection on hold. Inspect CloseDrawer first, using its three repeatedly failing scenes and five consistently successful scenes to test whether distinct conditions need different actions. The per-condition oracle must improve on the best fixed correction before collecting histories. Then test whether support reveals the right choice on a fresh query pose beyond what the current observation reveals.
 
-## Claim
+## Hypothesis to test
 
-A frozen VLA trained on constructed histories corrects its next attempt from one support episode, and the correction depends on which support episode it saw. On native benchmark tasks, where nothing persists across resets, history does not help.
+A frozen VLA trained on constructed histories can use one support episode to choose a correction on a fresh query pose when both episodes share a hidden property. Compare own history with a donor history at a different property value, the current observation alone and the best fixed correction. On native tasks, measure separately how well outcomes repeat on a fixed scene and whether support from another scene improves the next action.
 
 ## What the reviewers asked for
 
