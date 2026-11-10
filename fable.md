@@ -20,6 +20,31 @@ A way to build training histories in which the earlier episode carries the infor
 
 Two trials with the same query observation and opposite latents then need different actions, and only the support history distinguishes them.
 
+## Dataset protocol
+
+One trial is built in seven steps, identical on every benchmark.
+
+1. **Draw scene and latent independently.** Sample a task, a scene seed and a latent value. The latent must not correlate with scene or attempt index.
+2. **Run the support episode.** The frozen VLA acts normally with the latent applied. Save public observations, delivered actions, reward and boundaries. Keep failures.
+3. **Reset to a fresh query scene.** Same task and latent, new starting pose.
+4. **Run to the decision point and save the simulator state.** The decision point is where the correction applies, such as the approach before first gripper closure.
+5. **Branch.** Restore that state K times and execute a fixed set of alternatives, including "no correction", with the same motor noise. Record success and a continuous measure such as signed miss distance.
+6. **Write the record.** Support history, query observation, every alternative with its outcome, and the index of the best. The latent value, object poses and unchosen-branch outcomes go in an evaluator-only file the student never reads.
+7. **Split by whole trial and by scene.** Hold out a latent region, whole scenes and at least one task before fitting or normalisation.
+
+Before a large collection, verify on development scenes that restoring a state and replaying the same action reproduces the same outcome. Otherwise branch outcomes are noise.
+
+| | RoboCasa365 | RoboTwin | LIBERO plus/pro |
+| --- | --- | --- | --- |
+| Role | Primary: build and train here | Transfer test and comparison on VLRLA's tasks | Third embodiment; untouched transfer test |
+| Candidate latent | End-effector offset on handle tasks | Per-arm offset, or which arm is miscalibrated | Released S18 offsets |
+| State restore | MuJoCo save/restore; canonical reset snapshots already in use | SAPIEN; exact restore not yet qualified here | MuJoCo; not yet checked here |
+| Known obstacle | No handle acquisition under offset on two pilot tapes | Phone stand is at 75–87% SFT; choose lower-success tasks | S18 perturbs reported positions, not the physical command, with one direction for all 40 tasks |
+
+S18's single direction gives no pairs with opposite correct answers, so it cannot be training data without a custom variant. If SAPIEN restore is not deterministic, RoboTwin supplies support and query episodes for evaluation only. The LIBERO column rests on the [Nov 9 plan's static check](outputs/vlrla-feedback-plan-20261109-r1/PLAN.md) and has not been re-verified.
+
+**First build.** One task and one latent on RoboCasa, about 100 trials with five alternatives each. Measure restore determinism, how often any alternative succeeds, and controls per trial. This is the same run as E1 and prices the full corpus.
+
 ## Claim
 
 A frozen VLA trained on constructed histories corrects its next attempt from one support episode, and the correction depends on which support episode it saw. On native benchmark tasks, where nothing persists across resets, history does not help.
