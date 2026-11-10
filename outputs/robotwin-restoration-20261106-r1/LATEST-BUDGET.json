@@ -1,11 +1,11 @@
 {
-  "status": "epoch2_sidney_frozen_endpoint_evaluations",
-  "closed_conservative_gpu_seconds": 29240,
+  "status": "epoch2_sidney_sft_diagnosis_and_endpoint_evaluations_complete",
+  "closed_conservative_gpu_seconds": 38045,
   "cap_gpu_seconds": 360000,
-  "closed_conservative_gpu_hours": 8.122222222222222,
-  "remaining_gpu_seconds": 330760,
-  "remaining_unreserved_gpu_seconds": 286360,
-  "next_worst_gpu_seconds": 44400,
+  "closed_conservative_gpu_hours": 10.568055555555556,
+  "remaining_gpu_seconds": 321955,
+  "remaining_unreserved_gpu_seconds": 321955,
+  "next_worst_gpu_seconds": 0,
   "components": [
     {
       "cluster": "Baige Pro6K",
@@ -270,20 +270,13 @@
       "worker_gpu_seconds": 5547,
       "independent_readback_pending": false,
       "evidence": "outputs/robotwin-sidney-gap-20261109-r1/DIAGNOSTIC-READBACK.json"
-    }
-  ],
-  "prior_cleared_epoch_gpu_seconds": 359665,
-  "prior_cleared_epoch_gpu_hours": 99.90694444444445,
-  "prior_cleared_epoch_ledger": "HISTORICAL-BUDGET-EPOCH1-THROUGH-20261108.json",
-  "approval": "User cleared prior 359,665 GPU-s (99.91 GPU-h) epoch and approved a fresh 100 GPU-hour (360,000 GPU-s) budget on 2026-11-09T11:05:01+08:00 ('clear the existing gpu hours, i approve another 100 hours').",
-  "active_job_id": "job-nvcx32ct9vsc",
-  "active_jobs": [
+    },
     {
       "job_id": "job-nvcx32ct9vsc",
       "job_name": "mwj_1109_sidney_ppo40_native01",
       "cluster": "Baige Pro6K",
       "created_at": "2026-11-09T19:03:06+08:00",
-      "scheduler_status": "starting",
+      "scheduler_status": "Succeeded",
       "gpus": 1,
       "hardware": "NVIDIA RPBZZZ6",
       "queue_free_at_submission": 34,
@@ -294,14 +287,20 @@
       "episodes_per_domain": 100,
       "wrist_near_m": 0.01,
       "checkpoint_adam_steps": 40,
-      "extra_optimizer_steps": 0
+      "extra_optimizer_steps": 0,
+      "scheduler_ended_at": "2026-11-09T20:16:51+08:00",
+      "gpus_released": true,
+      "conservative_allocation_gpu_seconds": 4425,
+      "worker_gpu_seconds": 4397,
+      "independent_readback_pending": false,
+      "evidence": "outputs/robotwin-sidney-native-endpoints-20261109-r1/PPO40-READBACK.json"
     },
     {
       "job_id": "job-cnb3ou1rb25z",
       "job_name": "mwj_1109_sidney_grpo40_native01",
       "cluster": "Baige Pro6K",
       "created_at": "2026-11-09T19:04:15+08:00",
-      "scheduler_status": "starting",
+      "scheduler_status": "Succeeded",
       "gpus": 1,
       "hardware": "NVIDIA RPBZZZ6",
       "queue_free_at_submission": 34,
@@ -312,9 +311,21 @@
       "episodes_per_domain": 100,
       "wrist_near_m": 0.01,
       "checkpoint_adam_steps": 40,
-      "extra_optimizer_steps": 0
+      "extra_optimizer_steps": 0,
+      "scheduler_ended_at": "2026-11-09T20:17:15+08:00",
+      "gpus_released": true,
+      "conservative_allocation_gpu_seconds": 4380,
+      "worker_gpu_seconds": 4339,
+      "independent_readback_pending": false,
+      "evidence": "outputs/robotwin-sidney-native-endpoints-20261109-r1/GRPO40-READBACK.json"
     }
   ],
+  "prior_cleared_epoch_gpu_seconds": 359665,
+  "prior_cleared_epoch_gpu_hours": 99.90694444444445,
+  "prior_cleared_epoch_ledger": "HISTORICAL-BUDGET-EPOCH1-THROUGH-20261108.json",
+  "approval": "User cleared prior 359,665 GPU-s (99.91 GPU-h) epoch and approved a fresh 100 GPU-hour (360,000 GPU-s) budget on 2026-11-09T11:05:01+08:00 ('clear the existing gpu hours, i approve another 100 hours').",
+  "active_job_id": null,
+  "active_jobs": [],
   "ownership_and_data_preserved": true,
   "planned_job": null,
   "user_stopped_at": "2026-11-09T12:21:51+08:00",

@@ -1,0 +1,65 @@
+{
+  "partial": false,
+  "source_commit": "85ec07c9473ce003b527ab73ca370717e31ae6b1",
+  "model_revision": "e49e2ab6c11f07511573b67261bd129e88d0a416",
+  "allocated_renderers": 200,
+  "result_sha256": "8b6348d0f22ea14da008024d05fb2841cc26d596bcf92d49aeb5fd1d2095e3c2",
+  "settings": {
+    "demo_clean": {
+      "successes": 78,
+      "episodes": 100,
+      "targets": 18843,
+      "action_chunks": 420,
+      "wilson_95": [
+        0.6892964648501421,
+        0.8499871761539459
+      ],
+      "exact_matched_initial_observations": 100,
+      "sft_successes": 75,
+      "paired_sft_first_actor_second": {
+        "both": 71,
+        "first_only": 4,
+        "second_only": 7,
+        "neither": 18,
+        "exact_p_two_sided": 0.548828125
+      }
+    },
+    "demo_randomized": {
+      "successes": 90,
+      "episodes": 100,
+      "targets": 14925,
+      "action_chunks": 350,
+      "wilson_95": [
+        0.8256343384950865,
+        0.9447708629393249
+      ],
+      "exact_matched_initial_observations": 100,
+      "sft_successes": 87,
+      "paired_sft_first_actor_second": {
+        "both": 85,
+        "first_only": 2,
+        "second_only": 5,
+        "neither": 8,
+        "exact_p_two_sided": 0.453125
+      }
+    }
+  },
+  "endpoint": {
+    "arm": "grpo40",
+    "adam_step": 40,
+    "source_export_sha256": "ee68ab24cc0da7586374725ae2a0d8eade9e241c238cf76a4dfd7c521578cefe",
+    "base_port_sha256": "c71114641cf0819900f8b1d7b0568158a12e631b2ca08b2b19bc2d5b761b69b3",
+    "output_sha256": "28a4d1b83d159229269c1a3e0e5e0126bf4f81b6601a12e4969e359727a71776",
+    "exact_roundtrip_policy_tensors": 667,
+    "original_layout_tensors": 813,
+    "changed_port_tensors": 190,
+    "omitted_critic_tensors": [],
+    "extra_optimizer_steps": 0
+  },
+  "worker_exit": {
+    "exit_code": 0,
+    "started_unix": 1794222281,
+    "ended_unix": 1794226620,
+    "worker_gpu_seconds": 4339
+  }
+}
