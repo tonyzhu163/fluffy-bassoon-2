@@ -47,10 +47,15 @@ def public_history(scene, probe, goal):
 
 def observation(frames, states):
     assert frames.shape == (3,256,256,3) and frames.dtype==np.uint8 and states.shape==(16,)
+    # RLinf selects the released relative end-effector pose, base pose and gripper
+    # positions from its 25-slot environment layout. Archives already use that 16D order.
+    env_state = np.zeros(25, dtype=np.float32)
+    env_state[11:25] = states[:14]
+    env_state[7:9] = states[14:]
     return {"main_images":torch.from_numpy(frames[None,0].copy()),
             "wrist_images":torch.from_numpy(frames[None,1].copy()),
             "extra_view_images":torch.from_numpy(frames[None,2:3].copy()),
-            "states":torch.from_numpy(states[None].astype(np.float32)), "task_descriptions":[PROMPT]}
+            "states":torch.from_numpy(env_state[None]), "task_descriptions":[PROMPT]}
 
 
 def normalize_history(history, mean, scale):
