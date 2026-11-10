@@ -4,6 +4,8 @@ The strongest evidence so far is for native SFT competence and for some **source
 
 ## RoboCasa365
 
+The Atomic-Seen baseline uses the native JAX π0.5 Human300 checkpoint at step **75,000**. Load `pi05_pretrain_human300/multitask_learning/75000` from `robocasa/robocasa365_checkpoints` at revision `c484448a`, including its bundled normalization. OpenPI predicts 50 actions and executes five before replanning, with ten denoising steps. [Pinned checkpoint](https://huggingface.co/robocasa/robocasa365_checkpoints/tree/c484448aba1a9b60a04c9b0ca117241518ea69f3/pi05_pretrain_human300/multitask_learning/75000)
+
 | Measurement | Result | What it establishes |
 | --- | --- | --- |
 | [Native Human300 atomic SFT reproduction](../outputs/robocasa-sft-reproduction-20261109-r1/ATOMIC-RESULT.md) | 363 successes in 900 episodes (40.33%) across 18 atomic tasks, versus the published 39.6%. | The original JAX evaluator, checkpoint and horizons give a credible atomic reference. The [composite continuation](../outputs/robocasa-sft-reproduction-20261109-r1/CLOSEOUT.md) closed early and is not a composite benchmark score. |
@@ -20,6 +22,24 @@ For historical Flow-SDE teachers, the [critic parity audit](../outputs/robocasa-
 
 ## RoboTwin
 
+### Sidney phone-stand baseline
+
+All three policies start from `SidneyXie/pi05_robotwin` at revision `e49e2ab6`. The frozen evaluation uses the native per-target controller, a 1 cm near clipping plane on both wrist cameras, ten denoising steps, 50-action chunks and a 400-target episode limit. Within each domain, all three policies use the same 100 scenes, prompts and sampling seeds. [Pinned checkpoint](https://huggingface.co/SidneyXie/pi05_robotwin/tree/e49e2ab6c11f07511573b67261bd129e88d0a416) · [Matched evaluation](../outputs/robotwin-sidney-native-endpoints-20261109-r1/RESULT.md)
+
+| Policy | Clean successes / 100 | Randomized successes / 100 |
+| --- | ---: | ---: |
+| Original SFT | 75 | 87 |
+| PPO after 40 Adam updates | 77 | 88 |
+| GRPO after 40 Adam updates | 78 | 90 |
+
+**Training volume per algorithm** was two collections × 1,024 trajectories × 400 action slots = **819,200 nominal action steps**, or 16,384 chunks of 50. Each policy received 40 synchronized Adam updates. The training journal counted 842,240 slots including 23,040 setup/reset allowances. Actual delivered motor calls during training were unmeasured. [Training accounting](../outputs/robotwin-sidney-matched-baselines-20261106-r1/RESULT.md)
+
+The subsequent frozen evaluation delivered **34,533 targets for PPO** and **33,768 for GRPO** across 200 episodes each, with zero further updates. The 1–3 point gains over SFT had two-sided exact paired p-values of at least 0.45. [PPO readback](../outputs/robotwin-sidney-native-endpoints-20261109-r1/PPO40-READBACK.json) · [GRPO readback](../outputs/robotwin-sidney-native-endpoints-20261109-r1/GRPO40-READBACK.json)
+
+At the original 10 cm wrist clipping distance, SFT scored 23/100 clean and 31/100 randomized. Restoring the fingertips visible in training recovered 55 clean failures and lost three successes. On randomized scenes it recovered 58 and lost two. The reference loader matched all 813 released tensors. The uploader reports 66/100 clean on a separately evaluated cohort. [Camera experiment](../outputs/robotwin-sidney-gap-20261109-r1/RESULT.md)
+
+### Motus and other RoboTwin results
+
 | Measurement | Result | What it establishes |
 | --- | --- | --- |
 | [Released Motus native phone baseline](../outputs/robotwin-motus-release-baseline-20261109-r1/RESULT.md) | 27/100 clean and 25/100 randomized successes on `place_phone_stand` under the documented reconstruction. | Below the reported 49%/53% for that task. This is one motor and controller protocol, not the 50-task aggregate. |
@@ -29,9 +49,3 @@ For historical Flow-SDE teachers, the [critic parity audit](../outputs/robocasa-
 The [decoded-learner audit](../outputs/robotwin-restoration-20261106-r1/CPUDECODEDFIT01.json) and [four-method steering qualification](../outputs/steering-four-method-pipeline-20261103-r1/RESULT.md) test objectives, causal context and recovery. They are software qualifications, not held-out performance scores.
 
 The [full pre-consolidation evidence ledger](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/24fcc5b016f6d6f15cd7bad09cec9bd723873338/docs/FINDINGS.md) preserves detailed benchmark results, negative findings and citations for retired experiments. Consult a run’s own source and evidence before comparing results across protocols.
-
-On the frozen 100 clean phone-stand scenes, Sidney's original RoboTwin π0.5 SFT checkpoint scored 23/100 with the native 10 cm wrist-camera near plane and 75/100 with both wrists at 1 cm. In SAPIEN 3.0.1 the 10 cm setting clips the gripper fingertips visible in the training demonstrations. The paired intervention recovered 55 failures and lost three successes with equal seeds, instructions, starting state, head-camera pixels, noise and 400-target limit. All 813 published tensors matched the reference loader. The author reports 66/100 on a separately evaluated clean cohort. [Experiment, image comparison and paired readback](../outputs/robotwin-sidney-gap-20261109-r1/RESULT.md).
-
-On the separate randomized phone-stand panel the same wrist-camera correction raised original Sidney SFT from 31/100 to 87/100. It recovered 58 failures and lost two successes. All 100 initial head images, joint states and prompts matched across camera conditions. [Randomized paired readback](../outputs/robotwin-sidney-gap-20261109-r1/WRIST-RANDOM-READBACK.json).
-
-With the corrected wrist images and the native K10 controller evaluation on 100 scenes per domain, frozen Sidney SFT, PPO40 and GRPO40 respectively scored 75/77/78 clean and 87/88/90 randomized. All actors used the same initial observations and per-case/chunk Gaussian seeds. The 1–3 point gains over SFT have two-sided exact paired p-values ≥ 0.45. These are deployment results for one previously trained actor per method. [Matched endpoint results and paired outcomes](../outputs/robotwin-sidney-native-endpoints-20261109-r1/RESULT.md).

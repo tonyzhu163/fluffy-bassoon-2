@@ -9,7 +9,7 @@ Can a frozen π0.5 policy improve on a new task using its own earlier attempts? 
 | RLinf | [Integration](src/fluffy_bassoon/rlinf/) · [revision-specific patches](patches/) | Native rollout and online PPO/GRPO baselines, action accounting, probability replay and checkpoint recovery. |
 | Meta-learning | [Learners](src/fluffy_bassoon/meta_rl/) · [frozen motor interfaces](src/fluffy_bassoon/rl/) | Algorithm Distillation (AD), Decision-Pretrained Transformer (DPT), DIT-style advantage weighting and in-context IQL. [Methods](docs/METHODS.md) identifies which objective each data format supports. |
 
-Start with the [documentation index](docs/README.md) or the [verified findings](docs/FINDINGS.md). For a new run, read [AGENTS.md](AGENTS.md) and check [live ownership](outputs/coordination.md). Earlier experiments are reproducible from their recorded Git commits; [provenance](PROVENANCE.md) records the original repository split.
+For baseline scores and weights, see the [RoboTwin phone-stand comparison](docs/FINDINGS.md#sidney-phone-stand-baseline) and the [RoboCasa365 Human300 checkpoint](docs/FINDINGS.md#robocasa365). The [documentation index](docs/README.md) covers the broader project. For a new run, read [AGENTS.md](AGENTS.md) and check [live ownership](outputs/coordination.md). Earlier experiments are reproducible from their recorded Git commits; [provenance](PROVENANCE.md) records the original repository split.
 
 ## Getting started
 

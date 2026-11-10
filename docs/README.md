@@ -1,5 +1,7 @@
 # Documentation
 
+Start with the [RoboTwin SFT, PPO and GRPO baselines](FINDINGS.md#sidney-phone-stand-baseline) or the [RoboCasa365 Human300 checkpoint and Atomic-Seen score](FINDINGS.md#robocasa365).
+
 | Read | Purpose |
 | --- | --- |
 | [Research question](PAPER.md) | What would count as in-context adaptation, and which comparisons can establish it. |
