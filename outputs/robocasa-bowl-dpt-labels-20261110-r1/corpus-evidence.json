@@ -123,6 +123,43 @@
       "collection_commit": "78adcc261aa97fbdbf49c558e2aaa311d7c72a31"
     }
   },
+  "native_state_qualification": {
+    "state_indices": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      7,
+      8
+    ],
+    "training_and_validation_scenes": 32,
+    "branch_archives": 64,
+    "all_saved_replans_including_terminal": 1539,
+    "all_native_inputs_equal": true,
+    "initial_attempt": {
+      "id": "student01",
+      "commit": "52cab3546e053a56cc0ee1f6ef19860be5d8a3b9",
+      "exit_code": 1,
+      "worker_seconds": 134,
+      "updates": 0,
+      "reason": "The native RLinf transform selected environment-state indices from an already-selected 16D array."
+    },
+    "qualified_attempt": {
+      "id": "student02",
+      "commit": "bf64c1eff73375f633cf014559b025794b36e3fb",
+      "state_equality": "All 16 selected coordinates at the model's float32 precision, all three raw uint8 images and the neutral prompt matched after the actual native RoboCasa input transform."
+    }
+  },
   "training_draw_audit": {
     "draws": 6144,
     "right_goal": 3070,
