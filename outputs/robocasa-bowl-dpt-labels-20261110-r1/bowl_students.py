@@ -5,6 +5,14 @@ from fit import PairedStudents
 from fluffy_bassoon.meta_rl.causal_decoder import CausalDecoderCore
 
 
+def terminal_features(encoder, history):
+    tokens = history.transpose(0, 1)
+    valid = tokens[..., -1].bool()
+    features = encoder.sequence(tokens[..., :-1], reset=torch.zeros_like(valid), valid=valid)
+    last = valid.long().sum(0) - 1
+    return features[last, torch.arange(len(last), device=last.device)]
+
+
 class BowlStudents(PairedStudents):
     def __init__(self, native, history_width):
         super().__init__(native, history_width)
@@ -14,8 +22,4 @@ class BowlStudents(PairedStudents):
         self.active = name
         self.context = None
         if name == "dpt":
-            tokens = history.transpose(0, 1)
-            valid = tokens[..., -1].bool()
-            features = self.encoder.sequence(tokens[..., :-1], reset=torch.zeros_like(valid), valid=valid)
-            terminal = valid.long().sum(0) - 1
-            self.context = self.project(features[terminal, torch.arange(len(terminal),device=terminal.device)])
+            self.context = self.project(terminal_features(self.encoder, history))
