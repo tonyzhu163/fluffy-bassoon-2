@@ -23,7 +23,11 @@ On Nov 10 the policy failed six of eight OpenDrawer scenes. Five never grasped t
 - **Read:** per scene, whether any offset gives native success, and whether the rescuing sign opposes the nominal miss.
 - **Go:** an offset rescues at least three of the six, with a consistent sign rule. That gives a correction worth inferring from a failed attempt.
 - **No-go:** no rescue, or rescue with no relation to the miss. The frozen policy then fails for a reason a lateral correction cannot fix; inspect the videos before trying another actuator.
-- Reproduce outcomes, control counts, decision images and state, first grasps and terminal physics on all eight archived scenes before running any corrected branch. In every corrected branch verify the decision observation against its nominal. Retain approach and wrist videos. Treat one or two rescues as below the threshold for expanding collection.
+- The first attempt stopped before any offset branch. On seed 982100 its outcome, duration, first grasp and decision observation reproduced, but terminal physics differed. The repeat below preserves all eight original outcomes as the eligibility gate. Retain approach and wrist videos. Treat one or two rescues as below the threshold for expanding collection.
+
+### Rescue replay amendment after the first baseline
+
+Replay the archived actions for each seed and log the first differing physical state. Independently rerun the native policy and compare its commands and states to the archive. Report exact terminal matches separately for fixed-command and closed-loop replay. Require both runs to reproduce the archived native outcome on all eight seeds before testing offsets. For each of the original six failures, replay the new nominal command prefix for zero and all four offsets. Every physical state through the decision and the public decision observation must match the new nominal. A zero-offset continuation must reproduce its native failure before scoring that scene. This preserves the original six-scene denominator and makes numerical drift visible. The run has 46 episodes including eight archived-tape replays and six additional zero continuations.
 
 ## Check 3: a hidden property revealed only by contact (`stiff`)
 

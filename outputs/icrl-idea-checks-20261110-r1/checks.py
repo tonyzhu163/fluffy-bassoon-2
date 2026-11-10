@@ -102,7 +102,8 @@ def public_hash(obs):
     return digest(x['observation/state'], x['prompt'], *(x[k] for k in INPUT))
 
 
-def episode(policy, task, scene, noise_seed, *, drawer=None, horizon=HORIZON, video=None):
+def episode(policy, task, scene, noise_seed, *, drawer=None, horizon=HORIZON, video=None,
+            reference=None, replay_steps=0, record=None):
     env, obs = reset(task, scene)
     writer = None
     try:
@@ -115,15 +116,33 @@ def episode(policy, task, scene, noise_seed, *, drawer=None, horizon=HORIZON, vi
             writer = imageio.get_writer(video, fps=10, codec='libx264', macro_block_size=1)
         noise = np.random.default_rng(noise_seed).standard_normal((horizon // 5, 50, 32), dtype=np.float32)
         success, chunk = False, None
+        first_state_diff = first_command_diff = None
+        first_command_max_abs = None
         for t in range(horizon):
-            if t % 5 == 0:
-                chunk = np.asarray(policy.infer(inputs(obs), noise=noise[t // 5])['actions'])
-                assert chunk.shape == (50, 12) and np.isfinite(chunk).all()
-            a = chunk[t % 5].copy()
+            if reference is not None or record is not None:
+                state = physics(raw)
+                if record is not None:
+                    record['physics'].append(state)
+                if reference is not None and t < len(reference['physics']) and first_state_diff is None:
+                    if state != reference['physics'][t]:
+                        first_state_diff = t
+            if t < replay_steps:
+                a = reference['actions'][t].copy()
+            else:
+                if t % 5 == 0:
+                    chunk = np.asarray(policy.infer(inputs(obs), noise=noise[t // 5])['actions'])
+                    assert chunk.shape == (50, 12) and np.isfinite(chunk).all()
+                a = chunk[t % 5].copy()
             if hook:
                 a = hook.act(t, a)
                 if hook.decision == t:
                     decision_obs = public_hash(obs)
+            if record is not None:
+                record['actions'].append(a.copy())
+            if reference is not None and t < len(reference['actions']) and first_command_diff is None:
+                delta = np.abs(a - reference['actions'][t])
+                if np.any(delta):
+                    first_command_diff, first_command_max_abs = t, float(delta.max())
             if writer is not None and t % 5 == 0:
                 frame = inputs(obs)
                 writer.append_data(np.concatenate([frame['observation/image'], frame['observation/wrist_image']], axis=1))
@@ -135,10 +154,14 @@ def episode(policy, task, scene, noise_seed, *, drawer=None, horizon=HORIZON, vi
                     grasp_state = physics(raw)
             if success or done or truncated:
                 break
+            if replay_steps == horizon and t + 1 == len(reference['actions']):
+                break
         return dict(task=task, scene=scene, noise_seed=noise_seed, success=success, controls=t + 1,
                     initial_sha256=initial_state, initial_observation_sha256=initial_obs,
                     decision_observation_sha256=decision_obs, first_grasp_sha256=grasp_state,
                     terminal_sha256=physics(raw),
+                    **(dict(first_state_diff=first_state_diff, first_command_diff=first_command_diff,
+                            first_command_max_abs=first_command_max_abs) if reference is not None else {}),
                     **(hook.report() if hook else {}))
     finally:
         try:
@@ -170,25 +193,41 @@ def rescue(policy, log, out):
     nominal = {r['scene']: r for r in records if r.get('arm') == 'nominal'}
     if set(nominal) != set(DRAWER_SCENES):
         raise ValueError('Incomplete reference drawer screen')
+    tape_dir = out.parent.parent / 'robocasa-drawer-authority-20261110-r1' / 'gpu01'
+    current = {}
     for scene in DRAWER_SCENES:
-        base = episode(policy, 'OpenDrawer', scene, scene + 700000, drawer={},
-                       video=out / f'{scene}-nominal.mp4')
+        with np.load(tape_dir / f'{scene}-nominal.npz') as data:
+            archive_tape = {key: data[key] for key in ('physics', 'actions')}
+        prior = nominal[scene]
+        repeat = episode(policy, 'OpenDrawer', scene, scene + 700000, drawer={}, reference=archive_tape,
+                         replay_steps=HORIZON)
+        log('archive_replay', check='rescue', prior_terminal_sha256=prior['terminal_sha256'], **repeat)
+        tape = {'actions': [], 'physics': []}
+        base = episode(policy, 'OpenDrawer', scene, scene + 700000, drawer={}, reference=archive_tape,
+                       record=tape, video=out / f'{scene}-nominal.mp4')
         log('episode', check='rescue', arm='nominal', **base)
-        fields = ('success', 'controls', 'decision', 'first_grasp', 'decision_observation_sha256', 'terminal_sha256')
-        for field in fields:
-            if base[field] != nominal[scene][field]:
-                raise ValueError(f'Prior nominal mismatch on scene {scene}, field {field}')
+        if base['success'] != prior['success'] or repeat['success'] != prior['success']:
+            raise ValueError(f'Archived native outcome changed on {scene}')
+        if base['decision'] is None:
+            raise ValueError(f'Missing decision on {scene}')
+        np.savez_compressed(out / f'{scene}-nominal.npz', **tape)
+        current[scene] = (base, tape)
     for scene in DRAWER_SCENES:
-        base = nominal[scene]
-        if base['success'] or base['decision'] is None:
+        base, tape = current[scene]
+        if base['success']:
             continue
-        for cm in (-4, -2, 2, 4):
-            arm = f'offset{cm:+d}cm'
+        for cm in (0, -4, -2, 2, 4):
+            arm = 'zero_repeat' if cm == 0 else f'offset{cm:+d}cm'
             row = episode(policy, 'OpenDrawer', scene, scene + 700000, drawer=dict(goal_offset=cm / 100),
+                          reference=tape, replay_steps=base['decision'],
                           video=out / f'{scene}-{arm}.mp4')
+            if row['first_state_diff'] is not None and row['first_state_diff'] <= base['decision']:
+                raise ValueError(f'Physical prefix mismatch on {scene}, {arm} at {row["first_state_diff"]}')
             if (row['decision'], row['decision_observation_sha256']) != (base['decision'], base['decision_observation_sha256']):
                 raise ValueError(f'Offset decision mismatch on scene {scene}, arm {arm}')
             log('episode', check='rescue', arm=arm, **row)
+            if cm == 0 and row['success'] != base['success']:
+                raise ValueError(f'Zero correction changed native outcome on {scene}')
 
 
 def stiff(policy, log):
