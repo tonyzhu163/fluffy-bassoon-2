@@ -29,7 +29,7 @@ One trial is built in seven steps, identical on every benchmark.
 3. **Reset to a fresh query scene.** Same task and latent, new starting pose.
 4. **Run to the decision point and save the simulator state.** The decision point is where the correction applies, such as the approach before first gripper closure.
 5. **Branch.** Restore that state K times and execute a fixed set of alternatives, including "no correction", with the same motor noise. Record success and a continuous measure such as signed miss distance.
-6. **Write the record.** Support history, query observation, every alternative with its outcome, and the index of the best. The latent value, object poses and unchosen-branch outcomes go in an evaluator-only file the student never reads.
+6. **Write the record.** Support history, query observation, the physical action chunks executed by each branch, their execution masks, outcomes and the index of the best. The latent value, object poses and unchosen-branch outcomes go in an evaluator-only file the student never reads.
 7. **Split by whole trial and by scene.** Hold out a latent region, whole scenes and at least one task before fitting or normalisation.
 
 Before a large collection, verify on development scenes that returning to the decision point and repeating the same action reproduces the same outcome. Otherwise branch outcomes are noise. On RoboCasa this already holds for reset-by-seed plus exact command replay: the [bowl fork script](outputs/robocasa-compact-bowls-20261109-r1/fork_grasp.py) asserts every public state equal to the original trace before branching.
@@ -68,7 +68,7 @@ Test splits: fresh scenes in the seen property range (main endpoint); a held-out
 - **Native policy retries.** On eight exact starts per task and four motor-noise seeds per start, all eight CloseDrawer scenes and seven OpenDrawer scenes had the same outcome on every attempt. Scene ICCs were 1.00 for CloseDrawer, 0.885 for OpenDrawer, 0.222 for CloseFridge and −0.067 for TurnOnMicrowave. With the latter two tasks, many failures were expected from their low overall success rate. [Native persistence panel](outputs/icrl-idea-checks-20261110-r1/PERSISTENCE.md).
 - **CloseDrawer correction test.** Over eight scenes and two motor-noise seeds, native, waiting and either lateral base shift each closed 10/16. Moving forward closed 7/16. All three recurrent failures survived all four alternatives. Even choosing the best strategy separately per scene gave 10/16. [Paired results and failure frames](outputs/robocasa-closedrawer-corrections-20261110-r1/RESULT.md).
 
-Keep the 100-trial collection on hold. The base moves produced no successful rescue labels. The next targeted diagnostic is a sustained inward push from matched first contact on CloseDrawer scene 983003, which pushed partway and stalled. Use 983000 (contact with little travel) and a normally successful drawer as controls. If a correction succeeds, compare its fixed use across scenes to a per-condition oracle before testing whether support reveals the right choice on a fresh query pose.
+Keep the 100-trial drawer collection on hold. Prioritize the compact-bowl pilot below for DPT action labels. The base moves produced no successful rescue labels. The remaining drawer diagnostic is a sustained inward push from matched first contact on CloseDrawer scene 983003, which pushed partway and stalled. Use 983000 (contact with little travel) and a normally successful drawer as controls. If a correction succeeds, compare its fixed use across scenes to a per-condition oracle before testing whether support reveals the right choice on a fresh query pose.
 
 ## Hypothesis to test
 
@@ -92,7 +92,7 @@ A frozen VLA trained on constructed histories can use one support episode to cho
 
 - **Wrist cameras and SAPIEN replay.** Both 1 cm wrist cameras and the action-50 fork reproduced on two clean phone-stand cases in the [Baige replay](outputs/robotwin-e1-replay-20261110-r1/RESULT.md). New tasks and randomized scenes need their own check.
 - **Recipe validation.** The [native validator](src/fluffy_bassoon/rlinf/native_ppo.py) checks the original `adjust_bottle` recipe and Sidney phone-stand PPO or grouped GRPO. E5 still needs its task selection, common scene schedule, and an equal delivered-action budget.
-- **Student query labels.** The [query-label module](src/fluffy_bassoon/meta_rl/constructed_queries.py) exports one target from measured alternatives and trains a categorical readout at the query. Support observations, actions and rewards form the input. An all-failure panel or an unresolved tie supplies no target. E1 chooses the candidate actions.
+- **Student query labels.** The [query-label module](src/fluffy_bassoon/meta_rl/constructed_queries.py) exports a branch index for a categorical diagnostic. The proposed π0.5 LoRA trainer also needs the corresponding action target in the checkpoint’s native coordinates and a mask for delivered controls. Support observations, actions and rewards form the input. An all-failure panel or an unresolved tie supplies no target. E1 chooses the candidate actions.
 
 ### E1. Control authority (go/no-go)
 
@@ -116,7 +116,8 @@ The head uses the true latent as its label, so it is a diagnostic and an upper b
 
 - **Latent.** Choose a continuous property only after E1 demonstrates both a native rescue and an advantage over the best fixed correction. Draw the property independently of the scene and hold it fixed through support and a fresh query pose.
 - **Corpus.** One real support episode, then the query state with all branched alternatives and their outcomes. Whole trials stay together across the train/validation split.
-- **Main learner.** DPT-style: predict the measured best alternative at the query, given the support history. Three independent fits.
+- **Main learner.** Use DPT supervision with LoRA in π0.5. Condition the action expert on a causal encoding of public support observations, delivered actions, rewards and episode boundaries, followed by the current query observation. Train against the selected expert or validated branch action chunk with the native flow-matching objective and mask undelivered controls. Freeze the pretrained weights. Fit the adapters offline and keep them fixed throughout evaluation. Train three independent fits. [DPT objective](https://arxiv.org/abs/2306.14892).
+- **Proposed collection pilot.** Use the compact two-bowl setup as a positive control. Balance the hidden rewarded side across trials, keep it fixed across support and a fresh query pose, and use the same public instruction for both sides. Randomize which side the support policy probes independently of the rewarded side. Keep failed supports and log whether a placement actually completed. At matched query states, record executable target-specific teacher actions and verify their releases on fresh development scenes. The existing scripted carry reached both sides on three of four scenes with evaluator access to object poses. Feed the public history and current observation to the student. Use the teacher action only in the training loss. Report label coverage and compare own history with swapped histories and a separately trained memoryless LoRA policy. [Compact-bowl pilot](outputs/robocasa-compact-bowls-20261109-r1/RESULT.md).
 - **Label-source arms on the same pairs.**
   - Behaviour cloning of the action actually taken.
   - Outcome-weighted imitation, with weights from measured branch outcomes and no learned critic.
@@ -140,7 +141,7 @@ Own versus donor versus reset on RoboCasa atomic tasks with the same trained con
 
 ### E5. Deployment cost
 
-Success versus delivered physical actions at 0, 1, 2, 4 and 8 supports for native retries, per-task PPO/GRPO from the same initialiser, the memoryless bridge and the candidate. PPO/GRPO appears here only, as the equal-budget baseline on two or three tasks. On RoboTwin it must be retrained with corrected wrist cameras first; phone stand has little headroom at 75–87% SFT, so pick tasks by SFT success band.
+Success versus delivered physical actions at 0, 1, 2, 4 and 8 supports for native retries, per-task PPO/GRPO from the same initialiser, the memoryless LoRA policy and the history-conditioned LoRA policy. New PPO/GRPO training is reserved for this comparison, as the equal-budget baseline on two or three tasks. On RoboTwin it must be retrained with corrected wrist cameras first; phone stand has little headroom at 75–87% SFT, so pick tasks by SFT success band.
 
 ## Evidence thresholds
 
@@ -164,7 +165,7 @@ Dates are proposals, not derived from measured throughput.
 
 ## Out of scope
 
-New PPO teacher campaigns as a data source, the four-learner comparison, DIT and IC-IQL with learned critics, Flora and physical-robot trials, RoboCasa composites, and any new VLA fine-tuning.
+New PPO teacher campaigns as a data source, the four-learner comparison, DIT and IC-IQL with learned critics, Flora and physical-robot trials, RoboCasa composites, and full fine-tuning of pretrained π0.5 weights.
 
 ## Risks
 
