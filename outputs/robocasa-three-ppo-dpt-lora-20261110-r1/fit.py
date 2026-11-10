@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import random
+import shutil
 import time
 
 import numpy as np
@@ -164,9 +165,14 @@ def main():
     parser.add_argument("data", type=Path)
     parser.add_argument("out", type=Path)
     parser.add_argument("--resume", type=Path)
+    parser.add_argument("--epochs", type=int, default=2)
+    parser.add_argument("--fit-seed", type=int, default=991)
+    parser.add_argument("--validation-steps", type=int, nargs="*", default=[])
     args = parser.parse_args()
+    if args.epochs < 1 or len(set(args.validation_steps)) != len(args.validation_steps):
+        parser.error("Require positive epoch count and distinct validation steps")
     torch.set_num_threads(4)
-    torch.manual_seed(991)
+    torch.manual_seed(args.fit_seed)
     assert torch.cuda.device_count() == 1
     stats = json.loads(Path(os.environ["ROBOCASA_PI05_NATIVE_NORM"]).read_text())
     corpus = Corpus(args.data, stats.get("norm_stats", stats))
@@ -179,7 +185,7 @@ def main():
     trainables["dpt"] += list(students.encoder.parameters()) + list(students.project.parameters())
     optimizers = {k:torch.optim.AdamW(params, lr=3e-4, weight_decay=.01) for k,params in trainables.items()}
     contract = dict(data_sha256=hashlib.sha256(corpus.manifest).hexdigest(), code=os.environ["PILOT_COMMIT"],
-                    batch=6, epochs=2, seed=991, rank=8, layers=list(students.adapters["memoryless"]),
+                    batch=6, epochs=args.epochs, seed=args.fit_seed, rank=8, layers=list(students.adapters["memoryless"]),
                     trainable={k:sum(p.numel() for p in params) for k,params in trainables.items()})
     print(json.dumps(contract), flush=True)
     assert not any(p.requires_grad for p in native.parameters())
@@ -193,12 +199,15 @@ def main():
         torch.set_rng_state(restored["cpu_rng"])
         torch.cuda.set_rng_state_all(restored["cuda_rng"])
         start = restored["step"]
-    plan = corpus.batches("train", 0) + corpus.batches("train", 1)
+    seed_offset = (args.fit_seed - 991) * 10000
+    plan = [batch for epoch in range(args.epochs) for batch in corpus.batches("train", epoch + seed_offset)]
+    if any(s < 1 or s > len(plan) for s in args.validation_steps):
+        parser.error("A validation step falls outside the training schedule")
     wall = time.monotonic()
     for step, rows in enumerate(plan, 1):
         if step <= start:
             continue
-        inputs, target, history = paired_input(native, corpus, rows, 20000 + step)
+        inputs, target, history = paired_input(native, corpus, rows, 20000 + step + seed_offset)
         if step == 1:
             with torch.no_grad():
                 students.select(None, history)
@@ -222,9 +231,18 @@ def main():
         if step <= 2 or step % 8 == 0:
             print(json.dumps(dict(step=step, total=len(plan), elapsed_s=round(time.monotonic()-wall, 2),
                                   peak_gpu_gib=round(torch.cuda.max_memory_allocated()/2**30, 2), **report)), flush=True)
-        if step in (1, 8) or step % 48 == 0 or step == len(plan):
+        if step in (1, 8) or step % 48 == 0 or step == len(plan) or step in args.validation_steps:
             save_checkpoint(args.out, step, students, optimizers, corpus, contract)
-    validate(native, students, corpus, args.out)
+        if step in args.validation_steps:
+            milestone = args.out / f"step-{step:04d}"
+            milestone.mkdir()
+            os.link(args.out / "checkpoint.pt", milestone / "checkpoint.pt")
+            validate(native, students, corpus, milestone)
+            print("Validation finished", step, flush=True)
+    if len(plan) in args.validation_steps:
+        shutil.copyfile(args.out / f"step-{len(plan):04d}" / "held-out.json", args.out / "held-out.json")
+    else:
+        validate(native, students, corpus, args.out)
     print("Completed both fits and held-out comparison", flush=True)
 
 
