@@ -9,7 +9,7 @@ from hydra import compose, initialize_config_dir
 from rlinf.models.embodiment.openpi import get_model
 
 from collect import CAMERAS, SIDES, convert_action, held_fruit, identity, release, reset_scene, stable_counter_regions, state
-from corpus import normalize_history, observation, public_history
+from corpus import given_side_prompt, normalize_history, observation, public_history
 from bowl_students import BowlStudents
 from readout import read
 
@@ -31,7 +31,7 @@ def plans(seeds, query_index, arms):
     assert len({query,own,donor})==3
     probe=int(np.random.default_rng(110922).permutation(np.repeat([0,1],len(seeds)//2))[query_index])
     for arm in arms:
-        goals=(0,1) if arm in ("own","donor") else (None,)
+        goals=(0,1) if arm in ("own","donor","oracle") else (None,)
         for goal in goals:
             yield {"arm":arm,"goal":goal,"query":query,"support":donor if arm=="donor" else own,
                    "support_goal":1-goal if arm=="donor" else goal, "probe":probe}
@@ -48,7 +48,7 @@ def episode(native,students,weights,source,plan):
         h=torch.from_numpy(normalize_history(raw,weights["mean"],weights["scale"])[None]).cuda()
         students.select("dpt",h)
     else:
-        students.select("memoryless" if arm=="memoryless" else None,None)
+        students.select("memoryless" if arm in ("memoryless","oracle") else None,None)
     seed=plan["query"]
     path=source/str(seed)
     prefix=read(path/"pickup.json")
@@ -69,6 +69,8 @@ def episode(native,students,weights,source,plan):
         for index in range(500-prefix["controls"]):
             if index%5==0:
                 raw=observation(np.stack([obs[k] for k in CAMERAS]),state(obs))
+                if arm=="oracle":
+                    raw["task_descriptions"] = [given_side_prompt(plan["goal"])]
                 noise=torch.randn((1,50,32),device="cuda",dtype=torch.float32,generator=rng)
                 proposal,_=native.predict_action_batch(raw,mode="eval",noise=noise)
                 chunk=proposal.detach().float().cpu().numpy()[0]
@@ -90,6 +92,10 @@ def main(args):
     assert torch.cuda.device_count()==1
     stable_counter_regions()
     weights=torch.load(args.checkpoint,map_location="cpu",weights_only=False)
+    if weights["contract"].get("given_side_in_prompt", False):
+        assert args.arms == ["oracle"]
+    else:
+        assert "oracle" not in args.arms
     native,students=actor(args.code,weights)
     seeds=read(args.admission)["admitted"]
     assert len(seeds)>=4 and len(seeds)%4==0
@@ -109,5 +115,5 @@ if __name__=="__main__":
     p=argparse.ArgumentParser()
     for name in ("code","checkpoint","source","admission","out"):
         p.add_argument(name,type=Path)
-    p.add_argument("--arms",nargs="+",choices=("frozen","memoryless","own","donor","masked"),required=True)
+    p.add_argument("--arms",nargs="+",choices=("frozen","memoryless","own","donor","masked","oracle"),required=True)
     main(p.parse_args())

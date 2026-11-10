@@ -17,7 +17,7 @@ def outcomes(folder,arm):
     rows={}
     for seed in identity["scenes"]:
         for goal in (0,1):
-            setting=goal if arm in ("own","donor") else None
+            setting=goal if arm in ("own","donor","oracle") else None
             r=read(folder/f"{seed}-{arm}-{setting}.json")
             assert r["query"]==seed and r["goal"]==setting and r["arm"]==arm
             assert r["executed"]+r["prefix_controls"]<=500 and sum(r["placed"])<=1
@@ -25,7 +25,7 @@ def outcomes(folder,arm):
     return rows
 
 
-def choose(dev,fit):
+def choose(dev,fit,arms=("memoryless","own")):
     scores={}
     for step in STEPS:
         key=f"step-{step:04d}"
@@ -35,13 +35,13 @@ def choose(dev,fit):
         panel=dev/key
         assert read(panel/"identity.json")["step"]==step
         scores[step]={}
-        for arm in ("memoryless","own"):
+        for arm in arms:
             native=outcomes(panel,arm)
             assert len(native)==16
             scores[step][arm]={"native":sum(r["placed"][g] for (_,g),r in native.items()),
                                "masked_error":float(np.mean([r[arm] for r in shared]))}
     return {"development":scores,**{a:max(STEPS,key=lambda s:(scores[s][a]["native"],-scores[s][a]["masked_error"],-s))
-                                    for a in ("memoryless","own")}}
+                                    for a in arms}}
 
 
 def confirm(study,selected):
@@ -77,12 +77,16 @@ def confirm(study,selected):
 if __name__=="__main__":
     ap=argparse.ArgumentParser()
     sub=ap.add_subparsers(dest="mode",required=True)
-    for name,fields in (("select",("dev","fit","output")),("confirm",("study","selection","output"))):
+    for name,fields in (("select",("dev","fit","output")),("select-oracle",("dev","fit","output")),("confirm",("study","selection","output"))):
         q=sub.add_parser(name)
         for f in fields:
             q.add_argument(f,type=Path)
     args=ap.parse_args()
-    data=choose(args.dev,args.fit) if args.mode=="select" else confirm(args.study,read(args.selection))
+    if args.mode=="confirm":
+        data=confirm(args.study,read(args.selection))
+    else:
+        arms = ("oracle",) if args.mode=="select-oracle" else ("memoryless","own")
+        data=choose(args.dev,args.fit,arms)
     with args.output.open("x") as f:
         json.dump(data,f,indent=2)
     print(json.dumps({k:v for k,v in data.items() if k!="cases"}),flush=True)

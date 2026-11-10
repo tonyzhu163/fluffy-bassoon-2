@@ -12,16 +12,19 @@ from hydra import compose, initialize_config_dir
 from rlinf.models.embodiment.openpi import get_model
 from rlinf.models.embodiment.openpi.modules.model import preprocess_observation
 from fluffy_bassoon.robocasa.residual import combine_observations
-from corpus import Corpus, normalize_history
+from corpus import Corpus, given_side_prompt, normalize_history
 from fit import velocity
 from bowl_students import BowlStudents
 
 STEPS = (128,512,1024)
 
 
-def batch(native, corpus, examples, mean, scale, noise_seed):
+def batch(native, corpus, examples, mean, scale, noise_seed, *, given_side=False):
     values = [corpus.get(*e,mean,scale) for e in examples]
     raw, target, active, history = zip(*values)
+    if given_side:
+        for obs, (label, _, _, _) in zip(raw, examples, strict=True):
+            obs["task_descriptions"] = [given_side_prompt(label["goal"])]
     target = torch.from_numpy(np.stack(target)).cuda()
     active = torch.from_numpy(np.stack(active)).cuda()
     history = torch.from_numpy(np.stack(history)).cuda()
@@ -61,16 +64,20 @@ def validation_rows(corpus):
 
 
 @torch.no_grad()
-def evaluate(native, students, valid, mean, scale):
+def evaluate(native, students, valid, mean, scale, *, given_side=False):
     records=[]
     examples=validation_rows(valid)
     for start in range(0,len(examples),6):
         group=examples[start:start+6]
-        inputs,target,active,own=batch(native,valid,group,mean,scale,90000+start)
-        swap=opposite(valid,group,mean,scale)
+        students.select(None,None)
+        inputs,target,active,own=batch(native,valid,group,mean,scale,90000+start,given_side=given_side)
+        if given_side:
+            arms = (("frozen_given_side",None,None),("oracle","memoryless",None))
+        else:
+            swap=opposite(valid,group,mean,scale)
+            arms = (("frozen",None,None),("memoryless","memoryless",None),("own","dpt",own),("flipped","dpt",swap))
         scores={}
-        for key,arm,history in (("frozen",None,None),("memoryless","memoryless",None),
-                               ("own","dpt",own),("flipped","dpt",swap)):
+        for key,arm,history in arms:
             students.select(arm,history)
             scores[key]=losses(native,inputs,target,active).tolist()
         for j,(r,b,s,p) in enumerate(group):
@@ -98,9 +105,12 @@ def fit(args):
     students=BowlStudents(native,len(mean)).cuda()
     params={k:list(v.parameters()) for k,v in students.adapters.items()}
     params["dpt"]+=list(students.encoder.parameters())+list(students.project.parameters())
+    if args.given_side:
+        params = {"memoryless":params["memoryless"]}
     opts={k:torch.optim.AdamW(ps,lr=3e-4,weight_decay=.01) for k,ps in params.items()}
     contract={"seed":args.seed,"steps":STEPS,"batch_size":6,"code":os.environ["PILOT_COMMIT"],
-              "history_encoder":"2-layer, 4-head causal transformer, width 128, ALiBi",
+              "given_side_in_prompt":args.given_side,
+              "history_encoder":None if args.given_side else "2-layer, 4-head causal transformer, width 128, ALiBi",
               "training_labels":fingerprint(args.train/"targets/index.json"),
               "validation_labels":fingerprint(args.valid/"targets/index.json"),
               "trainable":{k:sum(p.numel() for p in ps) for k,ps in params.items()}}
@@ -119,7 +129,8 @@ def fit(args):
     begin=time.monotonic()
     for step in range(start+1,STEPS[-1]+1):
         examples=[train.sample(rng) for _ in range(6)]
-        inputs,target,active,own=batch(native,train,examples,mean,scale,args.seed*10000+step)
+        students.select(None,None)
+        inputs,target,active,own=batch(native,train,examples,mean,scale,args.seed*10000+step,given_side=args.given_side)
         if step==1:
             with torch.no_grad():
                 students.select(None,None)
@@ -152,9 +163,10 @@ def fit(args):
             phase=args.out/f"step-{step:04d}"
             phase.mkdir()
             os.link(args.out/"checkpoint.pt",phase/"checkpoint.pt")
-            measured=evaluate(native,students,valid,mean,scale)
+            measured=evaluate(native,students,valid,mean,scale,given_side=args.given_side)
             (phase/"offline.json").write_text(json.dumps(measured))
-            print("VALIDATION",step,{k:np.mean([r[k] for r in measured]) for k in ("memoryless","own","flipped")},flush=True)
+            metrics = ("oracle","frozen_given_side") if args.given_side else ("memoryless","own","flipped")
+            print("VALIDATION",step,{k:np.mean([r[k] for r in measured]) for k in metrics},flush=True)
     print("COMPLETE",flush=True)
 
 
@@ -164,4 +176,5 @@ if __name__=="__main__":
         p.add_argument(label,type=Path)
     p.add_argument("--seed",type=int,default=991)
     p.add_argument("--resume",type=Path)
+    p.add_argument("--given-side",action="store_true")
     fit(p.parse_args())

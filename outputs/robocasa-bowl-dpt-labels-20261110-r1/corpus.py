@@ -11,6 +11,9 @@ PROMPT = "Put one fruit from the plate into a bowl. Release it and move your han
 SIDES = ("left","right")
 
 
+def given_side_prompt(goal):
+    return f"Put one fruit from the plate into the {SIDES[goal]} bowl. Release it and move your hand away."
+
 def transitions(archive):
     offsets = archive["offsets"]
     public = archive["public"]
