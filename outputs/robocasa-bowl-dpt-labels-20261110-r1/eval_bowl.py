@@ -10,7 +10,7 @@ from rlinf.models.embodiment.openpi import get_model
 
 from collect import CAMERAS, SIDES, convert_action, held_fruit, identity, release, reset_scene, stable_counter_regions, state
 from corpus import normalize_history, observation, public_history
-from fit import PairedStudents
+from bowl_students import BowlStudents
 from readout import read
 
 
@@ -19,7 +19,7 @@ def actor(code, weights):
         cfg=compose(config_name="robocasa365_pi05_eval")
     native=get_model(cfg.rollout.model,torch_dtype=torch.bfloat16).cuda().eval().requires_grad_(False)
     assert native.num_steps==10 and native.action_horizon==50
-    students=PairedStudents(native,len(weights["mean"])).cuda().eval().requires_grad_(False)
+    students=BowlStudents(native,len(weights["mean"])).cuda().eval().requires_grad_(False)
     students.load_state_dict(weights["students"])
     return native,students
 

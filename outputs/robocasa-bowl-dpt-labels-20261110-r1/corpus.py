@@ -51,9 +51,10 @@ def observation(frames, states):
 
 
 def normalize_history(history, mean, scale):
-    # Left-padding keeps the observed terminal reward at the final GRU step for every length.
-    out=np.zeros((102,len(mean)),np.float32)
-    out[-len(history):]=np.clip((history-mean)/scale,-12,12)
+    # The decoder consumes a contiguous prefix and reads its last real (terminal) token.
+    out=np.zeros((102,len(mean)+1),np.float32)
+    out[:len(history),:-1]=np.clip((history-mean)/scale,-12,12)
+    out[:len(history),-1]=1.
     return out
 
 

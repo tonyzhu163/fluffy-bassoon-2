@@ -13,7 +13,8 @@ from rlinf.models.embodiment.openpi import get_model
 from rlinf.models.embodiment.openpi.modules.model import preprocess_observation
 from fluffy_bassoon.robocasa.residual import combine_observations
 from corpus import Corpus, normalize_history
-from fit import PairedStudents, velocity
+from fit import velocity
+from bowl_students import BowlStudents
 
 STEPS = (128,512,1024)
 
@@ -94,11 +95,12 @@ def fit(args):
     with initialize_config_dir(config_dir=str(args.code/"benchmarks/robocasa/configs"),version_base=None):
         cfg=compose(config_name="robocasa365_pi05_eval")
     native=get_model(cfg.rollout.model,torch_dtype=torch.bfloat16).cuda().eval().requires_grad_(False)
-    students=PairedStudents(native,len(mean)).cuda()
+    students=BowlStudents(native,len(mean)).cuda()
     params={k:list(v.parameters()) for k,v in students.adapters.items()}
     params["dpt"]+=list(students.encoder.parameters())+list(students.project.parameters())
     opts={k:torch.optim.AdamW(ps,lr=3e-4,weight_decay=.01) for k,ps in params.items()}
     contract={"seed":args.seed,"steps":STEPS,"batch_size":6,"code":os.environ["PILOT_COMMIT"],
+              "history_encoder":"2-layer, 4-head causal transformer, width 128, ALiBi",
               "training_labels":fingerprint(args.train/"targets/index.json"),
               "validation_labels":fingerprint(args.valid/"targets/index.json"),
               "trainable":{k:sum(p.numel() for p in ps) for k,ps in params.items()}}
