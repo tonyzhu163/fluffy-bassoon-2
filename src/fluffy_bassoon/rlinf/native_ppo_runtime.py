@@ -194,6 +194,12 @@ class SidecarMixin:
         return dict(role=self.pilot_role, rank=self._rank, restored=restore)
 
 
+def install_motor_boundary(cfg):
+    from fluffy_bassoon.robotwin.sidney import CONFIG_NAME, install_rlinf_transforms
+    if cfg.actor.model.openpi.config_name == CONFIG_NAME:
+        install_rlinf_transforms()
+
+
 class PilotActor(SidecarMixin, EmbodiedFSDPActor):
     pilot_role = 'actor'
 
@@ -254,6 +260,7 @@ class PilotActor(SidecarMixin, EmbodiedFSDPActor):
         return dict(sha256=digest.hexdigest(), local_parameter_tensors=count, local_elements=elements)
 
     def init_worker(self):
+        install_motor_boundary(self.cfg)
         result = super().init_worker()
         self._pilot_frozen_before = self._pilot_frozen_signature()
         write(Path(self.cfg.native_pilot.output) / 'actor-invariants' /
@@ -300,6 +307,7 @@ class PilotRollout(SidecarMixin, MultiStepRolloutWorker):
     pilot_role = 'rollout'
 
     def init_worker(self):
+        install_motor_boundary(self.cfg)
         result = super().init_worker()
         import rlinf.models.embodiment.openpi.sampling.rl_sampler as sampler
         from .native_ppo_data import record_gaussian_parameters
@@ -614,7 +622,7 @@ class PilotRunner(EmbodiedRunner):
         if OmegaConf.is_config(self.cfg):
             self._pilot_write('resolved-native-config.json', OmegaConf.to_container(self.cfg, resolve=True))
         self._pilot_write('resolved-pilot-contract.json', dict(recipe,
-            mode=self.cfg.native_pilot.mode, role='target-online/native-action-expert PPO',
+            mode=self.cfg.native_pilot.mode, role='target-online/native-action-expert ' + recipe.get('algorithm', 'ppo').upper(),
             source6_pretraining_admission=False, paper_numeric_reproduction=False,
             scaler_disabled=True, initialization_revision=self.cfg.native_pilot.initializer_revision))
         resume = self.cfg.runner.get('resume_dir')
@@ -650,8 +658,8 @@ class PilotRunner(EmbodiedRunner):
         self.env.pilot_phase('training').wait()
         super().run()
         # super closes the asynchronous logger; write our own immutable JSON.
-        if self.global_step != 2:
-            raise RuntimeError('Pilot ended without two complete published-batch iterations')
+        if self.global_step != recipe['source_iterations']:
+            raise RuntimeError('Pilot ended before the configured training boundary')
         self.rollout.pilot_rng(restore=True).wait()
         self.env.pilot_rng(restore=True).wait()
         self.update_rollout_weights()
@@ -659,5 +667,5 @@ class PilotRunner(EmbodiedRunner):
         self.rollout.pilot_evaluation_iteration(self.global_step).wait()
         after = self.evaluate()
         pairing = self.env.pilot_pair_receipt().wait()
-        self._pilot_write('after-evaluation.json', dict(completed=True, global_step=2, metrics=json_metrics(after),
-            pairing=pairing, model_selection='fixed iteration2', source6_pretraining_admission=False))
+        self._pilot_write('after-evaluation.json', dict(completed=True, global_step=self.global_step, metrics=json_metrics(after),
+            pairing=pairing, model_selection=f'fixed iteration{self.global_step}', source6_pretraining_admission=False))

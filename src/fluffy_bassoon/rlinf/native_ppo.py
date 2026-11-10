@@ -90,23 +90,68 @@ def validate_recipe(cfg):
         'env.eval.use_fixed_reset_state_ids': True,
         'env.eval.auto_reset': True, 'env.eval.ignore_terminations': True,
     }
+    from fluffy_bassoon.robotwin.sidney import CONFIG_NAME, REVISION
+    sidney = OmegaConf.select(cfg, 'actor.model.openpi.config_name') == CONFIG_NAME
+    task = 'place_phone_stand' if sidney else 'adjust_bottle'
+    world = int(cfg.native_pilot.world_size)
+    micro = cfg.actor.micro_batch_size
+    iterations = 2
+    method = 'ppo'
+    if sidney:
+        method = {'gae': 'ppo', 'grpo': 'grpo'}.get(cfg.algorithm.adv_type)
+        group = cfg.algorithm.group_size
+        if method is None or group not in ((8,) if method == 'grpo' else (1, 8)):
+            raise ValueError('Sidney contract differs: require PPO or grouped GRPO')
+        if world != 4 or micro not in (8, 16, 32, 64, 128, 256, 512):
+            raise ValueError('Sidney contract differs: unsupported rank or microbatch count')
+        iterations = cfg.runner.max_steps
+        if type(iterations) is not int or iterations < 1:
+            raise ValueError('Sidney contract differs: require a positive iteration count')
+        expected.update({
+            'runner.max_steps': iterations, 'runner.max_epochs': iterations,
+            'actor.micro_batch_size': micro, 'native_pilot.initializer_revision': REVISION,
+            'native_pilot.wrist_near': .01, 'actor.model.openpi.config_name': CONFIG_NAME,
+            'actor.model.precision': None, 'actor.model.openpi_data.adapt_to_pi': False,
+            'actor.model.openpi_data.extra_delta_transform': False,
+            'algorithm.adv_type': 'grpo' if method == 'grpo' else 'gae',
+            'algorithm.loss_type': 'actor' if method == 'grpo' else 'actor_critic',
+            'actor.model.add_value_head': method == 'ppo', 'env.train.group_size': group,
+            'env.eval.group_size': 1, 'rollout.pipeline_stage_num': 1,
+            'algorithm.recompute_logprobs': micro != 256 // world,
+        })
+        if cfg.native_pilot.get('comparison_algorithm', method) != method:
+            raise ValueError('Sidney declared algorithm differs from its advantage estimator')
     for mode in ('train', 'eval'):
         for field in ('max_episode_steps', 'max_steps_per_rollout_epoch', 'task_config.step_lim'):
             expected[f'env.{mode}.{field}'] = 400
-        expected[f'env.{mode}.task_config.task_name'] = 'adjust_bottle'
+        expected[f'env.{mode}.task_config.task_name'] = task
+        if sidney:
+            for camera in ('head_camera_type', 'wrist_camera_type'):
+                expected[f'env.{mode}.task_config.camera.{camera}'] = 'Large_D435'
+            expected[f'env.{mode}.task_config.camera.collect_wrist_camera'] = True
         expected[f'env.{mode}.seed'] = 0
     for key, value in expected.items():
         actual = OmegaConf.select(cfg, key)
         if actual != value:
             raise ValueError(f'Published-batch pilot contract differs: {key}={actual!r}, expected {value!r}')
-    world = int(cfg.native_pilot.world_size)
-    if world not in (4, 8) or 2048 != 32 * world * (2048 // (32 * world)):
+    if world not in (4, 8) or 2048 % (micro * world):
         raise ValueError('Only explicit 4/8-rank execution of the same global2048 batch is admitted')
     placement = cfg.cluster.component_placement
     if len(placement) != 1 or list(placement.values()) != [f'0-{world-1}']:
         raise ValueError('Actor/environment/rollout must share the explicit allocated rank range')
     if cfg.native_pilot.mode not in ('train', 'evaluate_existing'):
         raise ValueError('Use train or explicit evaluate_existing, never only_eval')
+    if sidney:
+        training = iterations * 256 * 4 * 400
+        evaluation = 2 * 128 * 400
+        limit = cfg.native_pilot.maximum_actions
+        if type(limit) is not int or limit < training + evaluation:
+            raise ValueError('Sidney action cap does not cover the declared run including before/after evaluation')
+        return dict(source_task=task, algorithm=method, group_size=group, world_size=world,
+                    global_batch_size=2048, micro_batch_size=micro, accumulation_steps=2048 // (micro*world),
+                    source_iterations=iterations, nominal_train_actions=training,
+                    nominal_before_after_actions=evaluation, nominal_all_in_actions=training+evaluation,
+                    maximum_actions=limit, wrist_near_m=.01, initializer_revision=REVISION)
     return dict(world_size=world, global_batch_size=2048, micro_batch_size=32,
         accumulation_steps=2048 // (32 * world), source_iterations=2,
         nominal_train_actions=819200, nominal_before_after_actions=102400,

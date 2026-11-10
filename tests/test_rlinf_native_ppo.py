@@ -51,6 +51,28 @@ def test_rejects_scientific_recipe_drift(recipe, field, value):
         validate_recipe(recipe)
 
 
+@pytest.mark.parametrize('method,group', [('ppo', 1), ('ppo', 8), ('grpo', 8)])
+def test_sidney_recipe_from_native_config(recipe, monkeypatch, method, group):
+    from hydra import compose, initialize_config_dir
+    from omegaconf import OmegaConf
+    from fluffy_bassoon.robotwin.sidney import REVISION
+    monkeypatch.setenv('NATIVE_PPO_INITIALIZER_REVISION', REVISION)
+    monkeypatch.setenv('NATIVE_PPO_WORLD', '4')
+    monkeypatch.setenv('NATIVE_PPO_PLACEMENT', '0-3')
+    directory = Path(__file__).resolve().parents[1]/'benchmarks/robotwin/configs'
+    overrides = [f'algorithm.group_size={group}']
+    if method == 'grpo':
+        overrides += ['algorithm.adv_type=grpo', 'algorithm.loss_type=actor', 'actor.model.add_value_head=false']
+    with initialize_config_dir(version_base='1.1', config_dir=str(directory)):
+        cfg = compose(config_name='sidney_phone_two', overrides=overrides)
+    result = validate_recipe(cfg)
+    assert (result['algorithm'], result['accumulation_steps'], result['nominal_all_in_actions']) == (method, 8, 921600)
+    for key, wrong in [('native_pilot.wrist_near', .1), ('env.eval.task_config.task_name', 'adjust_bottle'),
+                       ('actor.model.add_value_head', method != 'ppo'), ('native_pilot.maximum_actions', 1000)]:
+        changed = cfg.copy(); OmegaConf.update(changed, key, wrong)
+        with pytest.raises(ValueError): validate_recipe(changed)
+
+
 def test_unresolved_calls_remain_charged_across_fresh_attempt(tmp_path):
     first = ActionJournal(tmp_path, rank=0, world=8, attempt='r1')
     slot = first.begin(100000, phase='training')
@@ -123,7 +145,7 @@ def test_official_runtime_import_and_baseline_precedes_training(monkeypatch, tmp
     runner.update_rollout_weights = lambda: events.append(('sync',))
     runner.evaluate = lambda: events.append(('evaluate', runner.global_step)) or {'success': .5}
     runner._capture_boundary = lambda: events.append(('boundary', runner.global_step))
-    monkeypatch.setattr(runtime, 'validate_recipe', lambda _: {})
+    monkeypatch.setattr(runtime, 'validate_recipe', lambda _: {'source_iterations': 2})
     def official_run(self):
         for step in (1, 2):
             events.append(('official_optimizer', step))
