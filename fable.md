@@ -73,6 +73,8 @@ A frozen VLA trained on constructed histories corrects its next attempt from one
 
 The Nov 9 pilots are small but unfavourable. Frozen π0.5 released to the right regardless of the requested bowl, while a scripted carry reached the requested side in 6 of 8 continuations ([compact bowls](outputs/robocasa-compact-bowls-20261109-r1/RESULT.md)). The drawer offset changed the lateral miss but produced no handle acquisition on the two tapes examined ([hidden-goal pilot](outputs/robocasa-meta-feedback-20261109-r1/RESULT.md)).
 
+On Nov 10, the frozen policy opened the drawer on two of eight development seeds. On both openings, either sign of a 4 cm lateral offset still allowed native success without correction. The five-control offset ended 36 and 63 controls before the first two-finger grasp. Repeat the small paired test with the offset active through gripper closure before collecting 100 trials. [Matched drawer results](outputs/robocasa-drawer-authority-20261110-r1/RESULT.md).
+
 For one task and one latent, branch a fixed set of alternatives from saved query states on development scenes. Compare three actuators: KV or velocity steering of the frozen expert, a bounded residual on the decoded action, and a choice among scripted corrections.
 
 **Go** with the weakest actuator for which some alternative succeeds on a clear majority of states where the uncorrected action fails. **No-go** if none does; the paper then waits on a different latent or task.

@@ -18,6 +18,8 @@ A [controlled hidden-goal pilot](../outputs/robocasa-meta-feedback-20261109-r1/R
 
 In the [compact-table follow-up](../outputs/robocasa-compact-bowls-20261109-r1/RESULT.md), frozen π0.5 grasped in 8/8 trials but all three released fruits went right, regardless of the requested side. A scripted post-grasp carry using simulator coordinates released to either requested side on 3/4 scenes (6/8 continuations). A fixed reward-conditioned rule on these same development traces obtained 3/4 query goals, versus 2/4 with either constant choice and 1/4 with inverted reward. There were only two scene pairs; the original motor did not qualify for held-out evaluation.
 
+In an eight-seed OpenDrawer screen, two scenes opened under the frozen native policy. Both exact nominal replays matched. Both scenes still opened with either sign of a five-control, 4 cm lateral offset and zero correction. Nineteen of 20 branches opened across all five residual choices. The only timeout came after adding a correction that reinforced the offset. All four uncorrected branches succeeded, leaving no failures on which to measure rescue. [Matched drawer results](../outputs/robocasa-drawer-authority-20261110-r1/RESULT.md).
+
 For historical Flow-SDE teachers, the [critic parity audit](../outputs/robocasa-flow-sde-critic-parity-20261104-r1/RESULT.md) found that rollout and replay could use different denoising-step values even when likelihoods matched. Record the RLinf revision and critic definition when comparing these runs.
 
 ## RoboTwin
