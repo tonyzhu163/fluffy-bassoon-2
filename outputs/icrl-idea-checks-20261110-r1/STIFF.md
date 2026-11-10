@@ -12,4 +12,4 @@ At 64×, the largest observed drawer travel was 0.048 m with normal effort and 0
 
 The four pairs at each damping level use two development scenes crossed with two motor-noise seeds. All paired starts matched in simulator state and public observations. Within each effort pair, the first two-finger grasp matched in time and physical state, or both runs never grasped. The actuator multiplies the three translation commands after contact and clips to the controller bounds. It does not directly set a physical force. [Per-episode measurements](stiff02/events.jsonl).
 
-Baige Pro6K job `job-19vkb4r2o74v` completed all 24 episodes and 10,430 controls on source `9c0036ea`. The worker used 941 seconds on one GPU (0.261 GPU-hours). [GPU probe](stiff02/gpu.json) · [Worker clock](stiff02/exit.json).
+Baige Pro6K job `job-19vkb4r2o74v` completed all 24 episodes and 10,430 controls on source `9c0036ea`. The worker used 941 seconds on one GPU (0.261 GPU-hours). [GPU probe](stiff02/gpu.json) · [Worker clock](stiff02/exit.json). The scheduler recorded 18m04s (0.301 GPU-hours) at release. [Scheduler receipt](stiff02-close.png).
