@@ -30,6 +30,8 @@ Across eight CloseDrawer development scenes and two noise seeds, the native poli
 
 A memoryless LoRA student trained on the final Drawer130, Toaster130 and Faucet40 PPO actions reduced held-out native flow-matching error from 0.08113 to 0.07887. DPT + LoRA scored 0.08207 with the matching prior SFT attempt and 0.08262 with a different same-task attempt. The paired 95% interval for the own-history improvement included zero across 48 held-out reset scenes. The pilot measured offline imitation with one fit per arm. [Three-teacher RoboCasa pilot](../outputs/robocasa-three-ppo-dpt-lora-20261110-r1/RESULT.md).
 
+On 96 fresh RoboCasa365 scenes with one shared frozen-policy first attempt, two-epoch memoryless LoRA succeeded on 60 retries, frozen π0.5 on 40, and DPT with own versus same-task donor history on 37 versus 54. On the 52 first-attempt failures these four arms recovered 27, 19, 12 and 21, respectively. Selecting training duration on 24 development scenes chose one epoch for DPT and two for memoryless. On the other 72 scenes, matching DPT reached 38, donor DPT 41, and memoryless 42. Own history gained six and lost nine paired cases against donor history. Native checkpoint selection improved DPT success without establishing a memory benefit. [Paired native retries and three-seed learning curves](../outputs/robocasa-three-ppo-retry-20261110-r1/RESULT.md).
+
 For historical Flow-SDE teachers, the [critic parity audit](../outputs/robocasa-flow-sde-critic-parity-20261104-r1/RESULT.md) found that rollout and replay could use different denoising-step values even when likelihoods matched. Record the RLinf revision and critic definition when comparing these runs.
 
 ## RoboTwin
