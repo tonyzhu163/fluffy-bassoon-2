@@ -38,10 +38,10 @@ Before a large collection, verify on development scenes that returning to the de
 | --- | --- | --- | --- |
 | Role | Primary: build and train here | Transfer test and comparison on VLRLA's tasks | Third embodiment; untouched transfer test |
 | Candidate latent | End-effector offset on handle tasks | Per-arm offset, or which arm is miscalibrated | Released S18 offsets |
-| Return to decision point | Verified: seed reset plus command replay matches every public state | SAPIEN; replay determinism not yet qualified here | MuJoCo; not yet checked here |
+| Return to decision point | Verified: seed reset plus command replay matches every public state | SAPIEN seed reset and command replay matched on [two clean phone-stand scenes](outputs/robotwin-e1-replay-20261110-r1/RESULT.md) | MuJoCo; not yet checked here |
 | Known obstacle | No handle acquisition under offset on two pilot tapes | Phone stand is at 75–87% SFT; choose lower-success tasks | S18 perturbs reported positions, not the physical command, with one direction for all 40 tasks |
 
-S18's single direction gives no pairs with opposite correct answers, so it cannot be training data without a custom variant. If SAPIEN restore is not deterministic, RoboTwin supplies support and query episodes for evaluation only. The [pinned S18 code](https://github.com/LIBERO-Pro-Team/LIBERO-Pro2.0/blob/e5500c690c1498eca1b7050350654964190cdf70/simulator-source/libero/libero/envs/nonphysical_perturbations.py#L3213-L3247) was re-read on November 10 and adds offsets only to observation keys containing `eef_pos` or `joint_pos`. The single direction across 40 tasks rests on the [Nov 9 static check](outputs/vlrla-feedback-plan-20261109-r1/PLAN.md) and was not re-counted.
+S18's single direction gives no pairs with opposite correct answers, so it cannot be training data without a custom variant. Check replay again on any new RoboTwin task or domain before collecting branched labels there. The [pinned S18 code](https://github.com/LIBERO-Pro-Team/LIBERO-Pro2.0/blob/e5500c690c1498eca1b7050350654964190cdf70/simulator-source/libero/libero/envs/nonphysical_perturbations.py#L3213-L3247) was re-read on November 10 and adds offsets only to observation keys containing `eef_pos` or `joint_pos`. The single direction across 40 tasks rests on the [Nov 9 static check](outputs/vlrla-feedback-plan-20261109-r1/PLAN.md) and was not re-counted.
 
 **First build.** One task and one latent on RoboCasa, about 100 trials with five alternatives each. Measure restore determinism, how often any alternative succeeds, and controls per trial. This is the same run as E1 and prices the full corpus.
 
@@ -65,9 +65,9 @@ A frozen VLA trained on constructed histories corrects its next attempt from one
 
 ### E0. Prerequisites in code
 
-- **Done, untested on Linux:** `native_pilot.wrist_near` sets the wrist near plane when RoboTwin builds its cameras, in training and evaluation, and every reset checks it. The Sidney config sets 1 cm. Pinned RoboTwin hard-codes 10 cm. Qualify it on Baige with the unit test and one real episode before any PPO/GRPO baseline.
-- **Open:** `validate_recipe` on `main` admits only the two-iteration `adjust_bottle` pilot. The Sidney PPO/GRPO arms ran from run-pinned source. Generalise the check when the E5 baseline is contracted, with its Linux tests.
-- **Open:** a query-label path for the student interface, chosen after E1 picks the actuator.
+- **Wrist cameras and SAPIEN replay.** Both 1 cm wrist cameras and the action-50 fork reproduced on two clean phone-stand cases in the [Baige replay](outputs/robotwin-e1-replay-20261110-r1/RESULT.md). New tasks and randomized scenes need their own check.
+- **Recipe validation.** The [native validator](src/fluffy_bassoon/rlinf/native_ppo.py) checks the original `adjust_bottle` recipe and Sidney phone-stand PPO or grouped GRPO. E5 still needs its task selection, common scene schedule, and an equal delivered-action budget.
+- **Student query labels.** The [query-label module](src/fluffy_bassoon/meta_rl/constructed_queries.py) exports one target from measured alternatives and trains a categorical readout at the query. Support observations, actions and rewards form the input. An all-failure panel or an unresolved tie supplies no target. E1 chooses the candidate actions.
 
 ### E1. Control authority (go/no-go)
 

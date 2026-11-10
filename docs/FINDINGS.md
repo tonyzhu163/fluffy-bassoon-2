@@ -38,6 +38,8 @@ The subsequent frozen evaluation delivered **34,533 targets for PPO** and **33,7
 
 At the original 10 cm wrist clipping distance, SFT scored 23/100 clean and 31/100 randomized. Restoring the fingertips visible in training recovered 55 clean failures and lost three successes. On randomized scenes it recovered 58 and lost two. The reference loader matched all 813 released tensors. The uploader reports 66/100 clean on a separately evaluated cohort. [Camera experiment](../outputs/robotwin-sidney-gap-20261109-r1/RESULT.md)
 
+On clean phone-stand seeds 100000 and 100001, two independent native SAPIEN replays per seed reproduced the saved Sidney success on action 128. All three camera views, public joints, articulation positions and velocities, and phone and stand poses were bitwise identical at all 129 observed boundaries, including the action-50 fork. [Replay evidence](../outputs/robotwin-e1-replay-20261110-r1/RESULT.md).
+
 ### Motus and other RoboTwin results
 
 | Measurement | Result | What it establishes |
