@@ -14,7 +14,7 @@ Four tasks × eight scenes × four motor-noise seeds from the same seeded start,
 
 - **Read:** per task, the success rate, the count of scenes with 0/4 and 4/4, and the intraclass correlation.
 - **Use:** tasks with many always-failing scenes are candidates for history to matter; tasks near binomial are not. Pick the next task from this table.
-- All four Gym identifiers resolve in the pinned Baige RoboCasa environment. Verify the initial physical state and public observation match across the four repeats.
+- All four Gym identifiers resolve in the pinned Baige RoboCasa environment. A seeded fridge reset differed on its second repeat. Before any actions or rewards on a scene, select the first native start signature observed twice under the registered seed. Match each subsequent repeat to that signature before inference, up to 16 resets per repeat. Record every candidate and its component hashes. The signature covers full flattened simulator state, camera pose, model body and geometry positions, policy state, instruction, and each policy image. Keep all eight prespecified seeds. Report any scene that cannot be matched.
 
 ## Check 2: can a known correction rescue a natural failure? (`rescue`)
 

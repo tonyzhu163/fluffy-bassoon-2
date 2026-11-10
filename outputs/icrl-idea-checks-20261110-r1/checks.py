@@ -103,8 +103,8 @@ def public_hash(obs):
 
 
 def episode(policy, task, scene, noise_seed, *, drawer=None, horizon=HORIZON, video=None,
-            reference=None, replay_steps=0, record=None):
-    env, obs = reset(task, scene)
+            reference=None, replay_steps=0, record=None, start=None):
+    env, obs = start if start is not None else reset(task, scene)
     writer = None
     try:
         raw = env.unwrapped.env
@@ -171,14 +171,51 @@ def episode(policy, task, scene, noise_seed, *, drawer=None, horizon=HORIZON, vi
             env.close()
 
 
+def start_signature(env, obs):
+    raw = env.unwrapped.env
+    public = inputs(obs)
+    return dict(sim_state=digest(raw.sim.get_state().flatten()),
+                camera_pose=digest(raw.sim.data.cam_xpos, raw.sim.data.cam_xmat),
+                body_geometry=digest(raw.sim.model.body_pos, raw.sim.model.geom_pos),
+                public_state=digest(public['observation/state']), prompt=digest(public['prompt']),
+                **{name: digest(public[name]) for name in INPUT})
+
+
+def matched_start(task, scene, repeat, target, log):
+    # Select a recurring native start before the first action or reward of this scene.
+    seen = set()
+    first = None
+    for attempt in range(1, 17):
+        env, obs = reset(task, scene)
+        try:
+            fields = start_signature(env, obs)
+            key = digest(*fields.values())
+            match = key == target if target is not None else key in seen
+            log('reset_check', task=task, scene=scene, repeat=repeat, attempt=attempt, signature=key,
+                selected=match, fields=fields,
+                differs_from_first=[] if first is None else [k for k in fields if fields[k] != first[k]])
+            if match:
+                return (env, obs), key
+            seen.add(key)
+            if first is None:
+                first = fields
+        except BaseException:
+            env.close()
+            raise
+        env.close()
+    raise ValueError(f'No exact native start match for {task}, {scene}, repeat {repeat}')
+
+
 def persistence(policy, log, tasks, scenes, repeats):
     """Same scene and start, different motor noise: is the outcome a property of the scene?"""
     for task in tasks:
         for index in range(scenes):
             scene = 983000 + index
             start = None
+            target = None
             for repeat in range(repeats):
-                row = episode(policy, task, scene, scene + 700000 + 1000 * repeat)
+                env_obs, target = matched_start(task, scene, repeat, target, log)
+                row = episode(policy, task, scene, scene + 700000 + 1000 * repeat, start=env_obs)
                 current = (row['initial_sha256'], row['initial_observation_sha256'])
                 if start is not None and current != start:
                     raise ValueError(f'Native reset mismatch for {task} {scene} repeat {repeat}')
