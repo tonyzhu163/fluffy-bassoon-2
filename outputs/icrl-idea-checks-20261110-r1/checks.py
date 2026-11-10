@@ -14,13 +14,14 @@ import sys
 import time
 
 import gymnasium as gym
+import imageio.v2 as imageio
 import jax
 import numpy as np
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / 'robocasa-drawer-calibration-20261109-r2'))
-from replay import (GATE_M, HORIZON, config, convert_action, geometry, handle, inputs,
-                    normalize, policy_config, stable_counter_regions, with_checkpoint_stats)
+from replay import (GATE_M, HORIZON, INPUT, config, convert_action, digest, geometry, handle,
+                    inputs, normalize, physics, policy_config, stable_counter_regions, with_checkpoint_stats)
 
 DRAWER_SCENES = range(982100, 982108)   # screened on November 10; 982101 and 982103 opened
 DEFAULT_TASKS = 'OpenDrawer,CloseDrawer,CloseFridge,TurnOnMicrowave'
@@ -96,11 +97,22 @@ class Drawer:
                     goal_offset_m=self.goal_offset, effort=self.effort)
 
 
-def episode(policy, task, scene, noise_seed, *, drawer=None, horizon=HORIZON):
+def public_hash(obs):
+    x = inputs(obs)
+    return digest(x['observation/state'], x['prompt'], *(x[k] for k in INPUT))
+
+
+def episode(policy, task, scene, noise_seed, *, drawer=None, horizon=HORIZON, video=None):
     env, obs = reset(task, scene)
+    writer = None
     try:
         raw = env.unwrapped.env
         hook = Drawer(raw, **drawer) if drawer is not None else None
+        initial_state = physics(raw)
+        initial_obs = public_hash(obs)
+        decision_obs = grasp_state = None
+        if video is not None:
+            writer = imageio.get_writer(video, fps=10, codec='libx264', macro_block_size=1)
         noise = np.random.default_rng(noise_seed).standard_normal((horizon // 5, 50, 32), dtype=np.float32)
         success, chunk = False, None
         for t in range(horizon):
@@ -110,16 +122,30 @@ def episode(policy, task, scene, noise_seed, *, drawer=None, horizon=HORIZON):
             a = chunk[t % 5].copy()
             if hook:
                 a = hook.act(t, a)
+                if hook.decision == t:
+                    decision_obs = public_hash(obs)
+            if writer is not None and t % 5 == 0:
+                frame = inputs(obs)
+                writer.append_data(np.concatenate([frame['observation/image'], frame['observation/wrist_image']], axis=1))
             obs, _, done, truncated, info = env.step(convert_action(a))
             success = bool(info['success'])
             if hook:
                 hook.after(t)
+                if hook.first_grasp == t + 1:
+                    grasp_state = physics(raw)
             if success or done or truncated:
                 break
         return dict(task=task, scene=scene, noise_seed=noise_seed, success=success, controls=t + 1,
+                    initial_sha256=initial_state, initial_observation_sha256=initial_obs,
+                    decision_observation_sha256=decision_obs, first_grasp_sha256=grasp_state,
+                    terminal_sha256=physics(raw),
                     **(hook.report() if hook else {}))
     finally:
-        env.close()
+        try:
+            if writer is not None:
+                writer.close()
+        finally:
+            env.close()
 
 
 def persistence(policy, log, tasks, scenes, repeats):
@@ -127,34 +153,63 @@ def persistence(policy, log, tasks, scenes, repeats):
     for task in tasks:
         for index in range(scenes):
             scene = 983000 + index
+            start = None
             for repeat in range(repeats):
-                log('episode', check='persistence', repeat=repeat,
-                    **episode(policy, task, scene, scene + 700000 + 1000 * repeat))
+                row = episode(policy, task, scene, scene + 700000 + 1000 * repeat)
+                current = (row['initial_sha256'], row['initial_observation_sha256'])
+                if start is not None and current != start:
+                    raise ValueError(f'Native reset mismatch for {task} {scene} repeat {repeat}')
+                start = current
+                log('episode', check='persistence', repeat=repeat, **row)
 
 
-def rescue(policy, log):
+def rescue(policy, log, out):
     """On scenes the frozen policy fails, does a held lateral goal offset recover the grasp?"""
+    archive = HERE.parent / 'robocasa-drawer-authority-20261110-r1' / 'events.jsonl'
+    records = [json.loads(line) for line in archive.read_text().splitlines()]
+    nominal = {r['scene']: r for r in records if r.get('arm') == 'nominal'}
+    if set(nominal) != set(DRAWER_SCENES):
+        raise ValueError('Incomplete reference drawer screen')
     for scene in DRAWER_SCENES:
-        base = episode(policy, 'OpenDrawer', scene, scene + 700000, drawer={})
+        base = episode(policy, 'OpenDrawer', scene, scene + 700000, drawer={},
+                       video=out / f'{scene}-nominal.mp4')
         log('episode', check='rescue', arm='nominal', **base)
+        fields = ('success', 'controls', 'decision', 'first_grasp', 'decision_observation_sha256', 'terminal_sha256')
+        for field in fields:
+            if base[field] != nominal[scene][field]:
+                raise ValueError(f'Prior nominal mismatch on scene {scene}, field {field}')
+    for scene in DRAWER_SCENES:
+        base = nominal[scene]
         if base['success'] or base['decision'] is None:
             continue
         for cm in (-4, -2, 2, 4):
-            log('episode', check='rescue', arm=f'offset{cm:+d}cm',
-                **episode(policy, 'OpenDrawer', scene, scene + 700000, drawer=dict(goal_offset=cm / 100)))
+            arm = f'offset{cm:+d}cm'
+            row = episode(policy, 'OpenDrawer', scene, scene + 700000, drawer=dict(goal_offset=cm / 100),
+                          video=out / f'{scene}-{arm}.mp4')
+            if (row['decision'], row['decision_observation_sha256']) != (base['decision'], base['decision_observation_sha256']):
+                raise ValueError(f'Offset decision mismatch on scene {scene}, arm {arm}')
+            log('episode', check='rescue', arm=arm, **row)
 
 
 def stiff(policy, log):
     """A latent the camera cannot show before contact: does it cause failure, persist, and yield to effort?"""
     for scene in (982101, 982103):
+        start = None
         for damping in (1., 8., 64.):
             for repeat in range(2):
+                nominal = None
                 for effort in (1., 2.):
-                    if damping == 1. and effort != 1.:
-                        continue
-                    log('episode', check='stiff', repeat=repeat, damping_scale=damping,
-                        **episode(policy, 'OpenDrawer', scene, scene + 700000 + 1000 * repeat,
-                                  drawer=dict(damping=damping, effort=effort)))
+                    row = episode(policy, 'OpenDrawer', scene, scene + 700000 + 1000 * repeat,
+                                  drawer=dict(damping=damping, effort=effort))
+                    current = (row['initial_sha256'], row['initial_observation_sha256'])
+                    if start is not None and start != current:
+                        raise ValueError(f'Stiffness changed reset on {scene}')
+                    start = current
+                    grasp = (row['first_grasp'], row['first_grasp_sha256'])
+                    if nominal is not None and nominal != grasp:
+                        raise ValueError(f'Unmatched effort branch on {scene}, {damping}, {repeat}')
+                    nominal = grasp
+                    log('episode', check='stiff', repeat=repeat, damping_scale=damping, **row)
 
 
 def main():
@@ -175,7 +230,7 @@ def main():
         tasks = (rest[0] if rest else DEFAULT_TASKS).split(',')
         persistence(policy, log, tasks, int(rest[1]) if len(rest) > 1 else 8, int(rest[2]) if len(rest) > 2 else 4)
     elif check == 'rescue':
-        rescue(policy, log)
+        rescue(policy, log, out)
     elif check == 'stiff':
         stiff(policy, log)
     else:
