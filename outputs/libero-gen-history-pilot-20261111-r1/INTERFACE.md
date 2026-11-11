@@ -100,3 +100,26 @@ visibility is preserved. The outer clock starts before the probe so probe
 failures are included in the process receipt.
 No launcher has run. Python compilation, shell syntax, and `git diff --check`
 pass; those are static checks, not runtime qualification.
+
+## Preparation update, 15:59 Shanghai
+
+All three selected assets (8,451,066,217 bytes) finished downloading and
+matched their manifest SHA256 digests. This was observed in remote
+`asset-prefetch01.log`; raw download receipts are pending retrieval. The
+checkpoint has not been loaded.
+
+The private project Git store was repacked into an independent object
+store; its connectivity check passed and its alternates file was removed
+from use. Commit `27fe941012964f2ec922aae17f293ad0898032ed` was deployed
+through a verified Git bundle into the new detached source directory
+`/mowenjie/fluffy-bassoon-2/sources/libero-gen-preflight-27fe9410`.
+The older source directory remains unchanged.
+
+The upstream LIBERO submodule clone reached its 900-second bound before
+completion. The old preparation process is absent and the source remains
+unqualified. A separate CPU dependency installation started at 07:59:20
+UTC using the dependency lines from the committed installer, isolated in
+this pilot's environment (`dependency-prepare02.log`, PID 68530). An exact
+upstream Git bundle fallback is being prepared. No runtime import check,
+simulator episode, or GPU job has run; additional usage remains 0 / 5
+GPU-hours.
