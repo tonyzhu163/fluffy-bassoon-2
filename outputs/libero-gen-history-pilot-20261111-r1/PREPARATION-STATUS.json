@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-11T17:44:30+08:00",
+  "checked_at": "2026-11-11T17:47:10+08:00",
   "cluster": "Baige",
-  "gpu_job": "job-7ssvclidy81g",
+  "gpu_job": "job-3gat2nxlklck",
   "gpu_hours_used": null,
   "gpu_hours_cap": 5,
-  "deployed_commit": "7d3096e60d222e0314e5643420c0cb00bd08e0d0",
-  "deployed_source": "/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-7d3096e6",
+  "deployed_commit": "1b4b9b1fc944cc1377b137068427b5fea9014b1b",
+  "deployed_source": "/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-1b4b9b1f",
   "assets": {
     "selected_bytes": 8451066217,
     "all_three_sha256_verified": true,
@@ -23,15 +23,15 @@
     "cpu_preflight03": "Passed all 10 imports and both HDF5 schemas; complete=true; GPU execution remains unqualified",
     "gpu_runtime_smoke": "Passed allocated4090 probe, strict967tensor equality, frozenCUDA, both native episodes, pairedreset observations and unchanged parameters"
   },
-  "next": "Fresh panel02 with8 CPU instead of13; retain112GiB and1RTX4090, same five-scene contract and qualified code",
+  "next": "Verify in-job GPU probe and native episode advancement; next regular17:59",
   "latest_fix_commit": "9cb5094d",
   "gpu_hours_finalized": 0.5416666666666666,
-  "gpu_hours_reserved": 0,
+  "gpu_hours_reserved": 1,
   "cpu_evidence": "cpu-evidence01",
   "qualification": {
     "gpus": 1,
     "gpu_type": "NVIDIA GeForce RTX 4090",
-    "cpus": 13,
+    "cpus": 8,
     "memory_gib": 112,
     "runtime_limit_minutes": 60,
     "unconditional_retries": 0,
@@ -42,10 +42,10 @@
       "NVIDIA_DRIVER_CAPABILITIES": "compute,utility,graphics"
     },
     "n_test_per_candidate": 5,
-    "identity": "panel01",
-    "job_id": "job-7ssvclidy81g",
-    "created_shanghai": "2026-11-11 17:34:01",
-    "status": "Cancelled while queued after CPU resource-fit diagnosis; never allocated or executed",
+    "identity": "panel02",
+    "job_id": "job-3gat2nxlklck",
+    "created_shanghai": "2026-11-11 17:46:46",
+    "status": "Running; allocated probe/episode advancement pending",
     "capacity_before_submit": {
       "free_gpus": 7,
       "max_gpus": 152,
@@ -54,13 +54,7 @@
       "free_memory_gib": 6276,
       "max_memory_gib": 17081,
       "queued_tasks": 1
-    },
-    "ended_shanghai": "2026-11-11 17:44:11",
-    "queue_wait_seconds": 610,
-    "scheduler_seconds": 0,
-    "conservative_seconds": 0,
-    "native_episodes": 0,
-    "output_directory_exists": false
+    }
   },
   "cumulative_scheduler_gpu_hours": 0.3947222222222222,
   "repair": "Remove only inactive legacy language_embedding=null and use_finetuned_language_encoder=false runner keywords, with exact-value/language-ignore guards and full signature binding",
@@ -222,6 +216,40 @@
         "hostname": "job-ixk0ddq6qilq-master-0"
       },
       "receipt_folder": "qual04"
+    },
+    {
+      "gpus": 1,
+      "gpu_type": "NVIDIA GeForce RTX 4090",
+      "cpus": 13,
+      "memory_gib": 112,
+      "runtime_limit_minutes": 60,
+      "unconditional_retries": 0,
+      "queue": "aihcq-chqrelndaaj4",
+      "pool": "aihc-sw5hua6i3hyv",
+      "image": "ccr-2ff5lkkz-vpc.cnc.bj.baidubce.com/db/strong-plant:v2.0-cu12.8-cudnn9-ubuntu22.04_mowenjie_20261015152301",
+      "scheduler_environment": {
+        "NVIDIA_DRIVER_CAPABILITIES": "compute,utility,graphics"
+      },
+      "n_test_per_candidate": 5,
+      "identity": "panel01",
+      "job_id": "job-7ssvclidy81g",
+      "created_shanghai": "2026-11-11 17:34:01",
+      "status": "Cancelled while queued after CPU resource-fit diagnosis; never allocated or executed",
+      "capacity_before_submit": {
+        "free_gpus": 7,
+        "max_gpus": 152,
+        "free_cpus": 355,
+        "max_cpus": 2052,
+        "free_memory_gib": 6276,
+        "max_memory_gib": 17081,
+        "queued_tasks": 1
+      },
+      "ended_shanghai": "2026-11-11 17:44:11",
+      "queue_wait_seconds": 610,
+      "scheduler_seconds": 0,
+      "conservative_seconds": 0,
+      "native_episodes": 0,
+      "output_directory_exists": false
     }
   ],
   "visual_review": {
