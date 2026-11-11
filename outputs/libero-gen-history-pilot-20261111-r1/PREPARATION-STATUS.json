@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-11T17:19:00+08:00",
+  "checked_at": "2026-11-11T17:21:30+08:00",
   "cluster": "Baige",
-  "gpu_job": "job-l5f145d5n9rw",
+  "gpu_job": "job-ixk0ddq6qilq",
   "gpu_hours_used": null,
   "gpu_hours_cap": 5,
-  "deployed_commit": "8cedcf3831729ba432979b3296affb060d09b8c1",
-  "deployed_source": "/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-8cedcf38",
+  "deployed_commit": "8e526743738cb76a973b80417f6a6375e410f5a0",
+  "deployed_source": "/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-8e526743",
   "assets": {
     "selected_bytes": 8451066217,
     "all_three_sha256_verified": true,
@@ -22,10 +22,10 @@
     "graphics_repair": "Ubuntu jammy GLVND 1.4.0-1 libgl1/libegl1/libglx0/libglvnd0 unpacked into private os-libs01; OpenCV/Open3D/MuJoCo ldd sweep passed with private torch/lib",
     "cpu_preflight03": "Passed all 10 imports and both HDF5 schemas; complete=true; GPU execution remains unqualified"
   },
-  "next": "Commit/deploy guarded runner compatibility repair; fresh qual04 runtime smoke, then competence panel if qualified",
+  "next": "Verify allocated probe, checkpoint load, prompt cache and native simulator advancement; regular status 17:39",
   "latest_fix_commit": "9cb5094d",
   "gpu_hours_finalized": 0.4122222222222222,
-  "gpu_hours_reserved": 0,
+  "gpu_hours_reserved": 1,
   "cpu_evidence": "cpu-evidence01",
   "qualification": {
     "gpus": 1,
@@ -41,30 +41,18 @@
       "NVIDIA_DRIVER_CAPABILITIES": "compute,utility,graphics"
     },
     "n_test_per_candidate": 1,
-    "identity": "qual03",
-    "job_id": "job-l5f145d5n9rw",
-    "created_shanghai": "2026-11-11 17:09:50",
-    "status": "Failed at runner constructor before native episodes; all 967 checkpoint tensors exact and frozen CUDA passed",
+    "identity": "qual04",
+    "job_id": "job-ixk0ddq6qilq",
+    "created_shanghai": "2026-11-11 17:21:09",
+    "status": "Starting; native runtime smoke pending",
     "capacity_before_submit": {
-      "free_gpus": 32,
+      "free_gpus": 34,
       "max_gpus": 152,
-      "free_cpus": 661,
+      "free_cpus": 660,
       "max_cpus": 2052,
-      "free_memory_gib": 7892,
+      "free_memory_gib": 7908,
       "max_memory_gib": 17081
-    },
-    "ended_shanghai": "2026-11-11 17:17:24",
-    "scheduler_seconds": 290,
-    "conservative_seconds": 454,
-    "native_episodes": 0,
-    "clock": {
-      "exit_code": 1,
-      "started": 1794388198,
-      "ended": 1794388459,
-      "gpus": 1,
-      "hostname": "job-l5f145d5n9rw-master-0"
-    },
-    "receipt_folder": "qual03"
+    }
   },
   "cumulative_scheduler_gpu_hours": 0.26944444444444443,
   "repair": "Remove only inactive legacy language_embedding=null and use_finetuned_language_encoder=false runner keywords, with exact-value/language-ignore guards and full signature binding",
@@ -148,6 +136,45 @@
         "hostname": "job-ljqnfml2gcji-master-0"
       },
       "receipt_folder": "qual02"
+    },
+    {
+      "gpus": 1,
+      "gpu_type": "NVIDIA GeForce RTX 4090",
+      "cpus": 13,
+      "memory_gib": 112,
+      "runtime_limit_minutes": 60,
+      "unconditional_retries": 0,
+      "queue": "aihcq-chqrelndaaj4",
+      "pool": "aihc-sw5hua6i3hyv",
+      "image": "ccr-2ff5lkkz-vpc.cnc.bj.baidubce.com/db/strong-plant:v2.0-cu12.8-cudnn9-ubuntu22.04_mowenjie_20261015152301",
+      "scheduler_environment": {
+        "NVIDIA_DRIVER_CAPABILITIES": "compute,utility,graphics"
+      },
+      "n_test_per_candidate": 1,
+      "identity": "qual03",
+      "job_id": "job-l5f145d5n9rw",
+      "created_shanghai": "2026-11-11 17:09:50",
+      "status": "Failed at runner constructor before native episodes; all 967 checkpoint tensors exact and frozen CUDA passed",
+      "capacity_before_submit": {
+        "free_gpus": 32,
+        "max_gpus": 152,
+        "free_cpus": 661,
+        "max_cpus": 2052,
+        "free_memory_gib": 7892,
+        "max_memory_gib": 17081
+      },
+      "ended_shanghai": "2026-11-11 17:17:24",
+      "scheduler_seconds": 290,
+      "conservative_seconds": 454,
+      "native_episodes": 0,
+      "clock": {
+        "exit_code": 1,
+        "started": 1794388198,
+        "ended": 1794388459,
+        "gpus": 1,
+        "hostname": "job-l5f145d5n9rw-master-0"
+      },
+      "receipt_folder": "qual03"
     }
   ]
 }
