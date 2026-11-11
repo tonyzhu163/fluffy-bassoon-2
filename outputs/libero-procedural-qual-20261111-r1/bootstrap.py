@@ -22,10 +22,12 @@ def main():
     parser.add_argument('--bundle', type=Path, required=True)
     parser.add_argument('--bundle-sha256', required=True)
     parser.add_argument('--commit', required=True)
+    parser.add_argument('--base', default=BASE)
     parser.add_argument('--identity', required=True)
     args = parser.parse_args()
     assert re.fullmatch('[a-z0-9-]+', args.identity)
     assert re.fullmatch('[0-9a-f]{40}', args.commit)
+    assert re.fullmatch('[0-9a-f]{40}', args.base)
     root = args.project / 'outputs' / RUN / ('bootstrap-' + args.identity)
     root.mkdir(parents=True, exist_ok=False)
     started = time.time()
@@ -73,20 +75,22 @@ def main():
         assert hashlib.sha256(data).hexdigest() == args.bundle_sha256
         header, pack = data.split(b'\n\n', 1)
         lines = header.decode('ascii').splitlines()
-        assert lines.pop(0) == '# v3 git bundle' and pack.startswith(b'PACK')
+        version = lines.pop(0)
+        assert version in ('# v2 git bundle', '# v3 git bundle') and pack.startswith(b'PACK')
         caps = {line for line in lines if line.startswith('@')}
-        assert caps == {'@object-format=sha1', '@filter=blob:limit=102400'}
+        assert caps == ({'@object-format=sha1', '@filter=blob:limit=102400'} if version == '# v3 git bundle' else set())
         prerequisites = [line[1:].split(' ', 1)[0] for line in lines if line.startswith('-')]
         references = [line for line in lines if not line.startswith(('@', '-'))]
-        assert prerequisites == [BASE] and references == [args.commit + ' refs/heads/main']
-        assert git(store, 'cat-file', '-t', BASE) == 'commit'
-        reachable = git(store, 'rev-list', '--objects', '--missing=print', BASE)
-        assert not any(line.startswith('?') for line in reachable.splitlines()), 'incomplete base'
+        assert prerequisites == [args.base] and references == [args.commit + ' refs/heads/main']
+        assert git(store, 'cat-file', '-t', args.base) == 'commit'
+        reachable = git(store, 'rev-list', '--objects', '--missing=print', args.base)
+        base_missing = {line[1:].split()[0] for line in reachable.splitlines() if line.startswith('?')}
+        assert base_missing <= set(OMITTED), 'unexpected incomplete base'
         # Git 2.34 understands promisor packs, but not the v3 bundle filter header.
         packed = subprocess.check_output(['git', '-C', str(store), 'index-pack', '--stdin',
                     '--fix-thin', '--promisor'], input=pack).decode().strip()
-        missing = {line[1:].split()[0] for line in git(store, 'rev-list', '--objects',
-                    '--missing=print', args.commit, '^' + BASE).splitlines() if line.startswith('?')}
+        missing = base_missing | {line[1:].split()[0] for line in git(store, 'rev-list', '--objects',
+                    '--missing=print', args.commit, '^' + args.base).splitlines() if line.startswith('?')}
         assert missing <= set(OMITTED), missing
         for oid in missing:
             assert git(store, 'ls-tree', args.commit, OMITTED[oid]).split()[2] == oid
