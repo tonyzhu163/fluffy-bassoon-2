@@ -13,10 +13,20 @@ elif [[ $HOSTNAME =~ -worker-([0-9]+)$ ]]; then
 else
     exit 2
 fi
-test "$seed" -lt 3
+index=$seed
+conditions=(demo blind attempts corrections linked)
+if [[ $mode == grid ]]; then
+    test "$index" -lt 15
+    seed=$((index % 3))
+    cond=${conditions[index/3]}
+    member=$cond-s$seed
+else
+    test "$index" -eq 0
+    member=seed-0
+fi
 folder=$root/outputs/learning-histories-20261111-r1
 mkdir -p "$folder/$identity"
-out=$folder/$identity/seed-$seed
+out=$folder/$identity/$member
 mkdir "$out"
 exec > >(tee "$out/run.log") 2>&1
 started=$(date +%s)
@@ -40,19 +50,14 @@ if [[ $mode == qualify ]]; then
     "$py" -Bu "$code/exploration/learning-histories/train.py" --cond attempts --K 6 --steps 500 --eval-n 256 --out "$out/timing.json" --device cuda
 elif [[ $mode == grid ]]; then
     test -f "$folder/${4:?qualification identity}/seed-0/qualification.json"
-    for cond in demo blind attempts corrections linked; do
-        "$py" -Bu "$code/exploration/learning-histories/train.py" --cond "$cond" --K 6 --seed "$seed" --out "$out/$cond.json" --device cuda > "$out/$cond.log" 2>&1
-    done
+    "$py" -Bu "$code/exploration/learning-histories/train.py" --cond "$cond" --K 6 --seed "$seed" --out "$out/$cond.json" --device cuda > "$out/$cond.log" 2>&1
 else
     exit 2
 fi
 touch "$out/complete"
-if [[ $mode == grid && $seed == 0 ]]; then
-    until [[ -f "$folder/$identity/seed-1/complete" && -f "$folder/$identity/seed-2/complete" ]]; do
-        for other in 1 2; do
-            receipt=$folder/$identity/seed-$other/clock.json
-            if [[ -f $receipt ]] && ! grep -q '"exit_code":0,' "$receipt"; then exit 1; fi
-        done
+if [[ $mode == grid && $index == 0 ]]; then
+    until [[ $(find "$folder/$identity" -mindepth 2 -maxdepth 2 -name complete | wc -l) == 15 ]]; do
+        if find "$folder/$identity" -name clock.json -exec grep -lE '"exit_code":[1-9]' {} + | grep -q .; then exit 1; fi
         sleep 10
     done
 fi
