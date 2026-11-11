@@ -8,7 +8,9 @@ TASK_UV="$TASK_PROJECT/setups/libero-gen-history-pilot-20261111-r1/uv-0.13.7/bin
 TASK_FILES="$TASK_CODE/outputs/libero-procedural-qual-20261111-r1"
 TASK_SOURCE="$TASK_SETUP/openpi"
 mkdir -p "$TASK_SETUP"
-export UV_CACHE_DIR="$TASK_SETUP/uv-cache"
+# An explicit fresh cache allows recovery from interrupted shared-cache I/O.
+# It does not change the author's locked versions or wheel hashes.
+export UV_CACHE_DIR="${UV_CACHE_DIR:-$TASK_SETUP/uv-cache}"
 export UV_PYTHON_INSTALL_DIR="$TASK_SETUP/python"
 export UV_PROJECT_ENVIRONMENT="$TASK_SETUP/env"
 export HF_HOME="$TASK_SETUP/huggingface-cache"
