@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-11T17:08:00+08:00",
+  "checked_at": "2026-11-11T17:10:00+08:00",
   "cluster": "Baige",
-  "gpu_job": null,
-  "gpu_hours_used": 0.2861111111111111,
+  "gpu_job": "job-l5f145d5n9rw",
+  "gpu_hours_used": null,
   "gpu_hours_cap": 5,
-  "deployed_commit": "8d503df7f6487a8293037c6f2c658edf648bb133",
-  "deployed_source": "/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-8d503df7",
+  "deployed_commit": "8cedcf3831729ba432979b3296affb060d09b8c1",
+  "deployed_source": "/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-8cedcf38",
   "assets": {
     "selected_bytes": 8451066217,
     "all_three_sha256_verified": true,
@@ -22,10 +22,10 @@
     "graphics_repair": "Ubuntu jammy GLVND 1.4.0-1 libgl1/libegl1/libglx0/libglvnd0 unpacked into private os-libs01; OpenCV/Open3D/MuJoCo ldd sweep passed with private torch/lib",
     "cpu_preflight03": "Passed all 10 imports and both HDF5 schemas; complete=true; GPU execution remains unqualified"
   },
-  "next": "Deploy guarded legacy-default fix and start fresh qual03, same two native episodes and 60-minute cap",
+  "next": "Verify strict checkpoint load/tensor equality, paired resets, GPU rendering and two native episodes, then five scenes per candidate if runtime passes",
   "latest_fix_commit": "9cb5094d",
   "gpu_hours_finalized": 0.2861111111111111,
-  "gpu_hours_reserved": 0,
+  "gpu_hours_reserved": 1,
   "cpu_evidence": "cpu-evidence01",
   "qualification": {
     "gpus": 1,
@@ -41,30 +41,18 @@
       "NVIDIA_DRIVER_CAPABILITIES": "compute,utility,graphics"
     },
     "n_test_per_candidate": 1,
-    "identity": "qual02",
-    "job_id": "job-ljqnfml2gcji",
-    "created_shanghai": "2026-11-11 16:59:17",
-    "status": "Failed strict load before episodes: legacy checkpoint omits newly default-enabled pool_modality_pos_embed",
+    "identity": "qual03",
+    "job_id": "job-l5f145d5n9rw",
+    "created_shanghai": "2026-11-11 17:09:50",
+    "status": "Created; GPU probe, exact checkpoint tensors and native episodes pending",
     "capacity_before_submit": {
-      "free_gpus": 28,
+      "free_gpus": 32,
       "max_gpus": 152,
-      "free_cpus": 620,
+      "free_cpus": 661,
       "max_cpus": 2052,
-      "free_memory_gib": 7628,
+      "free_memory_gib": 7892,
       "max_memory_gib": 17081
-    },
-    "ended_shanghai": "2026-11-11 17:06:50",
-    "scheduler_seconds": 270,
-    "conservative_seconds": 453,
-    "native_episodes": 0,
-    "clock": {
-      "exit_code": 1,
-      "started": 1794387584,
-      "ended": 1794387830,
-      "gpus": 1,
-      "hostname": "job-ljqnfml2gcji-master-0"
-    },
-    "receipt_folder": "qual02"
+    }
   },
   "cumulative_scheduler_gpu_hours": 0.18888888888888888,
   "repair": "Official BPP paper config sets use_pool_modality_pos_embed=false. Add this documented legacy default only if checkpoint cfg and state both omit it; retain strict loading and exact tensor checks.",
@@ -109,6 +97,45 @@
       "receipt_folder": "qual01",
       "abnormal_transition_shanghai": "2026-11-11 16:53:48",
       "tolerance_wait_seconds": 154
+    },
+    {
+      "gpus": 1,
+      "gpu_type": "NVIDIA GeForce RTX 4090",
+      "cpus": 13,
+      "memory_gib": 112,
+      "runtime_limit_minutes": 60,
+      "unconditional_retries": 0,
+      "queue": "aihcq-chqrelndaaj4",
+      "pool": "aihc-sw5hua6i3hyv",
+      "image": "ccr-2ff5lkkz-vpc.cnc.bj.baidubce.com/db/strong-plant:v2.0-cu12.8-cudnn9-ubuntu22.04_mowenjie_20261015152301",
+      "scheduler_environment": {
+        "NVIDIA_DRIVER_CAPABILITIES": "compute,utility,graphics"
+      },
+      "n_test_per_candidate": 1,
+      "identity": "qual02",
+      "job_id": "job-ljqnfml2gcji",
+      "created_shanghai": "2026-11-11 16:59:17",
+      "status": "Failed strict load before episodes: legacy checkpoint omits newly default-enabled pool_modality_pos_embed",
+      "capacity_before_submit": {
+        "free_gpus": 28,
+        "max_gpus": 152,
+        "free_cpus": 620,
+        "max_cpus": 2052,
+        "free_memory_gib": 7628,
+        "max_memory_gib": 17081
+      },
+      "ended_shanghai": "2026-11-11 17:06:50",
+      "scheduler_seconds": 270,
+      "conservative_seconds": 453,
+      "native_episodes": 0,
+      "clock": {
+        "exit_code": 1,
+        "started": 1794387584,
+        "ended": 1794387830,
+        "gpus": 1,
+        "hostname": "job-ljqnfml2gcji-master-0"
+      },
+      "receipt_folder": "qual02"
     }
   ]
 }
