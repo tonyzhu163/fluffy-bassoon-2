@@ -47,14 +47,32 @@ def positions(env):
     return np.stack([env.sim.data.body_xpos[env.env.obj_body_id[n]].copy() for n in BOWLS])
 
 
-def run_episode(env, state, prompt, client, folder, max_steps):
+def run_episode(env, state, prompt, client, folder, max_steps,
+                intended_bowl=None, reference_positions=None):
     import imageio.v2 as imageio
     from PIL import Image
     folder.mkdir()
     obs = env.set_init_state(state)
     restored_sha = sha(env.get_sim_state())
+    reset_check = None
+    if reference_positions is not None:
+        restored = {n: env.sim.data.body_xpos[env.env.obj_body_id[n]].copy()
+                    for n in reference_positions}
+        # Static fixture poses may live in the model, outside the saved qpos.
+        # Record their actual positions as well as the flattened state hash.
+        reset_check = {'restored_world_positions': {n: v.tolist() for n, v in restored.items()},
+                       'position_errors': {n: float(np.linalg.norm(v - reference_positions[n]))
+                                           for n, v in restored.items()}}
     for _ in range(10):
         obs, _, _, _ = env.step([0.] * 6 + [-1.])
+    prompt_pixels = None
+    if intended_bowl is not None:
+        import admit
+        admit.SIZE = obs['agentview_image'].shape[0]
+        prompt_pixels = {n: admit.project(env, p) for n, p in zip(BOWLS, positions(env))}
+        # Resolve wording after the exact reset and warm-up used by the policy.
+        left = max(BOWLS, key=lambda n: prompt_pixels[n][0])
+        prompt = f"pick up the {'left' if intended_bowl == left else 'right'} black bowl and place it on the plate"
     initial = policy_input(obs, prompt)
     Image.fromarray(initial['observation/image']).save(folder / 'policy-input.png')
     Image.fromarray(obs['agentview_image'][::-1]).save(folder / 'initial-upright.png')
@@ -94,6 +112,7 @@ def run_episode(env, state, prompt, client, folder, max_steps):
     return {'prompt': prompt, 'native_success': bool(env.check_success()),
             'error': error, 'controls': len(actions), 'elapsed_seconds': time.monotonic() - start,
             'restored_state_sha256': restored_sha, 'input_state_sha256': sha(state),
+            'reset_position_check': reset_check, 'prompt_upright_pixels': prompt_pixels,
             'policy_image_sha256': sha(initial['observation/image']),
             'bowl_names': BOWLS,
             'maximum_bowl_displacement': np.linalg.norm(poses - poses[0], axis=-1).max(0).tolist(),
@@ -158,6 +177,7 @@ def main():
                     'state': np.load(args.geometry / 'inspection' / f"scene-{scene['index']:04d}" / 'state.npy'),
                     'prompt': f"pick up the {'left' if bowl == left else 'right'} black bowl and place it on the plate",
                     'intended_bowl': bowl, 'target': target, 'scene': scene['index'],
+                    'reference_positions': record['world_positions'],
                     'prompt_reference': 'left/right in horizontally mirrored policy image'})
     results = []
     (args.output / 'result.json').write_text(json.dumps({'mode': args.mode, 'episodes': [],
@@ -172,7 +192,8 @@ def main():
             env.env.hard_reset = False
             env.seed(trial['seed']); env.env.reset()
             result.update(run_episode(env, trial['state'], trial['prompt'] or env.language_instruction,
-                                      client, args.output / trial['id'], args.max_steps))
+                                      client, args.output / trial['id'], args.max_steps,
+                                      trial.get('intended_bowl'), trial.get('reference_positions')))
         except Exception as exc:
             result.update(native_success=False, error=f'{type(exc).__name__}:{exc}')
         finally:
