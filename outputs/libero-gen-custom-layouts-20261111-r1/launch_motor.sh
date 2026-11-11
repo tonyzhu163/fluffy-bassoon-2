@@ -5,8 +5,8 @@ TASK_PROJECT=${1:?shared project root}
 TASK_CODE=${2:?immutable project checkout}
 TASK_COMMIT=${3:?expected full project SHA}
 TASK_ID=${4:?fresh qualification identity such as qual01}
-TASK_MODE=${5:?smoke or panel}
-[[ $TASK_MODE == smoke || $TASK_MODE == panel ]]
+TASK_MODE=${5:?smoke, panel or control}
+[[ $TASK_MODE == smoke || $TASK_MODE == panel || $TASK_MODE == control ]]
 [[ $TASK_ID =~ ^[a-z0-9-]+$ && $HOSTNAME == job-*-master-0 ]]
 TASK_FILES="$TASK_CODE/outputs/libero-gen-custom-layouts-20261111-r1"
 TASK_PARENT="$TASK_PROJECT/outputs/libero-gen-custom-layouts-20261111-r1"
@@ -52,15 +52,20 @@ import datetime,json,subprocess,sys,time
 files,setup,project,out=map(Path,sys.argv[1:5]); mode=sys.argv[5]
 started=time.time()
 import hashlib
-admission=files/'admission.json'
-assert hashlib.sha256(admission.read_bytes()).hexdigest()=='35aeb8c3fe365da2bdffdaa37c3d713bcff2e3def3b38cd582936c161c29db74'
-indices='0,5,8,13' if mode=='smoke' else ','.join(map(str,range(16)))
-command=[sys.executable,'-Bu',str(files/'motor.py'),'--source',str(project/'cache/bpp-58125e6-20261111-r1'),'--assets',str(setup/'assets'),'--geometry',str(project/'outputs/libero-gen-custom-layouts-20261111-r1/geometry02/geometry'),'--admission',str(admission),'--admission-sha256',hashlib.sha256(admission.read_bytes()).hexdigest(),'--indices',indices,'--output',str(out/'motor')]
+command=[sys.executable,'-Bu',str(files/'motor.py'),'--source',str(project/'cache/bpp-58125e6-20261111-r1'),'--assets',str(setup/'assets'),'--output',str(out/'motor')]
+if mode == 'control':
+ reference=files.parent/'libero-gen-history-pilot-20261111-r1/panel03/motor/result.json'
+ command += ['--native-control-reference',str(reference)]
+else:
+ admission=files/'admission.json'
+ assert hashlib.sha256(admission.read_bytes()).hexdigest()=='35aeb8c3fe365da2bdffdaa37c3d713bcff2e3def3b38cd582936c161c29db74'
+ indices='0,5,8,13' if mode=='smoke' else ','.join(map(str,range(16)))
+ command += ['--geometry',str(project/'outputs/libero-gen-custom-layouts-20261111-r1/geometry02/geometry'),'--admission',str(admission),'--admission-sha256',hashlib.sha256(admission.read_bytes()).hexdigest(),'--indices',indices]
 code=124
 try:
  with (out/'motor.log').open('w') as log:
-  code=subprocess.run(command,stdout=log,stderr=subprocess.STDOUT,timeout=3300).returncode
- if code == 0:
+  code=subprocess.run(command,stdout=log,stderr=subprocess.STDOUT,timeout=1200 if mode == 'control' else 3300).returncode
+ if code == 0 and mode != 'control':
   audit=[sys.executable,'-Bu',str(files/'audit_records.py'),'--motor',str(out/'motor'),'--geometry',str(project/'outputs/libero-gen-custom-layouts-20261111-r1/geometry02/geometry'),'--output',str(out/'audit.json')]
   with (out/'audit.log').open('w') as log:
    code=subprocess.run(audit,stdout=log,stderr=subprocess.STDOUT,timeout=180).returncode

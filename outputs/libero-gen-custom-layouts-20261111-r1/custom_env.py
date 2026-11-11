@@ -16,7 +16,7 @@ class CustomControlEnv(ControlEnvForRunner):
         super().__init__(**kwargs)
         self.metadata = None
         self.manifest = manifest
-        self.geometry_root = Path(geometry_root)
+        self.geometry_root = Path(geometry_root) if geometry_root is not None else None
         self.output_root = Path(output_root)
         self.candidate = candidate
         self.spec = None
@@ -52,7 +52,11 @@ class CustomControlEnv(ControlEnvForRunner):
         if self.spec['index'] in self.completed_indices:
             return obs
         assert not self.recording
-        assert {k: sha(v) for k, v in obs.items()} == self.spec['observation_hashes']
+        if self.manifest.get('kind') == 'native_control':
+            assert self.manifest['source_index'] == self.spec['index'] == 0
+            assert self.env.parsed_problem['goal_state'] == [['on', BOWLS[self.candidate], 'plate_1']]
+        else:
+            assert {k: sha(v) for k, v in obs.items()} == self.spec['observation_hashes']
         assert self.native_values() == [0, 0]
         self.observations = [{k: np.array(v, copy=True) for k, v in obs.items()}]
         self.actions = []

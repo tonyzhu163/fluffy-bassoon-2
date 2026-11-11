@@ -1,4 +1,4 @@
-"""Custom-layout frozen-motor admission. Run only in an allocated Linux GPU job."""
+"""Custom-layout motor study and paired native reset/recorder control."""
 import argparse
 import hashlib
 import inspect
@@ -30,10 +30,12 @@ def main():
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--assets", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--geometry", type=Path, required=True)
-    parser.add_argument("--admission", type=Path, required=True)
-    parser.add_argument("--admission-sha256", required=True)
-    parser.add_argument("--indices", required=True, help="Fixed comma-separated layout indices")
+    parser.add_argument("--geometry", type=Path)
+    parser.add_argument("--admission", type=Path)
+    parser.add_argument("--admission-sha256")
+    parser.add_argument("--indices", help="Fixed comma-separated layout indices")
+    parser.add_argument("--native-control-reference", type=Path,
+                        help="Prior native panel result; replay initialization 0")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     os.environ.setdefault("WANDB_MODE", "disabled")
@@ -54,20 +56,39 @@ def main():
     base = args.source / "behavior_prompting/train_network"
     init_dir = args.output / "paired_init" / SPLIT
     init_dir.mkdir(parents=True)
-    assert digest(args.admission) == args.admission_sha256
-    admission = json.loads(args.admission.read_text())
-    assert admission["geometry_passed"] and admission["visual_review_passed"]
-    assert digest(args.geometry / "result.json") == admission["geometry_result_sha256"]
-    manifest = json.loads((args.geometry / "result.json").read_text())
-    assert manifest["geometry_passed"] and manifest["balance_passed"]
-    indices = [int(x) for x in args.indices.split(",")]
-    assert len(set(indices)) == len(indices) and all(0 <= i < 16 for i in indices)
     from geometry import sha
-    state_bank = []
-    for i in indices:
-        state = np.load(args.geometry / f"layout-{i:02d}/state.npy", allow_pickle=False)
-        assert sha(state) == manifest["layouts"][i]["state_sha256"]
-        state_bank.append(state)
+    reference = None
+    source_init = None
+    if args.native_control_reference is not None:
+        assert args.geometry is args.admission is args.admission_sha256 is args.indices is None
+        reference = json.loads(args.native_control_reference.read_text())
+        assert reference['n_test_per_candidate'] == 20 and reference['complete']
+        source_init = base / 'env/libero/init_files' / SPLIT / (TASKS[0] + '.pruned_init')
+        assert digest(source_init) == reference['source_init_sha256']
+        native_bank = torch.load(source_init, map_location='cpu', weights_only=False)
+        state_bank = [np.asarray(native_bank[0])]
+        indices = [0]
+        manifest = {'kind': 'native_control', 'source_index': 0,
+                    'source_init_sha256': digest(source_init),
+                    'reference_sha256': digest(args.native_control_reference),
+                    'layouts': [{'index': 0, 'state_sha256': sha(state_bank[0]),
+                                 'candidate_object_ids': ['akita_black_bowl_1', 'akita_black_bowl_2']}]}
+        (args.output / 'native-control-input.json').write_text(json.dumps(manifest, indent=2) + '\n')
+    else:
+        assert all(value is not None for value in [args.geometry, args.admission, args.admission_sha256, args.indices])
+        assert digest(args.admission) == args.admission_sha256
+        admission = json.loads(args.admission.read_text())
+        assert admission["geometry_passed"] and admission["visual_review_passed"]
+        assert digest(args.geometry / "result.json") == admission["geometry_result_sha256"]
+        manifest = json.loads((args.geometry / "result.json").read_text())
+        assert manifest["geometry_passed"] and manifest["balance_passed"]
+        indices = [int(x) for x in args.indices.split(",")]
+        assert len(set(indices)) == len(indices) and all(0 <= i < 16 for i in indices)
+        state_bank = []
+        for i in indices:
+            state = np.load(args.geometry / f"layout-{i:02d}/state.npy", allow_pickle=False)
+            assert sha(state) == manifest["layouts"][i]["state_sha256"]
+            state_bank.append(state)
     for task in TASKS:
         torch.save(np.stack(state_bank), init_dir / (task + ".pruned_init"))
     config_dir = args.output / "libero_config"
@@ -177,6 +198,11 @@ def main():
         def __init__(self, inner):
             self.inner = inner
             self.records = []
+            self.reset_hashes = []
+        def reset(self, *a, **kw):
+            obs = self.inner.reset(*a, **kw)
+            self.reset_hashes.append({k: sha(v) for k, v in obs.items()})
+            return obs
         def __getattr__(self, name):
             return getattr(self.inner, name)
         def call(self, name, *a, **kw):
@@ -255,7 +281,15 @@ def main():
                           'fixed_prompt_sha256': prompt_digests[0],
                           'prompt_calls': len(prompt_digests),
                           'scores': {k: float(v) for k, v in scores.items() if isinstance(v, (int, float, np.number))},
-                          'records': proxy.records}
+                          'records': proxy.records, 'outer_reset_hashes': proxy.reset_hashes}
+                if reference is not None:
+                    prior = reference['results'][candidate]
+                    assert prior['task'] == task
+                    result['native_control_comparison'] = {
+                        'prior_scores': prior['scores'],
+                        'prior_initial_observation_hashes': prior['reset_hashes'][0],
+                        'initial_observation_hashes_match_prior': proxy.reset_hashes[0] == prior['reset_hashes'][0],
+                        'reference_sha256': digest(args.native_control_reference)}
                 (folder / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
                 results.append(result)
             finally:
@@ -270,7 +304,9 @@ def main():
     final = {'complete': True, 'paired_initial_observations': True, 'indices': indices,
              'admission_sha256': args.admission_sha256, 'public_horizon': PUBLIC_HORIZON,
              'checkpoint_sha256': digest(checkpoint), 'gpu': torch.cuda.get_device_name(),
-             'reader_trained': False, 'results': results}
+             'reader_trained': False, 'results': results,
+             'mode': 'native_control' if reference is not None else 'custom_layout',
+             'native_control_reference_sha256': digest(args.native_control_reference) if reference is not None else None}
     (args.output / 'result.json').write_text(json.dumps(final, indent=2) + '\n')
     (args.output / 'complete').write_text('complete\n')
 

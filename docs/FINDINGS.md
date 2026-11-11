@@ -55,6 +55,14 @@ motor choices on the native task family, not a released benchmark score,
 custom relational layouts or history-based adaptation. No history reader
 was trained. [Protocol, raw evidence and limits](../outputs/libero-gen-history-pilot-20261111-r1/RESULT.md).
 
+The first custom-layout smoke then failed on all four tested layouts for
+each prompt (0/8 physical episodes), despite correct paired resets and
+unchanged frozen weights. Several trajectories transported a bowl but
+never reached either native plate predicate; other trajectories reached
+empty space. The geometry shift and new recording path have not yet been
+fully separated by a native replay control. This is a development failure,
+not a history-learning result. [Custom-layout evidence and limits](../outputs/libero-gen-custom-layouts-20261111-r1/RESULT.md).
+
 ## RoboCasa365
 
 The Atomic-Seen baseline uses the native JAX π0.5 Human300 checkpoint at step **75,000**. Load `pi05_pretrain_human300/multitask_learning/75000` from `robocasa/robocasa365_checkpoints` at revision `c484448a`, including its bundled normalization. OpenPI predicts 50 actions and executes five before replanning, with ten denoising steps. [Pinned checkpoint](https://huggingface.co/robocasa/robocasa365_checkpoints/tree/c484448aba1a9b60a04c9b0ca117241518ea69f3/pi05_pretrain_human300/multitask_learning/75000)
