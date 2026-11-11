@@ -16,12 +16,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("project", type=Path)
     parser.add_argument("archive", type=Path)
+    parser.add_argument("--attempt", type=int, default=1)
     args = parser.parse_args()
+    assert args.attempt > 0
     root = args.project
     run = root / "outputs/libero-gen-history-pilot-20261111-r1"
     target = root / "cache/bpp-58125e6-20261111-r1/deps/LIBERO"
-    import_dir = root / "setups/libero-gen-history-pilot-20261111-r1/source-import01"
-    receipt = run / "SOURCE-IMPORT01.json"
+    import_dir = root / f"setups/libero-gen-history-pilot-20261111-r1/source-import{args.attempt:02d}"
+    receipt = run / f"SOURCE-IMPORT{args.attempt:02d}.json"
     assert not receipt.exists() and not import_dir.exists(), "Fresh import identity required"
     value = hashlib.sha256()
     with args.archive.open("rb") as stream:
@@ -34,7 +36,10 @@ def main():
             path = Path(member.name)
             assert not path.is_absolute() and ".." not in path.parts
             assert path.parts[0] == "LIBERO.git" and (member.isdir() or member.isfile())
-        archive.extractall(import_dir)
+        # Preserve Git content, not the exporting machine's user/group IDs.
+        # Cross-host owner IDs otherwise trigger Git's ownership protection.
+        for member in archive.getmembers():
+            archive.extract(member, import_dir, set_attrs=False)
     store = import_dir / "LIBERO.git"
     subprocess.run(["git", "--git-dir", str(store), "fsck", "--connectivity-only"], check=True)
     actual = subprocess.check_output(["git", "--git-dir", str(store), "rev-parse", "HEAD"], text=True).strip()
@@ -44,7 +49,7 @@ def main():
         # Previous bounded clone did not complete. Preserve any remnants;
         # do not replace an existing valid checkout or a nonempty directory.
         assert target.is_dir() and not any(target.iterdir()), "Existing source requires inspection"
-        backup = run / "empty-source-before-import01"
+        backup = run / f"empty-source-before-import{args.attempt:02d}"
         assert not backup.exists()
         target.rename(backup)
         preserved = str(backup)

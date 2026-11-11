@@ -10,6 +10,7 @@ TASK_BPP="$TASK_PROJECT/cache/bpp-58125e6-20261111-r1"
 TASK_ENV="$TASK_SETUP/env"
 mkdir -p "$TASK_SETUP" "$TASK_RUN"
 export UV_CACHE_DIR="$TASK_SETUP/uv-cache"
+export PIP_CACHE_DIR="$TASK_SETUP/pip-cache"
 export UV_PYTHON_INSTALL_DIR="$TASK_SETUP/python"
 export HF_HOME="$TASK_SETUP/huggingface-cache"
 export HF_HUB_DISABLE_XET=1
