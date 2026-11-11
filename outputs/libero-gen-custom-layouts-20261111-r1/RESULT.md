@@ -9,9 +9,11 @@ history experiment. No history reader was trained or evaluated.
 The controller did move: six trajectories lifted a bowl by 5.6–13.0 cm.
 The traces and videos show wrong-object choices, transport away from the
 plate, and empty-space reaches. These are substantive physical failures;
-the result is not explained solely by an incorrect reward label. It does
-not establish why the frozen policy fails, or rule out every interaction
-between the new reset/recording path and the policy.
+the result is not explained solely by an incorrect reward label. A targeted
+native replay through the same recorder then succeeded with
+both candidates, supporting custom geometry transfer as the leading
+explanation. This single-state control does not rule out every interaction
+between the reset/recording path and a changed scene.
 
 ## What was run
 
@@ -57,10 +59,35 @@ The [sequence sheet](evidence/smoke01/smoke01-sequences.png) samples all eight
 videos; original videos and RGB remain unchanged.
 
 The planned 32-episode panel was not launched after the smoke. More nearly
-identical layouts would not by itself resolve the observed failure. A
-targeted next question, if needed, is whether a previously successful native
-state remains successful through the new reset/recording path. That control
-has not been run. Geometry or prompts have not been tuned on these outcomes.
+identical layouts would not by itself resolve the observed failure. The targeted
+native replay below resolved the immediate reset/recorder
+question on one previously successful state. Geometry or prompts have not
+been tuned on these outcomes.
+
+## Targeted native replay
+
+Control01 replayed native initialization 0 through the same raw recorder
+with both original fixed prompts. Candidate 0 reached native `[1,0]` after
+111 raw controls, and candidate 1 reached `[0,1]` after 195. Both initial
+outer observation hashes matched the earlier Pro6K panel03 state 0 exactly;
+both prompt hashes matched custom smoke01 exactly. The native source bank
+hash was unchanged, and all 967 checkpoint tensors again loaded exactly.
+The two recorded initial physics states were identical. No hidden rule,
+custom geometry admission or performance cutoff was used in this control.
+
+The [raw control result](evidence/control01/motor/result.json) and
+[video sequence sheet](evidence/control01/control01-sequences.png) show
+successful executions of the two distinct intended native goals. This
+supports scene transfer as the leading explanation for the custom failures.
+It establishes native replay through this wrapper, not absence of every
+wrapper/scene interaction or failure on every possible custom layout.
+The second candidate's policy RNG stream may differ from the previous
+20-episode-per-candidate panel; no trajectory-equality claim is made.
+
+The parent agent independently checked both raw native traces, exact prior
+observation and smoke prompt hashes, paired states and all 967 tensors,
+and visually reviewed both native videos. Its [review image](evidence/control01/parent-native-control-review.png) agrees with the two native goal outcomes.
+No separate release requirement is inferred from the final video frames.
 
 ## Provenance, cost and retention
 
@@ -69,9 +96,13 @@ job `job-yv8dtfoqo5kb`, one Pro6K GPU, with exit 0. Submitted November 11
 19:19:48 Shanghai; scheduler completion 19:24:51, duration 291 seconds.
 Submission-to-completion conservative cost is 303 GPU-seconds.
 
-Including the failed first geometry allocation, this stage used **532
-scheduler GPU-seconds (0.148 h)** and **724 conservative GPU-seconds
-(0.201 h)** of the additional 4 GPU-hour cap. No job is active.
+Control01 ran commit `21dbdd675eaa2accdb0d485167fd34098d32c644`,
+job `job-zgcjkfcb2rtz`, also exit 0. Submitted 19:37:44 Shanghai; completed
+19:40:35, 151 scheduler seconds and 171 conservative seconds.
+
+Including the failed first geometry allocation, this stage used **683
+scheduler GPU-seconds (0.190 h)** and **895 conservative GPU-seconds
+(0.249 h)** of the additional 4 GPU-hour cap. No job is active.
 [Accounting](EXECUTION.json) preserves all allocations and failures.
 
 [Raw small receipts](evidence/smoke01/audit.json), private native traces,
@@ -80,7 +111,9 @@ and their 193 MB archive remain on Baige; two Jupyter downloads failed.
 The verified 1.93 MB archive containing videos and all small receipts was
 retrieved. [Artifact manifest](ARTIFACTS.json) records every public file and
 array hash, both archive hashes, remote locations, and all local video
-hashes. Videos stay outside Git; the sequence sheet is committed.
+hashes. The 167 KB native-control small archive was also verified and
+retrieved; its two public NPZs (44.85 MB) remain remote with tracked hashes.
+Videos stay outside Git; both sequence sheets are committed.
 
 This is an adapted development study, not a released LIBERO-Gen benchmark
 score, held-out generalization result, or evidence of learned history use.

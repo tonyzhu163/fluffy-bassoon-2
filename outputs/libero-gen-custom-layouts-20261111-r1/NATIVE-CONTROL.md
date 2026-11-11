@@ -35,3 +35,9 @@ the leading explanation for the smoke failure, within the limits of this
 small control. If it fails, inspect the differences before making that
 attribution. In either case preserve the result. There is no automatic
 32-episode panel and no reader training in this allocation.
+
+Completed as control01 on commit `21dbdd67`, job `job-zgcjkfcb2rtz`. Both native
+goals succeeded, with exact prior initial observation hashes and the same
+prompt hashes as the failed custom smoke. See [result](RESULT.md). This
+contract is retained as the pre-allocation rationale; no further control
+or full panel is implied.

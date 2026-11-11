@@ -1,0 +1,37 @@
+MOTOR_STAGE importing_bpp_runner
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+[robosuite WARNING] To setup, run: python /mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+/mowenjie/fluffy-bassoon-2/sources/libero-custom-21dbdd67/outputs/libero-gen-custom-layouts-20261111-r1/motor.py:107: UserWarning: register_new_resolver() is deprecated and will be removed in a future release.
+Use register_resolver() instead.
+See https://github.com/hydra-ecosystem/omegaconf/issues/426 for migration instructions.
+
+  OmegaConf.register_new_resolver("eval", eval, replace=True)
+MOTOR_STAGE reading_released_checkpoint
+MOTOR_COMPATIBILITY [{"path": "model.obs_encoder.obs_encoder.use_pool_modality_pos_embed", "checkpoint_value": "absent", "effective_value": false, "evidence": "BPP 58125e6 config/libero_policy_dunetp.yaml:12; paper models trained with false"}]
+MOTOR_STAGE constructing_checkpoint_model
+MOTOR_STAGE strict_loaded_frozen_cuda 967
+CUSTOM_STAGE constructing_runner 0 [0]
+Acquiring lock on cache.
+Cache path: /mowenjie/fluffy-bassoon-2/outputs/libero-gen-custom-layouts-20261111-r1/control01/motor/prompt-cache/demonstration_data/libero_spatial_selected_combinations_inverse_view/libero_spatial_selected_combinations_inverse_view_pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate_demo.zarr
+Cache does not exist. Creating!
+Loading /mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/assets/dataset/demonstration_data/libero_spatial_selected_combinations_inverse_view/pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate_demo.hdf5
+Total demos: 50
+Loading lowdim data:   0%|          | 0/6 [00:00<?, ?it/s]Loading lowdim data: 100%|██████████| 6/6 [00:00<00:00, 82.17it/s]
+Loading image data:   0%|          | 0/11764 [00:00<?, ?it/s]Loading image data:  11%|█         | 1281/11764 [00:01<00:08, 1276.45it/s]Loading image data:  22%|██▏       | 2576/11764 [00:03<00:11, 811.87it/s] Loading image data:  32%|███▏      | 3822/11764 [00:04<00:08, 961.50it/s]Loading image data:  42%|████▏     | 4890/11764 [00:05<00:07, 907.87it/s]Loading image data:  55%|█████▍    | 6427/11764 [00:06<00:04, 1094.65it/s]Loading image data:  65%|██████▌   | 7694/11764 [00:07<00:03, 1146.02it/s]Loading image data:  76%|███████▌  | 8942/11764 [00:08<00:02, 1173.66it/s]Loading image data:  88%|████████▊ | 10337/11764 [00:09<00:01, 1092.92it/s]Loading image data: 100%|██████████| 11764/11764 [00:11<00:00, 1069.87it/s]Loading image data: 100%|██████████| 11764/11764 [00:11<00:00, 1053.88it/s]
+Cache generation completed successfully.
+Loading prompts...
+Finished loading prompts!
+Eval (chunk 1/1) "pick up the black bowl from table center and place it on the plate":   0%|          | 0/562 [00:00<?, ?it/s]Eval (chunk 1/1) "pick up the black bowl from table center and place it on the plate":   2%|▏         | 12/562 [00:01<00:52, 10.42it/s]Eval (chunk 1/1) "pick up the black bowl from table center and place it on the plate":   9%|▊         | 48/562 [00:02<00:21, 23.93it/s]Eval (chunk 1/1) "pick up the black bowl from table center and place it on the plate":  15%|█▍        | 84/562 [00:03<00:17, 26.67it/s]                                                                                                                                       CUSTOM_EPISODE 0 0 111 [1, 0]
+CUSTOM_STAGE constructing_runner 1 [0]
+Acquiring lock on cache.
+Cache path: /mowenjie/fluffy-bassoon-2/outputs/libero-gen-custom-layouts-20261111-r1/control01/motor/prompt-cache/demonstration_data/libero_spatial_selected_combinations_inverse_view/libero_spatial_selected_combinations_inverse_view_pick_up_the_black_bowl_next_to_the_plate_and_place_it_on_the_plate_2_demo.zarr
+Cache does not exist. Creating!
+Loading /mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/assets/dataset/demonstration_data/libero_spatial_selected_combinations_inverse_view/pick_up_the_black_bowl_next_to_the_plate_and_place_it_on_the_plate_2_demo.hdf5
+Total demos: 50
+Loading lowdim data:   0%|          | 0/6 [00:00<?, ?it/s]Loading lowdim data: 100%|██████████| 6/6 [00:00<00:00, 54.56it/s]Loading lowdim data: 100%|██████████| 6/6 [00:00<00:00, 54.46it/s]
+Loading image data:   0%|          | 0/18932 [00:00<?, ?it/s]Loading image data:   8%|▊         | 1580/18932 [00:01<00:11, 1525.17it/s]Loading image data:  16%|█▋        | 3107/18932 [00:02<00:14, 1100.47it/s]Loading image data:  24%|██▎       | 4482/18932 [00:03<00:12, 1197.92it/s]Loading image data:  31%|███       | 5829/18932 [00:04<00:11, 1170.65it/s]Loading image data:  39%|███▉      | 7378/18932 [00:05<00:09, 1269.62it/s]Loading image data:  49%|████▉     | 9318/18932 [00:07<00:06, 1457.85it/s]Loading image data:  58%|█████▊    | 10921/18932 [00:08<00:05, 1486.33it/s]Loading image data:  66%|██████▌   | 12433/18932 [00:09<00:04, 1337.98it/s]Loading image data:  74%|███████▍  | 14007/18932 [00:10<00:03, 1310.36it/s]Loading image data:  81%|████████  | 15345/18932 [00:11<00:02, 1301.12it/s]Loading image data:  91%|█████████ | 17193/18932 [00:12<00:01, 1425.46it/s]Loading image data: 100%|██████████| 18932/18932 [00:13<00:00, 1446.77it/s]Loading image data: 100%|██████████| 18932/18932 [00:13<00:00, 1355.46it/s]
+Cache generation completed successfully.
+Loading prompts...
+Finished loading prompts!
+Eval (chunk 1/1) "pick up the black bowl next to the plate and place it on the plate 2":   0%|          | 0/562 [00:00<?, ?it/s]Eval (chunk 1/1) "pick up the black bowl next to the plate and place it on the plate 2":   6%|▋         | 36/562 [00:01<00:17, 29.36it/s]Eval (chunk 1/1) "pick up the black bowl next to the plate and place it on the plate 2":  15%|█▍        | 84/562 [00:02<00:14, 33.77it/s]Eval (chunk 1/1) "pick up the black bowl next to the plate and place it on the plate 2":  21%|██▏       | 120/562 [00:03<00:13, 32.98it/s]Eval (chunk 1/1) "pick up the black bowl next to the plate and place it on the plate 2":  28%|██▊       | 156/562 [00:04<00:12, 32.14it/s]                                                                                                                                          CUSTOM_EPISODE 0 1 195 [0, 1]

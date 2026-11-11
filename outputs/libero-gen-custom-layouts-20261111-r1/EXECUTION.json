@@ -75,10 +75,60 @@
       "structural_record_audit_passed": true,
       "paired_initial_observations": true,
       "archive_sha256": "587baaa14de09670a81950bcb835764e8acc87d2c7e8eaa899bb8a5d91b62994"
+    },
+    {
+      "identity": "control01",
+      "job_id": "job-zgcjkfcb2rtz",
+      "commit": "21dbdd675eaa2accdb0d485167fd34098d32c644",
+      "gpu_count": 1,
+      "gpu": "NVIDIA RPBZZZ6",
+      "created_shanghai": "2026-11-11T19:37:44+08:00",
+      "last_check_shanghai": "2026-11-11T19:40:57+08:00",
+      "status": "completed",
+      "gpu_probe": "completed",
+      "observed_stage": "importing_bpp_runner",
+      "planned_physical_episodes": 2,
+      "native_source_index": 0,
+      "mode": "native_control",
+      "max_runtime_minutes": 30,
+      "retries": 0,
+      "scheduler_final_shanghai": "2026-11-11T19:40:35+08:00",
+      "scheduler_gpu_seconds": 151,
+      "conservative_gpu_seconds": 171,
+      "process_seconds": 110.0640778541565,
+      "outer_clock_seconds": 130,
+      "exit_code": 0,
+      "physical_episodes": 2,
+      "selected_skill_successes_by_candidate": [
+        1,
+        1
+      ],
+      "raw_controls_by_candidate": [
+        111,
+        195
+      ],
+      "native_any_by_candidate": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "strict_saved_tensors_verified": 967,
+      "initial_observation_hashes_match_prior": [
+        true,
+        true
+      ],
+      "paired_initial_observations": true,
+      "same_prompt_hashes_as_smoke": true,
+      "archive_sha256": "cd4575be18cd28d4032654193556d536190cb133fc69fde47c7537cb2130bb33"
     }
   ],
-  "scheduler_gpu_seconds": 532,
-  "conservative_gpu_seconds": 724,
-  "remaining_stage_gpu_hours_conservative": 3.798888888888889,
-  "status": "Smoke completed: all8 native outcomes zero, integrity audit passed; diagnosing raw videos before any further allocation per user direction"
+  "scheduler_gpu_seconds": 683,
+  "conservative_gpu_seconds": 895,
+  "remaining_stage_gpu_hours_conservative": 3.751388888888889,
+  "status": "Stage closed: custom smoke0/8; native recorder control2/2 with exact prior initial observation hashes; custom geometry transfer failure leading explanation; no active jobs or reader training"
 }

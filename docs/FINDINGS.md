@@ -59,9 +59,11 @@ The first custom-layout smoke then failed on all four tested layouts for
 each prompt (0/8 physical episodes), despite correct paired resets and
 unchanged frozen weights. Several trajectories transported a bowl but
 never reached either native plate predicate; other trajectories reached
-empty space. The geometry shift and new recording path have not yet been
-fully separated by a native replay control. This is a development failure,
-not a history-learning result. [Custom-layout evidence and limits](../outputs/libero-gen-custom-layouts-20261111-r1/RESULT.md).
+empty space. A targeted two-episode native-state0 replay through the same
+recorder then succeeded with both candidates, matching the prior initial
+observations and the smoke prompts exactly. This supports custom scene
+transfer as the leading explanation, with a single-state control limit.
+This is a development failure, not a history-learning result. [Custom-layout evidence and limits](../outputs/libero-gen-custom-layouts-20261111-r1/RESULT.md).
 
 ## RoboCasa365
 
