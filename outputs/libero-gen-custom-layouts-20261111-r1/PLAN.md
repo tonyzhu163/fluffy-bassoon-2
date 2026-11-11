@@ -1,9 +1,9 @@
-# Custom-layout physical and information admission
+# Custom-layout physical and information study
 
 This stage follows the completed frozen BPP motor qualification. It has a
 hard additional cap of **4 GPU-hours**, with all startup/failure allocations
 counted. Prior task-wide conservative use was approximately 17.50 GPU-hours.
-No reader training is authorized before admission passes. Use latest main,
+This stage measures the motor and recording interface; it does not train a reader. Use latest main,
 immutable deployments, a fresh identity per allocation and native rewards.
 
 ## Scientific contract
@@ -25,7 +25,7 @@ fixed. The cookies and ramekin move to declared fixed safe locations.
 All coordinates are preregistered in `geometry.py:templates` before any
 simulator/model execution; there is no rejection sampling or adaptive search.
 
-Geometry admission requires: at least 6 pixels separation on each projected
+The completed geometry preflight used: at least 6 pixels separation on each projected
 image axis; both centers inside an 8 pixel image border; no initial contact
 between movable objects or fixtures; at most 5 mm xy settling drift after
 20 fixed, stationary, open-gripper controls; neither native bowl-on-plate
@@ -36,13 +36,17 @@ Inspect the rendered contact sheet to confirm projection/visibility.
 Each rule must choose each candidate 4/8 times within each stratum; rewarded
 physical bowl IDs must be independently balanced 4/8. Both strata have 8 cases.
 A geometry failure is preserved and diagnosed before a revised identity.
+The exact pixel/drift cutoffs were development heuristics, not calibrated
+reliability criteria. Preserve what was run; do not automatically impose
+these numbers on future work. Visibility, initial collisions, stable
+physics and native predicate correctness are the underlying concerns.
 
-Only after geometric and visual admission passes do we freeze the 16-state
-manifest. Then run a small fixed-prompt smoke and the 32-episode motor panel
-(two candidate commands from every layout). No tuning on panel outcomes.
-Require ≥7/8 selected-skill native successes for each candidate in each
-stratum and distinct intended executions on ≥7/8 paired layouts in each
-stratum. Repeated smoke cases are marked and never counted as fresh evidence.
+The geometry and visual review fixed the 16-state manifest before motor
+execution. Report native outcomes and distinct intended executions for
+each candidate and stratum, with no arbitrary minimum success fraction.
+Repeated smoke cases are marked and never counted as fresh evidence.
+The original proposed 32-episode panel is not an automatic next step:
+additional rollouts must resolve a concrete uncertainty left by the smoke.
 
 ## Outcome and recording contract
 
@@ -83,13 +87,15 @@ templates away from the fixed cabinet and separates near bowl/plate rims.
 Static inspection explicitly accounts for flat_stove.xml's burner offset
 of +.15 m along local x and .095 m box half-width: fixture-origin distances
 alone understated its collision extent. Actual simulator admission remains
-required. No BPP motor outcome has been observed on any custom layout.
+required for that allocation. These coordinates were frozen before any
+BPP motor outcome on a custom layout was observed.
 
 Geometry02 passed all 16 cases and independent visual review. The immutable
 admission manifest is `admission.json`, bound to the result and 16 physics
 state hashes. The motor smoke uses indices 0,5,8,13 with both fixed prompts
-(8 episodes, including swapped IDs in each stratum); the full panel uses 0–15 (32 episodes). Runtime-valid motor
-failures remain in the full panel. The repeated smoke cases are development
+(8 episodes, including swapped IDs in each stratum); the originally proposed
+full panel uses 0–15 (32 episodes). All runtime-valid motor failures remain
+in the evidence. The repeated smoke cases are development
 evidence, not additional independent trials.
 
 The recorder observes raw controls below the official vector/chunk wrapper.
@@ -97,7 +103,28 @@ It finalizes each episode before the next initializer and the runner's extra
 video-cleanup reset. Native selected-skill stopping matches LIBERO's original
 raw success timing when IDs match; after ID swaps it uses the preassigned
 intended bowl. Both native predicates are read-only diagnostics. Paired
-distinct execution requires opposite one-hot `native_any` vectors, so moving
-both bowls onto the plate cannot pass that gate. The prompt tensor hash must
+distinct execution is counted using opposite one-hot `native_any` vectors;
+moving both bowls onto the plate is reported separately because it cannot
+distinguish the hidden rules. The prompt tensor hash must
 remain identical across all layouts for each candidate. Geometry-compatible
 128×128 cameras, no render resizing, and 562 controls are asserted explicitly.
+
+## User-directed interpretation change after smoke01
+
+On November 11 the user rejected unnecessary fixed pass rules and tests.
+The 7/8 motor cutoff had no calibrated or statistical basis and is removed
+from future analysis. Smoke01 remains immutable at `62246070`; its original
+audit output is retained without rewriting the executed contract. Future
+readouts report the same counts without a binary motor-admission verdict.
+
+Smoke01 reported zero native successes in all eight executions. Inspect
+the trajectories before deciding whether more of the near-identical
+layouts would be informative. There is no automatic 32-episode launch.
+The reason to investigate is the observed absence of successful alternatives
+and informative outcomes, not falling below a chosen percentage.
+
+No new test suite is needed for this change. Keep run-local integrity
+checks for matched resets, actual native rewards, fixed motor weights,
+correct recording/padding and hidden-rule-independent public inputs: those
+protect the experiment's interpretation. Do not add checks solely for
+bookkeeping or to enforce an unsupported performance threshold.

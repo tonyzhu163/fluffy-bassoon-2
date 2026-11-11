@@ -126,14 +126,11 @@ def main():
                                                             for i in selected) for c in (0, 1)},
                           'distinct_one_hot_pairs': len(distinct), 'distinct_pair_indices': distinct}
     full_panel = set(indices) == set(range(16)) and len(indices) == 16
-    gate = (all(cell['paired_layouts'] == 8 and cell['distinct_one_hot_pairs'] >= 7
-                and min(cell['candidate_successes'].values()) >= 7 for cell in cells.values())
-            if full_panel else None)
     report = {'complete': True, 'structural_record_audit_passed': True,
               'counterfactual_rule_records_share_public_bytes_by_construction': True,
               'feedback_intervention_evaluated_on_reader': False,
               'physical_episodes': len(observed), 'layout_indices': indices,
-              'full_panel': full_panel, 'motor_admission_passed': gate, 'by_stratum': cells,
+              'full_panel': full_panel, 'by_stratum': cells,
               'counterfactual_outcomes': counterfactuals,
               'motor_result_sha256': file_sha(args.motor / 'result.json'),
               'geometry_result_sha256': file_sha(args.geometry / 'result.json')}

@@ -1,9 +1,11 @@
-# Reader experiment after physical admission
+# Reader experiment informed by motor measurements
 
 This is the next-stage design, not a training launch or a result. The current
 4 GPU-hour allocation covers custom-layout qualification only. Freeze the
 collection counts, reader configuration, seeds and incremental compute cap
-after geometry and motor admission pass, before collecting training data.
+after reviewing the motor results, before collecting training data. Do not
+require an arbitrary success percentage; establish what choices can
+actually be executed and what the resulting feedback can distinguish.
 
 ## Question and limits
 
@@ -56,14 +58,17 @@ native predicates and selected-skill success for diagnosis, without giving
 those extra labels to the primary reader. Do not relabel a failed selected
 skill as a successful alternative.
 
-## Qualification before a reader fit
+## Evidence needed to interpret a reader fit
 
-1. Pass geometry/visual admission and the preregistered 32-episode motor
-   panel, retaining all failures and repeated smoke identifiers.
+1. Review geometry and physical execution results, retaining all failures
+   and repeated smoke identifiers. Additional motor rollouts need a specific
+   unresolved question. Zero-outcome histories cannot identify a hidden
+   rule in this construction; collecting more such histories is not a
+   substitute for understanding the motor failure.
 2. Audit public-record equality across counterfactual hidden rules. The
    allowed difference is the explicit outcome channel. Verify split groups
    from the actual manifest and cached-feature ancestry.
-3. Qualify the visual interface with a rule-given positive control on fresh
+3. Diagnose the visual interface with a rule-given positive control on fresh
    development layouts. If the chosen frozen visual features cannot support
    selecting a motor from the image and supplied rule, diagnose perception
    or the candidate interface before interpreting a history-reader failure.

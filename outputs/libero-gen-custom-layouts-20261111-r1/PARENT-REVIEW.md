@@ -31,12 +31,19 @@ orientation, and changes declared placements. Static fixture review caught
 the stove burner's local +0.15-m X offset before geometry02. No policy
 outcome informed these revisions.
 
-The next fixed smoke uses layout indices 0, 5, 8 and 13 with both unchanged
-motor prompts, followed by the full 16-layout, 32-episode panel. This
+The smoke uses layout indices 0, 5, 8 and 13 with both unchanged
+motor prompts. The original proposal then called for the full 16-layout,
+32-episode panel. This
 pre-launch revision of the initial 0/4/8/12 proposal includes a swapped-ID
 layout in each stratum while retaining one scene per quadrant. Repeated
 smoke cases must not be pooled as independent confirmation. The distinct
-execution gate requires opposite one-hot native outcome vectors for the
+execution count uses opposite one-hot native outcome vectors for the
 paired motor executions; achieving both goals cannot count as an
 informative alternative. All runtime-valid motor failures remain in the
 panel, without tuning layouts or prompts on their outcomes.
+
+After smoke01, the user rejected unjustified fixed pass rules and tests.
+The previously proposed 7/8 cutoff is withdrawn, without changing the
+completed geometry or smoke evidence. Report descriptive counts; inspect
+the eight zero-success trajectories before deciding whether any further
+panel would answer a useful question. The full panel is no longer automatic.
