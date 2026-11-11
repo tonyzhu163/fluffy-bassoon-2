@@ -1,0 +1,77 @@
+{
+  "archive": [
+    {
+      "id": "mikasa-reset-s1000",
+      "roots": [
+        "fluffy-bassoon/outputs/mikasa-fullft-reset-s1000-new-20261107-r4/initializer",
+        "fluffy-bassoon/outputs/mikasa-fullft-reset-s1000-new-20261107-r4/training/checkpoints/00005000",
+        "fluffy-bassoon/outputs/mikasa-fullft-reset-s1000-new-20261107-r4/training/checkpoints/00010000"
+      ],
+      "reason": "Completed 5k and 10k evaluations in the published fixed-milestone record. Preserve both full training boundaries and initializer in BOS."
+    },
+    {
+      "id": "mikasa-stream-s999",
+      "roots": [
+        "fluffy-bassoon/outputs/mikasa-vla16x16-s999-baige-20261107-r2/initializer",
+        "fluffy-bassoon/outputs/mikasa-vla16x16-s999-baige-20261107-r2/train-00010000/checkpoints/00010000",
+        "fluffy-bassoon/outputs/mikasa-vla16x16-s999-baige-20261107-r2/train-00006000/checkpoints/00006000"
+      ],
+      "reason": "Terminal production and evaluation, published or retained milestones and initializer remain exactly restorable. Run contracts and measured results stay hot."
+    },
+    {
+      "id": "mikasa-stream-s1003",
+      "roots": [
+        "fluffy-bassoon/outputs/mikasa-vla16x16-s1003-baige-20261109-r1/initializer",
+        "fluffy-bassoon/outputs/mikasa-vla16x16-s1003-baige-20261109-r1/train-00010000/checkpoints/00010000"
+      ],
+      "reason": "Terminal production and evaluation, published or retained milestones and initializer remain exactly restorable. Run contracts and measured results stay hot."
+    },
+    {
+      "id": "mikasa-stream-s1004",
+      "roots": [
+        "fluffy-bassoon/outputs/mikasa-vla16x16-s1004-baige-20261109-r1/initializer",
+        "fluffy-bassoon/outputs/mikasa-vla16x16-s1004-baige-20261109-r1/train-00010000/checkpoints/00010000",
+        "fluffy-bassoon/outputs/mikasa-vla16x16-s1004-baige-20261109-r1/train-00006000/checkpoints/00006000"
+      ],
+      "reason": "Terminal production and evaluation, published or retained milestones and initializer remain exactly restorable. Run contracts and measured results stay hot."
+    },
+    {
+      "id": "sidney-predecessors",
+      "roots": [
+        "fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train03",
+        "fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train06",
+        "fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1/train07"
+      ],
+      "reason": "Closed pilot family, superseded by the matched production pair. Preserve native recovery files and raw science payloads with original paths."
+    },
+    {
+      "id": "robocasa-grpo-predecessor",
+      "roots": [
+        "fluffy-bassoon-2/outputs/robocasa-ppo-grpo-meta-stage1-20261104-r1/grpo/attempt-01/OpenDrawer"
+      ],
+      "reason": "Retain actual GRPO resume ancestor in BOS and preserve PPO/GRPO final production branches on PFS."
+    },
+    {
+      "id": "critic-baseline-intermediate",
+      "roots": [
+        "fluffy-bassoon-2/outputs/robocasa-flow-sde-critic-parity-20261104-r1/comparison-r1/baseline/PickPlaceDrawerToCounter/checkpoints/global_step_1",
+        "fluffy-bassoon-2/outputs/robocasa-flow-sde-critic-parity-20261104-r1/comparison-r1/baseline/PickPlaceDrawerToCounter/checkpoints/global_step_2"
+      ],
+      "reason": "Both jobs terminal. Keep step 3, the input and endpoint payloads for the held comparison on PFS. Preserve complete intermediate states in BOS."
+    },
+    {
+      "id": "critic-fixed-intermediate",
+      "roots": [
+        "fluffy-bassoon-2/outputs/robocasa-flow-sde-critic-parity-20261104-r1/comparison-fixed-r2/PickPlaceDrawerToCounter/checkpoints/global_step_1",
+        "fluffy-bassoon-2/outputs/robocasa-flow-sde-critic-parity-20261104-r1/comparison-fixed-r2/PickPlaceDrawerToCounter/checkpoints/global_step_2"
+      ],
+      "reason": "Both jobs terminal. Keep step 3, the input and endpoint payloads for the held comparison on PFS. Preserve complete intermediate states in BOS."
+    }
+  ],
+  "retained_hot": [
+    "RoboTwin matched PPO ppo02 and GRPO grpo01",
+    "RoboCasa canonical PPO and GRPO final endpoints, teacher corpora and current staged inputs",
+    "Critic parity held endpoint inputs and latest complete step 3 states",
+    "Active and queued work"
+  ]
+}
