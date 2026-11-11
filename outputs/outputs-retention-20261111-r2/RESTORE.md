@@ -13,7 +13,7 @@ temporary scratch for the object and its extracted members.
 
 ```bash
 cold=/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261111-r2
-python3 restore_payloads.py "$cold/mikasa-reset-s1000/001.receipt.json"
+python3 "$cold/restore_payloads.py" "$cold/mikasa-reset-s1000/001.receipt.json"
 ```
 
 Restore all parts covering a checkpoint before loading it. The command verifies
@@ -22,7 +22,6 @@ owner, and mtime. Existing identical files are accepted. A different file at
 the same path stops the restore.
 
 The [failed MIKASA qualification deletion record](MIKASA-QUALIFICATION-DELETION.json)
-lists permanently deleted step-3 payloads. Its duplicate initializer can be
-restored using its adjacent pointer and
+lists permanently deleted step-3 payloads. The r2 and r3 duplicate initializers can be restored using their adjacent pointers and
 [the original file restore procedure](../storage-audit-baige-20261111-r1/RESTORE.md).
 The step-2 tarball was already cold archived in the previous pass.

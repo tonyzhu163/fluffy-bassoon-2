@@ -1,0 +1,174 @@
+{
+  "verified_unix": 1794376604.859905,
+  "before": {
+    "total": 2199023255552,
+    "used": 1970295275520,
+    "free": 228727980032
+  },
+  "after": {
+    "total": 2199023255552,
+    "used": 1465116524544,
+    "free": 733906731008
+  },
+  "archive_parts": 54,
+  "archived_files": 4788,
+  "archived_allocated_bytes": 413274529792,
+  "qualification_payloads_deleted": 68494639104,
+  "qualification_duplicate_bytes": 23411965952,
+  "released_allocated_bytes": 505181134848,
+  "released_by_project": {
+    "fluffy-bassoon-2": 148336427008,
+    "fluffy-bassoon": 356844707840
+  },
+  "groups": {
+    "critic-baseline-intermediate-retry": {
+      "parts": 1,
+      "files": 1,
+      "allocated_bytes": 6949289984,
+      "cold_bytes": 6949286402
+    },
+    "critic-baseline-intermediate": {
+      "parts": 7,
+      "files": 9,
+      "allocated_bytes": 27339358208,
+      "cold_bytes": 26289501387
+    },
+    "critic-fixed-intermediate": {
+      "parts": 8,
+      "files": 10,
+      "allocated_bytes": 34288648192,
+      "cold_bytes": 33239787311
+    },
+    "mikasa-loop1-carry-retry": {
+      "parts": 1,
+      "files": 1,
+      "allocated_bytes": 11705950208,
+      "cold_bytes": 11705949516
+    },
+    "mikasa-loop1-carry": {
+      "parts": 1,
+      "files": 1,
+      "allocated_bytes": 26853376,
+      "cold_bytes": 26848533
+    },
+    "mikasa-loop12-carry-retry": {
+      "parts": 1,
+      "files": 1,
+      "allocated_bytes": 11705950208,
+      "cold_bytes": 11705949516
+    },
+    "mikasa-loop12-carry": {
+      "parts": 1,
+      "files": 1,
+      "allocated_bytes": 26853376,
+      "cold_bytes": 26848533
+    },
+    "mikasa-reset-s1000": {
+      "parts": 5,
+      "files": 5,
+      "allocated_bytes": 80200622080,
+      "cold_bytes": 80200616722
+    },
+    "mikasa-stream-s1003": {
+      "parts": 3,
+      "files": 3,
+      "allocated_bytes": 45953302528,
+      "cold_bytes": 45953299741
+    },
+    "mikasa-stream-s1004": {
+      "parts": 4,
+      "files": 4,
+      "allocated_bytes": 57659285504,
+      "cold_bytes": 57659281925
+    },
+    "mikasa-stream-s999": {
+      "parts": 4,
+      "files": 4,
+      "allocated_bytes": 57659285504,
+      "cold_bytes": 57659281797
+    },
+    "robocasa-five-task-qualification-evidence": {
+      "parts": 1,
+      "files": 752,
+      "allocated_bytes": 1910603776,
+      "cold_bytes": 1890584025
+    },
+    "robocasa-grpo-predecessor-retry": {
+      "parts": 1,
+      "files": 2,
+      "allocated_bytes": 1043283968,
+      "cold_bytes": 503716564
+    },
+    "robocasa-grpo-predecessor": {
+      "parts": 3,
+      "files": 3,
+      "allocated_bytes": 16089939968,
+      "cold_bytes": 16089928565
+    },
+    "robocasa-scale50-qualification-evidence": {
+      "parts": 1,
+      "files": 1036,
+      "allocated_bytes": 2150072320,
+      "cold_bytes": 1722435741
+    },
+    "robocasa-snapshot-qualification-evidence": {
+      "parts": 1,
+      "files": 2254,
+      "allocated_bytes": 3663282176,
+      "cold_bytes": 3306365592
+    },
+    "sidney-predecessors": {
+      "parts": 11,
+      "files": 701,
+      "allocated_bytes": 54901948416,
+      "cold_bytes": 50774209551
+    }
+  },
+  "linked_payloads_kept": [],
+  "failed_parts_recovered": [
+    {
+      "part": [
+        "robocasa-grpo-predecessor",
+        4
+      ],
+      "error": "[Errno 22] Invalid argument: '/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261111-r2/robocasa-grpo-predecessor/004.tar.zst'"
+    },
+    {
+      "part": [
+        "critic-baseline-intermediate",
+        3
+      ],
+      "error": "[Errno 22] Invalid argument: '/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261111-r2/critic-baseline-intermediate/003-full_weights.pt'"
+    },
+    {
+      "part": [
+        "mikasa-loop1-carry",
+        2
+      ],
+      "error": "[Errno 22] Invalid argument: '/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261111-r2/mikasa-loop1-carry/002-model.safetensors'"
+    },
+    {
+      "part": [
+        "mikasa-loop12-carry",
+        2
+      ],
+      "error": "[Errno 22] Invalid argument: '/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261111-r2/mikasa-loop12-carry/002-model.safetensors'"
+    }
+  ],
+  "unverified_duplicate_objects_removed": [
+    "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261111-r2/robocasa-grpo-predecessor/004.tar.zst",
+    "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261111-r2/critic-baseline-intermediate/003-full_weights.pt",
+    "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261111-r2/mikasa-loop1-carry/002-model.safetensors",
+    "/mnt/bos/adgfyl/strong-plant-archives/outputs-retention-20261111-r2/mikasa-loop12-carry/002-model.safetensors"
+  ],
+  "restore_probe": "Both object and tar restore passed on PFS. Wrong existing bytes preserved.",
+  "scheduler": {
+    "observed_unix": 1794376500.63,
+    "distributed_observed_unix": 1794376485.182,
+    "scope": "Owned distributed tasks across all pools and queues and serverless workflow tasks, all active and pending statuses.",
+    "active_distributed_tasks": [],
+    "active_workflow_tasks": [],
+    "selected_consumers": [],
+    "protected": "Current retry-history inputs, canonical teachers, reported PPO/GRPO final boundaries and held recoveries."
+  }
+}
