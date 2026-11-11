@@ -33,7 +33,38 @@ if [[ ! -d "$TASK_SOURCE/.git" ]]; then
 fi
 test "$(git -C "$TASK_SOURCE" rev-parse HEAD)" = 4066d8f7c544ba1e5cd5386b2db47ab900fae3fc
 git -C "$TASK_SOURCE" diff --quiet HEAD
-"$TASK_UV" sync --project "$TASK_SOURCE" --python 3.11 --frozen --no-dev
+TASK_INSTALL_SOURCE="$TASK_SOURCE"
+if [[ ${TASK_PYPI_MIRROR:-} == tuna ]]; then
+  # Keep upstream code clean. Only registry/download locations differ in this
+  # install copy; the complete dependency graph, versions and hashes stay fixed.
+  TASK_INSTALL_SOURCE="$TASK_SETUP/openpi-tuna"
+  if [[ ! -d "$TASK_INSTALL_SOURCE/.git" ]]; then
+    git clone --local "$TASK_SOURCE" "$TASK_INSTALL_SOURCE"
+  fi
+  test "$(git -C "$TASK_INSTALL_SOURCE" rev-parse HEAD)" = 4066d8f7c544ba1e5cd5386b2db47ab900fae3fc
+  git -C "$TASK_INSTALL_SOURCE" diff --quiet HEAD -- . ':!uv.lock'
+  python - "$TASK_SOURCE" "$TASK_INSTALL_SOURCE" "$TASK_SETUP" <<'PY'
+import hashlib,json,pathlib,sys
+source,install,setup=map(pathlib.Path,sys.argv[1:])
+original=(source/'uv.lock').read_text()
+routes={'https://pypi.org/simple':'https://pypi.tuna.tsinghua.edu.cn/simple',
+        'https://files.pythonhosted.org/packages/':'https://pypi.tuna.tsinghua.edu.cn/packages/'}
+changed=original
+for before,after in routes.items():
+ assert before in original and after not in original
+ changed=changed.replace(before,after)
+restored=changed
+for before,after in routes.items(): restored=restored.replace(after,before)
+assert restored==original  # No package, version, dependency or hash changed.
+(install/'uv.lock').write_text(changed)
+(setup/'mirror-lock.json').write_text(json.dumps({'routes':routes,
+ 'original_sha256':hashlib.sha256(original.encode()).hexdigest(),
+ 'mirror_sha256':hashlib.sha256(changed.encode()).hexdigest(),
+ 'only_download_locations_changed':True},indent=2)+'\n')
+PY
+  export UV_DEFAULT_INDEX=https://pypi.tuna.tsinghua.edu.cn/simple
+fi
+"$TASK_UV" sync --project "$TASK_INSTALL_SOURCE" --python 3.11 --frozen --no-dev
 "$TASK_UV" pip freeze --python "$TASK_SETUP/env/bin/python" > "$TASK_SETUP/installed.txt"
 # Add only the official client's transport dependencies to a separate directory.
 # The existing Python 3.10 simulator and its numerical libraries are untouched.
