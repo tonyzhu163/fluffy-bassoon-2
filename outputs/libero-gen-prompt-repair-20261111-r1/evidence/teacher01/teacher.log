@@ -1,0 +1,19 @@
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+[robosuite WARNING] To setup, run: python /mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/sources/libero-repair-77bcd43c/outputs/libero-gen-prompt-repair-20261111-r1/teacher.py", line 279, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/sources/libero-repair-77bcd43c/outputs/libero-gen-prompt-repair-20261111-r1/teacher.py", line 241, in main
+    restore(env, state, seed, xml)
+  File "/mowenjie/fluffy-bassoon-2/sources/libero-repair-77bcd43c/outputs/libero-gen-prompt-repair-20261111-r1/teacher.py", line 63, in restore
+    env.reset_from_xml_string(postprocess_model_xml(model_xml, {}))
+  File "/mowenjie/fluffy-bassoon-2/cache/bpp-58125e6-20261111-r1/behavior_prompting/train_network/env/libero/env_wrapper.py", line 216, in reset_from_xml_string
+    self.env.reset_from_xml_string(xml_string)
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/robosuite/environments/base.py", line 554, in reset_from_xml_string
+    self._initialize_sim(xml_string=xml_string)
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/robosuite/environments/base.py", line 230, in _initialize_sim
+    self.sim = MjSim.from_xml_string(xml)
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/robosuite/utils/binding_utils.py", line 1072, in from_xml_string
+    model = mujoco.MjModel.from_xml_string(xml)
+ValueError: Error: Error opening file '/Users/yifengz/workspace/libero-dev/chiliocosm/assets/stable_scanned_objects/akita_black_bowl/visual/akita_black_bowl_vis.msh': No such file or directory

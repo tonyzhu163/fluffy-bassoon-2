@@ -1,5 +1,5 @@
 {
-  "status": "prepared_not_submitted",
+  "status": "teacher01_failed_before_episodes; asset path repair prepared",
   "stage_cap_gpu_hours": 4,
   "prior_task_conservative_gpu_hours_approx": 17.75,
   "initial_allocation": {
@@ -25,5 +25,23 @@
   "checks": {
     "local": "Python AST and bash syntax only; simulator execution on allocated Linux pending",
     "source_hdf5": "two cached demo0 metadata receipts; near-plate abs_actions pose is constant and deliberately unused"
-  }
+  },
+  "jobs": [
+    {
+      "identity": "teacher01",
+      "job_id": "job-8fxjofxhqvd0",
+      "commit": "77bcd43cedb8f5af42c2eee12f0aa4808708461d",
+      "submitted_shanghai": "2026-11-11 20:15:28",
+      "clock": {
+        "exit_code": 1,
+        "started": 1794399342,
+        "ended": 1794399378,
+        "gpus": 1,
+        "hostname": "job-8fxjofxhqvd0-master-0"
+      },
+      "failure": "Unmapped author-local XML asset path; no episode executed",
+      "conservative_gpu_seconds_pending_scheduler_end": 50
+    }
+  ],
+  "next_identity": "teacher02"
 }

@@ -54,13 +54,41 @@ def new_env(base, candidate):
     return env
 
 
+def resolve_source_xml(xml, asset_root):
+    """Rebase known author-local paths only; leave every model attribute intact."""
+    import importlib.util
+    import xml.etree.ElementTree as ET
+    robot_root = Path(importlib.util.find_spec('robosuite').origin).parent
+    tree = ET.fromstring(xml)
+    mappings = []
+    for element in tree.iter():
+        old = element.get('file')
+        if old is None:
+            continue
+        target = Path(old)
+        if '/robosuite/' in old:
+            target = robot_root / old.rsplit('/robosuite/', 1)[1]
+        elif '/chiliocosm/assets/' in old:
+            target = asset_root / old.split('/chiliocosm/assets/', 1)[1]
+        elif '/libero/libero/assets/' in old:
+            target = asset_root / old.split('/libero/libero/assets/', 1)[1]
+        assert target.is_file(), f'Unresolved source asset: {old} -> {target}'
+        element.set('file', str(target))
+        mappings.append({'source': old, 'resolved': str(target),
+                         'sha256': hashlib.sha256(target.read_bytes()).hexdigest()})
+    converted = ET.tostring(tree, encoding='unicode')
+    return converted, {'original_xml_sha256': hashlib.sha256(xml.encode()).hexdigest(),
+                       'resolved_xml_sha256': hashlib.sha256(converted.encode()).hexdigest(),
+                       'file_references': mappings, 'all_resolved': True,
+                       'only_model_change': 'file attributes rebased to installed official assets'}
+
+
 def restore(env, state, seed, model_xml=None):
     env.seed(int(seed))
     env.env.reset()  # Deliberately bypass the upstream exception-swallowing reset.
     if model_xml is not None:
-        from libero.libero.utils.utils import postprocess_model_xml
         env.seed(int(seed))
-        env.reset_from_xml_string(postprocess_model_xml(model_xml, {}))
+        env.reset_from_xml_string(model_xml)
         env.sim.reset()
     env.regenerate_obs_from_state(state)
     c = env.robots[0].controller
@@ -238,7 +266,9 @@ def main():
                 xml = demo.attrs['model_file']
                 if isinstance(xml, bytes):
                     xml = xml.decode()
-                restore(env, state, seed, xml)
+                resolved_xml, path_receipt = resolve_source_xml(xml, args.source / 'deps/LIBERO/libero/libero/assets')
+                write_json(args.output / f'source-paths-{candidate}.json', path_receipt)
+                restore(env, state, seed, resolved_xml)
                 metadata = {'kind': 'native_source_replay', 'source_file': str(file), 'source_demo': 'demo_0',
                             'source_seed': seed, 'candidate': candidate,
                             'source_state0_sha256': sha(state), 'source_init_attr_equals_state0': bool(np.array_equal(init, state)),
