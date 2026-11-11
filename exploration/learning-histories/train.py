@@ -53,9 +53,20 @@ def main() -> None:
     ap.add_argument("--batch", type=int, default=256)
     ap.add_argument("--lr", type=float, default=3e-4)
     ap.add_argument("--eval-n", type=int, default=8192)
+    ap.add_argument("--eval-batch", type=int, default=256)
+    ap.add_argument("--checkpoint", type=Path)
+    ap.add_argument("--resume", type=Path)
+    ap.add_argument("--save-every", type=int, default=500)
+    ap.add_argument("--stop-after", type=int, help="Save and exit at this step without changing the schedule")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     args = ap.parse_args()
+    if min(args.steps, args.batch, args.eval_n, args.eval_batch, args.save_every) <= 0:
+        ap.error("step and batch counts must be positive")
+    checkpoint = args.checkpoint or args.out.with_suffix(".pt")
+    checkpoint.parent.mkdir(parents=True, exist_ok=True)
+    if args.out.exists() or (checkpoint.exists() and not args.resume):
+        ap.error("output already exists; use a fresh identity or an explicit resume checkpoint")
 
     torch.manual_seed(args.seed)
     rng = np.random.default_rng(args.seed)
@@ -63,9 +74,34 @@ def main() -> None:
     model = Learner(K + 2).to(args.device)
     opt = torch.optim.AdamW(model.parameters(), args.lr)
     sched = torch.optim.lr_scheduler.OneCycleLR(opt, args.lr, total_steps=args.steps, pct_start=0.05)
+    first, elapsed = 0, 0.0
+    if args.resume:
+        state = torch.load(args.resume, map_location="cpu", weights_only=False)
+        for name in ("cond", "K", "steps", "batch", "lr", "seed"):
+            if state["args"][name] != getattr(args, name):
+                raise ValueError(f"Resume changes training contract: {name}")
+        model.load_state_dict(state["model"])
+        opt.load_state_dict(state["optimizer"])
+        sched.load_state_dict(state["scheduler"])
+        rng.bit_generator.state = state["numpy_rng"]
+        torch.set_rng_state(state["torch_rng"])
+        if state["cuda_rng"] is not None:
+            torch.cuda.set_rng_state_all(state["cuda_rng"])
+        first, elapsed = state["step"], state["elapsed_seconds"]
 
     start = time.time()
-    for step in range(1, args.steps + 1):
+
+    def save(step):
+        state = dict(args=vars(args), step=step, model=model.state_dict(),
+                     optimizer=opt.state_dict(), scheduler=sched.state_dict(),
+                     numpy_rng=rng.bit_generator.state, torch_rng=torch.get_rng_state(),
+                     cuda_rng=torch.cuda.get_rng_state_all() if args.device.startswith("cuda") else None,
+                     elapsed_seconds=elapsed + time.time() - start)
+        tmp = checkpoint.with_suffix(checkpoint.suffix + ".tmp")
+        torch.save(state, tmp)
+        tmp.replace(checkpoint)
+
+    for step in range(first + 1, args.steps + 1):
         s = S.sample(rng, args.batch, K, "train")
         choice, outcome = S.behave(rng, s, K)
         # A random prefix per session trains the whole learning curve.
@@ -77,7 +113,11 @@ def main() -> None:
         opt.step()
         sched.step()
         if step % 500 == 0 or step == args.steps:
-            print(f"step {step} loss {loss.item():.4f} {time.time() - start:.0f}s", flush=True)
+            print(f"step {step} loss {loss.item():.4f} {elapsed + time.time() - start:.0f}s", flush=True)
+        if step % args.save_every == 0 or step == args.steps or step == args.stop_after:
+            save(step)
+        if step == args.stop_after:
+            return
 
     model.eval()
     result = {"args": {k: str(v) for k, v in vars(args).items()}, "rules": {"train": len(S.TRAIN), "heldout": len(S.HELDOUT)}}
@@ -85,7 +125,12 @@ def main() -> None:
     def learner_act(s):
         @torch.no_grad()
         def act(c, o, k, t):
-            return logits(model, args.device, s, args.cond, c, o, k, t).argmax(1).cpu().numpy()
+            choices = []
+            for lo in range(0, len(s.rule), args.eval_batch):
+                sl = slice(lo, lo + args.eval_batch)
+                chunk = S.Sessions(s.rule[sl], s.scenes[sl], s.tgt[sl], s.true[sl])
+                choices.append(logits(model, args.device, chunk, args.cond, c[sl], o[sl], k, t).argmax(1).cpu().numpy())
+            return np.concatenate(choices)
 
         return act
 
