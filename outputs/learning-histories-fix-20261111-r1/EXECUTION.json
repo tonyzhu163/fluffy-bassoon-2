@@ -23,24 +23,30 @@
     "timing_observed": [
       {
         "recipe": "base",
+        "batch": 256,
+        "steps": 200,
         "seconds_per_update": 0.07803230762481689,
         "projected_train_minutes": 26.010769208272293,
         "peak_allocated_bytes": 373976064
       },
       {
         "recipe": "dense",
-        "seconds_per_update": 0.0829373359688318,
-        "projected_train_minutes": 27.645778656277265,
+        "batch": 256,
+        "steps": 200,
+        "seconds_per_update": 0.08293733358383179,
+        "projected_train_minutes": 27.645777861277264,
         "peak_allocated_bytes": 669791232
       },
       {
         "recipe": "wide",
+        "batch": 256,
+        "steps": 200,
         "seconds_per_update": 0.09028229236602783,
         "projected_train_minutes": 30.09409745534261,
         "peak_allocated_bytes": 1850688000
       }
     ],
-    "evidence_status": "Read in authenticated console; raw receipts remain on shared storage pending retrieval.",
+    "evidence_status": "Raw receipts retrieved and validated under qual01.",
     "conservative_gpuh": 0.06916666666666667,
     "clock_observed": {
       "exit_code": 0,
@@ -48,7 +54,9 @@
       "ended": 1794382074,
       "hostname": "job-dxc5nv9qq1yw-master-0",
       "gpus": 1
-    }
+    },
+    "scheduler_duration_seconds": 232,
+    "scheduler_gpuh": 0.06444444444444444
   },
   "budget": {
     "prior_scheduler_gpuh": 7.5303,
@@ -56,11 +64,14 @@
     "qualification_cap_gpuh": 0.5,
     "grid_cap_gpuh": 22.5,
     "confirmation_cap_gpuh": 0.25,
-    "separate_libero_pilot_cap_gpuh": 5
+    "separate_libero_pilot_cap_gpuh": 5,
+    "cumulative_scheduler_gpuh": 16.21168888888889,
+    "cumulative_conservative_gpuh": 16.60641111111111,
+    "accounting_note": "Prior totals rounded to 4 decimals. Scheduler duration counts entire multiworker allocation; conservative bound uses submission-to-end. LIBERO usage separately recorded by its owner."
   },
   "remote_code": "/mowenjie/fluffy-bassoon-2/sources/learning-histories-fix-4b06413e",
   "grid": {
-    "status": "running",
+    "status": "succeeded",
     "requires": "passed same-commit qualification and all projected fit times <=80 minutes",
     "job_id": "job-h9o49h1vu3zt",
     "identity": "grid01",
@@ -68,29 +79,68 @@
     "allocated_gpus": 15,
     "runtime_limit_minutes": 90,
     "retries": 0,
-    "last_check_shanghai": "2026-11-11 15:56:20",
+    "last_check_shanghai": "2026-11-11 16:19:31",
     "gpu_probes_passed": 15,
     "observed_updates": {
-      "attempts-both-lr-s0": 17000,
-      "attempts-both-lr-s1": 17000,
-      "attempts-both-lr-s2": 18000,
-      "base-lr-s0": 18000,
-      "base-lr-s1": 18000,
-      "base-lr-s2": 18500,
-      "both-lr-s0": 17000,
-      "both-lr-s1": 16500,
-      "both-lr-s2": 17000,
-      "both-s0": 19500,
-      "both-s1": 19500,
-      "both-s2": 17500,
-      "wide-s0": 15500,
-      "wide-s1": 15000,
-      "wide-s2": 15500
+      "attempts-both-lr-s0": 20000,
+      "attempts-both-lr-s1": 20000,
+      "attempts-both-lr-s2": 20000,
+      "base-lr-s0": 20000,
+      "base-lr-s1": 20000,
+      "base-lr-s2": 20000,
+      "both-lr-s0": 20000,
+      "both-lr-s1": 20000,
+      "both-lr-s2": 20000,
+      "both-s0": 20000,
+      "both-s1": 20000,
+      "both-s2": 20000,
+      "wide-s0": 20000,
+      "wide-s1": 20000,
+      "wide-s2": 20000
     },
-    "next_check": "Completion check around 16:05; next regular check 16:16 Shanghai.",
-    "completed_members": 0,
+    "next_check": "Complete; frozen confirmation also succeeded.",
+    "completed_members": 15,
     "failures": 0,
-    "progress_source": "Sub-agent console observation; raw remote grid-status-1556.json pending retrieval."
+    "progress_source": "All 15 raw worker clock exit codes are zero, results present, and scheduler shows Succeeded.",
+    "ended_shanghai": "2026-11-11 16:04:47",
+    "scheduler_duration_seconds": 2046,
+    "scheduler_gpuh": 8.525,
+    "conservative_gpuh": 8.675
   },
-  "code_review": "Latest main fe076cf4 adds LIBERO pilot documentation/audit only. Toy campaign remains pinned to 4b06413e as launched at qualification; no active checkout migration."
+  "code_review": "Reviewed main through 0d6da30a. Post-qualification changes are LIBERO preparation/status, toy readout and frozen confirmation. Trainer remains pinned to 4b06413e; no active worktree migrated.",
+  "confirmation": {
+    "status": "succeeded",
+    "job_id": "job-obkpwzu2057v",
+    "identity": "confirm01",
+    "analysis_commit": "27fe941012964f2ec922aae17f293ad0898032ed",
+    "analysis_checkout": "/mowenjie/fluffy-bassoon-2/sources/libero-gen-preflight-27fe9410",
+    "trainer_commit": "4b06413e33d1e1279b2431f370ff9e638bb7cab9",
+    "created_shanghai": "2026-11-11 16:13:53",
+    "ended_shanghai": "2026-11-11 16:19:33",
+    "allocated_gpus": 1,
+    "scheduler_gpu_type": "NVIDIA GeForce RTX 4090",
+    "runtime_limit_minutes": 15,
+    "retries": 0,
+    "capacity_before_submit": {
+      "free_gpus": 24,
+      "maximum_gpus": 152,
+      "free_cpus": 605,
+      "maximum_cpus": 2052,
+      "free_memory_gib": 7292,
+      "maximum_memory_gib": 17081
+    },
+    "gpu_probe": "passed",
+    "completed_evaluations": 12,
+    "clock": {
+      "exit_code": 0,
+      "started": 1794384851,
+      "ended": 1794385153,
+      "hostname": "job-obkpwzu2057v-master-0",
+      "gpus": 1
+    },
+    "scheduler_duration_seconds": 331,
+    "scheduler_gpuh": 0.09194444444444444,
+    "conservative_gpuh": 0.09444444444444444,
+    "source": "Process receipts retrieved; scheduler status/times verified in authenticated console by LIBERO sub-agent."
+  }
 }

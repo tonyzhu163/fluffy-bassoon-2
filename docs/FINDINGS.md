@@ -31,6 +31,18 @@ shift therefore does not explain most of the gap. These are frozen-query input
 interventions, not alternate closed-loop rollouts or robotic adaptation.
 [Paired diagnostics and limitations](../outputs/learning-histories-feedback-20261111-r1/RESULT.md).
 
+A five-recipe, three-seed screen selected dense multi-query supervision with
+Fourier features for correction reading. On fresh frozen-checkpoint evaluation
+sessions, held-out k=6 accuracy rose from 67.40% to 75.64%, improving in all
+three fits. The same-history enumeration reference reached 94.94%; training
+rules also retained a 10.41-point deficit. The revised attempt-and-reward
+learner reached 60.50% versus 57.34% originally, with one fit slightly worse
+and different learner-generated histories. Every fit still failed the
+within-five-points-at-every-prefix screen. This confirms a recipe improvement
+on the same rule split, not a solved inference problem or robotic adaptation.
+The screen changes attention, supervision and features together and does not
+isolate their effects. [Fresh confirmation, all recipes and limits](../outputs/learning-histories-fix-20261111-r1/RESULT.md).
+
 ## RoboCasa365
 
 The Atomic-Seen baseline uses the native JAX π0.5 Human300 checkpoint at step **75,000**. Load `pi05_pretrain_human300/multitask_learning/75000` from `robocasa/robocasa365_checkpoints` at revision `c484448a`, including its bundled normalization. OpenPI predicts 50 actions and executes five before replanning, with ten denoising steps. [Pinned checkpoint](https://huggingface.co/robocasa/robocasa365_checkpoints/tree/c484448aba1a9b60a04c9b0ca117241518ea69f3/pi05_pretrain_human300/multitask_learning/75000)

@@ -1,0 +1,169 @@
+{
+  "status": "passed",
+  "torch": "2.11.0+cu128",
+  "numpy": "2.2.5",
+  "device": "NVIDIA GeForce RTX 4090",
+  "dense_numerics": [
+    {
+      "config": {},
+      "cond": "demo",
+      "max_abs_error": 7.152557373046875e-07
+    },
+    {
+      "config": {},
+      "cond": "blind",
+      "max_abs_error": 7.152557373046875e-07
+    },
+    {
+      "config": {},
+      "cond": "attempts",
+      "max_abs_error": 7.152557373046875e-07
+    },
+    {
+      "config": {},
+      "cond": "corrections",
+      "max_abs_error": 7.152557373046875e-07
+    },
+    {
+      "config": {},
+      "cond": "linked",
+      "max_abs_error": 7.152557373046875e-07
+    },
+    {
+      "config": {},
+      "gradient_max_abs_error": 1.210719347000122e-07
+    },
+    {
+      "config": {
+        "fourier": 4
+      },
+      "cond": "demo",
+      "max_abs_error": 5.960464477539062e-07
+    },
+    {
+      "config": {
+        "fourier": 4
+      },
+      "cond": "blind",
+      "max_abs_error": 5.364418029785156e-07
+    },
+    {
+      "config": {
+        "fourier": 4
+      },
+      "cond": "attempts",
+      "max_abs_error": 5.960464477539062e-07
+    },
+    {
+      "config": {
+        "fourier": 4
+      },
+      "cond": "corrections",
+      "max_abs_error": 5.21540641784668e-07
+    },
+    {
+      "config": {
+        "fourier": 4
+      },
+      "cond": "linked",
+      "max_abs_error": 6.109476089477539e-07
+    },
+    {
+      "config": {
+        "fourier": 4
+      },
+      "gradient_max_abs_error": 6.51925802230835e-08
+    },
+    {
+      "config": {
+        "d": 256,
+        "layers": 6,
+        "heads": 8,
+        "fourier": 4
+      },
+      "cond": "demo",
+      "max_abs_error": 9.5367431640625e-07
+    },
+    {
+      "config": {
+        "d": 256,
+        "layers": 6,
+        "heads": 8,
+        "fourier": 4
+      },
+      "cond": "blind",
+      "max_abs_error": 1.0132789611816406e-06
+    },
+    {
+      "config": {
+        "d": 256,
+        "layers": 6,
+        "heads": 8,
+        "fourier": 4
+      },
+      "cond": "attempts",
+      "max_abs_error": 1.0728836059570312e-06
+    },
+    {
+      "config": {
+        "d": 256,
+        "layers": 6,
+        "heads": 8,
+        "fourier": 4
+      },
+      "cond": "corrections",
+      "max_abs_error": 9.5367431640625e-07
+    },
+    {
+      "config": {
+        "d": 256,
+        "layers": 6,
+        "heads": 8,
+        "fourier": 4
+      },
+      "cond": "linked",
+      "max_abs_error": 9.5367431640625e-07
+    },
+    {
+      "config": {
+        "d": 256,
+        "layers": 6,
+        "heads": 8,
+        "fourier": 4
+      },
+      "gradient_max_abs_error": 4.418579919729382e-07
+    }
+  ],
+  "resumption": {
+    "legacy_schema": "bitwise_exact",
+    "dense": "bitwise_exact"
+  },
+  "original_curves": "exact",
+  "timings": [
+    {
+      "recipe": "base",
+      "batch": 256,
+      "steps": 200,
+      "seconds_per_update": 0.07803230762481689,
+      "projected_train_minutes": 26.010769208272293,
+      "peak_allocated_bytes": 373976064
+    },
+    {
+      "recipe": "dense",
+      "batch": 256,
+      "steps": 200,
+      "seconds_per_update": 0.08293733358383179,
+      "projected_train_minutes": 27.645777861277264,
+      "peak_allocated_bytes": 669791232
+    },
+    {
+      "recipe": "wide",
+      "batch": 256,
+      "steps": 200,
+      "seconds_per_update": 0.09028229236602783,
+      "projected_train_minutes": 30.09409745534261,
+      "peak_allocated_bytes": 1850688000
+    }
+  ],
+  "grid_90min_admissible": true
+}
