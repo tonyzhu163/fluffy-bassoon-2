@@ -51,11 +51,21 @@ Changing only support reward at each identical query decision produced a mean ac
 
 The negative primary result triggered the predeclared control that gives a separately trained LoRA policy the correct bowl in its instruction. Its 128-, 512- and 1,024-update checkpoints scored 5, 1 and 4 of 16 development goals. Native placements selected 128 updates. Imitation error declined across all three durations. [Selection and physical development outcomes](oracle-development.json)
 
-The locked property-given policy reached 7/32 confirmation goals, with six correct left placements and one right placement. No scene succeeded under both instructions. It gained six and lost four paired goals against memoryless LoRA, giving a net gain of two. The instructed learner still reproduced a small fraction of the 32 demonstrated successful carries. The eight-case training-placement diagnostic is running. [Property-given confirmation](oracle-confirmation.json)
+The locked property-given policy reached 7/32 confirmation goals, with six correct left placements and one right placement. No scene succeeded under both instructions. It gained six and lost four paired goals against memoryless LoRA, giving a net gain of two. The instructed learner still reproduced a small fraction of the 32 demonstrated successful carries. [Property-given confirmation](oracle-confirmation.json)
 
 ![Imitation error and native placement success across training durations](learning-curves.png)
 
 Each curve comes from one fit. The left panel measures masked flow-prediction error at the common teacher decision. The right panel counts correct physical placements across the same eight development scenes and both hidden goals. [Plot source](learning_curves.py)
+
+On the first four training scenes with successful labels for both goals, the selected 128-update instruction policy reproduced 2/8 goals. An exploratory check of its existing 1,024-update checkpoint reached 3/8, gaining one and losing zero cases. The scripted teacher had completed all eight placements. These scores condition on demonstrated training scenes. [Fixed training cases and paired outcomes](training-fit.json)
+
+Replaying the first failed training goal at 1,024 updates reproduced its original failure. The fruit remained grasped throughout all 231 learned controls. It rose 0.76 m and moved from 0.309 m to 0.458 m away from the target horizontally. Its closest approach was 0.309 m. The screenshots show that recorded case and its successful scripted teacher.
+
+| Shared first grasp | Learned policy at control 500 | Scripted teacher at release |
+| --- | --- | --- |
+| ![Shared initial grasp](motor-start.png) | ![Learned policy holding the fruit high above the bowls](motor-end.png) | ![Scripted teacher placing the fruit in the requested bowl](teacher-end.png) |
+
+The subsequent exploratory test starts the same eight training goals at the exact shared teacher decision after securing and lifting the fruit. It verifies the public state and all camera views, charges the added teacher controls within 500, and evaluates the 1,024-update instruction policy. This phase diagnostic is running.
 
 ## Scope and execution
 
