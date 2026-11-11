@@ -16,7 +16,7 @@ So a scene offers at most 2 bowls × about 10 targets, roughly 20 behaviours. Th
 
 ### 1. Rules as functions of the scene
 
-A rule is one choice on each of a few independent axes, each computed from observable geometry, so it names a behaviour in any layout. Each axis is a short list; extending the family means appending to one list, with no new motor behaviour.
+A rule is one choice on each of a few independent axes, each computed from observable geometry, so it names a behaviour in any layout. Each axis is a short list; extending the family means appending to one list. The first four axes need no new motor behaviour; the last two do.
 
 | Axis | Choices | Count |
 | --- | --- | ---: |
