@@ -1,0 +1,63 @@
+{
+  "status": "passed",
+  "purpose": "training",
+  "timing_comparison_eligible": false,
+  "allocation_type": "baige_container",
+  "hostname": "job-tar8hons981r-worker-8",
+  "probe_pid": 221,
+  "created_at_utc": "2026-11-11T05:07:11.264674+00:00",
+  "devices": [
+    {
+      "allocation_ordinal": 0,
+      "visibility_token": "0",
+      "cuda_uuid": "01ddc650-fa04-2e12-331b-46d17e9732b1",
+      "cuda_name": "NVIDIA GeForce RTX 4090",
+      "cuda_total_bytes": 25250627584,
+      "pci_bus_id": "0000:a1:00.0",
+      "uuid": "GPU-01ddc650-fa04-2e12-331b-46d17e9732b1",
+      "inventory": {
+        "index": 0,
+        "uuid": "GPU-01ddc650-fa04-2e12-331b-46d17e9732b1",
+        "name": "NVIDIA GeForce RTX 4090",
+        "memory_total_mib": 24564.0,
+        "memory_used_mib": 1.0,
+        "utilization_percent": 0.0,
+        "pci_bus_id": "00000000:A1:00.0"
+      },
+      "allocation_check": {
+        "elements": 1048576,
+        "result": 2097152.0,
+        "touched_gpu_uuids": [
+          "GPU-01ddc650-fa04-2e12-331b-46d17e9732b1"
+        ],
+        "own_pid_gpu_uuids": [
+          "GPU-01ddc650-fa04-2e12-331b-46d17e9732b1"
+        ]
+      }
+    }
+  ],
+  "idle_utilization_required": false,
+  "exclusive_training_admission": true,
+  "admission_policy": "exclusive_scheduler_cuda_pci_pid_memory",
+  "utilization_role": "telemetry_only",
+  "utilization_telemetry": {
+    "GPU-01ddc650-fa04-2e12-331b-46d17e9732b1": 0.0
+  },
+  "maximum_initial_memory_mib": 256,
+  "gpu_identity_mapping": {
+    "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+    "assigned_nvml_uuids": [
+      "GPU-01ddc650-fa04-2e12-331b-46d17e9732b1"
+    ]
+  },
+  "compute_processes_before": [],
+  "compute_processes_after": [
+    {
+      "gpu_uuid": "GPU-01ddc650-fa04-2e12-331b-46d17e9732b1",
+      "pid": 221,
+      "process_name": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+      "memory_used_mib": "448"
+    }
+  ],
+  "topology": "\t\u001b[4mGPU0\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \t56-111\t1\t\tN/A\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks"
+}
