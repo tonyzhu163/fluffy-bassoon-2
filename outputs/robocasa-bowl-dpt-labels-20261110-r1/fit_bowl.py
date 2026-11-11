@@ -95,6 +95,10 @@ def fit(args):
     torch.manual_seed(args.seed)
     assert torch.cuda.device_count()==1
     rng=np.random.default_rng(args.seed)
+    milestones = STEPS
+    if args.extend_to is not None:
+        assert args.resume and args.extend_to > STEPS[-1]
+        milestones = (*STEPS, args.extend_to)
     train=Corpus(args.train,args.train/"targets")
     valid=Corpus(args.valid,args.valid/"targets")
     assert set(train.scenes).isdisjoint(valid.scenes)
@@ -108,7 +112,7 @@ def fit(args):
     if args.given_side:
         params = {"memoryless":params["memoryless"]}
     opts={k:torch.optim.AdamW(ps,lr=3e-4,weight_decay=.01) for k,ps in params.items()}
-    contract={"seed":args.seed,"steps":STEPS,"batch_size":6,"code":os.environ["PILOT_COMMIT"],
+    contract={"seed":args.seed,"steps":milestones,"batch_size":6,"code":os.environ["PILOT_COMMIT"],
               "given_side_in_prompt":args.given_side,
               "history_encoder":None if args.given_side else "2-layer, 4-head causal transformer, width 128, ALiBi",
               "training_labels":fingerprint(args.train/"targets/index.json"),
@@ -118,7 +122,19 @@ def fit(args):
     start=0
     if args.resume:
         state=torch.load(args.resume,map_location="cpu",weights_only=False)
-        assert state["contract"]==contract
+        if args.extend_to is None:
+            assert state["contract"]==contract
+        else:
+            before = {k:v for k,v in state["contract"].items() if k not in ("steps","code")}
+            after = {k:v for k,v in contract.items() if k not in ("steps","code")}
+            assert before == after and tuple(state["contract"]["steps"]) == STEPS
+            assert state["step"] == STEPS[-1]
+            np.testing.assert_array_equal(mean, state["mean"])
+            np.testing.assert_array_equal(scale, state["scale"])
+            (args.out/"resume.json").write_text(json.dumps({
+                "checkpoint":str(args.resume), "sha256":fingerprint(args.resume),
+                "previous_contract":state["contract"], "restored_step":state["step"],
+                "continued_to":args.extend_to}, indent=2))
         students.load_state_dict(state["students"])
         for k,opt in opts.items():
             opt.load_state_dict(state["optimizers"][k])
@@ -127,7 +143,7 @@ def fit(args):
         torch.cuda.set_rng_state_all(state["cuda_rng"])
         start=state["step"]
     begin=time.monotonic()
-    for step in range(start+1,STEPS[-1]+1):
+    for step in range(start+1,milestones[-1]+1):
         examples=[train.sample(rng) for _ in range(6)]
         students.select(None,None)
         inputs,target,active,own=batch(native,train,examples,mean,scale,args.seed*10000+step,given_side=args.given_side)
@@ -153,13 +169,13 @@ def fit(args):
             scores[arm]=loss.item()
         if step in (1,8) or step%32==0:
             print("UPDATE",step,round(time.monotonic()-begin,1),scores,flush=True)
-        if step%64==0 or step in (1,8):
+        if step%64==0 or step in (1,8) or step==milestones[-1]:
             state={"step":step,"contract":contract,"students":students.state_dict(),"optimizers":{k:o.state_dict() for k,o in opts.items()},
                    "draws":rng.bit_generator.state,"cpu_rng":torch.get_rng_state(),"cuda_rng":torch.cuda.get_rng_state_all(),
                    "mean":mean,"scale":scale}
             torch.save(state,args.out/"next.tmp")
             os.replace(args.out/"next.tmp",args.out/"checkpoint.pt")
-        if step in STEPS:
+        if step in milestones:
             phase=args.out/f"step-{step:04d}"
             phase.mkdir()
             os.link(args.out/"checkpoint.pt",phase/"checkpoint.pt")
@@ -177,4 +193,5 @@ if __name__=="__main__":
     p.add_argument("--seed",type=int,default=991)
     p.add_argument("--resume",type=Path)
     p.add_argument("--given-side",action="store_true")
+    p.add_argument("--extend-to",type=int)
     fit(p.parse_args())
