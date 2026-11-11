@@ -1,4 +1,6 @@
-# Restore archived Sidney training rollouts
+# Restore the Baige archives
+
+## Sidney training rollouts
 
 The 16 original `.pt` objects are in private Baige BOS under
 `/mnt/bos/adgfyl/strong-plant-archives/storage-audit-baige-20261111-r1/sidney-training-rollouts/`.
@@ -8,15 +10,44 @@ is available as `RELEASE.json` in that BOS directory. Every source directory
 has its original rollout JSONs and a `.pt.cold.json` pointer per archived
 payload.
 
-Run the following in a Baige Linux container with PFS and BOS mounted. Give
-it an arm and payload filename from the receipt. Check available space first.
 Each payload needs approximately 5.4 GiB on PFS. Both arms need 86.2 GiB.
+Set the pointer for the desired arm and filename.
 
 ```bash
 arm=ppo02
 payload=iteration-0001-policy-0000-rank-00.pt
 base=/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1
-python3 - "$base/$arm/training-rollouts/$payload.cold.json" <<'PY'
+pointer="$base/$arm/training-rollouts/$payload.cold.json"
+```
+
+The final checkpoints, initial states, sampling records and per-payload JSONs
+are already on PFS.
+
+## MIKASA failed qualification archive
+
+The 25.8 GiB tarball is in the sibling `mikasa-failed-qualification/` BOS
+directory. Its [release receipt](MIKASA-RELEASE.json) and the original
+`qualification-step2-archive.json` list the compressed-object digest and
+the original qualification member hashes, respectively. Set the pointer
+to restore the tarball at its original path.
+
+```bash
+base=/mowenjie/fluffy-bassoon/outputs/mikasa-fullft-reset-s1000-new-20261107-r3
+pointer="$base/qualification-step2-preserved.tar.zst.cold.json"
+```
+
+To recover the checkpoint inside the restored tarball, extract with
+`tar -I zstd -xf "$base/qualification-step2-preserved.tar.zst" -C "$scratch"`
+into a fresh empty directory. Compare the extracted members with
+`qualification-step2-archive.json` before using them.
+
+## Verified copy back to PFS
+
+Run in a Baige Linux container with PFS and BOS mounted and sufficient free
+space. Set `pointer` as above and run the copy for each file you need.
+
+```bash
+python3 - "$pointer" <<'PY'
 import hashlib
 import json
 import os
@@ -51,5 +82,4 @@ print(source)
 PY
 ```
 
-Re-run for each required file before starting a reader. The final checkpoints,
-initial states, sampling records and per-payload JSONs are already on PFS.
+Restore the required files before starting a reader.
