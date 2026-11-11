@@ -1,5 +1,5 @@
 {
-  "status": "geometry01_running_deployment_verified_probe_pending",
+  "status": "geometry01_all_eight_passed_pi05_dependencies_installing",
   "gpu_hours_limit": 4,
   "scheduler_gpu_hours": 0,
   "conservative_gpu_hours": 0,
@@ -20,13 +20,18 @@
       "requested_gpu": "NVIDIA GeForce RTX 4090",
       "checkout": "/mowenjie/fluffy-bassoon-2/sources/libero-procedural-64a5e288-geometry01",
       "deployment_verified": true,
-      "status": "Running"
+      "status": "Running",
+      "gpu_probe": "passed",
+      "actual_gpu": "NVIDIA GeForce RTX 4090",
+      "geometry_scenes_admitted": 8,
+      "geometry_process_seconds": 274,
+      "geometry_exit_code": 0
     }
   ],
   "user_scope": "development scene qualification and released pi05 motor assessment before deciding SFT",
   "browser_coordination": "human authorized message to parent chat 01a1c8f3-5b3b-7822-b61b-0a59f6431501; message accepted",
-  "code_commit": "a08ae7353dff94a21d79caf3397dc313a0010cec",
-  "last_checked": "2026-11-11T20:54:00+08:00",
+  "code_commit": "64a5e2880f4851c5f1f0edbd9eaff75df0a5c591",
+  "last_checked": "2026-11-11T21:07:00+08:00",
   "development_endpoint": "dv-0d0ac1c839",
   "development_status": "HTTP 503 / no healthy upstream; also confirmed by other LIBERO chat",
   "policy_scripts": "syntax checked only; runtime not installed; no model loaded"

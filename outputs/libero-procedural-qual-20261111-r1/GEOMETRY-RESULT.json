@@ -1,0 +1,99 @@
+{
+  "job_id": "job-ly2f0fq12gta",
+  "commit": "64a5e2880f4851c5f1f0edbd9eaff75df0a5c591",
+  "checked_scenes": 8,
+  "admitted": [
+    0,
+    1,
+    2,
+    5,
+    6,
+    10,
+    11,
+    13
+  ],
+  "rejection_reasons": {},
+  "positive_controls": 48,
+  "native_policy_episodes": 0,
+  "model_updates": 0,
+  "rule_comparisons": [
+    {
+      "index": 0,
+      "rules": 2912,
+      "changed_from_nominal": 0,
+      "source_state_sha256": "c4160ce126e67700be7bfcb5c5cab0ca4cca1d843b2b6c6231c6595babcea205"
+    },
+    {
+      "index": 1,
+      "rules": 2912,
+      "changed_from_nominal": 416,
+      "source_state_sha256": "96e3a9e082b12c58cdbeedf3eba4594c483ab025af78816c5cd2da04560b2d61"
+    },
+    {
+      "index": 2,
+      "rules": 2912,
+      "changed_from_nominal": 896,
+      "source_state_sha256": "bab780aa62ba82695e2d365a015aaac547b2c623044646ad1e32eb8156285d11"
+    },
+    {
+      "index": 5,
+      "rules": 2912,
+      "changed_from_nominal": 224,
+      "source_state_sha256": "439de64c374c6345f2f2f64372e197e39c829496a91935ae19b5b5116d746a2f"
+    },
+    {
+      "index": 6,
+      "rules": 2912,
+      "changed_from_nominal": 896,
+      "source_state_sha256": "cd6e7ad8b40d298cd6f2f142026c7a6e17680ec3a6b54db27440c5b3e6e0e0b5"
+    },
+    {
+      "index": 10,
+      "rules": 2912,
+      "changed_from_nominal": 0,
+      "source_state_sha256": "db6d1dff6a67a4b701167c4b5d65335870052e881d4e7a75de353e545449ff7f"
+    },
+    {
+      "index": 11,
+      "rules": 2912,
+      "changed_from_nominal": 608,
+      "source_state_sha256": "711c4cb6f9546bd128a70828277ab551968c606924723589d95a0183e5560f8d"
+    },
+    {
+      "index": 13,
+      "rules": 2912,
+      "changed_from_nominal": 0,
+      "source_state_sha256": "5f5f6b8ba65bf9908de886cefee1eabe0087e20221a999c7d2d10af3448c79cc"
+    }
+  ],
+  "changed_rule_labels": 3040,
+  "checked_rule_labels": 23296,
+  "visual_review": {
+    "all_eight_agent_views_inspected": true,
+    "partial_bowl_crops": [
+      {
+        "scene": 1,
+        "bowl": "akita_black_bowl_1"
+      },
+      {
+        "scene": 5,
+        "bowl": "akita_black_bowl_2"
+      },
+      {
+        "scene": 10,
+        "bowl": "akita_black_bowl_2"
+      }
+    ],
+    "note": "Object-centre visibility does not ensure the whole object is in frame; retain and report these cases separately."
+  },
+  "archive": {
+    "sha256": "0ae38f71a7f02b7fb10c538720c4e8b6c58db7c730da3d5106db36e7216ba743",
+    "bytes": 956836,
+    "remote": "/mowenjie/fluffy-bassoon-2/outputs/libero-procedural-qual-20261111-r1/bootstrap-geometry01/geometry-evidence.tar.gz"
+  },
+  "limitations": [
+    "Dropped-bowl controls establish predicate semantics, not robot reachability.",
+    "Nominal geometry changed rule labels in five of eight scenes; realized reset geometry must determine hidden goals.",
+    "Policy execution and the SFT decision remain pending."
+  ]
+}
