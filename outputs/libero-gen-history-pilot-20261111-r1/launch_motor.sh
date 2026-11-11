@@ -19,6 +19,13 @@ git -C "$TASK_CODE" diff --quiet HEAD
 export FLUFFY_GPU_EXECUTION=baige
 export PYTHONPATH="$TASK_CODE/src"
 export PYTHONDONTWRITEBYTECODE=1
+# The private GLVND dispatch packages repair the CPU image's missing libGL/EGL.
+# NVIDIA vendor libraries remain supplied by the scheduler container runtime.
+TASK_GL_LIB="$TASK_SETUP/os-libs01/prefix/usr/lib/x86_64-linux-gnu"
+TASK_TORCH_LIB="$TASK_SETUP/env/lib/python3.10/site-packages/torch/lib"
+test -f "$TASK_GL_LIB/libEGL.so.1"
+test -f "$TASK_GL_LIB/libGL.so.1"
+export LD_LIBRARY_PATH="$TASK_GL_LIB:$TASK_TORCH_LIB${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 export HF_HOME="$TASK_SETUP/huggingface-cache"
 export HF_HUB_DISABLE_XET=1
 export WANDB_MODE=disabled
