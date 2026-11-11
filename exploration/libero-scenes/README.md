@@ -2,7 +2,7 @@
 
 Exploratory. Generates tabletop scenes for the hidden-rule experiment described in the [extension spec](../../outputs/pi05-history-interface-20261111-r1/EXTENSION-SPEC.md). Scenes are built the same way as the [rule family](../learning-histories/placement.py): one draw on each of a few axes, each a short list.
 
-**Status:** `scenes.py` and `histories.py` have produced a candidate scene/session bank on a Mac, with static artifact checks. `admit.py` has only been syntax-checked. No generated scene has been loaded in a simulator. [First case bank and limits](../../outputs/libero-history-cases-20261111-r1/RESULT.md).
+**Status:** `scenes.py` and `histories.py` have produced a candidate scene/session bank. Eight fixed training layouts passed simulator admission and 48 dropped-bowl predicate controls on Baige. These controls establish goal semantics, not robot reachability. Realized positions changed 3,040 of 23,296 nominal rule labels; three bowls were partly cropped despite their centres being visible. The full bank remains nominal and policy execution is pending. [Geometry evidence](../../outputs/libero-procedural-qual-20261111-r1/GEOMETRY-RESULT.json) · [First case bank and limits](../../outputs/libero-history-cases-20261111-r1/RESULT.md).
 
 ## Why this exists
 

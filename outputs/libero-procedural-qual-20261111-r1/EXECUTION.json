@@ -1,8 +1,8 @@
 {
-  "status": "geometry01_all_eight_passed_pi05_dependencies_installing",
+  "status": "geometry_complete_cpu_preparation_resumed_on_development",
   "gpu_hours_limit": 4,
-  "scheduler_gpu_hours": 0,
-  "conservative_gpu_hours": 0,
+  "scheduler_gpu_hours": 0.3925,
+  "conservative_gpu_hours": 0.3947222222222222,
   "jobs": [
     {
       "identity": "geometry01",
@@ -20,19 +20,44 @@
       "requested_gpu": "NVIDIA GeForce RTX 4090",
       "checkout": "/mowenjie/fluffy-bassoon-2/sources/libero-procedural-64a5e288-geometry01",
       "deployment_verified": true,
-      "status": "Running",
+      "status": "Failed_after_intentional_CPU_setup_migration",
       "gpu_probe": "passed",
       "actual_gpu": "NVIDIA GeForce RTX 4090",
       "geometry_scenes_admitted": 8,
       "geometry_process_seconds": 274,
-      "geometry_exit_code": 0
+      "geometry_exit_code": 0,
+      "ended_shanghai": "2026-11-11 21:16:52",
+      "scheduler_reported_seconds": 1413,
+      "conservative_seconds": 1421,
+      "exit_code": 143,
+      "exit_reason": "SIGTERM to verified own uv sync process after geometry completed; development endpoint recovered; GPU released"
     }
   ],
   "user_scope": "development scene qualification and released pi05 motor assessment before deciding SFT",
   "browser_coordination": "human authorized message to parent chat 01a1c8f3-5b3b-7822-b61b-0a59f6431501; message accepted",
   "code_commit": "64a5e2880f4851c5f1f0edbd9eaff75df0a5c591",
-  "last_checked": "2026-11-11T21:07:00+08:00",
+  "last_checked": "2026-11-11T21:18:00+08:00",
   "development_endpoint": "dv-0d0ac1c839",
-  "development_status": "HTTP 503 / no healthy upstream; also confirmed by other LIBERO chat",
-  "policy_scripts": "syntax checked only; runtime not installed; no model loaded"
+  "development_status": "recovered; CPU setup running in isolated qualification Jupyter terminal",
+  "policy_scripts": "29a06f19 deployed clean; dependencies installing; no model loaded",
+  "cpu_preparation": {
+    "identity": "cpu-prepare03",
+    "host": "dv-0d0ac1c839",
+    "pid": 4872,
+    "commit": "29a06f19e5ce3a58d5ebc3b36e00972ac41271c8",
+    "gpus": 0,
+    "status": "Running",
+    "previous_attempt": {
+      "identity": "cpu-prepare02",
+      "exit_code": 1,
+      "reason": "wrapper syntax error before setup ran",
+      "gpus": 0
+    }
+  },
+  "policy_deployment": {
+    "commit": "29a06f19e5ce3a58d5ebc3b36e00972ac41271c8",
+    "checkout": "/mowenjie/fluffy-bassoon-2/sources/libero-procedural-29a06f19-native01",
+    "clean": true,
+    "bundle_sha256": "676697d2e526df26cf686cc4aa0d99279bd9da332f064bd46c42a4af0532ce4f"
+  }
 }

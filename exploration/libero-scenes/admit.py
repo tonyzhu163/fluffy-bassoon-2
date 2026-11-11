@@ -7,8 +7,9 @@ the scene is physically usable:
 
     python admit.py --source <behavior_prompting checkout> --scenes <dir> --output <new dir>
 
-The simulator calls follow `outputs/libero-gen-custom-layouts-20261111-r1/geometry.py`,
-which ran on Baige. This file itself has only been syntax-checked.
+The simulator calls follow `outputs/libero-gen-custom-layouts-20261111-r1/geometry.py`.
+Eight training layouts passed this admission on Baige; see
+`outputs/libero-procedural-qual-20261111-r1/GEOMETRY-RESULT.json` for limits.
 """
 
 from __future__ import annotations

@@ -103,6 +103,17 @@ On 96 fresh RoboCasa365 scenes with one shared frozen-policy first attempt, two-
 
 For historical Flow-SDE teachers, the [critic parity audit](../outputs/robocasa-flow-sde-critic-parity-20261104-r1/RESULT.md) found that rollout and replay could use different denoising-step values even when likelihoods matched. Record the RLinf revision and critic definition when comparing these runs.
 
+## Procedural LIBERO
+
+Eight training layouts fixed before simulation passed construction, initial contact,
+settling and object-centre visibility checks; all 48 dropped-bowl controls satisfied
+only the intended receptacle predicate. Those controls establish predicate semantics,
+not policy execution or robot reachability. Recomputing the 2,912 hidden rules on
+each settled layout changed 3,040 of 23,296 nominal labels across five layouts.
+Rendered inspection also found three partly cropped bowls. History targets must be
+bound to realized reset geometry, and centre visibility alone does not establish
+full-object visibility. [Geometry evidence and limits](../outputs/libero-procedural-qual-20261111-r1/GEOMETRY-RESULT.json).
+
 ## RoboTwin
 
 ### Sidney phone-stand baseline

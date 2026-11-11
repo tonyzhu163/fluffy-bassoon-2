@@ -52,6 +52,6 @@ No blanket percentage threshold and no held-out filtering by success.
 
 Use one allocated GPU at a time, with the actual job-step probe, immutable Git
 deployment and fresh output identity for each attempt. Initial qualification
-budget: at most 4 GPU-hours including failed jobs. CPU preparation uses no GPU
-time. Any model inference requires the actual accelerator allocation; a CPU import
+budget: at most 4 GPU-hours including failed jobs. CPU preparation runs on the development endpoint when available; any
+time spent preparing inside a GPU allocation counts toward this cap. Any model inference requires the actual accelerator allocation; a CPU import
 is not accelerator qualification. Save clocks and cumulative consumption here.
