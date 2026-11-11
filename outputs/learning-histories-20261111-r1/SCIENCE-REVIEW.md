@@ -21,7 +21,10 @@ diagnostic, not evidence of robotic adaptation or learned active exploration.
   frozen learner and the same histories; the current grid does not contain this
   intervention.
 - The held-out rules are new combinations within a fixed family, not new rule
-  families. Full corrections already reveal the correct object; linked failures
+  families. They are exclusively two-attribute rules, whereas training also
+  includes 18 one-attribute rules. A train/held-out gap does not by itself prove
+  memorization; an arity-matched training-rule evaluation is a useful control.
+  Full corrections already reveal the correct object; linked failures
   add no task information conditional on that full answer in this toy.
 
 The immutable grid remains the originally specified first-pass experiment.

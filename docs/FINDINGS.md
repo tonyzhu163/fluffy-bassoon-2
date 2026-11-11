@@ -2,6 +2,22 @@
 
 The strongest evidence so far is for native SFT competence and for some **source** policies improving under online RL. Paired frozen-student evaluations have not shown a consistent gain caused by retaining history. These are different measurements.
 
+## Synthetic learning histories
+
+A five-condition, three-seed hidden-rule selection grid trained four-layer
+Transformers for 20,000 updates per fit, then evaluated frozen weights using
+each learner's own attempts on fresh scenes. Execution was perfect. On held-out
+rules, the choice-and-outcome learner improved from 45.44% at k=0 to 57.05% at
+k=6, while exact rule enumeration on those same histories reached 86.50%.
+The training-rule gap was similarly large (58.19% versus 87.17%). All seeds
+failed the original near-reference screen. Demo-only reached 45.49%, blind
+choices 41.14%, full corrections 67.51%, and linked attempts/corrections 69.62%
+at held-out k=6. These curves show partial history use in the synthetic task,
+not robotic adaptation or learned information-seeking exploration. The
+reference uses a full-family prior rather than each split's sampling prior,
+and a same-model feedback intervention remains untested.
+[Results, seed variation and limitations](../outputs/learning-histories-20261111-r1/RESULT.md).
+
 ## RoboCasa365
 
 The Atomic-Seen baseline uses the native JAX π0.5 Human300 checkpoint at step **75,000**. Load `pi05_pretrain_human300/multitask_learning/75000` from `robocasa/robocasa365_checkpoints` at revision `c484448a`, including its bundled normalization. OpenPI predicts 50 actions and executes five before replanning, with ten denoising steps. [Pinned checkpoint](https://huggingface.co/robocasa/robocasa365_checkpoints/tree/c484448aba1a9b60a04c9b0ca117241518ea69f3/pi05_pretrain_human300/multitask_learning/75000)
