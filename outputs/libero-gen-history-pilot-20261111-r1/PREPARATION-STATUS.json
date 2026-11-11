@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-11T17:32:00+08:00",
+  "checked_at": "2026-11-11T17:34:15+08:00",
   "cluster": "Baige",
-  "gpu_job": "job-ixk0ddq6qilq",
+  "gpu_job": "job-7ssvclidy81g",
   "gpu_hours_used": null,
   "gpu_hours_cap": 5,
-  "deployed_commit": "8e526743738cb76a973b80417f6a6375e410f5a0",
-  "deployed_source": "/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-8e526743",
+  "deployed_commit": "7d3096e60d222e0314e5643420c0cb00bd08e0d0",
+  "deployed_source": "/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-7d3096e6",
   "assets": {
     "selected_bytes": 8451066217,
     "all_three_sha256_verified": true,
@@ -23,10 +23,10 @@
     "cpu_preflight03": "Passed all 10 imports and both HDF5 schemas; complete=true; GPU execution remains unqualified",
     "gpu_runtime_smoke": "Passed allocated4090 probe, strict967tensor equality, frozenCUDA, both native episodes, pairedreset observations and unchanged parameters"
   },
-  "next": "Launch panel01 with five paired native initial scenes0\u20134 per candidate; scene0 repeats smoke, no held-out claim",
+  "next": "Verify allocated probe and advancing native episodes; all five paired resets and per-scene native scores required; next regular17:39",
   "latest_fix_commit": "9cb5094d",
   "gpu_hours_finalized": 0.5416666666666666,
-  "gpu_hours_reserved": 0,
+  "gpu_hours_reserved": 1,
   "cpu_evidence": "cpu-evidence01",
   "qualification": {
     "gpus": 1,
@@ -41,31 +41,20 @@
     "scheduler_environment": {
       "NVIDIA_DRIVER_CAPABILITIES": "compute,utility,graphics"
     },
-    "n_test_per_candidate": 1,
-    "identity": "qual04",
-    "job_id": "job-ixk0ddq6qilq",
-    "created_shanghai": "2026-11-11 17:21:09",
-    "status": "Succeeded: both native smoke episodes1/1, exactly paired initial observations, unchanged frozen parameters",
+    "n_test_per_candidate": 5,
+    "identity": "panel01",
+    "job_id": "job-7ssvclidy81g",
+    "created_shanghai": "2026-11-11 17:34:01",
+    "status": "Queued; five scenes per candidate, index0 repeats runtime smoke",
     "capacity_before_submit": {
-      "free_gpus": 34,
+      "free_gpus": 7,
       "max_gpus": 152,
-      "free_cpus": 660,
+      "free_cpus": 355,
       "max_cpus": 2052,
-      "free_memory_gib": 7908,
-      "max_memory_gib": 17081
-    },
-    "ended_shanghai": "2026-11-11 17:28:55",
-    "scheduler_seconds": 451,
-    "conservative_seconds": 466,
-    "native_episodes": 2,
-    "clock": {
-      "exit_code": 0,
-      "started": 1794388882,
-      "ended": 1794389328,
-      "gpus": 1,
-      "hostname": "job-ixk0ddq6qilq-master-0"
-    },
-    "receipt_folder": "qual04"
+      "free_memory_gib": 6276,
+      "max_memory_gib": 17081,
+      "queued_tasks": 1
+    }
   },
   "cumulative_scheduler_gpu_hours": 0.3947222222222222,
   "repair": "Remove only inactive legacy language_embedding=null and use_finetuned_language_encoder=false runner keywords, with exact-value/language-ignore guards and full signature binding",
@@ -188,6 +177,54 @@
         "hostname": "job-l5f145d5n9rw-master-0"
       },
       "receipt_folder": "qual03"
+    },
+    {
+      "gpus": 1,
+      "gpu_type": "NVIDIA GeForce RTX 4090",
+      "cpus": 13,
+      "memory_gib": 112,
+      "runtime_limit_minutes": 60,
+      "unconditional_retries": 0,
+      "queue": "aihcq-chqrelndaaj4",
+      "pool": "aihc-sw5hua6i3hyv",
+      "image": "ccr-2ff5lkkz-vpc.cnc.bj.baidubce.com/db/strong-plant:v2.0-cu12.8-cudnn9-ubuntu22.04_mowenjie_20261015152301",
+      "scheduler_environment": {
+        "NVIDIA_DRIVER_CAPABILITIES": "compute,utility,graphics"
+      },
+      "n_test_per_candidate": 1,
+      "identity": "qual04",
+      "job_id": "job-ixk0ddq6qilq",
+      "created_shanghai": "2026-11-11 17:21:09",
+      "status": "Succeeded: both native smoke episodes1/1, exactly paired initial observations, unchanged frozen parameters",
+      "capacity_before_submit": {
+        "free_gpus": 34,
+        "max_gpus": 152,
+        "free_cpus": 660,
+        "max_cpus": 2052,
+        "free_memory_gib": 7908,
+        "max_memory_gib": 17081
+      },
+      "ended_shanghai": "2026-11-11 17:28:55",
+      "scheduler_seconds": 451,
+      "conservative_seconds": 466,
+      "native_episodes": 2,
+      "clock": {
+        "exit_code": 0,
+        "started": 1794388882,
+        "ended": 1794389328,
+        "gpus": 1,
+        "hostname": "job-ixk0ddq6qilq-master-0"
+      },
+      "receipt_folder": "qual04"
     }
-  ]
+  ],
+  "visual_review": {
+    "scope": "Both qual04 smoke videos",
+    "reviewer": "Independent parent agent",
+    "observation": "Same initial layout; center candidate grasps center bowl, near-plate candidate grasps different bowl beside plate; ending frames agree with native On-goal success, without a full-release claim",
+    "durations_seconds": [
+      4.9,
+      8.8
+    ]
+  }
 }
