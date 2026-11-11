@@ -127,8 +127,12 @@ def fit(args):
         else:
             before = {k:v for k,v in state["contract"].items() if k not in ("steps","code")}
             after = {k:v for k,v in contract.items() if k not in ("steps","code")}
-            assert before == after and tuple(state["contract"]["steps"]) == STEPS
-            assert state["step"] == STEPS[-1]
+            assert before == after
+            previous_steps = tuple(state["contract"]["steps"])
+            assert previous_steps in (STEPS, milestones)
+            assert STEPS[-1] <= state["step"] < args.extend_to
+            if previous_steps == STEPS:
+                assert state["step"] == STEPS[-1]
             np.testing.assert_array_equal(mean, state["mean"])
             np.testing.assert_array_equal(scale, state["scale"])
             (args.out/"resume.json").write_text(json.dumps({
