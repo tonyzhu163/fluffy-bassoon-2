@@ -1,0 +1,93 @@
+{
+  "status": "nominal_geometry_only_not_simulator_validated",
+  "seed": 0,
+  "attempts": 12,
+  "scenes": 256,
+  "syntactic_rules": 2912,
+  "distinct_rule_functions": 2912,
+  "splits": {
+    "train": {
+      "sessions": 1024,
+      "scenes": 192,
+      "distinct_rule_functions": 2184,
+      "syntactic_rules": 2184,
+      "after_demo": {
+        "hypotheses": {
+          "min": 112,
+          "median": 448.0,
+          "max": 560
+        },
+        "distinct_continuations": {
+          "min": 72,
+          "median": 384.0,
+          "max": 560
+        },
+        "query_choices": {
+          "min": 2,
+          "median": 6.0,
+          "max": 6
+        }
+      },
+      "construction_rejections": {
+        "support_cannot_identify_query_even_with_corrections": 23
+      }
+    },
+    "validation": {
+      "sessions": 256,
+      "scenes": 32,
+      "distinct_rule_functions": 364,
+      "syntactic_rules": 364,
+      "after_demo": {
+        "hypotheses": {
+          "min": 112,
+          "median": 448.0,
+          "max": 560
+        },
+        "distinct_continuations": {
+          "min": 88,
+          "median": 402.0,
+          "max": 560
+        },
+        "query_choices": {
+          "min": 2,
+          "median": 6.0,
+          "max": 6
+        }
+      },
+      "construction_rejections": {
+        "support_cannot_identify_query_even_with_corrections": 10
+      }
+    },
+    "test": {
+      "sessions": 256,
+      "scenes": 32,
+      "distinct_rule_functions": 364,
+      "syntactic_rules": 364,
+      "after_demo": {
+        "hypotheses": {
+          "min": 112,
+          "median": 448.0,
+          "max": 560
+        },
+        "distinct_continuations": {
+          "min": 88,
+          "median": 384.0,
+          "max": 480
+        },
+        "query_choices": {
+          "min": 2,
+          "median": 6.0,
+          "max": 6
+        }
+      },
+      "construction_rejections": {
+        "demo_already_determines_query": 1,
+        "support_cannot_identify_query_even_with_corrections": 2
+      }
+    }
+  },
+  "ambiguity_reference": "full rule family, without split membership",
+  "native_episodes": 0,
+  "model_updates": 0,
+  "source_manifest_sha256": "65bfcefd1845be3f64343624a991fb82b9a81f6dd11088bf6cd6736512fda079"
+}

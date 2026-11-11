@@ -1,0 +1,34 @@
+{
+  "scope": "static artifact integrity only; no simulator, motor or learner tests",
+  "case_directory": "cases-r2",
+  "sessions": {
+    "train": 1024,
+    "validation": 256,
+    "test": 256
+  },
+  "total_sessions": 1536,
+  "sampled_distinct_hidden_rules": {
+    "train": 820,
+    "validation": 181,
+    "test": 180
+  },
+  "distinct_layouts": 256,
+  "checks": [
+    "disjoint scene and rule compositions",
+    "schedule field allowlist",
+    "unique scene within each session",
+    "schedule/evaluator IDs and counts match",
+    "goal predicates belong to referenced scene",
+    "copied BDDL hashes match source",
+    "recorded ambiguity constraints satisfied"
+  ],
+  "all_static_checks_passed": true,
+  "native_episodes": 0,
+  "gpu_hours": 0,
+  "artifact_hashes_sha256": "a200baab2ff7e77f907085f9b1b397126f4d0235b9dc40c676dae1f9f0defdbc",
+  "source_sha256": {
+    "exploration/libero-scenes/histories.py": "22073e7d7af5ea4f367b0a07641384db10a19e5c779f4c942fa8b500734467e5",
+    "exploration/libero-scenes/scenes.py": "02c2c74695670d58e6ef8b0744509ba6119aaa9c2ae4299b6e3f08b056208604",
+    "exploration/learning-histories/placement.py": "f04bdca0544bdf2b91f863817c5e84b82ed264a89937d7d78551854ab4982c2f"
+  }
+}
