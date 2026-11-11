@@ -1,6 +1,6 @@
 # Learning histories: can a Transformer learn from attempts?
 
-Exploratory diagnostic, not part of the paper plan. The completed three-seed grid is recorded in the [run readout](../../outputs/learning-histories-20261111-r1/RESULT.md).
+Exploratory diagnostic, not part of the paper plan. See the [original three-seed grid](../../outputs/learning-histories-20261111-r1/RESULT.md), [same-checkpoint feedback intervention](../../outputs/learning-histories-feedback-20261111-r1/RESULT.md), and [completed recipe screen with fresh confirmation](../../outputs/learning-histories-fix-20261111-r1/RESULT.md).
 
 The RoboCasa and RoboTwin students showed no consistent gain from retaining history ([findings](../../docs/FINDINGS.md)). This folder asks the prior question in the cheapest setting available: when history *does* carry information, does a plain Transformer learn to use it, and how close to optimal does it get?
 
@@ -39,6 +39,8 @@ Chance is 0.20. Two things follow before any model is trained:
 
 `train.py` fits a four-layer Transformer over object tokens, one fit per context condition. Each session is trained at a random prefix length, so the fit covers the whole learning curve. Training attempts come from posterior sampling with 20% random choices. Evaluation uses the learner's **own** greedy attempts with all weights fixed, and reports three curves: the learner, the enumeration reference reading the learner's own histories, and the reference making its own attempts.
 
+Training uses supervised correct-choice labels, not online policy-gradient updates. At evaluation, the visible history is supplied again to each forward pass; the implementation does not carry a separate recurrent hidden state between calls. A feedback intervention can establish useful input dependence, but does not by itself identify a belief representation or Bayesian update mechanism inside the Transformer.
+
 Later training-actor choices depend on earlier rewards, so the blind condition can indirectly observe feedback through those choices. Its evaluation policy has no such reward access. Comparisons between separately trained conditions therefore need a follow-up intervention on the same frozen learner and histories (mask or shuffle feedback) before claiming a causal feedback benefit. The query imitation objective also does not train information-seeking exploration.
 
 ```bash
@@ -51,7 +53,7 @@ The completed five-condition, three-seed grid used K=6 and 20,000 CUDA updates p
 
 The [paired feedback follow-up](../../outputs/learning-histories-feedback-20261111-r1/RESULT.md) reproduced the original curves exactly. On held-out random-attempt histories, the same checkpoints scored 54.65% with real feedback, 43.94% with outcomes masked and 38.83% with outcomes shuffled. All three seeds showed a benefit. Training-style histories explained only 1.77 points of the held-out deficit; a large reading gap persisted even on training rules.
 
-The gap is the same on training rules and in the `corrections` condition, which involves no attempt policy, so it belongs to the learner. `train.py` now has three options aimed at it: `--dense` supervises every scene of a session instead of one query, `--fourier` adds sinusoidal attribute features, and `--d`, `--layers`, `--heads` and `--lr` set capacity and step size. They are untested at full length; the [follow-up plan](../../outputs/learning-histories-fix-20261111-r1/PLAN.md) compares them.
+Substantial gaps also appear on training rules and in the `corrections` condition, which involves no attempt policy. The completed five-recipe, three-seed screen tested denser supervision, Fourier attribute features, learning rate and a larger model. Fresh confirmation of the selected dense + Fourier corrections recipe reached 75.64%, versus 67.40% originally and a 94.94% same-history enumeration reference. Attempts reached 60.50% versus 57.34%, with one seed slightly worse. All fits still failed the near-reference screen. Dense training changes attention and the objective together; these recipe comparisons do not isolate a mechanism or substitute for the same-checkpoint feedback intervention. No longer-duration fit was tested. See the [confirmed results and limitations](../../outputs/learning-histories-fix-20261111-r1/RESULT.md).
 
 ## Decision rule
 
@@ -61,5 +63,5 @@ Read each fit on held-out rules, three seeds per condition. These original scree
 | --- | --- | --- |
 | `attempts` within 5 points of Bayes at every k, and `blind` no better than `demo` | A plain Transformer learns the update from outcomes. | Move to continuous actions and partial corrections, then a physics environment with a qualified motor. |
 | Close to Bayes on training rules, more than 10 points short on held-out rules | It memorized the rule set. | Enlarge the rule family before changing the model. |
-| More than 10 points short on training rules after 20,000 steps | The update is not being learned. | Fix the objective or architecture here. Do not move to robots. |
+| More than 10 points short on training rules after 20,000 steps | The learner leaves substantial available information unused; partial feedback use may still be present. | Diagnose the objective or representation before a robot history-learning campaign. Separate motor/interface qualification does not establish learned robotic adaptation. |
 | `blind` beats `demo` | The learner is reading the actor's competence from its choices, not the outcomes. | Change the attempt source before interpreting any gain. |
