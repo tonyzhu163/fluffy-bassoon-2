@@ -18,7 +18,7 @@ WORK = Path("/tmp") / RUN
 COLD = BOS / "strong-plant-archives" / RUN
 GIB = 2**30
 PAYLOAD = (".pt", ".pt.gz", ".pth", ".pth.gz", ".npz", ".npy", ".distcp", ".safetensors",
-           ".pkl", ".bin", ".mp4", ".mkv", ".webm", ".avi", ".h5", ".hdf5", ".tar.zst")
+           ".pkl", ".pkl.gz", ".bin", ".mp4", ".mkv", ".webm", ".avi", ".h5", ".hdf5", ".tar.zst")
 COMPACT_LIMIT = 2**20
 
 
@@ -121,8 +121,8 @@ def archive(group, number, sources):
     return group.name, part, sum(row["allocated_bytes"] for row in rows)
 
 
-def prepare():
-    plan = read(WORK / "PLAN.json")
+def prepare(plan_name):
+    plan = read(WORK / plan_name)
     COLD.mkdir(exist_ok=True)
     (WORK / "verified").mkdir(exist_ok=True)
     with ThreadPoolExecutor(max_workers=6) as pool:
@@ -136,17 +136,17 @@ def prepare():
             except Exception as error:
                 errors.append(dict(part=jobs[job], error=str(error)))
                 print(f"FAILED {jobs[job]} {error}", flush=True)
-        write(WORK / "PREPARE-DONE.json", dict(parts=len(jobs), errors=errors))
+        write(WORK / f"{Path(plan_name).stem}-DONE.json", dict(parts=len(jobs), errors=errors))
         require(not errors, "Some archive parts did not verify")
 
 
-def release():
+def release(plan_name):
     scheduler = read(WORK / "SCHEDULER.json")
     require(not scheduler["selected_consumers"] and time.time() - scheduler["observed_unix"] < 900,
             "Refresh active task dependencies")
     releases = WORK / "released"
     releases.mkdir(exist_ok=True)
-    for item in read(WORK / "PLAN.json")["archive"]:
+    for item in read(WORK / plan_name)["archive"]:
         key = item["id"]
         for receipt_path in sorted((WORK / "verified").glob(f"{key}__*.json")):
             release_path = releases / receipt_path.name
@@ -177,6 +177,7 @@ def release():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("phase", choices=("prepare", "release"))
+    parser.add_argument("--plan", choices=("PLAN.json", "ADDITIONAL.json"), default="PLAN.json")
     args = parser.parse_args()
     require(os.path.ismount(BOS), f"BOS is not mounted: {BOS}")
-    (prepare if args.phase == "prepare" else release)()
+    (prepare if args.phase == "prepare" else release)(args.plan)
