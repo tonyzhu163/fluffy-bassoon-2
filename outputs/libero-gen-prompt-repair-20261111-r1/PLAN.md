@@ -72,6 +72,17 @@ Report each native outcome, selected object and placement behavior. A gain
 only on layout 0 is reproduction; layout 1 provides a small transfer check,
 not a held-out benchmark or evidence of general rule learning.
 
+Use a separate process and fresh one-demo asset root for each condition.
+The original root contains an unchanged copy of each original `demo_0`;
+its official-loader prompt tensors must hash to the previously measured
+native/control prompts. Disable the checkpoint's training-split filter for
+both one-demo roots (`is_seen=False`), because the repaired demonstration
+was never in that split. This changes dataset selection, not the frozen
+model. Per-episode policy seeds are `91001 + 10000*candidate + layout_index`;
+the two conditions must have identical scene states, public observations,
+selected physical objects and seeds. Simulator validity and input parity
+checks do not impose a minimum success score.
+
 No weights are trained in this first repair. Further data collection or
 motor training must answer the concrete question left by these results,
 with an explicit new recipe and remaining budget. Do not repeat a larger
