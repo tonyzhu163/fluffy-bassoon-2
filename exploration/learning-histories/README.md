@@ -51,6 +51,8 @@ The completed five-condition, three-seed grid used K=6 and 20,000 CUDA updates p
 
 The [paired feedback follow-up](../../outputs/learning-histories-feedback-20261111-r1/RESULT.md) reproduced the original curves exactly. On held-out random-attempt histories, the same checkpoints scored 54.65% with real feedback, 43.94% with outcomes masked and 38.83% with outcomes shuffled. All three seeds showed a benefit. Training-style histories explained only 1.77 points of the held-out deficit; a large reading gap persisted even on training rules.
 
+The gap is the same on training rules and in the `corrections` condition, which involves no attempt policy, so it belongs to the learner. `train.py` now has three options aimed at it: `--dense` supervises every scene of a session instead of one query, `--fourier` adds sinusoidal attribute features, and `--d`, `--layers`, `--heads` and `--lr` set capacity and step size. They are untested at full length; the [follow-up plan](../../outputs/learning-histories-fix-20261111-r1/PLAN.md) compares them.
+
 ## Decision rule
 
 Read each fit on held-out rules, three seeds per condition. These original screening rules use "Bayes" to mean the full-family enumeration reference above; they are diagnostic thresholds, not proofs of optimality or causal feedback use.
