@@ -130,3 +130,19 @@ The small evidence archive's SHA256 was independently verified after
 download (`aa4152d76766349ba4e9834bf73d6315c68c784cd805cad90f850ad8f6adcb4d`).
 These receipts establish the asset digests and CPU setup start; they do
 not establish completed runtime installation or motor qualification.
+
+## Source import portability check
+
+The official LIBERO archive's 1,116 tracked file contents were verified
+against the pinned Git tree, then transferred as a packed shallow Git
+object store. Independent Git cloning and connectivity checks passed on
+the exporting host. The first Linux import was rejected by Git because
+tar extraction preserved macOS owner IDs. `cpu-runtime03-clock.json`
+records exit 1 after two seconds; no model was instantiated and no GPU
+was allocated.
+
+The fix extracts files with the current Linux owner while retaining
+content checks. It uses fresh `source-import02` rather than changing the
+failed import. No Git ownership protection is disabled. The isolated
+Python dependency installation has completed, including gym 0.21; full
+source/fork installation and CPU imports still need to pass.
