@@ -1,0 +1,19 @@
+/mowenjie/fluffy-bassoon-2/sources/libero-gen-source-import-0d6da30a/outputs/libero-gen-history-pilot-20261111-r1/import_source.py:37: DeprecationWarning: Python 3.14 will, by default, filter extracted tar archives and reject files or modify their metadata. Use the filter argument to control this behavior.
+  archive.extractall(import_dir)
+Cloning into '/mowenjie/fluffy-bassoon-2/cache/bpp-58125e6-20261111-r1/deps/LIBERO'...
+fatal: detected dubious ownership in repository at '/mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/source-import01/LIBERO.git'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/source-import01/LIBERO.git
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/sources/libero-gen-source-import-0d6da30a/outputs/libero-gen-history-pilot-20261111-r1/import_source.py", line 65, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/sources/libero-gen-source-import-0d6da30a/outputs/libero-gen-history-pilot-20261111-r1/import_source.py", line 51, in main
+    subprocess.run(["git", "clone", "--no-hardlinks", str(store), str(target)], check=True)
+  File "/root/miniforge/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'clone', '--no-hardlinks', '/mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/source-import01/LIBERO.git', '/mowenjie/fluffy-bassoon-2/cache/bpp-58125e6-20261111-r1/deps/LIBERO']' returned non-zero exit status 128.

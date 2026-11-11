@@ -1,15 +1,15 @@
 {
-  "checked_at": "2026-11-11T16:41:00+08:00",
+  "checked_at": "2026-11-11T16:48:53+08:00",
   "cluster": "Baige",
-  "gpu_job": null,
-  "gpu_hours_used": 0,
+  "gpu_job": "job-ziws4e3djp5a",
+  "gpu_hours_used": null,
   "gpu_hours_cap": 5,
-  "deployed_commit": "ab4dff90d6088989470e06d563cc0bf173c03a55",
-  "deployed_source": "/mowenjie/fluffy-bassoon-2/sources/libero-gen-source-owner-ab4dff90",
+  "deployed_commit": "9368f1da403bb61f0736c93e9d28564f6c0d2c1e",
+  "deployed_source": "/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-9368f1da",
   "assets": {
     "selected_bytes": 8451066217,
     "all_three_sha256_verified": true,
-    "evidence": "Observed remote asset-prefetch01.log; raw receipt pending retrieval"
+    "evidence": "ASSET-PREFETCH.json"
   },
   "runtime": {
     "dependencies": "CPU installation completed, including torch2.8/cu128 and gym0.21",
@@ -22,6 +22,36 @@
     "graphics_repair": "Ubuntu jammy GLVND 1.4.0-1 libgl1/libegl1/libglx0/libglvnd0 unpacked into private os-libs01; OpenCV/Open3D/MuJoCo ldd sweep passed with private torch/lib",
     "cpu_preflight03": "Passed all 10 imports and both HDF5 schemas; complete=true; GPU execution remains unqualified"
   },
-  "next": "Deploy launcher with qualified private shared-library paths, then first allocated one-GPU/two-episode motor qualification",
-  "latest_fix_commit": "9cb5094d"
+  "next": "Verify advancing native simulator episodes; no reader training authorized",
+  "latest_fix_commit": "9cb5094d",
+  "gpu_hours_finalized": 0,
+  "gpu_hours_reserved": 1,
+  "cpu_evidence": "cpu-evidence01",
+  "qualification": {
+    "identity": "qual01",
+    "job_id": "job-ziws4e3djp5a",
+    "created_shanghai": "2026-11-11 16:46:45",
+    "status": "GPU probe passed; motor startup, zero step files at last check",
+    "gpus": 1,
+    "gpu_type": "NVIDIA GeForce RTX 4090",
+    "cpus": 13,
+    "memory_gib": 112,
+    "runtime_limit_minutes": 60,
+    "unconditional_retries": 0,
+    "queue": "aihcq-chqrelndaaj4",
+    "pool": "aihc-sw5hua6i3hyv",
+    "capacity_before_submit": {
+      "free_gpus": 16,
+      "max_gpus": 152,
+      "free_cpus": 478,
+      "max_cpus": 2052,
+      "free_memory_gib": 6140,
+      "max_memory_gib": 17081
+    },
+    "image": "ccr-2ff5lkkz-vpc.cnc.bj.baidubce.com/db/strong-plant:v2.0-cu12.8-cudnn9-ubuntu22.04_mowenjie_20261015152301",
+    "scheduler_environment": {
+      "NVIDIA_DRIVER_CAPABILITIES": "compute,utility,graphics"
+    },
+    "n_test_per_candidate": 1
+  }
 }

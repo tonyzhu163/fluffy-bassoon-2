@@ -1,0 +1,14 @@
+IMPORT_OK torch 2.8.0+cu128
+IMPORT_OK torchvision 0.23.0+cu128
+IMPORT_OK gym 0.21.0
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+[robosuite WARNING] To setup, run: python /mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+IMPORT_OK robosuite 1.4.0
+IMPORT_OK mujoco 3.3.0
+IMPORT_OK h5py 3.14.0
+IMPORT_OK open3d 0.19.0
+IMPORT_OK behavior_prompting.train_network.env_runner.libero_image_runner imported
+IMPORT_OK behavior_prompting.train_network.policy.diffusion_unet_policy imported
+IMPORT_OK behavior_prompting.train_network.model.prompt.prompt_obs_encoder imported
+{"complete": true, "stage": "CPU imports and HDF5 schema only", "versions": {"torch": "2.8.0+cu128", "torchvision": "0.23.0+cu128", "gym": "0.21.0", "robosuite": "1.4.0", "mujoco": "3.3.0", "h5py": "3.14.0", "open3d": "0.19.0", "behavior_prompting.train_network.env_runner.libero_image_runner": "imported", "behavior_prompting.train_network.policy.diffusion_unet_policy": "imported", "behavior_prompting.train_network.model.prompt.prompt_obs_encoder": "imported"}, "prompts": [{"task": "pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate", "demonstrations": 50, "sample": "demo_0", "actions_shape": [103, 7], "observation_shapes": {"agentview_rgb": [103, 128, 128, 3], "ee_ori": [103, 3], "ee_pos": [103, 3], "ee_states": [103, 6], "eye_in_hand_rgb": [103, 128, 128, 3], "gripper_states": [103, 2], "joint_states": [103, 7]}}, {"task": "pick_up_the_black_bowl_next_to_the_plate_and_place_it_on_the_plate_2", "demonstrations": 50, "sample": "demo_0", "actions_shape": [186, 7], "observation_shapes": {"agentview_rgb": [186, 128, 128, 3], "ee_ori": [186, 3], "ee_pos": [186, 3], "ee_states": [186, 6], "eye_in_hand_rgb": [186, 128, 128, 3], "gripper_states": [186, 2], "joint_states": [186, 7]}}], "gpu_execution_qualified": false}
