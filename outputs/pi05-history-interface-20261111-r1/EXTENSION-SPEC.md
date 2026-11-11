@@ -21,19 +21,38 @@ A rule is one choice on each of a few independent axes, each computed from obser
 | Axis | Choices | Count |
 | --- | --- | ---: |
 | Pick | Leftmost, rightmost, uppermost, lowermost bowl in the image; nearest to or farthest from each of five landmarks | 14 |
-| Anchor | A named receptacle (five), or a relation: nearest the picked bowl, farthest from it, leftmost, rightmost | 9 |
-| Context | None, or a scene predicate that flips the pick when true (three predicates such as "plate left of ramekin") | 4 |
-| Offset | On the receptacle or beside it | 2 |
+| Pick-if | None, or a scene predicate that switches to the other bowl | 4 |
+| Anchor | A named receptacle (five), or one of eight relations (nearest the picked bowl, leftmost, nearest the other bowl, and so on) | 13 |
+| Anchor-if | None, or a scene predicate that switches to a partner anchor | 4 |
+| Offset | On the receptacle; beside it on a fixed side; beside it on the side facing a bowl's start | 9 |
+| Then | Nothing, or the other bowl goes on a named or relational receptacle | 10 |
 
-That is 1,008 rules over 20 behaviours. [Step A](STEP-A-RESULT.md) checked this in geometry only. It showed that an axis adds difficulty only when its value changes with the scene: context quadrupled the ambiguity left after a demonstration, while a constant offset added none. New axes should therefore be scene-dependent. Candidates, in rough order of motor cost: a context predicate on the anchor as well as the pick; an offset that depends on the scene ("beside it, on the side facing the other bowl"); a second step with the other bowl, which the release's Goal Chain split already covers.
+[Step A](STEP-A-RESULT.md) enumerated these in geometry only. Two findings shape the design:
+
+- An axis adds difficulty only when its value changes with the scene. A constant offset doubled the rule count and changed nothing.
+- Each scene-dependent axis is a dial. With a success bit only, the exact reference needs about 8 attempts for 728 rules (the first three axes), 12 for 2,912 (four axes) and more than 16 for all six (262,080). With a teacher correction per attempt, eight attempts suffice at every size.
+
+So the family can grow by appending to an axis or adding one, and the session length tells us how far to go. Start with the first four axes: they use only the 20 behaviours the release already contains. Offset and the second step add placements the motor has not been shown (beside a receptacle on a chosen side; two moves in one episode, which the release's Goal Chain split partly covers).
 
 Hold out a quarter of the compositions, with every choice on every axis still seen in training. With two bowls the pick is one bit per scene; a third bowl is deferred to step 4.
 
-### 2. A layout generator
+### 2. A procedural scene generator
 
-Sample bowl and receptacle positions under the checks the custom-layout stage defines: no initial contact, settling drift within tolerance, image-axis separation, no goal initially true. Add one check per session: the scenes chosen for attempts and query must keep at least three hypotheses apart, given the demonstration.
+Scenes get the same treatment as rules: a scene is one draw on each of a few axes, each a short list or range. LIBERO already has the machinery at the pinned commit `8f1084e3`: a scene template class declares fixture and object counts and an initial region (centre and half-width) per object, tasks are registered against it with goal predicates, and `generate_bddl_from_task_info()` writes the task files ([upstream example](https://github.com/Lifelong-Robot-Learning/LIBERO/blob/8f1084e3132a39270c3a13ebe37270a43ece2a01/scripts/create_libero_task_example.py)). The released tasks are fixed outputs of that route. The custom-layout stage instead writes object positions into the simulator state directly, which also works and needs no new task file.
 
-Sampled layouts replace the current hand-placed templates once those pass. Geometry01's failures (contact, drift, a cabinet collision) show that free sampling needs rejection on simulator checks, not on static coordinates alone. Rejection must use geometry only, never a policy outcome.
+| Scene axis | Draws | New motor behaviour? |
+| --- | --- | --- |
+| Positions | Bowl and receptacle positions sampled in the reachable table area | No, if the motor tolerates moved objects (unmeasured) |
+| Receptacles present | Any three or four of plate, ramekin, cookie box, basket, frying pan | New targets for basket and pan |
+| Fixtures | Stove and cabinet present or absent, at one of a few positions | No |
+| Bowl appearance | Black, red or white bowl (all three ship with LIBERO) | Probably small; it opens pick-by-colour rules |
+| Bowl count | Two or three (an upstream kitchen scene has three) | Unqualified: no released demonstration has three |
+| Camera | The release's two views | No, both are in the release |
+| Workspace | Kitchen, living-room or study table | Yes: new backgrounds and heights |
+
+Every sampled scene passes the custom-layout stage's checks in the simulator: no initial contact, settling drift within tolerance, image separation, no goal initially true. Rejection uses geometry only, never a policy outcome. One more check per session: after the demonstration, the attempt and query scenes still separate at least three hypotheses.
+
+Rules and scenes share one vocabulary. A rule refers to roles ("the bowl", "a receptacle", "a landmark"), not instances, so adding a receptacle type or a bowl colour to the scene lists extends every rule that mentions that role. Held-out scenes can then be defined per axis: unseen positions (easy), unseen receptacle subsets, an unseen bowl colour, the other camera.
 
 ### 3. Outcomes for every hypothesis
 
@@ -53,7 +72,7 @@ A third bowl or new objects fall under case 3 by default.
 
 | Step | What | Simulator or GPU | Pass condition |
 | --- | --- | --- | --- |
-| A | Rule family in geometry only, enumerated exactly as the toy does | None | **Passed** with the context axis: 44% after the demonstration, 82% at six attempts, 94% at eight. Use K=8. [Result](STEP-A-RESULT.md) |
+| A | Rule family in geometry only, enumerated exactly as the toy does | None | **Passed.** Four axes, 2,912 rules: 31% after the demonstration, 73% at eight attempts, 95% at twelve. [Result](STEP-A-RESULT.md) |
 | B | Custom-layout stage as planned: two pick rules, one target, 16 layouts | Owned by the LIBERO-Gen pilot | That stage's own admission |
 | C | Two bowls × four targets on sampled layouts, about 50 layouts, every behaviour executed once | About 400 episodes | At least 85% native success per behaviour; all predicates match the primary environment |
 | D | Full 20 behaviours, several hundred layouts | 6,000 to 10,000 episodes | Same, per behaviour; held-out compositions and layouts frozen before collection |
@@ -67,6 +86,6 @@ Panel03 ran 40 episodes in 380 seconds of process time, about 9.5 seconds per ep
 
 ## Known limits
 
-- One demonstration alone gives 44% in step A, because named anchors are easy to identify. Rebalance the anchor choices before fixing the family.
+- One demonstration alone gives 22 to 41% in step A depending on the family. Report gains relative to that floor, not to chance.
 - All rules stay within "put a bowl on something". The claim this supports is inference of unseen compositions of seen relations in one task family, not unseen rule families.
 - Fresh layouts are position changes with the same objects, camera and background.
