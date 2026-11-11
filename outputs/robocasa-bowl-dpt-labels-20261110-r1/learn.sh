@@ -44,5 +44,6 @@ case "$mode" in
           "$py" -Bu "$here/eval_bowl.py" "$code" "$checkpoint" "$source" "$admission" "$out" "$@" ;;
     direction) "$py" -Bu "$here/paired_direction.py" "$code" "$1" "$2" "$3" "$out" ;;
     trace) "$py" -Bu "$here/trace_motor.py" "$code" "$1" "$2" "$3" "$out" ;;
+    common-prefix) "$py" -Bu "$here/common_prefix.py" "$1" "$2" "$out" ;;
     *) exit 2 ;;
 esac
