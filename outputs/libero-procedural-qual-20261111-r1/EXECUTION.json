@@ -1,5 +1,5 @@
 {
-  "status": "geometry_complete_cpu_preparation_resumed_on_development",
+  "status": "checkpoint_verified_cpu_runtime_installing_from_hash_preserving_mirror",
   "gpu_hours_limit": 4,
   "scheduler_gpu_hours": 0.3925,
   "conservative_gpu_hours": 0.3947222222222222,
@@ -36,28 +36,57 @@
   "user_scope": "development scene qualification and released pi05 motor assessment before deciding SFT",
   "browser_coordination": "human authorized message to parent chat 01a1c8f3-5b3b-7822-b61b-0a59f6431501; message accepted",
   "code_commit": "64a5e2880f4851c5f1f0edbd9eaff75df0a5c591",
-  "last_checked": "2026-11-11T21:18:00+08:00",
+  "last_checked": "2026-11-11T21:39:00+08:00",
   "development_endpoint": "dv-0d0ac1c839",
   "development_status": "recovered; CPU setup running in isolated qualification Jupyter terminal",
-  "policy_scripts": "29a06f19 deployed clean; dependencies installing; no model loaded",
+  "policy_scripts": "unchanged evaluation code; runtime setup at 3a2ee1bf deployed clean; no model loaded",
   "cpu_preparation": {
-    "identity": "cpu-prepare03",
+    "identity": "cpu-prepare05",
     "host": "dv-0d0ac1c839",
-    "pid": 4872,
-    "commit": "29a06f19e5ce3a58d5ebc3b36e00972ac41271c8",
+    "pid": 7315,
+    "commit": "3a2ee1bf6ecba6fbd770383da7515b59c94c94eb",
     "gpus": 0,
     "status": "Running",
-    "previous_attempt": {
-      "identity": "cpu-prepare02",
-      "exit_code": 1,
-      "reason": "wrapper syntax error before setup ran",
-      "gpus": 0
-    }
+    "cache": "uv-cache05",
+    "mirror": "https://pypi.tuna.tsinghua.edu.cn",
+    "lock_change": "download/registry URLs only; versions, dependency graph and hashes unchanged"
   },
   "policy_deployment": {
-    "commit": "29a06f19e5ce3a58d5ebc3b36e00972ac41271c8",
-    "checkout": "/mowenjie/fluffy-bassoon-2/sources/libero-procedural-29a06f19-native01",
+    "commit": "3a2ee1bf6ecba6fbd770383da7515b59c94c94eb",
+    "checkout": "/mowenjie/fluffy-bassoon-2/sources/libero-procedural-3a2ee1bf-runtime05",
     "clean": true,
-    "bundle_sha256": "676697d2e526df26cf686cc4aa0d99279bd9da332f064bd46c42a4af0532ce4f"
+    "bundle_sha256": "90671896a655b7dac470be1fce72393b27eaab7835bb0a4584d86946fceb845c"
+  },
+  "cpu_preparation_attempts": [
+    {
+      "identity": "cpu-prepare02",
+      "exit_code": 1,
+      "gpus": 0,
+      "reason": "wrapper syntax error before setup ran"
+    },
+    {
+      "identity": "cpu-prepare03",
+      "exit_code": 143,
+      "gpus": 0,
+      "started": 1794403101.5606835,
+      "ended": 1794403791.1670356,
+      "reason": "stopped verified own uv after stalled shared-cache I/O; an unrelated diagnostic du in this own cache remained in kernel filesystem wait"
+    },
+    {
+      "identity": "cpu-prepare04",
+      "exit_code": 143,
+      "gpus": 0,
+      "started": 1794403886.183044,
+      "ended": 1794404228.8090096,
+      "reason": "direct PyPI large transfers slow; migrate to mirror while retaining artifact hashes"
+    }
+  ],
+  "checkpoint_preparation": {
+    "identity": "cpu-checkpoint01",
+    "gpus": 0,
+    "status": "all_19_files_verified",
+    "inference_bytes": 6334865102,
+    "revision": "f0cf5904b478d8f41633a7e632b23f598c9e72b7",
+    "updates": 0
   }
 }
