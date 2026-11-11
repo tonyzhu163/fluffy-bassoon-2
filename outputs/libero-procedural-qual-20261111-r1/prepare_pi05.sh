@@ -68,7 +68,10 @@ assert restored==original  # No package, version, dependency or hash changed.
 PY
   export UV_DEFAULT_INDEX=https://pypi.tuna.tsinghua.edu.cn/simple
 fi
-"$TASK_UV" sync --project "$TASK_INSTALL_SOURCE" --python 3.11 --frozen --no-dev
+# Upstream models_pytorch/gemma_pytorch.py imports pytest at module load,
+# including along the JAX factory's import path. Use upstream's default dev
+# group as documented by its README, with every version still frozen.
+"$TASK_UV" sync --project "$TASK_INSTALL_SOURCE" --python 3.11 --frozen
 "$TASK_UV" pip freeze --python "$TASK_SETUP/env/bin/python" > "$TASK_SETUP/installed.txt"
 # Add only the official client's transport dependencies to a separate directory.
 # The existing Python 3.10 simulator and its numerical libraries are untouched.
