@@ -1,4 +1,4 @@
-"""Deploy an exact Git commit and run the teacher despite a development outage.
+"""Deploy an exact Git commit and run a repair stage despite a development outage.
 
 Git 2.34 does not read filtered-bundle capabilities. Parse the pinned v3
 header, then use its standard index-pack --promisor support explicitly.
@@ -27,9 +27,18 @@ def main():
     parser.add_argument('--commit', required=True)
     parser.add_argument('--teacher-sha256', required=True)
     parser.add_argument('--identity', required=True)
+    parser.add_argument('--stage', choices=['teacher', 'evaluation'], default='teacher')
+    parser.add_argument('--teacher-identity')
+    parser.add_argument('--second-teacher-identity')
+    parser.add_argument('--alignment', choices=['pre', 'post'])
     args = parser.parse_args()
     assert re.fullmatch('[a-z0-9-]+', args.identity)
     assert re.fullmatch('[0-9a-f]{40}', args.commit)
+    if args.stage == 'evaluation':
+        assert args.teacher_identity and re.fullmatch('[a-z0-9-]+', args.teacher_identity)
+        assert args.alignment is not None
+        if args.second_teacher_identity is not None:
+            assert re.fullmatch('[a-z0-9-]+', args.second_teacher_identity)
     root = args.project / 'outputs' / RUN / ('bootstrap-' + args.identity)
     root.mkdir(parents=True, exist_ok=False)
     started, code = time.time(), 1
@@ -97,31 +106,39 @@ def main():
                    'prerequisites': prerequisites, 'capabilities': capabilities,
                    'missing_objects': {oid: OMITTED[oid] for oid in sorted(missing)},
                    'import': 'unchanged bundle PACK; git index-pack --stdin --fix-thin --promisor',
-                   'teacher_sha256': args.teacher_sha256}
+                   'teacher_sha256': args.teacher_sha256, 'stage': args.stage}
         (root / 'deployment.json').write_text(json.dumps(receipt, indent=2) + '\n')
         print('DEPLOY_VERIFIED', json.dumps(receipt), flush=True)
         run = args.project / 'outputs' / RUN / args.identity
-        command = ['bash', str(files / 'launch_teacher.sh'), str(args.project), str(checkout), args.commit, args.identity]
+        launcher = 'launch_teacher.sh' if args.stage == 'teacher' else 'launch_evaluation.sh'
+        command = ['bash', str(files / launcher), str(args.project), str(checkout), args.commit, args.identity]
+        if args.stage == 'evaluation':
+            command.extend([args.teacher_identity, args.alignment])
+            if args.second_teacher_identity is not None:
+                command.append(args.second_teacher_identity)
         process = subprocess.Popen(command)
-        offset = 0
+        names = ['teacher.log'] if args.stage == 'teacher' else [
+            'pack-original-0.log', 'pack-original-1.log',
+            'pack-repaired-0.log', 'pack-repaired-1.log',
+            'original.log', 'repaired.log']
+        offsets = dict.fromkeys(names, 0)
+        def drain_logs():
+            for name in names:
+                log = run / name
+                if log.exists():
+                    with log.open() as stream:
+                        stream.seek(offsets[name])
+                        chunk = stream.read()
+                        offsets[name] = stream.tell()
+                    if chunk:
+                        print('RUN_LOG', name, flush=True)
+                        print(chunk, end='', flush=True)
         while True:
-            log = run / 'teacher.log'
-            if log.exists():
-                with log.open() as stream:
-                    stream.seek(offset)
-                    chunk = stream.read()
-                    offset = stream.tell()
-                if chunk:
-                    print(chunk, end='', flush=True)
+            drain_logs()
             status = process.poll()
             if status is not None:
                 # A final write can occur between the preceding read and poll.
-                if log.exists():
-                    with log.open() as stream:
-                        stream.seek(offset)
-                        chunk = stream.read()
-                    if chunk:
-                        print(chunk, end='', flush=True)
+                drain_logs()
                 code = status
                 break
             time.sleep(2)
@@ -129,7 +146,21 @@ def main():
             record = json.loads(result.read_text())
             fields = ['count', 'native_any', 'native_final', 'alignment', 'geometry_observation_hashes_equal', 'trajectory_sha256']
             print('TEACHER_RECEIPT', result.parent.name, json.dumps({key: record.get(key) for key in fields}), flush=True)
-        print('TEACHER_CLOCK', (run / 'clock.json').read_text() if (run / 'clock.json').exists() else 'missing', flush=True)
+        if args.stage == 'evaluation':
+            for condition in ['original', 'repaired']:
+                result_file = run / condition / 'result.json'
+                if result_file.exists():
+                    result = json.loads(result_file.read_text())
+                    print('POLICY_RECEIPT', condition, json.dumps({
+                        'complete': result['complete'], 'checkpoint_sha256': result['checkpoint_sha256'],
+                        'candidates': [{'candidate': item['candidate'], 'policy_seeds': item['policy_seeds'],
+                            'fixed_prompt_sha256': item['fixed_prompt_sha256'],
+                            'records': [{key: record[key] for key in ['index', 'selected_skill_success', 'native_any', 'actual_controls']}
+                                        for record in item['records']]} for item in result['results']]}), flush=True)
+            comparison = run / 'comparison.json'
+            if comparison.exists():
+                print('PROMPT_COMPARISON', comparison.read_text(), flush=True)
+        print('RUN_CLOCK', (run / 'clock.json').read_text() if (run / 'clock.json').exists() else 'missing', flush=True)
     except Exception:
         traceback.print_exc()
     finally:

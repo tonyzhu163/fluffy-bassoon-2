@@ -87,3 +87,32 @@ No weights are trained in this first repair. Further data collection or
 motor training must answer the concrete question left by these results,
 with an explicit new recipe and remaining budget. Do not repeat a larger
 panel just to satisfy a checklist or turn a score into a pass/fail verdict.
+
+## Revision after teacher03
+
+Both native source replays succeeded. Both retargets grasped and lifted the
+intended bowl. Candidate 0 descended with a roughly 4 cm wrist tracking lag
+before horizontal alignment; the bowl pushed and tilted the plate and never
+reached its native goal. Candidate 1 reached its native goal first at action
+index 333, remained successful for several controls after gripper reopening,
+then crossed the native predicate's 3 cm horizontal boundary at index 356.
+Its full 372-control trajectory is retained, including that later failure.
+Post-action source observations fit the replay much better than pre-action
+observations, so prompt packaging uses `post` alignment.
+
+The teacher04 revision replays only candidate 0's successful 133-control
+grasp/lift prefix, then holds its actual controller orientation, aligns the
+carried bowl above the plate at the measured high lift, and descends with
+bounded delta controls. Document finite phase budgets and servo parameters
+before execution. No new native replay or candidate 1 simulation is needed.
+
+Repaired prompts end at the first intended native success, matching the
+policy's existing episode endpoint. This replaces the provisional demand
+that the full open-loop teacher schedule remain successful at its final
+frame; that extra persistence requirement was not the benchmark definition.
+Candidate 1 uses teacher03's actual successful prefix (334 controls), and
+candidate 0 will use teacher04 if its native goal is reached. Each packaging
+receipt records the full trajectory's length/final reward and the selected
+endpoint. This establishes native-goal execution, not stable released
+placement beyond the scored endpoint. No model success-percentage gate is
+introduced.

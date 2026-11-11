@@ -7,8 +7,10 @@ TASK_COMMIT=${3:?expected full project SHA}
 TASK_ID=${4:?fresh qualification identity such as qual01}
 TASK_TEACHER_ID=${5:?completed teacher output identity}
 TASK_ALIGNMENT=${6:?pre or post from native source alignment}
+TASK_SECOND_TEACHER_ID=${7:-$TASK_TEACHER_ID}
 [[ $TASK_ID =~ ^[a-z0-9-]+$ && $HOSTNAME == job-*-master-0 ]]
 [[ $TASK_TEACHER_ID =~ ^[a-z0-9-]+$ && ( $TASK_ALIGNMENT == pre || $TASK_ALIGNMENT == post ) ]]
+[[ $TASK_SECOND_TEACHER_ID =~ ^[a-z0-9-]+$ ]]
 TASK_FILES="$TASK_CODE/outputs/libero-gen-prompt-repair-20261111-r1"
 TASK_PARENT="$TASK_PROJECT/outputs/libero-gen-prompt-repair-20261111-r1"
 mkdir -p "$TASK_PARENT"
@@ -47,11 +49,11 @@ if [[ -z ${CUDA_VISIBLE_DEVICES:-} ]]; then
   export CUDA_VISIBLE_DEVICES=0
 fi
 "$TASK_PY" "$TASK_CODE/scripts/[train]gpu_probe.py" --expected-count 1 --purpose evaluation --baige-container --output "$TASK_RUN/gpu-probe.json"
-"$TASK_PY" - "$TASK_FILES" "$TASK_SETUP" "$TASK_PROJECT" "$TASK_RUN" "$TASK_TEACHER_ID" "$TASK_ALIGNMENT" <<'PY'
+"$TASK_PY" - "$TASK_FILES" "$TASK_SETUP" "$TASK_PROJECT" "$TASK_RUN" "$TASK_TEACHER_ID" "$TASK_ALIGNMENT" "$TASK_SECOND_TEACHER_ID" <<'PY'
 from pathlib import Path
 import hashlib,json,subprocess,sys,time
 files,setup,project,out=map(Path,sys.argv[1:5])
-teacher=project/'outputs/libero-gen-prompt-repair-20261111-r1'/sys.argv[5]/'teacher'
+teachers=[project/'outputs/libero-gen-prompt-repair-20261111-r1'/identity/'teacher' for identity in [sys.argv[5],sys.argv[7]]]
 alignment=sys.argv[6]
 started=time.time()
 split='libero_spatial_selected_combinations_inverse_view'
@@ -59,7 +61,7 @@ tasks=['pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate',
        'pick_up_the_black_bowl_next_to_the_plate_and_place_it_on_the_plate_2']
 geometry=project/'outputs/libero-gen-custom-layouts-20261111-r1/geometry02/geometry'
 admission=files.parent/'libero-gen-custom-layouts-20261111-r1/admission.json'
-assert json.loads((teacher/'result.json').read_text())['complete']
+assert all(json.loads((teacher/'result.json').read_text())['complete'] for teacher in teachers)
 
 def run(command, log_name):
  remaining=3300-(time.time()-started)
@@ -80,9 +82,9 @@ try:
    if condition=='original':
     command+=['--copy-reference']
    else:
-    folder=teacher/f'layout00-{candidate}'
+    folder=teachers[candidate]/f'layout00-{candidate}'
     command+=['--trajectory',str(folder/'trajectory.npz'),'--model-xml',str(folder/'model.xml'),
-              '--alignment',alignment,'--selected-bowl',str(candidate)]
+              '--alignment',alignment,'--selected-bowl',str(candidate),'--stop-at-first-native-success']
    run(command,f'pack-{condition}-{candidate}.log')
  # Prepare both prompt sets before spending time on the policy comparison.
  for condition in ['original','repaired']:
@@ -107,7 +109,7 @@ try:
    rows.append({'layout':index,'candidate':candidate,'seed':old['policy_seeds'][position],
                 'original':{k:a[k] for k in ['selected_skill_success','native_any','actual_controls']},
                 'repaired':{k:b[k] for k in ['selected_skill_success','native_any','actual_controls']}})
- (out/'comparison.json').write_text(json.dumps({'complete':True,'teacher':str(teacher),
+ (out/'comparison.json').write_text(json.dumps({'complete':True,'teachers':[str(p) for p in teachers],
     'alignment':alignment,'checkpoint_sha256':results[0]['checkpoint_sha256'],
     'paired_states_observations_and_policy_seeds':True,'weights_changed':False,
     'rows':rows},indent=2)+'\n')
