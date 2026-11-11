@@ -1,5 +1,5 @@
 {
-  "status": "teacher04 bounded alignment failure; persistent-reference correction prepared for one teacher05 episode",
+  "status": "Both candidate demonstrations reach native goals on layout0; paired frozen-policy prompt evaluation preparing",
   "stage_cap_gpu_hours": 4,
   "prior_task_conservative_gpu_hours_approx": 17.75,
   "initial_allocation": {
@@ -21,9 +21,9 @@
     "cpu_cores": 8,
     "ram_gib": 112
   },
-  "current_gpu_hours": 0.17333333333333334,
+  "current_gpu_hours": 0.1988888888888889,
   "checks": {
-    "local": "Python AST and bash syntax only; simulator execution on allocated Linux pending",
+    "local": "Python AST and bash syntax only; artifact integrity checked locally; simulator and policy computation restricted to allocated Linux",
     "source_hdf5": "two cached demo0 metadata receipts; near-plate abs_actions pose is constant and deliberately unused",
     "allocated_teacher03": "Exact Git deployment, GPU probe and all four simulator episodes completed; no BPP loaded; native successes but retarget final outcomes both zero."
   },
@@ -112,10 +112,41 @@
       "prefix_state_equal": true,
       "geometry_observation_hashes_equal": true,
       "policy_loaded": false
+    },
+    {
+      "identity": "teacher05",
+      "job_id": "job-x6lenl1n19fu",
+      "commit": "7a902b554c914455a606086fc1fb52822ea3d29c",
+      "submitted_shanghai": "2026-11-11 21:18:14",
+      "running_shanghai": "2026-11-11 21:18:27",
+      "ended_shanghai": "2026-11-11 21:19:46",
+      "scheduler_state": "Succeeded",
+      "scheduler_gpu_seconds": 79,
+      "conservative_gpu_seconds": 92,
+      "clock": {
+        "exit_code": 0,
+        "started": 1794403104,
+        "ended": 1794403157,
+        "gpus": 1,
+        "hostname": "job-x6lenl1n19fu-master-0"
+      },
+      "native_any": [
+        1,
+        0
+      ],
+      "native_final": [
+        1,
+        0
+      ],
+      "controls": 262,
+      "termination_reason": "selected_native_on",
+      "prefix_state_equal": true,
+      "geometry_observation_hashes_equal": true,
+      "policy_loaded": false
     }
   ],
-  "next_identity": "teacher05",
-  "current_scheduler_gpu_hours": 0.07222222222222222,
+  "next_identity": "paired01",
+  "current_scheduler_gpu_hours": 0.09416666666666666,
   "source_asset_cpu_preflight": {
     "native_source_count": 2,
     "references_resolved_per_source": 93,
