@@ -56,7 +56,7 @@ not simply be assumed paired. Use an isolated init bank with the same
 center-bowl task initialization copied under both candidate names, then
 verify matching simulator state/RGB/proprio after reset. This is a custom
 motor qualification, not the released benchmark evaluation. Successful
-execution remains unverified. The
+execution passed the two-episode runtime smoke; broader competence remains under qualification. The
 custom relation task uses the same two bowl-to-plate skills with qualified
 layout variation; it is not asserted to be ready before simulator checks.
 

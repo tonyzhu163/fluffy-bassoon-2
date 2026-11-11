@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-11T17:34:15+08:00",
+  "checked_at": "2026-11-11T17:44:30+08:00",
   "cluster": "Baige",
   "gpu_job": "job-7ssvclidy81g",
   "gpu_hours_used": null,
@@ -23,10 +23,10 @@
     "cpu_preflight03": "Passed all 10 imports and both HDF5 schemas; complete=true; GPU execution remains unqualified",
     "gpu_runtime_smoke": "Passed allocated4090 probe, strict967tensor equality, frozenCUDA, both native episodes, pairedreset observations and unchanged parameters"
   },
-  "next": "Verify allocated probe and advancing native episodes; all five paired resets and per-scene native scores required; next regular17:39",
+  "next": "Fresh panel02 with8 CPU instead of13; retain112GiB and1RTX4090, same five-scene contract and qualified code",
   "latest_fix_commit": "9cb5094d",
   "gpu_hours_finalized": 0.5416666666666666,
-  "gpu_hours_reserved": 1,
+  "gpu_hours_reserved": 0,
   "cpu_evidence": "cpu-evidence01",
   "qualification": {
     "gpus": 1,
@@ -45,7 +45,7 @@
     "identity": "panel01",
     "job_id": "job-7ssvclidy81g",
     "created_shanghai": "2026-11-11 17:34:01",
-    "status": "Queued; five scenes per candidate, index0 repeats runtime smoke",
+    "status": "Cancelled while queued after CPU resource-fit diagnosis; never allocated or executed",
     "capacity_before_submit": {
       "free_gpus": 7,
       "max_gpus": 152,
@@ -54,7 +54,13 @@
       "free_memory_gib": 6276,
       "max_memory_gib": 17081,
       "queued_tasks": 1
-    }
+    },
+    "ended_shanghai": "2026-11-11 17:44:11",
+    "queue_wait_seconds": 610,
+    "scheduler_seconds": 0,
+    "conservative_seconds": 0,
+    "native_episodes": 0,
+    "output_directory_exists": false
   },
   "cumulative_scheduler_gpu_hours": 0.3947222222222222,
   "repair": "Remove only inactive legacy language_embedding=null and use_finetuned_language_encoder=false runner keywords, with exact-value/language-ignore guards and full signature binding",
