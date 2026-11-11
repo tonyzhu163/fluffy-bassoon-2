@@ -65,6 +65,21 @@ observations and the smoke prompts exactly. This supports custom scene
 transfer as the leading explanation, with a single-state control limit.
 This is a development failure, not a history-learning result. [Custom-layout evidence and limits](../outputs/libero-gen-custom-layouts-20261111-r1/RESULT.md).
 
+A bounded demonstration repair then obtained both intended native goals on
+custom layout 0, including a corrected teacher that aligned the center bowl
+above the plate before descending. In eight paired frozen-policy episodes
+across that scene and a nearby scene, original prompts scored **0/4** and
+repaired prompts **0/4**. Initial states, observations and per-episode seeds
+matched; all 967 checkpoint tensors loaded exactly, and copied original
+prompts reproduced their historical tensor hashes. Every paired action
+trajectory changed with the new prompt, but neither placement nor the two
+intended choices became reliable. This establishes an unsuccessful prompt-only
+repair on this development pair, including the demonstration scene. It does
+not establish that motor fine-tuning or another checkpoint will fail; no
+history reader was trained. Demonstrations and policy episodes use the same
+first-native-success endpoint, without an added released-placement persistence
+criterion. [Repair results, teacher fixes and evidence](../outputs/libero-gen-prompt-repair-20261111-r1/RESULT.md).
+
 ## RoboCasa365
 
 The Atomic-Seen baseline uses the native JAX π0.5 Human300 checkpoint at step **75,000**. Load `pi05_pretrain_human300/multitask_learning/75000` from `robocasa/robocasa365_checkpoints` at revision `c484448a`, including its bundled normalization. OpenPI predicts 50 actions and executes five before replanning, with ten denoising steps. [Pinned checkpoint](https://huggingface.co/robocasa/robocasa365_checkpoints/tree/c484448aba1a9b60a04c9b0ca117241518ea69f3/pi05_pretrain_human300/multitask_learning/75000)
