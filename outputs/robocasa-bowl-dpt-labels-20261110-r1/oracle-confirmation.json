@@ -1,0 +1,370 @@
+{
+  "selection": {
+    "development": {
+      "128": {
+        "oracle": {
+          "native": 5,
+          "masked_error": 0.13090561913947266
+        }
+      },
+      "512": {
+        "oracle": {
+          "native": 1,
+          "masked_error": 0.11432546402017275
+        }
+      },
+      "1024": {
+        "oracle": {
+          "native": 4,
+          "masked_error": 0.09412236226101717
+        }
+      }
+    },
+    "oracle": 128
+  },
+  "identity": {
+    "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-bowl-dpt-labels-20261110-r1/followup02/oracle/fit/step-0128/checkpoint.pt",
+    "step": 128,
+    "fit": {
+      "seed": 991,
+      "steps": [
+        128,
+        512,
+        1024
+      ],
+      "batch_size": 6,
+      "code": "bf64c1eff73375f633cf014559b025794b36e3fb",
+      "given_side_in_prompt": true,
+      "history_encoder": null,
+      "training_labels": "ab92a6eb2b7a46cd18415b5295cce9d4d9cd2cffd3ec68943da7e1ff89e2a76a",
+      "validation_labels": "064aa98e1f4caf9cbdcdace602e198e8a032694827849adb88f003d117873c53",
+      "trainable": {
+        "memoryless": 139264
+      }
+    },
+    "scenes": [
+      987601,
+      987603,
+      987604,
+      987605,
+      987606,
+      987607,
+      987608,
+      987609,
+      987610,
+      987612,
+      987613,
+      987614,
+      987615,
+      987616,
+      987619,
+      987621
+    ],
+    "arms": [
+      "oracle"
+    ]
+  },
+  "goal_cases": 32,
+  "success": 7,
+  "success_by_goal": [
+    6,
+    1
+  ],
+  "scenes_successful_under_both_instructions": [],
+  "controls": 14640,
+  "oracle_minus": {
+    "memoryless": {
+      "wins": 6,
+      "losses": 4,
+      "ties": 22,
+      "delta_pp": 6.25,
+      "four_scene_block_95_pp": [
+        0,
+        12.5
+      ]
+    },
+    "own": {
+      "wins": 5,
+      "losses": 1,
+      "ties": 26,
+      "delta_pp": 12.5,
+      "four_scene_block_95_pp": [
+        12.5,
+        12.5
+      ]
+    },
+    "frozen": {
+      "wins": 5,
+      "losses": 2,
+      "ties": 25,
+      "delta_pp": 9.375,
+      "four_scene_block_95_pp": [
+        -6.25,
+        25
+      ]
+    }
+  },
+  "cases": [
+    {
+      "scene": 987601,
+      "goal": 0,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987601,
+      "goal": 1,
+      "oracle": 0,
+      "memoryless": 1,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987603,
+      "goal": 0,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987603,
+      "goal": 1,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987604,
+      "goal": 0,
+      "oracle": 1,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987604,
+      "goal": 1,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987605,
+      "goal": 0,
+      "oracle": 1,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987605,
+      "goal": 1,
+      "oracle": 0,
+      "memoryless": 1,
+      "own": 1,
+      "frozen": 0
+    },
+    {
+      "scene": 987606,
+      "goal": 0,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987606,
+      "goal": 1,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987607,
+      "goal": 0,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987607,
+      "goal": 1,
+      "oracle": 0,
+      "memoryless": 1,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987608,
+      "goal": 0,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987608,
+      "goal": 1,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987609,
+      "goal": 0,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987609,
+      "goal": 1,
+      "oracle": 1,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 1
+    },
+    {
+      "scene": 987610,
+      "goal": 0,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987610,
+      "goal": 1,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987612,
+      "goal": 0,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 1
+    },
+    {
+      "scene": 987612,
+      "goal": 1,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987613,
+      "goal": 0,
+      "oracle": 1,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987613,
+      "goal": 1,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987614,
+      "goal": 0,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 1
+    },
+    {
+      "scene": 987614,
+      "goal": 1,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987615,
+      "goal": 0,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987615,
+      "goal": 1,
+      "oracle": 0,
+      "memoryless": 1,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987616,
+      "goal": 0,
+      "oracle": 1,
+      "memoryless": 0,
+      "own": 1,
+      "frozen": 0
+    },
+    {
+      "scene": 987616,
+      "goal": 1,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987619,
+      "goal": 0,
+      "oracle": 1,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 1
+    },
+    {
+      "scene": 987619,
+      "goal": 1,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    },
+    {
+      "scene": 987621,
+      "goal": 0,
+      "oracle": 1,
+      "memoryless": 1,
+      "own": 1,
+      "frozen": 0
+    },
+    {
+      "scene": 987621,
+      "goal": 1,
+      "oracle": 0,
+      "memoryless": 0,
+      "own": 0,
+      "frozen": 0
+    }
+  ],
+  "clock": {
+    "exit_code": 0,
+    "started": 1794355958,
+    "ended": 1794358795
+  }
+}

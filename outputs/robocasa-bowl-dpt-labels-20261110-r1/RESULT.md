@@ -49,7 +49,9 @@ Changing only support reward at each identical query decision produced a mean ac
 
 ## Property-given motor
 
-The negative primary result triggered the predeclared control that gives a separately trained LoRA policy the correct bowl in its instruction. Its 128-, 512- and 1,024-update checkpoints scored 5, 1 and 4 of 16 development goals. Native placements selected 128 updates. Imitation error declined across all three durations. Its locked confirmation evaluation is running. [Selection and physical development outcomes](oracle-development.json)
+The negative primary result triggered the predeclared control that gives a separately trained LoRA policy the correct bowl in its instruction. Its 128-, 512- and 1,024-update checkpoints scored 5, 1 and 4 of 16 development goals. Native placements selected 128 updates. Imitation error declined across all three durations. [Selection and physical development outcomes](oracle-development.json)
+
+The locked property-given policy reached 7/32 confirmation goals, with six correct left placements and one right placement. No scene succeeded under both instructions. It gained six and lost four paired goals against memoryless LoRA, giving a net gain of two. The instructed learner still reproduced a small fraction of the 32 demonstrated successful carries. The eight-case training-placement diagnostic is running. [Property-given confirmation](oracle-confirmation.json)
 
 ![Imitation error and native placement success across training durations](learning-curves.png)
 
