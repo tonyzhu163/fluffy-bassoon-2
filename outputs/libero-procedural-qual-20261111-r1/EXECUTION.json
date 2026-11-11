@@ -1,13 +1,32 @@
 {
-  "status": "prepared_waiting_for_scheduler_deployment",
+  "status": "geometry01_running_deployment_verified_probe_pending",
   "gpu_hours_limit": 4,
   "scheduler_gpu_hours": 0,
   "conservative_gpu_hours": 0,
-  "jobs": [],
+  "jobs": [
+    {
+      "identity": "geometry01",
+      "job_id": "job-ly2f0fq12gta",
+      "commit": "64a5e2880f4851c5f1f0edbd9eaff75df0a5c591",
+      "created_shanghai": "2026-11-11 20:53:16",
+      "started_shanghai": "2026-11-11 20:53:27",
+      "gpus": 1,
+      "cpu_cores": 8,
+      "memory_gib": 48,
+      "scheduler_limit_minutes": 30,
+      "retries": 0,
+      "queue": "aihcq-chqrelndaaj4",
+      "pool": "aihc-sw5hua6i3hyv",
+      "requested_gpu": "NVIDIA GeForce RTX 4090",
+      "checkout": "/mowenjie/fluffy-bassoon-2/sources/libero-procedural-64a5e288-geometry01",
+      "deployment_verified": true,
+      "status": "Running"
+    }
+  ],
   "user_scope": "development scene qualification and released pi05 motor assessment before deciding SFT",
   "browser_coordination": "human authorized message to parent chat 01a1c8f3-5b3b-7822-b61b-0a59f6431501; message accepted",
   "code_commit": "a08ae7353dff94a21d79caf3397dc313a0010cec",
-  "last_checked": "2026-11-11T20:36:00+08:00",
+  "last_checked": "2026-11-11T20:54:00+08:00",
   "development_endpoint": "dv-0d0ac1c839",
   "development_status": "HTTP 503 / no healthy upstream; also confirmed by other LIBERO chat",
   "policy_scripts": "syntax checked only; runtime not installed; no model loaded"
