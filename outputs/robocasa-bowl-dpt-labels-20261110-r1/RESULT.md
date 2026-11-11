@@ -67,7 +67,7 @@ Replaying the first failed training goal at 1,024 updates reproduced its origina
 
 The subsequent exploratory test started the same eight training goals at the exact shared teacher decision after 30 additional securing-and-lifting controls. The public state and all camera views matched the original teacher archive. The 1,024-update instruction policy reached 2/8, gaining zero and losing one placement against its first-grasp handoff. The additional teacher controls counted within 500. This handoff change did not resolve reproduction of the training carries. [Phase diagnostic](common-handoff.json)
 
-An exploratory continuation is now extending the same instructed fit to 4,096 updates, followed by the original eight training goals. The optimizer, normalization and sampler were restored from update 1,024. An independent replay of the resumed sample draws matched the checkpoint exactly.
+The exploratory continuation to 4,096 updates reproduced **8/8 training goals**, gaining five and losing zero against the 1,024-update checkpoint on identical starts and noise. The optimizer, normalization and sampler were restored from update 1,024. An independent replay of the resumed sample draws matched the checkpoint exactly, and all 16 optimizer parameter states had the correct update count. The extended checkpoint has been evaluated on these four training scenes. Its held-out placement success remains unmeasured. [Extended fit and resumption audit](extended-fit.json)
 
 ## Scope and execution
 
@@ -78,3 +78,9 @@ Baige's allocated RTX 4090 ran the experiment. Collection used 78adcc26 and the 
 The first phase-handoff preparation exposed rounding in the original float32 teacher-control archive. Regenerating its full-precision scripted controls recovered the exact saved observations. Future collections now retain float64 executed controls. A fresh left/right collection and saved-action replay matched all 52 public observation boundaries, including all three camera views, and produced byte-identical float32 normalized training targets and masks. [Replay and target compatibility](precision-replay.json)
 
 The staged protocol records the original comparisons and the later exploratory diagnostics separately. [Protocol and decision rule](PLAN.md)
+
+The 27 recorded GPU-worker stages used 10.799 GPU-hours, including 176 seconds from three failed stages. Adding the earlier three-PPO student/retry work gives 14.353 recorded GPU-hours against the authorized 50-hour ceiling. The development GPU was exclusive between stages. All launched bowl workers have finished, and the full resumable checkpoints remain on Baige. [Worker clocks](usage.json)
+
+## Next test
+
+Evaluate the 4,096-update instructed carry on fresh scenes to establish transfer of the learned motor. Then extend the matched DPT and memoryless fits and choose their durations through physical rollouts before repeating the own-versus-donor test on a new confirmation split. The 8/8 training result establishes that this LoRA configuration can reproduce the selected demonstrations. The original confirmation test still provides the measured evidence about memory.
