@@ -43,5 +43,6 @@ case "$mode" in
     eval) checkpoint=$1; source=$2; admission=$3; shift 3
           "$py" -Bu "$here/eval_bowl.py" "$code" "$checkpoint" "$source" "$admission" "$out" "$@" ;;
     direction) "$py" -Bu "$here/paired_direction.py" "$code" "$1" "$2" "$3" "$out" ;;
+    trace) "$py" -Bu "$here/trace_motor.py" "$code" "$1" "$2" "$3" "$out" ;;
     *) exit 2 ;;
 esac
