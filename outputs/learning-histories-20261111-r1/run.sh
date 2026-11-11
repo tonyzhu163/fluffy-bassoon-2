@@ -47,3 +47,12 @@ else
     exit 2
 fi
 touch "$out/complete"
+if [[ $mode == grid && $seed == 0 ]]; then
+    until [[ -f "$folder/$identity/seed-1/complete" && -f "$folder/$identity/seed-2/complete" ]]; do
+        for other in 1 2; do
+            receipt=$folder/$identity/seed-$other/clock.json
+            if [[ -f $receipt ]] && ! grep -q '"exit_code":0,' "$receipt"; then exit 1; fi
+        done
+        sleep 10
+    done
+fi
