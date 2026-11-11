@@ -1,0 +1,29 @@
+{
+  "status": "prepared_not_submitted",
+  "stage_cap_gpu_hours": 4,
+  "prior_task_conservative_gpu_hours_approx": 17.75,
+  "initial_allocation": {
+    "identity": "teacher01",
+    "policy_loaded": false,
+    "episodes": [
+      "native source demo0 candidate0",
+      "layout0 retarget candidate0",
+      "native source demo0 candidate1",
+      "layout0 retarget candidate1"
+    ],
+    "gpus": 1,
+    "scheduler_limit_minutes": 30,
+    "process_limit_seconds": 1500,
+    "unconditional_retries": 0,
+    "queue": "aihcq-rh0wwk9muei4",
+    "pool": "aihc-7tr9r4v64sij",
+    "observed_accelerator": "NVIDIA RPBZZZ6",
+    "cpu_cores": 8,
+    "ram_gib": 112
+  },
+  "current_gpu_hours": 0,
+  "checks": {
+    "local": "Python AST and bash syntax only; simulator execution on allocated Linux pending",
+    "source_hdf5": "two cached demo0 metadata receipts; near-plate abs_actions pose is constant and deliberately unused"
+  }
+}

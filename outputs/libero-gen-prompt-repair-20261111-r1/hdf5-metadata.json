@@ -1,0 +1,363 @@
+[
+  {
+    "file": "pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate_demo.hdf5",
+    "env_args": {
+      "type": 1,
+      "env_name": "Libero_Tabletop_Manipulation",
+      "problem_name": "libero_tabletop_manipulation",
+      "bddl_file": "chiliocosm/bddl_files/libero_spatial/pick_the_akita_black_bowl_from_table_center_and_place_it_on_the_plate.bddl",
+      "env_kwargs": {
+        "robots": [
+          "Panda"
+        ],
+        "controller_configs": {
+          "type": "OSC_POSE",
+          "input_max": 1,
+          "input_min": -1,
+          "output_max": [
+            0.05,
+            0.05,
+            0.05,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "output_min": [
+            -0.05,
+            -0.05,
+            -0.05,
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "kp": 150,
+          "damping_ratio": 1,
+          "impedance_mode": "fixed",
+          "kp_limits": [
+            0,
+            300
+          ],
+          "damping_ratio_limits": [
+            0,
+            10
+          ],
+          "position_limits": null,
+          "orientation_limits": null,
+          "uncouple_pos_ori": true,
+          "control_delta": true,
+          "interpolation": null,
+          "ramp_ratio": 0.2
+        },
+        "bddl_file_name": "chiliocosm/bddl_files/libero_spatial/pick_the_akita_black_bowl_from_table_center_and_place_it_on_the_plate.bddl",
+        "has_renderer": false,
+        "has_offscreen_renderer": true,
+        "ignore_done": true,
+        "use_camera_obs": true,
+        "camera_depths": false,
+        "camera_names": [
+          "robot0_eye_in_hand",
+          "agentview"
+        ],
+        "reward_shaping": true,
+        "control_freq": 20,
+        "camera_heights": 128,
+        "camera_widths": 128,
+        "camera_segmentations": null
+      }
+    },
+    "num_demos": 50,
+    "demo": "demo_0",
+    "num_samples": 103,
+    "datasets": {
+      "actions": {
+        "shape": [
+          103,
+          7
+        ],
+        "dtype": "float64"
+      },
+      "dones": {
+        "shape": [
+          103
+        ],
+        "dtype": "uint8"
+      },
+      "obs/agentview_rgb": {
+        "shape": [
+          103,
+          128,
+          128,
+          3
+        ],
+        "dtype": "uint8"
+      },
+      "obs/ee_ori": {
+        "shape": [
+          103,
+          3
+        ],
+        "dtype": "float64"
+      },
+      "obs/ee_pos": {
+        "shape": [
+          103,
+          3
+        ],
+        "dtype": "float64"
+      },
+      "obs/ee_states": {
+        "shape": [
+          103,
+          6
+        ],
+        "dtype": "float64"
+      },
+      "obs/eye_in_hand_rgb": {
+        "shape": [
+          103,
+          128,
+          128,
+          3
+        ],
+        "dtype": "uint8"
+      },
+      "obs/gripper_states": {
+        "shape": [
+          103,
+          2
+        ],
+        "dtype": "float64"
+      },
+      "obs/joint_states": {
+        "shape": [
+          103,
+          7
+        ],
+        "dtype": "float64"
+      },
+      "rewards": {
+        "shape": [
+          103
+        ],
+        "dtype": "uint8"
+      },
+      "robot_states": {
+        "shape": [
+          103,
+          9
+        ],
+        "dtype": "float64"
+      },
+      "states": {
+        "shape": [
+          103,
+          92
+        ],
+        "dtype": "float64"
+      }
+    },
+    "gripper_changes": [
+      34,
+      98
+    ],
+    "eef_xyz_min": [
+      -0.20098051507915582,
+      -0.001577719392811584,
+      0.9190625763561617
+    ],
+    "eef_xyz_max": [
+      0.06697623850833312,
+      0.23183075959834265,
+      1.1733799894221408
+    ],
+    "initial_state_attr_shape": [
+      92
+    ],
+    "state_changed": true
+  },
+  {
+    "file": "pick_up_the_black_bowl_next_to_the_plate_and_place_it_on_the_plate_2_demo.hdf5",
+    "env_args": {
+      "type": 1,
+      "env_name": "Libero_Tabletop_Manipulation",
+      "problem_name": "libero_tabletop_manipulation",
+      "bddl_file": "/home/auspatel/umi_day_proj/umi_day/umi_day/train_network/scripts/libero/tmp_generate_demonstrations_runs/2026-01-15/run_1768464177_27736/bddl_files/libero_spatial_extra/pick_up_the_black_bowl_next_to_the_plate_and_place_it_on_the_plate_2.bddl",
+      "env_kwargs": {
+        "robots": [
+          "Panda"
+        ],
+        "controller_configs": {
+          "type": "OSC_POSE",
+          "input_max": 1,
+          "input_min": -1,
+          "output_max": [
+            0.05,
+            0.05,
+            0.05,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "output_min": [
+            -0.05,
+            -0.05,
+            -0.05,
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "kp": 150,
+          "damping_ratio": 1,
+          "impedance_mode": "fixed",
+          "kp_limits": [
+            0,
+            300
+          ],
+          "damping_ratio_limits": [
+            0,
+            10
+          ],
+          "position_limits": null,
+          "orientation_limits": null,
+          "uncouple_pos_ori": true,
+          "control_delta": true,
+          "interpolation": null,
+          "ramp_ratio": 0.2
+        },
+        "bddl_file_name": "/home/auspatel/umi_day_proj/umi_day/umi_day/train_network/scripts/libero/tmp_generate_demonstrations_runs/2026-01-15/run_1768464177_27736/bddl_files/libero_spatial_extra/pick_up_the_black_bowl_next_to_the_plate_and_place_it_on_the_plate_2.bddl",
+        "has_renderer": false,
+        "has_offscreen_renderer": true,
+        "ignore_done": true,
+        "use_camera_obs": true,
+        "camera_depths": false,
+        "camera_names": [
+          "robot0_eye_in_hand",
+          "agentview"
+        ],
+        "reward_shaping": true,
+        "control_freq": 20,
+        "camera_heights": 128,
+        "camera_widths": 128,
+        "camera_segmentations": null
+      }
+    },
+    "num_demos": 50,
+    "demo": "demo_0",
+    "num_samples": 186,
+    "datasets": {
+      "abs_actions": {
+        "shape": [
+          186,
+          7
+        ],
+        "dtype": "float64"
+      },
+      "actions": {
+        "shape": [
+          186,
+          7
+        ],
+        "dtype": "float64"
+      },
+      "dones": {
+        "shape": [
+          186
+        ],
+        "dtype": "uint8"
+      },
+      "obs/agentview_rgb": {
+        "shape": [
+          186,
+          128,
+          128,
+          3
+        ],
+        "dtype": "uint8"
+      },
+      "obs/ee_ori": {
+        "shape": [
+          186,
+          3
+        ],
+        "dtype": "float64"
+      },
+      "obs/ee_pos": {
+        "shape": [
+          186,
+          3
+        ],
+        "dtype": "float64"
+      },
+      "obs/ee_states": {
+        "shape": [
+          186,
+          6
+        ],
+        "dtype": "float64"
+      },
+      "obs/eye_in_hand_rgb": {
+        "shape": [
+          186,
+          128,
+          128,
+          3
+        ],
+        "dtype": "uint8"
+      },
+      "obs/gripper_states": {
+        "shape": [
+          186,
+          2
+        ],
+        "dtype": "float64"
+      },
+      "obs/joint_states": {
+        "shape": [
+          186,
+          7
+        ],
+        "dtype": "float64"
+      },
+      "rewards": {
+        "shape": [
+          186
+        ],
+        "dtype": "uint8"
+      },
+      "robot_states": {
+        "shape": [
+          186,
+          9
+        ],
+        "dtype": "float64"
+      },
+      "states": {
+        "shape": [
+          186,
+          92
+        ],
+        "dtype": "float64"
+      }
+    },
+    "gripper_changes": [
+      87,
+      170
+    ],
+    "eef_xyz_min": [
+      -0.17924405476011607,
+      0.04377271484840097,
+      0.9376321477147231
+    ],
+    "eef_xyz_max": [
+      0.10566361026071402,
+      0.26528023657641064,
+      1.167484897118726
+    ],
+    "initial_state_attr_shape": [
+      92
+    ],
+    "state_changed": true,
+    "abs_action_unique_rows": 2,
+    "abs_action_xyz_unique_rows": 1
+  }
+]
