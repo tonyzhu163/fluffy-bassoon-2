@@ -176,16 +176,28 @@ pilot uncertainty, not an unmeasured large grid.
    not evidence against in-context learning.
 
 Current qualification status is maintained in [PREPARATION-STATUS.json](PREPARATION-STATUS.json).
-At 17:28:55 Shanghai, `qual04` completed the native runtime smoke: both
-candidate episodes succeeded, initial observations were exactly paired, and
-frozen parameter versions were unchanged. Strict loading verified exact
-equality of all 967 saved tensors on the allocated RTX4090. Raw receipts,
-action/reward traces and videos are in [qual04](qual04/). Three earlier
-startup failures are preserved. Finalized usage is 0.395 scheduler / 0.542
-conservative GPU-hours of the 5-hour cap. The five-scene engineering panel
-uses initialization indices 0–4; index0 repeats the smoke scene and is not
-a fresh held-out test. The gate remains at least4/5 for each candidate.
-Custom relational layouts and the learned history reader remain unqualified.
+At 18:00:47 Shanghai, `panel02` completed the five-scene engineering gate:
+center 5/5 and near-plate 5/5 native successes, with five distinct and
+exactly paired initial observations. All 967 saved tensors loaded exactly,
+and frozen parameter versions were unchanged. Raw receipts and trajectories
+are in [panel02](panel02/); the validated readout is
+[panel02-readout.json](panel02-readout.json). Index 0 repeats the smoke scene.
+Three earlier startup failures and one unallocated queue cancellation are
+preserved. Finalized usage is 0.626 scheduler / 0.775 conservative GPU-hours
+of the 5-hour cap.
+
+The measured 13m51s scheduler duration supports the planned twenty-scene
+expansion within a one-GPU, sixty-minute reservation. `panel03` uses indices
+0–19, including the five engineering scenes, and the unchanged checkpoint,
+prompts, runner and seeds. The available Pro6K queue is selected after its
+node-level fit check; its exact device and CUDA/rendering support must pass
+in-job qualification. Report all forty outcomes and all twenty paired-reset
+assertions, report new indices 5–19 separately from repeated indices 0–4,
+and keep device-specific results separate. This expands the
+motor reliability check; it is not an independent held-out test or a reward
+learning experiment. Custom relational layouts and the learned reader
+remain unqualified; their next admission contract is
+[CUSTOM-LAYOUT-NEXT.md](CUSTOM-LAYOUT-NEXT.md).
 
 ## Primary sources
 
