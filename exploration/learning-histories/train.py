@@ -105,6 +105,7 @@ def main() -> None:
     ap.add_argument("--heads", type=int, default=4)
     ap.add_argument("--eval-n", type=int, default=8192)
     ap.add_argument("--eval-batch", type=int, default=256)
+    ap.add_argument("--eval-seed", type=int, default=10000, help="evaluation session RNG base, plus fit seed")
     ap.add_argument("--checkpoint", type=Path)
     ap.add_argument("--resume", type=Path)
     ap.add_argument("--save-every", type=int, default=500)
@@ -114,6 +115,8 @@ def main() -> None:
     args = ap.parse_args()
     if min(args.steps, args.batch, args.eval_n, args.eval_batch, args.save_every) <= 0:
         ap.error("step and batch counts must be positive")
+    if min(args.d, args.layers, args.heads) <= 0 or args.d % args.heads or args.fourier < 0:
+        ap.error("model dimensions must be positive, d divisible by heads, and fourier nonnegative")
     checkpoint = args.checkpoint or args.out.with_suffix(".pt")
     checkpoint.parent.mkdir(parents=True, exist_ok=True)
     if args.out.exists() or (checkpoint.exists() and not args.resume):
@@ -128,8 +131,11 @@ def main() -> None:
     first, elapsed = 0, 0.0
     if args.resume:
         state = torch.load(args.resume, map_location="cpu", weights_only=False)
+        # Checkpoints preceding the configurable architecture used these defaults.
+        stored_args = dict(dense=False, fourier=0, d=128, layers=4, heads=4)
+        stored_args.update(state["args"])
         for name in ("cond", "K", "steps", "batch", "lr", "seed", "dense", "fourier", "d", "layers", "heads"):
-            if state["args"][name] != getattr(args, name):
+            if stored_args[name] != getattr(args, name):
                 raise ValueError(f"Resume changes training contract: {name}")
         model.load_state_dict(state["model"])
         opt.load_state_dict(state["optimizer"])
@@ -147,6 +153,7 @@ def main() -> None:
                      optimizer=opt.state_dict(), scheduler=sched.state_dict(),
                      numpy_rng=rng.bit_generator.state, torch_rng=torch.get_rng_state(),
                      cuda_rng=torch.cuda.get_rng_state_all() if args.device.startswith("cuda") else None,
+                     cuda_peak_memory_bytes=torch.cuda.max_memory_allocated() if args.device.startswith("cuda") else None,
                      elapsed_seconds=elapsed + time.time() - start)
         tmp = checkpoint.with_suffix(checkpoint.suffix + ".tmp")
         torch.save(state, tmp)
@@ -195,7 +202,7 @@ def main() -> None:
         return act
 
     for split in ("train", "heldout"):
-        s = S.sample(np.random.default_rng(10_000 + args.seed), args.eval_n, K, split)
+        s = S.sample(np.random.default_rng(args.eval_seed + args.seed), args.eval_n, K, split)
         acc, bayes = S.rollout(s, K, args.cond, learner_act(s))
         oracle, _ = S.rollout(s, K, args.cond, S.oracle_act(s, args.cond))
         result[split] = {"learner": acc, "bayes_on_learner_history": bayes, "oracle_own_attempts": oracle}
