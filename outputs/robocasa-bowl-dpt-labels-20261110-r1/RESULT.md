@@ -65,7 +65,9 @@ Replaying the first failed training goal at 1,024 updates reproduced its origina
 | --- | --- | --- |
 | ![Shared initial grasp](motor-start.png) | ![Learned policy holding the fruit high above the bowls](motor-end.png) | ![Scripted teacher placing the fruit in the requested bowl](teacher-end.png) |
 
-The subsequent exploratory test starts the same eight training goals at the exact shared teacher decision after securing and lifting the fruit. It verifies the public state and all camera views, charges the added teacher controls within 500, and evaluates the 1,024-update instruction policy. This phase diagnostic is running.
+The subsequent exploratory test started the same eight training goals at the exact shared teacher decision after 30 additional securing-and-lifting controls. The public state and all camera views matched the original teacher archive. The 1,024-update instruction policy reached 2/8, gaining zero and losing one placement against its first-grasp handoff. The additional teacher controls counted within 500. This handoff change did not resolve reproduction of the training carries. [Phase diagnostic](common-handoff.json)
+
+An exploratory continuation is now extending the same instructed fit to 4,096 updates, followed by the original eight training goals. The optimizer, normalization and sampler were restored from update 1,024. An independent replay of the resumed sample draws matched the checkpoint exactly.
 
 ## Scope and execution
 
@@ -73,4 +75,6 @@ This is a binary, custom one-fruit task with scripted supports and an evaluator-
 
 Baige's allocated RTX 4090 ran the experiment. Collection used 78adcc26 and the learned motor used bf64c1ef. The first fit stopped before an optimizer update because its 16-dimensional public state needed packing into RLinf's 25-slot input layout. The corrected bridge reproduced all selected state coordinates and camera arrays on 1,539 saved observations. A transient utilization reading also stopped the final development panel before an episode, and a fresh probe passed for its replacement. Both failed attempts and all completed artifacts were retained.
 
-A weak property-given confirmation result also triggers the prespecified eight-case check on training demonstrations if time remains. [Protocol and decision rule](PLAN.md)
+The first phase-handoff preparation exposed rounding in the original float32 teacher-control archive. Regenerating its full-precision scripted controls recovered the exact saved observations. Future collections now retain float64 executed controls. A fresh left/right collection and saved-action replay matched all 52 public observation boundaries, including all three camera views, and produced byte-identical float32 normalized training targets and masks. [Replay and target compatibility](precision-replay.json)
+
+The staged protocol records the original comparisons and the later exploratory diagnostics separately. [Protocol and decision rule](PLAN.md)
