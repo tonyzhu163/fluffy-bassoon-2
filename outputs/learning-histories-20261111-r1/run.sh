@@ -27,6 +27,7 @@ if command -v quota >/dev/null; then quota -s >> "$out/storage.txt" 2>&1 || true
 test -w "$out"
 export FLUFFY_GPU_EXECUTION=baige NCCL_P2P_DISABLE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONHASHSEED=0
+export PYTHONPATH="$code/src"
 if [[ -z ${CUDA_VISIBLE_DEVICES:-} ]]; then
     uuid=$(nvidia-smi --query-gpu=uuid --format=csv,noheader)
     [[ $uuid == GPU-* && $uuid != *$'\n'* && $uuid == "${NVIDIA_VISIBLE_DEVICES:?}" ]]
@@ -38,7 +39,7 @@ if [[ $mode == qualify ]]; then
     "$py" -Bu "$(dirname "$0")/qualify.py" "$code" "$out"
     "$py" -Bu "$code/exploration/learning-histories/train.py" --cond attempts --K 6 --steps 500 --eval-n 256 --out "$out/timing.json" --device cuda
 elif [[ $mode == grid ]]; then
-    test -f "$folder/qualify01/seed-0/qualification.json"
+    test -f "$folder/${4:?qualification identity}/seed-0/qualification.json"
     for cond in demo blind attempts corrections linked; do
         "$py" -Bu "$code/exploration/learning-histories/train.py" --cond "$cond" --K 6 --seed "$seed" --out "$out/$cond.json" --device cuda > "$out/$cond.log" 2>&1
     done
