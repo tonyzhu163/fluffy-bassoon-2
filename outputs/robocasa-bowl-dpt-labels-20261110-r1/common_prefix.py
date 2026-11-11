@@ -22,7 +22,8 @@ def prepare(args):
             index = common_boundary(left, right)
             assert index is not None
             offset = int(left["offsets"][index])
-            np.testing.assert_array_equal(left["commands"][:offset], right["commands"][:offset])
+            recorded = left["commands"]
+            np.testing.assert_array_equal(recorded[:offset], right["commands"][:offset])
             assert len(pickup["commands"]) + offset < 500
             wrapped, obs, layout = reset_scene(seed)
             try:
@@ -39,7 +40,7 @@ def prepare(args):
                 # the original float64 controller outputs for bit-exact physics replay.
                 script = carry(env, original["fruit"], layout["bowls"][0])
                 for i, (_, command) in enumerate(islice(script, offset)):
-                    np.testing.assert_array_equal(command.astype(np.float32), left["commands"][i])
+                    np.testing.assert_array_equal(command.astype(recorded.dtype), recorded[i])
                     obs, _, _, _, _ = wrapped.step(convert_action(command))
                     commands.append(command.copy())
                     after.append(state(obs))

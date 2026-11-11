@@ -152,7 +152,7 @@ def branch(out, seed, side):
         frames.append(np.stack([obs[k] for k in CAMERAS]))
         states.append(state(obs))
         np.savez_compressed(dest/f"{side}.npz", frames=np.stack(frames), states=states, public=features,
-                            offsets=offsets, commands=np.asarray(commands,dtype=np.float32).reshape(-1,12))
+                            offsets=offsets, commands=np.asarray(commands,dtype=np.float64).reshape(-1,12))
         result["branch_controls"] = len(commands)
         write(dest/f"{side}.json", result)
         print("BRANCH", seed, side, result["placed"], len(commands), flush=True)
