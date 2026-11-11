@@ -16,6 +16,16 @@ It is a new history protocol, not a reproduction of its published score.
 Goal Chain is a later extension after motor reliability and feedback use
 are established.
 
+The binary deterministic-choice task is essentially one-bit task
+identification, with noise from motor failures. It can demonstrate
+feasibility and feedback use, but not multi-step evidence accumulation or
+broad rule generalization. A later scientific campaign needs at least
+three plausible hypotheses, rules that share candidate decisions in some
+scenes, and held-out rule compositions. The five history conditions from
+the toy study (demonstration, actions only, reward-bearing attempts, expert
+correction, linked correction) are a later extension, outside this motor
+qualification budget.
+
 ## One episode family
 
 Use two identical black bowls and a plate as the placement target.
@@ -39,8 +49,14 @@ The exact first motor pair already exists in the release, both in
 Their regions, fixtures, objects and initial predicates have exactly the
 same static hash (`42805b832c40f5f2eaf4de48b3b3820e0bdbceafed790ab55e85fc45391e5c65`).
 This supplies a concrete two-choice motor test without inventing unsupported
-objects. It does not yet establish HDF5 availability, equal reset arrays,
-or successful execution. Those remain qualification requirements. The
+objects. Official Hub metadata confirms both HDF5 files exist, with sizes
+and SHA256 values in `ASSET-MANIFEST.json`; their contents have not been
+loaded. The released init files have different byte hashes, so they must
+not simply be assumed paired. Use an isolated init bank with the same
+center-bowl task initialization copied under both candidate names, then
+verify matching simulator state/RGB/proprio after reset. This is a custom
+motor qualification, not the released benchmark evaluation. Successful
+execution remains unverified. The
 custom relation task uses the same two bowl-to-plate skills with qualified
 layout variation; it is not asserted to be ready before simulator checks.
 

@@ -60,3 +60,36 @@ Next runnable stage is to finish source/dependency preparation, verify
 checkpoint and prompt-data files, then run the bounded motor qualification.
 No checkpoint has been loaded, no native episode completed, and no learned
 history model has been trained. Additional GPU usage: **0 of 5 GPU-hours**.
+
+## Minimal asset and launch preparation
+
+Official Hub API metadata confirms the exact two prompt files exist.
+`ASSET-MANIFEST.json` pins model revision
+`56da72e7c27602b41608984d544ca05b638833f4` and dataset revision
+`6cfd76524c02faf775263aaf8ba383d62ffd6db5`, with byte sizes and LFS SHA256s.
+The checkpoint is 6,915,257,998 bytes; selected HDF5 files are 589,630,943 and
+946,177,276 bytes. Total selected download is 8,451,066,217 bytes. Full data
+is about 159 GB and is unnecessary for this qualification.
+
+`prepare_runtime.sh` uses isolated uv 0.9.10 / Python 3.10.20 and the
+official BPP CUDA-12.8 torch 2.8.0 option. `runtime-requirements.txt` retains
+the relevant upstream pins, including eagerly imported Open3D, but excludes
+robot-device and DrawAnything packages. Legacy gym 0.21 is installed with
+upstream's pip 24 / setuptools 65.5 / wheel 0.38 toolchain. The documented
+robomimic fork is pinned to `f4357ed548b656800636ee459c7a2f31f95b5a08`.
+This dependency subset has only been statically inspected, not imported yet.
+
+`qualify_motor.py` loads the checkpoint's own model configuration and strict
+saved `model` state, freezes every parameter, and uses the original LIBERO
+runner with an observation/action/reward recorder. Setting pretrained
+initialization off avoids downloading redundant CLIP weights; strict loading
+must still supply every saved weight. Both candidates receive a copied,
+isolated common initialization bank because upstream init-file byte hashes
+differ. Initial observation equality and unchanged parameter version
+counters are required. Videos and native reward traces are retained.
+
+`launch_motor.sh` requests no resources itself: it is for one approved
+allocated GPU with a 60-minute scheduler cap, runs the repository GPU probe,
+then bounds the first one-seed-per-candidate check to 55 process minutes.
+No launcher has run. Python compilation, shell syntax, and `git diff --check`
+pass; those are static checks, not runtime qualification.
