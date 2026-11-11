@@ -1,5 +1,5 @@
 {
-  "status": "Both candidate demonstrations reach native goals on layout0; paired frozen-policy prompt evaluation preparing",
+  "status": "complete: two native-success teacher demonstrations; paired frozen-policy comparison original0/4, repaired0/4; no improvement established",
   "stage_cap_gpu_hours": 4,
   "prior_task_conservative_gpu_hours_approx": 17.75,
   "initial_allocation": {
@@ -21,7 +21,7 @@
     "cpu_cores": 8,
     "ram_gib": 112
   },
-  "current_gpu_hours": 0.1988888888888889,
+  "current_gpu_hours": 0.2886111111111111,
   "checks": {
     "local": "Python AST and bash syntax only; artifact integrity checked locally; simulator and policy computation restricted to allocated Linux",
     "source_hdf5": "two cached demo0 metadata receipts; near-plate abs_actions pose is constant and deliberately unused",
@@ -143,14 +143,62 @@
       "prefix_state_equal": true,
       "geometry_observation_hashes_equal": true,
       "policy_loaded": false
+    },
+    {
+      "identity": "paired01",
+      "job_id": "job-e16eyoc5er5s",
+      "commit": "ff787a05f86b445419b235ca890bf82a8a8e142a",
+      "submitted_shanghai": "2026-11-11 21:23:31",
+      "scheduler_state": "Succeeded",
+      "scheduler_limit_minutes": 60,
+      "process_limit_seconds": 3300,
+      "gpus": 1,
+      "cpu_cores": 8,
+      "ram_gib": 112,
+      "unconditional_retries": 0,
+      "teacher_sources": [
+        "teacher05",
+        "teacher03"
+      ],
+      "observation_alignment": "post",
+      "conditions": [
+        "original",
+        "repaired"
+      ],
+      "layout_indices": [
+        0,
+        1
+      ],
+      "policy_episodes": 8,
+      "running_shanghai": "2026-11-11 21:23:44",
+      "ended_shanghai": "2026-11-11 21:28:54",
+      "scheduler_gpu_seconds": 310,
+      "conservative_gpu_seconds": 323,
+      "clock": {
+        "exit_code": 0,
+        "started": 1794403421,
+        "ended": 1794403711,
+        "gpus": 1,
+        "hostname": "job-e16eyoc5er5s-master-0"
+      },
+      "original_successes": 0,
+      "repaired_successes": 0,
+      "episodes_per_condition": 4,
+      "strict_saved_tensors": 967,
+      "pairing_verified": true,
+      "weights_changed": false,
+      "all_action_hashes_differ": true
     }
   ],
-  "next_identity": "paired01",
-  "current_scheduler_gpu_hours": 0.09416666666666666,
+  "next_identity": null,
+  "current_scheduler_gpu_hours": 0.1802777777777778,
   "source_asset_cpu_preflight": {
     "native_source_count": 2,
     "references_resolved_per_source": 93,
     "simulation_or_policy_executed": false,
     "receipt_remote": "/mowenjie/fluffy-bassoon-2/outputs/libero-gen-prompt-repair-20261111-r1/source-path-preflight.json"
-  }
+  },
+  "task_cumulative_conservative_gpu_hours": 18.035855555555557,
+  "task_cumulative_scheduler_gpu_hours": 17.315855555555558,
+  "task_accounting_note": "Includes completed synthetic learning-history task, original native motor qualification, custom layouts, and this repair. Prior synthetic totals have historical four-decimal rounding."
 }
