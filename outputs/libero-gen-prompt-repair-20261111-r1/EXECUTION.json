@@ -1,5 +1,5 @@
 {
-  "status": "teacher02_deployed_and_all_asset_paths_resolved; awaiting_shared_browser_handoff",
+  "status": "teacher02_bootstrap_failed_before_probe; Git2.34 compatibility prepared",
   "stage_cap_gpu_hours": 4,
   "prior_task_conservative_gpu_hours_approx": 17.75,
   "initial_allocation": {
@@ -46,11 +46,20 @@
       "conservative_gpu_seconds": 240,
       "process_and_probe_seconds": 36,
       "stop_request": "Exact exited teacher01 job selected after it remained Abnormal; final console Failed with resources released"
+    },
+    {
+      "identity": "teacher02",
+      "job_id": "job-8x3eo4uscgrd",
+      "commit": "0708bddd138c2afa05d06a51698c2955d8f6a54e",
+      "submitted_shanghai": "2026-11-11 20:34:33",
+      "running_shanghai": "2026-11-11 20:34:48",
+      "failure_observed_log_shanghai": "2026-11-11 20:34:49",
+      "failure": "Git2.34.1 bundle reader does not recognize filter capability; no checkout/probe/episode",
+      "scheduler_final_accounting_pending": true
     }
   ],
-  "next_identity": "teacher02",
+  "next_identity": "teacher03",
   "current_scheduler_gpu_hours": 0.019166666666666665,
-  "next_commit": "99583d3763309f13e041df379ae9ae6a9ec48d65",
   "source_asset_cpu_preflight": {
     "native_source_count": 2,
     "references_resolved_per_source": 93,
