@@ -1,5 +1,5 @@
 {
-  "status": "teacher01_failed_before_episodes; asset path repair prepared",
+  "status": "teacher02_deployed_and_all_asset_paths_resolved; awaiting_shared_browser_handoff",
   "stage_cap_gpu_hours": 4,
   "prior_task_conservative_gpu_hours_approx": 17.75,
   "initial_allocation": {
@@ -21,7 +21,7 @@
     "cpu_cores": 8,
     "ram_gib": 112
   },
-  "current_gpu_hours": 0,
+  "current_gpu_hours": 0.06666666666666667,
   "checks": {
     "local": "Python AST and bash syntax only; simulator execution on allocated Linux pending",
     "source_hdf5": "two cached demo0 metadata receipts; near-plate abs_actions pose is constant and deliberately unused"
@@ -40,8 +40,21 @@
         "hostname": "job-8fxjofxhqvd0-master-0"
       },
       "failure": "Unmapped author-local XML asset path; no episode executed",
-      "conservative_gpu_seconds_pending_scheduler_end": 50
+      "ended_shanghai": "2026-11-11 20:19:28",
+      "scheduler_state": "Failed",
+      "scheduler_gpu_seconds": 69,
+      "conservative_gpu_seconds": 240,
+      "process_and_probe_seconds": 36,
+      "stop_request": "Exact exited teacher01 job selected after it remained Abnormal; final console Failed with resources released"
     }
   ],
-  "next_identity": "teacher02"
+  "next_identity": "teacher02",
+  "current_scheduler_gpu_hours": 0.019166666666666665,
+  "next_commit": "99583d3763309f13e041df379ae9ae6a9ec48d65",
+  "source_asset_cpu_preflight": {
+    "native_source_count": 2,
+    "references_resolved_per_source": 93,
+    "simulation_or_policy_executed": false,
+    "receipt_remote": "/mowenjie/fluffy-bassoon-2/outputs/libero-gen-prompt-repair-20261111-r1/source-path-preflight.json"
+  }
 }
