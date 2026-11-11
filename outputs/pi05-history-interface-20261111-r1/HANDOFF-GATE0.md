@@ -17,6 +17,8 @@ Does the released language-conditioned π0.5 LIBERO-Gen checkpoint execute the c
 
 That is 80 language episodes and 40 generic ones.
 
+5. **Moved layouts** (added after your smoke01 result). Run the two bowl tasks with their released instructions from your four smoke layouts (0, 5, 8, 13): 8 more episodes. Behavior Prompting scored 0/8 there. This says whether the language-conditioned motor tolerates moved objects any better, which decides how much motor training the procedural scenes will need. No threshold.
+
 ## Record
 
 Per episode: task, initialization, instruction, native success, steps, and for the generic runs which object was grasped. Also inference seconds per action chunk and peak GPU memory, which size the later training.

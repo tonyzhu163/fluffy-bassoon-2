@@ -50,6 +50,8 @@ Scenes get the same treatment as rules: a scene is one draw on each of a few axe
 | Camera | The release's two views | No, both are in the release |
 | Workspace | Kitchen, living-room or study table | Yes: new backgrounds and heights |
 
+The generator is written: [scenes.py](../../exploration/libero-scenes/scenes.py) samples scenes on these axes (camera and workspace excluded) and writes one task file each, and [admit.py](../../exploration/libero-scenes/admit.py) checks them in the simulator. Neither has been run on Baige.
+
 Every sampled scene passes the custom-layout stage's checks in the simulator: no initial contact, settling drift within tolerance, image separation, no goal initially true. Rejection uses geometry only, never a policy outcome. One more check per session: after the demonstration, the attempt and query scenes still separate at least three hypotheses.
 
 Rules and scenes share one vocabulary. A rule refers to roles ("the bowl", "a receptacle", "a landmark"), not instances, so adding a receptacle type or a bowl colour to the scene lists extends every rule that mentions that role. Held-out scenes can then be defined per axis: unseen positions (easy), unseen receptacle subsets, an unseen bowl colour, the other camera.
@@ -60,7 +62,7 @@ Record one execution and evaluate all 20 native `On` predicates on its final sta
 
 ### 4. Motor coverage on new layouts
 
-This is the main cost and the main risk. The motor must execute each of the 20 behaviours wherever the generator puts the objects. Neither released motor has been run on a moved layout yet. Three outcomes, in order of preference:
+This is the main cost and the main risk. The motor must execute each behaviour wherever the generator puts the objects. First evidence, 2026-11-11: the frozen Behavior Prompting motor scored 0/8 on four hand-moved layouts after 20/20 on the release's own ([result](../libero-gen-custom-layouts-20261111-r1/RESULT.md)); a control for the new reset path was pending. The released π0.5 checkpoint has not been run on a moved layout. Three outcomes, in order of preference; the smoke result points at the third:
 
 1. The released Behavior Prompting motor holds at 85% or more per behaviour under position changes. No new training.
 2. It holds for a subset of targets. Restrict the rule family to those targets.
