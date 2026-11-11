@@ -34,21 +34,25 @@ fi
 test "$(git -C "$TASK_SOURCE" rev-parse HEAD)" = 4066d8f7c544ba1e5cd5386b2db47ab900fae3fc
 git -C "$TASK_SOURCE" diff --quiet HEAD
 TASK_INSTALL_SOURCE="$TASK_SOURCE"
-if [[ ${TASK_PYPI_MIRROR:-} == tuna ]]; then
+if [[ ${TASK_PYPI_MIRROR:-} == tuna || ${TASK_PYPI_MIRROR:-} == tuna_baidu ]]; then
   # Keep upstream code clean. Only registry/download locations differ in this
   # install copy; the complete dependency graph, versions and hashes stay fixed.
-  TASK_INSTALL_SOURCE="$TASK_SETUP/openpi-tuna"
+  TASK_INSTALL_SOURCE="$TASK_SETUP/openpi-$TASK_PYPI_MIRROR"
   if [[ ! -d "$TASK_INSTALL_SOURCE/.git" ]]; then
     git clone --local "$TASK_SOURCE" "$TASK_INSTALL_SOURCE"
   fi
   test "$(git -C "$TASK_INSTALL_SOURCE" rev-parse HEAD)" = 4066d8f7c544ba1e5cd5386b2db47ab900fae3fc
   git -C "$TASK_INSTALL_SOURCE" diff --quiet HEAD -- . ':!uv.lock'
-  python - "$TASK_SOURCE" "$TASK_INSTALL_SOURCE" "$TASK_SETUP" <<'PY'
+  python - "$TASK_SOURCE" "$TASK_INSTALL_SOURCE" "$TASK_SETUP" "$TASK_PYPI_MIRROR" <<'PY'
 import hashlib,json,pathlib,sys
-source,install,setup=map(pathlib.Path,sys.argv[1:])
+source,install,setup=map(pathlib.Path,sys.argv[1:4])
 original=(source/'uv.lock').read_text()
 routes={'https://pypi.org/simple':'https://pypi.tuna.tsinghua.edu.cn/simple',
         'https://files.pythonhosted.org/packages/':'https://pypi.tuna.tsinghua.edu.cn/packages/'}
+if sys.argv[4]=='tuna_baidu':
+ # Baidu's documented public artifact mirror is HTTP. Every artifact retains
+ # its upstream SHA-256; build dependency resolution stays on the HTTPS index.
+ routes['https://files.pythonhosted.org/packages/']='http://mirrors.baidubce.com/pypi/packages/'
 changed=original
 for before,after in routes.items():
  assert before in original and after not in original
