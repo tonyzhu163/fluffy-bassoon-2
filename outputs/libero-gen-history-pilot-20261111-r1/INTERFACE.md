@@ -123,3 +123,10 @@ this pilot's environment (`dependency-prepare02.log`, PID 68530). An exact
 upstream Git bundle fallback is being prepared. No runtime import check,
 simulator episode, or GPU job has run; additional usage remains 0 / 5
 GPU-hours.
+
+The raw `ASSET-PREFETCH.json`, `ENVIRONMENT-PREFLIGHT.json`, and
+`DEPENDENCY-PREPARATION02.json` receipts were retrieved at 16:08 Shanghai.
+The small evidence archive's SHA256 was independently verified after
+download (`aa4152d76766349ba4e9834bf73d6315c68c784cd805cad90f850ad8f6adcb4d`).
+These receipts establish the asset digests and CPU setup start; they do
+not establish completed runtime installation or motor qualification.
