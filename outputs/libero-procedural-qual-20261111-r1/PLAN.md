@@ -27,6 +27,24 @@ For duplicate bowls, the prompt must resolve the intended bowl in the actual vie
 the prior release's neighbour phrases cannot simply be reused after moving objects.
 Keep instruction-grounding errors distinguishable from failed grasps/placements.
 
+The first policy panel is four native episodes (the two prior native-control
+tasks, their own released initial states 0 and 1), then both bowls to the plate
+in each usable generated layout. Generated prompts say left/right in the actual
+mirrored policy image; this is an instruction-grounding diagnostic and does not
+by itself prove or disprove motor competence. The plate panel does not establish
+coverage of every destination in the rule family. Preserve skipped geometry
+cases and all policy failures. Review traces before expanding destinations or
+attributing failures to missing motor skills.
+
+`prepare_pi05.sh` installs the author's frozen CUDA 12 lockfile into a separate
+Python 3.11 environment and verifies the pinned checkpoint file sizes/hashes.
+The simulator remains in its existing environment; a separate client dependency
+directory supplies the official websocket client. `launch_pi05.sh` probes the
+allocated GPU, runs the JAX server on loopback, records memory, and caps each
+policy allocation's processes to about one hour. Use compatible hardware for
+that CUDA 12/JAX release; Blackwell requires a separately qualified runtime.
+These new policy scripts have only static checks as of preparation.
+
 Report native outcome for every episode, intended/actually moved bowl, destination,
 controls, latency and GPU memory. Use these descriptive results to decide whether
 the next intervention is interface repair, better demonstrations, or motor SFT.
