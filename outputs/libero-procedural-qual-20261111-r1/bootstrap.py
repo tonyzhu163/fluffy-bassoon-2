@@ -98,8 +98,8 @@ def main():
         # untouched. Git's local clone hard-links immutable object files only.
         subprocess.run(['git', 'clone', '--no-checkout', str(store), str(checkout)], check=True)
         git(checkout, 'sparse-checkout', 'init', '--cone')
-        git(checkout, 'sparse-checkout', 'set', 'src', 'scripts', 'exploration', 'outputs/' + RUN)
         git(checkout, 'checkout', '--detach', args.commit)
+        git(checkout, 'sparse-checkout', 'set', 'src', 'scripts', 'exploration', 'outputs/' + RUN)
         assert git(checkout, 'rev-parse', 'HEAD') == args.commit
         assert not git(checkout, 'status', '--porcelain')
         files = checkout / 'outputs' / RUN
