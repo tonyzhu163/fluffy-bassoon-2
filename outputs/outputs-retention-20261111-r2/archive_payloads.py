@@ -10,6 +10,7 @@ import subprocess
 import tempfile
 import time
 
+from archive_outputs import copy_archive
 from archive_rollouts import BOS, digest, has_readers, read, require, stamp, write
 
 BASE = Path("/mowenjie")
@@ -80,7 +81,7 @@ def archive(group, number, sources):
         if len(sources) == 1:
             source = sources[0]
             target = group / f"{part}-{source.name}"
-            checksum = digest(source, target)
+            checksum, _ = copy_archive(source, target)
             rows[0]["sha256"] = checksum
             restored = stage / source.name
             require(digest(target, restored) == checksum and digest(restored) == checksum,
@@ -96,7 +97,7 @@ def archive(group, number, sources):
             subprocess.run(["tar", "--format=posix", "--acls", "--xattrs", "--sparse",
                             "--no-recursion", "-I", "zstd --fast=1 -T1", "-cf", str(local),
                             "-C", str(BASE), "--null", "-T", str(listing)], check=True)
-            checksum = digest(local, target)
+            checksum, _ = copy_archive(local, target)
             local.unlink()
             require(digest(target, local) == checksum, f"BOS readback failed: {target}")
             restored = stage / "restore"
@@ -177,7 +178,7 @@ def release(plan_name):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("phase", choices=("prepare", "release"))
-    parser.add_argument("--plan", choices=("PLAN.json", "ADDITIONAL.json"), default="PLAN.json")
+    parser.add_argument("--plan", choices=("PLAN.json", "ADDITIONAL.json", "RECOVERY.json"), default="PLAN.json")
     args = parser.parse_args()
     require(os.path.ismount(BOS), f"BOS is not mounted: {BOS}")
     (prepare if args.phase == "prepare" else release)(args.plan)
