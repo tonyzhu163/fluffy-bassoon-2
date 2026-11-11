@@ -20,19 +20,19 @@ def sha(value):
 def templates():
     """Fixed locations in table/world metres; no outcome-based rejection search."""
     import numpy as np
-    near = [(0.005, 0.155), (-0.185, 0.155), (0.005, -0.125), (-0.185, -0.125)]
-    plate = [(0.12, 0.13), (-0.205, 0.28), (0.12, -0.10), (-0.205, -0.25)]
+    near = [(0.005, 0.255), (-0.185, 0.255), (0.005, -0.025), (-0.21, 0.04)]
+    plate = [(0.17, 0.255), (-0.28, 0.375), (0.17, -0.025), (-0.35, 0.105)]
     records = []
     for quadrant in range(4):
         for repeat in range(4):
             seed = 3100 + quadrant * 4 + repeat
             rng = np.random.default_rng(seed)
-            center_xy = np.array([-0.09, 0.015]) + rng.uniform(-0.004, 0.004, 2)
+            center_xy = np.array([-0.09, 0.115]) + rng.uniform(-0.004, 0.004, 2)
             near_xy = np.array(near[quadrant]) + rng.uniform(-0.004, 0.004, 2)
             plate_xy = np.array(plate[quadrant]) + rng.uniform(-0.004, 0.004, 2)
             ids = BOWLS if repeat % 2 == 0 else BOWLS[::-1]
             positions = {ids[0]: center_xy.tolist(), ids[1]: near_xy.tolist(),
-                         "plate_1": plate_xy.tolist(), "cookies_1": [0.16, 0.015],
+                         "plate_1": plate_xy.tolist(), "cookies_1": [0.17, 0.115],
                          "glazed_rim_porcelain_ramekin_1": [-0.34, 0.24]}
             records.append({"index": len(records), "seed": seed, "quadrant": quadrant,
                             "repeat": repeat, "candidate_object_ids": list(ids), "positions_xy": positions})
@@ -68,9 +68,18 @@ def project(env, xyz):
 
 def hold_action(env):
     import numpy as np
-    from robosuite.utils.transform_utils import quat2axisangle
+    from robosuite.utils.transform_utils import quat2axisangle, quat2mat, mat2quat
     obs = env.env._get_observations()
-    return np.concatenate((obs["robot0_eef_pos"], quat2axisangle(obs["robot0_eef_quat"]), [-1.0]))
+    # Exact convention used by BPP libero_image_runner.py:637-648.
+    rotation = quat2mat(obs["robot0_eef_quat"]) @ np.array([[0., 1., 0.], [-1., 0., 0.], [0., 0., 1.]])
+    return np.concatenate((obs["robot0_eef_pos"], quat2axisangle(mat2quat(rotation)), [-1.0]))
+
+
+def reset_restore(env, state):
+    """Reset Python episode/controller state before restoring MuJoCo state."""
+    env.seed(7)
+    env.env.reset()  # Fail fast; upstream wrapper reset swallows exceptions.
+    return env.regenerate_obs_from_state(state)
 
 
 def restored_native(sidecar, state):
@@ -146,12 +155,15 @@ def main():
         primary, *sidecars = envs
         for spec in templates():
             print("GEOMETRY", spec["index"], flush=True)
-            primary.regenerate_obs_from_state(bank[spec["index"]])
+            reset_restore(primary, bank[spec["index"]])
             for name, xy in spec["positions_xy"].items():
                 set_object_position(primary, name, xy)
             primary.sim.forward()
             # Exactly 20 fixed controls settle relocated objects; no policy or reward-conditioned actions.
             action = hold_action(primary)
+            before_hold = primary.env._get_observations()
+            before_eef_pos = before_hold["robot0_eef_pos"].copy()
+            before_eef_quat = before_hold["robot0_eef_quat"].copy()
             for _ in range(20):
                 primary.step(action)
             state = primary.get_sim_state().copy()
@@ -170,6 +182,11 @@ def main():
             stratum = "agreement" if left == upper else "disagreement"
             margins = [abs(pixels[0][i] - pixels[1][i]) for i in [0, 1]]
             errors = []
+            eef_translation = float(np.linalg.norm(obs["robot0_eef_pos"] - before_eef_pos))
+            eef_rotation_degrees = float(np.rad2deg(2 * np.arccos(np.clip(abs(np.dot(
+                before_eef_quat, obs["robot0_eef_quat"])), 0, 1))))
+            if eef_translation > 0.02 or eef_rotation_degrees > 10:
+                errors.append("stationary_hold_eef_drift")
             if min(margins) < 6:
                 errors.append("projected_axis_margin_below_6px")
             if any(not 8 <= value <= 120 for point in pixels for value in point):
@@ -191,7 +208,7 @@ def main():
             # Positive predicate fixtures are diagnostics, never motor successes.
             positive = []
             for bowl in BOWLS:
-                primary.regenerate_obs_from_state(state)
+                reset_restore(primary, state)
                 plate_pos = object_position(primary, "plate_1")
                 set_object_position(primary, bowl, plate_pos[:2], plate_pos[2] + 0.08)
                 primary.sim.forward()
@@ -201,11 +218,13 @@ def main():
                 positive.append(values)
                 if values != [int(bowl == b) for b in BOWLS]:
                     errors.append("positive_native_fixture_not_distinct")
-            primary.regenerate_obs_from_state(state)
+            reset_restore(primary, state)
             record = {**spec, "stratum": stratum, "rule_choices": {"leftmost": left, "uppermost": upper},
                       "actual_positions": pos, "projected_candidate_centers": pixels,
                       "axis_margins_pixels": margins, "settling_max_xy_drift": drift,
                       "contacts": contacts, "initial_native": native, "positive_native_fixtures": positive,
+                      "hold_action": action.tolist(), "hold_eef_translation_metres": eef_translation,
+                      "hold_eef_rotation_degrees": eef_rotation_degrees,
                       "state_sha256": sha(state), "observation_hashes": {k: sha(v) for k, v in obs.items()},
                       "sidecar_parity": True, "errors": errors, "admitted_geometry": not errors}
             (folder / "geometry.json").write_text(json.dumps(record, indent=2) + "\n")
@@ -213,7 +232,13 @@ def main():
             if errors:
                 failed.append(spec["index"])
             tile = image.resize((256, 256))
-            ImageDraw.Draw(tile).text((4, 4), f"{spec['index']} {stratum} L{left} U{upper}", fill="red")
+            draw = ImageDraw.Draw(tile)
+            draw.text((4, 4), f"{spec['index']} {stratum} L{left} U{upper}", fill="red")
+            for candidate, (u, v) in enumerate(pixels):
+                color = "cyan" if candidate == 0 else "yellow"
+                draw.ellipse((2*u-4, 2*v-4, 2*u+4, 2*v+4), outline=color, width=2)
+                draw.text((2*u+5, 2*v-5), str(candidate), fill=color)
+            tile.save(folder / "projection-diagnostic.png")
             images.append(tile)
         canvas = Image.new("RGB", (1024, 1024), "white")
         for i, image in enumerate(images):

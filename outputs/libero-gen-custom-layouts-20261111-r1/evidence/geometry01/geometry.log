@@ -1,0 +1,26 @@
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+[robosuite WARNING] To setup, run: python /mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+GEOMETRY 0
+GEOMETRY 1
+GEOMETRY 2
+GEOMETRY 3
+GEOMETRY 4
+GEOMETRY 5
+GEOMETRY 6
+GEOMETRY 7
+GEOMETRY 8
+GEOMETRY 9
+GEOMETRY 10
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/sources/libero-custom-03261779/outputs/libero-gen-custom-layouts-20261111-r1/geometry.py", line 243, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/sources/libero-custom-03261779/outputs/libero-gen-custom-layouts-20261111-r1/geometry.py", line 156, in main
+    primary.step(action)
+  File "/mowenjie/fluffy-bassoon-2/cache/bpp-58125e6-20261111-r1/behavior_prompting/train_network/env/libero/env_wrapper.py", line 161, in step
+    raw_obs, reward, done, info = self.env.step(action)
+  File "/mowenjie/fluffy-bassoon-2/cache/bpp-58125e6-20261111-r1/deps/LIBERO/libero/libero/envs/bddl_base_domain.py", line 806, in step
+    obs, reward, done, info = super().step(action)
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/robosuite/environments/base.py", line 376, in step
+    raise ValueError("executing action in terminated episode")
+ValueError: executing action in terminated episode

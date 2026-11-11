@@ -59,3 +59,28 @@ rule variants reuse the identical public record and differ only in outcome.
 Audit those bytes under true/masked/shuffled outcomes; independently scheduled
 histories are the primary feedback diagnostic. No reader experiment is
 claimed by this physical/information qualification.
+
+## Geometry02 correction, frozen before allocation
+
+Geometry01 (`03261779`, job `job-a3laid6l40hi`) completed layouts0–9,
+then exhausted robosuite's Python episode counter because restoring MuJoCo
+state does not reset that counter. Native sidecar parity and both positive
+fixtures passed in all10 completed cases. Layout2 had bowl/plate contact;
+layouts8–9 had57–59mm drift, and layout9 also had bowl/cabinet contact and
+insufficient image-axis separation. The original evidence is retained.
+
+Geometry02 resets and seeds the native environment before each restored
+case/diagnostic. Its fixed hold command follows BPP's -90° controller-frame
+rotation; recorded EEF drift must be≤2cm and≤10° after20 controls. Original
+RGB is retained, with projected0/1 markers in separate diagnostic images.
+The seeds, jitter, balance and native checks remain unchanged.
+
+The corrected center is(-.09,.115). Near-bowl templates are
+(.005,.255),(-.185,.255),(.005,-.025),(-.21,.04); plate templates are
+(.17,.255),(-.28,.375),(.17,-.025),(-.35,.105). Cookies move to(.17,.115);
+ramekin remains(-.34,.24). This geometry-only correction moves the lower
+templates away from the fixed cabinet and separates near bowl/plate rims.
+Static inspection explicitly accounts for flat_stove.xml's burner offset
+of+.15m along local x and .095m box half-width: fixture-origin distances
+alone understated its collision extent. Actual simulator admission remains
+required. No BPP motor outcome has been observed on any custom layout.
