@@ -1,0 +1,81 @@
+{
+  "code_commit": "4b06413e33d1e1279b2431f370ff9e638bb7cab9",
+  "cluster": "Baige",
+  "queue": "aihcq-chqrelndaaj4",
+  "pool": "aihc-sw5hua6i3hyv",
+  "qualification": {
+    "identity": "qual01",
+    "job_id": "job-dxc5nv9qq1yw",
+    "created_shanghai": "2026-11-11 15:23:58",
+    "allocated_gpus": 1,
+    "scheduler_gpu_type": "NVIDIA GeForce RTX 4090",
+    "cpus": 13,
+    "memory_gib": 112,
+    "runtime_limit_minutes": 30,
+    "retries": 0,
+    "capacity_before_submit": {
+      "free_gpus": 57,
+      "maximum_gpus": 152
+    },
+    "status": "passed",
+    "last_observation": "CUDA dense logits/gradients and isolation checks passed; legacy and dense continuation bitwise exact; original curves exact; all timing projections below80minutes.",
+    "ended_shanghai": "2026-11-11 15:28:07",
+    "timing_observed": [
+      {
+        "recipe": "base",
+        "seconds_per_update": 0.07803230762481689,
+        "projected_train_minutes": 26.010769208272293,
+        "peak_allocated_bytes": 373976064
+      },
+      {
+        "recipe": "dense",
+        "seconds_per_update": 0.0829373359688318,
+        "projected_train_minutes": 27.645778656277265,
+        "peak_allocated_bytes": 669791232
+      },
+      {
+        "recipe": "wide",
+        "seconds_per_update": 0.09028229236602783,
+        "projected_train_minutes": 30.09409745534261,
+        "peak_allocated_bytes": 1850688000
+      }
+    ],
+    "evidence_status": "Read in authenticated console; raw receipts remain on shared storage pending retrieval.",
+    "conservative_gpuh": 0.06916666666666667,
+    "clock_observed": {
+      "exit_code": 0,
+      "started": 1794381858,
+      "ended": 1794382074,
+      "hostname": "job-dxc5nv9qq1yw-master-0",
+      "gpus": 1
+    }
+  },
+  "budget": {
+    "prior_scheduler_gpuh": 7.5303,
+    "prior_conservative_gpuh": 7.7678,
+    "qualification_cap_gpuh": 0.5,
+    "grid_cap_gpuh": 22.5,
+    "confirmation_cap_gpuh": 0.25,
+    "separate_libero_pilot_cap_gpuh": 5
+  },
+  "remote_code": "/mowenjie/fluffy-bassoon-2/sources/learning-histories-fix-4b06413e",
+  "grid": {
+    "status": "running",
+    "requires": "passed same-commit qualification and all projected fit times <=80 minutes",
+    "job_id": "job-h9o49h1vu3zt",
+    "identity": "grid01",
+    "created_shanghai": "2026-11-11 15:30:05",
+    "allocated_gpus": 15,
+    "runtime_limit_minutes": 90,
+    "retries": 0,
+    "last_check_shanghai": "2026-11-11 15:32:15",
+    "gpu_probes_passed": 15,
+    "observed_updates": {
+      "both-s0": 1000,
+      "both-s1": 1000
+    },
+    "other_workers": "13 fit logs blank at startup check; follow-up delegated to active sub-agent.",
+    "next_check": "Startup follow-up around15:34, then20-minute checks; sub-agent libero_gen_pilot owns console."
+  },
+  "code_review": "Latest main fe076cf4 adds LIBERO pilot documentation/audit only. Toy campaign remains pinned to 4b06413e as launched at qualification; no active checkout migration."
+}
