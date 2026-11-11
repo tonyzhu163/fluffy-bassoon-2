@@ -1,5 +1,6 @@
 """Deploy pinned Git objects during the notebook outage; inspect then prepare."""
 import argparse
+import base64
 import hashlib
 import json
 import os
@@ -7,6 +8,7 @@ from pathlib import Path
 import re
 import signal
 import subprocess
+import tarfile
 import time
 import traceback
 
@@ -115,6 +117,21 @@ def main():
             result = run / relative
             if result.exists():
                 print('QUAL_RESULT', relative, result.read_text(), flush=True)
+        # The notebook file browser is unavailable. Preserve the small simulator
+        # evidence in the downloadable scheduler log as a checked archive.
+        if (run / 'geometry').is_dir():
+            archive = root / 'geometry-evidence.tar.gz'
+            with tarfile.open(archive, 'w:gz') as tar:
+                tar.add(run / 'geometry', arcname='geometry')
+                for name in ('gpu-probe.json', 'clock.json', 'process-clock.json', 'geometry.log'):
+                    if (run / name).is_file():
+                        tar.add(run / name, arcname=name)
+            data = archive.read_bytes()
+            encoded = base64.b64encode(data).decode('ascii')
+            print('QUAL_ARCHIVE', len(data), hashlib.sha256(data).hexdigest(), flush=True)
+            chunks = [encoded[i:i+4096] for i in range(0, len(encoded), 4096)]
+            for index, chunk in enumerate(chunks):
+                print('QUAL_ARCHIVE_CHUNK', index, len(chunks), chunk, flush=True)
         if code == 0 and time.monotonic() < deadline:
             code = execute('pi05-cpu-prepare', ['bash', str(files / 'prepare_pi05.sh'),
                            str(args.project), str(checkout)])
