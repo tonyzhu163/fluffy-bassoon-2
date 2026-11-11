@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-11T17:21:30+08:00",
+  "checked_at": "2026-11-11T17:32:00+08:00",
   "cluster": "Baige",
   "gpu_job": "job-ixk0ddq6qilq",
   "gpu_hours_used": null,
@@ -20,12 +20,13 @@
     "source_import02": "Passed exact source SHA and clean checkout; BPP/LIBERO/robomimic editable installation complete",
     "cpu_preflight02": "Failed missing libGL.so.1; CPU only",
     "graphics_repair": "Ubuntu jammy GLVND 1.4.0-1 libgl1/libegl1/libglx0/libglvnd0 unpacked into private os-libs01; OpenCV/Open3D/MuJoCo ldd sweep passed with private torch/lib",
-    "cpu_preflight03": "Passed all 10 imports and both HDF5 schemas; complete=true; GPU execution remains unqualified"
+    "cpu_preflight03": "Passed all 10 imports and both HDF5 schemas; complete=true; GPU execution remains unqualified",
+    "gpu_runtime_smoke": "Passed allocated4090 probe, strict967tensor equality, frozenCUDA, both native episodes, pairedreset observations and unchanged parameters"
   },
-  "next": "Verify allocated probe, checkpoint load, prompt cache and native simulator advancement; regular status 17:39",
+  "next": "Launch panel01 with five paired native initial scenes0\u20134 per candidate; scene0 repeats smoke, no held-out claim",
   "latest_fix_commit": "9cb5094d",
-  "gpu_hours_finalized": 0.4122222222222222,
-  "gpu_hours_reserved": 1,
+  "gpu_hours_finalized": 0.5416666666666666,
+  "gpu_hours_reserved": 0,
   "cpu_evidence": "cpu-evidence01",
   "qualification": {
     "gpus": 1,
@@ -44,7 +45,7 @@
     "identity": "qual04",
     "job_id": "job-ixk0ddq6qilq",
     "created_shanghai": "2026-11-11 17:21:09",
-    "status": "Starting; native runtime smoke pending",
+    "status": "Succeeded: both native smoke episodes1/1, exactly paired initial observations, unchanged frozen parameters",
     "capacity_before_submit": {
       "free_gpus": 34,
       "max_gpus": 152,
@@ -52,9 +53,21 @@
       "max_cpus": 2052,
       "free_memory_gib": 7908,
       "max_memory_gib": 17081
-    }
+    },
+    "ended_shanghai": "2026-11-11 17:28:55",
+    "scheduler_seconds": 451,
+    "conservative_seconds": 466,
+    "native_episodes": 2,
+    "clock": {
+      "exit_code": 0,
+      "started": 1794388882,
+      "ended": 1794389328,
+      "gpus": 1,
+      "hostname": "job-ixk0ddq6qilq-master-0"
+    },
+    "receipt_folder": "qual04"
   },
-  "cumulative_scheduler_gpu_hours": 0.26944444444444443,
+  "cumulative_scheduler_gpu_hours": 0.3947222222222222,
   "repair": "Remove only inactive legacy language_embedding=null and use_finetuned_language_encoder=false runner keywords, with exact-value/language-ignore guards and full signature binding",
   "prior_qualifications": [
     {

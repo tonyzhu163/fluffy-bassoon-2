@@ -1,5 +1,21 @@
 # Release inspection and qualification status
 
+Current status: native runtime smoke completed on Baige RTX4090 at17:28:55
+Shanghai. Both candidate episodes succeeded on exactly paired initial
+observations; strict loading matched all967saved tensors and frozen
+parameter versions stayed unchanged. See [qual04/motor/result.json](qual04/motor/result.json)
+and [current status](PREPARATION-STATUS.json). The entries below document
+preparation chronologically; their pending statements describe those dates.
+
+The working loader preserves checkpoint architecture flags, except the
+official paper configuration's documented legacy default
+`use_pool_modality_pos_embed=false`. It suppresses only the timm factory's
+redundant pretrained download and restores the factory before strict loading.
+Two obsolete inactive runner options are removed with exact-value guards;
+all remaining arguments bind to the official signature. The original saved
+config, effective model config, exact tensor receipt and runner interface
+receipt are retained. Motor competence still requires the five-scene panel.
+
 2026-11-11, static inspection on macOS. No model computation or simulator
 execution was performed locally. Source checkout:
 `/tmp/libero-gen-bpp-20261111`, BPP

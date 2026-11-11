@@ -176,13 +176,16 @@ pilot uncertainty, not an unmeasured large grid.
    not evidence against in-context learning.
 
 Current qualification status is maintained in [PREPARATION-STATUS.json](PREPARATION-STATUS.json).
-At 17:19 Shanghai, the released checkpoint passed strict loading and exact
-equality for all 967 saved tensors, then moved frozen to CUDA. Three bounded
-allocations have stopped before simulator episodes: two construction
-compatibility issues and an obsolete inactive runner keyword. All failures
-are preserved. Finalized usage is 0.269 scheduler / 0.412 conservative
-GPU-hours of the 5-hour cap. Native simulation and motor competence remain
-unqualified; a guarded runner compatibility repair is being prepared.
+At 17:28:55 Shanghai, `qual04` completed the native runtime smoke: both
+candidate episodes succeeded, initial observations were exactly paired, and
+frozen parameter versions were unchanged. Strict loading verified exact
+equality of all 967 saved tensors on the allocated RTX4090. Raw receipts,
+action/reward traces and videos are in [qual04](qual04/). Three earlier
+startup failures are preserved. Finalized usage is 0.395 scheduler / 0.542
+conservative GPU-hours of the 5-hour cap. The five-scene engineering panel
+uses initialization indices 0–4; index0 repeats the smoke scene and is not
+a fresh held-out test. The gate remains at least4/5 for each candidate.
+Custom relational layouts and the learned history reader remain unqualified.
 
 ## Primary sources
 
