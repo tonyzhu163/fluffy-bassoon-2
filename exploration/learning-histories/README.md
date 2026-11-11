@@ -49,6 +49,8 @@ done
 
 The completed five-condition, three-seed grid used K=6 and 20,000 CUDA updates per fit. On held-out rules, attempts improved from 45.44% to 57.05% at k=6, versus 86.50% for the reference reading the same histories. A similarly large gap remained on training rules. All seeds failed the original near-reference screen; see the [curves and qualification evidence](../../outputs/learning-histories-20261111-r1/RESULT.md).
 
+The [paired feedback follow-up](../../outputs/learning-histories-feedback-20261111-r1/RESULT.md) reproduced the original curves exactly. On held-out random-attempt histories, the same checkpoints scored 54.65% with real feedback, 43.94% with outcomes masked and 38.83% with outcomes shuffled. All three seeds showed a benefit. Training-style histories explained only 1.77 points of the held-out deficit; a large reading gap persisted even on training rules.
+
 ## Decision rule
 
 Read each fit on held-out rules, three seeds per condition. These original screening rules use "Bayes" to mean the full-family enumeration reference above; they are diagnostic thresholds, not proofs of optimality or causal feedback use.

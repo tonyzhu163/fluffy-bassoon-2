@@ -15,8 +15,21 @@ choices 41.14%, full corrections 67.51%, and linked attempts/corrections 69.62%
 at held-out k=6. These curves show partial history use in the synthetic task,
 not robotic adaptation or learned information-seeking exploration. The
 reference uses a full-family prior rather than each split's sampling prior,
-and a same-model feedback intervention remains untested.
+and that grid did not include a same-model feedback intervention.
 [Results, seed variation and limitations](../outputs/learning-histories-20261111-r1/RESULT.md).
+
+A subsequent frozen-checkpoint intervention reproduced all six original curves
+exactly and evaluated fresh paired histories. On held-out rules with independent
+random attempts, real feedback reached 54.65%, masked feedback 43.94%, shuffled
+feedback 38.83%, and demo-only context 44.93%. Real feedback helped in all three
+seeds; both paired within-fit intervals excluded zero in each seed. Independent
+random choices remove the training actor's indirect reward channel. This supports
+beneficial feedback dependence in the synthetic task. Training-actor histories
+raised held-out accuracy only from 57.38% to 59.15%, still below their 84.49%
+enumeration reference; training rules had a similar deficit. History-policy
+shift therefore does not explain most of the gap. These are frozen-query input
+interventions, not alternate closed-loop rollouts or robotic adaptation.
+[Paired diagnostics and limitations](../outputs/learning-histories-feedback-20261111-r1/RESULT.md).
 
 ## RoboCasa365
 
