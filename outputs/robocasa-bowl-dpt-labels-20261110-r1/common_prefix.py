@@ -1,11 +1,12 @@
 """Prepare an explicitly teacher-assisted handoff at the matched training decision."""
 import argparse
+from itertools import islice
 import json
 from pathlib import Path
 
 import numpy as np
 
-from collect import CAMERAS, convert_action, held_fruit, identity, reset_scene, stable_counter_regions, state
+from collect import CAMERAS, carry, convert_action, held_fruit, identity, reset_scene, stable_counter_regions, state
 from export_targets import common_boundary
 from readout import read
 
@@ -22,19 +23,27 @@ def prepare(args):
             assert index is not None
             offset = int(left["offsets"][index])
             np.testing.assert_array_equal(left["commands"][:offset], right["commands"][:offset])
-            commands = np.concatenate((pickup["commands"], left["commands"][:offset]))
-            assert len(commands) < 500
+            assert len(pickup["commands"]) + offset < 500
             wrapped, obs, layout = reset_scene(seed)
             try:
                 env = wrapped.unwrapped.env
                 assert identity(env, obs) == original["initial"]
-                after = []
-                for i, command in enumerate(commands):
+                after, commands = [], []
+                for command, expected in zip(pickup["commands"], pickup["post"], strict=True):
                     obs, _, _, _, _ = wrapped.step(convert_action(command))
-                    current = state(obs)
-                    if i < original["controls"]:
-                        np.testing.assert_array_equal(current, pickup["post"][i])
-                    after.append(current)
+                    np.testing.assert_array_equal(state(obs), expected)
+                    after.append(state(obs))
+                    commands.append(command.astype(np.float64))
+                assert identity(env, obs) == original["decision"]
+                # The training archive rounds teacher controls to float32. Regenerate
+                # the original float64 controller outputs for bit-exact physics replay.
+                script = carry(env, original["fruit"], layout["bowls"][0])
+                for i, (_, command) in enumerate(islice(script, offset)):
+                    np.testing.assert_array_equal(command.astype(np.float32), left["commands"][i])
+                    obs, _, _, _, _ = wrapped.step(convert_action(command))
+                    commands.append(command.copy())
+                    after.append(state(obs))
+                assert len(commands) == original["controls"] + offset
                 np.testing.assert_array_equal(state(obs), left["states"][index])
                 np.testing.assert_array_equal(np.stack([obs[k] for k in CAMERAS]), left["frames"][index])
                 assert held_fruit(env) == original["fruit"]
