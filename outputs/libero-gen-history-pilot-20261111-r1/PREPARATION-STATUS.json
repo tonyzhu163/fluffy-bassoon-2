@@ -1,8 +1,8 @@
 {
-  "checked_at": "2026-11-11T16:48:53+08:00",
+  "checked_at": "2026-11-11T16:56:00+08:00",
   "cluster": "Baige",
-  "gpu_job": "job-ziws4e3djp5a",
-  "gpu_hours_used": null,
+  "gpu_job": null,
+  "gpu_hours_used": 0.1175,
   "gpu_hours_cap": 5,
   "deployed_commit": "9368f1da403bb61f0736c93e9d28564f6c0d2c1e",
   "deployed_source": "/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-9368f1da",
@@ -22,16 +22,16 @@
     "graphics_repair": "Ubuntu jammy GLVND 1.4.0-1 libgl1/libegl1/libglx0/libglvnd0 unpacked into private os-libs01; OpenCV/Open3D/MuJoCo ldd sweep passed with private torch/lib",
     "cpu_preflight03": "Passed all 10 imports and both HDF5 schemas; complete=true; GPU execution remains unqualified"
   },
-  "next": "Verify advancing native simulator episodes; no reader training authorized",
+  "next": "Deploy reviewed construction fix and start fresh qual02, same two native episodes and 60-minute cap",
   "latest_fix_commit": "9cb5094d",
-  "gpu_hours_finalized": 0,
-  "gpu_hours_reserved": 1,
+  "gpu_hours_finalized": 0.1175,
+  "gpu_hours_reserved": 0,
   "cpu_evidence": "cpu-evidence01",
   "qualification": {
     "identity": "qual01",
     "job_id": "job-ziws4e3djp5a",
     "created_shanghai": "2026-11-11 16:46:45",
-    "status": "GPU probe passed; motor startup, zero step files at last check",
+    "status": "Failed before native episodes: harness disabled pretrained flag and triggered unsupported Conv2d initializer",
     "gpus": 1,
     "gpu_type": "NVIDIA GeForce RTX 4090",
     "cpus": 13,
@@ -52,6 +52,20 @@
     "scheduler_environment": {
       "NVIDIA_DRIVER_CAPABILITIES": "compute,utility,graphics"
     },
-    "n_test_per_candidate": 1
-  }
+    "n_test_per_candidate": 1,
+    "ended_shanghai": "2026-11-11 16:53:48",
+    "scheduler_seconds": 410,
+    "conservative_seconds": 423,
+    "clock": {
+      "exit_code": 1,
+      "started": 1794386817,
+      "ended": 1794387202,
+      "gpus": 1,
+      "hostname": "job-ziws4e3djp5a-master-0"
+    },
+    "native_episodes": 0,
+    "receipt_folder": "qual01"
+  },
+  "cumulative_scheduler_gpu_hours": 0.11388888888888889,
+  "repair": "Preserve original checkpoint model config; suppress only timm factory external pretraining download with context-restored wrapper; strict-load and compare every saved tensor before CUDA move"
 }

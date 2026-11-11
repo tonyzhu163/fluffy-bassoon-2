@@ -1,0 +1,50 @@
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+[robosuite WARNING] To setup, run: python /mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-9368f1da/outputs/libero-gen-history-pilot-20261111-r1/qualify_motor.py:68: UserWarning: register_new_resolver() is deprecated and will be removed in a future release.
+Use register_resolver() instead.
+See https://github.com/hydra-ecosystem/omegaconf/issues/426 for migration instructions.
+
+  OmegaConf.register_new_resolver("eval", eval, replace=True)
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 92, in _call_target
+    return _target_(*args, **kwargs)
+  File "/mowenjie/fluffy-bassoon-2/cache/bpp-58125e6-20261111-r1/behavior_prompting/train_network/model/vision/transformer_obs_encoder.py", line 283, in __init__
+    self.init_weights()
+  File "/mowenjie/fluffy-bassoon-2/cache/bpp-58125e6-20261111-r1/behavior_prompting/train_network/model/vision/transformer_obs_encoder.py", line 428, in init_weights
+    self.apply(init_weights)
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1061, in apply
+    module.apply(fn)
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1061, in apply
+    module.apply(fn)
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1061, in apply
+    module.apply(fn)
+  [Previous line repeated 1 more time]
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1062, in apply
+    fn(self)
+  File "/mowenjie/fluffy-bassoon-2/cache/bpp-58125e6-20261111-r1/behavior_prompting/train_network/utils/model_util.py", line 99, in init_weights
+    raise RuntimeError("Unaccounted module {}".format(module))
+RuntimeError: Unaccounted module Conv2d(3, 768, kernel_size=(16, 16), stride=(16, 16), bias=False)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-9368f1da/outputs/libero-gen-history-pilot-20261111-r1/qualify_motor.py", line 167, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-9368f1da/outputs/libero-gen-history-pilot-20261111-r1/qualify_motor.py", line 87, in main
+    policy = hydra.utils.instantiate(model_cfg)
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 222, in instantiate
+    return instantiate_node(
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 334, in instantiate_node
+    value = instantiate_node(
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 334, in instantiate_node
+    value = instantiate_node(
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 334, in instantiate_node
+    value = instantiate_node(
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 339, in instantiate_node
+    return _call_target(_target_, partial, args, kwargs, full_key)
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/hydra/_internal/instantiate/_instantiate2.py", line 97, in _call_target
+    raise InstantiationException(msg) from e
+hydra.errors.InstantiationException: Error in call to target 'behavior_prompting.train_network.model.vision.transformer_obs_encoder.TransformerObsEncoder':
+RuntimeError('Unaccounted module Conv2d(3, 768, kernel_size=(16, 16), stride=(16, 16), bias=False)')
+full_key: obs_encoder.obs_encoder.obs_encoder

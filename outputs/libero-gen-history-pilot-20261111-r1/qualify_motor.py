@@ -62,32 +62,54 @@ def main():
               "datasets": str(args.assets / "dataset/demonstration_data")}
     (config_dir / "config.yaml").write_text(yaml.safe_dump(config))
     os.environ["LIBERO_CONFIG_PATH"] = str(config_dir)
+    print("MOTOR_STAGE", "importing_bpp_runner", flush=True)
     from behavior_prompting.train_network.env_runner.libero_image_runner import LiberoImageRunner
     from behavior_prompting.train_network.utils.libero_util import discover_and_register_benchmarks
     discover_and_register_benchmarks()
     OmegaConf.register_new_resolver("eval", eval, replace=True)
     checkpoint = args.assets / "model/liberogen_spatial_combination_behavior_prompting.ckpt"
     assert digest(checkpoint) == "74e0f841f3b86f1383adda23dab59fddee8806a4bcb5685ed7f826afb320c097"
+    print("MOTOR_STAGE", "reading_released_checkpoint", flush=True)
     payload = torch.load(checkpoint, map_location="cpu", pickle_module=dill, weights_only=False)
     cfg = payload["cfg"]
     (args.output / "checkpoint-config.yaml").write_text(OmegaConf.to_yaml(cfg))
-    # Strictly load all saved weights, avoiding an unnecessary pretrained-ViT download.
+    # Preserve the checkpoint encoder's pretrained/frozen/group-norm branches.
+    # Suppress only timm's external weight download: the released checkpoint
+    # strictly replaces every parameter and buffer immediately after construction.
+    import timm
+    from unittest.mock import patch
     model_cfg = OmegaConf.create(OmegaConf.to_container(cfg.model, resolve=True))
-    def disable_pretrained(node):
-        if OmegaConf.is_dict(node):
-            for key in node:
-                if key == "pretrained":
-                    node[key] = False
-                else:
-                    disable_pretrained(node[key])
-        elif OmegaConf.is_list(node):
-            for value in node:
-                disable_pretrained(value)
-    disable_pretrained(model_cfg)
-    policy = hydra.utils.instantiate(model_cfg)
-    policy.load_state_dict(payload["state_dicts"]["model"], strict=True)
-    del payload
+    original_factory = timm.create_model
+    factory_calls = []
+    def create_without_download(*factory_args, **factory_kwargs):
+        factory_calls.append({"model_name": factory_kwargs.get("model_name", factory_args[0] if factory_args else None),
+                              "requested_pretrained": factory_kwargs.get("pretrained", False),
+                              "effective_pretrained": False})
+        factory_kwargs["pretrained"] = False
+        return original_factory(*factory_args, **factory_kwargs)
+    print("MOTOR_STAGE", "constructing_checkpoint_model", flush=True)
+    with patch.object(timm, "create_model", create_without_download):
+        policy = hydra.utils.instantiate(model_cfg)
+    assert timm.create_model is original_factory
+    assert factory_calls, "Expected the checkpoint visual backbone to use timm"
+    saved_state = payload["state_dicts"]["model"]
+    policy.load_state_dict(saved_state, strict=True)
+    loaded_state = policy.state_dict()
+    verified_tensors = 0
+    for name, value in saved_state.items():
+        if isinstance(value, torch.Tensor):
+            loaded = loaded_state[name]
+            assert loaded.dtype == value.dtype and loaded.shape == value.shape
+            assert torch.equal(loaded, value), f"Released tensor changed: {name}"
+            verified_tensors += 1
+    assert verified_tensors > 0
+    (args.output / "construction-receipt.json").write_text(json.dumps({
+        "factory_calls": factory_calls, "factory_restored": True,
+        "strict_checkpoint_load": True, "exact_saved_tensors_verified": verified_tensors,
+        "checkpoint_model_config_preserved": True}, indent=2) + "\n")
+    del payload, saved_state, loaded_state
     policy.requires_grad_(False).eval().cuda()
+    print("MOTOR_STAGE", "strict_loaded_frozen_cuda", verified_tensors, flush=True)
     versions = {name: p._version for name, p in policy.named_parameters()}
     (args.output / "instantiated-model-config.yaml").write_text(OmegaConf.to_yaml(model_cfg))
 
@@ -135,6 +157,7 @@ def main():
                              n_test_vis=args.n_test, is_seen=True, eval_seen=True, eval_unseen=False,
                              vis_prompt=False, vis_attention_map=False, vis_actions_rollout=False,
                              vis_proprio_rollout=False, vis_trajectory_video=False, render_gpu_device_id=0)
+        print("MOTOR_STAGE", "constructing_native_runner", task, flush=True)
         runner = LiberoImageRunner(**runner_kwargs)
         proxy = TraceProxy(runner.env, folder)
         runner.env = proxy
