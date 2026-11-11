@@ -71,13 +71,15 @@ The checkpoint is 6,915,257,998 bytes; selected HDF5 files are 589,630,943 and
 946,177,276 bytes. Total selected download is 8,451,066,217 bytes. Full data
 is about 159 GB and is unnecessary for this qualification.
 
-`prepare_runtime.sh` uses isolated uv 0.9.10 / Python 3.10.20 and the
+`prepare_runtime.sh` uses isolated uv 0.13.7 / Python 3.10.20 and the
 official BPP CUDA-12.8 torch 2.8.0 option. `runtime-requirements.txt` retains
 the relevant upstream pins, including eagerly imported Open3D, but excludes
 robot-device and DrawAnything packages. Legacy gym 0.21 is installed with
 upstream's pip 24 / setuptools 65.5 / wheel 0.38 toolchain. The documented
 robomimic fork is pinned to `f4357ed548b656800636ee459c7a2f31f95b5a08`.
 This dependency subset has only been statically inspected, not imported yet.
+The uv pin was updated after checking the current official PyPI metadata;
+the older 0.9.10 bootstrap predates the requested Python 3.10.20 release.
 
 `qualify_motor.py` loads the checkpoint's own model configuration and strict
 saved `model` state, freezes every parameter, and uses the original LIBERO
@@ -91,5 +93,10 @@ counters are required. Videos and native reward traces are retained.
 `launch_motor.sh` requests no resources itself: it is for one approved
 allocated GPU with a 60-minute scheduler cap, runs the repository GPU probe,
 then bounds the first one-seed-per-candidate check to 55 process minutes.
+The probe uses `--purpose evaluation` and the pinned project's `src` on
+`PYTHONPATH`. Missing CUDA visibility is filled only after a single NVML
+UUID exactly matches the scheduler's `NVIDIA_VISIBLE_DEVICES`; existing
+visibility is preserved. The outer clock starts before the probe so probe
+failures are included in the process receipt.
 No launcher has run. Python compilation, shell syntax, and `git diff --check`
 pass; those are static checks, not runtime qualification.

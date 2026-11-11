@@ -20,10 +20,10 @@ assert d.free > 30 * 2**30, 'Need 30 GiB free for isolated preparation'
 (p/'storage-before.json').write_text(json.dumps({'free_bytes':d.free,'quota_command':shutil.which('quota')}))
 (p/'write-probe').write_text('ok'); assert (p/'write-probe').read_text()=='ok'
 PY
-if [[ ! -x "$TASK_SETUP/uv-bootstrap/bin/uv" ]]; then
-  python -m pip install --target "$TASK_SETUP/uv-bootstrap" 'uv==0.9.10'
+if [[ ! -x "$TASK_SETUP/uv-0.13.7/bin/uv" ]]; then
+  python -m pip install --target "$TASK_SETUP/uv-0.13.7" 'uv==0.13.7'
 fi
-TASK_UV="$TASK_SETUP/uv-bootstrap/bin/uv"
+TASK_UV="$TASK_SETUP/uv-0.13.7/bin/uv"
 "$TASK_UV" --version > "$TASK_SETUP/uv-version.txt"
 test "$(git -C "$TASK_BPP" rev-parse HEAD)" = 58125e682acceefef3d60c071212dc483a4db1c9
 timeout 900 git -C "$TASK_BPP" submodule update --init --depth 1 deps/LIBERO
