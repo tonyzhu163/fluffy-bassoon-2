@@ -1,5 +1,5 @@
 {
-  "status": "teacher02_bootstrap_failed_before_probe; Git2.34 compatibility prepared",
+  "status": "teacher03 complete; native replay2/2 final success, retarget0/2 final success; diagnosis before further simulation",
   "stage_cap_gpu_hours": 4,
   "prior_task_conservative_gpu_hours_approx": 17.75,
   "initial_allocation": {
@@ -21,10 +21,11 @@
     "cpu_cores": 8,
     "ram_gib": 112
   },
-  "current_gpu_hours": 0.06666666666666667,
+  "current_gpu_hours": 0.1502777777777778,
   "checks": {
     "local": "Python AST and bash syntax only; simulator execution on allocated Linux pending",
-    "source_hdf5": "two cached demo0 metadata receipts; near-plate abs_actions pose is constant and deliberately unused"
+    "source_hdf5": "two cached demo0 metadata receipts; near-plate abs_actions pose is constant and deliberately unused",
+    "allocated_teacher03": "Exact Git deployment, GPU probe and all four simulator episodes completed; no BPP loaded; native successes but retarget final outcomes both zero."
   },
   "jobs": [
     {
@@ -55,11 +56,35 @@
       "running_shanghai": "2026-11-11 20:34:48",
       "failure_observed_log_shanghai": "2026-11-11 20:34:49",
       "failure": "Git2.34.1 bundle reader does not recognize filter capability; no checkout/probe/episode",
-      "scheduler_final_accounting_pending": true
+      "ended_shanghai": "2026-11-11 20:37:52",
+      "scheduler_state": "Failed",
+      "scheduler_gpu_seconds": 29,
+      "conservative_gpu_seconds": 199,
+      "bootstrap_seconds": 0.08376908302307129
+    },
+    {
+      "identity": "teacher03",
+      "job_id": "job-3m6siztxswao",
+      "commit": "fb7a772e5f8bd319bc108114a63d7e27cb7cfbc6",
+      "submitted_shanghai": "2026-11-11 20:48:36",
+      "running_shanghai": "2026-11-11 20:48:47",
+      "ended_shanghai": "2026-11-11 20:50:18",
+      "scheduler_state": "Succeeded",
+      "scheduler_gpu_seconds": 91,
+      "conservative_gpu_seconds": 102,
+      "process_and_probe_seconds": 80,
+      "bootstrap_seconds": 83.60925912857056,
+      "receipt": "evidence/teacher03/receipt-readout.json",
+      "native_final_successes": 2,
+      "retarget_final_successes": 0,
+      "retarget_native_any_successes": 1,
+      "episodes_executed": 4,
+      "policy_loaded": false,
+      "geometry_observation_hashes_equal": true
     }
   ],
-  "next_identity": "teacher03",
-  "current_scheduler_gpu_hours": 0.019166666666666665,
+  "next_identity": "not allocated; diagnose saved trajectories before teacher04",
+  "current_scheduler_gpu_hours": 0.0525,
   "source_asset_cpu_preflight": {
     "native_source_count": 2,
     "references_resolved_per_source": 93,
