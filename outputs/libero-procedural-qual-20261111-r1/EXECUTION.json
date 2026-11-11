@@ -1,5 +1,5 @@
 {
-  "status": "checkpoint_verified_cpu_runtime_installing_from_hash_preserving_mirror",
+  "status": "runtime_installed_import_qualification_pending",
   "gpu_hours_limit": 4,
   "scheduler_gpu_hours": 0.3925,
   "conservative_gpu_hours": 0.3947222222222222,
@@ -36,26 +36,25 @@
   "user_scope": "development scene qualification and released pi05 motor assessment before deciding SFT",
   "browser_coordination": "human authorized message to parent chat 01a1c8f3-5b3b-7822-b61b-0a59f6431501; message accepted",
   "code_commit": "64a5e2880f4851c5f1f0edbd9eaff75df0a5c591",
-  "last_checked": "2026-11-11T21:39:00+08:00",
+  "last_checked": "2026-11-11T22:06:00+08:00",
   "development_endpoint": "dv-0d0ac1c839",
   "development_status": "recovered; CPU setup running in isolated qualification Jupyter terminal",
-  "policy_scripts": "unchanged evaluation code; runtime setup at 3a2ee1bf deployed clean; no model loaded",
+  "policy_scripts": "669434dc deployed clean; upstream default locked dev group installed to satisfy inference-time pytest import; model not loaded",
   "cpu_preparation": {
-    "identity": "cpu-prepare05",
+    "identity": "cpu-prepare07",
     "host": "dv-0d0ac1c839",
-    "pid": 7315,
-    "commit": "3a2ee1bf6ecba6fbd770383da7515b59c94c94eb",
+    "pid": 10263,
+    "commit": "669434dc009099b46de29a72bb0dccf892263527",
     "gpus": 0,
-    "status": "Running",
-    "cache": "uv-cache05",
-    "mirror": "https://pypi.tuna.tsinghua.edu.cn",
-    "lock_change": "download/registry URLs only; versions, dependency graph and hashes unchanged"
+    "status": "installation_complete_import_probe_pending",
+    "cache": "uv-cache06",
+    "mirror": "HTTPS TUNA package index; Baidu public artifact mirror with upstream SHA-256 enforced"
   },
   "policy_deployment": {
-    "commit": "3a2ee1bf6ecba6fbd770383da7515b59c94c94eb",
-    "checkout": "/mowenjie/fluffy-bassoon-2/sources/libero-procedural-3a2ee1bf-runtime05",
+    "commit": "669434dc009099b46de29a72bb0dccf892263527",
+    "checkout": "/mowenjie/fluffy-bassoon-2/sources/libero-procedural-669434dc-runtime07",
     "clean": true,
-    "bundle_sha256": "90671896a655b7dac470be1fce72393b27eaab7835bb0a4584d86946fceb845c"
+    "bundle_sha256": "767f19efde345b191afadbd0c4437becdb56869e5fac8c9323b1f856c9679113"
   },
   "cpu_preparation_attempts": [
     {
@@ -79,6 +78,22 @@
       "started": 1794403886.183044,
       "ended": 1794404228.8090096,
       "reason": "direct PyPI large transfers slow; migrate to mirror while retaining artifact hashes"
+    },
+    {
+      "identity": "cpu-prepare05",
+      "exit_code": 143,
+      "gpus": 0,
+      "started": 1794404302.1398833,
+      "ended": 1794405075.544009,
+      "reason": "switch to faster provider artifact route after measured network/storage diagnostics"
+    },
+    {
+      "identity": "cpu-prepare06",
+      "exit_code": 0,
+      "gpus": 0,
+      "started": 1794405157.247413,
+      "ended": 1794405366.4954326,
+      "result": "runtime installed; subsequent import exposed upstream inference dependency on pytest excluded by --no-dev"
     }
   ],
   "checkpoint_preparation": {
