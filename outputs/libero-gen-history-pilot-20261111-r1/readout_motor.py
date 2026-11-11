@@ -37,6 +37,15 @@ def summarize(folder):
         values = [scores[index] for index in range(count)]
         rows.append({"task": candidate["task"], "per_scene_native_scores": values,
                      "successes": sum(values), "episodes": count,
+                     "scene_subsets": {
+                         name: {"indices": list(indices),
+                                "successes": sum(values[i] for i in indices),
+                                "episodes": len(indices)}
+                         for name, indices in [
+                             ("repeated_development_0_to_4", range(min(count, 5))),
+                             ("new_native_5_onward", range(5, count))]
+                         if len(indices)
+                     },
                      "native_step_counts": native_lengths,
                      "runner_seconds_including_prompt_cache": candidate["seconds"],
                      "peak_torch_allocated_bytes": candidate["max_memory_allocated_bytes"]})

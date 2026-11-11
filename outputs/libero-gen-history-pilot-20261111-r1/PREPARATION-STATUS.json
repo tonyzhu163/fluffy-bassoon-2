@@ -1,8 +1,8 @@
 {
-  "checked_at": "2026-11-11T18:07:15+08:00",
+  "checked_at": "2026-11-11T18:17:00+08:00",
   "cluster": "Baige",
-  "gpu_job": "job-eydsw39gx2rg",
-  "gpu_hours_used": 0.7752777777777777,
+  "gpu_job": null,
+  "gpu_hours_used": 0.8922222222222222,
   "gpu_hours_cap": 5,
   "deployed_commit": "230978e9960be5cd02952db5bea497b3d6caf0ed",
   "deployed_source": "/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-230978e9",
@@ -23,14 +23,14 @@
     "cpu_preflight03": "Passed all 10 imports and both HDF5 schemas; complete=true; later GPU runtime qualified in qual04 and panel02",
     "gpu_runtime_smoke": "Passed allocated4090 probe, strict967tensor equality, frozenCUDA, both native episodes, pairedreset observations and unchanged parameters"
   },
-  "next": "Verify allocated device/probe and advancing native episodes; next regular status18:19",
+  "next": "Bounded motor stage complete. Custom-layout qualification remains an unlaunched proposal in CUSTOM-LAYOUT-NEXT.md; no reader training or further GPU jobs.",
   "latest_fix_commit": "9cb5094d",
-  "gpu_hours_finalized": 0.7752777777777777,
-  "gpu_hours_reserved": 1,
+  "gpu_hours_finalized": 0.8922222222222222,
+  "gpu_hours_reserved": 0,
   "cpu_evidence": "cpu-evidence01",
   "qualification": {
     "identity": "panel03",
-    "status": "Starting; allocated CUDA/device and episode qualification pending",
+    "status": "Succeeded:20/20 native successes for each candidate, all20 distinct paired resets; no reader training",
     "gpus": 1,
     "cpus": 8,
     "memory_gib": 112,
@@ -39,7 +39,7 @@
     "queue": "aihcq-rh0wwk9muei4",
     "pool": "aihc-7tr9r4v64sij",
     "platform_gpu_type": "RPBZZZ6",
-    "exact_device_name": "Pending allocated probe",
+    "exact_device_name": "NVIDIA RPBZZZ6",
     "n_test_per_candidate": 20,
     "image": "ccr-2ff5lkkz-vpc.cnc.bj.baidubce.com/db/strong-plant:v2.0-cu12.8-cudnn9-ubuntu22.04_mowenjie_20261015152301",
     "scheduler_environment": {
@@ -57,9 +57,22 @@
       "queued_tasks": 4,
       "personal_free_gpu_quota": 16,
       "personal_gpu_quota": 32
-    }
+    },
+    "ended_shanghai": "2026-11-11 18:13:52",
+    "scheduler_seconds": 391,
+    "conservative_seconds": 421,
+    "native_episodes": 40,
+    "clock": {
+      "exit_code": 0,
+      "started": 1794391639,
+      "ended": 1794392019,
+      "gpus": 1,
+      "hostname": "job-eydsw39gx2rg-master-0"
+    },
+    "receipt_folder": "panel03",
+    "gpu_memory_mib": 97887
   },
-  "cumulative_scheduler_gpu_hours": 0.6255555555555555,
+  "cumulative_scheduler_gpu_hours": 0.7341666666666666,
   "repair": "Remove only inactive legacy language_embedding=null and use_finetuned_language_encoder=false runner keywords, with exact-value/language-ignore guards and full signature binding",
   "prior_qualifications": [
     {
@@ -304,11 +317,30 @@
       8.8
     ]
   },
-  "motor_panel": "panel02-readout.json; 5/5 each, five distinct paired resets, native reward trace parity, unchanged frozen parameters",
+  "motor_panel": "panel03-readout.json:20/20 each; repeated0\u20134=5/5 each; new5\u201319=15/15 each;20 distinct paired resets, native trace parity and unchanged frozen parameters",
   "archive_panel02": {
     "name": "libero-gen-panel02-evidence-20261111-1803.tar.gz",
     "bytes": 2038923,
     "sha256": "5fb84da50ae187e25d23ae636811b1c4ddcd7b2328dc6e00db18d5b77a0764eb",
     "files": 171
+  },
+  "status": "complete_motor_qualification",
+  "active_jobs": [],
+  "archive_panel03": {
+    "name": "libero-gen-panel03-evidence-20261111-1815.tar.gz",
+    "bytes": 7424391,
+    "sha256": "52cd50256ca3f34d1bbf36000a1c3e47918989f0e3a09998969c4720a245e49a",
+    "files": 632
+  },
+  "independent_readout_review": {
+    "reviewer": "parent agent",
+    "checked_at": "2026-11-11T18:18:22+08:00",
+    "passed": [
+      "40 native scores match reward traces",
+      "20 distinct paired resets",
+      "967 exact saved tensors",
+      "restored factory and guarded legacy default",
+      "clock exit0"
+    ]
   }
 }

@@ -43,6 +43,18 @@ on the same rule split, not a solved inference problem or robotic adaptation.
 The screen changes attention, supervision and features together and does not
 isolate their effects. [Fresh confirmation, all recipes and limits](../outputs/learning-histories-fix-20261111-r1/RESULT.md).
 
+## LIBERO-Gen motor qualification
+
+The released frozen Behavior Prompting Policy succeeded on 20/20 paired
+native initializations for each of two bowl-to-plate choices: the center
+bowl and the bowl beside the plate. Both candidates shared exactly matching
+RGB/wrist/proprioceptive resets; all 967 saved tensors loaded exactly and
+parameters stayed frozen. Initializations 0–4 repeated the engineering panel;
+new indices 5–19 succeeded 15/15 for each candidate. This qualifies these two
+motor choices on the native task family, not a released benchmark score,
+custom relational layouts or history-based adaptation. No history reader
+was trained. [Protocol, raw evidence and limits](../outputs/libero-gen-history-pilot-20261111-r1/RESULT.md).
+
 ## RoboCasa365
 
 The Atomic-Seen baseline uses the native JAX π0.5 Human300 checkpoint at step **75,000**. Load `pi05_pretrain_human300/multitask_learning/75000` from `robocasa/robocasa365_checkpoints` at revision `c484448a`, including its bundled normalization. OpenPI predicts 50 actions and executes five before replanning, with ten denoising steps. [Pinned checkpoint](https://huggingface.co/robocasa/robocasa365_checkpoints/tree/c484448aba1a9b60a04c9b0ca117241518ea69f3/pi05_pretrain_human300/multitask_learning/75000)

@@ -58,16 +58,30 @@ handwritten distance threshold is not a replacement for native reward.
 
 ## Admission and readout
 
-Before any learned reader training, collect a small preregistered layout
-qualification panel covering both strata and both physical bowl identities.
+Proposed next admission panel: 16 development layouts, eight agreement
+and eight disagreement, with the relation-selected physical bowl identity
+balanced within each stratum. Execute both unchanged candidate prompts
+from every layout: 32 physical episodes. The five-scene native panel took
+13m51s including cold imports and prompt caches; 32 episodes fit a provisional
+one-GPU, sixty-minute cap with a fresh output identity. This is a next-stage
+proposal, not an allocation under the current motor-only stage. Freeze the
+layout seeds, relation margins, target mapping and gate before execution.
+
 Keep all failures. Record candidate selected, bowl actually grasped,
 selected-skill success, both native hidden-goal outcomes, resets, videos,
-execution time and peak memory separately. Require exact paired physical
-states under goal variants and reliable execution of each distinct choice
-on disagreement layouts. Choose counts from the measured native motor
-cost, then write a fixed numerical gate before running this next panel.
+execution time and peak memory separately. Require at least seven successes
+out of eight for each candidate in each stratum, plus distinct intended bowl
+choices in at least seven of eight paired layouts in each stratum. Agreement
+means the two hidden rules favor the same candidate; the motor action set
+must still offer two executable choices. All 16 physical
+resets must match exactly across candidate evaluations. Every sampled state
+used for sidecar validation must give the same native success bit as the
+primary environment for its matching goal; any mismatch blocks collection.
+These are engineering admission thresholds, not precise reliability claims.
 Custom layout selection may use development seeds only; test layouts are
-locked afterward. No tuning on test failures.
+locked afterward. No tuning on test failures. If the released prompts cannot
+reliably express both alternatives after layout changes, stop and choose a
+separately qualified motor or task family rather than relabeling outcomes.
 
 Audit leakage by replaying a fixed candidate schedule independent of
 hidden rewards and verifying that changing the hidden goal changes only

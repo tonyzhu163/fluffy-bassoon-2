@@ -176,28 +176,23 @@ pilot uncertainty, not an unmeasured large grid.
    not evidence against in-context learning.
 
 Current qualification status is maintained in [PREPARATION-STATUS.json](PREPARATION-STATUS.json).
-At 18:00:47 Shanghai, `panel02` completed the five-scene engineering gate:
-center 5/5 and near-plate 5/5 native successes, with five distinct and
-exactly paired initial observations. All 967 saved tensors loaded exactly,
-and frozen parameter versions were unchanged. Raw receipts and trajectories
-are in [panel02](panel02/); the validated readout is
-[panel02-readout.json](panel02-readout.json). Index 0 repeats the smoke scene.
-Three earlier startup failures and one unallocated queue cancellation are
-preserved. Finalized usage is 0.626 scheduler / 0.775 conservative GPU-hours
-of the 5-hour cap.
+At 18:13:52 Shanghai, `panel03` completed the planned twenty-scene
+expansion: center 20/20 and near-plate 20/20 native successes. All twenty
+initial observations were distinct and exactly paired across candidates;
+all 967 saved tensors loaded exactly and parameters stayed frozen. New
+indices 5–19 scored 15/15 for each candidate; indices 0–4 repeated the prior
+five-scene engineering panel. The actual Pro6K device name was NVIDIA
+RPBZZZ6, with allocated GPU mapping, CUDA arithmetic and real simulator
+rendering/inference qualified in the job.
 
-The measured 13m51s scheduler duration supports the planned twenty-scene
-expansion within a one-GPU, sixty-minute reservation. `panel03` uses indices
-0–19, including the five engineering scenes, and the unchanged checkpoint,
-prompts, runner and seeds. The available Pro6K queue is selected after its
-node-level fit check; its exact device and CUDA/rendering support must pass
-in-job qualification. Report all forty outcomes and all twenty paired-reset
-assertions, report new indices 5–19 separately from repeated indices 0–4,
-and keep device-specific results separate. This expands the
-motor reliability check; it is not an independent held-out test or a reward
-learning experiment. Custom relational layouts and the learned reader
-remain unqualified; their next admission contract is
-[CUSTOM-LAYOUT-NEXT.md](CUSTOM-LAYOUT-NEXT.md).
+The bounded motor stage is complete, using 0.734 scheduler / 0.892
+conservative GPU-hours of the 5-hour cap, including all startup failures.
+No jobs remain active. [RESULT.md](RESULT.md) records the evidence and limits;
+[panel03-readout.json](panel03-readout.json) contains all per-scene outcomes.
+This is motor feasibility on native task initializations, not a released
+benchmark score or a history-learning result. Custom relational layouts and
+the learned reader remain unqualified. Their next admission proposal is
+[CUSTOM-LAYOUT-NEXT.md](CUSTOM-LAYOUT-NEXT.md); it has not launched.
 
 ## Primary sources
 
