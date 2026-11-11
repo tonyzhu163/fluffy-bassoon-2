@@ -15,8 +15,9 @@ or modified. The development container's separate overlay had
 | RoboTwin Sidney GRPO `grpo01/training-rollouts` | 8 | 43.09 GiB |
 | MIKASA failed r3 qualification step-2 tarball | 1 | 25.85 GiB |
 
-The original rollout receipts and MIKASA member hashes matched full BOS
-readback and fresh local staging. All 180 PPO and GRPO checkpoint files
+Each BOS copy and staged restore matched the SHA256 in its original receipt.
+The original MIKASA receipt also records verification of each tar member.
+All 180 PPO and GRPO checkpoint files
 passed the before/after identity check. The MIKASA successor used a fresh
 initializer. Its production checkpoints, the failed run's remaining
 diagnostics, and the original per-file receipts are still on PFS.
