@@ -1,0 +1,22 @@
+MOTOR_STAGE importing_bpp_runner
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+[robosuite WARNING] To setup, run: python /mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-8d503df7/outputs/libero-gen-history-pilot-20261111-r1/qualify_motor.py:69: UserWarning: register_new_resolver() is deprecated and will be removed in a future release.
+Use register_resolver() instead.
+See https://github.com/hydra-ecosystem/omegaconf/issues/426 for migration instructions.
+
+  OmegaConf.register_new_resolver("eval", eval, replace=True)
+MOTOR_STAGE reading_released_checkpoint
+MOTOR_STAGE constructing_checkpoint_model
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-8d503df7/outputs/libero-gen-history-pilot-20261111-r1/qualify_motor.py", line 190, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-8d503df7/outputs/libero-gen-history-pilot-20261111-r1/qualify_motor.py", line 96, in main
+    policy.load_state_dict(saved_state, strict=True)
+  File "/mowenjie/fluffy-bassoon-2/cache/bpp-58125e6-20261111-r1/behavior_prompting/train_network/model/common/base_policy.py", line 142, in load_state_dict
+    return super().load_state_dict(state_dict, strict)
+  File "/mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/torch/nn/modules/module.py", line 2624, in load_state_dict
+    raise RuntimeError(
+RuntimeError: Error(s) in loading state_dict for DiffusionUnetPolicy:
+	Missing key(s) in state_dict: "obs_encoder.obs_encoder.pool_modality_pos_embed". 

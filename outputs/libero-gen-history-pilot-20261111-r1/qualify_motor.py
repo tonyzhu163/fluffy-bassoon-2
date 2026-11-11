@@ -79,6 +79,25 @@ def main():
     import timm
     from unittest.mock import patch
     model_cfg = OmegaConf.create(OmegaConf.to_container(cfg.model, resolve=True))
+    saved_state = payload["state_dicts"]["model"]
+    original_tensor_count = sum(isinstance(v, torch.Tensor) for v in saved_state.values())
+    tokenizer_cfg = model_cfg.obs_encoder.obs_encoder
+    assert tokenizer_cfg._target_ == "behavior_prompting.train_network.model.prompt.prompt_obs_encoder.PairPromptTransformerTokenizer"
+    compatibility_overrides = []
+    # Official libero_policy_dunetp.yaml explicitly disables this for the paper
+    # models. Older released checkpoint configs omit the field, while the newer
+    # Python constructor defaults to True and would add an untrained parameter.
+    legacy_key = "obs_encoder.obs_encoder.pool_modality_pos_embed"
+    if "use_pool_modality_pos_embed" not in tokenizer_cfg:
+        assert legacy_key not in saved_state
+        tokenizer_cfg.use_pool_modality_pos_embed = False
+        compatibility_overrides.append({
+            "path": "model.obs_encoder.obs_encoder.use_pool_modality_pos_embed",
+            "checkpoint_value": "absent", "effective_value": False,
+            "evidence": "BPP 58125e6 config/libero_policy_dunetp.yaml:12; paper models trained with false"})
+    else:
+        assert tokenizer_cfg.use_pool_modality_pos_embed is False and legacy_key not in saved_state
+    print("MOTOR_COMPATIBILITY", json.dumps(compatibility_overrides), flush=True)
     original_factory = timm.create_model
     factory_calls = []
     def create_without_download(*factory_args, **factory_kwargs):
@@ -92,7 +111,6 @@ def main():
         policy = hydra.utils.instantiate(model_cfg)
     assert timm.create_model is original_factory
     assert factory_calls, "Expected the checkpoint visual backbone to use timm"
-    saved_state = payload["state_dicts"]["model"]
     policy.load_state_dict(saved_state, strict=True)
     loaded_state = policy.state_dict()
     verified_tensors = 0
@@ -106,7 +124,9 @@ def main():
     (args.output / "construction-receipt.json").write_text(json.dumps({
         "factory_calls": factory_calls, "factory_restored": True,
         "strict_checkpoint_load": True, "exact_saved_tensors_verified": verified_tensors,
-        "checkpoint_model_config_preserved": True}, indent=2) + "\n")
+        "original_checkpoint_tensor_count": original_tensor_count,
+        "checkpoint_model_config": "preserved except documented legacy-default completion",
+        "compatibility_overrides": compatibility_overrides}, indent=2) + "\n")
     del payload, saved_state, loaded_state
     policy.requires_grad_(False).eval().cuda()
     print("MOTOR_STAGE", "strict_loaded_frozen_cuda", verified_tensors, flush=True)
