@@ -16,18 +16,18 @@ So a scene offers at most 2 bowls × about 10 targets, roughly 20 behaviours. Th
 
 ### 1. Rules as functions of the scene
 
-A rule is a pick rule composed with a place rule. Each is computed from observable geometry, so it names a behaviour in any layout.
+A rule is one choice on each of a few independent axes, each computed from observable geometry, so it names a behaviour in any layout. Each axis is a short list; extending the family means appending to one list, with no new motor behaviour.
 
-| Part | Family | Count |
+| Axis | Choices | Count |
 | --- | --- | ---: |
-| Pick | Leftmost, rightmost, uppermost, lowermost bowl in the fixed agent-view image | 4 |
-| Pick | Bowl nearest to, or farthest from, a landmark (plate, ramekin, cookie box, stove, cabinet) | 10 |
-| Place | A fixed target (the release's ten non-bowl targets) | 10 |
-| Place | A relational target: the receptacle nearest the picked bowl, farthest from it, leftmost, rightmost | 4 |
+| Pick | Leftmost, rightmost, uppermost, lowermost bowl in the image; nearest to or farthest from each of five landmarks | 14 |
+| Anchor | A named receptacle (five), or a relation: nearest the picked bowl, farthest from it, leftmost, rightmost | 9 |
+| Context | None, or a scene predicate that flips the pick when true (three predicates such as "plate left of ramekin") | 4 |
+| Offset | On the receptacle or beside it | 2 |
 
-That is 14 × 14 = 196 rules over 20 behaviours per scene. Hold out a quarter of the compositions, with every pick rule and every place rule still seen in training, as in the toy. Image-frame relations use the projection the custom-layout stage already audits (pixel margins, no ties).
+That is 1,008 rules over 20 behaviours. [Step A](STEP-A-RESULT.md) checked this in geometry only. It showed that an axis adds difficulty only when its value changes with the scene: context quadrupled the ambiguity left after a demonstration, while a constant offset added none. New axes should therefore be scene-dependent. Candidates, in rough order of motor cost: a context predicate on the anchor as well as the pick; an offset that depends on the scene ("beside it, on the side facing the other bowl"); a second step with the other bowl, which the release's Goal Chain split already covers.
 
-With two bowls, any two pick rules either agree or disagree in a scene, so the pick contributes one bit per scene. The place rule carries most of the ambiguity. A third bowl would widen the pick but needs a motor that has never seen three bowls, so it is deferred to step 4.
+Hold out a quarter of the compositions, with every choice on every axis still seen in training. With two bowls the pick is one bit per scene; a third bowl is deferred to step 4.
 
 ### 2. A layout generator
 
@@ -53,13 +53,13 @@ A third bowl or new objects fall under case 3 by default.
 
 | Step | What | Simulator or GPU | Pass condition |
 | --- | --- | --- | --- |
-| A | Rule family in geometry only: sample positions, compute all 196 rules, enumerate hypotheses exactly as the toy does | None | With one demonstration and K attempts, the enumeration reference rises from near the demonstration-only level to at least 80%. This fixes K and the rule family before any rollout |
+| A | Rule family in geometry only, enumerated exactly as the toy does | None | **Passed** with the context axis: 44% after the demonstration, 82% at six attempts, 94% at eight. Use K=8. [Result](STEP-A-RESULT.md) |
 | B | Custom-layout stage as planned: two pick rules, one target, 16 layouts | Owned by the LIBERO-Gen pilot | That stage's own admission |
 | C | Two bowls × four targets on sampled layouts, about 50 layouts, every behaviour executed once | About 400 episodes | At least 85% native success per behaviour; all predicates match the primary environment |
 | D | Full 20 behaviours, several hundred layouts | 6,000 to 10,000 episodes | Same, per behaviour; held-out compositions and layouts frozen before collection |
 | E | Third bowl or new objects | New demonstrations and motor fine-tuning | Only if D succeeds and the paper needs a wider pick |
 
-Step A needs no cluster and can run on the Mac; it reuses `exploration/learning-histories/sessions.py` with a different rule function.
+Step A ran on the Mac with `exploration/learning-histories/placement.py`.
 
 ## Cost
 
@@ -67,6 +67,6 @@ Panel03 ran 40 episodes in 380 seconds of process time, about 9.5 seconds per ep
 
 ## Known limits
 
-- A single success bit over 20 behaviours is weak evidence per attempt: a failure removes one behaviour. Step A will show whether K stays practical. If it does not, add teacher corrections or a two-part outcome (right bowl, right target) and say so in the claim.
+- One demonstration alone gives 44% in step A, because named anchors are easy to identify. Rebalance the anchor choices before fixing the family.
 - All rules stay within "put a bowl on something". The claim this supports is inference of unseen compositions of seen relations in one task family, not unseen rule families.
 - Fresh layouts are position changes with the same objects, camera and background.
