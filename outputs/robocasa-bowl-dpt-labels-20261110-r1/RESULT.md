@@ -47,10 +47,18 @@ A fixed ridge decoder trained on the 24 training scenes identified 32/32 confirm
 
 Changing only support reward at each identical query decision produced a mean action-separation projection of −0.00135 along the teachers' left-minus-right commands. A value of one would reproduce the teacher separation, and zero would give no separation along that direction. The median was −0.000248, with seven of 16 scene means positive. Each scene used four common native noise draws over the first 50 translation commands shared by the two successful labels. [Action-level reward intervention](direction.json)
 
+## Property-given motor
+
+The negative primary result triggered the predeclared control that gives a separately trained LoRA policy the correct bowl in its instruction. Its 128-, 512- and 1,024-update checkpoints scored 5, 1 and 4 of 16 development goals. Native placements selected 128 updates. Imitation error declined across all three durations. Its locked confirmation evaluation is running. [Selection and physical development outcomes](oracle-development.json)
+
+![Imitation error and native placement success across training durations](learning-curves.png)
+
+Each curve comes from one fit. The left panel measures masked flow-prediction error at the common teacher decision. The right panel counts correct physical placements across the same eight development scenes and both hidden goals. [Plot source](learning_curves.py)
+
 ## Scope and execution
 
 This is a binary, custom one-fruit task with scripted supports and an evaluator-selected first-grasp handoff. The evidence covers one learner fit and 16 confirmation query scenes. The released RoboCasa task contains a broader goal. Generalization across tasks, continuous hidden properties and student-generated support sequences remains to be tested.
 
 Baige's allocated RTX 4090 ran the experiment. Collection used 78adcc26 and the learned motor used bf64c1ef. The first fit stopped before an optimizer update because its 16-dimensional public state needed packing into RLinf's 25-slot input layout. The corrected bridge reproduced all selected state coordinates and camera arrays on 1,539 saved observations. A transient utilization reading also stopped the final development panel before an episode, and a fresh probe passed for its replacement. Both failed attempts and all completed artifacts were retained.
 
-The predeclared next diagnostic is training the same memoryless adapter with the correct bowl explicitly given in the instruction. It selects duration on the original development scenes and tests the locked confirmation scenes. A weak result also triggers the prespecified eight-case check on training demonstrations if time remains. [Protocol and decision rule](PLAN.md)
+A weak property-given confirmation result also triggers the prespecified eight-case check on training demonstrations if time remains. [Protocol and decision rule](PLAN.md)
