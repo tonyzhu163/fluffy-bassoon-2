@@ -1,0 +1,20 @@
+MOTOR_STAGE importing_bpp_runner
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+[robosuite WARNING] To setup, run: python /mowenjie/fluffy-bassoon-2/setups/libero-gen-history-pilot-20261111-r1/env/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-8cedcf38/outputs/libero-gen-history-pilot-20261111-r1/qualify_motor.py:69: UserWarning: register_new_resolver() is deprecated and will be removed in a future release.
+Use register_resolver() instead.
+See https://github.com/hydra-ecosystem/omegaconf/issues/426 for migration instructions.
+
+  OmegaConf.register_new_resolver("eval", eval, replace=True)
+MOTOR_STAGE reading_released_checkpoint
+MOTOR_COMPATIBILITY [{"path": "model.obs_encoder.obs_encoder.use_pool_modality_pos_embed", "checkpoint_value": "absent", "effective_value": false, "evidence": "BPP 58125e6 config/libero_policy_dunetp.yaml:12; paper models trained with false"}]
+MOTOR_STAGE constructing_checkpoint_model
+MOTOR_STAGE strict_loaded_frozen_cuda 967
+MOTOR_STAGE constructing_native_runner pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-8cedcf38/outputs/libero-gen-history-pilot-20261111-r1/qualify_motor.py", line 210, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/sources/libero-gen-motor-8cedcf38/outputs/libero-gen-history-pilot-20261111-r1/qualify_motor.py", line 181, in main
+    runner = LiberoImageRunner(**runner_kwargs)
+TypeError: LiberoImageRunner.__init__() got an unexpected keyword argument 'language_embedding'

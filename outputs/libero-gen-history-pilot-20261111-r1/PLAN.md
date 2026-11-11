@@ -50,8 +50,8 @@ Their regions, fixtures, objects and initial predicates have exactly the
 same static hash (`42805b832c40f5f2eaf4de48b3b3820e0bdbceafed790ab55e85fc45391e5c65`).
 This supplies a concrete two-choice motor test without inventing unsupported
 objects. Official Hub metadata confirms both HDF5 files exist, with sizes
-and SHA256 values in `ASSET-MANIFEST.json`; their contents have not been
-loaded. The released init files have different byte hashes, so they must
+and SHA256 values in `ASSET-MANIFEST.json`. Both files were downloaded,
+SHA256 verified, and their 50-demonstration schemas passed CPU admission. The released init files have different byte hashes, so they must
 not simply be assumed paired. Use an isolated init bank with the same
 center-bowl task initialization copied under both candidate names, then
 verify matching simulator state/RGB/proprio after reset. This is a custom
@@ -175,9 +175,14 @@ pilot uncertainty, not an unmeasured large grid.
    concrete next contract is written. Low motor success is a motor blocker,
    not evidence against in-context learning.
 
-As of preparation: **no GPU job submitted; 0 GPU-hours used**. Source-only
-preparation started in an isolated Baige cache. Runtime, checkpoint, dataset,
-and native episode have not yet been qualified.
+Current qualification status is maintained in [PREPARATION-STATUS.json](PREPARATION-STATUS.json).
+At 17:19 Shanghai, the released checkpoint passed strict loading and exact
+equality for all 967 saved tensors, then moved frozen to CUDA. Three bounded
+allocations have stopped before simulator episodes: two construction
+compatibility issues and an obsolete inactive runner keyword. All failures
+are preserved. Finalized usage is 0.269 scheduler / 0.412 conservative
+GPU-hours of the 5-hour cap. Native simulation and motor competence remain
+unqualified; a guarded runner compatibility repair is being prepared.
 
 ## Primary sources
 

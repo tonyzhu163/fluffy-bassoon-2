@@ -1,0 +1,31 @@
+{
+  "checked_at": "2026-11-11T17:20:00+08:00",
+  "type": "static source/config audit; not runtime qualification",
+  "upstream_commit": "58125e682acceefef3d60c071212dc483a4db1c9",
+  "checkpoint_config": "qual03/motor/checkpoint-config.yaml",
+  "runner_unknown_fields": {
+    "language_embedding": null,
+    "use_finetuned_language_encoder": false
+  },
+  "guard": "Remove only exact inactive values and assert task_language.ignore_by_policy=true; bind all remaining kwargs to official signature",
+  "dataset_constructor": "Both run() callsites statically bind all keywords to current LiberoReplayImageDataset signature",
+  "policy_api": "reset(action_exec_horizon), prompt, num_available_actions and predict_action agree with official DiffusionUnetPolicy/BasePolicy",
+  "shape_meta": {
+    "prompt": "pair",
+    "max_full_demonstrations": 1,
+    "action_horizon": 16,
+    "execution_horizon": 12,
+    "policy_action_dimensions": 10,
+    "native_action_dimensions": 7,
+    "rotation_conversion": "official runner/dataset axis-angle to 6D and back",
+    "language_ignored": true,
+    "goal_image_ignored": true
+  },
+  "remaining_runtime_checks": [
+    "EGL/rendering",
+    "simulator reset pairing",
+    "HDF5 prompt/cache",
+    "real native episodes"
+  ],
+  "independent_review": "Parent agent independently checked all API callsites; no additional mismatch found"
+}

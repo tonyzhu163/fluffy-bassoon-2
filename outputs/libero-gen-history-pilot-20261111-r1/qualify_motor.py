@@ -1,6 +1,7 @@
 """Bounded frozen-motor qualification. Run only in an allocated Linux GPU job."""
 import argparse
 import hashlib
+import inspect
 import json
 import os
 from pathlib import Path
@@ -73,6 +74,26 @@ def main():
     payload = torch.load(checkpoint, map_location="cpu", pickle_module=dill, weights_only=False)
     cfg = payload["cfg"]
     (args.output / "checkpoint-config.yaml").write_text(OmegaConf.to_yaml(cfg))
+    # Two inactive language options were removed from the released runner API.
+    # Admit only their exact disabled values; reject every other unknown field.
+    runner_config = OmegaConf.to_container(cfg.task.env_runner, resolve=True)
+    runner_config.pop("_target_")
+    assert cfg.task.shape_meta.obs.task_language.ignore_by_policy is True
+    removed_runner_fields = {}
+    for field, disabled in [("language_embedding", None),
+                            ("use_finetuned_language_encoder", False)]:
+        if field in runner_config:
+            assert runner_config[field] is disabled
+            removed_runner_fields[field] = runner_config.pop(field)
+    runner_config["shape_meta"] = cfg.task.shape_meta
+    runner_signature = inspect.signature(LiberoImageRunner)
+    runner_signature.bind(dataset_path="checked-per-task", output_dir="checked-per-task",
+                          **runner_config)
+    (args.output / "runner-interface-receipt.json").write_text(json.dumps({
+        "removed_inactive_legacy_fields": removed_runner_fields,
+        "task_language_ignored_by_policy": True,
+        "remaining_checkpoint_kwargs_accepted": True,
+        "signature": str(runner_signature)}, indent=2) + "\n")
     # Preserve the checkpoint encoder's pretrained/frozen/group-norm branches.
     # Suppress only timm's external weight download: the released checkpoint
     # strictly replaces every parameter and buffer immediately after construction.
@@ -168,15 +189,14 @@ def main():
     for task in TASKS:
         folder = args.output / task
         folder.mkdir()
-        runner_kwargs = OmegaConf.to_container(cfg.task.env_runner, resolve=True)
-        runner_kwargs.pop("_target_", None)
-        runner_kwargs["shape_meta"] = cfg.task.shape_meta
+        runner_kwargs = dict(runner_config)
         runner_kwargs.update(dataset_path=str(args.assets / "dataset/demonstration_data" / SPLIT / (task + "_demo.hdf5")),
                              output_dir=str(folder), cache_dir=str(args.output / "prompt-cache"),
                              n_envs=1, n_train=0, n_train_vis=0, n_test=args.n_test,
                              n_test_vis=args.n_test, is_seen=True, eval_seen=True, eval_unseen=False,
                              vis_prompt=False, vis_attention_map=False, vis_actions_rollout=False,
                              vis_proprio_rollout=False, vis_trajectory_video=False, render_gpu_device_id=0)
+        runner_signature.bind(**runner_kwargs)
         print("MOTOR_STAGE", "constructing_native_runner", task, flush=True)
         runner = LiberoImageRunner(**runner_kwargs)
         proxy = TraceProxy(runner.env, folder)

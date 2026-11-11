@@ -1,0 +1,22 @@
+{
+  "factory_calls": [
+    {
+      "model_name": "vit_base_patch16_clip_224.openai",
+      "requested_pretrained": true,
+      "effective_pretrained": false
+    }
+  ],
+  "factory_restored": true,
+  "strict_checkpoint_load": true,
+  "exact_saved_tensors_verified": 967,
+  "original_checkpoint_tensor_count": 967,
+  "checkpoint_model_config": "preserved except documented legacy-default completion",
+  "compatibility_overrides": [
+    {
+      "path": "model.obs_encoder.obs_encoder.use_pool_modality_pos_embed",
+      "checkpoint_value": "absent",
+      "effective_value": false,
+      "evidence": "BPP 58125e6 config/libero_policy_dunetp.yaml:12; paper models trained with false"
+    }
+  ]
+}
