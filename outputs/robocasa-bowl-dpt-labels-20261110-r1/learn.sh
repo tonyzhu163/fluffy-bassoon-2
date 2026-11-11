@@ -45,5 +45,6 @@ case "$mode" in
     direction) "$py" -Bu "$here/paired_direction.py" "$code" "$1" "$2" "$3" "$out" ;;
     trace) "$py" -Bu "$here/trace_motor.py" "$code" "$1" "$2" "$3" "$out" ;;
     common-prefix) "$py" -Bu "$here/common_prefix.py" "$1" "$2" "$out" ;;
+    control-replay) "$py" -Bu "$here/qualify_controls.py" "$1" "$ROBOCASA_PI05_NATIVE_NORM" "$out" --seed "$2" ;;
     *) exit 2 ;;
 esac
