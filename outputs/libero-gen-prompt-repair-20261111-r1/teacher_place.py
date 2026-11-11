@@ -85,7 +85,9 @@ def main():
         'servo_parameter_role': 'finite motion budgets, convergence precision and lift guard; no model score threshold',
         'privileged_teacher': True, 'policy_loaded': False, 'uses_hidden_rule': False,
         'stopping_contract': 'first selected native On, same task endpoint as BPP; retain any bounded failure',
-        'phase_per_control': [], 'requested_goal_pos': [], 'unclipped_normalized_actions': []}
+        'reference_method': 'persistent rate-limited position reference; full reference minus current error through native OSC bounds',
+        'phase_per_control': [], 'requested_goal_pos': [], 'desired_absolute_goal_pos': [],
+        'unclipped_normalized_actions': []}
     env = new_env(base, 0)
     phase = {'name': 'prefix', 'count': 0}
     try:
@@ -102,12 +104,14 @@ def main():
             if index < PREFIX_CONTROLS:
                 metadata['phase_per_control'].append('prefix')
                 metadata['requested_goal_pos'].append(None)
+                metadata['desired_absolute_goal_pos'].append(None)
                 metadata['unclipped_normalized_actions'].append(None)
                 return actions[index]
             bowl = object_position(env, BOWLS[0])
             plate = object_position(env, 'plate_1')
             if phase['name'] == 'prefix':
-                phase.update(name='align', count=0, high_z=float(c.ee_pos[2]), orientation=c.ee_ori_mat.copy())
+                phase.update(name='align', count=0, high_z=float(c.ee_pos[2]),
+                             orientation=c.ee_ori_mat.copy(), reference=c.ee_pos.copy())
                 metadata['prefix_state_equal'] = bool(np.array_equal(env.get_sim_state(), expected_prefix_state))
                 metadata['prefix_actual_state_sha256'] = sha(env.get_sim_state())
                 metadata['prefix_expected_state_sha256'] = sha(expected_prefix_state)
@@ -119,10 +123,13 @@ def main():
                 phase.update(name='descend', count=0)
                 metadata['descent_start_control_index'] = index
             if phase['name'] == 'align':
-                delta_pos = bounded(np.r_[xy_error, phase['high_z'] - c.ee_pos[2]], ALIGN_STEP)
+                desired = np.r_[c.ee_pos[:2] + xy_error, phase['high_z']]
+                phase['reference'] += bounded(desired - phase['reference'], ALIGN_STEP)
             else:
-                delta_pos = np.r_[bounded(xy_error, DESCEND_XY_STEP),
-                    np.clip(plate[2] + reference_z_offset - bowl[2], -DESCEND_Z_STEP, DESCEND_Z_STEP)]
+                desired = c.ee_pos + np.r_[xy_error, plate[2] + reference_z_offset - bowl[2]]
+                phase['reference'][:2] += bounded(desired[:2] - phase['reference'][:2], DESCEND_XY_STEP)
+                phase['reference'][2] += np.clip(desired[2] - phase['reference'][2], -DESCEND_Z_STEP, DESCEND_Z_STEP)
+            delta_pos = phase['reference'] - c.ee_pos
             delta_rot = bounded(quat2axisangle(mat2quat(phase['orientation'] @ c.ee_ori_mat.T)), ROTATION_STEP)
             delta = np.r_[delta_pos, delta_rot]
             scaled = ((delta - (c.output_max + c.output_min) / 2)
@@ -130,7 +137,8 @@ def main():
                       + (c.input_max + c.input_min) / 2)
             phase['count'] += 1
             metadata['phase_per_control'].append(phase['name'])
-            metadata['requested_goal_pos'].append((c.ee_pos + delta_pos).tolist())
+            metadata['requested_goal_pos'].append(phase['reference'].tolist())
+            metadata['desired_absolute_goal_pos'].append(desired.tolist())
             metadata['unclipped_normalized_actions'].append(scaled.tolist())
             return np.r_[np.clip(scaled, c.input_min, c.input_max), 1.0]
 

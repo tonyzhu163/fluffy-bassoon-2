@@ -1,5 +1,5 @@
 {
-  "status": "teacher03 complete; native replay2/2 final success, retarget0/2 final success; diagnosis before further simulation",
+  "status": "teacher04 bounded alignment failure; persistent-reference correction prepared for one teacher05 episode",
   "stage_cap_gpu_hours": 4,
   "prior_task_conservative_gpu_hours_approx": 17.75,
   "initial_allocation": {
@@ -21,7 +21,7 @@
     "cpu_cores": 8,
     "ram_gib": 112
   },
-  "current_gpu_hours": 0.1502777777777778,
+  "current_gpu_hours": 0.17333333333333334,
   "checks": {
     "local": "Python AST and bash syntax only; simulator execution on allocated Linux pending",
     "source_hdf5": "two cached demo0 metadata receipts; near-plate abs_actions pose is constant and deliberately unused",
@@ -81,10 +81,41 @@
       "episodes_executed": 4,
       "policy_loaded": false,
       "geometry_observation_hashes_equal": true
+    },
+    {
+      "identity": "teacher04",
+      "job_id": "job-qt0eym5oxygp",
+      "commit": "ac06d8fe7e6abb8c808f04ebf3abf56c896f6e4c",
+      "submitted_shanghai": "2026-11-11 21:06:39",
+      "running_shanghai": "2026-11-11 21:06:51",
+      "ended_shanghai": "2026-11-11 21:08:02",
+      "scheduler_state": "Succeeded",
+      "scheduler_gpu_seconds": 71,
+      "conservative_gpu_seconds": 83,
+      "clock": {
+        "exit_code": 0,
+        "started": 1794402409,
+        "ended": 1794402461,
+        "gpus": 1,
+        "hostname": "job-qt0eym5oxygp-master-0"
+      },
+      "native_any": [
+        0,
+        0
+      ],
+      "native_final": [
+        0,
+        0
+      ],
+      "controls": 213,
+      "termination_reason": "alignment_budget_exhausted",
+      "prefix_state_equal": true,
+      "geometry_observation_hashes_equal": true,
+      "policy_loaded": false
     }
   ],
-  "next_identity": "not allocated; diagnose saved trajectories before teacher04",
-  "current_scheduler_gpu_hours": 0.0525,
+  "next_identity": "teacher05",
+  "current_scheduler_gpu_hours": 0.07222222222222222,
   "source_asset_cpu_preflight": {
     "native_source_count": 2,
     "references_resolved_per_source": 93,
