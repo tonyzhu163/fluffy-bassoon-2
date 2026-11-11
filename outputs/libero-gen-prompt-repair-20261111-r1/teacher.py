@@ -98,8 +98,8 @@ def restore(env, state, seed, model_xml=None):
     return observation(env)
 
 
-def execute(env, folder, candidate, action_fn, count, metadata):
-    """Record before/after each real action; native rewards never change this schedule."""
+def execute(env, folder, candidate, action_fn, count, metadata, stop_fn=None):
+    """Record each real control; an optional teacher callback can stop the schedule."""
     folder.mkdir()
     (folder / 'model.xml').write_text(env.sim.model.get_xml())
     arrays = {k: [] for k in ['actions', 'states_pre', 'states_post', 'native_trace',
@@ -130,7 +130,13 @@ def execute(env, folder, candidate, action_fn, count, metadata):
             arrays['post_' + key].append(np.array(after[key], copy=True))
         if (index + 1) % 50 == 0:
             print('TEACHER_PROGRESS', folder.name, index + 1, arrays['native_trace'][-1], flush=True)
+        if stop_fn is not None:
+            reason = stop_fn(index, arrays['native_trace'][-1])
+            if reason:
+                metadata['termination_reason'] = reason
+                break
     arrays = {key: np.stack(value) for key, value in arrays.items()}
+    count = len(arrays['actions'])
     path = folder / 'trajectory.npz'
     np.savez_compressed(path, **arrays)
     metadata.update({'candidate': candidate, 'count': count,
@@ -141,7 +147,8 @@ def execute(env, folder, candidate, action_fn, count, metadata):
                      'trajectory_bytes': path.stat().st_size,
                      'array_hashes': {k: sha(v) for k, v in arrays.items()},
                      'image_convention': 'ControlEnv prepare_observation: upright RGB; flip vertically for source HDF5',
-                     'stopping': 'fixed complete source schedule, independent of native outcome'})
+                     'stopping': ('fixed complete source schedule, independent of native outcome' if stop_fn is None
+                                  else 'documented teacher servo: selected native goal or bounded phase failure')})
     metadata['selected_native_success'] = metadata['native_any'][candidate]
     write_json(folder / 'result.json', metadata)
     # Small video makes physical selection and placement inspectable without transferring the NPZ.
