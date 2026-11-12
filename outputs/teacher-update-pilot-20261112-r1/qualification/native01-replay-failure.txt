@@ -1,0 +1,8 @@
+  logger.warn(f"{pre} is not within the observation space.")
+Traceback (most recent call last):
+  File "/mowenjie/fluffy-bassoon-2/setups/teacher-update-pilot-20261112-r1/source/outputs/teacher-update-pilot-20261112-r1/collect.py", line 234, in <module>
+    main()
+  File "/mowenjie/fluffy-bassoon-2/setups/teacher-update-pilot-20261112-r1/source/outputs/teacher-update-pilot-20261112-r1/collect.py", line 196, in main
+    assert fork == anchors[q], ('fork', seed, q, candidate, fork, anchors[q])
+           ^^^^^^^^^^^^^^^^^^
+AssertionError: ('fork', 120700, 100, 0, {'physics': 'e0df6a13082fbbe1be344ab2fc2858b0fea464cfc194361a4a1fc7f9e855bd02', 'public': 'c14f1afc062c0aae88d65ccf6569d7608bd4f1f685094a9bffb5eff07cff49eb', 'controllers': 'd42307c4d5fc2389ae32300478a60630386a4cc6b668f8f9ca38f36ffbf8decb', 'task': '47f884a3cf237b79a8deccd17800d64227223a698743bc7fef1035bd31dc6979', 'numpy_rng': '5279974e3f1827c39bc13d80d156c1dc25048da84c8aa2b6921cc7e9d6c9432f', 'python_rng': 'e25c9fa7a34a63600f8a5cf48181593231c92b8076e9ddc5bafd7d7bfea111d1'}, {'physics': 'e0df6a13082fbbe1be344ab2fc2858b0fea464cfc194361a4a1fc7f9e855bd02', 'public': 'c14f1afc062c0aae88d65ccf6569d7608bd4f1f685094a9bffb5eff07cff49eb', 'controllers': 'd42307c4d5fc2389ae32300478a60630386a4cc6b668f8f9ca38f36ffbf8decb', 'task': '47f884a3cf237b79a8deccd17800d64227223a698743bc7fef1035bd31dc6979', 'numpy_rng': '5279974e3f1827c39bc13d80d156c1dc25048da84c8aa2b6921cc7e9d6c9432f', 'python_rng': '0aa975f1db3d8547eaf8e46f74451c15ebf0ca2a6654beecf8232ab059846b23'})
