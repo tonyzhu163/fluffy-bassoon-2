@@ -129,19 +129,16 @@
     }
   ],
   "CPU_analysis_waiter": {
-    "pid": 112983,
-    "code_commit": "96c701cb131aea9d981c9a43dbab6fcb25819a4c",
-    "trigger": "all six complete audited groups in BOS metadata",
+    "pid": 134196,
+    "code_commit": "84239237321a01a7922d1291f582fd56749d4941",
     "GPU": false,
-    "alive_verified": true,
-    "python": "/mowenjie/fluffy-bassoon-2/setups/steering-plot-20261105-r1/env/bin/python",
-    "numpy": "2.5.4",
-    "matplotlib": "3.11.2",
-    "AD_reference_numerical_qualification_passed": true,
-    "plot_smoke_passed": true,
-    "replaced_waiter": 55562,
-    "status": "alive verified21:20; awaiting all six complete audited groups",
-    "metadata_root": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata"
+    "trigger": "All210 predeclared new banks durably published; reconstruct separate analysis inputs",
+    "metadata_root": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata",
+    "output": "analysis-final04",
+    "qualification": "Reconstructed all70 AD banks/3000 episodes with exactly matching original curves, candidate hashes and episode counts",
+    "reason": "External DPT stop omitted group receipts; re-entering already-complete ID also changes its elapsed-time receipt. Analysis can reconstruct complete groups from unchanged independently audited banks.",
+    "source_artifacts_unchanged": true,
+    "wait_hours": 12
   },
   "jobs_attempt03": [
     {
@@ -274,5 +271,20 @@
     "fix": "os.walk ignores only FileNotFoundError; byte stat also tolerates disappearance",
     "qualification": "Actual production scan block on Linux:1000 concurrent directory removals,337 completed scans; core/readout unchanged",
     "receipt": "BOS metadata/monitor/RESUME05-QUALIFICATION.json"
+  },
+  "CPU_analysis_waiter_previous": {
+    "pid": 112983,
+    "code_commit": "96c701cb131aea9d981c9a43dbab6fcb25819a4c",
+    "trigger": "all six complete audited groups in BOS metadata",
+    "GPU": false,
+    "alive_verified": true,
+    "python": "/mowenjie/fluffy-bassoon-2/setups/steering-plot-20261105-r1/env/bin/python",
+    "numpy": "2.5.4",
+    "matplotlib": "3.11.2",
+    "AD_reference_numerical_qualification_passed": true,
+    "plot_smoke_passed": true,
+    "replaced_waiter": 55562,
+    "status": "alive verified21:20; awaiting all six complete audited groups",
+    "metadata_root": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata"
   }
 }
