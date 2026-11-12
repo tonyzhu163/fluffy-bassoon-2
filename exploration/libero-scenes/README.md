@@ -38,6 +38,23 @@ python admit.py --source <behavior_prompting checkout> --scenes <scenes dir> --o
 
 It builds each scene, lets LIBERO place the objects, holds the arm still for 20 controls and checks initial contacts, finite simulator state, movable object centres inside the image, and whether a behaviour is already satisfied. Settling drift and differences from requested region centres are recorded for review without numerical rejection cutoffs. For receptacle targets it also drops each bowl on each receptacle and checks that only the matching predicate turns true. Rejections are recorded, never retried with a different seed. These drop controls do not establish robot reachability. No policy is loaded. Use `--image-size 256` for π0.5 inspection; the default is 128.
 
+## Scripted demonstrations
+
+`demo.py` produces one pick-and-place episode per behaviour on each admitted scene, every episode restored from the admitted state. It has **not run in the simulator**; its control flow completed 1,581 episodes against a kinematic stand-in, which checks the logic and nothing about physics.
+
+```bash
+python demo.py --source <behavior_prompting checkout> --scenes <scenes dir> \
+    --admitted <admit.py output> --output <new dir> --limit 2
+```
+
+- **Control:** relative end-effector commands, as in the released demonstrations. The arm follows a position reference that moves 5 mm per control in transit and 1.5 mm per control while lowering, with orientation held. This is the servo of teacher05 in the [prompt-repair run](../../outputs/libero-gen-prompt-repair-20261111-r1/TEACHER05.md), which reached a native goal on Baige.
+- **Grasp:** top-down on the bowl's rim, on the side farther from other objects, fingers `--depth` below the bowl's reported top at `--rim` times its reported radius. This is new. Earlier teachers replayed a released grasp instead of scripting one. Expect to tune `--rim`, `--rim-radius` and `--depth` on a few scenes first.
+- **Placement:** the bowl is lowered until it stops following the reference, then released, so no target height is assumed.
+- **Records:** per episode, observations, the actions actually sent, the reference, simulator states, the intended predicate at every control and all behaviours' predicates at the end. `result.json` counts successes by target kind and failures by stage (for example `grasp_slipped`, `above_target_not_reached`).
+- **Unverified simulator calls:** fingertip positions through `gripper.important_geoms`, object size through `horizontal_radius` and `top_offset`, and region positions through `get_site_xpos`. The first run will show whether these names are right.
+
+Episodes run 290 to 560 controls in the stand-in. `--shard i/n` splits scenes across processes.
+
 ## What is assumed and not yet verified
 
 - Footprint radii and fixture keep-out distances in `scenes.py` are estimates. Admission is the real collision check, and its rejection rate will show whether they need changing.
@@ -47,7 +64,7 @@ It builds each scene, lets LIBERO place the objects, holds the arm still for 20 
 
 ## Next pieces
 
-1. Scripted or planned pick-and-place demonstrations on admitted scenes, with native success measured for each behaviour. LIBERO-Gen's [existing collector](https://github.com/real-stanford/behavior_prompting/blob/58125e682acceefef3d60c071212dc483a4db1c9/behavior_prompting/train_network/scripts/libero/generate_demonstrations.py) is a starting point, but its task metadata and replay assumptions need adapting to new scenes.
+1. Run `demo.py` (below) in the simulator and tune its grasp. Once demonstrations succeed, convert them to the released dataset formats for motor training.
 2. Recompute rule labels on realized resets and repeat the ambiguity checks. The candidate history bank below uses nominal table coordinates, not measured camera coordinates.
 
 ## Candidate history-learning cases
