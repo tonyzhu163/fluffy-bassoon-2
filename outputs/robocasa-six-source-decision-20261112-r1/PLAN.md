@@ -14,9 +14,9 @@ from the newer confirmed PPO-teacher set (Drawer, Toaster, Faucet).
 
 The complete native ID/OOD panel exists for AD KV and AD velocity. The remaining
 six full evaluations were held near the earlier 150 GPU-hour cap. November 9
-started an eight-case KV DPT/DIT deployment pilot; its local execution record
-does not establish final paired results. Recover those artifacts before doing
-duplicate inference. The priority is a matched KV AD/DPT/DIT/IC-IQL table,
+started an eight-case KV DPT/DIT deployment pilot. Its completed four banks
+were recovered and independently rehashed on November 12; see
+[recovered results](RECOVERED-RESULTS.md). The priority is a matched KV AD/DPT/DIT/IC-IQL table,
 using the saved models, original cases and original full/reset conditions.
 No refitting is needed to answer that first question. Offline losses alone
 are not the requested robot results.
@@ -82,8 +82,19 @@ the general research direction. Show uncertainty and coverage explicitly.
 
 ## Current execution
 
-No new accelerator job has been submitted yet. Local main was reviewed at
-8ac569b3adb38e543701282456ab60b793c22094. Baige development access works through
+OpenCabinet pilot `job-k7eut34im2s5` was submitted at 14:49:55 Shanghai on
+November 12, eight Pro6K GPUs, 64 CPUs, 1024 GiB RAM, 32 GiB shared memory,
+60-minute maximum, automatic retries disabled. Its immutable source is
+84c982ac2f0fe1c2e18d980d3a0dc3d3eb46b430. The actual eight-GPU allocation
+probe passed at 14:50:49. Attempt01 failed at canonical evaluation snapshot creation because the launcher
+omitted TASK_CODE_PIN, before a completed PPO update. The fix exports the exact
+verified commit. Conservative charge is 0.8023 GPU-hours. Fresh retry and
+training progress are recorded in EXECUTION.json.
+The other two candidates are configured but not submitted.
+
+The underlying Python change passed all 29 existing flow PPO tests on Baige
+Linux with CUDA hidden; all three actual Hydra configurations resolved there.
+Local static shell checks passed. Baige development access works through
 the existing Jupyter terminal; SSH is not configured on this Mac. Current
 shared PFS free space was 273.41 GiB at the runtime inventory, so all three
 raw collections cannot be reserved concurrently without verified archiving

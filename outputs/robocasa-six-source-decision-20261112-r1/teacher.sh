@@ -19,6 +19,7 @@ esac
 [[ $(git -C "$TASK_CODE" rev-parse HEAD) == "$TASK_PIN" ]]
 [[ -z $(git -C "$TASK_CODE" status --porcelain --untracked-files=no) ]]
 export TASK_ATTEMPT
+export TASK_CODE_PIN=$TASK_PIN
 export RLINF_PATH=$TASK_ROOT/sources/critic-selected-a1229239-r1
 [[ $(git -C "$RLINF_PATH" rev-parse HEAD) == 8f9bfa7661928ef8c17494b04f4d7bf3125634e1 ]]
 export PYTHONPATH=$TASK_CODE/src:$RLINF_PATH
