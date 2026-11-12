@@ -1,0 +1,9 @@
+# Astra RoboCasa example
+
+Run one `OpenDrawer` pretrain episode, seed 7, through the native RoboCasa365 MCP collector. Select `gpt-6-astra` in the signed-in local Codex CLI; transport only MCP over the existing authenticated SSH connection. The model receives three RGB cameras and public robot state. Record public pre-action subgoals, decision summaries and expected outcomes, all requested/executed actions, native rewards/success and separate final self-assessment. No oracle state or retrospective labels enter the model input.
+
+Budget: at most 600 controls, chunks of at most 50, hidden native feedback; one initial attempt plus a fresh attempt only if a runtime failure needs repair. These are demo limits, not a benchmark claim. Initial GPU work ceiling 2 GPU-hours within the authorized task. Stop the owned simulator on completion or the wall limit; preserve failures. No training or checkpoint changes.
+
+Allocation: existing user-owned Baige development instance `dv-0d0ac1c839`, one RTX 4090, 13 CPU cores, 112 GiB RAM. Console and SSH checked; device idle with no compute processes. Use explicit-UUID direct execution in this already allocated development container, with the repository GPU probe and native simulator qualification. No new scheduler job. Exact source/runtime revisions and validation go in execution evidence. Use a new overlay and output identity; do not alter active runs or the base runtime.
+
+Validation: Linux CPU contract tests; allocation-local CUDA probe; native reset/action smoke; then the actual Astra episode. Export only an unambiguous completed episode. Native outcome determines reported success. Capture CLI events, actual selected model, source revisions, timing and cumulative GPU use. Quality/mistake metadata stays unknown unless explicitly reviewed with a rubric.
