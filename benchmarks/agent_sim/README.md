@@ -55,6 +55,26 @@ fails, preserving partial episodes. Use a new output root after interruption.
 Select the actual model in the client; `--model` only records your declaration.
 No global client configuration is changed by repository code.
 
+For a bounded direct OpenAI API check, the Responses client consumes this same
+stdio server. Run it on allocated Linux with the MCP dependencies installed:
+
+```bash
+python -m fluffy_bassoon.agent_sim.api_client \
+  --model gpt-6-astra --prompt-file /path/to/task-prompt.txt \
+  --output /path/to/fresh-client-log --max-calls 8 -- \
+  "$SIM_PYTHON" -m fluffy_bassoon.agent_sim \
+  --output "$SIM_OUTPUT/api" --client other --model gpt-6-astra \
+  --source-commit "$SIM_COMMIT" --max-controls 600 --max-chunk 50
+```
+
+Supply `OPENAI_API_KEY` in the client environment or a runtime-only `--key-file`.
+The client strips OpenAI environment variables from the simulator subprocess,
+records token usage, carries response state in memory, and stops on a failed
+tool call without retrying physical actions. Its completion means `sim_finish`
+returned successfully; inspect the separate native episode result for success.
+The [qualification record](../../outputs/agent-sim-api-debug-20261112-r1/PLAN.md)
+tracks actual API/native validation; the CLI alone does not establish either.
+
 ## Collection prompt
 
 > Use only the robot-sim tools to operate the robot. Read sim_interface, then

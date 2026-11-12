@@ -1,0 +1,10 @@
+This is a short interface qualification, not a task-solving attempt.
+Read sim_interface. Reset task OpenDrawer, seed 7, episode_id smoke01.
+Inspect the returned camera images and public state. Use the reported action
+dimension to execute exactly two all-zero action vectors in one sim_execute
+call, with the latest observation_control. State that this is a neutral-command
+wiring check in your subgoal and summary. Then call sim_observe. Finish using
+sim_finish, with success_claim false and a concise description of two visible
+scene details. Do not assert task success. Never reset again or exceed two
+executed controls. The simulator may be a clearly named synthetic test fixture;
+describe the image actually returned and do not invent robot scene contents.
