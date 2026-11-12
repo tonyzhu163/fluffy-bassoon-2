@@ -32,10 +32,12 @@ def compact(value):
     return value
 
 
-def prepare(data, output):
+def prepare(data, output, selected_seeds):
     seeds = (120700, 120701, 120702, 120703)
     jobs = []
     for si, seed in enumerate(seeds):
+        if seed not in selected_seeds:
+            continue
         for qi, query in enumerate((100, 250)):
             source = data/str(seed)/f'query-{query}.json'
             q = json.loads(source.read_text())
@@ -145,12 +147,15 @@ def main():
     ap.add_argument('--codex', required=True)
     ap.add_argument('--workers', type=int, default=3)
     ap.add_argument('--limit', type=int)
+    ap.add_argument('--seeds',type=int,nargs='+',default=[120700,120701,120702,120703])
     args = ap.parse_args()
     args.data, args.output = args.data.resolve(), args.output.resolve()
     args.output.mkdir(exist_ok=False, parents=True)
     schema = args.output/'schema.json'
     schema.write_text(json.dumps(SCHEMA))
-    jobs = prepare(args.data,args.output)
+    if len(set(args.seeds)) != len(args.seeds) or not set(args.seeds) <= {120700,120701,120702,120703}:
+        ap.error('Choose unique seeds from the declared four-scene panel')
+    jobs = prepare(args.data,args.output,args.seeds)
     if args.limit is not None:
         jobs = jobs[:args.limit]
     version = subprocess.check_output([args.codex,'--version'],text=True).strip()
