@@ -31,5 +31,10 @@ touch "$out/write-probe"
 df -h "$out" > "$out/storage.txt"
 "$py" -B "$code/scripts/[train]gpu_probe.py" --expected-count 1 --purpose measurement \
   --direct-hostname "$(hostname)" --output "$out/gpu.json" > "$out/probe.log"
-timeout --signal=TERM --kill-after=30 13500 "$py" -Bu "$(dirname "$0")/collect.py" \
-  --checkpoint "$root/inputs/robocasa365-public-pi05-c484-75000-20261101-r1" --output "$out/data"
+if [[ "${3:-collect}" == render-gc ]]; then
+  timeout 600 "$py" -Bu "$(dirname "$0")/render_gc.py" --output "$out/original"
+  timeout 600 "$py" -Bu "$(dirname "$0")/render_gc.py" --output "$out/fixed" --fix
+else
+  timeout --signal=TERM --kill-after=30 13500 "$py" -Bu "$(dirname "$0")/collect.py" \
+    --checkpoint "$root/inputs/robocasa365-public-pi05-c484-75000-20261101-r1" --output "$out/data"
+fi
