@@ -55,6 +55,39 @@ fails, preserving partial episodes. Use a new output root after interruption.
 Select the actual model in the client; `--model` only records your declaration.
 No global client configuration is changed by repository code.
 
+### Local Codex with a remote GPU
+
+`run_codex_ssh.py` uses the local Codex login and starts the remote MCP server
+over an existing SSH route. The model receives the simulator tools; shell,
+browser, plugins and other agents are disabled for the controller invocation.
+The remote launch script must set the qualified Python, source, GPU/EGL binding,
+and a fresh simulator output root, then `exec` the server command above. Give it
+an allocation-local wall limit as well. Keep SSH routing and keys outside Git.
+
+```bash
+python3 benchmarks/agent_sim/run_codex_ssh.py \
+  --host <existing-ssh-alias> --port <ssh-port> \
+  --remote-command 'bash /project/outputs/new-run/serve.sh' \
+  --prompt-file /path/to/controller-prompt.txt \
+  --output /path/to/fresh-client-output --model gpt-6-astra
+```
+
+Use `--codex /absolute/path/to/codex` when the executable is not on PATH. This
+requires a signed-in Codex client; no API credential is sent to the GPU host.
+Client JSONL, final response, selected model, version, timing and exit status are
+saved separately from the native episode. CLI exit zero does not imply task
+success: inspect the simulator's `result.json`. A wall-limit interruption
+preserves a partial episode and is never automatically retried.
+
+The CLI/MCP path was exercised with Codex CLI `0.167.0-alpha.3.2`, selecting
+`gpt-6-astra`: **OpenDrawer, pretrain, seed 7 reached native success in 220
+controls and 15 decisions**, with hidden native feedback. The reusable wrapper
+uses that configuration; its argument parsing and syntax were checked after
+factoring it out of the successful invocation. This is one integration example,
+not a benchmark success-rate estimate or a learned-VLA result. See the
+[run evidence](../../outputs/astra-robocasa-demo-20261112-r1/RESULT.md) and
+[exact controller prompt](../../outputs/astra-robocasa-demo-20261112-r1/PROMPT.txt).
+
 For a bounded direct OpenAI API check, the Responses client consumes this same
 stdio server. Run it on allocated Linux with the MCP dependencies installed:
 

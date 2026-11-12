@@ -160,3 +160,13 @@ On clean phone-stand seeds 100000 and 100001, two independent native SAPIEN repl
 The [decoded-learner audit](../outputs/robotwin-restoration-20261106-r1/CPUDECODEDFIT01.json) and [four-method steering qualification](../outputs/steering-four-method-pipeline-20261103-r1/RESULT.md) test objectives, causal context and recovery. They are software qualifications, not held-out performance scores.
 
 The [full pre-consolidation evidence ledger](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/24fcc5b016f6d6f15cd7bad09cec9bd723873338/docs/FINDINGS.md) preserves detailed benchmark results, negative findings and citations for retired experiments. Consult a run’s own source and evidence before comparing results across protocols.
+
+## Agent-collected RoboCasa context
+
+A local Codex CLI selecting `gpt-6-astra` controlled native RoboCasa365 through
+SSH/MCP and completed OpenDrawer, pretrain, seed 7 with hidden native feedback.
+Native success first occurred at control 210 and remained true at the final
+control 220. The recorder exported 15 pre-action context/action decisions,
+221 observations and 663 camera images with verified alignment. This is one
+successful integration example; no downstream VLA training or cross-task
+success estimate was measured. [Run, replay and dataset evidence](../outputs/astra-robocasa-demo-20261112-r1/RESULT.md).

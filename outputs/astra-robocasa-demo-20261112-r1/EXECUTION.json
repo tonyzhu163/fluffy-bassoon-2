@@ -1,0 +1,42 @@
+{
+  "source_commit": "c1cde5fa1ee328c541c7ab0fdea569a13a43be71",
+  "robocasa_commit": "3443cdf3dd20f9ae8ed41adba442059b506891d0",
+  "task": "OpenDrawer",
+  "split": "pretrain",
+  "seed": 7,
+  "instruction": "Open the right drawer.",
+  "first_success_control": 210,
+  "final_native_success": true,
+  "simulated_action_seconds": 11.00000000000051,
+  "result": {
+    "agent_success_claim": true,
+    "completed": true,
+    "controls": 220,
+    "decisions": 15,
+    "ended_by": "agent",
+    "native_return": 11.0,
+    "native_success_once": true,
+    "terminated": false,
+    "truncated": false,
+    "wall_seconds": 221.72394324280322
+  },
+  "private_oracle_observations_given_to_agent": false,
+  "native_feedback_given_to_agent": false,
+  "quality": null,
+  "mistake_annotations": null,
+  "allocation": "Baige user-owned development instance dv-0d0ac1c839; one RTX 4090",
+  "new_scheduler_job": false,
+  "gpu_usage_conservative_window": {
+    "start_utc": "2026-11-12T05:26:00+00:00",
+    "end_utc": "2026-11-12T05:37:00+00:00",
+    "gpu_hours": 0.18333333333333332,
+    "includes_idle_setup_and_client_reasoning": true,
+    "instance_was_already_running": true
+  },
+  "qualification_failures": [
+    "smoke1: missing EGL loader; no controls",
+    "smoke2: missing GL loader; no controls"
+  ],
+  "qualification_success": "smoke3: native reset and two zero-arm controls; separate from Astra dataset",
+  "shared_runtime_modified": false
+}

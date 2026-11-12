@@ -26,3 +26,19 @@ record actual usage. No learner fitting or demonstration collection campaign.
 
 Use fresh output identities for every attempt. Existing jobs, source worktrees,
 shared environments and model caches remain immutable.
+
+## Execution update
+
+The live API/MCP fixture passed on Baige at `1ad1afd4`: five provider calls,
+three image-bearing results, two recorded controls and one exported example.
+Direct Baige provider access timed out. A temporary loopback CONNECT relay
+restricted to `api.openai.com:443` and an authenticated SSH reverse forward
+provided end-to-end TLS access; the credential was passed in memory via SSH
+stdin. No credential was written on Baige or supplied to the simulator.
+
+The separately owned [native demonstration](../astra-robocasa-demo-20261112-r1/PLAN.md)
+completed and its GPU process exited. Reuse that qualified runtime unchanged
+for this client's two-control native smoke, with a new output directory and
+the latest committed source. This is still interface qualification, not an
+additional task-solving attempt. A lightweight CUDA check and real episode
+qualify this evaluation-only reuse; record its conservative GPU window.
