@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import random
 import signal
 import subprocess
 import tempfile
@@ -41,8 +42,10 @@ def prepare(data, output):
             donor_seed = seeds[(si+1) % len(seeds)]
             donor_source = data/str(donor_seed)/f'query-{query}.json'
             donor = json.loads(donor_source.read_text())
+            orders = [[0,1], [1,0], [0,1] if (si+qi) % 2 == 0 else [1,0]]
+            random.Random(7131+seed+query).shuffle(orders)
             for rep in range(3):
-                order = [0, 1] if (si*2+qi+rep) % 2 == 0 else [1, 0]
+                order = orders[rep]
                 order_conditions = CONDITIONS[rep:] + CONDITIONS[:rep]
                 for condition in order_conditions:
                     directory = output/f'{seed}-{query}-r{rep}-{condition}'
