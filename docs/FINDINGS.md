@@ -170,3 +170,10 @@ control 220. The recorder exported 15 pre-action context/action decisions,
 221 observations and 663 camera images with verified alignment. This is one
 successful integration example; no downstream VLA training or cross-task
 success estimate was measured. [Run, replay and dataset evidence](../outputs/astra-robocasa-demo-20261112-r1/RESULT.md).
+
+The direct Responses API client also passed synthetic and native RoboCasa MCP
+qualification with `gpt-6-astra`: five calls per smoke, image tool outputs,
+two recorded controls and an aligned causal export. The native smoke checked
+all nine camera-image hashes and used 0.016101 conservative GPU-hours. This
+qualifies the API transport; it did not attempt manipulation or learner training.
+[API qualification evidence](../outputs/agent-sim-api-debug-20261112-r1/RESULT.md).
