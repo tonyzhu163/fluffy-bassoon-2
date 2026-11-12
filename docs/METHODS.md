@@ -30,6 +30,15 @@ For constructed RoboCasa queries, the exporter matches the trial and decision ob
 
 ## Environments and tests
 
+The [agent simulator collector](../benchmarks/agent_sim/README.md) exposes one
+persistent RoboCasa365 episode through the same MCP tools to Codex or Claude
+Code. It records lossless control-rate observations, native commands and
+outcomes, plus explicit pre-action subgoals and brief decision summaries.
+Its exporter separates causal inputs from current action/context targets and
+future outcome labels. These are robot-action demonstrations, not noise targets
+for the existing `vla_history` trainer; a matching feature/action head is required.
+Native simulation and agent success require separate runtime qualification.
+
 Use `uv sync --locked` on allocated Linux for the shared Python environment. A quick learner check is:
 
 ```sh
