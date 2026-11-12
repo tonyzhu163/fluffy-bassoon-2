@@ -1,5 +1,5 @@
 {
-  "checked_shanghai": "2026-11-12T19:16:00+08:00",
+  "checked_shanghai": "2026-11-12T22:15:00+08:00",
   "teacher_attempts": [
     {
       "checked_shanghai": "2026-11-12T14:59:00+08:00",
@@ -112,7 +112,7 @@
       "attempt": "attempt01",
       "source_commit": "45873f14c458e3201512d4871a05918fe4236bef",
       "created_shanghai": "2026-11-12T18:57:57+08:00",
-      "scheduler_status": "Running",
+      "scheduler_status": "Succeeded",
       "GPUs": 8,
       "CPUs": 64,
       "RAM_GiB": 1024,
@@ -138,14 +138,25 @@
       "current_local_free_GiB": 557.6,
       "device_checked_shanghai": "2026-11-12T19:00:00+08:00",
       "completed_training_updates_verified": true,
-      "completed_training_iterations": 3,
+      "completed_training_iterations": 10,
       "before_evaluation": {
         "completed": true,
         "success_once": 0.65625,
         "successes": 42,
         "episodes": 64
       },
-      "storage_checked_shanghai": "2026-11-12T19:16:00+08:00"
+      "storage_checked_shanghai": "2026-11-12T19:16:00+08:00",
+      "released_shanghai": "2026-11-12T19:51:04+08:00",
+      "conservative_GPU_hours": 7.082222222222223,
+      "completed_iterations": 10,
+      "archive_verified": true,
+      "final_archive_verified": true,
+      "after_evaluation": {
+        "completed": true,
+        "success_once": 0.640625,
+        "successes": 41,
+        "episodes": 64
+      }
     },
     {
       "cluster": "Baige Pro6K",
@@ -154,7 +165,7 @@
       "attempt": "attempt01",
       "source_commit": "45873f14c458e3201512d4871a05918fe4236bef",
       "created_shanghai": "2026-11-12T18:58:53+08:00",
-      "scheduler_status": "Running",
+      "scheduler_status": "Succeeded",
       "GPUs": 8,
       "CPUs": 64,
       "RAM_GiB": 1024,
@@ -180,14 +191,44 @@
       "current_local_free_GiB": 279.7,
       "device_checked_shanghai": "2026-11-12T19:00:00+08:00",
       "completed_training_updates_verified": true,
-      "completed_training_iterations": 3,
+      "completed_training_iterations": 10,
       "before_evaluation": {
         "completed": true,
         "success_once": 0.625,
         "successes": 40,
         "episodes": 64
       },
-      "storage_checked_shanghai": "2026-11-12T19:16:00+08:00"
+      "storage_checked_shanghai": "2026-11-12T19:16:00+08:00",
+      "released_shanghai": "2026-11-12T19:55:58+08:00",
+      "conservative_GPU_hours": 7.611111111111111,
+      "completed_iterations": 10,
+      "archive_verified": true,
+      "final_archive_verified": true,
+      "after_evaluation": {
+        "completed": true,
+        "success_once": 0.625,
+        "successes": 40,
+        "episodes": 64
+      }
+    },
+    {
+      "cluster": "Baige Pro6K",
+      "task": "OpenCabinet",
+      "job_id": "job-9fn06pcy51s4",
+      "attempt": "attempt04",
+      "source_commit": "9e3c9bfab6e69a26a3cb77bcd2c460c9b708649c",
+      "created_shanghai": "2026-11-12T22:14:05+08:00",
+      "scheduler_status": "Queued",
+      "GPUs": 8,
+      "CPUs": 64,
+      "RAM_GiB": 1024,
+      "shared_memory_GiB": 32,
+      "maximum_job_minutes": 45,
+      "reserved_GPU_hours": 6,
+      "automatic_retries": false,
+      "resumed_global_step": 8,
+      "target_global_step": 10,
+      "qualification": "Linux actual stageback fixtures and original checkpoint input hashes verified; latest main reviewed, teacher core unchanged"
     }
   ],
   "total_failed_teacher_conservative_GPU_hours": 0.9066666666666666,
@@ -197,7 +238,7 @@
     "new_episodes": 9000,
     "run": "robocasa-kv-comparison-20261112-r1"
   },
-  "next_action": "Monitor Rack and CounterToStove training/checkpoint/archive; next check19:36 Shanghai. Cabinet exact iteration8 continuation qualified but not yet budget-admitted. KV comparison continues.",
+  "next_action": "Await8-GPU Cabinet allocation, then verify exact optimizer/RNG restore, updates9-10 and same64-case after panel. Next22:35 Shanghai.",
   "failed_attempt01_archive": {
     "cold": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-source-decision-20261112-r1/teachers/OpenCabinet/attempt01.tar",
     "archive_sha256": "5cbe40ef6a2f91137718125d5f10217af589c72bbe360cde5cac233c339d8d1a",
@@ -208,5 +249,5 @@
     "hot_duplicate_released": true,
     "full_initial_checkpoint_recoverable": true
   },
-  "all_new_committed_upper_bound_GPU_hours": 48.87527777777778
+  "all_new_committed_upper_bound_GPU_hours": 48.727500000000006
 }

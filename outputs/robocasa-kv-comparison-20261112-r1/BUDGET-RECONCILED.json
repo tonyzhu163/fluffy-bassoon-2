@@ -47,10 +47,10 @@
   "historical_actual_before_current_readout_GPU_hours": 140.9588887777778,
   "approved_cap_GPU_hours": 170,
   "current_readout_reserved_GPU_hours": 22.5,
-  "historical_committed_upper_bound_GPU_hours": 162.33888877777778,
+  "historical_committed_upper_bound_GPU_hours": 162.02194433333335,
   "new_teacher_failures_GPU_hours": 0.9066666666666666,
   "new_teacher_reservation_GPU_hours": 6,
-  "all_new_work_maximum_committed_GPU_hours": 49.04444444444445,
+  "all_new_work_maximum_committed_GPU_hours": 48.727500000000006,
   "first_readout_attempts": [
     {
       "objective": "dpt",
@@ -84,8 +84,8 @@
     }
   ],
   "first_readout_attempts_GPU_hours": 0.753611111111111,
-  "resume_reservation_GPU_hours": 9,
-  "readout_committed_GPU_hours": 21.380000000000003,
+  "resume_reservation_GPU_hours": 4,
+  "readout_committed_GPU_hours": 21.063055555555557,
   "second_readout_attempts": [
     {
       "objective": "dpt",
@@ -137,7 +137,7 @@
     }
   ],
   "second_readout_attempts_GPU_hours": 2.9980555555555557,
-  "readout_spent_GPU_hours": 12.38,
+  "readout_spent_GPU_hours": 17.063055555555557,
   "third_readout_attempts": [
     {
       "objective": "dpt",
@@ -174,6 +174,15 @@
       "GPUs": 1,
       "conservative_GPU_hours": 4.390555555555555,
       "reason": "Archive monitor traversal race; published audited banks preserved"
+    },
+    {
+      "objective": "dpt",
+      "job_id": "job-6eqbv7kqlfo1",
+      "created_shanghai": "2026-11-12T17:15:23+08:00",
+      "released_shanghai": "2026-11-12T21:56:22+08:00",
+      "GPUs": 1,
+      "conservative_GPU_hours": 4.683055555555556,
+      "reason": "External operator zrt requested stop at21:55:40; scheduler event stopSource=user;2688 published episodes preserved"
     }
   ],
   "completed_additional_teachers": [
