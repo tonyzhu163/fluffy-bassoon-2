@@ -1,5 +1,6 @@
 """Matched native pi0.5 proposals with full-prefix replay, no learned rewards."""
 import argparse
+import gc
 import hashlib
 import json
 import multiprocessing as mp
@@ -180,6 +181,11 @@ def main():
         print(json.dumps(row), flush=True)
 
     from robocasa.utils.env_utils import convert_action
+    from render_gc import bind_context_cleanup
+    bind_context_cleanup()
+    # Old reset-created renderer cycles must never finalize inside a camera
+    # render/read pair. Collect only after closing the episode's environment.
+    gc.disable()
     stable_counter_regions()
     event('loading', policy_process='spawn', rendering_process='parent')
     policy = Motor(args.checkpoint)
@@ -216,6 +222,7 @@ def main():
                         history_commands=np.asarray(commands[-50:]).tolist(),
                         history_states=np.asarray(states[-51:]).tolist(),
                         fork=anchors[step], budget=BUDGET, delivered_candidate_controls=5)
+                    del c
                 for action in ordinary[:5]:
                     obs, reward, done, truncated, info = wrapped.step(convert_action(action))
                     commands.append(action.copy()); states.append(state(obs)); rewards.append(float(reward))
@@ -238,6 +245,8 @@ def main():
             event('baseline_complete', seed=seed, success_once=any(successes), native_return=sum(rewards))
         finally:
             wrapped.close()
+            del wrapped
+            gc.collect()
         for q in QUERIES:
             for candidate in (0, 1):
                 wrapped, obs = reset(seed)
@@ -292,6 +301,8 @@ def main():
                     event('branch_complete', **result)
                 finally:
                     wrapped.close()
+                    del wrapped
+                    gc.collect()
     write(out/'complete.json', dict(scenes=len(SEEDS), queries=len(SEEDS)*len(QUERIES), branches=results,
                                    wall_seconds=time.time()-started))
     event('complete')
