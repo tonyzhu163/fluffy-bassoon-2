@@ -61,6 +61,7 @@ def main():
         distinct_final_outcomes=sum(r['final'][0] != r['final'][1] for r in query_results),
         distinct_native_returns=sum(r['returns'][0] != r['returns'][1] for r in query_results),
         already_successful_queries=sum(r['success_before_query'] for r in query_results),
+        estimable_teacher_updates=sum(r['delta_teacher'] is not None for r in query_results),
         fallback='Use original candidate zero for abstentions or invalid responses; report their counts separately.',
         aggregate=aggregate,scene_effects=scene_effects,queries=query_results,
         native_wall_seconds=native['wall_seconds'], inference_wall_seconds_sum=sum(r['wall_seconds'] for r in responses),
@@ -85,6 +86,7 @@ def main():
                 future_outcome_labels=dict(success=row['success'],final=row['final'],native_return=row['returns'],
                                           success_before_query=row['success_before_query']),
                 success_contrast_available=row['success'][0] != row['success'][1],
+                teacher_update_available=row['delta_teacher'] is not None,
                 note='Outcome labels and teacher targets are offline supervision, never support inputs.')
             stream.write(json.dumps(example,allow_nan=False)+'\n')
     print(json.dumps({k:v for k,v in report.items() if k not in ('queries','scene_effects')},indent=2))
