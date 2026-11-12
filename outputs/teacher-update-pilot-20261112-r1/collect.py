@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import pickle
 import random
 import time
 from pathlib import Path
@@ -141,12 +142,13 @@ def main():
         frames.mkdir()
         wrapped, obs = reset(seed)
         commands, states, rewards, successes, anchors = [], [state(obs)], [], [], {}
-        candidates, query_records = {}, {}
+        candidates, query_records, rngs = {}, {}, {}
         try:
             initial = identity(wrapped, obs)
             prompt = obs['annotation.human.task_description']
             for step in range(0, BUDGET, 5):
                 anchors[step] = identity(wrapped, obs)
+                rngs[step] = (random.getstate(), np.random.get_state())
                 if any(q-50 <= step <= q for q in QUERIES) and step % 10 == 0:
                     picture(frames/f'{step:04d}.png', obs, f'Control {step}')
                 ordinary = propose(policy, obs, seed, step)
@@ -173,6 +175,9 @@ def main():
                 if step % 50 == 0:
                     event('baseline', seed=seed, controls=step+5, success=successes[-1])
             anchors[BUDGET] = identity(wrapped, obs)
+            rngs[BUDGET] = (random.getstate(), np.random.get_state())
+            with (dest/'global-rng.pkl').open('wb') as stream:
+                pickle.dump(rngs, stream)
             np.savez_compressed(dest/'baseline.npz', commands=commands, states=states, rewards=rewards,
                 successes=successes, candidates=np.stack([candidates[q] for q in QUERIES]))
             write(dest/'baseline.json', dict(seed=seed, prompt=prompt, initial=initial,
@@ -192,6 +197,11 @@ def main():
                     for step, action in enumerate(commands[:q]):
                         obs, reward, done, truncated, info = wrapped.step(convert_action(action))
                         np.testing.assert_array_equal(state(obs), states[step+1])
+                    # The action replay omits inference and image-writing calls.
+                    # Restore their recorded global RNG effects as part of the
+                    # complete fork, then require the same strict fingerprint.
+                    random.setstate(rngs[q][0])
+                    np.random.set_state(rngs[q][1])
                     fork = identity(wrapped, obs)
                     assert fork == anchors[q], ('fork', seed, q, candidate, fork, anchors[q])
                     for step in range(q, BUDGET, 5):
@@ -215,6 +225,7 @@ def main():
                                         rewards=branch_rewards, successes=branch_success)
                     picture(dest/f'branch-{q}-{candidate}-final.png', obs, f'Final {seed} {q} {candidate}')
                     result = dict(seed=seed, query=q, candidate=candidate, fork_exact=True,
+                        global_rng_restored=True,
                         prefix_state_checks=q, baseline_continuation_exact=candidate == 0,
                         success_before_query=any(successes[:q]), success_once=any(branch_success),
                         final_success=branch_success[-1], native_return=sum(branch_rewards),
