@@ -4,6 +4,7 @@ The native learner, source seeds, ten-update target and recovery format are
 unchanged. Earlier operational checkpointing reserves time to preserve every
 byte before releasing the allocated container. No shared payload is moved.
 """
+import argparse
 import hashlib
 import json
 import os
@@ -109,7 +110,16 @@ def archive(source, remote):
 
 
 def main():
-    pin, task, attempt = sys.argv[1:]
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('pin')
+    parser.add_argument('task')
+    parser.add_argument('attempt')
+    parser.add_argument('--checkpoint-seconds', type=int, default=2100,
+                        choices=(2100, 3000))
+    args = parser.parse_args()
+    pin, task, attempt = args.pin, args.task, args.attempt
+    checkpoint_seconds = args.checkpoint_seconds
+    phase_seconds, process_seconds = checkpoint_seconds + 600, checkpoint_seconds + 700
     assert sys.platform == 'linux' and socket.gethostname().startswith('job-')
     assert task in ('OpenCabinet', 'SlideDishwasherRack', 'PickPlaceCounterToStove')
     assert re.fullmatch(r'attempt\d+', attempt)
@@ -131,14 +141,15 @@ def main():
     write(remote / 'LAUNCH.json', dict(source_commit=pin, hostname=socket.gethostname(),
         task=task, attempt=attempt, local_output=str(source), started_unix=started,
         scheduler_maximum_minutes=75, reserved_GPU_hours=10,
-        checkpoint_request_seconds=2100, phase_deadline_seconds=2700,
-        process_timeout_seconds=2800, learner_settings_unchanged=True,
+        checkpoint_request_seconds=checkpoint_seconds, phase_deadline_seconds=phase_seconds,
+        process_timeout_seconds=process_seconds, learner_settings_unchanged=True,
         storage='Local scratch raw output, private BOS verified archive; PFS native temporary XML allowed'))
     done = threading.Event()
     monitor = threading.Thread(target=snapshot, args=(source, remote, done), daemon=False)
     monitor.start()
-    env = dict(os.environ, TASK_LOCAL_OUTPUT=str(source), TASK_PHASE_SECONDS='2700',
-               TASK_CHECKPOINT_SECONDS='2100', TASK_PROCESS_SECONDS='2800')
+    env = dict(os.environ, TASK_LOCAL_OUTPUT=str(source), TASK_PHASE_SECONDS=str(phase_seconds),
+               TASK_CHECKPOINT_SECONDS=str(checkpoint_seconds), TASK_PROCESS_SECONDS=str(process_seconds),
+               TASK_MAXIMUM_GPU_HOURS='10')
     try:
         result = subprocess.run(['bash', str(HERE / 'teacher.sh'), pin, task, attempt], env=env)
         assert (source / 'EXIT.json').exists(), 'Native launcher must retain its terminal receipt'

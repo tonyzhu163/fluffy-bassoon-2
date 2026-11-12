@@ -91,7 +91,8 @@ assert model=='661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5'
 assert norm=='4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee'
 (p/'MANIFEST.json').write_text(json.dumps(dict(source=sys.argv[1],hostname=socket.gethostname(),
     task=os.environ['ROBOCASA_FLOW_TASK'],model_sha256=model,norm_sha256=norm,
-    maximum_job_GPU_hours=8,iterations=10,train_episodes=1280,train_controls=768000,
+    maximum_job_GPU_hours=float(os.environ.get('TASK_MAXIMUM_GPU_HOURS', '8')),
+    iterations=10,train_episodes=1280,train_controls=768000,
     free_bytes=shutil.disk_usage(p).free,checked_unix=time.time()),indent=2)+'\n')
 PY
 "$TASK_PY" -B "$TASK_CODE/scripts/[train]gpu_probe.py" --expected-count 8 --purpose training \
