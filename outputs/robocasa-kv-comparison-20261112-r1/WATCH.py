@@ -4,6 +4,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import socket
 import sys
@@ -52,6 +53,10 @@ def main():
                     del pending[bank]
             for result in sorted(ROOT.glob('readouts/*/*/*/*/*/bank-*/RESULT.json')):
                 bank = result.parent
+                # Archival briefly renames raw data to bank-NNN.verified-hot-copy.
+                # Only canonical bank names are independent rollout units.
+                if re.fullmatch(r'bank-\d{3}', bank.name) is None:
+                    continue
                 if str(bank) not in completed and str(bank) not in failures and bank not in pending:
                     if (bank / packed.MARKER).exists():
                         completed.add(str(bank))

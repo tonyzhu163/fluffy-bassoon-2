@@ -52,3 +52,22 @@ charge before these three readouts to140.958889. With the full22.5-hour new
 reservation, committed use is163.458889 of170 GPU-hours. The immutable
 launch contract retains its more conservative3-hour pilot allowance; no active
 run was changed. [Ledger](BUDGET-RECONCILED.json).
+
+## Operational resume after archive watcher failure
+
+The first allocations each completed two Drawer banks (96 episodes per model,
+288 total). A temporary `bank-000.verified-hot-copy` directory matched the CPU
+watcher's broad glob during archive replacement. Scheduling it as a new bank
+raised FileNotFoundError after the legitimate archiver removed that verified
+duplicate. The watcher disabled its heartbeat; all three workers checkpointed
+before bank016 with exit3. Completed scientific banks remain immutable.
+
+The corrected watcher admits only canonical `bank-NNN` directory names. Restart
+it from a new Git-pinned source with a fresh log, preserving the original
+failure heartbeat and receipt. Verify all six existing banks are audited and
+archived before resuming GPUs. Each fresh attempt02 is limited to420 minutes
+(7 hours), so these reservations plus the short first attempts remain below
+22.5 GPU-hours. Candidate/case bindings, original scientific runtime and all
+completed-bank bytes remain unchanged; the readout's existing resume behavior
+skips those completed banks. IC-IQL's scheduler allocation required explicit
+release after its worker EXIT and operational checkpoint were verified.

@@ -4,8 +4,10 @@ set -Eeuo pipefail
 RUNNER_PIN=${1:?reviewed main commit}
 OBJECTIVE=${2:?dpt, dit, or ic_iql}
 ATTEMPT=${3:?fresh attempt identity}
+MAX_MINUTES=${4:-450}
 case "$OBJECTIVE" in dpt|dit|ic_iql) ;; *) exit 2 ;; esac
 [[ $ATTEMPT =~ ^[a-z0-9-]+$ ]]
+[[ $MAX_MINUTES =~ ^[0-9]+$ && $MAX_MINUTES -gt 10 && $MAX_MINUTES -le 450 ]]
 HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 ROOT=/mowenjie/fluffy-bassoon-2
 RUN=robocasa-kv-comparison-20261112-r1
@@ -38,10 +40,10 @@ if [[ ${CUDA_VISIBLE_DEVICES+x} != x ]]; then
     [[ "$visible_uuid" == "${NVIDIA_VISIBLE_DEVICES:?}" && "$visible_uuid" == GPU-* && "$visible_uuid" != *$'\n'* && "$visible_uuid" != *,* ]]
     export CUDA_VISIBLE_DEVICES=0
 fi
-"$PY" -B - "$ROOT" "$RUN" "$OLD" "$OBJECTIVE" "$RUNNER_PIN" "$HERE" <<'PY'
+"$PY" -B - "$ROOT" "$RUN" "$OLD" "$OBJECTIVE" "$RUNNER_PIN" "$HERE" "$MAX_MINUTES" <<'PY'
 import hashlib,json,shutil,sys,time
 from pathlib import Path
-root,run,old,objective,pin,code=sys.argv[1:]
+root,run,old,objective,pin,code,minutes=sys.argv[1:]
 root=Path(root);run=root/'outputs'/run
 contract=json.loads((Path(code)/'outputs'/run.name/'CONTRACT.json').read_text())
 assert contract['approved_historical_cap_GPU_hours']==170
@@ -59,11 +61,11 @@ for name in ('candidate.pt','training-status.json','contract.json'):
 print(json.dumps(dict(admitted=True,runner_commit=pin,objective=objective,
     candidate_sha256=idx['models']['kv_bridge/'+objective]['artifacts']['candidate.pt']['sha256'],
     historical_cap_GPU_hours=170,reserved_new_evaluation_GPU_hours=22.5,
-    maximum_this_job_GPU_hours=7.5,free_PFS_GiB=shutil.disk_usage(run).free/2**30)))
+    maximum_this_job_GPU_hours=int(minutes)/60,free_PFS_GiB=shutil.disk_usage(run).free/2**30)))
 PY
 PROBE=$TASK_LOG/GPU-PROBE.json
 "$PY" -B "$HERE/scripts/[train]gpu_probe.py" --expected-count 1 --purpose evaluation --baige-container --output "$PROBE"
-DEADLINE=$((BEGAN+450*60-180))
+DEADLINE=$((BEGAN+MAX_MINUTES*60-180))
 for SPLIT in ID OOD; do
     OUT=$ROOT/outputs/$RUN/readouts/kv_bridge/$OBJECTIVE/$SPLIT
     REMAINING=$((DEADLINE-$(date +%s)))
