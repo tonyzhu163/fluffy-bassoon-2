@@ -231,5 +231,11 @@
   "fifth_readout_upper_bound_GPU_hours": 4,
   "final_readout_GPU_hours": 0.10722222222222222,
   "accounting_closeout_note": "Retain full4 GPUh attempt05 and6 GPUh Cabinet-resume bounds even though jobs finished earlier. Final attempt06 charged creation-to-release386s. These are conservative upper bounds, not exact billed use. Queued DIT duplicate charged0.",
-  "current_gpu_work_planned": false
+  "current_gpu_work_planned": false,
+  "accounting_status": "closed with conservative allocation upper bounds",
+  "active_GPU_reservations": 0,
+  "readout_spent_GPU_hours_scope": "This historical field covers terminal attempts01-04 only; complete readout upper bound is readout_committed_GPU_hours.",
+  "previous_reservation_fields_scope": "Retained as conservative charges for completed continuations, not active or future reservations.",
+  "exact_total_allocation_usage_known": false,
+  "upper_bound_reason": "The unindexed DIT pod lacks a readable terminal scheduler record; retain all previous continuation limits rather than infer a precise total."
 }

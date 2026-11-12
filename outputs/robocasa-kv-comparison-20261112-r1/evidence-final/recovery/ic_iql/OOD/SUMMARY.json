@@ -1,0 +1,413 @@
+{
+  "completed": true,
+  "interface": "kv_bridge",
+  "objective": "ic_iql",
+  "split": "OOD",
+  "selected_candidate_sha256": "24885ed79be9bcefc524397c3f51757eb5408f6f11fab202a94737097fba2b3b",
+  "prior_episodes": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "cases_per_task": 50,
+  "curves": {
+    "CloseFridge": {
+      "full": {
+        "denominator": 50,
+        "first_success": [
+          31,
+          35,
+          31,
+          40,
+          35,
+          34
+        ],
+        "final_success": [
+          29,
+          33,
+          30,
+          37,
+          32,
+          29
+        ],
+        "ever_success": [
+          31,
+          45,
+          48,
+          49,
+          49,
+          50
+        ]
+      },
+      "episode": {
+        "denominator": 50,
+        "first_success": [
+          34,
+          30,
+          32,
+          38,
+          32,
+          40
+        ],
+        "final_success": [
+          33,
+          28,
+          31,
+          37,
+          31,
+          40
+        ],
+        "ever_success": [
+          34,
+          43,
+          47,
+          49,
+          49,
+          49
+        ]
+      }
+    },
+    "TurnOnMicrowave": {
+      "full": {
+        "denominator": 50,
+        "first_success": [
+          13,
+          13,
+          11,
+          7,
+          4,
+          10
+        ],
+        "final_success": [
+          12,
+          11,
+          11,
+          5,
+          4,
+          7
+        ],
+        "ever_success": [
+          13,
+          24,
+          29,
+          31,
+          32,
+          35
+        ]
+      },
+      "episode": {
+        "denominator": 50,
+        "first_success": [
+          9,
+          13,
+          11,
+          5,
+          7,
+          12
+        ],
+        "final_success": [
+          8,
+          11,
+          10,
+          4,
+          4,
+          9
+        ],
+        "ever_success": [
+          9,
+          20,
+          24,
+          25,
+          25,
+          30
+        ]
+      }
+    }
+  },
+  "paired_full_minus_reset": {
+    "CloseFridge": {
+      "0": {
+        "delta_percentage_points": -6.0,
+        "wins": 0,
+        "losses": 3,
+        "exact_McNemar_p": 0.25,
+        "paired_case_bootstrap95_percentage_points": [
+          -14.000000000000002,
+          0.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "1": {
+        "delta_percentage_points": 10.0,
+        "wins": 7,
+        "losses": 2,
+        "exact_McNemar_p": 0.1796875,
+        "paired_case_bootstrap95_percentage_points": [
+          -2.0,
+          22.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "2": {
+        "delta_percentage_points": -2.0,
+        "wins": 6,
+        "losses": 7,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -16.0,
+          12.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "3": {
+        "delta_percentage_points": 4.0,
+        "wins": 4,
+        "losses": 2,
+        "exact_McNemar_p": 0.6875,
+        "paired_case_bootstrap95_percentage_points": [
+          -6.0,
+          14.000000000000002
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "4": {
+        "delta_percentage_points": 6.0,
+        "wins": 6,
+        "losses": 3,
+        "exact_McNemar_p": 0.5078125,
+        "paired_case_bootstrap95_percentage_points": [
+          -6.0,
+          18.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "5": {
+        "delta_percentage_points": -12.0,
+        "wins": 2,
+        "losses": 8,
+        "exact_McNemar_p": 0.109375,
+        "paired_case_bootstrap95_percentage_points": [
+          -24.0,
+          0.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      }
+    },
+    "TurnOnMicrowave": {
+      "0": {
+        "delta_percentage_points": 8.0,
+        "wins": 5,
+        "losses": 1,
+        "exact_McNemar_p": 0.21875,
+        "paired_case_bootstrap95_percentage_points": [
+          0.0,
+          18.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "1": {
+        "delta_percentage_points": 0.0,
+        "wins": 2,
+        "losses": 2,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -8.0,
+          8.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "2": {
+        "delta_percentage_points": 0.0,
+        "wins": 2,
+        "losses": 2,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -8.0,
+          8.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "3": {
+        "delta_percentage_points": 4.0,
+        "wins": 3,
+        "losses": 1,
+        "exact_McNemar_p": 0.625,
+        "paired_case_bootstrap95_percentage_points": [
+          -4.0,
+          12.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "4": {
+        "delta_percentage_points": -6.0,
+        "wins": 1,
+        "losses": 4,
+        "exact_McNemar_p": 0.375,
+        "paired_case_bootstrap95_percentage_points": [
+          -16.0,
+          2.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "5": {
+        "delta_percentage_points": -4.0,
+        "wins": 1,
+        "losses": 3,
+        "exact_McNemar_p": 0.625,
+        "paired_case_bootstrap95_percentage_points": [
+          -12.0,
+          4.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      }
+    }
+  },
+  "source_banks": [
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/episode/CloseFridge/bank-000/RESULT.json",
+      "sha256": "f681d88190bda26c3a450a2e7e8934e4b25f2b562f97eb277deab7279389ca1f",
+      "audit_sha256": "4671c2537ffff2e37ee4022a3f76ac659db6ea32baf74a1f32b58364cf1dee82"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/episode/CloseFridge/bank-008/RESULT.json",
+      "sha256": "0970137a82f89d7ff15b7afd8566e4b27896a232d90ef9773025cc97324f17ff",
+      "audit_sha256": "f8c65b2f10b9632e4600acde82568d5148790947cc86838c3cca59ab77c69795"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/episode/CloseFridge/bank-016/RESULT.json",
+      "sha256": "1b355486b1bfb866159c150d6300df5079c2b79d7cf6c66d5fd39721900193b6",
+      "audit_sha256": "1a0281dc36b6441ab7f83e82a0adf76e43a6474a3a17f91db2d94450e12b9067"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/episode/CloseFridge/bank-024/RESULT.json",
+      "sha256": "d55700475fad694545cd009373b64f9cbbab463533a9817c9deff2997f75b1e0",
+      "audit_sha256": "19fe361673e8fc50192fe78a4e885dd5d3968a0a5296c0444eb4d3cff56be4c5"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/episode/CloseFridge/bank-032/RESULT.json",
+      "sha256": "fef0f0132f10087b5ff012241de55ef3693b50202a17c15979d902d7b83a64ba",
+      "audit_sha256": "62254a4a066fd47ada2d147be2b0f47af14ad419b780a94ef15fe2844bf00f28"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/episode/CloseFridge/bank-040/RESULT.json",
+      "sha256": "6328a95e5b074695b22c696bc55b632ab2d38d5eaa1baa79ed06f26ddc4414b6",
+      "audit_sha256": "28ee0fd9a0397da038d2c84517dbe450e0a31a7f352a4245cadef135d4bb21ac"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/episode/CloseFridge/bank-048/RESULT.json",
+      "sha256": "3a90b2f1e3c8ae4b0a4ec18708d869cd2e9f48a6c2ee19114ecdcd66e5a20871",
+      "audit_sha256": "4af2d3953d7a65e9d88cf0c2c456a18cf3e0e3ae25d8838e5581c09c8ecfaab6"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/episode/TurnOnMicrowave/bank-000/RESULT.json",
+      "sha256": "61d151ca6d413ad0996fedfba60556e2021a405bffefbac9e3608ba14ded7fe3",
+      "audit_sha256": "94de182a7560770ae4251a5552b648028837e9544cd6a4edd75c44eb6fb94902"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/episode/TurnOnMicrowave/bank-008/RESULT.json",
+      "sha256": "2acc1cae542abde0171c4e10844a57c97ce1504eb06cb06e2799f143b695083d",
+      "audit_sha256": "e54e8f9dc4932da55db16776fed1444649be85449004691ebca543ddfc0bc8ef"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/episode/TurnOnMicrowave/bank-016/RESULT.json",
+      "sha256": "4f92d42478b84a9f60dd4c832e832fccb390c2e955f1f2ab293eb39b50721310",
+      "audit_sha256": "3575e00cbab808253f1aaa2541dd980366fc03bb39985eaf8c4cefb8e7c142ca"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/episode/TurnOnMicrowave/bank-024/RESULT.json",
+      "sha256": "4b46f05e89f6e15ba6031bc293206c1b26cd4d3a43c3d64fe1b233fc96fb9258",
+      "audit_sha256": "4433f27cb4c8fc1322e28d35e0d8c182e856d605ce30405dacd93281bec2eb09"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/episode/TurnOnMicrowave/bank-032/RESULT.json",
+      "sha256": "0e82d2f0f039394d87015bdcb262bde7f06fe0a8a631721b943fa5a73e99e042",
+      "audit_sha256": "88cfaf8134cf242ba86d75c33ca5e72b637a657352180dc30ce255cfc3604e29"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/episode/TurnOnMicrowave/bank-040/RESULT.json",
+      "sha256": "6055f97e6e7667620f2ab148313a18417793905f062e7a6154262fb06e39650d",
+      "audit_sha256": "1dc5e2f2f7c49b0cf5932322a7d74ab7e5c152cf60c940c257b982220c436d9c"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/episode/TurnOnMicrowave/bank-048/RESULT.json",
+      "sha256": "646422cdea0c2399791053830d208706399385c7e43d7cf53f830537175d3b3b",
+      "audit_sha256": "56df11479219f484ea5f1b62f0bbc3aea602de07b440ff5ca7f753173ad772f4"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/full/CloseFridge/bank-000/RESULT.json",
+      "sha256": "5bee00333faf3ba4826f328d8611c4389e13a9d5af710c7024bb04b4603861e0",
+      "audit_sha256": "1f000adcbd9773cb47e52e19159d11f3bb5f169b47d0201133ebb28f1c984076"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/full/CloseFridge/bank-008/RESULT.json",
+      "sha256": "eac3df6ef9e3bc9b69aa4aa0d35ac23a398417138d96e11cc3f3960a1d0e3cb4",
+      "audit_sha256": "a285633b45474ab276f537d96ef55af09f479b930449347bfde92d4abe061187"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/full/CloseFridge/bank-016/RESULT.json",
+      "sha256": "9a12b9a839d42e8cdb98e8283fdec1bb8289c094c77fd06fd526df4405978a5b",
+      "audit_sha256": "23bd62f9b5a360590af8983f1980090c8233672bfface7c4e6f0b6f68f87e8a0"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/full/CloseFridge/bank-024/RESULT.json",
+      "sha256": "2daea1964a57dc9aafd456f97a7e76a460341c77f71fb661602950bdf9181b5b",
+      "audit_sha256": "c157397144a3d47a756698f87184af1e82a555ca9f6ed3346b6825cec337fa50"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/full/CloseFridge/bank-032/RESULT.json",
+      "sha256": "94098acb76d6fd29ea9703bff2898db75943adbd1a7999bd1c7f76e1f47544f5",
+      "audit_sha256": "9bf2df518a3ca26a29d525e822b8387562845450df29ab751ade202509ea4b98"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/full/CloseFridge/bank-040/RESULT.json",
+      "sha256": "5101a1cecab85dd87d5548eda5ac55ef68ce31989770b1a2e6654b319ae1d429",
+      "audit_sha256": "b2407af7d5e1ffdbc020d6230bde215ef2b100116850131e0d57b3f978a18a6e"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/full/CloseFridge/bank-048/RESULT.json",
+      "sha256": "ba692f5100910a8b78f1a4b8b75d967447ea9c78d4d36cc4250a03dbaf207a6a",
+      "audit_sha256": "3ec4d7b4ead61856d321d9b0e7665892fa6534ffb83fe8299f31a0995a9fbafa"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/full/TurnOnMicrowave/bank-000/RESULT.json",
+      "sha256": "3784187ab5011ac5788321f9f1e5caa88d8dfcec51272a9b0d0573499da671f0",
+      "audit_sha256": "91f9f6a19b6e88d5ee75fc376cdb88c342a0f6fe70d4dd4f9aab5b70dfc7dcd9"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/full/TurnOnMicrowave/bank-008/RESULT.json",
+      "sha256": "985ed53fef5df64a0a3e3c03b013bfb449390e16b3b1762a4d4aac7da5f90390",
+      "audit_sha256": "9d3e55b094aff4b55b76bb98a5d1dfab753dfabe8c6b5f26bc80c5bd8e488520"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/full/TurnOnMicrowave/bank-016/RESULT.json",
+      "sha256": "174fb02b14856a48a11d382329d4627978370f359f5a8f79b6db8a931068000a",
+      "audit_sha256": "ada82d3e058e569b33592c41d7754b124838f5ca5abd1e2585c7fc61c14f0d06"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/full/TurnOnMicrowave/bank-024/RESULT.json",
+      "sha256": "0971868f945be6c558f1c8bdccee195c87400e0dd13e6a405e14c276a89d09d0",
+      "audit_sha256": "dc6c8c90ab9a520643fbed093e78aae40e8703b0193836d165caa241d917094a"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/full/TurnOnMicrowave/bank-032/RESULT.json",
+      "sha256": "e42f9eb6ede14266793ad28f46d9cc0019b67618622c424e2f004dd82d726307",
+      "audit_sha256": "d6c19cbe8f5e42c92b044d1ae19bd33ebb0d6ec194da04048271bc7198f41d17"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/full/TurnOnMicrowave/bank-040/RESULT.json",
+      "sha256": "d7a889431138de2398de232e9d99ce33d63a811eb6243c7e10758bb15961a6c4",
+      "audit_sha256": "f75b6961b11ed8cfe3dc4f7d4f8e5d04ea3be19aaeaecf7cc7eaa8df7776d249"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/OOD/full/TurnOnMicrowave/bank-048/RESULT.json",
+      "sha256": "d6182bfcadc8f2d276494395cd9cc6cb1bd25044bb72787cad231dda3385be64",
+      "audit_sha256": "23a7f8b31238f386bcf6a211c342cde6ce962ed5bb67c906aa0849669c3a36a3"
+    }
+  ],
+  "episodes": 1200,
+  "native_parameters_frozen": true,
+  "deployment_optimizer_updates": 0
+}

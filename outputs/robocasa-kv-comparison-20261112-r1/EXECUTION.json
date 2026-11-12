@@ -1,5 +1,5 @@
 {
-  "checked_shanghai": "2026-11-13T05:06:00+08:00",
+  "checked_shanghai": "2026-11-13T05:12:02.140957+08:00",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
   "runner_commit": "33753388a773f63efb5f07916d57c0d3a698290a",
@@ -25,7 +25,7 @@
     "all_eight_candidate_checksums_verified": true
   },
   "verified_completed_new_episodes": 9000,
-  "next_action": "All210 new banks published. Finish CPU reconstruction/uncertainty analysis, import evidence and close comparison. No additional GPU work planned.",
+  "next_action": "Closed: report and evidence verified; preserve fitted checkpoints and raw archives. No further GPU work planned.",
   "jobs_attempt01": [
     {
       "objective": "dpt",
@@ -138,7 +138,9 @@
     "qualification": "Reconstructed all70 AD banks/3000 episodes with exactly matching original curves, candidate hashes and episode counts",
     "reason": "External DPT stop omitted group receipts; re-entering already-complete ID also changes its elapsed-time receipt. Analysis can reconstruct complete groups from unchanged independently audited banks.",
     "source_artifacts_unchanged": true,
-    "wait_hours": 12
+    "wait_hours": 12,
+    "status": "complete",
+    "all_predeclared_banks_verified": true
   },
   "jobs_attempt03": [
     {
@@ -221,7 +223,7 @@
       "reason": "Archive monitor traversal race; published audited banks preserved"
     }
   ],
-  "last_check_evidence": "Final attempt06 EXIT.json/HOT-STORAGE.json and scheduler success; full report pending CPU finalizer",
+  "last_check_evidence": "comparison/COMPLETE.json; evidence-final; final-job-succeeded.png",
   "jobs_attempt05": [
     {
       "objective": "ic_iql",
@@ -339,5 +341,9 @@
       "archive_errors": [],
       "conservative_GPU_hours": 0.10722222222222222
     }
-  ]
+  ],
+  "status": "complete",
+  "verified_total_comparison_episodes": 12000,
+  "verified_total_banks": 280,
+  "comparison_result_sha256": "703af9df46846777370712a805a7201da9cadb2e182c4a28a3e84bc6643377e9"
 }

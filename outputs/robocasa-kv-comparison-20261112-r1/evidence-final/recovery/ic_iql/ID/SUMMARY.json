@@ -1,0 +1,607 @@
+{
+  "completed": true,
+  "interface": "kv_bridge",
+  "objective": "ic_iql",
+  "split": "ID",
+  "selected_candidate_sha256": "24885ed79be9bcefc524397c3f51757eb5408f6f11fab202a94737097fba2b3b",
+  "prior_episodes": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "cases_per_task": 50,
+  "curves": {
+    "CloseToasterOvenDoor": {
+      "full": {
+        "denominator": 50,
+        "first_success": [
+          14,
+          10,
+          15,
+          18,
+          18,
+          22
+        ],
+        "final_success": [
+          14,
+          10,
+          15,
+          18,
+          18,
+          22
+        ],
+        "ever_success": [
+          14,
+          20,
+          29,
+          34,
+          39,
+          43
+        ]
+      },
+      "episode": {
+        "denominator": 50,
+        "first_success": [
+          14,
+          11,
+          15,
+          22,
+          16,
+          18
+        ],
+        "final_success": [
+          14,
+          11,
+          15,
+          22,
+          16,
+          18
+        ],
+        "ever_success": [
+          14,
+          21,
+          31,
+          34,
+          38,
+          42
+        ]
+      }
+    },
+    "CoffeeSetupMug": {
+      "full": {
+        "denominator": 50,
+        "first_success": [
+          18,
+          15,
+          13,
+          15,
+          25,
+          17
+        ],
+        "final_success": [
+          18,
+          14,
+          13,
+          14,
+          25,
+          17
+        ],
+        "ever_success": [
+          18,
+          27,
+          31,
+          33,
+          40,
+          41
+        ]
+      },
+      "episode": {
+        "denominator": 50,
+        "first_success": [
+          22,
+          14,
+          17,
+          16,
+          21,
+          19
+        ],
+        "final_success": [
+          22,
+          12,
+          16,
+          16,
+          21,
+          19
+        ],
+        "ever_success": [
+          22,
+          31,
+          38,
+          41,
+          44,
+          44
+        ]
+      }
+    },
+    "OpenDrawer": {
+      "full": {
+        "denominator": 50,
+        "first_success": [
+          34,
+          35,
+          34,
+          28,
+          28,
+          33
+        ],
+        "final_success": [
+          34,
+          33,
+          34,
+          26,
+          27,
+          29
+        ],
+        "ever_success": [
+          34,
+          45,
+          47,
+          48,
+          48,
+          48
+        ]
+      },
+      "episode": {
+        "denominator": 50,
+        "first_success": [
+          34,
+          36,
+          36,
+          31,
+          31,
+          33
+        ],
+        "final_success": [
+          34,
+          33,
+          36,
+          30,
+          31,
+          32
+        ],
+        "ever_success": [
+          34,
+          44,
+          47,
+          48,
+          48,
+          48
+        ]
+      }
+    }
+  },
+  "paired_full_minus_reset": {
+    "CloseToasterOvenDoor": {
+      "0": {
+        "delta_percentage_points": 0.0,
+        "wins": 0,
+        "losses": 0,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          0.0,
+          0.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "1": {
+        "delta_percentage_points": -2.0,
+        "wins": 3,
+        "losses": 4,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -12.0,
+          8.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "2": {
+        "delta_percentage_points": 0.0,
+        "wins": 6,
+        "losses": 6,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -14.000000000000002,
+          14.000000000000002
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "3": {
+        "delta_percentage_points": -8.0,
+        "wins": 1,
+        "losses": 5,
+        "exact_McNemar_p": 0.21875,
+        "paired_case_bootstrap95_percentage_points": [
+          -18.0,
+          0.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "4": {
+        "delta_percentage_points": 4.0,
+        "wins": 4,
+        "losses": 2,
+        "exact_McNemar_p": 0.6875,
+        "paired_case_bootstrap95_percentage_points": [
+          -6.0,
+          14.000000000000002
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "5": {
+        "delta_percentage_points": 8.0,
+        "wins": 6,
+        "losses": 2,
+        "exact_McNemar_p": 0.2890625,
+        "paired_case_bootstrap95_percentage_points": [
+          -2.0,
+          18.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      }
+    },
+    "CoffeeSetupMug": {
+      "0": {
+        "delta_percentage_points": -8.0,
+        "wins": 0,
+        "losses": 4,
+        "exact_McNemar_p": 0.125,
+        "paired_case_bootstrap95_percentage_points": [
+          -16.0,
+          -2.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "1": {
+        "delta_percentage_points": 2.0,
+        "wins": 6,
+        "losses": 5,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -10.049999999999955,
+          14.000000000000002
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "2": {
+        "delta_percentage_points": -8.0,
+        "wins": 5,
+        "losses": 9,
+        "exact_McNemar_p": 0.4239501953125,
+        "paired_case_bootstrap95_percentage_points": [
+          -22.0,
+          6.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "3": {
+        "delta_percentage_points": -2.0,
+        "wins": 6,
+        "losses": 7,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -16.0,
+          12.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "4": {
+        "delta_percentage_points": 8.0,
+        "wins": 9,
+        "losses": 5,
+        "exact_McNemar_p": 0.4239501953125,
+        "paired_case_bootstrap95_percentage_points": [
+          -6.0,
+          22.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "5": {
+        "delta_percentage_points": -4.0,
+        "wins": 6,
+        "losses": 8,
+        "exact_McNemar_p": 0.79052734375,
+        "paired_case_bootstrap95_percentage_points": [
+          -18.0,
+          10.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      }
+    },
+    "OpenDrawer": {
+      "0": {
+        "delta_percentage_points": 0.0,
+        "wins": 0,
+        "losses": 0,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          0.0,
+          0.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "1": {
+        "delta_percentage_points": -2.0,
+        "wins": 1,
+        "losses": 2,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -8.0,
+          4.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "2": {
+        "delta_percentage_points": -4.0,
+        "wins": 3,
+        "losses": 5,
+        "exact_McNemar_p": 0.7265625,
+        "paired_case_bootstrap95_percentage_points": [
+          -14.000000000000002,
+          6.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "3": {
+        "delta_percentage_points": -6.0,
+        "wins": 1,
+        "losses": 4,
+        "exact_McNemar_p": 0.375,
+        "paired_case_bootstrap95_percentage_points": [
+          -16.0,
+          2.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "4": {
+        "delta_percentage_points": -6.0,
+        "wins": 1,
+        "losses": 4,
+        "exact_McNemar_p": 0.375,
+        "paired_case_bootstrap95_percentage_points": [
+          -14.000000000000002,
+          2.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      },
+      "5": {
+        "delta_percentage_points": 0.0,
+        "wins": 2,
+        "losses": 2,
+        "exact_McNemar_p": 1.0,
+        "paired_case_bootstrap95_percentage_points": [
+          -8.0,
+          8.0
+        ],
+        "inference": "Descriptive, marginal intervals; no multiplicity-adjusted adaptation claim"
+      }
+    }
+  },
+  "source_banks": [
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/CloseToasterOvenDoor/bank-000/RESULT.json",
+      "sha256": "4708ae0f4de420e9a534327d3f7efdaf4a8cbf4bfe7ccb716663a1efa31e1821",
+      "audit_sha256": "1aeac89449dd7758db8d100f4483c3ceea99d0c4a9fefc8a388c0ab8e1489df4"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/CloseToasterOvenDoor/bank-008/RESULT.json",
+      "sha256": "165f20505318e3177852c77ba4c595f1ec971ff3107f127f913d23573410d156",
+      "audit_sha256": "fbcaac624807f2d9f3c6dde467be814199f46ed275a0936c7475d07a351c79d2"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/CloseToasterOvenDoor/bank-016/RESULT.json",
+      "sha256": "4c0dc6fc85c090891ee7fc90b3bd73dc8d2414fd52bf3240d035b57c696d79d9",
+      "audit_sha256": "6fcb302da572929b158f84c324d7be0ecc1e11265eafd0bd83e1f4dd22ad206f"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/CloseToasterOvenDoor/bank-024/RESULT.json",
+      "sha256": "dbde7788ae4a3fcde7c9e23d524993d8ff0f224ed0c7a3fe27006fb0f8048fb1",
+      "audit_sha256": "669bf4b30b422a21b6a41625166e383ca7cb20f87938cb6899f77bb8669d1c64"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/CloseToasterOvenDoor/bank-032/RESULT.json",
+      "sha256": "7906a8daa4b5f638ed2dc5453c0142908d440b81f210f6490d8d7d8c9dd45c89",
+      "audit_sha256": "328fc365115e40ebbe002df6d27af6524520a1e9fed782429f5417f6438ae2e8"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/CloseToasterOvenDoor/bank-040/RESULT.json",
+      "sha256": "6caaa097463ba3be45214edfaca4b5493496f5e07bc94159efdda488806c06cd",
+      "audit_sha256": "fc10513efe25b973a3b5a293c522095fc930c30ac760a3d5bd6cf9cb5c521606"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/CloseToasterOvenDoor/bank-048/RESULT.json",
+      "sha256": "dc440b15ee96d3d74ba01fb9c9780607e99d84d8870d390a062cf6795418df4e",
+      "audit_sha256": "1a9535a5bf7014386db42ab0b814280ceee57a7eb9ac57c8790b82d9b5f37304"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/CoffeeSetupMug/bank-000/RESULT.json",
+      "sha256": "23e73ec3dc577bf2e21f44743a7dc4e34af83c331ef1f7f7d6a7dafa49b11f67",
+      "audit_sha256": "ff049b2b2d548fba6fb14d537a5e9e80dc57b4121d7a2aa545c98020f6108e7a"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/CoffeeSetupMug/bank-008/RESULT.json",
+      "sha256": "6c417f1716125d242e4b3d6ba12a3af0c0933d6620e955fc8b8d8cee70c083ad",
+      "audit_sha256": "cb674102a9966d4c8490ff8d49128d562d3684b6ca2b7357850bd5b801b9a3f9"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/CoffeeSetupMug/bank-016/RESULT.json",
+      "sha256": "2232b244ffaed1cea6e0a286648edacc1e65abeb6a2133c71373306e9e66758c",
+      "audit_sha256": "3ff1a94b43415f30bcc45b4fc115fb05d4840234e2dbc7556dba5c2a3a618ce9"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/CoffeeSetupMug/bank-024/RESULT.json",
+      "sha256": "395f486b0169932d21d924d3aac502c018a6169874831b441eaedffc09b1298d",
+      "audit_sha256": "cbd5d4f6c28e9ddb92e28be53ee8896c75c687114ff0ae1bde51bc559312d6ed"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/CoffeeSetupMug/bank-032/RESULT.json",
+      "sha256": "d7e0df8f39fd85dcb971f498e8e775a3867cb9ab97314fea15e65624dd77e1b1",
+      "audit_sha256": "17c606949d1124b21e9b997ccabccf849d88319889a573568e0f2f88e2bf4cdf"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/CoffeeSetupMug/bank-040/RESULT.json",
+      "sha256": "2bf3230f19da851fbae3cb43e48ff536f435d3999b932af3c019d77e1198727c",
+      "audit_sha256": "4f4082def3f54a2e0f7eb1bba245c1419fcdb93c9e883239f8929377536877f3"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/CoffeeSetupMug/bank-048/RESULT.json",
+      "sha256": "67d77b23b7ad11bf3756244cf88d8fa21b997c192bb6e38d05be9d541109ba99",
+      "audit_sha256": "d314a6b8c68589a94a0a6aa85c4e656d86ea747216145cea5b3ffa5cd2697172"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/OpenDrawer/bank-000/RESULT.json",
+      "sha256": "72e5c57b0f95386f215bfd90fabfbf36529961bdca7276cad1c6588245ccdd54",
+      "audit_sha256": "b1d1f6731ca648bd7e676fe380c898460735c47274300582f4d125303733f593"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/OpenDrawer/bank-008/RESULT.json",
+      "sha256": "fbed11253aacf43c5d69ac04bdc2521660adbc458f43bb39b68b4f8af50a7d83",
+      "audit_sha256": "a93d44c8d6d4e67a107f932e5a7366a364cbeedd1a778b84ffb27876df78ff8a"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/OpenDrawer/bank-016/RESULT.json",
+      "sha256": "cbe5415eeb8811a461bdf3266d13291289faae121db2b2e73d3cb1fb070b2ab7",
+      "audit_sha256": "b6ae27cf3e071231abd68c750ce3f16dab9908e6a94a9b999856fdb7119fc045"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/OpenDrawer/bank-024/RESULT.json",
+      "sha256": "2ea8176a704d869d429a0c5d6ede040baee530d3a53f2525ef85bfeda5a8730c",
+      "audit_sha256": "5763b8b8a2b24acec1cd62f98bc24ec4aa6ae81e47635754087bcc385f2f81d1"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/OpenDrawer/bank-032/RESULT.json",
+      "sha256": "c38ce837c03612ad9e9af67804cfb8957333e3495fc69103506901c2ae79046b",
+      "audit_sha256": "de667fd2a213227aa9fb905e51e9253da4f0d4738361eb69f456a83f98c99407"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/OpenDrawer/bank-040/RESULT.json",
+      "sha256": "fb8dee7ab3e56e38aaae704dcc64aead2dbb722a7df9753ca825e72c43bd55cb",
+      "audit_sha256": "bfd974e3fd3fb75b0df71e5c4c48360433d49abcde8cca77e499f47659042d29"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/episode/OpenDrawer/bank-048/RESULT.json",
+      "sha256": "557820da81bd63a8d5e17bfc4c919533d83594e080a58b44077dc396569227f9",
+      "audit_sha256": "471607f123a134d96cb2fe20fa346d8cbb62097235eec5cbf80d1d400ebbf165"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/CloseToasterOvenDoor/bank-000/RESULT.json",
+      "sha256": "7699d767fa0620bfdf0aafce8ed0ed5047102d689e2603d17707bb609d2cd0d7",
+      "audit_sha256": "f8d8046961ab33249d2f12c694d4711dabcd675b6a4c70803f55a11bc997750a"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/CloseToasterOvenDoor/bank-008/RESULT.json",
+      "sha256": "427df41c640bd24d00f3a0168761396e46f91f6bb290f1c54de64d3880032139",
+      "audit_sha256": "af7338205a17a88e4603f158320f0562924ac35c5cc861ed01f201e192d24029"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/CloseToasterOvenDoor/bank-016/RESULT.json",
+      "sha256": "7f5554f3963cf7f7a3149c562c3387579982a6345cfdd108612c7e07c200944d",
+      "audit_sha256": "b0c33eaf44cb333828a18492efcb9e20182ed6add26e9659419aa91bad6f1a11"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/CloseToasterOvenDoor/bank-024/RESULT.json",
+      "sha256": "f0ecf5443bcb1445b516694e9d216b96b7901fdb091fecebbf84377f866fbfba",
+      "audit_sha256": "a09ad2bc372b855cf7a4e3eb64c42540827698cda9060af36fe97cf67368dac9"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/CloseToasterOvenDoor/bank-032/RESULT.json",
+      "sha256": "27eeafc1c064637bbdf088294c30074e06dc3184d56ea175328fc940168dee57",
+      "audit_sha256": "d75e3b06590f7c01128d7903287ef2db449f951509620922d9fda738303a622f"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/CloseToasterOvenDoor/bank-040/RESULT.json",
+      "sha256": "5636e3ec15934b3ef12dd86f8ed88ed3a8804c07dc91b2fa8e55c5e71ffde4ec",
+      "audit_sha256": "47de9761d70bc34e7d400412bd576c2fe9e24aae2b6aafb105ecd04de6715ce0"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/CloseToasterOvenDoor/bank-048/RESULT.json",
+      "sha256": "abbee02c0c7f169471dcc4695774045c474a8611445d0f7796cc3dd11df9b536",
+      "audit_sha256": "3f1dcefd9e16e3a477032b4efb34e81f1ed4c0664d982771e5e7b2b0b60f0cfb"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/CoffeeSetupMug/bank-000/RESULT.json",
+      "sha256": "c44c48f86c45cba3c602ac8187001a49a0c1b92c027d6775bbefc64b902f5064",
+      "audit_sha256": "870d9107d9caf0fd32d8060dae4ed979b0f9466cc3ae2eeb7a30261e95f21a59"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/CoffeeSetupMug/bank-008/RESULT.json",
+      "sha256": "817898cf4df3ab67d25365efd7b0d09f45acedb4e58760d9b3bc8913f0ee8b74",
+      "audit_sha256": "ae4011f3b3bb4c0ff7307d07892ea4c4715375ad85a1a4e2b4368f535f060f92"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/CoffeeSetupMug/bank-016/RESULT.json",
+      "sha256": "077f8f0a92a35f9dd2d0bd0e82e81796fc06ef1c0f6c0379019d50f40d4074da",
+      "audit_sha256": "b1d223076ded0a6a460448d99ed69478f7b9a3a97f2d62cd0b379459275e76d8"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/CoffeeSetupMug/bank-024/RESULT.json",
+      "sha256": "703fc737cff2e3a8062c52013d22dcca145a2a12099770f0e98f17a42a369f61",
+      "audit_sha256": "93ed1879a5bf5c2d9a2c873ec593d2b4f586a0813d4044e02cf5314eacc2b895"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/CoffeeSetupMug/bank-032/RESULT.json",
+      "sha256": "71d17a44273c820827fa404a59f7adb8256c5370086ccc9ec2b327c955a9105b",
+      "audit_sha256": "89a2f48ebc9d322cf19b57d17ee4102735d0c0894a2b69fad499dd4cc1958d55"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/CoffeeSetupMug/bank-040/RESULT.json",
+      "sha256": "876fae13b918de2219b2adae12bfa1892e7c948002fa43293225e4c5819215ff",
+      "audit_sha256": "18f14c26bc64d5fadf9b9343f5589cf6a1636f1a0a800309275807d0520b0420"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/CoffeeSetupMug/bank-048/RESULT.json",
+      "sha256": "cd9a3597a7ed54451a9e8600f4862cff01f3f45ede1bef1d53bc69b82a7ec6ba",
+      "audit_sha256": "d05254fe8d0b025ade6c250d51f155852bbe1dd5bad7fc54d90a48e6cb49a9ff"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/OpenDrawer/bank-000/RESULT.json",
+      "sha256": "a8ccc674d4400fb76193337bb7d40f2317aa2ddcc708021ec1adcad0bf5edebc",
+      "audit_sha256": "635e6b8a002c9440c10a220a02754b36a11d880555a0a6a438662b2f318765ca"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/OpenDrawer/bank-008/RESULT.json",
+      "sha256": "7e23225b931936b629bdb3bfbe294d39904a31fd62cfa88b32f1258a50a63682",
+      "audit_sha256": "bb90e20de3fd6238ab7dcf0b4cec729ba8c3020c1adb9f4e6ac4cec06271dbaf"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/OpenDrawer/bank-016/RESULT.json",
+      "sha256": "b0f4ae064486ba37e5f7ab068037b096a3c2f59265b2e7d3b7f83504b530a4b2",
+      "audit_sha256": "9795bb6a85d1a76d94af34faa0cff1d988023e7672932f2138859f392df16228"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/OpenDrawer/bank-024/RESULT.json",
+      "sha256": "b4a83a9b21dfaaa7c5dc22383e34e6f3ac33eee8f13b3ae0b8405e429742f484",
+      "audit_sha256": "4f6c2e87fb7e1c24ce7dd4dc7afb1cbda68107ce2006922753095b0e8195aced"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/OpenDrawer/bank-032/RESULT.json",
+      "sha256": "b81cce066748d97a2cc6f6461f333c6d3a1c5cff7011a3eee93b46c547929f9a",
+      "audit_sha256": "81156330304945c4b02b2e2da05d820ca1eacfe73f194c8d895bc112d02ffcc4"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/OpenDrawer/bank-040/RESULT.json",
+      "sha256": "b5c729588bea18a6b3a4f916a2a5ac57f01972b35b9097ce032a20f85c8aa20b",
+      "audit_sha256": "6141422b83e2c307123b1285db7c66d68e2079f62ff652955d9a1405660cc043"
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata/analysis-final04/inputs/readouts/kv_bridge/ic_iql/ID/full/OpenDrawer/bank-048/RESULT.json",
+      "sha256": "4ed49fff92f25ad55a1d38aebaee924e55bdc1bb3b849b287668759ae38c7a3b",
+      "audit_sha256": "3ec8ac359cc9bc081974a6a20cf73f7bd2924a1eb2a662758c0019b7a97b4fb4"
+    }
+  ],
+  "episodes": 1800,
+  "native_parameters_frozen": true,
+  "deployment_optimizer_updates": 0
+}
