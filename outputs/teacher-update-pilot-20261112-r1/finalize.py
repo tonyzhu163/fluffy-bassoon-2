@@ -35,6 +35,8 @@ def main():
     assert {key(r) for r in rows} == expected
     panel = args.output/'panel'
     shutil.copytree(first,panel)
+    (panel/'events.jsonl').rename(panel/'source-native04-events.jsonl')
+    shutil.copy2(last/'events.jsonl',panel/'source-native05-events.jsonl')
     for row in b:
         for suffix in ('.json','.npz','-final.png'):
             name = f"branch-{row['query']}-{row['candidate']}"+suffix
@@ -50,6 +52,7 @@ def main():
             np.testing.assert_array_equal(trace['commands'][:5],q['candidate_commands'][row['candidate']])
             assert len(trace['commands']) == row['controls'] == 500-row['query']
             assert bool(trace['successes'].any()) == row['success_once']
+            assert bool(trace['successes'][-1]) == row['final_success']
             assert float(trace['rewards'].sum()) == row['native_return']
         prefix_checks += row['prefix_state_checks']
     calls = read(args.judgments)
@@ -77,6 +80,7 @@ def main():
         record = read(args.run/name/'exit.json')
         usage[name] = dict(record,worker_gpu_hours=(record['ended']-record['started'])/3600)
     wall = sum(usage[k]['ended']-usage[k]['started'] for k in ('native04','native05'))
+    (panel/'branches.json').write_text(json.dumps(rows,indent=2)+'\n')
     (panel/'complete.json').write_text(json.dumps(dict(scenes=4,queries=8,branches=rows,wall_seconds=wall,
         clock='native04 plus native05 worker walls, including probes/loading and rejected reset'),indent=2)+'\n')
     judgment_dir = args.output/'judgments'
