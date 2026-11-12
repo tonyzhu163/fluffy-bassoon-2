@@ -1,10 +1,29 @@
 {
-  "checked_shanghai": "2026-11-12T15:23:35.229366+08:00",
+  "checked_shanghai": "2026-11-12T15:57:00+08:00",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
   "runner_commit": "33753388a773f63efb5f07916d57c0d3a698290a",
   "scientific_commit": "87984718c9199797d31a158c47225cc695623afe",
-  "jobs": [
+  "CPU_watcher": {
+    "host": "Baige development dv-0d0ac1c839",
+    "pid": 39301,
+    "archive_write_readback": true,
+    "heartbeat_observed": true,
+    "attempt": 2,
+    "last_healthy_shanghai": "2026-11-12T15:57:00+08:00",
+    "completed_archives": 6,
+    "pending_archives": 2,
+    "failures": {}
+  },
+  "validation": {
+    "Linux_static_parse": true,
+    "shell_syntax": true,
+    "READOUT_scientific_body_byte_identical_after_owned_path_substitution": true,
+    "all_eight_candidate_checksums_verified": true
+  },
+  "verified_completed_new_episodes": 432,
+  "next_action": "Next check16:17 Shanghai: confirm advancing banks, independent audit/archive, storage and terminal status.",
+  "jobs_attempt01": [
     {
       "objective": "dpt",
       "job_id": "job-qrl5cyu25mfo",
@@ -15,7 +34,11 @@
       "shared_memory_GiB": 32,
       "maximum_minutes": 450,
       "automatic_retries": false,
-      "status": "submitted; initial GPU probe observed"
+      "status": "terminal; checkpoint preserved",
+      "released_shanghai": "2026-11-12T15:33:35+08:00",
+      "conservative_GPU_hours": 0.22333333333333333,
+      "completed_episodes_preserved": 96,
+      "reason": "Archive watcher matched transient directory; complete-bank checkpoint"
     },
     {
       "objective": "dit",
@@ -27,7 +50,11 @@
       "shared_memory_GiB": 32,
       "maximum_minutes": 450,
       "automatic_retries": false,
-      "status": "submitted; initial GPU probe observed"
+      "status": "terminal; checkpoint preserved",
+      "released_shanghai": "2026-11-12T15:34:09+08:00",
+      "conservative_GPU_hours": 0.21888888888888888,
+      "completed_episodes_preserved": 96,
+      "reason": "Archive watcher matched transient directory; complete-bank checkpoint"
     },
     {
       "objective": "ic_iql",
@@ -39,21 +66,61 @@
       "shared_memory_GiB": 32,
       "maximum_minutes": 450,
       "automatic_retries": false,
-      "status": "submitted; initial GPU probe observed"
+      "status": "terminal; checkpoint preserved",
+      "released_shanghai": "2026-11-12T15:40:46+08:00",
+      "conservative_GPU_hours": 0.3113888888888889,
+      "completed_episodes_preserved": 96,
+      "reason": "Archive watcher matched transient directory; complete-bank checkpoint"
     }
   ],
-  "CPU_watcher": {
-    "host": "Baige development dv-0d0ac1c839",
-    "pid": 32725,
-    "archive_write_readback": true,
-    "heartbeat_observed": true
-  },
-  "validation": {
-    "Linux_static_parse": true,
-    "shell_syntax": true,
-    "READOUT_scientific_body_byte_identical_after_owned_path_substitution": true,
-    "all_eight_candidate_checksums_verified": true
-  },
-  "verified_completed_new_episodes": 0,
-  "next_action": "Verify first complete native banks and independent audit/archive before relying on progress; monitor every20 minutes."
+  "archive_failure": "A transient bank-000.verified-hot-copy matched the broad watcher glob; corrected to canonical bank-NNN names",
+  "resume_runner_commit": "78bc51685149029ccfb04973468d63dd05aab552",
+  "jobs_attempt02": [
+    {
+      "objective": "dpt",
+      "job_id": "job-za6h10tp9lvc",
+      "created_shanghai": "2026-11-12T15:47:26+08:00",
+      "GPUs": 1,
+      "CPUs": 32,
+      "RAM_GiB": 192,
+      "shared_memory_GiB": 32,
+      "maximum_minutes": 420,
+      "automatic_retries": false,
+      "status": "running; GPU probe passed and bank016 completed",
+      "completed_episodes_at_check": 144
+    },
+    {
+      "objective": "dit",
+      "job_id": "job-rnaf1x56dbdb",
+      "created_shanghai": "2026-11-12T15:48:08+08:00",
+      "GPUs": 1,
+      "CPUs": 32,
+      "RAM_GiB": 192,
+      "shared_memory_GiB": 32,
+      "maximum_minutes": 420,
+      "automatic_retries": false,
+      "status": "running; GPU probe passed and bank016 completed",
+      "completed_episodes_at_check": 144
+    },
+    {
+      "objective": "ic_iql",
+      "job_id": "job-jfusjiri56gq",
+      "created_shanghai": "2026-11-12T15:49:14+08:00",
+      "GPUs": 1,
+      "CPUs": 32,
+      "RAM_GiB": 192,
+      "shared_memory_GiB": 32,
+      "maximum_minutes": 420,
+      "automatic_retries": false,
+      "status": "running; GPU probe passed and bank016 completed",
+      "completed_episodes_at_check": 144
+    }
+  ],
+  "CPU_analysis_waiter": {
+    "pid": 45170,
+    "code_commit": "96c701cb131aea9d981c9a43dbab6fcb25819a4c",
+    "trigger": "monitor/COMPLETE.json; all six new summaries independently audited and archived",
+    "GPU": false,
+    "alive_verified": true
+  }
 }

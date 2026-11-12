@@ -1,5 +1,5 @@
 {
-  "checked_shanghai": "2026-11-12T15:16:00+08:00",
+  "checked_shanghai": "2026-11-12T15:57:00+08:00",
   "teacher_attempts": [
     {
       "checked_shanghai": "2026-11-12T14:59:00+08:00",
@@ -62,5 +62,15 @@
     "new_episodes": 9000,
     "run": "robocasa-kv-comparison-20261112-r1"
   },
-  "next_action": "Deploy and start the approved KV readout; hold teachers until their storage reservation is available."
+  "next_action": "Hold additional teachers while the three KV readouts use the shared storage buffer; launch sequentially once the70 GiB teacher reservation fits above the200 GiB floor.",
+  "failed_attempt01_archive": {
+    "cold": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-source-decision-20261112-r1/teachers/OpenCabinet/attempt01.tar",
+    "archive_sha256": "5cbe40ef6a2f91137718125d5f10217af589c72bbe360cde5cac233c339d8d1a",
+    "archive_bytes": 9185372160,
+    "payload_bytes": 9185292906,
+    "full_archive_readback_verified": true,
+    "all_members_and_hot_sources_verified": true,
+    "hot_duplicate_released": true,
+    "full_initial_checkpoint_recoverable": true
+  }
 }
