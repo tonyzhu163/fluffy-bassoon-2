@@ -1,5 +1,5 @@
 {
-  "checked_shanghai": "2026-11-12T22:15:00+08:00",
+  "checked_shanghai": "2026-11-12T22:47:00+08:00",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
   "runner_commit": "33753388a773f63efb5f07916d57c0d3a698290a",
@@ -24,8 +24,8 @@
     "READOUT_scientific_body_byte_identical_after_owned_path_substitution": true,
     "all_eight_candidate_checksums_verified": true
   },
-  "verified_completed_new_episodes": 7680,
-  "next_action": "Monitor IC-IQL resumed panel and queued DIT/DPT; next22:35 Shanghai. All completed published banks retained; only unpublished predetermined cases rerun.",
+  "verified_completed_new_episodes": 7968,
+  "next_action": "Monitor at23:07 Shanghai. DIT and IC-IQL healthy and advancing; DPT and Cabinet remain queued. Inspect actual allocated pod identity, not only indexed scheduler rows.",
   "jobs_attempt01": [
     {
       "objective": "dpt",
@@ -234,13 +234,13 @@
       "shared_memory_GiB": 32,
       "maximum_minutes": 90,
       "automatic_retries": false,
-      "status": "Running; actual GPU probe passed",
-      "attempt": "attempt05"
+      "status": "Running; fresh archive heartbeat, no errors",
+      "attempt": "attempt05",
+      "completed_episodes_at_check": 2640
     },
     {
       "objective": "dit",
-      "job_id": "job-mqmhmhda3zjb",
-      "created_shanghai": "2026-11-12T22:10:53+08:00",
+      "job_id": "job-bpuakt232nhd",
       "source_commit": "0a7f192bff75080c79e37183cbe98a288fb7d42c",
       "GPUs": 1,
       "CPUs": 32,
@@ -248,8 +248,11 @@
       "shared_memory_GiB": 32,
       "maximum_minutes": 90,
       "automatic_retries": false,
-      "status": "Queued",
-      "attempt": "attempt05"
+      "status": "Running; actual GPU probe and fresh archive heartbeat verified",
+      "attempt": "attempt05",
+      "completed_episodes_at_check": 2640,
+      "gpu_probe_created_at_utc": "2026-11-12T14:29:09.227768+00:00",
+      "scheduler_index_note": "GPU-PROBE identifies active job-bpuakt232nhd; direct job UI resolves the same DIT name but its indexed detail is unavailable. This may be the initial submit that did not appear in the list. Known second submit job-mqmhmhda3zjb remained queued and was stopped at22:45:01 before execution. Only one active DIT writer observed."
     },
     {
       "objective": "dpt",
@@ -263,7 +266,8 @@
       "maximum_minutes": 60,
       "automatic_retries": false,
       "status": "Queued",
-      "attempt": "attempt05"
+      "attempt": "attempt05",
+      "completed_episodes_at_check": 2688
     }
   ],
   "archive_monitor_fix": {
@@ -286,5 +290,15 @@
     "replaced_waiter": 55562,
     "status": "alive verified21:20; awaiting all six complete audited groups",
     "metadata_root": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata"
+  },
+  "stopped_duplicate": {
+    "job_id": "job-mqmhmhda3zjb",
+    "stopped_shanghai": "2026-11-12T22:45:01+08:00",
+    "status": "ManualTermination",
+    "before_stop": "Queued pod, no allocated Host IP, scheduler runtime --",
+    "command_verified": "0a7f192b dit attempt05 90",
+    "reason": "Actual job-bpuakt232nhd already running same method/attempt; prevent duplicate allocation",
+    "GPU_hours": 0,
+    "accounting": "Pending time is not allocated GPU time. The existing1.5GPUh DIT reserve applies to the active pod."
   }
 }
