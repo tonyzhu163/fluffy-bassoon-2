@@ -79,8 +79,11 @@ def main():
                                  for step in raw['history_controls']]
             example = dict(format='teacher_evidence_pair_v1',seed=seed,query=q,context=context,
                 delivered_action_mask=[True]*5+[False]*45,
-                teacher_targets=dict(preferences=row['preferences'],delta_teacher=row['delta_teacher']),
-                future_outcome_labels=dict(success=row['success'],final=row['final'],native_return=row['returns']),
+                teacher_targets=dict(preferences={condition:{k:v for k,v in values.items()
+                    if k in ('choices','abstentions','invalid','p_candidate1')}
+                    for condition,values in row['preferences'].items()},delta_teacher=row['delta_teacher']),
+                future_outcome_labels=dict(success=row['success'],final=row['final'],native_return=row['returns'],
+                                          success_before_query=row['success_before_query']),
                 success_contrast_available=row['success'][0] != row['success'][1],
                 note='Outcome labels and teacher targets are offline supervision, never support inputs.')
             stream.write(json.dumps(example,allow_nan=False)+'\n')

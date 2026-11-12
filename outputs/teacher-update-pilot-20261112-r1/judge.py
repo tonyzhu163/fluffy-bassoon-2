@@ -76,6 +76,7 @@ def prepare(data, output):
                         'when the observations do not justify a preference. Do not invent hidden object geometry. '
                         'Arm commands are normalized delta control in the robot base frame, with the listed controller '
                         'output scales, NOT absolute Cartesian positions. Gripper_close >=0.5 means close and '
+                        'quaternion state fields use xyzw order. '
                         'base_mode >=0.5 selects the native base mode. All other commands follow native Human300 '
                         'conventions. The first image is the CURRENT left/wrist/right camera triptych. Any following '
                         'images are the explicitly described chronological history, also left/wrist/right. '
