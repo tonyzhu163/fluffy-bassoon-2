@@ -134,12 +134,17 @@ def watcher(local, done, errors):
                 if not errors and not (p.parent / 'PACKED-ARCHIVE.json').exists() and p.parent not in pending:
                     pending[p.parent] = pool.submit(archive, p.parent, local, module.audit_result)
             hot = 0
-            for p in local.rglob('*'):
-                try:
-                    if p.is_file():
-                        hot += p.stat().st_size
-                except FileNotFoundError:
-                    pass
+            # Verified archive stageback directories disappear concurrently.
+            # Unlike pathlib.rglob, os.walk handles that traversal race.
+            def scan_error(error):
+                if not isinstance(error, FileNotFoundError):
+                    raise error
+            for directory, _, names in os.walk(local, onerror=scan_error):
+                for name in names:
+                    try:
+                        hot += (Path(directory) / name).stat().st_size
+                    except FileNotFoundError:
+                        pass
             state = dict(checked_unix=time.time(), packed_archive_enabled=not errors,
                 current_hot_bytes=hot, pending_archives=len(pending), errors=errors,
                 local_free_bytes=shutil.disk_usage(local).free, published_banks=sum((p.parent/'PACKED-ARCHIVE.json').exists() for p in banks))
