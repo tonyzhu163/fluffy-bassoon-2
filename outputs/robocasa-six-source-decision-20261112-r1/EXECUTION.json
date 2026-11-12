@@ -1,5 +1,5 @@
 {
-  "checked_shanghai": "2026-11-12T18:36:00+08:00",
+  "checked_shanghai": "2026-11-12T18:59:00+08:00",
   "teacher_attempts": [
     {
       "checked_shanghai": "2026-11-12T14:59:00+08:00",
@@ -61,7 +61,7 @@
       "attempt": "attempt03",
       "source_commit": "66702f928693fb3435f88ed57b6fe209d633c316",
       "created_shanghai": "2026-11-12T18:07:48+08:00",
-      "scheduler_status": "Running",
+      "scheduler_status": "Succeeded",
       "GPUs": 8,
       "CPUs": 64,
       "RAM_GiB": 1024,
@@ -83,16 +83,85 @@
       },
       "gpu_probe_status": "passed",
       "actual_GPU_count": 8,
-      "completed_training_iterations": 5,
+      "completed_training_iterations": 8,
       "before_evaluation": {
         "completed": true,
         "success_once": 0.59375,
         "successes": 38,
         "episodes": 64
       },
-      "final_archive_verified": false,
+      "final_archive_verified": true,
       "storage_checked_shanghai": "2026-11-12T18:36:00+08:00",
-      "current_local_free_GiB": 596.3
+      "current_local_free_GiB": 596.3,
+      "released_shanghai": "2026-11-12T18:53:17+08:00",
+      "conservative_GPU_hours": 6.064444444444445,
+      "archive_bytes": 54932142080,
+      "complete_checkpoint_steps": [
+        0,
+        1,
+        5,
+        8
+      ],
+      "checkpoint_exit": true,
+      "worker_exit_code": 0
+    },
+    {
+      "cluster": "Baige Pro6K",
+      "task": "SlideDishwasherRack",
+      "job_id": "job-bfolcexlrxg4",
+      "attempt": "attempt01",
+      "source_commit": "45873f14c458e3201512d4871a05918fe4236bef",
+      "created_shanghai": "2026-11-12T18:57:57+08:00",
+      "scheduler_status": "Running; device probe pending",
+      "GPUs": 8,
+      "CPUs": 64,
+      "RAM_GiB": 1024,
+      "shared_memory_GiB": 32,
+      "maximum_job_minutes": 75,
+      "reserved_GPU_hours": 10,
+      "automatic_retries": false,
+      "checkpoint_request_seconds": 3000,
+      "phase_deadline_seconds": 3600,
+      "process_timeout_seconds": 3700,
+      "storage": "Local scratch and private BOS verified archive",
+      "archive_root": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-source-decision-20261112-r1/local01/teachers/SlideDishwasherRack/attempt01",
+      "validation": {
+        "Linux_clean_commit_verified": true,
+        "Linux_AST_parse": true,
+        "shell_syntax": true,
+        "CLI_help": true,
+        "core_learner_unchanged": true,
+        "BOS_archive_CPU_fixture_previously_verified": true
+      }
+    },
+    {
+      "cluster": "Baige Pro6K",
+      "task": "PickPlaceCounterToStove",
+      "job_id": "job-urfsyavct1do",
+      "attempt": "attempt01",
+      "source_commit": "45873f14c458e3201512d4871a05918fe4236bef",
+      "created_shanghai": "2026-11-12T18:58:53+08:00",
+      "scheduler_status": "Queued",
+      "GPUs": 8,
+      "CPUs": 64,
+      "RAM_GiB": 1024,
+      "shared_memory_GiB": 32,
+      "maximum_job_minutes": 75,
+      "reserved_GPU_hours": 10,
+      "automatic_retries": false,
+      "checkpoint_request_seconds": 3000,
+      "phase_deadline_seconds": 3600,
+      "process_timeout_seconds": 3700,
+      "storage": "Local scratch and private BOS verified archive",
+      "archive_root": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-source-decision-20261112-r1/local01/teachers/PickPlaceCounterToStove/attempt01",
+      "validation": {
+        "Linux_clean_commit_verified": true,
+        "Linux_AST_parse": true,
+        "shell_syntax": true,
+        "CLI_help": true,
+        "core_learner_unchanged": true,
+        "BOS_archive_CPU_fixture_previously_verified": true
+      }
     }
   ],
   "total_failed_teacher_conservative_GPU_hours": 0.9066666666666666,
@@ -102,7 +171,7 @@
     "new_episodes": 9000,
     "run": "robocasa-kv-comparison-20261112-r1"
   },
-  "next_action": "Observe bounded checkpoint and verify full local output archive before release; next check18:56 Shanghai. Reconcile actual usage before Rack/CounterToStove; KV evaluations continue.",
+  "next_action": "Run Rack and CounterToStove with qualified50-minute checkpoint window and75-minute allocation ceiling; continue matched KV comparison. Cabinet eight-iteration checkpoint retained; no after-evaluation yet.",
   "failed_attempt01_archive": {
     "cold": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-source-decision-20261112-r1/teachers/OpenCabinet/attempt01.tar",
     "archive_sha256": "5cbe40ef6a2f91137718125d5f10217af589c72bbe360cde5cac233c339d8d1a",
@@ -112,5 +181,6 @@
     "all_members_and_hot_sources_verified": true,
     "hot_duplicate_released": true,
     "full_initial_checkpoint_recoverable": true
-  }
+  },
+  "all_new_committed_upper_bound_GPU_hours": 48.87527777777778
 }
