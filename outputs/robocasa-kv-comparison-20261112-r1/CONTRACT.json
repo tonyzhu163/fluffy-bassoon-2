@@ -1,0 +1,48 @@
+{
+  "user_approval": "Raise the old cap to 170; finish the comparison",
+  "approved_date_shanghai": "2026-11-12",
+  "approved_historical_cap_GPU_hours": 170,
+  "historical_recorded_GPU_hours_before_Nov9": 140.416111,
+  "Nov9_conservative_maximum_GPU_hours": 3,
+  "historical_conservative_upper_bound_GPU_hours": 143.416111,
+  "reserved_evaluation_GPU_hours": 22.5,
+  "maximum_each_allocation_GPU_hours": 7.5,
+  "new_teacher_reserved_GPU_hours": 24,
+  "new_teacher_failed_GPU_hours": 0.906667,
+  "all_new_work_reserved_GPU_hours": 47.406667,
+  "objectives": [
+    "dpt",
+    "dit",
+    "ic_iql"
+  ],
+  "reference": "Completed AD KV readout from robocasa-three-task-kv-velocity-meta-20261105-r1",
+  "interface": "kv_bridge",
+  "ID_tasks": [
+    "OpenDrawer",
+    "CloseToasterOvenDoor",
+    "CoffeeSetupMug"
+  ],
+  "OOD_tasks": [
+    "CloseFridge",
+    "TurnOnMicrowave"
+  ],
+  "cases_per_task": 50,
+  "actual_episodes_per_case": 6,
+  "memory_modes": [
+    "full",
+    "episode"
+  ],
+  "new_episodes": 9000,
+  "scientific_runtime_commit": "87984718c9199797d31a158c47225cc695623afe",
+  "RLinf_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+  "original_READOUT_sha256": "612f4bfb185d84d3e974742b949914e64f6e95804d96e5c11ec5a8bbca587507",
+  "operational_changes": [
+    "New immutable output and archive identity; new CPU watcher heartbeat path",
+    "Same independently audited packed-wave archive protocol, with 200 GiB shared floor plus packing space",
+    "Fresh latest-main launcher; original scientific runtime and validated selected candidates remain pinned",
+    "One GPU per model with 450 minute scheduler limit; no automatic retry"
+  ],
+  "scientific_changes": [],
+  "new_fit_or_model_selection": false,
+  "other_velocity_evaluations": "Velocity DPT, DIT and IC-IQL remain outside this approved 9000 episode readout"
+}

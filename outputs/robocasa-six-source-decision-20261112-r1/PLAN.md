@@ -21,10 +21,10 @@ using the saved models, original cases and original full/reset conditions.
 No refitting is needed to answer that first question. Offline losses alone
 are not the requested robot results.
 
-The historical cap is retained. Its recorded 140.416111 GPU-hours exclude
-later November 9 pilot costs, which must be reconciled before another
-allocation is charged to it. Do not silently extend this capped campaign.
-Prepare a priced full readout if the remaining allowance cannot cover it.
+The user explicitly raised the historical cap to 170 GPU-hours on November 12
+and approved finishing the comparison. The saved KV DPT, DIT and IC-IQL
+readout reserves 22.5 GPU-hours for 9,000 episodes. See the new immutable
+[readout contract](../robocasa-kv-comparison-20261112-r1/CONTRACT.json).
 
 ## Additional source tasks
 
@@ -102,3 +102,10 @@ or a separate output volume. The existing development allocation has an idle
 RTX 4090, 13 CPU cores and 112 GiB memory; it is not an eight-GPU PPO allocation.
 The Pro6K console showed 8/416 free GPUs, 22 queued jobs and 32/32 personal
 GPUs free. These are snapshots, not launch qualification.
+
+Retry attempt02, job-eo7e9iieyr04, created 15:02:05 and failed 15:02:52,
+source7b1e055b, correctly stopped at the 270 GiB storage guard. The first
+failed job retained an 8.6 GiB initial checkpoint; current free space265 GiB.
+No rollout or update ran on attempt02. Additional conservative charge0.104444
+GPU-hours. Prioritize the approved KV evaluation and do not relaunch teachers
+until their storage reservation is available.

@@ -1,40 +1,66 @@
 {
-  "checked_shanghai": "2026-11-12T14:59:00+08:00",
-  "cluster": "Baige Pro6K",
-  "job_id": "job-k7eut34im2s5",
-  "task": "OpenCabinet",
-  "created_shanghai": "2026-11-12T14:49:55+08:00",
-  "source_commit": "84c982ac2f0fe1c2e18d980d3a0dc3d3eb46b430",
-  "scheduler_status": "Failed",
-  "GPUs": 8,
-  "maximum_job_minutes": 60,
-  "reserved_GPU_hours": 8,
-  "completed_training_updates_verified": false,
-  "gpu_probe_status": "passed",
-  "gpu_probe_checked_utc": "2026-11-12T06:50:49.325620+00:00",
-  "actual_accelerator": "NVIDIA RPBZZZ6",
-  "CPU_validation": {
-    "host": "Baige development dv-0d0ac1c839",
-    "code_commit": "52924c77371d6af383eb702607f0067c2012b8a4",
-    "CUDA_visible": false,
-    "test": "tests/test_robocasa_flow_ppo.py",
-    "passed": 29,
-    "warnings": 16,
-    "seconds": 143.89,
-    "three_task_Hydra_resolution_exit_codes": [
-      0,
-      0,
-      0
-    ]
-  },
-  "remaining_teacher_tasks": [
-    "SlideDishwasherRack",
-    "PickPlaceCounterToStove"
+  "checked_shanghai": "2026-11-12T15:16:00+08:00",
+  "teacher_attempts": [
+    {
+      "checked_shanghai": "2026-11-12T14:59:00+08:00",
+      "cluster": "Baige Pro6K",
+      "job_id": "job-k7eut34im2s5",
+      "task": "OpenCabinet",
+      "created_shanghai": "2026-11-12T14:49:55+08:00",
+      "source_commit": "84c982ac2f0fe1c2e18d980d3a0dc3d3eb46b430",
+      "scheduler_status": "Failed",
+      "GPUs": 8,
+      "maximum_job_minutes": 60,
+      "reserved_GPU_hours": 8,
+      "completed_training_updates_verified": false,
+      "gpu_probe_status": "passed",
+      "gpu_probe_checked_utc": "2026-11-12T06:50:49.325620+00:00",
+      "actual_accelerator": "NVIDIA RPBZZZ6",
+      "CPU_validation": {
+        "host": "Baige development dv-0d0ac1c839",
+        "code_commit": "52924c77371d6af383eb702607f0067c2012b8a4",
+        "CUDA_visible": false,
+        "test": "tests/test_robocasa_flow_ppo.py",
+        "passed": 29,
+        "warnings": 16,
+        "seconds": 143.89,
+        "three_task_Hydra_resolution_exit_codes": [
+          0,
+          0,
+          0
+        ]
+      },
+      "remaining_teacher_tasks": [
+        "SlideDishwasherRack",
+        "PickPlaceCounterToStove"
+      ],
+      "next_action": "Retry with explicit source-pin environment binding and fresh output identity after verifying the new Git deployment.",
+      "released_shanghai": "2026-11-12T14:55:56+08:00",
+      "worker_exit_code": 255,
+      "worker_GPU_hours": 0.688889,
+      "conservative_GPU_hours": 0.8022222222222222,
+      "failure": "Launcher omitted TASK_CODE_PIN, required when writing canonical evaluation snapshots. No completed PPO update."
+    },
+    {
+      "cluster": "Baige Pro6K",
+      "job_id": "job-eo7e9iieyr04",
+      "task": "OpenCabinet",
+      "source_commit": "7b1e055b07b5cd924e264fe1738da45753159d53",
+      "created_shanghai": "2026-11-12T15:02:05+08:00",
+      "released_shanghai": "2026-11-12T15:02:52+08:00",
+      "scheduler_status": "Failed",
+      "GPUs": 8,
+      "conservative_GPU_hours": 0.10444444444444445,
+      "failure": "Free PFS265 GiB below270 GiB teacher reservation; stopped before GPU probe or model load",
+      "completed_training_updates_verified": false
+    }
   ],
-  "next_action": "Retry with explicit source-pin environment binding and fresh output identity after verifying the new Git deployment.",
-  "released_shanghai": "2026-11-12T14:55:56+08:00",
-  "worker_exit_code": 255,
-  "worker_GPU_hours": 0.688889,
-  "conservative_GPU_hours": 0.8022222222222222,
-  "failure": "Launcher omitted TASK_CODE_PIN, required when writing canonical evaluation snapshots. No completed PPO update."
+  "total_failed_teacher_conservative_GPU_hours": 0.9066666666666666,
+  "meta_comparison": {
+    "approved_historical_cap_GPU_hours": 170,
+    "reserved_GPU_hours": 22.5,
+    "new_episodes": 9000,
+    "run": "robocasa-kv-comparison-20261112-r1"
+  },
+  "next_action": "Deploy and start the approved KV readout; hold teachers until their storage reservation is available."
 }
