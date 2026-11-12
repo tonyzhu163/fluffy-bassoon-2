@@ -1,0 +1,25 @@
+{
+  "migration": "teacher-local01",
+  "reason": "PFS below shared teacher reservation; verified local/BOS evaluation path available",
+  "learner_settings_changed": false,
+  "source_tasks": [
+    "OpenCabinet",
+    "SlideDishwasherRack",
+    "PickPlaceCounterToStove"
+  ],
+  "initializers_and_seeds_unchanged": true,
+  "storage": "Job-local /tmp output, private existing BOS archive, shared PFS assets/native temporary XML",
+  "operational_checkpoint_request_seconds": 2100,
+  "phase_deadline_seconds": 2700,
+  "process_timeout_seconds": 2800,
+  "allocation_maximum_minutes": 75,
+  "first_teacher_reservation_GPU_hours": 10,
+  "other_two_teachers_provisional_reservation_GPU_hours": 16,
+  "teacher_failed_attempts_GPU_hours": 0.9066666666666666,
+  "KV_readout_committed_GPU_hours": 21.90416666666667,
+  "combined_committed_GPU_hours": 48.810833333333335,
+  "approved_all_new_work_cap_GPU_hours": 50,
+  "subsequent_teacher_limits": "Reconcile actual allocation use before each launch; do not assume three75-minute reservations fit while KV readout18 GPUh is still reserved",
+  "archive": "Full immutable tar, full SHA readback, actual member stageback with original SHA recheck, complete actor and worker-sidecar hashes checked",
+  "validation": "Static parse and shell syntax; Linux deployment and actual allocated native pilot pending"
+}

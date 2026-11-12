@@ -27,7 +27,7 @@ export ROBOCASA_ASSETS_PATH=$TASK_ROOT/setups/robocasa365-native-20261101-r1/ass
 export OPENPI_DATA_HOME=$TASK_ROOT/setups/robocasa365-native-20261101-r1/cache/.cache/openpi
 export ROBOCASA_PI05_TORCH_MODEL=$TASK_ROOT/inputs/robocasa365-public-pi05-c484-torch-20261101-r2
 export ROBOCASA_PI05_NATIVE_NORM=$TASK_ROOT/inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json
-export ROBOCASA_SIM_PPO_OUTPUT=$TASK_ROOT/outputs/$TASK_RUN/teachers/$TASK_NAME/$TASK_ATTEMPT
+export ROBOCASA_SIM_PPO_OUTPUT=${TASK_LOCAL_OUTPUT:-$TASK_ROOT/outputs/$TASK_RUN/teachers/$TASK_NAME/$TASK_ATTEMPT}
 export ROBOCASA_SIM_PPO_ACCOUNTING=$ROBOCASA_SIM_PPO_OUTPUT/accounting
 export ROBOCASA_FLOW_TASK=$TASK_NAME ROBOCASA_FLOW_TRAIN_SEED=$TASK_TRAIN ROBOCASA_FLOW_EVAL_SEED=$TASK_EVAL
 export ROBOCASA_SIM_PPO_ACTOR_PLACEMENT=0-1 ROBOCASA_SIM_PPO_ROLLOUT_PLACEMENT=0-7
@@ -55,7 +55,7 @@ PY
   export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 fi
 TASK_STARTED=$(date +%s)
-export TASK_DEADLINE=$((TASK_STARTED+3300))
+export TASK_DEADLINE=$((TASK_STARTED+${TASK_PHASE_SECONDS:-3300}))
 [[ ! -e $ROBOCASA_SIM_PPO_OUTPUT ]]
 mkdir -p "$ROBOCASA_SIM_PPO_OUTPUT"
 exec > >(tee "$ROBOCASA_SIM_PPO_OUTPUT/console.log") 2>&1
@@ -99,13 +99,13 @@ PY
 (
   while sleep 20; do
     TASK_FREE=$(df -Pk "$ROBOCASA_SIM_PPO_OUTPUT" | awk 'NR==2 {print $4}')
-    if (( TASK_FREE < 230686720 || $(date +%s) >= TASK_STARTED+2700 )); then
+    if (( TASK_FREE < 230686720 || $(date +%s) >= TASK_STARTED+${TASK_CHECKPOINT_SECONDS:-2700} )); then
       touch "$ROBOCASA_SIM_PPO_OUTPUT/CHECKPOINT_AND_EXIT"
       break
     fi
   done
 ) &
 TASK_WATCHER=$!
-timeout --signal=TERM --kill-after=30s 3400 "$TASK_PY" -B \
+timeout --signal=TERM --kill-after=30s "${TASK_PROCESS_SECONDS:-3400}" "$TASK_PY" -B \
   "$TASK_CODE/benchmarks/robocasa/train_flow_ppo.py" \
   --config-name robocasa365_pi05_flow_sde_ppo_reuse4
