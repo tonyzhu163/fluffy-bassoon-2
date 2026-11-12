@@ -1,0 +1,23 @@
+{
+  "pid": 55562,
+  "command": [
+    "/mowenjie/fluffy-bassoon-2/setups/steering-plot-20261105-r1/env/bin/python",
+    "-B",
+    "/mowenjie/fluffy-bassoon-2/setups/robocasa-kv-comparison-20261112-r1/analysis/outputs/robocasa-kv-comparison-20261112-r1/COMPARE.py",
+    "--old",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1",
+    "--new",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-kv-comparison-20261112-r1",
+    "--output",
+    "/mowenjie/fluffy-bassoon-2/outputs/robocasa-kv-comparison-20261112-r1/analysis-final-01"
+  ],
+  "trigger": "monitor/COMPLETE.json",
+  "GPU": false,
+  "code_commit": null,
+  "replaces_pid": 45170,
+  "reason": "Use existing isolated plotting environment; no simulator environment changes",
+  "started_unix": 1794470497.6294646,
+  "numpy": "2.5.4",
+  "matplotlib": "3.11.2",
+  "plot_smoke_passed": true
+}

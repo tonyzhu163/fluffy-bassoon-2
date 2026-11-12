@@ -1,5 +1,5 @@
 {
-  "checked_shanghai": "2026-11-12T15:57:00+08:00",
+  "checked_shanghai": "2026-11-12T16:17:16+08:00",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
   "runner_commit": "33753388a773f63efb5f07916d57c0d3a698290a",
@@ -10,9 +10,9 @@
     "archive_write_readback": true,
     "heartbeat_observed": true,
     "attempt": 2,
-    "last_healthy_shanghai": "2026-11-12T15:57:00+08:00",
-    "completed_archives": 6,
-    "pending_archives": 2,
+    "last_healthy_shanghai": "2026-11-12T16:17:16+08:00",
+    "completed_archives": 19,
+    "pending_archives": 1,
     "failures": {}
   },
   "validation": {
@@ -21,8 +21,8 @@
     "READOUT_scientific_body_byte_identical_after_owned_path_substitution": true,
     "all_eight_candidate_checksums_verified": true
   },
-  "verified_completed_new_episodes": 432,
-  "next_action": "Next check16:17 Shanghai: confirm advancing banks, independent audit/archive, storage and terminal status.",
+  "verified_completed_new_episodes": 900,
+  "next_action": "Next check16:37 Shanghai: advancing batches, independent archive audit and storage.",
   "jobs_attempt01": [
     {
       "objective": "dpt",
@@ -86,8 +86,8 @@
       "shared_memory_GiB": 32,
       "maximum_minutes": 420,
       "automatic_retries": false,
-      "status": "running; GPU probe passed and bank016 completed",
-      "completed_episodes_at_check": 144
+      "status": "running; seven full-history Drawer banks complete",
+      "completed_episodes_at_check": 300
     },
     {
       "objective": "dit",
@@ -99,8 +99,8 @@
       "shared_memory_GiB": 32,
       "maximum_minutes": 420,
       "automatic_retries": false,
-      "status": "running; GPU probe passed and bank016 completed",
-      "completed_episodes_at_check": 144
+      "status": "running; seven full-history Drawer banks complete",
+      "completed_episodes_at_check": 300
     },
     {
       "objective": "ic_iql",
@@ -112,15 +112,21 @@
       "shared_memory_GiB": 32,
       "maximum_minutes": 420,
       "automatic_retries": false,
-      "status": "running; GPU probe passed and bank016 completed",
-      "completed_episodes_at_check": 144
+      "status": "running; seven full-history Drawer banks complete",
+      "completed_episodes_at_check": 300
     }
   ],
   "CPU_analysis_waiter": {
-    "pid": 45170,
+    "pid": 55562,
     "code_commit": "96c701cb131aea9d981c9a43dbab6fcb25819a4c",
     "trigger": "monitor/COMPLETE.json; all six new summaries independently audited and archived",
     "GPU": false,
-    "alive_verified": true
+    "alive_verified": true,
+    "python": "/mowenjie/fluffy-bassoon-2/setups/steering-plot-20261105-r1/env/bin/python",
+    "numpy": "2.5.4",
+    "matplotlib": "3.11.2",
+    "AD_reference_numerical_qualification_passed": true,
+    "plot_smoke_passed": true,
+    "replaced_waiter": 45170
   }
 }
