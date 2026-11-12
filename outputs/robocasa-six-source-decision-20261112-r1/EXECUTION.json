@@ -1,5 +1,5 @@
 {
-  "checked_shanghai": "2026-11-12T15:57:00+08:00",
+  "checked_shanghai": "2026-11-12T18:08:00+08:00",
   "teacher_attempts": [
     {
       "checked_shanghai": "2026-11-12T14:59:00+08:00",
@@ -53,6 +53,34 @@
       "conservative_GPU_hours": 0.10444444444444445,
       "failure": "Free PFS265 GiB below270 GiB teacher reservation; stopped before GPU probe or model load",
       "completed_training_updates_verified": false
+    },
+    {
+      "cluster": "Baige Pro6K",
+      "job_id": "job-a0wcjm3i2pyt",
+      "task": "OpenCabinet",
+      "attempt": "attempt03",
+      "source_commit": "66702f928693fb3435f88ed57b6fe209d633c316",
+      "created_shanghai": "2026-11-12T18:07:48+08:00",
+      "scheduler_status": "Running",
+      "GPUs": 8,
+      "CPUs": 64,
+      "RAM_GiB": 1024,
+      "shared_memory_GiB": 32,
+      "maximum_job_minutes": 75,
+      "reserved_GPU_hours": 10,
+      "automatic_retries": false,
+      "completed_training_updates_verified": false,
+      "storage": "Local scratch and existing private BOS verified archive",
+      "archive_root": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-source-decision-20261112-r1/local01/teachers/OpenCabinet/attempt03",
+      "validation": {
+        "Linux_clean_commit_verified": true,
+        "Linux_static_parse": true,
+        "shell_syntax": true,
+        "BOS_archive_CPU_fixture_verified": true,
+        "fixture_members": 4,
+        "fixture_bytes": 340343,
+        "core_learner_diff_since_qualified_source": false
+      }
     }
   ],
   "total_failed_teacher_conservative_GPU_hours": 0.9066666666666666,
@@ -62,7 +90,7 @@
     "new_episodes": 9000,
     "run": "robocasa-kv-comparison-20261112-r1"
   },
-  "next_action": "Hold additional teachers while the three KV readouts use the shared storage buffer; launch sequentially once the70 GiB teacher reservation fits above the200 GiB floor.",
+  "next_action": "Verify actual8-GPU probe and advancing PPO update; preserve full local output in BOS before release. Reconcile actual use before Rack/CounterToStove; KV evaluations continue.",
   "failed_attempt01_archive": {
     "cold": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-source-decision-20261112-r1/teachers/OpenCabinet/attempt01.tar",
     "archive_sha256": "5cbe40ef6a2f91137718125d5f10217af589c72bbe360cde5cac233c339d8d1a",
