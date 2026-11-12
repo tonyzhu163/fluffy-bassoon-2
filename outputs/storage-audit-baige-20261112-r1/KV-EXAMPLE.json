@@ -1,0 +1,90 @@
+{
+  "path": "/mowenjie/fluffy-bassoon/cache/libero-original-27e6ec3c",
+  "shard": "/mowenjie/fluffy-bassoon/cache/libero-original-27e6ec3c/shards/000000.safetensors",
+  "shard_bytes": 335907344,
+  "fields": {
+    "index": {
+      "dtype": "I64",
+      "shape": [
+        512
+      ],
+      "data_offsets": [
+        0,
+        4096
+      ]
+    },
+    "action": {
+      "dtype": "F32",
+      "shape": [
+        512,
+        7
+      ],
+      "data_offsets": [
+        4096,
+        18432
+      ]
+    },
+    "observation.state": {
+      "dtype": "F32",
+      "shape": [
+        512,
+        8
+      ],
+      "data_offsets": [
+        18432,
+        34816
+      ]
+    },
+    "observation.cached_keys": {
+      "dtype": "BF16",
+      "shape": [
+        512,
+        1,
+        640,
+        256
+      ],
+      "data_offsets": [
+        34816,
+        167806976
+      ]
+    },
+    "observation.cached_values": {
+      "dtype": "BF16",
+      "shape": [
+        512,
+        1,
+        640,
+        256
+      ],
+      "data_offsets": [
+        167806976,
+        335579136
+      ]
+    },
+    "observation.cached_valid": {
+      "dtype": "BOOL",
+      "shape": [
+        512,
+        640
+      ],
+      "data_offsets": [
+        335579136,
+        335906816
+      ]
+    }
+  },
+  "manifest": {
+    "state": "complete",
+    "feature_kind": "final_layer_native_kv",
+    "context_tokens": 640,
+    "total_frames": 273465,
+    "cache_sha256": "27e6ec3c15430f275ca9709e5fe00a185e2c5e37833a27f4f983db4d934f952f",
+    "source_commit": "3c587ce3bdeb0629fcb0f5218e47a78371b8e665"
+  },
+  "checksum_record": {
+    "state": "complete_and_checksum_verified",
+    "bytes": 191116165757,
+    "records_checked": 543,
+    "checked_at": "2026-11-11T06:29:27.955905+00:00"
+  }
+}
