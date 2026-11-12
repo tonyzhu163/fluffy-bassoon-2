@@ -41,7 +41,18 @@ export ROBOCASA_FLOW_MAX_ACTIONS=1100000
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl NCCL_P2P_DISABLE=1 FLUFFY_GPU_EXECUTION=baige
 export OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false
 export PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1 WANDB_MODE=disabled
-# Scheduler GPU visibility is inherited unchanged and independently verified.
+# Preserve any scheduler CUDA mask. Some Baige images supply only NVIDIA UUIDs;
+# use container ordinals only after proving that its entire inventory is assigned.
+if [[ ${CUDA_VISIBLE_DEVICES+x} != x ]]; then
+  "$TASK_PY" -B - <<'PY'
+import os,subprocess
+assigned=os.environ['NVIDIA_VISIBLE_DEVICES'].split(',')
+visible=subprocess.check_output(['nvidia-smi','--query-gpu=uuid','--format=csv,noheader'],text=True).splitlines()
+assert len(assigned)==len(set(assigned))==len(visible)==8
+assert all(x.startswith('GPU-') for x in assigned) and set(assigned)==set(visible)
+PY
+  export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+fi
 TASK_STARTED=$(date +%s)
 export TASK_DEADLINE=$((TASK_STARTED+3300))
 [[ ! -e $ROBOCASA_SIM_PPO_OUTPUT ]]
