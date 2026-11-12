@@ -61,7 +61,32 @@ def main():
     assert keys == {(s,q,rep,c) for s in range(120700,120704) for q in (100,250)
                     for rep in range(3) for c in ('minus','plus','donor')}
     image_checks = 0
+    context_signatures = {}
+    usage_tokens = {'input_tokens':0,'cached_input_tokens':0,'output_tokens':0}
+    item_types = set()
     for r in calls:
+        record_dir = args.run/'teacher-records'/f"astra-{r['seed']}"/(
+            f"{r['seed']}-{r['query']}-r{r['repetition']}-{r['condition']}")
+        assert sha(record_dir/'prompt.txt') == r['prompt_sha256']
+        context = json.loads((record_dir/'prompt.txt').read_text().split('\n\n',1)[1])
+        assert set(context) == {'task','current_control','control_budget','current_state','state_order',
+                               'candidate_commands','action_order','controller','history'}
+        history = context.pop('history')
+        if r['condition']=='minus':
+            assert isinstance(history,str) and 'unavailable' in history
+        else:
+            assert set(history) == {'relationship','task','image_controls','state_controls','states','command_start','commands'}
+            assert len(history['commands'])==50 and len(history['states'])==51
+            assert max(history['image_controls'])==r['query']
+            assert history['command_start']==r['query']-50
+        context_signatures[(r['seed'],r['query'],r['repetition'],r['condition'])] = json.dumps(context,sort_keys=True)
+        for line in (record_dir/'events.jsonl').read_text().splitlines():
+            entry = json.loads(line)
+            if 'item' in entry:
+                item_types.add(entry['item']['type'])
+            if entry.get('type')=='turn.completed':
+                for key_name in usage_tokens:
+                    usage_tokens[key_name] += entry.get('usage',{}).get(key_name,0)
         assert sha(panel/str(r['seed'])/f"query-{r['query']}.json") == r['source_query_sha256']
         assert len(r['images']) == (1 if r['condition']=='minus' else 7)
         for item in r['images']:
@@ -75,6 +100,8 @@ def main():
                 group = [r for r in calls if (r['seed'],r['query'],r['repetition']) == (s,q,rep)]
                 assert len({tuple(r['order']) for r in group})==1
                 assert len({r['images'][0]['sha256'] for r in group})==1
+                assert len({context_signatures[(s,q,rep,r['condition'])] for r in group})==1
+    assert item_types <= {'agent_message','reasoning'}, item_types
     usage = {}
     for name in ('native01','native02','native03','render-gc01','native04','native05'):
         record = read(args.run/name/'exit.json')
@@ -90,6 +117,8 @@ def main():
         prefix_state_comparisons=prefix_checks,delivered_candidate_prefixes_verified=16,
         unique_teacher_calls=72,teacher_image_hash_checks=image_checks,
         matched_query_and_candidate_order_triples=24,unqualified_initial_resets_in_panel_run=1,
+        public_only_prompts_verified=72,external_teacher_tool_calls=0,
+        teacher_item_types=sorted(item_types),teacher_tokens=usage_tokens,
         worker_runs=usage,total_worker_gpu_hours=sum(x['worker_gpu_hours'] for x in usage.values()),
         conservative_reservation_gpu_hours=(max(x['ended'] for x in usage.values())-min(x['started'] for x in usage.values()))/3600,
         teacher_summary_sha256=sha(args.judgments))
