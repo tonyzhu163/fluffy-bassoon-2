@@ -1,5 +1,5 @@
 {
-  "checked_shanghai": "2026-11-12T18:18:00+08:00",
+  "checked_shanghai": "2026-11-12T18:36:00+08:00",
   "teacher_attempts": [
     {
       "checked_shanghai": "2026-11-12T14:59:00+08:00",
@@ -83,15 +83,16 @@
       },
       "gpu_probe_status": "passed",
       "actual_GPU_count": 8,
-      "completed_training_iterations": 1,
+      "completed_training_iterations": 5,
       "before_evaluation": {
         "completed": true,
         "success_once": 0.59375,
         "successes": 38,
         "episodes": 64
       },
-      "current_local_free_bytes": 659508998144,
-      "final_archive_verified": false
+      "final_archive_verified": false,
+      "storage_checked_shanghai": "2026-11-12T18:36:00+08:00",
+      "current_local_free_GiB": 596.3
     }
   ],
   "total_failed_teacher_conservative_GPU_hours": 0.9066666666666666,
@@ -101,7 +102,7 @@
     "new_episodes": 9000,
     "run": "robocasa-kv-comparison-20261112-r1"
   },
-  "next_action": "Verify actual8-GPU probe and advancing PPO update; preserve full local output in BOS before release. Reconcile actual use before Rack/CounterToStove; KV evaluations continue.",
+  "next_action": "Observe bounded checkpoint and verify full local output archive before release; next check18:56 Shanghai. Reconcile actual usage before Rack/CounterToStove; KV evaluations continue.",
   "failed_attempt01_archive": {
     "cold": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-source-decision-20261112-r1/teachers/OpenCabinet/attempt01.tar",
     "archive_sha256": "5cbe40ef6a2f91137718125d5f10217af589c72bbe360cde5cac233c339d8d1a",
