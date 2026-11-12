@@ -47,10 +47,10 @@
   "historical_actual_before_current_readout_GPU_hours": 140.9588887777778,
   "approved_cap_GPU_hours": 170,
   "current_readout_reserved_GPU_hours": 22.5,
-  "historical_committed_upper_bound_GPU_hours": 162.02194433333335,
+  "historical_committed_upper_bound_GPU_hours": 162.12916655555557,
   "new_teacher_failures_GPU_hours": 0.9066666666666666,
   "new_teacher_reservation_GPU_hours": 6,
-  "all_new_work_maximum_committed_GPU_hours": 48.727500000000006,
+  "all_new_work_maximum_committed_GPU_hours": 48.834722222222226,
   "first_readout_attempts": [
     {
       "objective": "dpt",
@@ -85,7 +85,7 @@
   ],
   "first_readout_attempts_GPU_hours": 0.753611111111111,
   "resume_reservation_GPU_hours": 4,
-  "readout_committed_GPU_hours": 21.063055555555557,
+  "readout_committed_GPU_hours": 21.17027777777778,
   "second_readout_attempts": [
     {
       "objective": "dpt",
@@ -207,5 +207,29 @@
       "archive_verified": true
     }
   ],
-  "queued_job_accounting": "New queued jobs reserve their hard runtime xGPU count. Queue wait consumes no allocated GPU-hours; terminal actuals use allocation start through release. Historical creation-to-terminal charges remain conservative."
+  "queued_job_accounting": "New queued jobs reserve their hard runtime xGPU count. Queue wait consumes no allocated GPU-hours; terminal actuals use allocation start through release. Historical creation-to-terminal charges remain conservative.",
+  "final_readout_attempt": {
+    "objective": "ic_iql",
+    "job_id": "job-xmiufi23utlu",
+    "created_shanghai": "2026-11-13T04:57:35+08:00",
+    "running_shanghai": "2026-11-13T04:57:51+08:00",
+    "released_shanghai": "2026-11-13T05:04:01+08:00",
+    "status": "Succeeded",
+    "source_commit": "669f6c905cdacc4bfe4e3eb650715e03d625d77b",
+    "GPUs": 1,
+    "maximum_minutes": 30,
+    "automatic_retries": false,
+    "gpu_probe_status": "passed",
+    "worker_exit_code": 0,
+    "additional_episodes": 12,
+    "total_method_episodes": 3000,
+    "total_method_banks": 70,
+    "archive_errors": [],
+    "conservative_GPU_hours": 0.10722222222222222
+  },
+  "readout_spent_before_attempt05_GPU_hours": 17.063055555555557,
+  "fifth_readout_upper_bound_GPU_hours": 4,
+  "final_readout_GPU_hours": 0.10722222222222222,
+  "accounting_closeout_note": "Retain full4 GPUh attempt05 and6 GPUh Cabinet-resume bounds even though jobs finished earlier. Final attempt06 charged creation-to-release386s. These are conservative upper bounds, not exact billed use. Queued DIT duplicate charged0.",
+  "current_gpu_work_planned": false
 }
