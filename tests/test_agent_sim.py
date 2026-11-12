@@ -118,6 +118,41 @@ def test_native_feedback_only_enters_later_inputs(tmp_path):
     s.close()
 
 
+def test_behavior_conditioning_does_not_contaminate_planner_inputs(tmp_path):
+    """Protect the distinction between hindsight descriptors and online context."""
+    s = make_session(tmp_path)
+    s.reset("Task", 1, "episode1")
+    move(s, [[.1, 0.], [.2, 0.]])
+    move(s, [[.3, 1.]], control=2)
+    s.finish(summary="done", success_claim=True)
+    labels = dict(format="agent_sim_annotations_v1", episode_id="episode1", quality=2,
+        source=dict(kind="human", identity="reviewer", rubric="Task-specific execution quality rubric v1"),
+        segments=[dict(start_control=0, end_control=3, subtask="annotated grasp",
+                       mistake=True, achieved=False)])
+    export_episode(s.output / "episode1", tmp_path / "annotated", annotations=labels)
+    planner = (tmp_path / "annotated/examples.jsonl").read_text()
+    assert "annotated grasp" not in planner and "reviewer" not in planner
+    policy = [json.loads(x) for x in (tmp_path / "annotated/policy_examples.jsonl").read_text().splitlines()]
+    row = policy[0]
+    assert row["input"]["conditioning"]["episode_metadata"]["quality"] == 2
+    assert row["input"]["conditioning"]["episode_metadata"]["episode_controls"] == 3
+    assert row["input"]["conditioning"]["mistake"] is True
+    assert row["annotation_source"]["kind"] == "human"
+    assert row["future_image_supervision"]["control"] == 3
+    assert row["future_image_supervision"]["achieved_subgoal"] is False
+    assert "000003" not in json.dumps(row["input"])
+    # A segment boundary inside a committed chunk would mislabel its actions.
+    labels["segments"][0]["end_control"] = 1
+    with pytest.raises(ValueError, match="decision boundaries"):
+        export_episode(s.output / "episode1", tmp_path / "invalid", annotations=labels)
+    assert not (tmp_path / "invalid").exists()
+    export_episode(s.output / "episode1", tmp_path / "unannotated")
+    row = json.loads((tmp_path / "unannotated/policy_examples.jsonl").read_text().splitlines()[0])
+    assert row["input"]["conditioning"]["episode_metadata"]["quality"] is None
+    assert row["future_image_supervision"]["achieved_subgoal"] is None
+    s.close()
+
+
 def test_reject_invalid_and_stale_actions_before_dispatch(tmp_path):
     s = make_session(tmp_path)
     s.reset("Task", 1, "episode1")

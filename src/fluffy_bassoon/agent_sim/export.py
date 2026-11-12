@@ -71,7 +71,8 @@ def examples(path, *, history_decisions=None):
         raise ValueError("Unfinished decision")
 
 
-def export_episode(path, output, *, history_decisions=None):
+def export_episode(path, output, *, history_decisions=None, annotations=None):
+    from .conditioning import policy_examples
     path, output = Path(path).resolve(), Path(output)
     session, episode, result, events = read_episode(path)
     rows = list(examples(path, history_decisions=history_decisions))
@@ -82,10 +83,16 @@ def export_episode(path, output, *, history_decisions=None):
             or result["controls"] != len(transitions) or result["decisions"] != len(rows)
             or [o["control"] for o in observations] != list(range(len(observations)))):
         raise ValueError("Require a complete consecutive control-rate episode")
+    policy_rows = list(policy_examples(rows, observations, result, annotations))
     output.mkdir(parents=True, exist_ok=False)
     with (output / "examples.jsonl").open("x") as stream:
         for row in rows:
             stream.write(encode(row) + "\n")
+    with (output / "policy_examples.jsonl").open("x") as stream:
+        for row in policy_rows:
+            stream.write(encode(row) + "\n")
+    if annotations is not None:
+        write_json(output / "annotations.json", annotations)
     interface = next(e["interface"] for e in events if e["kind"] == "reset")
     state_order = interface.get("state_order", list(observations[0]["state"]))
     states = np.asarray([[v for k in state_order for v in o["state"][k]] for o in observations], np.float32)
@@ -102,6 +109,8 @@ def export_episode(path, output, *, history_decisions=None):
         session_root=str(path.parent), episode=episode, source=session, state_order=state_order,
         images=[o["images"] for o in observations], controls=len(transitions), decisions=len(rows),
         history_decisions=history_decisions,
+        policy_view="policy_examples.jsonl uses retrospective behavior conditioning, "
+                    "requiring desired descriptors at deployment. Future images are labels only.",
         train_note="input is causal; target and outcome are labels. Images are relative to session_root. "
                    "Actions use the recorded native interface, never frozen-VLA noise coordinates. "
                    "Split by task/scene/session before making support/query examples."))
@@ -113,8 +122,11 @@ def main(argv=None):
     parser.add_argument("episode", type=Path)
     parser.add_argument("output", type=Path)
     parser.add_argument("--history-decisions", type=int)
+    parser.add_argument("--annotations", type=Path, help="Optional sourced offline quality/segment labels")
     args = parser.parse_args(argv)
-    print(encode(export_episode(args.episode, args.output, history_decisions=args.history_decisions)))
+    annotations = None if args.annotations is None else json.loads(args.annotations.read_text())
+    print(encode(export_episode(args.episode, args.output,
+        history_decisions=args.history_decisions, annotations=annotations)))
 
 
 if __name__ == "__main__":

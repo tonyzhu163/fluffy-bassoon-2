@@ -115,6 +115,65 @@ and future outcomes do not enter earlier inputs. The exporter currently builds
 within-episode histories; it does not reconstruct the client's whole chat or
 automatically carry context across resets.
 
+### Behavior conditioning inspired by π0.7
+
+The [π0.7 blog](https://www.pi.website/blog/pi07) and
+[paper, sections V and VII](https://www.pi.website/download/pi07.pdf) motivate
+keeping subtask descriptions, speed, quality, mistake annotations and visual
+subgoals alongside heterogeneous trajectories. These are distinct learning
+signals. More explanatory text alone does not reproduce the method or its gains.
+
+The exporter produces two views:
+
+- `examples.jsonl`: causal observations/history → the agent's next explicit
+  subgoal/summary and actions. This can supervise a high-level context policy.
+- `policy_examples.jsonl`: observation/history + subtask + behavior descriptors
+  → executed actions. This can supervise a conditioned action policy. Episode
+  length and simulation duration describe actual training behavior; at inference
+  supply **desired** duration/quality/mistake descriptors. Never compute them
+  from an evaluation rollout's future. Quality and mistakes remain null unless
+  annotated; native success does not imply high quality or mistake-free execution.
+
+Optional `--annotations /path/to/annotations.json` accepts an offline review:
+
+```json
+{
+  "format": "agent_sim_annotations_v1",
+  "episode_id": "attempt-0001",
+  "source": {
+    "kind": "human",
+    "identity": "reviewer-id",
+    "rubric": "Named task-specific quality rubric and revision"
+  },
+  "quality": 2,
+  "segments": [
+    {"start_control": 0, "end_control": 50,
+     "subtask": "grasp the drawer handle", "mistake": true, "achieved": false}
+  ]
+}
+```
+
+This is an example schema, not a label for a real run. Use the actual episode
+length and decision boundaries. Segment ranges are `[start_control,end_control)`;
+the endpoint observation is at `end_control`. Segments must be ordered and
+disjoint. Uncovered decisions retain their pre-action agent subgoal and unknown
+mistake/achievement labels. `quality` follows the paper's 1–5 convention but needs
+an explicit task rubric; no automatic thresholds are invented. `kind: "model"`
+requires the judge/model identity and rubric and remains a model assertion.
+
+`future_image_supervision` points to observed segment endpoints for training a
+goal predictor. It is separate from policy inputs. A chunk endpoint alone is
+not a verified achieved subgoal, and failed segments are retained with their
+labels. At deployment, visual goals must be predicted or externally supplied.
+This code does not yet implement the world model or a goal-conditioned VLA.
+Mask unknown labels when training; do not replace null with success or zero.
+
+Keep the retrospective policy view separate from causal planner evaluation.
+Compare actions only, subtask conditioning, metadata conditioning and their
+combination using the same scene splits and trajectories. Such an experiment
+is needed to establish benefit for this repository; π0.7's result is motivation,
+not evidence that a frozen π0.5 will use arbitrary extra metadata correctly.
+
 `trajectory.npz` contains T actions/rewards/terminal flags/decision IDs and T+1
 states/timestamps. `manifest.json` records state ordering and lossless image
 references relative to the original session root. Retain that root with the
