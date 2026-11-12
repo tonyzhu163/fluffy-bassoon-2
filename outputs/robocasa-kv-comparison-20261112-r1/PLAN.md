@@ -43,3 +43,12 @@ then observe a completed native bank before treating a job as progressing.
 Check each active job at most 20 minutes after the previous check. No automatic
 retries or output identity reuse. Record source, job IDs, progress, usage and
 next action in EXECUTION.json and the existing coordination row.
+
+## Reconciled historical charge
+
+The five November9 scheduler rows were checked directly on November12. Their
+creation-to-terminal charge totals0.542778 GPU-hours, bringing the historical
+charge before these three readouts to140.958889. With the full22.5-hour new
+reservation, committed use is163.458889 of170 GPU-hours. The immutable
+launch contract retains its more conservative3-hour pilot allowance; no active
+run was changed. [Ledger](BUDGET-RECONCILED.json).
