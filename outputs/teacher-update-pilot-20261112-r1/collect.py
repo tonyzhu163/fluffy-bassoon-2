@@ -2,9 +2,11 @@
 import argparse
 import hashlib
 import json
+import multiprocessing as mp
 import pickle
 import random
 import time
+import traceback
 from pathlib import Path
 
 import numpy as np
@@ -74,6 +76,62 @@ def inputs(obs):
     return dict(result, **{'observation/state': state(obs), 'prompt': obs['annotation.human.task_description']})
 
 
+def motor_worker(connection, checkpoint):
+    """Keep JAX/CUDA inference out of the EGL simulator process."""
+    try:
+        import jax
+        from openpi.policies import policy_config
+        from openpi.shared import normalize
+        from openpi.training import config
+        assert len(jax.devices()) == 1 and jax.devices()[0].platform == 'gpu'
+        stats = normalize.load(checkpoint/'assets')
+        cfg = with_checkpoint_stats(config.get_config('pi05_pretrain_human300'), stats)
+        policy = policy_config.create_trained_policy(cfg, checkpoint, norm_stats=stats,
+                                                    sample_kwargs={'num_steps': 10})
+        connection.send(dict(ready=True, device=str(jax.devices()[0])))
+        while True:
+            request = connection.recv()
+            if request is None:
+                break
+            observation, sample_noise = request
+            connection.send(dict(actions=np.asarray(policy.infer(observation,noise=sample_noise)['actions']).copy()))
+    except BaseException:
+        connection.send(dict(error=traceback.format_exc()))
+    finally:
+        connection.close()
+
+
+class Motor:
+    def __init__(self, checkpoint):
+        context = mp.get_context('spawn')
+        self.connection, child = context.Pipe()
+        self.process = context.Process(target=motor_worker, args=(child,checkpoint),daemon=True)
+        self.process.start()
+        child.close()
+        self.receive()
+
+    def receive(self):
+        if not self.connection.poll(900):
+            raise TimeoutError('Native policy worker did not respond')
+        result = self.connection.recv()
+        if 'error' in result:
+            raise RuntimeError(result['error'])
+        return result
+
+    def infer(self, observation, *, noise):
+        self.connection.send((observation,noise))
+        return self.receive()
+
+    def close(self):
+        if self.process.is_alive():
+            self.connection.send(None)
+            self.process.join(10)
+        if self.process.is_alive():
+            self.process.terminate()
+            self.process.join(10)
+        self.connection.close()
+
+
 def noise(seed, step, candidate=0):
     return np.random.default_rng(np.random.SeedSequence([seed, step, candidate, 61927])).standard_normal(
         (50, 32), dtype=np.float32)
@@ -121,19 +179,11 @@ def main():
             f.write(json.dumps(row) + '\n')
         print(json.dumps(row), flush=True)
 
-    import jax
-    from openpi.policies import policy_config
-    from openpi.shared import normalize
-    from openpi.training import config
     from robocasa.utils.env_utils import convert_action
-    assert len(jax.devices()) == 1 and jax.devices()[0].platform == 'gpu'
     stable_counter_regions()
-    stats = normalize.load(args.checkpoint/'assets')
-    cfg = with_checkpoint_stats(config.get_config('pi05_pretrain_human300'), stats)
-    event('loading', device=str(jax.devices()[0]))
-    policy = policy_config.create_trained_policy(cfg, args.checkpoint, norm_stats=stats,
-                                                sample_kwargs={'num_steps': 10})
-    event('loaded')
+    event('loading', policy_process='spawn', rendering_process='parent')
+    policy = Motor(args.checkpoint)
+    event('loaded', policy_pid=policy.process.pid)
     results = []
     for seed in SEEDS:
         dest = out/str(seed)
@@ -206,7 +256,13 @@ def main():
                     assert fork == anchors[q], ('fork', seed, q, candidate, fork, anchors[q])
                     for step in range(q, BUDGET, 5):
                         if candidate == 0:
-                            assert identity(wrapped, obs) == anchors[step], ('continuation', seed, q, step)
+                            actual = identity(wrapped, obs)
+                            if actual != anchors[step]:
+                                mismatch = dict(seed=seed,query=q,step=step,expected=anchors[step],actual=actual,
+                                    differing=[k for k in actual if actual[k] != anchors[step][k]])
+                                write(dest/'continuation-mismatch.json', mismatch)
+                                picture(dest/'continuation-mismatch.png',obs,f'Mismatch at {step}')
+                                raise AssertionError(mismatch)
                         action_chunk = candidates[q][candidate] if step == q else propose(policy, obs, seed, step)
                         if candidate == 0:
                             np.testing.assert_array_equal(action_chunk[:5], commands[step:step+5])
@@ -239,6 +295,7 @@ def main():
     write(out/'complete.json', dict(scenes=len(SEEDS), queries=len(SEEDS)*len(QUERIES), branches=results,
                                    wall_seconds=time.time()-started))
     event('complete')
+    policy.close()
 
 
 if __name__ == '__main__':
