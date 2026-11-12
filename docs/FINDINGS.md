@@ -178,3 +178,15 @@ two recorded controls and an aligned causal export. The native smoke checked
 all nine camera-image hashes and used 0.016101 conservative GPU-hours. This
 qualifies the API transport; it did not attempt manipulation or learner training.
 [API qualification evidence](../outputs/agent-sim-api-debug-20261112-r1/RESULT.md).
+
+A paired teacher-update pilot used frozen Human300 pi0.5 on four fresh OpenDrawer
+scenes (3/4 native successes under a 500-control budget). Astra abstained in all 72
+judgments across current-only, actual-history and donor-history inputs, leaving
+zero estimable teacher-change targets. Six native candidate pairs qualified;
+one had different success outcomes. Thirteen of sixteen planned branches were
+verified, including seven exact baseline continuations. The remainder stayed
+unqualified after an initial-reset rejection and action drift on motor restart.
+The experiment also reproduced and locally repaired camera corruption caused
+by rendering-context cleanup. No TTT learner was trained. This is a negative
+result for raw five-control candidate ranking under the tested prompt, not a
+test of learned capability transfer. [Pilot results and limitations](../outputs/teacher-update-pilot-20261112-r1/RESULT.md).

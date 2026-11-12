@@ -1,0 +1,22 @@
+    main()
+  File "/mowenjie/fluffy-bassoon-2/setups/teacher-update-pilot-20261112-r1/source-native05/outputs/teacher-update-pilot-20261112-r1/resume.py", line 93, in main
+    np.testing.assert_array_equal(action_chunk[:5],commands[step:step+5])
+  File "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/numpy/_utils/__init__.py", line 86, in wrapper
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/numpy/testing/_private/utils.py", line 1057, in assert_array_equal
+    assert_array_compare(operator.__eq__, actual, desired, err_msg=err_msg,
+  File "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages/numpy/testing/_private/utils.py", line 921, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Arrays are not equal
+
+Mismatched elements: 44 / 60 (73.3%)
+Max absolute difference among violations: 0.00192529
+Max relative difference among violations: 21.08552186
+ ACTUAL: array([[ 2.605380e-01,  1.950478e-03, -1.577502e-02, -1.853441e-03,
+        -1.145823e-02,  5.115260e-04,  9.936148e-01, -1.607525e-04,
+         1.552883e-05, -5.967188e-04,  5.591512e-10, -1.001131e+00],...
+ DESIRED: array([[ 2.597843e-01,  1.894055e-03, -1.561561e-02, -2.018489e-03,
+        -1.149622e-02,  5.115260e-04,  9.931335e-01, -1.048944e-04,
+         1.552883e-05, -6.676536e-04,  1.047432e-09, -1.001642e+00],...

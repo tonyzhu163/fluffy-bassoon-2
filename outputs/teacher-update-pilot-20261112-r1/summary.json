@@ -1,0 +1,132 @@
+{
+  "status": "closed_negative_with_incomplete_native_panel",
+  "planned_scenes": 4,
+  "planned_queries": 8,
+  "baseline_successes": 3,
+  "baselines": [
+    {
+      "seed": 120700,
+      "success_once": true,
+      "final_success": true,
+      "native_return": 277.0
+    },
+    {
+      "seed": 120701,
+      "success_once": true,
+      "final_success": true,
+      "native_return": 253.0
+    },
+    {
+      "seed": 120702,
+      "success_once": false,
+      "final_success": false,
+      "native_return": 0.0
+    },
+    {
+      "seed": 120703,
+      "success_once": true,
+      "final_success": true,
+      "native_return": 263.0
+    }
+  ],
+  "qualified_branches": 13,
+  "complete_candidate_zero_replays": 7,
+  "qualified_paired_queries": 6,
+  "missing_qualified_branches": 3,
+  "excluded_cross_process_branches": 1,
+  "native_pairs": [
+    {
+      "seed": 120700,
+      "query": 100,
+      "success": [
+        true,
+        true
+      ],
+      "native_return": [
+        277.0,
+        279.0
+      ],
+      "success_before_query": false
+    },
+    {
+      "seed": 120700,
+      "query": 250,
+      "success": [
+        true,
+        true
+      ],
+      "native_return": [
+        250.0,
+        250.0
+      ],
+      "success_before_query": true
+    },
+    {
+      "seed": 120701,
+      "query": 100,
+      "success": [
+        true,
+        false
+      ],
+      "native_return": [
+        253.0,
+        0.0
+      ],
+      "success_before_query": false
+    },
+    {
+      "seed": 120701,
+      "query": 250,
+      "success": [
+        true,
+        true
+      ],
+      "native_return": [
+        250.0,
+        250.0
+      ],
+      "success_before_query": true
+    },
+    {
+      "seed": 120702,
+      "query": 100,
+      "success": [
+        false,
+        false
+      ],
+      "native_return": [
+        0.0,
+        0.0
+      ],
+      "success_before_query": false
+    },
+    {
+      "seed": 120702,
+      "query": 250,
+      "success": [
+        false,
+        false
+      ],
+      "native_return": [
+        0.0,
+        0.0
+      ],
+      "success_before_query": false
+    }
+  ],
+  "success_contrasts": 1,
+  "native_return_contrasts": 2,
+  "already_successful_qualified_queries": 2,
+  "teacher_calls": 72,
+  "valid_teacher_calls": 72,
+  "abstentions": 72,
+  "estimable_teacher_updates": 0,
+  "teacher_condition_counts": {
+    "minus": 24,
+    "plus": 24,
+    "donor": 24
+  },
+  "student_updates": 0,
+  "scope": "Native OpenDrawer pretrain; 500-control pilot budget; four exploratory scenes.",
+  "interpretation": "No teacher preference frequencies or paired policy-change labels can be estimated. Native05 restart changed inferred actions despite matched query observations and saved noise; its comparisons are excluded. The pilot does not test learned TTT transfer."
+}
