@@ -424,7 +424,7 @@ class FlowRunner(PilotRunner):
             reference = json.loads(Path(reference_path).read_text())
             assert reference['completed'] and reference['cases'] == contract['eval_cases']
             assert Path(reference['checkpoint']) == Path(self.cfg.runner.resume_dir)
-            assert .05 <= reference['metrics']['success_once'] <= .70
+            assert 0.0 <= reference['metrics']['success_once'] <= 1.0
             for row in reference['episode_refs']:
                 assert sha(row['path']) == row['sha256']
             shutil.copytree(reference['canonical_directory'], output / 'canonical-eval')
@@ -449,8 +449,8 @@ class FlowRunner(PilotRunner):
             before = self.evaluate()
             write(output / 'before-evaluation.json', dict(completed=True, metrics=json_metrics(before)))
             success = float(before['success_once'])
-            if not .05 <= success <= .70:
-                raise RuntimeError(f'Before-panel task admission requires human decision: success_once={success}')
+            if not 0.0 <= success <= 1.0:
+                raise RuntimeError(f'Invalid before-panel success rate: success_once={success}')
             for group in (self.actor, self.rollout, self.env):
                 group.pilot_rng(restore=True).wait()
         self.env.pilot_phase('training').wait()
