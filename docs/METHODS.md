@@ -35,7 +35,10 @@ persistent RoboCasa365 episode through the same MCP tools to Codex or Claude
 Code. It records lossless control-rate observations, native commands and
 outcomes, plus explicit pre-action subgoals and brief decision summaries.
 Its exporter separates causal inputs from current action/context targets and
-future outcome labels. These are robot-action demonstrations, not noise targets
+future outcome labels. A second policy view conditions actions on subtask and
+retrospective speed/quality descriptors, with sourced optional segment labels;
+deployment must supply desired descriptors. Future frames remain explicit goal
+prediction targets. These are robot-action demonstrations, not noise targets
 for the existing `vla_history` trainer; a matching feature/action head is required.
 Native simulation and agent success require separate runtime qualification.
 

@@ -1,0 +1,33 @@
+{
+  "source_commit": "b8639247fe953505aa457e4fa5ca940fdc701312",
+  "date": "2026-11-12",
+  "environment": "Baige allocated Linux development container",
+  "host": "aibox-rffe453e3884-5f96c78b88-6ssrn",
+  "command": "PYTHONPATH=src python -m pytest -q tests/test_agent_sim.py",
+  "result": "8 passed in 7.47s",
+  "exit_code": 0,
+  "evidence_method": "Observed terminal output and validation.json through the existing authenticated Baige Jupyter console",
+  "remote_evidence": "/mowenjie/fluffy-bassoon-2/outputs/agent-sim-qualification-20261112-r1",
+  "remote_source": "/mowenjie/fluffy-bassoon-2/setups/agent-sim-20261112-r1/source",
+  "versions": {
+    "python": "3.12.8",
+    "uv": "0.9.5",
+    "mcp": "1.30.0",
+    "anyio": "4.16.0",
+    "numpy": "2.5.4",
+    "Pillow": "13.0.0",
+    "pytest": "9.2.0"
+  },
+  "validated": [
+    "Lossless control-rate observations and executed action alignment",
+    "Causal planner inputs and native feedback visibility",
+    "Conditioned action export with sourced hindsight annotations and separate future image labels",
+    "Stale commands, episode reuse, early termination and uncertain dispatch handling",
+    "Actual MCP stdio subprocess with image responses and native/Python stdout isolation"
+  ],
+  "native_rollout_tested": false,
+  "actual_codex_or_claude_model_episode_tested": false,
+  "training_benefit_measured": false,
+  "gpu_hours": 0,
+  "limitations": "The tests use a deterministic synthetic backend. Native RoboCasa rendering, runtime/controller qualification and real agent performance still require an allocated GPU episode. RoboTwin and VLA training integration are not implemented."
+}
