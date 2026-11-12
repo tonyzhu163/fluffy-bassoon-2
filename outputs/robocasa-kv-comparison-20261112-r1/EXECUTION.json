@@ -1,5 +1,5 @@
 {
-  "checked_shanghai": "2026-11-12T22:47:00+08:00",
+  "checked_shanghai": "2026-11-12T23:09:59.856399+08:00",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
   "runner_commit": "33753388a773f63efb5f07916d57c0d3a698290a",
@@ -24,8 +24,8 @@
     "READOUT_scientific_body_byte_identical_after_owned_path_substitution": true,
     "all_eight_candidate_checksums_verified": true
   },
-  "verified_completed_new_episodes": 7968,
-  "next_action": "Monitor at23:07 Shanghai. DIT and IC-IQL healthy and advancing; DPT and Cabinet remain queued. Inspect actual allocated pod identity, not only indexed scheduler rows.",
+  "verified_completed_new_episodes": 8340,
+  "next_action": "Monitor at23:30 Shanghai; all three evals now advancing, Cabinet still queued. Launch a short continuation only if a hard runtime leaves predeclared banks unfinished, within remaining caps.",
   "jobs_attempt01": [
     {
       "objective": "dpt",
@@ -234,9 +234,10 @@
       "shared_memory_GiB": 32,
       "maximum_minutes": 90,
       "automatic_retries": false,
-      "status": "Running; fresh archive heartbeat, no errors",
+      "status": "Running; GPU probe passed, healthy archive heartbeat without errors",
       "attempt": "attempt05",
-      "completed_episodes_at_check": 2640
+      "completed_episodes_at_check": 2844,
+      "gpu_probe_created_at_utc": "2026-11-12T14:06:50.679892+00:00"
     },
     {
       "objective": "dit",
@@ -248,9 +249,9 @@
       "shared_memory_GiB": 32,
       "maximum_minutes": 90,
       "automatic_retries": false,
-      "status": "Running; actual GPU probe and fresh archive heartbeat verified",
+      "status": "Running; GPU probe passed, healthy archive heartbeat without errors",
       "attempt": "attempt05",
-      "completed_episodes_at_check": 2640,
+      "completed_episodes_at_check": 2796,
       "gpu_probe_created_at_utc": "2026-11-12T14:29:09.227768+00:00",
       "scheduler_index_note": "GPU-PROBE identifies active job-bpuakt232nhd; direct job UI resolves the same DIT name but its indexed detail is unavailable. This may be the initial submit that did not appear in the list. Known second submit job-mqmhmhda3zjb remained queued and was stopped at22:45:01 before execution. Only one active DIT writer observed."
     },
@@ -265,9 +266,10 @@
       "shared_memory_GiB": 32,
       "maximum_minutes": 60,
       "automatic_retries": false,
-      "status": "Queued",
+      "status": "Running; GPU probe passed, healthy archive heartbeat without errors",
       "attempt": "attempt05",
-      "completed_episodes_at_check": 2688
+      "completed_episodes_at_check": 2700,
+      "gpu_probe_created_at_utc": "2026-11-12T14:56:36.904762+00:00"
     }
   ],
   "archive_monitor_fix": {
@@ -300,5 +302,12 @@
     "reason": "Actual job-bpuakt232nhd already running same method/attempt; prevent duplicate allocation",
     "GPU_hours": 0,
     "accounting": "Pending time is not allocated GPU time. The existing1.5GPUh DIT reserve applies to the active pod."
+  },
+  "prepared_fallback": {
+    "source_commit": "fdad5f1062cf5a560ff8e792b42a48dcd2795b2c",
+    "source": "/mowenjie/fluffy-bassoon-2/setups/robocasa-kv-comparison-20261112-r1/source-resume06",
+    "qualified_on_Linux": true,
+    "scientific_readout_byte_identical": true,
+    "GPU_work_launched": false
   }
 }
