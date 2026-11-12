@@ -27,7 +27,7 @@ def main():
                       for r in range(3) for c in ('minus','plus','donor')}
     assert {(r['seed'],r['query'],r['repetition'],r['condition']) for r in calls} == expected_calls
     assert len(calls)==72 and all(r['valid'] and r['answer']['choice']=='abstain' and r['candidate'] is None for r in calls)
-    contexts, item_types, image_checks = {},set(),0
+    contexts, item_types, image_checks, client_warnings = {},set(),0,0
     tokens = {'input_tokens':0,'cached_input_tokens':0,'output_tokens':0}
     for r in calls:
         folder = args.run/'teacher-records'/f"astra-{r['seed']}"/f"{r['seed']}-{r['query']}-r{r['repetition']}-{r['condition']}"
@@ -54,10 +54,14 @@ def main():
             event= json.loads(line)
             if 'item' in event:
                 item_types.add(event['item']['type'])
+                if event['item']['type']=='error':
+                    assert event['item']['message'].startswith(
+                        'Under-development features enabled: skip_host_skill_discovery.'), event['item']
+                    client_warnings+=1
             if event.get('type')=='turn.completed':
                 for key in tokens:
                     tokens[key]+=event.get('usage',{}).get(key,0)
-    assert item_types <= {'agent_message','reasoning'}, item_types
+    assert item_types <= {'agent_message','reasoning','error'}, item_types
     for seed in range(120700,120704):
         for q in (100,250):
             for rep in range(3):
@@ -106,6 +110,7 @@ def main():
             'its comparisons are excluded. The pilot does not test learned TTT transfer.')
     audit=dict(public_only_prompts=72,matched_context_triples=24,image_hash_checks=image_checks,
         teacher_item_types=sorted(item_types),external_teacher_tool_calls=0,teacher_tokens=tokens,
+        client_configuration_warnings=client_warnings,
         prefix_state_checks=sum(r['prefix_state_checks'] for r in rows),candidate_prefix_checks=13,
         teacher_records_sha256=sha(args.judgments),worker_runs=runs,
         worker_gpu_hours=sum(r['ended']-r['started'] for r in runs.values())/3600,

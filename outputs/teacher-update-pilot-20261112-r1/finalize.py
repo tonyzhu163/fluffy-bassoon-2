@@ -84,6 +84,9 @@ def main():
             entry = json.loads(line)
             if 'item' in entry:
                 item_types.add(entry['item']['type'])
+                if entry['item']['type']=='error':
+                    assert entry['item']['message'].startswith(
+                        'Under-development features enabled: skip_host_skill_discovery.'), entry['item']
             if entry.get('type')=='turn.completed':
                 for key_name in usage_tokens:
                     usage_tokens[key_name] += entry.get('usage',{}).get(key_name,0)
@@ -101,7 +104,7 @@ def main():
                 assert len({tuple(r['order']) for r in group})==1
                 assert len({r['images'][0]['sha256'] for r in group})==1
                 assert len({context_signatures[(s,q,rep,r['condition'])] for r in group})==1
-    assert item_types <= {'agent_message','reasoning'}, item_types
+    assert item_types <= {'agent_message','reasoning','error'}, item_types
     usage = {}
     for name in ('native01','native02','native03','render-gc01','native04','native05'):
         record = read(args.run/name/'exit.json')
