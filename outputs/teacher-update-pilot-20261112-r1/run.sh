@@ -34,6 +34,9 @@ df -h "$out" > "$out/storage.txt"
 if [[ "${3:-collect}" == render-gc ]]; then
   timeout 600 "$py" -Bu "$(dirname "$0")/render_gc.py" --output "$out/original"
   timeout 600 "$py" -Bu "$(dirname "$0")/render_gc.py" --output "$out/fixed" --fix
+elif [[ "${3:-collect}" == resume ]]; then
+  timeout --signal=TERM --kill-after=30 6000 "$py" -Bu "$(dirname "$0")/resume.py" \
+    --checkpoint "$root/inputs/robocasa365-public-pi05-c484-75000-20261101-r1" --output "$out/data" --source "$4"
 else
   timeout --signal=TERM --kill-after=30 13500 "$py" -Bu "$(dirname "$0")/collect.py" \
     --checkpoint "$root/inputs/robocasa365-public-pi05-c484-75000-20261101-r1" --output "$out/data"
