@@ -1,0 +1,27 @@
+{
+  "migration": "local-scratch03",
+  "reason": "Shared PFS fell below220 GiB at16:47; all three attempt02 workers checkpointed and exited3",
+  "existing_new_episodes": 1764,
+  "remaining_new_episodes": 7236,
+  "existing_archived_banks": 39,
+  "science_commit": "87984718c9199797d31a158c47225cc695623afe",
+  "science_changes": [],
+  "local_readout_changes": [
+    "Archive heartbeat location",
+    "Hot-buffer byte counter from local heartbeat"
+  ],
+  "storage_accounting": "Read-only shared PFS for fixed weights, source, assets and canonical anchors. Raw outputs use allocated container scratch; local112 GiB admission,96 GiB floor,12 GiB backpressure. Archive and metadata published to existing private BOS after independent audit, full archive SHA readback and every restored member SHA.",
+  "BOS_bucket": "dexmal-mowenjie-data",
+  "BOS_mount": "/mnt/bos/adgfyl",
+  "BOS_metadata": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-kv-comparison-20261112-r1/local-migration03/metadata",
+  "all_completed_banks_resumed_without_replay": true,
+  "maximum_each_allocation_minutes": 360,
+  "automatic_retries": false,
+  "readout_spent_GPU_hours": 3.751666666666667,
+  "remaining_allocated_GPU_hours": 18,
+  "readout_committed_upper_bound_GPU_hours": 21.751666666666665,
+  "approved_readout_reserve_GPU_hours": 22.5,
+  "approved_historical_cap_GPU_hours": 170,
+  "all_new_work_upper_bound_GPU_hours": 46.65833333333333,
+  "protected_initial_and_final_fit_checkpoints_retained": true
+}

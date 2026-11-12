@@ -47,10 +47,10 @@
   "historical_actual_before_current_readout_GPU_hours": 140.9588887777778,
   "approved_cap_GPU_hours": 170,
   "current_readout_reserved_GPU_hours": 22.5,
-  "historical_committed_upper_bound_GPU_hours": 162.71249988888889,
+  "historical_committed_upper_bound_GPU_hours": 162.71055544444445,
   "new_teacher_failures_GPU_hours": 0.9066666666666666,
   "new_teacher_reservation_GPU_hours": 24,
-  "all_new_work_maximum_committed_GPU_hours": 46.66027777777778,
+  "all_new_work_maximum_committed_GPU_hours": 46.65833333333333,
   "first_readout_attempts": [
     {
       "objective": "dpt",
@@ -84,6 +84,58 @@
     }
   ],
   "first_readout_attempts_GPU_hours": 0.753611111111111,
-  "resume_reservation_GPU_hours": 21,
-  "readout_committed_GPU_hours": 21.753611111111113
+  "resume_reservation_GPU_hours": 18,
+  "readout_committed_GPU_hours": 21.751666666666665,
+  "second_readout_attempts": [
+    {
+      "objective": "dpt",
+      "job_id": "job-za6h10tp9lvc",
+      "created_shanghai": "2026-11-12T15:47:26+08:00",
+      "GPUs": 1,
+      "CPUs": 32,
+      "RAM_GiB": 192,
+      "shared_memory_GiB": 32,
+      "maximum_minutes": 420,
+      "automatic_retries": false,
+      "status": "terminal; storage guard preserved completed banks",
+      "completed_episodes_at_check": 588,
+      "released_shanghai": "2026-11-12T16:48:08+08:00",
+      "worker_exit_code": 3,
+      "conservative_GPU_hours": 1.0116666666666667
+    },
+    {
+      "objective": "dit",
+      "job_id": "job-rnaf1x56dbdb",
+      "created_shanghai": "2026-11-12T15:48:08+08:00",
+      "GPUs": 1,
+      "CPUs": 32,
+      "RAM_GiB": 192,
+      "shared_memory_GiB": 32,
+      "maximum_minutes": 420,
+      "automatic_retries": false,
+      "status": "terminal; storage guard preserved completed banks",
+      "completed_episodes_at_check": 588,
+      "released_shanghai": "2026-11-12T16:48:09+08:00",
+      "worker_exit_code": 3,
+      "conservative_GPU_hours": 1.0002777777777778
+    },
+    {
+      "objective": "ic_iql",
+      "job_id": "job-jfusjiri56gq",
+      "created_shanghai": "2026-11-12T15:49:14+08:00",
+      "GPUs": 1,
+      "CPUs": 32,
+      "RAM_GiB": 192,
+      "shared_memory_GiB": 32,
+      "maximum_minutes": 420,
+      "automatic_retries": false,
+      "status": "terminal; storage guard preserved completed banks",
+      "completed_episodes_at_check": 588,
+      "released_shanghai": "2026-11-12T16:48:24+08:00",
+      "worker_exit_code": 3,
+      "conservative_GPU_hours": 0.9861111111111112
+    }
+  ],
+  "second_readout_attempts_GPU_hours": 2.9980555555555557,
+  "readout_spent_GPU_hours": 3.751666666666667
 }
