@@ -214,6 +214,14 @@ def main():
         with (job/'console.log').open('x') as log:
             for split in ('ID','OOD'):
                 out = target/split
+                if (out/'RESULT.json').exists():
+                    completed = json.loads((out/'RESULT.json').read_text())
+                    assert completed['completed'] and completed['deployment_optimizer_updates'] == 0
+                    assert completed['binding']['objective'] == method
+                    assert completed['binding']['selected_candidate_sha256'] == sha(fit/'kv_bridge'/method/'candidate.pt')
+                    # Retain the original group receipt, including wall time.
+                    # Rewriting it after skipping every bank changes its hash.
+                    continue
                 command = [sys.executable,'-B',str(HERE/'LOCAL-READOUT.py'),'--code',str(science),
                     '--commit',SCI_PIN,'--fit',str(fit/'kv_bridge'/method),'--output',str(out),
                     '--probe',str(probe),'--interface','kv_bridge','--objective',method,
