@@ -66,6 +66,24 @@ def main():
         native_wall_seconds=native['wall_seconds'], inference_wall_seconds_sum=sum(r['wall_seconds'] for r in responses),
         statistical_unit='scene, n=4; repeated choices are descriptive, not additional independent episodes')
     args.output.write_text(json.dumps(report,indent=2)+'\n')
+    # Export only delivered action labels, with public context separated from
+    # future native outcomes. Keep tied/unsuccessful pairs in the corpus.
+    with args.output.with_name('training-pairs.jsonl').open('x') as stream:
+        for row in query_results:
+            seed,q = row['seed'],row['query']
+            raw = json.loads((args.native/str(seed)/f'query-{q}.json').read_text())
+            public_fields = ('prompt','current_state','candidate_commands','action_order','controller',
+                             'history_controls','history_commands','history_states','budget')
+            context = {k:raw[k] for k in public_fields}
+            context['images'] = [str((args.native/str(seed)/'public'/f'{step:04d}.png').resolve())
+                                 for step in raw['history_controls']]
+            example = dict(format='teacher_evidence_pair_v1',seed=seed,query=q,context=context,
+                delivered_action_mask=[True]*5+[False]*45,
+                teacher_targets=dict(preferences=row['preferences'],delta_teacher=row['delta_teacher']),
+                future_outcome_labels=dict(success=row['success'],final=row['final'],native_return=row['returns']),
+                success_contrast_available=row['success'][0] != row['success'][1],
+                note='Outcome labels and teacher targets are offline supervision, never support inputs.')
+            stream.write(json.dumps(example,allow_nan=False)+'\n')
     print(json.dumps({k:v for k,v in report.items() if k not in ('queries','scene_effects')},indent=2))
 
 
