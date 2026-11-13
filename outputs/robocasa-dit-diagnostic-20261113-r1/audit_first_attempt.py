@@ -25,6 +25,11 @@ def compare(left, right, path=""):
     if isinstance(right, torch.Tensor):
         right = right.detach().cpu().numpy()
     if isinstance(left, np.ndarray) and isinstance(right, np.ndarray):
+        if left.dtype.kind == "O" or right.dtype.kind == "O":
+            layout = dict(path=path + "/array_layout", exact=left.shape == right.shape and left.dtype == right.dtype,
+                          shape_left=list(left.shape), shape_right=list(right.shape),
+                          dtype_left=str(left.dtype), dtype_right=str(right.dtype))
+            return [layout] + compare(left.tolist(), right.tolist(), path + "/values")
         row = dict(path=path, shape_left=list(left.shape), shape_right=list(right.shape),
                    dtype_left=str(left.dtype), dtype_right=str(right.dtype),
                    exact=left.dtype == right.dtype and np.array_equal(left, right))
