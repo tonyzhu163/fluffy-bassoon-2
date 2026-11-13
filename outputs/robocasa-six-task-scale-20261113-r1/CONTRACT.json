@@ -1,10 +1,21 @@
 {
-  "status": "CPU preparation; GPU budget increase not yet approved",
+  "status": "230 additionalGPUh approved; source-task coverage under review before any GPU launch",
   "reviewed_main_before_changes": "a5fb64b5778cee47b44c40cee26a3611c4cf84b0",
   "purpose": "Compare adding three corrected-PPO learning-history sources to the fixed original RoboCasa corpus for all four frozen-VLA KV learners",
-  "source_tasks_original": ["OpenDrawer", "CloseToasterOvenDoor", "CoffeeSetupMug"],
-  "source_tasks_added": ["OpenCabinet", "SlideDishwasherRack", "PickPlaceCounterToStove"],
-  "held_out_tasks": ["CloseFridge", "TurnOnMicrowave"],
+  "source_tasks_original": [
+    "OpenDrawer",
+    "CloseToasterOvenDoor",
+    "CoffeeSetupMug"
+  ],
+  "source_tasks_added": [
+    "OpenCabinet",
+    "SlideDishwasherRack",
+    "PickPlaceCounterToStove"
+  ],
+  "held_out_tasks": [
+    "CloseFridge",
+    "TurnOnMicrowave"
+  ],
   "teacher_continuation": {
     "initial_global_step": 10,
     "target_global_step": 30,
@@ -14,11 +25,20 @@
     "total_additional_training_episodes": 7680,
     "total_additional_training_controls": 4608000,
     "eval_cases": 64,
-    "evaluation_steps": [20, 30],
+    "evaluation_steps": [
+      20,
+      30
+    ],
     "complete_checkpoint_interval": 5,
     "teacher_label_policy": "Predeclared step30 endpoint, no selection using the held-out transformer tasks",
     "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
-    "allocation": {"GPUs": 8, "CPUs": 64, "RAM_GiB": 1024, "shared_memory_GiB": 32, "maximum_minutes_per_task": 120},
+    "allocation": {
+      "GPUs": 8,
+      "CPUs": 64,
+      "RAM_GiB": 1024,
+      "shared_memory_GiB": 32,
+      "maximum_minutes_per_task": 120
+    },
     "checkpoint_request_seconds": 5400,
     "physics_deadline_seconds": 6000,
     "training_process_timeout_seconds": 6100,
@@ -35,8 +55,16 @@
   },
   "fitting": {
     "interface": "kv_bridge",
-    "objectives": ["ad", "dpt", "dit", "ic_iql"],
-    "corpora": ["original_three", "original_three_plus_new_three"],
+    "objectives": [
+      "ad",
+      "dpt",
+      "dit",
+      "ic_iql"
+    ],
+    "corpora": [
+      "original_three",
+      "original_three_plus_new_three"
+    ],
     "policy_fits": 8,
     "training_seed": 0,
     "updates_per_fit": 10000,
@@ -45,19 +73,45 @@
     "policy_initialization": "Identical seed and architecture; corpus-specific training-only normalization recorded",
     "checkpoint_selection": "Fixed final update10000; validation curves diagnostic, no success-based selection",
     "value_estimators": "Requalify and preserve original-three Q/V; fit DIT and IC-IQL Q/V on the six-task training split only",
-    "architecture": {"width": 256, "layers": 6, "heads": 8, "context_length": 192, "kv_rank": 4, "scale": 0.1},
+    "architecture": {
+      "width": 256,
+      "layers": 6,
+      "heads": 8,
+      "context_length": 192,
+      "kv_rank": 4,
+      "scale": 0.1
+    },
     "limitation": "One fit per method/corpus; this is a decision experiment, not evidence across independent training seeds"
   },
   "evaluation": {
-    "tasks": ["OpenDrawer", "CloseToasterOvenDoor", "CoffeeSetupMug", "OpenCabinet", "SlideDishwasherRack", "PickPlaceCounterToStove", "CloseFridge", "TurnOnMicrowave"],
+    "tasks": [
+      "OpenDrawer",
+      "CloseToasterOvenDoor",
+      "CoffeeSetupMug",
+      "OpenCabinet",
+      "SlideDishwasherRack",
+      "PickPlaceCounterToStove",
+      "CloseFridge",
+      "TurnOnMicrowave"
+    ],
     "cases_per_task": 50,
     "attempts_per_case": 6,
-    "memory_modes": ["full", "episode"],
+    "memory_modes": [
+      "full",
+      "episode"
+    ],
     "policy_fits": 8,
     "episodes_total": 38400,
-    "shared_ID": ["OpenDrawer", "CloseToasterOvenDoor", "CoffeeSetupMug"],
+    "shared_ID": [
+      "OpenDrawer",
+      "CloseToasterOvenDoor",
+      "CoffeeSetupMug"
+    ],
     "added_tasks_reporting": "Report separately: unseen source tasks for the three-task learner, ID for the six-task learner",
-    "shared_OOD": ["CloseFridge", "TurnOnMicrowave"],
+    "shared_OOD": [
+      "CloseFridge",
+      "TurnOnMicrowave"
+    ],
     "primary_readouts": "Sixth-attempt native success; paired full-minus-reset history effect; three-versus-six differences on shared ID and shared OOD",
     "uncertainty": "Paired case bootstrap; report task outcomes, first-attempt disagreements and initial/render variation",
     "deployment_optimizer_steps": 0
@@ -69,9 +123,10 @@
     "native_evaluations_and_archival": 96,
     "qualification_repeatability_and_recovery": 6,
     "additional_total_hard_cap": 230,
-    "authority": "Proposal only; the user's go-ahead authorizes scope but did not specify a new numerical cap",
-    "previous_campaigns": "Retain closed records and their explicit caps; request a separate230GPUh phase, never silently reset an allowance"
+    "authority": "User explicitly approved the full230GPUh campaign on2026-11-13; APPROVAL.json. Per-stage reservations remain provisional during task selection review.",
+    "previous_campaigns": "Prior50/170GPUh caps remain closed; new230GPUh phase explicitly approved"
   },
   "scientific_limits": "Original corpus retains the older PPO critic mismatch; additions use the corrected collector. This tests adding these sources, not task diversity isolated from collector quality or history length. Native history benefit remains separate from policy success.",
-  "deadline": "Target a first complete comparison within72hours of budget approval and allocated capacity; surface queue or stage failures rather than claim an unearned deadline"
+  "deadline": "Preserve original November15 Shanghai decision-readout target from the November12 plan; approval does not restart the three-day window. Report any schedule risk explicitly.",
+  "task_selection_status": "Prepared Cabinet/Rack/Counter list is provisional; see TASK-COVERAGE.md for proposed balanced replacement"
 }

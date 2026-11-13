@@ -1,6 +1,6 @@
 {
-  "checked_shanghai": "2026-11-13T14:34:07+08:00",
-  "status": "PPO launch preparation qualified on CPU; awaiting explicit additional budget",
+  "checked_shanghai": "2026-11-13T14:40:00+08:00",
+  "status": "Budget approved; task representativeness review before GPU launch",
   "launch_source_commit": "7c0d920ef0b571ae66bc0722247e2485edb5ef76",
   "deployment": "Git bundle; clean exact detached source on Baige; existing active worktrees untouched",
   "validation": {
@@ -8,7 +8,13 @@
     "Linux_checkpoint_inspection": "All three step10 checkpoint markers and 18-worker inventories match immutable archive receipts; original64-case before panels and canonical snapshots restored and hash-verified",
     "full_checkpoint_payloads": "Declared and hash-bound; each used payload must be rehashed at stageback inside its actual job before resuming",
     "Linux_config_resolution": "All three Hydra configurations resolve; native flow contracts show30 total updates,128 episodes/update,24 optimizer steps/update, eval10/save5 cadence and20/30 weight exports",
-    "Linux_core_tests": {"command": "python -B -m pytest -q tests/test_robocasa_flow_ppo.py", "passed": 29, "warnings": 16, "seconds": 160.43, "exit_code": 0},
+    "Linux_core_tests": {
+      "command": "python -B -m pytest -q tests/test_robocasa_flow_ppo.py",
+      "passed": 29,
+      "warnings": 16,
+      "seconds": 160.43,
+      "exit_code": 0
+    },
     "core_PPO_implementation_diff_from_prior_qualified_9e3c9bfa": false,
     "runtime": "Existing native uv environment and corrected RLinf8f9bfa76; unchanged",
     "actual_job_GPU_qualification": "Pending; each allocation must pass its own GPU probe before model work"
@@ -23,7 +29,10 @@
     "queue_GPU_free": 9,
     "queue_CPU_free": 2208,
     "queue_RAM_GiB_free": 23440,
-    "eight_GPU_template": {"CPUs": 175, "RAM_GiB": 1799},
+    "eight_GPU_template": {
+      "CPUs": 175,
+      "RAM_GiB": 1799
+    },
     "intern_group_GPU_quota": 32,
     "claim": "Queue snapshot only; no contiguous-node, allocation or GPU-health claim",
     "PFS_free_approx_GiB": 253,
@@ -33,12 +42,12 @@
   "budget": {
     "GPU_hours_used_this_phase": 0,
     "GPU_hours_reserved_this_phase": 0,
-    "proposed_additional_hard_cap_GPU_hours": 230,
     "prior_all_new_committed_upper_bound_GPU_hours": 48.834722222222226,
     "prior_all_new_hard_cap_GPU_hours": 50,
     "prior_historical_committed_upper_bound_GPU_hours": 162.12916655555557,
     "prior_historical_hard_cap_GPU_hours": 170,
-    "approval": "Pending; no GPU allocation submitted"
+    "approval": "User: Approve the full230GPU-hour campaign. See APPROVAL.json; no GPU allocation submitted.",
+    "approved_additional_hard_cap_GPU_hours": 230
   },
-  "next_action": "Obtain explicit new230GPUh phase authorization, recheck latest main and capacity, then submit one bounded8GPU teacher continuation and verify the first new update before additional launches. Develop and qualify annotation/fitting/readout stages within the approved phase."
+  "next_action": "Validate source provenance and cost for a balanced six-task selection; original three plus Counter-to-Stove, Stove and Faucet proposed. Keep230GPUh approval, preserve original November15 target, and do not launch the provisional redundant trio as if representative."
 }
