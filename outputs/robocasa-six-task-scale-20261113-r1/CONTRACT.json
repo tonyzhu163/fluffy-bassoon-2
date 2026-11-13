@@ -1,54 +1,26 @@
 {
-  "status": "230 additionalGPUh approved; source-task coverage under review before any GPU launch",
+  "status": "Balanced six accepted; matched corrected-PPO source recollection in preparation; no GPU launch yet",
   "reviewed_main_before_changes": "a5fb64b5778cee47b44c40cee26a3611c4cf84b0",
-  "purpose": "Compare adding three corrected-PPO learning-history sources to the fixed original RoboCasa corpus for all four frozen-VLA KV learners",
+  "purpose": "Compare three versus six tasks with matched corrected PPO, equal per-task history length and identical shared-task data",
   "source_tasks_original": [
     "OpenDrawer",
     "CloseToasterOvenDoor",
     "CoffeeSetupMug"
   ],
   "source_tasks_added": [
-    "OpenCabinet",
-    "SlideDishwasherRack",
-    "PickPlaceCounterToStove"
+    "PickPlaceCounterToStove",
+    "TurnOffStove",
+    "TurnOnSinkFaucet"
   ],
   "held_out_tasks": [
     "CloseFridge",
     "TurnOnMicrowave"
   ],
-  "teacher_continuation": {
-    "initial_global_step": 10,
-    "target_global_step": 30,
-    "additional_updates_per_task": 20,
-    "episodes_per_update": 128,
-    "native_controls_per_episode": 600,
-    "total_additional_training_episodes": 7680,
-    "total_additional_training_controls": 4608000,
-    "eval_cases": 64,
-    "evaluation_steps": [
-      20,
-      30
-    ],
-    "complete_checkpoint_interval": 5,
-    "teacher_label_policy": "Predeclared step30 endpoint, no selection using the held-out transformer tasks",
-    "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
-    "allocation": {
-      "GPUs": 8,
-      "CPUs": 64,
-      "RAM_GiB": 1024,
-      "shared_memory_GiB": 32,
-      "maximum_minutes_per_task": 120
-    },
-    "checkpoint_request_seconds": 5400,
-    "physics_deadline_seconds": 6000,
-    "training_process_timeout_seconds": 6100,
-    "automatic_retry": false
-  },
   "annotation": {
     "new_task_history_updates": 30,
     "queries_per_task": 46080,
-    "queries_total": 138240,
-    "source": "All original pilot plus continuation behavior trajectories, with observed native rewards and causal boundaries",
+    "queries_total": 276480,
+    "source": "All six corrected sources, updates1..30 only; native behavior actions/rewards and causal boundaries; no old critic-mismatch data",
     "features": "Frozen original VLM features",
     "DPT_labels": "Actual predeclared endpoint teacher actions at each saved query observation; never substitute behavior actions",
     "sampling": "Deterministic per-query native Gaussian and eval ODE10; hashes and mapped12-coordinate actions preserved"
@@ -62,8 +34,8 @@
       "ic_iql"
     ],
     "corpora": [
-      "original_three",
-      "original_three_plus_new_three"
+      "corrected_three",
+      "corrected_six"
     ],
     "policy_fits": 8,
     "training_seed": 0,
@@ -72,7 +44,7 @@
     "task_sampling": "Uniform over training tasks within each corpus, then uniform over that task's training streams; same total updates across corpora",
     "policy_initialization": "Identical seed and architecture; corpus-specific training-only normalization recorded",
     "checkpoint_selection": "Fixed final update10000; validation curves diagnostic, no success-based selection",
-    "value_estimators": "Requalify and preserve original-three Q/V; fit DIT and IC-IQL Q/V on the six-task training split only",
+    "value_estimators": "Fit DIT and IC-IQL Q/V separately on each corrected training corpus; do not reuse values fitted to buggy-critic data",
     "architecture": {
       "width": 256,
       "layers": 6,
@@ -88,26 +60,23 @@
       "OpenDrawer",
       "CloseToasterOvenDoor",
       "CoffeeSetupMug",
-      "OpenCabinet",
-      "SlideDishwasherRack",
-      "PickPlaceCounterToStove",
       "CloseFridge",
       "TurnOnMicrowave"
     ],
-    "cases_per_task": 50,
+    "cases_per_task": 40,
     "attempts_per_case": 6,
     "memory_modes": [
       "full",
       "episode"
     ],
     "policy_fits": 8,
-    "episodes_total": 38400,
+    "episodes_total": 19200,
     "shared_ID": [
       "OpenDrawer",
       "CloseToasterOvenDoor",
       "CoffeeSetupMug"
     ],
-    "added_tasks_reporting": "Report separately: unseen source tasks for the three-task learner, ID for the six-task learner",
+    "added_tasks_reporting": "No separate added-task panel in the primary bounded readout; prioritize shared ID/OOD and paired history effect",
     "shared_OOD": [
       "CloseFridge",
       "TurnOnMicrowave"
@@ -117,16 +86,62 @@
     "deployment_optimizer_steps": 0
   },
   "budget_proposal_GPU_hours": {
-    "teacher_continuations": 48,
-    "features_and_DPT_labels": 10,
-    "eight_policy_fits_and_value_estimators": 70,
-    "native_evaluations_and_archival": 96,
+    "teacher_collection": 96,
+    "features_and_DPT_labels": 18,
+    "eight_policy_fits_and_value_estimators": 62,
+    "native_evaluations_and_archival": 48,
     "qualification_repeatability_and_recovery": 6,
     "additional_total_hard_cap": 230,
-    "authority": "User explicitly approved the full230GPUh campaign on2026-11-13; APPROVAL.json. Per-stage reservations remain provisional during task selection review.",
-    "previous_campaigns": "Prior50/170GPUh caps remain closed; new230GPUh phase explicitly approved"
+    "authority": "Existing explicit230GPUh approval; user accepted balanced six and requested the same PPO setup. Reallocate within that cap; prior50/170GPUh caps closed.",
+    "evaluation_tradeoff": "Five shared tasks at40 cases rather than eight tasks at50; preserves all four learners and both corpus conditions, with less precision and no added-task panel."
   },
-  "scientific_limits": "Original corpus retains the older PPO critic mismatch; additions use the corrected collector. This tests adding these sources, not task diversity isolated from collector quality or history length. Native history benefit remains separate from policy success.",
+  "scientific_limits": "One fit per method/corpus; six atomic tasks and two held-out tasks remain narrow. Uniform-task sampling and fixed fit compute compare adding task data, not diversity isolated from corpus size. Teacher success is separate from causal history benefit.",
   "deadline": "Preserve original November15 Shanghai decision-readout target from the November12 plan; approval does not restart the three-day window. Report any schedule risk explicitly.",
-  "task_selection_status": "Prepared Cabinet/Rack/Counter list is provisional; see TASK-COVERAGE.md for proposed balanced replacement"
+  "task_selection_status": "User agreed to balanced six on November13; subsequently requested matched PPO setup. Recollect old three; verify corrected reuse rather than assume equivalence.",
+  "source_definition": "First 30 corrected-PPO updates per task; the corrected three-task corpus is an exact hash-bound subset of the six-task corpus. Historical buggy-critic sources excluded.",
+  "teacher_collection": {
+    "fresh_tasks": [
+      "OpenDrawer",
+      "CloseToasterOvenDoor",
+      "CoffeeSetupMug",
+      "TurnOffStove"
+    ],
+    "continuation_tasks": {
+      "PickPlaceCounterToStove": {
+        "initial_step": 10,
+        "target_step": 30
+      }
+    },
+    "reuse_candidate": {
+      "TurnOnSinkFaucet": "Only updates1..30 and the step30 teacher, conditional on recipe, raw-data and checkpoint verification; no step40 data/labels"
+    },
+    "target_updates_per_task": 30,
+    "episodes_per_update": 128,
+    "controls_per_episode": 600,
+    "task_train_episodes": 3840,
+    "task_train_controls": 2304000,
+    "initialization": "Original frozen-VLM Human300 SFT motor, fresh action-expert optimizer and critic",
+    "common_runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+    "fresh_allocation": {
+      "GPUs": 8,
+      "CPUs": 64,
+      "RAM_GiB": 1024,
+      "SHM_GiB": 32,
+      "maximum_minutes": 150,
+      "maximum_GPU_hours": 20
+    },
+    "continuation_maximum_minutes": 120,
+    "continuation_maximum_GPU_hours": 16,
+    "eval_cases": 64,
+    "evaluation_steps": [
+      0,
+      10,
+      20,
+      30
+    ],
+    "label_endpoint": 30,
+    "complete_checkpoint_interval": 5,
+    "automatic_retry": false,
+    "reuse_limit": "Operational save cadence may differ only if RNG isolation and complete chronology are verified; learner settings must match"
+  }
 }

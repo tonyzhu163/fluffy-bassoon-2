@@ -1,16 +1,18 @@
 #!/usr/bin/env bash
-# Fixed step10-to30 continuation in a fresh output; full resume inputs are mandatory.
+# Common corrected PPO recipe: four fresh sources and one exact continuation.
 set -Eeuo pipefail
 TASK_PIN=${1:?exact reviewed commit}
-TASK_NAME=${2:?OpenCabinet, SlideDishwasherRack, or PickPlaceCounterToStove}
+TASK_NAME=${2:?source task}
 TASK_ATTEMPT=${3:?fresh attempt name}
 TASK_CODE=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TASK_ROOT=/mowenjie/fluffy-bassoon-2
 TASK_RUN=robocasa-six-task-scale-20261113-r1
 TASK_PY=$TASK_ROOT/setups/robocasa365-native-20261101-r1/env/bin/python
 case "$TASK_NAME" in
-  OpenCabinet) TASK_TRAIN=2900000; TASK_EVAL=690100 ;;
-  SlideDishwasherRack) TASK_TRAIN=3000000; TASK_EVAL=700100 ;;
+  OpenDrawer) TASK_TRAIN=2100000; TASK_EVAL=610100 ;;
+  CloseToasterOvenDoor) TASK_TRAIN=2700000; TASK_EVAL=670100 ;;
+  CoffeeSetupMug) TASK_TRAIN=2500000; TASK_EVAL=650100 ;;
+  TurnOffStove) TASK_TRAIN=2400000; TASK_EVAL=640100 ;;
   PickPlaceCounterToStove) TASK_TRAIN=2600000; TASK_EVAL=660100 ;;
   *) exit 2 ;;
 esac
@@ -19,7 +21,15 @@ esac
 [[ $(git -C "$TASK_CODE" rev-parse HEAD) == "$TASK_PIN" ]]
 [[ -z $(git -C "$TASK_CODE" status --porcelain --untracked-files=no) ]]
 export TASK_ATTEMPT
-[[ -n ${ROBOCASA_SIM_PPO_RESUME:-} && -n ${ROBOCASA_SIM_PPO_BEFORE_REFERENCE:-} && -n ${ROBOCASA_SIM_PPO_BEFORE_SHA256:-} ]]
+if [[ $TASK_NAME == PickPlaceCounterToStove ]]; then
+  [[ -n ${ROBOCASA_SIM_PPO_RESUME:-} && -n ${ROBOCASA_SIM_PPO_BEFORE_REFERENCE:-} && -n ${ROBOCASA_SIM_PPO_BEFORE_SHA256:-} ]]
+  TASK_INITIAL_STEP=10; TASK_CHECKPOINT_SECONDS=5400; TASK_MAXIMUM_GPU_HOURS=16
+else
+  [[ -z ${ROBOCASA_SIM_PPO_RESUME:-} && -z ${ROBOCASA_SIM_PPO_BEFORE_REFERENCE:-} && -z ${ROBOCASA_SIM_PPO_BEFORE_SHA256:-} ]]
+  unset ROBOCASA_SIM_PPO_RESUME ROBOCASA_SIM_PPO_BEFORE_REFERENCE ROBOCASA_SIM_PPO_BEFORE_SHA256
+  TASK_INITIAL_STEP=0; TASK_CHECKPOINT_SECONDS=7200; TASK_MAXIMUM_GPU_HOURS=20
+fi
+export TASK_INITIAL_STEP TASK_MAXIMUM_GPU_HOURS
 export TASK_CODE_PIN=$TASK_PIN
 export RLINF_PATH=$TASK_ROOT/sources/critic-selected-a1229239-r1
 [[ $(git -C "$RLINF_PATH" rev-parse HEAD) == 8f9bfa7661928ef8c17494b04f4d7bf3125634e1 ]]
@@ -35,7 +45,7 @@ export ROBOCASA_SIM_PPO_ACTOR_PLACEMENT=0-1 ROBOCASA_SIM_PPO_ROLLOUT_PLACEMENT=0
 export ROBOCASA_SIM_PPO_MICRO_BATCH=16 ROBOCASA_SIM_PPO_WORLD_SIZE=8
 export ROBOCASA_FLOW_TRAIN_ENVS=128 ROBOCASA_FLOW_ROUNDS=1
 export ROBOCASA_FLOW_MAX_EPOCHS=30 ROBOCASA_FLOW_VAL_INTERVAL=10 ROBOCASA_FLOW_SAVE_INTERVAL=5
-export ROBOCASA_FLOW_FULL_MODEL_EXPORT_STEPS='[20,30]'
+export ROBOCASA_FLOW_FULL_MODEL_EXPORT_STEPS='[30]'
 export ROBOCASA_FLOW_SAMPLING_RECORD=full ROBOCASA_FLOW_ACTOR_BATCH_DROP='[]'
 export ROBOCASA_FLOW_NOISE_LEVEL=0.3 ROBOCASA_FLOW_IGNORE_LAST=true
 export ROBOCASA_SIM_PPO_GLOBAL_ESCROW=true ROBOCASA_FLOW_FRESH_EVAL_PROCESSES=true
@@ -56,7 +66,7 @@ PY
   export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 fi
 TASK_STARTED=$(date +%s)
-export TASK_DEADLINE=$((TASK_STARTED+6000))
+export TASK_DEADLINE=$((TASK_STARTED+TASK_CHECKPOINT_SECONDS+600))
 [[ ! -e $ROBOCASA_SIM_PPO_OUTPUT ]]
 mkdir -p "$ROBOCASA_SIM_PPO_OUTPUT"
 exec > >(tee "$ROBOCASA_SIM_PPO_OUTPUT/console.log") 2>&1
@@ -92,8 +102,10 @@ assert model=='661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5'
 assert norm=='4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee'
 (p/'MANIFEST.json').write_text(json.dumps(dict(source=sys.argv[1],hostname=socket.gethostname(),
     task=os.environ['ROBOCASA_FLOW_TASK'],model_sha256=model,norm_sha256=norm,
-    maximum_job_GPU_hours=16.0,
-    resumed_step=10,target_iterations=30,additional_train_episodes=2560,additional_train_controls=1536000,
+    maximum_job_GPU_hours=int(os.environ['TASK_MAXIMUM_GPU_HOURS']),
+    resumed_step=int(os.environ['TASK_INITIAL_STEP']),target_iterations=30,
+    additional_train_episodes=(30-int(os.environ['TASK_INITIAL_STEP']))*128,
+    additional_train_controls=(30-int(os.environ['TASK_INITIAL_STEP']))*128*600,
     free_bytes=shutil.disk_usage(p).free,checked_unix=time.time()),indent=2)+'\n')
 PY
 "$TASK_PY" -B "$TASK_CODE/scripts/[train]gpu_probe.py" --expected-count 8 --purpose training \
@@ -101,13 +113,13 @@ PY
 (
   while sleep 20; do
     TASK_FREE=$(df -Pk "$ROBOCASA_SIM_PPO_OUTPUT" | awk 'NR==2 {print $4}')
-    if (( TASK_FREE < 230686720 || $(date +%s) >= TASK_STARTED+5400 )); then
+    if (( TASK_FREE < 230686720 || $(date +%s) >= TASK_STARTED+TASK_CHECKPOINT_SECONDS )); then
       touch "$ROBOCASA_SIM_PPO_OUTPUT/CHECKPOINT_AND_EXIT"
       break
     fi
   done
 ) &
 TASK_WATCHER=$!
-timeout --signal=TERM --kill-after=30s "6100" "$TASK_PY" -B \
+timeout --signal=TERM --kill-after=30s "$((TASK_CHECKPOINT_SECONDS+700))" "$TASK_PY" -B \
   "$TASK_CODE/benchmarks/robocasa/train_flow_ppo.py" \
   --config-name robocasa365_pi05_flow_sde_ppo_reuse4
