@@ -1,0 +1,83 @@
+{
+  "status": "Prepared and CPU-checked; not submitted. Original fit allocations remain active.",
+  "recorded_shanghai": "2026-11-14T18:34:01.054478+08:00",
+  "reason": "Measured three-task DIT/IC-IQL actor pace is about2.4seconds/update versus about1.6 for AD/DPT; fixed10000 actor updates plus the1000-step value stage are likely to outlast the original345-minute worker windows.",
+  "fit_source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+  "launcher_source_commit": "55c0b27fd675e65d5c5cc715f5443571572e1b47",
+  "launcher_validation": "evidence/RESUME-LAUNCHER-VALIDATION.json",
+  "timing_evidence": "evidence/MONITOR-20261114-1833.json",
+  "training": "Resume full policy, values, both optimizers, sampler and all RNG state with the original fit source/contract. Keep actor10000 and value1000 endpoints, seed0, logical/execution batch8, loss weights and optimizer settings.",
+  "eligibility": "Bind actual terminal, launch, progress, contract and final resumable checkpoint hashes after the original worker closes gracefully and incomplete. Diagnose failures before any retry. No active checkpoint is used for a duplicate training launch.",
+  "budget": {
+    "proposed_maximum_GPU_hours": 9,
+    "existing_committed_conservative_GPU_hours": 189,
+    "matched_readout_proposal_GPU_hours": 32,
+    "total_with_both_proposals_GPU_hours": 230,
+    "authority": "Existing230GPUh campaign approval; use the previously uncommitted9GPUh recovery allowance. No extra budget authorized or spent by this preparation.",
+    "reconcile": "Use actual remaining updates and terminal allocation accounting before submission; do not exceed230GPUh."
+  },
+  "jobs": [
+    {
+      "corpus_size": 3,
+      "method": "dit",
+      "attempt": "resume3dit01",
+      "GPUs": 1,
+      "CPUs": 16,
+      "RAM_GiB": 128,
+      "shared_memory_GiB": 16,
+      "scheduler_maximum_minutes": 135,
+      "worker_deadline_minutes": 120,
+      "maximum_GPU_hours": 2.25,
+      "job_id": null,
+      "status": "unsubmitted",
+      "source_attempt": "fits3r1"
+    },
+    {
+      "corpus_size": 3,
+      "method": "ic_iql",
+      "attempt": "resume3iciql01",
+      "GPUs": 1,
+      "CPUs": 16,
+      "RAM_GiB": 128,
+      "shared_memory_GiB": 16,
+      "scheduler_maximum_minutes": 135,
+      "worker_deadline_minutes": 120,
+      "maximum_GPU_hours": 2.25,
+      "job_id": null,
+      "status": "unsubmitted",
+      "source_attempt": "fits3r1"
+    },
+    {
+      "corpus_size": 6,
+      "method": "dit",
+      "attempt": "resume6dit01",
+      "GPUs": 1,
+      "CPUs": 16,
+      "RAM_GiB": 128,
+      "shared_memory_GiB": 16,
+      "scheduler_maximum_minutes": 135,
+      "worker_deadline_minutes": 120,
+      "maximum_GPU_hours": 2.25,
+      "job_id": null,
+      "status": "unsubmitted",
+      "source_attempt": "fits6r1"
+    },
+    {
+      "corpus_size": 6,
+      "method": "ic_iql",
+      "attempt": "resume6iciql01",
+      "GPUs": 1,
+      "CPUs": 16,
+      "RAM_GiB": 128,
+      "shared_memory_GiB": 16,
+      "scheduler_maximum_minutes": 135,
+      "worker_deadline_minutes": 120,
+      "maximum_GPU_hours": 2.25,
+      "job_id": null,
+      "status": "unsubmitted",
+      "source_attempt": "fits6r1"
+    }
+  ],
+  "deployment": "Launcher changes only; qualified fit/runtime modules are identical. Deploy a new clean launcher checkout before submission; original active source remains immutable.",
+  "deadline": "Continue toward the originalNov15 Shanghai readout target; queue waits, continuation throughput and matched evaluation remain schedule risks."
+}

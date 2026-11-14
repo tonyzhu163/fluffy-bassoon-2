@@ -1,6 +1,6 @@
 {
-  "checked_shanghai": "2026-11-14T18:13:43.501880+08:00",
-  "status": "Both original jobs running; all eight learners have advancing native actor or Q/V updates",
+  "checked_shanghai": "2026-11-14T18:34:01.054478+08:00",
+  "status": "All eight native actors running; all four DIT/IC-IQL value stages completed1000 updates",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
   "source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
@@ -13,14 +13,14 @@
     "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json",
     "sha256": "2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0"
   },
-  "validation": "63 core tests and16 corpus/query cells passed; all eight resumable checkpoints read back. AD/DPT native actor updates verified on both corpora; three-task DIT/IC-IQL now made finite native actor updates after1000 independent value updates. Six-task DIT/IC-IQL actor transition remains pending.",
+  "validation": "Both allocation probes passed; all eight native actors made finite full-batch8 gradient updates. DIT/IC-IQL each completed1000 independent value updates. All10000-update actor endpoints and paired evaluations remain pending.",
   "jobs": [
     {
       "corpus_size": 3,
       "attempt": "fits3r1",
       "job_name": "mwj_1114_matched_fits3_g4_r1",
       "job_id": "job-o8p1uyvoxzr3",
-      "status": "Running; all four native actors advancing; DIT/IC-IQL completed1000 fresh value updates",
+      "status": "Running; all four native actors advancing",
       "GPUs": 4,
       "CPUs": 64,
       "RAM_GiB": 512,
@@ -49,70 +49,71 @@
         "ad": {
           "phase": "actor",
           "value_update": 0,
-          "actor_update": 1300,
-          "elapsed_seconds": 2165.293152407,
+          "actor_update": 2000,
+          "elapsed_seconds": 3298.063468544,
           "metrics": {
-            "loss": 0.15334194898605347,
-            "gradient_norm": 0.0015095461858436465,
+            "loss": 0.06669866293668747,
+            "gradient_norm": 0.0019885245710611343,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
             "weight_mean": 1.0,
             "weight_max": 1.0,
-            "mean_update_seconds": 1.6193877328399957,
+            "validation_flow_loss": 0.09781674994155765,
+            "mean_update_seconds": 1.5631493757699808,
             "peak_cuda_bytes": 14507586048
           },
-          "checked_unix": 1794651143.7140868
+          "checked_unix": 1794652278.4241862
         },
         "dit": {
           "phase": "actor",
           "value_update": 1000,
-          "actor_update": 1,
-          "elapsed_seconds": 2675.8279950450005,
+          "actor_update": 300,
+          "elapsed_seconds": 3396.135169544,
           "metrics": {
-            "loss": 0.07834988832473755,
-            "gradient_norm": 0.000780115369707346,
+            "loss": 0.09509941935539246,
+            "gradient_norm": 0.0013155165361240506,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
-            "weight_mean": 0.9812501072883606,
-            "weight_max": 1.0504419803619385,
-            "mean_update_seconds": 2.3730756620007014,
-            "peak_cuda_bytes": 12692160512
+            "weight_mean": 1.0032293796539307,
+            "weight_max": 1.0484321117401123,
+            "mean_update_seconds": 2.4529247896000017,
+            "peak_cuda_bytes": 14814460928
           },
-          "checked_unix": 1794651655.4024005
+          "checked_unix": 1794652375.668979
         },
         "dpt": {
           "phase": "actor",
           "value_update": 0,
-          "actor_update": 1300,
-          "elapsed_seconds": 2115.786302418,
+          "actor_update": 2100,
+          "elapsed_seconds": 3391.5759052549997,
           "metrics": {
-            "loss": 0.15063974261283875,
-            "gradient_norm": 0.0016980250366032124,
+            "loss": 0.08843708783388138,
+            "gradient_norm": 0.002795259468257427,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
             "weight_mean": 1.0,
             "weight_max": 1.0,
-            "mean_update_seconds": 1.5526741322000226,
+            "mean_update_seconds": 1.5335614095799792,
             "peak_cuda_bytes": 14507586048
           },
-          "checked_unix": 1794651093.469478
+          "checked_unix": 1794652369.2672198
         },
         "ic_iql": {
           "phase": "actor",
           "value_update": 1000,
-          "actor_update": 1,
-          "elapsed_seconds": 2613.98354276,
+          "actor_update": 300,
+          "elapsed_seconds": 3326.757152829,
           "metrics": {
-            "loss": 0.08254871517419815,
-            "gradient_norm": 0.0008627178031019866,
+            "loss": 0.09845589846372604,
+            "gradient_norm": 0.0013583735562860966,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
-            "weight_mean": 1.0191344022750854,
-            "weight_max": 1.1663546562194824,
-            "mean_update_seconds": 2.3248818749998463,
-            "peak_cuda_bytes": 12692160512
+            "weight_mean": 1.0077698230743408,
+            "weight_max": 1.094849705696106,
+            "mean_update_seconds": 2.421294184790022,
+            "peak_cuda_bytes": 14814460928
           },
-          "checked_unix": 1794651593.593191
+          "checked_unix": 1794652306.3603706
         }
       },
       "worker_started_unix": 1794648856.6161726,
@@ -148,7 +149,7 @@
       "attempt": "fits6r1",
       "job_name": "mwj_1114_matched_fits6_g4_r1",
       "job_id": "job-5zbsgqfx0ax6",
-      "status": "Running; AD/DPT native actor updates, DIT/IC-IQL fresh value updates advancing",
+      "status": "Running; all four native actors advancing",
       "GPUs": 4,
       "CPUs": 64,
       "RAM_GiB": 512,
@@ -178,64 +179,70 @@
         "ad": {
           "phase": "actor",
           "value_update": 0,
-          "actor_update": 800,
-          "elapsed_seconds": 1339.2337683644146,
+          "actor_update": 1600,
+          "elapsed_seconds": 2643.2617341279984,
           "metrics": {
-            "loss": 0.06167106702923775,
-            "gradient_norm": 0.004100976046174765,
+            "loss": 0.06457832455635071,
+            "gradient_norm": 0.0012480131117627025,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
             "weight_mean": 1.0,
             "weight_max": 1.0,
-            "mean_update_seconds": 1.5745490168966354,
-            "peak_cuda_bytes": 14483001344
+            "mean_update_seconds": 1.6081182565540075,
+            "peak_cuda_bytes": 14483107840
           },
-          "checked_unix": 1794651126.4996006
+          "checked_unix": 1794652430.507439
         },
         "dit": {
-          "phase": "value",
-          "value_update": 500,
-          "actor_update": 0,
-          "elapsed_seconds": 1286.8816503183916,
+          "phase": "actor",
+          "value_update": 1000,
+          "actor_update": 1,
+          "elapsed_seconds": 2644.823709851131,
           "metrics": {
-            "loss": 0.1918601095676422,
-            "q_loss": 0.095450758934021,
-            "v_loss": 0.09640934318304062,
-            "gradient_norm": 0.3718321621417999,
-            "update_seconds": 2.458876240067184
+            "loss": 0.10220630466938019,
+            "gradient_norm": 0.0009348933235742152,
+            "logical_batch_size": 8,
+            "execution_batch_size": 8,
+            "weight_mean": 0.9960340261459351,
+            "weight_max": 1.0558760166168213,
+            "mean_update_seconds": 2.347750994376838,
+            "peak_cuda_bytes": 12691408896
           },
-          "checked_unix": 1794651074.8758798
+          "checked_unix": 1794652433.3204246
         },
         "dpt": {
           "phase": "actor",
           "value_update": 0,
-          "actor_update": 800,
-          "elapsed_seconds": 1340.1557509368286,
+          "actor_update": 1600,
+          "elapsed_seconds": 2643.7080724537373,
           "metrics": {
-            "loss": 0.09470213949680328,
-            "gradient_norm": 0.003984607290476561,
+            "loss": 0.05656901001930237,
+            "gradient_norm": 0.0006770887994207442,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
             "weight_mean": 1.0,
             "weight_max": 1.0,
-            "mean_update_seconds": 1.5710442174319177,
-            "peak_cuda_bytes": 14483001344
+            "mean_update_seconds": 1.6010431139916181,
+            "peak_cuda_bytes": 14483107840
           },
-          "checked_unix": 1794651126.2358105
+          "checked_unix": 1794652429.7647567
         },
         "ic_iql": {
-          "phase": "value",
-          "value_update": 500,
-          "actor_update": 0,
-          "elapsed_seconds": 1252.960478823632,
+          "phase": "actor",
+          "value_update": 1000,
+          "actor_update": 1,
+          "elapsed_seconds": 2581.6282673384994,
           "metrics": {
-            "loss": 0.019828608259558678,
-            "q_loss": 0.019308099523186684,
-            "v_loss": 0.0005205092020332813,
-            "gradient_norm": 0.07332607358694077,
-            "update_seconds": 2.3481422374024987
+            "loss": 0.10559068620204926,
+            "gradient_norm": 0.0010009026154875755,
+            "logical_batch_size": 8,
+            "execution_batch_size": 8,
+            "weight_mean": 1.0231082439422607,
+            "weight_max": 1.1939594745635986,
+            "mean_update_seconds": 2.3182807452976704,
+            "peak_cuda_bytes": 12691408896
           },
-          "checked_unix": 1794651041.061739
+          "checked_unix": 1794652370.1721692
         }
       },
       "launch_evidence": {
@@ -266,10 +273,10 @@
       }
     }
   ],
-  "next_check_shanghai": "2026-11-14T18:33:43.501880+08:00",
+  "next_check_shanghai": "2026-11-14T18:54:01.054478+08:00",
   "next_action": "Monitor every20minutes; verify DIT/IC-IQL transition to fixed-value actor fitting, complete10000-update checkpoints, then run matched ID/OOD panel",
   "scheduling_change": "Prepared one-GPU alternative was never applied; both corpus fits use the same498 source pin and original commands.",
-  "progress_evidence": "evidence/MONITOR-20261114-1812.json",
+  "progress_evidence": "evidence/MONITOR-20261114-1833.json",
   "checkpoint_state_audit": "evidence/CHECKPOINT-STATE-AUDIT.json",
   "paired_method_contrasts": "ANALYSIS-CONTRASTS.json",
   "matched_readout_timing_projection": "evidence/MATCHED-READOUT-TIMING-PROJECTION.json",
@@ -277,5 +284,6 @@
     "passed": true,
     "checked_unix": 1794651717.9414322,
     "evidence": "evidence/THREE-TASK-VALUE-ACTOR-TRANSITION.json"
-  }
+  },
+  "continuation_preparation": "CONTINUATION-PLAN.json"
 }
