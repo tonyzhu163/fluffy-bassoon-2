@@ -41,7 +41,7 @@
   "completed": true,
   "ended_unix": 1794666040.9322987,
   "completion_receipt": "evidence/FINAL-AD-DPT-AUDIT-COMPLETE.json",
-  "next_action": "Retrieve final-fit-audit02 all8 result; create readout-inputs01/SPEC.json with the prospective540min/36GPUh window from EVALUATION-WINDOW-REVIEW.json, then review latest main, capacity and budget before launch.",
+  "next_action": "Use new readout-inputs01 SPEC with prospective540min/36GPUh window; check current capacity and launch.",
   "weighted_continuation_audit": {
     "status": "One of four weighted final fits audited; CPU watcher still running",
     "source_commit": "e5f8fb21c1c7919d6f1384fc4bf8edbfc48e26e0",
@@ -76,5 +76,45 @@
         "checked_unix": 1794676403.3344169
       }
     }
-  }
+  },
+  "overall_status": "All8 complete and audited",
+  "weighted_final_completion": {
+    "started_unix": 1794670802.0627267,
+    "hostname": "aibox-rffe453e3884-5f96c78b88-6ssrn",
+    "pid": 198476,
+    "script_sha256": "fa1a94e345d48f701529d3d136a48dff2a75628f29abc1875006c25796c5b938",
+    "deadline_unix": 1794680100.0,
+    "audited": {
+      "3/dit": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit02/3_dit.json",
+        "sha256": "b5bada0ba23fda5c5c73a51a43fcb25d6637bd7185b880f0448c0e7f249f0269"
+      },
+      "6/ic_iql": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit02/6_ic_iql.json",
+        "sha256": "2f53e0e314d78d788dfe2734e4f0a99f00c9af19786c6e3915422c13a4538d97"
+      },
+      "3/ic_iql": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit02/3_ic_iql.json",
+        "sha256": "9d30d9d7295f4fb3c258a2affcb1217bb6ee48ab1a5590529de369ab5abd52da"
+      },
+      "6/dit": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit02/6_dit.json",
+        "sha256": "1a350f399d351e19af2e4bffcf881e25588655218e6b973187b6194e9094893b"
+      }
+    },
+    "completed": true,
+    "submitted": false,
+    "GPU_hours": 0,
+    "checked_unix": 1794676962.5116255,
+    "ended_unix": 1794676963.3400176,
+    "inventory": {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit02/FINAL-FIT-CANDIDATES.json",
+      "sha256": "87d3ebe696e8bdbf9873b40555557a0cc8324705c4226da3bb286a79eace1e40"
+    },
+    "evaluation_spec": {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit02/SPEC.json",
+      "sha256": "1fbb025a89125fc2a1eaf5910603d098ece629d7c4bfc9f46285fc5dd84cfc63"
+    }
+  },
+  "overall_completed_count": 8
 }

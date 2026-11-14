@@ -7,15 +7,15 @@
   "prior_caps": "The original50/170GPUh campaign caps remain closed; this is an explicitly approved additional phase",
   "subsequent_steering": "User questioned representativeness before any launch. Review source-task coverage before committing collection; retain this budget authorization without asking again.",
   "GPU_hours_used": null,
-  "GPU_hours_reserved": 9.25,
+  "GPU_hours_reserved": 0,
   "task_selection_response": "yes i agree",
   "matched_collector_steering": [
     "but do we need to recollect the old ppo with bug?",
     "like we want to use the same ppo setup right?"
   ],
-  "usage_checked_shanghai": "2026-11-15T00:26:08.852587+08:00",
-  "closed_jobs_conservative_GPU_hours_upper_bound": 182.5,
-  "committed_conservative_upper_GPU_hours": 191.75,
+  "usage_checked_shanghai": "2026-11-15T01:28:20.733200+08:00",
+  "closed_jobs_conservative_GPU_hours_upper_bound": 190.25,
+  "committed_conservative_upper_GPU_hours": 190.25,
   "continuation_instruction": "can you cehck space and then keep going?",
   "reconciled_20261114": {
     "checked_shanghai": "2026-11-14T14:22:00+08:00",
@@ -42,12 +42,7 @@
     },
     "hard_cap_GPU_hours": 230
   },
-  "reservation_detail": {
-    "resume3dit01": 2.25,
-    "resume3iciql01": 2.5,
-    "resume6dit01": 2.25,
-    "resume6iciql01": 2.25
-  },
+  "reservation_detail": {},
   "paired_evaluation_instruction": "why didnt we just eval more then the uncertainty intervals? just do a lot of paired evals",
   "qualification_accounting": {
     "checked_shanghai": "2026-11-14T15:29:24+08:00",
@@ -91,9 +86,8 @@
   },
   "remaining_current_proposal": {
     "matched_endpoint_panels": 36,
-    "fit_continuations_from_existing_recovery_margin": 0,
-    "uncommitted_recovery": 2.25,
-    "total": 38.25
+    "uncommitted_recovery": 3.75,
+    "total": 39.75
   },
   "latest_reconciliation": "CONTINUATION-EXECUTION.json",
   "continuation_preparation": "CONTINUATION-PLAN.json",
@@ -161,5 +155,140 @@
       "sha256": "afa1f46eb3092f7074a200ebbdda3e3748eb12fd95cbc149bb95128a011ca112"
     }
   },
-  "evaluation_window_review": "EVALUATION-WINDOW-REVIEW.json"
+  "evaluation_window_review": "EVALUATION-WINDOW-REVIEW.json",
+  "continuation_closeout": {
+    "checked_shanghai": "2026-11-15T01:28:20.733200+08:00",
+    "jobs": [
+      {
+        "attempt": "resume3dit01",
+        "job_id": "job-x26sts56sm1y",
+        "owner": "mowenjie",
+        "scheduler_status": "Succeeded",
+        "scheduler_runtime_seconds": 6530,
+        "scheduler_ended_shanghai": "2026-11-15T01:11:53+08:00",
+        "scheduler_GPU_hours": 1.8138888888888889,
+        "worker_GPU_hours": 1.8096284523937438,
+        "closed_conservative_GPU_hours": 2,
+        "terminal": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3dit01/EXIT.json",
+          "sha256": "affa7c317f8d0d58aed673ccf2cbc86752d76e3d7e06ac9af1c791e51c83045c",
+          "data": {
+            "completed": true,
+            "results": [
+              {
+                "method": "dit",
+                "exit_code": 0,
+                "complete": true,
+                "started_unix": 1794669875.3468688,
+                "ended_unix": 1794676308.9955485
+              }
+            ],
+            "ended_unix": 1794676309.2059515,
+            "allocation_GPU_hours": 1.8096284523937438,
+            "incomplete_policy": "Resume preserved full state under a separately reconciled reservation; never publish a shorter fit as10000 updates"
+          }
+        },
+        "source": "Authenticated Baige task list terminal runtime and successful owned parent receipt"
+      },
+      {
+        "attempt": "resume3iciql01",
+        "job_id": "job-ffzoxy4ezshi",
+        "owner": "mowenjie",
+        "scheduler_status": "Succeeded",
+        "scheduler_runtime_seconds": 6831,
+        "scheduler_ended_shanghai": "2026-11-15T01:18:02+08:00",
+        "scheduler_GPU_hours": 1.8975,
+        "worker_GPU_hours": 1.8920351299974654,
+        "closed_conservative_GPU_hours": 2,
+        "terminal": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3iciql01/EXIT.json",
+          "sha256": "a3f605ba52a670fea75529a8ddb38d70fcc32e42df15e37d1b8272c77b8f10a3",
+          "data": {
+            "completed": true,
+            "results": [
+              {
+                "method": "ic_iql",
+                "exit_code": 0,
+                "complete": true,
+                "started_unix": 1794669912.3075578,
+                "ended_unix": 1794676664.57809
+              }
+            ],
+            "ended_unix": 1794676664.7717035,
+            "allocation_GPU_hours": 1.8920351299974654,
+            "incomplete_policy": "Resume preserved full state under a separately reconciled reservation; never publish a shorter fit as10000 updates"
+          }
+        },
+        "source": "Authenticated Baige task list terminal runtime and successful owned parent receipt"
+      },
+      {
+        "attempt": "resume6dit01",
+        "job_id": "job-8p3dcubnslyp",
+        "owner": "mowenjie",
+        "scheduler_status": "Succeeded",
+        "scheduler_runtime_seconds": 6490,
+        "scheduler_ended_shanghai": "2026-11-15T01:22:29+08:00",
+        "scheduler_GPU_hours": 1.8027777777777778,
+        "worker_GPU_hours": 1.797967442539003,
+        "closed_conservative_GPU_hours": 2,
+        "terminal": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6dit01/EXIT.json",
+          "sha256": "f71ac5a68aa90dafd7e2e6eed95f6a64e4e3a34a9ca148eba68e98e0d8254f57",
+          "data": {
+            "completed": true,
+            "results": [
+              {
+                "method": "dit",
+                "exit_code": 0,
+                "complete": true,
+                "started_unix": 1794670590.7690814,
+                "ended_unix": 1794676934.6280031
+              }
+            ],
+            "ended_unix": 1794676934.8186445,
+            "allocation_GPU_hours": 1.797967442539003,
+            "incomplete_policy": "Resume preserved full state under a separately reconciled reservation; never publish a shorter fit as10000 updates"
+          }
+        },
+        "source": "Authenticated Baige task list terminal runtime and successful owned parent receipt"
+      },
+      {
+        "attempt": "resume6iciql01",
+        "job_id": "job-98188j8yebi8",
+        "owner": "mowenjie",
+        "scheduler_status": "Succeeded",
+        "scheduler_runtime_seconds": 5931,
+        "scheduler_ended_shanghai": "2026-11-15T01:16:03+08:00",
+        "scheduler_GPU_hours": 1.6475,
+        "worker_GPU_hours": 1.6455591709746256,
+        "closed_conservative_GPU_hours": 1.75,
+        "terminal": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6iciql01/EXIT.json",
+          "sha256": "08ff861b823adb7b6bdc4d4f374473f048b5db8e7370bee1cea9b9d79b3b3c36",
+          "data": {
+            "completed": true,
+            "results": [
+              {
+                "method": "ic_iql",
+                "exit_code": 0,
+                "complete": true,
+                "started_unix": 1794670757.2460442,
+                "ended_unix": 1794676550.6627102
+              }
+            ],
+            "ended_unix": 1794676550.847996,
+            "allocation_GPU_hours": 1.6455591709746256,
+            "incomplete_policy": "Resume preserved full state under a separately reconciled reservation; never publish a shorter fit as10000 updates"
+          }
+        },
+        "source": "Authenticated Baige task list terminal runtime and successful owned parent receipt"
+      }
+    ],
+    "total_scheduler_GPU_hours": 7.161666666666667,
+    "total_worker_GPU_hours": 7.145190195904837,
+    "closed_conservative_GPU_hours": 7.75,
+    "previous_reservation_GPU_hours": 9.25,
+    "released_GPU_hours": 1.5,
+    "basis": "Round each observed scheduler/worker allocation up to next quarter GPU-hour; retain all earlier conservative closures"
+  }
 }

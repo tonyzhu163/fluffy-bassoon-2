@@ -10,7 +10,7 @@
       "attempt": "resume3dit01",
       "job_name": "mwj_1114_resume3dit01_g1_r1",
       "job_id": "job-x26sts56sm1y",
-      "status": "Complete; worker exit0; final tensor audit passed; scheduler accounting pending",
+      "status": "Succeeded; fixed10000 final audited and allocation closed",
       "GPUs": 1,
       "CPUs": 16,
       "RAM_GiB": 128,
@@ -216,7 +216,7 @@
           }
         }
       },
-      "checked_unix": 1794676450.5581682,
+      "checked_unix": 1794677213.9167745,
       "terminal": {
         "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3dit01/EXIT.json",
         "sha256": "affa7c317f8d0d58aed673ccf2cbc86752d76e3d7e06ac9af1c791e51c83045c",
@@ -239,6 +239,37 @@
       "final_audit": {
         "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit02/3_dit.json",
         "sha256": "b5bada0ba23fda5c5c73a51a43fcb25d6637bd7185b880f0448c0e7f249f0269"
+      },
+      "closeout": {
+        "attempt": "resume3dit01",
+        "job_id": "job-x26sts56sm1y",
+        "owner": "mowenjie",
+        "scheduler_status": "Succeeded",
+        "scheduler_runtime_seconds": 6530,
+        "scheduler_ended_shanghai": "2026-11-15T01:11:53+08:00",
+        "scheduler_GPU_hours": 1.8138888888888889,
+        "worker_GPU_hours": 1.8096284523937438,
+        "closed_conservative_GPU_hours": 2,
+        "terminal": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3dit01/EXIT.json",
+          "sha256": "affa7c317f8d0d58aed673ccf2cbc86752d76e3d7e06ac9af1c791e51c83045c",
+          "data": {
+            "completed": true,
+            "results": [
+              {
+                "method": "dit",
+                "exit_code": 0,
+                "complete": true,
+                "started_unix": 1794669875.3468688,
+                "ended_unix": 1794676308.9955485
+              }
+            ],
+            "ended_unix": 1794676309.2059515,
+            "allocation_GPU_hours": 1.8096284523937438,
+            "incomplete_policy": "Resume preserved full state under a separately reconciled reservation; never publish a shorter fit as10000 updates"
+          }
+        },
+        "source": "Authenticated Baige task list terminal runtime and successful owned parent receipt"
       }
     },
     {
@@ -247,7 +278,7 @@
       "attempt": "resume3iciql01",
       "job_name": "mwj_1114_resume3iciql01_g1_r1",
       "job_id": "job-ffzoxy4ezshi",
-      "status": "Running; restored actor updates advancing",
+      "status": "Succeeded; fixed10000 final audited and allocation closed",
       "GPUs": 1,
       "CPUs": 16,
       "RAM_GiB": 128,
@@ -301,27 +332,28 @@
       "command_UI_copy_verified_exact": true,
       "progress": {
         "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3iciql01/ic_iql/PROGRESS.json",
-        "sha256": "291eaa2c117d1b91428601a670d7c32280fcbe7b61d51fb966c787da49bb2af1",
+        "sha256": "669923280738d4f93b193a3890f53f6296487209de808898e298aed024adbc38",
         "data": {
           "phase": "actor",
           "value_update": 1000,
-          "actor_update": 9900,
-          "elapsed_seconds": 27019.355777139775,
+          "actor_update": 10000,
+          "elapsed_seconds": 27273.27317527309,
           "checkpoint": {
-            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3iciql01/ic_iql/actor-01000-09900.pt",
-            "sha256": "a4093133096d8c99df48e9742762e8a6d8540a4f12df83735f6fc01c75e360d1"
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3iciql01/ic_iql/actor-01000-10000.pt",
+            "sha256": "38e400d14be2ffb8f4c6afb17f8ed9362f4add075996d69408c24a767c77488a"
           },
-          "complete": false,
-          "checked_unix": 1794676382.7114885,
+          "complete": true,
+          "checked_unix": 1794676636.620985,
           "execution_batch": 8,
           "metrics": {
-            "loss": 0.10200518369674683,
-            "gradient_norm": 0.0013974851462990046,
+            "loss": 0.07637952268123627,
+            "gradient_norm": 0.0013111800653859973,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
-            "weight_mean": 0.9780706763267517,
-            "weight_max": 1.0306575298309326,
-            "mean_update_seconds": 2.4057517630793153,
+            "weight_mean": 0.9451610445976257,
+            "weight_max": 1.019885540008545,
+            "validation_flow_loss": 0.09847063152119517,
+            "mean_update_seconds": 2.3344215463567526,
             "peak_cuda_bytes": 14705613824
           }
         }
@@ -452,7 +484,57 @@
           }
         }
       },
-      "checked_unix": 1794676450.5581682
+      "checked_unix": 1794677213.9167745,
+      "terminal": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3iciql01/EXIT.json",
+        "sha256": "a3f605ba52a670fea75529a8ddb38d70fcc32e42df15e37d1b8272c77b8f10a3",
+        "data": {
+          "completed": true,
+          "results": [
+            {
+              "method": "ic_iql",
+              "exit_code": 0,
+              "complete": true,
+              "started_unix": 1794669912.3075578,
+              "ended_unix": 1794676664.57809
+            }
+          ],
+          "ended_unix": 1794676664.7717035,
+          "allocation_GPU_hours": 1.8920351299974654,
+          "incomplete_policy": "Resume preserved full state under a separately reconciled reservation; never publish a shorter fit as10000 updates"
+        }
+      },
+      "closeout": {
+        "attempt": "resume3iciql01",
+        "job_id": "job-ffzoxy4ezshi",
+        "owner": "mowenjie",
+        "scheduler_status": "Succeeded",
+        "scheduler_runtime_seconds": 6831,
+        "scheduler_ended_shanghai": "2026-11-15T01:18:02+08:00",
+        "scheduler_GPU_hours": 1.8975,
+        "worker_GPU_hours": 1.8920351299974654,
+        "closed_conservative_GPU_hours": 2,
+        "terminal": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3iciql01/EXIT.json",
+          "sha256": "a3f605ba52a670fea75529a8ddb38d70fcc32e42df15e37d1b8272c77b8f10a3",
+          "data": {
+            "completed": true,
+            "results": [
+              {
+                "method": "ic_iql",
+                "exit_code": 0,
+                "complete": true,
+                "started_unix": 1794669912.3075578,
+                "ended_unix": 1794676664.57809
+              }
+            ],
+            "ended_unix": 1794676664.7717035,
+            "allocation_GPU_hours": 1.8920351299974654,
+            "incomplete_policy": "Resume preserved full state under a separately reconciled reservation; never publish a shorter fit as10000 updates"
+          }
+        },
+        "source": "Authenticated Baige task list terminal runtime and successful owned parent receipt"
+      }
     },
     {
       "corpus_size": 6,
@@ -460,7 +542,7 @@
       "attempt": "resume6dit01",
       "job_name": "mwj_1114_resume6dit01_g1_r1",
       "job_id": "job-8p3dcubnslyp",
-      "status": "Running; restored actor updates advancing",
+      "status": "Succeeded; fixed10000 final audited and allocation closed",
       "GPUs": 1,
       "CPUs": 16,
       "RAM_GiB": 128,
@@ -514,27 +596,28 @@
       "command_UI_copy_verified_exact": true,
       "progress": {
         "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6dit01/dit/PROGRESS.json",
-        "sha256": "841f03c33f9da16af3bfda901f5392f68252702a16c48a50503f1c7ff6095db0",
+        "sha256": "9a23818120ece700f8afb13fde0a56601b3d5e868bc632d2ae318158665c646e",
         "data": {
           "phase": "actor",
           "value_update": 1000,
-          "actor_update": 9800,
-          "elapsed_seconds": 26300.873130015098,
+          "actor_update": 10000,
+          "elapsed_seconds": 26798.013028983027,
           "checkpoint": {
-            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6dit01/dit/actor-01000-09800.pt",
-            "sha256": "2254d6c838b3b140b720e620fa8a3f20e2f255b9754eced09ed1ad3b404935df"
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6dit01/dit/actor-01000-10000.pt",
+            "sha256": "837797fb3b343114ac81e8dc51ff978bcdd3e9c5ae92718c91011df6fe57c1dc"
           },
-          "complete": false,
-          "checked_unix": 1794676410.376016,
+          "complete": true,
+          "checked_unix": 1794676907.6109376,
           "execution_batch": 8,
           "metrics": {
-            "loss": 0.12894873321056366,
-            "gradient_norm": 0.0033218259923160076,
+            "loss": 0.05008392781019211,
+            "gradient_norm": 0.0018266099505126476,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
-            "weight_mean": 0.9762567281723022,
-            "weight_max": 1.0301192998886108,
-            "mean_update_seconds": 2.3737522585783153,
+            "weight_mean": 0.9814828634262085,
+            "weight_max": 1.1501915454864502,
+            "validation_flow_loss": 0.09235844202339649,
+            "mean_update_seconds": 2.330460341461003,
             "peak_cuda_bytes": 14630839808
           }
         }
@@ -665,7 +748,57 @@
           }
         }
       },
-      "checked_unix": 1794676450.5581682
+      "checked_unix": 1794677213.9167745,
+      "terminal": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6dit01/EXIT.json",
+        "sha256": "f71ac5a68aa90dafd7e2e6eed95f6a64e4e3a34a9ca148eba68e98e0d8254f57",
+        "data": {
+          "completed": true,
+          "results": [
+            {
+              "method": "dit",
+              "exit_code": 0,
+              "complete": true,
+              "started_unix": 1794670590.7690814,
+              "ended_unix": 1794676934.6280031
+            }
+          ],
+          "ended_unix": 1794676934.8186445,
+          "allocation_GPU_hours": 1.797967442539003,
+          "incomplete_policy": "Resume preserved full state under a separately reconciled reservation; never publish a shorter fit as10000 updates"
+        }
+      },
+      "closeout": {
+        "attempt": "resume6dit01",
+        "job_id": "job-8p3dcubnslyp",
+        "owner": "mowenjie",
+        "scheduler_status": "Succeeded",
+        "scheduler_runtime_seconds": 6490,
+        "scheduler_ended_shanghai": "2026-11-15T01:22:29+08:00",
+        "scheduler_GPU_hours": 1.8027777777777778,
+        "worker_GPU_hours": 1.797967442539003,
+        "closed_conservative_GPU_hours": 2,
+        "terminal": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6dit01/EXIT.json",
+          "sha256": "f71ac5a68aa90dafd7e2e6eed95f6a64e4e3a34a9ca148eba68e98e0d8254f57",
+          "data": {
+            "completed": true,
+            "results": [
+              {
+                "method": "dit",
+                "exit_code": 0,
+                "complete": true,
+                "started_unix": 1794670590.7690814,
+                "ended_unix": 1794676934.6280031
+              }
+            ],
+            "ended_unix": 1794676934.8186445,
+            "allocation_GPU_hours": 1.797967442539003,
+            "incomplete_policy": "Resume preserved full state under a separately reconciled reservation; never publish a shorter fit as10000 updates"
+          }
+        },
+        "source": "Authenticated Baige task list terminal runtime and successful owned parent receipt"
+      }
     },
     {
       "corpus_size": 6,
@@ -673,7 +806,7 @@
       "attempt": "resume6iciql01",
       "job_name": "mwj_1114_resume6iciql01_g1_r1",
       "job_id": "job-98188j8yebi8",
-      "status": "Running; restored actor updates advancing",
+      "status": "Succeeded; fixed10000 final audited and allocation closed",
       "GPUs": 1,
       "CPUs": 16,
       "RAM_GiB": 128,
@@ -727,27 +860,28 @@
       "command_UI_copy_verified_exact": true,
       "progress": {
         "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6iciql01/ic_iql/PROGRESS.json",
-        "sha256": "29f0e10cfb4cf69e65b5b360c76e1e59b675fff03357748aff92579ff2f1ea6e",
+        "sha256": "0ce543b2c286630a270630d567bc04a5bff52258f537dbe9730bcd11ec498b35",
         "data": {
           "phase": "actor",
           "value_update": 1000,
-          "actor_update": 9900,
-          "elapsed_seconds": 25992.47267545946,
+          "actor_update": 10000,
+          "elapsed_seconds": 26246.784371043555,
           "checkpoint": {
-            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6iciql01/ic_iql/actor-01000-09900.pt",
-            "sha256": "672a82a677bfea3395acc87a41bff5972a5ef317b9017e5d96792959c88ba89b"
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6iciql01/ic_iql/actor-01000-10000.pt",
+            "sha256": "6f589abf2a6acd69dfe7c45e6c5f2ab333591c995773936c9bb0b2db93f240e7"
           },
-          "complete": false,
-          "checked_unix": 1794676268.6114206,
+          "complete": true,
+          "checked_unix": 1794676522.8555162,
           "execution_batch": 8,
           "metrics": {
-            "loss": 0.09732089936733246,
-            "gradient_norm": 0.0013762229355052114,
+            "loss": 0.05364123731851578,
+            "gradient_norm": 0.0012126414803788066,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
-            "weight_mean": 0.9386491775512695,
-            "weight_max": 1.0609129667282104,
-            "mean_update_seconds": 2.4428853299841284,
+            "weight_mean": 1.0065711736679077,
+            "weight_max": 1.0882312059402466,
+            "validation_flow_loss": 0.09271001536399126,
+            "mean_update_seconds": 2.336736626988277,
             "peak_cuda_bytes": 14643275776
           }
         }
@@ -878,7 +1012,57 @@
           }
         }
       },
-      "checked_unix": 1794676450.5581682
+      "checked_unix": 1794677213.9167745,
+      "terminal": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6iciql01/EXIT.json",
+        "sha256": "08ff861b823adb7b6bdc4d4f374473f048b5db8e7370bee1cea9b9d79b3b3c36",
+        "data": {
+          "completed": true,
+          "results": [
+            {
+              "method": "ic_iql",
+              "exit_code": 0,
+              "complete": true,
+              "started_unix": 1794670757.2460442,
+              "ended_unix": 1794676550.6627102
+            }
+          ],
+          "ended_unix": 1794676550.847996,
+          "allocation_GPU_hours": 1.6455591709746256,
+          "incomplete_policy": "Resume preserved full state under a separately reconciled reservation; never publish a shorter fit as10000 updates"
+        }
+      },
+      "closeout": {
+        "attempt": "resume6iciql01",
+        "job_id": "job-98188j8yebi8",
+        "owner": "mowenjie",
+        "scheduler_status": "Succeeded",
+        "scheduler_runtime_seconds": 5931,
+        "scheduler_ended_shanghai": "2026-11-15T01:16:03+08:00",
+        "scheduler_GPU_hours": 1.6475,
+        "worker_GPU_hours": 1.6455591709746256,
+        "closed_conservative_GPU_hours": 1.75,
+        "terminal": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6iciql01/EXIT.json",
+          "sha256": "08ff861b823adb7b6bdc4d4f374473f048b5db8e7370bee1cea9b9d79b3b3c36",
+          "data": {
+            "completed": true,
+            "results": [
+              {
+                "method": "ic_iql",
+                "exit_code": 0,
+                "complete": true,
+                "started_unix": 1794670757.2460442,
+                "ended_unix": 1794676550.6627102
+              }
+            ],
+            "ended_unix": 1794676550.847996,
+            "allocation_GPU_hours": 1.6455591709746256,
+            "incomplete_policy": "Resume preserved full state under a separately reconciled reservation; never publish a shorter fit as10000 updates"
+          }
+        },
+        "source": "Authenticated Baige task list terminal runtime and successful owned parent receipt"
+      }
     }
   ],
   "original3_closeout": {
@@ -896,7 +1080,7 @@
     "evidence/RESUME3-SUBMITTED.jpg",
     "evidence/RESUME6-SUBMITTED.jpg"
   ],
-  "checked_shanghai": "2026-11-15T01:14:10.558168+08:00",
+  "checked_shanghai": "2026-11-15T01:28:20.733200+08:00",
   "original6_closeout": {
     "job_id": "job-5zbsgqfx0ax6",
     "scheduler_status": "Failed",
@@ -911,8 +1095,8 @@
       "sha256": "afa1f46eb3092f7074a200ebbdda3e3748eb12fd95cbc149bb95128a011ca112"
     }
   },
-  "latest_progress_evidence": "evidence/CONTINUATIONS-20261115-0114.json",
-  "next_full_check_shanghai": "2026-11-15T01:23:00+08:00",
+  "latest_progress_evidence": "evidence/CONTINUATIONS-20261115-0126.json",
+  "next_full_check_shanghai": null,
   "observation_watch": {
     "pid": 206657,
     "host": "aibox-rffe453e3884-5f96c78b88-6ssrn",
@@ -920,7 +1104,9 @@
     "deadline_unix": 1794675780,
     "behavior": "Read-only wait on four owned continuation terminals; return on first terminal/error or01:03 full-check deadline. No job submission, stop or retry.",
     "GPU_hours": 0,
-    "status": "Completed01:03 check; now watching the existing live CPU final-audit session for first completion"
+    "status": "Completed; all four final endpoints passed CPU audit and watcher exited0"
   },
-  "latest_timing_projection": "evidence/CONTINUATION-PROJECTION-0003.json"
+  "latest_timing_projection": "evidence/CONTINUATION-PROJECTION-0003.json",
+  "status": "All four continuations succeeded; all final fixed endpoints audited",
+  "next_action": "Launch fixed paired ID/OOD evaluation"
 }

@@ -1,5 +1,5 @@
 {
-  "status": "Prepared; not submitted; four weighted final fits still incomplete",
+  "status": "All8 fixed-final audits passed; final SPEC bound; awaiting current capacity and submission",
   "source_commit": "7cc56702ec6b623ae4aa4f79da211883ca4ecddd",
   "source_directory": "/mowenjie/fluffy-bassoon-2/sources/matched-readout-7cc56702",
   "source_deployment": "evidence/MATCHED-READOUT-DEPLOYMENT-7cc56702.json",
@@ -26,13 +26,20 @@
   "CPU_preparer": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit02/STATE.json",
   "binding_step": "After all8 audits complete, create a new readout-inputs01/SPEC.json from the prepared480min/32GPUh spec; preserve all model, baseline and case references, record original spec hash and window review, change scheduler to540 and reservation to36. The active CPU preparer remains immutable.",
   "launch_checks_remaining": [
-    "All8 actual10000-update final checkpoints audited",
-    "Review latestmain changes since the deployed commit",
-    "Reconcile completed fit allocations and proposed36GPUh against230cap",
-    "Fresh scheduler capacity and actual allocated GPU type",
-    "Hash-bind final evaluation SPEC and launch with automatic retries off",
-    "Allocated GPU probe and a real native episode, then first-wave actual timing"
+    "Fresh scheduler capacity, hardware and limits",
+    "Submit unique matchedreadout01 with540min cap and automatic retries off",
+    "Allocated4GPU probe and real simulator episode; inspect first-wave timing"
   ],
   "GPU_hours_used": 0,
-  "recorded_shanghai": "2026-11-15T00:31:49.865870+08:00"
+  "recorded_shanghai": "2026-11-15T01:28:40.659366+08:00",
+  "spec": {
+    "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/readout-inputs01/SPEC.json",
+    "sha256": "34fd790404df709796399cd845eec88788b5365488bf08f0480d9972efb0158f"
+  },
+  "binding_evidence": "evidence/MATCHED-EVALUATION-BINDING.json",
+  "latest_main_review": {
+    "commit": "20e9acd57cc8db160be338d9bf0eefbb2b4aeb64",
+    "result": "Only run metadata/evidence changed since7cc; src, scripts, benchmarks and evaluation runtime unchanged"
+  },
+  "prepared_command": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B /mowenjie/fluffy-bassoon-2/sources/matched-readout-7cc56702/outputs/robocasa-six-task-scale-20261113-r1/matched_eval_job.py --pin 7cc56702ec6b623ae4aa4f79da211883ca4ecddd --spec /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/readout-inputs01/SPEC.json --spec-sha256 34fd790404df709796399cd845eec88788b5365488bf08f0480d9972efb0158f --attempt matchedreadout01 --max-minutes 540"
 }
