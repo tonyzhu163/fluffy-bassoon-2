@@ -28,11 +28,11 @@
     }
   ],
   "budget": {
-    "proposed_fits_and_values_GPU_hours": 48,
+    "proposed_fits_and_values_GPU_hours": 57,
     "planned_primary_maximum": 48,
-    "uncommitted_margin": 0,
+    "uncommitted_margin": 9,
     "submitted_reservation": 0,
-    "contingency": "Previous9GPUh contingency deferred pending actual label-reservation release; do not exceed230 total"
+    "contingency": "Actual terminal label accounting released9GPUh. Primary fits reserve48; recovery9 remains uncommitted."
   },
   "retention": "One job-local raw cache shared across four workers; only two readback-verified resumable snapshots per method/attempt plus final candidate",
   "timeout": "Save optimizer, policy/values, task/window sampler and all RNG state; preserve10000-update endpoint across any explicit resume",
@@ -49,5 +49,10 @@
   },
   "prepared_source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
   "required_data_qualification": "dataqual01/RESULT.json full hash; exact source pin and corpus manifest match fit launch",
-  "evaluation_migration": "EVALUATION-MIGRATION.json"
+  "evaluation_migration": "EVALUATION-MIGRATION.json",
+  "source_review_before_launch": {
+    "latest_main_reviewed": "88ebc32e25e233d02bb1b3e292c2959b4dc8b69d",
+    "fit_and_runtime_code_pin": "4987585e7427061de30771ee207f9b2b79eedc6a",
+    "difference": "Only plans, decisions and evidence changed from498 to88ebc32e; executable source unchanged. Preserve active CPU qualification source and exact pin required by its receipt."
+  }
 }

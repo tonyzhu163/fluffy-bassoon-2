@@ -1,6 +1,6 @@
 {
-  "checked_shanghai": "2026-11-14T17:14:08+08:00",
-  "status": "Toaster/Stove labels complete; other four tasks43776/46080 at check; two task assemblies verified",
+  "checked_shanghai": "2026-11-14T17:20:45+08:00",
+  "status": "All six label tasks completed successfully; CPU corpus assembly underway",
   "jobs": [
     {
       "source_commit": "cbece8fd7038b60213df64fca2f0f6c7a32a55cf",
@@ -120,7 +120,7 @@
       "scheduler_maximum_minutes": 180,
       "maximum_GPU_hours": 12.0,
       "created_shanghai": "2026-11-14T16:21:02+08:00",
-      "status": "Running; allocated GPU probe passed; all task workers advancing",
+      "status": "Succeeded; all four tasks46080/46080, four readback-verified shards/task",
       "allocation_GPU_probe": "passed",
       "cold_output": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels04",
       "submission_evidence": "evidence/LABELS04-SUBMITTED.png",
@@ -181,6 +181,46 @@
         "scheduler_maximum_minutes": 180,
         "automatic_retry": false,
         "local_free_bytes": 421740380160
+      },
+      "scheduler_status": "Succeeded",
+      "scheduler_runtime_seconds": 2330,
+      "scheduler_GPU_hours": 2.588888888888889,
+      "closed_conservative_GPU_hours": 3,
+      "ended_shanghai": "2026-11-14T17:15:58+08:00",
+      "exit": {
+        "completed": true,
+        "results": [
+          {
+            "task": "OpenDrawer",
+            "exit_code": 0,
+            "started_unix": 1794645438.7027586,
+            "ended_unix": 1794647743.0786712,
+            "complete": true
+          },
+          {
+            "task": "CoffeeSetupMug",
+            "exit_code": 0,
+            "started_unix": 1794645438.7029552,
+            "ended_unix": 1794647726.0673409,
+            "complete": true
+          },
+          {
+            "task": "PickPlaceCounterToStove",
+            "exit_code": 0,
+            "started_unix": 1794645438.7032151,
+            "ended_unix": 1794647737.0629532,
+            "complete": true
+          },
+          {
+            "task": "TurnOnSinkFaucet",
+            "exit_code": 0,
+            "started_unix": 1794645438.7034037,
+            "ended_unix": 1794647735.9233396,
+            "complete": true
+          }
+        ],
+        "ended_unix": 1794647743.26501,
+        "allocation_GPU_hours": 2.5728728641404044
       }
     }
   ],
@@ -255,10 +295,10 @@
   "validation": "Full source payload semantics and cold shard readback completed for Toaster/Stove; active four-task allocation passed its four-GPU probe and every worker advances.",
   "budget": {
     "total_label_envelope_GPU_hours": 18,
-    "closed_conservative": 1.7,
-    "reserved": 12,
-    "arithmetic": "Failed0.2 + completed1.5 + active12 =13.7GPUh committed within original18GPUh envelope"
+    "closed_conservative": 4.7,
+    "reserved": 0,
+    "arithmetic": "Failed0.2 + labels03 1.5 + labels04 3.0 =4.7GPUh conservatively closed; all label jobs terminal"
   },
-  "next_check_shanghai": "2026-11-14T17:34:08+08:00",
+  "next_check_shanghai": null,
   "evidence": "evidence/ASSEMBLY-PROGRESS-20261114.json"
 }

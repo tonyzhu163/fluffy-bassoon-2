@@ -45,11 +45,10 @@ uncertainty for this checkpoint; they do not establish training-seed robustness
 or explain why DIT performs better.
 
 Keep the existing **230 GPU-hour hard cap**. Current reconciled accounting is
-110 closed conservatively + 12 reserved for active labels + 28 reserved for
-historical confirmation = **150/230 GPU-hours**. The remaining 80 is proposed
-for 48 of primary fits and 32 of matched new-fit evaluation. The earlier fit
-contingency is deferred until closed-job accounting releases capacity; active
-reservations are not released from estimated savings. The old 50/170 caps remain
+113 closed conservatively + 28 reserved for historical confirmation =
+**141/230 GPU-hours**. The remaining89 comprises48 of primary fits,32 of matched
+new-fit evaluation and9 of uncommitted recovery margin. The label jobs have
+closed; their verified accounting releases the earlier contingency. The old 50/170 caps remain
 closed. [Current ledger](../robocasa-six-task-scale-20261113-r1/APPROVAL.json).
 
 The outcome-blind count is now **256 fresh cases per task**, fixed before any
@@ -72,12 +71,13 @@ native audit and complete cold readback (408 physical episodes including the
 serial-reset check). Every recorded reset control replayed exactly from a fresh
 episode controller; the eight OpenDrawer serial/direct reset pairs had no
 outcome discordances. This validates the control procedure, not a DIT advantage.
-Expanded confirmation has not yet launched.
+Expanded confirmation `job-ir52nloomqdx` was submitted at17:18 Shanghai,
+source88ebc32e, and passed its four-device allocation probe.
+[Confirmation execution](CONFIRMATION-EXECUTION.json).
 
 All six corrected source collections and step-30 teachers are complete. Toaster
-and Stove labels are complete and their datasets assembled. The other four
-label workers are finishing; CPU assembly and corpus-query qualification are
-live. No new transformer fit has launched. Live status belongs in
+and Stove labels are complete and their datasets assembled. All other four label workers have now succeeded; CPU assembly and
+corpus-query qualification are live. No new transformer fit has launched. Live status belongs in
 [coordination](../coordination.md).
 
 [Execution](EXECUTION.json) · [Restored inputs](RESTORED.json) ·
