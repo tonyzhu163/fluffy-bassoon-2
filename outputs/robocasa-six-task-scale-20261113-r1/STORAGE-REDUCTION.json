@@ -1,0 +1,45 @@
+{
+  "user_instruction": "Keep only the old headline readily available; archive the rest; delete if wrong; reduce PPO space",
+  "scope": "Original RoboCasa three-task transformer comparison and its source histories. Active corrected six-source collection remains protected.",
+  "historical_headline": "DIT55.3% ID/56.0% OOD; history benefit not established; earlier collector and unequal policy budgets limit interpretation.",
+  "archive": {
+    "status": "in progress",
+    "source_commit": "c096a7264c3f6a1d61505b637e3d19a3c56cce76",
+    "receipt": "evidence/HISTORICAL-ARCHIVE-20261114.json",
+    "completed": [
+      "/mowenjie/fluffy-bassoon-2/outputs/robocasa-dit-diagnostic-20261113-r1",
+      "/mowenjie/fluffy-bassoon-2/outputs/robocasa-kv-comparison-20261112-r1",
+      "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1",
+      "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2"
+    ],
+    "cold_root": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-original-headline-retention-20261114-r1",
+    "method": "Exact GNU tar source comparison, complete member inventory, BOS full SHA256 readback; only then reclaim PFS copy. Sibling *.bos-archive.json restore pointers retained.",
+    "initial_PFS_free_bytes": 269505003520,
+    "current_PFS_free_bytes": 290807873536
+  },
+  "invalid_data_policy": "Earlier critic mismatch excludes the old130 source from corrected training, but does not invalidate every historical observation. No unsupported declaration of corruption; full historical evidence archived. Interrupted Toaster18 excluded, with no accessible payload to delete.",
+  "ppo_breakdown_GiB": {
+    "checkpoints": 81.66,
+    "training_rollouts": 29.149,
+    "environment": 13.46,
+    "sampling": 10.772,
+    "other": 0.086
+  },
+  "future_storage": {
+    "implementation_commit": "96dc0f816fa24dc3fd2e8ded610cc85a927602ae",
+    "rolling_recovery": "Two latest complete boundaries plus initial0, evaluation10/20 and teacher30; no raw history pruning.",
+    "removed_at30": [
+      1,
+      5,
+      15
+    ],
+    "estimated_checkpoint_GiB_saved": 28.557,
+    "compression": "Enable existing lossless gzip level1 writer for future attempts. A real521638778-byte rollout compressed to211406430bytes (40.53%) in8.71s and fully decoded to its original SHA256. This sample ratio is not an aggregate measured saving.",
+    "data_sharing": "One canonical per-task raw corpus and feature/label set, shared by all four learners. Three-task corpus references the exact same three task payloads as six-task corpus; no per-method raw copies.",
+    "hot_storage": "Node-local scratch for active data and bounded caches; private BOS for complete closed sources. Bulk raw output never stages on PFS.",
+    "active_launches_unchanged": "Stove and Toaster remain on immutable6c0ef27a with their original full-retention recipe. Storage changes apply to later launches only.",
+    "validation": "35 Linux CPU tests passed in234.47s: retention fallback/hash checks, DCP next-sample/Adam numerical recovery, Flow PPO invariants. Canonical gzip mode qualification pending.",
+    "estimated_total_GiB_saved_if_sample_ratio_holds": 45.89
+  },
+  "unperformed": "No new deletion of RoboTwin historical controls, shared initializers/environments, current corrected teachers, or labels required by future fits."
+}

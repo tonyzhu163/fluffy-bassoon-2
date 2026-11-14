@@ -1,0 +1,14 @@
+{
+  "source_commit": "96dc0f816fa24dc3fd2e8ded610cc85a927602ae",
+  "environment": "Allocated Baige Linux development CPU; native qualified env; no GPU computation",
+  "command": "python -B -m pytest -q tests/test_checkpoint_retention.py tests/test_flow_checkpoint_export.py tests/test_robocasa_flow_ppo.py",
+  "passed": 35,
+  "duration_seconds": 234.47,
+  "core_failures_protected": [
+    "Damaged new checkpoint must not remove valid fallback",
+    "Unregistered/outside checkpoint files must not be pruned",
+    "Initial/evaluation/latest-two/incomplete boundaries preserved",
+    "Complete model/Adam/LR/RNG restoration reproduces next sample and update",
+    "PPO action/value/reward/seed invariants"
+  ]
+}

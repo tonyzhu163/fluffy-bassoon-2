@@ -49,6 +49,7 @@ export ROBOCASA_FLOW_FULL_MODEL_EXPORT_STEPS='[30]'
 # Future attempts only: keep initial/evaluation/teacher checkpoints plus the two
 # newest complete recovery boundaries. Existing detached launches are immutable.
 export ROBOCASA_FLOW_KEEP_LATEST_CHECKPOINTS=2
+export ROBOCASA_FLOW_CANONICAL_COMPRESSION=gzip
 export ROBOCASA_FLOW_SAMPLING_RECORD=full ROBOCASA_FLOW_ACTOR_BATCH_DROP='[]'
 export ROBOCASA_FLOW_NOISE_LEVEL=0.3 ROBOCASA_FLOW_IGNORE_LAST=true
 export ROBOCASA_SIM_PPO_GLOBAL_ESCROW=true ROBOCASA_FLOW_FRESH_EVAL_PROCESSES=true
