@@ -1,6 +1,6 @@
 {
-  "checked_shanghai": "2026-11-14T21:51:01.983660+08:00",
-  "status": "All eight native actors running; all four DIT/IC-IQL value stages completed1000 updates",
+  "checked_shanghai": "2026-11-14T22:05:24.926078+08:00",
+  "status": "Two of eight fits complete and audited: three-task AD/DPT. Remaining six actors advancing; all weighted values1000.",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
   "source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
@@ -13,14 +13,14 @@
     "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json",
     "sha256": "2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0"
   },
-  "validation": "Both allocation probes passed; all eight native actors made finite full-batch8 gradient updates. DIT/IC-IQL each completed1000 independent value updates. All10000-update actor endpoints and paired evaluations remain pending.",
+  "validation": "Both allocation probes passed and all eight actors made finite full-batch8 updates. Three-task AD/DPT now have successful method exits and exact final checkpoint/export audits at10000. All weighted value stages1000 complete; remaining six actor endpoints and paired readout pending.",
   "jobs": [
     {
       "corpus_size": 3,
       "attempt": "fits3r1",
       "job_name": "mwj_1114_matched_fits3_g4_r1",
       "job_id": "job-o8p1uyvoxzr3",
-      "status": "Running; all four native actors advancing",
+      "status": "Allocation Running; AD/DPT complete10000 and audited, DIT/IC-IQL still advancing",
       "GPUs": 4,
       "CPUs": 64,
       "RAM_GiB": 512,
@@ -49,92 +49,94 @@
         "ad": {
           "phase": "actor",
           "value_update": 0,
-          "actor_update": 9500,
-          "elapsed_seconds": 15217.163358242002,
+          "actor_update": 10000,
+          "elapsed_seconds": 16024.315935221,
           "checkpoint": {
-            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ad/actor-00000-09500.pt",
-            "sha256": "ea0742b0378077f1edaef474a6df98c0bf5dbe0b491bdd036c4959c74581c71d"
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ad/actor-00000-10000.pt",
+            "sha256": "e855388370bbe99ff2ed82884f5f3ffd29a109085e83be847f5c5f8db82abb18"
           },
-          "complete": false,
-          "checked_unix": 1794664195.5366244,
+          "complete": true,
+          "checked_unix": 1794665002.663963,
           "execution_batch": 8,
           "metrics": {
-            "loss": 0.08215376734733582,
-            "gradient_norm": 0.001475901692174375,
+            "loss": 0.08259787410497665,
+            "gradient_norm": 0.0012087066425010562,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
             "weight_mean": 1.0,
             "weight_max": 1.0,
-            "mean_update_seconds": 1.5453539455701684,
+            "validation_flow_loss": 0.09698112169280648,
+            "mean_update_seconds": 1.5320390947500346,
             "peak_cuda_bytes": 14507695616
           }
         },
         "dpt": {
           "phase": "actor",
           "value_update": 0,
-          "actor_update": 9600,
-          "elapsed_seconds": 15249.008716768998,
+          "actor_update": 10000,
+          "elapsed_seconds": 15906.722044610999,
           "checkpoint": {
-            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dpt/actor-00000-09600.pt",
-            "sha256": "77578dffb3a6aace2a752ccdc642c424b6d2b6af516d2c5754ee09a9f7d35727"
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dpt/actor-00000-10000.pt",
+            "sha256": "12478af4b7598f5bf34b10f7c07d628145824985aa7dbd4a2c0bc496128fda8a"
           },
-          "complete": false,
-          "checked_unix": 1794664226.688888,
+          "complete": true,
+          "checked_unix": 1794664884.3717847,
           "execution_batch": 8,
           "metrics": {
-            "loss": 0.15318959951400757,
-            "gradient_norm": 0.005230425391346216,
+            "loss": 0.07155337929725647,
+            "gradient_norm": 0.0009216570761054754,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
             "weight_mean": 1.0,
             "weight_max": 1.0,
-            "mean_update_seconds": 1.5656265509798322,
+            "validation_flow_loss": 0.10468620713800192,
+            "mean_update_seconds": 1.5450904713600904,
             "peak_cuda_bytes": 14507695616
           }
         },
         "dit": {
           "phase": "actor",
           "value_update": 1000,
-          "actor_update": 5100,
-          "elapsed_seconds": 15046.016519055,
+          "actor_update": 5500,
+          "elapsed_seconds": 16021.713414465998,
           "checkpoint": {
-            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dit/actor-01000-05100.pt",
-            "sha256": "04f578e21531f6dbe4f5ce419fcbe931f2cf154af833467f687e0bfd2f2adc12"
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dit/actor-01000-05500.pt",
+            "sha256": "cbf07937feffc5badc03643d7e5385ef4a23fb4ae004d88a9c614c5dfa0d8e11"
           },
           "complete": false,
-          "checked_unix": 1794664025.5542717,
+          "checked_unix": 1794665001.3677917,
           "execution_batch": 8,
           "metrics": {
-            "loss": 0.0882023274898529,
-            "gradient_norm": 0.0010693949880078435,
+            "loss": 0.05879107117652893,
+            "gradient_norm": 0.0006951671093702316,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
-            "weight_mean": 1.02055025100708,
-            "weight_max": 1.115203619003296,
-            "mean_update_seconds": 2.339020592290035,
+            "weight_mean": 0.9957781434059143,
+            "weight_max": 1.037492275238037,
+            "mean_update_seconds": 2.429838443299741,
             "peak_cuda_bytes": 14814460928
           }
         },
         "ic_iql": {
           "phase": "actor",
           "value_update": 1000,
-          "actor_update": 5100,
-          "elapsed_seconds": 15213.403988544,
+          "actor_update": 5400,
+          "elapsed_seconds": 15963.621114336001,
           "checkpoint": {
-            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ic_iql/actor-01000-05100.pt",
-            "sha256": "0986621f6671df58e8e42c00d65bfacb40be377aeeabaade97efc30148f4bc88"
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ic_iql/actor-01000-05400.pt",
+            "sha256": "38d4908a1aa860e44fb08a2ada2bff059a16b1ceb35e182df09bf77519a95227"
           },
           "complete": false,
-          "checked_unix": 1794664192.9031985,
+          "checked_unix": 1794664943.1463034,
           "execution_batch": 8,
           "metrics": {
-            "loss": 0.08527497947216034,
-            "gradient_norm": 0.0009938101284205914,
+            "loss": 0.04909630864858627,
+            "gradient_norm": 0.0013573281466960907,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
-            "weight_mean": 1.000868320465088,
-            "weight_max": 1.0572727918624878,
-            "mean_update_seconds": 2.4022569829699205,
+            "weight_mean": 0.9926778078079224,
+            "weight_max": 1.1542325019836426,
+            "mean_update_seconds": 2.494120867019883,
             "peak_cuda_bytes": 14814460928
           }
         }
@@ -202,93 +204,92 @@
         "ad": {
           "phase": "actor",
           "value_update": 0,
-          "actor_update": 8900,
-          "elapsed_seconds": 14361.046459032223,
+          "actor_update": 9500,
+          "elapsed_seconds": 15316.138386393897,
           "checkpoint": {
-            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/ad/actor-00000-08900.pt",
-            "sha256": "097984990b23919f898fed380ffb85bee30a10b4a56e62298a8fc55e26d6ddf0"
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/ad/actor-00000-09500.pt",
+            "sha256": "48070a19fed6bdf479f4388420578a0fbc50456db036ac70623e1324ef545b09"
           },
           "complete": false,
-          "checked_unix": 1794664148.3237195,
+          "checked_unix": 1794665103.4689355,
           "execution_batch": 8,
           "metrics": {
-            "loss": 0.05243261158466339,
-            "gradient_norm": 0.0006118509918451309,
+            "loss": 0.10621343553066254,
+            "gradient_norm": 0.0017065212596207857,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
             "weight_mean": 1.0,
             "weight_max": 1.0,
-            "mean_update_seconds": 1.5522479916550218,
+            "mean_update_seconds": 1.5461296525318176,
             "peak_cuda_bytes": 14484328960
           }
         },
         "dpt": {
           "phase": "actor",
           "value_update": 0,
-          "actor_update": 8900,
-          "elapsed_seconds": 14411.930152320303,
+          "actor_update": 9400,
+          "elapsed_seconds": 15227.177601797506,
           "checkpoint": {
-            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/dpt/actor-00000-08900.pt",
-            "sha256": "8912d360953c7cd9ee32e13423067bb62b137f48faca755f58f33011dec7e440"
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/dpt/actor-00000-09400.pt",
+            "sha256": "8ac33641bf7a802fe19620b4e5904cc01f791c09088505788d95c6858e6c88a5"
           },
           "complete": false,
-          "checked_unix": 1794664197.9480486,
+          "checked_unix": 1794665013.2625687,
           "execution_batch": 8,
           "metrics": {
-            "loss": 0.074835404753685,
-            "gradient_norm": 0.0012120073661208153,
+            "loss": 0.08924264460802078,
+            "gradient_norm": 0.0020758560858666897,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
             "weight_mean": 1.0,
             "weight_max": 1.0,
-            "mean_update_seconds": 1.5876716010365635,
+            "mean_update_seconds": 1.5843927556090056,
             "peak_cuda_bytes": 14484328960
           }
         },
         "dit": {
           "phase": "actor",
           "value_update": 1000,
-          "actor_update": 4900,
-          "elapsed_seconds": 14463.725967189297,
+          "actor_update": 5200,
+          "elapsed_seconds": 15190.58916752413,
           "checkpoint": {
-            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/dit/actor-01000-04900.pt",
-            "sha256": "e21cd40e673e017a8ba6f693755658e57898cc4a4142e797939cfaeb7e6aa965"
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/dit/actor-01000-05200.pt",
+            "sha256": "38caeb43c2ffd18c818de8a2584149486ca42c37d7935928ec8c2e1a9e53c2c8"
           },
           "complete": false,
-          "checked_unix": 1794664252.1796358,
+          "checked_unix": 1794664979.0874016,
           "execution_batch": 8,
           "metrics": {
-            "loss": 0.06869994103908539,
-            "gradient_norm": 0.0011103261495009065,
+            "loss": 0.08861465007066727,
+            "gradient_norm": 0.0011036774376407266,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
-            "weight_mean": 1.0157992839813232,
-            "weight_max": 1.1360501050949097,
-            "mean_update_seconds": 2.3238879512436688,
+            "weight_mean": 1.0325989723205566,
+            "weight_max": 1.16953444480896,
+            "mean_update_seconds": 2.3762000759691,
             "peak_cuda_bytes": 14812136448
           }
         },
         "ic_iql": {
           "phase": "actor",
           "value_update": 1000,
-          "actor_update": 5000,
-          "elapsed_seconds": 14369.650676405989,
+          "actor_update": 5400,
+          "elapsed_seconds": 15303.108446753584,
           "checkpoint": {
-            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/ic_iql/actor-01000-05000.pt",
-            "sha256": "7d1be871e8d1f8329a9fafb40ba473c85673619350ad3a8df888a16c863251d6"
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/ic_iql/actor-01000-05400.pt",
+            "sha256": "b4616692dc3f27069b207fcb3eab5ab8ae2bd0a9f5e3c68abf5247c36590b45d"
           },
           "complete": false,
-          "checked_unix": 1794664158.043863,
+          "checked_unix": 1794665091.6033754,
           "execution_batch": 8,
           "metrics": {
-            "loss": 0.08085393160581589,
-            "gradient_norm": 0.0015694261528551579,
+            "loss": 0.08571293950080872,
+            "gradient_norm": 0.0018563630292192101,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
-            "weight_mean": 1.0215277671813965,
-            "weight_max": 1.065750241279602,
-            "validation_flow_loss": 0.0930159471463412,
-            "mean_update_seconds": 2.2684240756649525,
+            "weight_mean": 0.9775387644767761,
+            "weight_max": 1.0541682243347168,
+            "mean_update_seconds": 2.3427199022099376,
             "peak_cuda_bytes": 14812136448
           }
         }
@@ -321,7 +322,7 @@
       }
     }
   ],
-  "next_check_shanghai": "2026-11-14T22:00:00+08:00",
+  "next_check_shanghai": "2026-11-14T22:20:00+08:00",
   "next_action": "Monitor every20minutes; preserve fixed10000 actor endpoints and complete checkpoint state; launch qualified continuations only after original writers close.",
   "scheduling_change": "Prepared one-GPU alternative was never applied; both corpus fits use the same498 source pin and original commands.",
   "progress_evidence": "evidence/MONITOR-20261114-1833.json",
@@ -334,6 +335,8 @@
     "evidence": "evidence/THREE-TASK-VALUE-ACTOR-TRANSITION.json"
   },
   "continuation_preparation": "CONTINUATION-PLAN.json",
-  "latest_evidence": "evidence/MONITOR-20261114-2150.json",
-  "latest_monitor": "evidence/MONITOR-20261114-2150.json"
+  "latest_evidence": "evidence/MONITOR-20261114-2205.json",
+  "latest_monitor": "evidence/MONITOR-20261114-2205.json",
+  "fixed_final_candidates": "FINAL-FIT-CANDIDATES.json",
+  "final_checkpoint_audits": "FINAL-FIT-AUDIT-EXECUTION.json"
 }

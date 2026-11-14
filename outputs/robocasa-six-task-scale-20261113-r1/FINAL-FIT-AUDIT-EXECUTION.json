@@ -1,0 +1,33 @@
+{
+  "status": "Three-task AD/DPT final audits passed; waiting for six-task AD/DPT",
+  "source_commit": "9e714a3ec823d1386bc50b1359faee3942f894df",
+  "audit_script_sha256": "93e5d070ab5e85a9ff3d8bc5a1cc2d7d0c0a7d5ad05eccc131623d920a5c876b",
+  "started_unix": 1794664742.3489773,
+  "pid": 188949,
+  "hostname": "aibox-rffe453e3884-5f96c78b88-6ssrn",
+  "GPU_hours": 0,
+  "observation_deadline_unix": 1794668400,
+  "requested": [
+    "3_ad",
+    "3_dpt",
+    "6_ad",
+    "6_dpt"
+  ],
+  "passed": {
+    "3_dpt": {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit01/3_dpt.json",
+      "sha256": "efe71c62ab12f19447c15938dd222b17d22ec76080c5de14a5abf1369c2f02ef"
+    },
+    "3_ad": {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit01/3_ad.json",
+      "sha256": "173be98b3e11c88ef5ef2e0dd0a73da873a6b5fbb8af94a91977ad40401fe88c"
+    }
+  },
+  "checked_unix": 1794664742.3489873,
+  "source_directory": "/tmp/completed-fit-audit-source-9e714a3e",
+  "output_directory": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit01",
+  "validation": "Real three-task AD/DPT candidates exactly match final recovery tensors; all actor optimizer state steps10000; finite policies/optimizers and saved RNG fields verified. Remaining two original AD/DPT audits pending.",
+  "checks": "Require successful method exit and fixed10000 actor/1000 weighted-value endpoints; verify complete/candidate/recovery hashes, exact exported policy tensors, finite policy/value/optimizer states, optimizer step counts and saved RNG fields.",
+  "observation_policy": "Timeout stops only CPU observation; never restarts or stops a GPU job. Audit failures require diagnosis before another identity.",
+  "checked_shanghai": "2026-11-14T22:05:24.926078+08:00"
+}

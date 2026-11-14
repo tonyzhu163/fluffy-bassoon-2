@@ -1,0 +1,73 @@
+{
+  "ready_for_matched_evaluation": false,
+  "checked_shanghai": "2026-11-14T22:05:24.926078+08:00",
+  "required_models": [
+    "3/ad",
+    "3/dpt",
+    "3/dit",
+    "3/ic_iql",
+    "6/ad",
+    "6/dpt",
+    "6/dit",
+    "6/ic_iql"
+  ],
+  "completed_and_audited_count": 2,
+  "models": {
+    "3/ad": {
+      "complete": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ad/COMPLETE.json",
+        "sha256": "76f619d9026f070fdfa7e3233f520bd989ebf0895b3bd68886be32bec0e78ad1"
+      },
+      "candidate": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ad/candidate.pt",
+        "sha256": "a4f98daf8b8aa53c048356972b5ac03bdc3b2e470c0feb2dd61d4e36762bec50"
+      },
+      "checkpoint": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ad/actor-00000-10000.pt",
+        "sha256": "e855388370bbe99ff2ed82884f5f3ffd29a109085e83be847f5c5f8db82abb18"
+      },
+      "terminal": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ad-EXIT.json",
+        "sha256": "9847439fef2e4bc6daac35eeac1760583143ee9ece0c9299056b20cfb30afdf4"
+      },
+      "audit": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit01/3_ad.json",
+        "sha256": "173be98b3e11c88ef5ef2e0dd0a73da873a6b5fbb8af94a91977ad40401fe88c"
+      }
+    },
+    "3/dpt": {
+      "complete": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dpt/COMPLETE.json",
+        "sha256": "e57370226cb446c60bf4fd510de11c710507966cd4f95489bd0777b49c23232a"
+      },
+      "candidate": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dpt/candidate.pt",
+        "sha256": "c5b150b53dba9f3da5dfe4a5035ac72ffec4a8cbce310ba68752a79a29879895"
+      },
+      "checkpoint": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dpt/actor-00000-10000.pt",
+        "sha256": "12478af4b7598f5bf34b10f7c07d628145824985aa7dbd4a2c0bc496128fda8a"
+      },
+      "terminal": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dpt-EXIT.json",
+        "sha256": "df49deddaf986f89f37a7e5699f865dac4d9ecf7a812ab744cbf6575328f877c"
+      },
+      "audit": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit01/3_dpt.json",
+        "sha256": "efe71c62ab12f19447c15938dd222b17d22ec76080c5de14a5abf1369c2f02ef"
+      }
+    }
+  },
+  "pending_models": [
+    "3/dit",
+    "3/ic_iql",
+    "6/ad",
+    "6/dpt",
+    "6/dit",
+    "6/ic_iql"
+  ],
+  "selection": "Precommitted fixed actor10000; all weighted values1000. No validation-based checkpoint selection.",
+  "fit_source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+  "audit_source_commit": "9e714a3ec823d1386bc50b1359faee3942f894df",
+  "next_action": "Wait for all eight fixed-final fits, including any required graceful continuations. Bind actual matched evaluation SPEC only after all eight complete and audited."
+}
