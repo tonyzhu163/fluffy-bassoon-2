@@ -81,11 +81,14 @@ def main():
         assert complete['candidate'] == ref['candidate'] and complete['native_parameters_unchanged']
         contract = complete['contract']
         assert contract['corpus_size'] == int(size) and contract['objective'] == objective
+        assert contract['interface'] == 'kv_bridge'
         assert contract['actor_updates'] == 10000 and contract['checkpoint_selection'] == 'fixed final'
         assert contract['value_updates'] == (1000 if objective in ('dit', 'ic_iql') else 0)
+        assert complete['progress']['value_update'] == contract['value_updates']
         assert contract['seed'] == 0 and contract['logical_batch'] == 8
         policy, manifest = load_bridge_policy(ref['candidate']['path'], expected_sha256=ref['candidate']['sha256'], device='cuda:0')
         assert manifest['update'] == 10000
+        assert policy.config.interface == 'kv_bridge'
         assert {k: v for k, v in manifest['contract'].items() if k != 'config'} == contract
         assert (policy.config.width, policy.config.layers, policy.config.heads, policy.config.context_length) == (256, 6, 8, 192)
         policies[name], contracts[name] = policy, contract
