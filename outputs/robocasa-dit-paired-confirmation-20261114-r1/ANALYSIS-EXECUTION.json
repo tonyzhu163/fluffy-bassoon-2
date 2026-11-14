@@ -1,0 +1,31 @@
+{
+  "status": "Waiting for successful terminal confirmation",
+  "started_unix": 1794659276.3009133,
+  "pid": 186387,
+  "hostname": "aibox-rffe453e3884-5f96c78b88-6ssrn",
+  "source_commit": "440b051c94500efefd167bc9cc7de3cd1592c7ae",
+  "analysis_script_sha256": "83793d261d92b5d317df45536c4aff59ed8ba631e343d47baf48f08359680057",
+  "run": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/confirm01",
+  "decision_sha256": "40791e028cd21e78867ba3181fefb5807d60c364f1a759ba54bf5854b7ca89c3",
+  "local_output": "/tmp/robocasa-dit-paired-confirmation-20261114-r1-analysis01",
+  "cold_output": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/analysis01",
+  "GPU_hours": 0,
+  "observation_deadline_unix": 1794675600,
+  "state_file": "/tmp/HISTORICAL-ANALYSIS-WAIT.json",
+  "completion_gate": "Parent EXIT completed=true, all four shard EXIT complete=true/exit0 and evaluation COMPLETE files; then full fixed1280-case/11520-episode archive audit before effects.",
+  "validation": "Historical analyze.py byte-identical to39e40979 qualified CPU source; CLI passed on deployed440b051c. No partial outcome analysis.",
+  "archive_policy": "Copy completed analysis files to private BOS analysis01, verify full SHA256 readback and write ARCHIVE.json.",
+  "command": [
+    "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+    "-B",
+    "/mowenjie/fluffy-bassoon-2/sources/matched-baselines-440b051c/outputs/robocasa-dit-paired-confirmation-20261114-r1/analyze.py",
+    "--run",
+    "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/confirm01",
+    "--decision",
+    "/mowenjie/fluffy-bassoon-2/sources/paired-confirm-88ebc32e/outputs/robocasa-dit-paired-confirmation-20261114-r1/DECISION.json",
+    "--decision-sha256",
+    "40791e028cd21e78867ba3181fefb5807d60c364f1a759ba54bf5854b7ca89c3",
+    "--output",
+    "/tmp/robocasa-dit-paired-confirmation-20261114-r1-analysis01"
+  ]
+}
