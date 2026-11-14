@@ -1,0 +1,538 @@
+{
+  "checked_unix": 1794646007.9823406,
+  "records": {
+    "robocasa-six-task-scale-20261113-r1/labels03": {
+      "LAUNCH.json": {
+        "source_commit": "cbece8fd7038b60213df64fca2f0f6c7a32a55cf",
+        "spec_sha256": "253137dd48a45ed0cf33a8f9e6f14ab88fa61f4e3f4b61e4ca9bdd596c7a6c8e",
+        "tasks": [
+          "CloseToasterOvenDoor",
+          "TurnOffStove"
+        ],
+        "hostname": "job-3r4f69s37tpv-master-0",
+        "started_unix": 1794644390.7324622,
+        "maximum_GPU_hours": 5.8,
+        "scheduler_maximum_minutes": 174,
+        "automatic_retry": false,
+        "local_free_bytes": 257932996608
+      },
+      "gpu-probe.json": {
+        "status": "passed",
+        "purpose": "evaluation",
+        "timing_comparison_eligible": false,
+        "allocation_type": "baige_container",
+        "hostname": "job-3r4f69s37tpv-master-0",
+        "probe_pid": 272,
+        "created_at_utc": "2026-11-14T08:19:59.157586+00:00",
+        "devices": [
+          {
+            "allocation_ordinal": 0,
+            "visibility_token": "0",
+            "cuda_uuid": "e2789925-a337-b2b5-7a24-03c594da06f1",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:61:00.0",
+            "uuid": "GPU-094f3a82-be61-7d52-64b9-7c4c955b7411",
+            "inventory": {
+              "index": 0,
+              "uuid": "GPU-094f3a82-be61-7d52-64b9-7c4c955b7411",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 0.0,
+              "pci_bus_id": "00000000:61:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-094f3a82-be61-7d52-64b9-7c4c955b7411"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-094f3a82-be61-7d52-64b9-7c4c955b7411"
+              ]
+            }
+          },
+          {
+            "allocation_ordinal": 1,
+            "visibility_token": "1",
+            "cuda_uuid": "db89ca9a-d4b6-486f-9ce4-60c1df18577c",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:64:00.0",
+            "uuid": "GPU-10ced997-03ae-3d28-6fd1-a8068c6eb1bd",
+            "inventory": {
+              "index": 1,
+              "uuid": "GPU-10ced997-03ae-3d28-6fd1-a8068c6eb1bd",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 0.0,
+              "pci_bus_id": "00000000:64:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-094f3a82-be61-7d52-64b9-7c4c955b7411",
+                "GPU-10ced997-03ae-3d28-6fd1-a8068c6eb1bd"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-094f3a82-be61-7d52-64b9-7c4c955b7411",
+                "GPU-10ced997-03ae-3d28-6fd1-a8068c6eb1bd"
+              ]
+            }
+          }
+        ],
+        "idle_utilization_required": false,
+        "exclusive_training_admission": false,
+        "admission_policy": "exclusive_scheduler_evaluation",
+        "utilization_role": "telemetry_only",
+        "utilization_telemetry": {
+          "GPU-094f3a82-be61-7d52-64b9-7c4c955b7411": 0.0,
+          "GPU-10ced997-03ae-3d28-6fd1-a8068c6eb1bd": 0.0
+        },
+        "maximum_initial_memory_mib": 256,
+        "gpu_identity_mapping": {
+          "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+          "assigned_nvml_uuids": [
+            "GPU-094f3a82-be61-7d52-64b9-7c4c955b7411",
+            "GPU-10ced997-03ae-3d28-6fd1-a8068c6eb1bd"
+          ]
+        },
+        "compute_processes_before": [],
+        "compute_processes_after": [
+          {
+            "gpu_uuid": "GPU-094f3a82-be61-7d52-64b9-7c4c955b7411",
+            "pid": 272,
+            "process_name": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+            "memory_used_mib": "640"
+          },
+          {
+            "gpu_uuid": "GPU-10ced997-03ae-3d28-6fd1-a8068c6eb1bd",
+            "pid": 272,
+            "process_name": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+            "memory_used_mib": "640"
+          }
+        ],
+        "topology": "\t\u001b[4mGPU0\tGPU1\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tPHB\tSYS\tSYS\tSYS\tSYS\t0-89\t0\t\tN/A\nGPU1\tPHB\t X \tSYS\tSYS\tSYS\tSYS\t0-89\t0\t\tN/A\nNIC0\tSYS\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
+      },
+      "CloseToasterOvenDoor/PROGRESS.json": {
+        "task": "CloseToasterOvenDoor",
+        "checked_unix": 1794645996.5269432,
+        "completed_decisions": 32256,
+        "expected_decisions": 46080,
+        "banked_shards": 2,
+        "elapsed_seconds": 1470.8496532440186,
+        "inference_batch": 16,
+        "cuda_peak_allocated_bytes": 17024675328
+      },
+      "TurnOffStove/PROGRESS.json": {
+        "task": "TurnOffStove",
+        "checked_unix": 1794645995.3146253,
+        "completed_decisions": 32256,
+        "expected_decisions": 46080,
+        "banked_shards": 2,
+        "elapsed_seconds": 1469.8604712486267,
+        "inference_batch": 16,
+        "cuda_peak_allocated_bytes": 17024675328
+      }
+    },
+    "robocasa-six-task-scale-20261113-r1/labels04": {
+      "LAUNCH.json": {
+        "source_commit": "cbece8fd7038b60213df64fca2f0f6c7a32a55cf",
+        "spec_sha256": "c7af168839bdc817b71c733c8d518ff9646bd0f5cdd58ec1353f7939264ccd84",
+        "tasks": [
+          "OpenDrawer",
+          "CoffeeSetupMug",
+          "PickPlaceCounterToStove",
+          "TurnOnSinkFaucet"
+        ],
+        "hostname": "job-972qpi5ao378-master-0",
+        "started_unix": 1794645427.6794326,
+        "maximum_GPU_hours": 12.0,
+        "scheduler_maximum_minutes": 180,
+        "automatic_retry": false,
+        "local_free_bytes": 421740380160
+      },
+      "gpu-probe.json": {
+        "status": "passed",
+        "purpose": "evaluation",
+        "timing_comparison_eligible": false,
+        "allocation_type": "baige_container",
+        "hostname": "job-972qpi5ao378-master-0",
+        "probe_pid": 236,
+        "created_at_utc": "2026-11-14T08:37:16.390063+00:00",
+        "devices": [
+          {
+            "allocation_ordinal": 0,
+            "visibility_token": "0",
+            "cuda_uuid": "4e0d9584-565b-b2fb-519a-ce36fc16e70c",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:61:00.0",
+            "uuid": "GPU-e2f6d29f-83da-85fd-b137-ca4cc7876071",
+            "inventory": {
+              "index": 0,
+              "uuid": "GPU-e2f6d29f-83da-85fd-b137-ca4cc7876071",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 0.0,
+              "pci_bus_id": "00000000:61:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-e2f6d29f-83da-85fd-b137-ca4cc7876071"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-e2f6d29f-83da-85fd-b137-ca4cc7876071"
+              ]
+            }
+          },
+          {
+            "allocation_ordinal": 1,
+            "visibility_token": "1",
+            "cuda_uuid": "cb1effe5-32ce-48c5-4aa4-aaf9b0d97d03",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:62:00.0",
+            "uuid": "GPU-f3cd52e9-1e2c-1abb-6bb6-7d06fd457faa",
+            "inventory": {
+              "index": 1,
+              "uuid": "GPU-f3cd52e9-1e2c-1abb-6bb6-7d06fd457faa",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 100.0,
+              "pci_bus_id": "00000000:62:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-e2f6d29f-83da-85fd-b137-ca4cc7876071",
+                "GPU-f3cd52e9-1e2c-1abb-6bb6-7d06fd457faa"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-e2f6d29f-83da-85fd-b137-ca4cc7876071",
+                "GPU-f3cd52e9-1e2c-1abb-6bb6-7d06fd457faa"
+              ]
+            }
+          },
+          {
+            "allocation_ordinal": 2,
+            "visibility_token": "2",
+            "cuda_uuid": "a425907f-d9f9-c78a-0246-0d523660a901",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:64:00.0",
+            "uuid": "GPU-746b321b-2885-47e2-8642-b09d1a1ea921",
+            "inventory": {
+              "index": 2,
+              "uuid": "GPU-746b321b-2885-47e2-8642-b09d1a1ea921",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 100.0,
+              "pci_bus_id": "00000000:64:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-746b321b-2885-47e2-8642-b09d1a1ea921",
+                "GPU-e2f6d29f-83da-85fd-b137-ca4cc7876071",
+                "GPU-f3cd52e9-1e2c-1abb-6bb6-7d06fd457faa"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-746b321b-2885-47e2-8642-b09d1a1ea921",
+                "GPU-e2f6d29f-83da-85fd-b137-ca4cc7876071",
+                "GPU-f3cd52e9-1e2c-1abb-6bb6-7d06fd457faa"
+              ]
+            }
+          },
+          {
+            "allocation_ordinal": 3,
+            "visibility_token": "3",
+            "cuda_uuid": "2c8ac4a4-78e5-af72-e60a-c0db32077919",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:a4:00.0",
+            "uuid": "GPU-b0d41319-9245-ce2d-b28f-49ab7f096b6d",
+            "inventory": {
+              "index": 3,
+              "uuid": "GPU-b0d41319-9245-ce2d-b28f-49ab7f096b6d",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 0.0,
+              "pci_bus_id": "00000000:A4:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-746b321b-2885-47e2-8642-b09d1a1ea921",
+                "GPU-b0d41319-9245-ce2d-b28f-49ab7f096b6d",
+                "GPU-e2f6d29f-83da-85fd-b137-ca4cc7876071",
+                "GPU-f3cd52e9-1e2c-1abb-6bb6-7d06fd457faa"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-746b321b-2885-47e2-8642-b09d1a1ea921",
+                "GPU-b0d41319-9245-ce2d-b28f-49ab7f096b6d",
+                "GPU-e2f6d29f-83da-85fd-b137-ca4cc7876071",
+                "GPU-f3cd52e9-1e2c-1abb-6bb6-7d06fd457faa"
+              ]
+            }
+          }
+        ],
+        "idle_utilization_required": false,
+        "exclusive_training_admission": false,
+        "admission_policy": "exclusive_scheduler_evaluation",
+        "utilization_role": "telemetry_only",
+        "utilization_telemetry": {
+          "GPU-e2f6d29f-83da-85fd-b137-ca4cc7876071": 0.0,
+          "GPU-f3cd52e9-1e2c-1abb-6bb6-7d06fd457faa": 100.0,
+          "GPU-746b321b-2885-47e2-8642-b09d1a1ea921": 100.0,
+          "GPU-b0d41319-9245-ce2d-b28f-49ab7f096b6d": 0.0
+        },
+        "maximum_initial_memory_mib": 256,
+        "gpu_identity_mapping": {
+          "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+          "assigned_nvml_uuids": [
+            "GPU-b0d41319-9245-ce2d-b28f-49ab7f096b6d",
+            "GPU-e2f6d29f-83da-85fd-b137-ca4cc7876071",
+            "GPU-f3cd52e9-1e2c-1abb-6bb6-7d06fd457faa",
+            "GPU-746b321b-2885-47e2-8642-b09d1a1ea921"
+          ]
+        },
+        "compute_processes_before": [],
+        "compute_processes_after": [
+          {
+            "gpu_uuid": "GPU-e2f6d29f-83da-85fd-b137-ca4cc7876071",
+            "pid": 236,
+            "process_name": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+            "memory_used_mib": "642"
+          },
+          {
+            "gpu_uuid": "GPU-f3cd52e9-1e2c-1abb-6bb6-7d06fd457faa",
+            "pid": 236,
+            "process_name": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+            "memory_used_mib": "642"
+          },
+          {
+            "gpu_uuid": "GPU-746b321b-2885-47e2-8642-b09d1a1ea921",
+            "pid": 236,
+            "process_name": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+            "memory_used_mib": "642"
+          },
+          {
+            "gpu_uuid": "GPU-b0d41319-9245-ce2d-b28f-49ab7f096b6d",
+            "pid": 236,
+            "process_name": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+            "memory_used_mib": "642"
+          }
+        ],
+        "topology": "\t\u001b[4mGPU0\tGPU1\tGPU2\tGPU3\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tPHB\tPHB\tSYS\tSYS\tSYS\tSYS\tSYS\t0-89\t0\t\tN/A\nGPU1\tPHB\t X \tPHB\tSYS\tSYS\tSYS\tSYS\tSYS\t0-89\t0\t\tN/A\nGPU2\tPHB\tPHB\t X \tSYS\tSYS\tSYS\tSYS\tSYS\t0-89\t0\t\tN/A\nGPU3\tSYS\tSYS\tSYS\t X \tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nNIC0\tSYS\tSYS\tSYS\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\tSYS\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tSYS\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tSYS\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
+      },
+      "CoffeeSetupMug/PROGRESS.json": {
+        "task": "CoffeeSetupMug",
+        "checked_unix": 1794645977.0330956,
+        "completed_decisions": 8448,
+        "expected_decisions": 46080,
+        "banked_shards": 0,
+        "elapsed_seconds": 405.4307110309601,
+        "inference_batch": 16,
+        "cuda_peak_allocated_bytes": 17023676928
+      },
+      "OpenDrawer/PROGRESS.json": {
+        "task": "OpenDrawer",
+        "checked_unix": 1794645977.3175,
+        "completed_decisions": 8448,
+        "expected_decisions": 46080,
+        "banked_shards": 0,
+        "elapsed_seconds": 405.496084690094,
+        "inference_batch": 16,
+        "cuda_peak_allocated_bytes": 17023676928
+      },
+      "PickPlaceCounterToStove/PROGRESS.json": {
+        "task": "PickPlaceCounterToStove",
+        "checked_unix": 1794645977.036663,
+        "completed_decisions": 8448,
+        "expected_decisions": 46080,
+        "banked_shards": 0,
+        "elapsed_seconds": 405.43982434272766,
+        "inference_batch": 16,
+        "cuda_peak_allocated_bytes": 17023676928
+      },
+      "TurnOnSinkFaucet/PROGRESS.json": {
+        "task": "TurnOnSinkFaucet",
+        "checked_unix": 1794645977.513189,
+        "completed_decisions": 8448,
+        "expected_decisions": 46080,
+        "banked_shards": 0,
+        "elapsed_seconds": 405.99686908721924,
+        "inference_batch": 16,
+        "cuda_peak_allocated_bytes": 17023676928
+      }
+    },
+    "robocasa-six-task-scale-20261113-r1/datasets01": {
+      "LAUNCH.json": {
+        "source_commit": "5ca65a3a3533c75091e418f12686625f3e9eb9f3",
+        "hostname": "aibox-rffe453e3884-5f96c78b88-6ssrn",
+        "started_unix": 1794644841.3536263,
+        "deadline_unix": 1794659241.3536263,
+        "CPU_only": true,
+        "local_free_bytes": 3402875392000,
+        "required_local_bytes": 4831395840
+      }
+    },
+    "robocasa-dit-paired-confirmation-20261114-r1/qual02": {
+      "LAUNCH.json": {
+        "source_commit": "9f8bb6a46c806ac93edc55613909e00aa4319d38",
+        "hostname": "job-rndlh3s50x3d-master-0",
+        "started_unix": 1794643463.7754846,
+        "maximum_GPU_hours": 1.75,
+        "automatic_retry": false,
+        "stage": "qualification",
+        "cases_per_task": 8,
+        "local_free_bytes": 217304920064,
+        "local_output": "/tmp/robocasa-dit-paired-confirmation-20261114-r1/qual02",
+        "launch_limit_seconds": 6000
+      },
+      "gpu-probe.json": {
+        "status": "passed",
+        "purpose": "evaluation",
+        "timing_comparison_eligible": false,
+        "allocation_type": "baige_container",
+        "hostname": "job-rndlh3s50x3d-master-0",
+        "probe_pid": 233,
+        "created_at_utc": "2026-11-14T08:04:36.828079+00:00",
+        "devices": [
+          {
+            "allocation_ordinal": 0,
+            "visibility_token": "0",
+            "cuda_uuid": "b1cc6fc3-7960-1a1c-c034-6f264f6f7a06",
+            "cuda_name": "NVIDIA RPBZZZ6",
+            "cuda_total_bytes": 101973950464,
+            "pci_bus_id": "0000:64:00.0",
+            "uuid": "GPU-dd3c82b9-a8a6-84a8-652d-d3b328195da8",
+            "inventory": {
+              "index": 0,
+              "uuid": "GPU-dd3c82b9-a8a6-84a8-652d-d3b328195da8",
+              "name": "NVIDIA RPBZZZ6",
+              "memory_total_mib": 97887.0,
+              "memory_used_mib": 0.0,
+              "utilization_percent": 0.0,
+              "pci_bus_id": "00000000:64:00.0"
+            },
+            "allocation_check": {
+              "elements": 1048576,
+              "result": 2097152.0,
+              "touched_gpu_uuids": [
+                "GPU-dd3c82b9-a8a6-84a8-652d-d3b328195da8"
+              ],
+              "own_pid_gpu_uuids": [
+                "GPU-dd3c82b9-a8a6-84a8-652d-d3b328195da8"
+              ]
+            }
+          }
+        ],
+        "idle_utilization_required": false,
+        "exclusive_training_admission": false,
+        "admission_policy": "exclusive_scheduler_evaluation",
+        "utilization_role": "telemetry_only",
+        "utilization_telemetry": {
+          "GPU-dd3c82b9-a8a6-84a8-652d-d3b328195da8": 0.0
+        },
+        "maximum_initial_memory_mib": 256,
+        "gpu_identity_mapping": {
+          "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+          "assigned_nvml_uuids": [
+            "GPU-dd3c82b9-a8a6-84a8-652d-d3b328195da8"
+          ]
+        },
+        "compute_processes_before": [],
+        "compute_processes_after": [
+          {
+            "gpu_uuid": "GPU-dd3c82b9-a8a6-84a8-652d-d3b328195da8",
+            "pid": 233,
+            "process_name": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+            "memory_used_mib": "640"
+          }
+        ],
+        "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t0-89\t0\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
+      },
+      "evaluation/PROGRESS.json": {
+        "checked_unix": 1794645572.841853,
+        "completed_waves": 3,
+        "results": [
+          {
+            "task": "OpenDrawer",
+            "first": 0,
+            "archive": {
+              "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/qual02/evaluation/OpenDrawer/bank-0000/evidence.tar",
+              "sha256": "2b05122a51f7a2530c44a2cc62ad364c2832117d4957e994b149efa74b7a5560",
+              "bytes": 1292288000,
+              "every_member_verified": true,
+              "cold_full_readback": true,
+              "elapsed_seconds": 7.386051177978516
+            },
+            "timing": {
+              "DIT_full_history": 356.95038080215454,
+              "DIT_episode_reset": 59.36089777946472,
+              "original_SFT": 57.9221408367157,
+              "fixed_PPO130": 58.13589000701904,
+              "DIT_reset_serial": 349.38137125968933
+            }
+          },
+          {
+            "task": "CloseToasterOvenDoor",
+            "first": 0,
+            "archive": {
+              "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/qual02/evaluation/CloseToasterOvenDoor/bank-0000/evidence.tar",
+              "sha256": "7c0f08e88580288d2317e23bfd59a128652e561ccb936cebc9045fcf783aed56",
+              "bytes": 779489280,
+              "every_member_verified": true,
+              "cold_full_readback": true,
+              "elapsed_seconds": 4.758480787277222
+            },
+            "timing": {
+              "DIT_full_history": 296.67661356925964,
+              "DIT_episode_reset": 50.2717022895813,
+              "original_SFT": 49.2258026599884,
+              "fixed_PPO130": 48.71473550796509
+            }
+          },
+          {
+            "task": "CoffeeSetupMug",
+            "first": 0,
+            "archive": {
+              "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/qual02/evaluation/CoffeeSetupMug/bank-0000/evidence.tar",
+              "sha256": "b54f36082af16510ed864c03417af5f8ab3da94d40d2ea4eb60b29822892a2f2",
+              "bytes": 964229120,
+              "every_member_verified": true,
+              "cold_full_readback": true,
+              "elapsed_seconds": 5.65789270401001
+            },
+            "timing": {
+              "DIT_full_history": 331.7925786972046,
+              "DIT_episode_reset": 55.88573145866394,
+              "original_SFT": 54.81868052482605,
+              "fixed_PPO130": 54.366796255111694
+            }
+          }
+        ]
+      },
+      "verified_task_waves": [
+        "OpenDrawer",
+        "CloseToasterOvenDoor",
+        "CoffeeSetupMug"
+      ]
+    }
+  },
+  "assembly_process": "176149 /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B /mowenjie/fluffy-bassoon-2/sources/matched-assembly-5ca65a3a/outputs/robocasa-six-task-scale-20261113-r1/assemble_job.py --pin 5ca65a3a3533c75091e418f12686625f3e9eb9f3 --attempt datasets01"
+}

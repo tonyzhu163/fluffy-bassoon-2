@@ -1,6 +1,6 @@
 {
-  "checked_shanghai": "2026-11-14T16:22:47+08:00",
-  "status": "All six corrected30-update sources, canonical packs and step30 teachers complete. Two-task labels03 advancing after successful GPU probe; labels04 queued. Paired qualification has one fully audited, verified cold-banked wave. No new transformer fits or expanded confirmation yet.",
+  "checked_shanghai": "2026-11-14T16:46:47+08:00",
+  "status": "All six corrected task label workers advancing on two running jobs. Paired qualification has 3/5 verified waves. CPU assembly driver live; no new fit or expanded confirmation launched.",
   "launch_source_commit": "3a328f742d8db234586e2d7cb2d1d66e91e5d371",
   "deployment": "Git bundle; clean exact detached source on Baige; existing active worktrees untouched",
   "validation": {
@@ -393,10 +393,10 @@
   "monitoring_gap": "Previous record was November13 16:17. No intervening checks are recorded; terminal states were first reconciled in this November14 status check.",
   "source_completion_note": "Drawer30 checkpoint/raw archive complete, but its final after-evaluation receipt is absent because the bounded checkpoint-and-exit path ran. Coffee and Counter have step30 evaluation receipts. Source learning metrics are not transformer ID/OOD results.",
   "progress_check": {
-    "checked_shanghai": "2026-11-14T16:22:47+08:00",
+    "checked_shanghai": "2026-11-14T16:46:47+08:00",
     "source": "Baige console and actual-allocation cold receipts",
-    "evidence": "evidence/LABEL-RETRIES-AND-PAIRED-20261114.json",
-    "next_check_shanghai": "2026-11-14T16:42:47+08:00"
+    "evidence": "evidence/LABEL-AND-QUALIFICATION-PROGRESS-20261114.json",
+    "next_check_shanghai": "2026-11-14T17:06:47+08:00"
   },
   "canonical_raw_pack_tasks": [
     "OpenDrawer",
@@ -416,7 +416,7 @@
   ],
   "paired_qualification": {
     "job_id": "job-rndlh3s50x3d",
-    "status": "Running; GPU probe passed; one verified wave",
+    "status": "Running; 3/5 task waves fully audited and cold-banked",
     "source_commit": "9f8bb6a46c806ac93edc55613909e00aa4319d38",
     "qualification_reservation": {
       "total_GPU_hours": 2,
@@ -425,8 +425,8 @@
       "uncommitted_margin": 0.05
     },
     "progress": {
-      "checked_unix": 1794644529.6417606,
-      "completed_waves": 1,
+      "checked_unix": 1794645572.841853,
+      "completed_waves": 3,
       "results": [
         {
           "task": "OpenDrawer",
@@ -446,6 +446,42 @@
             "fixed_PPO130": 58.13589000701904,
             "DIT_reset_serial": 349.38137125968933
           }
+        },
+        {
+          "task": "CloseToasterOvenDoor",
+          "first": 0,
+          "archive": {
+            "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/qual02/evaluation/CloseToasterOvenDoor/bank-0000/evidence.tar",
+            "sha256": "7c0f08e88580288d2317e23bfd59a128652e561ccb936cebc9045fcf783aed56",
+            "bytes": 779489280,
+            "every_member_verified": true,
+            "cold_full_readback": true,
+            "elapsed_seconds": 4.758480787277222
+          },
+          "timing": {
+            "DIT_full_history": 296.67661356925964,
+            "DIT_episode_reset": 50.2717022895813,
+            "original_SFT": 49.2258026599884,
+            "fixed_PPO130": 48.71473550796509
+          }
+        },
+        {
+          "task": "CoffeeSetupMug",
+          "first": 0,
+          "archive": {
+            "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/qual02/evaluation/CoffeeSetupMug/bank-0000/evidence.tar",
+            "sha256": "b54f36082af16510ed864c03417af5f8ab3da94d40d2ea4eb60b29822892a2f2",
+            "bytes": 964229120,
+            "every_member_verified": true,
+            "cold_full_readback": true,
+            "elapsed_seconds": 5.65789270401001
+          },
+          "timing": {
+            "DIT_full_history": 331.7925786972046,
+            "DIT_episode_reset": 55.88573145866394,
+            "original_SFT": 54.81868052482605,
+            "fixed_PPO130": 54.366796255111694
+          }
         }
       ]
     }
@@ -456,7 +492,7 @@
       "job-3r4f69s37tpv",
       "job-972qpi5ao378"
     ],
-    "status": "labels03 advancing; labels04 queued",
+    "status": "Both jobs running;2+4 allocated GPU probes passed",
     "reserved_GPU_hours": 17.8
   },
   "fit_preparation": {
@@ -468,7 +504,8 @@
     "submitted": false,
     "plan": "FIT-PLAN.json",
     "validation": "evidence/FIT-CPU-VALIDATION.json",
-    "latest_launcher_source_commit": "cbece8fd7038b60213df64fca2f0f6c7a32a55cf"
+    "latest_launcher_source_commit": "cbece8fd7038b60213df64fca2f0f6c7a32a55cf",
+    "latest_reviewed_code_commit": "f5f8903d9ce49a96b58b12a41b38ab833a2ff789"
   },
   "assembly_execution": {
     "source_commit": "5ca65a3a3533c75091e418f12686625f3e9eb9f3",
@@ -478,6 +515,14 @@
     "status": "Bounded CPU driver running; waiting for completed task labels before assembly",
     "evidence": "evidence/ASSEMBLY-LAUNCH.json",
     "cold_output": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/datasets01",
-    "GPU_hours_reserved": 0
+    "GPU_hours_reserved": 0,
+    "live_process_verified": "176149 /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B /mowenjie/fluffy-bassoon-2/sources/matched-assembly-5ca65a3a/outputs/robocasa-six-task-scale-20261113-r1/assemble_job.py --pin 5ca65a3a3533c75091e418f12686625f3e9eb9f3 --attempt datasets01"
+  },
+  "matched_readout_preparation": {
+    "source_commit": "f5f8903d9ce49a96b58b12a41b38ab833a2ff789",
+    "file": "matched_readout.py",
+    "status": "Prepared and Linux CLI import passed; not launched",
+    "pairing": "All eight models share physical canonical states within each whole wave",
+    "migration": "Requires a recorded qualified migration preserving full episodes1..6 and reset endpoints1/6; cannot launch under the old19200-episode contract"
   }
 }

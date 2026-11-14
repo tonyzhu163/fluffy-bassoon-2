@@ -1,5 +1,5 @@
 {
-  "status": "Running; GPU probe passed; first task wave audited and cold archive fully read back",
+  "status": "Running; 3/5 task waves fully audited and cold-banked",
   "job_id": "job-rndlh3s50x3d",
   "job_name": "mwj_1114_dit_paired_qual_g1_r2",
   "cluster": "Baige Pro6K",
@@ -21,8 +21,8 @@
   "CPU_validation": "20 core tests passed on source8aa93780. Retry native score-to-command mapping and runner imports passed on allocated Linux at9f8bb6a4.",
   "allocation_gpu_probe": "passed",
   "native_progress": {
-    "checked_unix": 1794644529.6417606,
-    "completed_waves": 1,
+    "checked_unix": 1794645572.841853,
+    "completed_waves": 3,
     "results": [
       {
         "task": "OpenDrawer",
@@ -42,11 +42,47 @@
           "fixed_PPO130": 58.13589000701904,
           "DIT_reset_serial": 349.38137125968933
         }
+      },
+      {
+        "task": "CloseToasterOvenDoor",
+        "first": 0,
+        "archive": {
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/qual02/evaluation/CloseToasterOvenDoor/bank-0000/evidence.tar",
+          "sha256": "7c0f08e88580288d2317e23bfd59a128652e561ccb936cebc9045fcf783aed56",
+          "bytes": 779489280,
+          "every_member_verified": true,
+          "cold_full_readback": true,
+          "elapsed_seconds": 4.758480787277222
+        },
+        "timing": {
+          "DIT_full_history": 296.67661356925964,
+          "DIT_episode_reset": 50.2717022895813,
+          "original_SFT": 49.2258026599884,
+          "fixed_PPO130": 48.71473550796509
+        }
+      },
+      {
+        "task": "CoffeeSetupMug",
+        "first": 0,
+        "archive": {
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/qual02/evaluation/CoffeeSetupMug/bank-0000/evidence.tar",
+          "sha256": "b54f36082af16510ed864c03417af5f8ab3da94d40d2ea4eb60b29822892a2f2",
+          "bytes": 964229120,
+          "every_member_verified": true,
+          "cold_full_readback": true,
+          "elapsed_seconds": 5.65789270401001
+        },
+        "timing": {
+          "DIT_full_history": 331.7925786972046,
+          "DIT_episode_reset": 55.88573145866394,
+          "original_SFT": 54.81868052482605,
+          "fixed_PPO130": 54.366796255111694
+        }
       }
     ]
   },
   "next_action": "Complete remaining four task qualification waves; fix fresh confirmation count using measured full cost before confirmation outcomes. Target500 is conditional on28GPUh allowance.",
-  "checked_shanghai": "2026-11-14T16:22:47+08:00",
+  "checked_shanghai": "2026-11-14T16:46:47+08:00",
   "previous_attempt": {
     "job_id": "job-4fihmh5d1ox9",
     "status": "failed in audit after first rollout batch",
@@ -71,5 +107,19 @@
     "personal_limit_GPUs": 32,
     "queued_jobs": 14
   },
-  "next_check_shanghai": "2026-11-14T16:42:47+08:00"
+  "next_check_shanghai": "2026-11-14T17:06:47+08:00",
+  "verified_task_waves": [
+    "OpenDrawer",
+    "CloseToasterOvenDoor",
+    "CoffeeSetupMug"
+  ],
+  "confirmation_preparation": {
+    "source_commit": "39e40979801511dd78922943886c6fa5ca883001",
+    "launcher": "confirmation_job.py",
+    "analysis": "analyze.py",
+    "qualified_readout_unchanged_sha256": "cffb005f07df84a7961ffe33795529574e8f4743a69b2ef6477884118752cc53",
+    "Linux_CLI_imports": true,
+    "paired_statistics_numerical_checks": "Identical arms give exact zero; known binary +100pp and -100pp contrasts/intervals/discordances match reference",
+    "launched": false
+  }
 }
