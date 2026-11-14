@@ -1,0 +1,30 @@
+{
+  "recorded_utc": "2026-11-14T10:00:27.323534+00:00",
+  "status": "Declared before any new-fit native evaluation; all eight fits still in progress",
+  "purpose": "Direct paired comparison of AD, DPT, DIT and IC-IQL, in addition to the existing history and corpus-scaling contrasts",
+  "corpora": [
+    3,
+    6
+  ],
+  "within_corpus_pairs": [
+    "ad_minus_dpt",
+    "ad_minus_dit",
+    "ad_minus_ic_iql",
+    "dpt_minus_dit",
+    "dpt_minus_ic_iql",
+    "dit_minus_ic_iql"
+  ],
+  "endpoints": [
+    "full_first",
+    "full_sixth",
+    "reset_first",
+    "reset_sixth",
+    "history_effect_difference"
+  ],
+  "history_effect_difference": "(left full sixth - left reset sixth) - (right full sixth - right reset sixth)",
+  "panels": "Each task separately, equal-weight three-task ID and two-task OOD",
+  "uncertainty": "Same 10000 task-stratified paired bootstrap draws for every model and contrast; seed20261115; marginal95% intervals, no multiplicity correction",
+  "interpretation": "Descriptive paired contrasts, not a familywise winner test. Full-success advantage and extra history benefit are separate claims. One fit per method/corpus; case uncertainty does not measure training-seed robustness.",
+  "compute_change": "None: use the already planned12800 physical episodes,40 common cases/task for all eight models",
+  "source": "matched_analyze.py"
+}

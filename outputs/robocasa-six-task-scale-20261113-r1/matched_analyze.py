@@ -59,11 +59,30 @@ def paired_statistics(outcomes, *, replicates=10000, seed=20261115):
             scaling[method]['history_effect_difference'] = effect(
                 (large[:, :, 1] - large[:, :, 3]) - (small[:, :, 1] - small[:, :, 3]),
                 (large_draws[:, 1] - large_draws[:, 3]) - (small_draws[:, 1] - small_draws[:, 3]))
-        return dict(tasks=[TASKS[i] for i in indices], cases_per_task=40, models=models, six_minus_three=scaling)
+        within_corpus = {}
+        for offset, size in ((0, 3), (4, 6)):
+            comparisons = {}
+            for i in range(len(METHODS)):
+                for j in range(i + 1, len(METHODS)):
+                    left, right = outcomes[offset + i, indices], outcomes[offset + j, indices]
+                    left_draws, right_draws = samples[:, offset + i], samples[:, offset + j]
+                    comparison = {endpoint: effect(left[:, :, ei] - right[:, :, ei],
+                        left_draws[:, ei] - right_draws[:, ei]) for ei, endpoint in enumerate(ENDPOINTS)}
+                    for ei, endpoint in enumerate(ENDPOINTS):
+                        delta = left[:, :, ei] - right[:, :, ei]
+                        comparison[endpoint].update(left_wins=int((delta > 0).sum()),
+                            left_losses=int((delta < 0).sum()), ties=int((delta == 0).sum()))
+                    comparison['history_effect_difference'] = effect(
+                        (left[:, :, 1] - left[:, :, 3]) - (right[:, :, 1] - right[:, :, 3]),
+                        (left_draws[:, 1] - left_draws[:, 3]) - (right_draws[:, 1] - right_draws[:, 3]))
+                    comparisons[f'{METHODS[i]}_minus_{METHODS[j]}'] = comparison
+            within_corpus[str(size)] = comparisons
+        return dict(tasks=[TASKS[i] for i in indices], cases_per_task=40, models=models,
+            six_minus_three=scaling, within_corpus_method_differences=within_corpus)
 
     return dict(tasks={task: panel([i]) for i, task in enumerate(TASKS)},
         panels={'ID': panel([0, 1, 2]), 'OOD': panel([3, 4])}, bootstrap_replicates=replicates, bootstrap_seed=seed,
-        uncertainty='Task-stratified paired case bootstrap preserving all eight models, equal task weighting, marginal95% intervals without multiplicity correction. One fit per cell; no training-seed or task-population uncertainty.')
+        uncertainty='Task-stratified paired case bootstrap preserving all eight models, equal task weighting, marginal95% intervals without multiplicity correction. All six method pairs within each corpus are descriptive comparisons, not a familywise winner test. One fit per cell; no training-seed or task-population uncertainty.')
 
 
 def main():
@@ -190,6 +209,14 @@ def main():
             full, history = row['full_sixth'], row['history_effect_difference']
             fl, fh = full['paired_bootstrap95_pp']; hl, hh = history['paired_bootstrap95_pp']
             lines.append(f'| {method} | {panel} | {full["difference_pp"]:+.1f} | [{fl:.1f}, {fh:.1f}] | {history["difference_pp"]:+.1f} | [{hl:.1f}, {hh:.1f}] |')
+    lines += ['', '| Corpus | Method contrast | Panel | Full sixth difference (pp) | Paired 95% interval | History-effect difference (pp) | Paired 95% interval |',
+              '| --- | --- | --- | ---: | --- | ---: | --- |']
+    for size in ('3', '6'):
+        for panel, values in report['panels'].items():
+            for contrast, row in values['within_corpus_method_differences'][size].items():
+                full, history = row['full_sixth'], row['history_effect_difference']
+                fl, fh = full['paired_bootstrap95_pp']; hl, hh = history['paired_bootstrap95_pp']
+                lines.append(f'| {size} | {contrast.replace("_minus_", " − ")} | {panel} | {full["difference_pp"]:+.1f} | [{fl:.1f}, {fh:.1f}] | {history["difference_pp"]:+.1f} | [{hl:.1f}, {hh:.1f}] |')
     lines += ['', report['uncertainty'], '',
         'This compares adding task data at fixed fitting compute. It does not isolate diversity from corpus size. OOD is relative to these meta-training tasks, not necessarily base pretraining. First-attempt success and reset disagreements are reported in RESULT.json; initial competence alone does not establish adaptation.', '']
     (args.output / 'RESULT.md').write_text('\n'.join(lines))
