@@ -35,10 +35,30 @@ def main():
     assert not source.exists() and not remote.exists()
     source.parent.mkdir(parents=True, exist_ok=True)
     assert source.parent.stat().st_dev != PROJECT.stat().st_dev
-    assert shutil.disk_usage(source.parent).free >= 400 * 2**30
     remote.mkdir(parents=True, exist_ok=False)
     probe = remote / '.write-probe'
     probe.write_text('corrected-PPO-source'); assert probe.read_text() == 'corrected-PPO-source'; probe.unlink()
+    # The development machine's scratch capacity says nothing about the assigned
+    # job node. Retain its actual measurements even if admission fails.
+    usage = shutil.disk_usage(source.parent)
+    required = 400 * 2**30
+    storage = dict(hostname=socket.gethostname(), source_commit=args.pin,
+        task=args.task, attempt=args.attempt, path=str(source.parent),
+        total_bytes=usage.total, free_bytes=usage.free, required_bytes=required,
+        project_free_bytes=shutil.disk_usage(PROJECT).free,
+        separate_from_project=source.parent.stat().st_dev != PROJECT.stat().st_dev,
+        passed=usage.free >= required, checked_unix=time.time(),
+        rationale='Completed30-update sources used136GiB; retain200GiB floor plus checkpoint/transient headroom')
+    write(remote / 'STORAGE.json', storage)
+    print(storage, flush=True)
+    if not storage['passed']:
+        raise RuntimeError(f'Assigned node has {usage.free / 2**30:.1f}GiB scratch free; '
+                           '400GiB required. No model started; see STORAGE.json.')
+    probe = source.parent / (args.attempt + '-write-probe')
+    with probe.open('x') as stream:
+        stream.write('corrected-PPO-local-scratch')
+    assert probe.read_text() == 'corrected-PPO-local-scratch'
+    probe.unlink()
     started = time.time()
     write(remote / 'LAUNCH.json', dict(source_commit=args.pin, task=args.task, attempt=args.attempt,
         hostname=socket.gethostname(), started_unix=started, local_output=str(source),

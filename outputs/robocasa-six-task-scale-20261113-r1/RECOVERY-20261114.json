@@ -1,0 +1,31 @@
+{
+  "user_instruction": "can you cehck space and then keep going?",
+  "date_shanghai": "2026-11-14",
+  "status": "Prepared two fresh recollections; not yet submitted",
+  "reviewed_main": "a5235194",
+  "old_immutable_launch_pin": "3a328f742d8db234586e2d7cb2d1d66e91e5d371",
+  "tasks": [
+    "CloseToasterOvenDoor",
+    "TurnOffStove"
+  ],
+  "attempt": "attempt02",
+  "same_scientific_recipe": true,
+  "source_selection": "Each fresh recollection starts from original SFT and contributes its complete first30 updates. Do not splice the interrupted Toaster18 history into it.",
+  "toaster_recovery_evidence": "No ARCHIVE or COMPLETE receipt in its assigned private storage; stopped container exposes no WebIDE/WebShell connection. No full checkpoint/history is available through current access. Its18 updates are not admitted as recoverable source data.",
+  "space": "Development scratch3.1TiB free; shared PFS251GiB free. Keep raw job output on node-local scratch, never move it to PFS. Require400GiB on each actual allocation; wrapper now persists STORAGE.json before admission failure. No existing data deleted.",
+  "space_threshold_basis": "Two completed30-update source inventories occupy135\u2013136GiB.400GiB admission retains the200GiB floor and checkpoint/transient headroom;230GiB soft-stop watcher remains unchanged.",
+  "changes": "Only add storage measurements and local write probe; no PPO config, reward, RNG, sampling, optimizer or save cadence change. Old detached source remains untouched.",
+  "qualification": "Mac AST/static check; Linux CPU AST and deployment checks pending. Prior29 core PPO tests remain applicable to unchanged implementation. Actual allocation GPU probe and simulator update mandatory.",
+  "budget": {
+    "approved_hard_cap_GPU_hours": 230,
+    "prior_terminal_jobs_conservative_upper_GPU_hours": 96,
+    "two_retry_reservation_GPU_hours": 40,
+    "committed_conservative_upper_GPU_hours": 136,
+    "uncommitted_GPU_hours": 94,
+    "each_job_GPUs": 8,
+    "each_job_maximum_minutes": 150,
+    "automatic_retry": false,
+    "accounting": "Retain original96GPUh conservative cap until scheduler allocation durations are reconciled. Reconcile actual closed usage before reserving the full downstream annotation/fitting/evaluation plan; never exceed230."
+  },
+  "next_action": "Deploy the reviewed commit; check current queue/quota; submit two fresh attempts; verify actual-node storage/GPU checks and first completed updates, then prepare matched source inputs while they collect."
+}
