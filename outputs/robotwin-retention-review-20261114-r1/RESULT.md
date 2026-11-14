@@ -1,0 +1,18 @@
+# RoboTwin PPO and GRPO retention review
+
+November 14, 2026 Shanghai time. The storage review sent the collection chat the proposed scope and requested exact live or planned dependencies before moving files. The collection chat is currently handling the corrected RoboCasa Toaster and Stove recollections. This review made no changes to PFS payloads or BOS objects.
+
+| Item | Retention decision |
+| --- | --- |
+| Sidney November 5 `train03`, `train04`, `train05`, `train06` and the `train07` pilot | Retire from future source selection. Attempts 03–06 stopped before SGD. The later matched arms initialized independently from the original Sidney SFT and collected their own histories. Keep the pilot results and existing BOS recovery. |
+| Sidney `train04/initial-states` | Candidate for a verified cold move. PFS has 708,018,688 allocated bytes here, or 0.66 GiB. The relevant operational restore is an old zero-update rehearsal. |
+| Sidney `ppo02` and `grpo01` step-zero checkpoints | Candidate for a verified cold move after checking for an exact replay reader. Their combined PFS allocation is 19,965,775,872 bytes, or 18.59 GiB. Preserve both complete boundaries and keep the original Sidney SFT bundle separately available. |
+| Sidney `ppo02` and `grpo01` step-two checkpoints | Keep readily available. Combined PFS allocation is 22,348,738,560 bytes, or 20.81 GiB. Their 40-update policies are the frozen endpoints in the corrected-rendering paired study. Preserve original SFT processors, paired cases, sampling receipts and verified exports. Step-one, reset, sampling and training-rollout payloads already have BOS receipts. |
+| Old Motus B256 actor controls and consumed confirmation bank | Retire B256 for fresh training and retire the consumed bank for fresh confirmation. B256 shifted more than 11% of unchanged-policy ratios outside the PPO clip interval. Keep the raw evidence used by the numerical audit. The held Motus continuation and its behavior-replay fixtures reference older paths. |
+| Corrected Motus B32 PPO and GRPO | Retain as historical controls. Keep GRPO step two and its complete resume state and original sampling data. The prepared continuation and scene/evaluation contracts name these paths directly. Keep the consumed confirmation result as historical evidence. |
+
+Hot checkpoint base is `/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1`. The checkpoint paths are `ppo02/sidney-paired-ppo/checkpoints/global_step_0`, `grpo01/sidney-paired-grpo/checkpoints/global_step_0` and the corresponding `global_step_2` directories. The `train04` path is under the separate `/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-rlinf-ppo-20261105-r1` root.
+
+The best-supported hot release is about **19.25 GiB** following full BOS restore verification and current-reader review. Retiring a run from future collection leaves its archive available for reproducing the old result. No whole-prefix BOS deletion is recommended from this dependency review.
+
+[Old Sidney attempts](../robotwin-sidney-rlinf-ppo-20261105-r1/EXECUTION.json) · [Matched training](../robotwin-sidney-matched-baselines-20261106-r1/RESULT.md) · [Sidney initializer](../robotwin-sft-initializer-selection-20261109-r1/RESULT.md) · [Paired frozen endpoints](../robotwin-sidney-native-endpoints-20261109-r1/RESULT.md) · [Existing rollouts archive](../storage-audit-baige-20261111-r1/RESULT.md) · [Existing Sidney payload archive](../outputs-retention-20261113-r1/RESULT.md) · [Motus behavior audit](../robotwin-restoration-20261106-r1/PPO-GRPO-AUDIT-RESULT.md) · [Motus continuation proposal](../robotwin-restoration-20261106-r1/MOTUS-LONGER-CURVE-PROPOSAL.md)
