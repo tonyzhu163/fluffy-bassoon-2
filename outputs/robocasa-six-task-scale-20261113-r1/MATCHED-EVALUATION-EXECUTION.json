@@ -1,5 +1,5 @@
 {
-  "status": "Running;21/25 whole paired banks archived, at least11704 physical episodes complete",
+  "status": "Running;21/25 whole paired banks archived, at least12296 physical episodes complete",
   "source_commit": "7cc56702ec6b623ae4aa4f79da211883ca4ecddd",
   "source_directory": "/mowenjie/fluffy-bassoon-2/sources/matched-readout-7cc56702",
   "source_deployment": "evidence/MATCHED-READOUT-DEPLOYMENT-7cc56702.json",
@@ -58,7 +58,7 @@
     "queued_jobs": 1
   },
   "submission_evidence": "evidence/MATCHED-EVALUATION-SUBMITTED.jpg",
-  "next_check_shanghai": "2026-11-15T07:52:00+08:00",
+  "next_check_shanghai": "2026-11-15T08:12:00+08:00",
   "submission_evidence_sha256": "e7db69543091bbe776f1715142390361bcfb651e4bc1826f55227b4502a3b232",
   "launch": {
     "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/LAUNCH.json",
@@ -467,21 +467,21 @@
       "topology": "\t\u001b[4mGPU0\tGPU1\tGPU2\tGPU3\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tPHB\tPHB\tPHB\tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nGPU1\tPHB\t X \tPHB\tPHB\tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nGPU2\tPHB\tPHB\t X \tPHB\tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nGPU3\tPHB\tPHB\tPHB\t X \tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nNIC0\tSYS\tSYS\tSYS\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\tSYS\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tSYS\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tSYS\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
     }
   },
-  "latest_evidence": "evidence/MATCHED-READOUT-20261115-0731.json",
-  "checked_unix": 1794699094.8435006,
+  "latest_evidence": "evidence/MATCHED-READOUT-20261115-0752.json",
+  "checked_unix": 1794700325.2419646,
   "first_native_validation": "evidence/MATCHED-FIRST-NATIVE-PROGRESS.json",
   "shard_progress": {
     "0": {
       "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-00/evaluation/PROGRESS.json",
-      "sha256": "723bd0f33f1f751d6ab669d1db634a3214554ac57cba844601a7e301334ce0d2",
+      "sha256": "543bb0f2b743925b03b4fe7613a53a9eaeab2632067fae9083aeb356388a6fcc",
       "data": {
         "task": "TurnOnMicrowave",
         "first": 0,
-        "model": "3/ic_iql",
-        "arm": "reset_first",
+        "model": "6/dit",
+        "arm": "reset_sixth",
         "completed_waves": 5,
-        "elapsed_seconds": 43.22853064537048,
-        "checked_unix": 1794699090.8129308
+        "elapsed_seconds": 40.895763635635376,
+        "checked_unix": 1794700154.3423707
       }
     },
     "1": {
@@ -844,32 +844,32 @@
     },
     "2": {
       "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-02/evaluation/PROGRESS.json",
-      "sha256": "c025ed20fa1e25e1d10bf41872862fd2d4959c0c03c818785cb2fb5fd7e27f0b",
+      "sha256": "589257054360771d5b36b414f8ff4a2b3b51235d09e3b163a01d510473d17180",
       "data": {
         "task": "TurnOnMicrowave",
         "first": 16,
-        "model": "3/ic_iql",
+        "model": "6/dit",
         "arm": "reset_sixth",
         "completed_waves": 5,
-        "elapsed_seconds": 44.27807688713074,
-        "checked_unix": 1794699027.340866
+        "elapsed_seconds": 44.612056493759155,
+        "checked_unix": 1794700137.9877584
       }
     },
     "3": {
       "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-03/evaluation/PROGRESS.json",
-      "sha256": "4cb8dcc504eb11949f4a6c8e7588cd805a7aedbfbd35a3eb886582617388972a",
+      "sha256": "1898550bed35685e68ee2861c44fc7b0f73d1d990badd1728955f6e441ca7f4d",
       "data": {
         "task": "TurnOnMicrowave",
         "first": 24,
-        "model": "3/dpt",
-        "arm": "full",
+        "model": "6/ad",
+        "arm": "reset_first",
         "completed_waves": 5,
-        "elapsed_seconds": 278.9442186355591,
-        "checked_unix": 1794699083.2055783
+        "elapsed_seconds": 46.84401082992554,
+        "checked_unix": 1794700282.9206097
       }
     }
   },
-  "native_physical_episodes_completed_lower_bound": 11704,
+  "native_physical_episodes_completed_lower_bound": 12296,
   "whole_paired_waves_archived": 21,
   "first_native_observation_watch": {
     "pid": 209231,
@@ -882,28 +882,28 @@
     "ended_unix": 1794677989.2243135
   },
   "observation_watch": {
-    "pid": 251096,
+    "pid": 252128,
     "hostname": "aibox-rffe453e3884-5f96c78b88-6ssrn",
-    "started_unix": 1794699115.0083215,
-    "deadline_unix": 1794700320.0,
+    "started_unix": 1794700346.9162562,
+    "deadline_unix": 1794701520.0,
     "initial_bank_counts": {
       "0": 5,
       "1": 6,
       "2": 5,
       "3": 5
     },
-    "behavior": "Read-only wait for owned terminal/error/incomplete, next bank, or07:52 full check; no accelerator mutation",
+    "behavior": "Read-only wait for owned terminal/error/incomplete, next bank, or08:12 full check; no accelerator mutation",
     "GPU_hours": 0
   },
   "startup_binding_audit": "evidence/MATCHED-STARTUP-BINDING-AUDIT.json",
   "CPU_completion_followthrough": "MATCHED-ANALYSIS-EXECUTION.json",
-  "shared_PFS_free_bytes": 77225525248,
+  "shared_PFS_free_bytes": 65284341760,
   "shared_space_observation": {
-    "change_since_previous_check_bytes": -209715200,
+    "change_since_previous_check_bytes": -11941183488,
     "attribution": "Unattributed shared-space change; no ownership inference",
     "evaluation_bulk_output": "Container-local /tmp and BOS; active runtime unchanged"
   },
-  "last_full_monitor_unix": 1794699094.8435006,
+  "last_full_monitor_unix": 1794700325.2419646,
   "independently_audited_banks": 2,
   "independently_audited_physical_episodes": 1056,
   "first_bank_audit": "evidence/MATCHED-FIRST-BANK-AUDIT.json",
