@@ -1,13 +1,13 @@
 {
-  "status": "All8 fixed-final audits passed; final SPEC bound; awaiting current capacity and submission",
+  "status": "Submitted; allocated job launcher started; GPU probe and native progress pending",
   "source_commit": "7cc56702ec6b623ae4aa4f79da211883ca4ecddd",
   "source_directory": "/mowenjie/fluffy-bassoon-2/sources/matched-readout-7cc56702",
   "source_deployment": "evidence/MATCHED-READOUT-DEPLOYMENT-7cc56702.json",
   "qualified_runtime_source": "e9fe49c4a8892f0eec17e5d6c5fada229eac93dc",
   "runtime_code_unchanged": true,
   "fit_source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
-  "job_id": null,
-  "attempt": null,
+  "job_id": "job-ayk637qgg7gw",
+  "attempt": "matchedreadout01",
   "proposed_resources": {
     "GPUs": 4,
     "CPUs": 64,
@@ -26,12 +26,11 @@
   "CPU_preparer": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit02/STATE.json",
   "binding_step": "After all8 audits complete, create a new readout-inputs01/SPEC.json from the prepared480min/32GPUh spec; preserve all model, baseline and case references, record original spec hash and window review, change scheduler to540 and reservation to36. The active CPU preparer remains immutable.",
   "launch_checks_remaining": [
-    "Fresh scheduler capacity, hardware and limits",
-    "Submit unique matchedreadout01 with540min cap and automatic retries off",
-    "Allocated4GPU probe and real simulator episode; inspect first-wave timing"
+    "Allocated4GPU probe and real simulator episode",
+    "First-wave actual timing and every20min checks"
   ],
   "GPU_hours_used": 0,
-  "recorded_shanghai": "2026-11-15T01:28:40.659366+08:00",
+  "recorded_shanghai": "2026-11-15T01:30:22.614102+08:00",
   "spec": {
     "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/readout-inputs01/SPEC.json",
     "sha256": "34fd790404df709796399cd845eec88788b5365488bf08f0480d9972efb0158f"
@@ -41,5 +40,25 @@
     "commit": "20e9acd57cc8db160be338d9bf0eefbb2b4aeb64",
     "result": "Only run metadata/evidence changed since7cc; src, scripts, benchmarks and evaluation runtime unchanged"
   },
-  "prepared_command": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B /mowenjie/fluffy-bassoon-2/sources/matched-readout-7cc56702/outputs/robocasa-six-task-scale-20261113-r1/matched_eval_job.py --pin 7cc56702ec6b623ae4aa4f79da211883ca4ecddd --spec /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/readout-inputs01/SPEC.json --spec-sha256 34fd790404df709796399cd845eec88788b5365488bf08f0480d9972efb0158f --attempt matchedreadout01 --max-minutes 540"
+  "prepared_command": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B /mowenjie/fluffy-bassoon-2/sources/matched-readout-7cc56702/outputs/robocasa-six-task-scale-20261113-r1/matched_eval_job.py --pin 7cc56702ec6b623ae4aa4f79da211883ca4ecddd --spec /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/readout-inputs01/SPEC.json --spec-sha256 34fd790404df709796399cd845eec88788b5365488bf08f0480d9972efb0158f --attempt matchedreadout01 --max-minutes 540",
+  "job_name": "mwj_1115_matchedreadout01_g4_r1",
+  "created_shanghai": "2026-11-15T01:29:26+08:00",
+  "cluster": "Baige Pro6K",
+  "queue": "aihcq-rh0wwk9muei4",
+  "owner": "mowenjie",
+  "cold_output": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01",
+  "command_UI_copy_verified_exact": true,
+  "capacity_at_submission": {
+    "GPU_type": "NVIDIA RPBZZZ6",
+    "queue_free_GPUs": 84,
+    "queue_max_GPUs": 416,
+    "queue_free_CPUs": 3193,
+    "queue_free_RAM_GiB": 37517,
+    "personal_free_GPUs": 12,
+    "personal_GPU_quota": 32,
+    "queued_jobs": 1
+  },
+  "submission_evidence": "evidence/MATCHED-EVALUATION-SUBMITTED.jpg",
+  "next_check_shanghai": "2026-11-15T01:49:00+08:00",
+  "submission_evidence_sha256": "e7db69543091bbe776f1715142390361bcfb651e4bc1826f55227b4502a3b232"
 }
