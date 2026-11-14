@@ -25,14 +25,15 @@ predesignated OpenDrawer PPO130 transfer teacher.
 Evaluate four frozen arms on identical fresh cases and sixth-attempt noise:
 DIT full history, DIT reset, original SFT and fixed PPO130. Keep the original
 three ID tasks (Drawer, Toaster, Coffee) and two OOD tasks (Fridge, Microwave).
-Target **500 new cases per task**, ten times the old count. Fix the final count
-using outcome-blind throughput measurements and the remaining budget before
-examining confirmation outcomes; do not stop when an interval becomes significant.
+The initial conditional target was 500 new cases per task. Outcome-blind
+throughput measurements fixed the actual count at **256 fresh cases per task**
+before examining confirmation outcomes; do not stop when an interval becomes
+significant. The fixed count and its resource rationale are recorded below.
 
 Full-history DIT executes all six physical episodes. After native qualification,
 the history-independent controls execute only episode six with its original
-noise stream. This gives nine physical episodes per case, or 22,500 at the target
-count. No skipped support episode is fabricated. The endpoint is native
+noise stream. This gives nine physical episodes per case, or **11,520 at the fixed
+count**. No skipped support episode is fabricated. The endpoint is native
 sixth-episode `success_once`, with no deployment optimizer updates.
 
 Report per-task success, the three paired DIT contrasts, discordant-pair counts,
@@ -44,12 +45,29 @@ No numerical continue/kill threshold has been agreed. More cases narrow
 uncertainty for this checkpoint; they do not establish training-seed robustness
 or explain why DIT performs better.
 
-Keep the existing **230 GPU-hour hard cap**. Current reconciled accounting is
-113 closed conservatively + 28 reserved for historical confirmation =
-**141/230 GPU-hours**. The remaining89 comprises48 of primary fits,32 of matched
-new-fit evaluation and9 of uncommitted recovery margin. The label jobs have
-closed; their verified accounting releases the earlier contingency. The old 50/170 caps remain
-closed. [Current ledger](../robocasa-six-task-scale-20261113-r1/APPROVAL.json).
+The decision is to collect the larger paired panel before treating the old
+intervals as evidence to continue or kill the direction. An interval spanning
+zero does not establish no history benefit. Pairing uses the same physical case
+and query-noise stream across arms; report the paired gains and losses, rather
+than inferring a difference from separate success-rate intervals. More cases
+can improve precision but do not guarantee a decisive result. A precise small
+effect and an imprecise effect warrant different conclusions; a positive
+baseline gap alone does not establish that history caused the gain. No new
+practical-effect threshold is being introduced after observing results.
+
+Keep this historical-checkpoint confirmation separate from the corrected
+[AD/DPT/DIT/IC-IQL three-versus-six-task comparison](../robocasa-six-task-scale-20261113-r1/EVALUATION-MIGRATION.json).
+That comparison uses eight fresh, matched-duration fits and 40 paired cases per
+task per model. The 256-case confirmation does not increase its sample size.
+Both studies report ID and OOD separately; OOD means held out from meta-training,
+not necessarily unseen by the base VLA during pretraining or SFT.
+
+Keep the existing **230 GPU-hour hard cap**. At the November 14, 17:52 check,
+113 GPU-hours were closed conservatively, 28 reserved for historical
+confirmation and 48 reserved for the two fit allocations: **189/230 committed**.
+The remaining 41 comprise 32 for matched new-fit evaluation and 9 of uncommitted
+recovery margin. The old 50/170 caps remain closed.
+[Current ledger](../robocasa-six-task-scale-20261113-r1/APPROVAL.json).
 
 The outcome-blind count is now **256 fresh cases per task**, fixed before any
 confirmation outcomes: 1,280 cases and **11,520 physical episodes**. Full
@@ -75,10 +93,9 @@ Expanded confirmation `job-ir52nloomqdx` was submitted at17:18 Shanghai,
 source88ebc32e, and passed its four-device allocation probe.
 [Confirmation execution](CONFIRMATION-EXECUTION.json).
 
-All six corrected source collections and step-30 teachers are complete. Toaster
-and Stove labels are complete and their datasets assembled. All other four label workers have now succeeded; CPU assembly and
-corpus-query qualification are live. Both four-method transformer jobs were submitted at17:33/17:35 Shanghai.
-The three-task job is running; the six-task job is queued. Live status belongs in
+All six corrected source collections, step-30 teacher labels and corpus assembly
+are complete. Corpus-query qualification passed, and both four-method
+transformer allocations started. Live progress and the next check belong in
 [coordination](../coordination.md).
 
 [Execution](EXECUTION.json) · [Restored inputs](RESTORED.json) ·
