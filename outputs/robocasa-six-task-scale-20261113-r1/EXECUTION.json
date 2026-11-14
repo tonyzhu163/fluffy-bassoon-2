@@ -1,6 +1,6 @@
 {
-  "checked_shanghai": "2026-11-14T15:49:00+08:00",
-  "status": "Both final corrected PPO collectors reached30/30; archive readback pending. Four-task labels and paired qualification retry queued. No new transformer fits yet.",
+  "checked_shanghai": "2026-11-14T16:03:00+08:00",
+  "status": "All six matched corrected sources reached30 updates. Final Stove and Toaster jobs succeeded and archives fully verified; their canonical pack/teacher exports are running on allocated CPU. Labels01 and paired qualification remain queued. Fit code prepared and63 core tests passed; no new transformer fit yet.",
   "launch_source_commit": "3a328f742d8db234586e2d7cb2d1d66e91e5d371",
   "deployment": "Git bundle; clean exact detached source on Baige; existing active worktrees untouched",
   "validation": {
@@ -62,16 +62,16 @@
   },
   "budget": {
     "GPU_hours_used_this_phase": null,
-    "GPU_hours_reserved_this_phase": 53.8,
+    "GPU_hours_reserved_this_phase": 13.8,
     "prior_all_new_committed_upper_bound_GPU_hours": 48.834722222222226,
     "prior_all_new_hard_cap_GPU_hours": 50,
     "prior_historical_committed_upper_bound_GPU_hours": 162.12916655555557,
     "prior_historical_hard_cap_GPU_hours": 170,
     "approval": "Existing explicit230GPUh approval; corrected recollection replaces historical buggy-critic reuse. See PLAN.md for reallocation.",
     "approved_additional_hard_cap_GPU_hours": 230,
-    "usage_checked_shanghai": "2026-11-14T15:49:00+08:00",
-    "closed_jobs_conservative_GPU_hours_upper_bound": 67.2,
-    "accounting": "Closed conservative67.2 + active PPO40 + paired retry1.75 + held margin0.05 + labels01 reservation12 =121/230. Remaining109 proposal: labels6, fits/values57, new endpoint panels18, historical paired panel28.",
+    "usage_checked_shanghai": "2026-11-14T16:03:00+08:00",
+    "closed_jobs_conservative_GPU_hours_upper_bound": 107.2,
+    "accounting": "Closed sources conservative107 plus failed qualification0.2; queued labels12 plus qualification retry1.75 and held0.05 =121/230. Final collectors40 reservation moved to closed without releasing its margin; remaining109 proposal unchanged.",
     "committed_conservative_upper_GPU_hours": 121
   },
   "next_action": "Verify label and paired GPU probes after allocation; qualify actual paired waves and fix confirmation count before outcomes. Verify final two source archives, pack sources and teachers, then label. Prepare eight fixed10000-update transformer fits with fresh corpus-specific Q/V. Nov15 target at risk.",
@@ -261,7 +261,7 @@
       "job_id": "job-t5gpub15c9d6",
       "name": "mwj_1114_matched_stove_ppo30_r2",
       "created_shanghai": "2026-11-14T13:37:25+08:00",
-      "scheduler_status": "Running",
+      "scheduler_status": "Succeeded",
       "GPUs": 8,
       "CPUs": 64,
       "RAM_GiB": 1024,
@@ -272,10 +272,10 @@
       "attempt": "attempt02",
       "completed_updates": 30,
       "automatic_retries": false,
-      "last_checked_shanghai": "2026-11-14T15:49:00+08:00",
+      "last_checked_shanghai": "2026-11-14T16:03:00+08:00",
       "new_updates_completed": 30,
       "target_updates": 30,
-      "archive_verified": false,
+      "archive_verified": true,
       "storage": {
         "hostname": "job-t5gpub15c9d6-master-0",
         "source_commit": "6c0ef27a55a729abbe86a1d6cd1a0c11c99216bf",
@@ -297,14 +297,34 @@
         "hostname": "job-t5gpub15c9d6-master-0"
       },
       "latest_local_free_bytes": 574929543168,
-      "phase": "Final archive copying/readback; COMPLETE receipt pending"
+      "phase": "Closed; CPU canonical packing underway",
+      "scheduler_ended_shanghai": "2026-11-14T16:01:35+08:00",
+      "scheduler_runtime_seconds": 8632,
+      "scheduler_GPU_hours": 19.182222222222222,
+      "archive_receipt": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/teachers/TurnOffStove/attempt02/ARCHIVE.json",
+        "sha256": "3c6940ca7f9cba167b3efabbd3f1a7a6bc65dff0b59c9c2634539eb42c2e363b"
+      },
+      "verified_archive": {
+        "cold": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/teachers/TurnOffStove/attempt02/collection.tar",
+        "archive_sha256": "1e45872ce58c363851398416f8747394a43826deafa5a73aa6ce031e50d009f7",
+        "archive_bytes": 142678650880,
+        "canonical_training_chunks": 2880,
+        "step30_weights": [
+          {
+            "path": "TurnOffStove/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+            "bytes": 6957548034,
+            "sha256": "533e87c12174a8d9b0085bc7393bff5fc4e9d30df96168cbcbe39fe6f8b52e32"
+          }
+        ]
+      }
     },
     {
       "task": "CloseToasterOvenDoor",
       "job_id": "job-8d8wm2rua3nn",
       "name": "mwj_1114_matched_toaster_ppo30_r2",
       "created_shanghai": "2026-11-14T13:38:42+08:00",
-      "scheduler_status": "Running",
+      "scheduler_status": "Succeeded",
       "GPUs": 8,
       "CPUs": 64,
       "RAM_GiB": 1024,
@@ -315,10 +335,10 @@
       "attempt": "attempt02",
       "completed_updates": 30,
       "automatic_retries": false,
-      "last_checked_shanghai": "2026-11-14T15:49:00+08:00",
+      "last_checked_shanghai": "2026-11-14T16:03:00+08:00",
       "new_updates_completed": 30,
       "target_updates": 30,
-      "archive_verified": false,
+      "archive_verified": true,
       "storage": {
         "hostname": "job-8d8wm2rua3nn-master-0",
         "source_commit": "6c0ef27a55a729abbe86a1d6cd1a0c11c99216bf",
@@ -340,7 +360,27 @@
         "hostname": "job-8d8wm2rua3nn-master-0"
       },
       "latest_local_free_bytes": 380841361408,
-      "phase": "Final archive copying/readback; COMPLETE receipt pending"
+      "phase": "Closed; CPU canonical packing underway",
+      "scheduler_ended_shanghai": "2026-11-14T16:00:42+08:00",
+      "scheduler_runtime_seconds": 8490,
+      "scheduler_GPU_hours": 18.866666666666667,
+      "archive_receipt": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/teachers/CloseToasterOvenDoor/attempt02/ARCHIVE.json",
+        "sha256": "266c4a5eff2533ddf83927ebaa4cf6742ace408dbded665db754de768005fc04"
+      },
+      "verified_archive": {
+        "cold": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/teachers/CloseToasterOvenDoor/attempt02/collection.tar",
+        "archive_sha256": "c91cad8b95a1e28e1be548e1a6172d7a9685180ce63164c85b5d7faaaac9b045",
+        "archive_bytes": 144241899520,
+        "canonical_training_chunks": 2880,
+        "step30_weights": [
+          {
+            "path": "CloseToasterOvenDoor/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+            "bytes": 6957548034,
+            "sha256": "d0e94e44c783bbfa1b1a78dd107257cd7ab23ce70b0021706858232aa6143098"
+          }
+        ]
+      }
     }
   ],
   "scheduler_check": {
@@ -353,10 +393,10 @@
   "monitoring_gap": "Previous record was November13 16:17. No intervening checks are recorded; terminal states were first reconciled in this November14 status check.",
   "source_completion_note": "Drawer30 checkpoint/raw archive complete, but its final after-evaluation receipt is absent because the bounded checkpoint-and-exit path ran. Coffee and Counter have step30 evaluation receipts. Source learning metrics are not transformer ID/OOD results.",
   "progress_check": {
-    "checked_shanghai": "2026-11-14T15:49:00+08:00",
+    "checked_shanghai": "2026-11-14T16:03:00+08:00",
     "source": "Baige refreshed task list and actual-allocation progress/archive files",
     "evidence": "evidence/SOURCE-AND-QUALIFICATION-20261114.json",
-    "next_check_shanghai": "2026-11-14T16:09:00+08:00"
+    "next_check_shanghai": "2026-11-14T16:23:00+08:00"
   },
   "canonical_raw_pack_tasks": [
     "OpenDrawer",
@@ -386,5 +426,15 @@
     "job_id": "job-40dz76k3crrg",
     "status": "Queued",
     "reserved_GPU_hours": 12
+  },
+  "fit_preparation": {
+    "source_commit": "78ec94eb50cba869a08454d118275c016430919f",
+    "core_tests_passed": 63,
+    "CPU_imports_passed": true,
+    "native_Hydra_config_resolved": true,
+    "actual_GPU_qualification": "pending labeled assemblies and allocation",
+    "submitted": false,
+    "plan": "FIT-PLAN.json",
+    "validation": "evidence/FIT-CPU-VALIDATION.json"
   }
 }

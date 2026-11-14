@@ -35,5 +35,15 @@
   },
   "retention": "One job-local raw cache shared across four workers; only two readback-verified resumable snapshots per method/attempt plus final candidate",
   "timeout": "Save optimizer, policy/values, task/window sampler and all RNG state; preserve10000-update endpoint across any explicit resume",
-  "validation_pending": "Linux imports/core numerical tests, actual labeled data assembly/readback, actual GPU memory/update throughput and first native RGB gradient update"
+  "validation_pending": "Actual labeled task assembly/readback and source-query sampling; allocated GPU memory/update throughput and first native RGB gradient update",
+  "validation": {
+    "source_commit": "78ec94eb50cba869a08454d118275c016430919f",
+    "CPU_imports": "passed",
+    "native_Hydra_composition": "passed; no native model loaded",
+    "existing_core_tests": {
+      "passed": 63,
+      "seconds": 79.69,
+      "evidence": "evidence/FIT-CPU-VALIDATION.json"
+    }
+  }
 }
