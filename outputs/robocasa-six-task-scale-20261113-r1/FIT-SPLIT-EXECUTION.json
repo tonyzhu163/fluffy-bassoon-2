@@ -1,0 +1,82 @@
+{
+  "status": "Verified replacement prepared; original job cancellation pending",
+  "checked_shanghai": "2026-11-14T17:47:30+08:00",
+  "source_commit": "2d5ec0000c93a643e6d32c305b21378b89243c67",
+  "source_directory": "/mowenjie/fluffy-bassoon-2/sources/matched-split-2d5ec000",
+  "old_job": "job-5zbsgqfx0ax6",
+  "old_attempt": "fits6r1",
+  "total_reserved_GPU_hours": 24,
+  "reservation_replaces": "primary_six_task_fits; unchanged parent189/230 commitment",
+  "scientific_migration": "FIT-SCHEDULING-MIGRATION.json",
+  "corpora": {
+    "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/datasets01/CORPORA.json",
+    "sha256": "85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e"
+  },
+  "data_qualification": {
+    "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json",
+    "sha256": "2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0"
+  },
+  "validation": "evidence/SPLIT-FIT-VALIDATION.json",
+  "jobs": [
+    {
+      "method": "ad",
+      "attempt": "fits6adr2",
+      "job_name": "mwj_1114_matched_six_ad_g1_r2",
+      "job_id": null,
+      "command": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B /mowenjie/fluffy-bassoon-2/sources/matched-split-2d5ec000/outputs/robocasa-six-task-scale-20261113-r1/fit_job.py --pin 2d5ec0000c93a643e6d32c305b21378b89243c67 --attempt fits6adr2 --corpora /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/datasets01/CORPORA.json --corpora-sha256 85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e --corpus-size 6 --data-qualification /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json --data-qualification-sha256 2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0 --methods ad",
+      "GPUs": 1,
+      "CPUs": 16,
+      "RAM_GiB": 128,
+      "shared_memory_GiB": 16,
+      "scheduler_maximum_minutes": 360,
+      "reserved_GPU_hours": 6,
+      "automatic_retries": false,
+      "status": "Prepared; do not submit while old job remains eligible to run"
+    },
+    {
+      "method": "dpt",
+      "attempt": "fits6dptr2",
+      "job_name": "mwj_1114_matched_six_dpt_g1_r2",
+      "job_id": null,
+      "command": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B /mowenjie/fluffy-bassoon-2/sources/matched-split-2d5ec000/outputs/robocasa-six-task-scale-20261113-r1/fit_job.py --pin 2d5ec0000c93a643e6d32c305b21378b89243c67 --attempt fits6dptr2 --corpora /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/datasets01/CORPORA.json --corpora-sha256 85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e --corpus-size 6 --data-qualification /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json --data-qualification-sha256 2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0 --methods dpt",
+      "GPUs": 1,
+      "CPUs": 16,
+      "RAM_GiB": 128,
+      "shared_memory_GiB": 16,
+      "scheduler_maximum_minutes": 360,
+      "reserved_GPU_hours": 6,
+      "automatic_retries": false,
+      "status": "Prepared; do not submit while old job remains eligible to run"
+    },
+    {
+      "method": "dit",
+      "attempt": "fits6ditr2",
+      "job_name": "mwj_1114_matched_six_dit_g1_r2",
+      "job_id": null,
+      "command": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B /mowenjie/fluffy-bassoon-2/sources/matched-split-2d5ec000/outputs/robocasa-six-task-scale-20261113-r1/fit_job.py --pin 2d5ec0000c93a643e6d32c305b21378b89243c67 --attempt fits6ditr2 --corpora /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/datasets01/CORPORA.json --corpora-sha256 85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e --corpus-size 6 --data-qualification /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json --data-qualification-sha256 2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0 --methods dit",
+      "GPUs": 1,
+      "CPUs": 16,
+      "RAM_GiB": 128,
+      "shared_memory_GiB": 16,
+      "scheduler_maximum_minutes": 360,
+      "reserved_GPU_hours": 6,
+      "automatic_retries": false,
+      "status": "Prepared; do not submit while old job remains eligible to run"
+    },
+    {
+      "method": "ic_iql",
+      "attempt": "fits6iciqlr2",
+      "job_name": "mwj_1114_matched_six_iciql_g1_r2",
+      "job_id": null,
+      "command": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B /mowenjie/fluffy-bassoon-2/sources/matched-split-2d5ec000/outputs/robocasa-six-task-scale-20261113-r1/fit_job.py --pin 2d5ec0000c93a643e6d32c305b21378b89243c67 --attempt fits6iciqlr2 --corpora /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/datasets01/CORPORA.json --corpora-sha256 85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e --corpus-size 6 --data-qualification /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json --data-qualification-sha256 2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0 --methods ic_iql",
+      "GPUs": 1,
+      "CPUs": 16,
+      "RAM_GiB": 128,
+      "shared_memory_GiB": 16,
+      "scheduler_maximum_minutes": 360,
+      "reserved_GPU_hours": 6,
+      "automatic_retries": false,
+      "status": "Prepared; do not submit while old job remains eligible to run"
+    }
+  ]
+}
