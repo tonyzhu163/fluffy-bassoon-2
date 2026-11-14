@@ -1,5 +1,5 @@
 {
-  "status": "Three-task AD/DPT final audits passed; waiting for six-task AD/DPT",
+  "status": "All four AD/DPT fixed-final fits audited; CPU watcher exited0",
   "source_commit": "9e714a3ec823d1386bc50b1359faee3942f894df",
   "audit_script_sha256": "93e5d070ab5e85a9ff3d8bc5a1cc2d7d0c0a7d5ad05eccc131623d920a5c876b",
   "started_unix": 1794664742.3489773,
@@ -21,13 +21,25 @@
     "3_ad": {
       "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit01/3_ad.json",
       "sha256": "173be98b3e11c88ef5ef2e0dd0a73da873a6b5fbb8af94a91977ad40401fe88c"
+    },
+    "6_ad": {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit01/6_ad.json",
+      "sha256": "dcee854bd5b31bc7a64ef19eada584b62c3025d1c9ece966275d6598626893bc"
+    },
+    "6_dpt": {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit01/6_dpt.json",
+      "sha256": "ef78458e105327f89a86cfcc3aad459f985c8d8f70eb8e20cc3dc2ed839ab141"
     }
   },
   "checked_unix": 1794664742.3489873,
   "source_directory": "/tmp/completed-fit-audit-source-9e714a3e",
   "output_directory": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit01",
-  "validation": "Real three-task AD/DPT candidates exactly match final recovery tensors; all actor optimizer state steps10000; finite policies/optimizers and saved RNG fields verified. Remaining two original AD/DPT audits pending.",
+  "validation": "All four real final AD/DPT candidates exactly match recovery policy tensors; actor optimizer states all10000; finite policies/optimizers and saved RNG fields verified.",
   "checks": "Require successful method exit and fixed10000 actor/1000 weighted-value endpoints; verify complete/candidate/recovery hashes, exact exported policy tensors, finite policy/value/optimizer states, optimizer step counts and saved RNG fields.",
   "observation_policy": "Timeout stops only CPU observation; never restarts or stops a GPU job. Audit failures require diagnosis before another identity.",
-  "checked_shanghai": "2026-11-14T22:05:24.926078+08:00"
+  "checked_shanghai": "2026-11-14T22:20:23.687908+08:00",
+  "completed": true,
+  "ended_unix": 1794666040.9322987,
+  "completion_receipt": "evidence/FINAL-AD-DPT-AUDIT-COMPLETE.json",
+  "next_action": "Audit four DIT/IC-IQL fixed-final candidates after their original runs or qualified continuations finish; use a new audit identity."
 }
