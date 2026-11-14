@@ -1,9 +1,9 @@
 {
-  "status": "Prepared and CPU-checked; not submitted. Original fit allocations remain active.",
+  "status": "Prepared, CPU-checked and deployed clean; not submitted. Original fit allocations remain active.",
   "recorded_shanghai": "2026-11-14T18:34:01.054478+08:00",
   "reason": "Measured three-task DIT/IC-IQL actor pace is about2.4seconds/update versus about1.6 for AD/DPT; fixed10000 actor updates plus the1000-step value stage are likely to outlast the original345-minute worker windows.",
   "fit_source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
-  "launcher_source_commit": "55c0b27fd675e65d5c5cc715f5443571572e1b47",
+  "launcher_source_commit": "248dfd42e10906f21df9bdb4008b13a79dcb7283",
   "launcher_validation": "evidence/RESUME-LAUNCHER-VALIDATION.json",
   "timing_evidence": "evidence/MONITOR-20261114-1833.json",
   "training": "Resume full policy, values, both optimizers, sampler and all RNG state with the original fit source/contract. Keep actor10000 and value1000 endpoints, seed0, logical/execution batch8, loss weights and optimizer settings.",
@@ -78,6 +78,8 @@
       "source_attempt": "fits6r1"
     }
   ],
-  "deployment": "Launcher changes only; qualified fit/runtime modules are identical. Deploy a new clean launcher checkout before submission; original active source remains immutable.",
-  "deadline": "Continue toward the originalNov15 Shanghai readout target; queue waits, continuation throughput and matched evaluation remain schedule risks."
+  "deployment": "CONTINUATION-DEPLOYMENT.json",
+  "deadline": "Continue toward the originalNov15 Shanghai readout target; queue waits, continuation throughput and matched evaluation remain schedule risks.",
+  "qualified_launcher_commit": "55c0b27fd675e65d5c5cc715f5443571572e1b47",
+  "launcher_source_directory": "/mowenjie/fluffy-bassoon-2/sources/matched-continuation-248dfd42"
 }
