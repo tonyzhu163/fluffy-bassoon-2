@@ -41,5 +41,34 @@
   "completed": true,
   "ended_unix": 1794666040.9322987,
   "completion_receipt": "evidence/FINAL-AD-DPT-AUDIT-COMPLETE.json",
-  "next_action": "Audit four DIT/IC-IQL fixed-final candidates after their original runs or qualified continuations finish; use a new audit identity."
+  "next_action": "Monitor four continuations; retrieve final-fit-audit02 result and review current capacity/budget before readout submission.",
+  "weighted_continuation_audit": {
+    "status": "Running CPU watcher; no weighted final candidate yet",
+    "source_commit": "e5f8fb21c1c7919d6f1384fc4bf8edbfc48e26e0",
+    "script": "wait_weighted_fits.py",
+    "script_sha256": "fa1a94e345d48f701529d3d136a48dff2a75628f29abc1875006c25796c5b938",
+    "remote_script": "/tmp/weighted-final-bind-source-e5f8fb21/outputs/robocasa-six-task-scale-20261113-r1/wait_weighted_fits.py",
+    "started_unix": 1794670802.0627267,
+    "pid": 198476,
+    "hostname": "aibox-rffe453e3884-5f96c78b88-6ssrn",
+    "deadline_unix": 1794680100,
+    "state": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit02/STATE.json",
+    "GPU_hours": 0,
+    "behavior": "Audit each owned successful terminal continuation with the existing tensor/optimizer/RNG auditor; bind all8 fixed10000 candidates and the fixed13200-episode evaluation SPEC only after all pass; never submit or alter GPU jobs.",
+    "observed_state": {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit02/STATE.json",
+      "sha256": "414b1b99f632e58746e06b2508482ba0d71db9f52d08acf230ce6eeb05515a11",
+      "data": {
+        "started_unix": 1794670802.0627267,
+        "hostname": "aibox-rffe453e3884-5f96c78b88-6ssrn",
+        "pid": 198476,
+        "script_sha256": "fa1a94e345d48f701529d3d136a48dff2a75628f29abc1875006c25796c5b938",
+        "deadline_unix": 1794680100.0,
+        "audited": {},
+        "completed": false,
+        "submitted": false,
+        "GPU_hours": 0
+      }
+    }
+  }
 }

@@ -64,32 +64,158 @@
       "command_UI_copy_verified_exact": true,
       "progress": {
         "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3dit01/dit/PROGRESS.json",
-        "sha256": "4fb9ae9c926196f57ef9d86e041017e38aa6eecb173e058d2fdb4eefa23fea28",
+        "sha256": "9e309f737171160b0e52802c1bfac143a13c137092237ee28561c54bce2ad162",
         "data": {
           "phase": "actor",
           "value_update": 1000,
-          "actor_update": 7600,
-          "elapsed_seconds": 21081.53828981053,
+          "actor_update": 7800,
+          "elapsed_seconds": 21556.89277972281,
           "checkpoint": {
-            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3dit01/dit/actor-01000-07600.pt",
-            "sha256": "64eaf16e8b17970b14cbce306b3fd8559e430c9e2909e55edb68b6e7360b5497"
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3dit01/dit/actor-01000-07800.pt",
+            "sha256": "d0dfde8856b7f2dfba7800eb472d31f6b0d4a4b76b1b716329ea221b2759bd1a"
           },
           "complete": false,
-          "checked_unix": 1794670407.168706,
+          "checked_unix": 1794670882.4617226,
           "execution_batch": 8,
           "metrics": {
-            "loss": 0.09722293168306351,
-            "gradient_norm": 0.0023800041526556015,
+            "loss": 0.15277883410453796,
+            "gradient_norm": 0.0015711840242147446,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
-            "weight_mean": 0.9758397340774536,
-            "weight_max": 1.0199720859527588,
-            "mean_update_seconds": 2.334976231753826,
-            "peak_cuda_bytes": 14514748928
+            "weight_mean": 1.008720874786377,
+            "weight_max": 1.0828715562820435,
+            "mean_update_seconds": 2.3769256829936056,
+            "peak_cuda_bytes": 14673512960
           }
         }
       },
-      "advancing_from_restored_step": true
+      "advancing_from_restored_step": true,
+      "allocation_probe": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3dit01/gpu-probe.json",
+        "sha256": "624865741487a31dd46270ff1c6230841187d1fa28bae060083fb5746bb66263",
+        "data": {
+          "status": "passed",
+          "purpose": "training",
+          "timing_comparison_eligible": false,
+          "allocation_type": "baige_container",
+          "hostname": "job-x26sts56sm1y-master-0",
+          "probe_pid": 578,
+          "created_at_utc": "2026-11-14T15:23:41.841566+00:00",
+          "devices": [
+            {
+              "allocation_ordinal": 0,
+              "visibility_token": "0",
+              "cuda_uuid": "6b728e96-1f46-acac-0900-4413a704aaaf",
+              "cuda_name": "NVIDIA RPBZZZ6",
+              "cuda_total_bytes": 101973950464,
+              "pci_bus_id": "0000:61:00.0",
+              "uuid": "GPU-49c8abbb-629b-5366-2212-dbdb86a381f0",
+              "inventory": {
+                "index": 0,
+                "uuid": "GPU-49c8abbb-629b-5366-2212-dbdb86a381f0",
+                "name": "NVIDIA RPBZZZ6",
+                "memory_total_mib": 97887.0,
+                "memory_used_mib": 0.0,
+                "utilization_percent": 0.0,
+                "pci_bus_id": "00000000:61:00.0"
+              },
+              "allocation_check": {
+                "elements": 1048576,
+                "result": 2097152.0,
+                "touched_gpu_uuids": [
+                  "GPU-49c8abbb-629b-5366-2212-dbdb86a381f0"
+                ],
+                "own_pid_gpu_uuids": [
+                  "GPU-49c8abbb-629b-5366-2212-dbdb86a381f0"
+                ]
+              }
+            }
+          ],
+          "idle_utilization_required": false,
+          "exclusive_training_admission": true,
+          "admission_policy": "exclusive_scheduler_cuda_pci_pid_memory",
+          "utilization_role": "telemetry_only",
+          "utilization_telemetry": {
+            "GPU-49c8abbb-629b-5366-2212-dbdb86a381f0": 0.0
+          },
+          "maximum_initial_memory_mib": 256,
+          "gpu_identity_mapping": {
+            "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+            "assigned_nvml_uuids": [
+              "GPU-49c8abbb-629b-5366-2212-dbdb86a381f0"
+            ]
+          },
+          "compute_processes_before": [],
+          "compute_processes_after": [
+            {
+              "gpu_uuid": "GPU-49c8abbb-629b-5366-2212-dbdb86a381f0",
+              "pid": 578,
+              "process_name": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+              "memory_used_mib": "640"
+            }
+          ],
+          "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t0-89\t0\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
+        }
+      },
+      "launch": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3dit01/LAUNCH.json",
+        "sha256": "8d170c54bae67de6e8b60ae172aef7293a600b858487ef8ce191a87006211fc3",
+        "data": {
+          "source_commit": "e9fe49c4a8892f0eec17e5d6c5fada229eac93dc",
+          "fit_source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+          "fit_source_directory": "/mowenjie/fluffy-bassoon-2/sources/matched-ready-4987585e",
+          "resume": {
+            "fit_source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+            "corpus_size": 3,
+            "methods": {
+              "dit": {
+                "terminal": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/EXIT.json",
+                  "sha256": "f53af7000687741bbe9352c1b397d5ea97f1f8221f9d068cfb4ee544b787d29a"
+                },
+                "launch": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/LAUNCH.json",
+                  "sha256": "db88655b8edc883a1e9e54d3b308e463198c60fc7f7b1adb92613eec0793d657"
+                },
+                "progress": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dit/PROGRESS.json",
+                  "sha256": "94bc37e9f5708fe02c1139912349baaaeffff8103cd613e3b8efcb33579638e6"
+                },
+                "contract": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dit/CONTRACT.json",
+                  "sha256": "cc481850db1029ec1890d25f9249b870a19f22218b3446383cd7c54fc9790bef"
+                },
+                "checkpoint": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dit/actor-01000-07417.pt",
+                  "sha256": "e72a8e25915f983e4fa836eb2ae42657ed1c4e34809189aa28667b28634c20cf"
+                }
+              }
+            }
+          },
+          "resume_spec_sha256": "c8018774a8351df6ea282ecf8065455188e882ae67f6cfc2b47d6c7496f1675d",
+          "corpus_size": 3,
+          "methods": [
+            "dit"
+          ],
+          "hostname": "job-x26sts56sm1y-master-0",
+          "started_unix": 1794669794.543523,
+          "maximum_GPU_hours": 2.25,
+          "maximum_scheduler_minutes": 135,
+          "automatic_retries": false,
+          "required_local_bytes": 83066263552,
+          "local_free_bytes": 743481049088,
+          "corpus_spec_sha256": "85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e",
+          "qualification_code_equivalence": {
+            "source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+            "checked_modules_unchanged": true
+          },
+          "data_qualification": {
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json",
+            "sha256": "2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0"
+          }
+        }
+      },
+      "checked_unix": 1794670993.976041
     },
     {
       "corpus_size": 3,
@@ -151,32 +277,158 @@
       "command_UI_copy_verified_exact": true,
       "progress": {
         "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3iciql01/ic_iql/PROGRESS.json",
-        "sha256": "b85168c840657e805016fa13270e06649c765cef264ea8adc60b93da544d59d0",
+        "sha256": "77436d23ed069c0328d9b286b450c30edd8aef9f79be74e31d806ef948d2ae0e",
         "data": {
           "phase": "actor",
           "value_update": 1000,
-          "actor_update": 7400,
-          "elapsed_seconds": 21009.3422382148,
+          "actor_update": 7600,
+          "elapsed_seconds": 21480.024192589335,
           "checkpoint": {
-            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3iciql01/ic_iql/actor-01000-07400.pt",
-            "sha256": "74dd8658b00b473747c822033c79e72f55bac0f93b69fa057348674cff7fbb5b"
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3iciql01/ic_iql/actor-01000-07600.pt",
+            "sha256": "18b852ddf4dab773c37b89f5a34b4c01b3806cdce2123df0c173b1918f2d10a4"
           },
           "complete": false,
-          "checked_unix": 1794670372.6104283,
+          "checked_unix": 1794670843.2558575,
           "execution_batch": 8,
           "metrics": {
-            "loss": 0.1204506903886795,
-            "gradient_norm": 0.001619137590751052,
+            "loss": 0.101557157933712,
+            "gradient_norm": 0.00251219910569489,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
-            "weight_mean": 1.0723564624786377,
-            "weight_max": 1.479019045829773,
-            "mean_update_seconds": 2.3633256709668786,
+            "weight_mean": 0.9880518913269043,
+            "weight_max": 1.198832631111145,
+            "mean_update_seconds": 2.320449780728668,
             "peak_cuda_bytes": 14587973120
           }
         }
       },
-      "advancing_from_restored_step": true
+      "advancing_from_restored_step": true,
+      "allocation_probe": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3iciql01/gpu-probe.json",
+        "sha256": "f863c2aa662d0450d1e583eec59b755484a7a30e59b7ca17573b168710372fde",
+        "data": {
+          "status": "passed",
+          "purpose": "training",
+          "timing_comparison_eligible": false,
+          "allocation_type": "baige_container",
+          "hostname": "job-ffzoxy4ezshi-master-0",
+          "probe_pid": 292,
+          "created_at_utc": "2026-11-14T15:24:21.770079+00:00",
+          "devices": [
+            {
+              "allocation_ordinal": 0,
+              "visibility_token": "0",
+              "cuda_uuid": "ad88747b-8a86-7d09-38b9-bbc02d340bf0",
+              "cuda_name": "NVIDIA RPBZZZ6",
+              "cuda_total_bytes": 101973950464,
+              "pci_bus_id": "0000:a2:00.0",
+              "uuid": "GPU-00eb2ac2-65e4-2dcc-1c05-12e980b0c969",
+              "inventory": {
+                "index": 0,
+                "uuid": "GPU-00eb2ac2-65e4-2dcc-1c05-12e980b0c969",
+                "name": "NVIDIA RPBZZZ6",
+                "memory_total_mib": 97887.0,
+                "memory_used_mib": 0.0,
+                "utilization_percent": 100.0,
+                "pci_bus_id": "00000000:A2:00.0"
+              },
+              "allocation_check": {
+                "elements": 1048576,
+                "result": 2097152.0,
+                "touched_gpu_uuids": [
+                  "GPU-00eb2ac2-65e4-2dcc-1c05-12e980b0c969"
+                ],
+                "own_pid_gpu_uuids": [
+                  "GPU-00eb2ac2-65e4-2dcc-1c05-12e980b0c969"
+                ]
+              }
+            }
+          ],
+          "idle_utilization_required": false,
+          "exclusive_training_admission": true,
+          "admission_policy": "exclusive_scheduler_cuda_pci_pid_memory",
+          "utilization_role": "telemetry_only",
+          "utilization_telemetry": {
+            "GPU-00eb2ac2-65e4-2dcc-1c05-12e980b0c969": 100.0
+          },
+          "maximum_initial_memory_mib": 256,
+          "gpu_identity_mapping": {
+            "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+            "assigned_nvml_uuids": [
+              "GPU-00eb2ac2-65e4-2dcc-1c05-12e980b0c969"
+            ]
+          },
+          "compute_processes_before": [],
+          "compute_processes_after": [
+            {
+              "gpu_uuid": "GPU-00eb2ac2-65e4-2dcc-1c05-12e980b0c969",
+              "pid": 292,
+              "process_name": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+              "memory_used_mib": "640"
+            }
+          ],
+          "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
+        }
+      },
+      "launch": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3iciql01/LAUNCH.json",
+        "sha256": "2d1a303759d8b322d88b53257998d8738360067d4828062f0f978cd36c5e3332",
+        "data": {
+          "source_commit": "e9fe49c4a8892f0eec17e5d6c5fada229eac93dc",
+          "fit_source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+          "fit_source_directory": "/mowenjie/fluffy-bassoon-2/sources/matched-ready-4987585e",
+          "resume": {
+            "fit_source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+            "corpus_size": 3,
+            "methods": {
+              "ic_iql": {
+                "terminal": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/EXIT.json",
+                  "sha256": "f53af7000687741bbe9352c1b397d5ea97f1f8221f9d068cfb4ee544b787d29a"
+                },
+                "launch": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/LAUNCH.json",
+                  "sha256": "db88655b8edc883a1e9e54d3b308e463198c60fc7f7b1adb92613eec0793d657"
+                },
+                "progress": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ic_iql/PROGRESS.json",
+                  "sha256": "5e137e962436543e39533032c1f9301ce0a122315c27f12ba2ee1bb4045dabd1"
+                },
+                "contract": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ic_iql/CONTRACT.json",
+                  "sha256": "5bbccf5fe6e515f1d3777505e6a9553abc90bd599ae14d01d1c3808a56dd989a"
+                },
+                "checkpoint": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ic_iql/actor-01000-07249.pt",
+                  "sha256": "d63e23529e31431a0387844971375738e9e5a580bb17d310574dff688e8a459a"
+                }
+              }
+            }
+          },
+          "resume_spec_sha256": "d49bfacfdf8120c0a1759c54cbebdf23a637a8628faafccbe7940118de5b3a8d",
+          "corpus_size": 3,
+          "methods": [
+            "ic_iql"
+          ],
+          "hostname": "job-ffzoxy4ezshi-master-0",
+          "started_unix": 1794669853.4452357,
+          "maximum_GPU_hours": 2.5,
+          "maximum_scheduler_minutes": 150,
+          "automatic_retries": false,
+          "required_local_bytes": 83066263552,
+          "local_free_bytes": 373830852608,
+          "corpus_spec_sha256": "85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e",
+          "qualification_code_equivalence": {
+            "source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+            "checked_modules_unchanged": true
+          },
+          "data_qualification": {
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json",
+            "sha256": "2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0"
+          }
+        }
+      },
+      "checked_unix": 1794670993.976041
     },
     {
       "corpus_size": 6,
@@ -184,7 +436,7 @@
       "attempt": "resume6dit01",
       "job_name": "mwj_1114_resume6dit01_g1_r1",
       "job_id": "job-8p3dcubnslyp",
-      "status": "Running; GPU probe passed",
+      "status": "Running; restored actor updates advancing",
       "GPUs": 1,
       "CPUs": 16,
       "RAM_GiB": 128,
@@ -235,7 +487,161 @@
         "personal_GPU_quota": 32,
         "queued_jobs": 1
       },
-      "command_UI_copy_verified_exact": true
+      "command_UI_copy_verified_exact": true,
+      "progress": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6dit01/dit/PROGRESS.json",
+        "sha256": "21f45ac591d7fe7c2c3174d9aba379bb3982b62329711123ec431b92b5e3bc6e",
+        "data": {
+          "phase": "actor",
+          "value_update": 1000,
+          "actor_update": 7500,
+          "elapsed_seconds": 20774.14498384297,
+          "checkpoint": {
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6dit01/dit/actor-01000-07500.pt",
+            "sha256": "18f3c16d8019d0766383f7c06d139a2e50a85a94fd6d8cd25d3f364d03a44315"
+          },
+          "complete": false,
+          "checked_unix": 1794670884.1856756,
+          "execution_batch": 8,
+          "metrics": {
+            "loss": 0.11132129281759262,
+            "gradient_norm": 0.00332616432569921,
+            "logical_batch_size": 8,
+            "execution_batch_size": 8,
+            "weight_mean": 0.9921552538871765,
+            "weight_max": 1.037644386291504,
+            "mean_update_seconds": 2.5246425430648602,
+            "peak_cuda_bytes": 14083044864
+          }
+        }
+      },
+      "advancing_from_restored_step": true,
+      "allocation_probe": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6dit01/gpu-probe.json",
+        "sha256": "b781d990b0ddd7f007f4f945a2b2643c7a1f5cac65dcfb481355a33da5792174",
+        "data": {
+          "status": "passed",
+          "purpose": "training",
+          "timing_comparison_eligible": false,
+          "allocation_type": "baige_container",
+          "hostname": "job-8p3dcubnslyp-master-0",
+          "probe_pid": 346,
+          "created_at_utc": "2026-11-14T15:34:26.788026+00:00",
+          "devices": [
+            {
+              "allocation_ordinal": 0,
+              "visibility_token": "0",
+              "cuda_uuid": "a425907f-d9f9-c78a-0246-0d523660a901",
+              "cuda_name": "NVIDIA RPBZZZ6",
+              "cuda_total_bytes": 101973950464,
+              "pci_bus_id": "0000:64:00.0",
+              "uuid": "GPU-746b321b-2885-47e2-8642-b09d1a1ea921",
+              "inventory": {
+                "index": 0,
+                "uuid": "GPU-746b321b-2885-47e2-8642-b09d1a1ea921",
+                "name": "NVIDIA RPBZZZ6",
+                "memory_total_mib": 97887.0,
+                "memory_used_mib": 0.0,
+                "utilization_percent": 0.0,
+                "pci_bus_id": "00000000:64:00.0"
+              },
+              "allocation_check": {
+                "elements": 1048576,
+                "result": 2097152.0,
+                "touched_gpu_uuids": [
+                  "GPU-746b321b-2885-47e2-8642-b09d1a1ea921"
+                ],
+                "own_pid_gpu_uuids": [
+                  "GPU-746b321b-2885-47e2-8642-b09d1a1ea921"
+                ]
+              }
+            }
+          ],
+          "idle_utilization_required": false,
+          "exclusive_training_admission": true,
+          "admission_policy": "exclusive_scheduler_cuda_pci_pid_memory",
+          "utilization_role": "telemetry_only",
+          "utilization_telemetry": {
+            "GPU-746b321b-2885-47e2-8642-b09d1a1ea921": 0.0
+          },
+          "maximum_initial_memory_mib": 256,
+          "gpu_identity_mapping": {
+            "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+            "assigned_nvml_uuids": [
+              "GPU-746b321b-2885-47e2-8642-b09d1a1ea921"
+            ]
+          },
+          "compute_processes_before": [],
+          "compute_processes_after": [
+            {
+              "gpu_uuid": "GPU-746b321b-2885-47e2-8642-b09d1a1ea921",
+              "pid": 346,
+              "process_name": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+              "memory_used_mib": "640"
+            }
+          ],
+          "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t0-89\t0\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
+        }
+      },
+      "launch": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6dit01/LAUNCH.json",
+        "sha256": "122fe66a77665d1da834bd563b1af4b822de76f5ba1036c8a1058fe09293ca71",
+        "data": {
+          "source_commit": "e9fe49c4a8892f0eec17e5d6c5fada229eac93dc",
+          "fit_source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+          "fit_source_directory": "/mowenjie/fluffy-bassoon-2/sources/matched-ready-4987585e",
+          "resume": {
+            "fit_source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+            "corpus_size": 6,
+            "methods": {
+              "dit": {
+                "terminal": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/EXIT.json",
+                  "sha256": "afa1f46eb3092f7074a200ebbdda3e3748eb12fd95cbc149bb95128a011ca112"
+                },
+                "launch": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/LAUNCH.json",
+                  "sha256": "7e9aa65d999d7936cb25c6668e8a3dd2084605471fb8942bb68efa0bdbeac23a"
+                },
+                "progress": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/dit/PROGRESS.json",
+                  "sha256": "7dc3292805c04505c09d75931074782865a7a37478dd52dc8ecb3253cd3057b4"
+                },
+                "contract": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/dit/CONTRACT.json",
+                  "sha256": "088fc67ffd59c8884c7432e134844acc3b4150aca0304bc3b1aac12271b5bb27"
+                },
+                "checkpoint": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/dit/actor-01000-07435.pt",
+                  "sha256": "34319764cd04b3050ea55f87500a4d189a6080ae7215e7ca8e97395db2d2514f"
+                }
+              }
+            }
+          },
+          "resume_spec_sha256": "f363d7340688f2e42648ae8bfc3ad0d40e23d2718b13653e6a0ee2c8c528e99d",
+          "corpus_size": 6,
+          "methods": [
+            "dit"
+          ],
+          "hostname": "job-8p3dcubnslyp-master-0",
+          "started_unix": 1794670462.1358516,
+          "maximum_GPU_hours": 2.25,
+          "maximum_scheduler_minutes": 135,
+          "automatic_retries": false,
+          "required_local_bytes": 113443418112,
+          "local_free_bytes": 302126886912,
+          "corpus_spec_sha256": "85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e",
+          "qualification_code_equivalence": {
+            "source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+            "checked_modules_unchanged": true
+          },
+          "data_qualification": {
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json",
+            "sha256": "2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0"
+          }
+        }
+      },
+      "checked_unix": 1794670993.976041
     },
     {
       "corpus_size": 6,
@@ -243,7 +649,7 @@
       "attempt": "resume6iciql01",
       "job_name": "mwj_1114_resume6iciql01_g1_r1",
       "job_id": "job-98188j8yebi8",
-      "status": "Created",
+      "status": "Running; restored actor updates advancing",
       "GPUs": 1,
       "CPUs": 16,
       "RAM_GiB": 128,
@@ -294,7 +700,161 @@
         "personal_GPU_quota": 32,
         "queued_jobs": 1
       },
-      "command_UI_copy_verified_exact": true
+      "command_UI_copy_verified_exact": true,
+      "progress": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6iciql01/ic_iql/PROGRESS.json",
+        "sha256": "493a89680c46272a9eeb8e84007f212176d0696bbd638249bd95179159d96fa0",
+        "data": {
+          "phase": "actor",
+          "value_update": 1000,
+          "actor_update": 7700,
+          "elapsed_seconds": 20679.82051983662,
+          "checkpoint": {
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6iciql01/ic_iql/actor-01000-07700.pt",
+            "sha256": "913e48ba12bf163397f200ff16e8060a87a3ff81848c83eec5c98ab789c89304"
+          },
+          "complete": false,
+          "checked_unix": 1794670955.9129713,
+          "execution_batch": 8,
+          "metrics": {
+            "loss": 0.04895506426692009,
+            "gradient_norm": 0.0004947883426211774,
+            "logical_batch_size": 8,
+            "execution_batch_size": 8,
+            "weight_mean": 0.9695611000061035,
+            "weight_max": 1.0049219131469727,
+            "mean_update_seconds": 2.3140939292856135,
+            "peak_cuda_bytes": 14295183872
+          }
+        }
+      },
+      "advancing_from_restored_step": true,
+      "allocation_probe": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6iciql01/gpu-probe.json",
+        "sha256": "742d2e822cc4405fb9447183450b9729e843124182f453f6bd419af444909f5c",
+        "data": {
+          "status": "passed",
+          "purpose": "training",
+          "timing_comparison_eligible": false,
+          "allocation_type": "baige_container",
+          "hostname": "job-98188j8yebi8-master-0",
+          "probe_pid": 163,
+          "created_at_utc": "2026-11-14T15:37:08.921738+00:00",
+          "devices": [
+            {
+              "allocation_ordinal": 0,
+              "visibility_token": "0",
+              "cuda_uuid": "13e419d9-e19a-f3c0-3dfd-9a0f46f372e3",
+              "cuda_name": "NVIDIA RPBZZZ6",
+              "cuda_total_bytes": 101973950464,
+              "pci_bus_id": "0000:a2:00.0",
+              "uuid": "GPU-6f535f49-5a86-a2b1-eae5-2d5ab13f1e13",
+              "inventory": {
+                "index": 0,
+                "uuid": "GPU-6f535f49-5a86-a2b1-eae5-2d5ab13f1e13",
+                "name": "NVIDIA RPBZZZ6",
+                "memory_total_mib": 97887.0,
+                "memory_used_mib": 0.0,
+                "utilization_percent": 0.0,
+                "pci_bus_id": "00000000:A2:00.0"
+              },
+              "allocation_check": {
+                "elements": 1048576,
+                "result": 2097152.0,
+                "touched_gpu_uuids": [
+                  "GPU-6f535f49-5a86-a2b1-eae5-2d5ab13f1e13"
+                ],
+                "own_pid_gpu_uuids": [
+                  "GPU-6f535f49-5a86-a2b1-eae5-2d5ab13f1e13"
+                ]
+              }
+            }
+          ],
+          "idle_utilization_required": false,
+          "exclusive_training_admission": true,
+          "admission_policy": "exclusive_scheduler_cuda_pci_pid_memory",
+          "utilization_role": "telemetry_only",
+          "utilization_telemetry": {
+            "GPU-6f535f49-5a86-a2b1-eae5-2d5ab13f1e13": 0.0
+          },
+          "maximum_initial_memory_mib": 256,
+          "gpu_identity_mapping": {
+            "method": "scheduler NVIDIA UUID set + CUDA/NVML PCI bijection + own-PID allocation",
+            "assigned_nvml_uuids": [
+              "GPU-6f535f49-5a86-a2b1-eae5-2d5ab13f1e13"
+            ]
+          },
+          "compute_processes_before": [],
+          "compute_processes_after": [
+            {
+              "gpu_uuid": "GPU-6f535f49-5a86-a2b1-eae5-2d5ab13f1e13",
+              "pid": 163,
+              "process_name": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+              "memory_used_mib": "640"
+            }
+          ],
+          "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
+        }
+      },
+      "launch": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6iciql01/LAUNCH.json",
+        "sha256": "ea3e4e550e3d6819cfe66a7ab2cfac2b3dd5bb4db54565f57cb627e5cf03abec",
+        "data": {
+          "source_commit": "e9fe49c4a8892f0eec17e5d6c5fada229eac93dc",
+          "fit_source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+          "fit_source_directory": "/mowenjie/fluffy-bassoon-2/sources/matched-ready-4987585e",
+          "resume": {
+            "fit_source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+            "corpus_size": 6,
+            "methods": {
+              "ic_iql": {
+                "terminal": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/EXIT.json",
+                  "sha256": "afa1f46eb3092f7074a200ebbdda3e3748eb12fd95cbc149bb95128a011ca112"
+                },
+                "launch": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/LAUNCH.json",
+                  "sha256": "7e9aa65d999d7936cb25c6668e8a3dd2084605471fb8942bb68efa0bdbeac23a"
+                },
+                "progress": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/ic_iql/PROGRESS.json",
+                  "sha256": "5a198dc0762d0d266574a3e4e52b018e6fac87a79eff900e82b04c91ba0ce6e7"
+                },
+                "contract": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/ic_iql/CONTRACT.json",
+                  "sha256": "81005e5e75e6b036f2966c8c807428bad4decd1634a9ce9182e3f909e113762d"
+                },
+                "checkpoint": {
+                  "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/ic_iql/actor-01000-07661.pt",
+                  "sha256": "b01a14ff201d60576e6477cf45ff4ef3aa6e737889cbd700d8eee5b2a2836288"
+                }
+              }
+            }
+          },
+          "resume_spec_sha256": "f2077813833dbe31b4af00d434b269dff82fcce3f13a6eade614834e4143f9bc",
+          "corpus_size": 6,
+          "methods": [
+            "ic_iql"
+          ],
+          "hostname": "job-98188j8yebi8-master-0",
+          "started_unix": 1794670626.834981,
+          "maximum_GPU_hours": 2.25,
+          "maximum_scheduler_minutes": 135,
+          "automatic_retries": false,
+          "required_local_bytes": 113443418112,
+          "local_free_bytes": 239957155840,
+          "corpus_spec_sha256": "85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e",
+          "qualification_code_equivalence": {
+            "source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+            "checked_modules_unchanged": true
+          },
+          "data_qualification": {
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json",
+            "sha256": "2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0"
+          }
+        }
+      },
+      "checked_unix": 1794670993.976041
     }
   ],
   "original3_closeout": {
@@ -312,7 +872,7 @@
     "evidence/RESUME3-SUBMITTED.jpg",
     "evidence/RESUME6-SUBMITTED.jpg"
   ],
-  "checked_shanghai": "2026-11-14T23:36:51.034145+08:00",
+  "checked_shanghai": "2026-11-14T23:43:13.976041+08:00",
   "original6_closeout": {
     "job_id": "job-5zbsgqfx0ax6",
     "scheduler_status": "Failed",
@@ -326,5 +886,7 @@
       "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/EXIT.json",
       "sha256": "afa1f46eb3092f7074a200ebbdda3e3748eb12fd95cbc149bb95128a011ca112"
     }
-  }
+  },
+  "latest_progress_evidence": "evidence/CONTINUATIONS-20261114-2343.json",
+  "next_full_check_shanghai": "2026-11-15T00:03:00+08:00"
 }
