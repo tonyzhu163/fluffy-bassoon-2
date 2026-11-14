@@ -1,0 +1,43 @@
+{
+  "checked_unix": 1794667226.5091233,
+  "method": "Measured actor-update wall time from22:05 to22:40, including checkpoint/validation overhead; extrapolate unchanged pace to original345min deadline and add original measured setup. This informs duration planning only.",
+  "forecasts": {
+    "fits3r1/dit": {
+      "actor": 6400,
+      "observed_seconds_per_update": 2.4005443074968125,
+      "original_deadline_unix": 1794669556.6161726,
+      "estimated_actor_at_deadline": 7397.5897952283385,
+      "estimated_remaining_actor_minutes": 104.12001671393709,
+      "original_staging_minutes": 2.0489112695058185,
+      "estimated_resume_minutes_including_same_staging": 106.16892798344291
+    },
+    "fits3r1/ic_iql": {
+      "actor": 6300,
+      "observed_seconds_per_update": 2.5111405460039773,
+      "original_deadline_unix": 1794669556.6161726,
+      "estimated_actor_at_deadline": 7237.200978845372,
+      "estimated_remaining_actor_minutes": 115.62961070802476,
+      "original_staging_minutes": 2.0484643896420796,
+      "estimated_resume_minutes_including_same_staging": 117.67807509766683
+    },
+    "fits6r1/dit": {
+      "actor": 6100,
+      "observed_seconds_per_update": 2.4180692558818393,
+      "original_deadline_unix": 1794670322.914484,
+      "estimated_actor_at_deadline": 7409.956174496221,
+      "estimated_remaining_actor_minutes": 104.38175576395457,
+      "original_staging_minutes": 2.7594255963961283,
+      "estimated_resume_minutes_including_same_staging": 107.1411813603507
+    },
+    "fits6r1/ic_iql": {
+      "actor": 6300,
+      "observed_seconds_per_update": 2.3686244156625538,
+      "original_deadline_unix": 1794670322.914484,
+      "estimated_actor_at_deadline": 7608.586162498821,
+      "estimated_remaining_actor_minutes": 94.40602005764292,
+      "original_staging_minutes": 2.759976307551066,
+      "estimated_resume_minutes_including_same_staging": 97.16599636519399
+    }
+  },
+  "limitations": "No endpoint change or new reservation. Recompute from actual closed checkpoint and allocated hardware before launching; saved state and future throughput govern actual duration."
+}
