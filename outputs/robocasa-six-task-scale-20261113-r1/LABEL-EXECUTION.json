@@ -1,0 +1,48 @@
+{
+  "status": "Submitted and verified queued in Baige; no allocation receipt yet",
+  "source_commit": "7de254d2ae6d961a8d8d71fa5aa627ad8eec79f4",
+  "tasks": [
+    "OpenDrawer",
+    "CoffeeSetupMug",
+    "PickPlaceCounterToStove",
+    "TurnOnSinkFaucet"
+  ],
+  "spec": "LABEL-INPUTS-01.json",
+  "spec_sha256": "c7af168839bdc817b71c733c8d518ff9646bd0f5cdd58ec1353f7939264ccd84",
+  "attempt": "labels01",
+  "cluster": "Baige Pro6K",
+  "queue_id": "aihcq-rh0wwk9muei4",
+  "GPUs": 4,
+  "CPUs": 48,
+  "RAM_GiB": 512,
+  "shared_memory_GiB": 16,
+  "scheduler_maximum_minutes": 180,
+  "maximum_GPU_hours": 12,
+  "automatic_retries": false,
+  "inference_batch": 16,
+  "queries_total": 184320,
+  "validation": "All64 first/last rank payloads checked on allocated Linux; full2880/task payload semantic check runs during labels. No model computation claimed by CPU audit.",
+  "remaining_tasks": [
+    "CloseToasterOvenDoor",
+    "TurnOffStove"
+  ],
+  "storage": "One raw archive per task retained in cold storage; stage only inference weights and one32-stream feature/label shard per worker. Full cold readback before reclaim.",
+  "capacity_observed": {
+    "GPU_type": "NVIDIA RPBZZZ6",
+    "queue_free_GPUs": 8,
+    "queue_total_GPUs": 416,
+    "queue_free_CPUs": 632,
+    "queue_free_RAM_GiB": 7303,
+    "personal_free_GPUs": 15,
+    "personal_total_GPUs": 32,
+    "queued_jobs": 15
+  },
+  "budget": "12 of proposed18 label GPUh; conservative parent commitment rises109 to121 of230, with109 remaining for final labels, fits and comparisons.",
+  "job_id": "job-40dz76k3crrg",
+  "job_name": "mwj_1114_corrected_labels4_g4_r1",
+  "created_shanghai": "2026-11-14T15:39:51+08:00",
+  "checked_shanghai": "2026-11-14T15:49:00+08:00",
+  "allocation_GPU_probe": "pending allocation",
+  "cold_output": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels01",
+  "submission_evidence": "evidence/LABELS4-SUBMITTED.png"
+}
