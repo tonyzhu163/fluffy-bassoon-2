@@ -1,6 +1,6 @@
 {
-  "status": "Verified replacement prepared; original job cancellation pending",
-  "checked_shanghai": "2026-11-14T17:47:30+08:00",
+  "status": "NOT APPLIED: original four-GPU job started before any cancellation or replacement submission",
+  "checked_shanghai": "2026-11-14T17:49:46+08:00",
   "source_commit": "2d5ec0000c93a643e6d32c305b21378b89243c67",
   "source_directory": "/mowenjie/fluffy-bassoon-2/sources/matched-split-2d5ec000",
   "old_job": "job-5zbsgqfx0ax6",
@@ -31,7 +31,7 @@
       "scheduler_maximum_minutes": 360,
       "reserved_GPU_hours": 6,
       "automatic_retries": false,
-      "status": "Prepared; do not submit while old job remains eligible to run"
+      "status": "Not submitted; abandoned because original allocation started"
     },
     {
       "method": "dpt",
@@ -46,7 +46,7 @@
       "scheduler_maximum_minutes": 360,
       "reserved_GPU_hours": 6,
       "automatic_retries": false,
-      "status": "Prepared; do not submit while old job remains eligible to run"
+      "status": "Not submitted; abandoned because original allocation started"
     },
     {
       "method": "dit",
@@ -61,7 +61,7 @@
       "scheduler_maximum_minutes": 360,
       "reserved_GPU_hours": 6,
       "automatic_retries": false,
-      "status": "Prepared; do not submit while old job remains eligible to run"
+      "status": "Not submitted; abandoned because original allocation started"
     },
     {
       "method": "ic_iql",
@@ -76,7 +76,10 @@
       "scheduler_maximum_minutes": 360,
       "reserved_GPU_hours": 6,
       "automatic_retries": false,
-      "status": "Prepared; do not submit while old job remains eligible to run"
+      "status": "Not submitted; abandoned because original allocation started"
     }
-  ]
+  ],
+  "reason": "Fresh scheduler read showed job-5zbsgqfx0ax6 Running; worker LAUNCH and four-device training probe subsequently verified. Retain existing immutable run.",
+  "replacement_jobs_submitted": 0,
+  "original_job_cancelled": false
 }

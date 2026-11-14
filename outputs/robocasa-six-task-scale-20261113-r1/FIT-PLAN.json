@@ -1,5 +1,5 @@
 {
-  "status": "Three-task job running with passing GPU probe and fresh Q/V updates; six-task job queued",
+  "status": "Both original jobs running; all eight learners have advancing native actor or Q/V updates",
   "policy_updates": 10000,
   "value_updates": 1000,
   "seed": 0,
@@ -37,7 +37,7 @@
   },
   "retention": "One job-local raw cache shared across four workers; only two readback-verified resumable snapshots per method/attempt plus final candidate",
   "timeout": "Save optimizer, policy/values, task/window sampler and all RNG state; preserve10000-update endpoint across any explicit resume",
-  "validation_pending": "Allocated GPU memory/update throughput and first native RGB gradient update",
+  "validation_pending": "DIT/IC-IQL native actor update after fresh1000-step value fitting; completed10000-update candidates and paired evaluation",
   "validation": {
     "source_commit": "78ec94eb50cba869a08454d118275c016430919f",
     "CPU_imports": "passed",

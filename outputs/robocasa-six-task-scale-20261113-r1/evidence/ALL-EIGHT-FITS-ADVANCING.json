@@ -1,0 +1,316 @@
+{
+  "checked_unix": 1794649947.3485272,
+  "fits": {
+    "fits3r1": {
+      "methods": {
+        "ad": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ad/PROGRESS.json",
+          "sha256": "7549a7262173ab9b8e30bbef09a71dc80722e321051db67932ae2ec6608c0a4e",
+          "progress": {
+            "phase": "actor",
+            "value_update": 0,
+            "actor_update": 500,
+            "elapsed_seconds": 869.7403349080002,
+            "checkpoint": {
+              "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ad/actor-00000-00500.pt",
+              "sha256": "f7860287eab2516f6546a1b85b2fa03ecfcd4a14ce6abb8f82d0757c5949ebb0"
+            },
+            "complete": false,
+            "checked_unix": 1794649848.1495047,
+            "execution_batch": 8,
+            "metrics": {
+              "loss": 0.11788439750671387,
+              "gradient_norm": 0.0014782063663005829,
+              "logical_batch_size": 8,
+              "execution_batch_size": 8,
+              "weight_mean": 1.0,
+              "weight_max": 1.0,
+              "mean_update_seconds": 1.6393982088400163,
+              "peak_cuda_bytes": 14507266560
+            }
+          }
+        },
+        "dpt": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dpt/PROGRESS.json",
+          "sha256": "7a1ad3815951bee195e1a0006d034c1ce1b964117f306aae634e92ce5d7b0112",
+          "progress": {
+            "phase": "actor",
+            "value_update": 0,
+            "actor_update": 500,
+            "elapsed_seconds": 852.7471784180002,
+            "checkpoint": {
+              "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dpt/actor-00000-00500.pt",
+              "sha256": "ae4c3d85429e4c2ebe3dc00a49e9a4281e51ae772d81c93704a97315fc92d40d"
+            },
+            "complete": false,
+            "checked_unix": 1794649830.341666,
+            "execution_batch": 8,
+            "metrics": {
+              "loss": 0.11753430962562561,
+              "gradient_norm": 0.0013327819760888815,
+              "logical_batch_size": 8,
+              "execution_batch_size": 8,
+              "weight_mean": 1.0,
+              "weight_max": 1.0,
+              "mean_update_seconds": 1.534629580259998,
+              "peak_cuda_bytes": 14507266560
+            }
+          }
+        },
+        "dit": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dit/PROGRESS.json",
+          "sha256": "a28a3efaa9841a57bb4ac9aea2b4c67ecb9a0ec777d4d56a54446b5b796ad598",
+          "progress": {
+            "phase": "value",
+            "value_update": 300,
+            "actor_update": 0,
+            "elapsed_seconds": 780.2544944909998,
+            "checkpoint": {
+              "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dit/value-00300-00000.pt",
+              "sha256": "825c2b18dc32e79fb829042c92d938900cfe0377fcff08de2118be392a429f23"
+            },
+            "complete": false,
+            "checked_unix": 1794649759.3195915,
+            "execution_batch": 8,
+            "metrics": {
+              "loss": 0.1808769404888153,
+              "q_loss": 0.0898849293589592,
+              "v_loss": 0.09099201112985611,
+              "gradient_norm": 0.32252249121665955,
+              "update_seconds": 2.88658578400009
+            }
+          }
+        },
+        "ic_iql": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ic_iql/PROGRESS.json",
+          "sha256": "0415cf4ff21c175ebc4b1213868b98b47384a0c5fcd7bda9d9906912d9942dd7",
+          "progress": {
+            "phase": "value",
+            "value_update": 300,
+            "actor_update": 0,
+            "elapsed_seconds": 767.8523937890002,
+            "checkpoint": {
+              "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ic_iql/value-00300-00000.pt",
+              "sha256": "c92eca3cf29815a2f67e2434f7afca398241e27c3ecafaeb137479de970ee7d5"
+            },
+            "complete": false,
+            "checked_unix": 1794649746.9593172,
+            "execution_batch": 8,
+            "metrics": {
+              "loss": 0.017328277230262756,
+              "q_loss": 0.016653997823596,
+              "v_loss": 0.0006742794648744166,
+              "gradient_norm": 0.0823296383023262,
+              "update_seconds": 2.8382967460001964
+            }
+          }
+        }
+      },
+      "LAUNCH.json": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/LAUNCH.json",
+        "sha256": "db88655b8edc883a1e9e54d3b308e463198c60fc7f7b1adb92613eec0793d657",
+        "data": {
+          "source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+          "corpus_size": 3,
+          "methods": [
+            "ad",
+            "dpt",
+            "dit",
+            "ic_iql"
+          ],
+          "hostname": "job-o8p1uyvoxzr3-master-0",
+          "started_unix": 1794648856.6161726,
+          "maximum_GPU_hours": 24,
+          "maximum_scheduler_minutes": 360,
+          "automatic_retries": false,
+          "required_local_bytes": 83066263552,
+          "local_free_bytes": 831872430080,
+          "corpus_spec_sha256": "85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e",
+          "data_qualification": {
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json",
+            "sha256": "2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0"
+          }
+        }
+      },
+      "gpu-probe.json": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/gpu-probe.json",
+        "sha256": "4fccb8c1b38725c14a67afa86c549f40a59e668495627f1dfa610cd886c32fc5",
+        "data": {
+          "status": "passed",
+          "purpose": "training",
+          "hostname": "job-o8p1uyvoxzr3-master-0",
+          "scope": null
+        }
+      }
+    },
+    "fits6r1": {
+      "methods": {
+        "ad": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/ad/PROGRESS.json",
+          "sha256": "5401e3b21c82eb77a79c30e03a9d248aa98ff1ef79abd10f64e0cc3b583deae7",
+          "progress": {
+            "phase": "actor",
+            "value_update": 0,
+            "actor_update": 1,
+            "elapsed_seconds": 64.99554928857833,
+            "checkpoint": {
+              "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/ad/actor-00000-00001.pt",
+              "sha256": "a6e58339101d7dce46294a4fb2784ab48b88770d6564c275b25ee8cfb904f866"
+            },
+            "complete": false,
+            "checked_unix": 1794649852.7360203,
+            "execution_batch": 8,
+            "metrics": {
+              "loss": 0.10219354182481766,
+              "gradient_norm": 0.0009153877617791295,
+              "logical_batch_size": 8,
+              "execution_batch_size": 8,
+              "weight_mean": 1.0,
+              "weight_max": 1.0,
+              "mean_update_seconds": 2.245670751668513,
+              "peak_cuda_bytes": 12393426944
+            }
+          }
+        },
+        "dpt": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/dpt/PROGRESS.json",
+          "sha256": "937c5290a681aac0457cac4087505f9b6532264913d8da176d2d7c435927fb6d",
+          "progress": {
+            "phase": "actor",
+            "value_update": 0,
+            "actor_update": 1,
+            "elapsed_seconds": 66.22527604177594,
+            "checkpoint": {
+              "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/dpt/actor-00000-00001.pt",
+              "sha256": "2eb30db894c4e2dca988e6e29771b9556691f22e5094b2d2c11829c348cb15d1"
+            },
+            "complete": false,
+            "checked_unix": 1794649852.7030947,
+            "execution_batch": 8,
+            "metrics": {
+              "loss": 0.0699654370546341,
+              "gradient_norm": 0.000719816773198545,
+              "logical_batch_size": 8,
+              "execution_batch_size": 8,
+              "weight_mean": 1.0,
+              "weight_max": 1.0,
+              "mean_update_seconds": 2.2560379216447473,
+              "peak_cuda_bytes": 12393426944
+            }
+          }
+        },
+        "dit": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/dit/PROGRESS.json",
+          "sha256": "efa500f5305f90fb55c61d879b8d44111cfeb87c276c31f622b195003e87138a",
+          "progress": {
+            "phase": "value",
+            "value_update": 1,
+            "actor_update": 0,
+            "elapsed_seconds": 9.012082509696484,
+            "checkpoint": {
+              "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/dit/value-00001-00000.pt",
+              "sha256": "761940a72df3e1937c81ffdb8169e18b6a94d6d4ad8d34dc8cd8069e00968cb9"
+            },
+            "complete": false,
+            "checked_unix": 1794649798.2347212,
+            "execution_batch": 8,
+            "metrics": {
+              "loss": 0.5003250241279602,
+              "q_loss": 0.2298053801059723,
+              "v_loss": 0.2705196440219879,
+              "gradient_norm": 5.219521999359131,
+              "update_seconds": 4.071198184974492
+            }
+          }
+        },
+        "ic_iql": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/ic_iql/PROGRESS.json",
+          "sha256": "b215196cfa84b2046e987fca5e6439f8efda2ae9aec8ce4454857eb9203d57b1",
+          "progress": {
+            "phase": "value",
+            "value_update": 1,
+            "actor_update": 0,
+            "elapsed_seconds": 9.048906032927334,
+            "checkpoint": {
+              "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/ic_iql/value-00001-00000.pt",
+              "sha256": "4b6d8c551723b75f3f8bd5792f7c28237908264e8778f6ef731944ac976d2eb8"
+            },
+            "complete": false,
+            "checked_unix": 1794649797.6128716,
+            "execution_batch": 8,
+            "metrics": {
+              "loss": 0.11537165939807892,
+              "q_loss": 0.0836036279797554,
+              "v_loss": 0.03176803141832352,
+              "gradient_norm": 1.885886311531067,
+              "update_seconds": 4.09207628108561
+            }
+          }
+        }
+      },
+      "LAUNCH.json": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/LAUNCH.json",
+        "sha256": "7e9aa65d999d7936cb25c6668e8a3dd2084605471fb8942bb68efa0bdbeac23a",
+        "data": {
+          "source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+          "corpus_size": 6,
+          "methods": [
+            "ad",
+            "dpt",
+            "dit",
+            "ic_iql"
+          ],
+          "hostname": "job-5zbsgqfx0ax6-master-0",
+          "started_unix": 1794649622.914484,
+          "maximum_GPU_hours": 24,
+          "maximum_scheduler_minutes": 360,
+          "automatic_retries": false,
+          "required_local_bytes": 113443418112,
+          "local_free_bytes": 771918876672,
+          "corpus_spec_sha256": "85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e",
+          "data_qualification": {
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json",
+            "sha256": "2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0"
+          }
+        }
+      },
+      "gpu-probe.json": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/gpu-probe.json",
+        "sha256": "66deedae38f15bf0da049c98c409a7b1c091d45235c0aeeb4ba3d6fa42211761",
+        "data": {
+          "status": "passed",
+          "purpose": "training",
+          "hostname": "job-5zbsgqfx0ax6-master-0",
+          "scope": null
+        }
+      }
+    }
+  },
+  "confirmation": {
+    "0": {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/confirm01/shard-00/evaluation/PROGRESS.json",
+      "sha256": "c660e1cd61122c0c3e19c4eb583732f541b7654dfc97d7ecdb8eb6d5eb24d284",
+      "completed_waves": 3,
+      "checked_unix": 1794649642.5702555
+    },
+    "1": {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/confirm01/shard-01/evaluation/PROGRESS.json",
+      "sha256": "4413b12df5b0d417e4ed27779dc450997c2ae98aa3b1018b799c4d07dae0bdc1",
+      "completed_waves": 3,
+      "checked_unix": 1794649656.0009525
+    },
+    "2": {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/confirm01/shard-02/evaluation/PROGRESS.json",
+      "sha256": "f821f0ccf6d603156d7d302090420f5c87c60898da0c396ff04bbd647057eee2",
+      "completed_waves": 3,
+      "checked_unix": 1794649651.5768247
+    },
+    "3": {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/confirm01/shard-03/evaluation/PROGRESS.json",
+      "sha256": "a169d0232c1924a93d947a05217484842fcb592816b4f3b21907a3b105eb3bfb",
+      "completed_waves": 3,
+      "checked_unix": 1794649940.7225823
+    }
+  },
+  "confirmation_complete_paired_cases": 96
+}

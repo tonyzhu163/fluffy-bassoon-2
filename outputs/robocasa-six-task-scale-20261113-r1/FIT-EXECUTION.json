@@ -1,6 +1,6 @@
 {
-  "checked_shanghai": "2026-11-14T17:37:31+08:00",
-  "status": "Three-task job running with passing GPU probe and fresh Q/V updates; six-task job queued",
+  "checked_shanghai": "2026-11-14T17:52:27+08:00",
+  "status": "Both original jobs running; all eight learners have advancing native actor or Q/V updates",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
   "source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
@@ -20,7 +20,7 @@
       "attempt": "fits3r1",
       "job_name": "mwj_1114_matched_fits3_g4_r1",
       "job_id": "job-o8p1uyvoxzr3",
-      "status": "Running; four-device training probe passed; raw cache complete; DIT/IC-IQL fresh Q/V update1",
+      "status": "Running; all four methods made finite actual updates",
       "GPUs": 4,
       "CPUs": 64,
       "RAM_GiB": 512,
@@ -42,6 +42,95 @@
         "personal_free_GPUs": 19,
         "personal_GPU_limit": 32,
         "queued_jobs": 8
+      },
+      "native_gradient_qualification": "AD/DPT actual updates finite, logical/execution batch8, peak14.5GB; DIT/IC-IQL Q/V updates finite",
+      "throughput": "AD/DPT about1.55\u20131.59 seconds/update; first100 Q/V stage about2.5 seconds/update averaged, phase lengths preserved",
+      "progress": {
+        "ad": {
+          "phase": "actor",
+          "value_update": 0,
+          "actor_update": 500,
+          "elapsed_seconds": 869.7403349080002,
+          "metrics": {
+            "loss": 0.11788439750671387,
+            "gradient_norm": 0.0014782063663005829,
+            "logical_batch_size": 8,
+            "execution_batch_size": 8,
+            "weight_mean": 1.0,
+            "weight_max": 1.0,
+            "mean_update_seconds": 1.6393982088400163,
+            "peak_cuda_bytes": 14507266560
+          }
+        },
+        "dpt": {
+          "phase": "actor",
+          "value_update": 0,
+          "actor_update": 500,
+          "elapsed_seconds": 852.7471784180002,
+          "metrics": {
+            "loss": 0.11753430962562561,
+            "gradient_norm": 0.0013327819760888815,
+            "logical_batch_size": 8,
+            "execution_batch_size": 8,
+            "weight_mean": 1.0,
+            "weight_max": 1.0,
+            "mean_update_seconds": 1.534629580259998,
+            "peak_cuda_bytes": 14507266560
+          }
+        },
+        "dit": {
+          "phase": "value",
+          "value_update": 300,
+          "actor_update": 0,
+          "elapsed_seconds": 780.2544944909998,
+          "metrics": {
+            "loss": 0.1808769404888153,
+            "q_loss": 0.0898849293589592,
+            "v_loss": 0.09099201112985611,
+            "gradient_norm": 0.32252249121665955,
+            "update_seconds": 2.88658578400009
+          }
+        },
+        "ic_iql": {
+          "phase": "value",
+          "value_update": 300,
+          "actor_update": 0,
+          "elapsed_seconds": 767.8523937890002,
+          "metrics": {
+            "loss": 0.017328277230262756,
+            "q_loss": 0.016653997823596,
+            "v_loss": 0.0006742794648744166,
+            "gradient_norm": 0.0823296383023262,
+            "update_seconds": 2.8382967460001964
+          }
+        }
+      },
+      "worker_started_unix": 1794648856.6161726,
+      "launch_evidence": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/LAUNCH.json",
+        "sha256": "db88655b8edc883a1e9e54d3b308e463198c60fc7f7b1adb92613eec0793d657",
+        "data": {
+          "source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+          "corpus_size": 3,
+          "methods": [
+            "ad",
+            "dpt",
+            "dit",
+            "ic_iql"
+          ],
+          "hostname": "job-o8p1uyvoxzr3-master-0",
+          "started_unix": 1794648856.6161726,
+          "maximum_GPU_hours": 24,
+          "maximum_scheduler_minutes": 360,
+          "automatic_retries": false,
+          "required_local_bytes": 83066263552,
+          "local_free_bytes": 831872430080,
+          "corpus_spec_sha256": "85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e",
+          "data_qualification": {
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json",
+            "sha256": "2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0"
+          }
+        }
       }
     },
     {
@@ -49,7 +138,7 @@
       "attempt": "fits6r1",
       "job_name": "mwj_1114_matched_fits6_g4_r1",
       "job_id": "job-5zbsgqfx0ax6",
-      "status": "Queued; no allocation or worker launch observed yet",
+      "status": "Running; all four methods made finite actual updates",
       "GPUs": 4,
       "CPUs": 64,
       "RAM_GiB": 512,
@@ -60,7 +149,7 @@
       "command": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B /mowenjie/fluffy-bassoon-2/sources/matched-ready-4987585e/outputs/robocasa-six-task-scale-20261113-r1/fit_job.py --pin 4987585e7427061de30771ee207f9b2b79eedc6a --attempt fits6r1 --corpora /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/datasets01/CORPORA.json --corpora-sha256 85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e --corpus-size 6 --data-qualification /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json --data-qualification-sha256 2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0",
       "cold_output": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1",
       "created_shanghai": "2026-11-14T17:35:38+08:00",
-      "allocation_probe": "pending",
+      "allocation_probe": "passed",
       "submission_evidence": "evidence/FITS6-SUBMITTED.png",
       "capacity_at_submission": {
         "GPU_type": "NVIDIA RPBZZZ6",
@@ -71,9 +160,100 @@
         "personal_free_GPUs": 15,
         "personal_GPU_limit": 32,
         "queued_jobs": 8
+      },
+      "worker_started_unix": 1794649622.914484,
+      "local_free_bytes_at_start": 771918876672,
+      "required_local_bytes": 113443418112,
+      "progress": {
+        "ad": {
+          "phase": "actor",
+          "value_update": 0,
+          "actor_update": 1,
+          "elapsed_seconds": 64.99554928857833,
+          "metrics": {
+            "loss": 0.10219354182481766,
+            "gradient_norm": 0.0009153877617791295,
+            "logical_batch_size": 8,
+            "execution_batch_size": 8,
+            "weight_mean": 1.0,
+            "weight_max": 1.0,
+            "mean_update_seconds": 2.245670751668513,
+            "peak_cuda_bytes": 12393426944
+          }
+        },
+        "dpt": {
+          "phase": "actor",
+          "value_update": 0,
+          "actor_update": 1,
+          "elapsed_seconds": 66.22527604177594,
+          "metrics": {
+            "loss": 0.0699654370546341,
+            "gradient_norm": 0.000719816773198545,
+            "logical_batch_size": 8,
+            "execution_batch_size": 8,
+            "weight_mean": 1.0,
+            "weight_max": 1.0,
+            "mean_update_seconds": 2.2560379216447473,
+            "peak_cuda_bytes": 12393426944
+          }
+        },
+        "dit": {
+          "phase": "value",
+          "value_update": 1,
+          "actor_update": 0,
+          "elapsed_seconds": 9.012082509696484,
+          "metrics": {
+            "loss": 0.5003250241279602,
+            "q_loss": 0.2298053801059723,
+            "v_loss": 0.2705196440219879,
+            "gradient_norm": 5.219521999359131,
+            "update_seconds": 4.071198184974492
+          }
+        },
+        "ic_iql": {
+          "phase": "value",
+          "value_update": 1,
+          "actor_update": 0,
+          "elapsed_seconds": 9.048906032927334,
+          "metrics": {
+            "loss": 0.11537165939807892,
+            "q_loss": 0.0836036279797554,
+            "v_loss": 0.03176803141832352,
+            "gradient_norm": 1.885886311531067,
+            "update_seconds": 4.09207628108561
+          }
+        }
+      },
+      "launch_evidence": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/LAUNCH.json",
+        "sha256": "7e9aa65d999d7936cb25c6668e8a3dd2084605471fb8942bb68efa0bdbeac23a",
+        "data": {
+          "source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+          "corpus_size": 6,
+          "methods": [
+            "ad",
+            "dpt",
+            "dit",
+            "ic_iql"
+          ],
+          "hostname": "job-5zbsgqfx0ax6-master-0",
+          "started_unix": 1794649622.914484,
+          "maximum_GPU_hours": 24,
+          "maximum_scheduler_minutes": 360,
+          "automatic_retries": false,
+          "required_local_bytes": 113443418112,
+          "local_free_bytes": 771918876672,
+          "corpus_spec_sha256": "85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e",
+          "data_qualification": {
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json",
+            "sha256": "2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0"
+          }
+        }
       }
     }
   ],
-  "next_check_shanghai": "2026-11-14T17:57:31+08:00",
-  "next_action": "Verify native actor updates and steady update time/memory, six-task allocation and progress; preserve fixed10000-update endpoints"
+  "next_check_shanghai": "2026-11-14T18:12:27+08:00",
+  "next_action": "Monitor every20minutes; verify DIT/IC-IQL transition to fixed-value actor fitting, complete10000-update checkpoints, then run matched ID/OOD panel",
+  "scheduling_change": "Prepared one-GPU alternative was never applied; both corpus fits use the same498 source pin and original commands.",
+  "progress_evidence": "evidence/ALL-EIGHT-FITS-ADVANCING.json"
 }

@@ -1,5 +1,5 @@
 {
-  "status": "Prepared; old four-GPU six-task job remains queued and has not been cancelled",
+  "status": "NOT APPLIED: original four-GPU job started before any cancellation or replacement submission",
   "reason": "Baige queue diagnosis at17:42 Shanghai:4 free GPUs total but0 nodes with4 free GPUs;CPU/RAM are not the binding constraint",
   "old_job_id": "job-5zbsgqfx0ax6",
   "old_attempt": "fits6r1",
@@ -25,5 +25,9 @@
   ],
   "code_equivalence": "Launcher verifies Git equality of src,benchmarks,scripts,fit.py,corpus.py,labels.py,qualify_corpora.py against passed498 corpus-qualification source before accepting it",
   "storage_tradeoff": "Each allocation stages its own60GB-class raw cache on job-local NVMe, with capacity/write probes; shared PFS does not gain raw copies. Cold canonical data unchanged. Two rolling resumable checkpoints per method.",
-  "cancellation_rule": "Before replacement submission, recheck ownership and exact old job. Cancel only while unallocated, with no LAUNCH or fit checkpoint. If it starts first, retain the original job and abandon duplicate submission."
+  "cancellation_rule": "Before replacement submission, recheck ownership and exact old job. Cancel only while unallocated, with no LAUNCH or fit checkpoint. If it starts first, retain the original job and abandon duplicate submission.",
+  "applied": false,
+  "original_job_cancelled": false,
+  "replacement_jobs_submitted": 0,
+  "execution": "FIT-SPLIT-EXECUTION.json"
 }
