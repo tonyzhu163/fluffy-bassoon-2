@@ -1,5 +1,5 @@
 {
-  "status": "Running; all4 shards advanced to3-task IC-IQL or6-task AD comparisons; no failure receipts",
+  "status": "Running; first3 paired banks archived; first bank independently passed full archive and case coverage audit",
   "source_commit": "7cc56702ec6b623ae4aa4f79da211883ca4ecddd",
   "source_directory": "/mowenjie/fluffy-bassoon-2/sources/matched-readout-7cc56702",
   "source_deployment": "evidence/MATCHED-READOUT-DEPLOYMENT-7cc56702.json",
@@ -59,7 +59,7 @@
     "queued_jobs": 1
   },
   "submission_evidence": "evidence/MATCHED-EVALUATION-SUBMITTED.jpg",
-  "next_check_shanghai": "2026-11-15T02:29:00+08:00",
+  "next_check_shanghai": "2026-11-15T02:49:00+08:00",
   "submission_evidence_sha256": "e7db69543091bbe776f1715142390361bcfb651e4bc1826f55227b4502a3b232",
   "launch": {
     "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/LAUNCH.json",
@@ -468,65 +468,174 @@
       "topology": "\t\u001b[4mGPU0\tGPU1\tGPU2\tGPU3\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tPHB\tPHB\tPHB\tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nGPU1\tPHB\t X \tPHB\tPHB\tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nGPU2\tPHB\tPHB\t X \tPHB\tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nGPU3\tPHB\tPHB\tPHB\t X \tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nNIC0\tSYS\tSYS\tSYS\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\tSYS\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tSYS\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tSYS\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
     }
   },
-  "latest_evidence": "evidence/MATCHED-READOUT-20261115-0209.json",
-  "checked_unix": 1794679746.1479092,
+  "latest_evidence": "evidence/MATCHED-READOUT-20261115-0236.json",
+  "checked_unix": 1794681443.09694,
   "first_native_validation": "evidence/MATCHED-FIRST-NATIVE-PROGRESS.json",
   "shard_progress": {
     "0": {
       "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-00/evaluation/PROGRESS.json",
-      "sha256": "a5bc50c28bb4f0c6ee3b2c3eccb3151c9176015d19789243ef82493b64367767",
+      "sha256": "9387af63a3dd7d082900b34d50a831f3ff2aaf9f9658c6a2e32e94a5ca60aeab",
       "data": {
         "task": "OpenDrawer",
         "first": 0,
-        "model": "3/ic_iql",
-        "arm": "reset_sixth",
+        "model": "fixed_PPO30",
+        "arm": "baseline_sixth",
         "completed_waves": 0,
-        "elapsed_seconds": 56.935431480407715,
-        "checked_unix": 1794679427.9068599
+        "checked_unix": 1794681385.032873
       }
     },
     "1": {
       "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-01/evaluation/PROGRESS.json",
-      "sha256": "fd686714a3ecdbf538fd3d4c9bc64808f468bd36cac30d23216fda83b783bb9b",
+      "sha256": "76f7004b71b27cda4eb2e882718edd47a43168d07ac9ca78b944d2c6c7ef6c77",
       "data": {
-        "task": "OpenDrawer",
-        "first": 8,
-        "model": "6/ad",
-        "arm": "reset_sixth",
-        "completed_waves": 0,
-        "elapsed_seconds": 51.162245750427246,
-        "checked_unix": 1794679704.8310456
+        "completed_waves": 1,
+        "results": [
+          {
+            "task": "OpenDrawer",
+            "first": 8,
+            "archive": {
+              "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-01/evaluation/OpenDrawer/bank-0008/evidence.tar",
+              "sha256": "e432298fcbb862734eeed8cc0e8f8cb3badf21bcdd5a00f2addea94972f6f45a",
+              "bytes": 6793676800,
+              "every_member_verified": true,
+              "cold_full_readback": true,
+              "elapsed_seconds": 34.68438744544983
+            },
+            "timing": {
+              "3/ad": {
+                "full": 316.38876938819885,
+                "reset_first": 50.97200894355774,
+                "reset_sixth": 51.17656087875366
+              },
+              "3/dpt": {
+                "full": 307.4460971355438,
+                "reset_first": 50.570666551589966,
+                "reset_sixth": 50.931883335113525
+              },
+              "3/dit": {
+                "full": 306.4527916908264,
+                "reset_first": 51.48187613487244,
+                "reset_sixth": 51.0783371925354
+              },
+              "3/ic_iql": {
+                "full": 307.16902351379395,
+                "reset_first": 50.677467823028564,
+                "reset_sixth": 51.26980495452881
+              },
+              "6/ad": {
+                "full": 306.2231538295746,
+                "reset_first": 50.96760392189026,
+                "reset_sixth": 51.162245750427246
+              },
+              "6/dpt": {
+                "full": 307.86955213546753,
+                "reset_first": 51.47770357131958,
+                "reset_sixth": 51.57671403884888
+              },
+              "6/dit": {
+                "full": 306.44202518463135,
+                "reset_first": 51.794663429260254,
+                "reset_sixth": 51.0454421043396
+              },
+              "6/ic_iql": {
+                "full": 306.83901929855347,
+                "reset_first": 51.32663559913635,
+                "reset_sixth": 50.757917165756226
+              }
+            },
+            "baseline_timing": {
+              "original_SFT": 52.205262660980225,
+              "fixed_PPO30": 52.77897667884827
+            }
+          }
+        ],
+        "checked_unix": 1794681129.9475217
       }
     },
     "2": {
       "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-02/evaluation/PROGRESS.json",
-      "sha256": "642c0f9cf6b41acd13cd5b8b9a2779a74f164662e4d3487744c7256136bfd4ce",
+      "sha256": "28b6742593cd40bff631e819d6beca9da811c02ee0395ca859ed74cd4aeeca7f",
       "data": {
         "task": "OpenDrawer",
         "first": 16,
-        "model": "3/ic_iql",
+        "model": "6/dit",
         "arm": "reset_sixth",
         "completed_waves": 0,
-        "elapsed_seconds": 65.28325080871582,
-        "checked_unix": 1794679746.0173528
+        "elapsed_seconds": 65.24283003807068,
+        "checked_unix": 1794681366.8441672
       }
     },
     "3": {
       "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-03/evaluation/PROGRESS.json",
-      "sha256": "8dd57529ffea8dcea5be800002a3bb3131b3bd8e1abc43f90b4a79f39c126ef4",
+      "sha256": "676100f6fb5c4bd3f9af8f131ab34504475ec972b7ac240258afa38c4540fdf3",
       "data": {
-        "task": "OpenDrawer",
-        "first": 24,
-        "model": "6/ad",
-        "arm": "reset_first",
-        "completed_waves": 0,
-        "elapsed_seconds": 53.04560685157776,
-        "checked_unix": 1794679732.7372382
+        "completed_waves": 1,
+        "results": [
+          {
+            "task": "OpenDrawer",
+            "first": 24,
+            "archive": {
+              "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-03/evaluation/OpenDrawer/bank-0024/evidence.tar",
+              "sha256": "31937cec012f1a66c433441a7dc070cf848b2e0965e62494c59cafb6b5c9dcd2",
+              "bytes": 6056734720,
+              "every_member_verified": true,
+              "cold_full_readback": true,
+              "elapsed_seconds": 31.86125874519348
+            },
+            "timing": {
+              "3/ad": {
+                "full": 332.5195457935333,
+                "reset_first": 52.980342388153076,
+                "reset_sixth": 54.070351362228394
+              },
+              "3/dpt": {
+                "full": 320.7086853981018,
+                "reset_first": 53.39460206031799,
+                "reset_sixth": 53.34085702896118
+              },
+              "3/dit": {
+                "full": 319.628623008728,
+                "reset_first": 52.54748892784119,
+                "reset_sixth": 53.882909297943115
+              },
+              "3/ic_iql": {
+                "full": 318.77763533592224,
+                "reset_first": 53.17779803276062,
+                "reset_sixth": 52.87354874610901
+              },
+              "6/ad": {
+                "full": 318.9548110961914,
+                "reset_first": 53.04560685157776,
+                "reset_sixth": 52.89484524726868
+              },
+              "6/dpt": {
+                "full": 316.13618445396423,
+                "reset_first": 53.519564151763916,
+                "reset_sixth": 52.48160243034363
+              },
+              "6/dit": {
+                "full": 316.3524832725525,
+                "reset_first": 53.06169629096985,
+                "reset_sixth": 53.82522225379944
+              },
+              "6/ic_iql": {
+                "full": 314.9743278026581,
+                "reset_first": 52.36950898170471,
+                "reset_sixth": 53.52798390388489
+              }
+            },
+            "baseline_timing": {
+              "original_SFT": 55.27662420272827,
+              "fixed_PPO30": 53.634520530700684
+            }
+          }
+        ],
+        "checked_unix": 1794681248.0766606
       }
     }
   },
-  "native_physical_episodes_completed_lower_bound": 1144,
-  "whole_paired_waves_archived": 0,
+  "native_physical_episodes_completed_lower_bound": 2032,
+  "whole_paired_waves_archived": 3,
   "first_native_observation_watch": {
     "pid": 209231,
     "hostname": "aibox-rffe453e3884-5f96c78b88-6ssrn",
@@ -538,19 +647,50 @@
     "ended_unix": 1794677989.2243135
   },
   "observation_watch": {
-    "pid": 217742,
+    "pid": 220943,
     "hostname": "aibox-rffe453e3884-5f96c78b88-6ssrn",
-    "started_unix": 1794679819.0534387,
-    "deadline_unix": 1794680940,
-    "behavior": "Read-only wait for owned terminal/error/incomplete event, first complete paired bank, or02:29 full-check deadline; no accelerator mutation",
+    "started_unix": 1794681194.540061,
+    "deadline_unix": 1794682140,
+    "behavior": "Read-only wait for remaining first banks, owned failure/terminal, or02:49 full check; no accelerator mutation",
+    "observed_first_bank_shards": [
+      0,
+      1,
+      3
+    ],
+    "remaining_first_bank_shards": [
+      2
+    ],
     "GPU_hours": 0
   },
   "startup_binding_audit": "evidence/MATCHED-STARTUP-BINDING-AUDIT.json",
   "CPU_completion_followthrough": "MATCHED-ANALYSIS-EXECUTION.json",
-  "shared_PFS_free_bytes": 116710703104,
+  "shared_PFS_free_bytes": 139779375104,
   "shared_space_observation": {
-    "change_since_previous_check_bytes": -35706109952,
+    "change_since_previous_check_bytes": 23127392256,
     "attribution": "Unattributed shared-space change; no ownership inference",
     "evaluation_bulk_output": "Container-local /tmp and BOS; active runtime unchanged"
-  }
+  },
+  "last_full_monitor_unix": 1794681419.879269,
+  "independently_audited_banks": 1,
+  "independently_audited_physical_episodes": 528,
+  "first_bank_audit": "evidence/MATCHED-FIRST-BANK-AUDIT.json",
+  "first_bank_coverage": "evidence/MATCHED-FIRST-BANK-COVERAGE.json",
+  "first_bank_timing": "evidence/MATCHED-FIRST-BANK-TIMING.json",
+  "first_bank_wall_minutes_including_setup": 62.23327135642369,
+  "first_bank_rollout_minutes": 56.46803671518962,
+  "first_bank_timing_limit": "One shard only; wait for remaining first bank before full worker projection",
+  "first_bank_events": [
+    {
+      "shard": 1,
+      "observed_unix": 1794681137.272698
+    },
+    {
+      "shard": 3,
+      "observed_unix": 1794681257.3490727
+    },
+    {
+      "shard": 0,
+      "observed_unix": 1794681443.09694
+    }
+  ]
 }

@@ -1,0 +1,88 @@
+{
+  "passed_complete_bank_audit": true,
+  "full_panel_complete": false,
+  "checked_unix": 1794681224.312758,
+  "elapsed_seconds": 30.66371464729309,
+  "GPU_hours": 0,
+  "source_commit": "7cc56702ec6b623ae4aa4f79da211883ca4ecddd",
+  "analyzer": {
+    "path": "/mowenjie/fluffy-bassoon-2/sources/matched-readout-7cc56702/outputs/robocasa-six-task-scale-20261113-r1/matched_analyze.py",
+    "sha256": "a28dfa21b8443e449d54f63ccc869ce94ae757d3a8c11d8cfd35a67a55ef7093"
+  },
+  "spec": {
+    "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/readout-inputs01/SPEC.json",
+    "sha256": "34fd790404df709796399cd845eec88788b5365488bf08f0480d9972efb0158f"
+  },
+  "coverage": {
+    "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/first-bank-coverage01/COVERAGE.json",
+    "sha256": "6b9b326e9fdf07c40e09045188d58f61df86376d3f6c0c797035342a74e4839c"
+  },
+  "verified_banks": 1,
+  "verified_physical_episodes": 528,
+  "expected_partial_coverage_exit_code": 1,
+  "statistical_conclusions_generated": false,
+  "timing_only": [
+    {
+      "task": "OpenDrawer",
+      "first": 8,
+      "paired": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-01/evaluation/OpenDrawer/bank-0008/PAIRED.json",
+        "sha256": "b6c42d8265f24cdab13885dc26a0327b502ab09a73a516cd4b2d2e62abb7ef94"
+      },
+      "archive": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-01/evaluation/OpenDrawer/bank-0008/ARCHIVE.json",
+        "sha256": "f0c2dec5f489320142bb14b979640a889ce9c1c0e8be0b90bd08d23c46f808f9"
+      },
+      "archive_bytes": 6793676800,
+      "archive_seconds": 34.68438744544983,
+      "model_seconds": {
+        "3/ad": {
+          "full": 316.38876938819885,
+          "reset_first": 50.97200894355774,
+          "reset_sixth": 51.17656087875366
+        },
+        "3/dpt": {
+          "full": 307.4460971355438,
+          "reset_first": 50.570666551589966,
+          "reset_sixth": 50.931883335113525
+        },
+        "3/dit": {
+          "full": 306.4527916908264,
+          "reset_first": 51.48187613487244,
+          "reset_sixth": 51.0783371925354
+        },
+        "3/ic_iql": {
+          "full": 307.16902351379395,
+          "reset_first": 50.677467823028564,
+          "reset_sixth": 51.26980495452881
+        },
+        "6/ad": {
+          "full": 306.2231538295746,
+          "reset_first": 50.96760392189026,
+          "reset_sixth": 51.162245750427246
+        },
+        "6/dpt": {
+          "full": 307.86955213546753,
+          "reset_first": 51.47770357131958,
+          "reset_sixth": 51.57671403884888
+        },
+        "6/dit": {
+          "full": 306.44202518463135,
+          "reset_first": 51.794663429260254,
+          "reset_sixth": 51.0454421043396
+        },
+        "6/ic_iql": {
+          "full": 306.83901929855347,
+          "reset_first": 51.32663559913635,
+          "reset_sixth": 50.757917165756226
+        }
+      },
+      "baseline_seconds": {
+        "original_SFT": 52.205262660980225,
+        "fixed_PPO30": 52.77897667884827
+      },
+      "physical_episodes": 528
+    }
+  ],
+  "interpretation": "This independently verifies the available whole banks, not completion or effects for the planned13200 episodes."
+}
