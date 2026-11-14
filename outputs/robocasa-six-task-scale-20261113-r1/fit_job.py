@@ -1,4 +1,4 @@
-"""Four independent methods on one fixed corpus, sharing one raw observation cache."""
+"""Independent methods on one fixed corpus, sharing one cache per allocation."""
 import argparse
 import concurrent.futures
 import json
@@ -29,16 +29,26 @@ def main():
     p.add_argument('--corpus-size',type=int,choices=(3,6),required=True)
     p.add_argument('--data-qualification',type=Path,required=True)
     p.add_argument('--data-qualification-sha256',required=True)
+    p.add_argument('--methods',nargs='+',choices=METHODS,default=list(METHODS))
     a=p.parse_args()
     assert sys.platform=='linux' and socket.gethostname().startswith('job-')
     assert a.attempt.isalnum()
+    assert len(a.methods)==len(set(a.methods))
+    gpu_count=len(a.methods)
     assert subprocess.check_output(['git','-C',str(CODE),'rev-parse','HEAD'],text=True).strip()==a.pin
     assert not subprocess.check_output(['git','-C',str(CODE),'status','--porcelain','--untracked-files=no'])
     assert sha(a.corpora)==a.corpora_sha256
     assert sha(a.data_qualification)==a.data_qualification_sha256
     qualification=json.loads(a.data_qualification.read_text())
     assert qualification['passed'] and qualification['CPU_only']
-    assert qualification['source_commit']==a.pin
+    # Scheduling-only changes may split independent methods across allocations.
+    # Reuse qualification only when every checked/model-execution module is
+    # identical to the receipt's actual source, verified through Git objects.
+    qualified_pin=qualification['source_commit']
+    subprocess.run(['git','-C',str(CODE),'diff','--exit-code',qualified_pin,a.pin,'--',
+        'src','benchmarks','scripts',str(HERE.relative_to(CODE)/'fit.py'),
+        str(HERE.relative_to(CODE)/'corpus.py'),str(HERE.relative_to(CODE)/'labels.py'),
+        str(HERE.relative_to(CODE)/'qualify_corpora.py')],check=True,stdout=subprocess.DEVNULL)
     assert qualification['corpora']==dict(path=str(a.corpora),sha256=a.corpora_sha256)
     assert qualification['sampler_sha256']==sha(HERE/'corpus.py')
     assert {(cell['corpus_size'],cell['objective'],cell['split']) for cell in qualification['checked_cells']}=={
@@ -67,15 +77,16 @@ def main():
     if 'CUDA_VISIBLE_DEVICES' not in env:
         visible=subprocess.check_output(['nvidia-smi','--query-gpu=uuid','--format=csv,noheader'],text=True).splitlines()
         assigned=env['NVIDIA_VISIBLE_DEVICES'].split(',')
-        assert len(visible)==len(assigned)==4 and set(visible)==set(assigned)
-        env['CUDA_VISIBLE_DEVICES']='0,1,2,3'
+        assert len(visible)==len(assigned)==gpu_count and set(visible)==set(assigned)
+        env['CUDA_VISIBLE_DEVICES']=','.join(map(str,range(gpu_count)))
     began=time.time();deadline=began+20700
-    write(cold/'LAUNCH.json',dict(source_commit=a.pin,corpus_size=a.corpus_size,methods=METHODS,
-        hostname=socket.gethostname(),started_unix=began,maximum_GPU_hours=24,
+    write(cold/'LAUNCH.json',dict(source_commit=a.pin,corpus_size=a.corpus_size,methods=a.methods,
+        hostname=socket.gethostname(),started_unix=began,maximum_GPU_hours=6*gpu_count,
         maximum_scheduler_minutes=360,automatic_retries=False,required_local_bytes=needed,
         local_free_bytes=shutil.disk_usage(local).free,corpus_spec_sha256=a.corpora_sha256,
+        qualification_code_equivalence=dict(source_commit=qualified_pin,checked_modules_unchanged=True),
         data_qualification=dict(path=str(a.data_qualification),sha256=a.data_qualification_sha256)))
-    subprocess.run([str(PYTHON),'-B',str(CODE/'scripts/[train]gpu_probe.py'),'--expected-count','4',
+    subprocess.run([str(PYTHON),'-B',str(CODE/'scripts/[train]gpu_probe.py'),'--expected-count',str(gpu_count),
         '--purpose','training','--baige-container','--baige-exclusive-training',
         '--output',str(cold/'gpu-probe.json')],env=env,check=True,timeout=180)
     probe=json.loads((cold/'gpu-probe.json').read_text());assert probe['status']=='passed'
@@ -109,11 +120,11 @@ def main():
         write(cold/(method+'-EXIT.json'),result)
         return result
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
-        results=list(pool.map(worker,zip(METHODS,probe['devices'],strict=True)))
+    with concurrent.futures.ThreadPoolExecutor(max_workers=gpu_count) as pool:
+        results=list(pool.map(worker,zip(a.methods,probe['devices'],strict=True)))
     complete=all(x['exit_code']==0 and x['complete'] for x in results)
     write(cold/'EXIT.json',dict(completed=complete,results=results,ended_unix=time.time(),
-        allocation_GPU_hours=(time.time()-began)*4/3600,
+        allocation_GPU_hours=(time.time()-began)*gpu_count/3600,
         incomplete_policy='Resume preserved full state under a separately reconciled reservation; never publish a shorter fit as10000 updates'))
     raise SystemExit(0 if complete else 1)
 

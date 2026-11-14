@@ -1,0 +1,29 @@
+{
+  "status": "Prepared; old four-GPU six-task job remains queued and has not been cancelled",
+  "reason": "Baige queue diagnosis at17:42 Shanghai:4 free GPUs total but0 nodes with4 free GPUs;CPU/RAM are not the binding constraint",
+  "old_job_id": "job-5zbsgqfx0ax6",
+  "old_attempt": "fits6r1",
+  "new_allocation": "Four independent one-GPU jobs, one each for AD,DPT,DIT,IC-IQL",
+  "per_job": {
+    "GPUs": 1,
+    "CPUs": 16,
+    "RAM_GiB": 128,
+    "shared_memory_GiB": 16,
+    "scheduler_maximum_minutes": 360,
+    "maximum_GPU_hours": 6,
+    "automatic_retries": false
+  },
+  "total_maximum_GPU_hours": 24,
+  "unchanged": [
+    "six-task corpus and splits",
+    "all four objectives",
+    "fixed1000 fresh Q/V updates where applicable",
+    "fixed10000 actor updates",
+    "logical and execution batch8",
+    "seed0 and native model/runtime",
+    "optimizer schedule and final-checkpoint selection"
+  ],
+  "code_equivalence": "Launcher verifies Git equality of src,benchmarks,scripts,fit.py,corpus.py,labels.py,qualify_corpora.py against passed498 corpus-qualification source before accepting it",
+  "storage_tradeoff": "Each allocation stages its own60GB-class raw cache on job-local NVMe, with capacity/write probes; shared PFS does not gain raw copies. Cold canonical data unchanged. Two rolling resumable checkpoints per method.",
+  "cancellation_rule": "Before replacement submission, recheck ownership and exact old job. Cancel only while unallocated, with no LAUNCH or fit checkpoint. If it starts first, retain the original job and abandon duplicate submission."
+}
