@@ -10,7 +10,7 @@
       "attempt": "resume3dit01",
       "job_name": "mwj_1114_resume3dit01_g1_r1",
       "job_id": "job-x26sts56sm1y",
-      "status": "Running; restored actor updates advancing",
+      "status": "Complete; worker exit0; final tensor audit passed; scheduler accounting pending",
       "GPUs": 1,
       "CPUs": 16,
       "RAM_GiB": 128,
@@ -64,27 +64,28 @@
       "command_UI_copy_verified_exact": true,
       "progress": {
         "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3dit01/dit/PROGRESS.json",
-        "sha256": "508b84606d30a64a73adb1207a44591d6c4fe3ee5f2d6a3663d0bf3330d61486",
+        "sha256": "a78ca2a38eff7d70201982ac329b2b7d7e49d9af8f7fe5b938d49e6367f33951",
         "data": {
           "phase": "actor",
           "value_update": 1000,
-          "actor_update": 9800,
-          "elapsed_seconds": 26427.169483009726,
+          "actor_update": 10000,
+          "elapsed_seconds": 26953.73120529391,
           "checkpoint": {
-            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3dit01/dit/actor-01000-09800.pt",
-            "sha256": "5d1d05463d4d2e26c986e18e3d55076d3759d9da18c1abf02bede6f75b25bbe9"
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3dit01/dit/actor-01000-10000.pt",
+            "sha256": "d23d21918fb1e8a5d60af76be2a4d2955de208dd649ebda9ff0e45569869fb34"
           },
-          "complete": false,
-          "checked_unix": 1794675752.820235,
+          "complete": true,
+          "checked_unix": 1794676279.4280527,
           "execution_batch": 8,
           "metrics": {
-            "loss": 0.1551838517189026,
-            "gradient_norm": 0.0027572785038501024,
+            "loss": 0.09026522934436798,
+            "gradient_norm": 0.0012149526737630367,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
-            "weight_mean": 1.0136297941207886,
-            "weight_max": 1.0921963453292847,
-            "mean_update_seconds": 2.5257668925542385,
+            "weight_mean": 1.062183141708374,
+            "weight_max": 1.292224407196045,
+            "validation_flow_loss": 0.09757967526093125,
+            "mean_update_seconds": 2.469381723208353,
             "peak_cuda_bytes": 14711736320
           }
         }
@@ -215,7 +216,30 @@
           }
         }
       },
-      "checked_unix": 1794675788.0347247
+      "checked_unix": 1794676450.5581682,
+      "terminal": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3dit01/EXIT.json",
+        "sha256": "affa7c317f8d0d58aed673ccf2cbc86752d76e3d7e06ac9af1c791e51c83045c",
+        "data": {
+          "completed": true,
+          "results": [
+            {
+              "method": "dit",
+              "exit_code": 0,
+              "complete": true,
+              "started_unix": 1794669875.3468688,
+              "ended_unix": 1794676308.9955485
+            }
+          ],
+          "ended_unix": 1794676309.2059515,
+          "allocation_GPU_hours": 1.8096284523937438,
+          "incomplete_policy": "Resume preserved full state under a separately reconciled reservation; never publish a shorter fit as10000 updates"
+        }
+      },
+      "final_audit": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit02/3_dit.json",
+        "sha256": "b5bada0ba23fda5c5c73a51a43fcb25d6637bd7185b880f0448c0e7f249f0269"
+      }
     },
     {
       "corpus_size": 3,
@@ -277,27 +301,27 @@
       "command_UI_copy_verified_exact": true,
       "progress": {
         "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3iciql01/ic_iql/PROGRESS.json",
-        "sha256": "6f51277c9b7fdb9b1819a647a51ebeb7cb4dba569ee575deb340868735bc2413",
+        "sha256": "291eaa2c117d1b91428601a670d7c32280fcbe7b61d51fb966c787da49bb2af1",
         "data": {
           "phase": "actor",
           "value_update": 1000,
-          "actor_update": 9600,
-          "elapsed_seconds": 26294.13782891631,
+          "actor_update": 9900,
+          "elapsed_seconds": 27019.355777139775,
           "checkpoint": {
-            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3iciql01/ic_iql/actor-01000-09600.pt",
-            "sha256": "468431a597b8e593c497e187cbe9121b3e70aac67299d7d93e9997ea09bc4516"
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3iciql01/ic_iql/actor-01000-09900.pt",
+            "sha256": "a4093133096d8c99df48e9742762e8a6d8540a4f12df83735f6fc01c75e360d1"
           },
           "complete": false,
-          "checked_unix": 1794675657.5250995,
+          "checked_unix": 1794676382.7114885,
           "execution_batch": 8,
           "metrics": {
-            "loss": 0.14762020111083984,
-            "gradient_norm": 0.005855015479028225,
+            "loss": 0.10200518369674683,
+            "gradient_norm": 0.0013974851462990046,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
-            "weight_mean": 1.0121550559997559,
-            "weight_max": 1.1620455980300903,
-            "mean_update_seconds": 2.3376588001381604,
+            "weight_mean": 0.9780706763267517,
+            "weight_max": 1.0306575298309326,
+            "mean_update_seconds": 2.4057517630793153,
             "peak_cuda_bytes": 14705613824
           }
         }
@@ -428,7 +452,7 @@
           }
         }
       },
-      "checked_unix": 1794675788.0347247
+      "checked_unix": 1794676450.5581682
     },
     {
       "corpus_size": 6,
@@ -490,27 +514,27 @@
       "command_UI_copy_verified_exact": true,
       "progress": {
         "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6dit01/dit/PROGRESS.json",
-        "sha256": "4e61bef8b682e0691810a7772c374df0a41ced87d1b9bef76df65d492c4df445",
+        "sha256": "841f03c33f9da16af3bfda901f5392f68252702a16c48a50503f1c7ff6095db0",
         "data": {
           "phase": "actor",
           "value_update": 1000,
-          "actor_update": 9500,
-          "elapsed_seconds": 25581.121394801885,
+          "actor_update": 9800,
+          "elapsed_seconds": 26300.873130015098,
           "checkpoint": {
-            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6dit01/dit/actor-01000-09500.pt",
-            "sha256": "d7ebbfc803e6d720f2700e7678aa32a04770f151a676e261460d5a6768e11627"
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6dit01/dit/actor-01000-09800.pt",
+            "sha256": "2254d6c838b3b140b720e620fa8a3f20e2f255b9754eced09ed1ad3b404935df"
           },
           "complete": false,
-          "checked_unix": 1794675690.7442672,
+          "checked_unix": 1794676410.376016,
           "execution_batch": 8,
           "metrics": {
-            "loss": 0.10451541095972061,
-            "gradient_norm": 0.001689068041741848,
+            "loss": 0.12894873321056366,
+            "gradient_norm": 0.0033218259923160076,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
-            "weight_mean": 0.9911326169967651,
-            "weight_max": 1.0462337732315063,
-            "mean_update_seconds": 2.344228556212038,
+            "weight_mean": 0.9762567281723022,
+            "weight_max": 1.0301192998886108,
+            "mean_update_seconds": 2.3737522585783153,
             "peak_cuda_bytes": 14630839808
           }
         }
@@ -641,7 +665,7 @@
           }
         }
       },
-      "checked_unix": 1794675788.0347247
+      "checked_unix": 1794676450.5581682
     },
     {
       "corpus_size": 6,
@@ -703,27 +727,27 @@
       "command_UI_copy_verified_exact": true,
       "progress": {
         "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6iciql01/ic_iql/PROGRESS.json",
-        "sha256": "50edd4634db446540f6880565c1ebec39b0319d8d78a661bd4e4bc3fda1bb5b3",
+        "sha256": "29f0e10cfb4cf69e65b5b360c76e1e59b675fff03357748aff92579ff2f1ea6e",
         "data": {
           "phase": "actor",
           "value_update": 1000,
-          "actor_update": 9700,
-          "elapsed_seconds": 25504.35220842436,
+          "actor_update": 9900,
+          "elapsed_seconds": 25992.47267545946,
           "checkpoint": {
-            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6iciql01/ic_iql/actor-01000-09700.pt",
-            "sha256": "1bdeeb3e6048dc7c42e948b832bb44a6c2bfdb801ea06d8702e490e8141fcfb7"
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6iciql01/ic_iql/actor-01000-09900.pt",
+            "sha256": "672a82a677bfea3395acc87a41bff5972a5ef317b9017e5d96792959c88ba89b"
           },
           "complete": false,
-          "checked_unix": 1794675780.4122653,
+          "checked_unix": 1794676268.6114206,
           "execution_batch": 8,
           "metrics": {
-            "loss": 0.07150521874427795,
-            "gradient_norm": 0.0010726361069828272,
+            "loss": 0.09732089936733246,
+            "gradient_norm": 0.0013762229355052114,
             "logical_batch_size": 8,
             "execution_batch_size": 8,
-            "weight_mean": 0.9846640229225159,
-            "weight_max": 1.1028848886489868,
-            "mean_update_seconds": 2.399805691326037,
+            "weight_mean": 0.9386491775512695,
+            "weight_max": 1.0609129667282104,
+            "mean_update_seconds": 2.4428853299841284,
             "peak_cuda_bytes": 14643275776
           }
         }
@@ -854,7 +878,7 @@
           }
         }
       },
-      "checked_unix": 1794675788.0347247
+      "checked_unix": 1794676450.5581682
     }
   ],
   "original3_closeout": {
@@ -872,7 +896,7 @@
     "evidence/RESUME3-SUBMITTED.jpg",
     "evidence/RESUME6-SUBMITTED.jpg"
   ],
-  "checked_shanghai": "2026-11-15T01:03:08.034725+08:00",
+  "checked_shanghai": "2026-11-15T01:14:10.558168+08:00",
   "original6_closeout": {
     "job_id": "job-5zbsgqfx0ax6",
     "scheduler_status": "Failed",
@@ -887,7 +911,7 @@
       "sha256": "afa1f46eb3092f7074a200ebbdda3e3748eb12fd95cbc149bb95128a011ca112"
     }
   },
-  "latest_progress_evidence": "evidence/CONTINUATIONS-20261115-0103.json",
+  "latest_progress_evidence": "evidence/CONTINUATIONS-20261115-0114.json",
   "next_full_check_shanghai": "2026-11-15T01:23:00+08:00",
   "observation_watch": {
     "pid": 206657,

@@ -43,7 +43,7 @@
   "completion_receipt": "evidence/FINAL-AD-DPT-AUDIT-COMPLETE.json",
   "next_action": "Retrieve final-fit-audit02 all8 result; create readout-inputs01/SPEC.json with the prospective540min/36GPUh window from EVALUATION-WINDOW-REVIEW.json, then review latest main, capacity and budget before launch.",
   "weighted_continuation_audit": {
-    "status": "Running CPU watcher; no weighted final candidate yet",
+    "status": "One of four weighted final fits audited; CPU watcher still running",
     "source_commit": "e5f8fb21c1c7919d6f1384fc4bf8edbfc48e26e0",
     "script": "wait_weighted_fits.py",
     "script_sha256": "fa1a94e345d48f701529d3d136a48dff2a75628f29abc1875006c25796c5b938",
@@ -57,17 +57,23 @@
     "behavior": "Audit each owned successful terminal continuation with the existing tensor/optimizer/RNG auditor; bind all8 fixed10000 candidates and the fixed13200-episode evaluation SPEC only after all pass; never submit or alter GPU jobs.",
     "observed_state": {
       "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit02/STATE.json",
-      "sha256": "414b1b99f632e58746e06b2508482ba0d71db9f52d08acf230ce6eeb05515a11",
+      "sha256": "96ef1f790e67325ac3f7bffa0c674ed9e8436a39f3fb45b4cd32205e9a458e58",
       "data": {
         "started_unix": 1794670802.0627267,
         "hostname": "aibox-rffe453e3884-5f96c78b88-6ssrn",
         "pid": 198476,
         "script_sha256": "fa1a94e345d48f701529d3d136a48dff2a75628f29abc1875006c25796c5b938",
         "deadline_unix": 1794680100.0,
-        "audited": {},
+        "audited": {
+          "3/dit": {
+            "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit02/3_dit.json",
+            "sha256": "b5bada0ba23fda5c5c73a51a43fcb25d6637bd7185b880f0448c0e7f249f0269"
+          }
+        },
         "completed": false,
         "submitted": false,
-        "GPU_hours": 0
+        "GPU_hours": 0,
+        "checked_unix": 1794676403.3344169
       }
     }
   }
