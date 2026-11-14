@@ -38,8 +38,10 @@
     "data_sharing": "One canonical per-task raw corpus and feature/label set, shared by all four learners. Three-task corpus references the exact same three task payloads as six-task corpus; no per-method raw copies.",
     "hot_storage": "Node-local scratch for active data and bounded caches; private BOS for complete closed sources. Bulk raw output never stages on PFS.",
     "active_launches_unchanged": "Stove and Toaster remain on immutable6c0ef27a with their original full-retention recipe. Storage changes apply to later launches only.",
-    "validation": "35 Linux CPU tests passed in234.47s: retention fallback/hash checks, DCP next-sample/Adam numerical recovery, Flow PPO invariants. Canonical gzip mode qualification pending.",
-    "estimated_total_GiB_saved_if_sample_ratio_holds": 45.89
+    "validation": "35 core retention/Flow/DCP CPU tests passed on96dc0f81 plus2 native canonical-rollout tests (plain/gzip) on9825fcf2; actual future YAML resolves to gzip/latest2. No changed-storage GPU job launched.",
+    "estimated_total_GiB_saved_if_sample_ratio_holds": 45.893,
+    "latest_storage_code": "9825fcf24e04b7340c472f5ecb071ec9ed69a7b1",
+    "estimated_retained_GiB_if_sample_ratio_holds": 89.234
   },
   "unperformed": "No new deletion of RoboTwin historical controls, shared initializers/environments, current corrected teachers, or labels required by future fits."
 }

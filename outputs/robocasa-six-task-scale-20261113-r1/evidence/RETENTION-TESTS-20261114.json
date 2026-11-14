@@ -10,5 +10,15 @@
     "Initial/evaluation/latest-two/incomplete boundaries preserved",
     "Complete model/Adam/LR/RNG restoration reproduces next sample and update",
     "PPO action/value/reward/seed invariants"
-  ]
+  ],
+  "additional_gzip_qualification": {
+    "source_commit": "9825fcf24e04b7340c472f5ecb071ec9ed69a7b1",
+    "tests": "test_rlinf_native_ppo.py -k original_rollout_is_saved_before_official_training_shuffle",
+    "passed": 2,
+    "seconds": 7.15,
+    "resolved_config": {
+      "canonical_compression": "gzip",
+      "keep_latest_checkpoints": 2
+    }
+  }
 }
