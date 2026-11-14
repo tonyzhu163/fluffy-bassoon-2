@@ -136,27 +136,34 @@ full-object visibility. [Geometry evidence and limits](../outputs/libero-procedu
 
 ### Corrected six-task PPO30 source baselines
 
-The saved 64-case SFT/PPO30 panels have been audited against per-case outcomes,
-canonical physical/public reset states, 600-control horizons and the exact
-step30 teachers used for DPT labels. The endpoint was fixed before outcomes.
+All six fixed-step30 teachers now have verified 64-case paired comparisons
+against SFT, using native success and 600-control horizons. Five panels were
+recovered from saved source evaluations; OpenDrawer was evaluated on a fresh
+paired bank after its orderly training exit skipped the original final panel.
+The endpoint was fixed before outcomes.
 
-| Task | SFT successes /64 | PPO30 successes /64 | Paired gain (pp), descriptive95% interval |
+| Task | SFT successes /64 | PPO30 successes /64 | Paired gain (pp), descriptive 95% interval |
 | --- | ---: | ---: | ---: |
-| OpenDrawer | 33 | Missing evaluation | — |
+| OpenDrawer (fresh panel) | 37 | 48 | +17.19 [6.25,29.69] |
 | CloseToasterOvenDoor | 19 | 15 | −6.25 [−17.19,4.69] |
 | CoffeeSetupMug | 10 | 21 | +17.19 [3.13,31.25] |
 | PickPlaceCounterToStove | 40 | 38 | −3.13 [−12.50,6.25] |
 | TurnOffStove | 7 | 4 | −4.69 [−12.50,3.13] |
 | TurnOnSinkFaucet | 24 | 28 | +6.25 [−3.13,15.63] |
 
-OpenDrawer completed update30 and saved its checkpoint; an orderly checkpoint
-exit skipped the final evaluation. Faucet uses its saved intermediate step30
-panel, not its step40 final panel. Coffee shows the clearest improvement in
-these small panels; the other four completed intervals include zero. These are
-one training seed and marginal, unadjusted paired bootstrap intervals, not a
-six-task superiority claim. Source collection completion alone does not
-establish stronger teachers. No pooled six-task estimate is reported while
-OpenDrawer is missing. [Audit and paired outcomes](../outputs/robocasa-six-task-scale-20261113-r1/evidence/SAVED-BASELINES-AUDIT.json).
+OpenDrawer gains14 cases and loses3 relative to SFT on the same fresh64 cases;
+its old SFT33/64 panel is separate and is not paired or pooled with this result.
+The repair completed128 physical episodes, with every archive read back and all
+paired case identities verified. Faucet uses its saved intermediate step30
+panel, not its step40 final panel. [Drawer paired evidence](../outputs/robocasa-six-task-scale-20261113-r1/evidence/OPEN-DRAWER-BASELINE-RESULT.json) · [Saved-panel audit](../outputs/robocasa-six-task-scale-20261113-r1/evidence/SAVED-BASELINES-AUDIT.json).
+
+Drawer and Coffee show positive gains with intervals above zero; the other four
+intervals include zero. These are one training seed per task and marginal,
+unadjusted paired bootstrap intervals, not a six-task superiority claim.
+Collection completion alone does not establish uniformly stronger teachers.
+These source comparisons do not measure held-out meta-learning or history gains;
+the new fixed-final transformer ID/OOD readout remains pending.
+[Six-task baseline summary](../outputs/robocasa-six-task-scale-20261113-r1/SIX-TASK-BASELINES.json).
 
 ### Sidney phone-stand baseline
 

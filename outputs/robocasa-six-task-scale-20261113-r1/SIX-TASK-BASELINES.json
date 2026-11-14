@@ -1,0 +1,199 @@
+{
+  "all_six_baselines_verified": true,
+  "checked_shanghai": "2026-11-14T19:50:00+08:00",
+  "fixed_PPO_endpoint": 30,
+  "cases_per_task": 64,
+  "comparison": "Within-task paired native600-control success_once; one physical attempt per policy",
+  "results": {
+    "OpenDrawer": {
+      "panel": "fresh baseline repair",
+      "paired_result": {
+        "cases": 64,
+        "SFT_successes": 37,
+        "PPO30_successes": 48,
+        "SFT_percent": 57.8125,
+        "PPO30_percent": 75.0,
+        "delta_percentage_points": 17.1875,
+        "paired_wins": 14,
+        "paired_losses": 3,
+        "paired_ties": 47,
+        "paired_bootstrap95_percentage_points": [
+          6.25,
+          29.6875
+        ],
+        "bootstrap_seed": 20261120,
+        "bootstrap_draws": 10000,
+        "intervals_simultaneous": false
+      },
+      "teacher": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/source-data01/OpenDrawer/teacher30/full_weights.pt",
+        "sha256": "67783843d34b5e3daa3f0aba0b0aa3efb5afaede1f6114c60ebf510cee2bd50e",
+        "bytes": 6957548034,
+        "source_member": "OpenDrawer/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+        "boundary_sha256": "0abb942c9dd4593a07fe8f2e80fb76d35998dfb3e0da76266890ae06427d2304",
+        "step": 30
+      }
+    },
+    "CloseToasterOvenDoor": {
+      "panel": "saved source panel",
+      "paired_result": {
+        "cases": 64,
+        "SFT_successes": 19,
+        "PPO30_successes": 15,
+        "SFT_percent": 29.6875,
+        "PPO30_percent": 23.4375,
+        "delta_percentage_points": -6.25,
+        "paired_wins": 5,
+        "paired_losses": 9,
+        "paired_ties": 50,
+        "paired_bootstrap95_percentage_points": [
+          -17.1875,
+          4.6875
+        ],
+        "bootstrap_seed": 20261115,
+        "bootstrap_draws": 10000,
+        "intervals_simultaneous": false
+      },
+      "teacher": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/source-data01/CloseToasterOvenDoor/teacher30/full_weights.pt",
+        "sha256": "d0e94e44c783bbfa1b1a78dd107257cd7ab23ce70b0021706858232aa6143098",
+        "bytes": 6957548034,
+        "source_member": "CloseToasterOvenDoor/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+        "boundary_sha256": "3f51211c950b897bc665bb33d0feb0996e7d02e8ac7d0a5280c2596cf36aea72",
+        "step": 30
+      }
+    },
+    "CoffeeSetupMug": {
+      "panel": "saved source panel",
+      "paired_result": {
+        "cases": 64,
+        "SFT_successes": 10,
+        "PPO30_successes": 21,
+        "SFT_percent": 15.625,
+        "PPO30_percent": 32.8125,
+        "delta_percentage_points": 17.1875,
+        "paired_wins": 16,
+        "paired_losses": 5,
+        "paired_ties": 43,
+        "paired_bootstrap95_percentage_points": [
+          3.125,
+          31.25
+        ],
+        "bootstrap_seed": 20261116,
+        "bootstrap_draws": 10000,
+        "intervals_simultaneous": false
+      },
+      "teacher": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/source-data01/CoffeeSetupMug/teacher30/full_weights.pt",
+        "sha256": "1f7b55d5cbe606c54c2dfcc374d8f9546096fea3b07f005a0d05ea89333cb2bd",
+        "bytes": 6957548034,
+        "source_member": "CoffeeSetupMug/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+        "boundary_sha256": "e8dfc2489a9911c498381b01f96aadaa49f13973d0c3cb16768f5cb5289b52e9",
+        "step": 30
+      }
+    },
+    "PickPlaceCounterToStove": {
+      "panel": "saved source panel",
+      "paired_result": {
+        "cases": 64,
+        "SFT_successes": 40,
+        "PPO30_successes": 38,
+        "SFT_percent": 62.5,
+        "PPO30_percent": 59.375,
+        "delta_percentage_points": -3.125,
+        "paired_wins": 4,
+        "paired_losses": 6,
+        "paired_ties": 54,
+        "paired_bootstrap95_percentage_points": [
+          -12.5,
+          6.25
+        ],
+        "bootstrap_seed": 20261117,
+        "bootstrap_draws": 10000,
+        "intervals_simultaneous": false
+      },
+      "teacher": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/source-data01/PickPlaceCounterToStove/teacher30/full_weights.pt",
+        "sha256": "26128fedaf06f4a1c5129124e6dcae2e296bd5e0c4b12b962896ff8ce0d76e15",
+        "bytes": 6957548034,
+        "source_member": "PickPlaceCounterToStove/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+        "boundary_sha256": "7b27e5c6ce39c8c699e8d7a34c458ed24a7125933df37f9763e273a0f3f29d05",
+        "step": 30
+      }
+    },
+    "TurnOffStove": {
+      "panel": "saved source panel",
+      "paired_result": {
+        "cases": 64,
+        "SFT_successes": 7,
+        "PPO30_successes": 4,
+        "SFT_percent": 10.9375,
+        "PPO30_percent": 6.25,
+        "delta_percentage_points": -4.6875,
+        "paired_wins": 2,
+        "paired_losses": 5,
+        "paired_ties": 57,
+        "paired_bootstrap95_percentage_points": [
+          -12.5,
+          3.125
+        ],
+        "bootstrap_seed": 20261118,
+        "bootstrap_draws": 10000,
+        "intervals_simultaneous": false
+      },
+      "teacher": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/source-data01/TurnOffStove/teacher30/full_weights.pt",
+        "sha256": "533e87c12174a8d9b0085bc7393bff5fc4e9d30df96168cbcbe39fe6f8b52e32",
+        "bytes": 6957548034,
+        "source_member": "TurnOffStove/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+        "boundary_sha256": "6b577ec69b178ca950afa0bc9c0421b6d751a2cd5abf283772224b71120cd865",
+        "step": 30
+      }
+    },
+    "TurnOnSinkFaucet": {
+      "panel": "saved source panel",
+      "paired_result": {
+        "cases": 64,
+        "SFT_successes": 24,
+        "PPO30_successes": 28,
+        "SFT_percent": 37.5,
+        "PPO30_percent": 43.75,
+        "delta_percentage_points": 6.25,
+        "paired_wins": 7,
+        "paired_losses": 3,
+        "paired_ties": 54,
+        "paired_bootstrap95_percentage_points": [
+          -3.125,
+          15.625
+        ],
+        "bootstrap_seed": 20261119,
+        "bootstrap_draws": 10000,
+        "intervals_simultaneous": false
+      },
+      "teacher": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/reused-faucet-step30/full_weights.pt",
+        "sha256": "a37ba00563f6ce6b9f94a2ec9cd7c08531df7a45372c63d3e7b86a4d6e5aa0d5",
+        "bytes": 6957546378,
+        "boundary_sha256": "6e28e403fa02b30e759502bdaf6f280586587a4cd6f1d83e56fd91d3e8aae911",
+        "step": 30,
+        "receipt": "evidence/FAUCET-REUSE.json"
+      }
+    }
+  },
+  "evidence": {
+    "saved_five": {
+      "path": "evidence/SAVED-BASELINES-AUDIT.json",
+      "sha256": "6ed310bff4c91487314dc014d68e956e68970ad554e50c622d7284b33947320f"
+    },
+    "fresh_Drawer": {
+      "path": "evidence/OPEN-DRAWER-BASELINE-RESULT.json",
+      "sha256": "362209c527ea937772ad5334840dd668a9c5e338a1fb6f277972fb33f36af612"
+    }
+  },
+  "limitations": [
+    "Drawer uses a fresh64-case bank: SFT37/64 is paired to PPO48/64; original source SFT33/64 remains separate.",
+    "One trained teacher per task; marginal95% paired bootstrap intervals are descriptive and not simultaneous.",
+    "Teacher gains are task-dependent: Drawer and Coffee positive intervals, remaining four include zero. No suite-wide superiority claim.",
+    "These source baselines do not estimate held-out meta-learning or history gains; the matched ID/OOD readout remains pending."
+  ]
+}

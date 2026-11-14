@@ -1,5 +1,5 @@
 {
-  "status": "Running; first eight paired cases archived and read-back verified",
+  "status": "Succeeded; all64paired cases /128physical episodes and full archive readback verified",
   "job_id": "job-j0e9gke6dvd2",
   "job_name": "mwj_1114_drawer_sft_ppo30_g1_r1",
   "created_shanghai": "2026-11-14T19:05:44+08:00",
@@ -30,10 +30,35 @@
   },
   "submission_evidence": "evidence/BASELINE01-SUBMITTED.png",
   "qualification": "Actual allocation probe passed and first8 SFT/PPO30 paired native cases completed; full64-case result pending.",
-  "next_action": "Complete fixed64pairs, verify all archives and paired identities, then report the new Drawer bank separately from the old SFT panel.",
+  "next_action": "Complete fixed10000-update transformer fits and matched ID/OOD comparisons against these exact teacher checkpoints.",
   "latest_monitor": "evidence/MONITOR-20261114-1934.json",
-  "last_verified_state": "Running at19:35; first8pairs /16physical episodes cold-banked",
+  "last_verified_state": "Scheduler Succeeded at19:49; runtime18min11sec; worker exit0; CPU analyzer verified all8archives and64paired identities",
   "started_unix": 1794655853.1212556,
   "allocation_probe": "passed; one actual NVIDIA RPBZZZ6",
-  "first_paired_bank_evidence": "evidence/BASELINE01-FIRST-PAIRED-BANK.json"
+  "first_paired_bank_evidence": "evidence/BASELINE01-FIRST-PAIRED-BANK.json",
+  "completed": true,
+  "checked_shanghai": "2026-11-14T19:50:00+08:00",
+  "scheduler_runtime_seconds": 1091,
+  "scheduler_GPU_hours": 0.3030555555555556,
+  "closed_conservative_GPU_hours": 0.5,
+  "worker_exit": "evidence/BASELINE01-EXIT.json",
+  "verified_result": "evidence/OPEN-DRAWER-BASELINE-RESULT.json",
+  "paired_result": {
+    "cases": 64,
+    "SFT_successes": 37,
+    "PPO30_successes": 48,
+    "SFT_percent": 57.8125,
+    "PPO30_percent": 75.0,
+    "delta_percentage_points": 17.1875,
+    "paired_wins": 14,
+    "paired_losses": 3,
+    "paired_ties": 47,
+    "paired_bootstrap95_percentage_points": [
+      6.25,
+      29.6875
+    ],
+    "bootstrap_seed": 20261120,
+    "bootstrap_draws": 10000,
+    "intervals_simultaneous": false
+  }
 }
