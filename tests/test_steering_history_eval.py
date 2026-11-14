@@ -144,6 +144,25 @@ def test_pairing_capacity_and_early_stop_fail_before_fabricated_completion():
     assert environments[0].closed and not after and not completed
 
 
+def test_endpoint_only_reset_matches_sixth_query_without_fictitious_support():
+    policy, spec = setup()
+    case = dict(task='A', seed=42)
+    args, *_ = collect(policy, spec, case, attempts=6)
+    original = collect_case_attempts(policy, spec, case, controller_mode='episode', **args)
+    args, environments, motor, *_ = collect(policy, spec, case, attempts=6)
+    endpoint = collect_case_attempts(policy, spec, case, controller_mode='episode', first_attempt=6, **args)
+    assert [env.attempt for env in environments] == [6]
+    assert len(endpoint) == 1 and len(motor.executed) == 2
+    for old, new in zip(original[-1]['records'], endpoint[0]['records'], strict=True):
+        for field in ('control', 'native_noise', 'requested_commands'):
+            np.testing.assert_array_equal(old[field], new[field])
+    assert endpoint[0]['memory_tokens'] == original[-1]['memory_tokens'] == 2
+    args, environments, *_ = collect(policy, spec, case, attempts=6)
+    with pytest.raises(ValueError):
+        collect_case_attempts(policy, spec, case, controller_mode='full', first_attempt=6, **args)
+    assert not environments
+
+
 @pytest.mark.parametrize("kind", ["velocity", "kv_all_layers"])
 def test_physical_loop_consumes_the_real_native_interface_serial_api(kind):
     from test_interface_ppo import batch_native

@@ -82,3 +82,46 @@ class EpisodeVideos:
             raise ValueError("Close the complete synchronized videos before scoring")
         return [dict(camera=camera, path=str(path), sha256=sha(path))
                 for camera, path in zip(REWARD_CAMERAS, self.paths)]
+
+
+class EpisodeFrameDigests:
+    """Native-reward evaluation can retain frame hashes without encoded videos.
+
+    These records are explicitly not playable videos or rewarder inputs. Every
+    observed RGB frame contributes to a per-camera digest and the frame clock.
+    """
+    def __init__(self, root, key):
+        import hashlib
+        self.path = Path(root) / f'{key}-frame-digests.json'
+        if self.path.exists():
+            raise ValueError('Never overwrite frame evidence')
+        self.digests = [hashlib.sha256() for _ in REWARD_CAMERAS]
+        self.count, self.shapes, self.closed = 0, None, False
+
+    def append(self, frames):
+        import numpy as np
+        frames = [np.asarray(frame) for frame in frames]
+        if (self.closed or len(frames) != len(REWARD_CAMERAS)
+                or any(frame.ndim != 3 or frame.shape[-1] != 3 or frame.dtype != np.uint8 for frame in frames)):
+            raise ValueError('Exactly three native uint8 RGB frames are required')
+        shapes = [list(frame.shape) for frame in frames]
+        if self.shapes is not None and shapes != self.shapes:
+            raise ValueError('Camera image dimensions cannot change')
+        self.shapes = shapes
+        for digest, frame in zip(self.digests, frames, strict=True):
+            digest.update(np.ascontiguousarray(frame).tobytes())
+        self.count += 1
+
+    def close(self):
+        if not self.closed:
+            import json
+            self.path.write_text(json.dumps(dict(format='native_rgb_frame_digests_v1',
+                playable_video=False, frame_count=self.count, shapes=self.shapes,
+                camera_order=list(REWARD_CAMERAS), sha256=[d.hexdigest() for d in self.digests]),
+                indent=2) + '\n')
+            self.closed = True
+
+    def refs(self):
+        if not self.closed or not self.count:
+            raise ValueError('Close the frame record before scoring')
+        return [dict(path=str(self.path), sha256=sha(self.path))]

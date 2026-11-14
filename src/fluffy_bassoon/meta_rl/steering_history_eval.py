@@ -59,7 +59,7 @@ def replay_physical_attempt(controller, rows, *, horizon):
 
 def collect_case_attempts(policy, spec, case, *, horizon, environment_factory, motor,
                           noise_for, before_dispatch, after_dispatch, completed_attempt,
-                          attempts=5, completed_prefix=(), controller_mode="full"):
+                          attempts=5, completed_prefix=(), controller_mode="full", first_attempt=1):
     """Collect a case with isolated memory and same-case physical resets.
 
     ``noise_for(case, attempt, chunk)`` returns explicit FP32 native noise and
@@ -68,6 +68,8 @@ def collect_case_attempts(policy, spec, case, *, horizon, environment_factory, m
     it here; partial attempts are never accepted or silently recollected.
     """
     if (type(attempts) is not int or not 1 <= attempts <= 6
+            or type(first_attempt) is not int or not 1 <= first_attempt <= attempts
+            or first_attempt != 1 and (controller_mode != "episode" or completed_prefix)
             or type(horizon) is not int or horizon < 50 or horizon % 50
             or len(completed_prefix) > attempts
             or policy.config.noise_dim != spec.steering_dim
@@ -90,7 +92,9 @@ def collect_case_attempts(policy, spec, case, *, horizon, environment_factory, m
         if previous["memory_exit"] != memory_signature(controller):
             raise ValueError("Recovered attempt exit memory differs")
         results.append(previous)
-    for attempt in range(len(completed_prefix) + 1, attempts + 1):
+    # A reset control may execute only the requested query's independent draw
+    # stream. No missing support episode is fabricated or put into history.
+    for attempt in range(max(first_attempt, len(completed_prefix) + 1), attempts + 1):
         environment = environment_factory(case, attempt)
         records = []
         first_seen = False

@@ -57,7 +57,7 @@ class NativeAttemptBackend:
     def __init__(self, *, output, canonical_root, motor, spec, native_factory, journal,
                  writer_factory, binding, maximum_rgb_delta,
                  rank=0, environment_type=_RecordingEnvironment, memory_mode="full", actual_attempts=5,
-                 fixed_case_order=False):
+                 fixed_case_order=False, first_attempt=1, record_video=True):
         if (not binding or maximum_rgb_delta is not None
                 and (type(maximum_rgb_delta) is not int or maximum_rgb_delta < 0)
                 or maximum_rgb_delta is None and binding.get("render_contract") != "diagnostic_only"):
@@ -65,6 +65,11 @@ class NativeAttemptBackend:
         if type(actual_attempts) is not int or not 1 <= actual_attempts <= 6:
             raise ValueError("Bind at most six actual episodes for zero through five support episodes")
         self.actual_attempts = actual_attempts
+        if (type(first_attempt) is not int or not 1 <= first_attempt <= actual_attempts
+                or first_attempt != 1 and memory_mode != 'episode'
+                or type(record_video) is not bool):
+            raise ValueError('Only a reset control can skip preceding physical episodes')
+        self.first_attempt, self.record_video = first_attempt, record_video
         self.fixed_case_order = fixed_case_order
         self.output, self.canonical_root = Path(output), Path(canonical_root)
         self.motor, self.spec, self.native_factory = motor, spec, native_factory
@@ -80,6 +85,11 @@ class NativeAttemptBackend:
             protocol["memory_mode"] = memory_mode
         if fixed_case_order:
             protocol["batching"] = "fixed_order_same_horizon_waves_v1"
+        if first_attempt != 1:
+            protocol.update(first_attempt=first_attempt, physical_episodes=actual_attempts-first_attempt+1,
+                            missing_support_episodes_fabricated=False)
+        if not record_video:
+            protocol['recording'] = 'native_rgb_frame_digests_v1'
         if "native_attempt_protocol" in self.binding and self.binding["native_attempt_protocol"] != protocol:
             raise ValueError("Do not change a bound native attempt protocol")
         self.binding["native_attempt_protocol"] = protocol
@@ -101,7 +111,8 @@ class NativeAttemptBackend:
             output=directory / "videos", monitoring_root=directory / "monitoring", journal=self.environment_journal,
             writer_factory=self.writer_factory, rank=self.rank,
             episode_id_prefix=f"actual-{attempt}-", canonical_root=self.canonical_root,
-            source=dict(self.binding, actual_attempt=attempt))
+            source=dict(self.binding, actual_attempt=attempt),
+            **({} if self.record_video else dict(record_video=False)))
         key = (case_key(case), attempt)
         with self.lock:
             self.environments[key], self.chunks[key] = environment, []
@@ -169,6 +180,15 @@ class NativeAttemptBackend:
         reference = lambda path: dict(path=str(path), sha256=file_sha256(path))
         for item in video["videos"]:
             checked_reference(item)
+        if not self.record_video:
+            if video.get('recording') != 'native_rgb_frame_digests_v1' or video['videos']:
+                raise ValueError('Frame-only evidence must not claim encoded video')
+            refs = video.get('frame_digests', [])
+            if len(refs) != 1:
+                raise ValueError('Require a complete frame digest receipt')
+            frames = json.loads(checked_reference(refs[0]).read_text())
+            if frames['frame_count'] != horizon + 1 or frames['playable_video']:
+                raise ValueError('Frame digest count differs from physical episode')
         saved = {name: value for name, value in result.items() if name not in ("records", "pairing")}
         saved.update(format="frozen_steering_actual_attempt_v1", binding=self.binding,
             interface=self.spec.record(), initial=self.initials[key], chunks=self.chunks[key],
@@ -181,6 +201,8 @@ class NativeAttemptBackend:
             del self.environments[key], self.chunks[key], self.initials[key]
 
     def recover_prefix(self, references, *, case, horizon, policy):
+        if self.first_attempt != 1 and references:
+            raise ValueError('Endpoint-only reset controls have no recovery support prefix')
         prefix = []
         for attempt, reference in enumerate(references, 1):
             saved = torch.load(checked_reference(reference), map_location="cpu", weights_only=False)
@@ -195,6 +217,13 @@ class NativeAttemptBackend:
             video = json.loads(checked_reference(saved["video"]).read_text())
             for item in video["videos"]:
                 checked_reference(item)
+            if not self.record_video:
+                refs = video.get('frame_digests', [])
+                if video.get('recording') != 'native_rgb_frame_digests_v1' or video['videos'] or len(refs) != 1:
+                    raise ValueError('Recovered frame-only evidence changed recording format')
+                frames = json.loads(checked_reference(refs[0]).read_text())
+                if frames['frame_count'] != horizon + 1 or frames['playable_video']:
+                    raise ValueError('Recovered frame count differs from physical episode')
             if (truth["case"] != case or truth["simulator_success_once"] != saved["success_once"]
                     or truth["simulator_final_success"] != saved["success_at_end"]
                     or truth["first_success_step"] != saved["first_success_step"]):
@@ -230,7 +259,8 @@ class NativeAttemptBackend:
             result = collect_case_attempts(policy, self.spec, case, horizon=horizon,
                 environment_factory=factory, motor=self.motor if motor is None else motor, noise_for=attempt_noise,
                 before_dispatch=before, after_dispatch=self._after, completed_attempt=self._completed,
-                attempts=attempts, completed_prefix=prefix, controller_mode=self.memory_mode)
+                attempts=attempts, completed_prefix=prefix, controller_mode=self.memory_mode,
+                first_attempt=self.first_attempt)
         except BaseException as error:
             if on_error is not None:
                 on_error(error)

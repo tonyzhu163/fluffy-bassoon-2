@@ -108,7 +108,7 @@ class RoboCasaResidualEnvironment:
     Simulator labels go ONLY to monitoring_root. Returned info is truth free.
     """
     def __init__(self, factory, cases, *, horizon, output, monitoring_root, journal, writer_factory, observer=None,
-                 episode_id_prefix="", rank=0):
+                 episode_id_prefix="", rank=0, record_video=True):
         from .ppo import TASKS
         if (not cases or any(case['task'] not in TASKS for case in cases)
                 or horizon is not None and (horizon not in {row[0] for row in TASKS.values()}
@@ -120,6 +120,9 @@ class RoboCasaResidualEnvironment:
         self.output.mkdir(parents=True, exist_ok=True)
         self.monitoring_root.mkdir(parents=True, exist_ok=True)
         self.journal, self.writer_factory = journal, writer_factory
+        if type(record_video) is not bool:
+            raise ValueError('Bind an explicit video recording choice')
+        self.record_video = record_video
         self.observer = observer
         self.episode_id_prefix, self.rank = episode_id_prefix, int(rank)
         self.cursor, self.active = 0, False
@@ -151,8 +154,9 @@ class RoboCasaResidualEnvironment:
         self.steps, self.active = 0, True
         # Monitoring only: do not expose simulator truth to the motor or PPO.
         self.success_steps = []
-        from .video import EpisodeVideos
-        self.writer = EpisodeVideos(self.output, self.key, fps=self.fps, writer_factory=self.writer_factory)
+        from .video import EpisodeVideos, EpisodeFrameDigests
+        self.writer = (EpisodeVideos(self.output, self.key, fps=self.fps, writer_factory=self.writer_factory)
+                       if self.record_video else EpisodeFrameDigests(self.output, self.key))
         self._frame(observation)
         self.cursor += 1
         return public_observation(observation)
@@ -202,10 +206,14 @@ class RoboCasaResidualEnvironment:
         episode = dict(id=self.key, task=self.native.task_descriptions[0], camera_order=list(REWARD_CAMERAS),
             horizon=self.horizon, completed=True, success_termination_disabled=True, raw_rgb_only=True,
                 info_on_video=False, extra_info_on_video=[], rank=self.rank, round=self.cursor - 1, local_env=0,
-                videos=self.writer.refs(),
+                videos=self.writer.refs() if self.record_video else [],
             frame_clock=dict(frame_count=self.horizon + 1, native_fps=self.fps, encoded_fps=self.fps,
                 resampled=False, physical_steps=self.horizon, initial_frame_included=True))
         from .flora_ppo import digest, write_new
+        if not self.record_video:
+            episode.update(recording='native_rgb_frame_digests_v1', frame_digests=self.writer.refs(),
+                           playable_video=False, raw_rgb_only=False)
+            episode['frame_clock']['encoded_fps'] = None
         episode["frame_clock"]["timestamp_sha256"] = digest(self.timestamps)
         write_new(self.output / (self.key + ".json"), episode)
         truth = bool(np.asarray(info["episode"]["success_at_end"])[0])

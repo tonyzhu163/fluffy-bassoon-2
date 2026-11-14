@@ -46,3 +46,21 @@ def test_partial_multicamera_write_closes_every_stream_and_cannot_be_scored(tmp_
     with pytest.raises(OSError,match='encoder failed'):recorder.append(frames)
     assert all(writer.closed for writer in writers)
     with pytest.raises(ValueError):recorder.refs()
+def test_frame_only_record_binds_every_rgb_without_claiming_video(tmp_path):
+    import hashlib
+    import json
+    import numpy as np
+    import pytest
+    from fluffy_bassoon.robocasa.video import EpisodeFrameDigests
+    recorder = EpisodeFrameDigests(tmp_path, 'native')
+    frames = [np.full((2, 3, 3), i, np.uint8) for i in range(3)]
+    recorder.append(frames)
+    recorder.append(frames)
+    recorder.close()
+    refs = recorder.refs()
+    data = json.loads((tmp_path / 'native-frame-digests.json').read_text())
+    assert data['frame_count'] == 2 and data['playable_video'] is False
+    assert data['sha256'] == [hashlib.sha256(frame.tobytes() * 2).hexdigest() for frame in frames]
+    assert not list(tmp_path.glob('*.mp4')) and len(refs) == 1
+    with pytest.raises(ValueError):
+        recorder.append(frames)
