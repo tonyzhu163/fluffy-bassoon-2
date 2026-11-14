@@ -55,9 +55,11 @@ def main():
         arch.save(pointer, result)
         source.rename(quarantine)
         shutil.rmtree(quarantine)
-        result.update(source_reclaimed=True, reclaimed_unix=time.time(), free_project_bytes=shutil.disk_usage(ROOT).free)
+        result.update(phase='reclaimed after verified cold restore', source_reclaimed=True,
+                      reclaimed_unix=time.time(), free_project_bytes=shutil.disk_usage(ROOT).free)
         arch.save(receipt, result)
         arch.save(pointer, result)
+        arch.save(COLD / 'PROGRESS.json', result)
         # Only this run's successfully verified scratch objects are removed.
         shutil.rmtree(STAGE)
         print(json.dumps(result), flush=True)

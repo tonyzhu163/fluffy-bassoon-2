@@ -1,6 +1,6 @@
 {
-  "status": "CPU archive preparation running; original source retained",
-  "checked_shanghai": "2026-11-14T21:24:00+08:00",
+  "status": "Completed: verified cold archive and full cold restore; hot remainder reclaimed",
+  "checked_shanghai": "2026-11-14T21:51:01.983660+08:00",
   "source_commit": "46e30fe8916d55f73628c3254cfbc8d028613223",
   "source_directory": "/tmp/faucet-retention-source-46e30fe8",
   "code_deployed_through": "Git bundle fetched into isolated shared clone; exact detached commit verified; tracked checkout clean",
@@ -10,5 +10,11 @@
   "source_logical_bytes": 41696504532,
   "entries": 12439,
   "GPU_hours": 0,
-  "next_action": "Wait for source comparison, cold readback and full cold restore comparison; then recheck source/consumers before separate reclaim phase."
+  "next_action": "Preserve cold archive, prior cold checkpoint/rollout pieces, and restore pointer. No further Faucet hot reclamation remains.",
+  "completed": true,
+  "result": "ARCHIVE.json",
+  "post_reclaim": "POST-RECLAIM.json",
+  "reclaimed_allocated_bytes": 41739745792,
+  "free_project_bytes": 202979147776,
+  "receipt_correction": "After executed source46e30fe8 exited0, corrected only its stale phase string and synchronized terminal progress; original payload SHA and verification fields unchanged. Current script includes the phase bookkeeping fix."
 }

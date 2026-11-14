@@ -11,8 +11,12 @@
       "consumer": "Original corrected Counter versions0..9, full step10 checkpoint and original SFT paired64-case reference. Required to join the new continuation versions10..29."
     },
     {
-      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet",
-      "consumer": "Current Faucet source raw RGB/state/action/reward versions0..29 across attempt-01/attempt-02 and complete step30 checkpoint; also historical step40 result. Keep available until full source packing/label checks and a verified complete cold restore are recorded."
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-faucet-retention-20261114-r1",
+      "consumer": "Verified complete archive of the remaining hot Faucet40 lineage, with full source comparison, cold readback and restored-byte comparison. Hot source reclaimed after no-consumer check; ten existing cold checkpoint/rollout targets remain separately preserved. Current fits use datasets01/source-data01/reused-faucet-step30 on BOS.",
+      "receipt": "../robocasa-faucet-retention-20261114-r1/ARCHIVE.json",
+      "original_source": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet",
+      "restore_pointer": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet.bos-archive.json",
+      "preserve_existing_cold_root": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-eight-hour-babysit-20261104-r1"
     },
     {
       "path": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
@@ -90,7 +94,8 @@
       "evidence": "ARCHIVE01-COMPLETE.json and EXPORTS01-COMPLETE.json record prior verified trace/export migrations; do not count those bytes as fresh PFS savings. No Motus artifacts feed this new RoboCasa campaign."
     }
   },
-  "safe_direction": "No Sidney or Motus payload is used by the corrected RoboCasa collection or planned transformer fits. Their own matched-control/replay/continuation dependencies remain separate and protected. Current RoboCasa task archives, Faucet raw first30, Counter old0..9, shared original model/norm/env and both active launch sources remain required.",
+  "safe_direction": "Current campaign BOS task archives, Faucet packed first30 and teacher30, Counter original0..9, shared model/norm/env, and all active source/Git object stores remain protected. Faucet remaining hot source is now cold and restorable; existing ten cold checkpoint/rollout targets must also remain. No Sidney/Motus data was reclaimed here.",
   "historical_migration": "The first three historical RoboCasa roots listed below are now covered by the archive workflow; consult STORAGE-REDUCTION.json and cold restore pointers for current locations.",
-  "robotwin_review": "../robotwin-retention-review-20261114-r1/RESULT.md"
+  "robotwin_review": "../robotwin-retention-review-20261114-r1/RESULT.md",
+  "faucet_migration": "../robocasa-faucet-retention-20261114-r1/EXECUTION.json"
 }
