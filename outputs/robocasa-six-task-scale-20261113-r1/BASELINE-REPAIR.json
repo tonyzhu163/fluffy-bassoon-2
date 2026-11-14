@@ -1,0 +1,28 @@
+{
+  "task": "OpenDrawer",
+  "reason": "Training reached30 and saved weights, but orderly checkpoint exit skipped final evaluation. Complete the requested SFT/PPO30 comparison.",
+  "cases": 64,
+  "physical_episodes": 128,
+  "case_bank": "PPO30_baseline_repair_20261114",
+  "seed_base": 74140000,
+  "teacher": {
+    "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/source-data01/OpenDrawer/teacher30/full_weights.pt",
+    "sha256": "67783843d34b5e3daa3f0aba0b0aa3efb5afaede1f6114c60ebf510cee2bd50e",
+    "bytes": 6957548034,
+    "source_member": "OpenDrawer/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+    "boundary_sha256": "0abb942c9dd4593a07fe8f2e80fb76d35998dfb3e0da76266890ae06427d2304",
+    "step": 30
+  },
+  "SFT_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+  "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+  "native_qualification": {
+    "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/qual02/evaluation/COMPLETE.json",
+    "sha256": "55415f977e2fb437e0c266af34be35cc6e9ec6d8e89e5dc9ee9c62ed8735a5a5"
+  },
+  "scheduler_minutes": 90,
+  "reserved_GPU_hours": 1.5,
+  "status": "Prepared; not submitted",
+  "analysis": "All64 fresh paired cases, fixed step30, one600-control attempt per policy, paired gains/losses and descriptive95% paired bootstrap; no early stopping or checkpoint selection.",
+  "comparison_limit": "Fresh panel recorded separately from the original64-case SFT33/64 result; never pair observations across banks.",
+  "budget": "Funded from3GPUh of closed-source reservation padding reconciled from terminal runtimes;230GPUh cap unchanged."
+}

@@ -134,6 +134,30 @@ full-object visibility. [Geometry evidence and limits](../outputs/libero-procedu
 
 ## RoboTwin
 
+### Corrected six-task PPO30 source baselines
+
+The saved 64-case SFT/PPO30 panels have been audited against per-case outcomes,
+canonical physical/public reset states, 600-control horizons and the exact
+step30 teachers used for DPT labels. The endpoint was fixed before outcomes.
+
+| Task | SFT successes /64 | PPO30 successes /64 | Paired gain (pp), descriptive95% interval |
+| --- | ---: | ---: | ---: |
+| OpenDrawer | 33 | Missing evaluation | — |
+| CloseToasterOvenDoor | 19 | 15 | −6.25 [−17.19,4.69] |
+| CoffeeSetupMug | 10 | 21 | +17.19 [3.13,31.25] |
+| PickPlaceCounterToStove | 40 | 38 | −3.13 [−12.50,6.25] |
+| TurnOffStove | 7 | 4 | −4.69 [−12.50,3.13] |
+| TurnOnSinkFaucet | 24 | 28 | +6.25 [−3.13,15.63] |
+
+OpenDrawer completed update30 and saved its checkpoint; an orderly checkpoint
+exit skipped the final evaluation. Faucet uses its saved intermediate step30
+panel, not its step40 final panel. Coffee shows the clearest improvement in
+these small panels; the other four completed intervals include zero. These are
+one training seed and marginal, unadjusted paired bootstrap intervals, not a
+six-task superiority claim. Source collection completion alone does not
+establish stronger teachers. No pooled six-task estimate is reported while
+OpenDrawer is missing. [Audit and paired outcomes](../outputs/robocasa-six-task-scale-20261113-r1/evidence/SAVED-BASELINES-AUDIT.json).
+
 ### Sidney phone-stand baseline
 
 All three policies start from `SidneyXie/pi05_robotwin` at revision `e49e2ab6`. The frozen evaluation uses the native per-target controller, a 1 cm near clipping plane on both wrist cameras, ten denoising steps, 50-action chunks and a 400-target episode limit. Within each domain, all three policies use the same 100 scenes, prompts and sampling seeds. [Pinned checkpoint](https://huggingface.co/SidneyXie/pi05_robotwin/tree/e49e2ab6c11f07511573b67261bd129e88d0a416) · [Matched evaluation](../outputs/robotwin-sidney-native-endpoints-20261109-r1/RESULT.md)
