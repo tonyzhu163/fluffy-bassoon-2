@@ -1,0 +1,46 @@
+{
+  "format": "corrected_first30_labels_v1",
+  "parent_hard_cap_GPU_hours": 230,
+  "label_total_maximum_GPU_hours": 18,
+  "updates": 30,
+  "teacher_step": 30,
+  "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+  "native_model": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
+    "sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5"
+  },
+  "native_norm": {
+    "path": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1/assets/norm_stats.json",
+    "sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee"
+  },
+  "tasks": {
+    "CloseToasterOvenDoor": {
+      "packed": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/source-data01/CloseToasterOvenDoor/PACKED.json",
+        "sha256": "76e62137c3d48490fd2329a8a5bd0575b53fff735f45f80c0a134cafc6266966"
+      },
+      "teacher": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/source-data01/CloseToasterOvenDoor/teacher30/full_weights.pt",
+        "sha256": "d0e94e44c783bbfa1b1a78dd107257cd7ab23ce70b0021706858232aa6143098",
+        "bytes": 6957548034,
+        "source_member": "CloseToasterOvenDoor/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+        "boundary_sha256": "3f51211c950b897bc665bb33d0feb0996e7d02e8ac7d0a5280c2596cf36aea72",
+        "step": 30
+      }
+    },
+    "TurnOffStove": {
+      "packed": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/source-data01/TurnOffStove/PACKED.json",
+        "sha256": "25a9564871dae8c8bbd2d35c42be7f76bfdb82561ab0802a44629900f54cdf23"
+      },
+      "teacher": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/source-data01/TurnOffStove/teacher30/full_weights.pt",
+        "sha256": "533e87c12174a8d9b0085bc7393bff5fc4e9d30df96168cbcbe39fe6f8b52e32",
+        "bytes": 6957548034,
+        "source_member": "TurnOffStove/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+        "boundary_sha256": "6b577ec69b178ca950afa0bc9c0421b6d751a2cd5abf283772224b71120cd865",
+        "step": 30
+      }
+    }
+  }
+}
