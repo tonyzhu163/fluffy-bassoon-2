@@ -25,6 +25,7 @@
   "panels": "Each task separately, equal-weight three-task ID and two-task OOD",
   "uncertainty": "Same 10000 task-stratified paired bootstrap draws for every model and contrast; seed20261115; marginal95% intervals, no multiplicity correction",
   "interpretation": "Descriptive paired contrasts, not a familywise winner test. Full-success advantage and extra history benefit are separate claims. One fit per method/corpus; case uncertainty does not measure training-seed robustness.",
-  "compute_change": "None: use the already planned12800 physical episodes,40 common cases/task for all eight models",
-  "source": "matched_analyze.py"
+  "compute_change": "Existing12800 learner episodes retained;400 shared SFT/PPO30 endpoint episodes added,13200total within the same32GPUh reservation.",
+  "source": "matched_analyze.py",
+  "additional_baseline_contrasts": "BASELINE-CONTROLS.json"
 }

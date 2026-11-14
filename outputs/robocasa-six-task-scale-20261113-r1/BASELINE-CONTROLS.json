@@ -1,0 +1,59 @@
+{
+  "recorded_shanghai": "2026-11-14T19:19:27.167046+08:00",
+  "status": "Declared before any matched8-fit ID/OOD evaluation; no new-fit native outcomes exist",
+  "user_requirement": "Compare methods above the SFT and PPO stage baselines; latest steering verifies SFT versus PPO30 first.",
+  "names": [
+    "original_SFT",
+    "fixed_PPO30"
+  ],
+  "physical_attempt": 6,
+  "cases_per_task": 40,
+  "additional_physical_episodes": 400,
+  "transformer_physical_episodes": 12800,
+  "total_physical_episodes": 13200,
+  "teacher_task_by_evaluation": {
+    "OpenDrawer": "OpenDrawer",
+    "CloseToasterOvenDoor": "CloseToasterOvenDoor",
+    "CoffeeSetupMug": "CoffeeSetupMug",
+    "CloseFridge": "OpenDrawer",
+    "TurnOnMicrowave": "OpenDrawer"
+  },
+  "teachers": {
+    "OpenDrawer": {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/source-data01/OpenDrawer/teacher30/full_weights.pt",
+      "sha256": "67783843d34b5e3daa3f0aba0b0aa3efb5afaede1f6114c60ebf510cee2bd50e",
+      "bytes": 6957548034,
+      "source_member": "OpenDrawer/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+      "boundary_sha256": "0abb942c9dd4593a07fe8f2e80fb76d35998dfb3e0da76266890ae06427d2304",
+      "step": 30
+    },
+    "CloseToasterOvenDoor": {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/source-data01/CloseToasterOvenDoor/teacher30/full_weights.pt",
+      "sha256": "d0e94e44c783bbfa1b1a78dd107257cd7ab23ce70b0021706858232aa6143098",
+      "bytes": 6957548034,
+      "source_member": "CloseToasterOvenDoor/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+      "boundary_sha256": "3f51211c950b897bc665bb33d0feb0996e7d02e8ac7d0a5280c2596cf36aea72",
+      "step": 30
+    },
+    "CoffeeSetupMug": {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/source-data01/CoffeeSetupMug/teacher30/full_weights.pt",
+      "sha256": "1f7b55d5cbe606c54c2dfcc374d8f9546096fea3b07f005a0d05ea89333cb2bd",
+      "bytes": 6957548034,
+      "source_member": "CoffeeSetupMug/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+      "boundary_sha256": "e8dfc2489a9911c498381b01f96aadaa49f13973d0c3cb16768f5cb5289b52e9",
+      "step": 30
+    }
+  },
+  "SFT_sha256": "661bf172a2ae9dfca75216697eeaa543408bcbdfa53c98132759b93e0e8993a5",
+  "norm_sha256": "4aed1af411bd0e0f49d2b0e6d6832b11b8682917231a07173fbc30fd493bbdee",
+  "pairing": "Same cases, canonical physical states and episode6 native Gaussian draws as each learner; baselines execute one genuine episode each.",
+  "OOD_interpretation": "Fixed OpenDrawer30 source-policy transfer on both held-out tasks, following the declared historical reference mapping. No target-task PPO training, multi-task PPO baseline or outcome-selected oracle.",
+  "contrasts": [
+    "PPO30 minus SFT",
+    "Each learner full sixth minus SFT and PPO30",
+    "Each learner reset sixth minus SFT and PPO30"
+  ],
+  "statistics": "Same10000 task-stratified paired bootstrap draws as all learner contrasts; seed20261115; marginal95% intervals, no multiple-comparison winner claim.",
+  "budget": "Included in existing32GPUh matched-readout reservation; estimate459.83min versus470min worker deadline. Reconcile actual capacity/timing before launch;230GPUh phase cap unchanged.",
+  "timing_evidence": "evidence/WITH-BASELINES-TIMING-PROJECTION.json"
+}

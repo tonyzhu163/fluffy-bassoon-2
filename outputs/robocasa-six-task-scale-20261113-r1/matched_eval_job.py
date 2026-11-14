@@ -12,7 +12,7 @@ import sys
 import time
 
 from labels import sha, write
-from matched_readout import MODELS
+from matched_readout import MODELS, load_baselines
 
 HERE = Path(__file__).resolve().parent
 CODE = HERE.parents[1]
@@ -33,6 +33,7 @@ def main():
     assert not subprocess.check_output(['git', '-C', str(CODE), 'status', '--porcelain', '--untracked-files=no'])
     assert sha(args.spec) == args.spec_sha256
     spec = json.loads(args.spec.read_text())
+    baselines = load_baselines(spec['baseline_controls'])
     assert spec['shards'] == 4 and spec['cases_per_task'] == 40 and set(spec['models']) == set(MODELS)
     assert spec['scheduler_maximum_minutes'] == args.max_minutes
     assert spec['reserved_GPU_hours'] == 4 * args.max_minutes / 60
@@ -47,8 +48,8 @@ def main():
     local.mkdir(parents=True, exist_ok=False)
     cold.mkdir(parents=True, exist_ok=False)
     assert local.stat().st_dev != ROOT.stat().st_dev
-    # Four complete eight-policy waves plus tar copies, bounded at20GiB each.
-    assert shutil.disk_usage(local).free > 4 * 20 * 2**30
+    # Four complete waves/tar copies plus one shared read-only teacher cache.
+    assert shutil.disk_usage(local).free > 4 * 20 * 2**30 + sum(row['bytes'] for row in baselines['teachers'].values())
     probe_path = cold / '.write-probe'
     probe_path.write_text('eight matched policies')
     assert probe_path.read_text() == 'eight matched policies'
@@ -76,6 +77,11 @@ def main():
         '--output', str(cold / 'gpu-probe.json')], env=env, check=True, timeout=180)
     probe = json.loads((cold / 'gpu-probe.json').read_text())
     assert probe['status'] == 'passed'
+    for task, reference in baselines['teachers'].items():
+        weights = local / 'teachers' / task / 'full_weights.pt'
+        weights.parent.mkdir(parents=True)
+        shutil.copyfile(reference['path'], weights)
+        assert weights.stat().st_size == reference['bytes'] and sha(weights) == reference['sha256']
     helper_path = HERE.parent / 'robocasa-dit-paired-confirmation-20261114-r1/readout.py'
     helper_spec = importlib.util.spec_from_file_location('paired_native_archive', helper_path)
     helper = importlib.util.module_from_spec(helper_spec)
@@ -94,6 +100,7 @@ def main():
                     '--pin', args.pin, '--spec', str(args.spec), '--spec-sha256', args.spec_sha256,
                     '--probe', str(cold / 'gpu-probe.json'), '--output', str(directory),
                     '--cold', str(output / 'evaluation'), '--shards', '4', '--shard', str(shard),
+                    '--teachers', str(local / 'teachers'),
                     '--deadline', str(deadline)], env=worker_env, stdout=log, stderr=subprocess.STDOUT,
                     timeout=max(1, deadline + 300 - time.time())).returncode
         except BaseException as error:

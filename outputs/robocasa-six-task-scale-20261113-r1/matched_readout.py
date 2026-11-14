@@ -18,6 +18,19 @@ TASKS = ('OpenDrawer', 'CloseToasterOvenDoor', 'CoffeeSetupMug', 'CloseFridge', 
 HORIZONS = (600, 600, 600, 900, 450)
 METHODS = ('ad', 'dpt', 'dit', 'ic_iql')
 MODELS = tuple(f'{size}/{method}' for size in (3, 6) for method in METHODS)
+BASELINES = ('original_SFT', 'fixed_PPO30')
+
+
+def load_baselines(reference):
+    assert sha(reference['path']) == reference['sha256']
+    value = json.loads(Path(reference['path']).read_text())
+    assert value['names'] == list(BASELINES) and value['physical_attempt'] == 6
+    assert value['cases_per_task'] == 40 and value['additional_physical_episodes'] == 400
+    assert value['total_physical_episodes'] == 13200
+    assert value['teacher_task_by_evaluation'] == dict(zip(TASKS, TASKS[:3] + ('OpenDrawer', 'OpenDrawer')))
+    assert set(value['teachers']) == set(TASKS[:3])
+    assert all(row['step'] == 30 for row in value['teachers'].values())
+    return value
 
 
 def main():
@@ -28,6 +41,7 @@ def main():
     parser.add_argument('--probe', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--cold', type=Path, required=True)
+    parser.add_argument('--teachers', type=Path, required=True)
     parser.add_argument('--shards', type=int, required=True)
     parser.add_argument('--shard', type=int, required=True)
     parser.add_argument('--deadline', type=float, required=True)
@@ -35,6 +49,7 @@ def main():
     assert sys.platform == 'linux' and socket.gethostname().startswith('job-')
     assert 0 <= args.shard < args.shards and sha(args.spec) == args.spec_sha256
     spec = json.loads(args.spec.read_text())
+    baselines = load_baselines(spec['baseline_controls'])
     assert set(spec['models']) == set(MODELS) and spec['cases_per_task'] == 40
     assert args.shards == spec['shards']
     # This endpoint shortcut must have an explicit migration, not silently
@@ -55,7 +70,9 @@ def main():
     from hydra import compose, initialize_config_dir
     from fluffy_bassoon.baige_gpu import verify_selected_cuda, selected_device
     from fluffy_bassoon.rlinf.native_ppo import checked_checkout, tensor_hash, ActionJournal
-    from fluffy_bassoon.meta_rl.flow_history import FlowBridgeCodec, FlowBridgeMotor, load_bridge_policy
+    from fluffy_bassoon.meta_rl.flow_history import (FlowBridgeCodec, FlowBridgeMotor, load_bridge_policy,
+        DirectActionCodec, FlowReferenceMotor, ReferencePlaceholder)
+    from rlinf.models.embodiment.openpi import get_model
     from fluffy_bassoon.robocasa.joint_steering_ppo_worker import _load_native, _versions, native_video_writer
     from fluffy_bassoon.robocasa.steering_history_native import NativeAttemptBackend, case_key
     from fluffy_bassoon.robocasa.ppo import TASKS as ROUTES
@@ -108,29 +125,49 @@ def main():
         source_commit=args.pin, runtime_commit=identities[0]['runtime_commit']), CODE)
     assert signature['model_sha256'] == identities[0]['native_model_sha256']
     assert signature['norm_sha256'] == identities[0]['native_norm_sha256']
+    assert signature['model_sha256'] == baselines['SFT_sha256']
+    assert signature['norm_sha256'] == baselines['norm_sha256']
     stats = json.loads(norm.read_text())
     codec = FlowBridgeCodec.from_stats(stats.get('norm_stats', stats), interface='kv_bridge')
+    direct_codec = DirectActionCodec.from_stats(stats.get('norm_stats', stats))
+    placeholder = ReferencePlaceholder().to('cuda:0').eval().requires_grad_(False)
+    initial_motor = FlowReferenceMotor(native, direct_codec, native.model)
     with initialize_config_dir(config_dir=str(CODE / 'benchmarks/robocasa/configs'), version_base=None):
         cfg = compose(config_name='robocasa365_pi05_eval')
     versions = tensor_hash(_versions(native.model))
     ROUTES['CloseToasterOvenDoor'] = (600, 'atomic_seen', 'atomic', None)
     binding = dict(format='matched_three_six_eight_KV_endpoint_v1', source_commit=args.pin,
         spec_sha256=args.spec_sha256, models=spec['models'], contracts=contracts, signature=signature,
-        evaluation_migration=migration_ref, cases_per_task=40, shard=args.shard, shards=args.shards,
+        evaluation_migration=migration_ref, baseline_controls=spec['baseline_controls'],
+        baselines=baselines, cases_per_task=40, shard=args.shard, shards=args.shards,
         full_attempts=[1, 2, 3, 4, 5, 6], reset_physical_attempts=[1, 6], deployment_optimizer_updates=0,
-        pairing='All eight models share the same native physical canonical state and case/noise identities within each whole wave',
+        pairing='All eight models and both baselines share native physical canonical states and case/noise identities within each whole wave',
         recording='native_rgb_frame_digests_v1', render_contract='bounded_two_intensity_levels')
     write(args.cold / 'BINDING.json', binding)
     results = []
+    teacher, loaded_task = None, None
     for ti, task in enumerate(TASKS):
+        teacher_task = baselines['teacher_task_by_evaluation'][task]
+        if teacher_task != loaded_task:
+            if teacher is not None:
+                del teacher_motor, teacher
+                torch.cuda.empty_cache()
+            weights = args.teachers / teacher_task / 'full_weights.pt'
+            assert sha(weights) == baselines['teachers'][teacher_task]['sha256']
+            cfg.rollout.model.model_path = str(weights.parent)
+            cfg.rollout.model.openpi_data.norm_stats_path = str(norm)
+            teacher = get_model(cfg.rollout.model, torch_dtype=torch.bfloat16).to('cuda:0').eval().requires_grad_(False)
+            teacher_motor = FlowReferenceMotor(native, direct_codec, teacher)
+            teacher_versions = tensor_hash(_versions(teacher))
+            loaded_task = teacher_task
         for first in range(0, 40, 8):
             if (ti + first // 8) % args.shards != args.shard:
                 continue
             if time.time() + 300 >= args.deadline:
                 write(args.cold / 'INCOMPLETE.json', dict(next_task=task, next_first=first, completed_waves=results))
                 return
-            # One maximal 512-episode wave and its archive, derived from the
-            # qualified measured bytes/control, need about17GiB at horizon900.
+            # 528 episodes including both baselines; measured qualification
+            # bytes/control still fit the20GiB wave/archive allowance.
             assert shutil.disk_usage(args.output).free > 20 * 2**30
             wave = args.output / task / f'bank-{first:04d}'
             cases = [dict(case=dict(bank='matched_three_six_20261114', task=task, split='target',
@@ -172,13 +209,38 @@ def main():
                         completed_waves=len(results), elapsed_seconds=elapsed, checked_unix=time.time()))
                 assert all(set(row['endpoint']) == set(arms['full']['endpoint']) for row in arms.values())
                 paired[name] = arms
-            compact = dict(task=task, first=first, cases=cases, models=paired, spec_sha256=args.spec_sha256)
+            controls = {}
+            for arm, motor in zip(BASELINES, (initial_motor, teacher_motor)):
+                directory = wave / 'baselines' / arm
+                journal = ActionJournal(directory / 'accounting', rank=0, world=1, attempt='matched-baseline',
+                    maximum_actions=8 * (HORIZONS[ti] + 128))
+                backend = NativeAttemptBackend(output=directory / 'attempts', canonical_root=wave / 'canonical',
+                    motor=motor, spec=direct_codec, native_factory=factory.paired, journal=journal,
+                    writer_factory=native_video_writer, binding=dict(binding, arm=arm, task=task, teacher_task=teacher_task),
+                    maximum_rgb_delta=2, memory_mode='episode', actual_attempts=6, first_attempt=6,
+                    fixed_case_order=True, record_video=False)
+                began = time.time()
+                rows = backend.run_bank(placeholder, cases, lanes=8, attempts=6, deadline_unix=args.deadline - 120)
+                assert len(rows) == 8 and backend.last_batch_sizes == [8] * (HORIZONS[ti] // 50)
+                assert tensor_hash(_versions(native.model)) == versions and tensor_hash(_versions(teacher)) == teacher_versions
+                audited = helper.audit(backend.references, action_space=cfg.env.eval.action_space, reset_policy=placeholder)
+                endpoint = {case_key(row['case']): row for row in audited}
+                assert set(endpoint) == set(paired[MODELS[0]]['full']['endpoint'])
+                assert all(row['attempt'] == 6 for row in audited)
+                controls[arm] = dict(episodes=rows, endpoint=endpoint, elapsed_seconds=time.time() - began,
+                    physical_episodes=8, physical_controls=8 * HORIZONS[ti], all_native_evidence_checked=True,
+                    teacher_task=teacher_task if arm == 'fixed_PPO30' else None)
+                write(directory / 'RESULT.json', controls[arm])
+                write(args.cold / 'PROGRESS.json', dict(task=task, first=first, model=arm, arm='baseline_sixth',
+                    completed_waves=len(results), checked_unix=time.time()))
+            compact = dict(task=task, first=first, cases=cases, models=paired, baselines=controls, spec_sha256=args.spec_sha256)
             write(wave / 'PAIRED.json', compact)
             cold_wave = args.cold / task / f'bank-{first:04d}'
             receipt = helper.bank_wave(wave, cold_wave)
             write(cold_wave / 'PAIRED.json', compact)
             results.append(dict(task=task, first=first, archive=receipt,
-                timing={name: {arm: row['elapsed_seconds'] for arm, row in arms.items()} for name, arms in paired.items()}))
+                timing={name: {arm: row['elapsed_seconds'] for arm, row in arms.items()} for name, arms in paired.items()},
+                baseline_timing={arm: row['elapsed_seconds'] for arm, row in controls.items()}))
             write(args.cold / 'PROGRESS.json', dict(completed_waves=len(results), results=results, checked_unix=time.time()))
     write(args.cold / 'COMPLETE.json', dict(completed=True, binding=binding, results=results,
         deployment_optimizer_updates=0, checked_unix=time.time()))
