@@ -29,10 +29,13 @@ def main():
     p=argparse.ArgumentParser()
     p.add_argument('--pin', required=True)
     p.add_argument('--attempt', required=True)
+    p.add_argument('--max-minutes', type=int, default=120)
     args=p.parse_args()
     started=time.time()
     assert sys.platform=='linux' and socket.gethostname().startswith('job-')
     assert args.attempt.isalnum()
+    assert 30 <= args.max_minutes <= 120
+    launch_limit_seconds = (args.max_minutes - 5) * 60
     assert subprocess.check_output(['git','-C',str(CODE),'rev-parse','HEAD'],text=True).strip()==args.pin
     assert not subprocess.check_output(['git','-C',str(CODE),'status','--porcelain','--untracked-files=no'])
     local=Path('/tmp')/HERE.name/args.attempt
@@ -57,8 +60,8 @@ def main():
         assert len(visible)==len(assigned)==1 and set(visible)==set(assigned)
         env['CUDA_VISIBLE_DEVICES']='0'
     write(output/'LAUNCH.json',dict(source_commit=args.pin,hostname=socket.gethostname(),started_unix=started,
-        maximum_GPU_hours=2,automatic_retry=False,stage='qualification',cases_per_task=8,
-        local_free_bytes=usage.free,local_output=str(local),launch_limit_seconds=6900))
+        maximum_GPU_hours=args.max_minutes/60,automatic_retry=False,stage='qualification',cases_per_task=8,
+        local_free_bytes=usage.free,local_output=str(local),launch_limit_seconds=launch_limit_seconds))
     rc=1
     try:
         subprocess.run([str(PYTHON),'-B',str(CODE/'scripts/[train]gpu_probe.py'),
@@ -71,7 +74,7 @@ def main():
             shutil.copyfile(record['path'],destination)
             assert sha(destination)==record['sha256']
         write(inputs/'RESTORED.json',restored)
-        deadline=started+6900
+        deadline=started+launch_limit_seconds
         with (output/'console.log').open('x') as log:
             result=subprocess.run([str(PYTHON),'-B',str(HERE/'readout.py'),'--pin',args.pin,
                 '--output',str(local/'evaluation'),'--cold',str(output/'evaluation'),
