@@ -1,6 +1,7 @@
 """Fresh paired native episodes for frozen DIT and its three controls."""
 import argparse
 import gzip
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -23,13 +24,14 @@ def write(path, value):
     temporary.replace(path)
 
 
-def audit(references, *, reset_policy=None):
+def audit(references, *, action_space, reset_policy=None):
     import numpy as np
     import torch
     from fluffy_bassoon.meta_rl.frozen_steering_history import checked_reference
     from fluffy_bassoon.robocasa.steering_history_native import attempt_noise
     from fluffy_bassoon.meta_rl.steering_history_eval import replay_physical_attempt
     from fluffy_bassoon.meta_rl.vla_history import FrozenHistoryController
+    from rlinf.envs.sim.robocasa365.robocasa365_env import map_released_control_scores
     checked = []
     for reference in references:
         row = torch.load(checked_reference(reference), map_location='cpu', weights_only=False)
@@ -48,7 +50,10 @@ def audit(references, *, reset_policy=None):
             assert chunk['case'] == row['case'] and chunk['attempt'] == row['attempt'] and chunk['chunk'] == i
             assert chunk['status'] == 'completed' and chunk['native_noise_provenance'] == provenance
             assert np.array_equal(chunk['native_noise'], noise)
-            assert np.array_equal(chunk['requested_commands'], chunk['executed_commands'])
+            # RLinf converts released gripper/base-mode scores at dispatch.
+            # Check that exact transform, retaining both score and command evidence.
+            expected = map_released_control_scores(chunk['requested_commands'], action_space)
+            assert np.array_equal(expected, chunk['executed_commands'])
             assert np.array_equal(chunk['dispatched_commands'], chunk['executed_commands'])
             assert chunk['native_counts_after']['controls'] - chunk['native_counts_before']['controls'] == 50
             assert bool(chunk['done']) == (i == len(row['chunks'])-1)
@@ -67,7 +72,9 @@ def audit(references, *, reset_policy=None):
 
 
 def bank_wave(directory, cold):
-    from fluffy_bassoon.meta_rl.vla_history import file_sha256
+    def file_sha256(path):
+        with path.open('rb') as stream:
+            return hashlib.file_digest(stream, 'sha256').hexdigest()
     began = time.time()
     files = sorted(p for p in directory.rglob('*') if p.is_file())
     inventory = {str(p.relative_to(directory)): dict(bytes=p.stat().st_size, sha256=file_sha256(p)) for p in files}
@@ -76,7 +83,6 @@ def bank_wave(directory, cold):
         for path in files:
             bank.add(path, arcname=str(path.relative_to(directory)), recursive=False)
     with tarfile.open(archive, 'r') as bank:
-        import hashlib
         members = bank.getmembers()
         assert {m.name for m in members} == set(inventory)
         for member in members:
@@ -222,7 +228,8 @@ def main():
                 assert len(rows)==len(cases)*episodes
                 assert backend.last_batch_sizes==[len(cases)]*(episodes*HORIZONS[number]//50)
                 assert tensor_hash(_versions(native.model))==versions and tensor_hash(_versions(teacher))==teacher_versions
-                audited=audit(backend.references, reset_policy=None if full else policy)
+                audited=audit(backend.references, action_space=cfg.env.eval.action_space,
+                              reset_policy=None if full else policy)
                 endpoint={case_key(x['case']):x for x in audited if x['attempt']==6}
                 assert len(endpoint)==len(cases)
                 paired[arm]=dict(episodes=rows,endpoint=endpoint,elapsed_seconds=elapsed,

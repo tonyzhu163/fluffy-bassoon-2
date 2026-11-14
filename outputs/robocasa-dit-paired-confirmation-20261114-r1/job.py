@@ -85,9 +85,19 @@ def main():
         write(output/'ERROR.json',dict(error=repr(error),checked_unix=time.time()))
         raise
     finally:
+        # Failed audits must not strand physical evidence in an exited container.
+        # Preserve it without accepting it as a complete or valid paired result.
+        partial_archive = None
+        if rc != 0 and (local/'evaluation').exists():
+            try:
+                from readout import bank_wave
+                partial_archive = bank_wave(local/'evaluation', output/'partial-evidence')
+            except BaseException as archive_error:
+                write(output/'PARTIAL-ARCHIVE-ERROR.json', dict(error=repr(archive_error),
+                    local_evidence=str(local/'evaluation'), checked_unix=time.time()))
         write(output/'EXIT.json',dict(exit_code=rc,started_unix=started,ended_unix=time.time(),
             worker_GPU_hours=(time.time()-started)/3600,complete=(output/'evaluation/COMPLETE.json').exists(),
-            partial_evidence_location=str(local/'evaluation')))
+            partial_evidence_archive=partial_archive,partial_evidence_location=str(local/'evaluation')))
     raise SystemExit(rc)
 
 
