@@ -16,6 +16,15 @@ def key(case):
     return hashlib.sha256(json.dumps(case, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
 
 
+def shared_binding(binding):
+    # Each shard has its own allocated GPU. Keep the full scientific signature
+    # equal without requiring distinct physical devices to have the same UUID.
+    identity = {k: v for k, v in binding.items() if k not in ('shard', 'signature')}
+    identity['signature'] = {k: v for k, v in binding['signature'].items()
+                             if k not in ('cuda_uuid', 'scheduler_uuid')}
+    return identity
+
+
 def paired_statistics(outcomes, *, replicates=10000, seed=20261115):
     import numpy as np
     assert outcomes.shape == (8, 5, 40, 4) and np.isin(outcomes, [0, 1]).all()
@@ -86,7 +95,7 @@ def main():
         assert binding['source_commit'] == launch['source_commit'] and binding['shard'] == shard and binding['shards'] == 4
         assert binding['deployment_optimizer_updates'] == 0 and binding['cases_per_task'] == 40
         assert binding['full_attempts'] == [1, 2, 3, 4, 5, 6] and binding['reset_physical_attempts'] == [1, 6]
-        identity = {k: v for k, v in binding.items() if k != 'shard'}
+        identity = shared_binding(binding)
         if common is None:
             common = identity
         assert common == identity
