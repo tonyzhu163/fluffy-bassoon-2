@@ -1,0 +1,38 @@
+{
+  "checked_unix": 1794651070.496587,
+  "qualification_timing_sha256": "465766a8b054ba5cd4cb6dee22d0be4a7dd74522bb9ce66cf4d105365dd57aee",
+  "method": "Eight adapters per eight-case wave; use qualified DIT full-six and two reset endpoints per adapter, audit times included. Scale verified archive time from72 to512 episodes; keep measured fixed setup overhead. Existing (task_index+wave_index)%4 assignment.",
+  "projected_worker_minutes": [
+    446.42598861588374,
+    386.47925552615413,
+    393.0725257537984,
+    424.2621035063709
+  ],
+  "projected_allocation_GPU_hours": 29.76173257439225,
+  "proposed_scheduler_minutes": 480,
+  "worker_deadline_minutes": 470,
+  "projected_worker_margin_minutes": 23.57401138411626,
+  "waves": [
+    {
+      "task": "OpenDrawer",
+      "projected_512_episode_wave_seconds": 3977.469815572103
+    },
+    {
+      "task": "CloseToasterOvenDoor",
+      "projected_512_episode_wave_seconds": 3330.343597835965
+    },
+    {
+      "task": "CoffeeSetupMug",
+      "projected_512_episode_wave_seconds": 3725.9398114946152
+    },
+    {
+      "task": "CloseFridge",
+      "projected_512_episode_wave_seconds": 5597.314476648967
+    },
+    {
+      "task": "TurnOnMicrowave",
+      "projected_512_episode_wave_seconds": 2949.677767647637
+    }
+  ],
+  "limitations": "Planning estimate from historical DIT on the qualified native runtime, not measured new-model throughput. Actual first-wave timing and full audit remain required. Outcomes were not used; sample counts, cases, endpoints and budget are unchanged."
+}
