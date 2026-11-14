@@ -32,6 +32,9 @@ def main():
     torch.set_num_threads(4)
     assert not args.output.exists()
     complete = json.loads(args.complete.read_text())
+    terminal_path = args.complete.parent.parent / (args.method + '-EXIT.json')
+    terminal = json.loads(terminal_path.read_text())
+    assert terminal['method'] == args.method and terminal['exit_code'] == 0 and terminal['complete']
     progress_path = args.complete.with_name('PROGRESS.json')
     progress = json.loads(progress_path.read_text())
     contract = json.loads(args.complete.with_name('CONTRACT.json').read_text())
@@ -50,6 +53,7 @@ def main():
         assert digest(ref['path']) == ref['sha256']
     checkpoint = torch.load(progress['checkpoint']['path'], map_location='cpu', weights_only=False)
     candidate = torch.load(complete['candidate']['path'], map_location='cpu', weights_only=False)
+    assert candidate['format'] == 'flow_steering_bridge_policy_v1'
     assert checkpoint['format'] == 'matched_kv_fit_v1' and checkpoint['contract'] == contract
     assert checkpoint['progress']['actor_update'] == 10000
     assert checkpoint['progress']['value_update'] == expected_values
@@ -88,6 +92,7 @@ def main():
     assert len(rng['cuda']) == 1 and checkpoint['flow_generator'].numel() > 0
     result = dict(passed=True, method=args.method, corpus_size=args.corpus_size,
         complete=dict(path=str(args.complete), sha256=digest(args.complete)),
+        terminal=dict(path=str(terminal_path), sha256=digest(terminal_path)),
         progress=dict(path=str(progress_path), sha256=digest(progress_path)),
         candidate=complete['candidate'], checkpoint=progress['checkpoint'],
         actor_updates=10000, value_updates=expected_values, policy_tensors=len(candidate['policy']),
