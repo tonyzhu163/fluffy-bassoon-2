@@ -56,23 +56,25 @@ query/action/native-truth evidence and frame digests, with videos limited to
 qualification or a declared sample; bank completed evidence in verified cold
 storage and bound local staging. Do not restore the old raw training corpora.
 
-**Current state (November 14, 15:29 Shanghai):** the frozen inference inputs
-are restored with verified hashes. Twenty Linux core tests passed. The first
-native qualification completed its DIT rollout batch but failed a post-rollout
-audit: requested gripper/base-mode scores were incorrectly compared directly
-with converted physical commands. This produced no valid paired result. The
-corrected audit applies the exact native conversion, and Linux qualification
-of that conversion passed. A retry is queued as `job-rndlh3s50x3d`, pinned to
-`9f8bb6a4`, with a 105-minute limit on one GPU and automatic retries disabled.
-The failed attempt's conservative 0.2 GPU-hours plus the retry's maximum 1.75
-remain inside the original 2 GPU-hour qualification reservation.
+**Current state (November 14, 16:22 Shanghai):** paired qualification
+`job-rndlh3s50x3d` is running at `9f8bb6a4`. Its allocated GPU probe passed.
+The first OpenDrawer wave completed all four arms plus the six-episode reset
+replay audit. Its 1.29 GB evidence archive passed member hashes and full cold
+readback. Four task waves remain; this is qualification, not the expanded
+confirmation result. The first task's four-arm rollout took about 532 seconds
+for eight cases, excluding setup, audit and archiving. The 500-case target is
+conditional: use the complete qualification timing to fix a feasible sample
+count within 28 GPU-hours before confirmation outcomes, as specified above.
 
-The expanded confirmation has **not** launched. Next: verify the actual GPU
-probe and complete paired native wave, measure throughput, then fix the fresh
-sample count within the existing cap. Both corrected PPO collectors are at
-28/30 updates. Four raw task packs and four step-30 inference teachers are
-available (including the previously verified Faucet export); labels and the
-eight new transformer fits have not started.
+All six corrected source collections, canonical packs and step-30 teachers
+are complete. After correcting our launcher probe-purpose flag, two-task
+labels `job-3r4f69s37tpv` passed its GPU probe and advanced; four-task labels
+`job-972qpi5ao378` is queued. The failed label launch used 29 scheduler seconds
+on two GPUs, conservatively closed at 0.2 GPU-hours; the retry has a shortened
+174-minute limit, preserving the total 18 GPU-hour label allowance.
+Conservative closed plus reserved usage is **127/230 GPU-hours**. The eight
+new transformer fits and expanded paired confirmation have not launched.
+Live accounting is in the [campaign approval ledger](../robocasa-six-task-scale-20261113-r1/APPROVAL.json).
 
 [Execution and failure evidence](EXECUTION.json) · [Verified restored inputs](RESTORED.json) ·
 [Machine-readable plan](PLAN.json) · [Core validation](CORE-VALIDATION.json) ·

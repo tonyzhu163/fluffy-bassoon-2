@@ -1,5 +1,5 @@
 {
-  "status": "First qualification failed in post-rollout action audit; corrected retry submitted and queued",
+  "status": "Running; GPU probe passed; first task wave audited and cold archive fully read back",
   "job_id": "job-rndlh3s50x3d",
   "job_name": "mwj_1114_dit_paired_qual_g1_r2",
   "cluster": "Baige Pro6K",
@@ -19,10 +19,34 @@
   "cold_output": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/qual02",
   "native_runtime": "unchanged uv environment and corrected RLinf8f9bfa76",
   "CPU_validation": "20 core tests passed on source8aa93780. Retry native score-to-command mapping and runner imports passed on allocated Linux at9f8bb6a4.",
-  "allocation_gpu_probe": "pending allocation",
-  "native_progress": "No qual02 worker receipt yet",
-  "next_action": "Verify allocated GPU probe and completed audited physical wave. Continue fixed-step30 label preparation. Fix confirmation count from throughput before examining confirmation outcomes.",
-  "checked_shanghai": "2026-11-14T15:29:24+08:00",
+  "allocation_gpu_probe": "passed",
+  "native_progress": {
+    "checked_unix": 1794644529.6417606,
+    "completed_waves": 1,
+    "results": [
+      {
+        "task": "OpenDrawer",
+        "first": 0,
+        "archive": {
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/qual02/evaluation/OpenDrawer/bank-0000/evidence.tar",
+          "sha256": "2b05122a51f7a2530c44a2cc62ad364c2832117d4957e994b149efa74b7a5560",
+          "bytes": 1292288000,
+          "every_member_verified": true,
+          "cold_full_readback": true,
+          "elapsed_seconds": 7.386051177978516
+        },
+        "timing": {
+          "DIT_full_history": 356.95038080215454,
+          "DIT_episode_reset": 59.36089777946472,
+          "original_SFT": 57.9221408367157,
+          "fixed_PPO130": 58.13589000701904,
+          "DIT_reset_serial": 349.38137125968933
+        }
+      }
+    ]
+  },
+  "next_action": "Complete remaining four task qualification waves; fix fresh confirmation count using measured full cost before confirmation outcomes. Target500 is conditional on28GPUh allowance.",
+  "checked_shanghai": "2026-11-14T16:22:47+08:00",
   "previous_attempt": {
     "job_id": "job-4fihmh5d1ox9",
     "status": "failed in audit after first rollout batch",
@@ -46,5 +70,6 @@
     "personal_free_GPUs": 15,
     "personal_limit_GPUs": 32,
     "queued_jobs": 14
-  }
+  },
+  "next_check_shanghai": "2026-11-14T16:42:47+08:00"
 }

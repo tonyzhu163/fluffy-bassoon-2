@@ -1,6 +1,6 @@
 {
-  "checked_shanghai": "2026-11-14T16:03:00+08:00",
-  "status": "All six matched corrected sources reached30 updates. Final Stove and Toaster jobs succeeded and archives fully verified; their canonical pack/teacher exports are running on allocated CPU. Labels01 and paired qualification remain queued. Fit code prepared and63 core tests passed; no new transformer fit yet.",
+  "checked_shanghai": "2026-11-14T16:22:47+08:00",
+  "status": "All six corrected30-update sources, canonical packs and step30 teachers complete. Two-task labels03 advancing after successful GPU probe; labels04 queued. Paired qualification has one fully audited, verified cold-banked wave. No new transformer fits or expanded confirmation yet.",
   "launch_source_commit": "3a328f742d8db234586e2d7cb2d1d66e91e5d371",
   "deployment": "Git bundle; clean exact detached source on Baige; existing active worktrees untouched",
   "validation": {
@@ -62,19 +62,19 @@
   },
   "budget": {
     "GPU_hours_used_this_phase": null,
-    "GPU_hours_reserved_this_phase": 13.8,
+    "GPU_hours_reserved_this_phase": 19.6,
     "prior_all_new_committed_upper_bound_GPU_hours": 48.834722222222226,
     "prior_all_new_hard_cap_GPU_hours": 50,
     "prior_historical_committed_upper_bound_GPU_hours": 162.12916655555557,
     "prior_historical_hard_cap_GPU_hours": 170,
     "approval": "Existing explicit230GPUh approval; corrected recollection replaces historical buggy-critic reuse. See PLAN.md for reallocation.",
     "approved_additional_hard_cap_GPU_hours": 230,
-    "usage_checked_shanghai": "2026-11-14T16:03:00+08:00",
-    "closed_jobs_conservative_GPU_hours_upper_bound": 107.2,
-    "accounting": "Closed sources conservative107 plus failed qualification0.2; queued labels12 plus qualification retry1.75 and held0.05 =121/230. Final collectors40 reservation moved to closed without releasing its margin; remaining109 proposal unchanged.",
-    "committed_conservative_upper_GPU_hours": 121
+    "usage_checked_shanghai": "2026-11-14T16:22:47+08:00",
+    "closed_jobs_conservative_GPU_hours_upper_bound": 107.4,
+    "accounting": "Sources107 + failed paired0.2 + failed labels0.2 closed. Labels retries17.8 + paired1.75 + held0.05 reserved =127/230. Remaining103 proposal: fits/values57, new panels18, historical paired28.",
+    "committed_conservative_upper_GPU_hours": 127
   },
-  "next_action": "Verify label and paired GPU probes after allocation; qualify actual paired waves and fix confirmation count before outcomes. Verify final two source archives, pack sources and teachers, then label. Prepare eight fixed10000-update transformer fits with fresh corpus-specific Q/V. Nov15 target at risk.",
+  "next_action": "Verify labels04 allocation and advancing labels; assemble completed label shards into shared datasets. Complete paired qualification and fix confirmation count from outcome-blind timing. Then launch matched10000-update fits within existing cap; Nov15 target at risk.",
   "jobs": [
     {
       "task": "OpenDrawer",
@@ -297,7 +297,7 @@
         "hostname": "job-t5gpub15c9d6-master-0"
       },
       "latest_local_free_bytes": 574929543168,
-      "phase": "Closed; CPU canonical packing underway",
+      "phase": "Closed; canonical pack and step30 teacher export complete",
       "scheduler_ended_shanghai": "2026-11-14T16:01:35+08:00",
       "scheduler_runtime_seconds": 8632,
       "scheduler_GPU_hours": 19.182222222222222,
@@ -360,7 +360,7 @@
         "hostname": "job-8d8wm2rua3nn-master-0"
       },
       "latest_local_free_bytes": 380841361408,
-      "phase": "Closed; CPU canonical packing underway",
+      "phase": "Closed; canonical pack and step30 teacher export complete",
       "scheduler_ended_shanghai": "2026-11-14T16:00:42+08:00",
       "scheduler_runtime_seconds": 8490,
       "scheduler_GPU_hours": 18.866666666666667,
@@ -393,39 +393,71 @@
   "monitoring_gap": "Previous record was November13 16:17. No intervening checks are recorded; terminal states were first reconciled in this November14 status check.",
   "source_completion_note": "Drawer30 checkpoint/raw archive complete, but its final after-evaluation receipt is absent because the bounded checkpoint-and-exit path ran. Coffee and Counter have step30 evaluation receipts. Source learning metrics are not transformer ID/OOD results.",
   "progress_check": {
-    "checked_shanghai": "2026-11-14T16:03:00+08:00",
-    "source": "Baige refreshed task list and actual-allocation progress/archive files",
-    "evidence": "evidence/SOURCE-AND-QUALIFICATION-20261114.json",
-    "next_check_shanghai": "2026-11-14T16:23:00+08:00"
+    "checked_shanghai": "2026-11-14T16:22:47+08:00",
+    "source": "Baige console and actual-allocation cold receipts",
+    "evidence": "evidence/LABEL-RETRIES-AND-PAIRED-20261114.json",
+    "next_check_shanghai": "2026-11-14T16:42:47+08:00"
   },
   "canonical_raw_pack_tasks": [
     "OpenDrawer",
+    "CloseToasterOvenDoor",
     "CoffeeSetupMug",
     "PickPlaceCounterToStove",
+    "TurnOffStove",
     "TurnOnSinkFaucet"
   ],
   "step30_teacher_inputs": [
     "OpenDrawer",
+    "CloseToasterOvenDoor",
     "CoffeeSetupMug",
     "PickPlaceCounterToStove",
+    "TurnOffStove",
     "TurnOnSinkFaucet"
   ],
   "paired_qualification": {
     "job_id": "job-rndlh3s50x3d",
-    "status": "Queued",
+    "status": "Running; GPU probe passed; one verified wave",
     "source_commit": "9f8bb6a46c806ac93edc55613909e00aa4319d38",
     "qualification_reservation": {
       "total_GPU_hours": 2,
       "closed_conservative": 0.2,
       "retry_maximum": 1.75,
       "uncommitted_margin": 0.05
+    },
+    "progress": {
+      "checked_unix": 1794644529.6417606,
+      "completed_waves": 1,
+      "results": [
+        {
+          "task": "OpenDrawer",
+          "first": 0,
+          "archive": {
+            "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/qual02/evaluation/OpenDrawer/bank-0000/evidence.tar",
+            "sha256": "2b05122a51f7a2530c44a2cc62ad364c2832117d4957e994b149efa74b7a5560",
+            "bytes": 1292288000,
+            "every_member_verified": true,
+            "cold_full_readback": true,
+            "elapsed_seconds": 7.386051177978516
+          },
+          "timing": {
+            "DIT_full_history": 356.95038080215454,
+            "DIT_episode_reset": 59.36089777946472,
+            "original_SFT": 57.9221408367157,
+            "fixed_PPO130": 58.13589000701904,
+            "DIT_reset_serial": 349.38137125968933
+          }
+        }
+      ]
     }
   },
   "label_execution": {
     "path": "LABEL-EXECUTION.json",
-    "job_id": "job-40dz76k3crrg",
-    "status": "Queued",
-    "reserved_GPU_hours": 12
+    "job_ids": [
+      "job-3r4f69s37tpv",
+      "job-972qpi5ao378"
+    ],
+    "status": "labels03 advancing; labels04 queued",
+    "reserved_GPU_hours": 17.8
   },
   "fit_preparation": {
     "source_commit": "78ec94eb50cba869a08454d118275c016430919f",
@@ -435,6 +467,7 @@
     "actual_GPU_qualification": "pending labeled assemblies and allocation",
     "submitted": false,
     "plan": "FIT-PLAN.json",
-    "validation": "evidence/FIT-CPU-VALIDATION.json"
+    "validation": "evidence/FIT-CPU-VALIDATION.json",
+    "latest_launcher_source_commit": "cbece8fd7038b60213df64fca2f0f6c7a32a55cf"
   }
 }
