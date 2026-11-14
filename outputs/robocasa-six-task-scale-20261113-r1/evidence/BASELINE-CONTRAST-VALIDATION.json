@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "CPU_only": true,
+  "GPU_hours": 0,
+  "source_commit": "07bd432092c9b8af7c9ebe7b40beb392decb2c7d",
+  "checked_unix": 1794655332.9908454,
+  "replicates_per_check": 10000,
+  "checks": [
+    "Existing random-case learner/scaling/method statistics exactly unchanged",
+    "Identical nonconstant paired baseline gives exactly zero difference and zero-width interval",
+    "PPO minus SFT is the exact opposite of history for constructed matched controls, preserving covariance",
+    "Unsigned inputs converted before subtraction: known -100pp sign and intervals",
+    "Known +100pp improvement sign and paired ID120/OOD80 discordance counts",
+    "Baseline competence changes do not create a history effect",
+    "Actual baseline declaration fixes PPO30 and OOD OpenDrawer transfer mapping"
+  ],
+  "protected_failure": "Unpaired resampling can widen or misstate baseline-gain uncertainty; unsigned subtraction can reverse losses; baseline gain must remain distinct from history effect.",
+  "files": {
+    "matched_analyze.py": "a28dfa21b8443e449d54f63ccc869ce94ae757d3a8c11d8cfd35a67a55ef7093",
+    "matched_readout.py": "9208159316e7beb7b6b4876cd9b66cf4e0361aae41d7c3e8e94a71e6b9769dfc",
+    "matched_eval_job.py": "15233db1df19ae208ba2d88d68ba6d21b511de4a6c5cafb796afdfc99de5344f",
+    "BASELINE-CONTROLS.json": "0debb9d70bea5ebc5619aebe17f87c5089b8459a258d77288c9ab76e70167cdc"
+  },
+  "GPU_readout_validation": "Qualified native reference implementation reused; actual new-fit episodes and first-wave timing remain pending."
+}
