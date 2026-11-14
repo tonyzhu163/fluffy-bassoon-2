@@ -263,6 +263,9 @@ def flow_contract(cfg):
     if train_seed + iterations * scenes_per_iteration > eval_seed and eval_seed + eval_cases > train_seed:
         raise ValueError('TRAIN and eval seed ranges overlap')
     interval = int(_get(cfg, 'runner.save_interval'))
+    keep_latest = int(_get(cfg, 'native_pilot.keep_latest_checkpoints', 0))
+    if keep_latest != 0 and keep_latest < 2:
+        raise ValueError('Checkpoint retention must be disabled or keep at least two boundaries')
     if interval < 1 or iterations % interval:
         raise ValueError('Checkpoint interval must divide the iteration count')
     eval_interval = int(_get(cfg, 'runner.val_check_interval', iterations))
@@ -299,6 +302,7 @@ def flow_contract(cfg):
                 gamma_per_decision=float(_get(cfg, 'algorithm.gamma', .99)),
                 gae_lambda_per_decision=float(_get(cfg, 'algorithm.gae_lambda', .95)),
                 train_seed=train_seed, eval_seed=eval_seed, checkpoint_interval=interval,
+                keep_latest_checkpoints=keep_latest,
                 nominal_policy_controls=policy, reset_reserve_controls=resets,
                 maximum_actions=None if maximum is None else int(maximum),
                 physics_tick_limit=(max(horizon, eval_horizon) + RESET_CONTROL_RESERVE) * 128)

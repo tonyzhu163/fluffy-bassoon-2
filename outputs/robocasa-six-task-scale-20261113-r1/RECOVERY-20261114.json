@@ -15,7 +15,7 @@
   "space": "Development scratch3.1TiB free; shared PFS251GiB free. Keep raw job output on node-local scratch, never move it to PFS. Require400GiB on each actual allocation; wrapper now persists STORAGE.json before admission failure. No existing data deleted.",
   "space_threshold_basis": "Two completed30-update source inventories occupy135\u2013136GiB.400GiB admission retains the200GiB floor and checkpoint/transient headroom;230GiB soft-stop watcher remains unchanged.",
   "changes": "Only add storage measurements and local write probe; no PPO config, reward, RNG, sampling, optimizer or save cadence change. Old detached source remains untouched.",
-  "qualification": "Linux CPU/static and clean exact deployment passed; no scientific-code/config changes. Both actual allocations passed400GiB scratch checks and8-device GPU probes; first PPO update verification pending.",
+  "qualification": "Both actual allocations passed scratch and8-device GPU probes; first completed PPO update verified for both at13:50 Shanghai.",
   "budget": {
     "approved_hard_cap_GPU_hours": 230,
     "prior_terminal_jobs_conservative_upper_GPU_hours": 96,
@@ -27,7 +27,7 @@
     "automatic_retry": false,
     "accounting": "Retain original96GPUh conservative cap until scheduler allocation durations are reconciled. Reconcile actual closed usage before reserving the full downstream annotation/fitting/evaluation plan; never exceed230."
   },
-  "next_action": "Deploy the reviewed commit; check current queue/quota; submit two fresh attempts; verify actual-node storage/GPU checks and first completed updates, then prepare matched source inputs while they collect.",
+  "next_action": "Continue collection; archive closed historical data; reduce future checkpoint retention; prepare corrected matched corpora.",
   "launch_source_commit": "6c0ef27a55a729abbe86a1d6cd1a0c11c99216bf",
   "jobs": [
     {

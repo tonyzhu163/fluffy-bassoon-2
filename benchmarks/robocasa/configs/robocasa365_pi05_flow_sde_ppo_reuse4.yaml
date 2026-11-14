@@ -23,5 +23,6 @@ actor:
     critic_warmup_steps: 0
 
 native_pilot:
+  keep_latest_checkpoints: ${oc.decode:${oc.env:ROBOCASA_FLOW_KEEP_LATEST_CHECKPOINTS,0}}
   maximum_actions: ${oc.decode:${oc.env:ROBOCASA_FLOW_MAX_ACTIONS,4100000}}
   full_model_export_steps: ${oc.decode:${oc.env:ROBOCASA_FLOW_FULL_MODEL_EXPORT_STEPS,null}}

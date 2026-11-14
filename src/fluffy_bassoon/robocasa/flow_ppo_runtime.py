@@ -372,6 +372,20 @@ class FlowEnvironment(EnvWorker):
 
 
 class FlowRunner(PilotRunner):
+    def _capture_boundary(self):
+        super()._capture_boundary()
+        keep = int(self.cfg.native_pilot.get('keep_latest_checkpoints', 0))
+        if keep:
+            from fluffy_bassoon.rlinf.checkpoint_retention import retain_boundaries
+            root = (Path(self.cfg.runner.logger.log_path) /
+                    self.cfg.runner.logger.experiment_name / 'checkpoints')
+            contract = flow_contract(self.cfg)
+            protected = set(range(0, self.max_steps + 1, contract['eval_interval']))
+            protected.update(self.cfg.native_pilot.get('full_model_export_steps') or [])
+            protected.add(self.max_steps)
+            retain_boundaries(root, current_step=self.global_step,
+                              keep_latest=keep, protected_steps=protected)
+
     def _periodic_evaluation(self, output):
         self.rollout.pilot_training_rng().wait()
         self.env.pilot_training_rng().wait()
