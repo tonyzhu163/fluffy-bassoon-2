@@ -1,0 +1,88 @@
+{
+  "user_instruction": "Expand paired evaluations; quantify DIT benefit from history and above SFT/PPO",
+  "status": "Prepared and recorded; Linux core tests passed. Inference input restoration, native GPU qualification and expanded evaluation have not started.",
+  "tasks": [
+    "OpenDrawer",
+    "CloseToasterOvenDoor",
+    "CoffeeSetupMug",
+    "CloseFridge",
+    "TurnOnMicrowave"
+  ],
+  "arms": [
+    "original_SFT",
+    "fixed_PPO130",
+    "DIT_episode_reset",
+    "DIT_full_history"
+  ],
+  "target_cases_per_task": 500,
+  "case_count_status": "Fix count after outcome-blind throughput qualification and reservation reconciliation, before inspecting confirmation outcomes",
+  "old_discovery_cases_reused": false,
+  "endpoint": "Sixth-query native success_once",
+  "physical_episodes_per_case": {
+    "DIT_full_history": 6,
+    "DIT_episode_reset": 1,
+    "original_SFT": 1,
+    "fixed_PPO130": 1
+  },
+  "target_physical_episodes": 22500,
+  "paired_noise": "Same case and original attempt_noise(case,6,chunk) for all endpoint arms; full history supplies five genuine previous attempts",
+  "controls": "Episode reset and native anchors execute only query6 after core and native qualification; no missing support episodes fabricated",
+  "PPO_ID": "corresponding source-task step130",
+  "PPO_OOD": "OpenDrawer step130 chosen before old outcomes",
+  "storage": "Only required inference weights staged; native RGB frame digests and complete query/action/truth records; videos only for small qualification/sample; verified cold banking and bounded local scratch",
+  "budget": {
+    "parent": "robocasa-six-task-scale-20261113-r1",
+    "hard_cap_GPU_hours": 230,
+    "qualification_reserved_GPU_hours": 2,
+    "full_evaluation_reserved_GPU_hours": 0,
+    "rule": "Reconcile scheduler allocation times and remaining source/fitting reservations before full launch; closed170/50caps remain closed",
+    "parent_closed_conservative_GPU_hours": 67,
+    "parent_active_recovery_reserved_GPU_hours": 40,
+    "maximum_full_evaluation_GPU_hours": 28,
+    "remaining_parent_work_reserved_proposal_GPU_hours": 93
+  },
+  "limitations": "New cases narrow case uncertainty for this fixed DIT fit; do not establish training-seed robustness or all-task-family transfer",
+  "frozen_DIT": {
+    "candidate.pt": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/finalized-fits-20261106-r1/kv_bridge/dit/candidate.pt",
+      "original_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/fits/kv_bridge/dit/candidate.pt",
+      "sha256": "7ccaae7048df38a90ced30530002469f1f73e1ee9cb37a17b07c8137cabb3721",
+      "bytes": 22142841
+    },
+    "latest.pt": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/finalized-fits-20261106-r1/kv_bridge/dit/latest.pt",
+      "original_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/fits/kv_bridge/dit/latest.pt",
+      "sha256": "d2e7b4968e008d5e957ca9c5a899c55e53e82c6d0ef62070cd77d9f454e1b532",
+      "bytes": 66431859
+    },
+    "training-status.json": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/finalized-fits-20261106-r1/kv_bridge/dit/training-status.json",
+      "original_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/fits/kv_bridge/dit/training-status.json",
+      "sha256": "3d13f345719421a8d7a762607cdbc8d60f936ed34aa8d1d61d084f948a8af0f5",
+      "bytes": 347
+    },
+    "contract.json": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/finalized-fits-20261106-r1/kv_bridge/dit/contract.json",
+      "original_path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/fits/kv_bridge/dit/contract.json",
+      "sha256": "8a4131b01c46e21d7bebde0018427f135f2affb2d780fc2b56c9946d9aeb3b43",
+      "bytes": 3247
+    }
+  },
+  "recorded_shanghai": "2026-11-14T14:28:29+08:00",
+  "user_confirmation": "ok record this down",
+  "core_source_commit": "8aa93780fe7d2f565d0f6f2cf22d3b134ca4ddf9",
+  "comparisons": [
+    "DIT_full_history minus DIT_episode_reset",
+    "DIT_full_history minus original_SFT",
+    "DIT_full_history minus fixed_PPO130"
+  ],
+  "analysis": {
+    "unit": "Paired case; retain all arm outcomes for each same-case comparison",
+    "report": "Per-task rates and paired differences, plus equally weighted ID and OOD task panels with paired 95% intervals",
+    "interval": "Resample case identifiers within each task, preserving all four arms together; report discordant-pair counts alongside intervals",
+    "fixed_count": "Choose sample count from throughput and remaining budget before inspecting confirmation outcomes; do not stop when an interval first excludes zero",
+    "case_failures": "Preserve failures and paired denominators; no success-conditioned exclusions or substitution",
+    "interpretation": "Separate history effect from advantage over SFT/PPO. More cases estimate this frozen fit more precisely; they do not explain why DIT is stronger or measure training-seed variation."
+  },
+  "next_action": "Restore only hash-bound DIT and PPO inference inputs; qualify endpoint-only controls on allocated GPU, measure throughput, then fix and launch the paired sample within the existing cap."
+}

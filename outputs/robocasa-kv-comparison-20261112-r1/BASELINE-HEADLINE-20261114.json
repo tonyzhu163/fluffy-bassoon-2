@@ -1,0 +1,41 @@
+{
+  "measure": "sixth actual episode, success_once",
+  "panels": {
+    "ID": {
+      "cases": 150,
+      "SFT": 46.666666666666664,
+      "fixed_PPO": 51.333333333333336,
+      "DIT_reset": 50.66666666666667,
+      "DIT_full": 55.333333333333336,
+      "DIT_minus_SFT_pp": 8.666666666666671,
+      "DIT_minus_PPO_pp": 4.0,
+      "history_effect_pp": 4.666666666666667,
+      "history_interval": [
+        -2.0,
+        11.333333333333334
+      ]
+    },
+    "OOD": {
+      "cases": 100,
+      "SFT": 44.0,
+      "fixed_PPO": 50.0,
+      "DIT_reset": 50.0,
+      "DIT_full": 56.00000000000001,
+      "DIT_minus_SFT_pp": 12.000000000000007,
+      "DIT_minus_PPO_pp": 6.000000000000007,
+      "history_effect_pp": 6.0,
+      "history_interval": [
+        -3.0,
+        15.0
+      ]
+    }
+  },
+  "comparison": "Descriptive historical rates; same50-case protocol. No new DIT-versus-baseline paired intervals computed here.",
+  "PPO_ID": "Separate corresponding source-task fixed130 teacher",
+  "PPO_OOD": "Predesignated OpenDrawer fixed130 transfer teacher",
+  "sources": [
+    "comparison/RESULT.json",
+    "../robocasa-eight-hour-babysit-20261104-r1/NATIVE-ANCHOR-ID-RESULT.json",
+    "../robocasa-eight-hour-babysit-20261104-r1/NATIVE-ANCHOR-OOD-RESULT.json"
+  ]
+}

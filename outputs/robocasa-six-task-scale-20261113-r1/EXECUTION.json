@@ -1,6 +1,6 @@
 {
-  "checked_shanghai": "2026-11-14T13:43:18+08:00",
-  "status": "Two fresh recovery collectors running; both actual-node storage checks and8-GPU probes passed. Drawer/Coffee/Counter30 complete. No new transformer fits yet.",
+  "checked_shanghai": "2026-11-14T14:28:29+08:00",
+  "status": "Two corrected PPO collectors advancing at11/30 each. Four raw source packs verified. Historical archive complete; expanded paired evaluation prepared, not launched. No new labels or transformer fits yet.",
   "launch_source_commit": "3a328f742d8db234586e2d7cb2d1d66e91e5d371",
   "deployment": "Git bundle; clean exact detached source on Baige; existing active worktrees untouched",
   "validation": {
@@ -62,19 +62,19 @@
   },
   "budget": {
     "GPU_hours_used_this_phase": null,
-    "GPU_hours_reserved_this_phase": 40,
+    "GPU_hours_reserved_this_phase": 42,
     "prior_all_new_committed_upper_bound_GPU_hours": 48.834722222222226,
     "prior_all_new_hard_cap_GPU_hours": 50,
     "prior_historical_committed_upper_bound_GPU_hours": 162.12916655555557,
     "prior_historical_hard_cap_GPU_hours": 170,
     "approval": "Existing explicit230GPUh approval; corrected recollection replaces historical buggy-critic reuse. See PLAN.md for reallocation.",
     "approved_additional_hard_cap_GPU_hours": 230,
-    "usage_checked_shanghai": "2026-11-14T13:43:18+08:00",
-    "closed_jobs_conservative_GPU_hours_upper_bound": 96,
-    "accounting": "96GPUh conservative closed first-attempt cap plus40GPUh reserved for two150-minute8GPU retries; total136/230. Reconcile actual closed allocation durations before reserving the full downstream plan.",
-    "committed_conservative_upper_GPU_hours": 136
+    "usage_checked_shanghai": "2026-11-14T14:22:00+08:00",
+    "closed_jobs_conservative_GPU_hours_upper_bound": 67,
+    "accounting": "Observed closed scheduler runtimes61.7022GPUh; conservative closed bound67 plus40 reserved active collectors and2 paired qualification =109/230. Remaining121 is proposed downstream allocation, not yet launched.",
+    "committed_conservative_upper_GPU_hours": 109
   },
-  "next_action": "Verify first completed PPO updates and preserve complete sources. In parallel prepare exact30-update input archives for completed sources. Reconcile closed allocation accounting, then collect fixed step30 DPT labels and fit all four learners on matched3/6 corpora. Deadline remains November15 with substantial schedule risk.",
+  "next_action": "Restore frozen inference inputs and qualify expanded paired evaluation; retain next20-minute collector check. Finish corrected sources, collect fixed step30 DPT labels and fit four learners on exact3/6-task corpora. November15 target remains at risk.",
   "jobs": [
     {
       "task": "OpenDrawer",
@@ -270,10 +270,10 @@
       "reserved_GPU_hours": 20,
       "source_commit": "6c0ef27a55a729abbe86a1d6cd1a0c11c99216bf",
       "attempt": "attempt02",
-      "completed_updates": 0,
+      "completed_updates": 11,
       "automatic_retries": false,
-      "last_checked_shanghai": "2026-11-14T13:43:18+08:00",
-      "new_updates_completed": 0,
+      "last_checked_shanghai": "2026-11-14T14:28:29+08:00",
+      "new_updates_completed": 11,
       "target_updates": 30,
       "archive_verified": false,
       "storage": {
@@ -295,7 +295,8 @@
         "status": "passed",
         "devices": 8,
         "hostname": "job-t5gpub15c9d6-master-0"
-      }
+      },
+      "latest_local_free_bytes": 655681224704
     },
     {
       "task": "CloseToasterOvenDoor",
@@ -311,10 +312,10 @@
       "reserved_GPU_hours": 20,
       "source_commit": "6c0ef27a55a729abbe86a1d6cd1a0c11c99216bf",
       "attempt": "attempt02",
-      "completed_updates": 0,
+      "completed_updates": 11,
       "automatic_retries": false,
-      "last_checked_shanghai": "2026-11-14T13:43:18+08:00",
-      "new_updates_completed": 0,
+      "last_checked_shanghai": "2026-11-14T14:28:29+08:00",
+      "new_updates_completed": 11,
       "target_updates": 30,
       "archive_verified": false,
       "storage": {
@@ -336,7 +337,8 @@
         "status": "passed",
         "devices": 8,
         "hostname": "job-8d8wm2rua3nn-master-0"
-      }
+      },
+      "latest_local_free_bytes": 462294446080
     }
   ],
   "scheduler_check": {
@@ -347,5 +349,17 @@
     "next_check_shanghai": "2026-11-14T13:57:00+08:00"
   },
   "monitoring_gap": "Previous record was November13 16:17. No intervening checks are recorded; terminal states were first reconciled in this November14 status check.",
-  "source_completion_note": "Drawer30 checkpoint/raw archive complete, but its final after-evaluation receipt is absent because the bounded checkpoint-and-exit path ran. Coffee and Counter have step30 evaluation receipts. Source learning metrics are not transformer ID/OOD results."
+  "source_completion_note": "Drawer30 checkpoint/raw archive complete, but its final after-evaluation receipt is absent because the bounded checkpoint-and-exit path ran. Coffee and Counter have step30 evaluation receipts. Source learning metrics are not transformer ID/OOD results.",
+  "progress_check": {
+    "checked_shanghai": "2026-11-14T14:28:29+08:00",
+    "source": "Private actual-allocation progress receipts",
+    "evidence": "evidence/SOURCE-AND-PACK-STATUS-20261114.json",
+    "next_check_shanghai": "2026-11-14T14:48:29+08:00"
+  },
+  "canonical_raw_pack_tasks": [
+    "OpenDrawer",
+    "CoffeeSetupMug",
+    "PickPlaceCounterToStove",
+    "TurnOnSinkFaucet"
+  ]
 }

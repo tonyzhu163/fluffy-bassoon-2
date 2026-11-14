@@ -3,19 +3,24 @@
   "scope": "Original RoboCasa three-task transformer comparison and its source histories. Active corrected six-source collection remains protected.",
   "historical_headline": "DIT55.3% ID/56.0% OOD; history benefit not established; earlier collector and unequal policy budgets limit interpretation.",
   "archive": {
-    "status": "in progress",
+    "status": "completed",
     "source_commit": "c096a7264c3f6a1d61505b637e3d19a3c56cce76",
     "receipt": "evidence/HISTORICAL-ARCHIVE-20261114.json",
     "completed": [
       "/mowenjie/fluffy-bassoon-2/outputs/robocasa-dit-diagnostic-20261113-r1",
       "/mowenjie/fluffy-bassoon-2/outputs/robocasa-kv-comparison-20261112-r1",
       "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1",
-      "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2"
+      "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2",
+      "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1"
     ],
     "cold_root": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-original-headline-retention-20261114-r1",
     "method": "Exact GNU tar source comparison, complete member inventory, BOS full SHA256 readback; only then reclaim PFS copy. Sibling *.bos-archive.json restore pointers retained.",
     "initial_PFS_free_bytes": 269505003520,
-    "current_PFS_free_bytes": 290807873536
+    "current_PFS_free_bytes": 377902596096,
+    "net_PFS_free_increase_bytes": 108397592576,
+    "inventory_unique_allocated_GiB": 105.83631658554077,
+    "accounting_note": "Use measured net PFS free increase (~100.95GiB); legacy archive inventory sum double-counts hardlinks and is not reclaimed physical storage.",
+    "finished_at_shanghai": "2026-11-14T14:15:33+08:00"
   },
   "invalid_data_policy": "Earlier critic mismatch excludes the old130 source from corrected training, but does not invalidate every historical observation. No unsupported declaration of corruption; full historical evidence archived. Interrupted Toaster18 excluded, with no accessible payload to delete.",
   "ppo_breakdown_GiB": {
@@ -43,5 +48,6 @@
     "latest_storage_code": "9825fcf24e04b7340c472f5ecb071ec9ed69a7b1",
     "estimated_retained_GiB_if_sample_ratio_holds": 89.234
   },
-  "unperformed": "No new deletion of RoboTwin historical controls, shared initializers/environments, current corrected teachers, or labels required by future fits."
+  "unperformed": "No new deletion of RoboTwin historical controls, shared initializers/environments, current corrected teachers, or labels required by future fits.",
+  "new_user_request": "User now requests a much larger paired evaluation of old DIT against reset/SFT/fixedPPO. Restore only required inference checkpoints/compact metadata from cold; do not restore old raw training corpora."
 }
