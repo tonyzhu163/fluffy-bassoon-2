@@ -1,5 +1,5 @@
 {
-  "status": "Prepared, CPU-checked and deployed clean; not submitted. Original fit allocations remain active.",
+  "status": "Both three-task continuations submitted; original six-task fits still active",
   "recorded_shanghai": "2026-11-14T18:34:01.054478+08:00",
   "reason": "Measured three-task DIT/IC-IQL actor pace is about2.4seconds/update versus about1.6 for AD/DPT; fixed10000 actor updates plus the1000-step value stage are likely to outlast the original345-minute worker windows.",
   "fit_source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
@@ -10,12 +10,13 @@
   "eligibility": "Bind actual terminal, launch, progress, contract and final resumable checkpoint hashes after the original worker closes gracefully and incomplete. Diagnose failures before any retry. No active checkpoint is used for a duplicate training launch.",
   "budget": {
     "proposed_maximum_GPU_hours": 9.25,
-    "existing_committed_conservative_GPU_hours": 182.5,
+    "existing_committed_conservative_GPU_hours": 187.25,
     "matched_readout_proposal_GPU_hours": 32,
     "total_with_both_proposals_GPU_hours": 223.75,
     "authority": "Existing230GPUh campaign approval; add0.25GPUh to the prior9GPUh continuation proposal using the uncommitted recovery margin. No job submitted by this planning change.",
     "reconcile": "Use actual remaining updates and terminal allocation accounting before submission; do not exceed230GPUh.",
-    "current_authority": "APPROVAL.json:182.5committed,32readout+9.25continuations proposed,6.25uncommitted. Historical job closed at conservative24 of28 reservedGPUh; hard cap230 unchanged."
+    "current_authority": "APPROVAL.json:187.25committed,32readout+4.5remaining continuations proposed,6.25uncommitted; hard cap230 unchanged. The9.25continuation phase total includes4.75already submitted.",
+    "remaining_unsubmitted_continuation_GPU_hours": 4.5
   },
   "jobs": [
     {
@@ -29,8 +30,8 @@
       "scheduler_maximum_minutes": 135,
       "worker_deadline_minutes": 120,
       "maximum_GPU_hours": 2.25,
-      "job_id": null,
-      "status": "unsubmitted",
+      "job_id": "job-x26sts56sm1y",
+      "status": "Running; GPU probe passed",
       "source_attempt": "fits3r1"
     },
     {
@@ -44,8 +45,8 @@
       "scheduler_maximum_minutes": 150,
       "worker_deadline_minutes": 135,
       "maximum_GPU_hours": 2.5,
-      "job_id": null,
-      "status": "unsubmitted",
+      "job_id": "job-ffzoxy4ezshi",
+      "status": "Scheduled",
       "source_attempt": "fits3r1"
     },
     {

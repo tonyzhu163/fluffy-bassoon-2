@@ -1,5 +1,5 @@
 {
-  "status": "Verifying full archived panel",
+  "status": "Analysis completed and cold-readback verified",
   "started_unix": 1794659276.3009133,
   "pid": 186387,
   "hostname": "aibox-rffe453e3884-5f96c78b88-6ssrn",
@@ -28,7 +28,36 @@
     "--output",
     "/tmp/robocasa-dit-paired-confirmation-20261114-r1-analysis01"
   ],
-  "last_live_handle_check_shanghai": "2026-11-14T23:12:36.244004+08:00",
-  "last_live_handle_state": "Same live SSH analyzer handle86298; all successful terminal receipts verified, full archive audit in progress.",
-  "analysis_started_unix": 1794669016.960526
+  "last_live_handle_check_shanghai": "2026-11-14T23:26:01.483099+08:00",
+  "last_live_handle_state": "SSH CPU analyzer exited0; complete fixed panel and full cold readback verified",
+  "analysis_started_unix": 1794669016.960526,
+  "completed": true,
+  "finished_unix": 1794669555.3965893,
+  "archive": {
+    "files": [
+      {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/analysis01/COVERAGE.json",
+        "sha256": "6f9f3e16dafdcd2dc8aeeb320dc2acb0018d6c3674cbee3b3bcff2630bcca7f5",
+        "bytes": 67663
+      },
+      {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/analysis01/RESULT.json",
+        "sha256": "ad15662f6003e67326575b1ac84a032eaf0e5b8b037b05e73ce6d837453bb140",
+        "bytes": 12011
+      },
+      {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/analysis01/RESULT.md",
+        "sha256": "1f749f3f57b227c7ea4bb7e8465d4bfe74d8a4f487807af4f5a1aa386a1c123e",
+        "bytes": 1320
+      }
+    ],
+    "full_readback": true,
+    "checked_unix": 1794669555.352817,
+    "source_commit": "440b051c94500efefd167bc9cc7de3cd1592c7ae",
+    "analysis_script_sha256": "83793d261d92b5d317df45536c4aff59ed8ba631e343d47baf48f08359680057",
+    "GPU_hours": 0
+  },
+  "result": "RESULT.json",
+  "coverage": "COVERAGE.json",
+  "archive_receipt": "ARCHIVE.json"
 }

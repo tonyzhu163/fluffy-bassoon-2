@@ -90,7 +90,7 @@ The Atomic-Seen baseline uses the native JAX π0.5 Human300 checkpoint at step *
 | [Paired RLinf source endpoints](../outputs/robocasa-endpoint512-acceleration-20261104-r1/RESULT.md) | On 512 paired cases per task, OpenDrawer improved from 331 to 369 successes and CloseToasterOvenDoor from 168 to 212. Both passed the two-task Holm correction. | These fixed teachers improved over SFT on their own tasks. In a [separate three-task test](../outputs/robocasa-eight-hour-babysit-20261104-r1/SOURCE5-RESULT.md), Faucet passed (204 → 242/512); Counter and Coffee did not. This does not establish five effective sources. |
 | [Frozen AD steering with real prior attempts](../outputs/robocasa-three-task-kv-velocity-meta-20261105-r1/STAGE1-RESULT.md) | On held-out Fridge after five attempts, full-history KV and velocity students succeeded on 33 and 41 of 50 cases; clearing history gave 34 and 39. | Using the frozen expert improved some transfer comparisons with a direct action head. The full/reset comparisons show no consistent benefit from retaining history; one fit per interface. |
 | [Additional 10-update PPO pilots](../outputs/robocasa-six-source-decision-20261112-r1/RESULT.md) | Cabinet scored 38→40/64 (nine paired gains, seven losses); Rack 42→41/64 (four gains, five losses); CounterToStove 40→40/64 (seven gains, seven losses). Each preserves 1,280 training episodes and a verified full checkpoint/archive. | These short single-seed pilots establish collection and optimizer execution, without clear evidence of endpoint improvement. Physical/public initial states matched exactly; maximum initial RGB differences were 1, 1 and 2 intensity levels. Explicit DPT teacher-query labels remain uncollected. |
-| [Complete four-method frozen KV comparison](../outputs/robocasa-kv-comparison-20261112-r1/RESULT.md) | Across12,000 audited episodes, DIT had the highest sixth-episode full-history success:55.3% ID and56.0% OOD, versus AD46.7% and44.0%. DPT scored47.3%/49.0%, IC-IQL48.0%/44.0%. | DIT exceeded SFT by+8.7pp ID/+12.0pp OOD and fixed PPO130 by+4.0pp/+6.0pp (descriptive gaps). Full-minus-reset was+4.7pp ID (95% interval−2.0 to11.3) and+6.0pp OOD (−3.0 to15.0): a positive observed history effect needing confirmation. One fit/method, unequal training durations and first-query replay discrepancies limit causal attribution. Historical headline only: original collector histories are excluded from the corrected matched comparison; closed payloads are in verified cold storage. |
+| [Complete four-method frozen KV comparison](../outputs/robocasa-kv-comparison-20261112-r1/RESULT.md) | Across12,000 audited episodes, DIT had the highest sixth-episode full-history success:55.3% ID and56.0% OOD, versus AD46.7% and44.0%. DPT scored47.3%/49.0%, IC-IQL48.0%/44.0%. | DIT exceeded SFT by+8.7pp ID/+12.0pp OOD and fixed PPO130 by+4.0pp/+6.0pp (descriptive gaps). Full-minus-reset was+4.7pp ID (95% interval−2.0 to11.3) and+6.0pp OOD (−3.0 to15.0). The larger fresh paired confirmation below did not reproduce these history gains or establish superiority over SFT/PPO. One fit/method, unequal training durations and first-query replay discrepancies limit causal attribution. Historical headline only: original collector histories are excluded from the corrected matched comparison; closed payloads are in verified cold storage. |
 | [DIT first-attempt evidence audit](../outputs/robocasa-dit-diagnostic-20261113-r1/RESULT.md) | All 250 paired first attempts have identical empty entry signatures; 14 outcomes differ. In eight raw Coffee pairs, six match in every compared chunk field. One pair first differs by one RGB component after 100 controls; the success-discordant pair differs by 60 RGB components at reset, each by one intensity level, before features and commands diverge. | No recorded initial history leak was found. Rendering variation is a plausible contributor in the inspected mismatch; this retrospective subset neither establishes its causal effect nor explains all 14 cases. Exact initial pixels alone do not ensure identical later observations. |
 | [AD](../outputs/robocasa-eight-hour-babysit-20261104-r1/AD-ID50-RESULT.md) and [DPT](../outputs/robocasa-eight-hour-babysit-20261104-r1/DPT-OOD50-RESULT.md) direct-action baselines | Stronger performance on the three fitted tasks than on held-out Fridge and Microwave. | These students bypass the native action expert. Their performance cannot be attributed to KV steering or taken as proof of adaptation. |
 | [Flora calibration](../outputs/robocasa-joint-h600-preparation-20261102-r4/RESULT.md) and [reward mismatch](../outputs/robocasa-ppo-reward-gap-investigation-20261102-r1/RESULT.md) | Native/task-specific AUROC ranged from 0.848 to 0.982 on five fixed 50-episode, 600-control banks. A separate OpenDrawer training audit found maximum grades on 58 of 183 simulator failures. | The rewarder ranks outcomes usefully on these panels, but a high grade is not native success. The matched 50-case residual-PPO comparisons did not establish superiority over simulator reward. |
@@ -120,6 +120,38 @@ A memoryless LoRA student trained on the final Drawer130, Toaster130 and Faucet4
 On 96 fresh RoboCasa365 scenes with one shared frozen-policy first attempt, two-epoch memoryless LoRA succeeded on 60 retries, frozen π0.5 on 40, and DPT with own versus same-task donor history on 37 versus 54. On the 52 first-attempt failures these four arms recovered 27, 19, 12 and 21, respectively. Selecting training duration on 24 development scenes chose one epoch for DPT and two for memoryless. On the other 72 scenes, matching DPT reached 38, donor DPT 41, and memoryless 42. Own history gained six and lost nine paired cases against donor history. Native checkpoint selection improved DPT success without establishing a memory benefit. [Paired native retries and three-seed learning curves](../outputs/robocasa-three-ppo-retry-20261110-r1/RESULT.md).
 
 For historical Flow-SDE teachers, the [critic parity audit](../outputs/robocasa-flow-sde-critic-parity-20261104-r1/RESULT.md) found that rollout and replay could use different denoising-step values even when likelihoods matched. Record the RLinf revision and critic definition when comparing these runs.
+
+### Frozen DIT paired confirmation
+
+The same frozen DIT checkpoint was evaluated on 256 fresh paired cases per task,
+with the sample count fixed before outcomes. All 1,280 cases and 11,520 physical
+episodes passed the archive audit. The endpoint is episode-six success; DIT
+retains five prior attempts in the full-history arm and starts with empty replay
+in the reset control. ID comprises Drawer, Toaster and Coffee; OOD comprises
+Fridge and Microwave relative to the meta-training corpus.
+
+| Panel | DIT full | DIT reset | SFT | PPO130 |
+| --- | ---: | ---: | ---: | ---: |
+| ID | 43.23% | 44.92% | 41.15% | 49.74% |
+| OOD | 46.09% | 44.14% | 43.36% | 49.41% |
+
+| Full DIT minus control | ID difference (pp), paired 95% interval | OOD difference (pp), paired 95% interval |
+| --- | ---: | ---: |
+| Reset: history effect | −1.69 [−4.43,1.17] | +1.95 [−1.17,5.08] |
+| SFT | +2.08 [−1.17,5.34] | +2.73 [−1.17,6.64] |
+| PPO130 | −6.51 [−10.29,−2.60] | −3.32 [−7.23,0.59] |
+
+The larger panel does not confirm a history benefit or an advantage over SFT.
+Full DIT trails PPO130 on ID, with its interval below zero; the OOD comparison
+remains uncertain. Every per-task full/reset interval also includes zero.
+The earlier small-panel history gain is therefore not replicated, rather than
+evidence that the true effect is exactly zero. These are marginal, unadjusted
+task-stratified paired bootstrap intervals conditional on one DIT fit and these
+five tasks. They do not establish training-seed robustness, explain the original
+method ranking, or resolve the corrected matched four-method comparison.
+[Audited result](../outputs/robocasa-dit-paired-confirmation-20261114-r1/RESULT.md) ·
+[Coverage](../outputs/robocasa-dit-paired-confirmation-20261114-r1/COVERAGE.json) ·
+[Figure (PDF)](../outputs/robocasa-dit-paired-confirmation-20261114-r1/figures/frozen-dit-paired-confirmation.pdf).
 
 ### Corrected six-task PPO30 source baselines
 

@@ -1,0 +1,439 @@
+{
+  "completed": true,
+  "decision": {
+    "recorded_shanghai": "2026-11-14T17:13:52+08:00",
+    "status": "Count fixed before expanded confirmation; not yet submitted",
+    "cases_per_task": 256,
+    "previous_conditional_target_cases_per_task": 500,
+    "tasks": [
+      "OpenDrawer",
+      "CloseToasterOvenDoor",
+      "CoffeeSetupMug",
+      "CloseFridge",
+      "TurnOnMicrowave"
+    ],
+    "shards": 4,
+    "wave_size": 8,
+    "physical_episodes": 11520,
+    "scheduler_maximum_minutes": 420,
+    "worker_deadline_minutes": 405,
+    "reserved_GPU_hours": 28,
+    "outcome_blind_count_fixed": true,
+    "confirmation_outcomes_examined": false,
+    "qualified_readout_sha256": "cffb005f07df84a7961ffe33795529574e8f4743a69b2ef6477884118752cc53",
+    "qualification": {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/qual02/evaluation/COMPLETE.json",
+      "sha256": "55415f977e2fb437e0c266af34be35cc6e9ec6d8e89e5dc9ee9c62ed8735a5a5"
+    },
+    "restored_manifest_sha256": "90a182c8502a28856033e36ca6248fd6f208b851f3f1ef28e8b32d91da7c337a",
+    "timing_evidence": "evidence/QUALIFICATION-TIMING.json",
+    "predicted_worker_minutes": [
+      369.32179083824155,
+      369.32179083824155,
+      369.32179083824155,
+      369.32179083824155
+    ],
+    "predicted_allocation_GPU_hours": 24.62145272254944,
+    "target500_predicted_GPU_hours": 48.41658456987805,
+    "selection_reason": "Largest fully balanced count in 32-case increments fitting the 405-minute worker deadline. 256 predicts369.3minutes; next balanced288 predicts414.9minutes. Keep about35.7minutes internal margin plus15minutes scheduler shutdown/archive reserve. This resource choice uses qualification timing, not success outcomes.",
+    "case_bank": "Fresh confirmation seeds72140000 + task_index*10000 + slot; no old discovery or qualification cases",
+    "analysis": {
+      "contrasts": [
+        "DIT_full_history minus DIT_episode_reset",
+        "DIT_full_history minus original_SFT",
+        "DIT_full_history minus fixed_PPO130"
+      ],
+      "unit": "paired case within task",
+      "panels": "per-task, equal-weight three-task ID and two-task OOD",
+      "bootstrap_replicates": 10000,
+      "bootstrap_seed": 20261114,
+      "report": "success rates, paired differences and95% intervals, discordant pairs, completeness",
+      "stopping": "Fixed count; no significance-based stopping or outcome-selected replacement",
+      "limitations": "Fixed historical checkpoint, one training seed and narrow task set. More episodes do not identify why DIT is stronger."
+    }
+  },
+  "decision_sha256": "40791e028cd21e78867ba3181fefb5807d60c364f1a759ba54bf5854b7ca89c3",
+  "source_run": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/confirm01",
+  "verified_physical_episodes": 11520,
+  "full_history_success_curves": {
+    "OpenDrawer": [
+      62.109375,
+      62.890625,
+      64.453125,
+      59.765625,
+      65.234375,
+      64.453125
+    ],
+    "CloseToasterOvenDoor": [
+      33.984375,
+      31.640625,
+      35.15625,
+      28.515625,
+      31.25,
+      32.421875
+    ],
+    "CoffeeSetupMug": [
+      34.375,
+      35.9375,
+      37.890625,
+      36.328125,
+      37.109375,
+      32.8125
+    ],
+    "CloseFridge": [
+      71.09375,
+      68.75,
+      64.84375,
+      65.234375,
+      67.96875,
+      73.4375
+    ],
+    "TurnOnMicrowave": [
+      14.0625,
+      19.921875,
+      17.96875,
+      19.140625,
+      19.921875,
+      18.75
+    ]
+  },
+  "tasks": {
+    "OpenDrawer": {
+      "tasks": [
+        "OpenDrawer"
+      ],
+      "cases_per_task": 256,
+      "success_percent": {
+        "DIT_full_history": 64.453125,
+        "DIT_episode_reset": 65.234375,
+        "original_SFT": 63.671875,
+        "fixed_PPO130": 70.703125
+      },
+      "contrasts": {
+        "DIT_episode_reset": {
+          "difference_pp": -0.78125,
+          "paired_bootstrap95_pp": [
+            -4.6875,
+            3.125
+          ],
+          "DIT_wins": 12,
+          "DIT_losses": 14,
+          "ties": 230,
+          "paired_cases": 256
+        },
+        "original_SFT": {
+          "difference_pp": 0.78125,
+          "paired_bootstrap95_pp": [
+            -4.6875,
+            5.859375
+          ],
+          "DIT_wins": 24,
+          "DIT_losses": 22,
+          "ties": 210,
+          "paired_cases": 256
+        },
+        "fixed_PPO130": {
+          "difference_pp": -6.25,
+          "paired_bootstrap95_pp": [
+            -12.5,
+            0.0
+          ],
+          "DIT_wins": 25,
+          "DIT_losses": 41,
+          "ties": 190,
+          "paired_cases": 256
+        }
+      }
+    },
+    "CloseToasterOvenDoor": {
+      "tasks": [
+        "CloseToasterOvenDoor"
+      ],
+      "cases_per_task": 256,
+      "success_percent": {
+        "DIT_full_history": 32.421875,
+        "DIT_episode_reset": 34.765625,
+        "original_SFT": 29.296875,
+        "fixed_PPO130": 42.96875
+      },
+      "contrasts": {
+        "DIT_episode_reset": {
+          "difference_pp": -2.34375,
+          "paired_bootstrap95_pp": [
+            -7.03125,
+            2.34375
+          ],
+          "DIT_wins": 16,
+          "DIT_losses": 22,
+          "ties": 218,
+          "paired_cases": 256
+        },
+        "original_SFT": {
+          "difference_pp": 3.125,
+          "paired_bootstrap95_pp": [
+            -3.125,
+            9.375
+          ],
+          "DIT_wins": 35,
+          "DIT_losses": 27,
+          "ties": 194,
+          "paired_cases": 256
+        },
+        "fixed_PPO130": {
+          "difference_pp": -10.546875,
+          "paired_bootstrap95_pp": [
+            -17.1875,
+            -3.90625
+          ],
+          "DIT_wins": 25,
+          "DIT_losses": 52,
+          "ties": 179,
+          "paired_cases": 256
+        }
+      }
+    },
+    "CoffeeSetupMug": {
+      "tasks": [
+        "CoffeeSetupMug"
+      ],
+      "cases_per_task": 256,
+      "success_percent": {
+        "DIT_full_history": 32.8125,
+        "DIT_episode_reset": 34.765625,
+        "original_SFT": 30.46875,
+        "fixed_PPO130": 35.546875
+      },
+      "contrasts": {
+        "DIT_episode_reset": {
+          "difference_pp": -1.953125,
+          "paired_bootstrap95_pp": [
+            -7.8125,
+            3.90625
+          ],
+          "DIT_wins": 26,
+          "DIT_losses": 31,
+          "ties": 199,
+          "paired_cases": 256
+        },
+        "original_SFT": {
+          "difference_pp": 2.34375,
+          "paired_bootstrap95_pp": [
+            -3.515625,
+            7.8125
+          ],
+          "DIT_wins": 32,
+          "DIT_losses": 26,
+          "ties": 198,
+          "paired_cases": 256
+        },
+        "fixed_PPO130": {
+          "difference_pp": -2.734375,
+          "paired_bootstrap95_pp": [
+            -9.765625,
+            4.296875
+          ],
+          "DIT_wins": 41,
+          "DIT_losses": 48,
+          "ties": 167,
+          "paired_cases": 256
+        }
+      }
+    },
+    "CloseFridge": {
+      "tasks": [
+        "CloseFridge"
+      ],
+      "cases_per_task": 256,
+      "success_percent": {
+        "DIT_full_history": 73.4375,
+        "DIT_episode_reset": 69.921875,
+        "original_SFT": 70.3125,
+        "fixed_PPO130": 76.953125
+      },
+      "contrasts": {
+        "DIT_episode_reset": {
+          "difference_pp": 3.515625,
+          "paired_bootstrap95_pp": [
+            -1.5625,
+            8.59375
+          ],
+          "DIT_wins": 28,
+          "DIT_losses": 19,
+          "ties": 209,
+          "paired_cases": 256
+        },
+        "original_SFT": {
+          "difference_pp": 3.125,
+          "paired_bootstrap95_pp": [
+            -3.125,
+            9.765625
+          ],
+          "DIT_wins": 40,
+          "DIT_losses": 32,
+          "ties": 184,
+          "paired_cases": 256
+        },
+        "fixed_PPO130": {
+          "difference_pp": -3.515625,
+          "paired_bootstrap95_pp": [
+            -9.375,
+            2.734375
+          ],
+          "DIT_wins": 26,
+          "DIT_losses": 35,
+          "ties": 195,
+          "paired_cases": 256
+        }
+      }
+    },
+    "TurnOnMicrowave": {
+      "tasks": [
+        "TurnOnMicrowave"
+      ],
+      "cases_per_task": 256,
+      "success_percent": {
+        "DIT_full_history": 18.75,
+        "DIT_episode_reset": 18.359375,
+        "original_SFT": 16.40625,
+        "fixed_PPO130": 21.875
+      },
+      "contrasts": {
+        "DIT_episode_reset": {
+          "difference_pp": 0.390625,
+          "paired_bootstrap95_pp": [
+            -3.125,
+            3.90625
+          ],
+          "DIT_wins": 11,
+          "DIT_losses": 10,
+          "ties": 235,
+          "paired_cases": 256
+        },
+        "original_SFT": {
+          "difference_pp": 2.34375,
+          "paired_bootstrap95_pp": [
+            -2.34375,
+            7.03125
+          ],
+          "DIT_wins": 21,
+          "DIT_losses": 15,
+          "ties": 220,
+          "paired_cases": 256
+        },
+        "fixed_PPO130": {
+          "difference_pp": -3.125,
+          "paired_bootstrap95_pp": [
+            -8.203125,
+            1.953125
+          ],
+          "DIT_wins": 19,
+          "DIT_losses": 27,
+          "ties": 210,
+          "paired_cases": 256
+        }
+      }
+    }
+  },
+  "panels": {
+    "ID": {
+      "tasks": [
+        "OpenDrawer",
+        "CloseToasterOvenDoor",
+        "CoffeeSetupMug"
+      ],
+      "cases_per_task": 256,
+      "success_percent": {
+        "DIT_full_history": 43.22916666666667,
+        "DIT_episode_reset": 44.921875,
+        "original_SFT": 41.14583333333333,
+        "fixed_PPO130": 49.73958333333333
+      },
+      "contrasts": {
+        "DIT_episode_reset": {
+          "difference_pp": -1.6927083333333315,
+          "paired_bootstrap95_pp": [
+            -4.4270833333333375,
+            1.171875
+          ],
+          "DIT_wins": 54,
+          "DIT_losses": 67,
+          "ties": 647,
+          "paired_cases": 768
+        },
+        "original_SFT": {
+          "difference_pp": 2.083333333333337,
+          "paired_bootstrap95_pp": [
+            -1.171875,
+            5.338541666666669
+          ],
+          "DIT_wins": 91,
+          "DIT_losses": 75,
+          "ties": 602,
+          "paired_cases": 768
+        },
+        "fixed_PPO130": {
+          "difference_pp": -6.5104166666666625,
+          "paired_bootstrap95_pp": [
+            -10.286458333333337,
+            -2.6041666666666687
+          ],
+          "DIT_wins": 91,
+          "DIT_losses": 141,
+          "ties": 536,
+          "paired_cases": 768
+        }
+      }
+    },
+    "OOD": {
+      "tasks": [
+        "CloseFridge",
+        "TurnOnMicrowave"
+      ],
+      "cases_per_task": 256,
+      "success_percent": {
+        "DIT_full_history": 46.09375,
+        "DIT_episode_reset": 44.140625,
+        "original_SFT": 43.359375,
+        "fixed_PPO130": 49.4140625
+      },
+      "contrasts": {
+        "DIT_episode_reset": {
+          "difference_pp": 1.953125,
+          "paired_bootstrap95_pp": [
+            -1.171875,
+            5.078125
+          ],
+          "DIT_wins": 39,
+          "DIT_losses": 29,
+          "ties": 444,
+          "paired_cases": 512
+        },
+        "original_SFT": {
+          "difference_pp": 2.734375,
+          "paired_bootstrap95_pp": [
+            -1.171875,
+            6.640625
+          ],
+          "DIT_wins": 61,
+          "DIT_losses": 47,
+          "ties": 404,
+          "paired_cases": 512
+        },
+        "fixed_PPO130": {
+          "difference_pp": -3.3203125,
+          "paired_bootstrap95_pp": [
+            -7.2265625,
+            0.5859375
+          ],
+          "DIT_wins": 45,
+          "DIT_losses": 62,
+          "ties": 405,
+          "paired_cases": 512
+        }
+      }
+    }
+  },
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 20261114,
+  "uncertainty": "Task-stratified paired case bootstrap, equal task weighting; marginal95% intervals without multiplicity correction. Conditional on one fixed DIT fit and these five tasks, not training-seed or task-population uncertainty."
+}

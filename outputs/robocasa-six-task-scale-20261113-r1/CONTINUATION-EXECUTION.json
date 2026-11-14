@@ -1,0 +1,139 @@
+{
+  "source_commit": "e9fe49c4a8892f0eec17e5d6c5fada229eac93dc",
+  "latest_main_code_equivalence_review": "No training/runtime/launcher changes e9fe49c4..1291ac14",
+  "fit_source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+  "queue": "aihcq-rh0wwk9muei4",
+  "jobs": [
+    {
+      "corpus_size": 3,
+      "method": "dit",
+      "attempt": "resume3dit01",
+      "job_name": "mwj_1114_resume3dit01_g1_r1",
+      "job_id": "job-x26sts56sm1y",
+      "status": "Running; allocation probe passed",
+      "GPUs": 1,
+      "CPUs": 16,
+      "RAM_GiB": 128,
+      "shared_memory_GiB": 16,
+      "scheduler_maximum_minutes": 135,
+      "reserved_GPU_hours": 2.25,
+      "automatic_retries": false,
+      "command": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B /mowenjie/fluffy-bassoon-2/sources/matched-final-e9fe49c4/outputs/robocasa-six-task-scale-20261113-r1/fit_job.py --pin e9fe49c4a8892f0eec17e5d6c5fada229eac93dc --attempt resume3dit01 --corpora /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/datasets01/CORPORA.json --corpora-sha256 85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e --corpus-size 3 --data-qualification /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json --data-qualification-sha256 2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0 --methods dit --max-minutes 135 --fit-source /mowenjie/fluffy-bassoon-2/sources/matched-ready-4987585e --fit-pin 4987585e7427061de30771ee207f9b2b79eedc6a --resume-spec /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume-inputs01/3-dit.json --resume-spec-sha256 c8018774a8351df6ea282ecf8065455188e882ae67f6cfc2b47d6c7496f1675d",
+      "recovery_audit": {
+        "passed": true,
+        "spec": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume-inputs01/3-dit.json",
+          "sha256": "c8018774a8351df6ea282ecf8065455188e882ae67f6cfc2b47d6c7496f1675d"
+        },
+        "original_hostname": "job-o8p1uyvoxzr3-master-0",
+        "original_terminal": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/EXIT.json",
+          "sha256": "f53af7000687741bbe9352c1b397d5ea97f1f8221f9d068cfb4ee544b787d29a"
+        },
+        "method_terminal": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dit-EXIT.json",
+          "sha256": "715a18c9127773d25222b78c5cb893daea3e49ef010f19f3609acf412aa28c4c"
+        },
+        "actor_update": 7417,
+        "value_update": 1000,
+        "remaining_actor_updates": 2583,
+        "optimizer_steps": {
+          "optimizer": [
+            7417
+          ],
+          "value_optimizer": [
+            1000
+          ]
+        },
+        "finite_full_state": true,
+        "RNG_fields_present": true,
+        "checked_unix": 1794669591.35788,
+        "submitted": false
+      },
+      "cold_output": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3dit01",
+      "created_shanghai": "2026-11-14T23:22:35+08:00",
+      "capacity_at_submission": {
+        "queue_free_GPUs": 118,
+        "queue_max_GPUs": 416,
+        "queue_free_CPUs": 3529,
+        "queue_free_RAM_GiB": 40077,
+        "personal_free_GPUs": 8,
+        "personal_GPU_quota": 32,
+        "queued_jobs": 6
+      },
+      "command_UI_copy_verified_exact": true
+    },
+    {
+      "corpus_size": 3,
+      "method": "ic_iql",
+      "attempt": "resume3iciql01",
+      "job_name": "mwj_1114_resume3iciql01_g1_r1",
+      "job_id": "job-ffzoxy4ezshi",
+      "status": "Scheduled",
+      "GPUs": 1,
+      "CPUs": 16,
+      "RAM_GiB": 128,
+      "shared_memory_GiB": 16,
+      "scheduler_maximum_minutes": 150,
+      "reserved_GPU_hours": 2.5,
+      "automatic_retries": false,
+      "command": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B /mowenjie/fluffy-bassoon-2/sources/matched-final-e9fe49c4/outputs/robocasa-six-task-scale-20261113-r1/fit_job.py --pin e9fe49c4a8892f0eec17e5d6c5fada229eac93dc --attempt resume3iciql01 --corpora /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/datasets01/CORPORA.json --corpora-sha256 85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e --corpus-size 3 --data-qualification /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json --data-qualification-sha256 2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0 --methods ic_iql --max-minutes 150 --fit-source /mowenjie/fluffy-bassoon-2/sources/matched-ready-4987585e --fit-pin 4987585e7427061de30771ee207f9b2b79eedc6a --resume-spec /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume-inputs01/3-ic_iql.json --resume-spec-sha256 d49bfacfdf8120c0a1759c54cbebdf23a637a8628faafccbe7940118de5b3a8d",
+      "recovery_audit": {
+        "passed": true,
+        "spec": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume-inputs01/3-ic_iql.json",
+          "sha256": "d49bfacfdf8120c0a1759c54cbebdf23a637a8628faafccbe7940118de5b3a8d"
+        },
+        "original_hostname": "job-o8p1uyvoxzr3-master-0",
+        "original_terminal": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/EXIT.json",
+          "sha256": "f53af7000687741bbe9352c1b397d5ea97f1f8221f9d068cfb4ee544b787d29a"
+        },
+        "method_terminal": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ic_iql-EXIT.json",
+          "sha256": "464847136e71f5421e00d98c8076d3688780e0befce3b38edad677511043187c"
+        },
+        "actor_update": 7249,
+        "value_update": 1000,
+        "remaining_actor_updates": 2751,
+        "optimizer_steps": {
+          "optimizer": [
+            7249
+          ],
+          "value_optimizer": [
+            1000
+          ]
+        },
+        "finite_full_state": true,
+        "RNG_fields_present": true,
+        "checked_unix": 1794669593.2518246,
+        "submitted": false
+      },
+      "cold_output": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3iciql01",
+      "created_shanghai": "2026-11-14T23:23:45+08:00",
+      "capacity_at_submission": {
+        "queue_free_GPUs": 117,
+        "queue_max_GPUs": 416,
+        "queue_free_CPUs": 3513,
+        "queue_free_RAM_GiB": 39949,
+        "personal_free_GPUs": 7,
+        "personal_GPU_quota": 32,
+        "queued_jobs": 6
+      },
+      "command_UI_copy_verified_exact": true
+    }
+  ],
+  "original3_closeout": {
+    "job_id": "job-o8p1uyvoxzr3",
+    "scheduler_status": "Failed",
+    "diagnosis": "Expected parent exit1 because two methods remain incomplete at planned345-minute deadline. All four actual worker exit codes0; DIT/IC-IQL full recovery state audited after parent closed.",
+    "scheduler_ended_shanghai": "2026-11-14T23:20:05+08:00",
+    "scheduler_runtime_seconds": 20750,
+    "scheduler_GPU_hours": 23.055555555555557,
+    "worker_GPU_hours": 23.00596177260081,
+    "closed_conservative_GPU_hours": 24
+  },
+  "recorded_shanghai": "2026-11-14T23:21:32.837923+08:00",
+  "submission_evidence": "evidence/RESUME3-SUBMITTED.jpg",
+  "checked_shanghai": "2026-11-14T23:26:01.483099+08:00"
+}
