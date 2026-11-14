@@ -77,7 +77,8 @@ source88ebc32e, and passed its four-device allocation probe.
 
 All six corrected source collections and step-30 teachers are complete. Toaster
 and Stove labels are complete and their datasets assembled. All other four label workers have now succeeded; CPU assembly and
-corpus-query qualification are live. No new transformer fit has launched. Live status belongs in
+corpus-query qualification are live. Both four-method transformer jobs were submitted at17:33/17:35 Shanghai.
+The three-task job is running; the six-task job is queued. Live status belongs in
 [coordination](../coordination.md).
 
 [Execution](EXECUTION.json) · [Restored inputs](RESTORED.json) ·

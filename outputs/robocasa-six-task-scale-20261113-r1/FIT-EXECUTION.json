@@ -1,0 +1,79 @@
+{
+  "checked_shanghai": "2026-11-14T17:37:31+08:00",
+  "status": "Three-task job running with passing GPU probe and fresh Q/V updates; six-task job queued",
+  "cluster": "Baige Pro6K",
+  "queue": "aihcq-rh0wwk9muei4",
+  "source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+  "latest_main_code_equivalence_review": "4d2402ad2cc298737f84481730503e624ed0f049; runtime and fit modules byte-identical to498, only metadata and downstream analysis changed",
+  "corpora": {
+    "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/datasets01/CORPORA.json",
+    "sha256": "85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e"
+  },
+  "data_qualification": {
+    "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json",
+    "sha256": "2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0"
+  },
+  "validation": "63 existing core tests passed;16 actual method/corpus/split cells and128 source queries passed; first allocated native gradient update and batch capacity pending",
+  "jobs": [
+    {
+      "corpus_size": 3,
+      "attempt": "fits3r1",
+      "job_name": "mwj_1114_matched_fits3_g4_r1",
+      "job_id": "job-o8p1uyvoxzr3",
+      "status": "Running; four-device training probe passed; raw cache complete; DIT/IC-IQL fresh Q/V update1",
+      "GPUs": 4,
+      "CPUs": 64,
+      "RAM_GiB": 512,
+      "shared_memory_GiB": 32,
+      "scheduler_maximum_minutes": 360,
+      "reserved_GPU_hours": 24,
+      "automatic_retries": false,
+      "command": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B /mowenjie/fluffy-bassoon-2/sources/matched-ready-4987585e/outputs/robocasa-six-task-scale-20261113-r1/fit_job.py --pin 4987585e7427061de30771ee207f9b2b79eedc6a --attempt fits3r1 --corpora /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/datasets01/CORPORA.json --corpora-sha256 85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e --corpus-size 3 --data-qualification /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json --data-qualification-sha256 2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0",
+      "cold_output": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1",
+      "created_shanghai": "2026-11-14T17:33:53+08:00",
+      "allocation_probe": "passed",
+      "submission_evidence": "evidence/FITS3-SUBMITTED.png",
+      "capacity_at_submission": {
+        "GPU_type": "NVIDIA RPBZZZ6",
+        "queue_free_GPUs": 16,
+        "queue_total_GPUs": 416,
+        "queue_free_CPUs": 1211,
+        "queue_free_RAM_GiB": 15275,
+        "personal_free_GPUs": 19,
+        "personal_GPU_limit": 32,
+        "queued_jobs": 8
+      }
+    },
+    {
+      "corpus_size": 6,
+      "attempt": "fits6r1",
+      "job_name": "mwj_1114_matched_fits6_g4_r1",
+      "job_id": "job-5zbsgqfx0ax6",
+      "status": "Queued; no allocation or worker launch observed yet",
+      "GPUs": 4,
+      "CPUs": 64,
+      "RAM_GiB": 512,
+      "shared_memory_GiB": 32,
+      "scheduler_maximum_minutes": 360,
+      "reserved_GPU_hours": 24,
+      "automatic_retries": false,
+      "command": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B /mowenjie/fluffy-bassoon-2/sources/matched-ready-4987585e/outputs/robocasa-six-task-scale-20261113-r1/fit_job.py --pin 4987585e7427061de30771ee207f9b2b79eedc6a --attempt fits6r1 --corpora /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/datasets01/CORPORA.json --corpora-sha256 85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e --corpus-size 6 --data-qualification /mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json --data-qualification-sha256 2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0",
+      "cold_output": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1",
+      "created_shanghai": "2026-11-14T17:35:38+08:00",
+      "allocation_probe": "pending",
+      "submission_evidence": "evidence/FITS6-SUBMITTED.png",
+      "capacity_at_submission": {
+        "GPU_type": "NVIDIA RPBZZZ6",
+        "queue_free_GPUs": 6,
+        "queue_total_GPUs": 416,
+        "queue_free_CPUs": 1067,
+        "queue_free_RAM_GiB": 14251,
+        "personal_free_GPUs": 15,
+        "personal_GPU_limit": 32,
+        "queued_jobs": 8
+      }
+    }
+  ],
+  "next_check_shanghai": "2026-11-14T17:57:31+08:00",
+  "next_action": "Verify native actor updates and steady update time/memory, six-task allocation and progress; preserve fixed10000-update endpoints"
+}

@@ -1,5 +1,5 @@
 {
-  "status": "Prepared; not submitted. Requires completed hash-bound task assemblies and allocated native qualification.",
+  "status": "Three-task job running with passing GPU probe and fresh Q/V updates; six-task job queued",
   "policy_updates": 10000,
   "value_updates": 1000,
   "seed": 0,
@@ -31,12 +31,13 @@
     "proposed_fits_and_values_GPU_hours": 57,
     "planned_primary_maximum": 48,
     "uncommitted_margin": 9,
-    "submitted_reservation": 0,
-    "contingency": "Actual terminal label accounting released9GPUh. Primary fits reserve48; recovery9 remains uncommitted."
+    "submitted_reservation": 48,
+    "contingency": "Actual terminal label accounting released9GPUh. Primary fits reserve48; recovery9 remains uncommitted.",
+    "reservation_status": "Both primary jobs submitted,24GPUh maximum each; IDs inFIT-EXECUTION.json"
   },
   "retention": "One job-local raw cache shared across four workers; only two readback-verified resumable snapshots per method/attempt plus final candidate",
   "timeout": "Save optimizer, policy/values, task/window sampler and all RNG state; preserve10000-update endpoint across any explicit resume",
-  "validation_pending": "Actual labeled task assembly/readback and source-query sampling; allocated GPU memory/update throughput and first native RGB gradient update",
+  "validation_pending": "Allocated GPU memory/update throughput and first native RGB gradient update",
   "validation": {
     "source_commit": "78ec94eb50cba869a08454d118275c016430919f",
     "CPU_imports": "passed",
@@ -51,8 +52,17 @@
   "required_data_qualification": "dataqual01/RESULT.json full hash; exact source pin and corpus manifest match fit launch",
   "evaluation_migration": "EVALUATION-MIGRATION.json",
   "source_review_before_launch": {
-    "latest_main_reviewed": "88ebc32e25e233d02bb1b3e292c2959b4dc8b69d",
+    "latest_main_reviewed": "4d2402ad2cc298737f84481730503e624ed0f049",
     "fit_and_runtime_code_pin": "4987585e7427061de30771ee207f9b2b79eedc6a",
-    "difference": "Only plans, decisions and evidence changed from498 to88ebc32e; executable source unchanged. Preserve active CPU qualification source and exact pin required by its receipt."
+    "difference": "Latest main adds metadata and a matched-analysis GPU-UUID comparison fix. git diff confirms src,benchmarks,scripts and all fit/corpus/qualification modules are identical to498; keep active CPU qualification source and exact pin."
+  },
+  "corpora": {
+    "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/datasets01/CORPORA.json",
+    "sha256": "85394094fcc159984ffbaf249c93cbced236b723ce4fd6d39fa3e54b5dce4e2e"
+  },
+  "execution": "FIT-EXECUTION.json",
+  "data_qualification": {
+    "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/dataqual01/RESULT.json",
+    "sha256": "2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0"
   }
 }
