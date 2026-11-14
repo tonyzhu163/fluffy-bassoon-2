@@ -1,5 +1,5 @@
 {
-  "status": "Running; all4 shards advancing through DPT native comparisons; no failure receipts",
+  "status": "Running; all4 shards advanced to3-task IC-IQL or6-task AD comparisons; no failure receipts",
   "source_commit": "7cc56702ec6b623ae4aa4f79da211883ca4ecddd",
   "source_directory": "/mowenjie/fluffy-bassoon-2/sources/matched-readout-7cc56702",
   "source_deployment": "evidence/MATCHED-READOUT-DEPLOYMENT-7cc56702.json",
@@ -59,7 +59,7 @@
     "queued_jobs": 1
   },
   "submission_evidence": "evidence/MATCHED-EVALUATION-SUBMITTED.jpg",
-  "next_check_shanghai": "2026-11-15T02:09:00+08:00",
+  "next_check_shanghai": "2026-11-15T02:29:00+08:00",
   "submission_evidence_sha256": "e7db69543091bbe776f1715142390361bcfb651e4bc1826f55227b4502a3b232",
   "launch": {
     "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/LAUNCH.json",
@@ -468,64 +468,64 @@
       "topology": "\t\u001b[4mGPU0\tGPU1\tGPU2\tGPU3\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tPHB\tPHB\tPHB\tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nGPU1\tPHB\t X \tPHB\tPHB\tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nGPU2\tPHB\tPHB\t X \tPHB\tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nGPU3\tPHB\tPHB\tPHB\t X \tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nNIC0\tSYS\tSYS\tSYS\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\tSYS\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tSYS\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tSYS\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
     }
   },
-  "latest_evidence": "evidence/MATCHED-READOUT-20261115-0149.json",
-  "checked_unix": 1794678545.2795486,
+  "latest_evidence": "evidence/MATCHED-READOUT-20261115-0209.json",
+  "checked_unix": 1794679746.1479092,
   "first_native_validation": "evidence/MATCHED-FIRST-NATIVE-PROGRESS.json",
   "shard_progress": {
     "0": {
       "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-00/evaluation/PROGRESS.json",
-      "sha256": "6735f7b321efc97373bd40281125ca4ba4e80b9aab5499480d5c1ff54f2bbed7",
+      "sha256": "a5bc50c28bb4f0c6ee3b2c3eccb3151c9176015d19789243ef82493b64367767",
       "data": {
         "task": "OpenDrawer",
         "first": 0,
-        "model": "3/dpt",
+        "model": "3/ic_iql",
         "arm": "reset_sixth",
         "completed_waves": 0,
-        "elapsed_seconds": 56.0739483833313,
-        "checked_unix": 1794678501.9799063
+        "elapsed_seconds": 56.935431480407715,
+        "checked_unix": 1794679427.9068599
       }
     },
     "1": {
       "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-01/evaluation/PROGRESS.json",
-      "sha256": "452f428ea7e57090f20d4dd6684de0aab4d698820ade2611183f80163abc0360",
+      "sha256": "fd686714a3ecdbf538fd3d4c9bc64808f468bd36cac30d23216fda83b783bb9b",
       "data": {
         "task": "OpenDrawer",
         "first": 8,
-        "model": "3/dpt",
+        "model": "6/ad",
         "arm": "reset_sixth",
         "completed_waves": 0,
-        "elapsed_seconds": 50.931883335113525,
-        "checked_unix": 1794678424.8777485
+        "elapsed_seconds": 51.162245750427246,
+        "checked_unix": 1794679704.8310456
       }
     },
     "2": {
       "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-02/evaluation/PROGRESS.json",
-      "sha256": "e2b81b7d2ab8cb942a68d6b3458a92e9dd6b922d15bb044426f529fb2cf62797",
+      "sha256": "642c0f9cf6b41acd13cd5b8b9a2779a74f164662e4d3487744c7256136bfd4ce",
       "data": {
         "task": "OpenDrawer",
         "first": 16,
-        "model": "3/dpt",
-        "arm": "full",
+        "model": "3/ic_iql",
+        "arm": "reset_sixth",
         "completed_waves": 0,
-        "elapsed_seconds": 395.7424442768097,
-        "checked_unix": 1794678523.6376667
+        "elapsed_seconds": 65.28325080871582,
+        "checked_unix": 1794679746.0173528
       }
     },
     "3": {
       "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-03/evaluation/PROGRESS.json",
-      "sha256": "11c6c929c4a096ad6ab20e331e7d2c43ed9c921e15a76afa39583d7cb0a8abdd",
+      "sha256": "8dd57529ffea8dcea5be800002a3bb3131b3bd8e1abc43f90b4a79f39c126ef4",
       "data": {
         "task": "OpenDrawer",
         "first": 24,
-        "model": "3/dpt",
-        "arm": "reset_sixth",
+        "model": "6/ad",
+        "arm": "reset_first",
         "completed_waves": 0,
-        "elapsed_seconds": 53.34085702896118,
-        "checked_unix": 1794678462.402133
+        "elapsed_seconds": 53.04560685157776,
+        "checked_unix": 1794679732.7372382
       }
     }
   },
-  "native_physical_episodes_completed_lower_bound": 496,
+  "native_physical_episodes_completed_lower_bound": 1144,
   "whole_paired_waves_archived": 0,
   "first_native_observation_watch": {
     "pid": 209231,
@@ -538,13 +538,19 @@
     "ended_unix": 1794677989.2243135
   },
   "observation_watch": {
-    "pid": 211231,
+    "pid": 217742,
     "hostname": "aibox-rffe453e3884-5f96c78b88-6ssrn",
-    "started_unix": 1794678633.14647,
-    "deadline_unix": 1794679740,
-    "behavior": "Read-only wait on owned terminal/error/incomplete receipt, first paired bank, or02:09 full-check deadline; no accelerator mutation",
+    "started_unix": 1794679819.0534387,
+    "deadline_unix": 1794680940,
+    "behavior": "Read-only wait for owned terminal/error/incomplete event, first complete paired bank, or02:29 full-check deadline; no accelerator mutation",
     "GPU_hours": 0
   },
   "startup_binding_audit": "evidence/MATCHED-STARTUP-BINDING-AUDIT.json",
-  "CPU_completion_followthrough": "MATCHED-ANALYSIS-EXECUTION.json"
+  "CPU_completion_followthrough": "MATCHED-ANALYSIS-EXECUTION.json",
+  "shared_PFS_free_bytes": 116710703104,
+  "shared_space_observation": {
+    "change_since_previous_check_bytes": -35706109952,
+    "attribution": "Unattributed shared-space change; no ownership inference",
+    "evaluation_bulk_output": "Container-local /tmp and BOS; active runtime unchanged"
+  }
 }
