@@ -1,6 +1,6 @@
 {
   "user_instruction": "Expand paired evaluations; quantify DIT benefit from history and above SFT/PPO",
-  "status": "First qualification failed in post-rollout action audit; corrected retry submitted and queued",
+  "status": "Native qualification running; one of five task waves audited and fully cold-verified",
   "tasks": [
     "OpenDrawer",
     "CloseToasterOvenDoor",
@@ -36,10 +36,13 @@
     "qualification_reserved_GPU_hours": 2,
     "full_evaluation_reserved_GPU_hours": 0,
     "rule": "Reconcile scheduler allocation times and remaining source/fitting reservations before full launch; closed170/50caps remain closed",
-    "parent_closed_conservative_GPU_hours": 67,
-    "parent_active_recovery_reserved_GPU_hours": 40,
+    "parent_closed_conservative_GPU_hours": 107.4,
+    "parent_active_recovery_reserved_GPU_hours": 0,
     "maximum_full_evaluation_GPU_hours": 28,
-    "remaining_parent_work_reserved_proposal_GPU_hours": 93
+    "remaining_parent_work_reserved_proposal_GPU_hours": 75,
+    "parent_active_labels_reserved_GPU_hours": 17.8,
+    "parent_active_qualification_and_margin_GPU_hours": 1.8,
+    "parent_committed_conservative_GPU_hours": 127
   },
   "limitations": "New cases narrow case uncertainty for this fixed DIT fit; do not establish training-seed robustness or all-task-family transfer",
   "frozen_DIT": {
@@ -84,8 +87,8 @@
     "case_failures": "Preserve failures and paired denominators; no success-conditioned exclusions or substitution",
     "interpretation": "Separate history effect from advantage over SFT/PPO. More cases estimate this frozen fit more precisely; they do not explain why DIT is stronger or measure training-seed variation."
   },
-  "next_action": "Verify allocated GPU probe and completed audited physical wave. Continue fixed-step30 label preparation. Fix confirmation count from throughput before examining confirmation outcomes.",
-  "checked_shanghai": "2026-11-14T15:29:24+08:00",
+  "next_action": "Complete all task qualification waves and fix sample count from outcome-blind timing within available reservation. Expanded confirmation has not launched.",
+  "checked_shanghai": "2026-11-14T16:22:47+08:00",
   "qualification_retry": {
     "total_GPU_hours": 2,
     "closed_conservative": 0.2,
