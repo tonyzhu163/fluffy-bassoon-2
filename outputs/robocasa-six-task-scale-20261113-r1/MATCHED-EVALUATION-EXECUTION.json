@@ -1,5 +1,5 @@
 {
-  "status": "Running;17/25 whole paired banks archived, at least10344 physical episodes complete",
+  "status": "Running;19/25 whole paired banks archived, at least10736 physical episodes complete",
   "source_commit": "7cc56702ec6b623ae4aa4f79da211883ca4ecddd",
   "source_directory": "/mowenjie/fluffy-bassoon-2/sources/matched-readout-7cc56702",
   "source_deployment": "evidence/MATCHED-READOUT-DEPLOYMENT-7cc56702.json",
@@ -58,7 +58,7 @@
     "queued_jobs": 1
   },
   "submission_evidence": "evidence/MATCHED-EVALUATION-SUBMITTED.jpg",
-  "next_check_shanghai": "2026-11-15T07:14:00+08:00",
+  "next_check_shanghai": "2026-11-15T07:30:00+08:00",
   "submission_evidence_sha256": "e7db69543091bbe776f1715142390361bcfb651e4bc1826f55227b4502a3b232",
   "launch": {
     "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/LAUNCH.json",
@@ -467,65 +467,639 @@
       "topology": "\t\u001b[4mGPU0\tGPU1\tGPU2\tGPU3\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tPHB\tPHB\tPHB\tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nGPU1\tPHB\t X \tPHB\tPHB\tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nGPU2\tPHB\tPHB\t X \tPHB\tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nGPU3\tPHB\tPHB\tPHB\t X \tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nNIC0\tSYS\tSYS\tSYS\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\tSYS\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tSYS\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tSYS\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
     }
   },
-  "latest_evidence": "evidence/MATCHED-READOUT-20261115-0654.json",
-  "checked_unix": 1794696848.6829472,
+  "latest_evidence": "evidence/MATCHED-READOUT-20261115-0709.json",
+  "checked_unix": 1794697799.973055,
   "first_native_validation": "evidence/MATCHED-FIRST-NATIVE-PROGRESS.json",
   "shard_progress": {
     "0": {
       "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-00/evaluation/PROGRESS.json",
-      "sha256": "d014f08acc14be5536e2cd5d24265f3298323c7b3bc0418d07cea0519e035179",
+      "sha256": "e16d002616cb34415f80ffc69a316aa6ce983d11fc642f3afaef984732b34ebb",
       "data": {
-        "task": "CloseFridge",
-        "first": 8,
-        "model": "6/dit",
-        "arm": "reset_first",
-        "completed_waves": 4,
-        "elapsed_seconds": 74.12578320503235,
-        "checked_unix": 1794696848.4687283
+        "completed_waves": 5,
+        "results": [
+          {
+            "task": "OpenDrawer",
+            "first": 0,
+            "archive": {
+              "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-00/evaluation/OpenDrawer/bank-0000/evidence.tar",
+              "sha256": "0bd8b133558c83907d441d12240e1087644cc773296b076eadb2c00f33631ba3",
+              "bytes": 7055073280,
+              "every_member_verified": true,
+              "cold_full_readback": true,
+              "elapsed_seconds": 36.903703689575195
+            },
+            "timing": {
+              "3/ad": {
+                "full": 345.82081151008606,
+                "reset_first": 56.41307497024536,
+                "reset_sixth": 55.77508807182312
+              },
+              "3/dpt": {
+                "full": 332.54760479927063,
+                "reset_first": 56.37459135055542,
+                "reset_sixth": 56.0739483833313
+              },
+              "3/dit": {
+                "full": 332.7852635383606,
+                "reset_first": 56.73087000846863,
+                "reset_sixth": 55.84576201438904
+              },
+              "3/ic_iql": {
+                "full": 330.97190523147583,
+                "reset_first": 56.04573965072632,
+                "reset_sixth": 56.935431480407715
+              },
+              "6/ad": {
+                "full": 333.6392240524292,
+                "reset_first": 55.64469623565674,
+                "reset_sixth": 55.69170260429382
+              },
+              "6/dpt": {
+                "full": 328.9426815509796,
+                "reset_first": 55.933446645736694,
+                "reset_sixth": 55.29608106613159
+              },
+              "6/dit": {
+                "full": 330.73972249031067,
+                "reset_first": 55.996095418930054,
+                "reset_sixth": 55.228254318237305
+              },
+              "6/ic_iql": {
+                "full": 330.95627188682556,
+                "reset_first": 56.79817819595337,
+                "reset_sixth": 55.49653458595276
+              }
+            },
+            "baseline_timing": {
+              "original_SFT": 57.18815016746521,
+              "fixed_PPO30": 56.90558075904846
+            }
+          },
+          {
+            "task": "OpenDrawer",
+            "first": 32,
+            "archive": {
+              "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-00/evaluation/OpenDrawer/bank-0032/evidence.tar",
+              "sha256": "1045030a56018d635e1e580514678b4c51c505f3e88ad7d493a0cfbe2101491c",
+              "bytes": 6146467840,
+              "every_member_verified": true,
+              "cold_full_readback": true,
+              "elapsed_seconds": 32.99572944641113
+            },
+            "timing": {
+              "3/ad": {
+                "full": 360.17118191719055,
+                "reset_first": 60.71251320838928,
+                "reset_sixth": 60.1199905872345
+              },
+              "3/dpt": {
+                "full": 362.49652218818665,
+                "reset_first": 61.02612924575806,
+                "reset_sixth": 60.44572567939758
+              },
+              "3/dit": {
+                "full": 362.7819583415985,
+                "reset_first": 60.920685052871704,
+                "reset_sixth": 60.15576982498169
+              },
+              "3/ic_iql": {
+                "full": 362.8420240879059,
+                "reset_first": 60.83923387527466,
+                "reset_sixth": 60.59957003593445
+              },
+              "6/ad": {
+                "full": 360.8188235759735,
+                "reset_first": 60.578516483306885,
+                "reset_sixth": 60.392614126205444
+              },
+              "6/dpt": {
+                "full": 361.87913703918457,
+                "reset_first": 60.41978359222412,
+                "reset_sixth": 60.56651425361633
+              },
+              "6/dit": {
+                "full": 364.0130124092102,
+                "reset_first": 60.412517070770264,
+                "reset_sixth": 60.21315288543701
+              },
+              "6/ic_iql": {
+                "full": 360.4247622489929,
+                "reset_first": 60.441362380981445,
+                "reset_sixth": 60.3441948890686
+              }
+            },
+            "baseline_timing": {
+              "original_SFT": 61.32015538215637,
+              "fixed_PPO30": 61.7091965675354
+            }
+          },
+          {
+            "task": "CloseToasterOvenDoor",
+            "first": 24,
+            "archive": {
+              "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-00/evaluation/CloseToasterOvenDoor/bank-0024/evidence.tar",
+              "sha256": "2b9d97743477029b30b9bd6aa0c633e30279b5ce2329fab2e99e9d58c6eb0c06",
+              "bytes": 5620418560,
+              "every_member_verified": true,
+              "cold_full_readback": true,
+              "elapsed_seconds": 30.662932634353638
+            },
+            "timing": {
+              "3/ad": {
+                "full": 281.8622941970825,
+                "reset_first": 46.883795976638794,
+                "reset_sixth": 47.08118414878845
+              },
+              "3/dpt": {
+                "full": 283.104651927948,
+                "reset_first": 47.54718565940857,
+                "reset_sixth": 47.35495591163635
+              },
+              "3/dit": {
+                "full": 282.3047528266907,
+                "reset_first": 46.08482122421265,
+                "reset_sixth": 46.99826788902283
+              },
+              "3/ic_iql": {
+                "full": 282.7243866920471,
+                "reset_first": 47.67504835128784,
+                "reset_sixth": 47.30091714859009
+              },
+              "6/ad": {
+                "full": 281.72085094451904,
+                "reset_first": 47.96773600578308,
+                "reset_sixth": 46.66142129898071
+              },
+              "6/dpt": {
+                "full": 280.0233635902405,
+                "reset_first": 47.363659381866455,
+                "reset_sixth": 47.59664845466614
+              },
+              "6/dit": {
+                "full": 282.4296021461487,
+                "reset_first": 46.88163137435913,
+                "reset_sixth": 46.86759805679321
+              },
+              "6/ic_iql": {
+                "full": 279.70485401153564,
+                "reset_first": 46.25571632385254,
+                "reset_sixth": 47.06581783294678
+              }
+            },
+            "baseline_timing": {
+              "original_SFT": 48.91559338569641,
+              "fixed_PPO30": 47.773442029953
+            }
+          },
+          {
+            "task": "CoffeeSetupMug",
+            "first": 16,
+            "archive": {
+              "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-00/evaluation/CoffeeSetupMug/bank-0016/evidence.tar",
+              "sha256": "bfa2f7e715f116d9fd1205a840b50533c5b3db29a427216863837c271b1d44ae",
+              "bytes": 6686965760,
+              "every_member_verified": true,
+              "cold_full_readback": true,
+              "elapsed_seconds": 36.530349016189575
+            },
+            "timing": {
+              "3/ad": {
+                "full": 317.21748542785645,
+                "reset_first": 53.09529638290405,
+                "reset_sixth": 52.097365379333496
+              },
+              "3/dpt": {
+                "full": 313.0572533607483,
+                "reset_first": 52.335113525390625,
+                "reset_sixth": 51.69542407989502
+              },
+              "3/dit": {
+                "full": 315.527973651886,
+                "reset_first": 52.33684706687927,
+                "reset_sixth": 51.47309970855713
+              },
+              "3/ic_iql": {
+                "full": 312.5101339817047,
+                "reset_first": 52.84669041633606,
+                "reset_sixth": 51.905601263046265
+              },
+              "6/ad": {
+                "full": 312.73680090904236,
+                "reset_first": 51.91819167137146,
+                "reset_sixth": 52.32999777793884
+              },
+              "6/dpt": {
+                "full": 314.516229391098,
+                "reset_first": 51.76255559921265,
+                "reset_sixth": 52.10960817337036
+              },
+              "6/dit": {
+                "full": 317.3229694366455,
+                "reset_first": 51.82300329208374,
+                "reset_sixth": 52.022014141082764
+              },
+              "6/ic_iql": {
+                "full": 317.45942878723145,
+                "reset_first": 52.15620827674866,
+                "reset_sixth": 52.051968812942505
+              }
+            },
+            "baseline_timing": {
+              "original_SFT": 53.46899914741516,
+              "fixed_PPO30": 53.43637275695801
+            }
+          },
+          {
+            "task": "CloseFridge",
+            "first": 8,
+            "archive": {
+              "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-00/evaluation/CloseFridge/bank-0008/evidence.tar",
+              "sha256": "e5f468238a98904a3ab5f91b840be26f7aac46110be0a000d92c496b06990b66",
+              "bytes": 8479467520,
+              "every_member_verified": true,
+              "cold_full_readback": true,
+              "elapsed_seconds": 46.525824308395386
+            },
+            "timing": {
+              "3/ad": {
+                "full": 448.7027940750122,
+                "reset_first": 75.8502938747406,
+                "reset_sixth": 74.32208824157715
+              },
+              "3/dpt": {
+                "full": 450.82300901412964,
+                "reset_first": 74.61620450019836,
+                "reset_sixth": 74.12665438652039
+              },
+              "3/dit": {
+                "full": 449.92965745925903,
+                "reset_first": 74.29505681991577,
+                "reset_sixth": 74.11840152740479
+              },
+              "3/ic_iql": {
+                "full": 447.7034332752228,
+                "reset_first": 74.5666344165802,
+                "reset_sixth": 74.34617877006531
+              },
+              "6/ad": {
+                "full": 446.7069375514984,
+                "reset_first": 74.6779453754425,
+                "reset_sixth": 74.63430452346802
+              },
+              "6/dpt": {
+                "full": 449.75306701660156,
+                "reset_first": 75.25148820877075,
+                "reset_sixth": 75.47455048561096
+              },
+              "6/dit": {
+                "full": 449.2563943862915,
+                "reset_first": 74.12578320503235,
+                "reset_sixth": 75.00995087623596
+              },
+              "6/ic_iql": {
+                "full": 449.7562234401703,
+                "reset_first": 74.37248539924622,
+                "reset_sixth": 84.41024518013
+              }
+            },
+            "baseline_timing": {
+              "original_SFT": 76.41459059715271,
+              "fixed_PPO30": 77.22860646247864
+            }
+          }
+        ],
+        "checked_unix": 1794697766.4054103
       }
     },
     "1": {
       "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-01/evaluation/PROGRESS.json",
-      "sha256": "079283eb923e4311bf48b3c0beb66e14f2f2b0a682261af8fb64582a77fdbed1",
+      "sha256": "1f8c264923992839c64f7b07203056f29451c8cbd80fff6af07e5ac716f2afbf",
       "data": {
         "task": "TurnOnMicrowave",
         "first": 8,
-        "model": "3/dpt",
-        "arm": "full",
+        "model": "3/ic_iql",
+        "arm": "reset_sixth",
         "completed_waves": 5,
-        "elapsed_seconds": 243.41525030136108,
-        "checked_unix": 1794696825.4534712
+        "elapsed_seconds": 41.10044550895691,
+        "checked_unix": 1794697598.016466
       }
     },
     "2": {
       "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-02/evaluation/PROGRESS.json",
-      "sha256": "98a12ea6a337451c461fa07c82758478fbbff72451a4a6a10137e3ce6d35d8d2",
+      "sha256": "1f21b25e2d3a214cd81640118c9f6606ed9c4628cdc402790f3c74ada9fabbfd",
       "data": {
-        "task": "CloseFridge",
-        "first": 24,
-        "model": "6/dit",
-        "arm": "reset_sixth",
-        "completed_waves": 4,
-        "elapsed_seconds": 72.78277564048767,
-        "checked_unix": 1794696752.4373856
+        "completed_waves": 5,
+        "results": [
+          {
+            "task": "OpenDrawer",
+            "first": 16,
+            "archive": {
+              "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-02/evaluation/OpenDrawer/bank-0016/evidence.tar",
+              "sha256": "7669a01e495c1d3714231ae9a8e2e7eba6bf9b3cfbfd710d20df4e5c37ff7913",
+              "bytes": 5599836160,
+              "every_member_verified": true,
+              "cold_full_readback": true,
+              "elapsed_seconds": 30.084139347076416
+            },
+            "timing": {
+              "3/ad": {
+                "full": 401.5506308078766,
+                "reset_first": 67.41297435760498,
+                "reset_sixth": 66.16549372673035
+              },
+              "3/dpt": {
+                "full": 395.7424442768097,
+                "reset_first": 65.67631840705872,
+                "reset_sixth": 65.95948147773743
+              },
+              "3/dit": {
+                "full": 392.6271514892578,
+                "reset_first": 65.44004225730896,
+                "reset_sixth": 65.25783181190491
+              },
+              "3/ic_iql": {
+                "full": 400.00832056999207,
+                "reset_first": 65.52795195579529,
+                "reset_sixth": 65.28325080871582
+              },
+              "6/ad": {
+                "full": 393.3471088409424,
+                "reset_first": 64.95877385139465,
+                "reset_sixth": 65.7888572216034
+              },
+              "6/dpt": {
+                "full": 394.6484010219574,
+                "reset_first": 65.3159613609314,
+                "reset_sixth": 66.43660569190979
+              },
+              "6/dit": {
+                "full": 392.5421664714813,
+                "reset_first": 65.72203159332275,
+                "reset_sixth": 65.24283003807068
+              },
+              "6/ic_iql": {
+                "full": 392.28798270225525,
+                "reset_first": 64.24085760116577,
+                "reset_sixth": 64.60021567344666
+              }
+            },
+            "baseline_timing": {
+              "original_SFT": 65.86381721496582,
+              "fixed_PPO30": 66.4336166381836
+            }
+          },
+          {
+            "task": "CloseToasterOvenDoor",
+            "first": 8,
+            "archive": {
+              "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-02/evaluation/CloseToasterOvenDoor/bank-0008/evidence.tar",
+              "sha256": "1f140337c172274be54640d5e8fd53c0cefc8017653cc97c75a6c0eadf804cdb",
+              "bytes": 5906432000,
+              "every_member_verified": true,
+              "cold_full_readback": true,
+              "elapsed_seconds": 31.37678551673889
+            },
+            "timing": {
+              "3/ad": {
+                "full": 305.7215485572815,
+                "reset_first": 51.35979151725769,
+                "reset_sixth": 50.79232144355774
+              },
+              "3/dpt": {
+                "full": 305.7377107143402,
+                "reset_first": 51.133028745651245,
+                "reset_sixth": 50.715155363082886
+              },
+              "3/dit": {
+                "full": 308.58312129974365,
+                "reset_first": 52.05925726890564,
+                "reset_sixth": 50.334115505218506
+              },
+              "3/ic_iql": {
+                "full": 307.9506995677948,
+                "reset_first": 50.90027570724487,
+                "reset_sixth": 50.49400973320007
+              },
+              "6/ad": {
+                "full": 306.4380028247833,
+                "reset_first": 51.32941031455994,
+                "reset_sixth": 51.400012493133545
+              },
+              "6/dpt": {
+                "full": 307.57101249694824,
+                "reset_first": 54.18484592437744,
+                "reset_sixth": 50.76326560974121
+              },
+              "6/dit": {
+                "full": 307.2602322101593,
+                "reset_first": 51.50140023231506,
+                "reset_sixth": 51.018515825271606
+              },
+              "6/ic_iql": {
+                "full": 307.0953269004822,
+                "reset_first": 51.08319687843323,
+                "reset_sixth": 50.70086860656738
+              }
+            },
+            "baseline_timing": {
+              "original_SFT": 52.11901378631592,
+              "fixed_PPO30": 58.51423144340515
+            }
+          },
+          {
+            "task": "CoffeeSetupMug",
+            "first": 0,
+            "archive": {
+              "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-02/evaluation/CoffeeSetupMug/bank-0000/evidence.tar",
+              "sha256": "40dc7741236645a519d0985891e7bc0ca3c29c65b109f2537060b3bfd3cef454",
+              "bytes": 7153551360,
+              "every_member_verified": true,
+              "cold_full_readback": true,
+              "elapsed_seconds": 37.58739924430847
+            },
+            "timing": {
+              "3/ad": {
+                "full": 299.7068295478821,
+                "reset_first": 50.34195828437805,
+                "reset_sixth": 50.26630735397339
+              },
+              "3/dpt": {
+                "full": 299.1475872993469,
+                "reset_first": 49.89584493637085,
+                "reset_sixth": 50.505061626434326
+              },
+              "3/dit": {
+                "full": 298.4083251953125,
+                "reset_first": 49.763667583465576,
+                "reset_sixth": 50.325111865997314
+              },
+              "3/ic_iql": {
+                "full": 300.3624007701874,
+                "reset_first": 50.082024574279785,
+                "reset_sixth": 50.341126918792725
+              },
+              "6/ad": {
+                "full": 297.46618032455444,
+                "reset_first": 50.56284976005554,
+                "reset_sixth": 50.404377698898315
+              },
+              "6/dpt": {
+                "full": 299.7526521682739,
+                "reset_first": 49.68036603927612,
+                "reset_sixth": 49.634904861450195
+              },
+              "6/dit": {
+                "full": 296.4684977531433,
+                "reset_first": 49.59894299507141,
+                "reset_sixth": 50.33544564247131
+              },
+              "6/ic_iql": {
+                "full": 296.47854018211365,
+                "reset_first": 49.54703187942505,
+                "reset_sixth": 50.206175088882446
+              }
+            },
+            "baseline_timing": {
+              "original_SFT": 50.96794152259827,
+              "fixed_PPO30": 52.85059952735901
+            }
+          },
+          {
+            "task": "CoffeeSetupMug",
+            "first": 32,
+            "archive": {
+              "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-02/evaluation/CoffeeSetupMug/bank-0032/evidence.tar",
+              "sha256": "cd25fcebc39e7da73833c65e462e2200582b5106d98dfd9fc653bc976071fc6c",
+              "bytes": 6474434560,
+              "every_member_verified": true,
+              "cold_full_readback": true,
+              "elapsed_seconds": 34.48918104171753
+            },
+            "timing": {
+              "3/ad": {
+                "full": 287.2014546394348,
+                "reset_first": 47.959391832351685,
+                "reset_sixth": 47.83105278015137
+              },
+              "3/dpt": {
+                "full": 286.7485682964325,
+                "reset_first": 47.95037603378296,
+                "reset_sixth": 47.86854290962219
+              },
+              "3/dit": {
+                "full": 285.18893122673035,
+                "reset_first": 47.76219296455383,
+                "reset_sixth": 47.34186816215515
+              },
+              "3/ic_iql": {
+                "full": 285.9480690956116,
+                "reset_first": 48.31201100349426,
+                "reset_sixth": 49.06774878501892
+              },
+              "6/ad": {
+                "full": 286.32468843460083,
+                "reset_first": 47.7323739528656,
+                "reset_sixth": 47.80689096450806
+              },
+              "6/dpt": {
+                "full": 287.02499175071716,
+                "reset_first": 47.906407594680786,
+                "reset_sixth": 48.418652057647705
+              },
+              "6/dit": {
+                "full": 293.8464922904968,
+                "reset_first": 48.06587553024292,
+                "reset_sixth": 47.69690418243408
+              },
+              "6/ic_iql": {
+                "full": 287.836053609848,
+                "reset_first": 48.78123879432678,
+                "reset_sixth": 48.60078525543213
+              }
+            },
+            "baseline_timing": {
+              "original_SFT": 48.68339252471924,
+              "fixed_PPO30": 49.63320779800415
+            }
+          },
+          {
+            "task": "CloseFridge",
+            "first": 24,
+            "archive": {
+              "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-02/evaluation/CloseFridge/bank-0024/evidence.tar",
+              "sha256": "666366b0097f5bbb70c5b0a018897a17c082c7067d5e74ee9dfd345ee9b73b0d",
+              "bytes": 7894753280,
+              "every_member_verified": true,
+              "cold_full_readback": true,
+              "elapsed_seconds": 40.73017382621765
+            },
+            "timing": {
+              "3/ad": {
+                "full": 440.7883458137512,
+                "reset_first": 72.67612385749817,
+                "reset_sixth": 73.03171563148499
+              },
+              "3/dpt": {
+                "full": 436.1827018260956,
+                "reset_first": 72.30767250061035,
+                "reset_sixth": 72.25344944000244
+              },
+              "3/dit": {
+                "full": 436.5536673069,
+                "reset_first": 72.30736970901489,
+                "reset_sixth": 72.62485527992249
+              },
+              "3/ic_iql": {
+                "full": 436.57401490211487,
+                "reset_first": 72.73276448249817,
+                "reset_sixth": 72.58833122253418
+              },
+              "6/ad": {
+                "full": 433.99455523490906,
+                "reset_first": 72.50844407081604,
+                "reset_sixth": 71.82283329963684
+              },
+              "6/dpt": {
+                "full": 436.1702690124512,
+                "reset_first": 73.0039427280426,
+                "reset_sixth": 72.06151175498962
+              },
+              "6/dit": {
+                "full": 434.383305311203,
+                "reset_first": 72.6672432422638,
+                "reset_sixth": 72.78277564048767
+              },
+              "6/ic_iql": {
+                "full": 436.01188230514526,
+                "reset_first": 72.13999366760254,
+                "reset_sixth": 72.40337133407593
+              }
+            },
+            "baseline_timing": {
+              "original_SFT": 74.09757614135742,
+              "fixed_PPO30": 74.01671314239502
+            }
+          }
+        ],
+        "checked_unix": 1794697548.843869
       }
     },
     "3": {
       "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/shard-03/evaluation/PROGRESS.json",
-      "sha256": "8ad8e67152fdc5db47d1545c18a9eb6e774b21dc46dbb817c58f3840ca899ea0",
+      "sha256": "d8daceee5262cbffe9330960b9ab5c271baf64420c61bc853391975c7ae1b6ed",
       "data": {
         "task": "CloseFridge",
         "first": 32,
-        "model": "6/dpt",
-        "arm": "full",
+        "model": "6/dit",
+        "arm": "reset_sixth",
         "completed_waves": 4,
-        "elapsed_seconds": 448.8324337005615,
-        "checked_unix": 1794696802.7855685
+        "elapsed_seconds": 84.89381003379822,
+        "checked_unix": 1794697590.9640172
       }
     }
   },
-  "native_physical_episodes_completed_lower_bound": 10344,
-  "whole_paired_waves_archived": 17,
+  "native_physical_episodes_completed_lower_bound": 10736,
+  "whole_paired_waves_archived": 19,
   "first_native_observation_watch": {
     "pid": 209231,
     "hostname": "aibox-rffe453e3884-5f96c78b88-6ssrn",
@@ -537,28 +1111,28 @@
     "ended_unix": 1794677989.2243135
   },
   "observation_watch": {
-    "pid": 245201,
+    "pid": 248846,
     "hostname": "aibox-rffe453e3884-5f96c78b88-6ssrn",
-    "started_unix": 1794696949.1834476,
-    "deadline_unix": 1794698040.0,
+    "started_unix": 1794697873.3,
+    "deadline_unix": 1794699000.0,
     "initial_bank_counts": {
-      "0": 4,
+      "0": 5,
       "1": 5,
-      "2": 4,
+      "2": 5,
       "3": 4
     },
-    "behavior": "Read-only wait for owned terminal/error/incomplete, next bank, or07:14 full check; no accelerator mutation",
+    "behavior": "Read-only wait for owned terminal/error/incomplete, next bank, or07:30 full check; no accelerator mutation",
     "GPU_hours": 0
   },
   "startup_binding_audit": "evidence/MATCHED-STARTUP-BINDING-AUDIT.json",
   "CPU_completion_followthrough": "MATCHED-ANALYSIS-EXECUTION.json",
-  "shared_PFS_free_bytes": 77598818304,
+  "shared_PFS_free_bytes": 77519126528,
   "shared_space_observation": {
-    "change_since_previous_check_bytes": -134217728,
+    "change_since_previous_check_bytes": -79691776,
     "attribution": "Unattributed shared-space change; no ownership inference",
     "evaluation_bulk_output": "Container-local /tmp and BOS; active runtime unchanged"
   },
-  "last_full_monitor_unix": 1794696848.6829472,
+  "last_full_monitor_unix": 1794697799.973055,
   "independently_audited_banks": 2,
   "independently_audited_physical_episodes": 1056,
   "first_bank_audit": "evidence/MATCHED-FIRST-BANK-AUDIT.json",
@@ -583,15 +1157,15 @@
   ],
   "actual_first_bank_timing": "evidence/MATCHED-ACTUAL-FIRST-BANK-TIMING.json",
   "projected_finish_shanghai": {
-    "historical_mean_task_ratios": "2026-11-15T08:57:59.183047+08:00",
-    "remaining_historical_maximum_task_ratios": "2026-11-15T09:28:20.001381+08:00"
+    "historical_mean_task_ratios": "2026-11-15T08:54:58.554949+08:00",
+    "remaining_historical_maximum_task_ratios": "2026-11-15T09:12:56.815864+08:00"
   },
   "worker_deadline_shanghai": "2026-11-15T10:19:55.951240+08:00",
-  "slower_scenario_headroom_minutes": 51.59916431321602,
+  "slower_scenario_headroom_minutes": 66.985589610759,
   "timing_limits": "Planning estimates, not intervals or bounds. Unfinished later tasks still use historical timing ratios. No performance outcomes used.",
   "GPU_usage_status": "Active allocation: terminal scheduler usage not yet settled;36GPUh reservation remains included in226.25/230GPUh campaign commitment",
-  "later_bank_timing": "evidence/MATCHED-LATER-BANK-TIMING-0556.json",
-  "later_bank_timing_observation": "Timing through16 captured complete banks; actual elapsed plus unchanged historical remaining-task ratios.",
+  "later_bank_timing": "evidence/MATCHED-LATER-BANK-TIMING-0711.json",
+  "later_bank_timing_observation": "Timing through19 captured complete banks; actual elapsed plus unchanged historical remaining-task ratios.",
   "first_OOD_bank_audit": "evidence/MATCHED-FIRST-OOD-BANK-AUDIT.json",
   "first_OOD_bank_coverage": "evidence/MATCHED-FIRST-OOD-BANK-COVERAGE.json",
   "targeted_archive_audit_scope": "Separate ID600 and OOD900 banks; full25-bank independent analysis remains pending.",
