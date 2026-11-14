@@ -1,0 +1,96 @@
+{
+  "scope": "Current RoboCasa campaign dependency record, updated after user-authorized historical archival.",
+  "authority_limit": "Archive execution is recorded separately in STORAGE-REDUCTION.json. This record does not authorize deleting another owner's RoboTwin data.",
+  "active_preserve": [
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1",
+      "consumer": "Current collection archives and step30 teachers, pending raw-source packing, DPT labels, eight AD/DPT/DIT/IC-IQL fits and ID/OOD readout. Preserve all teacher attempt01/attempt02 receipts and completed payloads, reused-faucet-step30, and newly prepared corpus artifacts."
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-source-decision-20261112-r1/local01/teachers/PickPlaceCounterToStove/attempt01",
+      "consumer": "Original corrected Counter versions0..9, full step10 checkpoint and original SFT paired64-case reference. Required to join the new continuation versions10..29."
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-eight-hour-babysit-20261104-r1/source5/TurnOnSinkFaucet",
+      "consumer": "Current Faucet source raw RGB/state/action/reward versions0..29 across attempt-01/attempt-02 and complete step30 checkpoint; also historical step40 result. Keep available until full source packing/label checks and a verified complete cold restore are recorded."
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-torch-20261101-r2",
+      "consumer": "Common original frozen VLM/action initializer for both active collectors, feature extraction and transformer fitting."
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1",
+      "consumer": "Official shared normalization; native initializer/reproduction dependencies."
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1",
+      "consumer": "Active environment, model caches and simulator assets; do not move during these jobs."
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/critic-selected-a1229239-r1",
+      "consumer": "Corrected RLinf8f9bfa76 shared runtime used by active collectors and planned labels/fits."
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/sources/matched-recovery-6c0ef27a",
+      "consumer": "Immutable active Stove/Toaster launch source; remains protected."
+    }
+  ],
+  "excluded_from_new_collection_but_keep_historical_bytes": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-flow-sde-10m-per-task-20261103-r1",
+      "reason": "Earlier critic-mismatch sources are excluded from both new matched corpora. They remain inputs/provenance for historical trained models, critic replay audits and reported results; may move cold only after a verified complete restorable archive and owner checks."
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-meta-baseline-20261104-r2",
+      "reason": "Original three-task corpora, labels and Q/V states support the already-completed learners; new corrected fits will not reuse them. Preserve for historical reproduction, including original query RGB/sampling archives."
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/robocasa-three-task-kv-velocity-meta-20261105-r1",
+      "reason": "Already-trained AD/DPT/DIT/IC-IQL states and fit evidence; consumers include completed robocasa-kv-comparison-20261112-r1 and robocasa-dit-diagnostic-20261113-r1. These are not disposable failed jobs."
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-source-decision-20261112-r1/local01/teachers/OpenCabinet",
+      "reason": "Closed10-update pilot excluded by accepted coverage split; keep archive/checkpoint and paired pilot evidence, no new-campaign GPU continuation planned."
+    },
+    {
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-source-decision-20261112-r1/local01/teachers/SlideDishwasherRack",
+      "reason": "Same as Cabinet; no new-campaign continuation, preserve historical pilot bytes."
+    }
+  ],
+  "robotwin_lineages": {
+    "Sidney": {
+      "role": "Matched predecessor/control lineage. Distinct from Motus: Sidney absolute joints/H50 and its native processors; do not substitute Motus H32 delta-joint artifacts.",
+      "preserve_initializers": [
+        "/mowenjie/fluffy-bassoon-2/cache/sidney-pi05-robotwin-e49e2ab6-original-20261109-r1"
+      ],
+      "preserve_checkpoints": [
+        "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/ppo02/sidney-paired-ppo/checkpoints/global_step_2",
+        "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1/grpo01/sidney-paired-grpo/checkpoints/global_step_2"
+      ],
+      "preserve_evidence_roots": [
+        "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-matched-baselines-20261106-r1",
+        "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-gap-20261109-r1",
+        "/mowenjie/fluffy-bassoon-2/outputs/robotwin-sidney-native-endpoints-20261109-r1",
+        "/mowenjie/fluffy-bassoon-2/outputs/robotwin-e1-replay-20261110-r1"
+      ],
+      "consumers": "Published local PPO40/GRPO40 vs SFT paired100-case clean/randomized results; initializer conversion/readback, camera correction and exact replay controls. Preserve full DCP+12 worker sidecars, policy exports, original processors, paired scene/prompt/RGB/state/sampling and initial-state references. No consumer in the new RoboCasa fitting pipeline.",
+      "initializer_note": "Keep the separate converted initializer referenced by the matched contracts; no guessed absolute converted-cache path is admitted here."
+    },
+    "Motus": {
+      "role": "Separate source/behavior lineages; superseded or failed source-improvement decisions do not erase engineering/replay evidence.",
+      "preserve_source_roots": [
+        "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motusbehaviorppo01",
+        "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/motusbehaviorgrpo01"
+      ],
+      "consumers": "Their state/resolved-native-config.json and complete checkpoints0/2 plus24 worker sidecars underlie DEV source selection and GRPO confirmation. Keep exact initializer references from those configs, actual noise draws, public RGB/physical traces, baseline control and any decoded-fit labels/exports linked by DECODEDFIT02-CONTRACT.json. Longer-curve artifacts remain a separate lineage and require their own latest-complete-boundary check; do not retire the whole restoration root.",
+      "already_cold": [
+        "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/traces01",
+        "/mnt/bos/adgfyl/strong-plant-archives/robotwin-restoration-20261106-r1/exports01"
+      ],
+      "evidence": "ARCHIVE01-COMPLETE.json and EXPORTS01-COMPLETE.json record prior verified trace/export migrations; do not count those bytes as fresh PFS savings. No Motus artifacts feed this new RoboCasa campaign."
+    }
+  },
+  "safe_direction": "No Sidney or Motus payload is used by the corrected RoboCasa collection or planned transformer fits. Their own matched-control/replay/continuation dependencies remain separate and protected. Current RoboCasa task archives, Faucet raw first30, Counter old0..9, shared original model/norm/env and both active launch sources remain required.",
+  "historical_migration": "The first three historical RoboCasa roots listed below are now covered by the archive workflow; consult STORAGE-REDUCTION.json and cold restore pointers for current locations.",
+  "robotwin_review": "../robotwin-retention-review-20261114-r1/RESULT.md"
+}

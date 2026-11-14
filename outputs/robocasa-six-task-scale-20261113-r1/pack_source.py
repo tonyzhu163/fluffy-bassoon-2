@@ -147,7 +147,14 @@ def main():
         index_path=str(a.cold / 'TAR-INDEX.json'), index_sha256=sha(a.cold / 'TAR-INDEX.json'),
         segments=segments, gzip_CRC_passed=True, every_packed_member_readback=True,
         cold_full_SHA_readback=True, tensor_semantics_checked=False, teacher_labels_collected=False,
-        source_files_unchanged=True, hostname=socket.gethostname(), elapsed_seconds=time.time() - started)
+        source_files_unchanged=True, local_staging_reclaimed=False,
+        hostname=socket.gethostname(), elapsed_seconds=time.time() - started)
+    write(a.cold / 'PACKED.json', result)
+    write(a.output / 'PACKED.json', result)
+    # Readers use the verified cold archive. Do not retain a second raw corpus
+    # on scratch after its complete member and full-archive readback succeeds.
+    packed.unlink()
+    result['local_staging_reclaimed'] = True
     write(a.cold / 'PACKED.json', result)
     write(a.output / 'PACKED.json', result)
     print(json.dumps(result), flush=True)
