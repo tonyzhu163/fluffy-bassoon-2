@@ -65,7 +65,8 @@ def main():
         maximum_scheduler_minutes=360,automatic_retries=False,required_local_bytes=needed,
         local_free_bytes=shutil.disk_usage(local).free,corpus_spec_sha256=a.corpora_sha256))
     subprocess.run([str(PYTHON),'-B',str(CODE/'scripts/[train]gpu_probe.py'),'--expected-count','4',
-        '--baige-container','--output',str(cold/'gpu-probe.json')],env=env,check=True,timeout=180)
+        '--purpose','training','--baige-container','--baige-exclusive-training',
+        '--output',str(cold/'gpu-probe.json')],env=env,check=True,timeout=180)
     probe=json.loads((cold/'gpu-probe.json').read_text());assert probe['status']=='passed'
     raw=local/'raw';raw.mkdir();cache={}
     for task,source in sources.items():

@@ -26,6 +26,7 @@ def main():
     p.add_argument('--spec', type=Path, required=True)
     p.add_argument('--spec-sha256', required=True)
     p.add_argument('--tasks', nargs='+', required=True)
+    p.add_argument('--max-minutes', type=int, choices=(174, 180), default=180)
     args = p.parse_args()
     assert sys.platform == 'linux' and socket.gethostname().startswith('job-')
     assert args.attempt.isalnum() and len(set(args.tasks)) == len(args.tasks)
@@ -52,12 +53,12 @@ def main():
         assigned=env['NVIDIA_VISIBLE_DEVICES'].split(',')
         assert len(visible)==len(assigned)==len(args.tasks) and set(visible)==set(assigned)
         env['CUDA_VISIBLE_DEVICES']=','.join(str(i) for i in range(len(visible)))
-    began=time.time();deadline=began+10500
+    began=time.time();deadline=began+args.max_minutes*60-300
     write(cold/'LAUNCH.json',dict(source_commit=args.pin,spec_sha256=args.spec_sha256,tasks=args.tasks,
-        hostname=socket.gethostname(),started_unix=began,maximum_GPU_hours=3*len(args.tasks),
-        scheduler_maximum_minutes=180,automatic_retry=False,local_free_bytes=shutil.disk_usage(local).free))
+        hostname=socket.gethostname(),started_unix=began,maximum_GPU_hours=args.max_minutes/60*len(args.tasks),
+        scheduler_maximum_minutes=args.max_minutes,automatic_retry=False,local_free_bytes=shutil.disk_usage(local).free))
     subprocess.run([str(PYTHON),'-B',str(CODE/'scripts/[train]gpu_probe.py'),'--expected-count',str(len(args.tasks)),
-        '--baige-container','--output',str(cold/'gpu-probe.json')],env=env,check=True,timeout=180)
+        '--purpose','evaluation','--baige-container','--output',str(cold/'gpu-probe.json')],env=env,check=True,timeout=180)
     gpu=json.loads((cold/'gpu-probe.json').read_text());assert gpu['status']=='passed'
 
     def worker(task, device):
