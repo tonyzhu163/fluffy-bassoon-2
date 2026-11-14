@@ -1,0 +1,39 @@
+{
+  "status": "Prospective evaluation window change; no matched evaluation submitted or outcomes observed",
+  "recorded_shanghai": "2026-11-15T00:26:08.852587+08:00",
+  "reason": "Completed historical banks show runtime variability. The observed-bank maximum projection reaches492.66min, exceeding the original470min worker deadline; the original single-qualification estimate459.83min allowed only10.17min margin. Avoid a preventable incomplete fixed panel.",
+  "timing_evidence": "evidence/MATCHED-COMPLETED-TIMING-20261115.json",
+  "timing_evidence_sha256": "d7db72a7bc1961b8e2ced0d293f61da44dfb58a4c6003052ca093396114e3543",
+  "original": {
+    "scheduler_minutes": 480,
+    "worker_minutes": 470,
+    "reserved_GPU_hours": 32
+  },
+  "revised": {
+    "scheduler_minutes": 540,
+    "worker_minutes": 530,
+    "reserved_GPU_hours": 36
+  },
+  "unchanged": {
+    "GPUs": 4,
+    "models": 8,
+    "cases_per_task": 40,
+    "tasks": 5,
+    "transformer_physical_episodes": 12800,
+    "baseline_physical_episodes": 400,
+    "total_physical_episodes": 13200,
+    "actor_updates": 10000,
+    "selection": "Fixed final; no outcome-based selection"
+  },
+  "budget": {
+    "committed_conservative_GPU_hours": 191.75,
+    "readout_proposal_GPU_hours": 36,
+    "total_after_proposed_readout_GPU_hours": 227.75,
+    "uncommitted_recovery_GPU_hours": 2.25,
+    "hard_cap_GPU_hours": 230
+  },
+  "authority": "Existing explicit230GPUh campaign approval; no scope expansion or new approval required. This reserves additional time, not additional episodes.",
+  "binding": "Keep running fits, active CPU auditor and their sources immutable. After final-fit-audit02 prepares all8 final references, create a new readout-inputs01/SPEC.json from that audited preparation, recording its exact hash and this review; change only scheduler/reservation fields plus provenance. Do not launch the original480min prepared spec.",
+  "checks_before_launch": "Review latest main, actual scheduler capacity and final allocation accounting; verify all8 audited checkpoints. Use a qualified unchanged runtime with allocated GPU probe and actual native episode; check first-wave timing.",
+  "timing_limits": "Projection uses completed historical DIT/PPO130 banks as proxies. The observed maximum is neither a statistical bound nor a guarantee; actual new-model runtime still matters."
+}

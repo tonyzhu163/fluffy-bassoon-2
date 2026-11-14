@@ -1,0 +1,114 @@
+{
+  "checked_unix": 1794673507.6082704,
+  "historical_completed_timing_sha256": "adce5a30447fd2c756a0d4b3ec60f1bad39b2a951781ebd80cbca6074726e5f1",
+  "historical_complete_references": [
+    {
+      "shard": 0,
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/confirm01/shard-00/evaluation/COMPLETE.json",
+      "sha256": "e49f872cdfb008ee9af3c0ee8a6e110d061132b8a36ffc4f5fb759fa047d39be",
+      "elapsed_seconds": 20919.091052293777,
+      "waves": 40
+    },
+    {
+      "shard": 1,
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/confirm01/shard-01/evaluation/COMPLETE.json",
+      "sha256": "d67c86c7427994e65994ae65801e7e8b965392041c86779d0d37ed770db94b63",
+      "elapsed_seconds": 20671.011939525604,
+      "waves": 40
+    },
+    {
+      "shard": 2,
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/confirm01/shard-02/evaluation/COMPLETE.json",
+      "sha256": "ec1be2cfad2679d238980ab9fac01b478083875a67e35b2ab766058cbedc366c",
+      "elapsed_seconds": 20784.56892824173,
+      "waves": 40
+    },
+    {
+      "shard": 3,
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/confirm01/shard-03/evaluation/COMPLETE.json",
+      "sha256": "abc7f2f3bdba89b9cc47ded5daa50e148a9bed10a612120a86b4e0d4ab1d510d",
+      "elapsed_seconds": 20730.407940149307,
+      "waves": 40
+    }
+  ],
+  "qualification_timing_sha256": "465766a8b054ba5cd4cb6dee22d0be4a7dd74522bb9ce66cf4d105365dd57aee",
+  "method": "Use all160 completed historical timing records without outcomes:8*(full6+2*reset6)+SFT+PPO rollout time, qualified audit time per arm, archive scaling528/72, unchanged25-wave sharding and measured277.67-second setup. Max is an observed-bank stress projection, not a confidence or worst-case bound.",
+  "tasks": [
+    {
+      "task": "OpenDrawer",
+      "observed_historical_banks": 32,
+      "projected_528_episode_wave_seconds": {
+        "mean": 3805.4215478052697,
+        "median": 3778.8319917122526,
+        "min": 3398.066076437632,
+        "max": 4402.643121163051
+      },
+      "qualification_audit_seconds_scaled": 123.17641568183899
+    },
+    {
+      "task": "CloseToasterOvenDoor",
+      "observed_historical_banks": 32,
+      "projected_528_episode_wave_seconds": {
+        "mean": 3469.730127247671,
+        "median": 3530.161641399066,
+        "min": 3039.9844188690186,
+        "max": 3878.7915256818137
+      },
+      "qualification_audit_seconds_scaled": 122.39940905570984
+    },
+    {
+      "task": "CoffeeSetupMug",
+      "observed_historical_banks": 32,
+      "projected_528_episode_wave_seconds": {
+        "mean": 3552.0749967346587,
+        "median": 3652.8330743312836,
+        "min": 3074.3085943857827,
+        "max": 3791.731082757314
+      },
+      "qualification_audit_seconds_scaled": 141.4026231765747
+    },
+    {
+      "task": "CloseFridge",
+      "observed_historical_banks": 32,
+      "projected_528_episode_wave_seconds": {
+        "mean": 5105.095509720345,
+        "median": 5094.314224561056,
+        "min": 4466.43323858579,
+        "max": 5806.480695088704
+      },
+      "qualification_audit_seconds_scaled": 185.26412749290466
+    },
+    {
+      "task": "TurnOnMicrowave",
+      "observed_historical_banks": 32,
+      "projected_528_episode_wave_seconds": {
+        "mean": 2990.526898679634,
+        "median": 3024.2540569702787,
+        "min": 2634.077746152878,
+        "max": 3499.764440933863
+      },
+      "qualification_audit_seconds_scaled": 92.7910647392273
+    }
+  ],
+  "projected_worker_minutes": {
+    "mean": [
+      433.2743965201079,
+      377.8374245328207,
+      379.20983902427054,
+      405.09351424069865
+    ],
+    "median": [
+      436.01912170317445,
+      381.47038158178333,
+      383.51490546398696,
+      407.5395913011498
+    ],
+    "max": [
+      492.65807820426096,
+      425.59781093067596,
+      424.146803548601,
+      457.7259637541241
+    ]
+  },
+  "limitations": "Historical DIT/PPO130 timing remains a proxy for eight fresh fits/PPO30; new weight loading, execution hardware and shared I/O can differ. Actual first-wave timing remains required."
+}
