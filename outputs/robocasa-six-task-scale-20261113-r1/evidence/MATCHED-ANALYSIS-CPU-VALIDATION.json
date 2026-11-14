@@ -1,0 +1,21 @@
+{
+  "source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+  "execution": "Allocated Baige Linux development CPU, existing project uv environment; completed during source preparation",
+  "CLI_imports_passed": [
+    "qualify_corpora.py",
+    "fit_job.py",
+    "matched_eval_job.py",
+    "matched_readout.py",
+    "matched_analyze.py"
+  ],
+  "numerical_checks": {
+    "bootstrap_replicates": 1000,
+    "numpy": "2.2.5",
+    "passed": [
+      "identical arms/models produce zero history and corpus effects",
+      "known100pp additional history effect recovered",
+      "higher initial/reset competence is not reported as additional history use"
+    ]
+  },
+  "limits": "No actual corpus sampling qualification or GPU fit/native gradient update claimed; dataqual01 runs against completed assemblies before GPU launch."
+}

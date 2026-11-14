@@ -1,5 +1,5 @@
 {
-  "status": "Running; 3/5 task waves fully audited and cold-banked",
+  "status": "Qualification succeeded; all five task waves audited and cold-readback verified",
   "job_id": "job-rndlh3s50x3d",
   "job_name": "mwj_1114_dit_paired_qual_g1_r2",
   "cluster": "Baige Pro6K",
@@ -21,8 +21,7 @@
   "CPU_validation": "20 core tests passed on source8aa93780. Retry native score-to-command mapping and runner imports passed on allocated Linux at9f8bb6a4.",
   "allocation_gpu_probe": "passed",
   "native_progress": {
-    "checked_unix": 1794645572.841853,
-    "completed_waves": 3,
+    "completed_waves": 5,
     "results": [
       {
         "task": "OpenDrawer",
@@ -78,11 +77,47 @@
           "original_SFT": 54.81868052482605,
           "fixed_PPO130": 54.366796255111694
         }
+      },
+      {
+        "task": "CloseFridge",
+        "first": 0,
+        "archive": {
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/qual02/evaluation/CloseFridge/bank-0000/evidence.tar",
+          "sha256": "7be4d7ad6801468c17d6a082def49a5273495ea5abef6560af6a00d813888a1e",
+          "bytes": 1089013760,
+          "every_member_verified": true,
+          "cold_full_readback": true,
+          "elapsed_seconds": 6.814810037612915
+        },
+        "timing": {
+          "DIT_full_history": 507.5902998447418,
+          "DIT_episode_reset": 81.77207136154175,
+          "original_SFT": 77.62819314002991,
+          "fixed_PPO130": 80.68176817893982
+        }
+      },
+      {
+        "task": "TurnOnMicrowave",
+        "first": 0,
+        "archive": {
+          "archive": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/qual02/evaluation/TurnOnMicrowave/bank-0000/evidence.tar",
+          "sha256": "49882393bbadd1fcd78167c0b3a2c7a01edde72ea670db421a306ed52f7d9f85",
+          "bytes": 584857600,
+          "every_member_verified": true,
+          "cold_full_readback": true,
+          "elapsed_seconds": 3.6132349967956543
+        },
+        "timing": {
+          "DIT_full_history": 265.9207413196564,
+          "DIT_episode_reset": 44.15404295921326,
+          "original_SFT": 42.7318160533905,
+          "fixed_PPO130": 43.4127733707428
+        }
       }
     ]
   },
-  "next_action": "Complete remaining four task qualification waves; fix fresh confirmation count using measured full cost before confirmation outcomes. Target500 is conditional on28GPUh allowance.",
-  "checked_shanghai": "2026-11-14T16:46:47+08:00",
+  "next_action": "Submit fixed256-case/task confirmation under DECISION.json after fresh capacity check; no expanded confirmation submitted yet.",
+  "checked_shanghai": "2026-11-14T17:13:52+08:00",
   "previous_attempt": {
     "job_id": "job-4fihmh5d1ox9",
     "status": "failed in audit after first rollout batch",
@@ -107,11 +142,13 @@
     "personal_limit_GPUs": 32,
     "queued_jobs": 14
   },
-  "next_check_shanghai": "2026-11-14T17:06:47+08:00",
+  "next_check_shanghai": null,
   "verified_task_waves": [
     "OpenDrawer",
     "CloseToasterOvenDoor",
-    "CoffeeSetupMug"
+    "CoffeeSetupMug",
+    "CloseFridge",
+    "TurnOnMicrowave"
   ],
   "confirmation_preparation": {
     "source_commit": "39e40979801511dd78922943886c6fa5ca883001",
@@ -121,5 +158,21 @@
     "Linux_CLI_imports": true,
     "paired_statistics_numerical_checks": "Identical arms give exact zero; known binary +100pp and -100pp contrasts/intervals/discordances match reference",
     "launched": false
+  },
+  "scheduler_status": "Succeeded",
+  "scheduler_runtime_seconds": 3370,
+  "scheduler_GPU_hours": 0.9361111111111111,
+  "closed_conservative_GPU_hours": 1.1,
+  "ended_shanghai": "2026-11-14T17:00:37+08:00",
+  "qualification_complete": {
+    "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/qual02/evaluation/COMPLETE.json",
+    "sha256": "55415f977e2fb437e0c266af34be35cc6e9ec6d8e89e5dc9ee9c62ed8735a5a5"
+  },
+  "reset_qualification": {
+    "cases": 8,
+    "pre_act_signature_exact": false,
+    "functional_reset_replay_exact": true,
+    "outcome_discordances": 0,
+    "interpretation": "Every recorded control replays exactly from a fresh episode controller on its recorded features and feedback; identical episode6 draw law. Pre-act stale signatures are cleared by act(). Render differences can change trajectories."
   }
 }

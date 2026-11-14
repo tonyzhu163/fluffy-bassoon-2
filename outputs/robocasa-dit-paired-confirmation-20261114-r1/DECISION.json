@@ -1,0 +1,52 @@
+{
+  "recorded_shanghai": "2026-11-14T17:13:52+08:00",
+  "status": "Count fixed before expanded confirmation; not yet submitted",
+  "cases_per_task": 256,
+  "previous_conditional_target_cases_per_task": 500,
+  "tasks": [
+    "OpenDrawer",
+    "CloseToasterOvenDoor",
+    "CoffeeSetupMug",
+    "CloseFridge",
+    "TurnOnMicrowave"
+  ],
+  "shards": 4,
+  "wave_size": 8,
+  "physical_episodes": 11520,
+  "scheduler_maximum_minutes": 420,
+  "worker_deadline_minutes": 405,
+  "reserved_GPU_hours": 28,
+  "outcome_blind_count_fixed": true,
+  "confirmation_outcomes_examined": false,
+  "qualified_readout_sha256": "cffb005f07df84a7961ffe33795529574e8f4743a69b2ef6477884118752cc53",
+  "qualification": {
+    "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/qual02/evaluation/COMPLETE.json",
+    "sha256": "55415f977e2fb437e0c266af34be35cc6e9ec6d8e89e5dc9ee9c62ed8735a5a5"
+  },
+  "restored_manifest_sha256": "90a182c8502a28856033e36ca6248fd6f208b851f3f1ef28e8b32d91da7c337a",
+  "timing_evidence": "evidence/QUALIFICATION-TIMING.json",
+  "predicted_worker_minutes": [
+    369.32179083824155,
+    369.32179083824155,
+    369.32179083824155,
+    369.32179083824155
+  ],
+  "predicted_allocation_GPU_hours": 24.62145272254944,
+  "target500_predicted_GPU_hours": 48.41658456987805,
+  "selection_reason": "Largest fully balanced count in 32-case increments fitting the 405-minute worker deadline. 256 predicts369.3minutes; next balanced288 predicts414.9minutes. Keep about35.7minutes internal margin plus15minutes scheduler shutdown/archive reserve. This resource choice uses qualification timing, not success outcomes.",
+  "case_bank": "Fresh confirmation seeds72140000 + task_index*10000 + slot; no old discovery or qualification cases",
+  "analysis": {
+    "contrasts": [
+      "DIT_full_history minus DIT_episode_reset",
+      "DIT_full_history minus original_SFT",
+      "DIT_full_history minus fixed_PPO130"
+    ],
+    "unit": "paired case within task",
+    "panels": "per-task, equal-weight three-task ID and two-task OOD",
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 20261114,
+    "report": "success rates, paired differences and95% intervals, discordant pairs, completeness",
+    "stopping": "Fixed count; no significance-based stopping or outcome-selected replacement",
+    "limitations": "Fixed historical checkpoint, one training seed and narrow task set. More episodes do not identify why DIT is stronger."
+  }
+}

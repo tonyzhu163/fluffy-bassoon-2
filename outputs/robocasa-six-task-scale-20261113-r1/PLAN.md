@@ -18,9 +18,13 @@ Collect276,480 frozen-feature/query-label records across the six sources. DPT us
 
 Train eight fresh KV fits: AD, DPT, DIT and IC-IQL on each corpus, each at10,000 updates with seed0, the same architecture, logical batch8 and fixed final-update selection. Sample tasks uniformly within each corpus. The comparison measures adding task data at fixed fitting compute; it does not isolate diversity from corpus size. One fit per cell does not establish seed robustness.
 
-Prioritize five shared evaluation tasks: three ID plus Fridge/Microwave OOD. Use40 matched cases/task, six real attempts, full versus episode-cleared history, and all eight fits:19,200 episodes. This replaces the initial eight-task50-case plan to fund corrected recollection. Report the resulting uncertainty; omit the separate added-task panel from the primary bounded readout. Report first-attempt success, sixth-attempt success and paired history effects separately. Better initial competence alone is not evidence of adaptation.
+Prioritize five shared evaluation tasks: three ID plus Fridge/Microwave OOD. Use40 matched cases/task and all eight fits. Full history executes all six real attempts; episode-cleared controls execute genuine first and sixth attempts with their original noise streams:12,800 physical episodes. The prospective [evaluation migration](EVALUATION-MIGRATION.json) replaces the initial19,200-episode all-attempt reset design after native reset qualification. Reset attempts2–5 are not observed or reported. This replaces the initial eight-task50-case plan to fund corrected recollection. Report the resulting uncertainty; omit the separate added-task panel from the primary bounded readout. Report first-attempt success, sixth-attempt success and paired history effects separately. Better initial competence alone is not evidence of adaptation.
 
 ## Bounded execution
+
+The table below is the original stage proposal. Current reconciled reservations
+and the separately requested historical paired confirmation are tracked in
+[APPROVAL.json](APPROVAL.json); the230GPUh hard cap is unchanged.
 
 | Stage | Additional GPU-hour reservation |
 | --- | ---: |

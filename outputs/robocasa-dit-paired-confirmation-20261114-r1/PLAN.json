@@ -1,6 +1,6 @@
 {
   "user_instruction": "Expand paired evaluations; quantify DIT benefit from history and above SFT/PPO",
-  "status": "Running; 3/5 task waves fully audited and cold-banked",
+  "status": "Qualification passed; fixed256 fresh cases/task, confirmation not yet submitted",
   "tasks": [
     "OpenDrawer",
     "CloseToasterOvenDoor",
@@ -15,9 +15,9 @@
     "DIT_full_history"
   ],
   "target_cases_per_task": 500,
-  "case_count_status": "Fix count after outcome-blind throughput qualification and reservation reconciliation, before inspecting confirmation outcomes",
+  "case_count_status": "Fixed outcome-blind by DECISION.json before any confirmation outcomes",
   "old_discovery_cases_reused": false,
-  "endpoint": "Sixth-query native success_once",
+  "endpoint": "Sixth-attempt native success_once",
   "physical_episodes_per_case": {
     "DIT_full_history": 6,
     "DIT_episode_reset": 1,
@@ -34,15 +34,15 @@
     "parent": "robocasa-six-task-scale-20261113-r1",
     "hard_cap_GPU_hours": 230,
     "qualification_reserved_GPU_hours": 2,
-    "full_evaluation_reserved_GPU_hours": 0,
+    "full_evaluation_reserved_GPU_hours": 28,
     "rule": "Reconcile scheduler allocation times and remaining source/fitting reservations before full launch; closed170/50caps remain closed",
-    "parent_closed_conservative_GPU_hours": 107.4,
+    "parent_closed_conservative_GPU_hours": 110,
     "parent_active_recovery_reserved_GPU_hours": 0,
     "maximum_full_evaluation_GPU_hours": 28,
-    "remaining_parent_work_reserved_proposal_GPU_hours": 75,
-    "parent_active_labels_reserved_GPU_hours": 17.8,
-    "parent_active_qualification_and_margin_GPU_hours": 1.8,
-    "parent_committed_conservative_GPU_hours": 127
+    "remaining_parent_work_reserved_proposal_GPU_hours": 80,
+    "parent_active_labels_reserved_GPU_hours": 12,
+    "parent_active_qualification_and_margin_GPU_hours": 0,
+    "parent_committed_conservative_GPU_hours": 150
   },
   "limitations": "New cases narrow case uncertainty for this fixed DIT fit; do not establish training-seed robustness or all-task-family transfer",
   "frozen_DIT": {
@@ -87,12 +87,15 @@
     "case_failures": "Preserve failures and paired denominators; no success-conditioned exclusions or substitution",
     "interpretation": "Separate history effect from advantage over SFT/PPO. More cases estimate this frozen fit more precisely; they do not explain why DIT is stronger or measure training-seed variation."
   },
-  "next_action": "Complete all task qualification waves and fix sample count from outcome-blind timing within available reservation. Expanded confirmation has not launched.",
-  "checked_shanghai": "2026-11-14T16:46:47+08:00",
+  "next_action": "Submit fixed256-case/task confirmation under DECISION.json after fresh capacity check; no expanded confirmation submitted yet.",
+  "checked_shanghai": "2026-11-14T17:13:52+08:00",
   "qualification_retry": {
     "total_GPU_hours": 2,
     "closed_conservative": 0.2,
     "retry_maximum": 1.75,
     "uncommitted_margin": 0.05
-  }
+  },
+  "fixed_cases_per_task": 256,
+  "planned_physical_episodes": 11520,
+  "decision": "DECISION.json"
 }

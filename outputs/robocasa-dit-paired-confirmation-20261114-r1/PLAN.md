@@ -44,38 +44,41 @@ No numerical continue/kill threshold has been agreed. More cases narrow
 uncertainty for this checkpoint; they do not establish training-seed robustness
 or explain why DIT performs better.
 
-Keep the existing **230 GPU-hour hard cap**. Reconciled conservative accounting
-is 67 closed + 40 reserved for active teachers + 2 for paired qualification =
-109 GPU-hours. Of the remaining 121, the proposal allocates up to 28 to the large
-paired panel and 93 to corrected labels, eight fits and their evaluations.
-The full paired reservation is conditional on timing and final reconciliation.
-The old 50/170-hour caps remain closed.
+Keep the existing **230 GPU-hour hard cap**. Current reconciled accounting is
+110 closed conservatively + 12 reserved for active labels + 28 reserved for
+historical confirmation = **150/230 GPU-hours**. The remaining 80 is proposed
+for 48 of primary fits and 32 of matched new-fit evaluation. The earlier fit
+contingency is deferred until closed-job accounting releases capacity; active
+reservations are not released from estimated savings. The old 50/170 caps remain
+closed. [Current ledger](../robocasa-six-task-scale-20261113-r1/APPROVAL.json).
+
+The outcome-blind count is now **256 fresh cases per task**, fixed before any
+confirmation outcomes: 1,280 cases and **11,520 physical episodes**. Full
+qualification measured all five task waves, including audits and verified
+archival. On four GPUs, 256 predicts 369.3 minutes; the next fully balanced count
+of 288 predicts 414.9 minutes, beyond the 405-minute worker deadline. The
+original conditional target of 500 predicts 48.4 GPU-hours, above this panel's
+28-hour allowance. The scheduler limit is 420 minutes, with automatic retries
+off. This is a throughput/budget choice, not a significance threshold.
+[Fixed decision](DECISION.json) · [Timing evidence](evidence/QUALIFICATION-TIMING.json).
 
 Restore only required inference weights from verified archives. Keep complete
-query/action/native-truth evidence and frame digests, with videos limited to
-qualification or a declared sample; bank completed evidence in verified cold
-storage and bound local staging. Do not restore the old raw training corpora.
+query/action/native-truth evidence and frame digests; bank completed evidence in
+verified cold storage and bound local staging. Do not restore old raw corpora.
 
-**Current state (November 14, 16:22 Shanghai):** paired qualification
-`job-rndlh3s50x3d` is running at `9f8bb6a4`. Its allocated GPU probe passed.
-The first OpenDrawer wave completed all four arms plus the six-episode reset
-replay audit. Its 1.29 GB evidence archive passed member hashes and full cold
-readback. Four task waves remain; this is qualification, not the expanded
-confirmation result. The first task's four-arm rollout took about 532 seconds
-for eight cases, excluding setup, audit and archiving. The 500-case target is
-conditional: use the complete qualification timing to fix a feasible sample
-count within 28 GPU-hours before confirmation outcomes, as specified above.
+**State at November 14, 17:14 Shanghai:** qualification
+`job-rndlh3s50x3d` succeeded at source `9f8bb6a4`. All five task waves passed
+native audit and complete cold readback (408 physical episodes including the
+serial-reset check). Every recorded reset control replayed exactly from a fresh
+episode controller; the eight OpenDrawer serial/direct reset pairs had no
+outcome discordances. This validates the control procedure, not a DIT advantage.
+Expanded confirmation has not yet launched.
 
-All six corrected source collections, canonical packs and step-30 teachers
-are complete. After correcting our launcher probe-purpose flag, two-task
-labels `job-3r4f69s37tpv` passed its GPU probe and advanced; four-task labels
-`job-972qpi5ao378` is queued. The failed label launch used 29 scheduler seconds
-on two GPUs, conservatively closed at 0.2 GPU-hours; the retry has a shortened
-174-minute limit, preserving the total 18 GPU-hour label allowance.
-Conservative closed plus reserved usage is **127/230 GPU-hours**. The eight
-new transformer fits and expanded paired confirmation have not launched.
-Live accounting is in the [campaign approval ledger](../robocasa-six-task-scale-20261113-r1/APPROVAL.json).
+All six corrected source collections and step-30 teachers are complete. Toaster
+and Stove labels are complete and their datasets assembled. The other four
+label workers are finishing; CPU assembly and corpus-query qualification are
+live. No new transformer fit has launched. Live status belongs in
+[coordination](../coordination.md).
 
-[Execution and failure evidence](EXECUTION.json) · [Verified restored inputs](RESTORED.json) ·
-[Machine-readable plan](PLAN.json) · [Core validation](CORE-VALIDATION.json) ·
-[Budget reconciliation](../robocasa-six-task-scale-20261113-r1/evidence/BUDGET-RECONCILED-20261114.json)
+[Execution](EXECUTION.json) · [Restored inputs](RESTORED.json) ·
+[Machine-readable plan](PLAN.json) · [Core validation](CORE-VALIDATION.json)

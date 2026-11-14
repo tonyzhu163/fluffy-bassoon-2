@@ -1,0 +1,45 @@
+{
+  "recorded_shanghai": "2026-11-14T17:13:52+08:00",
+  "status": "Explicit prospective migration before any new-fit evaluation",
+  "original_contract": "CONTRACT.json",
+  "original_physical_episodes": 19200,
+  "full_attempts": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "reset_physical_attempts": [
+    1,
+    6
+  ],
+  "cases_per_task": 40,
+  "policy_fits": 8,
+  "tasks": [
+    "OpenDrawer",
+    "CloseToasterOvenDoor",
+    "CoffeeSetupMug",
+    "CloseFridge",
+    "TurnOnMicrowave"
+  ],
+  "physical_episodes": 12800,
+  "native_reset_qualification": {
+    "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/qual02/evaluation/COMPLETE.json",
+    "sha256": "55415f977e2fb437e0c266af34be35cc6e9ec6d8e89e5dc9ee9c62ed8735a5a5"
+  },
+  "qualified_audit_and_banking_sha256": "cffb005f07df84a7961ffe33795529574e8f4743a69b2ef6477884118752cc53",
+  "reason": "Qualified episode-cleared controls have no across-episode memory. Run genuine first and sixth controls with their original noise streams; preserve all six physical full-history attempts. Saves6400 physical reset episodes while preserving first/six endpoints and their paired comparison.",
+  "qualification_limit": "Functional clearing replay exact on recorded controls; OpenDrawer serial-vs-direct reset qualification0/8 outcome discordances. Pre-act signatures can be stale and are cleared by act; native render drift remains reported. Each new model control is audited during readout.",
+  "omitted": "Reset attempts2..5 are not run, fabricated, interpolated or reported as observed.",
+  "pairing": "All eight models share the canonical initial-state directory for every case/wave; paired case bootstrap retains corpus and method outcomes together.",
+  "report": [
+    "first and sixth full-history success",
+    "first and sixth episode-cleared success",
+    "sixth full-minus-reset history effect",
+    "six-minus-three changes in initial competence and history effect",
+    "per-task and equal-weight ID/OOD intervals and discordances"
+  ],
+  "budget": "Up to32GPUh proposed after primary48GPUh fits; reconcile actual usage before launch; entire phase stays within230."
+}

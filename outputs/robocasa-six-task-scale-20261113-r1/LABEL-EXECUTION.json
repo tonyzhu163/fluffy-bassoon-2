@@ -1,6 +1,6 @@
 {
-  "checked_shanghai": "2026-11-14T16:46:47+08:00",
-  "status": "Both corrected label jobs running; all six task workers advancing after allocated GPU probes",
+  "checked_shanghai": "2026-11-14T17:14:08+08:00",
+  "status": "Toaster/Stove labels complete; other four tasks43776/46080 at check; two task assemblies verified",
   "jobs": [
     {
       "source_commit": "cbece8fd7038b60213df64fca2f0f6c7a32a55cf",
@@ -9,7 +9,7 @@
       "automatic_retries": false,
       "inference_batch": 16,
       "shared_memory_GiB": 16,
-      "checked_shanghai": "2026-11-14T16:46:47+08:00",
+      "checked_shanghai": "2026-11-14T17:14:08+08:00",
       "attempt": "labels03",
       "job_id": "job-3r4f69s37tpv",
       "job_name": "mwj_1114_corrected_labels2_g2_r2",
@@ -25,28 +25,28 @@
       "scheduler_maximum_minutes": 174,
       "maximum_GPU_hours": 5.8,
       "created_shanghai": "2026-11-14T16:19:36+08:00",
-      "status": "Running; allocated GPU probe passed; all task workers advancing",
+      "status": "Succeeded; both tasks46080/46080, all four shards/task verified",
       "allocation_GPU_probe": "passed",
       "cold_output": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels03",
       "submission_evidence": "evidence/LABELS03-SUBMITTED.png",
       "progress": {
         "CloseToasterOvenDoor/PROGRESS.json": {
           "task": "CloseToasterOvenDoor",
-          "checked_unix": 1794645996.5269432,
-          "completed_decisions": 32256,
+          "checked_unix": 1794646626.8173559,
+          "completed_decisions": 46080,
           "expected_decisions": 46080,
-          "banked_shards": 2,
-          "elapsed_seconds": 1470.8496532440186,
+          "banked_shards": 3,
+          "elapsed_seconds": 2101.1400656700134,
           "inference_batch": 16,
           "cuda_peak_allocated_bytes": 17024675328
         },
         "TurnOffStove/PROGRESS.json": {
           "task": "TurnOffStove",
-          "checked_unix": 1794645995.3146253,
-          "completed_decisions": 32256,
+          "checked_unix": 1794646625.9593327,
+          "completed_decisions": 46080,
           "expected_decisions": 46080,
-          "banked_shards": 2,
-          "elapsed_seconds": 1469.8604712486267,
+          "banked_shards": 3,
+          "elapsed_seconds": 2100.5051786899567,
           "inference_batch": 16,
           "cuda_peak_allocated_bytes": 17024675328
         }
@@ -64,6 +64,35 @@
         "scheduler_maximum_minutes": 174,
         "automatic_retry": false,
         "local_free_bytes": 257932996608
+      },
+      "scheduler_status": "Succeeded",
+      "ended_shanghai": "2026-11-14T16:57:20+08:00",
+      "scheduler_runtime_seconds": 2251,
+      "scheduler_GPU_hours": 1.2505555555555556,
+      "closed_conservative_GPU_hours": 1.5,
+      "exit": {
+        "sha256": "ac639fac3da1aab39afe6bb5f3a4a393722f2112b7de33ad6e70e85f8718c27e",
+        "data": {
+          "completed": true,
+          "results": [
+            {
+              "task": "CloseToasterOvenDoor",
+              "exit_code": 0,
+              "started_unix": 1794644401.2856376,
+              "ended_unix": 1794646630.4237015,
+              "complete": true
+            },
+            {
+              "task": "TurnOffStove",
+              "exit_code": 0,
+              "started_unix": 1794644401.28592,
+              "ended_unix": 1794646630.410807,
+              "complete": true
+            }
+          ],
+          "ended_unix": 1794646630.7198122,
+          "allocation_GPU_hours": 1.2444374167919159
+        }
       }
     },
     {
@@ -73,7 +102,7 @@
       "automatic_retries": false,
       "inference_batch": 16,
       "shared_memory_GiB": 16,
-      "checked_shanghai": "2026-11-14T16:46:47+08:00",
+      "checked_shanghai": "2026-11-14T17:14:08+08:00",
       "attempt": "labels04",
       "job_id": "job-972qpi5ao378",
       "job_name": "mwj_1114_corrected_labels4_g4_r2",
@@ -98,43 +127,43 @@
       "progress": {
         "CoffeeSetupMug/PROGRESS.json": {
           "task": "CoffeeSetupMug",
-          "checked_unix": 1794645977.0330956,
-          "completed_decisions": 8448,
+          "checked_unix": 1794647618.3029218,
+          "completed_decisions": 43776,
           "expected_decisions": 46080,
-          "banked_shards": 0,
-          "elapsed_seconds": 405.4307110309601,
+          "banked_shards": 3,
+          "elapsed_seconds": 2046.700537443161,
           "inference_batch": 16,
-          "cuda_peak_allocated_bytes": 17023676928
+          "cuda_peak_allocated_bytes": 17024675328
         },
         "OpenDrawer/PROGRESS.json": {
           "task": "OpenDrawer",
-          "checked_unix": 1794645977.3175,
-          "completed_decisions": 8448,
+          "checked_unix": 1794647633.1539612,
+          "completed_decisions": 43776,
           "expected_decisions": 46080,
-          "banked_shards": 0,
-          "elapsed_seconds": 405.496084690094,
+          "banked_shards": 3,
+          "elapsed_seconds": 2061.332543849945,
           "inference_batch": 16,
-          "cuda_peak_allocated_bytes": 17023676928
+          "cuda_peak_allocated_bytes": 17024675328
         },
         "PickPlaceCounterToStove/PROGRESS.json": {
           "task": "PickPlaceCounterToStove",
-          "checked_unix": 1794645977.036663,
-          "completed_decisions": 8448,
+          "checked_unix": 1794647628.4254203,
+          "completed_decisions": 43776,
           "expected_decisions": 46080,
-          "banked_shards": 0,
-          "elapsed_seconds": 405.43982434272766,
+          "banked_shards": 3,
+          "elapsed_seconds": 2056.828581571579,
           "inference_batch": 16,
-          "cuda_peak_allocated_bytes": 17023676928
+          "cuda_peak_allocated_bytes": 17024675328
         },
         "TurnOnSinkFaucet/PROGRESS.json": {
           "task": "TurnOnSinkFaucet",
-          "checked_unix": 1794645977.513189,
-          "completed_decisions": 8448,
+          "checked_unix": 1794647627.6085207,
+          "completed_decisions": 43776,
           "expected_decisions": 46080,
-          "banked_shards": 0,
-          "elapsed_seconds": 405.99686908721924,
+          "banked_shards": 3,
+          "elapsed_seconds": 2056.092200279236,
           "inference_batch": 16,
-          "cuda_peak_allocated_bytes": 17023676928
+          "cuda_peak_allocated_bytes": 17024675328
         }
       },
       "launch": {
@@ -223,13 +252,13 @@
       "replaced_by": "labels03"
     }
   ],
-  "validation": "96 sampled source payloads passed Linux CPU semantics; complete payload validation occurs during labels. Actual two-device probe passed; both workers have completed768 decisions.",
+  "validation": "Full source payload semantics and cold shard readback completed for Toaster/Stove; active four-task allocation passed its four-GPU probe and every worker advances.",
   "budget": {
     "total_label_envelope_GPU_hours": 18,
-    "closed_conservative": 0.2,
-    "reserved": 17.8,
-    "arithmetic": "0.2 + 5.8 + 12 = 18; retry recovery uses the existing label allowance"
+    "closed_conservative": 1.7,
+    "reserved": 12,
+    "arithmetic": "Failed0.2 + completed1.5 + active12 =13.7GPUh committed within original18GPUh envelope"
   },
-  "next_check_shanghai": "2026-11-14T17:06:47+08:00",
-  "evidence": "evidence/LABEL-AND-QUALIFICATION-PROGRESS-20261114.json"
+  "next_check_shanghai": "2026-11-14T17:34:08+08:00",
+  "evidence": "evidence/ASSEMBLY-PROGRESS-20261114.json"
 }
