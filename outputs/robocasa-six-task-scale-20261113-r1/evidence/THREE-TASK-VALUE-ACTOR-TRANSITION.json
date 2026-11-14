@@ -1,0 +1,63 @@
+{
+  "checked_unix": 1794651717.9414322,
+  "fit_source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+  "job_id": "job-o8p1uyvoxzr3",
+  "passed": true,
+  "scope": "Actual three-task DIT and IC-IQL native actor gradient updates following their own fresh1000-update value fits; fixed actor endpoint10000 still running",
+  "methods": {
+    "dit": {
+      "progress_path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dit/PROGRESS.json",
+      "progress_sha256": "1f61738b16a894f295b4beceecb333a0cd28c14fc68cff0ecd80320628e04f2c",
+      "progress": {
+        "phase": "actor",
+        "value_update": 1000,
+        "actor_update": 1,
+        "elapsed_seconds": 2675.8279950450005,
+        "checkpoint": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dit/actor-01000-00001.pt",
+          "sha256": "6345e9d4e7c5c0061dd1fa5e7fa2dac169df4a91dfc4e6fb6dcc71c055fb99ab"
+        },
+        "complete": false,
+        "checked_unix": 1794651655.4024005,
+        "execution_batch": 8,
+        "metrics": {
+          "loss": 0.07834988832473755,
+          "gradient_norm": 0.000780115369707346,
+          "logical_batch_size": 8,
+          "execution_batch_size": 8,
+          "weight_mean": 0.9812501072883606,
+          "weight_max": 1.0504419803619385,
+          "mean_update_seconds": 2.3730756620007014,
+          "peak_cuda_bytes": 12692160512
+        }
+      }
+    },
+    "ic_iql": {
+      "progress_path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ic_iql/PROGRESS.json",
+      "progress_sha256": "c706ad692568d39e94b4393dc15f5212333008f0ae165da8bdd174c3b57941ad",
+      "progress": {
+        "phase": "actor",
+        "value_update": 1000,
+        "actor_update": 1,
+        "elapsed_seconds": 2613.98354276,
+        "checkpoint": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ic_iql/actor-01000-00001.pt",
+          "sha256": "e5f6d7b900f1303e223cc3ab4924770466603a00ee588f58da5507b48e252032"
+        },
+        "complete": false,
+        "checked_unix": 1794651593.593191,
+        "execution_batch": 8,
+        "metrics": {
+          "loss": 0.08254871517419815,
+          "gradient_norm": 0.0008627178031019866,
+          "logical_batch_size": 8,
+          "execution_batch_size": 8,
+          "weight_mean": 1.0191344022750854,
+          "weight_max": 1.1663546562194824,
+          "mean_update_seconds": 2.3248818749998463,
+          "peak_cuda_bytes": 12692160512
+        }
+      }
+    }
+  }
+}
