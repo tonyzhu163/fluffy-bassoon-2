@@ -1,6 +1,6 @@
 {
   "user_instruction": "Expand paired evaluations; quantify DIT benefit from history and above SFT/PPO",
-  "status": "Prepared and recorded; Linux core tests passed. Inference input restoration, native GPU qualification and expanded evaluation have not started.",
+  "status": "First qualification failed in post-rollout action audit; corrected retry submitted and queued",
   "tasks": [
     "OpenDrawer",
     "CloseToasterOvenDoor",
@@ -84,5 +84,12 @@
     "case_failures": "Preserve failures and paired denominators; no success-conditioned exclusions or substitution",
     "interpretation": "Separate history effect from advantage over SFT/PPO. More cases estimate this frozen fit more precisely; they do not explain why DIT is stronger or measure training-seed variation."
   },
-  "next_action": "Restore only hash-bound DIT and PPO inference inputs; qualify endpoint-only controls on allocated GPU, measure throughput, then fix and launch the paired sample within the existing cap."
+  "next_action": "Verify allocated GPU probe and completed audited physical wave. Continue fixed-step30 label preparation. Fix confirmation count from throughput before examining confirmation outcomes.",
+  "checked_shanghai": "2026-11-14T15:29:24+08:00",
+  "qualification_retry": {
+    "total_GPU_hours": 2,
+    "closed_conservative": 0.2,
+    "retry_maximum": 1.75,
+    "uncommitted_margin": 0.05
+  }
 }

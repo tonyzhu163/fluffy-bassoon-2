@@ -56,11 +56,24 @@ query/action/native-truth evidence and frame digests, with videos limited to
 qualification or a declared sample; bank completed evidence in verified cold
 storage and bound local staging. Do not restore the old raw training corpora.
 
-**Current state:** plan recorded; 20 Linux core tests passed. Inference input
-restoration, native GPU qualification and the expanded evaluation have not
-started. Next: restore hash-bound inputs, qualify and time the native path, then
-fix the sample count and launch within the approved cap. Corrected PPO collection
-continues under its existing immutable contracts.
+**Current state (November 14, 15:29 Shanghai):** the frozen inference inputs
+are restored with verified hashes. Twenty Linux core tests passed. The first
+native qualification completed its DIT rollout batch but failed a post-rollout
+audit: requested gripper/base-mode scores were incorrectly compared directly
+with converted physical commands. This produced no valid paired result. The
+corrected audit applies the exact native conversion, and Linux qualification
+of that conversion passed. A retry is queued as `job-rndlh3s50x3d`, pinned to
+`9f8bb6a4`, with a 105-minute limit on one GPU and automatic retries disabled.
+The failed attempt's conservative 0.2 GPU-hours plus the retry's maximum 1.75
+remain inside the original 2 GPU-hour qualification reservation.
 
+The expanded confirmation has **not** launched. Next: verify the actual GPU
+probe and complete paired native wave, measure throughput, then fix the fresh
+sample count within the existing cap. Both corrected PPO collectors are at
+28/30 updates. Four raw task packs and four step-30 inference teachers are
+available (including the previously verified Faucet export); labels and the
+eight new transformer fits have not started.
+
+[Execution and failure evidence](EXECUTION.json) · [Verified restored inputs](RESTORED.json) ·
 [Machine-readable plan](PLAN.json) · [Core validation](CORE-VALIDATION.json) ·
 [Budget reconciliation](../robocasa-six-task-scale-20261113-r1/evidence/BUDGET-RECONCILED-20261114.json)

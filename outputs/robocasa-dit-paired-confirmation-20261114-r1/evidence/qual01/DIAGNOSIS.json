@@ -1,0 +1,21 @@
+{
+  "job_id": "job-4fihmh5d1ox9",
+  "source_commit": "cbbc982b9fa0b3f30c01364f61d6803a41a4dab8",
+  "exit": {
+    "exit_code": 1,
+    "started_unix": 1794640447.3690815,
+    "ended_unix": 1794640933.1383827,
+    "worker_GPU_hours": 0.1349359170595805,
+    "complete": false,
+    "partial_evidence_location": "/tmp/robocasa-dit-paired-confirmation-20261114-r1/qual01/evaluation"
+  },
+  "failure": "readout.py:51 audit requested_commands equals executed_commands assertion",
+  "diagnosis": "Requested commands contain native gripper/base-mode scores. RLinf8f9bfa76 map_released_control_scores thresholds coordinates6/11 at0.5 before physical dispatch. Audit must compare mapped commands, not raw requested scores. No policy/runtime change is needed.",
+  "native_batch_returned": true,
+  "completed_wave_audit": false,
+  "confirmation_results_eligible": false,
+  "scheduler_runtime_seconds": 510,
+  "scheduler_GPU_hours": 0.14166666666666666,
+  "conservative_closed_GPU_hours": 0.2,
+  "failed_container_terminal": "WebShell and WebIDE unavailable after exit; full raw wave remained container-local and was not cold-banked. Retained launch, model binding, probe, exit and console log in BOS. Next attempt must archive partial evidence on failure."
+}

@@ -1,0 +1,50 @@
+{
+  "status": "First qualification failed in post-rollout action audit; corrected retry submitted and queued",
+  "job_id": "job-rndlh3s50x3d",
+  "job_name": "mwj_1114_dit_paired_qual_g1_r2",
+  "cluster": "Baige Pro6K",
+  "queue": "aihcq-rh0wwk9muei4",
+  "source_commit": "9f8bb6a46c806ac93edc55613909e00aa4319d38",
+  "created_shanghai": "2026-11-14T15:28:05+08:00",
+  "GPUs": 1,
+  "CPUs": 16,
+  "RAM_GiB": 192,
+  "shared_memory_GiB": 16,
+  "scheduler_maximum_minutes": 105,
+  "maximum_GPU_hours": 1.75,
+  "automatic_retries": false,
+  "qualification_only": true,
+  "cases_per_task": 8,
+  "expanded_confirmation_launched": false,
+  "cold_output": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-dit-paired-confirmation-20261114-r1/qual02",
+  "native_runtime": "unchanged uv environment and corrected RLinf8f9bfa76",
+  "CPU_validation": "20 core tests passed on source8aa93780. Retry native score-to-command mapping and runner imports passed on allocated Linux at9f8bb6a4.",
+  "allocation_gpu_probe": "pending allocation",
+  "native_progress": "No qual02 worker receipt yet",
+  "next_action": "Verify allocated GPU probe and completed audited physical wave. Continue fixed-step30 label preparation. Fix confirmation count from throughput before examining confirmation outcomes.",
+  "checked_shanghai": "2026-11-14T15:29:24+08:00",
+  "previous_attempt": {
+    "job_id": "job-4fihmh5d1ox9",
+    "status": "failed in audit after first rollout batch",
+    "source_commit": "cbbc982b9fa0b3f30c01364f61d6803a41a4dab8",
+    "scheduler_GPU_hours": 0.14166666666666666,
+    "conservative_closed_GPU_hours": 0.2,
+    "evidence": "evidence/qual01/DIAGNOSIS.json"
+  },
+  "qualification_reservation": {
+    "total_GPU_hours": 2,
+    "closed_conservative": 0.2,
+    "retry_maximum": 1.75,
+    "uncommitted_margin": 0.05
+  },
+  "capacity_at_submission": {
+    "GPU_type": "NVIDIA RPBZZZ6",
+    "queue_free_GPUs": 8,
+    "queue_total_GPUs": 416,
+    "queue_free_CPUs": 632,
+    "queue_free_RAM_GiB": 7303,
+    "personal_free_GPUs": 15,
+    "personal_limit_GPUs": 32,
+    "queued_jobs": 14
+  }
+}
