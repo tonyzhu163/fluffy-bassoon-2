@@ -1,0 +1,39 @@
+{
+  "status": "Prepared; not submitted. Requires completed hash-bound task assemblies and allocated native qualification.",
+  "policy_updates": 10000,
+  "value_updates": 1000,
+  "seed": 0,
+  "logical_batch": 8,
+  "execution_batch": 8,
+  "window_episodes": 12,
+  "learning_rate": 0.0003,
+  "checkpoint_selection": "Fixed final for both values and policies; validation is diagnostic",
+  "value_recipe": "Use core ValueConfig defaults;1000 fresh Q/V updates per DIT/IC-IQL and corpus before freezing for extraction. No old value state.",
+  "sampling": "Uniform task then uniform stream; same total optimizer updates for both corpora",
+  "normalization": "Each corpus training streams only; identical within-corpus action codec and source subsets",
+  "policy_initialization": "Reset torch seed0 immediately before identical KV architecture construction, independent of value stage and native model loading",
+  "source_layout": "Four canonical datasets/task; same references for the original three tasks in both conditions",
+  "planned_jobs": [
+    {
+      "corpus_size": 3,
+      "GPUs": 4,
+      "maximum_minutes": 360,
+      "maximum_GPU_hours": 24
+    },
+    {
+      "corpus_size": 6,
+      "GPUs": 4,
+      "maximum_minutes": 360,
+      "maximum_GPU_hours": 24
+    }
+  ],
+  "budget": {
+    "proposed_fits_and_values_GPU_hours": 57,
+    "planned_primary_maximum": 48,
+    "uncommitted_margin": 9,
+    "submitted_reservation": 0
+  },
+  "retention": "One job-local raw cache shared across four workers; only two readback-verified resumable snapshots per method/attempt plus final candidate",
+  "timeout": "Save optimizer, policy/values, task/window sampler and all RNG state; preserve10000-update endpoint across any explicit resume",
+  "validation_pending": "Linux imports/core numerical tests, actual labeled data assembly/readback, actual GPU memory/update throughput and first native RGB gradient update"
+}
