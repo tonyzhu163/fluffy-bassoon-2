@@ -27,12 +27,22 @@ def main():
     p.add_argument('--corpora',type=Path,required=True)
     p.add_argument('--corpora-sha256',required=True)
     p.add_argument('--corpus-size',type=int,choices=(3,6),required=True)
+    p.add_argument('--data-qualification',type=Path,required=True)
+    p.add_argument('--data-qualification-sha256',required=True)
     a=p.parse_args()
     assert sys.platform=='linux' and socket.gethostname().startswith('job-')
     assert a.attempt.isalnum()
     assert subprocess.check_output(['git','-C',str(CODE),'rev-parse','HEAD'],text=True).strip()==a.pin
     assert not subprocess.check_output(['git','-C',str(CODE),'status','--porcelain','--untracked-files=no'])
     assert sha(a.corpora)==a.corpora_sha256
+    assert sha(a.data_qualification)==a.data_qualification_sha256
+    qualification=json.loads(a.data_qualification.read_text())
+    assert qualification['passed'] and qualification['CPU_only']
+    assert qualification['source_commit']==a.pin
+    assert qualification['corpora']==dict(path=str(a.corpora),sha256=a.corpora_sha256)
+    assert qualification['sampler_sha256']==sha(HERE/'corpus.py')
+    assert {(cell['corpus_size'],cell['objective'],cell['split']) for cell in qualification['checked_cells']}=={
+        (size,method,split) for size in (3,6) for method in METHODS for split in ('train','validation')}
     spec=json.loads(a.corpora.read_text());tasks=TASKS[:a.corpus_size]
     sources={}
     for task in tasks:
@@ -63,7 +73,8 @@ def main():
     write(cold/'LAUNCH.json',dict(source_commit=a.pin,corpus_size=a.corpus_size,methods=METHODS,
         hostname=socket.gethostname(),started_unix=began,maximum_GPU_hours=24,
         maximum_scheduler_minutes=360,automatic_retries=False,required_local_bytes=needed,
-        local_free_bytes=shutil.disk_usage(local).free,corpus_spec_sha256=a.corpora_sha256))
+        local_free_bytes=shutil.disk_usage(local).free,corpus_spec_sha256=a.corpora_sha256,
+        data_qualification=dict(path=str(a.data_qualification),sha256=a.data_qualification_sha256)))
     subprocess.run([str(PYTHON),'-B',str(CODE/'scripts/[train]gpu_probe.py'),'--expected-count','4',
         '--purpose','training','--baige-container','--baige-exclusive-training',
         '--output',str(cold/'gpu-probe.json')],env=env,check=True,timeout=180)
