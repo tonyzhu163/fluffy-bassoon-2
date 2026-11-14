@@ -1,6 +1,6 @@
 {
-  "checked_shanghai": "2026-11-13T16:17:00+08:00",
-  "status": "Five matched corrected-PPO collection jobs submitted; all queued on Baige Pro6K; no advancing updates yet",
+  "checked_shanghai": "2026-11-14T12:39:54+08:00",
+  "status": "All five jobs terminal: Drawer, Coffee and Counter succeeded at30; Toaster manually stopped at18; Stove failed its scratch-space check before training. No queued/running collection or new transformer fit.",
   "launch_source_commit": "3a328f742d8db234586e2d7cb2d1d66e91e5d371",
   "deployment": "Git bundle; clean exact detached source on Baige; existing active worktrees untouched",
   "validation": {
@@ -17,7 +17,7 @@
     },
     "core_PPO_implementation_diff_from_prior_qualified_9e3c9bfa": false,
     "runtime": "Existing native uv environment and corrected RLinf8f9bfa76; unchanged",
-    "actual_job_GPU_qualification": "Pending; each allocation must pass its own GPU probe before model work",
+    "actual_job_GPU_qualification": "Passed8-device probes for Drawer, Toaster, Coffee and Counter; Stove failed before its GPU probe.",
     "matched_six_configurations": "All six resolve on allocated Linux to30 updates,128 episodes/update,720 optimizer steps; evidence/MATCHED-CONFIGURATION.json",
     "Faucet_reuse": "Effective algorithm, actor, rollout and environment settings match current corrected collector;30 updates/3840 episodes/2880 raw chunks present; step30 DCP rehashed. Raw payload and inference-label verification remain; evidence/FAUCET-REUSE.json",
     "Faucet_step30_export": {
@@ -61,24 +61,26 @@
     "intern_personal_GPU_free": 16
   },
   "budget": {
-    "GPU_hours_used_this_phase": 0,
-    "GPU_hours_reserved_this_phase": 96,
+    "GPU_hours_used_this_phase": null,
+    "GPU_hours_reserved_this_phase": 0,
     "prior_all_new_committed_upper_bound_GPU_hours": 48.834722222222226,
     "prior_all_new_hard_cap_GPU_hours": 50,
     "prior_historical_committed_upper_bound_GPU_hours": 162.12916655555557,
     "prior_historical_hard_cap_GPU_hours": 170,
     "approval": "Existing explicit230GPUh approval; corrected recollection replaces historical buggy-critic reuse. See PLAN.md for reallocation.",
     "approved_additional_hard_cap_GPU_hours": 230,
-    "usage_checked_shanghai": "2026-11-13T16:17:00+08:00"
+    "usage_checked_shanghai": "2026-11-14T12:39:54+08:00",
+    "closed_jobs_conservative_GPU_hours_upper_bound": 96,
+    "accounting": "All five allocations terminal. Preserve96GPUh as the conservative closed-job cap until scheduler allocation times are reconciled; actual billed use is not yet asserted. No retry reserved."
   },
-  "next_action": "Wait for allocation and verify actual GPU probes plus advancing updates; prepare the matched 30-update raw inputs and endpoint-30 annotation. Faucet CPU export is complete; raw-payload integrity and GPU query-label validation remain. Next scheduler check due16:37 Shanghai. No new learner fitting or readout yet.",
+  "next_action": "Determine whether the interrupted Toaster local full checkpoint/history can be recovered and why operator zrt stopped it; qualify adequate scratch for Stove before a new attempt. Then complete raw-source checks, endpoint labels and eight transformer fits. No retry submitted in this status check; November15 readout at serious risk.",
   "jobs": [
     {
       "task": "OpenDrawer",
       "job_id": "job-7zuf0bj1l20b",
       "name": "mwj_1113_matched_drawer_ppo30_r1",
       "created_shanghai": "2026-11-13T15:57:14+08:00",
-      "scheduler_status": "Queued",
+      "scheduler_status": "Succeeded",
       "GPUs": 8,
       "CPUs": 64,
       "RAM_GiB": 1024,
@@ -87,18 +89,38 @@
       "reserved_GPU_hours": 20,
       "source_commit": "3a328f742d8db234586e2d7cb2d1d66e91e5d371",
       "attempt": "attempt01",
-      "completed_updates": 0,
+      "completed_updates": 30,
       "automatic_retries": false,
-      "last_checked_shanghai": "2026-11-13T16:17:00+08:00",
-      "new_updates_completed": 0,
-      "target_updates": 30
+      "last_checked_shanghai": "2026-11-14T12:39:54+08:00",
+      "new_updates_completed": 30,
+      "target_updates": 30,
+      "scheduler_ended_shanghai": "2026-11-13T18:47:01+08:00",
+      "archive_verified": true,
+      "verified_archive": {
+        "cold": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/teachers/OpenDrawer/attempt01/collection.tar",
+        "archive_sha256": "e00f46765e4fd85ef5aab6a9b429eea8d28d122cb48bcf0951062c39832a503e",
+        "archive_bytes": 145107906560,
+        "file_count": 9548,
+        "raw_members": 2880,
+        "step30_weights": [
+          {
+            "path": "OpenDrawer/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+            "bytes": 6957548034,
+            "sha256": "67783843d34b5e3daa3f0aba0b0aa3efb5afaede1f6114c60ebf510cee2bd50e"
+          }
+        ]
+      },
+      "archive_receipt": {
+        "sha256": "f4e50516ce270e9b67d47652b715232d2ad4426e8d766149914a7d7e6df98288",
+        "bytes": 1695165
+      }
     },
     {
       "task": "CloseToasterOvenDoor",
       "job_id": "job-6exesyh5mex9",
       "name": "mwj_1113_matched_toaster_ppo30_r1",
       "created_shanghai": "2026-11-13T16:01:18+08:00",
-      "scheduler_status": "Queued",
+      "scheduler_status": "ManualTermination",
       "GPUs": 8,
       "CPUs": 64,
       "RAM_GiB": 1024,
@@ -107,18 +129,28 @@
       "reserved_GPU_hours": 20,
       "source_commit": "3a328f742d8db234586e2d7cb2d1d66e91e5d371",
       "attempt": "attempt01",
-      "completed_updates": 0,
+      "completed_updates": 18,
       "automatic_retries": false,
-      "last_checked_shanghai": "2026-11-13T16:17:00+08:00",
-      "new_updates_completed": 0,
-      "target_updates": 30
+      "last_checked_shanghai": "2026-11-14T12:39:54+08:00",
+      "new_updates_completed": 18,
+      "target_updates": 30,
+      "scheduler_ended_shanghai": "2026-11-13T19:36:56+08:00",
+      "archive_verified": false,
+      "termination": {
+        "source": "user",
+        "operator": "zrt",
+        "requested_shanghai": "2026-11-13T19:36:28+08:00",
+        "reason": "Not provided by the event",
+        "evidence": "evidence/TOASTER-EVENTS-20261114.txt",
+        "durable_archive": "No ARCHIVE.json or COMPLETE.json;18 is last observed progress, not a verified recoverable checkpoint"
+      }
     },
     {
       "task": "CoffeeSetupMug",
       "job_id": "job-761c2ywv13t9",
       "name": "mwj_1113_matched_coffee_ppo30_r1",
       "created_shanghai": "2026-11-13T16:04:20+08:00",
-      "scheduler_status": "Queued",
+      "scheduler_status": "Succeeded",
       "GPUs": 8,
       "CPUs": 64,
       "RAM_GiB": 1024,
@@ -127,18 +159,38 @@
       "reserved_GPU_hours": 20,
       "source_commit": "3a328f742d8db234586e2d7cb2d1d66e91e5d371",
       "attempt": "attempt01",
-      "completed_updates": 0,
+      "completed_updates": 30,
       "automatic_retries": false,
-      "last_checked_shanghai": "2026-11-13T16:17:00+08:00",
-      "new_updates_completed": 0,
-      "target_updates": 30
+      "last_checked_shanghai": "2026-11-14T12:39:54+08:00",
+      "new_updates_completed": 30,
+      "target_updates": 30,
+      "scheduler_ended_shanghai": "2026-11-13T22:49:48+08:00",
+      "archive_verified": true,
+      "verified_archive": {
+        "cold": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/teachers/CoffeeSetupMug/attempt01/collection.tar",
+        "archive_sha256": "01fb71354e7766a0e741b479b0af3bd2c5c32d67fbee96cae33284bcc8ebb6df",
+        "archive_bytes": 145693214720,
+        "file_count": 9506,
+        "raw_members": 2880,
+        "step30_weights": [
+          {
+            "path": "CoffeeSetupMug/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+            "bytes": 6957548034,
+            "sha256": "1f7b55d5cbe606c54c2dfcc374d8f9546096fea3b07f005a0d05ea89333cb2bd"
+          }
+        ]
+      },
+      "archive_receipt": {
+        "sha256": "57513e833ec61a19e9f176a931eb044396899ba6be1c5ec90843e1b77ae8a9b8",
+        "bytes": 1691636
+      }
     },
     {
       "task": "TurnOffStove",
       "job_id": "job-w3byow7hhbk2",
       "name": "mwj_1113_matched_stove_ppo30_r1",
       "created_shanghai": "2026-11-13T16:07:01+08:00",
-      "scheduler_status": "Queued",
+      "scheduler_status": "Failed",
       "GPUs": 8,
       "CPUs": 64,
       "RAM_GiB": 1024,
@@ -149,16 +201,26 @@
       "attempt": "attempt01",
       "completed_updates": 0,
       "automatic_retries": false,
-      "last_checked_shanghai": "2026-11-13T16:17:00+08:00",
+      "last_checked_shanghai": "2026-11-14T12:39:54+08:00",
       "new_updates_completed": 0,
-      "target_updates": 30
+      "target_updates": 30,
+      "scheduler_ended_shanghai": "2026-11-13T20:43:18+08:00",
+      "archive_verified": false,
+      "failure": {
+        "exit_code": 1,
+        "file": "teacher_fresh.py",
+        "line": 38,
+        "assertion": "shutil.disk_usage(source.parent).free >= 400 * 2**30",
+        "phase": "Before LAUNCH receipt/GPU probe/model construction",
+        "evidence": "evidence/STOVE-FAILURE-20261114.txt"
+      }
     },
     {
       "task": "PickPlaceCounterToStove",
       "job_id": "job-gvx2sbsw403k",
       "name": "mwj_1113_matched_counter_ppo30_r1",
       "created_shanghai": "2026-11-13T16:10:05+08:00",
-      "scheduler_status": "Queued",
+      "scheduler_status": "Succeeded",
       "GPUs": 8,
       "CPUs": 64,
       "RAM_GiB": 1024,
@@ -167,18 +229,39 @@
       "reserved_GPU_hours": 16,
       "source_commit": "3a328f742d8db234586e2d7cb2d1d66e91e5d371",
       "attempt": "attempt01",
-      "completed_updates": 10,
+      "completed_updates": 30,
       "automatic_retries": false,
-      "new_updates_completed": 0,
+      "new_updates_completed": 20,
       "target_updates": 30,
-      "last_checked_shanghai": "2026-11-13T16:17:00+08:00"
+      "last_checked_shanghai": "2026-11-14T12:39:54+08:00",
+      "scheduler_ended_shanghai": "2026-11-13T20:09:38+08:00",
+      "archive_verified": true,
+      "verified_archive": {
+        "cold": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/teachers/PickPlaceCounterToStove/attempt01/collection.tar",
+        "archive_sha256": "16b75a26e2931922b5b950c651c465ed461fef60ba04b11d8b6a32daf7ab00b5",
+        "archive_bytes": 96050042880,
+        "file_count": 6300,
+        "raw_members": 1920,
+        "step30_weights": [
+          {
+            "path": "PickPlaceCounterToStove/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+            "bytes": 6957548034,
+            "sha256": "26128fedaf06f4a1c5129124e6dcae2e296bd5e0c4b12b962896ff8ce0d76e15"
+          }
+        ]
+      },
+      "archive_receipt": {
+        "sha256": "3ebe1c51d725d78a5041f548e8c1897a0732614a7d95c55640d598d74cd8aa04",
+        "bytes": 1120480
+      }
     }
   ],
   "scheduler_check": {
-    "checked_shanghai": "2026-11-13T16:17:00+08:00",
-    "source": "Authenticated Baige task list, matching all five exact job IDs",
-    "status": "All five queued; no LAUNCH, PROGRESS or COMPLETE files at their assigned private archive paths",
-    "screenshot": "evidence/QUEUED-20261113-1617.jpg",
-    "next_check_shanghai": "2026-11-13T16:37:00+08:00"
-  }
+    "checked_shanghai": "2026-11-14T12:39:54+08:00",
+    "source": "Refreshed authenticated Baige task list for all five exact IDs, Stove startup logs and Toaster user-stop event",
+    "status": "3 Succeeded,1 ManualTermination,1 Failed;0 queued/running",
+    "evidence": "evidence/STATUS-20261114-1238.json"
+  },
+  "monitoring_gap": "Previous record was November13 16:17. No intervening checks are recorded; terminal states were first reconciled in this November14 status check.",
+  "source_completion_note": "Drawer30 checkpoint/raw archive complete, but its final after-evaluation receipt is absent because the bounded checkpoint-and-exit path ran. Coffee and Counter have step30 evaluation receipts. Source learning metrics are not transformer ID/OOD results."
 }

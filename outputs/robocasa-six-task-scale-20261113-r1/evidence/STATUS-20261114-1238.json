@@ -1,0 +1,890 @@
+{
+  "checked_unix": 1794631038.4543722,
+  "checked_shanghai": "2026-11-14T12:37:18.454379+08:00",
+  "tasks": [
+    {
+      "task": "OpenDrawer",
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/teachers/OpenDrawer/attempt01",
+      "exists": true,
+      "receipts": {
+        "LAUNCH.json": {
+          "sha256": "757d1d89935fb767ad02a32bdf368822d1d75db96d208da3998fcc25dc3c0da0",
+          "bytes": 573
+        },
+        "PROGRESS.json": {
+          "sha256": "07be1ecca0c54fac123a08bd9032ccd8652ccae1e04f742050070db3b225c947",
+          "bytes": 16718
+        },
+        "COMPLETE.json": {
+          "sha256": "b0f8a7722e0257df10d7f0e160f1dc5a9d4147db059e42949c341772b0822c4a",
+          "bytes": 1007
+        },
+        "progress.json": {
+          "sha256": "6af8ec4313507155d980b94bad66db184e335fa33b73a82b919b07aa0e53a19f",
+          "bytes": 133
+        },
+        "EXIT.json": {
+          "sha256": "f487422b3a53b0854b47ada77c820c8a6e34dae516f3c1dfc81209a9d146f93e",
+          "bytes": 110
+        },
+        "ARCHIVE.json": {
+          "sha256": "f4e50516ce270e9b67d47652b715232d2ad4426e8d766149914a7d7e6df98288",
+          "bytes": 1695165
+        },
+        "before-evaluation.json": {
+          "sha256": "0364b48de20d731db63e3d28c7b729a5dede79f68acd496d52a364b3e75e2ef5",
+          "bytes": 219
+        }
+      },
+      "LAUNCH.json": {
+        "source_commit": "3a328f742d8db234586e2d7cb2d1d66e91e5d371",
+        "task": "OpenDrawer",
+        "attempt": "attempt01",
+        "hostname": "job-7zuf0bj1l20b-master-0",
+        "started_unix": 1794558149.4771204,
+        "local_output": "/tmp/robocasa-six-task-scale-20261113-r1/teachers/OpenDrawer/attempt01",
+        "initial_step": 0,
+        "target_step": 30,
+        "maximum_scheduler_minutes": 150,
+        "maximum_GPU_hours": 20,
+        "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+        "automatic_retry": false,
+        "initialization": "Original Human300 SFT; fresh critic, optimizer, sampler and RNG"
+      },
+      "PROGRESS.json": {
+        "checked_unix": 1794565470.904814,
+        "final_archive_verified": false,
+        "local_free_bytes": 532810739712,
+        "progress.json": {
+          "completed_iterations": 30,
+          "target_iterations": 30,
+          "checked_unix": 1794565465.911335,
+          "operator_checkpoint_exit": true
+        },
+        "gpu-probe.json": {
+          "status": "passed",
+          "hostname": "job-7zuf0bj1l20b-master-0",
+          "created_at_utc": "2026-11-13T08:22:50.105290+00:00",
+          "allocation_type": "baige_container",
+          "devices": 8
+        },
+        "before-evaluation.json": {
+          "completed": true,
+          "metrics": {
+            "episode_len": 600.0,
+            "reward": 0.000859375053551048,
+            "return": 0.515625,
+            "success_at_end": 0.484375,
+            "success_once": 0.515625,
+            "num_trajectories": 64
+          }
+        },
+        "operator-checkpoint-exit.json": {
+          "completed": true,
+          "global_step": 30,
+          "requested_marker": "CHECKPOINT_AND_EXIT",
+          "scope": "All update handles completed; native DCP and all worker sidecars saved; no next rollout"
+        }
+      },
+      "COMPLETE.json": {
+        "archive_verified": true,
+        "learner_exit_code": 0,
+        "started_unix": 1794558149.4771204,
+        "ended_unix": 1794566812.3271234,
+        "complete_checkpoint_boundaries": [
+          {
+            "step": 20,
+            "path": "OpenDrawer/checkpoints/global_step_20/pilot-boundary.json"
+          },
+          {
+            "step": 15,
+            "path": "OpenDrawer/checkpoints/global_step_15/pilot-boundary.json"
+          },
+          {
+            "step": 0,
+            "path": "OpenDrawer/checkpoints/global_step_0/pilot-boundary.json"
+          },
+          {
+            "step": 5,
+            "path": "OpenDrawer/checkpoints/global_step_5/pilot-boundary.json"
+          },
+          {
+            "step": 25,
+            "path": "OpenDrawer/checkpoints/global_step_25/pilot-boundary.json"
+          },
+          {
+            "step": 1,
+            "path": "OpenDrawer/checkpoints/global_step_1/pilot-boundary.json"
+          },
+          {
+            "step": 30,
+            "path": "OpenDrawer/checkpoints/global_step_30/pilot-boundary.json"
+          },
+          {
+            "step": 10,
+            "path": "OpenDrawer/checkpoints/global_step_10/pilot-boundary.json"
+          }
+        ]
+      },
+      "progress.json": {
+        "completed_iterations": 30,
+        "target_iterations": 30,
+        "checked_unix": 1794565465.911335,
+        "operator_checkpoint_exit": true
+      },
+      "EXIT.json": {
+        "exit_code": 0,
+        "started_unix": 1794558149,
+        "ended_unix": 1794565489,
+        "worker_GPU_hours": 16.3111
+      },
+      "ARCHIVE.json": {
+        "verified": true,
+        "source": "/tmp/robocasa-six-task-scale-20261113-r1/teachers/OpenDrawer/attempt01",
+        "cold": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/teachers/OpenDrawer/attempt01/collection.tar",
+        "archive_sha256": "e00f46765e4fd85ef5aab6a9b429eea8d28d122cb48bcf0951062c39832a503e",
+        "archive_bytes": 145107906560,
+        "payload_bytes": 145090791489,
+        "full_archive_SHA_readback": true,
+        "all_stageback_members_verified": true,
+        "all_original_sources_rehashed": true,
+        "complete_checkpoint_boundaries": [
+          {
+            "step": 20,
+            "path": "OpenDrawer/checkpoints/global_step_20/pilot-boundary.json"
+          },
+          {
+            "step": 15,
+            "path": "OpenDrawer/checkpoints/global_step_15/pilot-boundary.json"
+          },
+          {
+            "step": 0,
+            "path": "OpenDrawer/checkpoints/global_step_0/pilot-boundary.json"
+          },
+          {
+            "step": 5,
+            "path": "OpenDrawer/checkpoints/global_step_5/pilot-boundary.json"
+          },
+          {
+            "step": 25,
+            "path": "OpenDrawer/checkpoints/global_step_25/pilot-boundary.json"
+          },
+          {
+            "step": 1,
+            "path": "OpenDrawer/checkpoints/global_step_1/pilot-boundary.json"
+          },
+          {
+            "step": 30,
+            "path": "OpenDrawer/checkpoints/global_step_30/pilot-boundary.json"
+          },
+          {
+            "step": 10,
+            "path": "OpenDrawer/checkpoints/global_step_10/pilot-boundary.json"
+          }
+        ],
+        "checked_unix": 1794566811.1744075,
+        "restore_instruction": "Restore this archive to the recorded local source path in a fresh allocation and verify every inventory member before resuming or reading raw data.",
+        "file_count": 9548,
+        "step30_weights": [
+          {
+            "path": "OpenDrawer/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+            "bytes": 6957548034,
+            "sha256": "67783843d34b5e3daa3f0aba0b0aa3efb5afaede1f6114c60ebf510cee2bd50e"
+          }
+        ],
+        "raw_members": 2880
+      },
+      "before-evaluation.json": {
+        "completed": true,
+        "metrics": {
+          "episode_len": 600.0,
+          "reward": 0.000859375053551048,
+          "return": 0.515625,
+          "success_at_end": 0.484375,
+          "success_once": 0.515625,
+          "num_trajectories": 64
+        }
+      },
+      "present_files": [
+        {
+          "name": "ARCHIVE-INVENTORY.json",
+          "bytes": 1693670
+        },
+        {
+          "name": "ARCHIVE.json",
+          "bytes": 1695165
+        },
+        {
+          "name": "COMPLETE.json",
+          "bytes": 1007
+        },
+        {
+          "name": "EXIT.json",
+          "bytes": 110
+        },
+        {
+          "name": "LAUNCH.json",
+          "bytes": 573
+        },
+        {
+          "name": "MANIFEST.json",
+          "bytes": 521
+        },
+        {
+          "name": "PROGRESS.json",
+          "bytes": 16718
+        },
+        {
+          "name": "before-evaluation.json",
+          "bytes": 219
+        },
+        {
+          "name": "collection.tar",
+          "bytes": 145107906560
+        },
+        {
+          "name": "operator-checkpoint-exit.json",
+          "bytes": 192
+        },
+        {
+          "name": "progress.json",
+          "bytes": 133
+        }
+      ]
+    },
+    {
+      "task": "CloseToasterOvenDoor",
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/teachers/CloseToasterOvenDoor/attempt01",
+      "exists": true,
+      "receipts": {
+        "LAUNCH.json": {
+          "sha256": "618807c644e9a8ee686daa9651333d872c058b94654fd880ceda43c5718502e1",
+          "bytes": 593
+        },
+        "PROGRESS.json": {
+          "sha256": "e215e37ff4554637e633a18ed41df6c12df4b946035a76c9684917ea470aaff5",
+          "bytes": 16477
+        }
+      },
+      "LAUNCH.json": {
+        "source_commit": "3a328f742d8db234586e2d7cb2d1d66e91e5d371",
+        "task": "CloseToasterOvenDoor",
+        "attempt": "attempt01",
+        "hostname": "job-6exesyh5mex9-master-0",
+        "started_unix": 1794565402.9898574,
+        "local_output": "/tmp/robocasa-six-task-scale-20261113-r1/teachers/CloseToasterOvenDoor/attempt01",
+        "initial_step": 0,
+        "target_step": 30,
+        "maximum_scheduler_minutes": 150,
+        "maximum_GPU_hours": 20,
+        "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+        "automatic_retry": false,
+        "initialization": "Original Human300 SFT; fresh critic, optimizer, sampler and RNG"
+      },
+      "PROGRESS.json": {
+        "checked_unix": 1794569778.4475586,
+        "final_archive_verified": false,
+        "local_free_bytes": 368430604288,
+        "progress.json": {
+          "completed_iterations": 18,
+          "target_iterations": 30,
+          "checked_unix": 1794569713.758123,
+          "operator_checkpoint_exit": false
+        },
+        "gpu-probe.json": {
+          "status": "passed",
+          "hostname": "job-6exesyh5mex9-master-0",
+          "created_at_utc": "2026-11-13T10:23:44.487298+00:00",
+          "allocation_type": "baige_container",
+          "devices": 8
+        },
+        "before-evaluation.json": {
+          "completed": true,
+          "metrics": {
+            "success_at_end": 0.359375,
+            "episode_len": 600.0,
+            "success_once": 0.375,
+            "reward": 0.0006249999860301614,
+            "return": 0.375,
+            "num_trajectories": 64
+          }
+        }
+      },
+      "present_files": [
+        {
+          "name": "LAUNCH.json",
+          "bytes": 593
+        },
+        {
+          "name": "PROGRESS.json",
+          "bytes": 16477
+        }
+      ]
+    },
+    {
+      "task": "CoffeeSetupMug",
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/teachers/CoffeeSetupMug/attempt01",
+      "exists": true,
+      "receipts": {
+        "LAUNCH.json": {
+          "sha256": "36f44c2377dc859f7d2f1b691a42b442a2f2a4fd74c2c42edb9948d2d3ee5ddb",
+          "bytes": 581
+        },
+        "PROGRESS.json": {
+          "sha256": "62828565b3c2348c94fa8a22dd54b5646269420293b5e72236448487aefeaa75",
+          "bytes": 16773
+        },
+        "COMPLETE.json": {
+          "sha256": "aba99c23717a86a1367f717cde1215bd71bc3d2beb61efe754e83130944f39db",
+          "bytes": 1039
+        },
+        "progress.json": {
+          "sha256": "c358a766053f1b4528c28056c1924793a03012d509c987edb9561115923ea345",
+          "bytes": 135
+        },
+        "EXIT.json": {
+          "sha256": "6420ded12e7bdaf51c4d6f5fd6279d813e7a29ba336a5a6e737357b6633f42da",
+          "bytes": 110
+        },
+        "ARCHIVE.json": {
+          "sha256": "57513e833ec61a19e9f176a931eb044396899ba6be1c5ec90843e1b77ae8a9b8",
+          "bytes": 1691636
+        },
+        "before-evaluation.json": {
+          "sha256": "97cca5ce76f0da643f169f03df6f8388940253374ada7c31aeb1812ef3984482",
+          "bytes": 218
+        },
+        "after-evaluation.json": {
+          "sha256": "4e1fe66bd6e2188e060df82acde0e3b4cb1c82dafc82767368f5eb99f22e62be",
+          "bytes": 241
+        }
+      },
+      "LAUNCH.json": {
+        "source_commit": "3a328f742d8db234586e2d7cb2d1d66e91e5d371",
+        "task": "CoffeeSetupMug",
+        "attempt": "attempt01",
+        "hostname": "job-761c2ywv13t9-master-0",
+        "started_unix": 1794572777.0474367,
+        "local_output": "/tmp/robocasa-six-task-scale-20261113-r1/teachers/CoffeeSetupMug/attempt01",
+        "initial_step": 0,
+        "target_step": 30,
+        "maximum_scheduler_minutes": 150,
+        "maximum_GPU_hours": 20,
+        "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1",
+        "automatic_retry": false,
+        "initialization": "Original Human300 SFT; fresh critic, optimizer, sampler and RNG"
+      },
+      "PROGRESS.json": {
+        "checked_unix": 1794580058.2234437,
+        "final_archive_verified": false,
+        "local_free_bytes": 553078276096,
+        "progress.json": {
+          "completed_iterations": 30,
+          "target_iterations": 30,
+          "checked_unix": 1794579958.1117785,
+          "operator_checkpoint_exit": false
+        },
+        "gpu-probe.json": {
+          "status": "passed",
+          "hostname": "job-761c2ywv13t9-master-0",
+          "created_at_utc": "2026-11-13T12:26:38.429064+00:00",
+          "allocation_type": "baige_container",
+          "devices": 8
+        },
+        "before-evaluation.json": {
+          "completed": true,
+          "metrics": {
+            "episode_len": 600.0,
+            "success_once": 0.15625,
+            "reward": 0.00026041665114462376,
+            "return": 0.15625,
+            "success_at_end": 0.15625,
+            "num_trajectories": 64
+          }
+        },
+        "after-evaluation.json": {
+          "completed": true,
+          "global_step": 30,
+          "metrics": {
+            "episode_len": 600.0,
+            "success_once": 0.328125,
+            "reward": 0.0005468750023283064,
+            "return": 0.328125,
+            "success_at_end": 0.328125,
+            "num_trajectories": 64
+          }
+        }
+      },
+      "COMPLETE.json": {
+        "archive_verified": true,
+        "learner_exit_code": 0,
+        "started_unix": 1794572777.0474367,
+        "ended_unix": 1794581370.4588058,
+        "complete_checkpoint_boundaries": [
+          {
+            "step": 20,
+            "path": "CoffeeSetupMug/checkpoints/global_step_20/pilot-boundary.json"
+          },
+          {
+            "step": 15,
+            "path": "CoffeeSetupMug/checkpoints/global_step_15/pilot-boundary.json"
+          },
+          {
+            "step": 0,
+            "path": "CoffeeSetupMug/checkpoints/global_step_0/pilot-boundary.json"
+          },
+          {
+            "step": 5,
+            "path": "CoffeeSetupMug/checkpoints/global_step_5/pilot-boundary.json"
+          },
+          {
+            "step": 25,
+            "path": "CoffeeSetupMug/checkpoints/global_step_25/pilot-boundary.json"
+          },
+          {
+            "step": 1,
+            "path": "CoffeeSetupMug/checkpoints/global_step_1/pilot-boundary.json"
+          },
+          {
+            "step": 30,
+            "path": "CoffeeSetupMug/checkpoints/global_step_30/pilot-boundary.json"
+          },
+          {
+            "step": 10,
+            "path": "CoffeeSetupMug/checkpoints/global_step_10/pilot-boundary.json"
+          }
+        ]
+      },
+      "progress.json": {
+        "completed_iterations": 30,
+        "target_iterations": 30,
+        "checked_unix": 1794579958.1117785,
+        "operator_checkpoint_exit": false
+      },
+      "EXIT.json": {
+        "exit_code": 0,
+        "started_unix": 1794572777,
+        "ended_unix": 1794580065,
+        "worker_GPU_hours": 16.1956
+      },
+      "ARCHIVE.json": {
+        "verified": true,
+        "source": "/tmp/robocasa-six-task-scale-20261113-r1/teachers/CoffeeSetupMug/attempt01",
+        "cold": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/teachers/CoffeeSetupMug/attempt01/collection.tar",
+        "archive_sha256": "01fb71354e7766a0e741b479b0af3bd2c5c32d67fbee96cae33284bcc8ebb6df",
+        "archive_bytes": 145693214720,
+        "payload_bytes": 145676150905,
+        "full_archive_SHA_readback": true,
+        "all_stageback_members_verified": true,
+        "all_original_sources_rehashed": true,
+        "complete_checkpoint_boundaries": [
+          {
+            "step": 20,
+            "path": "CoffeeSetupMug/checkpoints/global_step_20/pilot-boundary.json"
+          },
+          {
+            "step": 15,
+            "path": "CoffeeSetupMug/checkpoints/global_step_15/pilot-boundary.json"
+          },
+          {
+            "step": 0,
+            "path": "CoffeeSetupMug/checkpoints/global_step_0/pilot-boundary.json"
+          },
+          {
+            "step": 5,
+            "path": "CoffeeSetupMug/checkpoints/global_step_5/pilot-boundary.json"
+          },
+          {
+            "step": 25,
+            "path": "CoffeeSetupMug/checkpoints/global_step_25/pilot-boundary.json"
+          },
+          {
+            "step": 1,
+            "path": "CoffeeSetupMug/checkpoints/global_step_1/pilot-boundary.json"
+          },
+          {
+            "step": 30,
+            "path": "CoffeeSetupMug/checkpoints/global_step_30/pilot-boundary.json"
+          },
+          {
+            "step": 10,
+            "path": "CoffeeSetupMug/checkpoints/global_step_10/pilot-boundary.json"
+          }
+        ],
+        "checked_unix": 1794581369.159387,
+        "restore_instruction": "Restore this archive to the recorded local source path in a fresh allocation and verify every inventory member before resuming or reading raw data.",
+        "file_count": 9506,
+        "step30_weights": [
+          {
+            "path": "CoffeeSetupMug/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+            "bytes": 6957548034,
+            "sha256": "1f7b55d5cbe606c54c2dfcc374d8f9546096fea3b07f005a0d05ea89333cb2bd"
+          }
+        ],
+        "raw_members": 2880
+      },
+      "before-evaluation.json": {
+        "completed": true,
+        "metrics": {
+          "episode_len": 600.0,
+          "success_once": 0.15625,
+          "reward": 0.00026041665114462376,
+          "return": 0.15625,
+          "success_at_end": 0.15625,
+          "num_trajectories": 64
+        }
+      },
+      "after-evaluation.json": {
+        "completed": true,
+        "global_step": 30,
+        "metrics": {
+          "episode_len": 600.0,
+          "success_once": 0.328125,
+          "reward": 0.0005468750023283064,
+          "return": 0.328125,
+          "success_at_end": 0.328125,
+          "num_trajectories": 64
+        }
+      },
+      "present_files": [
+        {
+          "name": "ARCHIVE-INVENTORY.json",
+          "bytes": 1690106
+        },
+        {
+          "name": "ARCHIVE.json",
+          "bytes": 1691636
+        },
+        {
+          "name": "COMPLETE.json",
+          "bytes": 1039
+        },
+        {
+          "name": "EXIT.json",
+          "bytes": 110
+        },
+        {
+          "name": "LAUNCH.json",
+          "bytes": 581
+        },
+        {
+          "name": "MANIFEST.json",
+          "bytes": 525
+        },
+        {
+          "name": "PROGRESS.json",
+          "bytes": 16773
+        },
+        {
+          "name": "after-evaluation.json",
+          "bytes": 241
+        },
+        {
+          "name": "before-evaluation.json",
+          "bytes": 218
+        },
+        {
+          "name": "collection.tar",
+          "bytes": 145693214720
+        },
+        {
+          "name": "progress.json",
+          "bytes": 135
+        }
+      ]
+    },
+    {
+      "task": "TurnOffStove",
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/teachers/TurnOffStove/attempt01",
+      "exists": false,
+      "receipts": {}
+    },
+    {
+      "task": "PickPlaceCounterToStove",
+      "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/teachers/PickPlaceCounterToStove/attempt01",
+      "exists": true,
+      "receipts": {
+        "LAUNCH.json": {
+          "sha256": "a391d53d05741ccdc593599e327208110d2490a0a7299f189dcc2e699f73b4c0",
+          "bytes": 408
+        },
+        "PROGRESS.json": {
+          "sha256": "2a06de65abd3a71b327fff334b1667023be45fdce6361edd456e63e6abf0e26f",
+          "bytes": 17045
+        },
+        "COMPLETE.json": {
+          "sha256": "4984e59626d7a2e34bf06b07fb7eda75c0ee8ac0f3ab879391a84b8ea3e76769",
+          "bytes": 763
+        },
+        "progress.json": {
+          "sha256": "9e97d88a30c083ddadc93ad3f0ec2c5636963edb4a9a2f14c7b9130878db8a83",
+          "bytes": 135
+        },
+        "EXIT.json": {
+          "sha256": "710308bf80c63a842af8566c263f9e96cb78eb33cee17bcb49e81631563b425e",
+          "bytes": 110
+        },
+        "RESTORED.json": {
+          "sha256": "b9647608efd2a5f3ba34abdc2f36a722042f2ef97a5ed6c1404a47c01953470c",
+          "bytes": 560
+        },
+        "ARCHIVE.json": {
+          "sha256": "3ebe1c51d725d78a5041f548e8c1897a0732614a7d95c55640d598d74cd8aa04",
+          "bytes": 1120480
+        },
+        "before-evaluation.json": {
+          "sha256": "7823eff513c5fe42253ebc8b0d5e877a8b0d1c27a2bf8e75701a8018b4b649de",
+          "bytes": 476
+        },
+        "after-evaluation.json": {
+          "sha256": "891abdcba1c71c124a292f7daed0dce159b4dac8bd7a1a7427554cfc965368ed",
+          "bytes": 236
+        }
+      },
+      "LAUNCH.json": {
+        "source_commit": "3a328f742d8db234586e2d7cb2d1d66e91e5d371",
+        "task": "PickPlaceCounterToStove",
+        "attempt": "attempt01",
+        "hostname": "job-gvx2sbsw403k-master-0",
+        "started_unix": 1794565705.8878844,
+        "resumed_step": 10,
+        "target_step": 30,
+        "maximum_scheduler_minutes": 120,
+        "maximum_GPU_hours": 16,
+        "automatic_retry": false,
+        "runtime_commit": "8f9bfa7661928ef8c17494b04f4d7bf3125634e1"
+      },
+      "PROGRESS.json": {
+        "checked_unix": 1794570864.9693558,
+        "final_archive_verified": false,
+        "local_free_bytes": 799499472896,
+        "progress.json": {
+          "completed_iterations": 30,
+          "target_iterations": 30,
+          "checked_unix": 1794570755.9234524,
+          "operator_checkpoint_exit": false
+        },
+        "gpu-probe.json": {
+          "status": "passed",
+          "hostname": "job-gvx2sbsw403k-master-0",
+          "created_at_utc": "2026-11-13T10:29:39.947535+00:00",
+          "allocation_type": "baige_container",
+          "devices": 8
+        },
+        "before-evaluation.json": {
+          "completed": true,
+          "metrics": {
+            "success_once": 0.625,
+            "success_at_end": 0.609375,
+            "episode_len": 600.0,
+            "reward": 0.001041666604578495,
+            "return": 0.625,
+            "num_trajectories": 64
+          },
+          "reused_reference": {
+            "path": "/tmp/robocasa-six-task-scale-20261113-r1/teachers/PickPlaceCounterToStove/attempt01-before-reference.json",
+            "sha256": "207ab04373b5d4a157d2fec250039108295f0b300eaed20652e9890e45b91a6e"
+          },
+          "new_evaluation_controls": 0
+        },
+        "after-evaluation.json": {
+          "completed": true,
+          "global_step": 30,
+          "metrics": {
+            "success_at_end": 0.5625,
+            "reward": 0.000989583320915699,
+            "success_once": 0.59375,
+            "return": 0.59375,
+            "episode_len": 600.0,
+            "num_trajectories": 64
+          }
+        }
+      },
+      "COMPLETE.json": {
+        "archive_verified": true,
+        "learner_exit_code": 0,
+        "started_unix": 1794565705.8878844,
+        "ended_unix": 1794571756.6085472,
+        "complete_checkpoint_boundaries": [
+          {
+            "step": 20,
+            "path": "PickPlaceCounterToStove/checkpoints/global_step_20/pilot-boundary.json"
+          },
+          {
+            "step": 15,
+            "path": "PickPlaceCounterToStove/checkpoints/global_step_15/pilot-boundary.json"
+          },
+          {
+            "step": 11,
+            "path": "PickPlaceCounterToStove/checkpoints/global_step_11/pilot-boundary.json"
+          },
+          {
+            "step": 25,
+            "path": "PickPlaceCounterToStove/checkpoints/global_step_25/pilot-boundary.json"
+          },
+          {
+            "step": 30,
+            "path": "PickPlaceCounterToStove/checkpoints/global_step_30/pilot-boundary.json"
+          }
+        ]
+      },
+      "progress.json": {
+        "completed_iterations": 30,
+        "target_iterations": 30,
+        "checked_unix": 1794570755.9234524,
+        "operator_checkpoint_exit": false
+      },
+      "EXIT.json": {
+        "exit_code": 0,
+        "started_unix": 1794565759,
+        "ended_unix": 1794570870,
+        "worker_GPU_hours": 11.3578
+      },
+      "RESTORED.json": {
+        "task": "PickPlaceCounterToStove",
+        "source_commit": "3a328f742d8db234586e2d7cb2d1d66e91e5d371",
+        "restoration": {
+          "combined": {
+            "files": 56,
+            "bytes": 17230776464,
+            "selected_members_verified": true
+          }
+        },
+        "before_successes": 40,
+        "checkpoint_boundary_sha256": "017b49a91582619cb5ef111ba9537e04714fdd621a9b48fe0496a72852ecadc1",
+        "completed_step": 10,
+        "actor_checkpoint_files": 4,
+        "worker_sidecars": 18,
+        "checkpoint_payload_rehashed": true,
+        "original_archives_unchanged": true,
+        "checked_unix": 1794565758.8510177
+      },
+      "ARCHIVE.json": {
+        "verified": true,
+        "source": "/tmp/robocasa-six-task-scale-20261113-r1/teachers/PickPlaceCounterToStove/attempt01",
+        "cold": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/teachers/PickPlaceCounterToStove/attempt01/collection.tar",
+        "archive_sha256": "16b75a26e2931922b5b950c651c465ed461fef60ba04b11d8b6a32daf7ab00b5",
+        "archive_bytes": 96050042880,
+        "payload_bytes": 96038738618,
+        "full_archive_SHA_readback": true,
+        "all_stageback_members_verified": true,
+        "all_original_sources_rehashed": true,
+        "complete_checkpoint_boundaries": [
+          {
+            "step": 20,
+            "path": "PickPlaceCounterToStove/checkpoints/global_step_20/pilot-boundary.json"
+          },
+          {
+            "step": 15,
+            "path": "PickPlaceCounterToStove/checkpoints/global_step_15/pilot-boundary.json"
+          },
+          {
+            "step": 11,
+            "path": "PickPlaceCounterToStove/checkpoints/global_step_11/pilot-boundary.json"
+          },
+          {
+            "step": 25,
+            "path": "PickPlaceCounterToStove/checkpoints/global_step_25/pilot-boundary.json"
+          },
+          {
+            "step": 30,
+            "path": "PickPlaceCounterToStove/checkpoints/global_step_30/pilot-boundary.json"
+          }
+        ],
+        "checked_unix": 1794571755.161965,
+        "restore_instruction": "Restore this archive to the recorded local source path in a fresh allocation and verify every inventory member before resuming or reading raw data.",
+        "file_count": 6300,
+        "step30_weights": [
+          {
+            "path": "PickPlaceCounterToStove/checkpoints/global_step_30/actor/model_state_dict/full_weights.pt",
+            "bytes": 6957548034,
+            "sha256": "26128fedaf06f4a1c5129124e6dcae2e296bd5e0c4b12b962896ff8ce0d76e15"
+          }
+        ],
+        "raw_members": 1920
+      },
+      "before-evaluation.json": {
+        "completed": true,
+        "metrics": {
+          "success_once": 0.625,
+          "success_at_end": 0.609375,
+          "episode_len": 600.0,
+          "reward": 0.001041666604578495,
+          "return": 0.625,
+          "num_trajectories": 64
+        },
+        "reused_reference": {
+          "path": "/tmp/robocasa-six-task-scale-20261113-r1/teachers/PickPlaceCounterToStove/attempt01-before-reference.json",
+          "sha256": "207ab04373b5d4a157d2fec250039108295f0b300eaed20652e9890e45b91a6e"
+        },
+        "new_evaluation_controls": 0
+      },
+      "after-evaluation.json": {
+        "completed": true,
+        "global_step": 30,
+        "metrics": {
+          "success_at_end": 0.5625,
+          "reward": 0.000989583320915699,
+          "success_once": 0.59375,
+          "return": 0.59375,
+          "episode_len": 600.0,
+          "num_trajectories": 64
+        }
+      },
+      "present_files": [
+        {
+          "name": "ARCHIVE-INVENTORY.json",
+          "bytes": 1119219
+        },
+        {
+          "name": "ARCHIVE.json",
+          "bytes": 1120480
+        },
+        {
+          "name": "CHRONOLOGY.json",
+          "bytes": 544
+        },
+        {
+          "name": "COMPLETE.json",
+          "bytes": 763
+        },
+        {
+          "name": "EXIT.json",
+          "bytes": 110
+        },
+        {
+          "name": "LAUNCH.json",
+          "bytes": 408
+        },
+        {
+          "name": "MANIFEST.json",
+          "bytes": 534
+        },
+        {
+          "name": "PROGRESS.json",
+          "bytes": 17045
+        },
+        {
+          "name": "RESTORED.json",
+          "bytes": 560
+        },
+        {
+          "name": "after-evaluation.json",
+          "bytes": 236
+        },
+        {
+          "name": "before-evaluation.json",
+          "bytes": 476
+        },
+        {
+          "name": "collection.tar",
+          "bytes": 96050042880
+        },
+        {
+          "name": "progress.json",
+          "bytes": 135
+        }
+      ]
+    }
+  ]
+}
