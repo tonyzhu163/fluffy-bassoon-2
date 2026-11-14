@@ -1,6 +1,6 @@
 {
-  "checked_shanghai": "2026-11-14T23:20:42.381574+08:00",
-  "status": "Four of eight fits complete and audited: AD/DPT on both corpora. DIT/IC-IQL actors advancing; all weighted values1000.",
+  "checked_shanghai": "2026-11-14T23:38:28.981027+08:00",
+  "status": "Four AD/DPT fits complete and audited; both original allocations closed cleanly. Four weighted continuations submitted; original fit contracts unchanged.",
   "cluster": "Baige Pro6K",
   "queue": "aihcq-rh0wwk9muei4",
   "source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
@@ -174,7 +174,7 @@
       "attempt": "fits6r1",
       "job_name": "mwj_1114_matched_fits6_g4_r1",
       "job_id": "job-5zbsgqfx0ax6",
-      "status": "Running; AD/DPT complete and audited, DIT/IC-IQL approaching planned worker boundary",
+      "status": "Closed at planned345-minute boundary; all workers exit0; AD/DPT complete, DIT7435/IC-IQL7661 resumed under new jobs",
       "GPUs": 4,
       "CPUs": 64,
       "RAM_GiB": 512,
@@ -321,6 +321,25 @@
             "sha256": "2860b1d4e80067a24fd543c374d0fe570962d95c57d41df5f22bc498c4c4cac0"
           }
         }
+      },
+      "closeout": {
+        "job_id": "job-5zbsgqfx0ax6",
+        "scheduler_status": "Failed",
+        "diagnosis": "Expected parent exit1 at planned345-minute deadline with two unfinished methods. All four worker exit codes0; weighted recovery states passed full CPU audit after parent closure.",
+        "scheduler_ended_shanghai": "2026-11-14T23:32:32+08:00",
+        "scheduler_runtime_seconds": 20729,
+        "scheduler_GPU_hours": 23.032222222222224,
+        "worker_GPU_hours": 23.005661108493804,
+        "closed_conservative_GPU_hours": 24,
+        "terminal": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/EXIT.json",
+          "sha256": "afa1f46eb3092f7074a200ebbdda3e3748eb12fd95cbc149bb95128a011ca112"
+        }
+      },
+      "progress_at_original_close": {
+        "dit": 7435,
+        "ic_iql": 7661,
+        "value_updates": 1000
       }
     }
   ],
@@ -341,5 +360,6 @@
   "latest_monitor": "evidence/MONITOR-20261114-2320.json",
   "fixed_final_candidates": "FINAL-FIT-CANDIDATES.json",
   "final_checkpoint_audits": "FINAL-FIT-AUDIT-EXECUTION.json",
-  "continuation_execution": "CONTINUATION-EXECUTION.json"
+  "continuation_execution": "CONTINUATION-EXECUTION.json",
+  "continuations": "CONTINUATION-EXECUTION.json"
 }

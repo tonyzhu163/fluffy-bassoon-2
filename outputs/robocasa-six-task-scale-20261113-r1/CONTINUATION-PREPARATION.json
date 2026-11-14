@@ -1,5 +1,5 @@
 {
-  "status": "Both original3 full-state audits passed and their continuations submitted; CPU watcher still waits for original6 terminal receipts",
+  "status": "Complete: all four terminal-bound full-state audits passed; all four continuations submitted",
   "recorded_shanghai": "2026-11-14T22:50:45.351743+08:00",
   "execution": "CONTINUATION-EXECUTION.json",
   "command": "ssh -p 4952 root@10.200.0.11 /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B -u /tmp/prepare-continuations-e9fe49c4.py",
@@ -12,6 +12,9 @@
   "required_before_launch": "Successful complete CPU audit, scheduler ownership and terminal state, current capacity and budget; actual allocation probe and advancing restored updates after launch",
   "prepared_audits": [
     "evidence/3-dit-AUDIT.json",
-    "evidence/3-ic_iql-AUDIT.json"
-  ]
+    "evidence/3-ic_iql-AUDIT.json",
+    "evidence/6-dit-AUDIT.json",
+    "evidence/6-ic_iql-AUDIT.json"
+  ],
+  "completion": "evidence/RESUME-PREPARATION-COMPLETE.json"
 }
