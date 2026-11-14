@@ -1,0 +1,38 @@
+{
+  "status": "Prepared; not submitted; four weighted final fits still incomplete",
+  "source_commit": "7cc56702ec6b623ae4aa4f79da211883ca4ecddd",
+  "source_directory": "/mowenjie/fluffy-bassoon-2/sources/matched-readout-7cc56702",
+  "source_deployment": "evidence/MATCHED-READOUT-DEPLOYMENT-7cc56702.json",
+  "qualified_runtime_source": "e9fe49c4a8892f0eec17e5d6c5fada229eac93dc",
+  "runtime_code_unchanged": true,
+  "fit_source_commit": "4987585e7427061de30771ee207f9b2b79eedc6a",
+  "job_id": null,
+  "attempt": null,
+  "proposed_resources": {
+    "GPUs": 4,
+    "CPUs": 64,
+    "RAM_GiB": 512,
+    "shared_memory_GiB": 32,
+    "scheduler_maximum_minutes": 540,
+    "worker_deadline_minutes": 530,
+    "maximum_GPU_hours": 36,
+    "automatic_retries": false
+  },
+  "evaluation_window_review": "EVALUATION-WINDOW-REVIEW.json",
+  "planned_physical_episodes": 13200,
+  "cases_per_task": 40,
+  "policy_fits": 8,
+  "tasks": 5,
+  "CPU_preparer": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit02/STATE.json",
+  "binding_step": "After all8 audits complete, create a new readout-inputs01/SPEC.json from the prepared480min/32GPUh spec; preserve all model, baseline and case references, record original spec hash and window review, change scheduler to540 and reservation to36. The active CPU preparer remains immutable.",
+  "launch_checks_remaining": [
+    "All8 actual10000-update final checkpoints audited",
+    "Review latestmain changes since the deployed commit",
+    "Reconcile completed fit allocations and proposed36GPUh against230cap",
+    "Fresh scheduler capacity and actual allocated GPU type",
+    "Hash-bind final evaluation SPEC and launch with automatic retries off",
+    "Allocated GPU probe and a real native episode, then first-wave actual timing"
+  ],
+  "GPU_hours_used": 0,
+  "recorded_shanghai": "2026-11-15T00:31:49.865870+08:00"
+}
