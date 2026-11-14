@@ -1,7 +1,7 @@
 {
   "user_instruction": "can you cehck space and then keep going?",
   "date_shanghai": "2026-11-14",
-  "status": "Prepared two fresh recollections; not yet submitted",
+  "status": "Both fresh attempts submitted and running",
   "reviewed_main": "a5235194",
   "old_immutable_launch_pin": "3a328f742d8db234586e2d7cb2d1d66e91e5d371",
   "tasks": [
@@ -15,7 +15,7 @@
   "space": "Development scratch3.1TiB free; shared PFS251GiB free. Keep raw job output on node-local scratch, never move it to PFS. Require400GiB on each actual allocation; wrapper now persists STORAGE.json before admission failure. No existing data deleted.",
   "space_threshold_basis": "Two completed30-update source inventories occupy135\u2013136GiB.400GiB admission retains the200GiB floor and checkpoint/transient headroom;230GiB soft-stop watcher remains unchanged.",
   "changes": "Only add storage measurements and local write probe; no PPO config, reward, RNG, sampling, optimizer or save cadence change. Old detached source remains untouched.",
-  "qualification": "Mac AST/static check; Linux CPU AST and deployment checks pending. Prior29 core PPO tests remain applicable to unchanged implementation. Actual allocation GPU probe and simulator update mandatory.",
+  "qualification": "Linux CPU/static and clean exact deployment passed; no scientific-code/config changes. Both actual allocations passed400GiB scratch checks and8-device GPU probes; first PPO update verification pending.",
   "budget": {
     "approved_hard_cap_GPU_hours": 230,
     "prior_terminal_jobs_conservative_upper_GPU_hours": 96,
@@ -27,5 +27,22 @@
     "automatic_retry": false,
     "accounting": "Retain original96GPUh conservative cap until scheduler allocation durations are reconciled. Reconcile actual closed usage before reserving the full downstream annotation/fitting/evaluation plan; never exceed230."
   },
-  "next_action": "Deploy the reviewed commit; check current queue/quota; submit two fresh attempts; verify actual-node storage/GPU checks and first completed updates, then prepare matched source inputs while they collect."
+  "next_action": "Deploy the reviewed commit; check current queue/quota; submit two fresh attempts; verify actual-node storage/GPU checks and first completed updates, then prepare matched source inputs while they collect.",
+  "launch_source_commit": "6c0ef27a55a729abbe86a1d6cd1a0c11c99216bf",
+  "jobs": [
+    {
+      "task": "TurnOffStove",
+      "job_id": "job-t5gpub15c9d6",
+      "name": "mwj_1114_matched_stove_ppo30_r2",
+      "attempt": "attempt02",
+      "source_commit": "6c0ef27a55a729abbe86a1d6cd1a0c11c99216bf"
+    },
+    {
+      "task": "CloseToasterOvenDoor",
+      "job_id": "job-8d8wm2rua3nn",
+      "name": "mwj_1114_matched_toaster_ppo30_r2",
+      "attempt": "attempt02",
+      "source_commit": "6c0ef27a55a729abbe86a1d6cd1a0c11c99216bf"
+    }
+  ]
 }

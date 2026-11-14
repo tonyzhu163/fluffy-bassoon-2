@@ -1,6 +1,6 @@
 {
-  "checked_shanghai": "2026-11-14T12:39:54+08:00",
-  "status": "All five jobs terminal: Drawer, Coffee and Counter succeeded at30; Toaster manually stopped at18; Stove failed its scratch-space check before training. No queued/running collection or new transformer fit.",
+  "checked_shanghai": "2026-11-14T13:43:18+08:00",
+  "status": "Two fresh recovery collectors running; both actual-node storage checks and8-GPU probes passed. Drawer/Coffee/Counter30 complete. No new transformer fits yet.",
   "launch_source_commit": "3a328f742d8db234586e2d7cb2d1d66e91e5d371",
   "deployment": "Git bundle; clean exact detached source on Baige; existing active worktrees untouched",
   "validation": {
@@ -62,18 +62,19 @@
   },
   "budget": {
     "GPU_hours_used_this_phase": null,
-    "GPU_hours_reserved_this_phase": 0,
+    "GPU_hours_reserved_this_phase": 40,
     "prior_all_new_committed_upper_bound_GPU_hours": 48.834722222222226,
     "prior_all_new_hard_cap_GPU_hours": 50,
     "prior_historical_committed_upper_bound_GPU_hours": 162.12916655555557,
     "prior_historical_hard_cap_GPU_hours": 170,
     "approval": "Existing explicit230GPUh approval; corrected recollection replaces historical buggy-critic reuse. See PLAN.md for reallocation.",
     "approved_additional_hard_cap_GPU_hours": 230,
-    "usage_checked_shanghai": "2026-11-14T12:39:54+08:00",
+    "usage_checked_shanghai": "2026-11-14T13:43:18+08:00",
     "closed_jobs_conservative_GPU_hours_upper_bound": 96,
-    "accounting": "All five allocations terminal. Preserve96GPUh as the conservative closed-job cap until scheduler allocation times are reconciled; actual billed use is not yet asserted. No retry reserved."
+    "accounting": "96GPUh conservative closed first-attempt cap plus40GPUh reserved for two150-minute8GPU retries; total136/230. Reconcile actual closed allocation durations before reserving the full downstream plan.",
+    "committed_conservative_upper_GPU_hours": 136
   },
-  "next_action": "Determine whether the interrupted Toaster local full checkpoint/history can be recovered and why operator zrt stopped it; qualify adequate scratch for Stove before a new attempt. Then complete raw-source checks, endpoint labels and eight transformer fits. No retry submitted in this status check; November15 readout at serious risk.",
+  "next_action": "Verify first completed PPO updates and preserve complete sources. In parallel prepare exact30-update input archives for completed sources. Reconcile closed allocation accounting, then collect fixed step30 DPT labels and fit all four learners on matched3/6 corpora. Deadline remains November15 with substantial schedule risk.",
   "jobs": [
     {
       "task": "OpenDrawer",
@@ -254,13 +255,96 @@
         "sha256": "3ebe1c51d725d78a5041f548e8c1897a0732614a7d95c55640d598d74cd8aa04",
         "bytes": 1120480
       }
+    },
+    {
+      "task": "TurnOffStove",
+      "job_id": "job-t5gpub15c9d6",
+      "name": "mwj_1114_matched_stove_ppo30_r2",
+      "created_shanghai": "2026-11-14T13:37:25+08:00",
+      "scheduler_status": "Running",
+      "GPUs": 8,
+      "CPUs": 64,
+      "RAM_GiB": 1024,
+      "shared_memory_GiB": 32,
+      "maximum_minutes": 150,
+      "reserved_GPU_hours": 20,
+      "source_commit": "6c0ef27a55a729abbe86a1d6cd1a0c11c99216bf",
+      "attempt": "attempt02",
+      "completed_updates": 0,
+      "automatic_retries": false,
+      "last_checked_shanghai": "2026-11-14T13:43:18+08:00",
+      "new_updates_completed": 0,
+      "target_updates": 30,
+      "archive_verified": false,
+      "storage": {
+        "hostname": "job-t5gpub15c9d6-master-0",
+        "source_commit": "6c0ef27a55a729abbe86a1d6cd1a0c11c99216bf",
+        "task": "TurnOffStove",
+        "attempt": "attempt02",
+        "path": "/tmp/robocasa-six-task-scale-20261113-r1/teachers/TurnOffStove",
+        "total_bytes": 1056749920256,
+        "free_bytes": 682445467648,
+        "required_bytes": 429496729600,
+        "project_free_bytes": 269538557952,
+        "separate_from_project": true,
+        "passed": true,
+        "checked_unix": 1794634667.9553797,
+        "rationale": "Completed30-update sources used136GiB; retain200GiB floor plus checkpoint/transient headroom"
+      },
+      "GPU_probe": {
+        "status": "passed",
+        "devices": 8,
+        "hostname": "job-t5gpub15c9d6-master-0"
+      }
+    },
+    {
+      "task": "CloseToasterOvenDoor",
+      "job_id": "job-8d8wm2rua3nn",
+      "name": "mwj_1114_matched_toaster_ppo30_r2",
+      "created_shanghai": "2026-11-14T13:38:42+08:00",
+      "scheduler_status": "Running",
+      "GPUs": 8,
+      "CPUs": 64,
+      "RAM_GiB": 1024,
+      "shared_memory_GiB": 32,
+      "maximum_minutes": 150,
+      "reserved_GPU_hours": 20,
+      "source_commit": "6c0ef27a55a729abbe86a1d6cd1a0c11c99216bf",
+      "attempt": "attempt02",
+      "completed_updates": 0,
+      "automatic_retries": false,
+      "last_checked_shanghai": "2026-11-14T13:43:18+08:00",
+      "new_updates_completed": 0,
+      "target_updates": 30,
+      "archive_verified": false,
+      "storage": {
+        "hostname": "job-8d8wm2rua3nn-master-0",
+        "source_commit": "6c0ef27a55a729abbe86a1d6cd1a0c11c99216bf",
+        "task": "CloseToasterOvenDoor",
+        "attempt": "attempt02",
+        "path": "/tmp/robocasa-six-task-scale-20261113-r1/teachers/CloseToasterOvenDoor",
+        "total_bytes": 1056749920256,
+        "free_bytes": 524154798080,
+        "required_bytes": 429496729600,
+        "project_free_bytes": 269538557952,
+        "separate_from_project": true,
+        "passed": true,
+        "checked_unix": 1794634752.7725432,
+        "rationale": "Completed30-update sources used136GiB; retain200GiB floor plus checkpoint/transient headroom"
+      },
+      "GPU_probe": {
+        "status": "passed",
+        "devices": 8,
+        "hostname": "job-8d8wm2rua3nn-master-0"
+      }
     }
   ],
   "scheduler_check": {
-    "checked_shanghai": "2026-11-14T12:39:54+08:00",
-    "source": "Refreshed authenticated Baige task list for all five exact IDs, Stove startup logs and Toaster user-stop event",
-    "status": "3 Succeeded,1 ManualTermination,1 Failed;0 queued/running",
-    "evidence": "evidence/STATUS-20261114-1238.json"
+    "checked_shanghai": "2026-11-14T13:43:18+08:00",
+    "source": "Refreshed Baige list and private actual-allocation receipts",
+    "status": "Both attempt02 collectors Running;8-device probes passed",
+    "evidence": "evidence/RECOVERY-STARTED-20261114.json",
+    "next_check_shanghai": "2026-11-14T13:57:00+08:00"
   },
   "monitoring_gap": "Previous record was November13 16:17. No intervening checks are recorded; terminal states were first reconciled in this November14 status check.",
   "source_completion_note": "Drawer30 checkpoint/raw archive complete, but its final after-evaluation receipt is absent because the bounded checkpoint-and-exit path ran. Coffee and Counter have step30 evaluation receipts. Source learning metrics are not transformer ID/OOD results."
