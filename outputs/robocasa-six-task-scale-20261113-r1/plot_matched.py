@@ -121,7 +121,7 @@ def main():
             axis.set_title(f'{panel}: {title}')
             axis.set_xlabel('Six-task − three-task fit (percentage points)')
     finish(fig, 'matched-scaling', 'Does adding three training tasks help?',
-        'Fixed training compute; adding tasks changes both diversity and data volume.\n'
+        'Matched actor updates; task diversity, data volume and per-task exposure all change.\n'
         + footer)
 
     fig, axes = plt.subplots(2, 2, figsize=(12, 10.5))

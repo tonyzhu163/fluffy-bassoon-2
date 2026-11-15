@@ -275,7 +275,7 @@ def main():
             sl, sh = sft['paired_bootstrap95_pp']; pl, ph = ppo['paired_bootstrap95_pp']
             lines.append(f'| {name} | {panel} | {sft["difference_pp"]:+.1f} | [{sl:.1f}, {sh:.1f}] | {ppo["difference_pp"]:+.1f} | [{pl:.1f}, {ph:.1f}] |')
     lines += ['', 'PPO30 uses the matching task teacher on ID and the fixed OpenDrawer30 teacher on both OOD tasks. This OOD control measures transfer from one declared source policy, not a multi-task PPO policy or an oracle selected on target outcomes.', '', report['uncertainty'], '',
-        'This compares adding task data at fixed fitting compute. It does not isolate diversity from corpus size. OOD is relative to these meta-training tasks, not necessarily base pretraining. First-attempt success and reset disagreements are reported in RESULT.json; initial competence alone does not establish adaptation.', '']
+        'This compares adding task data at matched actor-update budgets. DIT and IC-IQL also have value pretraining, so total compute is not matched across all methods. Adding tasks changes diversity, data volume and per-task exposure together. OOD is relative to these meta-training tasks, not necessarily base pretraining. First-attempt success and reset disagreements are reported in RESULT.json; initial competence alone does not establish adaptation.', '']
     (args.output / 'RESULT.md').write_text('\n'.join(lines))
     print(json.dumps(dict(completed=True, models=len(MODELS), physical_episodes=13200)))
 
