@@ -1,7 +1,7 @@
 {
   "user_instruction": "Keep only the old headline readily available; archive the rest; delete if wrong; reduce PPO space",
-  "scope": "Original RoboCasa three-task transformer comparison and its source histories. Active corrected six-source collection remains protected.",
-  "historical_headline": "DIT55.3% ID/56.0% OOD; history benefit not established; earlier collector and unequal policy budgets limit interpretation.",
+  "scope": "Historical RoboCasa payloads archived with restore pointers; corrected six-source campaign and full CPU evidence audit completed.",
+  "historical_headline": "Original DIT55.3% ID/56.0% OOD remains a historical result. The larger fresh paired confirmation did not establish history/SFT benefit; see docs/FINDINGS.md.",
   "archive": {
     "status": "completed",
     "source_commit": "c096a7264c3f6a1d61505b637e3d19a3c56cce76",
@@ -42,12 +42,24 @@
     "compression": "Enable existing lossless gzip level1 writer for future attempts. A real521638778-byte rollout compressed to211406430bytes (40.53%) in8.71s and fully decoded to its original SHA256. This sample ratio is not an aggregate measured saving.",
     "data_sharing": "One canonical per-task raw corpus and feature/label set, shared by all four learners. Three-task corpus references the exact same three task payloads as six-task corpus; no per-method raw copies.",
     "hot_storage": "Node-local scratch for active data and bounded caches; private BOS for complete closed sources. Bulk raw output never stages on PFS.",
-    "active_launches_unchanged": "Stove and Toaster remain on immutable6c0ef27a with their original full-retention recipe. Storage changes apply to later launches only.",
+    "active_launches_unchanged": "Completed Stove/Toaster attempts retained immutable6c0ef27a and their original full-retention recipe. Prospective rolling/gzip changes did not alter those runs.",
     "validation": "35 core retention/Flow/DCP CPU tests passed on96dc0f81 plus2 native canonical-rollout tests (plain/gzip) on9825fcf2; actual future YAML resolves to gzip/latest2. No changed-storage GPU job launched.",
     "estimated_total_GiB_saved_if_sample_ratio_holds": 45.893,
     "latest_storage_code": "9825fcf24e04b7340c472f5ecb071ec9ed69a7b1",
     "estimated_retained_GiB_if_sample_ratio_holds": 89.234
   },
   "unperformed": "No new deletion of RoboTwin historical controls, shared initializers/environments, current corrected teachers, or labels required by future fits.",
-  "new_user_request": "User now requests a much larger paired evaluation of old DIT against reset/SFT/fixedPPO. Restore only required inference checkpoints/compact metadata from cold; do not restore old raw training corpora."
+  "new_user_request": "User now requests a much larger paired evaluation of old DIT against reset/SFT/fixedPPO. Restore only required inference checkpoints/compact metadata from cold; do not restore old raw training corpora.",
+  "historical_confirmation_status": "Completed11520-episode fresh paired confirmation and full audit, published separately; only required model/compact evidence restored, old raw training corpora stayed cold.",
+  "matched_campaign_retention": {
+    "evaluation_terminal": "evidence/MATCHED-EVALUATION-CLOSEOUT.json",
+    "cold_root": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1",
+    "GPU_jobs_active": false,
+    "all_evaluation_banks_archived": 25,
+    "full_independent_audit": "Passed: all25 banks and13200 episodes; hashes/coverage and final artifacts verified",
+    "storage_pattern": "One canonical six-task corpus; original3 references its exact subset. No per-method raw copies or videos. Evaluation used job-local scratch with verified cold copy before local bank reclamation. Shared models/environments preserved.",
+    "new_deletions": false,
+    "next_action": "Preserve cited cold sources, labels, models, resumable states and evaluation evidence; no additional deletion or GPU collection planned.",
+    "final_review": "FINAL-REVIEW.json"
+  }
 }

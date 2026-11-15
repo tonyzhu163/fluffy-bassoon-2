@@ -181,9 +181,66 @@ intervals include zero. These are one training seed per task and marginal,
 unadjusted paired bootstrap intervals, not a six-task superiority claim.
 Collection completion alone does not establish uniformly stronger teachers.
 These source comparisons do not measure held-out meta-learning or history gains;
-the new fixed-final transformer ID/OOD readout remains pending.
+the completed fixed-final transformer readout is reported below.
 [Six-task baseline summary](../outputs/robocasa-six-task-scale-20261113-r1/SIX-TASK-BASELINES.json).
 [Paired baseline figure (PDF)](../outputs/robocasa-six-task-scale-20261113-r1/figures/six-task-baselines.pdf).
+
+### Corrected three- versus six-task transformer comparison
+
+All eight fixed-final AD/DPT/DIT/IC-IQL fits and the complete13,200-episode
+comparison finished. The audit verified25 cold archives, all40 paired cases per
+task, and no missing slots or outcome-conditioned exclusions. The effective
+panels are120 ID cases across Drawer/Toaster/Coffee and80 OOD cases across
+Fridge/Microwave; repeated physical episodes are not independent cases.
+
+| Method | Training tasks | Full-history sixth success, ID | OOD |
+| --- | ---: | ---: | ---: |
+| AD | 3 | 45.00% | 36.25% |
+| DPT | 3 | 50.83% | 37.50% |
+| DIT | 3 | 41.67% | 36.25% |
+| IC-IQL | 3 | 49.17% | 43.75% |
+| AD | 6 | 45.00% | 40.00% |
+| DPT | 6 | 45.00% | 42.50% |
+| DIT | 6 | 46.67% | 40.00% |
+| IC-IQL | 6 | 47.50% | 41.25% |
+
+Same-case SFT scored49.17% ID/41.25% OOD and PPO30 scored52.50%/40.00%.
+No aggregate model-versus-baseline contrast establishes a positive advantage.
+Three-task DIT was below PPO30 on ID by−10.83pp [−19.17,−2.50]. PPO30 is
+task-matched on ID; both OOD tasks use the fixed OpenDrawer30 teacher, so this
+is a single-source transfer control. These are separate cases from the64-case
+source panels above, and separate checkpoints from historical PPO130.
+
+The sole positive aggregate history interval is three-task IC-IQL on ID:
+**+7.50pp [0.83,15.00]**, with14 wins,5 losses and101 ties. Its OOD effect is
++3.75pp [−3.75,11.25]; six-task IC-IQL gives−1.67pp [−9.17,5.83] ID and
++2.50pp [−5.00,10.00] OOD. No model has an OOD history interval excluding zero.
+All eight three-to-six-task full-success intervals and all eight corresponding
+history-change intervals include zero. DIT is not consistently the strongest
+method in this corrected comparison.
+
+These are marginal95% task-stratified paired bootstrap intervals, with one fit
+per cell and no multiplicity correction or training-seed uncertainty. Budgets
+match10,000 actor updates; DIT/IC-IQL additionally receive1,000 Q/V updates.
+Adding tasks changes diversity, data volume and per-task exposure together.
+OOD is relative to meta-training tasks, not necessarily base-VLA pretraining.
+First full/reset outcomes disagree on2–7/120 ID and2–12/80 OOD cases depending
+on the fit, despite passing the prescribed state/RGB-tolerance and reset-action
+replay checks. The causes were not isolated; these discrepancies limit causal
+attribution to history. All cases remain included.
+
+The recommendation is **stop scaling this recipe in its current form**:
+the isolated IC-IQL interval does not justify collecting more teachers without
+independent confirmation and an advantage over stage controls. This is a
+bounded resource decision, not proof against meta-learning generally. All GPU
+jobs are closed at219.5/230 conservative GPU-hours; valid models, data and
+evidence remain preserved.
+[Decision and full comparisons](../outputs/robocasa-six-task-scale-20261113-r1/RESULT.md) ·
+[Audited statistics](../outputs/robocasa-six-task-scale-20261113-r1/matched-finalize01/analysis/RESULT.json) ·
+[Coverage](../outputs/robocasa-six-task-scale-20261113-r1/matched-finalize01/analysis/COVERAGE.json) ·
+[History figure](../outputs/robocasa-six-task-scale-20261113-r1/matched-figures02/matched-performance.pdf) ·
+[Scaling figure](../outputs/robocasa-six-task-scale-20261113-r1/matched-figures02/matched-scaling.pdf) ·
+[Baseline gaps](../outputs/robocasa-six-task-scale-20261113-r1/matched-figures02/matched-baseline-gaps.pdf).
 
 ## Procedural LIBERO
 

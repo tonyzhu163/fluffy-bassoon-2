@@ -1,5 +1,5 @@
 {
-  "status": "Succeeded; all4 workers exit0,25/25 banks archived and13200 physical episodes complete; full CPU audit pending",
+  "status": "Complete: four successful workers, all13200 episodes and25 archives independently audited; all comparisons and figures reviewed",
   "source_commit": "7cc56702ec6b623ae4aa4f79da211883ca4ecddd",
   "source_directory": "/mowenjie/fluffy-bassoon-2/sources/matched-readout-7cc56702",
   "source_deployment": "evidence/MATCHED-READOUT-DEPLOYMENT-7cc56702.json",
@@ -25,9 +25,7 @@
   "tasks": 5,
   "CPU_preparer": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/final-fit-audit02/STATE.json",
   "binding_step": "After all8 audits complete, create a new readout-inputs01/SPEC.json from the prepared480min/32GPUh spec; preserve all model, baseline and case references, record original spec hash and window review, change scheduler to540 and reservation to36. The active CPU preparer remains immutable.",
-  "launch_checks_remaining": [
-    "Full archived-panel audit, all paired contrasts, manual figure review and scientific decision"
-  ],
+  "launch_checks_remaining": [],
   "GPU_hours_used": 29.034444444444443,
   "recorded_shanghai": "2026-11-15T01:30:22.614102+08:00",
   "spec": {
@@ -58,7 +56,7 @@
     "queued_jobs": 1
   },
   "submission_evidence": "evidence/MATCHED-EVALUATION-SUBMITTED.jpg",
-  "next_check_shanghai": "2026-11-15T09:05:00+08:00",
+  "next_check_shanghai": null,
   "submission_evidence_sha256": "e7db69543091bbe776f1715142390361bcfb651e4bc1826f55227b4502a3b232",
   "launch": {
     "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/LAUNCH.json",
@@ -1998,8 +1996,8 @@
     "evaluation_bulk_output": "Container-local /tmp and BOS; active runtime unchanged"
   },
   "last_full_monitor_unix": 1794703508.3410196,
-  "independently_audited_banks": 2,
-  "independently_audited_physical_episodes": 1056,
+  "independently_audited_banks": 25,
+  "independently_audited_physical_episodes": 13200,
   "first_bank_audit": "evidence/MATCHED-FIRST-BANK-AUDIT.json",
   "first_bank_coverage": "evidence/MATCHED-FIRST-BANK-COVERAGE.json",
   "first_bank_timing": "evidence/MATCHED-FIRST-BANK-TIMING.json",
@@ -2080,5 +2078,8 @@
       "incomplete_policy": "Retain all planned cases and both corpus conditions; disclose failures instead of selecting successful cases"
     }
   },
-  "terminal_accounting": "evidence/MATCHED-EVALUATION-CLOSEOUT.json"
+  "terminal_accounting": "evidence/MATCHED-EVALUATION-CLOSEOUT.json",
+  "analysis_result": "matched-finalize01/analysis/RESULT.json",
+  "final_review": "FINAL-REVIEW.json",
+  "decision_report": "RESULT.md"
 }

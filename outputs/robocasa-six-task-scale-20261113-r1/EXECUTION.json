@@ -1,6 +1,6 @@
 {
-  "checked_shanghai": "2026-11-14T16:46:47+08:00",
-  "status": "All six corrected task label workers advancing on two running jobs. Paired qualification has 3/5 verified waves. CPU assembly driver live; no new fit or expanded confirmation launched.",
+  "checked_shanghai": "2026-11-15T09:02:31.527560+08:00",
+  "status": "Complete: six corrected PPO30 sources/baselines, shared corpora/labels, eight fixed10000 fits, historical DIT confirmation, matched13200-episode ID/OOD audit and reviewed decision published.",
   "launch_source_commit": "3a328f742d8db234586e2d7cb2d1d66e91e5d371",
   "deployment": "Git bundle; clean exact detached source on Baige; existing active worktrees untouched",
   "validation": {
@@ -61,20 +61,17 @@
     "intern_personal_GPU_free": 16
   },
   "budget": {
-    "GPU_hours_used_this_phase": null,
-    "GPU_hours_reserved_this_phase": 19.6,
-    "prior_all_new_committed_upper_bound_GPU_hours": 48.834722222222226,
-    "prior_all_new_hard_cap_GPU_hours": 50,
-    "prior_historical_committed_upper_bound_GPU_hours": 162.12916655555557,
-    "prior_historical_hard_cap_GPU_hours": 170,
-    "approval": "Existing explicit230GPUh approval; corrected recollection replaces historical buggy-critic reuse. See PLAN.md for reallocation.",
+    "approval": "APPROVAL.json",
     "approved_additional_hard_cap_GPU_hours": 230,
-    "usage_checked_shanghai": "2026-11-14T16:22:47+08:00",
-    "closed_jobs_conservative_GPU_hours_upper_bound": 107.4,
-    "accounting": "Sources107 + failed paired0.2 + failed labels0.2 closed. Labels retries17.8 + paired1.75 + held0.05 reserved =127/230. Remaining103 proposal: fits/values57, new panels18, historical paired28.",
-    "committed_conservative_upper_GPU_hours": 127
+    "GPU_hours_used_this_phase": null,
+    "GPU_hours_reserved_this_phase": 0,
+    "closed_jobs_conservative_GPU_hours_upper_bound": 219.5,
+    "committed_conservative_upper_GPU_hours": 219.5,
+    "usage_checked_shanghai": "2026-11-15T09:02:31.527560+08:00",
+    "accounting": "Conservative closure, not exact aggregate billed use; all GPU jobs terminal. Old50/170 caps remain closed.",
+    "latest_closeout": "evidence/MATCHED-EVALUATION-CLOSEOUT.json"
   },
-  "next_action": "Verify labels04 allocation and advancing labels; assemble completed label shards into shared datasets. Complete paired qualification and fix confirmation count from outcome-blind timing. Then launch matched10000-update fits within existing cap; Nov15 target at risk.",
+  "next_action": "No further GPU collection planned; preserve cited cold artifacts and results.",
   "jobs": [
     {
       "task": "OpenDrawer",
@@ -500,23 +497,26 @@
     "core_tests_passed": 63,
     "CPU_imports_passed": true,
     "native_Hydra_config_resolved": true,
-    "actual_GPU_qualification": "pending labeled assemblies and allocation",
-    "submitted": false,
+    "actual_GPU_qualification": "Passed on allocated native runtime; all eight completed fits audited in FINAL-FIT-AUDIT-EXECUTION.json",
+    "submitted": true,
     "plan": "FIT-PLAN.json",
     "validation": "evidence/FIT-CPU-VALIDATION.json",
     "latest_launcher_source_commit": "cbece8fd7038b60213df64fca2f0f6c7a32a55cf",
-    "latest_reviewed_code_commit": "f5f8903d9ce49a96b58b12a41b38ab833a2ff789"
+    "latest_reviewed_code_commit": "f5f8903d9ce49a96b58b12a41b38ab833a2ff789",
+    "completion": "FIT-EXECUTION.json"
   },
   "assembly_execution": {
     "source_commit": "5ca65a3a3533c75091e418f12686625f3e9eb9f3",
     "attempt": "datasets01",
     "CPU_only": true,
     "host": "aibox-rffe453e3884-5f96c78b88-6ssrn",
-    "status": "Bounded CPU driver running; waiting for completed task labels before assembly",
+    "status": "Complete; canonical three/six-task corpora assembled and qualified, then consumed by all eight completed fits",
     "evidence": "evidence/ASSEMBLY-LAUNCH.json",
     "cold_output": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/datasets01",
     "GPU_hours_reserved": 0,
-    "live_process_verified": "176149 /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B /mowenjie/fluffy-bassoon-2/sources/matched-assembly-5ca65a3a/outputs/robocasa-six-task-scale-20261113-r1/assemble_job.py --pin 5ca65a3a3533c75091e418f12686625f3e9eb9f3 --attempt datasets01"
+    "completion": "evidence/CORPORA-COMPLETE.json",
+    "qualification": "evidence/CORPORA-QUALIFICATION.json",
+    "historical_process_observation": "176149 /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B /mowenjie/fluffy-bassoon-2/sources/matched-assembly-5ca65a3a/outputs/robocasa-six-task-scale-20261113-r1/assemble_job.py --pin 5ca65a3a3533c75091e418f12686625f3e9eb9f3 --attempt datasets01"
   },
   "matched_readout_preparation": {
     "source_commit": "f5f8903d9ce49a96b58b12a41b38ab833a2ff789",
@@ -524,5 +524,54 @@
     "status": "Prepared and Linux CLI import passed; not launched",
     "pairing": "All eight models share physical canonical states within each whole wave",
     "migration": "Requires a recorded qualified migration preserving full episodes1..6 and reset endpoints1/6; cannot launch under the old19200-episode contract"
-  }
+  },
+  "last_stage_snapshot_before_closeout": {
+    "checked_shanghai": "2026-11-14T16:46:47+08:00",
+    "status": "All six corrected task label workers advancing on two running jobs. Paired qualification has 3/5 verified waves. CPU assembly driver live; no new fit or expanded confirmation launched.",
+    "budget": {
+      "GPU_hours_used_this_phase": null,
+      "GPU_hours_reserved_this_phase": 19.6,
+      "prior_all_new_committed_upper_bound_GPU_hours": 48.834722222222226,
+      "prior_all_new_hard_cap_GPU_hours": 50,
+      "prior_historical_committed_upper_bound_GPU_hours": 162.12916655555557,
+      "prior_historical_hard_cap_GPU_hours": 170,
+      "approval": "Existing explicit230GPUh approval; corrected recollection replaces historical buggy-critic reuse. See PLAN.md for reallocation.",
+      "approved_additional_hard_cap_GPU_hours": 230,
+      "usage_checked_shanghai": "2026-11-14T16:22:47+08:00",
+      "closed_jobs_conservative_GPU_hours_upper_bound": 107.4,
+      "accounting": "Sources107 + failed paired0.2 + failed labels0.2 closed. Labels retries17.8 + paired1.75 + held0.05 reserved =127/230. Remaining103 proposal: fits/values57, new panels18, historical paired28.",
+      "committed_conservative_upper_GPU_hours": 127
+    },
+    "next_action": "Verify labels04 allocation and advancing labels; assemble completed label shards into shared datasets. Complete paired qualification and fix confirmation count from outcome-blind timing. Then launch matched10000-update fits within existing cap; Nov15 target at risk.",
+    "fit_preparation": {
+      "source_commit": "78ec94eb50cba869a08454d118275c016430919f",
+      "core_tests_passed": 63,
+      "CPU_imports_passed": true,
+      "native_Hydra_config_resolved": true,
+      "actual_GPU_qualification": "Passed on allocated native runtime; all eight completed fits audited in FINAL-FIT-AUDIT-EXECUTION.json",
+      "submitted": true,
+      "plan": "FIT-PLAN.json",
+      "validation": "evidence/FIT-CPU-VALIDATION.json",
+      "latest_launcher_source_commit": "cbece8fd7038b60213df64fca2f0f6c7a32a55cf",
+      "latest_reviewed_code_commit": "f5f8903d9ce49a96b58b12a41b38ab833a2ff789",
+      "completion": "FIT-EXECUTION.json"
+    },
+    "assembly_execution": {
+      "source_commit": "5ca65a3a3533c75091e418f12686625f3e9eb9f3",
+      "attempt": "datasets01",
+      "CPU_only": true,
+      "host": "aibox-rffe453e3884-5f96c78b88-6ssrn",
+      "status": "Complete; canonical three/six-task corpora assembled and qualified, then consumed by all eight completed fits",
+      "evidence": "evidence/ASSEMBLY-LAUNCH.json",
+      "cold_output": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/datasets01",
+      "GPU_hours_reserved": 0,
+      "completion": "evidence/CORPORA-COMPLETE.json",
+      "qualification": "evidence/CORPORA-QUALIFICATION.json",
+      "historical_process_observation": "176149 /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -B /mowenjie/fluffy-bassoon-2/sources/matched-assembly-5ca65a3a/outputs/robocasa-six-task-scale-20261113-r1/assemble_job.py --pin 5ca65a3a3533c75091e418f12686625f3e9eb9f3 --attempt datasets01"
+    }
+  },
+  "completed": true,
+  "result": "RESULT.md",
+  "final_review": "FINAL-REVIEW.json",
+  "record_scope": "Current campaign summary. Dated job, launch, capacity and progress entries below are historical stage evidence, not live allocations."
 }

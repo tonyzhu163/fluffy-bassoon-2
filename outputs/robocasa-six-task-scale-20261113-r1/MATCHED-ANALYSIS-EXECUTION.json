@@ -1,5 +1,5 @@
 {
-  "status": "Live Linux CPU finalizer; auditing all25 archived banks and computing all paired statistics",
+  "status": "Complete; full coverage/statistics/cold readback and manual figure review passed; decision recorded",
   "orchestrator_source": "afc1c2eccde6aa63798235679576f6769f717cd1",
   "script_path": "/tmp/matched-finalize-source-afc1c2ec/wait_matched_readout.py",
   "script_sha256": "78c0f936357e8fdb245f55d25a83100d156b51e3a483cca2a1e6eb8cbfca7c86",
@@ -19,16 +19,11 @@
     "actual_four_shard_binding_compatibility": "evidence/MATCHED-STARTUP-BINDING-AUDIT.json"
   },
   "behavior": "Wait for exact parent and all4 worker success/COMPLETE; audit all13200 episodes,25 banks and all planned contrasts; render3 figures; verify cold copies. No accelerator mutation or retry. Deadline stops observation only.",
-  "post_completion_remaining": [
-    "Inspect all rendered figures",
-    "Interpret ID/OOD history, stage-baseline and corpus-size contrasts with uncertainty",
-    "Reconcile terminal scheduler usage and retention",
-    "Publish verified findings and decision"
-  ],
+  "post_completion_remaining": [],
   "recorded_shanghai": "2026-11-15T01:47:46.185090+08:00",
   "live_state": {
     "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matched-finalize01/STATE.json",
-    "sha256": "428c1ddc7df90b1ffe05ec7ba1c35923dc72ba31e10c9da4f3399ee2341ea448",
+    "sha256": "8160d2276b0f0c4f396c31d5de79e2d493ab4075f16258f67697f86bc71bfc66",
     "data": {
       "started_unix": 1794678422.5932577,
       "hostname": "aibox-rffe453e3884-5f96c78b88-6ssrn",
@@ -48,15 +43,36 @@
         "bytes": 11946
       },
       "GPU_hours": 0,
-      "completed": false,
-      "stage": "Auditing all archived cases and computing paired statistics",
+      "completed": true,
+      "stage": "Analysis and figures archived; visual review and scientific decision pending",
       "policy": "No accelerator mutation or automatic retry; preserve all planned cases and contrasts",
       "terminal": {
         "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/EXIT.json",
         "sha256": "ca22284766e455a368d962ebf29da6ec28b5cc295faf22bdbcc39caf2289a5e5",
         "bytes": 722
       },
-      "checked_unix": 1794703499.9266882
+      "checked_unix": 1794704002.2467246,
+      "ended_unix": 1794704022.6305013,
+      "archive": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matched-finalize01/ARCHIVE.json",
+        "sha256": "aa628e18b70783a690d22382cb4ec4c4a1072117c03561247a13a92432b7306b",
+        "bytes": 7388
+      },
+      "result": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matched-finalize01/analysis/RESULT.json",
+        "sha256": "9856ab962d7cb8fb0a95f1257103ec2d72517ee5bc86129cce20ddb100d9e674",
+        "bytes": 277408
+      },
+      "coverage": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matched-finalize01/analysis/COVERAGE.json",
+        "sha256": "4e386513fdf70716bd0062672ee99e417d8b05c3e09fd370d0c3f2a51607d5c2",
+        "bytes": 11220
+      },
+      "figures": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matched-finalize01/figures/FIGURES.json",
+        "sha256": "7c61f7d304ce7d587ddc06be90f43136620bd2e379c3a8a9c575b1cd6cfe8dd2",
+        "bytes": 1972
+      }
     }
   },
   "last_live_handle_poll_unix": 1794703695.713983,
@@ -77,5 +93,11 @@
     "expected_partial_coverage_exit_code": 1,
     "statistical_conclusions_generated": false,
     "GPU_hours": 0
-  }
+  },
+  "completed": true,
+  "ended_unix": 1794704022.6305013,
+  "final_review": "FINAL-REVIEW.json",
+  "decision_report": "RESULT.md",
+  "final_figures": "matched-figures02/FIGURES.json",
+  "figure_caption_correction": "matched-figures02/ARCHIVE.json"
 }

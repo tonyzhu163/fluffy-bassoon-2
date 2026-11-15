@@ -1,0 +1,71 @@
+{
+  "completed": true,
+  "checked_shanghai": "2026-11-15T08:59:30.914600+08:00",
+  "decision": "Stop scaling the current frozen-VLA history-pretraining recipe; no additional PPO teachers or GPU jobs launched. One positive three-task IC-IQL ID history interval remains an unconfirmed lead.",
+  "report": {
+    "path": "RESULT.md",
+    "sha256": "559210500e5583e9d38797c97d0b937f73565a5e0e4fcd03f3731847fdc0aa6d"
+  },
+  "result": {
+    "path": "matched-finalize01/analysis/RESULT.json",
+    "sha256": "9856ab962d7cb8fb0a95f1257103ec2d72517ee5bc86129cce20ddb100d9e674"
+  },
+  "coverage": {
+    "path": "matched-finalize01/analysis/COVERAGE.json",
+    "sha256": "4e386513fdf70716bd0062672ee99e417d8b05c3e09fd370d0c3f2a51607d5c2"
+  },
+  "verification": {
+    "eight_final_fits_audited": true,
+    "actor_updates_each": 10000,
+    "DIT_IC_IQL_additional_QV_updates_each": 1000,
+    "physical_episodes": 13200,
+    "transformer_physical_episodes": 12800,
+    "baseline_physical_episodes": 400,
+    "archived_banks": 25,
+    "missing_planned_cases": 0,
+    "all_four_workers_successful": true,
+    "all_precommitted_contrasts_retained": true,
+    "local_analysis_and_figure_copies_match_cold_hashes": true,
+    "outcome_conditioned_exclusions": false,
+    "post_outcome_GPU_extension": false
+  },
+  "manual_visual_review": {
+    "passed": true,
+    "figures": {
+      "matched-performance": {
+        "path": "matched-figures02/matched-performance.png",
+        "sha256": "7d4456a371017c6bb8b0766399a76eded7fef16a1a429fee92c32b7acf949984"
+      },
+      "matched-scaling": {
+        "path": "matched-figures02/matched-scaling.png",
+        "sha256": "0973869f4a52867d3f7a2a62e6f4f12564d19a40ff24ae32fc6c780b6df3c6ad"
+      },
+      "matched-baseline-gaps": {
+        "path": "matched-figures02/matched-baseline-gaps.png",
+        "sha256": "a08cbdab949368abe1c784029196e190efebc9a0ff744f9ef5f3c57fa1c13290"
+      }
+    },
+    "review": "All three plots inspected: method/panel labels, interval ranges, legends, captions and footer legible; axes contain all intervals. Corrected scaling caption inspected after Linux rerender; performance/baseline PNGs verified byte-identical to inspected originals.",
+    "caption_correction_source": "6619d4c1cf2c11ceba6bf9340d2aab76fa55a44e",
+    "numerical_results_unchanged": true
+  },
+  "limits": [
+    "One fit per method/corpus; marginal intervals, no multiplicity correction or training-seed uncertainty.",
+    "40 paired cases per task; repeated attempts are not independent cases.",
+    "First full/reset outcome discrepancies remain included and limit causal history attribution.",
+    "Matched actor updates, not identical all-method compute; added tasks change diversity, volume and exposure.",
+    "OOD held out of meta-training only; PPO30 OOD is fixed OpenDrawer transfer."
+  ],
+  "GPU_hours_added_by_analysis_and_figures": 0,
+  "closed_campaign_conservative_GPU_hours": 219.5,
+  "approved_hard_cap_GPU_hours": 230,
+  "active_GPU_jobs": 0,
+  "remaining_required_work": [],
+  "storage_closeout": {
+    "shared_PFS_free_bytes": 51472498688,
+    "checked_unix": 1794704404.1462424,
+    "new_payload_deletions": false,
+    "valid_cold_evidence_preserved": true,
+    "shared_dependencies_preserved": true
+  }
+}
