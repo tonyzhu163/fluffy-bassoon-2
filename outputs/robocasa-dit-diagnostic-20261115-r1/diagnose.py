@@ -30,6 +30,21 @@ def write(path, data):
     Path(path).write_text(json.dumps(data, indent=2, allow_nan=False) + '\n')
 
 
+def vector_values(critic, batch, *, mode='full'):
+    """Existing causal sequence primitive; qualified against deployed stepping below."""
+    import torch
+    tokens, valid = batch['tokens'], batch['valid']
+    tokens = torch.where(valid[..., None], tokens, 0.)
+    d = critic.config.observation_dim
+    tokens = torch.cat(((tokens[..., :d] - critic.observation_mean) / critic.observation_std,
+                        tokens[..., d:]), -1)
+    reset = batch['starts'] if mode == 'episode' else torch.zeros_like(valid)
+    features = critic.core.sequence(tokens, reset=reset, valid=valid)
+    if critic.action_value:
+        features = torch.cat((features, torch.where(valid[..., None], batch['actions'], 0.)), -1)
+    return critic.head(features).squeeze(-1)
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--pin', required=True)
@@ -126,17 +141,32 @@ def main():
                             tokens[0, :, c['history_config']['observation_dim']:-1] = 0
                             b['tokens'] = torch.from_numpy(tokens)
                         with torch.inference_mode():
-                            q = values.q.sequence(batch)[-12:]
-                            v = values.v.sequence(batch)[-12:]
-                            qr = values.q.sequence(reset, mode='episode')[-12:]
-                            vr = values.v.sequence(reset, mode='episode')[-12:]
+                            q = vector_values(values.q, batch)[-12:]
+                            v = vector_values(values.v, batch)[-12:]
+                            qr = vector_values(values.q, reset, mode='episode')[-12:]
+                            vr = vector_values(values.v, reset, mode='episode')[-12:]
+                            if task == TASKS[0] and update == 19:
+                                errors = {}
+                                for label, critic in [('q', values.q), ('v', values.v)]:
+                                    for mode, source in [('full', batch), ('episode', reset)]:
+                                        small = {k: x[:, :2] for k,x in source.items()}
+                                        reference = critic.sequence(small, mode=mode)
+                                        fast = vector_values(critic, small, mode=mode)
+                                        # Float32 accumulation order differs between batched and incremental attention.
+                                        torch.testing.assert_close(fast, reference, rtol=1e-5, atol=1e-6)
+                                        errors[label + '_' + mode] = float((fast-reference).abs().max())
+                                write(a.output / (name + '-NUMERICS.json'), dict(
+                                    passed=True, sequence_length=len(batch['tokens']), lanes=2,
+                                    reference='HistoryCritic.sequence', maximum_absolute_errors=errors,
+                                    rtol=1e-5, atol=1e-6))
                             w = importance_weights(q-v, values.config)
                             wr = importance_weights(qr-vr, values.config)
                         arrays = {k: x.numpy() for k,x in dict(q=q,v=v,weight=w,reset_q=qr,reset_v=vr,reset_weight=wr).items()}
                         assert all(np.isfinite(x).all() for x in arrays.values())
                         if update == 0:
                             assert torch.equal(q, qr) and torch.equal(v, vr), 'No previous episode: full/reset must match'
-                        assert np.allclose(arrays['weight'], np.exp(arrays['q']-arrays['v']), rtol=1e-6)
+                        expected = np.exp(np.clip(arrays['q']-arrays['v'], -20, np.log(values.config.maximum_weight)))
+                        assert np.allclose(arrays['weight'], expected, rtol=1e-6)
                         for slot,t in enumerate(trials):
                             returns = discounted_returns(t['rewards'], t['dones'], .99)
                             success = int(t['rewards'][update*12:end].max())
