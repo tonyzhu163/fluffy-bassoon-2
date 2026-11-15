@@ -1,0 +1,2210 @@
+{
+  "verified_at": "2026-11-15T16:44:34.930528+08:00",
+  "archive_root": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1",
+  "initial_free_bytes": 131504013312,
+  "final_free_bytes": 179084197888,
+  "totals": {
+    "table7": {
+      "paths": 49,
+      "bos_bytes": 47693682516,
+      "reclaimed_bytes": 47696478208
+    },
+    "recurrent-flow": {
+      "paths": 3,
+      "bos_bytes": 35127349068,
+      "reclaimed_bytes": 0
+    }
+  },
+  "retained_t1_links": {
+    "/mowenjie/fluffy-bassoon/outputs/mikasa-recurrent-flow-20261107-r1/initializer-s1000/model.safetensors": {
+      "path": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-t1-20261109-r1/initializer-s1000/model.safetensors",
+      "allocated_bytes": 11709120512
+    },
+    "/mowenjie/fluffy-bassoon/outputs/mikasa-recurrent-flow-20261107-r1/initializer-s1001/model.safetensors": {
+      "path": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-t1-20261109-r1/initializer-s1001/model.safetensors",
+      "allocated_bytes": 11709120512
+    },
+    "/mowenjie/fluffy-bassoon/outputs/mikasa-recurrent-flow-20261107-r1/initializer-s1002/model.safetensors": {
+      "path": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-t1-20261109-r1/initializer-s1002/model.safetensors",
+      "allocated_bytes": 11709120512
+    }
+  },
+  "remaining_files_at_least_50_mib": {
+    "mikasa-table7-act82-20261115-r1": [],
+    "mikasa-table7-act82-scale-20261115-r2": [],
+    "mikasa-table7-act82-scale-20261115-r3": [],
+    "mikasa-recurrent-flow-20261107-r1": []
+  },
+  "scheduler": {
+    "observed_unix": 1794732222,
+    "source": "Authenticated Baige distributed task list, all clusters and queues, own tasks, active statuses; active workflow view empty",
+    "selected_consumers": [],
+    "active_jobs": [
+      {
+        "id": "job-by4q7uh17jpj",
+        "name": "mwj_1115_bridge_k4_b2048_500_r1",
+        "status": "Running",
+        "run": "bridge-k4-b2048-20261115-r1"
+      },
+      {
+        "id": "job-chg95vewe818",
+        "name": "mwj_1115_libero_k2_t1_w64_r4",
+        "status": "Running",
+        "run": "libero-k2-t1-carry-windows-20261115-r4"
+      }
+    ],
+    "active_workflows": [],
+    "dependency_check": "The Bridge and LIBERO launch and run records reference separate inputs. Three T1 initializer hard links remain on PFS."
+  },
+  "objects": [
+    {
+      "archive": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/table7/001-model.safetensors",
+      "archive_type": "file",
+      "archive_sha256": "d3be55cb3f576b7b0f19e5ba8199b7b6f258720fd25f0f6bfb50f76fc0939554",
+      "archive_bytes": 11706310352,
+      "rows": [
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-20261115-r1/initializer/direct_single_mikasa_vlm_kv/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4358149384,
+            "st_size": 11706310352,
+            "st_blocks": 22863888,
+            "st_mtime_ns": 1794679286379977383,
+            "st_ctime_ns": 1794679286379977383,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 11706310352,
+          "allocated_bytes": 11706310656,
+          "sha256": "d3be55cb3f576b7b0f19e5ba8199b7b6f258720fd25f0f6bfb50f76fc0939554"
+        }
+      ],
+      "verified_unix": 1794732158.431906,
+      "bos_receipt": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/table7/001.receipt.json",
+      "reclaimed_bytes": 11706310656,
+      "released_unix": 1794732223.0710816
+    },
+    {
+      "archive": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/table7/002-model.safetensors",
+      "archive_type": "file",
+      "archive_sha256": "7402a2a8ac9703b72aaad95c5c48c0f9981f53006910093c743873e4b198faf2",
+      "archive_bytes": 12348888,
+      "rows": [
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-20261115-r1/qualification-lanes8/checkpoints/00000002/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4392189606,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794680145871768639,
+            "st_ctime_ns": 1794683451908586000,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 2
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "7402a2a8ac9703b72aaad95c5c48c0f9981f53006910093c743873e4b198faf2"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r2/g2/migration-smoke-input/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4392189606,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794680145871768639,
+            "st_ctime_ns": 1794683451908586000,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 2
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "7402a2a8ac9703b72aaad95c5c48c0f9981f53006910093c743873e4b198faf2"
+        }
+      ],
+      "verified_unix": 1794732001.8487034,
+      "bos_receipt": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/table7/002.receipt.json",
+      "reclaimed_bytes": 12353536,
+      "released_unix": 1794732223.2443728
+    },
+    {
+      "archive": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/table7/003-model.safetensors",
+      "archive_type": "file",
+      "archive_sha256": "2e68509a19f66fa282c728356444a45d20e29aeb4b2d5cec420068753d1ebcb0",
+      "archive_bytes": 11706310352,
+      "rows": [
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-20261115-r1/training/checkpoints/00000559/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4392189645,
+            "st_size": 11706310352,
+            "st_blocks": 22863888,
+            "st_mtime_ns": 1794683538762348192,
+            "st_ctime_ns": 1794683571037010000,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 2
+          },
+          "bytes": 11706310352,
+          "allocated_bytes": 11706310656,
+          "sha256": "2e68509a19f66fa282c728356444a45d20e29aeb4b2d5cec420068753d1ebcb0"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r2/g2/migrated-checkpoint/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4392189645,
+            "st_size": 11706310352,
+            "st_blocks": 22863888,
+            "st_mtime_ns": 1794683538762348192,
+            "st_ctime_ns": 1794683571037010000,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 2
+          },
+          "bytes": 11706310352,
+          "allocated_bytes": 11706310656,
+          "sha256": "2e68509a19f66fa282c728356444a45d20e29aeb4b2d5cec420068753d1ebcb0"
+        }
+      ],
+      "verified_unix": 1794732078.9786153,
+      "bos_receipt": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/table7/003.receipt.json",
+      "reclaimed_bytes": 11706310656,
+      "released_unix": 1794732223.4202623
+    },
+    {
+      "archive": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/table7/004-model.safetensors",
+      "archive_type": "file",
+      "archive_sha256": "db812ade64adc9d6608af18b7c5d64fc782f1888f4f1dafa3b1555430c2f1ca2",
+      "archive_bytes": 12348888,
+      "rows": [
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r2/g2/training/checkpoints/00002000/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4459142401,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794687878384812829,
+            "st_ctime_ns": 1794692934337185000,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 2
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "db812ade64adc9d6608af18b7c5d64fc782f1888f4f1dafa3b1555430c2f1ca2"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/migration-smoke-input/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4459142401,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794687878384812829,
+            "st_ctime_ns": 1794692934337185000,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 2
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "db812ade64adc9d6608af18b7c5d64fc782f1888f4f1dafa3b1555430c2f1ca2"
+        }
+      ],
+      "verified_unix": 1794732001.9318962,
+      "bos_receipt": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/table7/004.receipt.json",
+      "reclaimed_bytes": 12353536,
+      "released_unix": 1794732223.5828564
+    },
+    {
+      "archive": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/table7/005-model.safetensors",
+      "archive_type": "file",
+      "archive_sha256": "8088b570a69e953bda1c1750643683f1497c455b90a6d7d91461f28934da92c3",
+      "archive_bytes": 11706310352,
+      "rows": [
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r2/g2/training/checkpoints/00003769/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4492974188,
+            "st_size": 11706310352,
+            "st_blocks": 22863888,
+            "st_mtime_ns": 1794693036831007145,
+            "st_ctime_ns": 1794693135114263000,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 2
+          },
+          "bytes": 11706310352,
+          "allocated_bytes": 11706310656,
+          "sha256": "8088b570a69e953bda1c1750643683f1497c455b90a6d7d91461f28934da92c3"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/migrated-checkpoint/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4492974188,
+            "st_size": 11706310352,
+            "st_blocks": 22863888,
+            "st_mtime_ns": 1794693036831007145,
+            "st_ctime_ns": 1794693135114263000,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 2
+          },
+          "bytes": 11706310352,
+          "allocated_bytes": 11706310656,
+          "sha256": "8088b570a69e953bda1c1750643683f1497c455b90a6d7d91461f28934da92c3"
+        }
+      ],
+      "verified_unix": 1794732117.8464642,
+      "bos_receipt": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/table7/005.receipt.json",
+      "reclaimed_bytes": 11706310656,
+      "released_unix": 1794732223.751679
+    },
+    {
+      "archive": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/table7/006-model.safetensors",
+      "archive_type": "file",
+      "archive_sha256": "d848e8916a16e7f8537e22e66f66153aceacb88be1f67bf5c0d229d2358f44c5",
+      "archive_bytes": 11706310352,
+      "rows": [
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/training/checkpoints/00010000/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4392173594,
+            "st_size": 11706310352,
+            "st_blocks": 22863888,
+            "st_mtime_ns": 1794702130474845133,
+            "st_ctime_ns": 1794702130474845133,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 11706310352,
+          "allocated_bytes": 11706310656,
+          "sha256": "d848e8916a16e7f8537e22e66f66153aceacb88be1f67bf5c0d229d2358f44c5"
+        }
+      ],
+      "verified_unix": 1794732159.3208082,
+      "bos_receipt": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/table7/006.receipt.json",
+      "reclaimed_bytes": 11706310656,
+      "released_unix": 1794732223.8948808
+    },
+    {
+      "archive": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/table7/007.tar.zst",
+      "archive_type": "tar.zst",
+      "archive_sha256": "a91f4d182da334a29d52ad6863328672e55c494ee00e2f5b68e6f851004aad07",
+      "archive_bytes": 843743332,
+      "rows": [
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-20261115-r1/qualification-lanes8/checkpoints/00000001/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4392189591,
+            "st_size": 27512980,
+            "st_blocks": 53744,
+            "st_mtime_ns": 1794680140371760356,
+            "st_ctime_ns": 1794680140371760356,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27512980,
+          "allocated_bytes": 27516928,
+          "sha256": "c6149d5720529382cdf17de5cd65abb7fd5bb8d2b86d27f831a945858b2bd0d1"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-20261115-r1/qualification-lanes8/checkpoints/00000001/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4526588571,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794680140321499802,
+            "st_ctime_ns": 1794680140321499802,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "170c58741139db95ac823f65576f94d089bee6a20bf608389b970c1ca6c8785b"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-20261115-r1/qualification-lanes8/checkpoints/00000002/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4324713077,
+            "st_size": 27513044,
+            "st_blocks": 53744,
+            "st_mtime_ns": 1794680145915712644,
+            "st_ctime_ns": 1794680145915712644,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27513044,
+          "allocated_bytes": 27516928,
+          "sha256": "0bebfba112cec46a896e4aaa75a10a6d8d949cbdfa3d31fbc59d531b69e9a9c9"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-20261115-r1/qualification-resumed-lanes8/checkpoints/00000002/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4324713098,
+            "st_size": 27513044,
+            "st_blocks": 53744,
+            "st_mtime_ns": 1794680212916758892,
+            "st_ctime_ns": 1794680212916758892,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27513044,
+          "allocated_bytes": 27516928,
+          "sha256": "023c1e9152d120c93aa8cfbf623a2bff280cd82c8c956d9be8dfe3a59ba934de"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-20261115-r1/qualification-resumed-lanes8/checkpoints/00000002/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4392189620,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794680212869320002,
+            "st_ctime_ns": 1794680212869320002,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "7402a2a8ac9703b72aaad95c5c48c0f9981f53006910093c743873e4b198faf2"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-20261115-r1/training/checkpoints/00000559/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4526588586,
+            "st_size": 27514004,
+            "st_blocks": 53744,
+            "st_mtime_ns": 1794683538898214403,
+            "st_ctime_ns": 1794683538898214403,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27514004,
+          "allocated_bytes": 27516928,
+          "sha256": "b71a9c5a335f6579a6ffc465e8c9f1224b96312a01803e022ca4754376372e76"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r2/g2/migrated-checkpoint/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4458614687,
+            "st_size": 27526312,
+            "st_blocks": 53776,
+            "st_mtime_ns": 1794683571070937995,
+            "st_ctime_ns": 1794683571070937995,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27526312,
+          "allocated_bytes": 27533312,
+          "sha256": "7e4a96afd324bcc0c7c6b195a3939ea9f764c2b75c45346244a12fecf6427b2e"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r2/g2/migration-smoke/checkpoints/00000003/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4559893153,
+            "st_size": 27541239,
+            "st_blocks": 53792,
+            "st_mtime_ns": 1794683516105007713,
+            "st_ctime_ns": 1794683516105007713,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27541239,
+          "allocated_bytes": 27541504,
+          "sha256": "02c8b55a4922443cdee304c730f2da66a2ce44d3455ba47216c1f9011f31a765"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r2/g2/migration-smoke/checkpoints/00000003/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4559893146,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794683516057788449,
+            "st_ctime_ns": 1794683516057788449,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "336082ccc507d9dcb8590a20aecfd382dc8ccae189a0ff3fae0763cbe213faae"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r2/g2/migration-smoke/checkpoints/00000004/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4525944793,
+            "st_size": 27541239,
+            "st_blocks": 53792,
+            "st_mtime_ns": 1794683519020910770,
+            "st_ctime_ns": 1794683519020910770,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27541239,
+          "allocated_bytes": 27541504,
+          "sha256": "cb01378ce4fddae3bdfe7c39147c557fdc1c27fecdaf94778a79588919abc959"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r2/g2/migration-smoke/checkpoints/00000004/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4559893157,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794683518976821528,
+            "st_ctime_ns": 1794683518976821528,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "6c1744026e384a110dbed165df52bb446e86d128c06b4a28136a0fa455958720"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r2/g2/migration-smoke-input/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4525944787,
+            "st_size": 27525352,
+            "st_blocks": 53776,
+            "st_mtime_ns": 1794683452052748921,
+            "st_ctime_ns": 1794683452052748921,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27525352,
+          "allocated_bytes": 27533312,
+          "sha256": "6a1cc7972b791508e642868700a795fba72a5b54a19b8b43f1d46a5f70fed484"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r2/g2/qualification-lanes8/checkpoints/00000001/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4458614666,
+            "st_size": 27541175,
+            "st_blocks": 53792,
+            "st_mtime_ns": 1794683255835912764,
+            "st_ctime_ns": 1794683255835912764,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27541175,
+          "allocated_bytes": 27541504,
+          "sha256": "8910d6c7ceb0828f04a4d628f785e51fca4ea17a3d24a2ecde444014a4885592"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r2/g2/qualification-lanes8/checkpoints/00000001/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4525944769,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794683255790578003,
+            "st_ctime_ns": 1794683255790578003,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "f56f0f97c7c4842747907a3b775df4c0cc7b95040df58d994a6667affa6b3295"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r2/g2/qualification-lanes8/checkpoints/00000002/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4559893096,
+            "st_size": 27541175,
+            "st_blocks": 53792,
+            "st_mtime_ns": 1794683258829024704,
+            "st_ctime_ns": 1794683258829024704,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27541175,
+          "allocated_bytes": 27541504,
+          "sha256": "89f7bef8fae5b086e7ec168ec6d3bfb6f664a267bc01beac246769b9b3c6e6c1"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r2/g2/qualification-lanes8/checkpoints/00000002/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4458614669,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794683258785274812,
+            "st_ctime_ns": 1794683258785274812,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "df4e7248db4f9bad91fea907e28000c28760983241d8e4b66e474af1ba337d68"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r2/g2/qualification-resumed-lanes8/checkpoints/00000002/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4559893100,
+            "st_size": 27541239,
+            "st_blocks": 53792,
+            "st_mtime_ns": 1794683327326773708,
+            "st_ctime_ns": 1794683327326773708,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27541239,
+          "allocated_bytes": 27541504,
+          "sha256": "87f154fc8835e82cd66578c33f79c4eaf998d93bbaeb99277365ddfead1a1926"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r2/g2/qualification-resumed-lanes8/checkpoints/00000002/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4458614677,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794683327278119823,
+            "st_ctime_ns": 1794683327278119823,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "df4e7248db4f9bad91fea907e28000c28760983241d8e4b66e474af1ba337d68"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r2/g2/training/checkpoints/00002000/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4492446712,
+            "st_size": 27542455,
+            "st_blocks": 53808,
+            "st_mtime_ns": 1794687878434965692,
+            "st_ctime_ns": 1794687878434965692,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27542455,
+          "allocated_bytes": 27549696,
+          "sha256": "3eb5920e062c47733d04eb0fac6e1e17a85413e04fc257f20ed12ffb00cd611a"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r2/g2/training/checkpoints/00003769/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4459142604,
+            "st_size": 27542135,
+            "st_blocks": 53808,
+            "st_mtime_ns": 1794693036932720758,
+            "st_ctime_ns": 1794693036932720758,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27542135,
+          "allocated_bytes": 27549696,
+          "sha256": "3b1c6139c8053f4a1b7dd6dfa233f3edf601405ecfd6b625fa42af2959014563"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/migrated-checkpoint/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4358110219,
+            "st_size": 27555694,
+            "st_blocks": 53824,
+            "st_mtime_ns": 1794693135168084016,
+            "st_ctime_ns": 1794693135168084016,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27555694,
+          "allocated_bytes": 27557888,
+          "sha256": "8bdaaa663e77aa597c0fc1a7071e68b3bc0ab0085b0c1f491747bcf078953a13"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/migration-smoke/checkpoints/00002001/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4324594765,
+            "st_size": 27572743,
+            "st_blocks": 53856,
+            "st_mtime_ns": 1794693016860769874,
+            "st_ctime_ns": 1794693016860769874,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27572743,
+          "allocated_bytes": 27574272,
+          "sha256": "ab120654e65fdb31bc7331eb0a1862b4922af4fbbc08b26346ba038f82a0abbf"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/migration-smoke/checkpoints/00002001/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4324594755,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794693016813764446,
+            "st_ctime_ns": 1794693016813764446,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "c3314581a53ebef8429f90f48d525ddd473d7b3a99cdf59092aa2bdb5e2b39cd"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/migration-smoke/checkpoints/00002002/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4324577257,
+            "st_size": 27572743,
+            "st_blocks": 53856,
+            "st_mtime_ns": 1794693018446884481,
+            "st_ctime_ns": 1794693018446884481,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27572743,
+          "allocated_bytes": 27574272,
+          "sha256": "222a1fa781eb979522825ddcd0dc4bd04a21f461a40b6f5920a5e6408c0b1928"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/migration-smoke/checkpoints/00002002/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4324549018,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794693018402244065,
+            "st_ctime_ns": 1794693018402244065,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "2b2f2636b8762de8d359fd5d89c6ff437c547fb957a2aef1c5f0468a46f8954e"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/migration-smoke-input/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4324577253,
+            "st_size": 27556078,
+            "st_blocks": 53824,
+            "st_mtime_ns": 1794692934453548025,
+            "st_ctime_ns": 1794692934453548025,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27556078,
+          "allocated_bytes": 27557888,
+          "sha256": "fb842a8cbb085944f7256c5799347e4eae5d0cf70ce6705a89baa6367823370e"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/qualification-lanes8/checkpoints/00000001/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4324548884,
+            "st_size": 27571399,
+            "st_blocks": 53856,
+            "st_mtime_ns": 1794692743065710014,
+            "st_ctime_ns": 1794692743065710014,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27571399,
+          "allocated_bytes": 27574272,
+          "sha256": "f32afbc31c7bbae3687b0c0c83d338f193ec466e4421763fa33a09174db77403"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/qualification-lanes8/checkpoints/00000001/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4324548782,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794692743015148212,
+            "st_ctime_ns": 1794692743015148212,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "7869b096cc84f4987465d1937e8b79e86f00858e1156ba5efcdd57aa16c38248"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/qualification-lanes8/checkpoints/00000002/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4391646188,
+            "st_size": 27571399,
+            "st_blocks": 53856,
+            "st_mtime_ns": 1794692744571162256,
+            "st_ctime_ns": 1794692744571162256,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27571399,
+          "allocated_bytes": 27574272,
+          "sha256": "06a3671161132e572f5265dfadadf8deeb26e96e2a83c8093f4c8edfb5dc52fe"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/qualification-lanes8/checkpoints/00000002/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4391646181,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794692744525378260,
+            "st_ctime_ns": 1794692744525378260,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "a8eb7326e29d4aee873f3e30941a0a94b90b4d61cde13429f91d427fcaf699d5"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/qualification-resumed-lanes8/checkpoints/00000002/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4324594696,
+            "st_size": 27571399,
+            "st_blocks": 53856,
+            "st_mtime_ns": 1794692810850583880,
+            "st_ctime_ns": 1794692810850583880,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27571399,
+          "allocated_bytes": 27574272,
+          "sha256": "bf1968670e1783d1fc24bf1f8a087c39256d8a87b15a088506ebce5075f5d54a"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/qualification-resumed-lanes8/checkpoints/00000002/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4391646193,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794692810804209201,
+            "st_ctime_ns": 1794692810804209201,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "a8eb7326e29d4aee873f3e30941a0a94b90b4d61cde13429f91d427fcaf699d5"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/training/checkpoints/00004000/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4392173575,
+            "st_size": 27572359,
+            "st_blocks": 53856,
+            "st_mtime_ns": 1794693550376612050,
+            "st_ctime_ns": 1794693550376612050,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27572359,
+          "allocated_bytes": 27574272,
+          "sha256": "7b05285ce1bbfa05f0e43f77746579c6e4a94a4950abfb82a24ded946bbe72d8"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/training/checkpoints/00004000/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4324577263,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794693550328387887,
+            "st_ctime_ns": 1794693550328387887,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "56dab1bdfa5164b8fa3df973d9fcb03817258796e699df7503c6eb02689b2857"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/training/checkpoints/00006000/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4324577272,
+            "st_size": 27572487,
+            "st_blocks": 53856,
+            "st_mtime_ns": 1794696416884709999,
+            "st_ctime_ns": 1794696416884709999,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27572487,
+          "allocated_bytes": 27574272,
+          "sha256": "ced0187118e2b1e14305920927743ee8350e2e2a5039b7d6872109998fb5dbca"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/training/checkpoints/00006000/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4392173578,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794696416834346842,
+            "st_ctime_ns": 1794696416834346842,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "7c8306e8aba765757cc4e6adcbdb9589d77a367f3fa3c40172505d413ecc6266"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/training/checkpoints/00008000/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4324577276,
+            "st_size": 27572487,
+            "st_blocks": 53856,
+            "st_mtime_ns": 1794699279168465569,
+            "st_ctime_ns": 1794699279168465569,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27572487,
+          "allocated_bytes": 27574272,
+          "sha256": "0cf502e3885e9a6544517541a6e54f5c1bedcdaad2acc2cb9296e400110420dc"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/training/checkpoints/00008000/pretrained_model/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4392173586,
+            "st_size": 12348888,
+            "st_blocks": 24128,
+            "st_mtime_ns": 1794699279122546049,
+            "st_ctime_ns": 1794699279122546049,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 12348888,
+          "allocated_bytes": 12353536,
+          "sha256": "81347e893691a14f30210eca8d56992dfb78e72434aaa5b64f0eff4d486b9029"
+        },
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-table7-act82-scale-20261115-r3/g4/training/checkpoints/00010000/training_state.pt",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4325104640,
+            "st_size": 27572871,
+            "st_blocks": 53856,
+            "st_mtime_ns": 1794702130583159393,
+            "st_ctime_ns": 1794702130583159393,
+            "st_mode": 33188,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 1
+          },
+          "bytes": 27572871,
+          "allocated_bytes": 27574272,
+          "sha256": "8eb2bf5ec76d16f98aaa558c9f1d40e3a48552bce17e1959502c9955c9e83f20"
+        }
+      ],
+      "verified_unix": 1794732032.7258537,
+      "bos_receipt": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/table7/007.receipt.json",
+      "reclaimed_bytes": 846528512,
+      "released_unix": 1794732225.8349621
+    },
+    {
+      "archive": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/recurrent-flow/008-model.safetensors",
+      "archive_type": "file",
+      "archive_sha256": "7b1c0c4c6643d4a1c671bcd34adc8846998ab369356b72a909ae7bf54951fe98",
+      "archive_bytes": 11709116356,
+      "rows": [
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-recurrent-flow-20261107-r1/initializer-s1000/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4357995389,
+            "st_size": 11709116356,
+            "st_blocks": 22869376,
+            "st_mtime_ns": 1794035778422165116,
+            "st_ctime_ns": 1794487887109014000,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 2
+          },
+          "bytes": 11709116356,
+          "allocated_bytes": 11709120512,
+          "sha256": "7b1c0c4c6643d4a1c671bcd34adc8846998ab369356b72a909ae7bf54951fe98"
+        }
+      ],
+      "verified_unix": 1794732159.958319,
+      "bos_receipt": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/recurrent-flow/008.receipt.json",
+      "reclaimed_bytes": 0,
+      "released_unix": 1794732226.001213
+    },
+    {
+      "archive": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/recurrent-flow/009-model.safetensors",
+      "archive_type": "file",
+      "archive_sha256": "9ddee4f3a2189bf58ab3325e008cfe672d3ef4f66a74e4bd4299c5bba7ee6eca",
+      "archive_bytes": 11709116356,
+      "rows": [
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-recurrent-flow-20261107-r1/initializer-s1001/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4357995413,
+            "st_size": 11709116356,
+            "st_blocks": 22869376,
+            "st_mtime_ns": 1794035867257489398,
+            "st_ctime_ns": 1794487887081229000,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 2
+          },
+          "bytes": 11709116356,
+          "allocated_bytes": 11709120512,
+          "sha256": "9ddee4f3a2189bf58ab3325e008cfe672d3ef4f66a74e4bd4299c5bba7ee6eca"
+        }
+      ],
+      "verified_unix": 1794732115.316049,
+      "bos_receipt": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/recurrent-flow/009.receipt.json",
+      "reclaimed_bytes": 0,
+      "released_unix": 1794732226.1382873
+    },
+    {
+      "archive": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/recurrent-flow/010-model.safetensors",
+      "archive_type": "file",
+      "archive_sha256": "c319051f648dba1b0afde4bb3ced2bffc4d4946fbb804d1d512804180d4d99e4",
+      "archive_bytes": 11709116356,
+      "rows": [
+        {
+          "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-recurrent-flow-20261107-r1/initializer-s1002/model.safetensors",
+          "source_stat": {
+            "st_dev": 1048787,
+            "st_ino": 4358523236,
+            "st_size": 11709116356,
+            "st_blocks": 22869376,
+            "st_mtime_ns": 1794035957814167196,
+            "st_ctime_ns": 1794487887032033000,
+            "st_mode": 33152,
+            "st_uid": 0,
+            "st_gid": 0,
+            "st_nlink": 2
+          },
+          "bytes": 11709116356,
+          "allocated_bytes": 11709120512,
+          "sha256": "c319051f648dba1b0afde4bb3ced2bffc4d4946fbb804d1d512804180d4d99e4"
+        }
+      ],
+      "verified_unix": 1794732164.8738382,
+      "bos_receipt": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r1/recurrent-flow/010.receipt.json",
+      "reclaimed_bytes": 0,
+      "released_unix": 1794732226.2702606
+    }
+  ],
+  "table7_final_checkpoint": {
+    "model_sha256": "d848e8916a16e7f8537e22e66f66153aceacb88be1f67bf5c0d229d2358f44c5",
+    "training_state_sha256": "8eb2bf5ec76d16f98aaa558c9f1d40e3a48552bce17e1959502c9955c9e83f20",
+    "sampler_lanes": 32,
+    "rng_ranks": 4,
+    "optimizer_entries": 47
+  },
+  "recurrent_checkpoint_batch": {
+    "verified_at": "2026-11-15T16:46:46.809516+08:00",
+    "archive_root": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r2",
+    "final_free_bytes": 180464123904,
+    "totals": {
+      "recurrent-flow-checkpoints": {
+        "paths": 58,
+        "bos_bytes": 1402099569,
+        "reclaimed_bytes": 1403789312
+      }
+    },
+    "archived_run_names": [
+      "mikasa-flow-carry-s1000-20261107-r3",
+      "mikasa-flow-reset-s1000-20261107-r2",
+      "mikasa-flow-carry-s1001-20261107-r1",
+      "mikasa-flow-reset-s1001-20261107-r1",
+      "mikasa-flow-carry-s1002-20261107-r1",
+      "mikasa-flow-reset-s1002-20261107-r1"
+    ],
+    "paired_cue_trace_counts": {
+      "mikasa-flow-carry-s1000-20261107-r3": 400,
+      "mikasa-flow-reset-s1000-20261107-r2": 400,
+      "mikasa-flow-carry-s1001-20261107-r1": 0,
+      "mikasa-flow-reset-s1001-20261107-r1": 400,
+      "mikasa-flow-carry-s1002-20261107-r1": 400,
+      "mikasa-flow-reset-s1002-20261107-r1": 400
+    },
+    "objects": [
+      {
+        "archive": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r2/recurrent-flow-checkpoints/001.tar.zst",
+        "archive_type": "tar.zst",
+        "archive_sha256": "1f8e714478ac4707f70e6c5355ab6b0d374efd31598a444fc8ac2a5b8a23f5f4",
+        "archive_bytes": 1402099569,
+        "rows": [
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1000-20261107-r3/qualification-lanes4/checkpoints/00000001/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324731416,
+              "st_size": 33243170,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794037287791990722,
+              "st_ctime_ns": 1794037287791990722,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33243170,
+            "allocated_bytes": 33251328,
+            "sha256": "a91c3118dd048deaf99b94f79fa1c2804e6db4edfb2ba467c5bc724d6b4b27fa"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1000-20261107-r3/qualification-lanes4/checkpoints/00000001/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324734474,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794037287533835684,
+              "st_ctime_ns": 1794037287533835684,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "10b6a90e11ec9b0ecf5ee09dd96a82c71bf9ffe39c40336b89d1a472c2c5f516"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1000-20261107-r3/qualification-lanes4/checkpoints/00000002/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324816385,
+              "st_size": 33243170,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794037291190287185,
+              "st_ctime_ns": 1794037291190287185,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33243170,
+            "allocated_bytes": 33251328,
+            "sha256": "10ec7742bdf7b752de7d10d44d2a9961ce4580533f794506c2cf3407130e6676"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1000-20261107-r3/qualification-lanes4/checkpoints/00000002/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324731419,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794037291042715188,
+              "st_ctime_ns": 1794037291042715188,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "52031a0d90b80a431650488dcbe120aab074fcb78650a7283c4d6b4d3ee41794"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1000-20261107-r3/qualification-resumed-lanes4/checkpoints/00000002/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324734483,
+              "st_size": 33243234,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794037375798374883,
+              "st_ctime_ns": 1794037375798374883,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33243234,
+            "allocated_bytes": 33251328,
+            "sha256": "c6707b8bd2bd611d2082ba036d781bf16b4c5e25308e60db4b8c4c13f6b5f15b"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1000-20261107-r3/qualification-resumed-lanes4/checkpoints/00000002/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324843035,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794037375654505685,
+              "st_ctime_ns": 1794037375654505685,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "52031a0d90b80a431650488dcbe120aab074fcb78650a7283c4d6b4d3ee41794"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1000-20261107-r3/training/checkpoints/00005000/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324816399,
+              "st_size": 33244514,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794053452830353522,
+              "st_ctime_ns": 1794053452830353522,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33244514,
+            "allocated_bytes": 33251328,
+            "sha256": "20fb33bc6f8c1c6506db2c11265de7a594035d9a7feaa30e363f0ffc615e56d5"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1000-20261107-r3/training/checkpoints/00005000/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324843045,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794053452642797666,
+              "st_ctime_ns": 1794053452642797666,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "513544d8d70718ff5e131c077a5b039f79b8589ae50a0db1a4ae3a5b13cfeb49"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1000-20261107-r3/training/checkpoints/00010000/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324816403,
+              "st_size": 33244578,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794068917580601113,
+              "st_ctime_ns": 1794068917580601113,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33244578,
+            "allocated_bytes": 33251328,
+            "sha256": "1af5a706307959333d664ef0a446866272b9141e64a333bc7fc1a14521d4c049"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1000-20261107-r3/training/checkpoints/00010000/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324843053,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794068917419416035,
+              "st_ctime_ns": 1794068917419416035,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "ea89fd81bc394a2e5a773abb4054a636f39446ae6e04dd9651950d92c92b18b1"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1000-20261107-r2/qualification-lanes4/checkpoints/00000001/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324852755,
+              "st_size": 33243234,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794037576748729824,
+              "st_ctime_ns": 1794037576748729824,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33243234,
+            "allocated_bytes": 33251328,
+            "sha256": "dc759e0c8410cfc22470e4eb532f324c2ba851d269f8835db584830cb55b885a"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1000-20261107-r2/qualification-lanes4/checkpoints/00000001/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324382257,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794037576537755014,
+              "st_ctime_ns": 1794037576537755014,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "3dfede47665009420b519d6af29294b640d3f771129beb9ba9fd67e3f09f6204"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1000-20261107-r2/qualification-lanes4/checkpoints/00000002/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324614657,
+              "st_size": 33243234,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794037579915104339,
+              "st_ctime_ns": 1794037579915104339,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33243234,
+            "allocated_bytes": 33251328,
+            "sha256": "358e20e3e70c0fad6347ffbc0b45ac246f50a84d2c8cc93f611a3a8cc34373ee"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1000-20261107-r2/qualification-lanes4/checkpoints/00000002/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324563457,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794037579696410230,
+              "st_ctime_ns": 1794037579696410230,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "884cad018088b171b47923545dac579b7856bd6bd23e13d238abc565a4f8a7cd"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1000-20261107-r2/qualification-resumed-lanes4/checkpoints/00000002/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324614664,
+              "st_size": 33243234,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794037657552102123,
+              "st_ctime_ns": 1794037657552102123,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33243234,
+            "allocated_bytes": 33251328,
+            "sha256": "09ab9e112165a2bb150cbac0b039ecd0435ee63b26a15f9a03c61c0e513fd876"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1000-20261107-r2/qualification-resumed-lanes4/checkpoints/00000002/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324852764,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794037657377715215,
+              "st_ctime_ns": 1794037657377715215,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "884cad018088b171b47923545dac579b7856bd6bd23e13d238abc565a4f8a7cd"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1000-20261107-r2/training/checkpoints/00005000/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324852809,
+              "st_size": 33244514,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794052009392063452,
+              "st_ctime_ns": 1794052009392063452,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33244514,
+            "allocated_bytes": 33251328,
+            "sha256": "99f39b5968ca616cd8f81e7654418145f4691faf26f3118110c594804b910871"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1000-20261107-r2/training/checkpoints/00005000/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324563506,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794052009193898758,
+              "st_ctime_ns": 1794052009193898758,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "57bbbd95d0f21974db035cbf1a17e5b46e8c8d7e052dfcbb4617e184985a85da"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1000-20261107-r2/training/checkpoints/00010000/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324852824,
+              "st_size": 33244642,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794065936714440999,
+              "st_ctime_ns": 1794065936714440999,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33244642,
+            "allocated_bytes": 33251328,
+            "sha256": "3b4bd35afcb8bf355bd7d89f7220a8f7f873c3853bf4e0cd8763d8ecc491ee12"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1000-20261107-r2/training/checkpoints/00010000/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324852817,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794065936550905334,
+              "st_ctime_ns": 1794065936550905334,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "16baf552991c34c8c5255c9ed372ddf2cf9e7488308d24adffc4fb580ac1b2a5"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1001-20261107-r1/qualification-lanes4/checkpoints/00000001/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4358586403,
+              "st_size": 33243362,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794038379462313314,
+              "st_ctime_ns": 1794038379462313314,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33243362,
+            "allocated_bytes": 33251328,
+            "sha256": "2b383383d18fe0acf258d43ea56cd903721e2e124687d82ef8a334593e848066"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1001-20261107-r1/qualification-lanes4/checkpoints/00000001/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324480117,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794038379243614219,
+              "st_ctime_ns": 1794038379243614219,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "003493d930bfa7b030de3ac18d2f0483dcd0015ec76ee1ab3d6f9b7b553584b0"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1001-20261107-r1/qualification-lanes4/checkpoints/00000002/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324480137,
+              "st_size": 33243362,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794038382666668092,
+              "st_ctime_ns": 1794038382666668092,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33243362,
+            "allocated_bytes": 33251328,
+            "sha256": "5c9c1bdc1d62387a52340b4ed114b233e9a3927d3a79768b9743a4c88f80a1f0"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1001-20261107-r1/qualification-lanes4/checkpoints/00000002/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324480130,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794038382496607194,
+              "st_ctime_ns": 1794038382496607194,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "8d842a03430f9ca5ccb2b4a7a5bb3c4bf27b74f1366e3ca216f795bc81cb1028"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1001-20261107-r1/qualification-resumed-lanes4/checkpoints/00000002/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324752647,
+              "st_size": 33243426,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794038462271117664,
+              "st_ctime_ns": 1794038462271117664,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33243426,
+            "allocated_bytes": 33251328,
+            "sha256": "73448e480da234bdb0b4b391521aa114c2c48edf635314c53be0365315ee0138"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1001-20261107-r1/qualification-resumed-lanes4/checkpoints/00000002/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324752629,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794038462128948422,
+              "st_ctime_ns": 1794038462128948422,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "8d842a03430f9ca5ccb2b4a7a5bb3c4bf27b74f1366e3ca216f795bc81cb1028"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1001-20261107-r1/training/checkpoints/00005000/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4358586446,
+              "st_size": 33244578,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794053988740061234,
+              "st_ctime_ns": 1794053988740061234,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33244578,
+            "allocated_bytes": 33251328,
+            "sha256": "e4fa8edb1885adac3f9660f35a75321805bda72284efc5f18c38d9a71bae8dc5"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1001-20261107-r1/training/checkpoints/00005000/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324545204,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794053988581551951,
+              "st_ctime_ns": 1794053988581551951,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "c8f912dd0348b03227d8a5fe7bfd6a2ea199306721170efaac8532d250dad95d"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1001-20261107-r1/qualification-lanes4/checkpoints/00000001/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324852792,
+              "st_size": 33243426,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794038317321327540,
+              "st_ctime_ns": 1794038317321327540,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33243426,
+            "allocated_bytes": 33251328,
+            "sha256": "05c87c32e11853be45a9bab86f135f4c1698566ef5f7c422a06135172a2b7efe"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1001-20261107-r1/qualification-lanes4/checkpoints/00000001/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324852785,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794038317171670453,
+              "st_ctime_ns": 1794038317171670453,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "130096ae9ca1cc0f05ef8044f8d55d033f0e0fbb25c54df29474ca1ef8285a60"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1001-20261107-r1/qualification-lanes4/checkpoints/00000002/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324563492,
+              "st_size": 33243426,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794038320277502743,
+              "st_ctime_ns": 1794038320277502743,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33243426,
+            "allocated_bytes": 33251328,
+            "sha256": "ae4e5d70ad2b4099f7ef8e61f83dc49021706211c5d97324bff1fcaf6a9f44e7"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1001-20261107-r1/qualification-lanes4/checkpoints/00000002/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324852796,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794038320154876123,
+              "st_ctime_ns": 1794038320154876123,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "cb504c5add723c1bc84acfdc77bb9daef495c9fb3e493fe8577c3db358cd4fdd"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1001-20261107-r1/qualification-resumed-lanes4/checkpoints/00000002/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324563498,
+              "st_size": 33243426,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794038400726847220,
+              "st_ctime_ns": 1794038400726847220,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33243426,
+            "allocated_bytes": 33251328,
+            "sha256": "7ff16b83a67ebb8fb018f5d514c24f64859cadaa1fdae3a15052458a690ecb2c"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1001-20261107-r1/qualification-resumed-lanes4/checkpoints/00000002/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324614669,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794038400574225278,
+              "st_ctime_ns": 1794038400574225278,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "cb504c5add723c1bc84acfdc77bb9daef495c9fb3e493fe8577c3db358cd4fdd"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1001-20261107-r1/training/checkpoints/00005000/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324563514,
+              "st_size": 33244578,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794052787068877855,
+              "st_ctime_ns": 1794052787068877855,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33244578,
+            "allocated_bytes": 33251328,
+            "sha256": "90413cc20838eee80089b3840c909ab92fc2b1cb59d5a5987c107f194f8c3d5a"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1001-20261107-r1/training/checkpoints/00005000/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324614682,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794052786877535415,
+              "st_ctime_ns": 1794052786877535415,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "59ed0fb855aba49346daab5d58843589fdb2339259c36f2061b1f5ac105998dc"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1001-20261107-r1/training/checkpoints/00010000/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324382486,
+              "st_size": 33244770,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794066821285535808,
+              "st_ctime_ns": 1794066821285535808,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33244770,
+            "allocated_bytes": 33251328,
+            "sha256": "cc8e014ebaf54025f571ee5667488d431859a5db45e7dc8bcec36888b8fe6093"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1001-20261107-r1/training/checkpoints/00010000/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324614690,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794066821115073269,
+              "st_ctime_ns": 1794066821115073269,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "4ba25e26be0fe9b9dc53606f70996011f9f7683d5088f9ac691cae3852510e48"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1002-20261107-r1/qualification-lanes4/checkpoints/00000001/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324713997,
+              "st_size": 33243362,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794038918719210315,
+              "st_ctime_ns": 1794038918719210315,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33243362,
+            "allocated_bytes": 33251328,
+            "sha256": "0fa00a08580aa035067f24ed79ca2042e12321688605f8ef0b8db0c935b7af65"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1002-20261107-r1/qualification-lanes4/checkpoints/00000001/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324399732,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794038918428466414,
+              "st_ctime_ns": 1794038918428466414,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "24c71a31afc343901bcbb54360b316818d45a2709272f992e70e0c40d6620b61"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1002-20261107-r1/qualification-lanes4/checkpoints/00000002/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324714005,
+              "st_size": 33243362,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794038922485737726,
+              "st_ctime_ns": 1794038922485737726,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33243362,
+            "allocated_bytes": 33251328,
+            "sha256": "d5b972120f27c47adbf386c4968c4d8bc14e42f8634ca7cb39b512b26e2c502c"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1002-20261107-r1/qualification-lanes4/checkpoints/00000002/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324787223,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794038922314141731,
+              "st_ctime_ns": 1794038922314141731,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "a57dd8f42ffd82b24b5dfc33673c96a358c06c2e3510489a4c0d63797d4c21f2"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1002-20261107-r1/qualification-resumed-lanes4/checkpoints/00000002/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324714039,
+              "st_size": 33243362,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794039005453579496,
+              "st_ctime_ns": 1794039005453579496,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33243362,
+            "allocated_bytes": 33251328,
+            "sha256": "312c94a719b774c35d480d821ea50e3427f1223c028271b8bce261c4aecee33d"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1002-20261107-r1/qualification-resumed-lanes4/checkpoints/00000002/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324714018,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794039005266819617,
+              "st_ctime_ns": 1794039005266819617,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "a57dd8f42ffd82b24b5dfc33673c96a358c06c2e3510489a4c0d63797d4c21f2"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1002-20261107-r1/training/checkpoints/00005000/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324814665,
+              "st_size": 33244514,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794055389525896326,
+              "st_ctime_ns": 1794055389525896326,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33244514,
+            "allocated_bytes": 33251328,
+            "sha256": "21ae81c814d98850a82c6742858bbbc953e382e231ae51ce8c5a9be735844403"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1002-20261107-r1/training/checkpoints/00005000/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324714059,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794055389350238553,
+              "st_ctime_ns": 1794055389350238553,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "52fc35e18027d938895635c3b9828f89f711d4ae4d1e5af09954a5fc0811033a"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1002-20261107-r1/training/checkpoints/00010000/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324814673,
+              "st_size": 33244706,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794071263661396249,
+              "st_ctime_ns": 1794071263661396249,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33244706,
+            "allocated_bytes": 33251328,
+            "sha256": "4417dd86fe9ee4559aec87c113c394551a417433beb55c135961900d05b0bc85"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-carry-s1002-20261107-r1/training/checkpoints/00010000/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324787239,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794071263528062421,
+              "st_ctime_ns": 1794071263528062421,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "2f4f3b587aa092879bb7ee7c913a59090ff8a2282469f93c9917aadf9cff117c"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1002-20261107-r1/qualification-lanes4/checkpoints/00000001/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324545181,
+              "st_size": 33243362,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794038463728194211,
+              "st_ctime_ns": 1794038463728194211,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33243362,
+            "allocated_bytes": 33251328,
+            "sha256": "6e4a4383c49f28662b316f73bbf51bc878401f072fd4071e316ae4def86749c7"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1002-20261107-r1/qualification-lanes4/checkpoints/00000001/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324480162,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794038463600488701,
+              "st_ctime_ns": 1794038463600488701,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "4a078609d3d3ff7a8d395a13fc5309e2489761d43afe00de39a8ee6e9429626b"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1002-20261107-r1/qualification-lanes4/checkpoints/00000002/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4358586424,
+              "st_size": 33243426,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794038466794718576,
+              "st_ctime_ns": 1794038466794718576,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33243426,
+            "allocated_bytes": 33251328,
+            "sha256": "77d02e3e6e76f6d6126d91b66640d3f9baefadc75218dc4ec4e9569173c311e5"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1002-20261107-r1/qualification-lanes4/checkpoints/00000002/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324752654,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794038466631306917,
+              "st_ctime_ns": 1794038466631306917,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "a29467152119f70afd05dea3b2c28c6558e9feff0eb7746a3b5f1b0aa9c652f1"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1002-20261107-r1/qualification-resumed-lanes4/checkpoints/00000002/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324752683,
+              "st_size": 33243426,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794038545393088111,
+              "st_ctime_ns": 1794038545393088111,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33243426,
+            "allocated_bytes": 33251328,
+            "sha256": "ef507b3b44962dc6d07a0332ce39df7fd40a074943e992f1692b1ae8416c34c2"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1002-20261107-r1/qualification-resumed-lanes4/checkpoints/00000002/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324545185,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794038545261279445,
+              "st_ctime_ns": 1794038545261279445,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "a29467152119f70afd05dea3b2c28c6558e9feff0eb7746a3b5f1b0aa9c652f1"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1002-20261107-r1/training/checkpoints/00005000/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324480198,
+              "st_size": 33244578,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794052608032042838,
+              "st_ctime_ns": 1794052608032042838,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33244578,
+            "allocated_bytes": 33251328,
+            "sha256": "2a83b362c7db0bdf8e1f8e27872e87565f3a90b899b022022801b3f365cd11d6"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1002-20261107-r1/training/checkpoints/00005000/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4358586438,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794052607856778708,
+              "st_ctime_ns": 1794052607856778708,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "49def1aaedc8ec4c1c3c34a106315eb184e3a9b75cc8b100b78ce7374bd89879"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1002-20261107-r1/training/checkpoints/00010000/training_state.pt",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4358586452,
+              "st_size": 33244770,
+              "st_blocks": 64944,
+              "st_mtime_ns": 1794066281356634600,
+              "st_ctime_ns": 1794066281356634600,
+              "st_mode": 33188,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 33244770,
+            "allocated_bytes": 33251328,
+            "sha256": "4e1284d2711d3f559156fb1471317abd81f871ee8e1ccbc8cb0961a290d3cab9"
+          },
+          {
+            "source": "/mowenjie/fluffy-bassoon/outputs/mikasa-flow-reset-s1002-20261107-r1/training/checkpoints/00010000/pretrained_model/model.safetensors",
+            "source_stat": {
+              "st_dev": 1048787,
+              "st_ino": 4324545214,
+              "st_size": 15154988,
+              "st_blocks": 29600,
+              "st_mtime_ns": 1794066281232213513,
+              "st_ctime_ns": 1794066281232213513,
+              "st_mode": 33152,
+              "st_uid": 0,
+              "st_gid": 0,
+              "st_nlink": 1
+            },
+            "bytes": 15154988,
+            "allocated_bytes": 15155200,
+            "sha256": "2b50da24250bbd4ec9b310e188d02d53bc0167cef35f7bce6958c67976ebb109"
+          }
+        ],
+        "verified_unix": 1794732359.6090927,
+        "bos_receipt": "/mnt/bos/adgfyl/strong-plant-archives/fluffy-bassoon-table7-recurrent-retention-20261115-r2/recurrent-flow-checkpoints/001.receipt.json",
+        "reclaimed_bytes": 1403789312,
+        "released_unix": 1794732362.6058033
+      }
+    ]
+  }
+}
