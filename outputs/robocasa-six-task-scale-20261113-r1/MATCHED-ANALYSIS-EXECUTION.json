@@ -1,5 +1,5 @@
 {
-  "status": "Live CPU watcher; waiting for the exact matched readout successful terminal",
+  "status": "Live Linux CPU finalizer; auditing all25 archived banks and computing all paired statistics",
   "orchestrator_source": "afc1c2eccde6aa63798235679576f6769f717cd1",
   "script_path": "/tmp/matched-finalize-source-afc1c2ec/wait_matched_readout.py",
   "script_sha256": "78c0f936357e8fdb245f55d25a83100d156b51e3a483cca2a1e6eb8cbfca7c86",
@@ -28,7 +28,7 @@
   "recorded_shanghai": "2026-11-15T01:47:46.185090+08:00",
   "live_state": {
     "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matched-finalize01/STATE.json",
-    "sha256": "841ee161799f2bf21ae68ee129ff8483928fb588326edc6ee6bba87ca7159f9b",
+    "sha256": "428c1ddc7df90b1ffe05ec7ba1c35923dc72ba31e10c9da4f3399ee2341ea448",
     "data": {
       "started_unix": 1794678422.5932577,
       "hostname": "aibox-rffe453e3884-5f96c78b88-6ssrn",
@@ -49,11 +49,17 @@
       },
       "GPU_hours": 0,
       "completed": false,
-      "stage": "Waiting for the exact owned evaluation to complete",
-      "policy": "No accelerator mutation or automatic retry; preserve all planned cases and contrasts"
+      "stage": "Auditing all archived cases and computing paired statistics",
+      "policy": "No accelerator mutation or automatic retry; preserve all planned cases and contrasts",
+      "terminal": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/matchedreadout01/EXIT.json",
+        "sha256": "ca22284766e455a368d962ebf29da6ec28b5cc295faf22bdbcc39caf2289a5e5",
+        "bytes": 722
+      },
+      "checked_unix": 1794703499.9266882
     }
   },
-  "last_live_handle_poll_unix": 1794702793.0,
+  "last_live_handle_poll_unix": 1794703695.713983,
   "first_bank_audit": {
     "receipt": "evidence/MATCHED-FIRST-BANK-AUDIT.json",
     "verified_banks": 1,
