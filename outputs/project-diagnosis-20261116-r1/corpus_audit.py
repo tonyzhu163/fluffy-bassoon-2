@@ -36,6 +36,8 @@ def main():
     assert subprocess.check_output(['git','-C',str(CODE),'rev-parse','HEAD'],text=True).strip()==a.pin
     assert not subprocess.check_output(['git','-C',str(CODE),'status','--porcelain','--untracked-files=no'])
     import numpy as np
+    import torch
+    torch.set_num_threads(4)
     from fluffy_bassoon.meta_rl.vla_history import load_dataset
     a.output.mkdir(parents=True,exist_ok=False)
     began=time.time()
@@ -110,6 +112,17 @@ def main():
             queries_by_task=seen.sum((1,2)).tolist(),sampled_window_episodes=context_counts.tolist(),
             preceding_episodes_at_actual_query=prior_counts.tolist(),
             fraction_queries_without_previous_episode=float(prior_counts[0]/total))
+        bindings={}
+        for method in ('ad','dpt','dit','ic_iql'):
+            auditdir='final-fit-audit01' if method in ('ad','dpt') else 'final-fit-audit02'
+            audit=json.loads((a.source/auditdir/f'{size}_{method}.json').read_text())
+            ref=audit['checkpoint'];assert audit['passed'] and sha(ref['path'])==ref['sha256']
+            saved=torch.load(ref['path'],map_location='cpu',weights_only=False)
+            assert saved['progress']['actor_update']==10000
+            assert saved['rng']['sampler']==rng.bit_generator.state, (size,method,'sampler diverged')
+            bindings[method]=ref
+            del saved
+        result['sampler'][str(size)].update(final_rng_matches_all_four_saved_fits=True,checkpoints=bindings)
 
     # Fixed nearest-centroid probe, no model or hyperparameter selection.
     x=np.concatenate(probe_train).astype(np.float64);v=np.concatenate(probe_val).astype(np.float64)
