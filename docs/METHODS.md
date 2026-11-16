@@ -22,6 +22,13 @@ The [RLinf integration](../src/fluffy_bassoon/rlinf/) extends the upstream worke
 | DIT-style | Estimate values using physical-episode returns and TD regularization, then weight imitation of executed actions by estimated advantage. | [Value objectives](../src/fluffy_bassoon/meta_rl/history_value.py) |
 | In-context IQL | Fit causal Q and expectile V from offline transitions, then extract a policy by advantage-weighted imitation. This version has no world-model prompt. | [Value and actor fitting](../src/fluffy_bassoon/meta_rl/history_value_train.py) |
 
+These are adaptations to the frozen motor. In particular, the published DIT
+offline value estimators use return-labeled context; ours use causal shifted
+action/reward history and reserve returns for supervision. The referenced
+offline IC-IQL shares a value-trained backbone with a detached actor head;
+ours has separate actor/Q/V encoders. Method names do not establish exact
+reproduction. [Primary specifications and implementation differences](../outputs/project-diagnosis-20261116-r1/RESULT.md#method-and-evaluation-distinctions).
+
 Run `python -m fluffy_bassoon.meta_rl METHOD --help` for the trajectory-archive trainer, with `ad`, `dpt`, `dit` or `ic_iql`. Supply train/validation files and SHA-256s, output directory, exact source commit and allocated host. The trainer checks the objective in the archive and rejects overlapping stream IDs. The interface is part of the experiment: a direct action head, a velocity residual and a learned KV adapter answer different questions.
 
 The [flow bridge](../src/fluffy_bassoon/meta_rl/flow_bridge_train.py) fits action-derived flow targets through the frozen expert. The [decoded chunk trainer](../src/fluffy_bassoon/meta_rl/chunk_training.py) supports AD, DIT, IC-IQL and cloning controls on masked physical chunks; it has no DPT query-label path. Do not substitute a behavior action for a missing teacher query. Keep episode termination, padding and delivered-action masks separate. Resume requires the optimizer, sampler, RNG and learned state, not just exported actor weights.

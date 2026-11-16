@@ -1,6 +1,6 @@
 # Verified findings
 
-The strongest evidence so far is for native SFT competence and for some **source** policies improving under online RL. Paired frozen-student evaluations have not shown a consistent gain caused by retaining history. These are different measurements.
+The strongest evidence so far is for native SFT competence and for some **source** policies improving under online RL. Paired frozen-student evaluations have not shown a consistent gain caused by retaining history. These are different measurements. The [overall project diagnosis](../outputs/project-diagnosis-20261116-r1/RESULT.md) reconciles the native and synthetic evidence with the measured data, sampling and value-model limitations.
 
 ## Synthetic learning histories
 
@@ -258,6 +258,11 @@ IC-IQL also has no first-query interval above chance. Some Q estimates predict
 eventual success, but Q−V has weaker outcome ranking. This is observational
 evidence, not a counterfactual test of individual action quality.
 
+The all-query success label includes the suffix after the one success reward
+is spent. Those queries have zero remaining return; their outcome ranking is
+not an action-quality test. The later pre-success analysis below qualifies
+that interpretation. First-query statistics are unaffected.
+
 Archived native flow checks show DIT full/reset history differences of0.234%
 and0.214% of native output RMS for the three-/six-task fits. The corresponding
 relative imitation-loss improvements from history are+0.0056% and−0.0147%.
@@ -272,6 +277,44 @@ statistic checks passed. Batched inference matched production stepping within
 uncertainty resamples whole streams, with one fit/model and unadjusted intervals.
 No GPU-hours were added. [Diagnostic and limitations](../outputs/robocasa-dit-diagnostic-20261115-r1/RESULT.md) ·
 [Complete statistics](../outputs/robocasa-dit-diagnostic-20261115-r1/evidence/analysis01/RESULT.json).
+
+### Project data, training exposure and frozen-value diagnosis
+
+A further CPU audit found 30 distinct reset seeds in every source stream,
+while the native evaluation repeats one canonical scene across attempts.
+Training and testing therefore differ in the scene structure of their
+histories. Current initial-query pooled features identify source task with
+99.375% accuracy on 2,880 held-out queries using fixed training centroids.
+This measures visible task identity, not absence of useful scene-specific
+unknowns or policy competence.
+
+Reconstructing the exact actor sampler, with final RNG agreement against all
+eight fits, gives 80,000 sampled queries per fit. Unique-query coverage is
+47.54% for three tasks and 27.89% for six. Respectively 21.42% and 19.82% of
+samples follow first success; 34.10% have no preceding complete episode.
+This establishes unequal data exposure at the fixed update budget, not that
+more training or success masking would necessarily improve native outcomes.
+
+Removing post-success queries from the outcome-ranking proxy reveals modest
+positive six-task DIT AUC intervals on Toaster and Faucet, and a negative one
+on CounterToStove. DIT weights remain nearly uniform (ESS 99.43–99.83%).
+In a separate frozen-value intervention, substituting another stream's action
+increases observed-return prediction error in all eighteen task/model panels,
+with nine positive marginal intervals. Substituting prior history has mixed
+effects: one positive and two negative Q-error intervals among eighteen.
+Thus some action information is learned, without consistent evidence that the
+particular prior history improves prediction. Donor actions lack measured
+counterfactual returns, so this does not validate action-value ranking.
+
+All inputs were hash-verified; repeated Q/V predictions agree exactly with the
+earlier diagnostic. Independent raw-record recomputation checked 588 statistics
+and count identities. Both stages exited zero, used no GPU-hours, and their
+1.44 MB of raw evidence was cold-archived with verified readback. The measured
+limitations support stopping scale-up of the current recipe and first testing
+whether matched history supplies useful information for attainable actions.
+[Diagnosis, method differences and proposed next experiment](../outputs/project-diagnosis-20261116-r1/RESULT.md) ·
+[Corpus evidence](../outputs/project-diagnosis-20261116-r1/evidence/corpus01/RESULT.json) ·
+[Value interventions](../outputs/project-diagnosis-20261116-r1/evidence/value01/RESULT.json).
 
 ## Procedural LIBERO
 

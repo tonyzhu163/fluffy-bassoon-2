@@ -28,6 +28,14 @@ included zero. Collection curves above do not replace those controls.
 
 ## DIT barely changes the emphasis on successful episodes
 
+**Interpretation update, November 16:** the all-query success label below
+includes queries after the single success reward has already been collected;
+their remaining return is zero. Those rankings are not action-quality labels.
+The first-query results are unaffected. The subsequent
+[project audit](../project-diagnosis-20261116-r1/RESULT.md#success-suffixes-matter-for-interpreting-the-value-diagnostic)
+reports the pre-success analysis: some modest positive rankings appear, while
+weights remain nearly uniform. Original measurements are preserved here.
+
 The frozen DIT models use weights `exp(Q−V)` at temperature 1. Across the
 diagnostic task panels, their effective sample size is **99.50–99.86%** of the
 number of uniformly weighted queries. This describes the sampled panel, not

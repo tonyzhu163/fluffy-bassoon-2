@@ -1,0 +1,972 @@
+{
+  "pin": "696ee560656fb8830aecf2ab5cb2a9e6c07b9127",
+  "script_sha256": "a83482f63543b9640f417d0e6a7881834488906172e97734d55387f56276d197",
+  "started_unix": 1794791997.5877163,
+  "GPU_hours": 0,
+  "task_order": [
+    "OpenDrawer",
+    "CloseToasterOvenDoor",
+    "CoffeeSetupMug",
+    "PickPlaceCounterToStove",
+    "TurnOffStove",
+    "TurnOnSinkFaucet"
+  ],
+  "sources": {
+    "OpenDrawer": {
+      "raw_refs": [
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels04/OpenDrawer/shard-00/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "81731e9675b5a35a98663ed48708db492028e82ddedf75fce34f6789585bdfbe",
+          "bytes": 32465764
+        },
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels04/OpenDrawer/shard-01/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "da93fd0e798a75ffb955e3b75cfe41bbcb45e1628b070189ff46f9ccfec7f5a0",
+          "bytes": 32465764
+        },
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels04/OpenDrawer/shard-02/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "fb608f6d72e7d7a34fbd33dfd1796046cb370b146bf2a03e1012eb4a15681519",
+          "bytes": 32465764
+        },
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels04/OpenDrawer/shard-03/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "4f0dd10a90642fbc21c1410b45f3c3a8a3cf19bdada326521f2a5fdee04b1469",
+          "bytes": 32465764
+        }
+      ],
+      "episodes": 3840,
+      "unique_native_seeds": 3840,
+      "distinct_seeds_per_stream": [
+        30
+      ],
+      "adjacent_repeated_seeds": 0,
+      "successful_episodes": 2503,
+      "post_success_control_fraction": 0.3986501736111111,
+      "post_success_query_fraction": 0.3738932291666667,
+      "splits": {
+        "train": {
+          "episodes": 3360,
+          "queries": 40320,
+          "post_success_queries": 15021,
+          "post_success_query_fraction": 0.37254464285714284,
+          "initial_query_feature_unique": 3360,
+          "dataset_sha256": "ccb152f37216a55767e8e12eff77e39ed4ba4c7823ae37597dbaa9189abb3507"
+        },
+        "validation": {
+          "episodes": 480,
+          "queries": 5760,
+          "post_success_queries": 2208,
+          "post_success_query_fraction": 0.38333333333333336,
+          "initial_query_feature_unique": 480,
+          "dataset_sha256": "07038660a8fe01e4efd768f8fbe842fd9b3df3333b4c7f6583ae0f9aebf52091"
+        }
+      }
+    },
+    "CloseToasterOvenDoor": {
+      "raw_refs": [
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels03/CloseToasterOvenDoor/shard-00/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "2469d9acae79b3afb0b26c2bdf70fc1903de6940d7aa967fb5a2659344610564",
+          "bytes": 32465764
+        },
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels03/CloseToasterOvenDoor/shard-01/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "ba92fe1d501e92ffad2421b332a857312e350288f03caab37ac63f90de55dfc9",
+          "bytes": 32465764
+        },
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels03/CloseToasterOvenDoor/shard-02/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "b1b119fff0c84a32816df44d3261832eb56adbe49f11d897ef723b61ce4d2ceb",
+          "bytes": 32465764
+        },
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels03/CloseToasterOvenDoor/shard-03/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "32e589493ea8ca74e9cd51404a1e568a14618251cfac3909c527abdcdcdf4a06",
+          "bytes": 32465764
+        }
+      ],
+      "episodes": 3840,
+      "unique_native_seeds": 3840,
+      "distinct_seeds_per_stream": [
+        30
+      ],
+      "adjacent_repeated_seeds": 0,
+      "successful_episodes": 1247,
+      "post_success_control_fraction": 0.1472165798611111,
+      "post_success_query_fraction": 0.13426649305555555,
+      "splits": {
+        "train": {
+          "episodes": 3360,
+          "queries": 40320,
+          "post_success_queries": 5461,
+          "post_success_query_fraction": 0.13544146825396824,
+          "initial_query_feature_unique": 3360,
+          "dataset_sha256": "46c8391f34156c46ad5cda30f6147b8d611792f50178c8618792d512b2a07fef"
+        },
+        "validation": {
+          "episodes": 480,
+          "queries": 5760,
+          "post_success_queries": 726,
+          "post_success_query_fraction": 0.12604166666666666,
+          "initial_query_feature_unique": 480,
+          "dataset_sha256": "62644e229280f5f7ea856694daed69d21dd2b391c229309bdbe15d62fc0b6987"
+        }
+      }
+    },
+    "CoffeeSetupMug": {
+      "raw_refs": [
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels04/CoffeeSetupMug/shard-00/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "2bb5e507f596953e4241536e9699e73a456a2bbcf2b0171ee6f8562ee2878941",
+          "bytes": 32465764
+        },
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels04/CoffeeSetupMug/shard-01/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "e3d40d701625cae4eb42bd7892693cb92e8a2bec15ce8d11940f5a7989a67809",
+          "bytes": 32465764
+        },
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels04/CoffeeSetupMug/shard-02/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "b0e7680e0c26534815edf93e8d1ad7a53fd3672872b19db55784508f02df7431",
+          "bytes": 32465764
+        },
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels04/CoffeeSetupMug/shard-03/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "57305ec1af965d619eae3d1291d599638d38fc73f8cd3b2ed83b0b823b9a0c0e",
+          "bytes": 32465764
+        }
+      ],
+      "episodes": 3840,
+      "unique_native_seeds": 3840,
+      "distinct_seeds_per_stream": [
+        30
+      ],
+      "adjacent_repeated_seeds": 0,
+      "successful_episodes": 1231,
+      "post_success_control_fraction": 0.15590277777777778,
+      "post_success_query_fraction": 0.14455295138888888,
+      "splits": {
+        "train": {
+          "episodes": 3360,
+          "queries": 40320,
+          "post_success_queries": 5778,
+          "post_success_query_fraction": 0.14330357142857142,
+          "initial_query_feature_unique": 3360,
+          "dataset_sha256": "a0613c6da8bbc6517de41a7e4fce831be9b2ffbdc67a2bcfe1322219e9dff4ea"
+        },
+        "validation": {
+          "episodes": 480,
+          "queries": 5760,
+          "post_success_queries": 883,
+          "post_success_query_fraction": 0.15329861111111112,
+          "initial_query_feature_unique": 480,
+          "dataset_sha256": "15c993d92d3a9031ec8e87a42c1fca2e56807384d42ef92bdb8fd8839405d431"
+        }
+      }
+    },
+    "PickPlaceCounterToStove": {
+      "raw_refs": [
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels04/PickPlaceCounterToStove/shard-00/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "a93dae832e57fb841f20cb8f062e37ad7c589987c5c4c39271781ea9049f3cf1",
+          "bytes": 32465764
+        },
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels04/PickPlaceCounterToStove/shard-01/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "0f58b30491b6c74423926e3189728ccb7a35d0020b666948cef84744d9b01eba",
+          "bytes": 32465764
+        },
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels04/PickPlaceCounterToStove/shard-02/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "264746cd383f0455841d5dee482f86d56aae4050408872ef579b611b582a745a",
+          "bytes": 32465764
+        },
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels04/PickPlaceCounterToStove/shard-03/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "7cebcadad77599eb95f094836a759317a88f868cac58eb0a7b3d3fc616f0d379",
+          "bytes": 32465764
+        }
+      ],
+      "episodes": 3840,
+      "unique_native_seeds": 3840,
+      "distinct_seeds_per_stream": [
+        30
+      ],
+      "adjacent_repeated_seeds": 0,
+      "successful_episodes": 2289,
+      "post_success_control_fraction": 0.30158984375,
+      "post_success_query_fraction": 0.27903645833333335,
+      "splits": {
+        "train": {
+          "episodes": 3360,
+          "queries": 40320,
+          "post_success_queries": 11230,
+          "post_success_query_fraction": 0.2785218253968254,
+          "initial_query_feature_unique": 3360,
+          "dataset_sha256": "d03276d6f410e22df917d1e00b6227f573bc7672865a8c89c619f878dc2488a0"
+        },
+        "validation": {
+          "episodes": 480,
+          "queries": 5760,
+          "post_success_queries": 1628,
+          "post_success_query_fraction": 0.2826388888888889,
+          "initial_query_feature_unique": 480,
+          "dataset_sha256": "b63ca1dbca6cfcc4cc8361a13d7ce835cf75a408f01447e7983613d8093be904"
+        }
+      }
+    },
+    "TurnOffStove": {
+      "raw_refs": [
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels03/TurnOffStove/shard-00/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "88c33a1364fc7d864a1b4db9f34da670d0242db6d541896c2feaeb9497473c7a",
+          "bytes": 32465764
+        },
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels03/TurnOffStove/shard-01/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "48ab14bcbca7ab27b9185a587456a088308f6db77eebc3ab19c98e1b2cc4c536",
+          "bytes": 32465764
+        },
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels03/TurnOffStove/shard-02/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "c9d27ab36494d6b1f0567d6141ebe6c79177de2fc47fe24eab4a22ca5168f877",
+          "bytes": 32465764
+        },
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels03/TurnOffStove/shard-03/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "fe1382454ed71500cfd851ee2ea364a82bf90860f4b77988ba8a0802be828ecc",
+          "bytes": 32465764
+        }
+      ],
+      "episodes": 3840,
+      "unique_native_seeds": 3840,
+      "distinct_seeds_per_stream": [
+        30
+      ],
+      "adjacent_repeated_seeds": 0,
+      "successful_episodes": 617,
+      "post_success_control_fraction": 0.06739366319444444,
+      "post_success_query_fraction": 0.061675347222222225,
+      "splits": {
+        "train": {
+          "episodes": 3360,
+          "queries": 40320,
+          "post_success_queries": 2483,
+          "post_success_query_fraction": 0.06158234126984127,
+          "initial_query_feature_unique": 3360,
+          "dataset_sha256": "aa2ddcd62f5bf70001fd47abfda27f3c5ee1f5184a70e401f7367255c644ccc3"
+        },
+        "validation": {
+          "episodes": 480,
+          "queries": 5760,
+          "post_success_queries": 359,
+          "post_success_query_fraction": 0.06232638888888889,
+          "initial_query_feature_unique": 480,
+          "dataset_sha256": "5f225758edb35e21b7a69de22a85ac8c8f71f6daed27b6d8816df71275dc125e"
+        }
+      }
+    },
+    "TurnOnSinkFaucet": {
+      "raw_refs": [
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels04/TurnOnSinkFaucet/shard-00/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "6adf07fddb99a83a2a70c9348fffb99332b3ffd7da0636ad56f18b9f102dd287",
+          "bytes": 32465764
+        },
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels04/TurnOnSinkFaucet/shard-01/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "8ab65be001a7fc50dd59ab8893045625fe1027c16810300ce1836fce3cfcbaad",
+          "bytes": 32465764
+        },
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels04/TurnOnSinkFaucet/shard-02/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "35eed2a522c249594b9ba6ceebc699c73c611f5d2d3064c239a893af5c3745f2",
+          "bytes": 32465764
+        },
+        {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/labels04/TurnOnSinkFaucet/shard-03/RAW-PUBLIC-CORPUS.npz",
+          "sha256": "21bcfc6c8ffc79bc91d00bc161620f848f2dbf485b00ebf3906ac378783c98bf",
+          "bytes": 32465764
+        }
+      ],
+      "episodes": 3840,
+      "unique_native_seeds": 3840,
+      "distinct_seeds_per_stream": [
+        30
+      ],
+      "adjacent_repeated_seeds": 0,
+      "successful_episodes": 1592,
+      "post_success_control_fraction": 0.2188263888888889,
+      "post_success_query_fraction": 0.2017578125,
+      "splits": {
+        "train": {
+          "episodes": 3360,
+          "queries": 40320,
+          "post_success_queries": 8138,
+          "post_success_query_fraction": 0.20183531746031746,
+          "initial_query_feature_unique": 3360,
+          "dataset_sha256": "7c43684f5b213c0b7cff7b2632f74e1158b7347dc9e3bb03b60a1c3aec965860"
+        },
+        "validation": {
+          "episodes": 480,
+          "queries": 5760,
+          "post_success_queries": 1159,
+          "post_success_query_fraction": 0.20121527777777778,
+          "initial_query_feature_unique": 480,
+          "dataset_sha256": "5af12c622a1c009cc5fb8829195340d6e7304ee3b1d193f3e0332da3f46bb72a"
+        }
+      }
+    }
+  },
+  "sampler": {
+    "3": {
+      "actor_updates": 10000,
+      "logical_batch": 8,
+      "total_queries": 80000,
+      "available_training_queries": 120960,
+      "unique_queries": 57499,
+      "fraction_unique_covered": 0.47535548941798944,
+      "sampled_post_success_queries": 17138,
+      "sampled_post_success_fraction": 0.214225,
+      "queries_by_teacher_version": [
+        4284,
+        3962,
+        3724,
+        3632,
+        3479,
+        3240,
+        3056,
+        2955,
+        2886,
+        2783,
+        2753,
+        2666,
+        2568,
+        2716,
+        2623,
+        2655,
+        2638,
+        2541,
+        2665,
+        2654,
+        2629,
+        2598,
+        2540,
+        2341,
+        2133,
+        2091,
+        1820,
+        1551,
+        1106,
+        711
+      ],
+      "queries_by_task": [
+        26680,
+        26751,
+        26569
+      ],
+      "sampled_window_episodes": [
+        12313,
+        9629,
+        8202,
+        7382,
+        6778,
+        6173,
+        5714,
+        5443,
+        5022,
+        4612,
+        4506,
+        4226
+      ],
+      "preceding_episodes_at_actual_query": [
+        27282,
+        15042,
+        10223,
+        7560,
+        5680,
+        4347,
+        3313,
+        2493,
+        1785,
+        1206,
+        754,
+        315
+      ],
+      "fraction_queries_without_previous_episode": 0.341025,
+      "final_rng_matches_all_four_saved_fits": true,
+      "checkpoints": {
+        "ad": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/ad/actor-00000-10000.pt",
+          "sha256": "e855388370bbe99ff2ed82884f5f3ffd29a109085e83be847f5c5f8db82abb18"
+        },
+        "dpt": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits3r1/dpt/actor-00000-10000.pt",
+          "sha256": "12478af4b7598f5bf34b10f7c07d628145824985aa7dbd4a2c0bc496128fda8a"
+        },
+        "dit": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3dit01/dit/actor-01000-10000.pt",
+          "sha256": "d23d21918fb1e8a5d60af76be2a4d2955de208dd649ebda9ff0e45569869fb34"
+        },
+        "ic_iql": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3iciql01/ic_iql/actor-01000-10000.pt",
+          "sha256": "38e400d14be2ffb8f4c6afb17f8ed9362f4add075996d69408c24a767c77488a"
+        }
+      }
+    },
+    "6": {
+      "actor_updates": 10000,
+      "logical_batch": 8,
+      "total_queries": 80000,
+      "available_training_queries": 241920,
+      "unique_queries": 67468,
+      "fraction_unique_covered": 0.278885582010582,
+      "sampled_post_success_queries": 15859,
+      "sampled_post_success_fraction": 0.1982375,
+      "queries_by_teacher_version": [
+        4284,
+        3962,
+        3724,
+        3632,
+        3479,
+        3240,
+        3056,
+        2955,
+        2886,
+        2783,
+        2753,
+        2666,
+        2568,
+        2716,
+        2623,
+        2655,
+        2638,
+        2541,
+        2665,
+        2654,
+        2629,
+        2598,
+        2540,
+        2341,
+        2133,
+        2091,
+        1820,
+        1551,
+        1106,
+        711
+      ],
+      "queries_by_task": [
+        13434,
+        13246,
+        13352,
+        13399,
+        13278,
+        13291
+      ],
+      "sampled_window_episodes": [
+        12313,
+        9629,
+        8202,
+        7382,
+        6778,
+        6173,
+        5714,
+        5443,
+        5022,
+        4612,
+        4506,
+        4226
+      ],
+      "preceding_episodes_at_actual_query": [
+        27282,
+        15042,
+        10223,
+        7560,
+        5680,
+        4347,
+        3313,
+        2493,
+        1785,
+        1206,
+        754,
+        315
+      ],
+      "fraction_queries_without_previous_episode": 0.341025,
+      "final_rng_matches_all_four_saved_fits": true,
+      "checkpoints": {
+        "ad": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/ad/actor-00000-10000.pt",
+          "sha256": "1272c2b90c68a3505be7bc4b9a40447d1d2108fafd852d9f2d11031c72cb0774"
+        },
+        "dpt": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/fits6r1/dpt/actor-00000-10000.pt",
+          "sha256": "c31028a3c56923ee6a21af4823197b12f83305144a58e0c539c4b963fae9bfee"
+        },
+        "dit": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6dit01/dit/actor-01000-10000.pt",
+          "sha256": "837797fb3b343114ac81e8dc51ff978bcdd3e9c5ae92718c91011df6fe57c1dc"
+        },
+        "ic_iql": {
+          "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6iciql01/ic_iql/actor-01000-10000.pt",
+          "sha256": "6f589abf2a6acd69dfe7c45e6c5f2ab333591c995773936c9bb0b2db93f240e7"
+        }
+      }
+    }
+  },
+  "probe": {
+    "public_state": {
+      "accuracy": 0.3107638888888889,
+      "confusion_matrix": [
+        [
+          0,
+          137,
+          36,
+          113,
+          62,
+          132
+        ],
+        [
+          0,
+          294,
+          47,
+          87,
+          0,
+          52
+        ],
+        [
+          0,
+          100,
+          47,
+          119,
+          66,
+          148
+        ],
+        [
+          0,
+          84,
+          40,
+          206,
+          109,
+          41
+        ],
+        [
+          0,
+          94,
+          52,
+          193,
+          98,
+          43
+        ],
+        [
+          0,
+          97,
+          0,
+          52,
+          81,
+          250
+        ]
+      ],
+      "train_queries": 20160,
+      "validation_queries": 2880,
+      "prior_accuracy": 0.16666666666666666,
+      "interpretation": "Current-observation source-task identification only; not evidence of policy quality or absence of useful hidden variables"
+    },
+    "pooled_prefix": {
+      "accuracy": 0.99375,
+      "confusion_matrix": [
+        [
+          476,
+          0,
+          0,
+          0,
+          4,
+          0
+        ],
+        [
+          0,
+          480,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          477,
+          0,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          472,
+          8,
+          0
+        ],
+        [
+          3,
+          0,
+          0,
+          0,
+          477,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          480
+        ]
+      ],
+      "train_queries": 20160,
+      "validation_queries": 2880,
+      "prior_accuracy": 0.16666666666666666,
+      "interpretation": "Current-observation source-task identification only; not evidence of policy quality or absence of useful hidden variables"
+    },
+    "combined": {
+      "accuracy": 0.99375,
+      "confusion_matrix": [
+        [
+          476,
+          0,
+          0,
+          0,
+          4,
+          0
+        ],
+        [
+          0,
+          480,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          477,
+          0,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          472,
+          8,
+          0
+        ],
+        [
+          3,
+          0,
+          0,
+          0,
+          477,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          480
+        ]
+      ],
+      "train_queries": 20160,
+      "validation_queries": 2880,
+      "prior_accuracy": 0.16666666666666666,
+      "interpretation": "Current-observation source-task identification only; not evidence of policy quality or absence of useful hidden variables"
+    }
+  },
+  "presuccess": {
+    "3_dit": {
+      "CloseToasterOvenDoor": {
+        "original_queries": 768,
+        "before_or_at_first_success_queries": 643,
+        "post_success_queries": 125,
+        "post_success_zero_return_verified": true,
+        "presuccess_advantage_auc": 0.5560916767189384,
+        "presuccess_auc_bootstrap95": [
+          0.46187619086727993,
+          0.654595284385652
+        ],
+        "comparable_pairs": 1658,
+        "presuccess_success_share_shift_pp": 0.10664556347057541,
+        "presuccess_ESS_fraction": 0.9962697330875975,
+        "limitation": "Outcome-associated remaining success, still not causal action advantage"
+      },
+      "CoffeeSetupMug": {
+        "original_queries": 768,
+        "before_or_at_first_success_queries": 640,
+        "post_success_queries": 128,
+        "post_success_zero_return_verified": true,
+        "presuccess_advantage_auc": 0.5796992481203007,
+        "presuccess_auc_bootstrap95": [
+          0.48557465529753263,
+          0.6756094107519087
+        ],
+        "comparable_pairs": 1330,
+        "presuccess_success_share_shift_pp": 0.4365415912627624,
+        "presuccess_ESS_fraction": 0.9942515898212793,
+        "limitation": "Outcome-associated remaining success, still not causal action advantage"
+      },
+      "OpenDrawer": {
+        "original_queries": 768,
+        "before_or_at_first_success_queries": 452,
+        "post_success_queries": 316,
+        "post_success_zero_return_verified": true,
+        "presuccess_advantage_auc": 0.4630738522954092,
+        "presuccess_auc_bootstrap95": [
+          0.3771676895441958,
+          0.5427038741166302
+        ],
+        "comparable_pairs": 1002,
+        "presuccess_success_share_shift_pp": -0.3565108361001712,
+        "presuccess_ESS_fraction": 0.9945532402086892,
+        "limitation": "Outcome-associated remaining success, still not causal action advantage"
+      }
+    },
+    "3_ic_iql": {
+      "CloseToasterOvenDoor": {
+        "original_queries": 768,
+        "before_or_at_first_success_queries": 643,
+        "post_success_queries": 125,
+        "post_success_zero_return_verified": true,
+        "presuccess_advantage_auc": 0.5784077201447527,
+        "presuccess_auc_bootstrap95": [
+          0.48126125600103803,
+          0.6694767962234695
+        ],
+        "comparable_pairs": 1658,
+        "presuccess_success_share_shift_pp": 0.9367662808639876,
+        "presuccess_ESS_fraction": 0.9934210125373012,
+        "limitation": "Outcome-associated remaining success, still not causal action advantage"
+      },
+      "CoffeeSetupMug": {
+        "original_queries": 768,
+        "before_or_at_first_success_queries": 640,
+        "post_success_queries": 128,
+        "post_success_zero_return_verified": true,
+        "presuccess_advantage_auc": 0.531578947368421,
+        "presuccess_auc_bootstrap95": [
+          0.44964137809498633,
+          0.6115090340888681
+        ],
+        "comparable_pairs": 1330,
+        "presuccess_success_share_shift_pp": 0.48436257331238575,
+        "presuccess_ESS_fraction": 0.9953036365478377,
+        "limitation": "Outcome-associated remaining success, still not causal action advantage"
+      },
+      "OpenDrawer": {
+        "original_queries": 768,
+        "before_or_at_first_success_queries": 452,
+        "post_success_queries": 316,
+        "post_success_zero_return_verified": true,
+        "presuccess_advantage_auc": 0.4630738522954092,
+        "presuccess_auc_bootstrap95": [
+          0.3997756820613034,
+          0.5233103216464992
+        ],
+        "comparable_pairs": 1002,
+        "presuccess_success_share_shift_pp": 0.3511213960921078,
+        "presuccess_ESS_fraction": 0.9924133881548486,
+        "limitation": "Outcome-associated remaining success, still not causal action advantage"
+      }
+    },
+    "6_dit": {
+      "CloseToasterOvenDoor": {
+        "original_queries": 768,
+        "before_or_at_first_success_queries": 643,
+        "post_success_queries": 125,
+        "post_success_zero_return_verified": true,
+        "presuccess_advantage_auc": 0.5729794933655006,
+        "presuccess_auc_bootstrap95": [
+          0.5277279101571555,
+          0.6164160683921197
+        ],
+        "comparable_pairs": 1658,
+        "presuccess_success_share_shift_pp": 0.2863603748724797,
+        "presuccess_ESS_fraction": 0.9979330373385707,
+        "limitation": "Outcome-associated remaining success, still not causal action advantage"
+      },
+      "CoffeeSetupMug": {
+        "original_queries": 768,
+        "before_or_at_first_success_queries": 640,
+        "post_success_queries": 128,
+        "post_success_zero_return_verified": true,
+        "presuccess_advantage_auc": 0.5165413533834586,
+        "presuccess_auc_bootstrap95": [
+          0.42834638026936217,
+          0.6026324084173029
+        ],
+        "comparable_pairs": 1330,
+        "presuccess_success_share_shift_pp": 0.09911260047932025,
+        "presuccess_ESS_fraction": 0.9982176909995584,
+        "limitation": "Outcome-associated remaining success, still not causal action advantage"
+      },
+      "OpenDrawer": {
+        "original_queries": 768,
+        "before_or_at_first_success_queries": 452,
+        "post_success_queries": 316,
+        "post_success_zero_return_verified": true,
+        "presuccess_advantage_auc": 0.5039920159680639,
+        "presuccess_auc_bootstrap95": [
+          0.3741171911385454,
+          0.6107012326096296
+        ],
+        "comparable_pairs": 1002,
+        "presuccess_success_share_shift_pp": 0.3904332049791126,
+        "presuccess_ESS_fraction": 0.9951116006534239,
+        "limitation": "Outcome-associated remaining success, still not causal action advantage"
+      },
+      "PickPlaceCounterToStove": {
+        "original_queries": 768,
+        "before_or_at_first_success_queries": 532,
+        "post_success_queries": 236,
+        "post_success_zero_return_verified": true,
+        "presuccess_advantage_auc": 0.4241329479768786,
+        "presuccess_auc_bootstrap95": [
+          0.3503176728779223,
+          0.4977556234841785
+        ],
+        "comparable_pairs": 1384,
+        "presuccess_success_share_shift_pp": -0.35483239248091936,
+        "presuccess_ESS_fraction": 0.9948824075408528,
+        "limitation": "Outcome-associated remaining success, still not causal action advantage"
+      },
+      "TurnOffStove": {
+        "original_queries": 768,
+        "before_or_at_first_success_queries": 732,
+        "post_success_queries": 36,
+        "post_success_zero_return_verified": true,
+        "presuccess_advantage_auc": 0.49501246882793015,
+        "presuccess_auc_bootstrap95": [
+          0.26412060950413224,
+          0.6303284027927732
+        ],
+        "comparable_pairs": 802,
+        "presuccess_success_share_shift_pp": -0.02374190655865388,
+        "presuccess_ESS_fraction": 0.9983083090926442,
+        "limitation": "Outcome-associated remaining success, still not causal action advantage"
+      },
+      "TurnOnSinkFaucet": {
+        "original_queries": 768,
+        "before_or_at_first_success_queries": 600,
+        "post_success_queries": 168,
+        "post_success_zero_return_verified": true,
+        "presuccess_advantage_auc": 0.5687540348612008,
+        "presuccess_auc_bootstrap95": [
+          0.5155579300166041,
+          0.6248916925676243
+        ],
+        "comparable_pairs": 1549,
+        "presuccess_success_share_shift_pp": 0.16738326136820358,
+        "presuccess_ESS_fraction": 0.998320932359912,
+        "limitation": "Outcome-associated remaining success, still not causal action advantage"
+      }
+    },
+    "6_ic_iql": {
+      "CloseToasterOvenDoor": {
+        "original_queries": 768,
+        "before_or_at_first_success_queries": 643,
+        "post_success_queries": 125,
+        "post_success_zero_return_verified": true,
+        "presuccess_advantage_auc": 0.53437876960193,
+        "presuccess_auc_bootstrap95": [
+          0.44999523506988565,
+          0.6225581607777988
+        ],
+        "comparable_pairs": 1658,
+        "presuccess_success_share_shift_pp": 0.2253627638029554,
+        "presuccess_ESS_fraction": 0.9949872519227431,
+        "limitation": "Outcome-associated remaining success, still not causal action advantage"
+      },
+      "CoffeeSetupMug": {
+        "original_queries": 768,
+        "before_or_at_first_success_queries": 640,
+        "post_success_queries": 128,
+        "post_success_zero_return_verified": true,
+        "presuccess_advantage_auc": 0.39172932330827065,
+        "presuccess_auc_bootstrap95": [
+          0.3415449849558672,
+          0.4395965959909507
+        ],
+        "comparable_pairs": 1330,
+        "presuccess_success_share_shift_pp": -0.38884357786127255,
+        "presuccess_ESS_fraction": 0.9965537097181711,
+        "limitation": "Outcome-associated remaining success, still not causal action advantage"
+      },
+      "OpenDrawer": {
+        "original_queries": 768,
+        "before_or_at_first_success_queries": 452,
+        "post_success_queries": 316,
+        "post_success_zero_return_verified": true,
+        "presuccess_advantage_auc": 0.406187624750499,
+        "presuccess_auc_bootstrap95": [
+          0.3451810815022596,
+          0.46606080781180653
+        ],
+        "comparable_pairs": 1002,
+        "presuccess_success_share_shift_pp": -0.7729681368616736,
+        "presuccess_ESS_fraction": 0.9938437669537382,
+        "limitation": "Outcome-associated remaining success, still not causal action advantage"
+      },
+      "PickPlaceCounterToStove": {
+        "original_queries": 768,
+        "before_or_at_first_success_queries": 532,
+        "post_success_queries": 236,
+        "post_success_zero_return_verified": true,
+        "presuccess_advantage_auc": 0.49060693641618497,
+        "presuccess_auc_bootstrap95": [
+          0.41927168212720417,
+          0.5614755951145762
+        ],
+        "comparable_pairs": 1384,
+        "presuccess_success_share_shift_pp": 0.002610465811314633,
+        "presuccess_ESS_fraction": 0.9902474298063305,
+        "limitation": "Outcome-associated remaining success, still not causal action advantage"
+      },
+      "TurnOffStove": {
+        "original_queries": 768,
+        "before_or_at_first_success_queries": 732,
+        "post_success_queries": 36,
+        "post_success_zero_return_verified": true,
+        "presuccess_advantage_auc": 0.5810473815461347,
+        "presuccess_auc_bootstrap95": [
+          0.4436646976317635,
+          0.8104901960784312
+        ],
+        "comparable_pairs": 802,
+        "presuccess_success_share_shift_pp": 0.032788095293803665,
+        "presuccess_ESS_fraction": 0.999240171188597,
+        "limitation": "Outcome-associated remaining success, still not causal action advantage"
+      },
+      "TurnOnSinkFaucet": {
+        "original_queries": 768,
+        "before_or_at_first_success_queries": 600,
+        "post_success_queries": 168,
+        "post_success_zero_return_verified": true,
+        "presuccess_advantage_auc": 0.5642349903163331,
+        "presuccess_auc_bootstrap95": [
+          0.5081713485278186,
+          0.6196683916712171
+        ],
+        "comparable_pairs": 1549,
+        "presuccess_success_share_shift_pp": 0.050151100247225466,
+        "presuccess_ESS_fraction": 0.9945899459793613,
+        "limitation": "Outcome-associated remaining success, still not causal action advantage"
+      }
+    }
+  },
+  "completed": true,
+  "elapsed_seconds": 93.33432054519653
+}

@@ -1,0 +1,2937 @@
+{
+  "pin": "c60eda37ee937461c79b265ac85ec45320a3a2a1",
+  "script_sha256": "6dc012767cec6fc1c3403c4a4260d6496292929be5ac0dba867859bdef356e0d",
+  "GPU_hours": 0,
+  "completed": true,
+  "interpretation": "Input relevance for observed returns; donor actions have no measured counterfactual returns",
+  "donor": "Next validation stream, cyclic +1, same task/update/query; no donor outcome selection",
+  "history": "Replace prior complete episodes plus their final shifted feedback; retain current-episode observations/actions/rewards",
+  "reward_blind": "Zero only prior-episode reward tokens, retaining other observations and actions",
+  "models": {
+    "3_dit": {
+      "checkpoint": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3dit01/dit/actor-01000-10000.pt",
+        "sha256": "d23d21918fb1e8a5d60af76be2a4d2955de208dd649ebda9ff0e45569869fb34"
+      },
+      "raw_file": "3_dit-queries.jsonl.gz",
+      "raw_sha256": "05bd69122691617601b09ca0f70fcd3fb452b8c5226f577809737c7388587cff",
+      "reproduced_previous_max_abs_error": 0.0,
+      "summary": {
+        "OpenDrawer": {
+          "before_success": {
+            "queries": 452,
+            "mse": {
+              "q": 0.13781101323642925,
+              "v": 0.13608522792870115,
+              "q_donor_action": 0.14746102289097138,
+              "q_donor_history": 0.13688722473739243,
+              "v_donor_history": 0.13534151057788502,
+              "q_blind_prior_reward": 0.13782018752428996,
+              "v_blind_prior_reward": 0.13610462916541896,
+              "reset_q": 0.14073650109374786,
+              "reset_v": 0.1399678618133658
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 452,
+                "altered_minus_real_mse": 0.009650009654542158,
+                "bootstrap95": [
+                  0.002856819144917489,
+                  0.017292748650144553
+                ],
+                "prediction_rms_change": 0.09994055059663728
+              },
+              "q_donor_history": {
+                "queries": 341,
+                "altered_minus_real_mse": -0.0012244938462306182,
+                "bootstrap95": [
+                  -0.004000694061096114,
+                  0.0017979121736697227
+                ],
+                "prediction_rms_change": 0.02058201866072348
+              },
+              "v_donor_history": {
+                "queries": 341,
+                "altered_minus_real_mse": -0.000985807162958624,
+                "bootstrap95": [
+                  -0.0029962931072207524,
+                  0.000989910505039489
+                ],
+                "prediction_rms_change": 0.023270773227484224
+              },
+              "q_blind_prior_reward": {
+                "queries": 341,
+                "altered_minus_real_mse": 1.2160639627680388e-05,
+                "bootstrap95": [
+                  -3.0092006262397592e-05,
+                  5.361711181625361e-05
+                ],
+                "prediction_rms_change": 0.00025870561991040537
+              },
+              "v_blind_prior_reward": {
+                "queries": 341,
+                "altered_minus_real_mse": 2.5716595297503684e-05,
+                "bootstrap95": [
+                  -1.823259474406366e-05,
+                  7.231225068456171e-05
+                ],
+                "prediction_rms_change": 0.0002769885464022703
+              },
+              "reset_q": {
+                "queries": 341,
+                "altered_minus_real_mse": 0.003877772761020572,
+                "bootstrap95": [
+                  -0.002978271551031744,
+                  0.010743300716131792
+                ],
+                "prediction_rms_change": 0.038474244570623796
+              },
+              "reset_v": {
+                "queries": 341,
+                "altered_minus_real_mse": 0.005146482451227058,
+                "bootstrap95": [
+                  -0.003361341411323815,
+                  0.013680401336734139
+                ],
+                "prediction_rms_change": 0.04013988962777763
+              }
+            }
+          },
+          "first_query": {
+            "queries": 64,
+            "mse": {
+              "q": 0.202178133328689,
+              "v": 0.18944300574191208,
+              "q_donor_action": 0.20647534969000403,
+              "q_donor_history": 0.20029053254492218,
+              "v_donor_history": 0.19003384751311056,
+              "q_blind_prior_reward": 0.20221776077292417,
+              "v_blind_prior_reward": 0.18947077200314316,
+              "reset_q": 0.20532665997282934,
+              "reset_v": 0.19396624865212891
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 64,
+                "altered_minus_real_mse": 0.004297216361315026,
+                "bootstrap95": [
+                  -0.008250743714020108,
+                  0.01650266352303427
+                ],
+                "prediction_rms_change": 0.07668880568113876
+              },
+              "q_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0025168010450224063,
+                "bootstrap95": [
+                  -0.00938408777430336,
+                  0.005775744327699529
+                ],
+                "prediction_rms_change": 0.028638878182378084
+              },
+              "v_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.0007877890282646146,
+                "bootstrap95": [
+                  -0.006175944629401568,
+                  0.008039706485435892
+                ],
+                "prediction_rms_change": 0.04385285525015327
+              },
+              "q_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 5.283659231356911e-05,
+                "bootstrap95": [
+                  2.228842816389687e-05,
+                  8.587401959017314e-05
+                ],
+                "prediction_rms_change": 0.00018808499819234612
+              },
+              "v_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 3.702168164143593e-05,
+                "bootstrap95": [
+                  7.443621153148857e-06,
+                  6.650842654615612e-05
+                ],
+                "prediction_rms_change": 0.00021518118841915089
+              },
+              "reset_q": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.004198035525520449,
+                "bootstrap95": [
+                  -0.009470717876863296,
+                  0.017691739878510308
+                ],
+                "prediction_rms_change": 0.04409061826985933
+              },
+              "reset_v": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.006030990546955735,
+                "bootstrap95": [
+                  -0.006987905948383483,
+                  0.018502514665496392
+                ],
+                "prediction_rms_change": 0.04980619124428763
+              }
+            }
+          }
+        },
+        "CloseToasterOvenDoor": {
+          "before_success": {
+            "queries": 643,
+            "mse": {
+              "q": 0.14245692536639204,
+              "v": 0.14322529362130912,
+              "q_donor_action": 0.14659496880244857,
+              "q_donor_history": 0.14450246681827889,
+              "v_donor_history": 0.14164588602776723,
+              "q_blind_prior_reward": 0.14244042566632464,
+              "v_blind_prior_reward": 0.1432487363784945,
+              "reset_q": 0.1464655711464496,
+              "reset_v": 0.14522869362236976
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 643,
+                "altered_minus_real_mse": 0.004138043436056514,
+                "bootstrap95": [
+                  0.00019034686759287857,
+                  0.008560769251656242
+                ],
+                "prediction_rms_change": 0.07191462241266991
+              },
+              "q_donor_history": {
+                "queries": 496,
+                "altered_minus_real_mse": 0.0026517805515388028,
+                "bootstrap95": [
+                  -0.0026233511703545667,
+                  0.008155795100531273
+                ],
+                "prediction_rms_change": 0.03600012357494985
+              },
+              "v_donor_history": {
+                "queries": 496,
+                "altered_minus_real_mse": -0.00204749815049882,
+                "bootstrap95": [
+                  -0.010232231890399955,
+                  0.005508526630637201
+                ],
+                "prediction_rms_change": 0.04105930718556274
+              },
+              "q_blind_prior_reward": {
+                "queries": 496,
+                "altered_minus_real_mse": -2.138973214381297e-05,
+                "bootstrap95": [
+                  -0.00011321995698445082,
+                  7.118628086364737e-05
+                ],
+                "prediction_rms_change": 0.0008811215058461986
+              },
+              "v_blind_prior_reward": {
+                "queries": 496,
+                "altered_minus_real_mse": 3.039050981897532e-05,
+                "bootstrap95": [
+                  -0.00011118371625059721,
+                  0.0002469127411503223
+                ],
+                "prediction_rms_change": 0.0009817009364603644
+              },
+              "reset_q": {
+                "queries": 496,
+                "altered_minus_real_mse": 0.005196692009227811,
+                "bootstrap95": [
+                  -0.0067772178171199,
+                  0.017848413153359704
+                ],
+                "prediction_rms_change": 0.05991707058629993
+              },
+              "reset_v": {
+                "queries": 496,
+                "altered_minus_real_mse": 0.002597149598149237,
+                "bootstrap95": [
+                  -0.01201229852362221,
+                  0.016633713098962565
+                ],
+                "prediction_rms_change": 0.06798491243552976
+              }
+            }
+          },
+          "first_query": {
+            "queries": 64,
+            "mse": {
+              "q": 0.2068417508856891,
+              "v": 0.20211943497870533,
+              "q_donor_action": 0.20342532764128626,
+              "q_donor_history": 0.21104047891462552,
+              "v_donor_history": 0.20123185372641716,
+              "q_blind_prior_reward": 0.20698155935146872,
+              "v_blind_prior_reward": 0.20210797075103182,
+              "reset_q": 0.2143195746418593,
+              "reset_v": 0.20760136936842694
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 64,
+                "altered_minus_real_mse": -0.003416423244402839,
+                "bootstrap95": [
+                  -0.017361893976944844,
+                  0.012047538843998215
+                ],
+                "prediction_rms_change": 0.07707409781559922
+              },
+              "q_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.005598304038581878,
+                "bootstrap95": [
+                  -0.006627844499758781,
+                  0.017532168281310705
+                ],
+                "prediction_rms_change": 0.053847264359311364
+              },
+              "v_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.001183441669717562,
+                "bootstrap95": [
+                  -0.013495897411180756,
+                  0.011198842342337761
+                ],
+                "prediction_rms_change": 0.04809945738460273
+              },
+              "q_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.00018641128770615725,
+                "bootstrap95": [
+                  -0.0002681239225795677,
+                  0.0007893906802234659
+                ],
+                "prediction_rms_change": 0.0021263274514216482
+              },
+              "v_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": -1.5285636898033455e-05,
+                "bootstrap95": [
+                  -0.00012229807230753018,
+                  0.00011765182776282934
+                ],
+                "prediction_rms_change": 0.000522121736645296
+              },
+              "reset_q": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.009970431674893592,
+                "bootstrap95": [
+                  -0.015965650597256475,
+                  0.03437660878769932
+                ],
+                "prediction_rms_change": 0.0783439965377317
+              },
+              "reset_v": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.007309245852962142,
+                "bootstrap95": [
+                  -0.01504476233496704,
+                  0.029311752310906648
+                ],
+                "prediction_rms_change": 0.08149989624502184
+              }
+            }
+          }
+        },
+        "CoffeeSetupMug": {
+          "before_success": {
+            "queries": 640,
+            "mse": {
+              "q": 0.12308495289275803,
+              "v": 0.12608657217949942,
+              "q_donor_action": 0.1250650616363555,
+              "q_donor_history": 0.12359869447559875,
+              "v_donor_history": 0.12715847455882284,
+              "q_blind_prior_reward": 0.12300295255699092,
+              "v_blind_prior_reward": 0.12581451398941962,
+              "reset_q": 0.11897357599626743,
+              "reset_v": 0.12032394422676969
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 640,
+                "altered_minus_real_mse": 0.0019801087435974566,
+                "bootstrap95": [
+                  -0.004453525851952762,
+                  0.009030491174369952
+                ],
+                "prediction_rms_change": 0.0798872745543908
+              },
+              "q_donor_history": {
+                "queries": 467,
+                "altered_minus_real_mse": 0.0007040569871907069,
+                "bootstrap95": [
+                  -0.00847085524456703,
+                  0.010275790529117304
+                ],
+                "prediction_rms_change": 0.053967638186719645
+              },
+              "v_donor_history": {
+                "queries": 467,
+                "altered_minus_real_mse": 0.001468988271449648,
+                "bootstrap95": [
+                  -0.006111599386150533,
+                  0.008946766943171602
+                ],
+                "prediction_rms_change": 0.04089684809439114
+              },
+              "q_blind_prior_reward": {
+                "queries": 467,
+                "altered_minus_real_mse": -0.00011237733381359706,
+                "bootstrap95": [
+                  -0.000468570519275869,
+                  0.00012607070628717083
+                ],
+                "prediction_rms_change": 0.0014732709812002886
+              },
+              "v_blind_prior_reward": {
+                "queries": 467,
+                "altered_minus_real_mse": -0.00037284205920997966,
+                "bootstrap95": [
+                  -0.0008968043492684992,
+                  -2.8759043954847606e-06
+                ],
+                "prediction_rms_change": 0.001667906878878907
+              },
+              "reset_q": {
+                "queries": 467,
+                "altered_minus_real_mse": -0.005634435147224804,
+                "bootstrap95": [
+                  -0.014396433927396078,
+                  0.0015379113204947053
+                ],
+                "prediction_rms_change": 0.059095594751535085
+              },
+              "reset_v": {
+                "queries": 467,
+                "altered_minus_real_mse": -0.007897391626867275,
+                "bootstrap95": [
+                  -0.01683064394958824,
+                  0.00024612702813408307
+                ],
+                "prediction_rms_change": 0.0534717431169038
+              }
+            }
+          },
+          "first_query": {
+            "queries": 64,
+            "mse": {
+              "q": 0.22420174547155441,
+              "v": 0.2204987051001441,
+              "q_donor_action": 0.22550301962872973,
+              "q_donor_history": 0.22188792680355632,
+              "v_donor_history": 0.22292028970817915,
+              "q_blind_prior_reward": 0.22357411319097661,
+              "v_blind_prior_reward": 0.22003676025362118,
+              "reset_q": 0.21619766083990227,
+              "reset_v": 0.2155412710557187
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 64,
+                "altered_minus_real_mse": 0.0013012741571753247,
+                "bootstrap95": [
+                  -0.023164731237728553,
+                  0.024618863203594358
+                ],
+                "prediction_rms_change": 0.11055095966643994
+              },
+              "q_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.003085091557330806,
+                "bootstrap95": [
+                  -0.01577307972196871,
+                  0.009713895370160618
+                ],
+                "prediction_rms_change": 0.05784215252350237
+              },
+              "v_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.0032287794773800636,
+                "bootstrap95": [
+                  -0.009354104286068416,
+                  0.016204556269669865
+                ],
+                "prediction_rms_change": 0.05758006694918053
+              },
+              "q_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0008368430407703839,
+                "bootstrap95": [
+                  -0.002036051248144701,
+                  -3.676674464137713e-05
+                ],
+                "prediction_rms_change": 0.002688666303905587
+              },
+              "v_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0006159264620305428,
+                "bootstrap95": [
+                  -0.0015379916568089964,
+                  -1.6000081846790165e-05
+                ],
+                "prediction_rms_change": 0.002054666258161183
+              },
+              "reset_q": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.010672112842202826,
+                "bootstrap95": [
+                  -0.024451763020050903,
+                  0.0032368930918031456
+                ],
+                "prediction_rms_change": 0.05675294978328879
+              },
+              "reset_v": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.006609912059233912,
+                "bootstrap95": [
+                  -0.018580726536448395,
+                  0.004196494438789819
+                ],
+                "prediction_rms_change": 0.04904415079926807
+              }
+            }
+          }
+        }
+      }
+    },
+    "3_ic_iql": {
+      "checkpoint": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume3iciql01/ic_iql/actor-01000-10000.pt",
+        "sha256": "38e400d14be2ffb8f4c6afb17f8ed9362f4add075996d69408c24a767c77488a"
+      },
+      "raw_file": "3_ic_iql-queries.jsonl.gz",
+      "raw_sha256": "638aef3898256a0bf44324a7fa5b3f9ff1c95cfbb586455f7edec126c42b0df6",
+      "reproduced_previous_max_abs_error": 0.0,
+      "summary": {
+        "OpenDrawer": {
+          "before_success": {
+            "queries": 452,
+            "mse": {
+              "q": 0.15950091377382897,
+              "v": 0.16833314147260536,
+              "q_donor_action": 0.1771513478533326,
+              "q_donor_history": 0.15998188901712723,
+              "v_donor_history": 0.16881198102172168,
+              "q_blind_prior_reward": 0.15950685738420636,
+              "v_blind_prior_reward": 0.16833821266397073,
+              "reset_q": 0.16112320571202457,
+              "reset_v": 0.16856062240402162
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 452,
+                "altered_minus_real_mse": 0.01765043407950363,
+                "bootstrap95": [
+                  0.011410897013542459,
+                  0.024604902878544624
+                ],
+                "prediction_rms_change": 0.0986218441803582
+              },
+              "q_donor_history": {
+                "queries": 341,
+                "altered_minus_real_mse": 0.000637539032172486,
+                "bootstrap95": [
+                  -0.0007383415384244767,
+                  0.001982645763638048
+                ],
+                "prediction_rms_change": 0.008610716125994866
+              },
+              "v_donor_history": {
+                "queries": 341,
+                "altered_minus_real_mse": 0.0006347081413506774,
+                "bootstrap95": [
+                  -0.0007126446504172866,
+                  0.0019795179887750654
+                ],
+                "prediction_rms_change": 0.008979315316544764
+              },
+              "q_blind_prior_reward": {
+                "queries": 341,
+                "altered_minus_real_mse": 7.87833399000462e-06,
+                "bootstrap95": [
+                  2.776414384011664e-06,
+                  1.374877029633321e-05
+                ],
+                "prediction_rms_change": 5.575127666247278e-05
+              },
+              "v_blind_prior_reward": {
+                "queries": 341,
+                "altered_minus_real_mse": 6.721931076677927e-06,
+                "bootstrap95": [
+                  2.677673254547729e-06,
+                  1.1516154158813852e-05
+                ],
+                "prediction_rms_change": 5.349435699953216e-05
+              },
+              "reset_q": {
+                "queries": 341,
+                "altered_minus_real_mse": 0.0021503693726229295,
+                "bootstrap95": [
+                  -0.0005301953906374164,
+                  0.005109765737138624
+                ],
+                "prediction_rms_change": 0.02288877622069636
+              },
+              "reset_v": {
+                "queries": 341,
+                "altered_minus_real_mse": 0.0003015289765400208,
+                "bootstrap95": [
+                  -0.002507297191020109,
+                  0.0034315504810098108
+                ],
+                "prediction_rms_change": 0.025944171327774823
+              }
+            }
+          },
+          "first_query": {
+            "queries": 64,
+            "mse": {
+              "q": 0.23652998449703577,
+              "v": 0.3068203758758028,
+              "q_donor_action": 0.24823646585686687,
+              "q_donor_history": 0.2387874262258058,
+              "v_donor_history": 0.3070884251455289,
+              "q_blind_prior_reward": 0.23653160012668872,
+              "v_blind_prior_reward": 0.3068261569113847,
+              "reset_q": 0.23230323966585897,
+              "reset_v": 0.2938081965232539
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 64,
+                "altered_minus_real_mse": 0.0117064813598311,
+                "bootstrap95": [
+                  -0.0014488940564803805,
+                  0.024679338185737514
+                ],
+                "prediction_rms_change": 0.05115189235960225
+              },
+              "q_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.0030099223050266874,
+                "bootstrap95": [
+                  -0.0007672926755501667,
+                  0.006927659532748947
+                ],
+                "prediction_rms_change": 0.012939044835041004
+              },
+              "v_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.0003573990263014415,
+                "bootstrap95": [
+                  -0.0017887385260828806,
+                  0.002727294207186706
+                ],
+                "prediction_rms_change": 0.009556985808131382
+              },
+              "q_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 2.1541728706016747e-06,
+                "bootstrap95": [
+                  -7.115854175628507e-06,
+                  1.1888842218040394e-05
+                ],
+                "prediction_rms_change": 3.773800981258113e-05
+              },
+              "v_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 7.708047442582059e-06,
+                "bootstrap95": [
+                  2.6258884477770026e-06,
+                  1.3086179988792044e-05
+                ],
+                "prediction_rms_change": 2.1691083835250516e-05
+              },
+              "reset_q": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.005635659774902398,
+                "bootstrap95": [
+                  -0.011853774999366998,
+                  0.0005142901503870798
+                ],
+                "prediction_rms_change": 0.026801558849427164
+              },
+              "reset_v": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.017349572470065227,
+                "bootstrap95": [
+                  -0.024343586857978827,
+                  -0.010891127659264054
+                ],
+                "prediction_rms_change": 0.030492451782661783
+              }
+            }
+          }
+        },
+        "CloseToasterOvenDoor": {
+          "before_success": {
+            "queries": 643,
+            "mse": {
+              "q": 0.15371769167211152,
+              "v": 0.15653819363057375,
+              "q_donor_action": 0.15679348454315517,
+              "q_donor_history": 0.15336093370111614,
+              "v_donor_history": 0.15537233068845524,
+              "q_blind_prior_reward": 0.15372297696459744,
+              "v_blind_prior_reward": 0.1565388572230766,
+              "reset_q": 0.15343142968541126,
+              "reset_v": 0.15508452628916183
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 643,
+                "altered_minus_real_mse": 0.0030757928710436386,
+                "bootstrap95": [
+                  -0.003329940991201497,
+                  0.0092101388281804
+                ],
+                "prediction_rms_change": 0.09685383529731421
+              },
+              "q_donor_history": {
+                "queries": 496,
+                "altered_minus_real_mse": -0.0004624906761089474,
+                "bootstrap95": [
+                  -0.0033793163978442756,
+                  0.0021457667685951276
+                ],
+                "prediction_rms_change": 0.01994496151157479
+              },
+              "v_donor_history": {
+                "queries": 496,
+                "altered_minus_real_mse": -0.0015113908705286694,
+                "bootstrap95": [
+                  -0.004131598676613986,
+                  0.000836311999343002
+                ],
+                "prediction_rms_change": 0.016536536813424305
+              },
+              "q_blind_prior_reward": {
+                "queries": 496,
+                "altered_minus_real_mse": 6.851699734742406e-06,
+                "bootstrap95": [
+                  -9.246466455709901e-05,
+                  0.00013306436950350376
+                ],
+                "prediction_rms_change": 0.0006831980637901534
+              },
+              "v_blind_prior_reward": {
+                "queries": 496,
+                "altered_minus_real_mse": 8.602620550639575e-07,
+                "bootstrap95": [
+                  -9.402620982495538e-06,
+                  1.3893939749411949e-05
+                ],
+                "prediction_rms_change": 6.434944194725785e-05
+              },
+              "reset_q": {
+                "queries": 496,
+                "altered_minus_real_mse": -0.0003711017287263779,
+                "bootstrap95": [
+                  -0.003682358880975571,
+                  0.0030645496457373683
+                ],
+                "prediction_rms_change": 0.02329083280339433
+              },
+              "reset_v": {
+                "queries": 496,
+                "altered_minus_real_mse": -0.0018844921381610653,
+                "bootstrap95": [
+                  -0.005269471371633057,
+                  0.0008352399897517022
+                ],
+                "prediction_rms_change": 0.019689800319826804
+              }
+            }
+          },
+          "first_query": {
+            "queries": 64,
+            "mse": {
+              "q": 0.21056459527574245,
+              "v": 0.2162675999650023,
+              "q_donor_action": 0.21445149378500636,
+              "q_donor_history": 0.2103064218337015,
+              "v_donor_history": 0.2149916491974189,
+              "q_blind_prior_reward": 0.21061201973231689,
+              "v_blind_prior_reward": 0.21627517561601628,
+              "reset_q": 0.21112754963697664,
+              "reset_v": 0.2137247466488349
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 64,
+                "altered_minus_real_mse": 0.0038868985092639086,
+                "bootstrap95": [
+                  -0.002963094291242488,
+                  0.010639283361734706
+                ],
+                "prediction_rms_change": 0.03536971290655839
+              },
+              "q_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0003442312560546131,
+                "bootstrap95": [
+                  -0.0023280747141457606,
+                  0.0016609272841910418
+                ],
+                "prediction_rms_change": 0.010787985596586622
+              },
+              "v_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.00170126769011122,
+                "bootstrap95": [
+                  -0.004181086531570561,
+                  0.0006487520196203663
+                ],
+                "prediction_rms_change": 0.009523058637808047
+              },
+              "q_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 6.32326087659137e-05,
+                "bootstrap95": [
+                  -2.0411831908810165e-05,
+                  0.00021656838572286323
+                ],
+                "prediction_rms_change": 0.0007583896261571862
+              },
+              "v_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 1.0100868018614317e-05,
+                "bootstrap95": [
+                  -9.21018098427225e-06,
+                  3.387957019010124e-05
+                ],
+                "prediction_rms_change": 0.00010641189798571367
+              },
+              "reset_q": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.0007506058149789144,
+                "bootstrap95": [
+                  -0.0034234743825279886,
+                  0.005183794215782862
+                ],
+                "prediction_rms_change": 0.018062524970096618
+              },
+              "reset_v": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0033904710882232173,
+                "bootstrap95": [
+                  -0.009691472842769118,
+                  0.0031871305401747854
+                ],
+                "prediction_rms_change": 0.021837457983313477
+              }
+            }
+          }
+        },
+        "CoffeeSetupMug": {
+          "before_success": {
+            "queries": 640,
+            "mse": {
+              "q": 0.12561664254377716,
+              "v": 0.13363214343923013,
+              "q_donor_action": 0.12797590354044308,
+              "q_donor_history": 0.12687868288124907,
+              "v_donor_history": 0.13431811512381078,
+              "q_blind_prior_reward": 0.12543900866235044,
+              "v_blind_prior_reward": 0.1336211980691325,
+              "reset_q": 0.12569663742198117,
+              "reset_v": 0.13421173304568584
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 640,
+                "altered_minus_real_mse": 0.002359260996665916,
+                "bootstrap95": [
+                  -0.004908114069851012,
+                  0.01081331921569003
+                ],
+                "prediction_rms_change": 0.07929606938943672
+              },
+              "q_donor_history": {
+                "queries": 467,
+                "altered_minus_real_mse": 0.0017295627751221089,
+                "bootstrap95": [
+                  -0.0024079440190916414,
+                  0.005966969033651747
+                ],
+                "prediction_rms_change": 0.026807130077581696
+              },
+              "v_donor_history": {
+                "queries": 467,
+                "altered_minus_real_mse": 0.0009400896748000478,
+                "bootstrap95": [
+                  -0.0011124980863860036,
+                  0.002982289153214187
+                ],
+                "prediction_rms_change": 0.012115646209620712
+              },
+              "q_blind_prior_reward": {
+                "queries": 467,
+                "altered_minus_real_mse": -0.00024343829574539785,
+                "bootstrap95": [
+                  -0.0006282820777332926,
+                  2.244206561708188e-05
+                ],
+                "prediction_rms_change": 0.0016591262892695993
+              },
+              "v_blind_prior_reward": {
+                "queries": 467,
+                "altered_minus_real_mse": -1.5000078934655767e-05,
+                "bootstrap95": [
+                  -3.833367144596437e-05,
+                  3.935530839466559e-06
+                ],
+                "prediction_rms_change": 0.00010377365301378641
+              },
+              "reset_q": {
+                "queries": 467,
+                "altered_minus_real_mse": 0.00010962895514040262,
+                "bootstrap95": [
+                  -0.006421316781389767,
+                  0.0055739562513032114
+                ],
+                "prediction_rms_change": 0.03230639175421494
+              },
+              "reset_v": {
+                "queries": 467,
+                "altered_minus_real_mse": 0.0007942983900035136,
+                "bootstrap95": [
+                  -0.002166875103632883,
+                  0.0035941276173230784
+                ],
+                "prediction_rms_change": 0.017035063631432642
+              }
+            }
+          },
+          "first_query": {
+            "queries": 64,
+            "mse": {
+              "q": 0.20031843737985172,
+              "v": 0.20531099442824705,
+              "q_donor_action": 0.2050343544919631,
+              "q_donor_history": 0.20096845468467556,
+              "v_donor_history": 0.20454114441766208,
+              "q_blind_prior_reward": 0.19998765004568758,
+              "v_blind_prior_reward": 0.2052824517392893,
+              "reset_q": 0.19979824690994602,
+              "reset_v": 0.20434201051690848
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 64,
+                "altered_minus_real_mse": 0.004715917112111376,
+                "bootstrap95": [
+                  -0.002197007532233232,
+                  0.011408141839672632
+                ],
+                "prediction_rms_change": 0.04101549983801724
+              },
+              "q_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.0008666897397651326,
+                "bootstrap95": [
+                  -0.0034591887101267276,
+                  0.005213765665274654
+                ],
+                "prediction_rms_change": 0.01746396838864101
+              },
+              "v_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0010264666807799176,
+                "bootstrap95": [
+                  -0.0037060053607568715,
+                  0.001482720890333039
+                ],
+                "prediction_rms_change": 0.01114124913833512
+              },
+              "q_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.00044104977888552443,
+                "bootstrap95": [
+                  -0.0011021238187565953,
+                  6.800760965396928e-06
+                ],
+                "prediction_rms_change": 0.0016404417953447856
+              },
+              "v_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": -3.8056918610312095e-05,
+                "bootstrap95": [
+                  -9.994814565630027e-05,
+                  7.503552338411607e-06
+                ],
+                "prediction_rms_change": 0.00014794413479204182
+              },
+              "reset_q": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0006935872932076389,
+                "bootstrap95": [
+                  -0.010551127779713402,
+                  0.007729545537014754
+                ],
+                "prediction_rms_change": 0.030334940413854736
+              },
+              "reset_v": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0012919785484513946,
+                "bootstrap95": [
+                  -0.008637277551273349,
+                  0.0055404020975819025
+                ],
+                "prediction_rms_change": 0.025645361451803503
+              }
+            }
+          }
+        }
+      }
+    },
+    "6_dit": {
+      "checkpoint": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6dit01/dit/actor-01000-10000.pt",
+        "sha256": "837797fb3b343114ac81e8dc51ff978bcdd3e9c5ae92718c91011df6fe57c1dc"
+      },
+      "raw_file": "6_dit-queries.jsonl.gz",
+      "raw_sha256": "ec4f09ecceaca3172c8c3536139a13017de53af42af0ff9bf18a05e35f153eeb",
+      "reproduced_previous_max_abs_error": 0.0,
+      "summary": {
+        "OpenDrawer": {
+          "before_success": {
+            "queries": 452,
+            "mse": {
+              "q": 0.13689298780913842,
+              "v": 0.13302370211280712,
+              "q_donor_action": 0.14354228525814022,
+              "q_donor_history": 0.1364082345872121,
+              "v_donor_history": 0.13317765033964685,
+              "q_blind_prior_reward": 0.1369077324777187,
+              "v_blind_prior_reward": 0.13303188744590028,
+              "reset_q": 0.14194910677738853,
+              "reset_v": 0.13926235823325
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 452,
+                "altered_minus_real_mse": 0.006649297449001822,
+                "bootstrap95": [
+                  -9.70142188466332e-05,
+                  0.013027598016133828
+                ],
+                "prediction_rms_change": 0.10518597766451937
+              },
+              "q_donor_history": {
+                "queries": 341,
+                "altered_minus_real_mse": -0.000642546792699997,
+                "bootstrap95": [
+                  -0.0027932977235258665,
+                  0.0013909183888824901
+                ],
+                "prediction_rms_change": 0.015129784936625194
+              },
+              "v_donor_history": {
+                "queries": 341,
+                "altered_minus_real_mse": 0.00020406040625089896,
+                "bootstrap95": [
+                  -0.0026974520646003697,
+                  0.0028275466227234624
+                ],
+                "prediction_rms_change": 0.019696088046972884
+              },
+              "q_blind_prior_reward": {
+                "queries": 341,
+                "altered_minus_real_mse": 1.9544252780879607e-05,
+                "bootstrap95": [
+                  -6.880888098845995e-07,
+                  4.294728459702556e-05
+                ],
+                "prediction_rms_change": 0.00014942668098357146
+              },
+              "v_blind_prior_reward": {
+                "queries": 341,
+                "altered_minus_real_mse": 1.0849767032592998e-05,
+                "bootstrap95": [
+                  -2.001130616898326e-05,
+                  4.00844871138308e-05
+                ],
+                "prediction_rms_change": 0.0002836719997180908
+              },
+              "reset_q": {
+                "queries": 341,
+                "altered_minus_real_mse": 0.00670195241539311,
+                "bootstrap95": [
+                  -0.0010607691920206316,
+                  0.01502378088669923
+                ],
+                "prediction_rms_change": 0.047688071200054166
+              },
+              "reset_v": {
+                "queries": 341,
+                "altered_minus_real_mse": 0.008269421015953612,
+                "bootstrap95": [
+                  -0.00015146689295246902,
+                  0.017505026695527434
+                ],
+                "prediction_rms_change": 0.055893283307912496
+              }
+            }
+          },
+          "first_query": {
+            "queries": 64,
+            "mse": {
+              "q": 0.187792135748435,
+              "v": 0.1872585519401318,
+              "q_donor_action": 0.1980541084784183,
+              "q_donor_history": 0.18729064923186262,
+              "v_donor_history": 0.1891448640650391,
+              "q_blind_prior_reward": 0.18780774329059624,
+              "v_blind_prior_reward": 0.1872697612905081,
+              "reset_q": 0.19352360564238702,
+              "reset_v": 0.1954081665793683
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 64,
+                "altered_minus_real_mse": 0.010261972729983304,
+                "bootstrap95": [
+                  -0.0061175237064020754,
+                  0.024678498283348355
+                ],
+                "prediction_rms_change": 0.09056652372155788
+              },
+              "q_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0006686486887631885,
+                "bootstrap95": [
+                  -0.006357867181632768,
+                  0.004860461934960594
+                ],
+                "prediction_rms_change": 0.02096935868578748
+              },
+              "v_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.0025150828332097253,
+                "bootstrap95": [
+                  -0.00442191833177305,
+                  0.009326920461373178
+                ],
+                "prediction_rms_change": 0.03606559614143155
+              },
+              "q_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 2.0810056214977852e-05,
+                "bootstrap95": [
+                  -1.4399183101698743e-06,
+                  4.431140638331832e-05
+                ],
+                "prediction_rms_change": 0.00012692759539247736
+              },
+              "v_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 1.4945800501690401e-05,
+                "bootstrap95": [
+                  -2.5729085568911014e-05,
+                  5.7561004282717654e-05
+                ],
+                "prediction_rms_change": 0.00016173080737165357
+              },
+              "reset_q": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.007641959858602683,
+                "bootstrap95": [
+                  -0.0019666285672486233,
+                  0.017323476921246955
+                ],
+                "prediction_rms_change": 0.04939208023119471
+              },
+              "reset_v": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.01086615285231531,
+                "bootstrap95": [
+                  -0.002716345075381646,
+                  0.024658191863555872
+                ],
+                "prediction_rms_change": 0.060999620754204446
+              }
+            }
+          }
+        },
+        "CloseToasterOvenDoor": {
+          "before_success": {
+            "queries": 643,
+            "mse": {
+              "q": 0.15038585880449454,
+              "v": 0.15437850044856052,
+              "q_donor_action": 0.1551935194247549,
+              "q_donor_history": 0.1503701295981292,
+              "v_donor_history": 0.15368804174119247,
+              "q_blind_prior_reward": 0.15042433220013296,
+              "v_blind_prior_reward": 0.15442003921759476,
+              "reset_q": 0.15353026534841546,
+              "reset_v": 0.1573460041923554
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 643,
+                "altered_minus_real_mse": 0.004807660620260372,
+                "bootstrap95": [
+                  0.0005088223390749008,
+                  0.009559054544444383
+                ],
+                "prediction_rms_change": 0.04642130364844255
+              },
+              "q_donor_history": {
+                "queries": 496,
+                "altered_minus_real_mse": -2.039088647763738e-05,
+                "bootstrap95": [
+                  -0.002505231200124222,
+                  0.0024430782812424555
+                ],
+                "prediction_rms_change": 0.016105727470799053
+              },
+              "v_donor_history": {
+                "queries": 496,
+                "altered_minus_real_mse": -0.0008950906226566212,
+                "bootstrap95": [
+                  -0.004692419372825588,
+                  0.0026573470526000107
+                ],
+                "prediction_rms_change": 0.020848586058891196
+              },
+              "q_blind_prior_reward": {
+                "queries": 496,
+                "altered_minus_real_mse": 4.987579313610433e-05,
+                "bootstrap95": [
+                  -1.5063002627513197e-05,
+                  0.00012816422778217013
+                ],
+                "prediction_rms_change": 0.0005012064190263435
+              },
+              "v_blind_prior_reward": {
+                "queries": 496,
+                "altered_minus_real_mse": 5.384965421169108e-05,
+                "bootstrap95": [
+                  -3.3334113544628564e-05,
+                  0.00016399794130401106
+                ],
+                "prediction_rms_change": 0.0005453989454162356
+              },
+              "reset_q": {
+                "queries": 496,
+                "altered_minus_real_mse": 0.004076317354316846,
+                "bootstrap95": [
+                  0.00023921188859058466,
+                  0.008248956099300162
+                ],
+                "prediction_rms_change": 0.021152341866497438
+              },
+              "reset_v": {
+                "queries": 496,
+                "altered_minus_real_mse": 0.003846985700121131,
+                "bootstrap95": [
+                  0.0005672629180469745,
+                  0.007380960058690281
+                ],
+                "prediction_rms_change": 0.02201311913258407
+              }
+            }
+          },
+          "first_query": {
+            "queries": 64,
+            "mse": {
+              "q": 0.20954095278426899,
+              "v": 0.2120258527902267,
+              "q_donor_action": 0.2126296090786141,
+              "q_donor_history": 0.20856411067355635,
+              "v_donor_history": 0.20966692641240314,
+              "q_blind_prior_reward": 0.20965261186508774,
+              "v_blind_prior_reward": 0.2120828181963951,
+              "reset_q": 0.21254345283777082,
+              "reset_v": 0.21382480100992046
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 64,
+                "altered_minus_real_mse": 0.0030886562943451545,
+                "bootstrap95": [
+                  -0.006490688467878743,
+                  0.011684367238059334
+                ],
+                "prediction_rms_change": 0.05734109054921103
+              },
+              "q_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.001302456147616829,
+                "bootstrap95": [
+                  -0.006242698273432829,
+                  0.00395701015812585
+                ],
+                "prediction_rms_change": 0.018139732921855105
+              },
+              "v_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0031452351704313875,
+                "bootstrap95": [
+                  -0.009931653770388078,
+                  0.002955112559467163
+                ],
+                "prediction_rms_change": 0.02457702433352339
+              },
+              "q_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.0001488787744250338,
+                "bootstrap95": [
+                  -2.0531281054722573e-05,
+                  0.00041528528485683646
+                ],
+                "prediction_rms_change": 0.0011019774600086539
+              },
+              "v_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 7.595387489122325e-05,
+                "bootstrap95": [
+                  -3.3562872959582925e-05,
+                  0.00021456963068595313
+                ],
+                "prediction_rms_change": 0.0005856036132846084
+              },
+              "reset_q": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.004003333404669157,
+                "bootstrap95": [
+                  -0.00180232349750865,
+                  0.00989530572216007
+                ],
+                "prediction_rms_change": 0.020330201297702938
+              },
+              "reset_v": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.002398597626258367,
+                "bootstrap95": [
+                  -0.0013002523421582278,
+                  0.006370643619529159
+                ],
+                "prediction_rms_change": 0.01805899289279465
+              }
+            }
+          }
+        },
+        "CoffeeSetupMug": {
+          "before_success": {
+            "queries": 640,
+            "mse": {
+              "q": 0.13325395511873311,
+              "v": 0.1342011198094149,
+              "q_donor_action": 0.13364484392882892,
+              "q_donor_history": 0.13290626755329588,
+              "v_donor_history": 0.13411497930946661,
+              "q_blind_prior_reward": 0.13315469413067654,
+              "v_blind_prior_reward": 0.1340344255908878,
+              "reset_q": 0.1343744538366914,
+              "reset_v": 0.13538231152400812
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 640,
+                "altered_minus_real_mse": 0.00039088881009581805,
+                "bootstrap95": [
+                  -0.003105171540600507,
+                  0.0038688838356306784
+                ],
+                "prediction_rms_change": 0.050575852036444845
+              },
+              "q_donor_history": {
+                "queries": 467,
+                "altered_minus_real_mse": -0.00047648831237648856,
+                "bootstrap95": [
+                  -0.0036155293848892074,
+                  0.002792983460227135
+                ],
+                "prediction_rms_change": 0.01872060379524413
+              },
+              "v_donor_history": {
+                "queries": 467,
+                "altered_minus_real_mse": -0.0001180512204858436,
+                "bootstrap95": [
+                  -0.004521956722689769,
+                  0.005036240086892749
+                ],
+                "prediction_rms_change": 0.02428076498839079
+              },
+              "q_blind_prior_reward": {
+                "queries": 467,
+                "altered_minus_real_mse": -0.00013603218919960034,
+                "bootstrap95": [
+                  -0.00038055969735036884,
+                  3.523808232897253e-05
+                ],
+                "prediction_rms_change": 0.0009399793756386002
+              },
+              "v_blind_prior_reward": {
+                "queries": 467,
+                "altered_minus_real_mse": -0.00022844603823842977,
+                "bootstrap95": [
+                  -0.0006085719615436929,
+                  3.548582711499712e-05
+                ],
+                "prediction_rms_change": 0.0012119512949395539
+              },
+              "reset_q": {
+                "queries": 467,
+                "altered_minus_real_mse": 0.0015355871081226629,
+                "bootstrap95": [
+                  -0.0015778773465972007,
+                  0.004581683235435129
+                ],
+                "prediction_rms_change": 0.02337880888215091
+              },
+              "reset_v": {
+                "queries": 467,
+                "altered_minus_real_mse": 0.0016187638058665116,
+                "bootstrap95": [
+                  -0.002340864785577961,
+                  0.005707362364114215
+                ],
+                "prediction_rms_change": 0.028077527713121348
+              }
+            }
+          },
+          "first_query": {
+            "queries": 64,
+            "mse": {
+              "q": 0.21339201810854594,
+              "v": 0.21793028927031577,
+              "q_donor_action": 0.21265427867383827,
+              "q_donor_history": 0.21275199005373613,
+              "v_donor_history": 0.21725473060997522,
+              "q_blind_prior_reward": 0.21288600453553364,
+              "v_blind_prior_reward": 0.21739644443239614,
+              "reset_q": 0.21155488127678798,
+              "reset_v": 0.2192209399534346
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 64,
+                "altered_minus_real_mse": -0.0007377394347076634,
+                "bootstrap95": [
+                  -0.00967075420261926,
+                  0.009715229830449855
+                ],
+                "prediction_rms_change": 0.048164424929688227
+              },
+              "q_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0008533707397464138,
+                "bootstrap95": [
+                  -0.00862122039976395,
+                  0.007530589109726894
+                ],
+                "prediction_rms_change": 0.030585510542633212
+              },
+              "v_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0009007448804540658,
+                "bootstrap95": [
+                  -0.011328590440948624,
+                  0.011463170371500004
+                ],
+                "prediction_rms_change": 0.042639310633735064
+              },
+              "q_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0006746847640163913,
+                "bootstrap95": [
+                  -0.0016624059532950363,
+                  3.179929154208775e-05
+                ],
+                "prediction_rms_change": 0.0024078212907647366
+              },
+              "v_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0007117931172261916,
+                "bootstrap95": [
+                  -0.0018004539897190125,
+                  2.809018336267268e-05
+                ],
+                "prediction_rms_change": 0.0023400235768796574
+              },
+              "reset_q": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0024495157756772765,
+                "bootstrap95": [
+                  -0.007309471735742211,
+                  0.002422393093798671
+                ],
+                "prediction_rms_change": 0.02459783238459923
+              },
+              "reset_v": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.0017208675774918018,
+                "bootstrap95": [
+                  -0.004200913630186656,
+                  0.007216021838662916
+                ],
+                "prediction_rms_change": 0.034235681640358465
+              }
+            }
+          }
+        },
+        "PickPlaceCounterToStove": {
+          "before_success": {
+            "queries": 532,
+            "mse": {
+              "q": 0.1702460310022162,
+              "v": 0.1630219531202288,
+              "q_donor_action": 0.18486263566152683,
+              "q_donor_history": 0.16729490714222367,
+              "v_donor_history": 0.16069738377282397,
+              "q_blind_prior_reward": 0.17021741936754928,
+              "v_blind_prior_reward": 0.16302091315197398,
+              "reset_q": 0.17292318661707085,
+              "reset_v": 0.16473604404942138
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 532,
+                "altered_minus_real_mse": 0.01461660465931065,
+                "bootstrap95": [
+                  0.000815785517801306,
+                  0.029645684650278663
+                ],
+                "prediction_rms_change": 0.11775547860489657
+              },
+              "q_donor_history": {
+                "queries": 403,
+                "altered_minus_real_mse": -0.003895776410709753,
+                "bootstrap95": [
+                  -0.008193735589743302,
+                  -0.0003915362516690248
+                ],
+                "prediction_rms_change": 0.019831914412583886
+              },
+              "v_donor_history": {
+                "queries": 403,
+                "altered_minus_real_mse": -0.0030686622650604387,
+                "bootstrap95": [
+                  -0.007993145326939502,
+                  0.0015828847205581677
+                ],
+                "prediction_rms_change": 0.025514272022347313
+              },
+              "q_blind_prior_reward": {
+                "queries": 403,
+                "altered_minus_real_mse": -3.777019762481915e-05,
+                "bootstrap95": [
+                  -0.00015084279945688472,
+                  6.903917605725867e-05
+                ],
+                "prediction_rms_change": 0.0006084597675734552
+              },
+              "v_blind_prior_reward": {
+                "queries": 403,
+                "altered_minus_real_mse": -1.3728613189874432e-06,
+                "bootstrap95": [
+                  -0.00012106229220987465,
+                  0.0001283101250589755
+                ],
+                "prediction_rms_change": 0.0006242309539719144
+              },
+              "reset_q": {
+                "queries": 403,
+                "altered_minus_real_mse": 0.0035341111342498143,
+                "bootstrap95": [
+                  -0.0032154226521422823,
+                  0.010871417370365784
+                ],
+                "prediction_rms_change": 0.034812678314896296
+              },
+              "reset_v": {
+                "queries": 403,
+                "altered_minus_real_mse": 0.002262770159628907,
+                "bootstrap95": [
+                  -0.004580827822205497,
+                  0.010318116106244559
+                ],
+                "prediction_rms_change": 0.03447962834329883
+              }
+            }
+          },
+          "first_query": {
+            "queries": 64,
+            "mse": {
+              "q": 0.17118949854245896,
+              "v": 0.17462565307819522,
+              "q_donor_action": 0.18254899868338392,
+              "q_donor_history": 0.1645832397064747,
+              "v_donor_history": 0.16799015016807256,
+              "q_blind_prior_reward": 0.17111379187364084,
+              "v_blind_prior_reward": 0.17461321912914674,
+              "reset_q": 0.17039123451072719,
+              "reset_v": 0.17231573123272578
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 64,
+                "altered_minus_real_mse": 0.01135950014092496,
+                "bootstrap95": [
+                  -0.005432604805777624,
+                  0.02804487834397655
+                ],
+                "prediction_rms_change": 0.08220298722971897
+              },
+              "q_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.008808345114645677,
+                "bootstrap95": [
+                  -0.017301901270788695,
+                  -0.001094479023544116
+                ],
+                "prediction_rms_change": 0.027706803280662957
+              },
+              "v_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.008847337213496898,
+                "bootstrap95": [
+                  -0.021236545075656522,
+                  0.0027512285623899173
+                ],
+                "prediction_rms_change": 0.04566424955082584
+              },
+              "q_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.00010094222509082762,
+                "bootstrap95": [
+                  -0.0002999228749602197,
+                  4.6618202068924696e-05
+                ],
+                "prediction_rms_change": 0.0008722154993132488
+              },
+              "v_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": -1.6578598731331606e-05,
+                "bootstrap95": [
+                  -0.0001623928662715939,
+                  0.00011801653639420817
+                ],
+                "prediction_rms_change": 0.0006705329789458882
+              },
+              "reset_q": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0010643520423090358,
+                "bootstrap95": [
+                  -0.008239265749515183,
+                  0.006511608765835517
+                ],
+                "prediction_rms_change": 0.03751282062865029
+              },
+              "reset_v": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0030798957939592677,
+                "bootstrap95": [
+                  -0.010923057700760486,
+                  0.004706165271529573
+                ],
+                "prediction_rms_change": 0.03634187548903843
+              }
+            }
+          }
+        },
+        "TurnOffStove": {
+          "before_success": {
+            "queries": 732,
+            "mse": {
+              "q": 0.06687168355587697,
+              "v": 0.06843915799457731,
+              "q_donor_action": 0.06706595312849838,
+              "q_donor_history": 0.06796068681670082,
+              "v_donor_history": 0.06936589419543146,
+              "q_blind_prior_reward": 0.06687192045372291,
+              "v_blind_prior_reward": 0.06843584201883676,
+              "reset_q": 0.06680181356861993,
+              "reset_v": 0.06912878645144739
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 732,
+                "altered_minus_real_mse": 0.00019426957262141074,
+                "bootstrap95": [
+                  -0.002825605615588595,
+                  0.002987357664010879
+                ],
+                "prediction_rms_change": 0.04896651057563539
+              },
+              "q_donor_history": {
+                "queries": 546,
+                "altered_minus_real_mse": 0.0014599823936319682,
+                "bootstrap95": [
+                  0.0002621983975064293,
+                  0.002896134911217221
+                ],
+                "prediction_rms_change": 0.012973534850567492
+              },
+              "v_donor_history": {
+                "queries": 546,
+                "altered_minus_real_mse": 0.0012424375440022565,
+                "bootstrap95": [
+                  -0.0014077705669985267,
+                  0.0041012076609100055
+                ],
+                "prediction_rms_change": 0.021745759188942955
+              },
+              "q_blind_prior_reward": {
+                "queries": 546,
+                "altered_minus_real_mse": 3.1759930995212694e-07,
+                "bootstrap95": [
+                  -1.8073405508265944e-05,
+                  2.3655231898985837e-05
+                ],
+                "prediction_rms_change": 0.0003480563877538654
+              },
+              "v_blind_prior_reward": {
+                "queries": 546,
+                "altered_minus_real_mse": -4.445593849979939e-06,
+                "bootstrap95": [
+                  -2.4323485637741654e-05,
+                  2.1099737067565536e-05
+                ],
+                "prediction_rms_change": 0.00029958190943601086
+              },
+              "reset_q": {
+                "queries": 546,
+                "altered_minus_real_mse": -9.367185104790095e-05,
+                "bootstrap95": [
+                  -0.003693769453746629,
+                  0.004500872275604951
+                ],
+                "prediction_rms_change": 0.026380283619694477
+              },
+              "reset_v": {
+                "queries": 546,
+                "altered_minus_real_mse": 0.0009245568322873443,
+                "bootstrap95": [
+                  -0.0023872367246584236,
+                  0.004859145333596902
+                ],
+                "prediction_rms_change": 0.02807590661274526
+              }
+            }
+          },
+          "first_query": {
+            "queries": 64,
+            "mse": {
+              "q": 0.09729632845198759,
+              "v": 0.09677455850730506,
+              "q_donor_action": 0.09536589467661032,
+              "q_donor_history": 0.09834317708665476,
+              "v_donor_history": 0.09884553709298942,
+              "q_blind_prior_reward": 0.09731104636708114,
+              "v_blind_prior_reward": 0.0967883234347438,
+              "reset_q": 0.09846495519602427,
+              "reset_v": 0.10191459336697314
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 64,
+                "altered_minus_real_mse": -0.0019304337753772646,
+                "bootstrap95": [
+                  -0.01095946678634422,
+                  0.006873857572173621
+                ],
+                "prediction_rms_change": 0.04368429879383271
+              },
+              "q_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.0013957981795562218,
+                "bootstrap95": [
+                  -0.003204386517070063,
+                  0.006246648115822818
+                ],
+                "prediction_rms_change": 0.029700209954078564
+              },
+              "v_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.0027613047809124883,
+                "bootstrap95": [
+                  -0.005846767750202651,
+                  0.012105321664164566
+                ],
+                "prediction_rms_change": 0.04582912502844043
+              },
+              "q_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 1.9623886791400303e-05,
+                "bootstrap95": [
+                  -2.8431876301525456e-05,
+                  8.587149714012699e-05
+                ],
+                "prediction_rms_change": 0.0009573635786575263
+              },
+              "v_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 1.8353236585008127e-05,
+                "bootstrap95": [
+                  -2.6218030861220438e-05,
+                  8.16090392509397e-05
+                ],
+                "prediction_rms_change": 0.0006678127514308902
+              },
+              "reset_q": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.0015581689920489011,
+                "bootstrap95": [
+                  -0.0030864901774098575,
+                  0.006350898776656345
+                ],
+                "prediction_rms_change": 0.025222037343089004
+              },
+              "reset_v": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.0068533798128907674,
+                "bootstrap95": [
+                  0.0021062815790832304,
+                  0.012384772753426228
+                ],
+                "prediction_rms_change": 0.03935748341754656
+              }
+            }
+          }
+        },
+        "TurnOnSinkFaucet": {
+          "before_success": {
+            "queries": 600,
+            "mse": {
+              "q": 0.09709010262236839,
+              "v": 0.0991199511557148,
+              "q_donor_action": 0.10176573006894686,
+              "q_donor_history": 0.09725003562940515,
+              "v_donor_history": 0.09874085321717141,
+              "q_blind_prior_reward": 0.09708020658225652,
+              "v_blind_prior_reward": 0.099112847461221,
+              "reset_q": 0.09973300516723392,
+              "reset_v": 0.10079527051123842
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 600,
+                "altered_minus_real_mse": 0.004675627446578477,
+                "bootstrap95": [
+                  0.0015943071110775806,
+                  0.007753651770396684
+                ],
+                "prediction_rms_change": 0.04104559374844269
+              },
+              "q_donor_history": {
+                "queries": 449,
+                "altered_minus_real_mse": 0.00021371894036090934,
+                "bootstrap95": [
+                  -0.0012509549095154446,
+                  0.0017306440998453364
+                ],
+                "prediction_rms_change": 0.015492909058797294
+              },
+              "v_donor_history": {
+                "queries": 449,
+                "altered_minus_real_mse": -0.0005065896728864881,
+                "bootstrap95": [
+                  -0.0023765578173686997,
+                  0.001376860838799111
+                ],
+                "prediction_rms_change": 0.015346352468958865
+              },
+              "q_blind_prior_reward": {
+                "queries": 449,
+                "altered_minus_real_mse": -1.322410705371463e-05,
+                "bootstrap95": [
+                  -4.896304299625749e-05,
+                  1.47568912769263e-05
+                ],
+                "prediction_rms_change": 0.000284621024078833
+              },
+              "v_blind_prior_reward": {
+                "queries": 449,
+                "altered_minus_real_mse": -9.492687519565798e-06,
+                "bootstrap95": [
+                  -4.113099242920729e-05,
+                  1.751507390312085e-05
+                ],
+                "prediction_rms_change": 0.00023432981376513552
+              },
+              "reset_q": {
+                "queries": 449,
+                "altered_minus_real_mse": 0.0035317183227601676,
+                "bootstrap95": [
+                  -0.0005971399517697655,
+                  0.00805107700138867
+                ],
+                "prediction_rms_change": 0.035479265368604074
+              },
+              "reset_v": {
+                "queries": 449,
+                "altered_minus_real_mse": 0.0022387341053767816,
+                "bootstrap95": [
+                  -0.0019048111948834275,
+                  0.0068903199678658445
+                ],
+                "prediction_rms_change": 0.03406891809832328
+              }
+            }
+          },
+          "first_query": {
+            "queries": 64,
+            "mse": {
+              "q": 0.19213076394837106,
+              "v": 0.18180790272203579,
+              "q_donor_action": 0.19666853838184561,
+              "q_donor_history": 0.190862893080955,
+              "v_donor_history": 0.17743545742556982,
+              "q_blind_prior_reward": 0.19213570775727676,
+              "v_blind_prior_reward": 0.18185926980706077,
+              "reset_q": 0.19256842204120156,
+              "reset_v": 0.17742866657188394
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 64,
+                "altered_minus_real_mse": 0.004537774433474546,
+                "bootstrap95": [
+                  -0.0033264956601297305,
+                  0.012727984531216067
+                ],
+                "prediction_rms_change": 0.039637385890535656
+              },
+              "q_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0016904944898880798,
+                "bootstrap95": [
+                  -0.0071553134459518,
+                  0.0038157413205576873
+                ],
+                "prediction_rms_change": 0.02156837496344956
+              },
+              "v_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.005829927061954597,
+                "bootstrap95": [
+                  -0.013261902172487523,
+                  0.0014229685626830249
+                ],
+                "prediction_rms_change": 0.03012604459485449
+              },
+              "q_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 6.591745207594942e-06,
+                "bootstrap95": [
+                  -2.7105698536212623e-05,
+                  4.08150205794854e-05
+                ],
+                "prediction_rms_change": 0.0001640273394632663
+              },
+              "v_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 6.848944670000134e-05,
+                "bootstrap95": [
+                  -1.947522511594468e-06,
+                  0.00016266850440337726
+                ],
+                "prediction_rms_change": 0.00033571108610934425
+              },
+              "reset_q": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.0005835441237739732,
+                "bootstrap95": [
+                  -0.0068085636242589806,
+                  0.00732177397511865
+                ],
+                "prediction_rms_change": 0.026860941125335366
+              },
+              "reset_v": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.005838981533535786,
+                "bootstrap95": [
+                  -0.016155251520975807,
+                  0.0036361024280483233
+                ],
+                "prediction_rms_change": 0.045617210589269125
+              }
+            }
+          }
+        }
+      }
+    },
+    "6_ic_iql": {
+      "checkpoint": {
+        "path": "/mnt/bos/adgfyl/strong-plant-archives/robocasa-six-task-scale-20261113-r1/resume6iciql01/ic_iql/actor-01000-10000.pt",
+        "sha256": "6f589abf2a6acd69dfe7c45e6c5f2ab333591c995773936c9bb0b2db93f240e7"
+      },
+      "raw_file": "6_ic_iql-queries.jsonl.gz",
+      "raw_sha256": "c83e3fd0d6b2a3dd2bf8a52d0aff2d545794270b5c70933b95bbd5874a53c1e0",
+      "reproduced_previous_max_abs_error": 0.0,
+      "summary": {
+        "OpenDrawer": {
+          "before_success": {
+            "queries": 452,
+            "mse": {
+              "q": 0.17820537209704468,
+              "v": 0.18459939661139568,
+              "q_donor_action": 0.19209953491274703,
+              "q_donor_history": 0.17780876150445948,
+              "v_donor_history": 0.18427219083116164,
+              "q_blind_prior_reward": 0.17821391723024946,
+              "v_blind_prior_reward": 0.18461329598340392,
+              "reset_q": 0.17890174464896075,
+              "reset_v": 0.18479176496890137
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 452,
+                "altered_minus_real_mse": 0.013894162815702354,
+                "bootstrap95": [
+                  0.009110194403605349,
+                  0.019013145412612106
+                ],
+                "prediction_rms_change": 0.08950007539008092
+              },
+              "q_donor_history": {
+                "queries": 341,
+                "altered_minus_real_mse": -0.0005257125743358022,
+                "bootstrap95": [
+                  -0.0017135640505680256,
+                  0.0009964273336037595
+                ],
+                "prediction_rms_change": 0.008058698546615695
+              },
+              "v_donor_history": {
+                "queries": 341,
+                "altered_minus_real_mse": -0.00043371557966511375,
+                "bootstrap95": [
+                  -0.002475666349085001,
+                  0.0018240836691460975
+                ],
+                "prediction_rms_change": 0.012194400842489378
+              },
+              "q_blind_prior_reward": {
+                "queries": 341,
+                "altered_minus_real_mse": 1.1326686828614429e-05,
+                "bootstrap95": [
+                  2.1493099040612717e-06,
+                  2.1359984011849657e-05
+                ],
+                "prediction_rms_change": 6.386375246280038e-05
+              },
+              "v_blind_prior_reward": {
+                "queries": 341,
+                "altered_minus_real_mse": 1.842380101967672e-05,
+                "bootstrap95": [
+                  7.416761082552503e-06,
+                  3.301174204259167e-05
+                ],
+                "prediction_rms_change": 0.00011766841139829786
+              },
+              "reset_q": {
+                "queries": 341,
+                "altered_minus_real_mse": 0.0009230510072318706,
+                "bootstrap95": [
+                  -0.0008185688160179083,
+                  0.0028501853560205684
+                ],
+                "prediction_rms_change": 0.019073914918681895
+              },
+              "reset_v": {
+                "queries": 341,
+                "altered_minus_real_mse": 0.0002549867964591049,
+                "bootstrap95": [
+                  -0.0021801805845450277,
+                  0.002806637655830257
+                ],
+                "prediction_rms_change": 0.024085187057793778
+              }
+            }
+          },
+          "first_query": {
+            "queries": 64,
+            "mse": {
+              "q": 0.26276828770529725,
+              "v": 0.33170342235999545,
+              "q_donor_action": 0.2767194008236216,
+              "q_donor_history": 0.2616992488451461,
+              "v_donor_history": 0.3295921544577931,
+              "q_blind_prior_reward": 0.2627761742251242,
+              "v_blind_prior_reward": 0.33168645844786093,
+              "reset_q": 0.2581553514716927,
+              "reset_v": 0.3175491485381462
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 64,
+                "altered_minus_real_mse": 0.01395111311832442,
+                "bootstrap95": [
+                  -0.0035896465134175994,
+                  0.03216698275828879
+                ],
+                "prediction_rms_change": 0.06954804772092453
+              },
+              "q_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0014253851468681484,
+                "bootstrap95": [
+                  -0.0043540861405622295,
+                  0.001456720796830913
+                ],
+                "prediction_rms_change": 0.011564626915928895
+              },
+              "v_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.002815023869603093,
+                "bootstrap95": [
+                  -0.010487932381144748,
+                  0.005917712845345819
+                ],
+                "prediction_rms_change": 0.021645046334100238
+              },
+              "q_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 1.0515359769351177e-05,
+                "bootstrap95": [
+                  8.667372066964443e-07,
+                  2.097293283296609e-05
+                ],
+                "prediction_rms_change": 3.659327990429493e-05
+              },
+              "v_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": -2.2618549512627244e-05,
+                "bootstrap95": [
+                  -3.656393752403906e-05,
+                  -8.300793427654681e-06
+                ],
+                "prediction_rms_change": 6.330457636491341e-05
+              },
+              "reset_q": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.006150581644805993,
+                "bootstrap95": [
+                  -0.01067656130000508,
+                  -0.0017342490124931534
+                ],
+                "prediction_rms_change": 0.019558250451178934
+              },
+              "reset_v": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.01887236509579898,
+                "bootstrap95": [
+                  -0.02479106117625776,
+                  -0.013027090110739856
+                ],
+                "prediction_rms_change": 0.03202310058454277
+              }
+            }
+          }
+        },
+        "CloseToasterOvenDoor": {
+          "before_success": {
+            "queries": 643,
+            "mse": {
+              "q": 0.15702540979776075,
+              "v": 0.1684255211328628,
+              "q_donor_action": 0.16008155444336586,
+              "q_donor_history": 0.15653100627431984,
+              "v_donor_history": 0.16756550205395676,
+              "q_blind_prior_reward": 0.1570458509788627,
+              "v_blind_prior_reward": 0.16843077248780244,
+              "reset_q": 0.15622620249382288,
+              "reset_v": 0.16753835880561815
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 643,
+                "altered_minus_real_mse": 0.0030561446456051316,
+                "bootstrap95": [
+                  -0.00032530570278220165,
+                  0.006128832080160983
+                ],
+                "prediction_rms_change": 0.05003973512031397
+              },
+              "q_donor_history": {
+                "queries": 496,
+                "altered_minus_real_mse": -0.0006409303741380792,
+                "bootstrap95": [
+                  -0.0027725567745651,
+                  0.001333935739771186
+                ],
+                "prediction_rms_change": 0.010755654954099508
+              },
+              "v_donor_history": {
+                "queries": 496,
+                "altered_minus_real_mse": -0.001114903765597904,
+                "bootstrap95": [
+                  -0.0024997111558471,
+                  0.00018075713071932136
+                ],
+                "prediction_rms_change": 0.00761330766552927
+              },
+              "q_blind_prior_reward": {
+                "queries": 496,
+                "altered_minus_real_mse": 2.6499353726948216e-05,
+                "bootstrap95": [
+                  -5.0597053396187716e-05,
+                  0.0001506610784498175
+                ],
+                "prediction_rms_change": 0.0006189441498509955
+              },
+              "v_blind_prior_reward": {
+                "queries": 496,
+                "altered_minus_real_mse": 6.807704085050818e-06,
+                "bootstrap95": [
+                  -1.53945969124445e-05,
+                  4.44437685284323e-05
+                ],
+                "prediction_rms_change": 0.00016130853166561998
+              },
+              "reset_q": {
+                "queries": 496,
+                "altered_minus_real_mse": -0.0010360691460323556,
+                "bootstrap95": [
+                  -0.0034034546214444066,
+                  0.001526342518357505
+                ],
+                "prediction_rms_change": 0.014259088044853813
+              },
+              "reset_v": {
+                "queries": 496,
+                "altered_minus_real_mse": -0.001150091484714331,
+                "bootstrap95": [
+                  -0.0030697455482318254,
+                  0.0007605698297613577
+                ],
+                "prediction_rms_change": 0.012415571682939205
+              }
+            }
+          },
+          "first_query": {
+            "queries": 64,
+            "mse": {
+              "q": 0.21152754518504002,
+              "v": 0.213362320696669,
+              "q_donor_action": 0.21230821960485718,
+              "q_donor_history": 0.2101562846100305,
+              "v_donor_history": 0.21154161477642472,
+              "q_blind_prior_reward": 0.21164661236269988,
+              "v_blind_prior_reward": 0.21338449635106474,
+              "reset_q": 0.21013577100963865,
+              "reset_v": 0.21279757902145363
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 64,
+                "altered_minus_real_mse": 0.0007806744198171622,
+                "bootstrap95": [
+                  -0.004493904197689243,
+                  0.005351579551946577
+                ],
+                "prediction_rms_change": 0.03525418234571337
+              },
+              "q_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0018283474333460337,
+                "bootstrap95": [
+                  -0.005309497056083124,
+                  0.001318148060781556
+                ],
+                "prediction_rms_change": 0.012470924047567462
+              },
+              "v_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0024276078936590526,
+                "bootstrap95": [
+                  -0.004738675777011622,
+                  -0.00018154282593435436
+                ],
+                "prediction_rms_change": 0.00959571126880622
+              },
+              "q_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.0001587562368797757,
+                "bootstrap95": [
+                  -3.089358391324496e-05,
+                  0.0005170014869247286
+                ],
+                "prediction_rms_change": 0.001543008081374109
+              },
+              "v_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 2.9567539194308434e-05,
+                "bootstrap95": [
+                  -2.8543102141273534e-06,
+                  8.672474011659447e-05
+                ],
+                "prediction_rms_change": 0.0002522648232177357
+              },
+              "reset_q": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0018556989005351816,
+                "bootstrap95": [
+                  -0.005989384633077134,
+                  0.0023882559442857296
+                ],
+                "prediction_rms_change": 0.01319724164949286
+              },
+              "reset_v": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0007529889002871512,
+                "bootstrap95": [
+                  -0.004095274591500721,
+                  0.0025219506288913143
+                ],
+                "prediction_rms_change": 0.011682364853822461
+              }
+            }
+          }
+        },
+        "CoffeeSetupMug": {
+          "before_success": {
+            "queries": 640,
+            "mse": {
+              "q": 0.13535896583846996,
+              "v": 0.1342278441925832,
+              "q_donor_action": 0.13672623439694945,
+              "q_donor_history": 0.13502826240223736,
+              "v_donor_history": 0.13391487145718856,
+              "q_blind_prior_reward": 0.13529554491438534,
+              "v_blind_prior_reward": 0.1342109356503829,
+              "reset_q": 0.13503662231396402,
+              "reset_v": 0.133471585839012
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 640,
+                "altered_minus_real_mse": 0.0013672685584794658,
+                "bootstrap95": [
+                  -0.002861911787129803,
+                  0.006411862853915351
+                ],
+                "prediction_rms_change": 0.0517146249341464
+              },
+              "q_donor_history": {
+                "queries": 467,
+                "altered_minus_real_mse": -0.00045321241796331645,
+                "bootstrap95": [
+                  -0.0017384452447577437,
+                  0.000734479391397248
+                ],
+                "prediction_rms_change": 0.007855044608754417
+              },
+              "v_donor_history": {
+                "queries": 467,
+                "altered_minus_real_mse": -0.0004289133846950869,
+                "bootstrap95": [
+                  -0.0014495772652357202,
+                  0.0005442871583080894
+                ],
+                "prediction_rms_change": 0.007189972812575866
+              },
+              "q_blind_prior_reward": {
+                "queries": 467,
+                "altered_minus_real_mse": -8.691518504104626e-05,
+                "bootstrap95": [
+                  -0.0002942014080165948,
+                  6.659976238256423e-05
+                ],
+                "prediction_rms_change": 0.0007392156524603195
+              },
+              "v_blind_prior_reward": {
+                "queries": 467,
+                "altered_minus_real_mse": -2.3172306227479116e-05,
+                "bootstrap95": [
+                  -7.250509602144675e-05,
+                  1.3926641364851207e-05
+                ],
+                "prediction_rms_change": 0.00019766896715663686
+              },
+              "reset_q": {
+                "queries": 467,
+                "altered_minus_real_mse": -0.00044175557962273376,
+                "bootstrap95": [
+                  -0.002833413656846127,
+                  0.0013834485302546822
+                ],
+                "prediction_rms_change": 0.014269741806615393
+              },
+              "reset_v": {
+                "queries": 467,
+                "altered_minus_real_mse": -0.0010364140177421884,
+                "bootstrap95": [
+                  -0.0033321986236141666,
+                  0.0006269493473576724
+                ],
+                "prediction_rms_change": 0.014648374149015604
+              }
+            }
+          },
+          "first_query": {
+            "queries": 64,
+            "mse": {
+              "q": 0.22614378441432287,
+              "v": 0.2324345525469037,
+              "q_donor_action": 0.22392279169758633,
+              "q_donor_history": 0.22476852142624715,
+              "v_donor_history": 0.2303512399643493,
+              "q_blind_prior_reward": 0.2257920690731273,
+              "v_blind_prior_reward": 0.23231880031131666,
+              "reset_q": 0.2203193286840961,
+              "reset_v": 0.22364866592074453
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 64,
+                "altered_minus_real_mse": -0.0022209927167365275,
+                "bootstrap95": [
+                  -0.008224343505700376,
+                  0.0034040932859740135
+                ],
+                "prediction_rms_change": 0.02633769756531195
+              },
+              "q_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.001833683984100918,
+                "bootstrap95": [
+                  -0.005484204329835938,
+                  0.0019738720090359844
+                ],
+                "prediction_rms_change": 0.015480867965456361
+              },
+              "v_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0027777501100725494,
+                "bootstrap95": [
+                  -0.006730077589593232,
+                  0.0015038260422879503
+                ],
+                "prediction_rms_change": 0.015150691805578544
+              },
+              "q_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.00046895378826074713,
+                "bootstrap95": [
+                  -0.0012644545875403403,
+                  9.605137723695029e-05
+                ],
+                "prediction_rms_change": 0.0017862034332563192
+              },
+              "v_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.00015433631411606563,
+                "bootstrap95": [
+                  -0.0003979902733419139,
+                  1.1378371684523927e-05
+                ],
+                "prediction_rms_change": 0.0005099952239254194
+              },
+              "reset_q": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.007765940973635667,
+                "bootstrap95": [
+                  -0.014349965832764315,
+                  -0.0016758008424505183
+                ],
+                "prediction_rms_change": 0.02467551872341574
+              },
+              "reset_v": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.011714515501545557,
+                "bootstrap95": [
+                  -0.020852777825383695,
+                  -0.0032335688730848852
+                ],
+                "prediction_rms_change": 0.029945132804356546
+              }
+            }
+          }
+        },
+        "PickPlaceCounterToStove": {
+          "before_success": {
+            "queries": 532,
+            "mse": {
+              "q": 0.17577288779923078,
+              "v": 0.19039955053634047,
+              "q_donor_action": 0.1934990643459468,
+              "q_donor_history": 0.17469505622823184,
+              "v_donor_history": 0.18967142368517112,
+              "q_blind_prior_reward": 0.17574299440809255,
+              "v_blind_prior_reward": 0.19039546920447434,
+              "reset_q": 0.17612108422054631,
+              "reset_v": 0.18855501442389144
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 532,
+                "altered_minus_real_mse": 0.017726176546716023,
+                "bootstrap95": [
+                  0.004169023239681156,
+                  0.03319560986396152
+                ],
+                "prediction_rms_change": 0.12591778107940682
+              },
+              "q_donor_history": {
+                "queries": 403,
+                "altered_minus_real_mse": -0.0014228446545196535,
+                "bootstrap95": [
+                  -0.0028912557273064314,
+                  -3.879364654180482e-05
+                ],
+                "prediction_rms_change": 0.009323856513908506
+              },
+              "v_donor_history": {
+                "queries": 403,
+                "altered_minus_real_mse": -0.0009611997141987357,
+                "bootstrap95": [
+                  -0.002622430108385034,
+                  0.0008497192915068365
+                ],
+                "prediction_rms_change": 0.010358673612413907
+              },
+              "q_blind_prior_reward": {
+                "queries": 403,
+                "altered_minus_real_mse": -3.946224338838981e-05,
+                "bootstrap95": [
+                  -0.00016352025418095857,
+                  9.40309512646413e-05
+                ],
+                "prediction_rms_change": 0.000675529357907937
+              },
+              "v_blind_prior_reward": {
+                "queries": 403,
+                "altered_minus_real_mse": -5.387763158264683e-06,
+                "bootstrap95": [
+                  -3.8671741503404627e-05,
+                  2.7962905733064105e-05
+                ],
+                "prediction_rms_change": 0.0002049307596626242
+              },
+              "reset_q": {
+                "queries": 403,
+                "altered_minus_real_mse": 0.0004596538365753734,
+                "bootstrap95": [
+                  -0.0022890166320531846,
+                  0.0036190246630801
+                ],
+                "prediction_rms_change": 0.019327360251701498
+              },
+              "reset_v": {
+                "queries": 403,
+                "altered_minus_real_mse": -0.002434970748940158,
+                "bootstrap95": [
+                  -0.004647351433016154,
+                  6.763751861034121e-05
+                ],
+                "prediction_rms_change": 0.018976995847280523
+              }
+            }
+          },
+          "first_query": {
+            "queries": 64,
+            "mse": {
+              "q": 0.2574057158390444,
+              "v": 0.29921378838621704,
+              "q_donor_action": 0.25925577517968235,
+              "q_donor_history": 0.2556676594763448,
+              "v_donor_history": 0.29747440175569206,
+              "q_blind_prior_reward": 0.25735132646187264,
+              "v_blind_prior_reward": 0.299152096489808,
+              "reset_q": 0.2523816322674879,
+              "reset_v": 0.29053227541441373
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 64,
+                "altered_minus_real_mse": 0.001850059340637894,
+                "bootstrap95": [
+                  -0.007082060198443874,
+                  0.01098742099412651
+                ],
+                "prediction_rms_change": 0.03234746948225341
+              },
+              "q_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0023174084835995514,
+                "bootstrap95": [
+                  -0.005355002677687575,
+                  0.0007249111773084392
+                ],
+                "prediction_rms_change": 0.010636192182913696
+              },
+              "v_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0023191821740332305,
+                "bootstrap95": [
+                  -0.005946620947802941,
+                  0.001273775606799367
+                ],
+                "prediction_rms_change": 0.013816628984320093
+              },
+              "q_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": -7.251916956239428e-05,
+                "bootstrap95": [
+                  -0.0004466652174589007,
+                  0.00015464897275943904
+                ],
+                "prediction_rms_change": 0.0010503153998299793
+              },
+              "v_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": -8.22558618786597e-05,
+                "bootstrap95": [
+                  -0.00023676234417799107,
+                  6.706870801141705e-07
+                ],
+                "prediction_rms_change": 0.00041467727287191974
+              },
+              "reset_q": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0066987780954087155,
+                "bootstrap95": [
+                  -0.011057206539632176,
+                  -0.0025008746711775113
+                ],
+                "prediction_rms_change": 0.017476956791279894
+              },
+              "reset_v": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.011575350629070988,
+                "bootstrap95": [
+                  -0.018212017739782375,
+                  -0.0051382584955190274
+                ],
+                "prediction_rms_change": 0.02130521080306748
+              }
+            }
+          }
+        },
+        "TurnOffStove": {
+          "before_success": {
+            "queries": 732,
+            "mse": {
+              "q": 0.0667214203491051,
+              "v": 0.06730192490175056,
+              "q_donor_action": 0.06923998743054256,
+              "q_donor_history": 0.06666614239453192,
+              "v_donor_history": 0.06726279798377008,
+              "q_blind_prior_reward": 0.06672298295012134,
+              "v_blind_prior_reward": 0.06730350843543856,
+              "reset_q": 0.0663293344548142,
+              "reset_v": 0.06633968162600828
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 732,
+                "altered_minus_real_mse": 0.0025185670814374616,
+                "bootstrap95": [
+                  -0.0006692950233017683,
+                  0.0066105767701330935
+                ],
+                "prediction_rms_change": 0.05025346502847759
+              },
+              "q_donor_history": {
+                "queries": 546,
+                "altered_minus_real_mse": -7.41089061310821e-05,
+                "bootstrap95": [
+                  -0.0008694392669088997,
+                  0.0006610417719253117
+                ],
+                "prediction_rms_change": 0.006092020505084148
+              },
+              "v_donor_history": {
+                "queries": 546,
+                "altered_minus_real_mse": -5.2455868061741397e-05,
+                "bootstrap95": [
+                  -0.00032654127960094924,
+                  0.00015791090697204687
+                ],
+                "prediction_rms_change": 0.006187195401554249
+              },
+              "q_blind_prior_reward": {
+                "queries": 546,
+                "altered_minus_real_mse": 2.0949156481509384e-06,
+                "bootstrap95": [
+                  -3.056555518172075e-06,
+                  1.0988990639489586e-05
+                ],
+                "prediction_rms_change": 8.74843568207117e-05
+              },
+              "v_blind_prior_reward": {
+                "queries": 546,
+                "altered_minus_real_mse": 2.122979230082752e-06,
+                "bootstrap95": [
+                  -1.3546006429058394e-06,
+                  8.285224208676354e-06
+                ],
+                "prediction_rms_change": 9.619149754247258e-05
+              },
+              "reset_q": {
+                "queries": 546,
+                "altered_minus_real_mse": -0.000525653616521865,
+                "bootstrap95": [
+                  -0.0016845068611712093,
+                  0.0004071008979055705
+                ],
+                "prediction_rms_change": 0.016272283294373878
+              },
+              "reset_v": {
+                "queries": 546,
+                "altered_minus_real_mse": -0.001290040435610508,
+                "bootstrap95": [
+                  -0.0038727492108174516,
+                  0.0007712764726615174
+                ],
+                "prediction_rms_change": 0.018659796986353828
+              }
+            }
+          },
+          "first_query": {
+            "queries": 64,
+            "mse": {
+              "q": 0.09723945433497158,
+              "v": 0.10068034697983334,
+              "q_donor_action": 0.09954486411693395,
+              "q_donor_history": 0.09639837530958492,
+              "v_donor_history": 0.09996645616368108,
+              "q_blind_prior_reward": 0.09724534773536467,
+              "v_blind_prior_reward": 0.10068312430332924,
+              "reset_q": 0.09446765718376829,
+              "reset_v": 0.09738327689961189
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 64,
+                "altered_minus_real_mse": 0.002305409781962364,
+                "bootstrap95": [
+                  -0.002345961161846704,
+                  0.00791983116163889
+                ],
+                "prediction_rms_change": 0.032885065497156495
+              },
+              "q_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0011214387005155553,
+                "bootstrap95": [
+                  -0.0031302848640702265,
+                  0.0004824643749318351
+                ],
+                "prediction_rms_change": 0.013746999730598721
+              },
+              "v_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0009518544215363535,
+                "bootstrap95": [
+                  -0.0036882555884736857,
+                  0.001428658846448512
+                ],
+                "prediction_rms_change": 0.016975200131418927
+              },
+              "q_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 7.85786719079805e-06,
+                "bootstrap95": [
+                  -4.061037513184769e-07,
+                  1.932309400164232e-05
+                ],
+                "prediction_rms_change": 0.0002334862667848768
+              },
+              "v_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 3.703097994547329e-06,
+                "bootstrap95": [
+                  3.7015524033188267e-07,
+                  8.149767293616007e-06
+                ],
+                "prediction_rms_change": 0.00030893422427361446
+              },
+              "reset_q": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0036957295349377196,
+                "bootstrap95": [
+                  -0.012066208056882561,
+                  0.0031949310743590214
+                ],
+                "prediction_rms_change": 0.03286391365102049
+              },
+              "reset_v": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0043960934402952545,
+                "bootstrap95": [
+                  -0.014211808532084251,
+                  0.003452278802983162
+                ],
+                "prediction_rms_change": 0.0379232986297456
+              }
+            }
+          }
+        },
+        "TurnOnSinkFaucet": {
+          "before_success": {
+            "queries": 600,
+            "mse": {
+              "q": 0.11533633451304126,
+              "v": 0.12493291134870915,
+              "q_donor_action": 0.12118043745726145,
+              "q_donor_history": 0.11563050634600686,
+              "v_donor_history": 0.12473102159435859,
+              "q_blind_prior_reward": 0.1153241458806973,
+              "v_blind_prior_reward": 0.12492534058960378,
+              "reset_q": 0.11625956406981015,
+              "reset_v": 0.12536537100718684
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 600,
+                "altered_minus_real_mse": 0.005844102944220169,
+                "bootstrap95": [
+                  0.0028470529960204103,
+                  0.008974872588596179
+                ],
+                "prediction_rms_change": 0.05575958894234193
+              },
+              "q_donor_history": {
+                "queries": 449,
+                "altered_minus_real_mse": 0.0003931026721143593,
+                "bootstrap95": [
+                  -0.0006688757759259901,
+                  0.0016139746097254687
+                ],
+                "prediction_rms_change": 0.008080007398448224
+              },
+              "v_donor_history": {
+                "queries": 449,
+                "altered_minus_real_mse": -0.00026978586327470214,
+                "bootstrap95": [
+                  -0.001167973938973928,
+                  0.0005142090691992137
+                ],
+                "prediction_rms_change": 0.006968867778555648
+              },
+              "q_blind_prior_reward": {
+                "queries": 449,
+                "altered_minus_real_mse": -1.628770469126742e-05,
+                "bootstrap95": [
+                  -4.2344216611579544e-05,
+                  1.6897227098030681e-06
+                ],
+                "prediction_rms_change": 0.00012133430890320265
+              },
+              "v_blind_prior_reward": {
+                "queries": 449,
+                "altered_minus_real_mse": -1.0116827312321785e-05,
+                "bootstrap95": [
+                  -1.8032498543036087e-05,
+                  -2.1478976739889005e-06
+                ],
+                "prediction_rms_change": 6.95650149218656e-05
+              },
+              "reset_q": {
+                "queries": 449,
+                "altered_minus_real_mse": 0.00123371432975799,
+                "bootstrap95": [
+                  -0.00168851909025239,
+                  0.0040061057814678065
+                ],
+                "prediction_rms_change": 0.022089310690205075
+              },
+              "reset_v": {
+                "queries": 449,
+                "altered_minus_real_mse": 0.0005778970937341082,
+                "bootstrap95": [
+                  -0.0015976897035095154,
+                  0.0028890318361734337
+                ],
+                "prediction_rms_change": 0.02080422982767961
+              }
+            }
+          },
+          "first_query": {
+            "queries": 64,
+            "mse": {
+              "q": 0.22136767575736382,
+              "v": 0.22482884117945512,
+              "q_donor_action": 0.21847728844343156,
+              "q_donor_history": 0.2204793465429374,
+              "v_donor_history": 0.22380580460145733,
+              "q_blind_prior_reward": 0.2213751606158899,
+              "v_blind_prior_reward": 0.22483161719271527,
+              "reset_q": 0.21949868274388046,
+              "reset_v": 0.22501761417010283
+            },
+            "interventions": {
+              "q_donor_action": {
+                "queries": 64,
+                "altered_minus_real_mse": -0.002890387313932277,
+                "bootstrap95": [
+                  -0.007961062240108927,
+                  0.002656795639644325
+                ],
+                "prediction_rms_change": 0.02735073746821311
+              },
+              "q_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.001184438952568571,
+                "bootstrap95": [
+                  -0.003895588541679634,
+                  0.001594549927049789
+                ],
+                "prediction_rms_change": 0.008412899621474016
+              },
+              "v_donor_history": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0013640487706637616,
+                "bootstrap95": [
+                  -0.00372949675958332,
+                  0.0009234677044062828
+                ],
+                "prediction_rms_change": 0.008024571351740867
+              },
+              "q_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 9.97981136807713e-06,
+                "bootstrap95": [
+                  -2.5356112416672713e-06,
+                  2.3560592247955096e-05
+                ],
+                "prediction_rms_change": 5.5419830834190386e-05
+              },
+              "v_blind_prior_reward": {
+                "queries": 48,
+                "altered_minus_real_mse": 3.701351013500146e-06,
+                "bootstrap95": [
+                  -4.9478462670458445e-06,
+                  1.1253777586152833e-05
+                ],
+                "prediction_rms_change": 3.340070213563391e-05
+              },
+              "reset_q": {
+                "queries": 48,
+                "altered_minus_real_mse": -0.0024919906846444886,
+                "bootstrap95": [
+                  -0.005387323247736874,
+                  0.0005004392372102203
+                ],
+                "prediction_rms_change": 0.011539554032235954
+              },
+              "reset_v": {
+                "queries": 48,
+                "altered_minus_real_mse": 0.00025169732086359015,
+                "bootstrap95": [
+                  -0.0018935684003094171,
+                  0.002756813522301018
+                ],
+                "prediction_rms_change": 0.012907245846785395
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "elapsed_seconds": 73.01732969284058
+}
