@@ -242,6 +242,37 @@ evidence remain preserved.
 [Scaling figure](../outputs/robocasa-six-task-scale-20261113-r1/matched-figures02/matched-scaling.pdf) ·
 [Baseline gaps](../outputs/robocasa-six-task-scale-20261113-r1/matched-figures02/matched-baseline-gaps.pdf).
 
+### Frozen DIT advantage and history diagnostic
+
+The completed CPU diagnostic found uneven PPO quality and weak signals in the
+current learner. Each source task contains537–2,179 successful training episodes
+out of3,360, so successful behavior is present. First-to-last-ten-update success
+changes are modest and vary by task; these collection rates are separate from
+paired SFT/PPO30 evaluations.
+
+On all16 validation streams/task at four fixed collection updates, DIT weights
+are nearly uniform: effective sample size is99.50–99.86% of the panel size.
+They change the all-query successful-example share by−0.453 to+0.188 percentage
+points per task. No first-query DIT advantage AUC interval is wholly above0.5;
+IC-IQL also has no first-query interval above chance. Some Q estimates predict
+eventual success, but Q−V has weaker outcome ranking. This is observational
+evidence, not a counterfactual test of individual action quality.
+
+Archived native flow checks show DIT full/reset history differences of0.234%
+and0.214% of native output RMS for the three-/six-task fits. The corresponding
+relative imitation-loss improvements from history are+0.0056% and−0.0147%.
+These are flow predictions on128 held-out queries per actor, not new simulator
+success rates. Together with the native readout above, this favors qualifying
+advantage weighting and useful history influence before more teacher collection;
+it does not establish that stronger PPO would fix the result.
+
+All four frozen Q/V models,13,824 model-query records and144 independent
+statistic checks passed. Batched inference matched production stepping within
+3.58e-7. The panel contains4,608 unique source queries in384 episode records;
+uncertainty resamples whole streams, with one fit/model and unadjusted intervals.
+No GPU-hours were added. [Diagnostic and limitations](../outputs/robocasa-dit-diagnostic-20261115-r1/RESULT.md) ·
+[Complete statistics](../outputs/robocasa-dit-diagnostic-20261115-r1/evidence/analysis01/RESULT.json).
+
 ## Procedural LIBERO
 
 Eight training layouts fixed before simulation passed construction, initial contact,
