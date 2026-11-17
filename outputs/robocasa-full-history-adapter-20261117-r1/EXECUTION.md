@@ -61,7 +61,7 @@ conservative completed-plus-reserved total: **1.29/200 GPU-hours**.
 The next launch covers only ranks 1–3 with the same qualified collector,
 reserving at most 3 additional GPU-hours. Initial data is 12–18 MB per episode.
 
-November 17, 18:29 Shanghai: remaining qualification submitted at 18:16:28 as
+November 17, 18:23 Shanghai: remaining qualification submitted at 18:16:28 as
 `job-k72bbb17v39j` (`qual04`), 3 one-GPU workers, source `680b3dd6`,
 60-minute scheduler limit, retries off. Queue 45/416 free; personal 27/32.
 All three in-allocation GPU probes passed. The rank-0 `qual03` shard completed
@@ -87,3 +87,24 @@ a numerical regression checks values and gradients against incremental
 inference, including episode resets and memory-window truncation. The run
 sampler retains complete support episodes, their terminal feedback, and only
 the causal query prefix, with balanced scene/condition query coverage.
+
+November 17, 18:30 Shanghai: source `7b2da26f` passed all
+33 bridge/history Linux CPU tests in 83.08 seconds. The per-run causal sampler
+check also passed: complete support/terminal feedback, no future query or
+attempt leakage, matched current-only clearing, balanced query coverage and
+exact sampler continuation. Rank 1 and 3 completed their eleven episodes;
+qual04 allocation-end reports total 0.581 worker GPUh including rank-2 barrier
+wait. Provisional conservative charge 0.70 GPUh pending scheduler timestamps.
+
+Replacement submission `job-zxra5yrwo4c3` at 18:25:32 failed at 18:26:18 before
+creating an output directory. Scheduler-stored command had a new command
+prepended to the old one: native editor AX setValue looked correct but did not
+update Monaco's submitted model. Charge 0.02 GPUh. Use fresh `qual06`; verify
+actual keyboard replacement and the submitted command, not only AX value.
+Current provisional completed charge: 1.26 GPUh (0.25+0.04+0.25+0.70+0.02).
+The next one-hour qualification plus two-hour privileged fit reserve 3 more.
+
+Fresh train/development/test candidate lists are frozen in SPLITS.json;
+nominal-only eligibility and balanced condition assignment are predeclared.
+No confirmatory test outcomes have been opened. The privileged 1024-update fit
+also runs fresh attempt-2 native SFT/teacher/adapter episodes if time remains.

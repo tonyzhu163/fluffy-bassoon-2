@@ -10,8 +10,8 @@ import time
 import numpy as np
 import torch
 
-from native import load, write
-from bridge import Corpus, BalancedQueries, Queries, batch, commands
+from native import load, rollout, write
+from bridge import Corpus, BalancedQueries, Queries, batch, commands, Student
 from fluffy_bassoon.meta_rl.flow_history import FlowBridgeConfig, HistoryFlowSteeringPolicy, export_bridge_policy
 from fluffy_bassoon.meta_rl.flow_bridge_train import bridge_update, save_resume, restore_resume, query_context
 from fluffy_bassoon.robocasa.joint_steering_ppo_worker import _versions
@@ -29,6 +29,7 @@ def main():
     p.add_argument('--execution-batch',type=int,default=2)
     p.add_argument('--deadline',type=float,required=True)
     p.add_argument('--resume',type=Path)
+    p.add_argument('--native-eval',action='store_true')
     a = p.parse_args()
     torch.set_num_threads(4)
     a.output.mkdir(parents=True,exist_ok=False)
@@ -123,6 +124,10 @@ def main():
         progress['update'] += 1
         if progress['update'] == 1 or progress['update'] % 32 == 0:
             log('update',update=progress['update'],mean_seconds=float(np.mean(timings)),
+                decoder_gradient_l2=float(torch.stack([x.grad.square().sum() for x in policy.core.parameters()
+                    if x.grad is not None]).sum().sqrt()),
+                adapter_gradient_l2=float(torch.stack([x.grad.square().sum() for x in policy.kv_adapter.parameters()
+                    if x.grad is not None]).sum().sqrt()),
                 peak_cuda_bytes=torch.cuda.max_memory_allocated(),**metrics)
             timings.clear()
         if progress['update'] % 128 == 0:
@@ -138,6 +143,26 @@ def main():
     write(a.output/'summary.json',dict(complete=complete,update=progress['update'],config=asdict(config),
         frozen_motor_unchanged=_versions(native.model)==frozen,
         coverage=[dict(queries=len(c),seen=int((c>0).sum()),minimum=int(c.min()),maximum=int(c.max())) for c in sampler.coverage]))
+    if complete and a.native_eval:
+        assert a.mode == 'privileged'
+        student = Student(native,policy,'privileged')
+        seen,results=set(),[]
+        for ep in corpus.episodes:
+            meta=ep['meta']; key=(meta['scene'],tuple(meta['offset']))
+            if key in seen: continue
+            seen.add(key)
+            for name,fraction,actor in (('sft',0.,None),('teacher',1.,None),('privileged',0.,student)):
+                if time.time() >= a.deadline:
+                    write(a.output/'native-eval.json',dict(complete=False,results=results)); return
+                if actor is not None: actor.reset()
+                result=rollout(native,motor,codec,directory=a.output/f'eval-{len(seen):02d}-{name}',
+                    scene=meta['scene'],offset=meta['offset'],fraction=fraction,
+                    target_start=meta['start_signature'],attempt=2,student=actor,save_images=False,log=log)
+                results.append(dict(arm=name,scene=meta['scene'],offset=meta['offset'],
+                    success=result['success'],controls=result['controls']))
+                write(a.output/'native-eval.json',dict(complete=False,results=results))
+        write(a.output/'native-eval.json',dict(complete=True,results=results,
+            note='Privileged interface engineering test on development scenes; no public-history claim'))
 
 
 if __name__ == '__main__':

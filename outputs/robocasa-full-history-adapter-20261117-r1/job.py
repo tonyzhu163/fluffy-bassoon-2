@@ -81,7 +81,7 @@ def main():
                 trials = []
                 for index in range(8):
                     source_rank = index % 4
-                    phase = 'qual03' if source_rank == 0 else 'qual05' if source_rank == 2 else 'qual04'
+                    phase = 'qual03' if source_rank == 0 else 'qual06' if source_rank == 2 else 'qual04'
                     source = STUDY/phase/f'rank{source_rank}'/'native'
                     for fraction in (0,1):
                         episode = source/f'condition-{index:02d}-f{fraction}'
@@ -93,6 +93,7 @@ def main():
                 command=[str(PYTHON),'-Bu',str(HERE/'fit.py'),'--pin',a.pin,
                     '--manifest',str(manifest),'--output',str(out/'fit'),'--mode','privileged',
                     '--updates','1024','--execution-batch','2',
+                    '--native-eval',
                     '--deadline',str(started+(a.minutes-5)*60)]
             result=subprocess.run(command,env=env,stdout=log,stderr=subprocess.STDOUT,timeout=max(1,started+a.minutes*60-time.time()))
             rc=result.returncode
