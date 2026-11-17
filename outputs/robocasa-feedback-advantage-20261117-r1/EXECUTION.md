@@ -50,3 +50,11 @@ intervention, not a random unrelated-history baseline. The mask is an
 evaluation-only input intervention and may be out of the training distribution.
 Small scene counts and shared support/query scenes limit statistical precision;
 pairing dependencies must be retained in the final readout.
+
+Before fitting, score Stage 1 separately. Bootstrap blocks join every scene
+that appears as a query, support or donor in a shared trial. The primary
+eight-scene cross-scene panel has only two independent four-scene blocks;
+its intervals are descriptive and coarse. The all-to-all panel has one
+connected block and reports no confidence interval. This avoids treating
+recombined native branch outcomes as independent episodes. Save complete
+actor/optimizer/sampler/RNG snapshots at each declared training milestone.

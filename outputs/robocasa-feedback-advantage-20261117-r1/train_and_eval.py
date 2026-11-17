@@ -44,6 +44,12 @@ def arm_name(sign, u):
 
 
 def bootstrap_ci(scene_num_a, scene_den_a, scene_num_b=None, scene_den_b=None, *, seed=20261117, draws=10000):
+    if len(scene_num_a) < 2:
+        point = float(np.sum(scene_num_a) / np.sum(scene_den_a))
+        if scene_num_b is not None:
+            point -= float(np.sum(scene_num_b) / np.sum(scene_den_b))
+        return dict(point=point, ci95=None, independent_blocks=len(scene_num_a),
+                    limitation='One connected scene block cannot estimate between-block uncertainty')
     rng = np.random.default_rng(seed)
     n_scenes = len(scene_num_a)
     counts = rng.multinomial(n_scenes, np.full(n_scenes, 1.0 / n_scenes), size=draws)
@@ -53,20 +59,30 @@ def bootstrap_ci(scene_num_a, scene_den_a, scene_num_b=None, scene_den_b=None, *
     if scene_num_b is None:
         point = float(np.sum(scene_num_a) / np.sum(scene_den_a))
         lo, hi = np.nanquantile(rate_a, [0.025, 0.975]).tolist()
-        return dict(point=point, ci95=[float(lo), float(hi)])
+        return dict(point=point, ci95=[float(lo), float(hi)], independent_blocks=n_scenes)
     b_num = counts @ np.asarray(scene_num_b, dtype=np.float64)
     b_den = counts @ np.asarray(scene_den_b, dtype=np.float64)
     rate_b = np.divide(b_num, b_den, out=np.full(draws, np.nan), where=b_den > 0)
     diff = rate_a - rate_b
     point = float(np.sum(scene_num_a) / np.sum(scene_den_a) - np.sum(scene_num_b) / np.sum(scene_den_b))
     lo, hi = np.nanquantile(diff, [0.025, 0.975]).tolist()
-    return dict(point=point, ci95=[float(lo), float(hi)])
+    return dict(point=point, ci95=[float(lo), float(hi)], independent_blocks=n_scenes)
 
 
 def summarize_trials(trials, scenes, predictions, baseline_predictions=None):
-    """Aggregate action accuracy, Attempt-2 success, and cumulative (1-or-2) success with scene CIs."""
-    scene_index = {s: i for i, s in enumerate(scenes)}
-    n = len(scenes)
+    """Keep shared query, support and donor scenes in the same bootstrap block."""
+    parent = {s: s for s in scenes}
+    def root(s):
+        while parent[s] != s:
+            s = parent[s]
+        return s
+    for trial in trials:
+        q = trial['query_scene']
+        for s in (trial['support_scene'], trial['donor_scene']):
+            parent[root(s)] = root(q)
+    roots = sorted({root(s) for s in scenes})
+    scene_index = {s: roots.index(root(s)) for s in scenes}
+    n = len(roots)
     acc_num, att2_num, cum_num, den = np.zeros(n), np.zeros(n), np.zeros(n), np.zeros(n)
     b_att2 = np.zeros(n)
     b_cum = np.zeros(n)
@@ -96,6 +112,8 @@ def summarize_trials(trials, scenes, predictions, baseline_predictions=None):
                 ties += 1
     out = dict(
         trials=len(trials),
+        query_scenes=len(scenes),
+        independent_scene_blocks=n,
         action_accuracy=bootstrap_ci(acc_num, den),
         attempt2_success=bootstrap_ci(att2_num, den),
         cumulative_success=bootstrap_ci(cum_num, den),
@@ -714,16 +732,20 @@ def run_suite(suite_name, train_trials_base, eval_cross, eval_same, train_scenes
                         coverage_fraction=float((seen > 0).mean()),
                         eval=eval_out,
                     )
-                    if step == MILESTONES[-1]:
-                        ckpt_path = seed_dir / f'{method}-step-{step:04d}.pt'
-                        torch.save(dict(
-                            step=step, seed=seed, method=method, suite=suite_name,
-                            model=actor.state_dict(), optimizer=opt.state_dict(),
-                            critic_q=q_net.state_dict(), critic_v=v_net.state_dict(),
-                            rng=dict(sampler=sampler.bit_generator.state, torch=torch.get_rng_state()),
-                            norm_stats={k: v.tolist() for k, v in norm_stats.items()},
-                            seen_counts=seen.tolist(),
-                        ), ckpt_path)
+                    ckpt_path = seed_dir / f'{method}-step-{step:04d}.pt'
+                    torch.save(dict(
+                        step=step, seed=seed, method=method, suite=suite_name,
+                        model=actor.state_dict(), optimizer=opt.state_dict(),
+                        critic_q=q_net.state_dict(), critic_v=v_net.state_dict(),
+                        rng=dict(sampler=sampler.bit_generator.state, torch=torch.get_rng_state(),
+                                 cuda=torch.cuda.get_rng_state_all() if device.startswith('cuda') else []),
+                        norm_stats={k: v.tolist() for k, v in norm_stats.items()},
+                        seen_counts=seen.tolist(),
+                    ), ckpt_path)
+                    progress = dict(suite=suite_name, seed=seed, method=method, step=step,
+                                    total_draws=int(seen.sum()), coverage=float((seen > 0).mean()))
+                    write_json(out_dir / 'PROGRESS.json', progress)
+                    print(json.dumps(progress), flush=True)
             seed_methods[method] = dict(
                 final_coverage_fraction=float((seen > 0).mean()),
                 unique_queries_covered=int((seen > 0).sum()),
@@ -783,6 +805,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--panel', type=Path, required=True)
     p.add_argument('--out', type=Path, required=True)
+    p.add_argument('--stage1-only', action='store_true')
     args = p.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
     started = time.time()
@@ -795,6 +818,12 @@ def main():
     assert set(train_scenes).isdisjoint(eval_scenes)
 
     stage1 = evaluate_stage1(train_scenes, eval_scenes, by_key)
+    if args.stage1_only:
+        write_json(args.out / 'RESULT.json', dict(completed=True,
+            panel_summary_sha256=sha256_file(args.panel / 'SUMMARY.json'),
+            train_scenes=train_scenes, eval_scenes=eval_scenes,
+            repeat_checks=repeat_checks, stage1=stage1, elapsed_seconds=time.time()-started))
+        return
 
     # Fit state & drift normalization ONLY on training scenes' nominal / uncompensated states.
     train_states = np.stack([np.asarray(by_key[(s, 'nominal')]['decision_state'], dtype=np.float32) for s in train_scenes])
