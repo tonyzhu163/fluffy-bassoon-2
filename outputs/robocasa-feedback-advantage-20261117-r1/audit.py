@@ -90,7 +90,7 @@ def main():
                 assert b['decision_observation_sha256'] == nom['decision_observation_sha256']
                 checks += 2
 
-    # 1. Recompute Stage 1 completely independently and verify exact match.
+    # 1. Re-run the Stage 1 readout and verify exact match; shared helpers are not an independent implementation.
     re_stage1 = evaluate_stage1(result['train_scenes'], result['eval_scenes'], by_key)
     assert re_stage1['best_fixed_u_on_train'] == result['stage1']['best_fixed_u_on_train']
     for panel_key in ('probed_train_cross', 'probed_eval_cross', 'probed_eval_same', 'probed_eval_cross_all',
@@ -127,10 +127,10 @@ def main():
                 assert ckpt['step'] == 1024 and ckpt['seed'] == seed and ckpt['method'] == method
 
                 # Reconstruct exact sampler RNG state.
-                sampler = np.random.default_rng(10000 * seed + 100 + m_idx)
+                sampler = np.random.default_rng(10000 * seed + 100)
                 seen = np.zeros(n_train, dtype=np.int32)
                 for _ in range(1024):
-                    seen[sampler.integers(n_train, size=32)] += 1
+                    np.add.at(seen, sampler.integers(n_train, size=32), 1)
                 assert sampler.bit_generator.state == ckpt['rng']['sampler']
                 assert seen.tolist() == ckpt['seen_counts']
                 assert (seen > 0).all(), f'Incomplete query coverage in {suite_name}/{seed}/{method}'

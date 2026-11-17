@@ -656,7 +656,7 @@ def run_suite(suite_name, train_trials_base, eval_cross, eval_same, train_scenes
             actor = HistoryActor(input_dim).to(device)
             actor.load_state_dict(init_state)
             opt = torch.optim.AdamW(actor.parameters(), lr=3e-4, weight_decay=1e-2)
-            sampler = np.random.default_rng(10000 * seed + 100 + m_idx)
+            sampler = np.random.default_rng(10000 * seed + 100)
             seen = np.zeros(n_train, dtype=np.int32)
             is_teacher = method in ('dpt', 'memoryless')
             targets_t = tr_u_star if is_teacher else tr_a2
@@ -671,7 +671,7 @@ def run_suite(suite_name, train_trials_base, eval_cross, eval_same, train_scenes
             for step in range(1, MILESTONES[-1] + 1):
                 actor.train()
                 batch_idx = sampler.integers(n_train, size=32)
-                seen[batch_idx] += 1
+                np.add.at(seen, batch_idx, 1)
                 idx_t = torch.from_numpy(batch_idx).to(device)
                 opt.zero_grad(set_to_none=True)
                 logits = actor.sequence_logits(tokens_in[:, idx_t], reset_in[:, idx_t], tr_val[:, idx_t])[-1]
