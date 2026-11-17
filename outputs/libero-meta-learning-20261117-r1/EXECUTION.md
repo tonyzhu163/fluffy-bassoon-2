@@ -16,9 +16,10 @@ An isolated runtime inherits the qualified frozen-policy dependency set and
 installs its own robosuite1.4.0/MuJoCo3.2.3 simulator packages. It does not
 modify another environment. Optional vendor assets total175,877,791 bytes
 in76 Git LFS objects; payloads are individually SHA-checked and stored in a
-separate setup tree. Some simulator asset resolvers use source-relative
-paths; those paths must be realized or explicitly qualified before launching
-cases that need vendor assets. No complete new demo dataset is downloaded.
+separate setup tree. Source-relative asset resolution is handled by a byte-
+identical copy of simulator Python files in the setup tree, with the hydrated
+assets adjacent. The upstream Git checkout remains unchanged; the setup
+receipt hashes each copied Python file. No complete new demo dataset is downloaded.
 
 Candidate motor: existing RLinf/RLinf-Pi05-LIBERO-SFT checkpoint revision
 45ccfcc4e28634f1576ebf78cab0fbe2fd82432d. Its preserved acquisition receipt
@@ -26,7 +27,7 @@ records model SHA256
 4616e4c1966a5fb063b442ea5d69857f45e873222d839b794634d87d252ab9e7
 and normalization SHA256
 dae37d79a22108af83df9189c6710a3ec8e077d65b28e34bdf1da724e5ae30f1.
-Fresh hashes are being checked before execution. This is a different release
+Fresh hashes matched both preserved digests on November 17 before execution. This is a different release
 from the earlier audited OpenPI/LeRobot pi05_libero weights; equivalence is
 not assumed. The candidate is a LIBERO-SFT checkpoint, and no evidence here
 establishes that the backbone excluded our eight meta-test tasks. Report
@@ -61,3 +62,17 @@ the pilot coverage, not evidence of sufficient scale; also measure semantic
 skill diversity, independent task-condition trials, unique query coverage,
 success/failure coverage and learning curves before choosing bulk volume.
 Prefer one shared corpus and selective PPO source improvement where needed.
+
+The first direct CPU dependency installation stalled before completion and
+was stopped after verifying its exact owned PIDs. No GPU was allocated.
+Official PyPI wheels for robosuite, MuJoCo, NumPy and Pydantic were downloaded
+and checked against PyPI SHA256 metadata, then transferred for local install.
+A CPU preflight checks imports, simulator source copies, the published BDDL
+manifest, image orientation and public state packing. GPU and simulator
+qualification still require the actual scheduled job.
+
+The corpus plan now includes nested 8/16/24-task development curves and
+independent trial-depth curves, with semantic coverage reported separately.
+No bulk episode count is committed before measured costs. Commands issued
+to env.step are the public action history; environment-internal delayed or
+filtered controls are excluded from student inputs.

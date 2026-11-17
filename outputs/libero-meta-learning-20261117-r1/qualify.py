@@ -70,13 +70,14 @@ def rollout(motor, case, output, *, zero_adapter=False, gradient=False):
             if len(rows)%10==0:
                 print(json.dumps(dict(case=case,controls=controls,success=success)),flush=True)
         np.savez_compressed(output/'episode.npz',states=states,images=images,features=features,
-            proposed_actions=proposals,executed_actions=executed,action_masks=masks,
+            proposed_actions=proposals,issued_actions=executed,action_masks=masks,
             noise=noises[:len(rows)],rewards=np.array([r['reward'] for r in rows],np.float32),
             dones=np.array([r['terminated'] or r['truncated'] for r in rows],bool))
         result=dict(case=case,prompt=prompt,zero_adapter=zero_adapter,success=success,controls=controls,
             initial_hashes=first_hash,initial_state=first['environment_reproducibility']['initial_state_fingerprint'],
             action_sha256=action_hash.hexdigest(),seconds=time.monotonic()-began,rows=rows,
             npz_bytes=(output/'episode.npz').stat().st_size,
+            action_record='public commands issued to env.step; hidden delay/filter effects are not student inputs',
             role='development runtime qualification; not held-out adaptation')
         write(output/'result.json',result)
         print(json.dumps({k:v for k,v in result.items() if k not in ('rows','initial_hashes')}),flush=True)

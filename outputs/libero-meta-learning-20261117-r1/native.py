@@ -113,8 +113,9 @@ class Motor:
 
 def make_adapter():
     from fluffy_bassoon.meta_rl.flow_history import FlowBridgeConfig, HistoryFlowSteeringPolicy
-    # History retains10 executed7D controls, padded to the model's32D width.
-    # Padding is always zero; raw controls and delivered-action masks are saved.
+    # History retains ten issued 7D controls, padded to the model's 32D width.
+    # Environment-internal delayed/applied controls remain hidden from students.
+    # Padding is always zero; commands and delivered-action masks are saved.
     cfg=FlowBridgeConfig(observation_dim=2056,history_action_dim=320,
         width=256,layers=6,heads=8,context_length=160,kv_heads=1,head_dim=256,
         kv_rank=4,kv_layers=tuple(range(18)),scale=1.,action_horizon=10,

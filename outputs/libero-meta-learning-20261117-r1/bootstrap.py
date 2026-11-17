@@ -29,6 +29,7 @@ def main():
     assert sys.platform == 'linux'
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--assets', action='store_true')
+    parser.add_argument('--wheelhouse', type=Path)
     args = parser.parse_args()
     assert subprocess.check_output(['git','-C',str(SOURCE),'rev-parse','HEAD'],text=True).strip() == PIN
     SETUP.mkdir(parents=True, exist_ok=True)
@@ -41,7 +42,8 @@ def main():
     site = SETUP/'env/lib/python3.11/site-packages'
     (site/'shared-frozen-policy-dependencies.pth').write_text(str(BASE/'lib/python3.11/site-packages')+'\n')
     env = dict(os.environ, UV_CACHE_DIR=str(SETUP/'uv-cache'), UV_LINK_MODE='copy')
-    subprocess.run(['/mowenjie/bin/uv','pip','install','--python',str(SETUP/'env/bin/python'),
+    wheel_args = ['--find-links',str(args.wheelhouse)] if args.wheelhouse else []
+    subprocess.run(['/mowenjie/bin/uv','pip','install','--python',str(SETUP/'env/bin/python'),*wheel_args,
         '--no-deps','robosuite==1.4.0','mujoco==3.2.3','bddl==1.0.1','robomimic==0.2.0',
         'easydict==1.9','numpy==1.26.4','pydantic==1.10.22','httpx==0.24.1','httpcore==0.17.3',
         'h11==0.14.0','msgpack==1.0.8'],env=env,check=True)
@@ -82,16 +84,41 @@ def main():
             for record in pool.map(fetch,pending):
                 fetched.append(record)
                 print('asset',len(fetched),'/',len(pending),flush=True)
+    # Some upstream resolvers locate assets through __file__, ignoring the
+    # config. Copy Python source byte-for-byte into a setup package and point
+    # its source-relative asset directory at the hydrated tree. The upstream
+    # Git checkout stays clean; no symlinked Python source resolves back there.
+    package_root = SETUP/'simulator-source'
+    source_records = []
+    for path in sorted((SOURCE/'simulator-source/libero').rglob('*')):
+        relative = path.relative_to(SOURCE/'simulator-source')
+        if relative.parts[:3] == ('libero','libero','assets'):
+            continue
+        target = package_root/relative
+        if path.is_dir():
+            target.mkdir(parents=True,exist_ok=True)
+        elif path.suffix == '.py':
+            shutil.copyfile(path,target)
+            assert digest(target) == digest(path)
+            source_records.append(dict(path=str(relative),sha256=digest(path)))
+        elif not target.exists():
+            target.symlink_to(path)
+    local_simulator = package_root/'libero/libero'
+    asset_link = local_simulator/'assets'
+    if not asset_link.exists():
+        asset_link.symlink_to(asset_root,target_is_directory=True)
+    assert asset_link.resolve() == asset_root.resolve()
     config = SETUP/'libero-config'; config.mkdir(exist_ok=True)
-    paths = dict(benchmark_root=str(simulator),bddl_files=str(simulator/'bddl_files'),
+    paths = dict(benchmark_root=str(local_simulator),bddl_files=str(simulator/'bddl_files'),
         init_states=str(simulator/'init_files'),datasets=str(SETUP),assets=str(asset_root))
     (config/'config.yaml').write_text(''.join(k+': '+json.dumps(v)+'\n' for k,v in paths.items()))
     receipt = dict(source_pin=PIN, source=str(SOURCE), setup=str(SETUP),free_bytes_before=free,
         quota='quota command unavailable; actual write probe passed',
         lfs_required=len(pending),lfs_bytes=sum(p[3] for p in pending),lfs_fetched=fetched,
+        simulator_package=str(package_root),python_sources=source_records,
         inherited_policy_dependencies=str(BASE), model_loaded=False, gpu_used=False)
     (SETUP/'preparation.json').write_text(json.dumps(receipt,indent=2)+'\n')
-    print(json.dumps({k:v for k,v in receipt.items() if k!='lfs_fetched'}),flush=True)
+    print(json.dumps({k:v for k,v in receipt.items() if k not in ('lfs_fetched','python_sources')}),flush=True)
 
 
 if __name__ == '__main__':

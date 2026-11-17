@@ -20,8 +20,8 @@ PYTHON=SETUP/'env/bin/python'
 
 
 def environment():
-    return dict(os.environ,PYTHONPATH=f'{CODE}/src:{RUNTIME}:{OPENPI}/src:{OPENPI}/packages/openpi-client/src:{PRO}:{PRO}/simulator-source:{HERE}',
-        RLINF_PATH=str(RUNTIME),LIBERO_PRO_ROOT=str(PRO/'simulator-source'),
+    return dict(os.environ,PYTHONPATH=f'{CODE}/src:{RUNTIME}:{OPENPI}/src:{OPENPI}/packages/openpi-client/src:{PRO}:{SETUP}/simulator-source:{HERE}',
+        RLINF_PATH=str(RUNTIME),LIBERO_PRO_ROOT=str(SETUP/'simulator-source'),
         LIBERO_CONFIG_PATH=str(SETUP/'libero-config'),MUJOCO_GL='egl',PYOPENGL_PLATFORM='egl',
         MUJOCO_EGL_DEVICE_ID='0',PYTHONDONTWRITEBYTECODE='1',PYTHONUNBUFFERED='1',
         OMP_NUM_THREADS='4',MKL_NUM_THREADS='4',OPENBLAS_NUM_THREADS='4',

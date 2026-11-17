@@ -83,7 +83,11 @@ observations. Completely independent one-off faults provide no persistent
 condition to infer and must not be advertised as guaranteed history tasks.
 
 Inputs are current cameras, public robot state, instruction, causal prior
-observations, executed actions, native rewards and episode boundaries.
+observations, issued actions, native rewards and episode boundaries. Record
+only the controls actually sent to env.step before termination, rather than
+unused chunk predictions. Under action delay/filter perturbations, applied
+controls can differ from issued controls; hidden applied controls are audit
+information and must not enter learner history.
 Exclude perturbation IDs/parameters, simulator internals, source checkpoint
 identity, future outcomes and teacher targets. Match the physical-control
 budget per attempt, action horizon and inference settings across arms.
@@ -176,6 +180,52 @@ inputs, actor query coverage, decoded adapter control, and whether estimated
 advantages contain useful action information. A weak teacher or a broken KV
 interface makes a null outcome inconclusive about meta-learning in general.
 Use concrete diagnostics; no arbitrary success-rate admission threshold.
+
+## Corpus scale and representativeness
+
+The user explicitly requested a large enough base. The 24 fitting task IDs
+are a starting coverage target, not proof that the base is sufficient. This
+release contains many related pick-and-place tasks; report unique task IDs,
+semantic action types, objects, scene layouts and condition mechanisms
+separately. Repeating frames or renaming an object does not create an
+independent task. A negative result on this base alone cannot rule out
+meta-learning at larger or more varied scale.
+
+Collect balanced task-condition trials and retain both successful and failed
+attempts. A trial contains three chronological attempts with fresh resets
+under the same persistent condition. Sample several actual conditions for
+each task and family; multiple random seeds for a fixed camera offset do not
+count as multiple offsets. Keep condition assignment independent of task ID
+so the learner cannot infer the change from the instruction alone. Donor
+history must differ in the actual condition, not just in the reset seed.
+
+Use nested 8-, 16- and 24-task subsets (two, four and six tasks per suite),
+selected by task semantics before fitting results. Cover pushing, articulated
+controls and multistep behavior as well as pick-and-place from the smallest
+subset where possible. Compare breadth at matched total source trials and
+actor updates; separately vary independent trials per task at fixed breadth.
+These development curves distinguish more variety from simply more data.
+Reuse one collection through explicit subset manifests instead of collecting
+or storing separate corpora. Freeze exact subsets before these fits.
+
+Size collection in independent trials and decision states, not video frames.
+For example, 24 tasks x 8 actual conditions x 16 independent trials x 3
+attempts is 9,216 episodes. This is a sizing example, not an authorized launch
+count or a sufficiency threshold. The measured seconds/episode, teacher-query
+cost and compressed bytes/episode determine which balanced volume fits the
+existing 200 GPU-hour cap after reserving fitting and paired evaluation.
+Report achieved cells, independent trials, decision states, outcomes and
+native-return diversity, including missing or degenerate cells.
+
+PPO is optional for initial collection: frozen SFT rollouts supply genuine
+history, and competent teacher calls can label the same query observations.
+Use PPO selectively when source behavior lacks competent actions, useful
+outcome variation or genuine improvement streams for AD. A frozen policy's
+random failures and successes must not be relabeled as a learning process.
+Teacher labels and optimizer trajectories remain training-only supervision.
+If data-scale curves are still rising or signal remains poor at the budget
+limit, the result is a limited or inconclusive test of this recipe; do not
+turn a small-corpus failure into a claim that the whole direction is dead.
 
 ## Endpoints, uncertainty and decision
 
