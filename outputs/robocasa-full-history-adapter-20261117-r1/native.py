@@ -34,7 +34,9 @@ def public(obs, raw):
     # Gym's official policy view is eef7/base7/gripper2 (16D). RLinf's
     # history port requires its raw 25D sensor layout before selecting those
     # same 16 motor coordinates. Preserve public sensors, never pad fake ones.
-    sensors = raw._get_observations(force_update=True)
+    # Read the same sensor sample returned by env.step. Forcing an update
+    # here would advance observable sampling and desynchronize state/images.
+    sensors = raw._get_observations(force_update=False)
     keys = ('robot0_eef_pos', 'robot0_eef_quat', 'robot0_gripper_qpos',
             'robot0_gripper_qvel', 'robot0_base_to_eef_pos',
             'robot0_base_to_eef_quat', 'robot0_base_pos', 'robot0_base_quat')
