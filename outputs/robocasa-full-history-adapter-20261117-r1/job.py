@@ -21,6 +21,7 @@ def main():
     p.add_argument('--pin', required=True)
     p.add_argument('--attempt', required=True)
     p.add_argument('--minutes', type=int, default=55)
+    p.add_argument('--workers', type=int, choices=(1,4), default=4)
     a = p.parse_args()
     assert a.attempt.isalnum() and 10 <= a.minutes <= 60
     assert socket.gethostname().startswith('job-')
@@ -28,7 +29,7 @@ def main():
     assert not subprocess.check_output(['git','-C',str(CODE),'status','--porcelain','--untracked-files=no'])
     slots = STUDY/a.attempt
     slots.mkdir(parents=True, exist_ok=True)
-    for rank in range(4):
+    for rank in range(a.workers):
         out = slots/f'rank{rank}'
         try:
             out.mkdir()
@@ -36,7 +37,7 @@ def main():
         except FileExistsError:
             continue
     else:
-        raise RuntimeError('Four slots already claimed; retries need a fresh attempt ID')
+        raise RuntimeError('All slots already claimed; retries need a fresh attempt ID')
     free = shutil.disk_usage(STUDY).free
     assert free > 16*2**30  # Four shards need at most ~6 GB of decision images; retain recovery space.
     probe_write = out/'write-probe'; probe_write.write_text('probe'); probe_write.unlink()
@@ -73,7 +74,7 @@ def main():
         (out/'terminal.json').write_text(json.dumps(dict(receipt,ended=time.time(),exit_code=rc),indent=2)+'\n')
     # A PyTorchJob can end when master exits; wait until every shard is banked.
     while rc == 0:
-        terminals = [slots/f'rank{i}'/'terminal.json' for i in range(4)]
+        terminals = [slots/f'rank{i}'/'terminal.json' for i in range(a.workers)]
         if any(p.exists() and json.loads(p.read_text())['exit_code'] != 0 for p in terminals):
             rc = 1
             break

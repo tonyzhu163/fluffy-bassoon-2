@@ -29,12 +29,23 @@ def write(path, value):
     temporary.replace(path)
 
 
-def public(obs):
+def public(obs, raw):
     item = reset.inputs(obs)
+    # Gym's official policy view is eef7/base7/gripper2 (16D). RLinf's
+    # history port requires its raw 25D sensor layout before selecting those
+    # same 16 motor coordinates. Preserve public sensors, never pad fake ones.
+    sensors = raw._get_observations(force_update=True)
+    keys = ('robot0_eef_pos', 'robot0_eef_quat', 'robot0_gripper_qpos',
+            'robot0_gripper_qvel', 'robot0_base_to_eef_pos',
+            'robot0_base_to_eef_quat', 'robot0_base_pos', 'robot0_base_quat')
+    state = np.concatenate([np.asarray(sensors[k]).reshape(-1) for k in keys]).astype(np.float32)
+    if state.shape != (25,):
+        raise ValueError(f'Native public state layout differs: {state.shape}')
+    np.testing.assert_allclose(state[[*range(11,25),7,8]], item['observation/state'], atol=1e-6, rtol=0)
     return dict(main_images=item['observation/image'][None],
         wrist_images=item['observation/wrist_image'][None],
         extra_view_images=item['observation/right_image'][None, None],
-        states=item['observation/state'][None].astype(np.float32),
+        states=state[None],
         task_descriptions=[item['prompt']])
 
 
@@ -120,7 +131,7 @@ def rollout(native, motor, codec, *, directory, scene, offset, fraction,
             if decision is None and first_grasp is None and np.linalg.norm(reset.geometry(raw, robot, centers)) <= .10:
                 decision = t
             active = decision is not None and first_grasp is None and t < decision + 100
-            item = public(obs)
+            item = public(obs, raw)
             feat, prepared = motor.prepare_batch(item)
             noise = noises[t // 5]
             base = base_prediction(native, prepared, noise)
