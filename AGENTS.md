@@ -29,6 +29,10 @@ runs per the [retention policy](README.md#artifact-retention).
   validity constraint, or decision it protects. Do not invent numerical
   admission gates or add tests merely to complete a checklist. Prefer
   descriptive results and targeted checks that resolve a real uncertainty.
+- Size the record to the run. An exploratory run needs only a short plan, the
+  run itself and a result note in `outputs/<run-id>/`. Reserve full audits,
+  receipts and hash readbacks for confirmatory panels whose results enter
+  `docs/FINDINGS.md`.
 - Use Git directly on Macs with direct access. On Macs that require a proxy,
   run `proxy_on` or `proxy_on_clash` in the same shell as Git.
 - Keep the main clone on `main` and commit routine changes (fixes, docs,
