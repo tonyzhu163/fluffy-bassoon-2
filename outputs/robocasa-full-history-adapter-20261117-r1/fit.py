@@ -51,6 +51,9 @@ def main():
     write(a.output/'motor.json',identity)
     corpus = Corpus(manifest['trials'],privileged=a.mode=='privileged')
     reader = Queries(corpus,native,motor)
+    development = (Corpus(manifest['development_trials'])
+                   if manifest.get('development_trials') else corpus)
+    development_reader = Queries(development,native,motor)
     first = corpus.strata[0][0]
     prepared = reader.prepare([first]); cache = prepared['prefix'][2]
     config = FlowBridgeConfig(observation_dim=2076 if a.mode=='privileged' else 2073,
@@ -70,20 +73,24 @@ def main():
                                   sampler=sampler.rng,generator=generator)
         sampler.restore(progress['sampler'])
     fixed_indices = []
-    for stratum in corpus.strata:
-        active = [i for i in stratum if corpus.episode(i)[0]['meta']['rows'][i[2]]['active']]
-        quiet = [i for i in stratum if not corpus.episode(i)[0]['meta']['rows'][i[2]]['active']]
-        fixed_indices.extend([group[len(group)//2] for group in (active,quiet) if group])
+    for stratum in development.strata:
+        # Evaluate the first active query in each supervised attempt, before
+        # its first perturbed command can reveal the condition within-query.
+        for attempt in sorted({i[1] for i in stratum}):
+            active = [i for i in stratum if i[1] == attempt and development.episode(i)[0]['meta']['rows'][i[2]]['active']]
+            quiet = [i for i in stratum if i[1] == attempt and not development.episode(i)[0]['meta']['rows'][i[2]]['active']]
+            fixed_indices.extend([active[0]] if active else [])
+            fixed_indices.extend([quiet[len(quiet)//2]] if quiet else [])
     diagnostic_rng = torch.Generator(device='cuda:0').manual_seed(871105)
 
     @torch.no_grad()
     def diagnostic():
         policy.eval(); rows = []
         for idx in fixed_indices:
-            ep,q = corpus.episode(idx)
-            b = batch(corpus,[idx],policy,codec,stats,a.mode,diagnostic_rng)
+            ep,q = development.episode(idx)
+            b = batch(development,[idx],policy,codec,stats,a.mode,diagnostic_rng)
             context = query_context(policy,b)
-            prepared = reader.prepare([idx])
+            prepared = development_reader.prepare([idx])
             from native import base_prediction
             base = codec.mapped_physical(base_prediction(native,prepared,ep['noise'][q]))
             predicted = commands(native,policy,prepared,context,ep['noise'][q][None])[0]
@@ -98,7 +105,8 @@ def main():
             if progress['update'] == 0 and a.resume is None:
                 np.testing.assert_array_equal(predicted,base)
         write(a.output/f'decoded-{progress["update"]:05d}.json',dict(rows=rows,
-            note='Training/development command diagnostic, not held-out policy performance'))
+            note=('Disjoint development command diagnostic; not held-out policy performance'
+                  if development is not corpus else 'Engineering training-query diagnostic; not held-out policy performance')))
         log('decoded',update=progress['update'],active_queries=sum(r['active'] for r in rows),
             active_native_mse=float(np.mean([r['native_xyz_mse'] for r in rows if r['active']])),
             active_adapter_mse=float(np.mean([r['adapter_xyz_mse'] for r in rows if r['active']])),

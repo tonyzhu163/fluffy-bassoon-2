@@ -125,3 +125,25 @@ with finite decoder and adapter gradients, 0.55 seconds/update and 7.46 GB peak
 CUDA allocation. Initial active XYZ teacher MSE is 0.12922; inactive error is
 zero. Later command diagnostics and fresh native attempt-2 comparisons are
 pending. This is an explicitly privileged interface check, not a history result.
+
+November 17, 18:50 Shanghai: all 20 development offset pairs
+completed. Teacher success 20/20; uncorrected success 4/20. The condition set
+remains exactly the predeclared 8 ID + 12 held-out-value conditions. All signs,
+axes and diagonal directions remain, including the clipped 6 cm cases.
+These use three development scenes and are engineering evidence only;
+QUALIFICATION.json preserves the case-level results and failed nominal screen.
+qual06 worker allocation ended with 0.173 GPUh; conservatively charge 0.25.
+Completed provisional campaign charge is now 1.51 GPUh, plus the 2-hour
+priv01 reservation. At update512 the privileged adapter's active decoded XYZ
+MSE is 0.12884 versus native 0.12922: command movement remains very small.
+
+Next engineering check: at most 0.25 GPUh to measure decoded command authority
+at fixed adapter scales on training-condition development queries. This does
+not open held-out learner outcomes or modify the running fit. Refit only from
+that interface evidence. Main collection remains contingent on useful native
+control. A nine-constant development correction baseline is implemented but
+not launched; it has privileged window timing, never the hidden condition.
+The main public-history fits will use disjoint development queries for curves,
+and the larger execution batch of8 will be measured against the saved logical
+batch8 (priv01 peaked at7.46GB on the97.9GB allocation). Core/model architecture
+and optimization budget are unchanged.

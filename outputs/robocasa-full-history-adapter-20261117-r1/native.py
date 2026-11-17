@@ -86,7 +86,8 @@ def command_feedback(physical, codec):
 
 
 def rollout(native, motor, codec, *, directory, scene, offset, fraction,
-            target_start=None, attempt=1, student=None, log=None, save_images=True):
+            target_start=None, attempt=1, student=None, log=None, save_images=True,
+            fixed_offset=None):
     """All geometry stays in the environment/teacher, outside student inputs.
 
     The approach-window flag is held for five physical controls, matching the
@@ -102,6 +103,9 @@ def rollout(native, motor, codec, *, directory, scene, offset, fraction,
     offset = np.asarray(offset, np.float64)
     if offset.shape != (3,) or not np.isfinite(offset).all():
         raise ValueError('Finite base-frame offset required')
+    if fixed_offset is not None:
+        fixed_offset = np.asarray(fixed_offset, np.float64)
+        assert student is None and fixed_offset.shape == (3,) and np.isfinite(fixed_offset).all()
     (env, obs), start_key = reset.matched_start(scene, directory.name, target_start, log)
     raw = env.unwrapped.env
     robot = raw.robots[0]
@@ -147,7 +151,8 @@ def rollout(native, motor, codec, *, directory, scene, offset, fraction,
             if student is None:
                 commanded = base_physical.copy()
                 if active:
-                    commanded[:5, :3] = np.clip(commanded[:5, :3] - fraction * offset[None] / gain[None],
+                    compensation = fraction * offset if fixed_offset is None else fixed_offset
+                    commanded[:5, :3] = np.clip(commanded[:5, :3] - compensation[None] / gain[None],
                                                 controller.input_min[:3], controller.input_max[:3])
                 native._prepared = None
             else:
@@ -196,6 +201,7 @@ def rollout(native, motor, codec, *, directory, scene, offset, fraction,
             payload['images'] = np.asarray(images, np.uint8)
         np.savez_compressed(directory / 'episode.npz', **payload)
         result = dict(scene=scene, offset=offset.tolist(), fraction=fraction, attempt=attempt,
+            fixed_offset=None if fixed_offset is None else fixed_offset.tolist(),
             start_signature=start_key, success=success, controls=len(actions), decisions=len(rows),
             onset=decision, first_grasp=first_grasp, teacher_clipped_controls=clipped,
             controller_gain=gain.tolist(), controller_input_min=controller.input_min.tolist(),

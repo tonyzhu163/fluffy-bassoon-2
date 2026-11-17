@@ -267,7 +267,7 @@ Report both for in-distribution and held-out groups separately.
   pooled held-out contrast is the main generalization result.
 
 **Episode count.** 64 shared supports + 1,344 DPT queries + 320 reference
-episodes = **1,728 episodes**, plus 96 optional opposite-history episodes.
+episodes = **1,728 episodes**, plus 96 optional opposite-history queries and 32 additional opposite-condition supports (128 extra episodes).
 Profile throughput first. If the initial allocation cannot fit, defer optional
 controls and attempt-3 endpoints before reducing independent scenes. Any
 change is fixed from timing before inspecting confirmatory outcomes.

@@ -23,13 +23,21 @@ def main():
     p.add_argument('--minutes', type=int, default=55)
     p.add_argument('--workers', type=int, choices=range(1,5), default=4)
     p.add_argument('--rank-offset', type=int, default=0)
-    p.add_argument('--stage', choices=('qualify','privileged'), default='qualify')
+    p.add_argument('--stage', choices=('qualify','privileged','collect','fit','fixed','authority'), default='qualify')
     p.add_argument('--scene', type=int)
+    p.add_argument('--split', choices=('train','development','test'))
+    p.add_argument('--corpus', type=Path)
+    p.add_argument('--checkpoint', type=Path)
     a = p.parse_args()
     assert a.attempt.isalnum() and 10 <= a.minutes <= (60 if a.stage == 'qualify' else 240)
-    assert a.stage == 'qualify' or (a.workers == 1 and a.rank_offset == 0)
+    assert a.stage != 'privileged' or (a.workers == 1 and a.rank_offset == 0)
+    assert (a.split is not None) == (a.stage == 'collect')
+    assert (a.corpus is not None) == (a.stage == 'fit')
+    assert a.stage != 'fixed' or (a.workers == 3 and a.rank_offset == 0)
+    assert (a.checkpoint is not None) == (a.stage == 'authority')
+    assert a.stage != 'authority' or (a.workers == 1 and a.rank_offset == 0)
     assert a.scene is None or (a.stage == 'qualify' and a.workers == 1)
-    assert 0 <= a.rank_offset and a.rank_offset + a.workers <= 4
+    assert 0 <= a.rank_offset and a.rank_offset + a.workers <= (6 if a.stage == 'fit' else 4)
     assert socket.gethostname().startswith('job-')
     assert subprocess.check_output(['git','-C',str(CODE),'rev-parse','HEAD'],text=True).strip() == a.pin
     assert not subprocess.check_output(['git','-C',str(CODE),'status','--porcelain','--untracked-files=no'])
@@ -77,6 +85,23 @@ def main():
                 command=[str(PYTHON),'-Bu',str(HERE/'qualify.py'),'--pin',a.pin,'--rank',str(rank),
                     '--output',str(out/'native'),'--deadline',str(started+(a.minutes-3)*60)]
                 if a.scene is not None: command += ['--scene',str(a.scene)]
+            elif a.stage == 'collect':
+                command=[str(PYTHON),'-Bu',str(HERE/'collect.py'),'--pin',a.pin,'--rank',str(rank),
+                    '--output',str(out/'native'),'--split',a.split,
+                    '--deadline',str(started+(a.minutes-5)*60)]
+            elif a.stage == 'fixed':
+                command=[str(PYTHON),'-Bu',str(HERE/'fixed.py'),'--pin',a.pin,'--rank',str(rank),
+                    '--output',str(out/'native'),'--deadline',str(started+(a.minutes-5)*60)]
+            elif a.stage == 'authority':
+                command=[str(PYTHON),'-Bu',str(HERE/'authority.py'),'--pin',a.pin,
+                    '--checkpoint',str(a.checkpoint),'--manifest',str(STUDY/'priv01/rank0/corpus.json'),
+                    '--output',str(out/'authority')]
+            elif a.stage == 'fit':
+                command=[str(PYTHON),'-Bu',str(HERE/'fit.py'),'--pin',a.pin,
+                    '--manifest',str(a.corpus),'--output',str(out/'fit'),
+                    '--mode','full' if rank % 2 == 0 else 'current','--seed',str(rank//2),
+                    '--updates','4096','--execution-batch','8',
+                    '--deadline',str(started+(a.minutes-5)*60)]
             else:
                 trials = []
                 for index in range(8):
