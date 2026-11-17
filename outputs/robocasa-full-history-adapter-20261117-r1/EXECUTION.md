@@ -182,3 +182,10 @@ each condition appearing8 times across32 training scenes. Development has
 each condition twice; test condition assignment is also frozen. Candidate
 scene lists and their hashes are unchanged. This is a pre-collection design
 correction, not selection using outcomes.
+
+The native score-map reference also covers the exact0.5 tie. The history
+codec used >0.5 while RoboCasa's converter uses >=0.5; align that boundary
+for subsequent source pins and qualify it against the actual converter.
+Existing tapes preserve their actually executed physical controls and remain
+usable. Active worktrees stay unchanged; no raw data is rewritten. No claim
+is made that this rare tie explains the fit's understeering.

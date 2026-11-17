@@ -77,7 +77,7 @@ class DirectActionCodec:
         physical = np.asarray(commands, np.float32).copy()
         if physical.shape[-2:] != (50, 12) or not np.isfinite(physical).all():
             raise ValueError("Require finite native H50x12 commands")
-        physical[..., list(BINARY)] = np.where(physical[..., list(BINARY)] > .5, 1., -1.)
+        physical[..., list(BINARY)] = np.where(physical[..., list(BINARY)] >= .5, 1., -1.)
         return physical
 
     def feedback_control(self, commands):

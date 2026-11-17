@@ -122,6 +122,10 @@ def test_native_score_controls_match_pandaomron_key_converter():
                          ref["robot0_base"], ref["robot0_torso"], ref["robot0_base_mode"]]
         np.testing.assert_array_equal(actual, expected)
     np.testing.assert_array_equal(actions, original)
+    from fluffy_bassoon.meta_rl.flow_history import DirectActionCodec
+    chunks = np.broadcast_to(original[:, None], (2, 50, 12)).copy()
+    np.testing.assert_array_equal(DirectActionCodec.mapped_physical(chunks),
+                                  np.broadcast_to(mapped[:, None], chunks.shape))
 
 
 def test_flow_labels_match_released_training_transform_without_binary_score_remap(native_pipeline):
