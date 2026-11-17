@@ -480,7 +480,7 @@ class HistoryFlowSteeringPolicy(nn.Module):
         return _add(base_velocity, delta.expand_as(base_velocity).to(base_velocity.dtype))
 
     def flow_matching_loss(self, model, observation, target_actions, noise, timestep,
-                           cache, prefix_mask, context, *, sample_weights=None):
+                           cache, prefix_mask, context, *, sample_weights=None, action_mask=None):
         """Flow-matching MSE over active coordinates, supporting AD/DPT/DIT/IC-IQL weights."""
         batch = len(target_actions)
         expected = (batch, self.config.action_horizon, self.config.model_action_dim)
@@ -493,7 +493,16 @@ class HistoryFlowSteeringPolicy(nn.Module):
         predicted = self.predict_velocity(
             model, observation, noisy_actions, timestep, cache, prefix_mask, context
         )[..., :self.config.active_action_dim]
-        per_sample = (predicted - target_velocity).square().mean(dim=(-1, -2))
+        squared = (predicted - target_velocity).square()
+        if action_mask is None:
+            per_sample = squared.mean(dim=(-1, -2))
+        else:
+            # A proposed chunk is longer than the controls delivered before
+            # replanning. Unvalidated suffixes must not become actor targets.
+            if (action_mask.shape != squared.shape or action_mask.dtype != torch.bool
+                    or not action_mask.flatten(1).any(dim=1).all()):
+                raise ValueError("Require a nonempty boolean active-coordinate mask per query")
+            per_sample = torch.where(action_mask, squared, 0.).sum(dim=(-1, -2)) / action_mask.sum(dim=(-1, -2))
         if sample_weights is not None:
             weights = sample_weights.reshape(batch).detach().to(per_sample.dtype)
             if not torch.isfinite(weights).all() or (weights < 0).any():

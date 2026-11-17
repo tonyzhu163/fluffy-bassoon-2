@@ -53,6 +53,8 @@ def slice_batch(batch, begin, end):
     result = {k: batch[k][:, begin:end] for k in sequence}
     for key in ("query_rel", "target_actions", "noise", "timesteps", "weights"):
         result[key] = batch[key][begin:end]
+    if "action_mask" in batch:
+        result["action_mask"] = batch["action_mask"][begin:end]
     result["query_indices"] = batch["query_indices"][begin:end]
     return result
 
@@ -63,7 +65,7 @@ def flow_batch_loss(policy, model, batch, prepare_queries):
     observation, cache, mask = prepare_queries(batch["query_indices"])
     return policy.flow_matching_loss(model, observation, batch["target_actions"],
         batch["noise"], batch["timesteps"], cache, mask, context,
-        sample_weights=batch["weights"])
+        sample_weights=batch["weights"], action_mask=batch.get("action_mask"))
 
 
 def bridge_update(policy, model, optimizer, batch, prepare_queries, *, execution_batch_size):

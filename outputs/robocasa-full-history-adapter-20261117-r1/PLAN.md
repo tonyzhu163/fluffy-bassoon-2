@@ -1,8 +1,10 @@
 # Full history adapter: in-context recalibration of a frozen VLA
 
 Written November 17, 2026. Revised the same day to merge the duplicate
-closed-loop bridge plan and the agreed scope changes. **Plan only; no jobs
-submitted.** Code was reviewed at main `6f4b5ce0`. The actual implementation,
+closed-loop bridge plan and the agreed scope changes. **Execution authorized:**
+the user approved up to **200 GPU-hours** for this campaign on November 17.
+Implementation is starting; jobs and usage are recorded in EXECUTION.md.
+Code was reviewed at main `dae30718`. The actual implementation,
 validation, source pin, data manifests and allocations must be recorded before
 launch. This is a new phase, separate from the closed 8 GPU-hour pilot and the
 230 GPU-hour campaign.
@@ -27,7 +29,9 @@ through what happens during an attempt.
 - **Deployment.** No weight updates and no privileged input.
 
 The training distribution is part of the method. Its conditions vary across
-trials, so the student can identify the condition only from earlier attempts.
+trials. Earlier attempts can reveal it before the next attempt; observations
+within the current attempt may also reveal it, which the cleared-history
+control measures.
 Test conditions include magnitudes and directions never seen in training.
 That separates in-context inference from memorizing a few fixed corrections.
 
@@ -50,7 +54,9 @@ remains negative in aggregate.
 This phase covers OpenDrawer only. If it is positive, the same pipeline
 extends to two or three more RoboCasa tasks that the nominal SFT policy can
 solve. That extension is costed separately (see the last section). The
-paper-level ceiling is about 150 GPU-hours, including this phase.
+campaign hard cap is 200 GPU-hours, including qualification, failures, retries,
+PPO comparison and any contingent task/objective extension. Closed campaigns
+are not reopened. This is a ceiling, not a spending target.
 
 ## 1. The adaptation problem
 
@@ -60,7 +66,10 @@ paper-level ceiling is about 150 GPU-hours, including this phase.
   - Predict 50 controls, execute 5 before replanning; 10 denoising steps.
 - **Hidden condition.** An end-effector goal offset `z`, constant across all
   attempts of one trial, applied over the pilot's 100-control approach window
-  and ending at first grasp.
+  and ending at the first decision boundary after grasp. Window flags update
+  at five-control boundaries so teacher labels depend only on the current
+  decision state. This is at most four controls later than the old pilot;
+  qualification checks this explicit timing migration.
 - **Training conditions.** Lateral and depth axes separately, magnitudes 2 cm
   and 4 cm, both signs: eight conditions. Qualify the depth axis in §2 before
   using it.
@@ -109,10 +118,12 @@ Engineering checks before bulk collection, on development scenes:
      and quantify clipping.
    - Fit one bridge that is given the offset as a privileged input. Confirm it
      beats the best fixed correction on development resets.
-   - If it doesn't, the interface can't express the correction: fix `scale` or
-     the interface before the main fits. Fix `scale` from the measured action
-     change it can produce, not from outcomes.
-   - A condition the teacher cannot correct is dropped and reported.
+   - Failure can reflect labels, optimization or limited correction authority.
+     Diagnose these separately; fix `scale` from measured command authority,
+     not held-out success. Fit this privileged bridge on training conditions.
+   - Qualify condition feasibility on development scenes only, then freeze
+     the condition set before confirmatory collection. Never drop individual
+     held-out failures based on teacher or learner outcomes.
 3. **Executed-action semantics.**
    - Save the five executed controls and their mask separately from the
      proposed 50-control chunk.
@@ -153,6 +164,12 @@ replacement, balanced across the eight. For each, collect from the same reset:
 2. A partial-correction attempt: the teacher at a random 0–100% of the needed
    compensation.
 3. A full teacher query attempt.
+
+At every query state in attempts 2 and 3, also obtain the full teacher label
+from that exact observation, independently of the partial behavior action.
+Attempt-2 targets use only attempt 1 and the causal attempt-2 prefix; attempt-3
+targets use attempts 1–2 and its causal prefix. No third-attempt experience
+enters an attempt-2 input.
 
 Training contexts hold one or two earlier attempts, so the student sees both
 first-attempt and second-attempt histories. That gives up to **240 episodes**
@@ -212,7 +229,8 @@ fixed balanced design before collection:
 | Current-only DPT, three seeds | 2 and 3 | History versus equal supervision and capacity |
 | Full DPT, random-donor history, three seeds | 2 | Same task and condition group, random condition: does the *particular* experience matter? |
 | Frozen SFT | 2 and 3 | Native retry |
-| Best fixed correction per axis | 2 | Strongest memoryless policy |
+| Archived OpenDrawer PPO30 | 2 | Measured zero-shot policy-stage reference; no new training |
+| Fixed correction selected on training/development data | 2 | Constant-correction baseline; no test-condition axis input or test selection |
 | Privileged teacher | 2 | Upper bound and solvability |
 
 On a predeclared 16-scene subset, add opposite-condition support for each DPT
@@ -220,9 +238,9 @@ fit (96 episodes). This deliberately contradictory history should reverse the
 commanded correction. Reward masking alone is not a useful control here,
 because motion also carries the information.
 
-The earlier compact-reader positive control and the PPO30 arm are dropped.
-PPO30 never saw the offset, so it would only repeat the SFT result; the
-sample-efficiency comparison below replaces it.
+The compact reader is deferred. PPO30 is retained: lack of offset exposure
+does not imply that it behaves like SFT. The online PPO comparison below asks
+a separate adaptation-cost question.
 
 **Primary outcomes.** Paired success at attempt 2:
 - full DPT minus its history-cleared version;
@@ -246,10 +264,11 @@ Report both for in-distribution and held-out groups separately.
 - Sixteen cases per held-out group gives coarse per-group estimates. The
   pooled held-out contrast is the main generalization result.
 
-**Episode count.** About 64 supports, plus 64 × 3 seeds × (2 + 2 + 2 + 1) DPT
-episodes, plus the references: roughly **1,600 episodes before the subset**.
-Profile throughput first. If it cannot fit, reduce the case count on timing
-alone before inspecting outcomes, preserving all arms and seeds.
+**Episode count.** 64 shared supports + 1,344 DPT queries + 320 reference
+episodes = **1,728 episodes**, plus 96 optional opposite-history episodes.
+Profile throughput first. If the initial allocation cannot fit, defer optional
+controls and attempt-3 endpoints before reducing independent scenes. Any
+change is fixed from timing before inspecting confirmatory outcomes.
 
 ## 5. Sample efficiency against online RL (conditional)
 
@@ -258,15 +277,21 @@ SFT, using the four-epoch recipe, under one fixed in-distribution condition on
 the training scenes. Evaluate after 2, 5 and 10 updates, at 128 episodes per
 update, on the same held-out cases for that condition.
 
-Report how many PPO training episodes are needed to match the adapter's
-attempt-2 success, against the one earlier episode the adapter uses. This is
-the paper's sample-efficiency comparison. PPO trains a separate policy for
-the condition; the adapter covers every condition with fixed weights.
+Report deployment adaptation episodes to reach the adapter's attempt-2
+success, with the same observation/reward access. Separately report all offline
+student data, privileged teacher labels and training compute; one support
+episode does not mean one total training episode. Use a dedicated sufficiently
+sized fixed paired panel for this condition, not the two cases per condition
+in the small ID panel. PPO fits a separate condition-specific policy; the
+adapter has fixed weights across conditions.
 
 ## 6. Budget, storage and delivery
 
-**Phase ceiling: 48 GPU-hours** for §§2–4, plus about 10 GPU-hours for §5
-if it runs. Record cumulative usage separately from closed campaigns. The
+**Campaign hard cap: 200 GPU-hours, explicitly approved by the user.**
+Initially reserve 48 for §§2–4, 10 for conditional §5, 90 for contingent
+task/objective extension and 52 uncommitted for justified profiling, recovery
+or precision work. Reassign these reservations from evidence while keeping
+all work within 200. Record cumulative usage separately from closed campaigns. The
 stage amounts below are planning reservations, not guaranteed runtimes:
 
 | Stage | GPU-hours |
@@ -277,8 +302,8 @@ stage amounts below are planning reservations, not guaranteed runtimes:
 | Evaluation | 16 |
 | Recovery reserve | 3 |
 
-Stop at the ceiling with resumable artifacts. The budget is not extended
-automatically.
+Stop at the 200 GPU-hour hard cap with resumable artifacts. No automatic
+extension beyond the user-approved cap.
 
 **Compute.** Baige is the target. At launch, inspect live queue capacity,
 limits and the actual accelerator type. Prefer up to four independent one-GPU
@@ -321,5 +346,6 @@ Monitor every 20 minutes after launch on the coordination board.
 or three more RoboCasa tasks that the nominal SFT policy can solve, with one
 held-out task. Then run the objective ablations (AD, DIT, IC-IQL) on the
 shared corpus, with equal architecture and budgets. That extension and its
-budget, roughly 60–90 GPU-hours, need their own short plan. Together with
-this phase it stays within the paper-level ceiling of about 150 GPU-hours.
+budget, roughly 60–90 GPU-hours, need their own short plan and must remain
+within the approved 200 GPU-hour total. Launch only if the preceding evidence
+supports the extension.

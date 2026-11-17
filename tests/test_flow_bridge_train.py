@@ -49,6 +49,34 @@ def fixture(interface):
     return policy, motor, batch, prepare
 
 
+def test_delivered_action_mask_matches_reference_and_accumulation():
+    """Protect short executed chunks from unvalidated suffix supervision."""
+    policy, motor, batch, prepare = fixture('kv_bridge')
+    context = query_context(policy, batch)
+    observation, cache, prefix_mask = prepare(batch['query_indices'])
+    tau = batch['timesteps'][:, None, None]
+    noisy = (1-tau)*batch['target_actions'] + tau*batch['noise']
+    velocity = policy.predict_velocity(motor, observation, noisy, batch['timesteps'], cache, prefix_mask, context)[..., :12]
+    errors = (velocity-(batch['noise']-batch['target_actions'])[..., :12]).square()
+    mask = torch.zeros_like(errors, dtype=torch.bool)
+    for lane in range(4):
+        mask[lane, :lane+1] = True
+    batch['action_mask'] = mask
+    reference = torch.stack([errors[lane, :lane+1].mean()*batch['weights'][lane] for lane in range(4)]).mean()
+    torch.testing.assert_close(flow_batch_loss(policy, motor, batch, prepare), reference)
+    other = deepcopy(policy)
+    first = torch.optim.AdamW(policy.parameters(), lr=3e-4, weight_decay=0.)
+    second = torch.optim.AdamW(other.parameters(), lr=3e-4, weight_decay=0.)
+    a = bridge_update(policy, motor, first, batch, prepare, execution_batch_size=4)
+    b = bridge_update(other, motor, second, batch, prepare, execution_batch_size=1)
+    assert a['loss'] == pytest.approx(b['loss'], abs=2e-6)
+    for key, value in policy.state_dict().items():
+        torch.testing.assert_close(value, other.state_dict()[key], atol=2e-6, rtol=2e-5)
+    batch['action_mask'][0] = False
+    with pytest.raises(ValueError, match='nonempty boolean'):
+        flow_batch_loss(policy, motor, batch, prepare)
+
+
 @pytest.mark.parametrize('interface', ['kv_bridge', 'velocity_bridge'])
 def test_native_bridge_logical_batch_matches_accumulation_and_excludes_expert(interface):
     policy, motor, batch, prepare = fixture(interface)
