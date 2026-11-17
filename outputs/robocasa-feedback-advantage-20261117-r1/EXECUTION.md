@@ -82,3 +82,40 @@ The fixed decision trigger uses simulator handle geometry. The small history
 reader selects a correction at that trigger; it is not a new full-trajectory
 VLA policy. Native branch-table scoring and the conditional scene selection
 must remain explicit in the final interpretation.
+
+## Explicit migration to four RTX workers
+
+The user requested multiple RTX 6000 GPUs. The Pro6K queue showed 5–8 free
+RPBZZZ6 GPUs, distributed across nodes, with 16 of the personal 32-GPU quota
+available. Use four one-GPU instances in one PyTorchJob, each 16 CPU cores,
+128 GiB RAM, 16 GiB shared memory, maximum 75 minutes, retries disabled.
+Each actual instance must pass the repository CUDA probe and native simulator
+rollouts. Reuse the previous RoboCasa CUDA 12.8 container and PFS/BOS mounts.
+
+`parallel_run.py handoff` verifies the three owned process commands, pauses
+only the old continuation, finishes the in-flight scene, then stops collection
+at the next scene boundary. Every completed nominal and perturbed branch is
+retained and hashed. The frozen motor has no optimizer state. A just-entered
+scene is restarted under a fresh output identity; its partial evidence remains.
+Neither active source checkout is edited.
+
+The remaining original seeds are divided into four fixed, disjoint round-robin
+shards. Each GPU collects all nine branches of an eligible scene locally.
+The native rollout function and its settings are unchanged. `--screen-all`
+changes only shard termination. Merge into `panel02` takes the first sixteen
+nominally eligible scenes in the original order, first eight for training and
+next eight held out. Completion order and perturbed outcomes never select the
+panel. Extra collected scenes are retained but excluded from the fixed readout.
+Hardware migration is part of the provenance: early scenes use RTX 4090,
+remaining scenes use actual Pro6K devices reported by the probes. We do not
+claim cross-hardware bit-identical motor trajectories; within-scene pairing
+still requires exact reset, prefix and tape checks.
+
+Charge the full **5 GPU-hour scheduler reservation** for parallel collection,
+including startup and any barrier idle time, plus the original 4090 phase up
+to handoff. The subsequent `reference02` and conditional `fit02` keep the same
+models, losses, seeds, milestones and train-only qualification. The fit may use
+only the balance of the original eight GPU-hours, and must finish no later than
+19:09:33 Shanghai. `PARALLEL-CONTINUATION.json` supersedes the intentionally
+stopped old continuation after `MIGRATION.json` is written. Do not restart the
+old driver or add workers to occupied slots.

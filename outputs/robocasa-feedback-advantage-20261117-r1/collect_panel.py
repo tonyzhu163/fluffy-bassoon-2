@@ -311,6 +311,7 @@ def main():
     p.add_argument('--target-admitted', type=int, required=True)
     p.add_argument('--bias-m', type=float, default=0.04)
     p.add_argument('--window', type=int, default=100)
+    p.add_argument('--screen-all', action='store_true', help='Finish this fixed shard; admission is decided by the ordered merge')
     args = p.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
 
@@ -363,11 +364,12 @@ def main():
                 scene_rows.append(row)
         write_json(args.out / f'scene-{scene}.json', scene_rows)
         admitted.append(scene)
-        if len(admitted) >= args.target_admitted:
+        if not args.screen_all and len(admitted) >= args.target_admitted:
             break
 
     summary = dict(
-        completed=len(admitted) == args.target_admitted,
+        completed=args.screen_all or len(admitted) == args.target_admitted,
+        screen_all=args.screen_all,
         bias_m=float(args.bias_m),
         window=int(args.window),
         horizon=HORIZON,
@@ -384,7 +386,7 @@ def main():
     )
     write_json(args.out / 'SUMMARY.json', summary)
     log('complete', admitted=len(admitted), screened=len(screened), episodes=len(records))
-    if len(admitted) < args.target_admitted:
+    if not args.screen_all and len(admitted) < args.target_admitted:
         raise RuntimeError(f'Only admitted {len(admitted)}/{args.target_admitted} scenes from {len(screened)} screened')
 
 
