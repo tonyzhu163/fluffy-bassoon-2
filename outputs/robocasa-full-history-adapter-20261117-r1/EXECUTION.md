@@ -108,3 +108,20 @@ Fresh train/development/test candidate lists are frozen in SPLITS.json;
 nominal-only eligibility and balanced condition assignment are predeclared.
 No confirmatory test outcomes have been opened. The privileged 1024-update fit
 also runs fresh attempt-2 native SFT/teacher/adapter episodes if time remains.
+
+November 17, 18:41 Shanghai: `qual06` is running as `job-43l5z513d967`,
+created 18:32:13, one GPU, source `6c460e90`, one-hour scheduler limit.
+The actual run directory and passed probe verify the corrected command.
+The replacement nominal and both negative-lateral training pairs completed;
+the teacher succeeds in both while uncorrected SFT fails. All sixteen
+training-condition episodes (eight offsets, two arms) are now available.
+
+`priv01` launched at 18:38:16 as `job-s41w9yvu9458`, one Pro6K GPU,
+120-minute scheduler limit / 115-minute worker limit, retries off,
+source `6c460e90`. Queue showed 9/416 free, personal 11/32; PFS had
+84.23 GiB available. In-job probe passed. The initial adapter exactly matches
+the frozen motor on all 32 decoded diagnostic queries. Update 32/1024 reached
+with finite decoder and adapter gradients, 0.55 seconds/update and 7.46 GB peak
+CUDA allocation. Initial active XYZ teacher MSE is 0.12922; inactive error is
+zero. Later command diagnostics and fresh native attempt-2 comparisons are
+pending. This is an explicitly privileged interface check, not a history result.
