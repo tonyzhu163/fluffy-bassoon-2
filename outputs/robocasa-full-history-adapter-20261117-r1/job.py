@@ -28,6 +28,8 @@ def main():
     p.add_argument('--split', choices=('train','development','test'))
     p.add_argument('--corpus', type=Path)
     p.add_argument('--checkpoint', type=Path)
+    p.add_argument('--scale', type=float, default=.1)
+    p.add_argument('--privileged-updates', type=int, default=1024)
     a = p.parse_args()
     assert a.attempt.isalnum() and 10 <= a.minutes <= (60 if a.stage == 'qualify' else 240)
     assert a.stage != 'privileged' or (a.workers == 1 and a.rank_offset == 0)
@@ -117,7 +119,7 @@ def main():
                     role='privileged engineering fit; training conditions on old development scenes only'),indent=2)+'\n')
                 command=[str(PYTHON),'-Bu',str(HERE/'fit.py'),'--pin',a.pin,
                     '--manifest',str(manifest),'--output',str(out/'fit'),'--mode','privileged',
-                    '--updates','1024','--execution-batch','2',
+                    '--updates',str(a.privileged_updates),'--scale',str(a.scale),'--execution-batch','8',
                     '--native-eval',
                     '--deadline',str(started+(a.minutes-5)*60)]
             result=subprocess.run(command,env=env,stdout=log,stderr=subprocess.STDOUT,timeout=max(1,started+a.minutes*60-time.time()))

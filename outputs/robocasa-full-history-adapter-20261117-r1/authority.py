@@ -50,8 +50,17 @@ def main():
                 target=ep['teacher_actions'][q]
                 for scale in scales:
                     policy.kv_adapter.scale=scale
+                    cache=prepared['prefix'][2]; mask=prepared['prefix'][1]
+                    edited=policy.kv_adapter(cache,mask,context)
+                    changed=total=0; squared=0.
+                    for old_pair,new_pair in zip(cache,edited):
+                        for old,new in zip(old_pair,new_pair):
+                            old,new=old[mask],new[mask]
+                            changed+=int((old!=new).sum()); total+=old.numel()
+                            squared+=float((new.float()-old.float()).square().sum())
                     predicted=commands(native,policy,prepared,context,ep['noise'][q][None])[0]
                     rows.append(dict(index=idx,active=active,scale=scale,
+                        cache_changed_fraction=changed/total,cache_delta_rms=(squared/total)**.5,
                         correction_xyz=(predicted[:n,:3]-base[:n,:3]).mean(0).tolist(),
                         needed_xyz=(target[:n,:3]-base[:n,:3]).mean(0).tolist(),
                         command_rms=float(np.mean((predicted[:n,:3]-base[:n,:3])**2)**.5),
@@ -63,6 +72,8 @@ def main():
         active=[r for r in rows if r['scale']==scale and r['active']]
         quiet=[r for r in rows if r['scale']==scale and not r['active']]
         aggregates.append(dict(scale=scale,active_command_rms=float(np.mean([r['command_rms'] for r in active])),
+            cache_changed_fraction=float(np.mean([r['cache_changed_fraction'] for r in active])),
+            cache_delta_rms=float(np.mean([r['cache_delta_rms'] for r in active])),
             active_needed_rms=float(np.mean([r['needed_rms'] for r in active])),
             active_teacher_mse=float(np.mean([r['teacher_mse'] for r in active])),
             inactive_command_rms=float(np.mean([r['command_rms'] for r in quiet]))))
