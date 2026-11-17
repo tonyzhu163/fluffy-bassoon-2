@@ -27,4 +27,20 @@ Implementation decisions:
 - The core loss-mask regression test protects the numerical mean over valid
   controls and its equivalence under execution-batch accumulation.
 
-Status: preparing implementation and Linux CPU validation. GPU use: **0**.
+November 17, 17:51 Shanghai: native qualification submitted as
+**`job-o71yh82weghm`**, `mwj_1117_full_history_qual4_r1`, four independent
+one-GPU workers, 16 CPU cores and 128 GiB RAM each, 60-minute scheduler limit,
+automatic retries off. Queue at submission: 51/416 free GPUs, personal quota
+32/32 available. Source `5d919c390adfd231703c42e353017c62246cdb33`, deployed
+through a Git bundle into an immutable detached checkout. The runtime is the
+previously qualified RLinf `8f9bfa7661928ef8c17494b04f4d7bf3125634e1`.
+
+Linux CPU validation: **30 tests passed in 85.81 seconds** in
+`tests/test_flow_bridge_train.py` and `tests/test_flow_history.py`, CUDA hidden.
+All four in-allocation GPU probes passed. Workers are loading the native motor;
+completed simulator episodes remain pending. Output identity: `qual01`.
+
+Conservative charge/reservation: **4/200 GPU-hours**, including startup and
+barrier time. This is the complete maximum for this job, not measured elapsed
+compute. Next check: 18:11 Shanghai or sooner on a startup failure. Continue
+with teacher/control results, then the privileged-input adapter qualification.
