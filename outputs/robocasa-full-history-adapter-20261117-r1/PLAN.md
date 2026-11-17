@@ -1,256 +1,325 @@
-# Full history adapter: first native meta-learning test
+# Full history adapter: in-context recalibration of a frozen VLA
 
-Written November 17, 2026. **Plan only; no jobs submitted.** The user requested
-the plan before execution. Code reviewed at main `6f4b5ce0`; actual implementation,
+Written November 17, 2026. Revised the same day to merge the duplicate
+closed-loop bridge plan and the agreed scope changes. **Plan only; no jobs
+submitted.** Code was reviewed at main `6f4b5ce0`. The actual implementation,
 validation, source pin, data manifests and allocations must be recorded before
-launch. This is a new phase, separate from the closed 8 GPU-hour pilot and
+launch. This is a new phase, separate from the closed 8 GPU-hour pilot and the
 230 GPU-hour campaign.
+
+Record this phase lightly, following AGENTS.md: a plan, the runs and a result
+note. Full audits are reserved for the confirmatory panel in §4.
+
+## Method
+
+**Problem.** A frozen VLA meets a hidden, persistent condition that the
+current observation does not reveal. Here that condition is a miscalibration
+of the commanded end-effector position. The condition shows itself only
+through what happens during an attempt.
+
+**Method: privileged-teacher distillation into a history adapter.**
+
+- **Training.** A teacher that knows the hidden condition produces the
+  corrected action at each saved query state.
+- **Student.** A history-conditioned KV adapter on the frozen π0.5 learns to
+  reproduce the teacher's action from public experience only: earlier
+  observations, executed controls, native rewards and episode boundaries.
+- **Deployment.** No weight updates and no privileged input.
+
+The training distribution is part of the method. Its conditions vary across
+trials, so the student can identify the condition only from earlier attempts.
+Test conditions include magnitudes and directions never seen in training.
+That separates in-context inference from memorizing a few fixed corrections.
+
+Objective ablations (AD, DIT, IC-IQL) and interface ablations (velocity bridge)
+come after the primary result. They are not part of this phase.
 
 ## Question and scope
 
-Can a trained history transformer steer the **frozen pi0.5 action expert through
-its KV adapter** so that a second real attempt succeeds more often because of
-experience from the first attempt, with no test-time weight updates?
+Does the trained adapter, run closed loop, make later attempts succeed more
+often *because of* earlier experience? Is the effect still present for
+held-out condition values, and how does it compare with online RL on the same
+condition?
 
-Start on RoboCasa OpenDrawer. The [small native pilot](../robocasa-feedback-advantage-20261117-r1/RESULT.md)
-established an information advantage in a deliberately controlled calibration
-problem. Its readers selected among recorded correction outcomes; it did not
-establish that the full VLA adapter can produce useful adapted actions. The
+The [small native pilot](../robocasa-feedback-advantage-20261117-r1/RESULT.md)
+established an information advantage in one lateral calibration problem. Its
+readers selected among recorded correction outcomes. The
 [earlier multi-task comparison](../robocasa-six-task-scale-20261113-r1/RESULT.md)
 remains negative in aggregate.
 
-The immediate experiment trains **DPT and an equally trained current-only
-adapter**, then tests them in fresh closed-loop rollouts. DPT supplies a strong
-supervised positive control before introducing value-estimation uncertainty.
-Broad PPO collection and another four-method sweep remain deferred. A positive
-result here establishes a mechanism in one task family, not representative
-meta-learning or held-out-task generalization.
+This phase covers OpenDrawer only. If it is positive, the same pipeline
+extends to two or three more RoboCasa tasks that the nominal SFT policy can
+solve. That extension is costed separately (see the last section). The
+paper-level ceiling is about 150 GPU-hours, including this phase.
 
-## 1. Preserve the working adaptation problem
+## 1. The adaptation problem
 
-Use the pilot's **uncorrected first attempt with motion feedback** condition.
-Both small DPT and DIT readers reached 100% on its small recorded held-out panel.
-This is a choice of the easier information condition, not a claim that reward
-alone is sufficient. The action/reward-only condition can follow if the full
-adapter works.
+- **Motor and episodes.**
+  - Frozen public Human300 π0.5 motor, native RoboCasa rewards, OpenDrawer.
+  - 600 physical controls per episode.
+  - Predict 50 controls, execute 5 before replanning; 10 denoising steps.
+- **Hidden condition.** An end-effector goal offset `z`, constant across all
+  attempts of one trial, applied over the pilot's 100-control approach window
+  and ending at first grasp.
+- **Training conditions.** Lateral and depth axes separately, magnitudes 2 cm
+  and 4 cm, both signs: eight conditions. Qualify the depth axis in §2 before
+  using it.
+- **Held-out test conditions** (never trained):
+  - 3 cm on either axis (interpolation).
+  - 6 cm on either axis (extrapolation).
+  - Diagonal lateral + depth offsets of 4 cm norm (a held-out direction).
+- **No privileged trigger for the student.** The adapter acts at every chunk
+  and must learn from its normal inputs when to correct. Simulator handle
+  geometry may define the teacher's correction window. It never enters the
+  student or the evaluation policy.
+- **Attempt 1** is the same uncorrected frozen SFT policy for every arm. Before
+  each later attempt, reset the scene and keep the hidden condition. The
+  learner receives its recorded earlier attempts.
+- **Student inputs.**
+  - Current: cameras, public robot state and the original instruction.
+  - History: earlier public observations, actually executed controls, native
+    rewards and episode boundaries.
+  - Never: the hidden offset, simulator geometry, teacher identity, current
+    target or future outcome. Public motion may reveal the offset, and that is
+    the intended channel.
+- **Analytic compensation** is allowed only in the named privileged teacher.
 
-- Frozen public Human300 pi0.5 motor, native RoboCasa rewards, OpenDrawer,
-  600 physical controls per episode, predict 50 controls and execute 5 before
-  replanning, 10 denoising steps.
-- Hidden lateral OSC calibration offset `z = -0.04 m` or `+0.04 m`, constant
-  across the two attempts. Retain the pilot's approach trigger and 100-control
-  window, ending at first grasp. The trigger uses simulator geometry; this
-  remains a disclosed privileged experimental scaffold.
-- First attempt: the same uncorrected frozen SFT policy for every comparison.
-  Second attempt: reset the scene, preserve the hidden calibration and supply
-  the recorded first attempt to the history-conditioned learner.
-- Current inputs are cameras, public robot state and the original instruction.
-  History contains prior public observations, actually executed controls,
-  native rewards and episode boundaries. No hidden calibration, simulator
-  geometry, teacher identity, current target or future outcome enters the
-  learner. Public motion may reveal calibration during either attempt.
-- The student supplies robot commands through the frozen action expert. It
-  receives no analytic correction after inference. Analytic compensation is
-  allowed only for the explicitly named privileged teacher/reference.
+This is **same-scene retry**. Changing the scene between support and query is a
+later transfer test.
 
-This first test is **same-scene retry**. Changing scenes between support and
-query is a subsequent transfer test, not mixed into the primary estimate.
-
-## 2. Qualify the full interface and collect suitable data
+## 2. Qualify the interface and collect data
 
 Reuse [the KV bridge](../../src/fluffy_bassoon/meta_rl/flow_history.py) and
 [its frozen-expert training path](../../src/fluffy_bassoon/meta_rl/flow_bridge_train.py),
-with a new run-specific collector and trial sampler. The compact pilot archives
-lack the saved camera inputs needed for these fits; they are development
-evidence, not a substitute visual training corpus.
+with a new collector and trial sampler for this run. The compact pilot
+archives lack camera inputs. They are development evidence, not a visual
+training corpus.
 
-Before bulk collection, use development scenes to resolve these concrete risks:
+Engineering checks before bulk collection, on development scenes:
 
-1. **Runtime and actuator parity.** Verify the actual allocated GPU, native
-   episode, zero-initialized adapter parity and deterministic reset pairing.
-   Use one qualified accelerator/runtime family across collection, fitting and
-   evaluation; do not repeat the pilot's hardware/split confound.
-2. **Teacher target correctness.** Query the frozen motor at the exact saved
-   query observation. The privileged teacher compensates the known OSC offset
-   in native control space, respecting the controller gain, clipping and active
-   window. Record the mapping from model space to issued and executed controls.
-   Demonstrate real corrected rollouts and quantify clipping; an inverse-sign
-   label alone is not evidence that the motor can execute it.
-3. **Executed action semantics.** Save the actual five-control execution and
-   its mask separately from the proposed 50-control chunk. Define a causal,
-   masked representation for history. Supervise only validated teacher command
-   coordinates and timesteps; do not invent targets for an unexecuted suffix.
-   The existing bridge needs an explicit loss-mask extension for this protocol.
-   Resolve changes of the calibration window within a chunk in the teacher
-   execution/label contract before fitting. Preserve native 32-dimensional
-   normalization, physical 12-dimensional controls and binary action mapping.
-4. **Learning path.** Demonstrate finite gradients reaching the history model
-   and KV adapter through the frozen expert, unchanged motor tensors, and a
-   small development fit that reproduces distinct teacher corrections. Compare
-   decoded commands and native behavior, not training loss alone.
+1. **Runtime parity.**
+   - Actual allocated GPU and a native episode.
+   - Zero-initialized adapter parity and deterministic reset pairing.
+   - One accelerator and runtime family across collection, fitting and
+     evaluation.
+2. **Teacher correctness and authority, per axis.**
+   - The teacher compensates the known offset in native control space,
+     respecting controller gain, clipping and the active window.
+   - Show real corrected rollouts for every training and held-out condition,
+     and quantify clipping.
+   - Fit one bridge that is given the offset as a privileged input. Confirm it
+     beats the best fixed correction on development resets.
+   - If it doesn't, the interface can't express the correction: fix `scale` or
+     the interface before the main fits. Fix `scale` from the measured action
+     change it can produce, not from outcomes.
+   - A condition the teacher cannot correct is dropped and reported.
+3. **Executed-action semantics.**
+   - Save the five executed controls and their mask separately from the
+     proposed 50-control chunk.
+   - Supervise only validated teacher command coordinates and timesteps, with
+     native action targets outside the correction window.
+   - Extend the bridge loss with the needed mask. Resolve window changes
+     within a chunk in the label contract.
+   - Preserve native 32-dimensional normalization, 12-dimensional physical
+     controls and binary action mapping.
+4. **Learning path.**
+   - Finite gradients reach the history model and KV adapter through the
+     frozen expert; motor tensors are unchanged.
+   - A small development fit reproduces distinct teacher corrections in
+     decoded commands and native behavior.
 
-These are validity checks, not a new success-percentage admission rule. If the
-teacher cannot correct the perturbation, or the interface cannot represent the
-targets, diagnose that before spending the main training budget. Run applicable
-existing core tests and targeted numerical checks on allocated Linux resources;
-add a core regression test only if a substantive implementation fix needs it.
+These are validity checks, not success-percentage admission rules. Run the
+applicable core tests on allocated Linux.
 
-### Trial split and collection
+### Splits and collection
 
-Target **32 training, 8 development and 32 fresh held-out scenes**, with both
-calibration signs in each scene. A scene, including all its attempts and signs,
-belongs to exactly one split. Old pilot scenes, including its old held-out
-scenes, are development-only and cannot enter the new confirmatory holdout.
+**Scenes:** 32 training, 8 development and 32 fresh held-out. A scene and all
+of its attempts and conditions belong to exactly one split. Old pilot scenes
+are development-only.
 
-Before collection, publish ordered, disjoint candidate seed lists and their
-hashes. Screen at most 128 training, 64 development and 128 test candidates.
-Eligibility is nominal SFT success and a valid approach trigger, as in the
-pilot; never select using perturbed, oracle or learned-adapter outcomes. Keep
-all screening counts and all failed qualified trials. Report that the result
-is conditional on this nominal-solvable subset. If a quota cannot be filled,
-report the smaller fixed set rather than replacing cases after reading results.
+**Screening:**
+- Publish ordered, disjoint candidate seed lists with hashes before
+  collection.
+- Screen at most 128 training, 64 development and 128 test candidates.
+- Eligibility is nominal SFT success and a valid approach. Never select on
+  perturbed, teacher or adapter outcomes.
+- Keep all screening counts and failed trials. Report the result as
+  conditional on the nominally solvable subset.
 
-For each training/development scene and sign, collect one uncorrected support
-episode and one fresh privileged-teacher query episode from the same reset.
-This gives up to **160 support/query episodes** across the 40 scenes, plus
-nominal screening. Preserve exact query images, public states, teacher labels,
-executed control masks, terminal feedback and reset/noise identities. A failed
-teacher episode remains included. Stop each episode at native success or the
-declared horizon; there are no post-success training queries.
+**Per training or development scene,** draw two training conditions without
+replacement, balanced across the eight. For each, collect from the same reset:
 
-## 3. Train the actual adapter, with a matched control
+1. An uncorrected attempt.
+2. A partial-correction attempt: the teacher at a random 0–100% of the needed
+   compensation.
+3. A full teacher query attempt.
+
+Training contexts hold one or two earlier attempts, so the student sees both
+first-attempt and second-attempt histories. That gives up to **240 episodes**
+across 40 scenes, plus nominal screening.
+
+Preserve query images, public states, teacher labels, executed-control masks,
+terminal feedback and reset and noise identities. Failed teacher episodes stay
+in. There are no queries after success.
+
+## 3. Train the adapter and a matched control
 
 | Setting | Planned value |
 | --- | --- |
-| Interface | History decoder to learned KV residuals over the frozen VLA prefix; no direct correction selector or velocity bypass |
+| Interface | History decoder to learned KV residuals over the frozen VLA prefix; no correction selector, no velocity bypass, no trigger input |
 | Decoder | Width 256, 6 layers, 8 heads |
-| KV adapter | Rank 4, scale 0.1, all qualified prefix layers, zero output initialization |
-| Context | 256 query tokens: two episodes of at most 120 decisions plus boundaries; verify terminal support feedback is retained |
+| KV adapter | Rank 4, `scale` fixed in §2, all qualified prefix layers, zero output initialization |
+| Context | Up to three episodes of at most 120 decisions, plus boundaries; verify terminal feedback is retained |
 | Training | DPT teacher-action flow matching, logical batch 8, AdamW learning rate 0.0003, weight decay 0 |
-| Fits | Full-history DPT and current-only DPT, each with seeds 0, 1, 2: six fits |
-| Endpoint | Fixed 4,096 updates; development curves at 1,024/2,048/4,096, final checkpoint used for confirmatory evaluation |
+| Fits | Full-history DPT and current-only DPT, seeds 0, 1, 2: six fits |
+| Endpoint | Fixed 4,096 updates; development curves at 1,024/2,048/4,096; final checkpoint used for evaluation |
 
-The current-only control has the same trainable architecture, labels, query
-draws, initialization seeds and optimizer budget, but receives no previous
-observations/actions/rewards at training or evaluation. Preserve the complete
-support episode in every full-history query window; the old generic sampler's
-optional one-episode window is unsuitable for this primary comparison.
+**The current-only control** has the same architecture, labels, query draws,
+initialization seeds and optimizer budget, but no earlier
+observations, actions or rewards. Preserve complete earlier episodes in every
+full-history window.
 
-Sample query positions without replacement within scene/sign strata before
-reshuffling; record coverage and multiplicities. At most 7,680 query positions
-come from 32 training scenes, two signs and 120 decisions. The 32,768 query
-draws allow repeated coverage of this small corpus. This endpoint is a bounded
-first fit, not a guarantee of convergence. Normalization uses training only.
-Measure execution batch capacity and update time without changing the logical
-batch or objective. If development shows unresolved underfitting, report that
-and amend the plan before opening confirmatory outcomes.
+Sample query positions without replacement within scene and condition strata.
+Record coverage and multiplicities. Normalization uses training data only.
+Measure execution batch capacity without changing the logical batch. If
+development shows underfitting, report it and amend the plan before opening
+held-out outcomes.
 
-## 4. Evaluate fresh, paired native attempts
+## 4. Confirmatory evaluation: fresh paired native attempts
 
-The target panel has **64 calibration cases in 32 independent scenes**. Every
-case shares a real first-attempt support trajectory across arms. All second
-attempts start from the same verified scene state and use matched inference
-noise where supported. Run each policy closed loop; its own subsequent
-observations/actions feed its own query-episode memory. No recorded outcome
-lookup scores the learned adapter.
+**64 cases in 32 held-out scenes, two cases per scene.** Assign conditions in a
+fixed balanced design before collection:
 
-| Second-attempt arm | Purpose |
+| Condition group | Cases |
+| --- | ---: |
+| In-distribution conditions (training magnitudes and axes) | 16 |
+| Held-out 3 cm (interpolation) | 16 |
+| Held-out 6 cm (extrapolation) | 16 |
+| Held-out diagonal direction | 16 |
+
+**Each case runs three attempts.**
+- Attempt 1 is shared across arms.
+- Attempts 2 and 3 start from the same verified scene state, with matched
+  inference noise.
+- Each policy runs closed loop, and its own attempt 2 feeds its attempt-3
+  history.
+- No recorded outcome lookup scores a learned policy.
+
+| Arm | Attempts | Purpose |
+| --- | --- | --- |
+| Full DPT, three fit seeds | 2 and 3 | Primary: does experience turn into successful action? |
+| Same DPT, earlier attempts cleared, three seeds | 2 and 3 | Causal effect of history; normal within-episode memory kept |
+| Current-only DPT, three seeds | 2 and 3 | History versus equal supervision and capacity |
+| Full DPT, random-donor history, three seeds | 2 | Same task and condition group, random condition: does the *particular* experience matter? |
+| Frozen SFT | 2 and 3 | Native retry |
+| Best fixed correction per axis | 2 | Strongest memoryless policy |
+| Privileged teacher | 2 | Upper bound and solvability |
+
+On a predeclared 16-scene subset, add opposite-condition support for each DPT
+fit (96 episodes). This deliberately contradictory history should reverse the
+commanded correction. Reward masking alone is not a useful control here,
+because motion also carries the information.
+
+The earlier compact-reader positive control and the PPO30 arm are dropped.
+PPO30 never saw the offset, so it would only repeat the SFT result; the
+sample-efficiency comparison below replaces it.
+
+**Primary outcomes.** Paired success at attempt 2:
+- full DPT minus its history-cleared version;
+- full DPT minus current-only DPT.
+
+Report both for in-distribution and held-out groups separately.
+
+**Secondary outcomes.**
+- The attempt 1–3 success curve with history kept versus cleared.
+- Cumulative success.
+- The random-donor contrast.
+- Signed commanded displacement at the first grasp, compared with the true
+  offset.
+- Physical controls consumed and clipping.
+
+**Uncertainty.**
+- Average fit seeds within scene and report each seed.
+- Resample whole scenes. Conditions, repeated fits and shared support are not
+  independent samples.
+- Report discordances and intervals even when inconclusive.
+- Sixteen cases per held-out group gives coarse per-group estimates. The
+  pooled held-out contrast is the main generalization result.
+
+**Episode count.** About 64 supports, plus 64 × 3 seeds × (2 + 2 + 2 + 1) DPT
+episodes, plus the references: roughly **1,600 episodes before the subset**.
+Profile throughput first. If it cannot fit, reduce the case count on timing
+alone before inspecting outcomes, preserving all arms and seeds.
+
+## 5. Sample efficiency against online RL (conditional)
+
+Run this only if §4 shows a history benefit. Start online PPO from Human300
+SFT, using the four-epoch recipe, under one fixed in-distribution condition on
+the training scenes. Evaluate after 2, 5 and 10 updates, at 128 episodes per
+update, on the same held-out cases for that condition.
+
+Report how many PPO training episodes are needed to match the adapter's
+attempt-2 success, against the one earlier episode the adapter uses. This is
+the paper's sample-efficiency comparison. PPO trains a separate policy for
+the condition; the adapter covers every condition with fixed weights.
+
+## 6. Budget, storage and delivery
+
+**Phase ceiling: 48 GPU-hours** for §§2–4, plus about 10 GPU-hours for §5
+if it runs. Record cumulative usage separately from closed campaigns. The
+stage amounts below are planning reservations, not guaranteed runtimes:
+
+| Stage | GPU-hours |
+| --- | ---: |
+| Qualification, including the privileged-input bridge | 4 |
+| Collection and labels | 7 |
+| Fits | 18 |
+| Evaluation | 16 |
+| Recovery reserve | 3 |
+
+Stop at the ceiling with resumable artifacts. The budget is not extended
+automatically.
+
+**Compute.** Baige is the target. At launch, inspect live queue capacity,
+limits and the actual accelerator type. Prefer up to four independent one-GPU
+workers on qualified RTX 6000-class allocations, using the in-job GPU probe
+and binding inference and rendering to the allocation. Review the latest main,
+commit and validate the implementation, then deploy commit-pinned worktrees
+through Git.
+
+**Storage.**
+- Check NVMe capacity, quota and a write probe first.
+- Save lossless policy-input images at decision points only, and profile bytes
+  per episode before bulk collection.
+- Keep the initial, final and evaluation checkpoints, plus two complete
+  recovery boundaries with optimizer, sampler and RNG state.
+- Archive completed raw shards before removing hot copies. Small manifests and
+  results go into Git; large payloads do not.
+
+**Timeline target:** about four days once resources are allocated:
+
+| Day | Work |
 | --- | --- |
-| Full DPT, three fit seeds | Does the full adapter turn support experience into successful action? |
-| Same DPT with support cleared, three seeds | Causal effect of previous-attempt history; retain normal memory within the query episode |
-| Separately trained current-only DPT, three seeds | Does history beat equal supervised training and model capacity? |
-| Frozen SFT and existing OpenDrawer PPO30 | Absolute comparison with the two previously requested policy stages; no new PPO training |
-| Privileged inverse-calibration teacher | Can this motor/controller solve the qualified case? |
-| Compact motion-history reader | Does the simpler history mechanism reproduce in fresh closed-loop execution? |
+| 1 | Qualification and collection |
+| 2 | Fits |
+| 3 | Paired evaluation and result note |
+| 4 | §5 if it runs |
 
-Retrain the compact reference on the same new training split with its previously
-fixed architecture/endpoint; it is a diagnostic reference, not an extra VLA
-method. Verify the archived PPO30 identity against the existing
-[baseline contract](../robocasa-six-task-scale-20261113-r1/BASELINE-CONTROLS.json).
-The complete primary panel costs up to **832 query episodes plus 64 shared
-support episodes**, excluding nominal screening. Profile this before reserving
-the full panel. If it cannot fit the phase budget, change the case count using
-timing alone before inspecting held-out policy outcomes, preserving all arms
-and three fit seeds.
+Monitor every 20 minutes after launch on the coordination board.
 
-On a predeclared 16-scene subset, budget permitting, add opposite-calibration
-support from the same scene for each DPT fit (96 query episodes). This tests
-whether the content of experience changes behavior. It is deliberately
-contradictory history, not an unrelated random donor. Reward masking alone
-cannot establish a negative result here because motion also carries information.
-
-Primary outcomes are paired second-attempt success differences: full DPT minus
-its support-cleared version, and full DPT minus separately trained current-only
-DPT. Also report SFT/PPO30 differences, first-attempt success, cumulative
-first-or-second success, physical controls consumed, clipping and behavior at
-the first adapted decision. Separate within-query recovery from cross-attempt
-adaptation. Average fit seeds within scene, report each seed, and estimate
-paired uncertainty by resampling whole scenes; signs, repeated fits and shared
-support are not independent extra samples. Include success discordances and
-intervals even when the result is inconclusive. Thirty-two scenes target the
-large pilot-sized effect; they cannot rule out small useful benefits.
-
-## 5. Budget, storage and delivery
-
-New phase ceiling: **48 GPU-hours**, with cumulative usage recorded separately
-from closed campaigns. Stage amounts are planning reservations, not guaranteed
-runtime: qualification 4, collection/labels 6, fits 20, evaluation 14, recovery
-reserve 4 GPU-hours. Stop at the total ceiling with resumable artifacts; no
-automatic budget extension. The reserve covers failed attempts as well as
-retries. Dependent stages follow qualification, not a blanket concurrent launch.
-
-Baige is the target. At launch inspect live queue capacity, limits and actual
-accelerator type; prefer up to four independent one-GPU workers on qualified
-RTX 6000-class allocations for fits and evaluation shards. Do not require a
-distributed fit. Use the in-job GPU probe and bind inference/rendering to the
-allocation. Review latest main, commit the implementation and validate it,
-then deploy immutable commit-pinned worktrees through Git.
-
-Check project NVMe capacity/quota and a write probe first. Save lossless policy
-input images only at decision points, not video at every simulator step; share
-the corpus and frozen weights across fits. Profile bytes per episode before
-bulk collection and stop safely if storage cannot accommodate the remaining
-contract. Retain initial/final/evaluation checkpoints plus two complete recovery
-boundaries with optimizer, sampler and RNG state. Archive and hash-readback
-completed raw shards before removing their hot copies; protect all active
-dependencies. Small manifests/results enter Git, large payloads do not.
-
-Target a first decision within **three days of allocated resources becoming
-available**: day 1 interface/teacher qualification and collection; day 2 fits;
-day 3 paired evaluation and report. This is a target, not an assumption of
-queue availability. Verify advancing updates after launch and monitor every
-20 minutes, recording job IDs, source, progress, last check and next action in
-the single coordination board.
-
-## Decision and path to the full meta-learning idea
+## Decision and path to the paper
 
 | Observation | Next decision |
 | --- | --- |
-| Teacher or simple native reference fails | Repair the experiment/runtime; this does not test the large adapter hypothesis |
-| Simple reference works, full adapter cannot fit/execute teacher actions | Diagnose labels, normalization, KV influence and optimization; do not collect more PPO |
-| Full adapter imitates training targets but lacks held-out history benefit | Examine closed-loop shift and history use; stop scaling this recipe until the cause is resolved |
-| Held-out gains over both controls recur across fits, with useful history interventions | Proceed to a representative adaptation distribution; quantify uncertainty rather than declaring success from one scene or a pooled percentage |
-| Intervals still admit both useful improvement and no benefit | Call the result inconclusive; propose additional paired scenes rather than a bigger teacher campaign |
+| Teacher or privileged-input bridge fails | Fix the interface or runtime; this does not test the history hypothesis |
+| Bridge fits teacher actions but shows no held-out history benefit | Examine closed-loop shift and history use; do not scale this recipe |
+| Benefit in distribution only | Report it; held-out conditions become the next method question |
+| Benefit in held-out groups over both controls, across fits | Run §5, then extend to two or three more RoboCasa tasks |
+| Intervals admit both benefit and none | Inconclusive; add paired scenes rather than a teacher campaign |
 
-A positive bridge result is followed by a separate, costed distribution plan:
-
-1. Choose task families for coverage of articulated opening/closing, grasp and
-   placement, spatial targets and contact conditions—not because jobs already
-   exist. For each, identify persistent uncertainty for which previous attempts
-   can actually help. Qualify native information/reference controls first.
-2. Freeze training families and distinguish **ID new scenes**, **OOD condition
-   values/combinations**, and **OOD held-out task families**. Hold all histories
-   from a task/scene/condition unit in the same split. Record the frozen base
-   motor's pretraining exposure separately from meta-training exposure.
-3. Collect a shared chronological corpus, then compare **AD, DPT, DIT and
-   IC-IQL** with equal architecture, data access, fit budgets and paired native
-   evaluations, alongside SFT and PPO references. DPT needs query-aligned
-   teacher labels; AD needs a genuinely changing learning trajectory; DIT and
-   IC-IQL need separately validated Q/V and effective action weighting.
-4. Add PPO teachers only where that corpus requires better actions or genuine
-   learning trajectories. Teacher quality and same-state action ranking should
-   justify the collection before scaling it.
-
-Those later phases are **not included in this 48 GPU-hour reservation**. Their
-task list, budget and launch decision depend on the bridge result. The present
-deliverable is this plan; execution starts in a subsequent step.
+**Extension after a positive result.** Run the same condition family on two
+or three more RoboCasa tasks that the nominal SFT policy can solve, with one
+held-out task. Then run the objective ablations (AD, DIT, IC-IQL) on the
+shared corpus, with equal architecture and budgets. That extension and its
+budget, roughly 60–90 GPU-hours, need their own short plan. Together with
+this phase it stays within the paper-level ceiling of about 150 GPU-hours.
