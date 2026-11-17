@@ -20,7 +20,8 @@ camera streams. Shared environments and checkpoints stay in place.
 - Output: `/mowenjie/fluffy-bassoon-2/outputs/robocasa-feedback-advantage-20261117-r1/gate01`.
 - Development hostname: `aibox-rffe453e3884-5f96c78b88-6ssrn`.
 - Controller PID 319421; collector PID 319472, verified against exact commands.
-- First scene reset fingerprints match exactly; first episode is underway.
+- Gate completed at 11:26:35 Shanghai: all 18 episodes, both signs on both
+  scenes qualified; exact tape and fresh closed-loop repeats passed.
 
 Do not mutate this checkout or reuse the output identity. Inspect the native
 qualification before launching the sixteen-scene panel. The two gate scenes
@@ -58,3 +59,26 @@ its intervals are descriptive and coarse. The all-to-all panel has one
 connected block and reports no confidence interval. This avoids treating
 recombined native branch outcomes as independent episodes. Save complete
 actor/optimizer/sampler/RNG snapshots at each declared training milestone.
+
+## Continuation and monitoring
+
+The pinned continuation at `02d6071efe0107f43943c54911ad56f23d918c53`
+(PID 320466) waits for the immutable gate receipt, verifies the native contrasts,
+then runs `panel01`, a separate `reference01`, and conditionally `fit01` plus its
+audit. Only the training-split reference controls whether fitting proceeds.
+The numerical training code matches the CPU-qualified `4d5ce29e` byte for byte.
+The continuation bounds its own child process groups by the eight-hour phase
+deadline, 19:09:33 Shanghai. It archives completed raw evidence with readback
+hashes. Errors stop the continuation for diagnosis; it does not retry silently.
+
+Heartbeat `monitor-robocasa-history-pilot` checks this thread every twenty
+minutes and stops after delivering the result, a diagnosed stop, or budget
+expiry. It must not launch duplicate jobs or modify active worktrees. After
+completion it retrieves compact evidence and publishes the verified readout.
+As of 11:29 the gate has passed and the panel is advancing; the first screened
+scene failed nominally and is retained in the admission ledger.
+
+The fixed decision trigger uses simulator handle geometry. The small history
+reader selects a correction at that trigger; it is not a new full-trajectory
+VLA policy. Native branch-table scoring and the conditional scene selection
+must remain explicit in the final interpretation.
