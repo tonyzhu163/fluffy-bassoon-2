@@ -1,0 +1,65 @@
+{
+  "checked_utc": "2026-11-17T03:48:07.091801+00:00",
+  "phase": "panel01",
+  "source_commit": "02d6071efe0107f43943c54911ad56f23d918c53",
+  "controller_pid": 320466,
+  "child_pid": 320521,
+  "collector_processes": [
+    {
+      "pid": 320585,
+      "command": [
+        "/mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python",
+        "-Bu",
+        "/mowenjie/fluffy-bassoon-2/sources/feedback-advantage-02d6071e/outputs/robocasa-feedback-advantage-20261117-r1/collect_panel.py",
+        "/mowenjie/fluffy-bassoon-2/outputs/robocasa-feedback-advantage-20261117-r1/panel01",
+        "/mowenjie/fluffy-bassoon-2/inputs/robocasa365-public-pi05-c484-75000-20261101-r1",
+        "--seeds",
+        "982100:982108,983000:983041",
+        "--target-admitted",
+        "16",
+        "--bias-m",
+        "0.04",
+        "--window",
+        "100"
+      ]
+    }
+  ],
+  "panel_completed_episodes": 23,
+  "panel_screened_scenes": 8,
+  "panel_completed_scenes": 2,
+  "panel_target_scenes": 16,
+  "last_completed_episodes": [
+    {
+      "scene": 982104,
+      "arm": "nominal",
+      "success": false,
+      "controls": 600,
+      "unix": 1794887038.6637814
+    },
+    {
+      "scene": 982105,
+      "arm": "nominal",
+      "success": false,
+      "controls": 600,
+      "unix": 1794887135.7365766
+    },
+    {
+      "scene": 982106,
+      "arm": "nominal",
+      "success": false,
+      "controls": 600,
+      "unix": 1794887234.4974425
+    }
+  ],
+  "last_event": {
+    "kind": "reset_check",
+    "scene": 982107,
+    "arm": "nominal",
+    "unix": 1794887267.6763616
+  },
+  "conservative_gpu_hours": 0.6428034598297543,
+  "gpu_hour_budget": 8,
+  "phase_receipt_exists": false,
+  "monitor_automation": "monitor-robocasa-history-pilot",
+  "next_action": "Continue panel collection, then training-reference qualification and conditional three-seed fits"
+}
