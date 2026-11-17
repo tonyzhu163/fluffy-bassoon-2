@@ -1,18 +1,18 @@
 {
-  "checked_shanghai": "2026-11-17T13:04:01.399783+08:00",
-  "checked_unix": 1794891841.3998003,
+  "checked_shanghai": "2026-11-17T13:24:12.755922+08:00",
+  "checked_unix": 1794893052.7559345,
   "cluster": "Baige Pro6K",
   "job_id": "job-6wm41wcuc7x4",
   "source_commit": "0c553ebade1c132b2f9a2a81dadfaa2ce28f5f65",
-  "status": "Healthy: all four workers advancing through fixed shards; no worker exit or error",
+  "status": "Healthy: three fixed shards complete, final shard collecting its last scene; no failed worker",
   "prior_complete_scene_panels": 8,
   "prior_complete_episodes": 81,
-  "new_native_episodes": 153,
+  "new_native_episodes": 218,
   "phase_gpu_hour_budget": 8,
   "prior_4090_gpu_hours": 1.4819413118892246,
   "parallel_charged_reservation_gpu_hours": 5,
   "fit_gpu_hour_balance": 1.5180586881107754,
-  "free_storage_bytes": 96456409088,
+  "free_storage_bytes": 96154419200,
   "controller": {
     "source_commit": "0c553ebade1c132b2f9a2a81dadfaa2ce28f5f65",
     "pid": 321627,
@@ -104,13 +104,13 @@
         ],
         "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
       },
-      "episodes": 40,
-      "completed_scenes": 4,
+      "episodes": 66,
+      "completed_scenes": 7,
       "last_event": {
         "kind": "episode",
-        "unix": 1794891834.237013,
-        "scene": 983025,
-        "arm": "b-1-u-1"
+        "unix": 1794893047.5904644,
+        "scene": 983037,
+        "arm": "repeat_closed_loop"
       },
       "first_native_episode": {
         "scene": 983009,
@@ -121,11 +121,11 @@
         "terminal_sha256": "3036f55684e351e2da5b29f4888bff6927bd49c05fc95046eabcfd9cc0a343c3"
       },
       "last_episode": {
-        "scene": 983025,
-        "arm": "b-1-u-1",
-        "unix": 1794891834.237013,
-        "success": false,
-        "controls": 600
+        "scene": 983037,
+        "arm": "repeat_closed_loop",
+        "unix": 1794893047.5904644,
+        "success": true,
+        "controls": 554
       },
       "exit": null
     },
@@ -212,13 +212,11 @@
         ],
         "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
       },
-      "episodes": 40,
-      "completed_scenes": 4,
+      "episodes": 64,
+      "completed_scenes": 7,
       "last_event": {
-        "kind": "episode",
-        "unix": 1794891834.0758183,
-        "scene": 983030,
-        "arm": "repeat_closed_loop"
+        "kind": "complete",
+        "unix": 1794892729.6960857
       },
       "first_native_episode": {
         "scene": 983010,
@@ -229,13 +227,18 @@
         "terminal_sha256": "55007becc296558cf21dea9d83dcca4a0d33ae0874ea1288eb613350045f219b"
       },
       "last_episode": {
-        "scene": 983030,
-        "arm": "repeat_closed_loop",
-        "unix": 1794891834.0758183,
-        "success": true,
-        "controls": 239
+        "scene": 983038,
+        "arm": "b+1-u+1",
+        "unix": 1794892729.6823986,
+        "success": false,
+        "controls": 600
       },
-      "exit": null
+      "exit": {
+        "exit_code": 0,
+        "ended_unix": 1794892732.0173485,
+        "gpu_hours": 0.6697547431124581,
+        "completed": true
+      }
     },
     {
       "slot": 2,
@@ -320,13 +323,11 @@
         ],
         "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t0-89\t0\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
       },
-      "episodes": 39,
-      "completed_scenes": 3,
+      "episodes": 40,
+      "completed_scenes": 4,
       "last_event": {
-        "kind": "episode",
-        "unix": 1794891840.5331287,
-        "scene": 983039,
-        "arm": "b+1-u+0"
+        "kind": "complete",
+        "unix": 1794891883.344747
       },
       "first_native_episode": {
         "scene": 983011,
@@ -338,12 +339,17 @@
       },
       "last_episode": {
         "scene": 983039,
-        "arm": "b+1-u+0",
-        "unix": 1794891840.5331287,
+        "arm": "b+1-u+1",
+        "unix": 1794891883.335601,
         "success": false,
         "controls": 600
       },
-      "exit": null
+      "exit": {
+        "exit_code": 0,
+        "ended_unix": 1794891885.681504,
+        "gpu_hours": 0.43466109944714443,
+        "completed": true
+      }
     },
     {
       "slot": 3,
@@ -428,14 +434,11 @@
         ],
         "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
       },
-      "episodes": 34,
-      "completed_scenes": 3,
+      "episodes": 48,
+      "completed_scenes": 5,
       "last_event": {
-        "kind": "reset_check",
-        "unix": 1794891837.738597,
-        "scene": 983036,
-        "arm": "b-1-u+0",
-        "selected": true
+        "kind": "complete",
+        "unix": 1794892384.2828789
       },
       "first_native_episode": {
         "scene": 983012,
@@ -446,16 +449,22 @@
         "terminal_sha256": "2c21ec6d764dcb741fc79cf69ecc66ba33e8f4e1870aaa8352b20f5b5d070db9"
       },
       "last_episode": {
-        "scene": 983036,
-        "arm": "b-1-u-1",
-        "unix": 1794891816.9943159,
+        "scene": 983040,
+        "arm": "b+1-u+1",
+        "unix": 1794892384.27414,
         "success": false,
         "controls": 600
       },
-      "exit": null
+      "exit": {
+        "exit_code": 0,
+        "ended_unix": 1794892386.685471,
+        "gpu_hours": 0.5738289946317673,
+        "completed": true
+      }
     }
   ],
   "next_action": "Continue fixed shards, ordered panel02 merge, train-reference gate and conditional fit02; next monitoring check in20 minutes",
-  "complete_candidate_panels": 22,
-  "controller_command_verified": true
+  "complete_candidate_panels": 31,
+  "controller_command_verified": true,
+  "completed_shards": 3
 }
