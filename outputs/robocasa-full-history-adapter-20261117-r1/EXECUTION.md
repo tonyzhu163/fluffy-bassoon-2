@@ -189,3 +189,35 @@ for subsequent source pins and qualify it against the actual converter.
 Existing tapes preserve their actually executed physical controls and remain
 usable. Active worktrees stay unchanged; no raw data is rewritten. No claim
 is made that this rare tie explains the fit's understeering.
+
+November 17, benchmark review after the user's LIBERO-PRO/Plus question:
+qual07 was prepared but not submitted; its browser form was closed. The
+three-scale priv02 refit, fixed baseline and main public-history collection
+also remain unsubmitted. Small calibration offsets establish only a narrow
+engineering control test, not broad meta-learning generalization. Further
+offset launches are held while the evaluation scope is reconsidered.
+
+priv01 completed all 24 fresh native attempt-2 episodes: adapter3/8,
+uncorrected SFT2/8, privileged teacher8/8. Worker allocation was
+0.60101658 GPUh; conservatively charge0.75. authority01 worker allocation was
+0.0426606 GPUh; conservatively charge0.10. Together with the previous1.51,
+completed conservative campaign charge is2.36 GPUh. No GPU job in this
+campaign remains running; the200 GPU-hour cap is unchanged.
+
+Linux CPU validation on source15964d7842279ea60407c2c1947444941d3f6765
+finished: tests/test_flow_history.py, tests/test_flow_bridge_train.py and
+tests/test_robocasa_pi05_preprocessing.py, 39 passed in604.98s. This includes
+the official action normalization/padding and binary tie reference checks.
+
+Benchmark review recommendation, not a launched replacement contract:
+LIBERO-Pro2.0 supplies32 training and8 held-out base tasks with static and
+runtime changes (https://github.com/LIBERO-Pro-Team/LIBERO-Pro2.0).
+LIBERO-Plus supplies complementary layout, camera, robot-state, language,
+lighting, texture and sensor-noise coverage
+(https://github.com/sylvestf/LIBERO-plus). Neither standard robustness score
+establishes learning from prior attempts. A replacement protocol must report
+official independent-episode scores separately from repeated-attempt history
+comparisons, hold out tasks and shift families/compositions, match interaction
+budgets, and audit frozen-checkpoint exposure before claiming unseen tasks.
+The recommendation is to use Pro2.0 as the main candidate and Plus for
+complementary coverage, subject to native policy/runtime qualification.
