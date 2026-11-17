@@ -1,24 +1,29 @@
 {
-  "checked_shanghai": "2026-11-17T13:24:12.755922+08:00",
-  "checked_unix": 1794893052.7559345,
+  "checked_shanghai": "2026-11-17T13:52:34.906145+08:00",
+  "checked_unix": 1794894754.9061577,
   "cluster": "Baige Pro6K",
   "job_id": "job-6wm41wcuc7x4",
   "source_commit": "0c553ebade1c132b2f9a2a81dadfaa2ce28f5f65",
-  "status": "Healthy: three fixed shards complete, final shard collecting its last scene; no failed worker",
+  "status": "Complete: four shards and all 36 reader fits finished; audit passed; monitoring deleted",
   "prior_complete_scene_panels": 8,
   "prior_complete_episodes": 81,
-  "new_native_episodes": 218,
+  "new_native_episodes": 224,
   "phase_gpu_hour_budget": 8,
   "prior_4090_gpu_hours": 1.4819413118892246,
   "parallel_charged_reservation_gpu_hours": 5,
   "fit_gpu_hour_balance": 1.5180586881107754,
-  "free_storage_bytes": 96154419200,
+  "free_storage_bytes": 95537856512,
   "controller": {
     "source_commit": "0c553ebade1c132b2f9a2a81dadfaa2ce28f5f65",
     "pid": 321627,
-    "phase": "waiting_for_parallel",
-    "completed": false,
-    "checked_unix": 1794889972.1658082
+    "phase": "complete",
+    "completed": true,
+    "checked_unix": 1794893746.372644,
+    "collection_charged_gpu_hours": 6.481941311889225,
+    "worker_measured_gpu_hours": 2.502602365480529,
+    "child_pid": 322184,
+    "maximum_fit_seconds": 5465.0112771987915,
+    "total_charged_gpu_hours": 6.577972011897299
   },
   "workers": [
     {
@@ -104,8 +109,8 @@
         ],
         "topology": "\t\u001b[4mGPU0\tNIC0\tNIC1\tNIC2\tNIC3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\tSYS\t90-179\t1\t\tN/A\nNIC0\tSYS\t X \tSYS\tSYS\tSYS\t\t\t\t\nNIC1\tSYS\tSYS\t X \tPHB\tPHB\t\t\t\t\nNIC2\tSYS\tSYS\tPHB\t X \tPHB\t\t\t\t\nNIC3\tSYS\tSYS\tPHB\tPHB\t X \t\t\t\t\nLegend:\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\nNIC Legend:\n  NIC0: mlx5_0\n  NIC1: mlx5_1\n  NIC2: mlx5_2\n  NIC3: mlx5_3"
       },
-      "episodes": 66,
-      "completed_scenes": 7,
+      "episodes": 72,
+      "completed_scenes": 8,
       "last_event": {
         "kind": "episode",
         "unix": 1794893047.5904644,
@@ -127,7 +132,12 @@
         "success": true,
         "controls": 554
       },
-      "exit": null
+      "exit": {
+        "exit_code": 0,
+        "ended_unix": 1794893288.5891201,
+        "gpu_hours": 0.8243575282891591,
+        "completed": true
+      }
     },
     {
       "slot": 1,
@@ -463,8 +473,13 @@
       }
     }
   ],
-  "next_action": "Continue fixed shards, ordered panel02 merge, train-reference gate and conditional fit02; next monitoring check in20 minutes",
-  "complete_candidate_panels": 31,
+  "next_action": "No further compute; retain results and archived checkpoints, diagnose sparse-feedback DIT values before any scale-up",
+  "complete_candidate_panels": 32,
   "controller_command_verified": true,
-  "completed_shards": 3
+  "completed_shards": 4,
+  "primary_panel_episodes": 159,
+  "primary_selected_scenes": 16,
+  "total_charged_gpu_hours": 6.577972011897299,
+  "audit_passed": true,
+  "audit_checks": 1333
 }

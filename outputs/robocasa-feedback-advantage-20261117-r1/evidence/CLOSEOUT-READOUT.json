@@ -1,0 +1,4219 @@
+{
+  "completed": true,
+  "source_commit": "0c553ebade1c132b2f9a2a81dadfaa2ce28f5f65",
+  "completed_unix": 1794893746.372644,
+  "audit_checks": 1333,
+  "panel_episodes": 159,
+  "screened_scenes": 31,
+  "train_scenes": [
+    982101,
+    982103,
+    982107,
+    983001,
+    983002,
+    983005,
+    983007,
+    983008
+  ],
+  "eval_scenes": [
+    983009,
+    983012,
+    983013,
+    983014,
+    983017,
+    983018,
+    983021,
+    983022
+  ],
+  "total_charged_gpu_hours": 6.577972011897299,
+  "worker_measured_gpu_hours": 2.502602365480529,
+  "repeat_checks": {
+    "tape_exact": 16,
+    "fresh_success_equal": 16,
+    "fresh_terminal_exact": 14
+  },
+  "stage1": {
+    "probed_train_cross": {
+      "oracle": {
+        "point": 0.9375,
+        "ci95": [
+          0.875,
+          1.0
+        ],
+        "independent_blocks": 2
+      },
+      "best_fixed": {
+        "point": 0.5,
+        "ci95": [
+          0.5,
+          0.5
+        ],
+        "independent_blocks": 2
+      },
+      "uncorrected": {
+        "point": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "independent_blocks": 2
+      },
+      "current_obs_ref": {
+        "point": 0.4375,
+        "ci95": [
+          0.375,
+          0.5
+        ],
+        "independent_blocks": 2
+      },
+      "feedback_own": {
+        "point": 0.90625,
+        "ci95": [
+          0.8125,
+          1.0
+        ],
+        "independent_blocks": 2
+      },
+      "feedback_own_vs_obs": {
+        "point": 0.90625,
+        "ci95": [
+          0.8125,
+          1.0
+        ],
+        "independent_blocks": 2
+      },
+      "feedback_own_vs_donor": {
+        "point": 0.90625,
+        "ci95": [
+          0.8125,
+          1.0
+        ],
+        "independent_blocks": 2
+      },
+      "feedback_own_vs_masked": {
+        "point": 0.90625,
+        "ci95": [
+          0.8125,
+          1.0
+        ],
+        "independent_blocks": 2
+      },
+      "feedback_matched_donor": {
+        "point": 0.03125,
+        "ci95": [
+          0.0,
+          0.0625
+        ],
+        "independent_blocks": 2
+      },
+      "feedback_masked": {
+        "point": 0.4375,
+        "ci95": [
+          0.375,
+          0.5
+        ],
+        "independent_blocks": 2
+      },
+      "feedback_counterfactual_reward": {
+        "point": 0.03125,
+        "ci95": [
+          0.0,
+          0.0625
+        ],
+        "independent_blocks": 2
+      }
+    },
+    "probed_eval_cross": {
+      "oracle": {
+        "point": 1.0,
+        "ci95": [
+          1.0,
+          1.0
+        ],
+        "independent_blocks": 2
+      },
+      "best_fixed": {
+        "point": 0.5,
+        "ci95": [
+          0.5,
+          0.5
+        ],
+        "independent_blocks": 2
+      },
+      "uncorrected": {
+        "point": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "independent_blocks": 2
+      },
+      "current_obs_ref": {
+        "point": 0.5,
+        "ci95": [
+          0.5,
+          0.5
+        ],
+        "independent_blocks": 2
+      },
+      "feedback_own": {
+        "point": 1.0,
+        "ci95": [
+          1.0,
+          1.0
+        ],
+        "independent_blocks": 2
+      },
+      "feedback_own_vs_obs": {
+        "point": 1.0,
+        "ci95": [
+          1.0,
+          1.0
+        ],
+        "independent_blocks": 2
+      },
+      "feedback_own_vs_donor": {
+        "point": 1.0,
+        "ci95": [
+          1.0,
+          1.0
+        ],
+        "independent_blocks": 2
+      },
+      "feedback_own_vs_masked": {
+        "point": 1.0,
+        "ci95": [
+          1.0,
+          1.0
+        ],
+        "independent_blocks": 2
+      },
+      "feedback_matched_donor": {
+        "point": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "independent_blocks": 2
+      },
+      "feedback_masked": {
+        "point": 0.5,
+        "ci95": [
+          0.5,
+          0.5
+        ],
+        "independent_blocks": 2
+      },
+      "feedback_counterfactual_reward": {
+        "point": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "independent_blocks": 2
+      }
+    },
+    "drift_eval_cross": {
+      "oracle": {
+        "point": 1.0,
+        "ci95": [
+          1.0,
+          1.0
+        ],
+        "independent_blocks": 2
+      },
+      "best_fixed": {
+        "point": 0.5,
+        "ci95": [
+          0.5,
+          0.5
+        ],
+        "independent_blocks": 2
+      },
+      "drift_own": {
+        "point": 1.0,
+        "ci95": [
+          1.0,
+          1.0
+        ],
+        "independent_blocks": 2
+      },
+      "drift_own_vs_donor": {
+        "point": 1.0,
+        "ci95": [
+          1.0,
+          1.0
+        ],
+        "independent_blocks": 2
+      },
+      "drift_own_vs_cleared": {
+        "point": 1.0,
+        "ci95": [
+          1.0,
+          1.0
+        ],
+        "independent_blocks": 2
+      },
+      "drift_matched_donor": {
+        "point": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "independent_blocks": 2
+      },
+      "drift_cleared": {
+        "point": 0.5,
+        "ci95": [
+          0.5,
+          0.5
+        ],
+        "independent_blocks": 2
+      }
+    }
+  },
+  "stage2": {
+    "probed_action_reward": {
+      "dpt": {
+        "eval_cross": {
+          "own": {
+            "attempt2_mean": 0.9583333333333334,
+            "attempt2_per_seed": [
+              0.9375,
+              0.9375,
+              1.0
+            ],
+            "cumulative_mean": 0.96875,
+            "cumulative_per_seed": [
+              0.9375,
+              0.96875,
+              1.0
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.052083333333333336,
+            "attempt2_per_seed": [
+              0.0625,
+              0.09375,
+              0.0
+            ],
+            "cumulative_mean": 0.5416666666666666,
+            "cumulative_per_seed": [
+              0.5625,
+              0.5625,
+              0.5
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.7083333333333334,
+            "cumulative_per_seed": [
+              0.65625,
+              0.8125,
+              0.65625
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.041666666666666664,
+            "attempt2_per_seed": [
+              0.0625,
+              0.0625,
+              0.0
+            ],
+            "cumulative_mean": 0.5104166666666666,
+            "cumulative_per_seed": [
+              0.5,
+              0.53125,
+              0.5
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.9583333333333334,
+            "attempt2_per_seed": [
+              0.9375,
+              0.9375,
+              1.0
+            ],
+            "cumulative_mean": 0.96875,
+            "cumulative_per_seed": [
+              0.9375,
+              0.96875,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.90625,
+            "diff_attempt2_per_seed": [
+              0.875,
+              0.84375,
+              1.0
+            ],
+            "diff_cumulative_mean": 0.4270833333333333,
+            "diff_cumulative_per_seed": [
+              0.375,
+              0.40625,
+              0.5
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.9583333333333334,
+            "attempt2_per_seed": [
+              0.9375,
+              0.9375,
+              1.0
+            ],
+            "cumulative_mean": 0.96875,
+            "cumulative_per_seed": [
+              0.9375,
+              0.96875,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.4583333333333333,
+            "diff_attempt2_per_seed": [
+              0.4375,
+              0.4375,
+              0.5
+            ],
+            "diff_cumulative_mean": 0.21875,
+            "diff_cumulative_per_seed": [
+              0.1875,
+              0.21875,
+              0.25
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.9583333333333334,
+            "attempt2_per_seed": [
+              0.9375,
+              0.9375,
+              1.0
+            ],
+            "cumulative_mean": 0.96875,
+            "cumulative_per_seed": [
+              0.9375,
+              0.96875,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.4583333333333333,
+            "diff_attempt2_per_seed": [
+              0.4375,
+              0.4375,
+              0.5
+            ],
+            "diff_cumulative_mean": 0.2604166666666667,
+            "diff_cumulative_per_seed": [
+              0.28125,
+              0.15625,
+              0.34375
+            ]
+          }
+        },
+        "eval_same": {
+          "own": {
+            "attempt2_mean": 0.90625,
+            "attempt2_per_seed": [
+              0.84375,
+              0.875,
+              1.0
+            ],
+            "cumulative_mean": 0.9375,
+            "cumulative_per_seed": [
+              0.90625,
+              0.90625,
+              1.0
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.041666666666666664,
+            "attempt2_per_seed": [
+              0.0625,
+              0.0625,
+              0.0
+            ],
+            "cumulative_mean": 0.53125,
+            "cumulative_per_seed": [
+              0.5625,
+              0.53125,
+              0.5
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.6875,
+            "cumulative_per_seed": [
+              0.625,
+              0.8125,
+              0.625
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.09375,
+            "attempt2_per_seed": [
+              0.15625,
+              0.125,
+              0.0
+            ],
+            "cumulative_mean": 0.53125,
+            "cumulative_per_seed": [
+              0.5625,
+              0.53125,
+              0.5
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.90625,
+            "attempt2_per_seed": [
+              0.84375,
+              0.875,
+              1.0
+            ],
+            "cumulative_mean": 0.9375,
+            "cumulative_per_seed": [
+              0.90625,
+              0.90625,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.8645833333333334,
+            "diff_attempt2_per_seed": [
+              0.78125,
+              0.8125,
+              1.0
+            ],
+            "diff_cumulative_mean": 0.40625,
+            "diff_cumulative_per_seed": [
+              0.34375,
+              0.375,
+              0.5
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.90625,
+            "attempt2_per_seed": [
+              0.84375,
+              0.875,
+              1.0
+            ],
+            "cumulative_mean": 0.9375,
+            "cumulative_per_seed": [
+              0.90625,
+              0.90625,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.40625,
+            "diff_attempt2_per_seed": [
+              0.34375,
+              0.375,
+              0.5
+            ],
+            "diff_cumulative_mean": 0.1875,
+            "diff_cumulative_per_seed": [
+              0.15625,
+              0.15625,
+              0.25
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.90625,
+            "attempt2_per_seed": [
+              0.84375,
+              0.875,
+              1.0
+            ],
+            "cumulative_mean": 0.9375,
+            "cumulative_per_seed": [
+              0.90625,
+              0.90625,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.40625,
+            "diff_attempt2_per_seed": [
+              0.34375,
+              0.375,
+              0.5
+            ],
+            "diff_cumulative_mean": 0.25,
+            "diff_cumulative_per_seed": [
+              0.28125,
+              0.09375,
+              0.375
+            ]
+          }
+        }
+      },
+      "uniform_bc": {
+        "eval_cross": {
+          "own": {
+            "attempt2_mean": 0.4166666666666667,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.25
+            ],
+            "cumulative_mean": 0.7083333333333334,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.625
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.4270833333333333,
+            "attempt2_per_seed": [
+              0.5,
+              0.46875,
+              0.3125
+            ],
+            "cumulative_mean": 0.7083333333333334,
+            "cumulative_per_seed": [
+              0.75,
+              0.71875,
+              0.65625
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.4166666666666667,
+            "attempt2_per_seed": [
+              0.5,
+              0.4375,
+              0.3125
+            ],
+            "cumulative_mean": 0.7083333333333334,
+            "cumulative_per_seed": [
+              0.75,
+              0.71875,
+              0.65625
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.4270833333333333,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.28125
+            ],
+            "cumulative_mean": 0.71875,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.65625
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.4270833333333333,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.28125
+            ],
+            "cumulative_mean": 0.71875,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.65625
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.4166666666666667,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.25
+            ],
+            "cumulative_mean": 0.7083333333333334,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.625
+            ],
+            "diff_attempt2_mean": -0.010416666666666666,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.03125,
+              -0.0625
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.03125,
+              -0.03125
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.4166666666666667,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.25
+            ],
+            "cumulative_mean": 0.7083333333333334,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.625
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0625,
+              -0.0625
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.03125,
+              -0.03125
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.4166666666666667,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.25
+            ],
+            "cumulative_mean": 0.7083333333333334,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.625
+            ],
+            "diff_attempt2_mean": -0.010416666666666666,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              -0.03125
+            ],
+            "diff_cumulative_mean": -0.010416666666666666,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              -0.03125
+            ]
+          }
+        },
+        "eval_same": {
+          "own": {
+            "attempt2_mean": 0.4270833333333333,
+            "attempt2_per_seed": [
+              0.5,
+              0.46875,
+              0.3125
+            ],
+            "cumulative_mean": 0.71875,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.65625
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.4270833333333333,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.28125
+            ],
+            "cumulative_mean": 0.7083333333333334,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.625
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.4166666666666667,
+            "attempt2_per_seed": [
+              0.5,
+              0.4375,
+              0.3125
+            ],
+            "cumulative_mean": 0.7083333333333334,
+            "cumulative_per_seed": [
+              0.75,
+              0.71875,
+              0.65625
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.4270833333333333,
+            "attempt2_per_seed": [
+              0.5,
+              0.46875,
+              0.3125
+            ],
+            "cumulative_mean": 0.7395833333333334,
+            "cumulative_per_seed": [
+              0.78125,
+              0.78125,
+              0.65625
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.4166666666666667,
+            "attempt2_per_seed": [
+              0.5,
+              0.4375,
+              0.3125
+            ],
+            "cumulative_mean": 0.71875,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.65625
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.4270833333333333,
+            "attempt2_per_seed": [
+              0.5,
+              0.46875,
+              0.3125
+            ],
+            "cumulative_mean": 0.71875,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.65625
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              -0.03125,
+              0.03125
+            ],
+            "diff_cumulative_mean": 0.010416666666666666,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.03125
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.4270833333333333,
+            "attempt2_per_seed": [
+              0.5,
+              0.46875,
+              0.3125
+            ],
+            "cumulative_mean": 0.71875,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.65625
+            ],
+            "diff_attempt2_mean": 0.010416666666666666,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.03125,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.010416666666666666,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.03125,
+              0.0
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.4270833333333333,
+            "attempt2_per_seed": [
+              0.5,
+              0.46875,
+              0.3125
+            ],
+            "cumulative_mean": 0.71875,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.65625
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": -0.020833333333333332,
+            "diff_cumulative_per_seed": [
+              -0.03125,
+              -0.03125,
+              0.0
+            ]
+          }
+        }
+      },
+      "dit_tau1": {
+        "eval_cross": {
+          "own": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.53125,
+              0.5,
+              0.46875
+            ],
+            "cumulative_mean": 0.7604166666666666,
+            "cumulative_per_seed": [
+              0.78125,
+              0.78125,
+              0.71875
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.4270833333333333,
+            "attempt2_per_seed": [
+              0.34375,
+              0.46875,
+              0.46875
+            ],
+            "cumulative_mean": 0.6875,
+            "cumulative_per_seed": [
+              0.59375,
+              0.71875,
+              0.75
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.7604166666666666,
+            "cumulative_per_seed": [
+              0.75,
+              0.8125,
+              0.71875
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.46875,
+              0.5,
+              0.53125
+            ],
+            "cumulative_mean": 0.7604166666666666,
+            "cumulative_per_seed": [
+              0.75,
+              0.78125,
+              0.75
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.53125,
+              0.5,
+              0.46875
+            ],
+            "cumulative_mean": 0.7604166666666666,
+            "cumulative_per_seed": [
+              0.78125,
+              0.78125,
+              0.71875
+            ],
+            "diff_attempt2_mean": 0.07291666666666667,
+            "diff_attempt2_per_seed": [
+              0.1875,
+              0.03125,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.07291666666666667,
+            "diff_cumulative_per_seed": [
+              0.1875,
+              0.0625,
+              -0.03125
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.53125,
+              0.5,
+              0.46875
+            ],
+            "cumulative_mean": 0.7604166666666666,
+            "cumulative_per_seed": [
+              0.78125,
+              0.78125,
+              0.71875
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.03125,
+              0.0,
+              -0.03125
+            ],
+            "diff_cumulative_mean": 0.010416666666666666,
+            "diff_cumulative_per_seed": [
+              0.03125,
+              0.03125,
+              -0.03125
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.53125,
+              0.5,
+              0.46875
+            ],
+            "cumulative_mean": 0.7604166666666666,
+            "cumulative_per_seed": [
+              0.78125,
+              0.78125,
+              0.71875
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.03125,
+              0.0,
+              -0.03125
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.03125,
+              -0.03125,
+              0.0
+            ]
+          }
+        },
+        "eval_same": {
+          "own": {
+            "attempt2_mean": 0.5208333333333334,
+            "attempt2_per_seed": [
+              0.5625,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.78125,
+            "cumulative_per_seed": [
+              0.8125,
+              0.78125,
+              0.75
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.46875,
+              0.5,
+              0.53125
+            ],
+            "cumulative_mean": 0.7395833333333334,
+            "cumulative_per_seed": [
+              0.71875,
+              0.71875,
+              0.78125
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.78125,
+            "cumulative_per_seed": [
+              0.78125,
+              0.8125,
+              0.75
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.4791666666666667,
+            "attempt2_per_seed": [
+              0.4375,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.7604166666666666,
+            "cumulative_per_seed": [
+              0.75,
+              0.78125,
+              0.75
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.5208333333333334,
+            "attempt2_per_seed": [
+              0.5625,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.78125,
+            "cumulative_per_seed": [
+              0.8125,
+              0.78125,
+              0.75
+            ],
+            "diff_attempt2_mean": 0.020833333333333332,
+            "diff_attempt2_per_seed": [
+              0.09375,
+              0.0,
+              -0.03125
+            ],
+            "diff_cumulative_mean": 0.041666666666666664,
+            "diff_cumulative_per_seed": [
+              0.09375,
+              0.0625,
+              -0.03125
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.5208333333333334,
+            "attempt2_per_seed": [
+              0.5625,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.78125,
+            "cumulative_per_seed": [
+              0.8125,
+              0.78125,
+              0.75
+            ],
+            "diff_attempt2_mean": 0.020833333333333332,
+            "diff_attempt2_per_seed": [
+              0.0625,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.03125,
+            "diff_cumulative_per_seed": [
+              0.0625,
+              0.03125,
+              0.0
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.5208333333333334,
+            "attempt2_per_seed": [
+              0.5625,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.78125,
+            "cumulative_per_seed": [
+              0.8125,
+              0.78125,
+              0.75
+            ],
+            "diff_attempt2_mean": 0.020833333333333332,
+            "diff_attempt2_per_seed": [
+              0.0625,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.03125,
+              -0.03125,
+              0.0
+            ]
+          }
+        }
+      },
+      "dit_tau01": {
+        "eval_cross": {
+          "own": {
+            "attempt2_mean": 0.5833333333333334,
+            "attempt2_per_seed": [
+              0.75,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.8333333333333334,
+            "cumulative_per_seed": [
+              1.0,
+              0.75,
+              0.75
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.4270833333333333,
+            "attempt2_per_seed": [
+              0.28125,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.6666666666666666,
+            "cumulative_per_seed": [
+              0.53125,
+              0.71875,
+              0.75
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.4166666666666667,
+            "attempt2_per_seed": [
+              0.25,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.5833333333333334,
+            "attempt2_per_seed": [
+              0.75,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.8333333333333334,
+            "cumulative_per_seed": [
+              1.0,
+              0.75,
+              0.75
+            ],
+            "diff_attempt2_mean": 0.15625,
+            "diff_attempt2_per_seed": [
+              0.46875,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.16666666666666666,
+            "diff_cumulative_per_seed": [
+              0.46875,
+              0.03125,
+              0.0
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.5833333333333334,
+            "attempt2_per_seed": [
+              0.75,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.8333333333333334,
+            "cumulative_per_seed": [
+              1.0,
+              0.75,
+              0.75
+            ],
+            "diff_attempt2_mean": 0.08333333333333333,
+            "diff_attempt2_per_seed": [
+              0.25,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.08333333333333333,
+            "diff_cumulative_per_seed": [
+              0.25,
+              0.0,
+              0.0
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.5833333333333334,
+            "attempt2_per_seed": [
+              0.75,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.8333333333333334,
+            "cumulative_per_seed": [
+              1.0,
+              0.75,
+              0.75
+            ],
+            "diff_attempt2_mean": 0.08333333333333333,
+            "diff_attempt2_per_seed": [
+              0.25,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.08333333333333333,
+            "diff_cumulative_per_seed": [
+              0.25,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "eval_same": {
+          "own": {
+            "attempt2_mean": 0.5833333333333334,
+            "attempt2_per_seed": [
+              0.75,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.84375,
+            "cumulative_per_seed": [
+              1.0,
+              0.78125,
+              0.75
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.4166666666666667,
+            "attempt2_per_seed": [
+              0.25,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.6666666666666666,
+            "cumulative_per_seed": [
+              0.5,
+              0.75,
+              0.75
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.7708333333333334,
+            "cumulative_per_seed": [
+              0.78125,
+              0.78125,
+              0.75
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.4166666666666667,
+            "attempt2_per_seed": [
+              0.25,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.7604166666666666,
+            "cumulative_per_seed": [
+              0.75,
+              0.78125,
+              0.75
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.5833333333333334,
+            "attempt2_per_seed": [
+              0.75,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.84375,
+            "cumulative_per_seed": [
+              1.0,
+              0.78125,
+              0.75
+            ],
+            "diff_attempt2_mean": 0.16666666666666666,
+            "diff_attempt2_per_seed": [
+              0.5,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.17708333333333334,
+            "diff_cumulative_per_seed": [
+              0.5,
+              0.03125,
+              0.0
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.5833333333333334,
+            "attempt2_per_seed": [
+              0.75,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.84375,
+            "cumulative_per_seed": [
+              1.0,
+              0.78125,
+              0.75
+            ],
+            "diff_attempt2_mean": 0.08333333333333333,
+            "diff_attempt2_per_seed": [
+              0.25,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.09375,
+            "diff_cumulative_per_seed": [
+              0.25,
+              0.03125,
+              0.0
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.5833333333333334,
+            "attempt2_per_seed": [
+              0.75,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.84375,
+            "cumulative_per_seed": [
+              1.0,
+              0.78125,
+              0.75
+            ],
+            "diff_attempt2_mean": 0.08333333333333333,
+            "diff_attempt2_per_seed": [
+              0.25,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.07291666666666667,
+            "diff_cumulative_per_seed": [
+              0.21875,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "known_outcome_tau01": {
+        "eval_cross": {
+          "own": {
+            "attempt2_mean": 0.9270833333333334,
+            "attempt2_per_seed": [
+              0.875,
+              0.90625,
+              1.0
+            ],
+            "cumulative_mean": 0.9791666666666666,
+            "cumulative_per_seed": [
+              0.96875,
+              0.96875,
+              1.0
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.13541666666666666,
+            "attempt2_per_seed": [
+              0.125,
+              0.1875,
+              0.09375
+            ],
+            "cumulative_mean": 0.53125,
+            "cumulative_per_seed": [
+              0.5,
+              0.59375,
+              0.5
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.8229166666666666,
+            "cumulative_per_seed": [
+              0.8125,
+              0.78125,
+              0.875
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.052083333333333336,
+            "attempt2_per_seed": [
+              0.0625,
+              0.09375,
+              0.0
+            ],
+            "cumulative_mean": 0.5416666666666666,
+            "cumulative_per_seed": [
+              0.5625,
+              0.5625,
+              0.5
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.9270833333333334,
+            "attempt2_per_seed": [
+              0.875,
+              0.90625,
+              1.0
+            ],
+            "cumulative_mean": 0.9791666666666666,
+            "cumulative_per_seed": [
+              0.96875,
+              0.96875,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.7916666666666666,
+            "diff_attempt2_per_seed": [
+              0.75,
+              0.71875,
+              0.90625
+            ],
+            "diff_cumulative_mean": 0.4479166666666667,
+            "diff_cumulative_per_seed": [
+              0.46875,
+              0.375,
+              0.5
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.9270833333333334,
+            "attempt2_per_seed": [
+              0.875,
+              0.90625,
+              1.0
+            ],
+            "cumulative_mean": 0.9791666666666666,
+            "cumulative_per_seed": [
+              0.96875,
+              0.96875,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.4270833333333333,
+            "diff_attempt2_per_seed": [
+              0.375,
+              0.40625,
+              0.5
+            ],
+            "diff_cumulative_mean": 0.22916666666666666,
+            "diff_cumulative_per_seed": [
+              0.21875,
+              0.21875,
+              0.25
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.9270833333333334,
+            "attempt2_per_seed": [
+              0.875,
+              0.90625,
+              1.0
+            ],
+            "cumulative_mean": 0.9791666666666666,
+            "cumulative_per_seed": [
+              0.96875,
+              0.96875,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.4270833333333333,
+            "diff_attempt2_per_seed": [
+              0.375,
+              0.40625,
+              0.5
+            ],
+            "diff_cumulative_mean": 0.15625,
+            "diff_cumulative_per_seed": [
+              0.15625,
+              0.1875,
+              0.125
+            ]
+          }
+        },
+        "eval_same": {
+          "own": {
+            "attempt2_mean": 0.8958333333333334,
+            "attempt2_per_seed": [
+              0.90625,
+              0.90625,
+              0.875
+            ],
+            "cumulative_mean": 0.9479166666666666,
+            "cumulative_per_seed": [
+              0.96875,
+              0.9375,
+              0.9375
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.052083333333333336,
+            "attempt2_per_seed": [
+              0.0625,
+              0.09375,
+              0.0
+            ],
+            "cumulative_mean": 0.5104166666666666,
+            "cumulative_per_seed": [
+              0.5,
+              0.53125,
+              0.5
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.84375,
+            "cumulative_per_seed": [
+              0.78125,
+              0.90625,
+              0.84375
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.09375,
+            "attempt2_per_seed": [
+              0.0625,
+              0.09375,
+              0.125
+            ],
+            "cumulative_mean": 0.5520833333333334,
+            "cumulative_per_seed": [
+              0.5625,
+              0.53125,
+              0.5625
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.8958333333333334,
+            "attempt2_per_seed": [
+              0.90625,
+              0.90625,
+              0.875
+            ],
+            "cumulative_mean": 0.9479166666666666,
+            "cumulative_per_seed": [
+              0.96875,
+              0.9375,
+              0.9375
+            ],
+            "diff_attempt2_mean": 0.84375,
+            "diff_attempt2_per_seed": [
+              0.84375,
+              0.8125,
+              0.875
+            ],
+            "diff_cumulative_mean": 0.4375,
+            "diff_cumulative_per_seed": [
+              0.46875,
+              0.40625,
+              0.4375
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.8958333333333334,
+            "attempt2_per_seed": [
+              0.90625,
+              0.90625,
+              0.875
+            ],
+            "cumulative_mean": 0.9479166666666666,
+            "cumulative_per_seed": [
+              0.96875,
+              0.9375,
+              0.9375
+            ],
+            "diff_attempt2_mean": 0.3958333333333333,
+            "diff_attempt2_per_seed": [
+              0.40625,
+              0.40625,
+              0.375
+            ],
+            "diff_cumulative_mean": 0.19791666666666666,
+            "diff_cumulative_per_seed": [
+              0.21875,
+              0.1875,
+              0.1875
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.8958333333333334,
+            "attempt2_per_seed": [
+              0.90625,
+              0.90625,
+              0.875
+            ],
+            "cumulative_mean": 0.9479166666666666,
+            "cumulative_per_seed": [
+              0.96875,
+              0.9375,
+              0.9375
+            ],
+            "diff_attempt2_mean": 0.3958333333333333,
+            "diff_attempt2_per_seed": [
+              0.40625,
+              0.40625,
+              0.375
+            ],
+            "diff_cumulative_mean": 0.10416666666666667,
+            "diff_cumulative_per_seed": [
+              0.1875,
+              0.03125,
+              0.09375
+            ]
+          }
+        }
+      },
+      "memoryless": {
+        "eval_cross": {
+          "own": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "eval_same": {
+          "own": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.75,
+            "cumulative_per_seed": [
+              0.75,
+              0.75,
+              0.75
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "_coverage": {
+        "0": {
+          "dpt": 1.0,
+          "uniform_bc": 1.0,
+          "dit_tau1": 1.0,
+          "dit_tau01": 1.0,
+          "known_outcome_tau01": 1.0,
+          "memoryless": 1.0
+        },
+        "1": {
+          "dpt": 1.0,
+          "uniform_bc": 1.0,
+          "dit_tau1": 1.0,
+          "dit_tau01": 1.0,
+          "known_outcome_tau01": 1.0,
+          "memoryless": 1.0
+        },
+        "2": {
+          "dpt": 1.0,
+          "uniform_bc": 1.0,
+          "dit_tau1": 1.0,
+          "dit_tau01": 1.0,
+          "known_outcome_tau01": 1.0,
+          "memoryless": 1.0
+        }
+      }
+    },
+    "uncompensated_drift": {
+      "dpt": {
+        "eval_cross": {
+          "own": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.0,
+            "attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "cumulative_mean": 0.0,
+            "cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_attempt2_mean": 1.0,
+            "diff_attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_cumulative_mean": 1.0,
+            "diff_cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.5,
+            "diff_attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "diff_cumulative_mean": 0.5,
+            "diff_cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "eval_same": {
+          "own": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.0,
+            "attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "cumulative_mean": 0.0,
+            "cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.9791666666666666,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              0.9375
+            ],
+            "cumulative_mean": 0.9791666666666666,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              0.9375
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.9791666666666666,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              0.9375
+            ],
+            "cumulative_mean": 0.9791666666666666,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              0.9375
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_attempt2_mean": 1.0,
+            "diff_attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_cumulative_mean": 1.0,
+            "diff_cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.5,
+            "diff_attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "diff_cumulative_mean": 0.5,
+            "diff_cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.020833333333333332,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0625
+            ],
+            "diff_cumulative_mean": 0.020833333333333332,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0625
+            ]
+          }
+        }
+      },
+      "uniform_bc": {
+        "eval_cross": {
+          "own": {
+            "attempt2_mean": 0.16666666666666666,
+            "attempt2_per_seed": [
+              0.125,
+              0.1875,
+              0.1875
+            ],
+            "cumulative_mean": 0.16666666666666666,
+            "cumulative_per_seed": [
+              0.125,
+              0.1875,
+              0.1875
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.125,
+            "attempt2_per_seed": [
+              0.125,
+              0.1875,
+              0.0625
+            ],
+            "cumulative_mean": 0.125,
+            "cumulative_per_seed": [
+              0.125,
+              0.1875,
+              0.0625
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.125,
+            "attempt2_per_seed": [
+              0.125,
+              0.125,
+              0.125
+            ],
+            "cumulative_mean": 0.125,
+            "cumulative_per_seed": [
+              0.125,
+              0.125,
+              0.125
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.16666666666666666,
+            "attempt2_per_seed": [
+              0.125,
+              0.1875,
+              0.1875
+            ],
+            "cumulative_mean": 0.16666666666666666,
+            "cumulative_per_seed": [
+              0.125,
+              0.1875,
+              0.1875
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.16666666666666666,
+            "attempt2_per_seed": [
+              0.125,
+              0.1875,
+              0.1875
+            ],
+            "cumulative_mean": 0.16666666666666666,
+            "cumulative_per_seed": [
+              0.125,
+              0.1875,
+              0.1875
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.16666666666666666,
+            "attempt2_per_seed": [
+              0.125,
+              0.1875,
+              0.1875
+            ],
+            "cumulative_mean": 0.16666666666666666,
+            "cumulative_per_seed": [
+              0.125,
+              0.1875,
+              0.1875
+            ],
+            "diff_attempt2_mean": 0.041666666666666664,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.125
+            ],
+            "diff_cumulative_mean": 0.041666666666666664,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.125
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.16666666666666666,
+            "attempt2_per_seed": [
+              0.125,
+              0.1875,
+              0.1875
+            ],
+            "cumulative_mean": 0.16666666666666666,
+            "cumulative_per_seed": [
+              0.125,
+              0.1875,
+              0.1875
+            ],
+            "diff_attempt2_mean": 0.041666666666666664,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0625,
+              0.0625
+            ],
+            "diff_cumulative_mean": 0.041666666666666664,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0625,
+              0.0625
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.16666666666666666,
+            "attempt2_per_seed": [
+              0.125,
+              0.1875,
+              0.1875
+            ],
+            "cumulative_mean": 0.16666666666666666,
+            "cumulative_per_seed": [
+              0.125,
+              0.1875,
+              0.1875
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "eval_same": {
+          "own": {
+            "attempt2_mean": 0.14583333333333334,
+            "attempt2_per_seed": [
+              0.125,
+              0.1875,
+              0.125
+            ],
+            "cumulative_mean": 0.14583333333333334,
+            "cumulative_per_seed": [
+              0.125,
+              0.1875,
+              0.125
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.125,
+            "attempt2_per_seed": [
+              0.125,
+              0.1875,
+              0.0625
+            ],
+            "cumulative_mean": 0.125,
+            "cumulative_per_seed": [
+              0.125,
+              0.1875,
+              0.0625
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.125,
+            "attempt2_per_seed": [
+              0.125,
+              0.125,
+              0.125
+            ],
+            "cumulative_mean": 0.125,
+            "cumulative_per_seed": [
+              0.125,
+              0.125,
+              0.125
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.14583333333333334,
+            "attempt2_per_seed": [
+              0.125,
+              0.1875,
+              0.125
+            ],
+            "cumulative_mean": 0.14583333333333334,
+            "cumulative_per_seed": [
+              0.125,
+              0.1875,
+              0.125
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.14583333333333334,
+            "attempt2_per_seed": [
+              0.125,
+              0.1875,
+              0.125
+            ],
+            "cumulative_mean": 0.14583333333333334,
+            "cumulative_per_seed": [
+              0.125,
+              0.1875,
+              0.125
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.14583333333333334,
+            "attempt2_per_seed": [
+              0.125,
+              0.1875,
+              0.125
+            ],
+            "cumulative_mean": 0.14583333333333334,
+            "cumulative_per_seed": [
+              0.125,
+              0.1875,
+              0.125
+            ],
+            "diff_attempt2_mean": 0.020833333333333332,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0625
+            ],
+            "diff_cumulative_mean": 0.020833333333333332,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0625
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.14583333333333334,
+            "attempt2_per_seed": [
+              0.125,
+              0.1875,
+              0.125
+            ],
+            "cumulative_mean": 0.14583333333333334,
+            "cumulative_per_seed": [
+              0.125,
+              0.1875,
+              0.125
+            ],
+            "diff_attempt2_mean": 0.020833333333333332,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0625,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.020833333333333332,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0625,
+              0.0
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.14583333333333334,
+            "attempt2_per_seed": [
+              0.125,
+              0.1875,
+              0.125
+            ],
+            "cumulative_mean": 0.14583333333333334,
+            "cumulative_per_seed": [
+              0.125,
+              0.1875,
+              0.125
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "dit_tau1": {
+        "eval_cross": {
+          "own": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.0,
+            "attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "cumulative_mean": 0.0,
+            "cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_attempt2_mean": 1.0,
+            "diff_attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_cumulative_mean": 1.0,
+            "diff_cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.5,
+            "diff_attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "diff_cumulative_mean": 0.5,
+            "diff_cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "eval_same": {
+          "own": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.0,
+            "attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "cumulative_mean": 0.0,
+            "cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.9791666666666666,
+            "attempt2_per_seed": [
+              0.9375,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 0.9791666666666666,
+            "cumulative_per_seed": [
+              0.9375,
+              1.0,
+              1.0
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.9791666666666666,
+            "attempt2_per_seed": [
+              0.9375,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 0.9791666666666666,
+            "cumulative_per_seed": [
+              0.9375,
+              1.0,
+              1.0
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_attempt2_mean": 1.0,
+            "diff_attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_cumulative_mean": 1.0,
+            "diff_cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.5,
+            "diff_attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "diff_cumulative_mean": 0.5,
+            "diff_cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.020833333333333332,
+            "diff_attempt2_per_seed": [
+              0.0625,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.020833333333333332,
+            "diff_cumulative_per_seed": [
+              0.0625,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "dit_tau01": {
+        "eval_cross": {
+          "own": {
+            "attempt2_mean": 0.9791666666666666,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              0.9375
+            ],
+            "cumulative_mean": 0.9791666666666666,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              0.9375
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.0625,
+            "attempt2_per_seed": [
+              0.0625,
+              0.0,
+              0.125
+            ],
+            "cumulative_mean": 0.0625,
+            "cumulative_per_seed": [
+              0.0625,
+              0.0,
+              0.125
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.9791666666666666,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              0.9375
+            ],
+            "cumulative_mean": 0.9791666666666666,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              0.9375
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.9583333333333334,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              0.875
+            ],
+            "cumulative_mean": 0.9583333333333334,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              0.875
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.9791666666666666,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              0.9375
+            ],
+            "cumulative_mean": 0.9791666666666666,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              0.9375
+            ],
+            "diff_attempt2_mean": 0.9166666666666666,
+            "diff_attempt2_per_seed": [
+              0.9375,
+              1.0,
+              0.8125
+            ],
+            "diff_cumulative_mean": 0.9166666666666666,
+            "diff_cumulative_per_seed": [
+              0.9375,
+              1.0,
+              0.8125
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.9791666666666666,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              0.9375
+            ],
+            "cumulative_mean": 0.9791666666666666,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              0.9375
+            ],
+            "diff_attempt2_mean": 0.4791666666666667,
+            "diff_attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.4375
+            ],
+            "diff_cumulative_mean": 0.4791666666666667,
+            "diff_cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.4375
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.9791666666666666,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              0.9375
+            ],
+            "cumulative_mean": 0.9791666666666666,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              0.9375
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "eval_same": {
+          "own": {
+            "attempt2_mean": 0.9375,
+            "attempt2_per_seed": [
+              0.9375,
+              1.0,
+              0.875
+            ],
+            "cumulative_mean": 0.9375,
+            "cumulative_per_seed": [
+              0.9375,
+              1.0,
+              0.875
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.020833333333333332,
+            "attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0625
+            ],
+            "cumulative_mean": 0.020833333333333332,
+            "cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0625
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.9166666666666666,
+            "attempt2_per_seed": [
+              0.9375,
+              1.0,
+              0.8125
+            ],
+            "cumulative_mean": 0.9166666666666666,
+            "cumulative_per_seed": [
+              0.9375,
+              1.0,
+              0.8125
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.8958333333333334,
+            "attempt2_per_seed": [
+              0.9375,
+              1.0,
+              0.75
+            ],
+            "cumulative_mean": 0.8958333333333334,
+            "cumulative_per_seed": [
+              0.9375,
+              1.0,
+              0.75
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.9375,
+            "attempt2_per_seed": [
+              0.9375,
+              1.0,
+              0.875
+            ],
+            "cumulative_mean": 0.9375,
+            "cumulative_per_seed": [
+              0.9375,
+              1.0,
+              0.875
+            ],
+            "diff_attempt2_mean": 0.9166666666666666,
+            "diff_attempt2_per_seed": [
+              0.9375,
+              1.0,
+              0.8125
+            ],
+            "diff_cumulative_mean": 0.9166666666666666,
+            "diff_cumulative_per_seed": [
+              0.9375,
+              1.0,
+              0.8125
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.9375,
+            "attempt2_per_seed": [
+              0.9375,
+              1.0,
+              0.875
+            ],
+            "cumulative_mean": 0.9375,
+            "cumulative_per_seed": [
+              0.9375,
+              1.0,
+              0.875
+            ],
+            "diff_attempt2_mean": 0.4375,
+            "diff_attempt2_per_seed": [
+              0.4375,
+              0.5,
+              0.375
+            ],
+            "diff_cumulative_mean": 0.4375,
+            "diff_cumulative_per_seed": [
+              0.4375,
+              0.5,
+              0.375
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.9375,
+            "attempt2_per_seed": [
+              0.9375,
+              1.0,
+              0.875
+            ],
+            "cumulative_mean": 0.9375,
+            "cumulative_per_seed": [
+              0.9375,
+              1.0,
+              0.875
+            ],
+            "diff_attempt2_mean": 0.020833333333333332,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0625
+            ],
+            "diff_cumulative_mean": 0.020833333333333332,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0625
+            ]
+          }
+        }
+      },
+      "known_outcome_tau01": {
+        "eval_cross": {
+          "own": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.08333333333333333,
+            "attempt2_per_seed": [
+              0.1875,
+              0.0,
+              0.0625
+            ],
+            "cumulative_mean": 0.08333333333333333,
+            "cumulative_per_seed": [
+              0.1875,
+              0.0,
+              0.0625
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.9791666666666666,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              0.9375
+            ],
+            "cumulative_mean": 0.9791666666666666,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              0.9375
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.9791666666666666,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              0.9375
+            ],
+            "cumulative_mean": 0.9791666666666666,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              0.9375
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.9166666666666666,
+            "diff_attempt2_per_seed": [
+              0.8125,
+              1.0,
+              0.9375
+            ],
+            "diff_cumulative_mean": 0.9166666666666666,
+            "diff_cumulative_per_seed": [
+              0.8125,
+              1.0,
+              0.9375
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.5,
+            "diff_attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "diff_cumulative_mean": 0.5,
+            "diff_cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 1.0,
+            "attempt2_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cumulative_mean": 1.0,
+            "cumulative_per_seed": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "diff_attempt2_mean": 0.020833333333333332,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0625
+            ],
+            "diff_cumulative_mean": 0.020833333333333332,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0625
+            ]
+          }
+        },
+        "eval_same": {
+          "own": {
+            "attempt2_mean": 0.9583333333333334,
+            "attempt2_per_seed": [
+              0.9375,
+              1.0,
+              0.9375
+            ],
+            "cumulative_mean": 0.9583333333333334,
+            "cumulative_per_seed": [
+              0.9375,
+              1.0,
+              0.9375
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.0,
+            "attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "cumulative_mean": 0.0,
+            "cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.8958333333333334,
+            "attempt2_per_seed": [
+              0.875,
+              1.0,
+              0.8125
+            ],
+            "cumulative_mean": 0.8958333333333334,
+            "cumulative_per_seed": [
+              0.875,
+              1.0,
+              0.8125
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.8958333333333334,
+            "attempt2_per_seed": [
+              0.875,
+              1.0,
+              0.8125
+            ],
+            "cumulative_mean": 0.8958333333333334,
+            "cumulative_per_seed": [
+              0.875,
+              1.0,
+              0.8125
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.9583333333333334,
+            "attempt2_per_seed": [
+              0.9375,
+              1.0,
+              0.9375
+            ],
+            "cumulative_mean": 0.9583333333333334,
+            "cumulative_per_seed": [
+              0.9375,
+              1.0,
+              0.9375
+            ],
+            "diff_attempt2_mean": 0.9583333333333334,
+            "diff_attempt2_per_seed": [
+              0.9375,
+              1.0,
+              0.9375
+            ],
+            "diff_cumulative_mean": 0.9583333333333334,
+            "diff_cumulative_per_seed": [
+              0.9375,
+              1.0,
+              0.9375
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.9583333333333334,
+            "attempt2_per_seed": [
+              0.9375,
+              1.0,
+              0.9375
+            ],
+            "cumulative_mean": 0.9583333333333334,
+            "cumulative_per_seed": [
+              0.9375,
+              1.0,
+              0.9375
+            ],
+            "diff_attempt2_mean": 0.4583333333333333,
+            "diff_attempt2_per_seed": [
+              0.4375,
+              0.5,
+              0.4375
+            ],
+            "diff_cumulative_mean": 0.4583333333333333,
+            "diff_cumulative_per_seed": [
+              0.4375,
+              0.5,
+              0.4375
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.9583333333333334,
+            "attempt2_per_seed": [
+              0.9375,
+              1.0,
+              0.9375
+            ],
+            "cumulative_mean": 0.9583333333333334,
+            "cumulative_per_seed": [
+              0.9375,
+              1.0,
+              0.9375
+            ],
+            "diff_attempt2_mean": 0.0625,
+            "diff_attempt2_per_seed": [
+              0.0625,
+              0.0,
+              0.125
+            ],
+            "diff_cumulative_mean": 0.0625,
+            "diff_cumulative_per_seed": [
+              0.0625,
+              0.0,
+              0.125
+            ]
+          }
+        }
+      },
+      "memoryless": {
+        "eval_cross": {
+          "own": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "eval_same": {
+          "own": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "matched_donor": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "feedback_masked": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "counterfactual_reward": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "own_vs_donor": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "own_vs_cleared": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "own_vs_masked": {
+            "attempt2_mean": 0.5,
+            "attempt2_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "cumulative_mean": 0.5,
+            "cumulative_per_seed": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "diff_attempt2_mean": 0.0,
+            "diff_attempt2_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "diff_cumulative_mean": 0.0,
+            "diff_cumulative_per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "_coverage": {
+        "0": {
+          "dpt": 1.0,
+          "uniform_bc": 1.0,
+          "dit_tau1": 1.0,
+          "dit_tau01": 1.0,
+          "known_outcome_tau01": 1.0,
+          "memoryless": 1.0
+        },
+        "1": {
+          "dpt": 1.0,
+          "uniform_bc": 1.0,
+          "dit_tau1": 1.0,
+          "dit_tau01": 1.0,
+          "known_outcome_tau01": 1.0,
+          "memoryless": 1.0
+        },
+        "2": {
+          "dpt": 1.0,
+          "uniform_bc": 1.0,
+          "dit_tau1": 1.0,
+          "dit_tau01": 1.0,
+          "known_outcome_tau01": 1.0,
+          "memoryless": 1.0
+        }
+      }
+    }
+  },
+  "critic": {
+    "probed_action_reward": {
+      "0": {
+        "incremental_parity_max_diff": 7.152557373046875e-07,
+        "train_auc": 0.8237413194444444,
+        "eval_auc": 0.7998046875,
+        "eval_q_mse": 0.1649409830570221,
+        "eval_delta_mse_donor_action": 0.15766745805740356,
+        "eval_delta_mse_donor_history": 0.021106481552124023,
+        "eval_delta_mse_cleared": 0.009081363677978516,
+        "eval_delta_mse_feedback_masked": 0.007927194237709045,
+        "train_weights": {
+          "uniform_bc": {
+            "ess_fraction": 1.0,
+            "success_share_shift_pp": 0.0
+          },
+          "dit_tau1": {
+            "ess_fraction": 0.9564229652996676,
+            "success_share_shift_pp": 5.433303846950283
+          },
+          "dit_tau01": {
+            "ess_fraction": 0.4457091416110812,
+            "success_share_shift_pp": 24.01344200383404
+          },
+          "known_outcome_tau01": {
+            "ess_fraction": 0.31310429185275773,
+            "success_share_shift_pp": 68.65343208824726
+          }
+        },
+        "eval_weights": {
+          "dit_tau1": {
+            "ess_fraction": 0.9582196971229274,
+            "success_share_shift_pp": 5.138738562731504
+          },
+          "dit_tau01": {
+            "ess_fraction": 0.4367970141223449,
+            "success_share_shift_pp": 22.23891441655999
+          },
+          "known_outcome_tau01": {
+            "ess_fraction": 0.3339192875950098,
+            "success_share_shift_pp": 66.57886994839532
+          }
+        }
+      },
+      "1": {
+        "incremental_parity_max_diff": 9.5367431640625e-07,
+        "train_auc": 0.7849313446969697,
+        "eval_auc": 0.7578125,
+        "eval_q_mse": 0.18473617732524872,
+        "eval_delta_mse_donor_action": 0.1345570832490921,
+        "eval_delta_mse_donor_history": 0.003354191780090332,
+        "eval_delta_mse_cleared": 0.005811452865600586,
+        "eval_delta_mse_feedback_masked": -0.0005021542310714722,
+        "train_weights": {
+          "uniform_bc": {
+            "ess_fraction": 1.0,
+            "success_share_shift_pp": 0.0
+          },
+          "dit_tau1": {
+            "ess_fraction": 0.9621425247319191,
+            "success_share_shift_pp": 4.681250121332431
+          },
+          "dit_tau01": {
+            "ess_fraction": 0.582068806230143,
+            "success_share_shift_pp": 18.61646261369528
+          },
+          "known_outcome_tau01": {
+            "ess_fraction": 0.31310429185275773,
+            "success_share_shift_pp": 68.65343208824726
+          }
+        },
+        "eval_weights": {
+          "dit_tau1": {
+            "ess_fraction": 0.9649492498306678,
+            "success_share_shift_pp": 4.383248320493211
+          },
+          "dit_tau01": {
+            "ess_fraction": 0.5873706123612795,
+            "success_share_shift_pp": 16.80753648129418
+          },
+          "known_outcome_tau01": {
+            "ess_fraction": 0.3339192875950098,
+            "success_share_shift_pp": 66.57886994839532
+          }
+        }
+      },
+      "2": {
+        "incremental_parity_max_diff": 7.152557373046875e-07,
+        "train_auc": 0.774932922979798,
+        "eval_auc": 0.748046875,
+        "eval_q_mse": 0.1761297881603241,
+        "eval_delta_mse_donor_action": 0.1467243731021881,
+        "eval_delta_mse_donor_history": 0.0011343955993652344,
+        "eval_delta_mse_cleared": 0.0030075013637542725,
+        "eval_delta_mse_feedback_masked": -0.00018416345119476318,
+        "train_weights": {
+          "uniform_bc": {
+            "ess_fraction": 1.0,
+            "success_share_shift_pp": 0.0
+          },
+          "dit_tau1": {
+            "ess_fraction": 0.9567364927896995,
+            "success_share_shift_pp": 4.940856483855938
+          },
+          "dit_tau01": {
+            "ess_fraction": 0.5464148102449738,
+            "success_share_shift_pp": 18.12097567991035
+          },
+          "known_outcome_tau01": {
+            "ess_fraction": 0.31310429185275773,
+            "success_share_shift_pp": 68.65343208824726
+          }
+        },
+        "eval_weights": {
+          "dit_tau1": {
+            "ess_fraction": 0.9579040758894882,
+            "success_share_shift_pp": 4.790428619652482
+          },
+          "dit_tau01": {
+            "ess_fraction": 0.5517434798441693,
+            "success_share_shift_pp": 16.245158614499218
+          },
+          "known_outcome_tau01": {
+            "ess_fraction": 0.3339192875950098,
+            "success_share_shift_pp": 66.57886994839532
+          }
+        }
+      }
+    },
+    "uncompensated_drift": {
+      "0": {
+        "incremental_parity_max_diff": 7.152557373046875e-07,
+        "train_auc": 1.0,
+        "eval_auc": 1.0,
+        "eval_q_mse": 0.017889419570565224,
+        "eval_delta_mse_donor_action": 0.608833571895957,
+        "eval_delta_mse_donor_history": 0.6039869990199804,
+        "eval_delta_mse_cleared": 0.2861752714961767,
+        "eval_delta_mse_feedback_masked": 0.0010637510567903519,
+        "train_weights": {
+          "uniform_bc": {
+            "ess_fraction": 1.0,
+            "success_share_shift_pp": 0.0
+          },
+          "dit_tau1": {
+            "ess_fraction": 0.8051353357385993,
+            "success_share_shift_pp": 22.669192697879303
+          },
+          "dit_tau01": {
+            "ess_fraction": 0.3135804982956476,
+            "success_share_shift_pp": 68.57715284482082
+          },
+          "known_outcome_tau01": {
+            "ess_fraction": 0.31310429185275773,
+            "success_share_shift_pp": 68.65343208824726
+          }
+        },
+        "eval_weights": {
+          "dit_tau1": {
+            "ess_fraction": 0.8054122144442893,
+            "success_share_shift_pp": 22.4232090000638
+          },
+          "dit_tau01": {
+            "ess_fraction": 0.29483631909055846,
+            "success_share_shift_pp": 66.59825525717942
+          },
+          "known_outcome_tau01": {
+            "ess_fraction": 0.3339192875950098,
+            "success_share_shift_pp": 66.57886994839532
+          }
+        }
+      },
+      "1": {
+        "incremental_parity_max_diff": 4.76837158203125e-07,
+        "train_auc": 1.0,
+        "eval_auc": 1.0,
+        "eval_q_mse": 0.011118005029857159,
+        "eval_delta_mse_donor_action": 0.6288888351991773,
+        "eval_delta_mse_donor_history": 0.6312134759500623,
+        "eval_delta_mse_cleared": 0.2952760951593518,
+        "eval_delta_mse_feedback_masked": 0.0007327049970626831,
+        "train_weights": {
+          "uniform_bc": {
+            "ess_fraction": 1.0,
+            "success_share_shift_pp": 0.0
+          },
+          "dit_tau1": {
+            "ess_fraction": 0.7958356593894891,
+            "success_share_shift_pp": 23.429854355974243
+          },
+          "dit_tau01": {
+            "ess_fraction": 0.3134544774448935,
+            "success_share_shift_pp": 68.5974980860247
+          },
+          "known_outcome_tau01": {
+            "ess_fraction": 0.31310429185275773,
+            "success_share_shift_pp": 68.65343208824726
+          }
+        },
+        "eval_weights": {
+          "dit_tau1": {
+            "ess_fraction": 0.8000693750725262,
+            "success_share_shift_pp": 23.0170699528427
+          },
+          "dit_tau01": {
+            "ess_fraction": 0.31641922139003187,
+            "success_share_shift_pp": 66.56687306032534
+          },
+          "known_outcome_tau01": {
+            "ess_fraction": 0.3339192875950098,
+            "success_share_shift_pp": 66.57886994839532
+          }
+        }
+      },
+      "2": {
+        "incremental_parity_max_diff": 7.152557373046875e-07,
+        "train_auc": 1.0,
+        "eval_auc": 0.998046875,
+        "eval_q_mse": 0.029591139405965805,
+        "eval_delta_mse_donor_action": 0.5854788459837437,
+        "eval_delta_mse_donor_history": 0.5701530613005161,
+        "eval_delta_mse_cleared": 0.2683810628950596,
+        "eval_delta_mse_feedback_masked": 0.012697320431470871,
+        "train_weights": {
+          "uniform_bc": {
+            "ess_fraction": 1.0,
+            "success_share_shift_pp": 0.0
+          },
+          "dit_tau1": {
+            "ess_fraction": 0.7991023386107142,
+            "success_share_shift_pp": 23.01673816051798
+          },
+          "dit_tau01": {
+            "ess_fraction": 0.3142714470335453,
+            "success_share_shift_pp": 68.46635288538441
+          },
+          "known_outcome_tau01": {
+            "ess_fraction": 0.31310429185275773,
+            "success_share_shift_pp": 68.65343208824726
+          }
+        },
+        "eval_weights": {
+          "dit_tau1": {
+            "ess_fraction": 0.8009508209617785,
+            "success_share_shift_pp": 22.064838085478062
+          },
+          "dit_tau01": {
+            "ess_fraction": 0.29299325197434406,
+            "success_share_shift_pp": 66.55372521201417
+          },
+          "known_outcome_tau01": {
+            "ess_fraction": 0.3339192875950098,
+            "success_share_shift_pp": 66.57886994839532
+          }
+        }
+      }
+    }
+  },
+  "source_hashes": {
+    "fit": "b2c027415127ae6219d49e93265ad0d696f1059bebe239bacb6e4ae0ced23819",
+    "panel": "98b0b1bff094333d5d1073519366b91b6f0f22e19db6c6d21892ae0759ceb5ca"
+  }
+}

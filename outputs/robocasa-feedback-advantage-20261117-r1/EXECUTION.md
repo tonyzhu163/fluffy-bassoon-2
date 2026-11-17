@@ -135,3 +135,13 @@ Hardware is therefore confounded with the train/held-out split. History and
 memoryless policies still score the same held-out native branches, but a weak
 transfer result alone cannot isolate model learning from this additional
 runtime shift. No cross-hardware trajectory equivalence has been established.
+
+## Completed phase
+
+All four shards and the conditional reader fit completed at 13:35:46 Shanghai;
+the audit passed 1,333 checks. Final charged use is 6.577972/8 GPU-hours.
+The first 16 eligible scenes were merged into panel02 without outcome-based
+selection. All 36 fixed-endpoint reader fits completed. The result and its
+scope limits are in RESULT.md. Monitoring was deleted after completion.
+Native tapes and all recovery checkpoints are retained in the verified cold
+archives; later hot-payload retirement does not remove the archived evidence.

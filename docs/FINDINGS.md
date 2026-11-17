@@ -316,6 +316,40 @@ whether matched history supplies useful information for attainable actions.
 [Corpus evidence](../outputs/project-diagnosis-20261116-r1/evidence/corpus01/RESULT.json) ·
 [Value interventions](../outputs/project-diagnosis-20261116-r1/evidence/value01/RESULT.json).
 
+### Native history under a persistent calibration error
+
+A controlled OpenDrawer pilot establishes useful history for a small causal
+correction selector. The frozen Human300 pi0.5 motor receives a hidden signed
+4 cm approach offset; the reader chooses left, no correction or right. Eight
+nominally successful scenes train the reader and eight are held out. At the
+fixed 1,024-update endpoint, averaged over three fit seeds:
+
+| Reader | Prior probe action and reward | Uncorrected-attempt motion history |
+| --- | ---: | ---: |
+| DPT teacher labels | 95.83% | 100% |
+| DIT, tau 1 | 50% | 100% |
+| DIT, tau 0.1 | 58.33% | 97.92% |
+| Measured-outcome weighting | 92.71% | 100% |
+| Memoryless teacher-label control | 50% | 50% |
+
+These are held-out second-attempt success rates scored against measured native
+candidate outcomes. Clearing the main DPT reader's history reduces 95.83% to
+50%; flipping its support reward reduces it to 4.17%. Main-version critic AUC
+is 0.748–0.800, versus 0.998–1.000 with motion history. The latter variant also
+changes the support policy, so the difference is not a single-feature ablation.
+The results support usable history and identify estimated DIT weighting under
+sparse feedback as an unresolved limitation; they do not justify new broad
+PPO collection or establish a unique critic failure mechanism.
+
+This is one task family, a hand-designed offset, a privileged geometry trigger,
+and a three-action selector, not the earlier large VLA adapter or a multi-task
+ID/OOD comparison. The 32 primary constructed trials share only eight held-out
+scenes and two dependency blocks. Training data used 4090 and held-out data
+Pro6K. All 16 tape replays match exactly; fresh closed-loop repeats preserve
+success in all 16 and terminal physics in 14. The audit passed 1,333 checks;
+the completed phase charged 6.578 of 8 GPU-hours. The earlier multi-task null
+results stand. [Full results, controls and limitations](../outputs/robocasa-feedback-advantage-20261117-r1/RESULT.md).
+
 ## Procedural LIBERO
 
 Eight training layouts fixed before simulation passed construction, initial contact,
