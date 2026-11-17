@@ -23,6 +23,7 @@ def main():
     p.add_argument('--rank', type=int, required=True, choices=range(4))
     p.add_argument('--deadline', type=float, required=True)
     p.add_argument('--scene', type=int)
+    p.add_argument('--training-only', action='store_true')
     a = p.parse_args()
     a.output.mkdir(parents=True, exist_ok=False)
 
@@ -42,7 +43,7 @@ def main():
         write(a.output/'summary.json', dict(complete=False, reason='nominal_not_qualified', nominal=nominal))
         return
     results = []
-    for index in range(a.rank, len(conditions()), 4):
+    for index in range(a.rank, 8 if a.training_only else len(conditions()), 4):
         offset = conditions()[index]
         for fraction in (0., 1.):
             if time.time() >= a.deadline:

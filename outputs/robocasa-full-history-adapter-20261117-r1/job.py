@@ -1,6 +1,7 @@
 """One finite qualification shard per scheduler GPU; no automatic retries."""
 import argparse
 import json
+import math
 import os
 from pathlib import Path
 import shutil
@@ -30,15 +31,22 @@ def main():
     p.add_argument('--checkpoint', type=Path)
     p.add_argument('--scale', type=float, default=.1)
     p.add_argument('--privileged-updates', type=int, default=1024)
+    p.add_argument('--privileged-scales', type=float, nargs='+')
+    p.add_argument('--training-only', action='store_true')
+    p.add_argument('--shared-scene-data', action='store_true')
     a = p.parse_args()
     assert a.attempt.isalnum() and 10 <= a.minutes <= (60 if a.stage == 'qualify' else 240)
-    assert a.stage != 'privileged' or (a.workers == 1 and a.rank_offset == 0)
+    assert a.stage != 'privileged' or (a.rank_offset == 0 and
+        a.workers == (len(a.privileged_scales) if a.privileged_scales else 1))
+    assert not a.privileged_scales or (a.stage == 'privileged' and all(math.isfinite(s) and s > 0 for s in a.privileged_scales))
     assert (a.split is not None) == (a.stage == 'collect')
     assert (a.corpus is not None) == (a.stage == 'fit')
     assert a.stage != 'fixed' or (a.workers == 3 and a.rank_offset == 0)
     assert (a.checkpoint is not None) == (a.stage == 'authority')
     assert a.stage != 'authority' or (a.workers == 1 and a.rank_offset == 0)
-    assert a.scene is None or (a.stage == 'qualify' and a.workers == 1)
+    assert a.scene is None or a.stage == 'qualify'
+    assert not a.training_only or a.stage == 'qualify'
+    assert not a.shared_scene_data or a.stage == 'privileged'
     assert 0 <= a.rank_offset and a.rank_offset + a.workers <= (6 if a.stage == 'fit' else 4)
     assert socket.gethostname().startswith('job-')
     assert subprocess.check_output(['git','-C',str(CODE),'rev-parse','HEAD'],text=True).strip() == a.pin
@@ -87,6 +95,7 @@ def main():
                 command=[str(PYTHON),'-Bu',str(HERE/'qualify.py'),'--pin',a.pin,'--rank',str(rank),
                     '--output',str(out/'native'),'--deadline',str(started+(a.minutes-3)*60)]
                 if a.scene is not None: command += ['--scene',str(a.scene)]
+                if a.training_only: command += ['--training-only']
             elif a.stage == 'collect':
                 command=[str(PYTHON),'-Bu',str(HERE/'collect.py'),'--pin',a.pin,'--rank',str(rank),
                     '--output',str(out/'native'),'--split',a.split,
@@ -114,12 +123,20 @@ def main():
                         episode = source/f'condition-{index:02d}-f{fraction}'
                         assert (episode/'result.json').exists() and (episode/'episode.npz').exists()
                         trials.append([str(episode)])
+                if a.shared_scene_data:
+                    for index in (0,1,4,5):
+                        for fraction in (0,1):
+                            episode=STUDY/'qual07'/f'rank{index%4}'/'native'/f'condition-{index:02d}-f{fraction}'
+                            assert (episode/'result.json').exists() and (episode/'episode.npz').exists()
+                            trials.append([str(episode)])
                 manifest = out/'corpus.json'
                 manifest.write_text(json.dumps(dict(trials=trials,
                     role='privileged engineering fit; training conditions on old development scenes only'),indent=2)+'\n')
                 command=[str(PYTHON),'-Bu',str(HERE/'fit.py'),'--pin',a.pin,
                     '--manifest',str(manifest),'--output',str(out/'fit'),'--mode','privileged',
-                    '--updates',str(a.privileged_updates),'--scale',str(a.scale),'--execution-batch','8',
+                    '--updates',str(a.privileged_updates),
+                    '--scale',str(a.privileged_scales[rank] if a.privileged_scales else a.scale),
+                    '--execution-batch','8',
                     '--native-eval',
                     '--deadline',str(started+(a.minutes-5)*60)]
             result=subprocess.run(command,env=env,stdout=log,stderr=subprocess.STDOUT,timeout=max(1,started+a.minutes*60-time.time()))

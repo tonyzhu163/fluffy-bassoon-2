@@ -38,7 +38,7 @@ def main():
         admitted.append(dict(scene=scene,start_signature=nominal['start_signature']))
         write(a.output/'admitted.json',admitted)
         if a.split == 'test': continue
-        for condition in ((2*ordinal+a.rank)%8,(2*ordinal+a.rank+4)%8):
+        for condition in specification['condition_pairs'][a.rank*(specification['target']//4)+ordinal]:
             fraction=float(np.random.default_rng(scene+condition*1009).uniform())
             paths=[]
             for attempt,behavior in enumerate((0.,fraction,1.),1):

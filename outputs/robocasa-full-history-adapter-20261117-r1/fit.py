@@ -96,7 +96,14 @@ def main():
             predicted = commands(native,policy,prepared,context,ep['noise'][q][None])[0]
             n = int(ep['action_masks'][q,:,0].sum())
             target = ep['teacher_actions'][q]
+            condition_response = None
+            if a.mode == 'privileged':
+                flipped = dict(b, tokens=b['tokens'].clone())
+                flipped['tokens'][...,config.observation_dim-3:config.observation_dim] *= -1
+                alternate = commands(native,policy,prepared,query_context(policy,flipped),ep['noise'][q][None])[0]
+                condition_response = float(np.mean((predicted[:n,:3]-alternate[:n,:3])**2)**.5)
             rows.append(dict(index=idx,active=ep['meta']['rows'][q]['active'],
+                condition_response_rms=condition_response,
                 native_xyz_mse=float(np.mean((base[:n,:3]-target[:n,:3])**2)),
                 adapter_xyz_mse=float(np.mean((predicted[:n,:3]-target[:n,:3])**2)),
                 adapter_all_mse=float(np.mean((predicted[:n]-target[:n])**2)),

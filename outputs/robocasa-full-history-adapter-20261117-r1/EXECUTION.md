@@ -147,3 +147,38 @@ The main public-history fits will use disjoint development queries for curves,
 and the larger execution batch of8 will be measured against the saved logical
 batch8 (priv01 peaked at7.46GB on the97.9GB allocation). Core/model architecture
 and optimization budget are unchanged.
+
+November 17, 19:09 Shanghai: authority01 (`job-gte1aadj5t5j`, created
+18:54:40; source `d888f73c`; 15-minute scheduler limit) completed and its
+native nominal episode succeeded. AUTHORITY.json records exact checkpoint
+identity and query-level measurements. At scale0.1, decoded XYZ change RMS is
+0.01473 versus required0.33605; scales1 and3 bracket the required range
+(0.17455 and0.51935). Amplification also moves inactive queries, so rescaling
+an existing checkpoint is not a qualified policy. 78.8% of cache elements
+already change at0.1; this is not explained by all edits rounding to zero.
+Several layer coefficient nonlinearities are saturated; refitting is needed
+before attributing underfitting to a single cause. Native binary targets were
+checked against actual checkpoint statistics: mean/std for gripper
+(-0.16830,0.98575) and base mode(-0.71627,0.69784) describe +/-1, as used by
+native_flow_targets. They must not be replaced with0/1 environment-score
+representatives. A new numerical reference test protects that transform and
+its padding order; there is no action-domain code change.
+
+Before further fits, collect eight additional training-condition episodes
+on scene983001 (both depth signs and both magnitudes). Together with its
+existing lateral episodes this gives all eight conditions on the same scene,
+removing direction-from-scene shortcuts in the privileged positive control.
+Fresh identity qual07, two one-GPU workers, at most30 minutes each (1GPUh).
+Then compare scales0.1/1/3 at the same4096 updates, seed0, logical batch8,
+execution batch8, augmented24-episode corpus, and native attempt2 readouts.
+Reserve at most6 GPUh for that three-worker fit. Reassign this qualification
+reservation from the uncommitted campaign reserve; total cap remains200.
+No main public-history corpus or held-out policy evaluation has started.
+
+The previously published +4 condition pairing would also correlate sign and
+axis with scene in the main corpus. It is replaced before any collection:
+all28 distinct condition pairs plus four opposite-sign pairs, shuffled,
+each condition appearing8 times across32 training scenes. Development has
+each condition twice; test condition assignment is also frozen. Candidate
+scene lists and their hashes are unchanged. This is a pre-collection design
+correction, not selection using outcomes.

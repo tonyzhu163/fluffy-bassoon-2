@@ -122,3 +122,23 @@ def test_native_score_controls_match_pandaomron_key_converter():
                          ref["robot0_base"], ref["robot0_torso"], ref["robot0_base_mode"]]
         np.testing.assert_array_equal(actual, expected)
     np.testing.assert_array_equal(actions, original)
+
+
+def test_flow_labels_match_released_training_transform_without_binary_score_remap(native_pipeline):
+    """Protect the physical +/-1 label domain and pre-normalization padding.
+
+    The environment also accepts 0/1 scores, but the released checkpoint's
+    training statistics describe physical +/-1 binary controls. Substituting
+    score representatives would silently train the frozen expert off contract.
+    """
+    from fluffy_bassoon.meta_rl.flow_history import DirectActionCodec, native_flow_targets
+    transforms, _, cfg, stats = native_pipeline
+    physical = np.linspace(-.8,.8,600,dtype=np.float32).reshape(50,12)
+    physical[:,6] = np.where(np.arange(50)%2,1.,-1.)
+    physical[:,11] = np.where(np.arange(50)%3,1.,-1.)
+    source_stats = {'actions': {'mean':stats['actions'].mean, 'std':stats['actions'].std}}
+    codec = DirectActionCodec.from_stats(source_stats)
+    case = dict(raw_case(), actions=physical.copy())
+    reference = transforms.Normalize(stats,use_quantiles=False)(apply_inputs(cfg,case))['actions']
+    actual = native_flow_targets(codec.encode(physical),codec,source_stats['actions'])
+    np.testing.assert_allclose(actual,reference,rtol=1e-6,atol=1e-6)
