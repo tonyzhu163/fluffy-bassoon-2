@@ -21,15 +21,18 @@ def main():
     p.add_argument('--pin', required=True)
     p.add_argument('--attempt', required=True)
     p.add_argument('--minutes', type=int, default=55)
-    p.add_argument('--workers', type=int, choices=(1,4), default=4)
+    p.add_argument('--workers', type=int, choices=range(1,5), default=4)
+    p.add_argument('--rank-offset', type=int, default=0)
     a = p.parse_args()
     assert a.attempt.isalnum() and 10 <= a.minutes <= 60
+    assert 0 <= a.rank_offset and a.rank_offset + a.workers <= 4
     assert socket.gethostname().startswith('job-')
     assert subprocess.check_output(['git','-C',str(CODE),'rev-parse','HEAD'],text=True).strip() == a.pin
     assert not subprocess.check_output(['git','-C',str(CODE),'status','--porcelain','--untracked-files=no'])
     slots = STUDY/a.attempt
     slots.mkdir(parents=True, exist_ok=True)
-    for rank in range(a.workers):
+    ranks = range(a.rank_offset, a.rank_offset + a.workers)
+    for rank in ranks:
         out = slots/f'rank{rank}'
         try:
             out.mkdir()
@@ -74,7 +77,7 @@ def main():
         (out/'terminal.json').write_text(json.dumps(dict(receipt,ended=time.time(),exit_code=rc),indent=2)+'\n')
     # A PyTorchJob can end when master exits; wait until every shard is banked.
     while rc == 0:
-        terminals = [slots/f'rank{i}'/'terminal.json' for i in range(a.workers)]
+        terminals = [slots/f'rank{i}'/'terminal.json' for i in ranks]
         if any(p.exists() and json.loads(p.read_text())['exit_code'] != 0 for p in terminals):
             rc = 1
             break

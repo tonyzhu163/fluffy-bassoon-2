@@ -44,3 +44,19 @@ Conservative charge/reservation: **4/200 GPU-hours**, including startup and
 barrier time. This is the complete maximum for this job, not measured elapsed
 compute. Next check: 18:11 Shanghai or sooner on a startup failure. Continue
 with teacher/control results, then the privileged-input adapter qualification.
+
+
+November 17, 18:11 Shanghai update:
+
+| Attempt | Source / job | Outcome | Conservative GPUh |
+| --- | --- | --- | ---: |
+| qual01 | `5d919c39`, `job-o71yh82weghm` | Four workers stopped before controls: compact Gym state16 was incorrectly passed to the native state25 port. Scheduler 17:49:58–17:53:41. | 0.25 |
+| qual02 | `8db32972`, `job-6erpto17om93` | Single worker executed its first chunk, then correctly rejected state/image sample drift caused by forced observable refresh. Scheduler 18:02:01–18:04:12. | 0.04 |
+| qual03 | `feeaf3a5`, `job-elqtm2aq1oe9` | Running since 18:06:42, one Pro6K GPU. Cached observations now match. Nominal success and first 2 cm offset teacher/control pair completed. Eleven-episode rank-0 shard continues. | 1.00 reserved |
+
+Both failures are diagnosed, retained and terminal; their worktrees are
+unchanged. Native preprocessing tests also passed: 5 tests in 266.33 seconds
+on allocated Linux CPU, in addition to the 30 bridge checks. Current
+conservative completed-plus-reserved total: **1.29/200 GPU-hours**.
+The next launch covers only ranks 1–3 with the same qualified collector,
+reserving at most 3 additional GPU-hours. Initial data is 12–18 MB per episode.
