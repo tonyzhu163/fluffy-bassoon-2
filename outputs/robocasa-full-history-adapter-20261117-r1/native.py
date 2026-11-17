@@ -151,6 +151,10 @@ def rollout(native, motor, codec, *, directory, scene, offset, fraction,
                                                 controller.input_min[:3], controller.input_max[:3])
                 native._prepared = None
             else:
+                if getattr(student, 'privileged', False):
+                    # Named positive control only; public history students have
+                    # no offset/window setter and never receive this channel.
+                    student.set_teacher_condition(offset, active)
                 commanded = student.predict(feat[0], prepared, noise, start=(t == 0))
                 if commanded.shape != (50, 12):
                     raise ValueError('Student must produce the full native action chunk')
@@ -179,7 +183,8 @@ def rollout(native, motor, codec, *, directory, scene, offset, fraction,
                 images.append(np.stack((item['main_images'][0], item['wrist_images'][0], item['extra_view_images'][0, 0])))
             actions.extend(delivered)
             rows.append(dict(control=t, delivered=len(delivered), reward=sum(rewards), done=bool(terminal),
-                             success=success, active=bool(active)))
+                             success=success, active=bool(active),
+                             command_delta_xyz=(actual[:, :3] - base_physical[:len(actual), :3]).mean(0).tolist()))
             if terminal:
                 break
         payload = dict(features=np.asarray(features, np.float32), states=np.asarray(states, np.float32),
@@ -193,6 +198,8 @@ def rollout(native, motor, codec, *, directory, scene, offset, fraction,
         result = dict(scene=scene, offset=offset.tolist(), fraction=fraction, attempt=attempt,
             start_signature=start_key, success=success, controls=len(actions), decisions=len(rows),
             onset=decision, first_grasp=first_grasp, teacher_clipped_controls=clipped,
+            controller_gain=gain.tolist(), controller_input_min=controller.input_min.tolist(),
+            controller_input_max=controller.input_max.tolist(),
             prompt=prompt, rows=rows, seconds=time.monotonic()-start_time,
             terminal_physics=reset.physics(raw), physical_hashes=physical_hashes,
             bytes=(directory / 'episode.npz').stat().st_size,

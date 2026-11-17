@@ -252,8 +252,10 @@ Report both for in-distribution and held-out groups separately.
 - The attempt 1–3 success curve with history kept versus cleared.
 - Cumulative success.
 - The random-donor contrast.
-- Signed commanded displacement at the first grasp, compared with the true
-  offset.
+- Signed commanded displacement in the first five controls of the approach
+  window, compared with the true offset, including failed episodes. The first
+  grasp is descriptive timing only; conditioning this diagnostic on grasp
+  would omit failures.
 - Physical controls consumed and clipping.
 
 **Uncertainty.**

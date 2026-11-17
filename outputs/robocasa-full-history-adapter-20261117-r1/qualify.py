@@ -22,6 +22,7 @@ def main():
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--rank', type=int, required=True, choices=range(4))
     p.add_argument('--deadline', type=float, required=True)
+    p.add_argument('--scene', type=int)
     a = p.parse_args()
     a.output.mkdir(parents=True, exist_ok=False)
 
@@ -34,7 +35,7 @@ def main():
     native, motor, codec, stats, identity = load(a.pin)
     write(a.output / 'motor.json', identity)
     scenes = (982101, 982103, 982107, 983001)
-    scene = scenes[a.rank]
+    scene = a.scene if a.scene is not None else scenes[a.rank]
     nominal = rollout(native, motor, codec, directory=a.output/'nominal', scene=scene,
         offset=[0.,0.,0.], fraction=0., log=log)
     if not nominal['success'] or nominal['onset'] is None:

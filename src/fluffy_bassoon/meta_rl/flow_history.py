@@ -456,14 +456,12 @@ class HistoryFlowSteeringPolicy(nn.Module):
     def encode_sequence(self, tokens, valid, episode_starts, *, mode="full"):
         if mode not in MODES or tokens.ndim != 3 or valid.shape != tokens.shape[:2]:
             raise ValueError("Invalid sequence shape/mode")
-        state, contexts = None, []
-        for index in range(len(tokens)):
-            reset = (torch.ones_like(valid[index]) if mode == "static" else
-                     episode_starts[index] if mode == "episode" else None)
-            token = torch.where(valid[index, :, None], tokens[index], 0.)
-            context, state = self.encode_step(token, state, reset=reset)
-            contexts.append(context)
-        return torch.stack(contexts)
+        reset = (torch.ones_like(valid) if mode == "static" else
+                 episode_starts if mode == "episode" else torch.zeros_like(valid))
+        d = self.config.observation_dim
+        encoded = torch.cat(((tokens[..., :d] - self.observation_mean) / self.observation_std,
+                             tokens[..., d:]), dim=-1)
+        return self.core.sequence(encoded, reset=reset, valid=valid)
 
     def predict_velocity(self, model, observation, noisy_actions, timestep, cache, prefix_mask, context):
         if self.config.interface == "kv_bridge":

@@ -60,3 +60,30 @@ on allocated Linux CPU, in addition to the 30 bridge checks. Current
 conservative completed-plus-reserved total: **1.29/200 GPU-hours**.
 The next launch covers only ranks 1–3 with the same qualified collector,
 reserving at most 3 additional GPU-hours. Initial data is 12–18 MB per episode.
+
+November 17, 18:29 Shanghai: remaining qualification submitted at 18:16:28 as
+`job-k72bbb17v39j` (`qual04`), 3 one-GPU workers, source `680b3dd6`,
+60-minute scheduler limit, retries off. Queue 45/416 free; personal 27/32.
+All three in-allocation GPU probes passed. The rank-0 `qual03` shard completed
+all eleven episodes in 0.178 worker GPUh; provisionally charge 0.25 until
+scheduler closeout. The 3/4/6 cm negative-depth teacher succeeded where the
+uncorrected policy failed; these are development outcomes only.
+
+Rank 2's nominal scene 982107 failed, so its qualification ended before any
+perturbed pair. Replace this development-only scene with already nominally
+qualified 983001 in fresh `qual05`, preserving the failed nominal result.
+This selects on nominal eligibility, never perturbed outcomes. Reserve at
+most one further GPU-hour. The privileged-input fit uses only the eight
+training conditions from qual03/04/05, never held-out magnitudes/directions;
+reserve at most two hours for its initial 1,024-update fit. All remain within
+the 200-hour campaign cap (maximum completed plus pending reservations 6.54).
+
+The adapter uses the planned six-layer width-256 rank-4 all-prefix-layer KV
+interface. Its privileged positive control receives the active offset;
+real history/current-only students have no such input. Native zero-output
+parity and decoded teacher-command error are measured before/through fitting.
+The sequence encoder now uses the core's equivalent parallel causal path;
+a numerical regression checks values and gradients against incremental
+inference, including episode resets and memory-window truncation. The run
+sampler retains complete support episodes, their terminal feedback, and only
+the causal query prefix, with balanced scene/condition query coverage.

@@ -143,6 +143,32 @@ def test_export_corpus_supports_h600_multi_version_ppo_and_grpo_streams(tmp_path
     assert not np.array_equal(ad_trials[0]["target_noise"], dpt_trials[0]["target_noise"])
 
 
+@pytest.mark.parametrize("mode", ["full", "episode", "static"])
+def test_bridge_parallel_history_matches_incremental_values_and_gradients(mode):
+    """Protect deployment parity when vectorizing long history training."""
+    from fluffy_bassoon.meta_rl.flow_history import FlowBridgeConfig, HistoryFlowSteeringPolicy
+    torch.manual_seed(93)
+    policy = HistoryFlowSteeringPolicy(FlowBridgeConfig(observation_dim=4,
+        history_action_dim=8, width=8, layers=2, heads=2, context_length=3))
+    other = deepcopy(policy)
+    tokens = torch.randn(7, 2, 15)
+    valid = torch.ones(7, 2, dtype=torch.bool); valid[5:, 1] = False
+    starts = torch.zeros_like(valid); starts[0] = True; starts[3, 0] = True
+    actual = policy.encode_sequence(tokens, valid, starts, mode=mode)
+    state, reference = None, []
+    for i in range(len(tokens)):
+        reset = torch.ones(2, dtype=torch.bool) if mode == 'static' else starts[i] if mode == 'episode' else None
+        value, state = other.encode_step(torch.where(valid[i, :, None], tokens[i], 0.), state, reset=reset)
+        reference.append(value)
+    reference = torch.stack(reference)
+    torch.testing.assert_close(actual[valid], reference[valid], atol=2e-6, rtol=2e-5)
+    weight = torch.randn_like(actual)
+    (actual[valid] * weight[valid]).sum().backward()
+    (reference[valid] * weight[valid]).sum().backward()
+    for first, second in zip(policy.core.parameters(), other.core.parameters()):
+        torch.testing.assert_close(first.grad, second.grad, atol=1e-5, rtol=1e-4)
+
+
 @pytest.mark.parametrize("interface", ["kv_bridge", "velocity_bridge"])
 def test_history_flow_steering_policy_supports_interfaces_and_four_meta_learners(interface):
     from fluffy_bassoon.meta_rl.flow_history import FlowBridgeConfig, HistoryFlowSteeringPolicy
