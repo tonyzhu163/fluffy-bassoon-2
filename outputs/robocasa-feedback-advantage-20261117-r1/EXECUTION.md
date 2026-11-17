@@ -119,3 +119,19 @@ only the balance of the original eight GPU-hours, and must finish no later than
 19:09:33 Shanghai. `PARALLEL-CONTINUATION.json` supersedes the intentionally
 stopped old continuation after `MIGRATION.json` is written. Do not restart the
 old driver or add workers to occupied slots.
+
+The handoff completed at 12:38:27 Shanghai after the eighth admitted scene:
+**81 complete panel episodes**, eight admitted scenes and nine failed
+nominal screens, retained in 90 hashed files. The next scene, 983009, moves to
+the new workers. The original three owned processes exited. Job
+`job-6wm41wcuc7x4` was submitted at 12:33:50 with a bounded wait for the handoff
+receipt, and its four distinct RPBZZZ6 devices each passed the actual CUDA probe.
+The subsequent continuation is PID 321627. Original 4090 usage is 1.481941 GPUh;
+charging the full parallel reservation leaves 1.518059 GPUh for the final fit.
+
+The boundary coincides with the eight-scene training split: all training
+branches were measured on 4090, and the held-out branches will use Pro6K.
+Hardware is therefore confounded with the train/held-out split. History and
+memoryless policies still score the same held-out native branches, but a weak
+transfer result alone cannot isolate model learning from this additional
+runtime shift. No cross-hardware trajectory equivalence has been established.

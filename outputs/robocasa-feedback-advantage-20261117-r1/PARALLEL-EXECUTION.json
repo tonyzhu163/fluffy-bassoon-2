@@ -1,0 +1,39 @@
+{
+  "checked_shanghai": "2026-11-17T12:41:37.040910+08:00",
+  "cluster": "Baige Pro6K",
+  "queue": "aihcq-rh0wwk9muei4",
+  "job_name": "mwj_1117_native_history_4x1_r1",
+  "job_id": "job-6wm41wcuc7x4",
+  "source_commit": "0c553ebade1c132b2f9a2a81dadfaa2ce28f5f65",
+  "status": "All four instances passed CUDA probes and completed native simulator episodes",
+  "instances": 4,
+  "gpus_per_instance": 1,
+  "cpu_per_instance": 16,
+  "ram_gib_per_instance": 128,
+  "shared_memory_gib": 16,
+  "scheduler_maximum_minutes": 75,
+  "charged_reservation_gpu_hours": 5,
+  "phase_budget_gpu_hours": 8,
+  "automatic_retries": false,
+  "created_shanghai": "2026-11-17T12:33:50+08:00",
+  "continuation_pid": 321627,
+  "capacity_at_submission": {
+    "queue_free_gpus": 5,
+    "queue_max_gpus": 416,
+    "personal_free_gpus": 16,
+    "personal_limit_gpus": 32,
+    "queued_tasks": 2
+  },
+  "allocation_host_ips": [
+    "10.200.23.48",
+    "10.200.25.205",
+    "10.200.23.44",
+    "10.200.19.215"
+  ],
+  "container_image": "ccr-2ff5lkkz-vpc.cnc.bj.baidubce.com/db/strong-plant:v2.0-cu12.8-cudnn9-ubuntu22.04_mowenjie_20261015152301",
+  "command": "timeout 600 bash -c 'until test -f /mowenjie/fluffy-bassoon-2/outputs/robocasa-feedback-advantage-20261117-r1/MIGRATION.json; do sleep 2; done' && exec /mowenjie/fluffy-bassoon-2/setups/robocasa365-native-20261101-r1/env/bin/python -Bu /mowenjie/fluffy-bassoon-2/sources/feedback-parallel-0c553eba/outputs/robocasa-feedback-advantage-20261117-r1/parallel_run.py worker --pin 0c553ebade1c132b2f9a2a81dadfaa2ce28f5f65",
+  "prior_4090_gpu_hours": 1.4819413118892246,
+  "fit_gpu_hour_balance": 1.5180586881107754,
+  "all_four_cuda_probes_passed": true,
+  "all_four_native_episodes_completed": true
+}
