@@ -89,7 +89,7 @@ def rollout(policy, pipe, root, scene, variant, goal, gain, *, paced=False):
     return record
 
 
-def live_trials(policy, pipe, out):
+def live_trials(policy, pipe, out, *, paced_support=False):
     from readout import estimate_lag
 
     supports = json.loads((HERE/'nominal02-evidence.json').read_text())['branches']
@@ -102,8 +102,9 @@ def live_trials(policy, pipe, out):
             support_scene, query_scene = 20+idx, 24+idx
             block = out / f'b{idx}-{variant}'
             block.mkdir()
-            support = rollout(policy, pipe, block, support_scene, variant, option, 1.)
-            with np.load(block/f's{support_scene}-{variant}-g{option}-gain1/public.npz') as data:
+            support = rollout(policy, pipe, block, support_scene, variant, option, 1., paced=paced_support)
+            suffix = 'paced' if paced_support else 'gain1'
+            with np.load(block/f's{support_scene}-{variant}-g{option}-{suffix}/public.npz') as data:
                 lag = estimate_lag(data)
             paced = abs(lag-anchors[1]) < abs(lag-anchors[0])
             for assigned in (0,1):
@@ -129,7 +130,7 @@ def live_trials(policy, pipe, out):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('output',type=Path)
-    parser.add_argument('--phase', choices=('nominal','paired','pacing','live'), required=True)
+    parser.add_argument('--phase', choices=('nominal','paired','pacing','live','trialpair'), required=True)
     args = parser.parse_args()
     assert len(jax.devices()) == 1 and jax.devices()[0].platform == 'gpu'
     assert subprocess.check_output(['git','-C',SRC,'rev-parse','HEAD'],text=True).strip() == '215abfb217dbac7d5f1273282331b9b1866c0479'
@@ -150,6 +151,14 @@ def main():
     peer.close()
     records = []
     try:
+        if args.phase == 'trialpair':
+            for paced_support in (False,True):
+                sub = out/('paced_support' if paced_support else 'default_support')
+                sub.mkdir()
+                trials = live_trials(policy, pipe, sub, paced_support=paced_support)
+                write(sub/'complete.json',dict(trials=trials,episodes=trials*2+trials//2))
+            write(out/'complete.json',dict(paired_assignments=trials,episodes=80,elapsed_seconds=time.time()-start))
+            return
         if args.phase == 'live':
             trials = live_trials(policy, pipe, out)
             write(out/'complete.json',dict(trials=trials,episodes=trials*2+trials//2,elapsed_seconds=time.time()-start))

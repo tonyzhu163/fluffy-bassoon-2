@@ -7,7 +7,7 @@ legacy=/mowenjie/fluffy-bassoon
 pin=$1
 attempt=$2
 phase=$3
-[[ "$attempt" =~ ^[a-z0-9]+$ && ( "$phase" == nominal || "$phase" == paired || "$phase" == pacing || "$phase" == live ) ]]
+[[ "$attempt" =~ ^[a-z0-9]+$ && ( "$phase" == nominal || "$phase" == paired || "$phase" == pacing || "$phase" == live || "$phase" == trialpair ) ]]
 [[ $(git -C "$code" rev-parse HEAD) == "$pin" && -z $(git -C "$code" status --porcelain) ]]
 [[ $CGPU_COUNT == 1 && $NVIDIA_VISIBLE_DEVICES == "$NVIDIA_VISIBLE_GPUS_UUID" && $NVIDIA_VISIBLE_DEVICES != *,* ]]
 export CUDA_VISIBLE_DEVICES="$NVIDIA_VISIBLE_DEVICES"
@@ -18,7 +18,7 @@ out="$root/outputs/$(basename "$here")/$attempt"
 mkdir -p "$(dirname "$out")"
 mkdir "$out"
 exec 9>"$root/outputs/$(basename "$here")/device.lock"
-flock -n 9
+flock -w 7200 9
 [[ -z $(nvidia-smi --query-compute-apps=pid --format=csv,noheader) ]]
 df -h "$out" > "$out/storage.txt"
 start=$(date +%s)
