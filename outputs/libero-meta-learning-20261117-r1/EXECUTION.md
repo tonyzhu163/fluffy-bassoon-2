@@ -112,3 +112,17 @@ contribution cannot be assigned to normalization alone. The pilot collector
 is prepared for 8 fitting tasks x 2 conditions x 2 trials x 3 attempts
 (96 episodes), after the baseline supports meaningful collection. The two
 repeats use different initial states and matched draws across conditions.
+
+The converted official OpenPI checkpoint also finished the same eight episodes
+in devqual03 (86250d07). It scored 0/6 distinct cases and 0/2 repeated BASE
+controls. Both zero-adapter traces matched exactly and the gradient checks passed.
+The first Spatial BASE rotation command changed from -2.055 to -0.004 with
+the new motor. Correcting that observed difference was insufficient for success.
+This run took 0.078 GPU-hours, bringing the campaign to about 2.56 GPU-hours.
+
+The original JAX reference check uses the same official checkpoint, the same
+two BASE resets, the native OpenPI sampler and five executed controls per query.
+It verifies the initial simulator state and public observations against
+devqual03. Changes in sampler, implementation and replanning cadence are
+joint here. These are development checks, with all eight official test tasks
+reserved and the training collection still pending.
