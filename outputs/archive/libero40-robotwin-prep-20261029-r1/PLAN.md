@@ -57,7 +57,7 @@ and shift claim requires a declared auxiliary base-family holdout.
   0.2.1 without changing the shared 0.1.1 package.
 
 Contracts: [LIBERO](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/741064b4d8df00555f92a7a8449055c0edb50707/docs/libero-transfer.md),
-[RoboTwin](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/d82a98394304e54e777c9b36b5b5fe3a295a9155/docs/robotwin/vlrla.md).
+[RoboTwin](../../../docs/robotwin/vlrla.md).
 Verified preparation: [results and receipts](RESULTS.md). The static LIBERO
 audit produced 40 source tasks, 68 strict targets and 22 overlap controls;
 three Linux regressions passed. The isolated RoboTwin CPU environment passes

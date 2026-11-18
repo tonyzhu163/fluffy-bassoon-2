@@ -1,0 +1,5 @@
+At 09:50 Shanghai, job-2qn8dpw3yvlb remained running with finite losses and advancing training:313,220 updates,1,794 completed training episodes,16,155 replay rows,1,755 successes and39 failures. Producer all-in actions were317,902 and outputs18.654GB. No new completed query panel followed the prior300,140-update20/20 panel; the next threshold remains320k.
+
+A separately read, stable rolling checkpoint had advanced to313,380 updates (SHAa09a2be2b219a71a75854e22103501eae94e2eccf7452f51bac58fff4bf6730c). Its nearby counter snapshot is distinct from the earlier index. The new raw trace and one RPC input/outcome sample matched their hashes. Conservative observed GPU time29,672s includes the active elapsed amount and is not a final charge. All original57,600s/1M-action/64GiB limits and scientific b665 contract remain unchanged under execution d236.
+
+Verification is bounded saved-metadata/hash inspection, not a full physical journal audit. The carried reader also rehashed the old300k milestone once; no new panel outcome was inferred. Next owned check10:10.

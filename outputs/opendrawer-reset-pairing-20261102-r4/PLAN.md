@@ -1,0 +1,7 @@
+# Loaded-motor fork/spawn rendering qualification
+
+The24-reset r3 diagnostic completed with0 controls/225 process GPU-seconds. Full MuJoCo state and serialized scene XML were identical for repeated case seeds. CloseFridge wrist images still varied with and without global Python/NumPy/Torch seeding; OpenDrawer0 matched. This is an image identity failure, not an observed case/robot-state mismatch.
+
+Human explicitly requested the fix. Keep all trained weights and scientific contracts fixed. This diagnostic compares fork and spawn native child execution after loading the exact original motor/runtime68. Each condition uses3 repeats of OOD seeds0/4/6 and ID0:24 resets,48 paired same-observation motor inferences,0 policy actions. Preserve raw camera arrays, compiled model/render arrays' hashes, camera poses, full state, XML, features and base chunks. This isolates native rendering/compiler/process state from motor sampling. Both source/data/checkpoint selection and locked case/motor schedules remain unchanged.
+
+One allocated GPU/16CPU/64GiB RAM/16GiB shared memory,20-minute operational limit, no automatic retries. The native configuration export block is identical to the Linux-qualified r3 launcher; only the pinned probe script changes. No full readout recovery until repeated raw images and first native motor outputs are qualified. Record any evaluation-only execution migration explicitly; never modify the active training worktree.

@@ -1,0 +1,5 @@
+# Native reset pairing diagnosis with resolved runtime configuration
+
+Same24-reset/no-policy-action diagnostic as r1/r2. The second attempt passed the GPU probe but failed before a native constructor because ROBOCASA_NATIVE_OUTPUT was absent. Preserve both startup failures and their clocks; no simulator/source training occurred. The committed launcher now supplies all four native config environment variables. Its exact export block was qualified on allocated Linux CPUs: all Hydra interpolations resolve, including actual ID/OOD registry task/horizons. See CPU-QUALIFICATION.json.
+
+Source3e14de9cb0fbdb8761254be33675d09f617854b6, driver worktree /mowenjie/fluffy-bassoon-2/worktrees/opendrawer-reset-pairing-20261102-r3, output /mowenjie/fluffy-bassoon-2/outputs/opendrawer-reset-pairing-20261102-r3. OneGPU/16CPU/64GiB RAM/16GiB shared memory,20-minute operational limit, no automatic retry. Native core68 and all source/stopping/selection/case/noise/horizon/motor/bound contracts remain unchanged. Do not relaunch full readouts before identifying and qualifying the pairing cause.

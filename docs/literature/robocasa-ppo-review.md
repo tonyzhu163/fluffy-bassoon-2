@@ -1,6 +1,53 @@
 # RoboCasa PPO: literature and released-recipe audit
 
-This November 2026 review records published PPO recipes, their author-reported results and their relationship to the earlier RoboCasa source teachers. Measured source endpoints and the subsequent frozen-student comparisons are in [Findings](../FINDINGS.md#robocasa365).
+Search and source inspection: November 2–3, 2026. This review asks which
+published results actually demonstrate online RL on RoboCasa, which recipes
+can be reconstructed from released code, and what they imply for this
+repository's unsuccessful OpenDrawer PPO positive control and planned frozen
+velocity/KV steering learners. It reports author results; none of the external
+training runs was reproduced here.
+
+## Findings that change our next experiment
+
+1. **A public config is not a demonstrated successful recipe.** RLinf supplies
+   RoboCasa and RoboCasa365 examples, but its legacy RoboCasa guide explicitly
+   supplies no fixed success-rate table. Our run combined that framework with
+   a different model, action cadence, critic placement and short budget. Calling
+   it a reproduction of a published RoboCasa PPO result overstates fidelity.
+2. **The best released comparison found is StructRL's sparse-reward PPO
+   baseline and structured-reward PPO on RoboCasa365.** Its reported π0.5
+   results are 39.3% SFT, 41.1% sparse PPO and 45.8% structured PPO across
+   16 Composite-Seen tasks. Sparse PPO is therefore a useful control, but the
+   paper does not support expecting a large gain from sparse reward alone.
+3. **Our usual PPO constants are plausible.** Actor/value learning rates
+   5e-6/1e-4, γ=.99, λ=.95, clipping .2, and no reference-KL/entropy term
+   appear in relevant implementations. Stronger concerns are temporal
+   granularity, exploration, critic inputs, reward/boundary alignment,
+   initialization and the amount of genuinely new experience.
+4. **Successful base-policy RL does not qualify a frozen steering interface.**
+   PPO studies generally update an action expert or its LoRA weights. They do
+   not establish that our fixed random 32-D velocity/KV maps are sufficient.
+   MiDAS provides relevant frozen-base residual evidence, but uses value-based
+   off-policy learning, demonstrations and replay rather than our PPO recipe.
+5. **Read launchers and patches, not YAML alone.** StructRL's released π0.5
+   launchers override both chunk length and critic placement. Its paper and
+   released launcher disagree on the π0.5 chunk length; its code also contains
+   a termination-shift patch whose applicability depends on buffer indexing.
+   These are reproduction questions to resolve, not fixes to copy blindly.
+
+**Nov 4 update.** The [recipe audit](../../outputs/robocasa-ppo-recipe-audit-20261104-r1/AUDIT.md)
+compares the five-task 10M Flow-SDE sources with πRL's ablation tables and
+RLinf's shipped π0.5 configs. Our H50 chunk, K10 denoising steps, noise 0.3
+and action-expert critic all sit on the losing side of πRL's ablations. Together they make
+the 600-coordinate chunk ratio ~8–10× more sensitive than published recipes
+(first-update approx-KL .151, clip fraction .262). This revises finding 3
+above: the scalar constants are fine, but the Flow-SDE cadence/noise/critic
+recipe is not.
+
+Primary starting points: [StructRL paper](https://arxiv.org/html/2609.36352v1),
+[released reproduction guide](https://github.com/amazon-science/StructRL/blob/6caba1f9538167e0752a7338663e45aac8df965d/docs/REPRODUCE.md),
+[RLinf RoboCasa365 guide](https://rlinf.readthedocs.io/en/latest/rst_source/examples/embodied/robocasa365.html),
+and [πRL critic design](https://arxiv.org/html/2510.25889#S4.SS3).
 
 ## Search scope and evidence rules
 

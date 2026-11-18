@@ -57,7 +57,7 @@ and does not touch its worktree or jobs.
 
 ## Facts from the existing RoboCasa365 setup
 
-From [robocasa365_pi05_eval.yaml](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/5faf93fe1630be4c42f8fee10e8fa892ffe881a9/configs/native_ppo/robocasa365_pi05_eval.yaml)
+From [robocasa365_pi05_eval.yaml](../../configs/native_ppo/robocasa365_pi05_eval.yaml)
 and the [loading handoff](../robocasa-flora-ppo-preparation-20261101-r1/PUBLIC-PI05-LOADING-HANDOFF.md):
 
 - Policy: public `pi05_robocasa365_pretrain_human300`, RLinf HuggingFace

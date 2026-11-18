@@ -22,7 +22,7 @@ therefore an unreleased VLRLA run, not an RLinf artifact we can rerun.
 
 | Attempt | Motor | Outcome |
 | --- | --- | --- |
-| Motus-era source PPO/SAC (Oct 29–Nov 1) | Motus | Source success flat near 17%; SAC 11.5%; no memory benefit ([FINDINGS](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/030dfe60b7478c8ccb20eaed0fce25dfc16ec51b/docs/FINDINGS.md#robotwin-motus--vlrla-style)) |
+| Motus-era source PPO/SAC (Oct 29–Nov 1) | Motus | Source success flat near 17%; SAC 11.5%; no memory benefit ([FINDINGS](../../docs/FINDINGS.md#robotwin-motus--vlrla-style)) |
 | Matched Sidney PPO/GRPO (Nov 6) | `SidneyXie/pi05_robotwin@e49e2ab6` | 2 iterations / 40 updates, phone stand; training collections 17.2% → 21.9% (PPO) and 17.2% → 18.0% (GRPO); no held-out evaluation ([result](../robotwin-sidney-matched-baselines-20261106-r1/RESULT.md)) |
 
 ## Root causes, ranked

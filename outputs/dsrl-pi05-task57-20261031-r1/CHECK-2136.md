@@ -1,0 +1,3 @@
+Checked 2026-10-31T21:47:30.838110+08:00 (overdue21:36): Baige job-iudscqfntb4e Running, 490,220 updates, 1852/1854 training successes, 25,004 replay rows; finite losses. Latest complete470,100/480,020 panels10/10 at1277/1235 primitives plus100 settling each.490k panel active.
+
+Stable latest full recovery, newest immutable milestone and sampled raw/RPC hashes match; all ten nominal/actual-initial-observation/query-seed pairs match native. Producer charge324,407 actions; storage37,706,769,276 bytes; active27,637.84seconds is not final GPU charge. No journal forest read. Same two training timeouts and one390kquery failure preserved. Fixed500k/finalnative unchanged. Next21:56.

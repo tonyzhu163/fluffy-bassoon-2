@@ -1,13 +1,14 @@
 # Documentation
 
-[Research design and benchmark](PAPER.md) describes how to train a frozen robot policy to use earlier attempts and how to evaluate it on standard LIBERO and the held-out LIBERO-Pro2.0 tasks.
+Start with the [RoboTwin SFT, PPO and GRPO baselines](FINDINGS.md#sidney-phone-stand-baseline) or the [RoboCasa365 Human300 checkpoint and Atomic-Seen score](FINDINGS.md#robocasa365).
 
-| Document | What it answers |
+| Read | Purpose |
 | --- | --- |
-| [Methods and runtime](METHODS.md) | Which learners, action interfaces, data formats and benchmark integrations exist? |
-| [Verified findings](FINDINGS.md) | Where has history helped, where has it failed, and what evidence supports each result? |
-| [Learned video reward](FLORA-PPO.md) | What did RoboCasa reward calibration establish, and what would physical-robot feedback require? |
-| [RoboTwin protocol](robotwin/rl-baselines.md) | Which task split, motor, action coordinates and runtime define the bimanual baselines? |
-| [Literature](literature/) | How do the published objectives, steering interfaces and online baselines differ? |
+| [Research question](PAPER.md) | What would count as in-context adaptation, and which comparisons can establish it. |
+| [Methods and runtime](METHODS.md) | The two benchmark interfaces, RLinf integration, offline algorithms, training inputs and tests. |
+| [Learned video reward](FLORA-PPO.md) | Historical RoboCasa reward calibration and the qualification needed before physical-robot testing. |
+| [Verified findings](FINDINGS.md) | Measured outcomes, limits and links to run evidence. |
 
-For the current LIBERO campaign, consult the [split](../outputs/libero-meta-learning-20261117-r1/SPLITS.json), [registered run plan](../outputs/libero-meta-learning-20261117-r1/PLAN.md) and [execution record](../outputs/libero-meta-learning-20261117-r1/EXECUTION.md). The [coordination board](../outputs/coordination.md) records owners' last reports. Dated run contracts describe their own experiments. See the [archive](../outputs/archive/README.md) for retired proposals and earlier layouts.
+The [RoboTwin protocol](robotwin/rl-baselines.md) holds the task split, runtime setup and controller conventions. [Literature](literature/) contains research references, including the [offline ICRL review](literature/frozen-vla-offline-icrl-review.md) and the [RoboCasa](literature/robocasa-ppo-review.md) and [RoboTwin](literature/robotwin-ppo-review.md) baseline reviews.
+
+Use [coordination](../outputs/coordination.md) for current ownership and jobs. A dated plan belongs in its run directory. Promote verified results here with evidence; use the [retention policy](../README.md#artifact-retention) when a run closes.

@@ -1,6 +1,6 @@
 # Learned video reward
 
-The LIBERO-Pro2.0 design and the RoboCasa and RoboTwin benchmark studies use native simulator rewards. [Flora-Rewarder](https://huggingface.co/nvidia/Flora-Rewarder) is planned for episode feedback on physical robots. Before using it there, compare its grades on real task videos with independently judged outcomes and report the cost of obtaining feedback.
+The current RoboCasa and RoboTwin experiments use native simulator rewards. [Flora-Rewarder](https://huggingface.co/nvidia/Flora-Rewarder) is planned for episode feedback on physical robots. Before using it there, compare its grades on real task videos with independently judged outcomes and report the cost of obtaining feedback.
 
 Earlier RoboCasa experiments used this video-reward protocol. Their calibration and failures inform the physical-robot study; they do not qualify a new camera setup or task.
 

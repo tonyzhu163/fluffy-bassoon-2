@@ -1,6 +1,6 @@
 # Three checks of the constructed-history idea, November 10
 
-Development checks for E1 in [fable.md](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/409baf7aca4c52959da72d55edd38c5f028b65c9/fable.md), on frozen public Human300 π0.5 with the native closed-loop protocol (predict 50, execute 5, ten denoising steps, 600 controls). Use the first allocated Baige episodes to qualify each intervention. All seeds are development seeds.
+Development checks for E1 in [fable.md](../../fable.md), on frozen public Human300 π0.5 with the native closed-loop protocol (predict 50, execute 5, ten denoising steps, 600 controls). Use the first allocated Baige episodes to qualify each intervention. All seeds are development seeds.
 
 ## What the existing data already says
 

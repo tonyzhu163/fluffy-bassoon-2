@@ -7,7 +7,7 @@ reports are complete. All five failed teacher-improvement gates and retain
 reference corpora. See [results](RESULT.md) and [final closeout](FINAL-CLOSEOUT-R1.json).
 
 Governing decision:
-[PAPER.md source campaign (2026-11-03)](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/42cefb77daec997df5b6bd178aaf8e4bdfb3b089/docs/PAPER.md#agreed-design).
+[PAPER.md source campaign (2026-11-03)](../../docs/PAPER.md#agreed-design).
 Live status: [coordination](../coordination.md).
 
 ## Human decisions (2026-11-03)
@@ -65,7 +65,7 @@ moves from 400 to 600, so its before panel is new rather than reused.
 
 ## Contract per task
 
-Unchanged from [`robocasa365_opendrawer_pi05_sim_ppo.yaml`](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/42cefb77daec997df5b6bd178aaf8e4bdfb3b089/configs/native_ppo/robocasa365_opendrawer_pi05_sim_ppo.yaml)
+Unchanged from [`robocasa365_opendrawer_pi05_sim_ppo.yaml`](../../configs/native_ppo/robocasa365_opendrawer_pi05_sim_ppo.yaml)
 unless the row says otherwise.
 
 | Item | Setting |
@@ -182,7 +182,7 @@ colocated on GPUs 0–1 already peaks at ~35 GiB, against 96 GiB per card.
 
 F1–F6 are fixed on `main` and covered by CPU tests in
 `tests/test_robocasa_flow_ppo.py`. The new config is
-[`robocasa365_pi05_flow_sde_10m.yaml`](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/5f83b787c38fef1b60b771b921803a7ff2c18d0e/configs/native_ppo/robocasa365_pi05_flow_sde_10m.yaml);
+[`robocasa365_pi05_flow_sde_10m.yaml`](../../configs/native_ppo/robocasa365_pi05_flow_sde_10m.yaml);
 `flow_contract()` derives the horizon, schedule, seeds, step count and action
 ceiling from it, and the driver refuses `kl_beta != 0`. For F7, the storage
 switches exist (`sampling_record: full|scalars`, `actor_batch_drop`); their
@@ -200,10 +200,10 @@ Use a fresh `ROBOCASA_SIM_PPO_ACCOUNTING` root per task.
 
 ## Pre-launch static audit
 
-The audit read [`rlinf_robocasa_flow_ppo_runtime.py`](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/42cefb77daec997df5b6bd178aaf8e4bdfb3b089/src/fluffy_bassoon/meta_rl/rlinf_robocasa_flow_ppo_runtime.py),
-[`rlinf_native_ppo_runtime.py`](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/42cefb77daec997df5b6bd178aaf8e4bdfb3b089/src/fluffy_bassoon/meta_rl/rlinf_native_ppo_runtime.py),
-[`rlinf_native_ppo.py`](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/42cefb77daec997df5b6bd178aaf8e4bdfb3b089/src/fluffy_bassoon/meta_rl/rlinf_native_ppo.py),
-[`rlinf_robocasa_flow_ppo.py`](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/42cefb77daec997df5b6bd178aaf8e4bdfb3b089/src/fluffy_bassoon/meta_rl/rlinf_robocasa_flow_ppo.py),
+The audit read [`rlinf_robocasa_flow_ppo_runtime.py`](../../src/fluffy_bassoon/meta_rl/rlinf_robocasa_flow_ppo_runtime.py),
+[`rlinf_native_ppo_runtime.py`](../../src/fluffy_bassoon/meta_rl/rlinf_native_ppo_runtime.py),
+[`rlinf_native_ppo.py`](../../src/fluffy_bassoon/meta_rl/rlinf_native_ppo.py),
+[`rlinf_robocasa_flow_ppo.py`](../../src/fluffy_bassoon/meta_rl/rlinf_robocasa_flow_ppo.py),
 the driver and the config. RLinf itself is only on Baige; checks C1–C2 must
 read it there.
 

@@ -1,0 +1,123 @@
+# Released π0.5 baseline first
+
+User scope, 2026-11-09: reproduce the released Motus π0.5 baseline before
+anything else; then obtain PPO and GRPO baselines. Start with
+`place_phone_stand`, as previously agreed. The paused custom controller run
+and its failed competence gate do not establish this baseline.
+
+## Reference and claim boundary
+
+- [Motus v2, §5.2 and Table 14](https://arxiv.org/html/2512.13030v2): π0.5
+  phone stand 49% clean / 53% randomized, 100 trials per setting. Across all
+  50 tasks: 42.98% / 43.84%. Motus itself is a different model.
+- [Released weights](https://huggingface.co/motus-robotics/pi0.5_robotwin2),
+  revision `effc6e1a99bd4d0edf9447e8ba313def67649cfe`.
+  Model SHA256 `de8e03a445f3e0af417a9d61a903d342fca5b6a5b4fdc6f20445e14ad25692eb`;
+  norm SHA256 `1dce5ceb9a98eaa6ae587795e0e8977dc3ce046a7ba0a5ec07858ea896ed1adb`.
+- Its metadata records global_step=40000, π0.5, H32, model action dimension32,
+  token limit200, bfloat16, gemma_2b/gemma_300m, delta joints, adapt_to_pi=True.
+  Metadata SHA256 `ef52d518167a652b74cc1c4d3a49fc18f758c286fc0ee8485d33a3caf3bd99ee`.
+  Inspected with pickletools, without executing pickle imports.
+- Motus's published inference adapter targets its larger architecture, not
+  this OpenPI checkpoint. [Issue45](https://github.com/thu-ml/Motus/issues/45)
+  asks for the missing exact evaluator/fork and remains unanswered at review.
+  This is a documented reconstruction, not a maintainer-confirmed reproduction.
+- The saved metadata additionally references an unreleased
+  `add_state_from_actions` training transform. The model card instead describes
+  a state input. Evaluation uses measured native joint state. Record this
+  unresolved training provenance; do not invent the missing function.
+
+## Execution
+
+Use the RoboTwin source available at the paper's release date, commit
+`fa8d97b0f33bb894eae16df5a8175490f5b977a7`, including the original native
+`Base_Task.take_action`, without the RLinf sparse/chunk controller or our
+waypoint fallback. Its [π0.5 adapter](https://github.com/RoboTwin-Platform/RoboTwin/blob/fa8d97b0f33bb894eae16df5a8175490f5b977a7/policy/pi05/deploy_policy.py)
+maps head/left/right RGB to matching ALOHA cameras, CHW uint8, measured
+14-dimensional joint state and unseen task instruction. It executes the
+returned chunk (up to50 requested; the released checkpoint returns32), reading
+observations after every target. Replan after32. Native phone limit400.
+
+Reconstruct the card's inference data configuration in the installed
+`rlinf-openpi==0.1.1` reference OpenPI package, using its direct
+`create_trained_policy` / `Policy.infer`, not the RLinf policy subclass.
+Use the checkpoint's own norm stats, quantile normalization as selected by
+OpenPI for π0.5, native ALOHA conversions and delta inverse. K10 is the
+OpenPI default, not a paper-confirmed π0.5 evaluator setting. Eager execution
+avoids compilation setup; no custom sampler or policy-side noise injection.
+Pin/hash the actual package source. Bind rendering and inference to the same
+allocated GPU; retain scheduler visibility.
+
+Direct-loader qualification found that the shared environment resolves
+Transformers4.55.4, whereas this reference OpenPI loader requires4.53.2 plus
+its five bundled `transformers_replace` files. Use the isolated uv environment
+`motus-reference-openpi-20261109-r1`, with4.53.2 and those exact files copied
+from the installed OpenPI package. Shared dependencies are read through a
+`.pth`; do not modify the shared runtime. Validate the loader's own sentinel
+and hash all five replacements on Linux CPU before another GPU attempt.
+The overlay must also include the existing RoboTwin simulator dependency
+layer (Open3D and associated packages), before the base model dependencies.
+Smoke03 loaded the released weights successfully, then exposed that omitted
+layer at native import. Require complete native simulator imports on CPU
+before constructing a model in any subsequent allocation.
+The historical `Robot` module requires cuRobo, and the cached native ALOHA
+configuration selects it for expert planning. Include the existing qualified
+`nvidia-curobo==0.7.8` layer (source commit
+`d64c4b005459db10c5dd867d8b30a87d5bda9bdb`). Keep native expert planning;
+do not force the previous RLinf MPLIB backend. Build an owned asset view and
+repair only the two stale absolute URDF/collision-sphere paths in each native
+cuRobo YAML. Verify that restoring those fields recovers the original mapping;
+record original/runtime and target file hashes. Shared assets remain intact.
+
+Smoke04 completed the two clean controls (one success, one400-action timeout),
+then stopped before randomized trials because the unseen texture split was
+absent. It also exposed OIDN2.0.1 CUDA initialization errors on Blackwell;
+those noisy observations cannot establish the released-model baseline.
+Use a new isolated `motus-reference-openpi-20261109-r2` runtime. Keep SAPIEN's
+compiled physics/render engine and native32-sample, depth8, OIDN settings;
+replace only the private OIDN loader/libraries with the official
+[2.3.3 release](https://github.com/RenderKit/oidn/releases/tag/v2.3.3), which
+adds Blackwell support. The shared SAPIEN environment remains unchanged.
+
+Textures come from the upstream `TianxingChen/RoboTwin2.0` archive at
+`39b4a57384f28b6ed0ea1118871ae302e67eae38` (June26,2025).
+All10,970,687,027 archive bytes were SHA256-verified against
+`54ede0fb5b783e0faa2bc98720d3affd6ca3bb9280b225b48c1aafaf31473070`.
+The complete1,000-file unseen split is retained, with per-file hashes/ZIP CRCs,
+in the project cache. Native `eval_mode=True` uses this split. Do not substitute
+training textures or a selected subset. Before another model run, qualify one
+native expert episode in each domain on the actual GPU and require zero
+denoiser errors. This renderer qualification constructs no policy model.
+
+Match native evaluation seed0: candidate seeds begin100000; expert play_once
+must plan and succeed before policy evaluation; count100 accepted episodes
+per clean/randomized setting. Use native unseen language generation and
+per-task limits. Record rejected candidates and exceptions. Policy rollout
+errors abort the run rather than becoming silent exclusions.
+
+First complete a 2+2 episode smoke, then100+100 independently under the same
+frozen contract. Smoke qualifies execution only, not success rate. Retain
+initial/final camera panels, all predicted action chunks and initial states,
+per-episode seeds/instructions/results, controller/runtime hashes, and GPU
+probe. Use BOS outputs and job-local NVMe. Do not tune against these results.
+
+## Sequence after SFT
+
+Only after this baseline is measured and its runtime qualified, compare the
+RLinf SFT execution against it, resolve material execution differences, and
+then launch separate PPO and GRPO baselines from the same released weights.
+Use identical evaluation cases/settings and report per-task SFT/PPO/GRPO
+results plus uncertainty and compute. No RL training is authorized to bypass
+the SFT-first ordering. Broader six-task expansion follows phone stand and
+must fit the existing cap; a phone result is not a50-task reproduction.
+
+## Budget
+
+Continue the previously approved100GPU-hour Epoch2 cap. Already closed:
+918GPU-s=.255h. Reserve at most1GPU-hour for the first native smoke; inspect
+its actual rate before reserving the full evaluation. No new100h reset.
+Update the existing single LATEST-BUDGET ledger and our coordination row.
+
+## Frozen smoke qualification
+
+Native-smoke05 (`job-4tj08qs57c6x`, source `a3110e7b`) completed2clean+2randomized episodes. Independent Linux readback passed: all43action chunks finite32x14,1,325native targets delivered, frozen parameter versions unchanged, optimizer updates0, qualified runtime/assets identical. Clean1/2, randomized0/2 are execution diagnostics only. Scheduler succeeded13:48:58 Shanghai; creation-to-terminal charge324GPU-s. Proceed unchanged to100+100 phone episodes; reserve22,200GPU-s (370min scheduler,21,600s worker) within the existing100h cap.

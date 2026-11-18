@@ -35,16 +35,16 @@ Auditing our deployed configuration against RLinf and StructRL identified four c
 ## 2. Code & Pipeline Architecture
 
 ### 2.1 Completed Changes on `main`
-- **Dual PPO/GRPO contract & grouped seeding ([`rlinf_robocasa_flow_ppo.py`](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/a8c6248f7d1c8c33790b755d240735024124b565/src/fluffy_bassoon/meta_rl/rlinf_robocasa_flow_ppo.py)):**
+- **Dual PPO/GRPO contract & grouped seeding ([`rlinf_robocasa_flow_ppo.py`](../../src/fluffy_bassoon/meta_rl/rlinf_robocasa_flow_ppo.py)):**
   - Appended `TurnOnSinkFaucet=8` to `FLOW_TASK_NUMBERS`.
   - Extended `flow_contract(cfg)` to validate both GAE PPO (`adv_type='gae'`, `loss_type='actor_critic'`, `group_size=1`, `add_value_head=True`) and GRPO (`adv_type='grpo'`, `loss_type='actor'`, `group_size>=2` dividing `train_envs`, `add_value_head=False`), plus `value_after_vlm`, `ignore_last`, `noise_level`, and `update_epochs`.
   - Extended `train_case_seeds` so `group_size=G` assigns identical reset seeds to each contiguous group of $G$ local environment slots per worker.
   - Added `flow_episode_ids` (`task/seed` for PPO and eval; `task/seed/g00..g07` for GRPO training) and `verify_grpo_group_reset` (enforcing identical MuJoCo XML/state fingerprint, prompt, and initial public state across all $G$ members of every GRPO group at reset).
-- **Runtime & Driver ([`rlinf_robocasa_flow_ppo_runtime.py`](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/a8c6248f7d1c8c33790b755d240735024124b565/src/fluffy_bassoon/meta_rl/rlinf_robocasa_flow_ppo_runtime.py), [`scripts/[train]robocasa_flow_ppo.py`](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/a8c6248f7d1c8c33790b755d240735024124b565/scripts/%5Btrain%5Drobocasa_flow_ppo.py)):**
+- **Runtime & Driver ([`rlinf_robocasa_flow_ppo_runtime.py`](../../src/fluffy_bassoon/meta_rl/rlinf_robocasa_flow_ppo_runtime.py), [`scripts/[train]robocasa_flow_ppo.py`](../../scripts/[train]robocasa_flow_ppo.py)):**
   - Wired `flow_episode_ids`, `verify_grpo_group_reset`, and critic-optional `flow_logprob_parity` / `flow_value_parity` checks.
 - **Resolved Configs (`configs/native_ppo/`):**
-  - [`robocasa365_pi05_flow_sde_ppo_vlm_critic.yaml`](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/a8c6248f7d1c8c33790b755d240735024124b565/configs/native_ppo/robocasa365_pi05_flow_sde_ppo_vlm_critic.yaml)
-  - [`robocasa365_pi05_flow_sde_grpo.yaml`](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/a8c6248f7d1c8c33790b755d240735024124b565/configs/native_ppo/robocasa365_pi05_flow_sde_grpo.yaml)
+  - [`robocasa365_pi05_flow_sde_ppo_vlm_critic.yaml`](../../configs/native_ppo/robocasa365_pi05_flow_sde_ppo_vlm_critic.yaml)
+  - [`robocasa365_pi05_flow_sde_grpo.yaml`](../../configs/native_ppo/robocasa365_pi05_flow_sde_grpo.yaml)
 - **Generalized Corpus Export & Multi-Interface Meta-Learners ([`flow_history.py`](../../src/fluffy_bassoon/meta_rl/flow_history.py)):**
   - Generalized `export_corpus` to support arbitrary `(num_streams, num_versions * chunks_per_episode, 25)` schedules (including 130-iteration $H=600$ PPO and GRPO corpora) across all 4 meta-learning objectives (`ad`, `dpt`, `dit`, `ic_iql`).
   - Added `FlowBridgeConfig` and `HistoryFlowSteeringPolicy` supporting both **`kv_bridge`** (causal history decoder + `ReactiveKVResidual` through the frozen $\pi_{0.5}$ suffix) and **`velocity_bridge`** (causal history decoder + zero-init velocity residual head) trained with advantage-weighted flow-matching loss (`flow_matching_loss`) for **AD**, **DPT**, **DIT**, and **IC-IQL**.
@@ -57,7 +57,7 @@ Auditing our deployed configuration against RLinf and StructRL identified four c
 2. **GRPO Within-Scene Multi-Attempt Stream Builder (`flow_history.py`):**
    - Add `export_grpo_group_trials(...)` to [`flow_history.py`](../../src/fluffy_bassoon/meta_rl/flow_history.py) so each 8-rollout group (`g00..g07` sharing one physical scene `seed`) can also be exported as a **within-scene multi-attempt trial** (ordering failed attempts before successful attempts on the identical scene, capped at 5 attempts to match deployment memory length), alongside the standard cross-update stream export (`export_corpus`).
 3. **Closed-Loop Native Evaluation Wrapper for Learned Bridges (`flow_history.py`):**
-   - Add `FlowBridgeCodec` and `FlowBridgeMotor` in [`flow_history.py`](../../src/fluffy_bassoon/meta_rl/flow_history.py) so `HistoryFlowSteeringPolicy` (`kv_bridge` and `velocity_bridge`) plugs directly into [`collect_case_attempts`](../../src/fluffy_bassoon/meta_rl/steering_history_eval.py) and [`NativeAttemptBackend`](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/a8c6248f7d1c8c33790b755d240735024124b565/src/fluffy_bassoon/meta_rl/steering_history_native.py) for 5-attempt RoboCasa evaluation with zero-init native parity.
+   - Add `FlowBridgeCodec` and `FlowBridgeMotor` in [`flow_history.py`](../../src/fluffy_bassoon/meta_rl/flow_history.py) so `HistoryFlowSteeringPolicy` (`kv_bridge` and `velocity_bridge`) plugs directly into [`collect_case_attempts`](../../src/fluffy_bassoon/meta_rl/steering_history_eval.py) and [`NativeAttemptBackend`](../../src/fluffy_bassoon/meta_rl/steering_history_native.py) for 5-attempt RoboCasa evaluation with zero-init native parity.
 4. **Core Unit Tests (`tests/test_robocasa_flow_ppo.py`, `tests/test_flow_history.py`):**
    - Test periodic evaluation contract arithmetic in `test_robocasa_flow_ppo.py`.
    - Test `export_grpo_group_trials` and `FlowBridgeMotor` / `FlowBridgeCodec` in `test_flow_history.py`.

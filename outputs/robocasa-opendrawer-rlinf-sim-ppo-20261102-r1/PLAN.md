@@ -15,7 +15,7 @@ our learner (1) left pi0.5's sampling noise outside the policy, (2) used a
 final-control reward with γ=1, and (3) ran about 1% of the data. This run is
 FLORA-PPO gate 2's positive control with the published recipe instead of our
 interface. Full-weight PPO is a reward check, not the frozen-motor baseline
-([FLORA-PPO](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/da3023e77038593c03a83151904d7babb5483934/docs/FLORA-PPO.md#gates-on-each-benchmark)).
+([FLORA-PPO](../../docs/FLORA-PPO.md#gates-on-each-benchmark)).
 
 ## Human decisions (2026-11-02)
 
@@ -27,7 +27,7 @@ interface. Full-weight PPO is a reward check, not the frozen-motor baseline
 
 ## Contract
 
-Config: [`configs/native_ppo/robocasa365_opendrawer_pi05_sim_ppo.yaml`](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/da3023e77038593c03a83151904d7babb5483934/configs/native_ppo/robocasa365_opendrawer_pi05_sim_ppo.yaml).
+Config: [`configs/native_ppo/robocasa365_opendrawer_pi05_sim_ppo.yaml`](../../configs/native_ppo/robocasa365_opendrawer_pi05_sim_ppo.yaml).
 
 | Item | Setting | Source |
 | --- | --- | --- |

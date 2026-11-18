@@ -1,0 +1,7 @@
+# Independent DPT/static paired readout
+
+DPT/static reached the original validation plateau at update24,100 (selected checkpoint23,100; validation NLL-24.264713764190674). Its candidate hash and source data are frozen in binding.json. It is evaluated independently against the shared physical case bank with the qualified production driver63a17336 and runtime core68f2c5aa. There is no readiness gate on another model.
+
+Use the same50 ID OpenDrawer and50 OOD CloseFridge cases, horizons750/900 and existing motor draws. Static is the separately trained history-free controller: K0 query only, no invented support episode. Compare it against both frozen PPO checkpoints from the AD phase after verifying identical canonical snapshots, case/noise/source and simulator truth. Exact native state, camera poses, compiled scene/XML and public state are checked before actions; original policy pixels are retained with the qualified at-most-one-level RGB roundoff.
+
+Baige job-5qtsrh7a1khb, attempt dpt-static-paired-r1, submitted Nov2 14:55:47 Shanghai,4 nodes with2 GPUs each, initially queued. Verify every allocated GPU probe/unique UUID and first native episode before claiming runtime success. The binding field completed means binding completed, not evaluation completed. See SUBMISSION.json and ../opendrawer-pairing-recovery-20261102-r1/PLAN.md. Publish this phase independently and release its allocation at completion. Preserve partial/failure records and all charges.

@@ -2,7 +2,7 @@
 
 Exploratory. Generates tabletop scenes for the hidden-rule experiment described in the [extension spec](../../outputs/pi05-history-interface-20261111-r1/EXTENSION-SPEC.md). Scenes are built the same way as the [rule family](../learning-histories/placement.py): one draw on each of a few axes, each a short list.
 
-**Status:** `scenes.py` and `histories.py` have produced a candidate scene/session bank. Eight fixed training layouts passed simulator admission and 48 dropped-bowl predicate controls on Baige. These controls establish goal semantics, not robot reachability. Realized positions changed 3,040 of 23,296 nominal rule labels; three bowls were partly cropped despite their centres being visible. The bank records nominal geometry. The simulator evidence covers the eight evaluated training layouts. [Geometry evidence](../../outputs/libero-procedural-qual-20261111-r1/GEOMETRY-RESULT.json) · [First case bank and limits](../../outputs/libero-history-cases-20261111-r1/RESULT.md).
+**Status:** `scenes.py` and `histories.py` have produced a candidate scene/session bank. Eight fixed training layouts passed simulator admission and 48 dropped-bowl predicate controls on Baige. These controls establish goal semantics, not robot reachability. Realized positions changed 3,040 of 23,296 nominal rule labels; three bowls were partly cropped despite their centres being visible. The full bank remains nominal and policy execution is pending. [Geometry evidence](../../outputs/libero-procedural-qual-20261111-r1/GEOMETRY-RESULT.json) · [First case bank and limits](../../outputs/libero-history-cases-20261111-r1/RESULT.md).
 
 ## Why this exists
 
@@ -62,6 +62,11 @@ Episodes run 290 to 560 controls in the stand-in. `--shard i/n` splits scenes ac
 - Beside-regions and fixture surfaces have no positive control in `admit.py`.
 - LIBERO's reset is assumed to place each object inside its 2 cm region. The requested-layout check measures this.
 
+## Next pieces
+
+1. Run `demo.py` (below) in the simulator and tune its grasp. Once demonstrations succeed, convert them to the released dataset formats for motor training.
+2. Recompute rule labels on realized resets and repeat the ambiguity checks. The candidate history bank below uses nominal table coordinates, not measured camera coordinates.
+
 ## Candidate history-learning cases
 
 `histories.py` binds the existing four-axis `placement.py` family to `positions` scenes. It does not change the simulator. Each session has one demonstration, K attempts on distinct scenes, and a query on another scene. The hidden rule persists across the session; the instruction stays generic.
@@ -82,3 +87,5 @@ Layouts and rule compositions are disjoint across training, validation and test.
 A candidate demonstration must leave at least three distinct continuations, and at least two answers on its query. The correct behaviours on the attempt scenes must identify the query answer within the full rule family. These constraints prevent trivial demonstrations and sessions that cannot disambiguate the query even with full corrections. They do **not** guarantee identification from binary feedback, successful execution, or a learning gain. Ambiguity is measured without knowledge of the hidden rule's split. Proposals are uniform before these geometry-based constraints; the resulting bank is conditional on them.
 
 The rules here use table XY coordinates: `min_x` does not mean image-left. Fixture landmarks use their requested table positions. LIBERO samples initial placements within regions, so real resets can change near ties or conditional rules. Before collection, bind labels to the settled reset, check observable distinctions in rendered images, and repeat the session checks. Record failures rather than silently resampling based on policy success.
+
+For an actual learning experiment, collect demonstrations and attempted trajectories, evaluate native predicates on their physical states, then compare the same frozen learner with own history, cleared history and matched donor history; intervene on outcome bits separately. All variants use the same case bank and execution budget. Outcome-independent episode horizons and padding are required so masking rewards does not leak the hidden goal through termination. The simulator/collector integration and history training are not implemented by this compiler.

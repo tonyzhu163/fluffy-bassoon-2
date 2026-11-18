@@ -1,6 +1,28 @@
-# Offline in-context RL for a frozen VLA
+# Offline in-context RL for a frozen VLA: evidence and experiment design
 
-This review compares the supervision required by published offline objectives, the interfaces that can steer a frozen motor and differences from the repository implementations. [Research design](../PAPER.md) · [Verified findings](../FINDINGS.md)
+Primary-source scoping review, 7 November 2026. Question: what can our
+RoboTwin PPO/GRPO experience teach a history-conditioned controller while
+the deployment VLA stays frozen? This complements the broader
+[ICRL review](in-context-rl-review.md), the earlier
+[steering map](vla-steering-review.md), and the direct
+[RoboTwin PPO recipe audit](robotwin-ppo-review.md).
+
+**Assessment:** continue DIT-style weighting and offline IQL alongside source
+PPO engineering. Strong PPO improvement is valuable for algorithm
+distillation, but is not a prerequisite for every offline ICRL objective.
+Informative action/reward coverage, a usable control interface and an honest
+online adaptation test are prerequisites. The current corpus supports a
+single-task pilot; it cannot yet establish cross-task meta-learning.
+
+For the immediate decision, distinguish **teacher optimization**, **student
+training objective**, and **control interface**. PPO/GRPO generate experience;
+AD/DPT/DIT/offline value learning determine what the student learns from it;
+residual actions, KV modification and proposal ranking determine how the
+student controls the frozen motor. Evidence for one choice does not select
+the other two. Our recommendation is a matched residual-interface comparison
+with trained static and history-imitation controls, alongside source PPO
+restoration. This is an experimental recommendation, not an established
+RoboTwin result.
 
 ## Scope and strength of evidence
 
@@ -44,6 +66,65 @@ length limitation. Neither result justifies dropping coverage checks or
 calling a single-task fit cross-task meta-learning. Read each method's own
 versioned specification when comparing architectures: another paper's
 related-work description is insufficient implementation evidence.
+
+## Source PPO versus GRPO: what the evidence licenses
+
+The official [RLinf RoboTwin guide](https://rlinf.readthedocs.io/en/latest/rst_source/examples/embodied/robotwin.html)
+reports clean `adjust_bottle` pi0.5 success of 85.94% SFT and 96.09% PPO.
+Its OpenVLA-OFT GRPO results use randomized settings and another policy family.
+Those tables support feasibility; they do not establish a matched pi0.5
+PPO-versus-GRPO ranking on our task.
+
+The [released PPO YAML](https://github.com/RLinf/RLinf/blob/77a521298f1d215971246c2d7a423720d9e76652/examples/embodiment/config/robotwin_adjust_bottle_ppo_openpi_pi05.yaml)
+uses task-specific SFT, H50, horizon200, group1, 256 environments, four rounds,
+global minibatch2048 and five epochs. Our joint Motus phone experiment changes
+the initializer, task, cadence and grouping. `max_epochs: 1000` is a ceiling,
+not a recovered training duration for the reported result.
+
+[What Can RL Bring to VLA Generalization?](https://papers.nips.cc/paper_files/paper/2025/file/8c0fabe372177d2aded596be2d3b4544-Paper-Conference.pdf),
+§4.1, favors PPO over GRPO in its OpenVLA/LoRA manipulation comparison, with
+two training seeds. This supports choosing PPO as a starting point; it does
+not prove that PPO histories are better supervision for our student.
+[piRL v3](https://arxiv.org/html/2510.25889v3) supplies flow-policy likelihood,
+noise and critic-design evidence, with several manipulation benchmarks and
+single-task studies. These are adjacent optimization results rather than a
+joint Motus/RoboTwin reproduction.
+
+The schematic PPO advantage is
+
+\[
+\delta_t=r_t+\gamma b_tV(o_{t+1})-V(o_t),\qquad
+\widehat A_t=\delta_t+\gamma\lambda c_t\widehat A_{t+1}.
+\]
+
+Bootstrap mask \(b_t\) and continuation mask \(c_t\) need not be identical.
+The clipped policy surrogate uses the likelihood ratio
+\(\rho_t=\exp(\log p_\theta-\log p_{\rm old})\).
+For Flow-SDE, the pinned sampler's transition likelihood and denoising/action
+reduction must be preserved; this expression does not assert an exact marginal
+likelihood for a decoded physical command.
+
+[RLinf-VLA §3.4 / §4.2](https://arxiv.org/html/2510.06710v1) defines GRPO groups
+by common task and initial state and assigns a normalized trajectory score to
+their actions. The qualified local native formula uses
+
+\[
+\widehat A_i=\frac{R_i-\overline R_g}{s_g+10^{-6}},\qquad
+s_g^2=\frac{1}{G-1}\sum_{j\in g}(R_j-\overline R_g)^2.
+\]
+
+Here the score follows the native masked, undiscounted reward recurrence;
+multiple episodes require done-aware handling. All-tied scores give zero
+reward advantages. Additional advantage normalization, masking and loss
+reduction are part of the recipe, not optional arithmetic details. The local
+[independent numerical reference](../../outputs/robotwin-sidney-matched-baselines-20261106-r1/numerical_qualification.py)
+checks these choices. A zero reward advantage does not imply every possible
+regularizer or optimizer-state contribution vanishes.
+
+**Design inference:** use PPO first and a matched GRPO arm. Match physical
+interaction budget, initializer, reward, scene groups, cadence and evaluation.
+Report both teacher learning and downstream student adaptation. Do not adopt
+the earlier informal “75/25” preference as an evidence-based allocation.
 
 ## The controller interface is a separate choice
 
@@ -110,4 +191,49 @@ assuming an algorithm name establishes equivalence:
 | Actor density | Different papers use categorical, Gaussian or flow policies. | Our actor is a bounded, tanh-transformed diagonal Gaussian over the full32×14 residual with a density Jacobian and fixed radii. Its capacity/support is a hypothesis to test. |
 | History and Bellman boundaries | Cross-episode memory and value horizons are distinct design decisions. | The pilot carries memory across episodes but stops Bellman edges at success or the declared H192 timeout. Gamma .99 is per physical chunk decision, not per physics integration step. This values within-episode behavior; it does not explicitly optimize the future benefit of support-episode exploration. |
 
-See the [local methods](../METHODS.md) for the implemented data contracts and the [RoboTwin findings](../FINDINGS.md#robotwin) for the measured native outcomes.
+The temperature discrepancy should be resolved explicitly before calling a
+fit an original-IQL reference. An existing pinned contract must not be edited
+mid-run. Retain its declared beta1/3 pilot identity or create a fresh,
+predeclared beta3 comparison after checking advantage/weight distributions.
+Neither setting is known to be superior on our data. Numerical correctness
+against our own formulas does not establish reference-method equivalence.
+
+## What our data can and cannot establish
+
+The independently checked
+[physical export](../../outputs/robotwin-restoration-20261106-r1/DECODEDHISTORY01-COMPLETE.json)
+contains one `place_phone_stand` policy version, 1,024 episodes and 5,958
+positive-duration decisions; 186 post-terminal no-ops are excluded. There is
+nonzero success coverage. This permits an informative-data pilot, not a
+presumption that values or residuals will improve behavior.
+
+Important limitations are concrete:
+
+* The 32 exported streams are ordered by collection round then replica. Every
+  policy0 stream contains **four distinct scene seeds**, each with eight
+  replicas, according to the
+  [case split](../../outputs/robotwin-restoration-20261106-r1/STUDENT-CASE-SPLIT.json).
+  Simultaneous replicas have an imposed offline order. This is neither an
+  online student learning history nor 32 attempts on one fixed scene.
+* Only policy0 is present: no chronological teacher improvement sequence and
+  no qualified DPT query labels. Use DIT-style/IQL-style/static-imitation names
+  for this pilot. More updates to the same buffer do not add policy versions.
+* Student TRAIN/DEV/TEST streams are separated, but their scenes were all
+  available to the source teacher as TRAIN. They do not establish teacher-case
+  transfer. The separate native DEV panel and held-out task evaluation have
+  different roles.
+* The [fitting profile](../../outputs/robotwin-restoration-20261106-r1/DECODED-FIT-BOUNDS02.json)
+  uses TRAIN feature statistics and joint envelopes, with a global radius
+  margin selected on DEV. The entire profile is not TRAIN-only. TEST was not
+  used to select that margin; selected-profile TEST coverage is unverified.
+* The [Motus card](https://huggingface.co/motus-robotics/pi0.5_robotwin2)
+  describes joint SFT on 50 tasks / 27,500 episodes and native H32 delta-joint
+  control. Tasks held out from our RL/student training may already be in base
+  SFT. Audit exact exposure; do not call them unseen to the pretrained VLA.
+
+The [full-architecture CPU qualification](../../outputs/robotwin-restoration-20261106-r1/CPUDECODEDFIT01.json)
+verifies a few real-data updates, strict frozen exports and exact fresh-process
+learner/optimizer/sampler/RNG recovery. It does not test a trained student in
+the simulator or establish an adaptation gain. The negative small-panel PPO
+endpoints and the collector timeout are documented separately in the
+[PPO review](robotwin-ppo-review.md#what-actually-happened-in-this-repository).

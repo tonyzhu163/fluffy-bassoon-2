@@ -86,7 +86,7 @@ also differs from native; there is no matched untrained tied-noise panel.
 Preserve the already authorized fixed500k curve and final native stability
 control under the original limits. No case selection, extra collection or
 meta-student fitting is launched from this observation.
-[Saved check](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/4c1c445702e58091e60e0f390f90be69f2046db2/outputs/dsrl-pi05-task57-20261031-r1/CHECK-1516.md).
+[Saved check](CHECK-1516.md).
 
 ## What the literature establishes
 

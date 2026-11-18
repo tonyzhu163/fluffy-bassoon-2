@@ -1,0 +1,1 @@
+Primary task44 remains Running at394,240updates/2,308TRAIN/20,206replay,2,269successes/39failures. Latestcomplete380,000panel remains20/20; next400k. Stablefull/newrawRPC hashes and finite losses pass.367,898all-in actions/22.857GBoutputs/39,266conservative observedGPU-s includingactiveelapsed. Nextownedcheck12:50.

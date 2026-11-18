@@ -105,7 +105,7 @@ The client strips OpenAI environment variables from the simulator subprocess,
 records token usage, carries response state in memory, and stops on a failed
 tool call without retrying physical actions. Its completion means `sim_finish`
 returned successfully; inspect the separate native episode result for success.
-The [qualification record](../../outputs/agent-sim-api-debug-20261112-r1/RESULT.md)
+The [qualification record](../../outputs/agent-sim-api-debug-20261112-r1/PLAN.md)
 tracks actual API/native validation; the CLI alone does not establish either.
 
 ## Collection prompt

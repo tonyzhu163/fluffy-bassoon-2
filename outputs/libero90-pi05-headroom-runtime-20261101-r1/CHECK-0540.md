@@ -1,0 +1,3 @@
+Baige job-w8deahieli8q remains Running at05:42 Shanghai. Current snapshot199000optimizer updates,1073training episodes,10444replay rows,1034successes/39failures. No new complete querypanel since180020(20/20);200000threshold has not yet completed. Latest full recovery is stable/hash-matched, newest raw/RPC sampled bytes match, and losses are finite.
+
+Producer wholephase246582actions/output12838957069bytes; activeelapsed14300.31seconds plus3076settled prior. Caps,500000endpoint,last-threepanels/finalnative and sourceb665 remain unchanged. This light check performs no oldpanel/journalforest scan, model/test/simulator computation or jobcontrol. Ended commandfit jobs were not queried. Next06:00.

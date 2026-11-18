@@ -2,7 +2,7 @@
 
 Nov 4 2026. Scope: the five-task Flow-SDE PPO sources
 ([10M run](../robocasa-flow-sde-10m-per-task-20261103-r1/RESULT.md),
-config [`robocasa365_pi05_flow_sde_10m.yaml`](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/9bdd1df1665891c39ff0fca221f60c40fb26abef/configs/native_ppo/robocasa365_pi05_flow_sde_10m.yaml))
+config [`robocasa365_pi05_flow_sde_10m.yaml`](../../configs/native_ppo/robocasa365_pi05_flow_sde_10m.yaml))
 and the checkpoint-selection curves made from them. This builds on the
 [Nov 2–3 literature review](../../docs/literature/robocasa-ppo-review.md),
 which already covers StructRL, PolicyWeave, SEES, Z-1, DRILL, MiDAS and RLinf.

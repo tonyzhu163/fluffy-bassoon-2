@@ -1,0 +1,19 @@
+# Actual attempt success curves, 50 ID and 50 OOD cases
+
+User chose actual attempts 1–5 only on November 2 after the earlier protocol also collected separate query probes. Success at attempt t uses memory of actual attempts 1 through t−1. Reset the same native case between attempts; clear memory between cases. Frozen AD/full and DPT/full selected checkpoints, independent jobs and independent summaries. No additional query probes, fitting, PPO collection, tasks or architectures.
+
+Preserve all original runtime/core/data/checkpoint/native case bank/pairing/motor schedules and horizons. ID OpenDrawer50, H750; OOD CloseFridge50, H900. Original motor stream p1..p5 is common across models, different across attempts. Original support1 is attempt1. Reuse every complete consecutive actual support prefix from the stopped R2 curves. Query branches never mutated practice memory; retain their evidence and cost but do not replay them. Recover functional controller cache by replaying complete actual feature/control/reward/done rows. On GPU, assert reconstructed memory equals the stored entry signature before every reused later attempt. No optimizer exists during evaluation; history means deterministic, native seeds and per-case/attempt motor schedules fixed, logical rank assignment unchanged.
+
+R2 owned jobs job-5s1gfdfcqh6b (DPT) and job-io98kf4jtqh4 (AD) were stopped after PRE-STOP-RECOVERY.json retained full prefix references and checkpoint hashes. Final bindings scan only complete prefix results after terminal state. Preserve all partial calls and charge costs. Active source worktrees remain immutable. New jobs use fresh source/output/attempt identities and inherit the repaired master wait for all four nodes. Each job has4 nodes×2 GPUs,32CPU/128GiB per node, original image and479minute operational boundary, auto-retry off. Scheduler limits are checkpoints, never convergence or an experiment budget cap.
+
+Exact physical/camera/XML/public initial state, qualified ≤1uint8 renderer arithmetic, original policy pixels. True success requires native simulator truth sidecars. Report successes/50 separately on attempts1..5, paired per-case changes, confidence intervals, actual episodes and total costs. This is per-attempt success, not ever-success by an attempt. Later histories exceed the64-token training window (capacity128). Single source task, one fit seed, different fixed motor noise per attempt; no causal adaptation claim without static repeated controls.
+
+## Allocated CPU summary and figure runtime
+
+The original simulator Python environment lacks matplotlib. A separate CPU-only environment was created with uv at `/mowenjie/fluffy-bassoon-2/setups/opendrawer-attempts-plot-20261102-r1/env`; numpy1.26.4 and matplotlib3.10.7/Agg imports pass. PLOT-RUNTIME.json retains the exact dependency set. The model/simulator environment and active source worktrees were not changed.
+
+After each model's own8 successful worker receipts, run its exact pinned `ATTEMPTS.py --summarize` with CUDA hidden, `PYTHONPATH` pointing at original core68f2c5aa/src, `TASK_CURVE_METHOD=ad_full` or `dpt_full`, and that model's `TASK_CURVE_OUTPUT`. Use the original simulator Python and source worktree26033f08, not the latest main implementation. Then run the isolated plot Python with `MPLCONFIGDIR=/mowenjie/fluffy-bassoon-2/setups/opendrawer-attempts-plot-20261102-r1/cache` and `CUDA_VISIBLE_DEVICES=`:
+
+`/mowenjie/fluffy-bassoon-2/setups/opendrawer-attempts-plot-20261102-r1/env/bin/python /mowenjie/fluffy-bassoon-2/outputs/opendrawer-attempts50-20261102-r1/PLOT.py <model-output>/RESULT.json --output <model-output>/figures`
+
+One model result makes its own ID/OOD figure. With both complete, pass both RESULT.json paths for the final overlay. PNG/SVG/CSV and the caption are saved together. Review the real PNG before publishing. No synthetic outcome fixtures or partial success denominators are used.
