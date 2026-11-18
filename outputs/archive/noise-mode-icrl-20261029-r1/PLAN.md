@@ -7,7 +7,7 @@ were held.** See [audited results](https://github.com/tonyzhu163/fluffy-bassoon-
 CPU stages (code, tests, cached meta-training) need no ask under
 [AGENTS.md](../../../AGENTS.md). The Stage 0 and Stage 2 GPU collections and the
 Stage 4 live evaluation need user approval of the stated budgets before launch.
-This makes [fallback idea 1](../../coordination.md#1-in-context-strategy-selection-over-a-frozen-vla)
+This makes [fallback idea 1](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/2ed7bf09fcf90a6b5938f13924a379dc9ffc1b5f/outputs/coordination.md#1-in-context-strategy-selection-over-a-frozen-vla)
 concrete.
 
 ## Question and claim
@@ -41,7 +41,7 @@ is native sampling, with fresh noise every chunk.
 
 Why a per-env override is required: `run_batch` seeds one CUDA generator per
 batch, so an env's noise currently depends on its slot and on the batch
-composition ([maniskill_pi05.py](../../../src/fluffy_bassoon/rl/maniskill_pi05.py),
+composition ([maniskill_pi05.py](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/1af045e63a1f4085f6006101518a82d5b2df4a4e/src/fluffy_bassoon/rl/maniskill_pi05.py),
 `run_batch`). An arm must mean the same tensor regardless of batch layout.
 The eval sampler is the four-step Euler ODE (contract field `sampler` in the
 rotation cache), so the initial noise is the only stochastic input. Stage 0
@@ -172,7 +172,7 @@ recorded in each contract.
 ## Stage 3: cached meta-training (CPU)
 
 `meta_rl/maniskill_noise.py`, following
-[maniskill_rotation.py](../../../src/fluffy_bassoon/meta_rl/maniskill_rotation.py):
+[maniskill_rotation.py](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/1af045e63a1f4085f6006101518a82d5b2df4a4e/src/fluffy_bassoon/meta_rl/maniskill_rotation.py):
 
 - `NoiseArmCache`: validates a complete (scene, arm) table and drops graded
   outcomes.

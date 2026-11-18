@@ -1,10 +1,10 @@
 # Repository guidance
 
-This repository studies in-context reinforcement learning for frozen VLAs on
-RoboCasa365 and RoboTwin. RLinf provides rollout and online baselines; shared
-offline learners adapt through history. Use native rewards in simulation.
-Flora-Rewarder is planned for physical-robot testing. Start with
-[docs/README.md](docs/README.md). It was split from `tonyzhu163/fluffy-bassoon`
+This repository studies few-shot adaptation of frozen robot policies. LIBERO-Pro2.0
+is the primary benchmark. RoboCasa365 and RoboTwin supply native controls and
+online baselines through RLinf. Use native rewards in simulation. Flora-Rewarder
+is planned for physical-robot testing. Start with [docs/README.md](docs/README.md).
+It was split from `tonyzhu163/fluffy-bassoon`
 (branch `lycoreco_rl`); see [PROVENANCE.md](PROVENANCE.md). LycoReco work and runs pinned to fluffy-bassoon
 commits stay there.
 

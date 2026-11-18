@@ -1,6 +1,6 @@
 # Verified findings
 
-The strongest evidence so far is for native SFT competence and for some **source** policies improving under online RL. Paired frozen-student evaluations have not shown a consistent gain caused by retaining history. These are different measurements. The [overall project diagnosis](../outputs/project-diagnosis-20261116-r1/RESULT.md) reconciles the native and synthetic evidence with the measured data, sampling and value-model limitations.
+The controlled OpenDrawer reader used one probe to choose a useful correction on measured native branches. The broader RoboCasa studies found no consistent held-out benefit from retaining history. The results below distinguish selection among executable actions, learned motor control and source-policy competence. [Controlled reader](#native-history-under-a-persistent-calibration-error) · [Multi-task comparison](#corrected-three--versus-six-task-transformer-comparison) · [Corpus diagnosis](../outputs/project-diagnosis-20261116-r1/RESULT.md)
 
 ## Synthetic learning histories
 
@@ -349,6 +349,8 @@ Pro6K. All 16 tape replays match exactly; fresh closed-loop repeats preserve
 success in all 16 and terminal physics in 14. The audit passed 1,333 checks;
 the completed phase charged 6.578 of 8 GPU-hours. The earlier multi-task null
 results stand. [Full results, controls and limitations](../outputs/robocasa-feedback-advantage-20261117-r1/RESULT.md).
+
+On a separate OpenDrawer development panel, the full history adapter given the true condition and privileged timing succeeded on **3/8** fresh episodes, the uncorrected SFT motor on **2/8**, and the privileged teacher on **8/8**. This measures the learned motor interface with the answer supplied. The panel and action interface differ from the three-choice reader above. [Execution record](../outputs/robocasa-full-history-adapter-20261117-r1/EXECUTION.md) · [Command diagnostics](../outputs/robocasa-full-history-adapter-20261117-r1/AUTHORITY.json)
 
 ## Procedural LIBERO
 

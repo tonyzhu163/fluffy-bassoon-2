@@ -5,41 +5,7 @@ recorded RLinf PPO recipe not produced a verified gain here? This is a focused
 literature/configuration audit, not a systematic review or a reproduction of
 external results. External percentages below are author-reported.
 
-## What the evidence currently says
-
-RLinf reports successful pi0.5 PPO on RoboTwin. Our short transferred runs have
-not established a learning gain. These statements are compatible: our runs use
-different joint initializers, a different task, and much shorter training.
-The earlier B256 actor lineage is unsuitable as an on-policy control: an
-actual unchanged-policy audit found batch-dependent likelihood drift. Corrected
-fresh B32/accumulation8 PPOgroup1 and GRPOgroup8 controls each completed two
-fresh collections and30 Adam updates per rank. Independent cold checkpoint and
-whole-batch advantage readbacks passed for both. Their small progress panels
-were PPO2/16→4/16→5/16 and GRPO2/16→4/16→3/16. Independent64-scene
-paired DEV now gives SFT6/64, PPO10/64 (six gains,two losses,p=.2891), and
-GRPO11/64 (five gains,no losses,p=.0625). Full cold/physical/noise readbacks pass.
-GRPO was selected under the precommitted larger-gain rule before disjoint
-confirmation. Confirmation gives SFT7/64→GRPO10/64, eight gains/five losses,
-+4.6875points, exact paired p=.5810547. It fails the predeclared10-point/p<.05
-gate. Full process restores and independent trace/noise readbacks pass. No
-effective source learner is established; this does not demonstrate that the
-released recipe fails. [Confirmation evidence](../../outputs/robotwin-restoration-20261106-r1/MOTUS-SOURCE-GRPO-CONFIRMATION01-READBACK.json).
-
-
-The final independently verified GRPO existing-DEV curve is6/64→10/64→11/64
-across checkpoints0/1/2. Checkpoint2 versus1 has three gains/two losses and
-exact p=1.0; the suspected second-cycle regression from the16-scene progress
-panel is not supported by this larger comparison. All384 cross-run Gaussian
-hashes,64 initial B2 observation hashes and all64 SFT outcomes match.
-[Cross-run evidence](../../outputs/robotwin-restoration-20261106-r1/MOTUS-SOURCE-GRPO-CURVE01-READBACK.json).
-
-Three separate questions need separate evidence:
-
-| Question | Current answer |
-| --- | --- |
-| Can our learner update real rollout data and restore exactly? | Yes: the B32 actual-data update qualification passed15 new Adam steps/rank and independent cold checkpoint/owned-Adam readback on all8 actors. |
-| Can the complete optimized collector/learner cycle run repeatedly at scale? | Corrected PPO and GRPO each passed two fresh combined cycles; all three cold boundaries and both full actor batches independently verified. |
-| Does sustained PPO improve the selected joint motor on our source tasks? | Not established; audited paired DEV improves6.25points with PPO and7.81points with GRPO, below the gate; selected GRPO confirmation+4.69points,p=.581 also fails. |
+The configuration and replay measurements below concern early Motus and Sidney experiments. The [verified RoboTwin findings](../FINDINGS.md#robotwin) include the later native Sidney comparison. [Motor and controller conventions](../robotwin/rl-baselines.md)
 
 ## Direct and adjacent literature
 
@@ -185,73 +151,6 @@ The corrected readouts subsequently passed all GPU guards for both checkpoints
 and both methods, plus independent cold/physical/noise readback. The selected
 GRPO confirmation also passed every execution check but failed the learning gate.
 [Actual-layout and reference audit](../../outputs/robotwin-restoration-20261106-r1/MOTUS-EMPTY-STATE-AUDIT-CPU01.json).
-
-## Ranked explanations and discriminating checks
-
-| Explanation | Evidence status | Next check |
-| --- | --- | --- |
-| Sustained online learning has not been tested adequately | Verified limitation, not a proof that more training will help | Run successive complete collect/update cycles; show new rollout data and checkpoint progression. |
-| New motor/task/cadence changes the learning problem | Verified protocol differences; causal effect unknown | Hold these fixed within a port experiment; report it separately from exact release reproduction. |
-| Combined scene/model memory and setup overhead obstruct training | Four-rank B64 reserve failed; corrected B32 PPO and GRPO each passed two integrated cycles | Cold training boundaries pass; qualify independent full-checkpoint readout. Actor-only capacity is insufficient. |
-| Group8 reduces scene diversity relative to group1 | Corrected group1 PPO uses the full1,000 TRAIN scenes per collection; group8 GRPO uses128 | Paired DEV favors GRPO by one case; confirmation fails. Their difference does not isolate only the advantage estimator. |
-| Exploration harms the initializer or fails to reach useful alternatives | Plausible, unisolated | Compare policy0 Flow-SDE and ODE on the same cases before changing noise. Different TRAIN/DEV scenes cannot isolate this gap. |
-| Critic quality or return/boundary semantics limit learning | Plausible, unisolated | Inspect explained variance, targets, values, advantage spread and episode boundaries; compare critic designs only after a stable control. |
-| SAPIEN camera clipping changes policy observations | Concrete difference from current upstream; no camera-only benefit on the small completed panel | Independent315-file readback passed: near0.1/H192:2/8; near0.01/H192:2/8; near0.1/H384:3/8; near0.01/H384:2/8. Preserve the active continuation's protocol; this exploratory panel does not establish equivalence. |
-| Numerical changes from larger batches contaminate likelihood ratios | Verified batch effect; contribution to missing learning gain unisolated | B32 exactly matches original behavior likelihoods; B256 puts11.279% of unchanged-policy ratios outside the clip interval. B32/accumulation8 corrected controls and endpoint readouts pass, but no confirmed learning gain. |
-
-Our native-batch adapter matches its native reference exactly, but native
-batched outputs differ from singleton outputs. The diagnosis did not isolate
-BF16 as the cause. This matters when profiling maximum memory usage:
-execution partition and actual batch/row must remain explicit numerical
-conditions. [Batch evidence](../../outputs/robotwin-restoration-20261106-r1/BATCHMATH01-COMPLETE.json),
-[actor selection](../../outputs/robotwin-restoration-20261106-r1/ACTOR-SELECTION.json).
-
-The local replay hook replaces stored rollout log probabilities with an actor
-recomputation after shuffling. Its logged gap is mean absolute coordinate error.
-Pinned RLinf's chunk-level loss instead sums H32 times14 action coordinates.
-The completed read-only checkpoint0 measurement, independently reduced on CPU,
-finds exact original behavior probabilities at B32 on all5958 valid decisions.
-At B256, unchanged-policy joint ratios range0.520–1.883;11.279% lie outside
-[0.8,1.2];5.572% would activate the clipped surrogate against the original
-behavior reference before SGD. The replacement
-actor reference hid this discrepancy from the zero first-replay check.
-This establishes a numerical execution-partition problem; its contribution to
-missing learning gains still requires a corrected learning control. Use B32
-with gradient accumulation while preserving global2048 and five epochs.
-[Likelihood measurement](../../outputs/robotwin-restoration-20261106-r1/MOTUSJOINTAUDIT01-COMPLETE.json).
-
-The earlier training-loop DEV snapshot/restored its current rollout RNG. Fixed
-scenes preserved the training stream but did not impose common initial action
-noise across checkpoints. Treat its3/16 to4/16 panels as descriptive. Corrected
-controls explicitly seed the native B2 evaluation stream31000+rank, restoring
-the training stream afterward. Larger readout records actual ODE Gaussian draws
-in place; its Linux numerical qualification preserves output and final RNG
-exactly. All48 original SFT prediction pixels/actions/RNG match across methods;
-full-model readout qualification and independent physical/noise readbacks now pass. The earlier separately qualified MotusDEV01 comparison explicitly
-restored baseline sampling RNG; its pairing evidence remains valid. Future
-source qualification will explicitly share case/chunk noise across policies.
-
-piRL motivates the exploration and critic checks above: it separates
-stochastic training from ODE evaluation, and its LIBERO ablations show
-noise/gradient and chunk-length tradeoffs. Those results do not justify
-simultaneously changing our noise, learning rate, critic and chunk length.
-Such a change would leave the cause of any improvement unresolved.
-[Primary ablations](https://arxiv.org/html/2510.25889v1#S5.SS3).
-
-The public [RLinf issue1268](https://github.com/RLinf/RLinf/issues/1268)
-also reports unstable pi0.5 Flow-SDE GRPO on a different RoboTwin task with
-absolute-joint H16 actions. No resolution was visible in the inspected issue.
-This is an implementation report, not controlled proof of a general algorithm
-failure, and its suggestion that updates are too conservative is the reporter's
-interpretation. It does not justify raising our learning rate from log scalars.
-
-Native logged PPO KL is.040/.028 with clip fraction.173/.121 over the two
-corrected iterations; GRPO is.044/.026 and.083/.060. These are rounded native
-summary values, not independent recomputation. In the pinned
-[loss implementation](https://github.com/RLinf/RLinf/blob/c605b9d55ed93a180119b099e6f836abff293b08/rlinf/algorithms/losses.py#L261),
-`actor/clipped_ratio` is the masked mean of the clamped probability ratio, not
-the fraction of clipped samples. A value near.99 is not99% clipping.
-[Closed-log receipt](../../outputs/robotwin-restoration-20261106-r1/MOTUS-NATIVE-LOGGED-SCALARS01.json).
 
 ## Formula and data-path audit
 

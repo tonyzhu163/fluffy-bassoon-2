@@ -1,6 +1,6 @@
 # Reproducing the paper
 
-All launchers read `PROJECT_ROOT` (the repository root, see [INSTALL.md](INSTALL.md)); the LIBERO ones also
+All launchers read `PROJECT_ROOT` (the repository root, see [INSTALL.md](https://github.com/amazon-science/StructRL/blob/6caba1f9538167e0752a7338663e45aac8df965d/docs/INSTALL.md)); the LIBERO ones also
 read `LIBERO_RL_ROOT` and `CKPT_ROOT`. Submit them from the repository root. Training uses 4 nodes x 8
 GPUs and evaluation 2 nodes x 8 GPUs (one task per GPU). Environment resets are not seeded, so repeated
 evaluations of one checkpoint vary by about 1 to 2 points of macro SR.
@@ -62,7 +62,7 @@ LIBERO training uses a second RLinf checkout with `patches/rlinf_core.patch` and
 `patches/libero_addon.patch`, at `$LIBERO_RL_ROOT/RLinf`, and the RLinf fork of LIBERO at
 `$LIBERO_RL_ROOT/LIBERO` (`scripts/setup_upstream.sh --libero`). Configs come from `libero/configs/` and
 reference durations from `libero/timing/`. SFT policies are the public GR00T-N1.5 LIBERO checkpoints
-and the public RLinf π0.5 LIBERO checkpoint (see [INSTALL.md](INSTALL.md)).
+and the public RLinf π0.5 LIBERO checkpoint (see [INSTALL.md](https://github.com/amazon-science/StructRL/blob/6caba1f9538167e0752a7338663e45aac8df965d/docs/INSTALL.md)).
 
 | Paper entry | Launcher |
 |---|---|
