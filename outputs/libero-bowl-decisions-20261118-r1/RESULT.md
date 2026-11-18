@@ -28,3 +28,14 @@ For a support with a known attempted destination, the rule repeats it after rewa
 | Best measured option with evaluator knowledge | 32/32 | 0/32 | 32/64 |
 
 The improvement over a uniform destination came entirely from using goal feedback under normal timing. Choosing the gain from history added zero successes over the fixed default. Under delay, a support missed both destinations, so its zero reward had the same value under either goal. Switching destinations was correct on half of those balanced assignments.
+
+## Pacing under delay
+
+On four additional starts (16–19), the paced option executes ten predicted controls and waits 14 controls for feedback. The arm receives zero displacement during each wait and holds the last gripper command. Both strategies receive 300 controls. Pacing trades inference calls and movement time for observations that reflect the previous burst. Its delayed first hits ranged from controls 162 to 209. [32 pacing branch records](pacing01-evidence.json)
+
+| Execution | Normal timing | S20 |
+| --- | ---: | ---: |
+| Released five-control replanning | 7/8 | 0/8 |
+| Ten-control burst with charged waits | 6/8 | 8/8 |
+
+Across the 64 paired lookups, choosing the execution strategy from the earlier attempt produced 41 native successes. The same destination rule with always-paced query execution produced 38, and with default execution produced 25. Giving the execution selector the opposite-timing support produced 22. The 3/64 incremental gain over always pacing came from normal timing. On S20, all default support attempts missed both destinations, so the goal rule chose the correct destination in only half of the balanced assignments even when pacing could carry it there. This motivates the direct intervention on the first attempt below. [Pacing retry comparison](pacing01-retry.json)
