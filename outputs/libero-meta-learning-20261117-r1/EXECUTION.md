@@ -92,3 +92,23 @@ These vendor replacements are not required by the planned BASE/S15/S20
 qualification. Once access returns, check any surviving setup process,
 finish the core setup and CPU preflight, refresh queue capacity, then submit
 the prepared two-worker qualification with a fresh verified main pin.
+
+November 18. Baige SSH recovered. The allocated development RTX 4090 ran
+the two fixed cases in sequence. Attempt devqual01 stopped loading the
+policy because its transform module imports RoboCasa. Separating the policy
+and simulator interpreters resolved the dependency conflict. A native reset
+and step passed. Attempt devqual02 (debd2bc0) completed eight episodes.
+Both zero-adapter replays matched every issued action. Both gradient checks
+passed. The RLinf SFT motor failed all six distinct task/condition cases,
+including both nominal settings. The other two episodes are repeated nominal
+controls. On Spatial BASE, the first rotation coordinate stayed near -2.05
+across 220 controls. No learner comparison has been made.
+
+For the next qualification use the already available official OpenPI pi05_libero
+weights and their bundled action statistics. Convert the Orbax weights using
+the pinned OpenPI converter (ca4c6d71, bfloat16, CPU), then run the same
+development panel. This changes the candidate motor as a unit. Its causal
+contribution cannot be assigned to normalization alone. The pilot collector
+is prepared for 8 fitting tasks x 2 conditions x 2 trials x 3 attempts
+(96 episodes), after the baseline supports meaningful collection. The two
+repeats use different initial states and matched draws across conditions.

@@ -48,16 +48,23 @@ class PrefixReady(Exception):
 
 
 class Motor:
-    def __init__(self):
+    def __init__(self, checkpoint='rlinf'):
         from omegaconf import OmegaConf
         from rlinf.models.embodiment.openpi import get_model
+        if checkpoint == 'openpi':
+            model_path = SETUP/'openpi-official-conversion01/weights'
+            norm_path = Path('/mowenjie/fluffy-bassoon/inputs/pi05-libero-openpi-20261027-r1/assets/physical-intelligence/libero/norm_stats.json')
+        elif checkpoint == 'rlinf':
+            model_path, norm_path = MODEL, NORM
+        else:
+            raise ValueError(checkpoint)
         self.config = dict(model_type='openpi',pi05=True,precision='bf16',
-            model_path=str(MODEL),num_action_chunks=10,action_dim=7,num_steps=5,
+            model_path=str(model_path),num_action_chunks=10,action_dim=7,num_steps=5,
             add_value_head=False,openpi=dict(task='eval',config_name='pi05_libero',
                 action_horizon=10,action_chunk=10,model_action_dim=32,action_env_dim=7,
                 num_steps=5,paligemma_variant='gemma_2b',action_expert_variant='gemma_300m',
                 max_token_len=200,discrete_state_input=False,torch_compile=False),
-            openpi_data=dict(norm_stats_path=str(NORM)))
+            openpi_data=dict(norm_stats_path=str(norm_path)))
         self.model=get_model(OmegaConf.create(self.config),torch_dtype=torch.bfloat16).to('cuda').eval().requires_grad_(False)
         assert (self.model.action_horizon,self.model.action_env_dim,self.model.action_chunk)==(10,7,10)
 

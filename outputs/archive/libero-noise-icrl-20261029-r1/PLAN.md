@@ -5,7 +5,7 @@ CPU-tested; launches delegated to coordination; no GPU runs yet.** Released RLin
 cached meta-training) needs no ask under [AGENTS.md](../../../AGENTS.md). Stage L0
 and every later GPU collection need user approval of the stated budget.
 This replaces ManiSkill as the benchmark for
-[fallback idea 1](../../coordination.md#1-in-context-strategy-selection-over-a-frozen-vla);
+[fallback idea 1](https://github.com/tonyzhu163/fluffy-bassoon-2/blob/2ed7bf09fcf90a6b5938f13924a379dc9ffc1b5f/outputs/coordination.md#1-in-context-strategy-selection-over-a-frozen-vla);
 the [noise-mode plan](../noise-mode-icrl-20261029-r1/PLAN.md) supplies the arm
 definition, the gates and `noise_screen.py`, which carry over unchanged.
 

@@ -1,12 +1,18 @@
 # Methods and runtime
 
-The data path is **benchmark → RLinf rollout → offline history learner → frozen-policy evaluation**. The source policy can change while it generates data. A student fit uses recorded interactions; it does not update the native π0.5 motor or interact with held-out evaluation tasks.
+For decision pretraining, the unit of data is a support history paired with a decision target at a fresh query under the same persistent condition. The source behavior that generates support can differ from the teacher that labels the query. Only the public interaction prefix is an input. The motor stays frozen during offline adapter fitting, and the reader and motor both stay frozen during evaluation. [Research design](PAPER.md)
 
-## Benchmark interfaces
+## LIBERO evaluation
+
+For the standard four-suite comparison, use the [OpenPI LIBERO evaluation](https://github.com/Physical-Intelligence/openpi/tree/main/examples/libero) and its model-specific action conventions. For LIBERO-Pro2.0 use the pinned release and the project's 24/8/8 base-task split. The run directory contains the [environment bootstrap](../outputs/libero-meta-learning-20261117-r1/bootstrap.py), [native policy and simulator integration](../outputs/libero-meta-learning-20261117-r1/native.py), [qualification driver](../outputs/libero-meta-learning-20261117-r1/qualify.py), [split](../outputs/libero-meta-learning-20261117-r1/SPLITS.json) and [execution record](../outputs/libero-meta-learning-20261117-r1/EXECUTION.md). These are campaign entry points. Follow the [published evaluator](https://github.com/LIBERO-Pro-Team/LIBERO-Pro2.0/blob/e5500c690c1498eca1b7050350654964190cdf70/docs/remote-evaluation-guide.md) for independent-episode scores.
+
+For the proposed retry evaluation, carry public support across resets within one trial. Record the command actually issued at the controller boundary and the observed response with their timestamps. Under delayed control the applied command can differ from the issued command. Keep simulator-internal queues and perturbation IDs outside the policy. A timing diagnostic needs control-rate action and motion measurements. The candidate-action selector and proposed WAM comparison are described in the [research design](PAPER.md).
+
+## RoboCasa365 and RoboTwin interfaces
 
 | | RoboCasa365 | RoboTwin |
 | --- | --- | --- |
-| Current scope | Atomic tasks for source learning; composites deferred to transfer | Six source and six held-out tasks in the [split](../benchmarks/robotwin/configs/robotwin_vlrla.json) |
+| Task coverage | Atomic tasks for source learning and mechanism controls | Six source and six held-out tasks in the [split](../benchmarks/robotwin/configs/robotwin_vlrla.json) |
 | Motor boundary | Human300 π0.5: three camera views, state normalization and action decoding bound to the checkpoint | Three camera views and 14-dimensional bimanual actions. Sidney uses absolute joints; Motus is a distinct delta-joint motor. |
 | Timing | For the native Human300 SFT reference, predict 50 actions, execute 5, use 10 ODE steps. Historical RLinf teachers have their own executed chunks and horizons. | Bind controller, action horizon, executed targets and actual physics time. See the [RoboTwin protocol](robotwin/rl-baselines.md). |
 | Native entry | [Flow PPO](../benchmarks/robocasa/train_flow_ppo.py) and [configs](../benchmarks/robocasa/configs/) | [RLinf entry](../benchmarks/robotwin/train_ppo.py) and [configs](../benchmarks/robotwin/configs/) |

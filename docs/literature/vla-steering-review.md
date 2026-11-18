@@ -53,29 +53,9 @@ In-context imitation ([ICRT 2408.15980](https://arxiv.org/abs/2408.15980),
 [Instant Policy 2411.12633](https://arxiv.org/abs/2411.12633)) trains the
 whole policy to read prompts, so it is not steering of an existing VLA.
 
-## Fit for this project's meta-learner
+## Selecting an interface
 
-The meta-learner is a plain causal decoder that must output one continuous
-control per step, keep pi0.5 frozen, and learn from Flora-rewarded PPO
-histories.
-
-| Family | Fit | Why |
-|---|---|---|
-| 1 Noise | Good, already built | Low-dimensional and bounded. Works with frozen-motor PPO or DSRL directly, and with full-weight PPO through inversion, with the out-of-range risk |
-| 2 Conditioning residual | Good | Natural for full-weight PPO labels. Matches VLRLA. A soft-prompt result exists on frozen pi0.5 in RoboCasa. The earlier RoboTwin KV-head attempt here scored 0/5 |
-| 3 Velocity residual | Good | Same labels as 2. Acts in the denoiser rather than the conditioning |
-| 4 Action residual | Good, simplest | Direct labels, small output. Bypasses nothing. Needs the base sample's noise recorded |
-| 5 Direct actions | Possible | Simple labels, but discards pi0.5's action expert, which weakens the frozen-VLA story |
-| 6 Latent perturbation | Poor | Needs a bottleneck trained into the base policy |
-| 7 Language | Poor for this question | Discrete and slow; a different research question |
-| 8 Activation | Poor | Few known directions; not a learned per-step control |
-| 9 Guidance | Poor | Flora is a 27B video model, not a cheap differentiable objective |
-| 10 Sample and select | Possible as a complement | The meta-learner would output scores; labels come from a critic, not from actions |
-
-The label rule from this review: **the meta-learner's output must be
-something the PPO histories can label.** Frozen-motor PPO or DSRL labels
-noise (family 1) directly. Full-weight PPO labels families 2–5 directly, and
-family 1 only through inversion.
+Action supervision can train a residual or a conditioning adapter through a frozen expert. A proposal selector needs the outcomes of competing continuations from comparable query states. Its attainable performance depends on proposal diversity and on the skill of the frozen motor. Compare the controller with the best fixed choice on native rollouts. The repository's [method contracts](../METHODS.md) and [OpenDrawer results](../FINDINGS.md#native-history-under-a-persistent-calibration-error) document those distinctions.
 
 ## References
 

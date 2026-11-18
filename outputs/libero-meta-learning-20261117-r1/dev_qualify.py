@@ -14,6 +14,8 @@ def main():
     parser.add_argument('--hostname', required=True)
     parser.add_argument('--pin', required=True)
     parser.add_argument('--attempt', required=True)
+    parser.add_argument('--checkpoint', choices=('openpi', 'rlinf'), default='rlinf')
+    parser.add_argument('--stage', choices=('qualify', 'collect'), default='qualify')
     args = parser.parse_args()
     if not (args.hostname.startswith('aibox-') and socket.gethostname() == args.hostname
             and args.attempt.isalnum()):
@@ -35,10 +37,13 @@ def main():
         subprocess.run([PYTHON, '-Bu', CODE/'scripts/[train]gpu_probe.py', '--expected-count', '1',
                         '--purpose', 'training', '--direct-hostname', args.hostname,
                         '--output', out/'gpu.json'], env=env, check=True, timeout=180)
-        for rank in range(2):
-            with (out/f'rank{rank}.log').open('x') as log:
-                subprocess.run([POLICY_PYTHON, '-Bu', HERE/'qualify.py', '--rank', str(rank),
-                                '--output', out/f'rank{rank}', '--deadline', str(deadline)],
+        workers = [(f'rank{rank}', [HERE/'qualify.py', '--rank', str(rank)]) for rank in range(2)]
+        if args.stage == 'collect':
+            workers = [('corpus', [HERE/'collect_pilot.py'])]
+        for name, command in workers:
+            with (out/f'{name}.log').open('x') as log:
+                subprocess.run([POLICY_PYTHON, '-Bu', *command, '--checkpoint', args.checkpoint,
+                                '--output', out/name, '--deadline', str(deadline)],
                                env=env, stdout=log, stderr=subprocess.STDOUT, check=True,
                                timeout=max(1, deadline - time.time()))
         success = True

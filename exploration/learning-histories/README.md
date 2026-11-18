@@ -1,21 +1,6 @@
 # Learning histories: can a Transformer learn from attempts?
 
-Exploratory diagnostic, not part of the paper plan. See the [original three-seed grid](../../outputs/learning-histories-20261111-r1/RESULT.md), [same-checkpoint feedback intervention](../../outputs/learning-histories-feedback-20261111-r1/RESULT.md), and [completed recipe screen with fresh confirmation](../../outputs/learning-histories-fix-20261111-r1/RESULT.md).
-
-The RoboCasa and RoboTwin students showed no consistent gain from retaining history ([findings](../../docs/FINDINGS.md)). This folder asks the prior question in the cheapest setting available: when history *does* carry information, does a plain Transformer learn to use it, and how close to optimal does it get?
-
-## What an environment needs
-
-1. **A hidden variable the query cannot reveal.** The correct action must depend on something that only the history identifies. Otherwise a history model has nothing to learn.
-2. **A motor that executes every alternative.** A failure must mean a wrong choice. If the motor cannot do the task either way, no history can help.
-3. **Outcomes that separate hypotheses.** A failed attempt must rule something out.
-4. **Fresh scenes between attempts and query.** Copying a past action must fail, so the lesson has to transfer.
-5. **Many rules, with some held out.** With a handful of rules the learner memorizes them instead of learning how to update.
-6. **A computable reference.** Exact rule enumeration measures how much the recorded history can reveal. A formal optimum additionally requires matching the evaluator's rule prior and specifying the attempt policy.
-
-The existing robot failure tapes mostly fail requirements 1 and 2. Outcomes repeat at a fixed scene (ICC 1.00 for CloseDrawer, 0.885 for OpenDrawer), and no tested correction rescued a CloseDrawer failure, where a per-scene oracle matched the native 10/16. Those are execution failures with no available alternative. A history model can learn to predict them, but not to avoid them.
-
-So the first collection should use an actor that is **competent at execution and ignorant of the hidden variable**. A scripted or already-qualified motor supplies the competence. The ignorance supplies informative mistakes. An improving PPO teacher is the wrong source: its mistakes are execution noise.
+This synthetic experiment measures how much information a history reader extracts when execution is perfect. The enumeration reference and the frozen learner can be evaluated on exactly the same attempts. The project uses LIBERO-Pro2.0 to test transfer in manipulation. [Benchmark design](../../docs/PAPER.md)
 
 ## The toy
 
@@ -54,14 +39,3 @@ The completed five-condition, three-seed grid used K=6 and 20,000 CUDA updates p
 The [paired feedback follow-up](../../outputs/learning-histories-feedback-20261111-r1/RESULT.md) reproduced the original curves exactly. On held-out random-attempt histories, the same checkpoints scored 54.65% with real feedback, 43.94% with outcomes masked and 38.83% with outcomes shuffled. All three seeds showed a benefit. Training-style histories explained only 1.77 points of the held-out deficit; a large reading gap persisted even on training rules.
 
 Substantial gaps also appear on training rules and in the `corrections` condition, which involves no attempt policy. The completed five-recipe, three-seed screen tested denser supervision, Fourier attribute features, learning rate and a larger model. Fresh confirmation of the selected dense + Fourier corrections recipe reached 75.64%, versus 67.40% originally and a 94.94% same-history enumeration reference. Attempts reached 60.50% versus 57.34%, with one seed slightly worse. All fits still failed the near-reference screen. Dense training changes attention and the objective together; these recipe comparisons do not isolate a mechanism or substitute for the same-checkpoint feedback intervention. No longer-duration fit was tested. See the [confirmed results and limitations](../../outputs/learning-histories-fix-20261111-r1/RESULT.md).
-
-## Decision rule
-
-Read each fit on held-out rules, three seeds per condition. These original screening rules use "Bayes" to mean the full-family enumeration reference above; they are diagnostic thresholds, not proofs of optimality or causal feedback use.
-
-| Outcome | Reading | Next step |
-| --- | --- | --- |
-| `attempts` within 5 points of Bayes at every k, and `blind` no better than `demo` | A plain Transformer learns the update from outcomes. | Move to continuous actions and partial corrections, then a physics environment with a qualified motor. |
-| Close to Bayes on training rules, more than 10 points short on held-out rules | It memorized the rule set. | Enlarge the rule family before changing the model. |
-| More than 10 points short on training rules after 20,000 steps | The learner leaves substantial available information unused; partial feedback use may still be present. | Diagnose the objective or representation before a robot history-learning campaign. Separate motor/interface qualification does not establish learned robotic adaptation. |
-| `blind` beats `demo` | The learner is reading the actor's competence from its choices, not the outcomes. | Change the attempt source before interpreting any gain. |

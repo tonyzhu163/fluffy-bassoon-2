@@ -12,7 +12,8 @@ from native import Motor, array_hash, make_adapter, public, qualify_gradient, wr
 from simulator import Simulator
 
 
-def rollout(motor, case, output, *, zero_adapter=False, gradient=False):
+def rollout(motor, case, output, *, zero_adapter=False, gradient=False,
+            role='development runtime qualification; not held-out adaptation'):
     output.mkdir(parents=True,exist_ok=False)
     policy=make_adapter().eval() if zero_adapter else None
     began=time.monotonic()
@@ -73,7 +74,7 @@ def rollout(motor, case, output, *, zero_adapter=False, gradient=False):
             action_sha256=action_hash.hexdigest(),seconds=time.monotonic()-began,rows=rows,
             npz_bytes=(output/'episode.npz').stat().st_size,
             action_record='public commands issued to env.step; hidden delay/filter effects are not student inputs',
-            role='development runtime qualification; not held-out adaptation')
+            role=role)
         write(output/'result.json',result)
         print(json.dumps({k:v for k,v in result.items() if k not in ('rows','initial_hashes')}),flush=True)
         return result
@@ -86,9 +87,10 @@ def main():
     p.add_argument('--rank',type=int,choices=(0,1),required=True)
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--deadline',type=float,required=True)
+    p.add_argument('--checkpoint',choices=('openpi','rlinf'),default='rlinf')
     args=p.parse_args()
     args.output.mkdir(parents=True,exist_ok=False)
-    motor=Motor(); write(args.output/'motor-config.json',motor.config)
+    motor=Motor(args.checkpoint); write(args.output/'motor-config.json',motor.config)
     # Both are predeclared development tasks, not official test tasks.
     suite=('libero_spatial','libero_goal')[args.rank]
     case=dict(suite=suite,task_id=1,init_state_id=0,seed=171117+args.rank,variant='BASE')
