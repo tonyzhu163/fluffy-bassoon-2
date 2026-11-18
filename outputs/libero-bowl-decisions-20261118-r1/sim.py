@@ -12,7 +12,7 @@ from libero.libero.envs.bddl_utils import robosuite_parse_problem
 ROOT = Path('/mowenjie/fluffy-bassoon-2/sources/libero-pro2-e5500c69')
 
 
-def serve(pipe):
+def serve(pipe, task_ids=(4, 8)):
     manifest = TaskManifest.load(str(ROOT / 'assets/task_manifest.json'))
     env = LiberoEnvironmentAdapter()
     try:
@@ -21,12 +21,12 @@ def serve(pipe):
             if op == 'reset':
                 env.close()
                 scene, variant = value
-                paths = [manifest.resolve_bddl('libero_goal', task, variant) for task in (4, 8)]
+                paths = [manifest.resolve_bddl('libero_goal', task, variant) for task in task_ids]
                 problems = [robosuite_parse_problem(str(p)) for p in paths]
                 goals = [p['goal_state'] for p in problems]
                 prompts = [' '.join(p['language_instruction']) if isinstance(p['language_instruction'], list)
                            else p['language_instruction'] for p in problems]
-                initial = env.create(dict(suite='libero_goal', task_id=4, variant=variant,
+                initial = env.create(dict(suite='libero_goal', task_id=task_ids[0], variant=variant,
                     init_state_id=scene, seed=18180100 + scene, _bddl_path=str(paths[0]),
                     camera_names=['agentview', 'robot0_eye_in_hand'], camera_height=256,
                     camera_width=256, control_mode='relative', max_steps=300))
@@ -59,4 +59,6 @@ def serve(pipe):
 
 if __name__ == '__main__':
     with Connection(int(sys.argv[1])) as connection:
-        serve(connection)
+        tasks = tuple(map(int, sys.argv[2:])) if len(sys.argv) > 2 else (4, 8)
+        assert len(tasks) == 2
+        serve(connection, tasks)
