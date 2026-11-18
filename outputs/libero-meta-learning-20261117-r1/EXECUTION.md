@@ -151,3 +151,37 @@ by up to 1.183 in normalized state and 0.623 in decoded action. The pinned
 RLinf runtime used mean/standard-deviation transforms. The released pi05_libero
 policy uses quantiles. Apply quantiles to both transforms of the converted
 official checkpoint and repeat the same paired development panel.
+
+Nov 19, 00:03 Shanghai. After enabling quantiles, the replay matched the
+original JAX transforms exactly for the normalized public state, decoded
+test actions, three camera slots and their masks, tokens and token mask.
+Devqual06 was submitted on the shared development 4090 to check whether
+this numerical fix restores closed-loop success.
+
+The original JAX fitting pilot devcollect01 (787ada19) finished 96/96 episodes.
+There were six attempts in each cell below, grouped into two chronological
+three-attempt trials. Each BASE/S20 pair shared reset IDs, noise seeds and
+instruction. Counts are native successes.
+
+| Fitting suite and task ID | BASE | S20 delay |
+| --- | ---: | ---: |
+| LIBERO-10 2 | 6 | 0 |
+| LIBERO-10 9 | 6 | 0 |
+| Goal 5 | 6 | 0 |
+| Goal 7 | 6 | 3 |
+| Object 2 | 6 | 0 |
+| Object 6 | 6 | 0 |
+| Spatial 2 | 6 | 0 |
+| Spatial 4 | 5 | 0 |
+| Total | 47/48 | 3/48 |
+
+All 96 archives were read back and checked against their case, control count,
+issuance mask, terminal marker and reward. The panel contains 4,628 policy
+queries and 23,024 executed controls in 496.5 MiB of compressed arrays.
+Issued actions are stored as float32 and match the float32-cast proposals
+exactly. The masked float64 proposals preserve the original commands. The
+largest cast difference was below 6e-8. Cumulative cost through this pilot
+was 3.18 of 200 GPU-hours, including the RoboCasa bridge. All delayed
+successes came from Goal 7. The seven other fitting tasks need successful
+delayed examples or teacher actions before this corpus can support a broad
+comparison of how learners recover from delay.
