@@ -8,34 +8,29 @@ import time
 import numpy as np
 import torch
 
-from native import Motor, PRO, array_hash, make_adapter, public, qualify_gradient, write
+from native import Motor, array_hash, make_adapter, public, qualify_gradient, write
+from simulator import Simulator
 
 
 def rollout(motor, case, output, *, zero_adapter=False, gradient=False):
-    from libero_remote.environment.libero import LiberoEnvironmentAdapter
-    from libero_remote.environment.task_manifest import TaskManifest
-    manifest=TaskManifest.load(str(PRO/'assets/task_manifest.json'))
-    entry=manifest.require(case['suite'],case['task_id'],case['variant'])
-    spec=dict(case,camera_names=['agentview','robot0_eye_in_hand'],
-        camera_height=256,camera_width=256,control_mode='relative',max_steps=entry['max_steps'],
-        _bddl_path=str(manifest.resolve_bddl(case['suite'],case['task_id'],case['variant'])))
     output.mkdir(parents=True,exist_ok=False)
-    env=LiberoEnvironmentAdapter()
     policy=make_adapter().eval() if zero_adapter else None
     began=time.monotonic()
     rows=[]; states=[]; images=[]; features=[]; proposals=[]; executed=[]; masks=[]
     previous=np.zeros(322,np.float32); memory=None
-    noises=np.random.default_rng(case['seed']+817117).standard_normal(
-        ((entry['max_steps']+9)//10,1,10,32)).astype(np.float32)
     action_hash=hashlib.sha256()
+    env=Simulator()
     try:
-        first=env.create(spec)
+        spec,first=env.call('create',case)
+        max_steps=spec['max_steps']
+        noises=np.random.default_rng(case['seed']+817117).standard_normal(
+            ((max_steps+9)//10,1,10,32)).astype(np.float32)
         raw=first['observation']; prompt=first['language_instruction']
         first_hash={k:array_hash(v) for k,v in raw.items()}
         write(output/'initial.json',dict(spec=spec,public_hashes=first_hash,
             environment=first['environment_reproducibility'],schema=first['action_schema']))
         controls=0; success=False; terminated=False; truncated=False
-        while controls<entry['max_steps'] and not (terminated or truncated):
+        while controls<max_steps and not (terminated or truncated):
             item=public(raw,prompt)
             prepared=motor.prepare(item)
             if gradient and not rows:
@@ -51,8 +46,8 @@ def rollout(motor, case, output, *, zero_adapter=False, gradient=False):
             inference_seconds=time.monotonic()-t
             delivered=np.zeros((10,7),np.float32); mask=np.zeros((10,7),bool)
             reward=0.
-            for k,action in enumerate(chunk[:entry['max_steps']-controls]):
-                transition=env.step(action)
+            for k,action in enumerate(chunk[:max_steps-controls]):
+                transition=env.call('step',action)
                 delivered[k]=action; mask[k]=True; controls+=1
                 action_hash.update(action.tobytes())
                 raw=transition['observation']; reward+=transition['reward']

@@ -17,6 +17,7 @@ PRO=ROOT/'sources/libero-pro2-e5500c69'
 RUNTIME=ROOT/'sources/critic-selected-a1229239-r1'
 OPENPI=ROOT/'outputs/robocasa-sft-reproduction-20261109-r1/sources/openpi'
 PYTHON=SETUP/'env/bin/python'
+POLICY_PYTHON=ROOT/'setups/robocasa365-native-20261101-r1/env/bin/python'
 
 
 def environment():
@@ -71,7 +72,7 @@ def main():
                 '--baige-exclusive-training','--output',str(out/'gpu.json')],
                 env=env,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=180)
             env['LYCO_BAIGE_GPU_MAP']=str(out/'gpu.json')
-            rc=subprocess.run([str(PYTHON),'-Bu',str(HERE/'qualify.py'),'--rank',str(rank),
+            rc=subprocess.run([str(POLICY_PYTHON),'-Bu',str(HERE/'qualify.py'),'--rank',str(rank),
                 '--output',str(out/'native'),'--deadline',str(started+(a.minutes-3)*60)],
                 env=env,stdout=log,stderr=subprocess.STDOUT,
                 timeout=max(1,started+a.minutes*60-time.time())).returncode

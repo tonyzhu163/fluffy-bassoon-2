@@ -6,7 +6,7 @@ import socket
 import subprocess
 import time
 
-from job import CODE, HERE, PYTHON, ROOT, environment
+from job import CODE, HERE, POLICY_PYTHON, PYTHON, ROOT, environment
 
 
 def main():
@@ -37,7 +37,7 @@ def main():
                         '--output', out/'gpu.json'], env=env, check=True, timeout=180)
         for rank in range(2):
             with (out/f'rank{rank}.log').open('x') as log:
-                subprocess.run([PYTHON, '-Bu', HERE/'qualify.py', '--rank', str(rank),
+                subprocess.run([POLICY_PYTHON, '-Bu', HERE/'qualify.py', '--rank', str(rank),
                                 '--output', out/f'rank{rank}', '--deadline', str(deadline)],
                                env=env, stdout=log, stderr=subprocess.STDOUT, check=True,
                                timeout=max(1, deadline - time.time()))
