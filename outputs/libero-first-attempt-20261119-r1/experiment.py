@@ -12,7 +12,7 @@ import time
 
 import numpy as np
 
-from design import OLD, VARIANTS, fit, lag24, use_pacing
+from design import OLD, REMOTE, VARIANTS, fit, lag24, use_pacing
 sys.path.insert(0,str(OLD))
 import pilot
 
@@ -33,7 +33,7 @@ def simulator(tasks):
         worker.wait(timeout=30)
 
 
-def episode(motor, pipe, directory, scene, variant, option, mode, *, model=None, bottle=False):
+def episode(motor, pipe, directory, scene, variant, option, mode, *, model=None, bottle=False, prefix=None):
     directory.mkdir(parents=True)
     raw,physics,prompts = pilot.call(pipe,'reset',(scene,variant))
     hashes = {k:hashlib.sha256(v.tobytes()).hexdigest() for k,v in raw.items()}
@@ -49,12 +49,16 @@ def episode(motor, pipe, directory, scene, variant, option, mode, *, model=None,
         decisions.append(len(actions))
         frames.append(np.stack([obs['observation/image'],obs['observation/wrist_image']]))
         noise=rng.standard_normal((10,32)).astype(np.float32)
-        chunk=motor.infer(obs,noise=noise)['actions'][:10 if paced else 5].copy()
-        assert chunk.shape==(10 if paced else 5,7) and np.isfinite(chunk).all()
-        if paced:
-            wait=np.zeros((14,7),dtype=chunk.dtype)
-            wait[:,-1]=chunk[-1,-1]
-            chunk=np.concatenate((chunk,wait))
+        if not actions and prefix is not None:
+            assert prefix.shape == (24,7) and np.isfinite(prefix).all()
+            chunk = prefix.copy()
+        else:
+            chunk=motor.infer(obs,noise=noise)['actions'][:10 if paced else 5].copy()
+            assert chunk.shape==(10 if paced else 5,7) and np.isfinite(chunk).all()
+            if paced:
+                wait=np.zeros((14,7),dtype=chunk.dtype)
+                wait[:,-1]=chunk[-1,-1]
+                chunk=np.concatenate((chunk,wait))
         chunk=chunk[:300-len(actions)]
         raw,state,success=pilot.call(pipe,'chunk',chunk)
         actions.extend(chunk)
@@ -78,8 +82,15 @@ def transfer(motor,pipe,root,model):
     for scene in range(6):
         for v in VARIANTS:
             block=root/f's{scene}-{v}'
+            prefixes = {}
             def support(option,mode):
-                return episode(motor,pipe,block/f'support-g{option}-{mode}',scene,v,option,mode,model=model,bottle=True)
+                destination = block/f'support-g{option}-{mode}'
+                record = episode(motor,pipe,destination,scene,v,option,mode,model=model,bottle=True,
+                                 prefix=prefixes.get(option))
+                if option not in prefixes:
+                    with np.load(destination/'public.npz') as data:
+                        prefixes[option] = data['issued'][:24].copy()
+                return record
             selected=support(goal,'learned')
             instructions=[]
             for assigned in range(2):
@@ -115,7 +126,10 @@ def main():
         for scene in range(16,20):
             for variant in VARIANTS:
                 for option in range(2):
-                    episode(motor,pipe,bowl/f's{scene}-{variant}-g{option}-switch',scene,variant,option,'switch')
+                    archived = REMOTE/'pacing01/episodes'/f's{scene}-{variant}-g{option}-paced/public.npz'
+                    with np.load(archived) as data:
+                        prefix = data['issued'][:24].copy()
+                    episode(motor,pipe,bowl/f's{scene}-{variant}-g{option}-switch',scene,variant,option,'switch',prefix=prefix)
     result=fit(bowl)
     pilot.write(root/'frozen-policy.json',result)
     print('frozen before transfer',result['learned'],flush=True)
