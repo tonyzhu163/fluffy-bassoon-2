@@ -185,3 +185,11 @@ was 3.18 of 200 GPU-hours, including the RoboCasa bridge. All delayed
 successes came from Goal 7. The seven other fitting tasks need successful
 delayed examples or teacher actions before this corpus can support a broad
 comparison of how learners recover from delay.
+
+Before spending on PPO teachers, compare a timing-aware source on the first
+attempt of each of the 16 S20 fitting trials. Use the already measured reset,
+prompt, starting noise and control budget for each pair. Apply the bowl pilot's
+fixed schedule of ten motor actions followed by fourteen charged wait controls,
+holding the gripper. Include all eight fitting tasks regardless of their
+previous outcomes. This estimates whether a candidate teacher reaches goals
+under delay. It does not supply DPT labels at the other policy's query states.

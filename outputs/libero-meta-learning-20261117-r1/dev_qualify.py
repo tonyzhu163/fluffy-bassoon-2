@@ -16,7 +16,8 @@ def main():
     parser.add_argument('--attempt', required=True)
     parser.add_argument('--checkpoint', choices=('openpi', 'rlinf'), default='rlinf')
     parser.add_argument('--reference-cadence', action='store_true')
-    parser.add_argument('--stage', choices=('qualify', 'collect', 'reference', 'reference-collect'), default='qualify')
+    parser.add_argument('--stage', choices=('qualify', 'collect', 'reference', 'reference-collect', 'paced-source'),
+                        default='qualify')
     args = parser.parse_args()
     if not (args.hostname.startswith('aibox-') and socket.gethostname() == args.hostname
             and args.attempt.isalnum()):
@@ -38,11 +39,12 @@ def main():
         subprocess.run([PYTHON, '-Bu', CODE/'scripts/[train]gpu_probe.py', '--expected-count', '1',
                         '--purpose', 'training', '--direct-hostname', args.hostname,
                         '--output', out/'gpu.json'], env=env, check=True, timeout=180)
-        if args.stage in ('reference', 'reference-collect'):
+        if args.stage in ('reference', 'reference-collect', 'paced-source'):
             legacy = ROOT.parent/'fluffy-bassoon'
             reference_env = dict(env, JAX_PLATFORMS='cuda', OPENPI_DATA_HOME=str(legacy/'cache/openpi-215abfb'),
                                  PYTHONPATH=f'{PRO}:{SETUP}/simulator-source:{HERE}')
-            command = [legacy/'envs/openpi-215abfb/bin/python', '-Bu', HERE/'reference.py',
+            script = 'pacing_probe.py' if args.stage == 'paced-source' else 'reference.py'
+            command = [legacy/'envs/openpi-215abfb/bin/python', '-Bu', HERE/script,
                        '--output', out/'reference']
             if args.stage == 'reference-collect':
                 command.append('--collect')
