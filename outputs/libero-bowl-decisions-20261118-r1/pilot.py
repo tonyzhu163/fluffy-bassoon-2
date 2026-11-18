@@ -97,7 +97,8 @@ def main():
          openpi='215abfb217dbac7d5f1273282331b9b1866c0479',replan_steps=5,device=str(jax.devices()[0])))
     policy = policy_config.create_trained_policy(config.get_config('pi05_libero'),str(CKPT))
     pipe, peer = Pipe()
-    sim_env = dict(os.environ,PYTHONPATH=f'{PRO}:{SETUP}/simulator-source',
+    # The pinned LIBERO release stores its NumPy reset bank using torch's legacy format.
+    sim_env = dict(os.environ,TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD='1',PYTHONPATH=f'{PRO}:{SETUP}/simulator-source',
                    LIBERO_CONFIG_PATH=str(SETUP/'libero-config'), LIBERO_PRO_ROOT=str(SETUP/'simulator-source'))
     proc = subprocess.Popen([SETUP/'env/bin/python','-Bu',HERE/'sim.py',str(peer.fileno())],
                              pass_fds=(peer.fileno(),),env=sim_env)
