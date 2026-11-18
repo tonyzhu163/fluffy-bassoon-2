@@ -4,18 +4,7 @@ import json
 from pathlib import Path
 import time
 
-from native import Motor, write
-from qualify import rollout
-
-
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output', required=True, type=Path)
-    parser.add_argument('--deadline', required=True, type=float)
-    parser.add_argument('--checkpoint', required=True, choices=('openpi', 'rlinf'))
-    parser.add_argument('--reference-cadence', action='store_true')
-    args = parser.parse_args()
-    args.output.mkdir(parents=True, exist_ok=False)
+def fitting_trials():
     splits = json.loads(Path(__file__).with_name('SPLITS.json').read_text())
     subset = splits['development_scaling']['task_subsets']['8']
     trials = []
@@ -29,6 +18,21 @@ def main():
                     trials.append([dict(suite=suite, task_id=task_id, variant=variant,
                                         init_state_id=3 * repeat + attempt,
                                         seed=seed_base + attempt) for attempt in range(3)])
+    return trials
+
+
+def main():
+    from native import Motor, write
+    from qualify import rollout
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output', required=True, type=Path)
+    parser.add_argument('--deadline', required=True, type=float)
+    parser.add_argument('--checkpoint', required=True, choices=('openpi', 'rlinf'))
+    parser.add_argument('--reference-cadence', action='store_true')
+    args = parser.parse_args()
+    args.output.mkdir(parents=True, exist_ok=False)
+    trials = fitting_trials()
     write(args.output/'design.json', dict(trials=trials, split='fitting',
           source='frozen SFT', attempts_per_trial=3, paired_conditions=['BASE', 'S20']))
     motor = Motor(args.checkpoint, reference_cadence=args.reference_cadence)

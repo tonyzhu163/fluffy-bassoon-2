@@ -126,3 +126,18 @@ It verifies the initial simulator state and public observations against
 devqual03. Changes in sampler, implementation and replanning cadence are
 joint here. These are development checks, with all eight official test tasks
 reserved and the training collection still pending.
+
+On Nov 18 the original JAX policy (devref01, 9d4a4635) solved both matched
+BASE cases, Spatial in 106 controls and Goal in 87. Simulator reset hashes,
+public inputs and the first query noise agreed with the converted policy's
+panel. The JAX run used the OpenPI defaults of ten flow steps and five executed
+controls per replan. This establishes a competent nominal source on these two
+resets. Compare the learner-compatible PyTorch policy at those same settings.
+The first retry (devqual04) stopped in the GPU probe during handover.
+
+Use the original JAX policy to collect the registered 96 fitting episodes.
+Keep both camera inputs, state, noise, proposed and issued actions, issuance
+masks, native rewards and boundaries. Compute learner features from these
+saved public inputs after fixing the learner-compatible policy. Use the same
+BASE instruction in both timing conditions and preserve the released prompt
+as metadata. This pilot measures corpus coverage and outcome diversity.
