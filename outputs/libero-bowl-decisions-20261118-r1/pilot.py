@@ -89,10 +89,47 @@ def rollout(policy, pipe, root, scene, variant, goal, gain, *, paced=False):
     return record
 
 
+def live_trials(policy, pipe, out):
+    from readout import estimate_lag
+
+    supports = json.loads((HERE/'nominal02-evidence.json').read_text())['branches']
+    anchors = [float(np.median([s['public_lag'] for s in supports if s['variant']==v]))
+               for v in ('BASE','S20')]
+    options = np.random.default_rng(18182401).permutation([0,0,1,1]).tolist()
+    rows = []
+    for idx, option in enumerate(options):
+        for variant in ('BASE','S20'):
+            support_scene, query_scene = 20+idx, 24+idx
+            block = out / f'b{idx}-{variant}'
+            block.mkdir()
+            support = rollout(policy, pipe, block, support_scene, variant, option, 1.)
+            with np.load(block/f's{support_scene}-{variant}-g{option}-gain1/public.npz') as data:
+                lag = estimate_lag(data)
+            paced = abs(lag-anchors[1]) < abs(lag-anchors[0])
+            for assigned in (0,1):
+                reward = support['first'][assigned] is not None
+                chosen = option if reward else 1-option
+                trial = block / f'goal{assigned}'
+                trial.mkdir()
+                write(trial/'choice.json',dict(option=option,reward=reward,lag=lag,anchors=anchors,
+                                                chosen=chosen,paced=paced))
+                outcomes = []
+                for is_paced in (paced, not paced):
+                    outcomes.append(rollout(policy, pipe, trial, query_scene, variant, chosen, 1., paced=is_paced))
+                a,b = outcomes
+                assert a['initial_physics']==b['initial_physics'] and a['initial_public']==b['initial_public']
+                fixed = {x['paced']: x['first'][assigned] is not None for x in outcomes}
+                rows.append(dict(support_scene=support_scene,query_scene=query_scene,variant=variant,assigned=assigned,
+                                 option=option,reward=reward,lag=lag,paced=paced,chosen=chosen,
+                                 matched=fixed[paced],default=fixed[False],always_paced=fixed[True]))
+                write(out/'trials.json',rows)
+    return len(rows)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('output',type=Path)
-    parser.add_argument('--phase', choices=('nominal','paired','pacing'), required=True)
+    parser.add_argument('--phase', choices=('nominal','paired','pacing','live'), required=True)
     args = parser.parse_args()
     assert len(jax.devices()) == 1 and jax.devices()[0].platform == 'gpu'
     assert subprocess.check_output(['git','-C',SRC,'rev-parse','HEAD'],text=True).strip() == '215abfb217dbac7d5f1273282331b9b1866c0479'
@@ -113,6 +150,10 @@ def main():
     peer.close()
     records = []
     try:
+        if args.phase == 'live':
+            trials = live_trials(policy, pipe, out)
+            write(out/'complete.json',dict(trials=trials,episodes=trials*2+trials//2,elapsed_seconds=time.time()-start))
+            return
         scenes = {'nominal': (10,11), 'paired': (12,13,14,15), 'pacing': (16,17,18,19)}[args.phase]
         options = {'nominal': [(1.,False)], 'paired': [(1.,False),(.5,False)],
                    'pacing': [(1.,False),(1.,True)]}[args.phase]
