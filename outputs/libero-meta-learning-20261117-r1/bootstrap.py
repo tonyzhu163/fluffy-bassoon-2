@@ -89,6 +89,7 @@ def main():
     # its source-relative asset directory at the hydrated tree. The upstream
     # Git checkout stays clean; no symlinked Python source resolves back there.
     package_root = SETUP/'simulator-source'
+    (package_root/'libero').mkdir(parents=True, exist_ok=True)
     source_records = []
     for path in sorted((SOURCE/'simulator-source/libero').rglob('*')):
         relative = path.relative_to(SOURCE/'simulator-source')
