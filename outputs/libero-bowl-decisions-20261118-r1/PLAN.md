@@ -1,0 +1,9 @@
+# Bowl destination and execution pilot
+
+Use fitting tasks LIBERO-Goal 4 (cabinet) and 8 (plate). First test all four instructed destination × BASE/S20 branches from each of two common Goal 4 initial states (indices 10 and 11). Use the release task predicates on every control. A single physical world per timing condition and a common fixed 300-control endpoint allow scoring either hidden preference without goal-dependent termination. Never send the assigned preference or either predicate to the motor. The instructor at this stage supplies the public motor option whose reachability we are measuring.
+
+Use the official OpenPI JAX π0.5-LIBERO checkpoint with its bundled transforms and released five-control replanning, paired initial noise across branches. The preceding RLinf development qualification had no native successes and uses a different release, normalization and execution cadence. Keep those baselines separate. Independent seeds across scenes.
+
+If both destination options are attainable, compare a half-gain translation strategy against the default, preserving rotations, gripper, horizon and replanning. Under delay, repeated feedback corrections could overshoot. A fixed gain could also be best in both conditions. Use fresh initializations 12–15 for a paired comparison if the first panel identifies action headroom. Report native physical placements, intended placements, first-hit control and ambiguity. Absence of one destination after the initial screen warrants diagnosing the motor before training. This is an exploratory test on fitting tasks. No held-out task is used.
+
+Baige allocation, one GPU, up to 1.5 GPU-hours for a single pilot invocation. Save branch records immediately. On an unsuccessful worker, inspect the failure and use a fresh output identity for a retry. All work counts toward the existing campaign cap.
