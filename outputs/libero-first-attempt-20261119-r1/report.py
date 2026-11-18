@@ -6,7 +6,7 @@ from pathlib import Path
 
 import numpy as np
 
-from design import VARIANTS, curve_metrics, lag24, native_record, scored_trials, use_pacing
+from design import BUDGETS, VARIANTS, curve_metrics, lag24, native_record, scored_trials, use_pacing
 
 
 def load(path):
@@ -102,7 +102,9 @@ def summarize(root):
     bounds=dict(best_constant_on_bottles=float(per_block.sum(axis=(1,2)).max()),
                 known_timing=float(per_block.sum(axis=1).max(axis=0).sum()),
                 known_pose_and_timing=float(per_block.max(axis=0).sum()))
-    return dict(fit=fit,models=panels,descriptive_menu_ceiling=bounds,
+    curves={name:raw[name].mean(axis=0).tolist() for name in
+            ('learned','bowl_fixed','paced_same_target','balanced_always_pace','cleared_uniform_retry')}
+    return dict(fit=fit,models=panels,descriptive_menu_ceiling=bounds,budgets=BUDGETS.tolist(),curves=curves,
                 learned_only=int((diff>0).sum()),fixed_only=int((diff<0).sum()),
                 by_pose_gain_vs_fixed=diff.reshape(6,4).sum(axis=1).tolist(),native_reach=reach,
                 double_hits=sum(all(t is not None for t in r['first']) for r in rows),branches=rows,initial_states=supports_by_pose)
