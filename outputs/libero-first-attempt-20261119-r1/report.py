@@ -95,7 +95,15 @@ def summarize(root):
             reach[f'{role}-{v}-{opt}-{"paced" if mode else "switch"}']=dict(
                 intended=sum(r['first'][opt] is not None for r in subset),
                 wrong=sum(r['first'][1-opt] is not None for r in subset),episodes=len(subset))
-    return dict(fit=fit,models=panels,learned_only=int((diff>0).sum()),fixed_only=int((diff<0).sum()),
+    # A single exploratory choice must cover both possible preferences. Even the
+    # descriptive oracle cannot pick a different first option for each preference.
+    fixed_actions = [raw[name][:,-1].reshape(6,2,2) for name in policies if name.startswith('fixed_target')]
+    per_block = np.stack(fixed_actions).sum(axis=-1)
+    bounds=dict(best_constant_on_bottles=float(per_block.sum(axis=(1,2)).max()),
+                known_timing=float(per_block.sum(axis=1).max(axis=0).sum()),
+                known_pose_and_timing=float(per_block.max(axis=0).sum()))
+    return dict(fit=fit,models=panels,descriptive_menu_ceiling=bounds,
+                learned_only=int((diff>0).sum()),fixed_only=int((diff<0).sum()),
                 by_pose_gain_vs_fixed=diff.reshape(6,4).sum(axis=1).tolist(),native_reach=reach,
                 double_hits=sum(all(t is not None for t in r['first']) for r in rows),branches=rows,initial_states=supports_by_pose)
 
