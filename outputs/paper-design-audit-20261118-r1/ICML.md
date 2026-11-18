@@ -32,3 +32,7 @@ Prior work already uses sparse feedback from attempts, transfers VLA histories b
 ## First experimental readout
 
 Across four fresh LIBERO bowl pose pairs, pacing the first attempt raised native retry success from 11/16 to 14/16 and identified the correct destination on all 16 assignments. A learned command–motion lag threshold tied the always-paced retry at 14/16 and reached the goal sooner on normal timing. Prioritize learning how to obtain informative feedback on attempt one. Carry the fixed paced exploration and retry policy into the transfer panel as the strongest comparator. [Experiment and controls](../libero-bowl-decisions-20261118-r1/RESULT.md)
+
+## First-attempt transfer to bottles
+
+A bowl-trained policy chose the alternative destination first (plate on bowl, rack on bottle) and adjusted its first-attempt cadence from public motion. On six fresh bottle pose pairs it achieved 14/24 native retry successes, compared with 14.5/24 expected for balanced always-pacing. A retrospective cabinet-first probe identified all 24 destinations and reached the paced query motor's 16/24 ceiling. For the next paper panel, train goal-conditioned estimates of which exploratory placement will succeed, include several fitting pairs, and select reserved pairs with an executable retry and a scene-dependent choice of informative probe. Preserve balanced pacing and the strongest source-fitted constant as baselines. [Transfer study](../libero-first-attempt-20261119-r1/RESULT.md)
