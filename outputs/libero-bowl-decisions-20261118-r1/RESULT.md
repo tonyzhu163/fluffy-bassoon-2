@@ -31,7 +31,7 @@ The improvement over a uniform destination came entirely from using goal feedbac
 
 ## Pacing under delay
 
-On four additional starts (16–19), the paced option executes ten predicted controls and waits 14 controls for feedback. The arm receives zero displacement during each wait and holds the last gripper command. Both strategies receive 300 controls. Pacing trades inference calls and movement time for observations that reflect the previous burst. Its delayed first hits ranged from controls 162 to 209. [32 pacing branch records](pacing01-evidence.json)
+On four additional starts (16–19), the paced option executes ten predicted controls and waits 14 controls for feedback. The arm receives zero displacement during each wait and holds the last gripper command. Both strategies receive 300 controls. Pacing trades inference calls and movement time for observations that reflect the previous burst. Its delayed first hits ranged from controls 162 to 209. [Matched camera sequence](pacing-plate.png) · [32 pacing branch records](pacing01-evidence.json)
 
 | Execution | Normal timing | S20 |
 | --- | ---: | ---: |
