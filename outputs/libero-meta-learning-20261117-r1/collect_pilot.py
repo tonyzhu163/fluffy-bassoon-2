@@ -13,6 +13,7 @@ def main():
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--deadline', required=True, type=float)
     parser.add_argument('--checkpoint', required=True, choices=('openpi', 'rlinf'))
+    parser.add_argument('--reference-cadence', action='store_true')
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     splits = json.loads(Path(__file__).with_name('SPLITS.json').read_text())
@@ -30,8 +31,8 @@ def main():
                                         seed=seed_base + attempt) for attempt in range(3)])
     write(args.output/'design.json', dict(trials=trials, split='fitting',
           source='frozen SFT', attempts_per_trial=3, paired_conditions=['BASE', 'S20']))
-    motor = Motor(args.checkpoint)
-    write(args.output/'motor-config.json', motor.config)
+    motor = Motor(args.checkpoint, reference_cadence=args.reference_cadence)
+    write(args.output/'motor-config.json', dict(motor.config, executed_before_replan=motor.replan_steps))
     summary = []
     for trial_id, cases in enumerate(trials):
         outcomes = []

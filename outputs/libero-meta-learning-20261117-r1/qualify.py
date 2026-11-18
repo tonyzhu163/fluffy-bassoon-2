@@ -24,8 +24,10 @@ def rollout(motor, case, output, *, zero_adapter=False, gradient=False,
     try:
         spec,first=env.call('create',case)
         max_steps=spec['max_steps']
+        replan = motor.replan_steps
+        queries = (max_steps + replan - 1) // replan
         noises=np.random.default_rng(case['seed']+817117).standard_normal(
-            ((max_steps+9)//10,1,10,32)).astype(np.float32)
+            (queries,1,10,32)).astype(np.float32)
         raw=first['observation']; prompt=first['language_instruction']
         first_hash={k:array_hash(v) for k,v in raw.items()}
         write(output/'initial.json',dict(spec=spec,public_hashes=first_hash,
@@ -47,7 +49,7 @@ def rollout(motor, case, output, *, zero_adapter=False, gradient=False,
             inference_seconds=time.monotonic()-t
             delivered=np.zeros((10,7),np.float32); mask=np.zeros((10,7),bool)
             reward=0.
-            for k,action in enumerate(chunk[:max_steps-controls]):
+            for k,action in enumerate(chunk[:min(replan,max_steps-controls)]):
                 transition=env.call('step',action)
                 delivered[k]=action; mask[k]=True; controls+=1
                 action_hash.update(action.tobytes())
@@ -88,9 +90,11 @@ def main():
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--deadline',type=float,required=True)
     p.add_argument('--checkpoint',choices=('openpi','rlinf'),default='rlinf')
+    p.add_argument('--reference-cadence',action='store_true')
     args=p.parse_args()
     args.output.mkdir(parents=True,exist_ok=False)
-    motor=Motor(args.checkpoint); write(args.output/'motor-config.json',motor.config)
+    motor=Motor(args.checkpoint, reference_cadence=args.reference_cadence)
+    write(args.output/'motor-config.json',dict(motor.config, executed_before_replan=motor.replan_steps))
     # Both are predeclared development tasks, not official test tasks.
     suite=('libero_spatial','libero_goal')[args.rank]
     case=dict(suite=suite,task_id=1,init_state_id=0,seed=171117+args.rank,variant='BASE')

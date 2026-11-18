@@ -15,6 +15,7 @@ def main():
     parser.add_argument('--pin', required=True)
     parser.add_argument('--attempt', required=True)
     parser.add_argument('--checkpoint', choices=('openpi', 'rlinf'), default='rlinf')
+    parser.add_argument('--reference-cadence', action='store_true')
     parser.add_argument('--stage', choices=('qualify', 'collect', 'reference'), default='qualify')
     args = parser.parse_args()
     if not (args.hostname.startswith('aibox-') and socket.gethostname() == args.hostname
@@ -51,6 +52,8 @@ def main():
         if args.stage == 'collect':
             workers = [('corpus', [HERE/'collect_pilot.py'])]
         for name, command in workers:
+            if args.reference_cadence:
+                command.append('--reference-cadence')
             with (out/f'{name}.log').open('x') as log:
                 subprocess.run([POLICY_PYTHON, '-Bu', *command, '--checkpoint', args.checkpoint,
                                 '--output', out/name, '--deadline', str(deadline)],

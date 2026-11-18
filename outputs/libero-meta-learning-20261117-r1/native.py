@@ -48,7 +48,7 @@ class PrefixReady(Exception):
 
 
 class Motor:
-    def __init__(self, checkpoint='rlinf'):
+    def __init__(self, checkpoint='rlinf', *, reference_cadence=False):
         from omegaconf import OmegaConf
         from rlinf.models.embodiment.openpi import get_model
         if checkpoint == 'openpi':
@@ -58,11 +58,13 @@ class Motor:
             model_path, norm_path = MODEL, NORM
         else:
             raise ValueError(checkpoint)
+        self.replan_steps = 5 if reference_cadence else 10
+        flow_steps = 10 if reference_cadence else 5
         self.config = dict(model_type='openpi',pi05=True,precision='bf16',
-            model_path=str(model_path),num_action_chunks=10,action_dim=7,num_steps=5,
+            model_path=str(model_path),num_action_chunks=10,action_dim=7,num_steps=flow_steps,
             add_value_head=False,openpi=dict(task='eval',config_name='pi05_libero',
                 action_horizon=10,action_chunk=10,model_action_dim=32,action_env_dim=7,
-                num_steps=5,paligemma_variant='gemma_2b',action_expert_variant='gemma_300m',
+                num_steps=flow_steps,paligemma_variant='gemma_2b',action_expert_variant='gemma_300m',
                 max_token_len=200,discrete_state_input=False,torch_compile=False),
             openpi_data=dict(norm_stats_path=str(norm_path)))
         self.model=get_model(OmegaConf.create(self.config),torch_dtype=torch.bfloat16).to('cuda').eval().requires_grad_(False)
