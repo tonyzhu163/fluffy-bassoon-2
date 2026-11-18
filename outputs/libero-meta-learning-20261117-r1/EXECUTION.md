@@ -193,3 +193,22 @@ fixed schedule of ten motor actions followed by fourteen charged wait controls,
 holding the gripper. Include all eight fitting tasks regardless of their
 previous outcomes. This estimates whether a candidate teacher reaches goals
 under delay. It does not supply DPT labels at the other policy's query states.
+
+Nov 19, 00:24 Shanghai. The corrected learner-compatible motor (devqual06,
+b46ec9a7) succeeded on both nominal development cases, Spatial in 105 controls
+and Goal in 88. The native JAX reference took 106 and 87. Both S15 camera cases
+and both S20 timing cases failed. Both zero-adapter nominal replays reproduced
+the full action trace exactly and both gradient checks left the motor frozen.
+This isolates the effect of the normalization repair at the reference cadence
+on these two nominal resets.
+
+Devpace01 (cb2aab06) finished all 16 fitting comparisons. Default execution
+scored 0/16, and the timing-aware candidate scored 4/16 on the same resets.
+The four recoveries were LIBERO-10 2 (1/2), Goal 7 (2/2) and Object 2 (1/2).
+The five remaining tasks had zero successes in both arms. All commands,
+charged waits and native outcomes were checked against the episode records.
+Pacing can supply some successful behavior, with limited task coverage here.
+The 96-episode source pilot and these checks used 3.33 cumulative GPU-hours
+including the bridge. The official test split and all four LIBERO learner
+fits remain pending. None of these frozen-policy checks measures a benefit
+from history.
