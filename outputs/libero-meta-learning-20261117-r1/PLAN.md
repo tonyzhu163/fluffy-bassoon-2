@@ -206,7 +206,8 @@ subset where possible. Compare breadth at matched total source trials and
 actor updates; separately vary independent trials per task at fixed breadth.
 These development curves distinguish more variety from simply more data.
 Reuse one collection through explicit subset manifests instead of collecting
-or storing separate corpora. Freeze exact subsets before these fits.
+or storing separate corpora. The exact nested task subsets are frozen in
+SPLITS.json before these fits.
 
 Size collection in independent trials and decision states, not video frames.
 For example, 24 tasks x 8 actual conditions x 16 independent trials x 3

@@ -76,3 +76,19 @@ independent trial-depth curves, with semantic coverage reported separately.
 No bulk episode count is committed before measured costs. Commands issued
 to env.step are the public action history; environment-internal delayed or
 filtered controls are excluded from student inputs.
+
+November 18, 09:36 Shanghai: resumed after interruption. The isolated
+simulator package install completed on November 17, but asset setup and
+CPU/native qualification are not confirmed complete. No LIBERO GPU job was
+submitted before interruption. The development SSH endpoint now times out;
+console browser control is unavailable in this session. Requested restored
+Baige access. No additional GPU use is known; the closed charge remains
+2.36 GPU-hours and the total cap remains 200.
+
+The exact nested 8/16/24 fitting-task subsets are now fixed in SPLITS.json.
+Local recovery preserved 67 of 76 optional vendor assets; the other nine
+downloads were too slow and were stopped, with partial files excluded.
+These vendor replacements are not required by the planned BASE/S15/S20
+qualification. Once access returns, check any surviving setup process,
+finish the core setup and CPU preflight, refresh queue capacity, then submit
+the prepared two-worker qualification with a fresh verified main pin.
