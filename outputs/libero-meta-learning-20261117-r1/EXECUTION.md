@@ -141,3 +141,13 @@ masks, native rewards and boundaries. Compute learner features from these
 saved public inputs after fixing the learner-compatible policy. Use the same
 BASE instruction in both timing conditions and preserve the released prompt
 as metadata. This pilot measures corpus coverage and outcome diversity.
+
+Devqual05 (6ddd4381) completed the same six distinct cases and two repeat
+controls at the reference cadence. All failed. A CPU replay of the first
+Spatial query with the official paired weights/statistics found identical
+images, image masks, token IDs and token masks. With identical public state
+and a common synthetic action vector, the two transform pipelines differed
+by up to 1.183 in normalized state and 0.623 in decoded action. The pinned
+RLinf runtime used mean/standard-deviation transforms. The released pi05_libero
+policy uses quantiles. Apply quantiles to both transforms of the converted
+official checkpoint and repeat the same paired development panel.

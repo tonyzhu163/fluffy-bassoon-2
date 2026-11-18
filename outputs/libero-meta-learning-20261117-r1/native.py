@@ -1,5 +1,5 @@
 """LIBERO public inputs and frozen RLinf Pi0.5 inference for qualification."""
-from dataclasses import asdict
+from dataclasses import asdict, replace
 import hashlib
 import json
 from pathlib import Path
@@ -47,6 +47,18 @@ class PrefixReady(Exception):
     pass
 
 
+def official_transforms(model_path, norm_path):
+    """Match the released pi05_libero quantile input and output transforms."""
+    from openpi.transforms import Normalize, Unnormalize
+    from rlinf.models.embodiment.openpi.transforms.pipeline import build_openpi_transforms
+    inputs, outputs = build_openpi_transforms(str(model_path), 'pi05_libero',
+                                               {'norm_stats_path': str(norm_path)})
+    assert sum(isinstance(t, Normalize) for t in inputs) == 1
+    assert sum(isinstance(t, Unnormalize) for t in outputs) == 1
+    return ([replace(t, use_quantiles=True) if isinstance(t, Normalize) else t for t in inputs],
+            [replace(t, use_quantiles=True) if isinstance(t, Unnormalize) else t for t in outputs])
+
+
 class Motor:
     def __init__(self, checkpoint='rlinf', *, reference_cadence=False):
         from omegaconf import OmegaConf
@@ -68,6 +80,9 @@ class Motor:
                 max_token_len=200,discrete_state_input=False,torch_compile=False),
             openpi_data=dict(norm_stats_path=str(norm_path)))
         self.model=get_model(OmegaConf.create(self.config),torch_dtype=torch.bfloat16).to('cuda').eval().requires_grad_(False)
+        if checkpoint == 'openpi':
+            self.model.setup_transforms(*official_transforms(model_path, norm_path))
+            self.config['released_pi05_libero_quantiles'] = True
         assert (self.model.action_horizon,self.model.action_env_dim,self.model.action_chunk)==(10,7,10)
 
     @torch.no_grad()
