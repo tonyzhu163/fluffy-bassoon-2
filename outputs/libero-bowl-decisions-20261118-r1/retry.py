@@ -7,11 +7,16 @@ from statistics import median
 
 
 def evaluate(supports, queries):
-    lookup = {(b['scene'], b['variant'], b['goal'], b['gain']): b['first'] for b in queries}
+    def strategy(b):
+        if b.get('paced',False):
+            return 'paced'
+        return {1.: 'full', .5: 'half'}[b['gain']]
+
+    lookup = {(b['scene'], b['variant'], b['goal'], strategy(b)): b['first'] for b in queries}
     query_scenes = sorted({b['scene'] for b in queries})
     support_scenes = {b['scene'] for b in supports}
     assert support_scenes.isdisjoint(query_scenes)
-    gains = (1., .5)
+    gains = ('full', 'paced' if any(b.get('paced') for b in queries) else 'half')
     variants = ('BASE', 'S20')
     assert len(lookup) == len(queries) == len(query_scenes)*len(variants)*2*len(gains)
     lags = {(b['scene'], b['variant'], b['goal']): b['public_lag'] for b in supports}
@@ -40,9 +45,9 @@ def evaluate(supports, queries):
                 counts['selected_assigned_destination'] += (chosen == assigned)
                 counts['matched'] += success(chosen,gain)
                 counts['other_timing_support'] += success(chosen, donor_gain)
-                for g, label in zip(gains, ('full', 'half')):
-                    counts['retry_'+label] += success(chosen, g)
-                    counts['uniform_'+label] += sum(success(dest,g) for dest in (0,1)) / 2
+                for g in gains:
+                    counts['retry_'+g] += success(chosen, g)
+                    counts['uniform_'+g] += sum(success(dest,g) for dest in (0,1)) / 2
                 counts['uniform_matched_execution'] += sum(success(dest,gain) for dest in (0,1)) / 2
                 counts['privileged_best_branch'] += any(success(dest,g) for dest in (0,1) for g in gains)
     totals = {name: sum(row[name] for row in by_condition.values())

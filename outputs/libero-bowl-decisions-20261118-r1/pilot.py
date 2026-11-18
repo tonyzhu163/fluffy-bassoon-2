@@ -51,18 +51,26 @@ def call(pipe, op, arg):
     return result
 
 
-def rollout(policy, pipe, root, scene, variant, goal, gain):
-    output = root / f's{scene}-{variant}-g{goal}-gain{gain:g}'
+def rollout(policy, pipe, root, scene, variant, goal, gain, *, paced=False):
+    suffix = 'paced' if paced else f'gain{gain:g}'
+    output = root / f's{scene}-{variant}-g{goal}-{suffix}'
     output.mkdir()
     raw, physics, prompts = call(pipe, 'reset', (scene, variant))
     initial = {k:hashlib.sha256(v.tobytes()).hexdigest() for k,v in raw.items()}
     rng = np.random.default_rng(18183300 + scene)
     states, frames, sent, hits = [], [], [], []
-    for _ in range(60):
+    decision_steps = []
+    while len(sent) < 300:
         item = observation(raw, prompts[goal])
-        chunk = policy.infer(item, noise=rng.standard_normal((10,32)).astype(np.float32))['actions'][:5].copy()
-        assert chunk.shape == (5,7) and np.isfinite(chunk).all()
+        decision_steps.append(len(sent))
+        length = 10 if paced else 5
+        chunk = policy.infer(item, noise=rng.standard_normal((10,32)).astype(np.float32))['actions'][:length].copy()
+        assert chunk.shape == (length,7) and np.isfinite(chunk).all()
         chunk[:, :3] *= gain
+        if paced:
+            wait = np.zeros((14, 7), dtype=chunk.dtype)
+            wait[:, -1] = chunk[-1, -1]
+            chunk = np.concatenate((chunk, wait))[:300-len(sent)]
         frames.append(np.stack([item['observation/image'],item['observation/wrist_image']]))
         raw, state, success = call(pipe, 'chunk', chunk)
         sent.extend(chunk)
@@ -70,10 +78,10 @@ def rollout(policy, pipe, root, scene, variant, goal, gain):
         hits.extend(success)
     hits = np.asarray(hits, dtype=bool)
     first = [int(np.flatnonzero(col)[0])+1 if col.any() else None for col in hits.T]
-    np.savez_compressed(output/'public.npz', frames=frames, state_after=states, issued=sent,
+    np.savez_compressed(output/'public.npz', frames=frames, decision_steps=decision_steps, state_after=states, issued=sent,
                         final_images=np.stack([observation(raw,'')[k] for k in ('observation/image','observation/wrist_image')]))
     np.save(output/'evaluator-predicates.npy',hits)
-    record = dict(scene=scene,variant=variant,goal=goal,prompt=prompts[goal],gain=gain,
+    record = dict(scene=scene,variant=variant,goal=goal,prompt=prompts[goal],gain=gain,paced=paced,decisions=len(frames),
                   initial_physics=physics,initial_public=initial,first=first,
                   intended=first[goal] is not None, simultaneous=bool(hits.all(axis=1).any()),controls=len(hits))
     write(output/'result.json',record)
@@ -84,7 +92,7 @@ def rollout(policy, pipe, root, scene, variant, goal, gain):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('output',type=Path)
-    parser.add_argument('--phase', choices=('nominal','paired'), required=True)
+    parser.add_argument('--phase', choices=('nominal','paired','pacing'), required=True)
     args = parser.parse_args()
     assert len(jax.devices()) == 1 and jax.devices()[0].platform == 'gpu'
     assert subprocess.check_output(['git','-C',SRC,'rev-parse','HEAD'],text=True).strip() == '215abfb217dbac7d5f1273282331b9b1866c0479'
@@ -94,7 +102,7 @@ def main():
     start = time.time()
     write(out/'motor.json',dict(checkpoint=str(CKPT),ready=json.loads((CKPT/'READY.json').read_text())['checkpoint'],
          norm_sha256=hashlib.sha256((CKPT/'assets/physical-intelligence/libero/norm_stats.json').read_bytes()).hexdigest(),
-         openpi='215abfb217dbac7d5f1273282331b9b1866c0479',replan_steps=5,device=str(jax.devices()[0])))
+         openpi='215abfb217dbac7d5f1273282331b9b1866c0479',nominal_replan_steps=5,device=str(jax.devices()[0])))
     policy = policy_config.create_trained_policy(config.get_config('pi05_libero'),str(CKPT))
     pipe, peer = Pipe()
     # The pinned LIBERO release stores its NumPy reset bank using torch's legacy format.
@@ -105,12 +113,14 @@ def main():
     peer.close()
     records = []
     try:
-        scenes = (10,11) if args.phase=='nominal' else (12,13,14,15)
+        scenes = {'nominal': (10,11), 'paired': (12,13,14,15), 'pacing': (16,17,18,19)}[args.phase]
+        options = {'nominal': [(1.,False)], 'paired': [(1.,False),(.5,False)],
+                   'pacing': [(1.,False),(1.,True)]}[args.phase]
         for scene in scenes:
             for variant in ('BASE','S20'):
-                for gain in ((1.,) if args.phase=='nominal' else (1.,.5)):
+                for gain, paced in options:
                     for goal in range(2):
-                        r = rollout(policy, pipe, out, scene, variant, goal, gain)
+                        r = rollout(policy, pipe, out, scene, variant, goal, gain, paced=paced)
                         for prev in records:
                             if (prev['scene'],prev['variant'])==(scene,variant):
                                 assert prev['initial_physics']==r['initial_physics'] and prev['initial_public']==r['initial_public'], 'branch reset mismatch'

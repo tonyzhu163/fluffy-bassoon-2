@@ -36,7 +36,7 @@ def summarize(directory):
         first = [int(np.flatnonzero(h)[0])+1 if h.any() else None for h in hits.T]
         assert first == record['first'] and bool(hits[:, record['goal']].any()) == record['intended']
         branches.append(dict(scene=record['scene'], variant=record['variant'], goal=record['goal'],
-                             gain=record['gain'], first=first, final=hits[-1].tolist(),
+                             gain=record['gain'], paced=record.get('paced', False), first=first, final=hits[-1].tolist(),
                              intended=record['intended'], public_lag=lag))
     assert len(branches) == expected
     return branches
