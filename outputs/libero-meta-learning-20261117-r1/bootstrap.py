@@ -41,11 +41,13 @@ def main():
         subprocess.run(['/mowenjie/bin/uv','venv','--python',str(BASE/'bin/python'),str(SETUP/'env')],check=True)
     site = SETUP/'env/lib/python3.11/site-packages'
     (site/'shared-frozen-policy-dependencies.pth').write_text(str(BASE/'lib/python3.11/site-packages')+'\n')
+    support = ROOT/'setups/libero-procedural-pi05-20261111-r1/env/lib/python3.11/site-packages'
+    (site/'z-libero-support.pth').write_text(str(support)+'\n')
     env = dict(os.environ, UV_CACHE_DIR=str(SETUP/'uv-cache'), UV_LINK_MODE='copy')
     wheel_args = ['--find-links',str(args.wheelhouse)] if args.wheelhouse else []
     subprocess.run(['/mowenjie/bin/uv','pip','install','--python',str(SETUP/'env/bin/python'),*wheel_args,
         '--no-deps','robosuite==1.4.0','mujoco==3.2.3','bddl==1.0.1','robomimic==0.2.0',
-        'easydict==1.9','numpy==1.26.4','pydantic==1.10.22','httpx==0.24.1','httpcore==0.17.3',
+        'easydict==1.9','numpy==1.26.4','future==1.0.0','sniffio==1.3.1','httpx==0.24.1','httpcore==0.17.3',
         'h11==0.14.0','msgpack==1.0.8'],env=env,check=True)
     simulator = SOURCE/'simulator-source/libero/libero'
     # Keep the Git checkout immutable. Ordinary assets are shared by symlink;
