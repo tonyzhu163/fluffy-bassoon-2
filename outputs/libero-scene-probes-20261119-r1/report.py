@@ -129,6 +129,31 @@ def score_pair(source,test,pair):
                 blocks=blocks)
 
 
+def reset_query_layout(source,test,pair,blocks):
+    def make(panel,pose,layout):
+        return outcomes(panel[pose,layout]['records'],panel[next_scene(panel,pose),'base']['records'],pair)
+    if pair==NEW:
+        fixed=.5
+    else:
+        src=np.stack([make(source,s,l)[0] for s,l in source])
+        fixed=split_tie(*src.sum(axis=(0,2)))
+    totals=dict(selected=0.,fit_constant=0.,balanced=0.,first=0.,second=0.,block_oracle=0.,
+                selected_correct=0.,best_fixed_correct=0.,oracle_correct=0.)
+    fixed_correct=np.zeros(2)
+    for b in blocks:
+        result,correct=make(test,b['scene'],b['layout'])
+        choice=b['choice_probability_first']
+        for k,p in [('selected',choice),('fit_constant',fixed),('balanced',.5),('first',1.),('second',0.)]:
+            totals[k]+=float((p*result[0]+(1-p)*result[1]).sum())
+        totals['block_oracle']+=float(result.sum(axis=1).max())
+        totals['selected_correct']+=float((choice*correct[0]+(1-choice)*correct[1]).sum())
+        totals['oracle_correct']+=float(correct.sum(axis=1).max())
+        fixed_correct+=correct.sum(axis=1)
+    totals['best_fixed_correct']=float(fixed_correct.max())
+    totals['test_best_constant']=max(totals['first'],totals['second'])
+    return totals
+
+
 def summarize(root):
     done=read(root/'complete.json')
     assert done=={**done,'fitting':64,'fresh':96}
@@ -136,6 +161,8 @@ def summarize(root):
     source=load_panel(root/'fitting')
     test=load_panel(root/'fresh',model)
     result=[score_pair(source,test,p) for p in (*combinations(KNOWN,2),NEW)]
+    for item in result:
+        item['fresh_base_query']=reset_query_layout(source,test,tuple(item['goals']),item['blocks'])
     summaries={}
     for name,pairs in [('composition',COMPOSITION),('familiar',tuple(combinations(KNOWN,2))),('unseen',(NEW,))]:
         group=[x for x in result if tuple(x['goals']) in pairs]
