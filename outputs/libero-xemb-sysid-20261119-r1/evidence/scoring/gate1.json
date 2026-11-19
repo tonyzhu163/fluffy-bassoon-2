@@ -1,0 +1,1977 @@
+{
+  "gate1": {
+    "panel": "development",
+    "counts": {
+      "cases": 48,
+      "episodes": 96
+    },
+    "parity": [
+      {
+        "suite": "libero_10",
+        "task_id": 0,
+        "init_state_id": 13,
+        "physics": "e4e2637857eef42b044141c4b28c5c106485aadebc95e6afbfd849264f8959d3",
+        "noise_seed": 21117117,
+        "noise_sha256": "2b6ecd32a2df3140d9484152c2b84ec95a82a6b2c4ea9647deafa7389375504d",
+        "identical_query_resets": true,
+        "opening_proposal_sha256": null
+      },
+      {
+        "suite": "libero_10",
+        "task_id": 3,
+        "init_state_id": 13,
+        "physics": "ce30305f2fb90f44ee29db3f14a1c16107b1b277faef561ba25be08c6e66132b",
+        "noise_seed": 21117417,
+        "noise_sha256": "0ce4e2e0701db9972dc3037b7ed821d5833388724eded1648163ac42d16a21c7",
+        "identical_query_resets": true,
+        "opening_proposal_sha256": null
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 0,
+        "init_state_id": 13,
+        "physics": "c7456d745ec34c86b03c2ed19b319e58f17490f6e32168dc289428dc9c58b584",
+        "noise_seed": 21127117,
+        "noise_sha256": "d30c407e9f6feac9d28c6ed97e278286df3d0183f1a7cf2f20ca39c658f29975",
+        "identical_query_resets": true,
+        "opening_proposal_sha256": null
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 1,
+        "init_state_id": 13,
+        "physics": "47e00ff47a7b002822687e0cc37a5dc66123d7ea4c4fb948636b967fb16b67c0",
+        "noise_seed": 21127217,
+        "noise_sha256": "d9fe90b0250a51a241194b29bc08573a6f6b8fe87b4ed29aff03872ec541b82c",
+        "identical_query_resets": true,
+        "opening_proposal_sha256": null
+      },
+      {
+        "suite": "libero_object",
+        "task_id": 0,
+        "init_state_id": 13,
+        "physics": "1a7fbf9715ccedab800c8d838336ba9fbf93eef05c8869246984b63fabac4f67",
+        "noise_seed": 21137117,
+        "noise_sha256": "6d4fd49357647806adbdec8a6f07881dc6ea023c27fbee5e44265f5afcb9cf5b",
+        "identical_query_resets": true,
+        "opening_proposal_sha256": null
+      },
+      {
+        "suite": "libero_object",
+        "task_id": 7,
+        "init_state_id": 13,
+        "physics": "a9c2132a66e16f0a0737f1b5e19d61172088d06db7bde1744d437f6386ee382a",
+        "noise_seed": 21137817,
+        "noise_sha256": "dd716ddea85e608e1857382412f17834aca5a52474a6d711e438280207a4bfd9",
+        "identical_query_resets": true,
+        "opening_proposal_sha256": null
+      },
+      {
+        "suite": "libero_spatial",
+        "task_id": 1,
+        "init_state_id": 13,
+        "physics": "b5ed5476ca1f1bd590fd137874daf3647d3ad4d9f45e9d32e4c95328ee0c877c",
+        "noise_seed": 21147217,
+        "noise_sha256": "381eaf31bffd3e6dcc0a478d58cd62416a209a9083b08e3b9504923bc318a327",
+        "identical_query_resets": true,
+        "opening_proposal_sha256": null
+      },
+      {
+        "suite": "libero_spatial",
+        "task_id": 7,
+        "init_state_id": 13,
+        "physics": "7340b938cd1eb9a531dbabdb571e444e93fe6ff66391038ec58607833c73c6a0",
+        "noise_seed": 21147817,
+        "noise_sha256": "45811ee42fb4ee87f9533ba3905c05c6aad034b6151a9412757ed3c7e336929e",
+        "identical_query_resets": true,
+        "opening_proposal_sha256": null
+      }
+    ],
+    "groups": {
+      "overall": {
+        "cases": 48,
+        "arms": {
+          "nominal": {
+            "n": 48,
+            "successes": 9,
+            "success_rate": 0.1875,
+            "return_sum": 9.0,
+            "return_mean": 0.1875,
+            "controls": 14377,
+            "return_sources": {
+              "archived_sum_only": 48
+            }
+          },
+          "privileged_oracle": {
+            "n": 48,
+            "successes": 47,
+            "success_rate": 0.9791666666666666,
+            "return_sum": 47.0,
+            "return_mean": 0.9791666666666666,
+            "controls": 7975,
+            "return_sources": {
+              "archived_sum_only": 48
+            }
+          }
+        },
+        "paired": {
+          "privileged_oracle": {
+            "nominal": {
+              "n": 48,
+              "wins": 38,
+              "losses": 0,
+              "ties": 10,
+              "success_gain_pp": 79.16666666666667,
+              "mean_return_gain": 0.7916666666666666
+            }
+          }
+        }
+      },
+      "shifted": {
+        "cases": 40,
+        "arms": {
+          "nominal": {
+            "n": 40,
+            "successes": 1,
+            "success_rate": 0.025,
+            "return_sum": 1.0,
+            "return_mean": 0.025,
+            "controls": 13122,
+            "return_sources": {
+              "archived_sum_only": 40
+            }
+          },
+          "privileged_oracle": {
+            "n": 40,
+            "successes": 39,
+            "success_rate": 0.975,
+            "return_sum": 39.0,
+            "return_mean": 0.975,
+            "controls": 6720,
+            "return_sources": {
+              "archived_sum_only": 40
+            }
+          }
+        },
+        "paired": {
+          "privileged_oracle": {
+            "nominal": {
+              "n": 40,
+              "wins": 38,
+              "losses": 0,
+              "ties": 2,
+              "success_gain_pp": 95.0,
+              "mean_return_gain": 0.95
+            }
+          }
+        }
+      },
+      "compositional_ood": {
+        "cases": 16,
+        "arms": {
+          "nominal": {
+            "n": 16,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 5280,
+            "return_sources": {
+              "archived_sum_only": 16
+            }
+          },
+          "privileged_oracle": {
+            "n": 16,
+            "successes": 15,
+            "success_rate": 0.9375,
+            "return_sum": 15.0,
+            "return_mean": 0.9375,
+            "controls": 2904,
+            "return_sources": {
+              "archived_sum_only": 16
+            }
+          }
+        },
+        "paired": {
+          "privileged_oracle": {
+            "nominal": {
+              "n": 16,
+              "wins": 15,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 93.75,
+              "mean_return_gain": 0.9375
+            }
+          }
+        }
+      },
+      "continuous_angle_ood": {
+        "cases": 16,
+        "arms": {
+          "nominal": {
+            "n": 16,
+            "successes": 1,
+            "success_rate": 0.0625,
+            "return_sum": 1.0,
+            "return_mean": 0.0625,
+            "controls": 5202,
+            "return_sources": {
+              "archived_sum_only": 16
+            }
+          },
+          "privileged_oracle": {
+            "n": 16,
+            "successes": 16,
+            "success_rate": 1.0,
+            "return_sum": 16.0,
+            "return_mean": 1.0,
+            "controls": 2561,
+            "return_sources": {
+              "archived_sum_only": 16
+            }
+          }
+        },
+        "paired": {
+          "privileged_oracle": {
+            "nominal": {
+              "n": 16,
+              "wins": 15,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 93.75,
+              "mean_return_gain": 0.9375
+            }
+          }
+        }
+      },
+      "familiar": {
+        "cases": 16,
+        "arms": {
+          "nominal": {
+            "n": 16,
+            "successes": 8,
+            "success_rate": 0.5,
+            "return_sum": 8.0,
+            "return_mean": 0.5,
+            "controls": 3895,
+            "return_sources": {
+              "archived_sum_only": 16
+            }
+          },
+          "privileged_oracle": {
+            "n": 16,
+            "successes": 16,
+            "success_rate": 1.0,
+            "return_sum": 16.0,
+            "return_mean": 1.0,
+            "controls": 2510,
+            "return_sources": {
+              "archived_sum_only": 16
+            }
+          }
+        },
+        "paired": {
+          "privileged_oracle": {
+            "nominal": {
+              "n": 16,
+              "wins": 8,
+              "losses": 0,
+              "ties": 8,
+              "success_gain_pp": 50.0,
+              "mean_return_gain": 0.5
+            }
+          }
+        }
+      },
+      "comp_180_lo_inv": {
+        "cases": 8,
+        "arms": {
+          "nominal": {
+            "n": 8,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 2640,
+            "return_sources": {
+              "archived_sum_only": 8
+            }
+          },
+          "privileged_oracle": {
+            "n": 8,
+            "successes": 8,
+            "success_rate": 1.0,
+            "return_sum": 8.0,
+            "return_mean": 1.0,
+            "controls": 1332,
+            "return_sources": {
+              "archived_sum_only": 8
+            }
+          }
+        },
+        "paired": {
+          "privileged_oracle": {
+            "nominal": {
+              "n": 8,
+              "wins": 8,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            }
+          }
+        }
+      },
+      "comp_m90_hi_inv": {
+        "cases": 8,
+        "arms": {
+          "nominal": {
+            "n": 8,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 2640,
+            "return_sources": {
+              "archived_sum_only": 8
+            }
+          },
+          "privileged_oracle": {
+            "n": 8,
+            "successes": 7,
+            "success_rate": 0.875,
+            "return_sum": 7.0,
+            "return_mean": 0.875,
+            "controls": 1572,
+            "return_sources": {
+              "archived_sum_only": 8
+            }
+          }
+        },
+        "paired": {
+          "privileged_oracle": {
+            "nominal": {
+              "n": 8,
+              "wins": 7,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 87.5,
+              "mean_return_gain": 0.875
+            }
+          }
+        }
+      },
+      "cont_135_075_inv": {
+        "cases": 8,
+        "arms": {
+          "nominal": {
+            "n": 8,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 2640,
+            "return_sources": {
+              "archived_sum_only": 8
+            }
+          },
+          "privileged_oracle": {
+            "n": 8,
+            "successes": 8,
+            "success_rate": 1.0,
+            "return_sum": 8.0,
+            "return_mean": 1.0,
+            "controls": 1283,
+            "return_sources": {
+              "archived_sum_only": 8
+            }
+          }
+        },
+        "paired": {
+          "privileged_oracle": {
+            "nominal": {
+              "n": 8,
+              "wins": 8,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            }
+          }
+        }
+      },
+      "cont_45_nom": {
+        "cases": 8,
+        "arms": {
+          "nominal": {
+            "n": 8,
+            "successes": 1,
+            "success_rate": 0.125,
+            "return_sum": 1.0,
+            "return_mean": 0.125,
+            "controls": 2562,
+            "return_sources": {
+              "archived_sum_only": 8
+            }
+          },
+          "privileged_oracle": {
+            "n": 8,
+            "successes": 8,
+            "success_rate": 1.0,
+            "return_sum": 8.0,
+            "return_mean": 1.0,
+            "controls": 1278,
+            "return_sources": {
+              "archived_sum_only": 8
+            }
+          }
+        },
+        "paired": {
+          "privileged_oracle": {
+            "nominal": {
+              "n": 8,
+              "wins": 7,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 87.5,
+              "mean_return_gain": 0.875
+            }
+          }
+        }
+      },
+      "fam_nom": {
+        "cases": 8,
+        "arms": {
+          "nominal": {
+            "n": 8,
+            "successes": 8,
+            "success_rate": 1.0,
+            "return_sum": 8.0,
+            "return_mean": 1.0,
+            "controls": 1255,
+            "return_sources": {
+              "archived_sum_only": 8
+            }
+          },
+          "privileged_oracle": {
+            "n": 8,
+            "successes": 8,
+            "success_rate": 1.0,
+            "return_sum": 8.0,
+            "return_mean": 1.0,
+            "controls": 1255,
+            "return_sources": {
+              "archived_sum_only": 8
+            }
+          }
+        },
+        "paired": {
+          "privileged_oracle": {
+            "nominal": {
+              "n": 8,
+              "wins": 0,
+              "losses": 0,
+              "ties": 8,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            }
+          }
+        }
+      },
+      "fam_yaw90": {
+        "cases": 8,
+        "arms": {
+          "nominal": {
+            "n": 8,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 2640,
+            "return_sources": {
+              "archived_sum_only": 8
+            }
+          },
+          "privileged_oracle": {
+            "n": 8,
+            "successes": 8,
+            "success_rate": 1.0,
+            "return_sum": 8.0,
+            "return_mean": 1.0,
+            "controls": 1255,
+            "return_sources": {
+              "archived_sum_only": 8
+            }
+          }
+        },
+        "paired": {
+          "privileged_oracle": {
+            "nominal": {
+              "n": 8,
+              "wins": 8,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            }
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "suite": "libero_10",
+        "task_id": 0,
+        "embodiment": "fam_nom",
+        "true_latent": {
+          "yaw_deg": 0,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "familiar",
+        "seed": 20300000,
+        "arms": {
+          "nominal": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 265,
+            "terminated": true,
+            "truncated": false
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 265,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_10",
+        "task_id": 0,
+        "embodiment": "fam_yaw90",
+        "true_latent": {
+          "yaw_deg": 90,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "familiar",
+        "seed": 20300000,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 520,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 265,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_10",
+        "task_id": 0,
+        "embodiment": "comp_180_lo_inv",
+        "true_latent": {
+          "yaw_deg": 180,
+          "xy_scale": 0.65,
+          "gripper_sign": -1
+        },
+        "regime": "compositional_ood",
+        "seed": 20300000,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 520,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 311,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_10",
+        "task_id": 0,
+        "embodiment": "comp_m90_hi_inv",
+        "true_latent": {
+          "yaw_deg": -90,
+          "xy_scale": 1.55,
+          "gripper_sign": -1
+        },
+        "regime": "compositional_ood",
+        "seed": 20300000,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 520,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 290,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_10",
+        "task_id": 0,
+        "embodiment": "cont_45_nom",
+        "true_latent": {
+          "yaw_deg": 45,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "continuous_angle_ood",
+        "seed": 20300000,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 520,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 288,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_10",
+        "task_id": 0,
+        "embodiment": "cont_135_075_inv",
+        "true_latent": {
+          "yaw_deg": 135,
+          "xy_scale": 0.75,
+          "gripper_sign": -1
+        },
+        "regime": "continuous_angle_ood",
+        "seed": 20300000,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 520,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 292,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_10",
+        "task_id": 3,
+        "embodiment": "fam_nom",
+        "true_latent": {
+          "yaw_deg": 0,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "familiar",
+        "seed": 20300300,
+        "arms": {
+          "nominal": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 232,
+            "terminated": true,
+            "truncated": false
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 232,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_10",
+        "task_id": 3,
+        "embodiment": "fam_yaw90",
+        "true_latent": {
+          "yaw_deg": 90,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "familiar",
+        "seed": 20300300,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 520,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 232,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_10",
+        "task_id": 3,
+        "embodiment": "comp_180_lo_inv",
+        "true_latent": {
+          "yaw_deg": 180,
+          "xy_scale": 0.65,
+          "gripper_sign": -1
+        },
+        "regime": "compositional_ood",
+        "seed": 20300300,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 520,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 232,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_10",
+        "task_id": 3,
+        "embodiment": "comp_m90_hi_inv",
+        "true_latent": {
+          "yaw_deg": -90,
+          "xy_scale": 1.55,
+          "gripper_sign": -1
+        },
+        "regime": "compositional_ood",
+        "seed": 20300300,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 520,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 520,
+            "terminated": false,
+            "truncated": true
+          }
+        }
+      },
+      {
+        "suite": "libero_10",
+        "task_id": 3,
+        "embodiment": "cont_45_nom",
+        "true_latent": {
+          "yaw_deg": 45,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "continuous_angle_ood",
+        "seed": 20300300,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 520,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 228,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_10",
+        "task_id": 3,
+        "embodiment": "cont_135_075_inv",
+        "true_latent": {
+          "yaw_deg": 135,
+          "xy_scale": 0.75,
+          "gripper_sign": -1
+        },
+        "regime": "continuous_angle_ood",
+        "seed": 20300300,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 520,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 232,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 0,
+        "embodiment": "fam_nom",
+        "true_latent": {
+          "yaw_deg": 0,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "familiar",
+        "seed": 20310000,
+        "arms": {
+          "nominal": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 127,
+            "terminated": true,
+            "truncated": false
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 127,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 0,
+        "embodiment": "fam_yaw90",
+        "true_latent": {
+          "yaw_deg": 90,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "familiar",
+        "seed": 20310000,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 127,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 0,
+        "embodiment": "comp_180_lo_inv",
+        "true_latent": {
+          "yaw_deg": 180,
+          "xy_scale": 0.65,
+          "gripper_sign": -1
+        },
+        "regime": "compositional_ood",
+        "seed": 20310000,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 137,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 0,
+        "embodiment": "comp_m90_hi_inv",
+        "true_latent": {
+          "yaw_deg": -90,
+          "xy_scale": 1.55,
+          "gripper_sign": -1
+        },
+        "regime": "compositional_ood",
+        "seed": 20310000,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 127,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 0,
+        "embodiment": "cont_45_nom",
+        "true_latent": {
+          "yaw_deg": 45,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "continuous_angle_ood",
+        "seed": 20310000,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 120,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 0,
+        "embodiment": "cont_135_075_inv",
+        "true_latent": {
+          "yaw_deg": 135,
+          "xy_scale": 0.75,
+          "gripper_sign": -1
+        },
+        "regime": "continuous_angle_ood",
+        "seed": 20310000,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 123,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 1,
+        "embodiment": "fam_nom",
+        "true_latent": {
+          "yaw_deg": 0,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "familiar",
+        "seed": 20310100,
+        "arms": {
+          "nominal": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 82,
+            "terminated": true,
+            "truncated": false
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 82,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 1,
+        "embodiment": "fam_yaw90",
+        "true_latent": {
+          "yaw_deg": 90,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "familiar",
+        "seed": 20310100,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 82,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 1,
+        "embodiment": "comp_180_lo_inv",
+        "true_latent": {
+          "yaw_deg": 180,
+          "xy_scale": 0.65,
+          "gripper_sign": -1
+        },
+        "regime": "compositional_ood",
+        "seed": 20310100,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 90,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 1,
+        "embodiment": "comp_m90_hi_inv",
+        "true_latent": {
+          "yaw_deg": -90,
+          "xy_scale": 1.55,
+          "gripper_sign": -1
+        },
+        "regime": "compositional_ood",
+        "seed": 20310100,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 82,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 1,
+        "embodiment": "cont_45_nom",
+        "true_latent": {
+          "yaw_deg": 45,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "continuous_angle_ood",
+        "seed": 20310100,
+        "arms": {
+          "nominal": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 222,
+            "terminated": true,
+            "truncated": false
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 82,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 1,
+        "embodiment": "cont_135_075_inv",
+        "true_latent": {
+          "yaw_deg": 135,
+          "xy_scale": 0.75,
+          "gripper_sign": -1
+        },
+        "regime": "continuous_angle_ood",
+        "seed": 20310100,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 86,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_object",
+        "task_id": 0,
+        "embodiment": "fam_nom",
+        "true_latent": {
+          "yaw_deg": 0,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "familiar",
+        "seed": 20320000,
+        "arms": {
+          "nominal": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 138,
+            "terminated": true,
+            "truncated": false
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 138,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_object",
+        "task_id": 0,
+        "embodiment": "fam_yaw90",
+        "true_latent": {
+          "yaw_deg": 90,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "familiar",
+        "seed": 20320000,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 280,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 138,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_object",
+        "task_id": 0,
+        "embodiment": "comp_180_lo_inv",
+        "true_latent": {
+          "yaw_deg": 180,
+          "xy_scale": 0.65,
+          "gripper_sign": -1
+        },
+        "regime": "compositional_ood",
+        "seed": 20320000,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 280,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 156,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_object",
+        "task_id": 0,
+        "embodiment": "comp_m90_hi_inv",
+        "true_latent": {
+          "yaw_deg": -90,
+          "xy_scale": 1.55,
+          "gripper_sign": -1
+        },
+        "regime": "compositional_ood",
+        "seed": 20320000,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 280,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 148,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_object",
+        "task_id": 0,
+        "embodiment": "cont_45_nom",
+        "true_latent": {
+          "yaw_deg": 45,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "continuous_angle_ood",
+        "seed": 20320000,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 280,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 148,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_object",
+        "task_id": 0,
+        "embodiment": "cont_135_075_inv",
+        "true_latent": {
+          "yaw_deg": 135,
+          "xy_scale": 0.75,
+          "gripper_sign": -1
+        },
+        "regime": "continuous_angle_ood",
+        "seed": 20320000,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 280,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 146,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_object",
+        "task_id": 7,
+        "embodiment": "fam_nom",
+        "true_latent": {
+          "yaw_deg": 0,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "familiar",
+        "seed": 20320700,
+        "arms": {
+          "nominal": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 137,
+            "terminated": true,
+            "truncated": false
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 137,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_object",
+        "task_id": 7,
+        "embodiment": "fam_yaw90",
+        "true_latent": {
+          "yaw_deg": 90,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "familiar",
+        "seed": 20320700,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 280,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 137,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_object",
+        "task_id": 7,
+        "embodiment": "comp_180_lo_inv",
+        "true_latent": {
+          "yaw_deg": 180,
+          "xy_scale": 0.65,
+          "gripper_sign": -1
+        },
+        "regime": "compositional_ood",
+        "seed": 20320700,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 280,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 154,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_object",
+        "task_id": 7,
+        "embodiment": "comp_m90_hi_inv",
+        "true_latent": {
+          "yaw_deg": -90,
+          "xy_scale": 1.55,
+          "gripper_sign": -1
+        },
+        "regime": "compositional_ood",
+        "seed": 20320700,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 280,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 138,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_object",
+        "task_id": 7,
+        "embodiment": "cont_45_nom",
+        "true_latent": {
+          "yaw_deg": 45,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "continuous_angle_ood",
+        "seed": 20320700,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 280,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 141,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_object",
+        "task_id": 7,
+        "embodiment": "cont_135_075_inv",
+        "true_latent": {
+          "yaw_deg": 135,
+          "xy_scale": 0.75,
+          "gripper_sign": -1
+        },
+        "regime": "continuous_angle_ood",
+        "seed": 20320700,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 280,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 150,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_spatial",
+        "task_id": 1,
+        "embodiment": "fam_nom",
+        "true_latent": {
+          "yaw_deg": 0,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "familiar",
+        "seed": 20330100,
+        "arms": {
+          "nominal": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 109,
+            "terminated": true,
+            "truncated": false
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 109,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_spatial",
+        "task_id": 1,
+        "embodiment": "fam_yaw90",
+        "true_latent": {
+          "yaw_deg": 90,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "familiar",
+        "seed": 20330100,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 220,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 109,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_spatial",
+        "task_id": 1,
+        "embodiment": "comp_180_lo_inv",
+        "true_latent": {
+          "yaw_deg": 180,
+          "xy_scale": 0.65,
+          "gripper_sign": -1
+        },
+        "regime": "compositional_ood",
+        "seed": 20330100,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 220,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 124,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_spatial",
+        "task_id": 1,
+        "embodiment": "comp_m90_hi_inv",
+        "true_latent": {
+          "yaw_deg": -90,
+          "xy_scale": 1.55,
+          "gripper_sign": -1
+        },
+        "regime": "compositional_ood",
+        "seed": 20330100,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 220,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 108,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_spatial",
+        "task_id": 1,
+        "embodiment": "cont_45_nom",
+        "true_latent": {
+          "yaw_deg": 45,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "continuous_angle_ood",
+        "seed": 20330100,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 220,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 110,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_spatial",
+        "task_id": 1,
+        "embodiment": "cont_135_075_inv",
+        "true_latent": {
+          "yaw_deg": 135,
+          "xy_scale": 0.75,
+          "gripper_sign": -1
+        },
+        "regime": "continuous_angle_ood",
+        "seed": 20330100,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 220,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 117,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_spatial",
+        "task_id": 7,
+        "embodiment": "fam_nom",
+        "true_latent": {
+          "yaw_deg": 0,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "familiar",
+        "seed": 20330700,
+        "arms": {
+          "nominal": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 165,
+            "terminated": true,
+            "truncated": false
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 165,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_spatial",
+        "task_id": 7,
+        "embodiment": "fam_yaw90",
+        "true_latent": {
+          "yaw_deg": 90,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "familiar",
+        "seed": 20330700,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 220,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 165,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_spatial",
+        "task_id": 7,
+        "embodiment": "comp_180_lo_inv",
+        "true_latent": {
+          "yaw_deg": 180,
+          "xy_scale": 0.65,
+          "gripper_sign": -1
+        },
+        "regime": "compositional_ood",
+        "seed": 20330700,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 220,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 128,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_spatial",
+        "task_id": 7,
+        "embodiment": "comp_m90_hi_inv",
+        "true_latent": {
+          "yaw_deg": -90,
+          "xy_scale": 1.55,
+          "gripper_sign": -1
+        },
+        "regime": "compositional_ood",
+        "seed": 20330700,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 220,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 159,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_spatial",
+        "task_id": 7,
+        "embodiment": "cont_45_nom",
+        "true_latent": {
+          "yaw_deg": 45,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "continuous_angle_ood",
+        "seed": 20330700,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 220,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 161,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      },
+      {
+        "suite": "libero_spatial",
+        "task_id": 7,
+        "embodiment": "cont_135_075_inv",
+        "true_latent": {
+          "yaw_deg": 135,
+          "xy_scale": 0.75,
+          "gripper_sign": -1
+        },
+        "regime": "continuous_angle_ood",
+        "seed": 20330700,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "archived_sum_only",
+            "controls": 220,
+            "terminated": false,
+            "truncated": true
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "archived_sum_only",
+            "controls": 137,
+            "terminated": true,
+            "truncated": false
+          }
+        }
+      }
+    ],
+    "archived_count_disagreements": [],
+    "predicates": {
+      "overall_oracle_rate": true,
+      "overall_gain": true,
+      "no_base_regression": true
+    },
+    "passed": true,
+    "archived_passed": true,
+    "archived_decision_agrees": true,
+    "source": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-sysid-20261119-r1/gpu01gate1/gate1/gate1-summary.json",
+      "sha256": "7f340825175389b98a71bdff9317c0742b8321f3b12378f9fe18702b775c7388"
+    }
+  }
+}
