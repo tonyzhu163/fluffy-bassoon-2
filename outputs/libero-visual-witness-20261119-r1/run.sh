@@ -14,7 +14,7 @@ code=$(git -C "$(dirname "$0")" rev-parse --show-toplevel)
 [[ $(cut -d' ' -f1 "$archive/pacing01/launch.txt") == 6ddd4381fd9ef9145e1398f3a602de3e47394193 ]]
 export CUDA_VISIBLE_DEVICES="" PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 LP_NUM_THREADS=1
-export LIBGL_ALWAYS_SOFTWARE=1 __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json
+export LIBGL_ALWAYS_SOFTWARE=1 MUJOCO_EGL_DEVICE_ID=1 __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json
 export PYTHONPATH="$release:$runtime/simulator-source:$code/src"
 export LIBERO_PRO_ROOT="$runtime/simulator-source" LIBERO_CONFIG_PATH="$runtime/libero-config"
 export TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD=1 MUJOCO_GL=egl PYOPENGL_PLATFORM=egl
