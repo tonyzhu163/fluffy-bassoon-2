@@ -281,7 +281,7 @@ def test_native_motor_caches_input_transform():
             nested = transformed["nested"][0].clone()
             # Mutate in place to verify prepare/actions cloning protects cached transforms.
             transformed["state_tensor"].zero_()
-            transformed["arr"].fill_(99.0)
+            transformed["arr"].fill(99.0)
             transformed["nested"][0].fill_(-1.0)
             transformed["extra"] = "mutated"
             obs = SimpleNamespace(state=state)
