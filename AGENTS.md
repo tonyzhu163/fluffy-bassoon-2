@@ -63,6 +63,10 @@ the [documentation index](docs/README.md). Keep LycoReco work and runs pinned to
   queue capacity, limits and actual accelerator type before scheduling. Keep
   GPU isolation at the exclusive scheduler container. Avoid nested device
   namespaces and bubblewrap so the job retains scheduler GPU visibility.
+- Submit full GPU training, rollout collection and benchmark evaluation on
+  RTX 4090 or RTX PRO 6000D through Baige **分布式训练** (Distributed
+  Training), including single-GPU runs. Use **开发机** (development machine)
+  GPUs exclusively for short smoke tests and runtime qualification.
 - During Baige computer use, reuse and navigate existing browser windows,
   tabs and console terminals. Open a new one only when no suitable existing
   surface is available or the user requests it.

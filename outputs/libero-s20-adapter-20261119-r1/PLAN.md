@@ -38,7 +38,8 @@ the strongest fixed setting establishes motor coverage. Improvement over the
 lag-estimate arm measures the remaining opportunity for learned inference.
 The official test tasks remain reserved. This is a phase-one diagnostic.
 
-Reserve up to four incremental GPU-hours including qualification, fitting
-and evaluation on Baige. Save the adapter, optimizer, step and sampler RNG
+Reserve up to four incremental GPU-hours on Baige. Use the development GPU
+for smoke tests and submit the full fit and benchmark panel through
+**分布式训练**. Save the adapter, optimizer, step and sampler RNG
 in the checkpoint. Reassess the fit after the held-out action and native
 success readouts. [Frozen action menu pilot](../libero-decision-pretraining-20261119-r1/RESULT.md)
