@@ -3,8 +3,8 @@
 Replay the first two HDF5 groups per condition on each of the two cached
 fitting bowl tasks (Goal 4 and 8). Use their recorded seeds, reset IDs,
 commands, camera resolution and horizons, the pinned LIBERO-Pro2.0 simulator
-`e5500c69`, and the training archive at `6c4c5524`. Match the initial public
-observation, record divergence in wrist motion, and score native success
+`e5500c69`, and the training archive at `6c4c5524`. Match the first recorded
+observation at its measured timing, record divergence in wrist motion, and score native success
 at the benchmark endpoint. Where the GPU is occupied, first check the same
 physics, proprioception and rewards with the camera sensors disabled.
 Inspect command activity across all 120 cached
@@ -15,6 +15,8 @@ For the first learned motor, train a small timing-conditioned action adapter
 on the 24 fitting tasks' released BASE and S20 demo commands. Deduplicate
 the declared copies, report effective reset coverage, and hold π0.5 weights
 fixed. Use the public image and state at the time the command was issued.
+On the audited archives, observation row `t` is the result of action `t`.
+Pair it with `actions[t + 1]` and subsequent commands when training.
 Provide the true timing setting as an adapter input during this diagnostic.
 Use learned action-chunk targets that respect the issued-command convention.
 An analytic predictive comparator would need to account for both stale

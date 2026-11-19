@@ -34,16 +34,17 @@ def replay(demo, archive_name, demo_name, manifest, cameras):
     env = LiberoEnvironmentAdapter()
     try:
         reset = env.create(spec)
-        raw = reset["observation"]
-        first_matches = {field: bool(np.array_equal(value, demo["obs"][field][0]))
-                         for field, value in raw.items() if field in demo["obs"]}
+        reset_position = reset["observation"]["robot0_eef_pos"]
         position_error = []
         reward_disagreements = 0
         for step, action in enumerate(actions):
-            position_error.append(float(np.linalg.norm(raw["robot0_eef_pos"] - recorded_position[step])))
             result = env.step(action)
             reward_disagreements += int(result["reward"] != recorded_reward[step])
             raw = result["observation"]
+            if step == 0:
+                first_matches = {field: bool(np.array_equal(value, demo["obs"][field][0]))
+                                 for field, value in raw.items() if field in demo["obs"]}
+            position_error.append(float(np.linalg.norm(raw["robot0_eef_pos"] - recorded_position[step])))
             if result["terminated"] or result["truncated"]:
                 break
     finally:
@@ -52,7 +53,9 @@ def replay(demo, archive_name, demo_name, manifest, cameras):
                 recorded_success=bool(demo.attrs["success"]), recorded_steps=len(actions),
                 replay_success=result["success"], replay_steps=step + 1,
                 instruction_match=reset["language_instruction"] == source["instruction"],
-                first_matches=first_matches, peak_position_error_m=max(position_error),
+                first_post_action_matches=first_matches, peak_position_error_m=max(position_error),
+                reset_to_first_position_m=float(np.linalg.norm(reset_position - recorded_position[0])),
+                exact_position_controls=sum(error == 0 for error in position_error),
                 reward_disagreements=reward_disagreements)
 
 

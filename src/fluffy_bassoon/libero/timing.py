@@ -29,7 +29,7 @@ def estimate_command_lag(
         commands: Sequence/array of issued commands with shape ``[T, >=3]``.
         positions: Sequence/array of end-effector positions with shape ``[T, >=3]``.
         positions_timing: ``"before"`` when ``positions[t]`` is observed before
-            ``commands[t]`` executes (HDF5 demo convention, aligning ``dy[t]``
+            ``commands[t]`` executes (aligning ``dy[t]``
             with ``commands[t - lag]``), or ``"after"`` when ``positions[t]``
             is recorded after ``step(commands[t])`` (live ``state_after``
             convention, aligning ``dy[t]`` with ``commands[t + 1 - lag]``).
