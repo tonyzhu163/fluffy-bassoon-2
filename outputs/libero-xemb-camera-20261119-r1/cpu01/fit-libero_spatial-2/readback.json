@@ -1,0 +1,401 @@
+{
+  "spec": {
+    "suite": "libero_spatial",
+    "task_id": 2,
+    "variant": "BASE",
+    "init_state_id": 0,
+    "seed": 19111906,
+    "camera_names": [
+      "agentview",
+      "robot0_eye_in_hand"
+    ],
+    "camera_height": 128,
+    "camera_width": 128,
+    "control_mode": "relative",
+    "max_steps": 220,
+    "_bddl_path": "/mowenjie/fluffy-bassoon-2/sources/libero-pro2-e5500c69/assets/bddl/libero-pro2.0-1680-v1/libero_spatial/00_base/BASE__pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate.bddl"
+  },
+  "initial_state": "11e88d0a0cc46b2b5cda9f5663e7405ca254dc6832ce81d90165366c88cde6b6",
+  "plan_fingerprint": "154bbf4bc97876a6a3c423a0961ca7dd706c2b507fcad5616254971c433bebcd",
+  "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+  "vendor": "Mesa",
+  "base_body": "robot0_base",
+  "world_base_xmat": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "world_base_xpos": [
+    -0.66,
+    0.0,
+    0.912
+  ],
+  "time_s": 0.5000000000000003,
+  "reset_physics": {
+    "integration": "27b6486d7cbbc28d2eb1f9dea84874d8f4d6abb9c9c224fb6fae92fa5cc1993a",
+    "body_xpos": "f96d16087ca933ecaee498eb2918f29e0b5e61a4759fbe790b13934981441a9b",
+    "body_xmat": "d4e58638c526f655af597095398fac6ba62bb1424015849c322fe4e78d878b1d"
+  },
+  "reset_public_sha256": {
+    "agentview_image": "b6aec365db44f6e33c2655226820c9ecab2c904dc89d044867237fa5004c3c2f",
+    "robot0_eye_in_hand_image": "9d5be1bc427a7a7ffb1ddacae6bf278d59ded783ee4a0dcf946ed16347172c8f",
+    "robot0_joint_pos": "778008f12e390b3974566ae6162ad3c97ee4f982c77e4e8bda8732cda64a3166",
+    "robot0_joint_vel": "b7c10f43629352bd5016e8ff76391639751da795f5663e5fc63ea6ee7cfe219e",
+    "robot0_eef_pos": "fc3cd705332aa5985fac6b17f22dc420a3d681221eb374706b461ebc8534a562",
+    "robot0_eef_quat_xyzw": "0984b255b7e163900cb289d709c8c80a09aeb52164d6f0730fdec11c6f884b9d",
+    "robot0_gripper_qpos": "ca8e95891ef8a881c6afacb0ecf215f186cd6547e2305a8eb856b2ec74ee05bf"
+  },
+  "exposures": [
+    {
+      "command_deg": 0,
+      "realized_deg": -2.634596759558635e-15,
+      "base_R_cam": [
+        [
+          -7.268184498698815e-08,
+          -0.6282664504107425,
+          0.7779982437565529
+        ],
+        [
+          0.9999999999999858,
+          7.268184498698815e-08,
+          1.521152659944569e-07
+        ],
+        [
+          -1.521152659944569e-07,
+          0.7779982437565529,
+          0.6282664504107283
+        ]
+      ],
+      "base_t_cam": [
+        1.318613174683477,
+        0.0,
+        0.6983500240372423
+      ],
+      "relative_rotation": [
+        [
+          1.0,
+          -4.598238791667157e-17,
+          2.1970724397686267e-17
+        ],
+        [
+          -4.598238791667157e-17,
+          0.9999999999999999,
+          0.0
+        ],
+        [
+          2.1970724397686267e-17,
+          0.0,
+          0.9999999999999998
+        ]
+      ],
+      "world_cam_xmat": [
+        [
+          -7.268184498698815e-08,
+          -0.6282664504107425,
+          0.7779982437565529
+        ],
+        [
+          0.9999999999999858,
+          7.268184498698815e-08,
+          1.521152659944569e-07
+        ],
+        [
+          -1.521152659944569e-07,
+          0.7779982437565529,
+          0.6282664504107283
+        ]
+      ],
+      "model_cam_quat": [
+        0.6380177212293417,
+        0.30484971880648903,
+        0.30484983801576876,
+        0.6380177212293417
+      ],
+      "physics": {
+        "integration": "27b6486d7cbbc28d2eb1f9dea84874d8f4d6abb9c9c224fb6fae92fa5cc1993a",
+        "body_xpos": "f96d16087ca933ecaee498eb2918f29e0b5e61a4759fbe790b13934981441a9b",
+        "body_xmat": "d4e58638c526f655af597095398fac6ba62bb1424015849c322fe4e78d878b1d"
+      },
+      "public_sha256": {
+        "agentview_image": "b6aec365db44f6e33c2655226820c9ecab2c904dc89d044867237fa5004c3c2f",
+        "robot0_eye_in_hand_image": "9d5be1bc427a7a7ffb1ddacae6bf278d59ded783ee4a0dcf946ed16347172c8f",
+        "robot0_joint_pos": "778008f12e390b3974566ae6162ad3c97ee4f982c77e4e8bda8732cda64a3166",
+        "robot0_joint_vel": "b7c10f43629352bd5016e8ff76391639751da795f5663e5fc63ea6ee7cfe219e",
+        "robot0_eef_pos": "fc3cd705332aa5985fac6b17f22dc420a3d681221eb374706b461ebc8534a562",
+        "robot0_eef_quat_xyzw": "0984b255b7e163900cb289d709c8c80a09aeb52164d6f0730fdec11c6f884b9d",
+        "robot0_gripper_qpos": "ca8e95891ef8a881c6afacb0ecf215f186cd6547e2305a8eb856b2ec74ee05bf"
+      },
+      "changed_pixel_fraction": 0.0,
+      "rotation_max_abs_error": 2.220446049250313e-16,
+      "center_displacement_m": 0.0,
+      "optical_axis_displacement": 0.0,
+      "image": "roll+0.png"
+    },
+    {
+      "command_deg": 90,
+      "realized_deg": 89.99999999999999,
+      "base_R_cam": [
+        [
+          0.6282664504107424,
+          -7.268184510199405e-08,
+          0.7779982437565529
+        ],
+        [
+          -7.268184490164469e-08,
+          0.9999999999999857,
+          1.521152660142578e-07
+        ],
+        [
+          -0.7779982437565529,
+          -1.5211526591852932e-07,
+          0.6282664504107282
+        ]
+      ],
+      "base_t_cam": [
+        1.318613174683477,
+        0.0,
+        0.6983500240372423
+      ],
+      "relative_rotation": [
+        [
+          1.3132585426176864e-16,
+          0.9999999999999999,
+          4.1771641552082635e-17
+        ],
+        [
+          -0.9999999999999998,
+          8.534347957998687e-17,
+          -1.1102230246251565e-16
+        ],
+        [
+          -5.551115123125783e-17,
+          -1.9800903919506567e-17,
+          0.9999999999999998
+        ]
+      ],
+      "world_cam_xmat": [
+        [
+          0.6282664504107424,
+          -7.268184510199405e-08,
+          0.7779982437565529
+        ],
+        [
+          -7.268184490164469e-08,
+          0.9999999999999857,
+          1.521152660142578e-07
+        ],
+        [
+          -0.7779982437565529,
+          -1.5211526591852932e-07,
+          0.6282664504107282
+        ]
+      ],
+      "model_cam_quat": [
+        0.9022933143969116,
+        -8.429369005580334e-08,
+        0.4311226911154512,
+        5.551115123125783e-17
+      ],
+      "physics": {
+        "integration": "27b6486d7cbbc28d2eb1f9dea84874d8f4d6abb9c9c224fb6fae92fa5cc1993a",
+        "body_xpos": "f96d16087ca933ecaee498eb2918f29e0b5e61a4759fbe790b13934981441a9b",
+        "body_xmat": "d4e58638c526f655af597095398fac6ba62bb1424015849c322fe4e78d878b1d"
+      },
+      "public_sha256": {
+        "agentview_image": "230ca41f0557074747f751b27a84a3fff6180d2daa6504dc009d8d67ef58cc8a",
+        "robot0_eye_in_hand_image": "9d5be1bc427a7a7ffb1ddacae6bf278d59ded783ee4a0dcf946ed16347172c8f",
+        "robot0_joint_pos": "778008f12e390b3974566ae6162ad3c97ee4f982c77e4e8bda8732cda64a3166",
+        "robot0_joint_vel": "b7c10f43629352bd5016e8ff76391639751da795f5663e5fc63ea6ee7cfe219e",
+        "robot0_eef_pos": "fc3cd705332aa5985fac6b17f22dc420a3d681221eb374706b461ebc8534a562",
+        "robot0_eef_quat_xyzw": "0984b255b7e163900cb289d709c8c80a09aeb52164d6f0730fdec11c6f884b9d",
+        "robot0_gripper_qpos": "ca8e95891ef8a881c6afacb0ecf215f186cd6547e2305a8eb856b2ec74ee05bf"
+      },
+      "changed_pixel_fraction": 0.99627685546875,
+      "rotation_max_abs_error": 2.220446049250313e-16,
+      "center_displacement_m": 0.0,
+      "optical_axis_displacement": 1.1277423216368107e-16,
+      "image": "roll+90.png"
+    },
+    {
+      "command_deg": -90,
+      "realized_deg": -89.99999999999999,
+      "base_R_cam": [
+        [
+          -0.6282664504107424,
+          7.268184494950892e-08,
+          0.7779982437565529
+        ],
+        [
+          7.268184514985828e-08,
+          -0.9999999999999857,
+          1.5211526601870402e-07
+        ],
+        [
+          0.7779982437565529,
+          1.521152661144325e-07,
+          0.6282664504107282
+        ]
+      ],
+      "base_t_cam": [
+        1.318613174683477,
+        0.0,
+        0.6983500240372423
+      ],
+      "relative_rotation": [
+        [
+          1.1688772768956587e-16,
+          -0.9999999999999999,
+          4.6217849841118466e-17
+        ],
+        [
+          0.9999999999999998,
+          1.6287015531090684e-16,
+          -1.1102230246251565e-16
+        ],
+        [
+          5.551115123125783e-17,
+          2.42471254434322e-17,
+          0.9999999999999998
+        ]
+      ],
+      "world_cam_xmat": [
+        [
+          -0.6282664504107424,
+          7.268184494950892e-08,
+          0.7779982437565529
+        ],
+        [
+          7.268184514985828e-08,
+          -0.9999999999999857,
+          1.5211526601870402e-07
+        ],
+        [
+          0.7779982437565529,
+          1.521152661144325e-07,
+          0.6282664504107282
+        ]
+      ],
+      "model_cam_quat": [
+        5.551115123125783e-17,
+        0.4311226911154512,
+        8.429369011131449e-08,
+        0.9022933143969116
+      ],
+      "physics": {
+        "integration": "27b6486d7cbbc28d2eb1f9dea84874d8f4d6abb9c9c224fb6fae92fa5cc1993a",
+        "body_xpos": "f96d16087ca933ecaee498eb2918f29e0b5e61a4759fbe790b13934981441a9b",
+        "body_xmat": "d4e58638c526f655af597095398fac6ba62bb1424015849c322fe4e78d878b1d"
+      },
+      "public_sha256": {
+        "agentview_image": "4ba8f08616686be2cb88bf1af28eb6aa47c097fa56710b8e61e0dae33d86e2b7",
+        "robot0_eye_in_hand_image": "9d5be1bc427a7a7ffb1ddacae6bf278d59ded783ee4a0dcf946ed16347172c8f",
+        "robot0_joint_pos": "778008f12e390b3974566ae6162ad3c97ee4f982c77e4e8bda8732cda64a3166",
+        "robot0_joint_vel": "b7c10f43629352bd5016e8ff76391639751da795f5663e5fc63ea6ee7cfe219e",
+        "robot0_eef_pos": "fc3cd705332aa5985fac6b17f22dc420a3d681221eb374706b461ebc8534a562",
+        "robot0_eef_quat_xyzw": "0984b255b7e163900cb289d709c8c80a09aeb52164d6f0730fdec11c6f884b9d",
+        "robot0_gripper_qpos": "ca8e95891ef8a881c6afacb0ecf215f186cd6547e2305a8eb856b2ec74ee05bf"
+      },
+      "changed_pixel_fraction": 0.99627685546875,
+      "rotation_max_abs_error": 2.220446049250313e-16,
+      "center_displacement_m": 0.0,
+      "optical_axis_displacement": 1.1363922779802736e-16,
+      "image": "roll-90.png"
+    },
+    {
+      "command_deg": 0,
+      "realized_deg": -2.634596759558635e-15,
+      "base_R_cam": [
+        [
+          -7.268184498698815e-08,
+          -0.6282664504107425,
+          0.7779982437565529
+        ],
+        [
+          0.9999999999999858,
+          7.268184498698815e-08,
+          1.521152659944569e-07
+        ],
+        [
+          -1.521152659944569e-07,
+          0.7779982437565529,
+          0.6282664504107283
+        ]
+      ],
+      "base_t_cam": [
+        1.318613174683477,
+        0.0,
+        0.6983500240372423
+      ],
+      "relative_rotation": [
+        [
+          1.0,
+          -4.598238791667157e-17,
+          2.1970724397686267e-17
+        ],
+        [
+          -4.598238791667157e-17,
+          0.9999999999999999,
+          0.0
+        ],
+        [
+          2.1970724397686267e-17,
+          0.0,
+          0.9999999999999998
+        ]
+      ],
+      "world_cam_xmat": [
+        [
+          -7.268184498698815e-08,
+          -0.6282664504107425,
+          0.7779982437565529
+        ],
+        [
+          0.9999999999999858,
+          7.268184498698815e-08,
+          1.521152659944569e-07
+        ],
+        [
+          -1.521152659944569e-07,
+          0.7779982437565529,
+          0.6282664504107283
+        ]
+      ],
+      "model_cam_quat": [
+        0.6380177212293417,
+        0.30484971880648903,
+        0.30484983801576876,
+        0.6380177212293417
+      ],
+      "physics": {
+        "integration": "27b6486d7cbbc28d2eb1f9dea84874d8f4d6abb9c9c224fb6fae92fa5cc1993a",
+        "body_xpos": "f96d16087ca933ecaee498eb2918f29e0b5e61a4759fbe790b13934981441a9b",
+        "body_xmat": "d4e58638c526f655af597095398fac6ba62bb1424015849c322fe4e78d878b1d"
+      },
+      "public_sha256": {
+        "agentview_image": "b6aec365db44f6e33c2655226820c9ecab2c904dc89d044867237fa5004c3c2f",
+        "robot0_eye_in_hand_image": "9d5be1bc427a7a7ffb1ddacae6bf278d59ded783ee4a0dcf946ed16347172c8f",
+        "robot0_joint_pos": "778008f12e390b3974566ae6162ad3c97ee4f982c77e4e8bda8732cda64a3166",
+        "robot0_joint_vel": "b7c10f43629352bd5016e8ff76391639751da795f5663e5fc63ea6ee7cfe219e",
+        "robot0_eef_pos": "fc3cd705332aa5985fac6b17f22dc420a3d681221eb374706b461ebc8534a562",
+        "robot0_eef_quat_xyzw": "0984b255b7e163900cb289d709c8c80a09aeb52164d6f0730fdec11c6f884b9d",
+        "robot0_gripper_qpos": "ca8e95891ef8a881c6afacb0ecf215f186cd6547e2305a8eb856b2ec74ee05bf"
+      },
+      "changed_pixel_fraction": 0.0,
+      "rotation_max_abs_error": 2.220446049250313e-16,
+      "center_displacement_m": 0.0,
+      "optical_axis_displacement": 0.0
+    }
+  ]
+}
