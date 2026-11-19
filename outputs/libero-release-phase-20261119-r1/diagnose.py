@@ -5,7 +5,7 @@ from pathlib import Path
 import json
 import sys
 import numpy as np
-from phase import SOURCE,ORDERS
+from phase import SOURCE,ORDERS,QUERIES,panel,policies
 
 
 def category(row):
@@ -60,6 +60,25 @@ def main(out):
         result[name]=dict(all=score(rows),zero=score([r for r in rows if r['zero']]),
                           by_support={int(p):score([r for r in rows if r['p']==p]) for p in sorted({r['p'] for r in rows})})
         assert all(result[name]['all']['native'][k]==report[name]['all']['native'][k] for k in choices[name])
+    with np.load(worker/'model.npz') as model:
+        bank=dict(model)
+    outcomes={q:tuple(np.array([queries[q,g] for g in (0,1)]) for _ in (0,1)) for q in QUERIES}
+    tapes,d,probs,original=panel(worker/'episodes',('early','late'),outcomes,bank)
+    assert all(np.array_equal(p,choices['stages'][k]) for k,p in original.items())
+    idx={k:i for i,k in enumerate(tapes)}
+    paired=np.array([all(library[p,g,m]['start'] is not None for m in ('early','late')) for p,g,_,_ in tapes])
+    row_mask=paired[d['keys']].all(axis=1)
+    y=np.array([t['hits'][:,g].any() for (p,g,j,b),t in tapes.items()])
+    donated={k:np.zeros(len(row_mask)) for k in probs}
+    for a,b in product((False,True),repeat=2):
+        remap=np.array([idx[p,g,j,(a,b)[g]] for p,g,j,_ in tapes])
+        vals=policies(dict(d,keys=remap[d['keys']]),tapes,bank,probs)
+        for k in probs:
+            donated[k]+=vals[k]/4
+    native=d['native'][row_mask]
+    result['both_triggers']=dict(practice_tapes=int(paired.sum()),rows=int(row_mask.sum()),
+        brier={k:float(np.mean(((p-y)**2)[paired])) for k,p in probs.items()},
+        donor={k:float((native[:,1]+donated[k][row_mask]*(native[:,0]-native[:,1])).sum()) for k in probs})
     (out/'diagnostic.json').write_text(json.dumps(result,indent=2)+'\n')
 
 
