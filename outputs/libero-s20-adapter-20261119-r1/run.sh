@@ -48,7 +48,16 @@ start=$(date +%s)
 trap 'rc=$?; printf "%s %s %s\n" "$rc" "$(date +%s)" "$start" > "$out/exit.txt"' EXIT
 exec 9>"$root/outputs/libero-bowl-decisions-20261118-r1/device.lock"
 flock -w 3600 9
-[[ -z $(nvidia-smi --query-compute-apps=pid --format=csv,noheader) ]]
+idle=false
+for ((check=0; check<30; check++)); do
+    if [[ -z $(nvidia-smi --query-compute-apps=pid --format=csv,noheader) &&
+          $(nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits) -le 5 ]]; then
+        idle=true
+        break
+    fi
+    sleep 2
+done
+[[ "$idle" == true ]]
 date +%s > "$out/gpu-start.txt"
 
 export CUDA_VISIBLE_DEVICES="$NVIDIA_VISIBLE_DEVICES" JAX_PLATFORMS=cuda
