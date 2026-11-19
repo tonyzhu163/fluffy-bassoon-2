@@ -77,6 +77,17 @@ the ketchup instruction placed either object. The 288 paired assignments
 reused 108 simulated episodes on six reset poses per layout.
 [Layout-level outcomes and intervention checks](../outputs/libero-object-history-20261119-r1/RESULT.md)
 
+On a separate Goal 4 BASE bowl panel, opening the gripper during lift allowed
+1/10 new practices to complete. The same override during descent allowed 9/10.
+A reader trained on 30 earlier practices that added wrist motion around jaw
+opening to public timing features earned 237/320 paired native successes versus
+224/320 with the timing features. The aggregate difference came from histories
+involving one placement where neither trigger fired. On the 256 assignments
+where both triggers fired on both practices, wrist and timing readers earned
+181 and 182 successes, versus 160.5 and 160 with same-start motion reassignment.
+The 320 assignments reuse five practice poses and four query poses in fixed-command
+simulator replay. [Physical intervention and transfer checks](../outputs/libero-release-phase-20261119-r1/RESULT.md)
+
 ## LIBERO-Gen motor qualification
 
 The released frozen Behavior Prompting Policy succeeded on 20/20 paired
