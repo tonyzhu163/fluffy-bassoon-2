@@ -41,11 +41,15 @@ if [[ "$stage" == "test" || "$stage" == "cpu-smoke" ]]; then
     export MUJOCO_EGL_DEVICE_ID=1 __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json
     export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 LP_NUM_THREADS=1
     if [[ "$stage" == "test" ]]; then
-        if "$python" -c "import pytest" >/dev/null 2>&1; then
-            timeout --kill-after=15s 10m "$python" -m pytest -q "$code/tests/test_xemb_sysid.py" > "$out/run.log" 2>&1
-        else
-            timeout --kill-after=15s 10m "$python" -Bu -c "import sys; sys.path.insert(0, '$code/tests'); import test_xemb_sysid as t; [getattr(t, n)() for n in dir(t) if n.startswith('test_')]; print('all unit tests passed')" > "$out/run.log" 2>&1
-        fi
+        export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
+        # Import the test harness after the qualified motor's own numerical packages.
+        test_site="$root/setups/robocasa365-native-20261101-r1/env/lib/python3.11/site-packages"
+        timeout --kill-after=15s 10m "$python" -Bu -c '
+import sys
+sys.path.append(sys.argv[1])
+import pytest
+raise SystemExit(pytest.main(["-p", "no:cacheprovider", "-q", sys.argv[2]]))
+' "$test_site" "$code/tests/test_xemb_sysid.py" > "$out/run.log" 2>&1
     else
         timeout --kill-after=15s 15m "$python" -Bu "$here/collect.py" \
             --output "$out/archive" --panel smoke --modes active_probe --allow-mesa > "$out/collect.log" 2>&1

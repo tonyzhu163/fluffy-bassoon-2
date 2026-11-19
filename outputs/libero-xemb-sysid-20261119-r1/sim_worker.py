@@ -70,7 +70,7 @@ def _inspect_robots():
     import robosuite.models.grippers as rs_grippers
 
     robot_names = sorted(getattr(rs_robots, "ROBOT_CLASS_MAPPING", {}).keys())
-    gripper_names = sorted(getattr(rs_grippers, "ALL_GRIPPERS", []))
+    gripper_names = sorted(name for name in getattr(rs_grippers, "ALL_GRIPPERS", []) if name is not None)
     return dict(robots=robot_names, grippers=gripper_names)
 
 
