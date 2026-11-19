@@ -22,15 +22,43 @@ kept=()
 for path in "${paths[@]}"; do
     [[ -n "$path" && ! -f "$path/libtorch_python.so" ]] && kept+=("$path")
 done
-glvnd="$setup/glvnd01/prefix/usr/lib/x86_64-linux-gnu"
-test -r "$glvnd/libOpenGL.so.0"
-export LD_LIBRARY_PATH="$glvnd$(printf ':%s' "${kept[@]}")"
+libs="$setup/desktop-libs02"
+glvnd="$libs/prefix/usr/lib/x86_64-linux-gnu"
+test -r "$glvnd/libOpenGL.so.0" && test -r "$glvnd/libX11.so.6"
+export LD_LIBRARY_PATH="$glvnd:$libs/prefix/lib/x86_64-linux-gnu$(printf ':%s' "${kept[@]}")"
+export __EGL_VENDOR_LIBRARY_FILENAMES="$libs/nvidia-vendor.json"
 export PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1
-/mowenjie/envs/wam-libero-plus-py310/bin/python -B -c 'import pathlib,torch
+if [[ "$stage" == qualify ]]; then
+    nvidia-smi --query-gpu=name,driver_version --format=csv,noheader
+    ldconfig -p | grep -E 'libEGL_nvidia|libcuda.so.1' || true
+    # Check one fitting reset before loading the large frozen motor.
+    (
+        legacy=/mowenjie/fluffy-bassoon
+        export LIBERO_STD_ROOT="$root/deps/libero-dsrl-87edbd1-20261029-r1/repo"
+        export LIBERO_CONFIG_PATH="$root/cache/libero-dsrl-87edbd1-20261029-r1"
+        export PYTHONPATH="$LIBERO_STD_ROOT:$code/../libero90-meta-retry-20261119-r1:$legacy/third_party/openpi-215abfb/packages/openpi-client/src:$legacy/envs/pi05-plus-client-deps"
+        export MUJOCO_GL=egl MUJOCO_EGL_DEVICE_ID=0 PYOPENGL_PLATFORM=egl
+        export MAGICK_HOME=/mowenjie/libs/libero-plus-imagemagick
+        export MAGICK_CODER_MODULE_PATH="$MAGICK_HOME/usr/lib/x86_64-linux-gnu/ImageMagick-6.9.11/modules-Q16/coders"
+        export LD_LIBRARY_PATH="$MAGICK_HOME/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH"
+        export TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD=1
+        /mowenjie/envs/wam-libero-plus-py310/bin/python -Bu - <<'PYTHON'
+import ctypes
+import pathlib
+import torch
 loaded = {s.split()[-1] for s in pathlib.Path("/proc/self/maps").read_text().splitlines() if "/libtorch_python.so" in s}
 expected = pathlib.Path(torch.__file__).parent / "lib/libtorch_python.so"
 assert {p.resolve() for p in map(pathlib.Path, loaded)} == {expected.resolve()}, loaded
-print("Simulator Torch:", expected, flush=True)'
+print("Simulator Torch:", expected, flush=True)
+ctypes.CDLL("libEGL_nvidia.so.0")
+from standard_sim import StandardLibero
+sim = StandardLibero()
+_, identity = sim.reset(dict(task_id=0, init_state_id=14, seed=7))
+print("Fitting practice renderer:", identity["renderer"], flush=True)
+sim.env.close()
+PYTHON
+    )
+fi
 if [[ "$stage" == qualify ]]; then
     exec bash "$runner" "$pin" fitting "$out/corpus01" --shard-index 0 --shards 960
 fi
