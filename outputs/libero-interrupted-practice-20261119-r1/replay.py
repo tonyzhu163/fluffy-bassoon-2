@@ -16,7 +16,7 @@ from libero_remote.environment.task_manifest import TaskManifest
 ROOT=Path('/mowenjie/fluffy-bassoon-2')
 BOWL=ROOT/'outputs/libero-matched-zero-corrections-20261119-r1/matched01/episodes'
 BOTTLE=ROOT/'outputs/libero-first-attempt-20261119-r1/transfer02/episodes/bottle'
-GOALS={'bowl':(4,8),'bottle':(2,9)}
+GOALS={'bowl':(4,8),'bottle':(2,9),'live':(2,9)}
 
 
 @lru_cache(maxsize=2)
@@ -36,6 +36,11 @@ def read_tape(family,p,g,j):
         block=BOWL/split/f'p{p}'
         with np.load(block/f'g{GOALS[family][g]}-practice{j}'/'tape.npz') as z:
             return z['actions'],z['states'],z['native'],json.loads((block/'initial.json').read_text())['physics']
+    if family=='live':
+        block=ROOT/'outputs/libero-interrupted-practice-20261119-r1/closed01/episodes'/f'p{p}-g{g}-sham'
+        rec=json.loads((block/'result.json').read_text())
+        assert rec['pose']==p and rec['goal']==g and rec['mode']=='sham'
+        with np.load(block/'tape.npz') as z:return z['issued'],z['states'],z['hits'],rec['physics']
     block=BOTTLE/f's{p-6}-BASE'/f'query-g{g}'
     rec=json.loads((block/'result.json').read_text())
     assert rec['scene']==p and rec['goal']==g
@@ -94,7 +99,9 @@ def simulate(job):
 if __name__=='__main__':
     out=Path(sys.argv[1]);out.mkdir()
     with (out/'branches.jsonl').open('x',buffering=1) as f, ProcessPoolExecutor(max_workers=6) as pool:
-        for family,poses,draws in [('bowl',range(32,36),range(4)),('bowl',range(44,48),range(4)),('bottle',range(6,12),range(1))]:
+        splits=[('live',range(24,30),range(1))] if sys.argv[2:]==['live'] else [
+            ('bowl',range(32,36),range(4)),('bowl',range(44,48),range(4)),('bottle',range(6,12),range(1))]
+        for family,poses,draws in splits:
             jobs=[(family,p,g,j,out) for p,g,j in product(poses,(0,1),draws)]
             for records in pool.map(simulate,jobs):
                 for r in records:
