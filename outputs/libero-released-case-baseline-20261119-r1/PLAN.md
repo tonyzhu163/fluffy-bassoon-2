@@ -17,7 +17,9 @@ Run the released benchmark planner, scheduler, policy runner and result
 export. The project provides an adapter for original JAX OpenPI π0.5 with
 bundled LIBERO normalization, ten flow steps and five actions executed per
 replan. The adapter clears its queue on every reset and samples explicit
-policy noise using the episode seed. There is no cross-episode context.
+policy noise using the episode seed. It clips decoded commands to the
+server-advertised bounds, following the release's own π0 adapter, and
+records the number and size of corrections. There is no cross-episode context.
 The server binds to the development container's loopback interface.
 Simulator and policy inference share the single allocated GPU.
 

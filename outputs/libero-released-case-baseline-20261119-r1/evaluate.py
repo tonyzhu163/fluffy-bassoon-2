@@ -20,7 +20,7 @@ CASES = ("BASE", "S15", "S20", "D17", "D18")
 
 
 class OpenPIAdapter:
-    def __init__(self, python):
+    def __init__(self, python, output):
         self.pipe, peer = Pipe()
         try:
             self.worker = subprocess.Popen(
@@ -31,17 +31,31 @@ class OpenPIAdapter:
         finally:
             peer.close()
         self.pending = deque()
+        self.output = output
+        self.commands = 0
+        self.clipped_commands = 0
+        self.clipped_coordinates = np.zeros(7, dtype=np.int64)
+        self.max_correction = np.zeros(7, dtype=np.float32)
 
     def reset(self, context):
         self.pending.clear()
         self.rng = np.random.default_rng(int(context.episode_spec["seed"]) + 817117)
+        self.low = np.asarray(context.action_schema["low"], dtype=np.float32)
+        self.high = np.asarray(context.action_schema["high"], dtype=np.float32)
 
     def act(self, observation):
         if not self.pending:
             noise = self.rng.standard_normal((10, 32)).astype(np.float32)
             self.pipe.send((observation, noise))
             self.pending.extend(self.pipe.recv()[:5])
-        return self.pending.popleft()
+        proposed = self.pending.popleft()
+        bounded = np.clip(proposed, self.low, self.high)
+        correction = np.abs(proposed - bounded)
+        self.commands += 1
+        self.clipped_commands += bool(correction.any())
+        self.clipped_coordinates += correction > 0
+        np.maximum(self.max_correction, correction, out=self.max_correction)
+        return bounded
 
     def close(self):
         self.pipe.close()
@@ -50,6 +64,10 @@ class OpenPIAdapter:
         except subprocess.TimeoutExpired:
             self.worker.terminate()
             self.worker.wait(timeout=30)
+        (self.output / "action-bounds.json").write_text(json.dumps(dict(
+            commands=self.commands, clipped_commands=self.clipped_commands,
+            clipped_coordinates=self.clipped_coordinates.tolist(),
+            max_correction=self.max_correction.tolist()), indent=2) + "\n")
 
 
 def main():
@@ -72,7 +90,7 @@ def main():
         submitted = submit_benchmark_plan(client, plan, args.output)
         run_id = submitted["run_id"]
         print(f"Released scheduler run {run_id}, {plan.rollout_count} episodes", flush=True)
-        adapter = OpenPIAdapter(args.motor_python)
+        adapter = OpenPIAdapter(args.motor_python, args.output)
         try:
             run_scheduled_run(client, run_id, "openpi-libero-development", adapter)
         finally:
