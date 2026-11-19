@@ -66,6 +66,7 @@ def fit(source):
         loss=np.mean((y-np.where(split,high,low))**2)
         if best is None or loss<best[0]:best=(loss,float(cut),float(low),float(high))
     models['jaw']=best[1:]
+    models['table']=fit_reward_table(source)
     models['prior']=[smooth([t['ever'][g] for t in source if t['goal']==g]) for g in (0,1)]
     models['off']=smooth([t['ever'][1-t['goal']] for t in source])
     return models
@@ -111,6 +112,22 @@ def decide(rewards, likelihood):
     return float(p[0]>p[1]) if not np.isclose(p[0],p[1],rtol=0,atol=1e-10) else .5
 
 
+def fit_reward_table(source):
+    pool={(r['pose'],r['goal'],r['draw'],r['interrupted']):r for r in source}
+    leaf=defaultdict(list)
+    poses=sorted({r['pose'] for r in source})
+    for i,p in enumerate(poses):
+        s,q=poses[(i+1)%len(poses)],poses[(i+2)%len(poses)]
+        native,_=query('bowl',q)
+        for g,j,k,b,c,h in product((0,1),range(4),range(4),(False,True),(False,True),(0,1)):
+            bits=(pool[p,g,j,b]['ever'][h],pool[s,1-g,k,c]['ever'][h])
+            leaf[(g,*bits)].append(native[:,h])
+    def choose(rows):
+        a,b=np.mean(rows,axis=0)
+        return .5 if a==b else float(a>b)
+    return {k:choose(rows) for k,rows in leaf.items()}
+
+
 def score(data, model, family, poses, draws, query_reader=query):
     poses=list(poses)
     panel={k:r for k,r in data.items() if k[0]==family and k[1] in poses}
@@ -139,6 +156,7 @@ def score(data, model, family, poses, draws, query_reader=query):
                 for hidden in (0,1):
                     rewards=actual[:,hidden]
                     policy={m:decide(rewards,mat) for m,mat in fields.items()}
+                    policy['table']=model['table'].get((first,*rewards.tolist()),.5)
                     policy['true']=decide(rewards,actual)
                     policy['donor']=np.mean([decide(rewards,mats['history']) for _,mats in branches.values()])
                     policy['opposite']=decide(rewards,branches[not b,not c][1]['history'])
