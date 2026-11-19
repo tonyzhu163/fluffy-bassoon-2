@@ -1,0 +1,5 @@
+# Motor pilot interface
+
+Run `gate.py --output DIR` with the qualified JAX OpenPI interpreter. It creates a fresh `DIR/pilot/` for the 96 episodes. Adding `--smoke` creates `DIR/smoke/` for one full native episode on pose 30 with reversed X, D17, the correct decoder and regrasp enabled. Each mode refuses to overwrite its own directory. Both use one visible CUDA device and the qualified EGL simulator interpreter.
+
+Within the mode directory, `episodes.jsonl` appends one JSON object per completed episode after its arrays are saved. The primary fields are `pose`, `wire` (+1 nominal, −1 reversed), `condition` (BASE or D17), `decode` (+1 identity, −1 invert X), `regrasp` (0 or 1), `native_success` (boolean), `seed`, `initial_physics`, `initial_public`, `first_proposal`, `d17_opportunity`, `d17_triggered`, `d17_event_control` and `controls`. `complete.json` appears only after every planned episode passes the runtime checks. Analyze the full pilot from `DIR/pilot/episodes.jsonl` after checking its completion marker.

@@ -1,0 +1,33 @@
+# Goal 2 live motor gate
+
+**Decision pending collection.** Can knowing the grasp condition change native cabinet-placement success once the X command convention is known? A perfect condition reader must have somewhere to improve over a controller that uses the correct X decoder and always retries the grasp. The previous wire probe could solve sign reversal analytically. The earlier D17 regrasp successes came from replayed commands on poses 24–29 against D18. The released live motor already solved 13 of 14 D17 assignments in a different panel. None of these comparisons measures the incremental value of selecting regrasp on the new live BASE/D17 queries. [Wire control](../libero-axis-native-20261119-r1/RESULT.md) · [Grasp recovery](../libero-temporal-recovery-20261119-r1/RESULT.md) · [Released live baseline](../libero-released-case-baseline-20261119-r1/RESULT.md)
+
+## Read the 96 branches as 24 paired decisions
+
+One case fixes pose, physical X sign and assigned grasp condition. Each case has four live branches crossing the decoder sign and regrasp flag. All 16 branches for a pose must share its initial physics, public input, uncorrected first motor proposal and seed. Replanning on each branch's own observations lets the motor recover on its own. Count all controls spent on regrasp within the native horizon. Each of the 16 wire × condition × choice cells contributes six episodes. Report native task success for every assignment, including failed approaches and D17 episodes where the event never fired. An event rate conditional on reaching the bottle would select on a consequence of the chosen correction. [Motor gate plan](PLAN.md) · [Collector interface](RUNTIME.md)
+
+The privileged rule sets the decoder equal to the physical sign and enables regrasp on D17 only. Compare that rule separately with all four constant decoder/grasp choices over the same 24 cases. Then give each arm the true wire. Against always off, only the 12 D17 cases can disagree. Against always on, only the 12 BASE cases can disagree. Record true-only wins, comparator-only wins, shared successes and shared failures. With correct decoding, both wires execute the same physical X mapping. The collector checks that trajectories match for equivalent mappings. Each discordant pose therefore counts twice in the pooled grip comparison. The evidence comes from six starts. The scorer exposes each pose and each wire separately. [Collector](gate.py)
+
+**Go** requires both paired net gains to be strictly positive with the true wire and at least one reversed-X/D17 pose where enabling regrasp rescues a failure. **No-go** on this panel if either constant grasp choice ties or beats the true-grasp rule, or if that composed-cell rescue is absent. A gain over the fixed identity decoder alone cannot establish contact-specific headroom. The gate measures attainable return for the known factors. Whether an agent can infer them from its observations remains open. [Registered decision](PLAN.md)
+
+## Conditional comparison on fresh poses
+
+If the gate passes, fit on nominal BASE, reversed-X BASE and nominal D17. Exclude reversed-X/D17 from fitting, normalization, model selection and threshold tuning. Retire poses 30–35 from the reader comparison. Keep the official test closed. Freeze the reader before evaluating new support/query pose pairs with both factors held fixed across resets. Score the composed cell separately. [Registered split](../libero-meta-learning-20261117-r1/SPLITS.json) · [Run plan](PLAN.md)
+
+Pair three arms on the same query pose, noise and frozen motor. Give one a fixed free-space probe and an analytic sign decoder plus fitting-selected grip. Give another prior contact experience on a different pose and let it infer both choices. Give the current-only controller access to the same public sensors and permission to adjust its choices after observing its own actions. Match the total physical-control allowance and native query horizon. Charge every practice, probe, exploratory action and recovery command. Record actual controls, resets, motor calls, first decision time, query success and cumulative successes over the budget. Use the same public inputs, data and fitting budget for factored and joint readers. Report paired wins and losses. An earlier live timing comparison found that ten controls on the current attempt matched the prior-based arm on all 16 queries. [Current-attempt control](../libero-first-controls-20261119-r1/RESULT.md)
+
+Clear prior history and swap donor histories at the same support pose, changing grasp condition while holding wire fixed, then changing wire while holding grasp fixed. These controls separate contact information from sign calibration. If the probe or current-only controller matches prior contact at equal cost, report that outcome. A privileged motor advantage alone cannot establish the value of history or pretraining.
+
+## Scorer interface
+
+From this run directory, the scorer reads the completed pilot on its collection host.
+
+```sh
+python -B score.py "$attempt_dir/native/pilot" > "$attempt_dir/score.json"
+```
+
+The scorer uses Python and NumPy. It requires the full pilot marker and all 96 branches. It checks the native success sequence, reward sum, end of the control tape, common starts and noise, and paired successes for equivalent net X transforms. It reconstructs the decoded commands and native inputs and counts episodes that executed a recovery control. On D17 it recounts the released `grasp_failure_window_started` and `recoverable_grasp_failure` events. The reported event control follows the collector's one-based convention. A grasp-window opportunity, a native fault firing and execution of the controller's regrasp routine are distinct measurements. [Collector](gate.py) · [Collector schema](RUNTIME.md)
+
+`paired_vs_true` compares the privileged rule with each fixed policy and each one-factor control across all 24 cases. `true_wire_pairs_by_factor` gives the informative six-pose comparison within each wire/condition. `cells` gives native successes for all four correction settings in every environment, D17 opportunity and trigger counts, and first event controls by pose. `cases` gives the individual paired outcomes. A complete panel yields an exit status of zero for either scientific decision. Invalid evidence produces a nonzero exit and no decision. [Scorer](score.py)
+
+The audit started from repository revision `862328a0912fed8724c7190a34aabc5c6f7380a8` and follows the plan recorded at `46d709e6`. The scorer passed a Mac syntax check. The audit used zero GPU-hours. Measured native counts and a gate decision await the completed pilot.
