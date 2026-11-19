@@ -115,7 +115,13 @@ def score_pair(source,test,pair):
             for name,p in [('selected',b['choice_probability_first']),('fit_constant',fixed),('balanced',.5)]:
                 values[name]+=float(p*x[0].sum()+(1-p)*x[1].sum())
         sensitivity[str(budget)]=values
+    exclusive=[b for b in blocks if sum(b['support_hits'])==1]
+    def correct_first(b,p):
+        return p if b['support_hits'][0] else 1-p
+    rank_check=dict(blocks=len(exclusive),selected=sum(correct_first(b,b['choice_probability_first']) for b in exclusive),
+                    fitted_constant=sum(correct_first(b,fixed) for b in exclusive))
     return dict(goals=list(pair),assignments=2*len(blocks),totals=totals,budget_sensitivity=sensitivity,
+                exclusive_support_ranking=rank_check,
                 reachability=dict(first_only=sides.count([True,False]),second_only=sides.count([False,True]),
                                   both=sides.count([True,True]),neither=sides.count([False,False])),
                 differences_by_pose=[sum(sum(b['native']['selected'])-sum(b['native']['fit_constant'])
