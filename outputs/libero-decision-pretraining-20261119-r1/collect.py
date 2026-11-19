@@ -179,7 +179,7 @@ def main():
     write(args.output / "design.json", dict(modes=MODES, timings=TIMINGS, motor=str(CHECKPOINT)))
     motor = FrozenMotor()
     collect_panel(motor, args.output / "development", splits["development"], 19110000)
-    collect_panel(motor, args.output / "fitting", splits["development_scaling"]["task_subsets"]["8"], 19120000)
+    collect_panel(motor, args.output / "fitting", splits["development_scaling"]["task_subsets"]["8"], 19210000)
     write(args.output / "complete.json", dict(development=32, fitting=32, episodes=320))
 
 

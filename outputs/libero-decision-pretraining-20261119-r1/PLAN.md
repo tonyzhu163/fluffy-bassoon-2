@@ -31,7 +31,8 @@ uses the first 80 physical controls of each support to limit length and
 terminal-outcome shortcuts. Keep all support tapes for auditing.
 
 Fit a two-layer causal reader (width 128, four heads) across independent
-initializations. Train with retained and empty support. Fit a separate
+initializations (41, 42, 43) using 120 full-batch AdamW updates at 3e-4.
+Train with retained and empty support at equal weight. Fit a separate
 current-observation-only control with the same seed, architecture and updates.
 Use no development information in training, including normalization or
 checkpoint selection. Score all models on the development branch table.
