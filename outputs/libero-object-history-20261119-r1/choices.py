@@ -13,14 +13,15 @@ def read_tape(path):
     with np.load(file) as z:return {k:z[k] for k in ('issued','states','hits')}
 
 
-def choices(model,library,poses):
+def choices(model,library,poses,triplets=None):
     cache={}
     for p,g,b,sensor in product(poses,(0,1),(False,True),(False,True)):
         factual,other=library[p,g,b],library[p,g,sensor]
         cache[p,g,b,sensor]=predict(model,factual['issued'],other['states'])
     rows=[]
-    for i,p in enumerate(poses):
-        s,q=poses[(i+1)%len(poses)],poses[(i+2)%len(poses)]
+    if triplets is None:
+        triplets=[(p,poses[(i+1)%len(poses)],poses[(i+2)%len(poses)]) for i,p in enumerate(poses)]
+    for p,s,q in triplets:
         for first,b,c,h in product((0,1),(False,True),(False,True),(0,1)):
             r=[int(library[p,first,b]['hits'][:,h].any()),int(library[s,1-first,c]['hits'][:,h].any())]
             def preference(mode,u,v):
