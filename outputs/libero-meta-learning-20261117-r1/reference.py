@@ -24,7 +24,7 @@ def observation(raw, prompt):
     quat = raw['robot0_eef_quat_xyzw']
     w = np.clip(quat[3], -1., 1.)
     den = np.sqrt(1. - w * w)
-    rotation = quat[:3] * 2. * np.arccos(w) / den if den else np.zeros(3)
+    rotation = quat[:3] * 2. * np.arccos(w) / den if den > 1e-10 else np.zeros(3)
     state = np.concatenate((raw['robot0_eef_pos'], rotation, raw['robot0_gripper_qpos']))
     return {'observation/image': rgb[0], 'observation/wrist_image': rgb[1],
             'observation/state': state, 'prompt': prompt}
@@ -36,9 +36,11 @@ def write(path, data):
     temporary.replace(path)
 
 
-def episode(policy, case, output, *, expected=None, paired_prompt=None):
+def episode(policy, case, output, *, expected=None, paired_prompt=None, simulator=None):
     output.mkdir(parents=True)
-    simulator = Simulator()
+    own_simulator = simulator is None
+    if own_simulator:
+        simulator = Simulator()
     try:
         spec, first = simulator.call('create', case)
         initial = first['environment_reproducibility']['initial_state_fingerprint']
@@ -62,17 +64,14 @@ def episode(policy, case, output, *, expected=None, paired_prompt=None):
             assert chunk.shape == (10, 7) and np.isfinite(chunk).all()
             issued = np.zeros((10, 7), dtype=np.float32)
             mask = np.zeros((10, 7), dtype=bool)
-            reward = 0.
-            for k, action in enumerate(chunk[:5]):
-                step = simulator.call('step', action)
-                issued[k] = action
-                mask[k] = True
-                controls += 1
-                raw = step['observation']
-                reward += step['reward']
-                done = step['terminated'] or step['truncated']
-                if done:
-                    break
+            step = simulator.call('chunk', chunk[:5])
+            steps = step['steps']
+            issued[:steps] = chunk[:steps]
+            mask[:steps] = True
+            controls += steps
+            raw = step['observation']
+            reward = float(sum(step['rewards']))
+            done = step['terminated'] or step['truncated']
             images.append(np.stack((item['observation/image'], item['observation/wrist_image'])))
             states.append(item['observation/state'].astype(np.float32))
             noises.append(noise[None])
@@ -93,7 +92,8 @@ def episode(policy, case, output, *, expected=None, paired_prompt=None):
         print(json.dumps(result), flush=True)
         return result
     finally:
-        simulator.close()
+        if own_simulator:
+            simulator.close()
 
 
 def main():
@@ -108,14 +108,15 @@ def main():
     policy = policy_config.create_trained_policy(config.get_config('pi05_libero'), str(CHECKPOINT))
     if not args.collect:
         prior = ROOT / 'outputs' / Path(__file__).parent.name / 'devqual03'
-        for rank, suite in enumerate(('libero_spatial', 'libero_goal')):
-            case = dict(suite=suite, task_id=1, init_state_id=0, seed=171117+rank, variant='BASE')
-            expected = json.loads((prior/f'rank{rank}/episode-0/result.json').read_text())
-            row = episode(policy, case, args.output/suite, expected=expected)
-            write(args.output/f'{suite}.json', row)
-            with np.load(args.output/suite/'episode.npz') as data:
-                selected = data['action_masks'].all(axis=-1)
-                np.save(args.output/f'{suite}-actions.npy', data['issued_actions'][selected])
+        with Simulator() as simulator:
+            for rank, suite in enumerate(('libero_spatial', 'libero_goal')):
+                case = dict(suite=suite, task_id=1, init_state_id=0, seed=171117+rank, variant='BASE')
+                expected = json.loads((prior/f'rank{rank}/episode-0/result.json').read_text())
+                row = episode(policy, case, args.output/suite, expected=expected, simulator=simulator)
+                write(args.output/f'{suite}.json', row)
+                with np.load(args.output/suite/'episode.npz') as data:
+                    selected = data['action_masks'].all(axis=-1)
+                    np.save(args.output/f'{suite}-actions.npy', data['issued_actions'][selected])
         return
 
     trials = fitting_trials()
@@ -124,18 +125,19 @@ def main():
           prompt='BASE wording in both timing arms', features='derive offline from saved public observations'))
     prompts = {}
     results = []
-    for trial_id, trial in enumerate(trials):
-        for attempt, case in enumerate(trial, start=1):
-            key = case['suite'], case['task_id']
-            paired_prompt = prompts[key] if case['variant'] == 'S20' else None
-            destination = args.output/f'trial-{trial_id:03d}'/f'attempt-{attempt}'
-            row = episode(policy, case, destination, paired_prompt=paired_prompt)
-            if case['variant'] == 'BASE':
-                if key in prompts:
-                    assert prompts[key] == row['prompt']
-                prompts[key] = row['prompt']
-            results.append(dict(trial=trial_id, attempt=attempt, **row))
-            write(args.output/'progress.json', results)
+    with Simulator() as simulator:
+        for trial_id, trial in enumerate(trials):
+            for attempt, case in enumerate(trial, start=1):
+                key = case['suite'], case['task_id']
+                paired_prompt = prompts[key] if case['variant'] == 'S20' else None
+                destination = args.output/f'trial-{trial_id:03d}'/f'attempt-{attempt}'
+                row = episode(policy, case, destination, paired_prompt=paired_prompt, simulator=simulator)
+                if case['variant'] == 'BASE':
+                    if key in prompts:
+                        assert prompts[key] == row['prompt']
+                    prompts[key] = row['prompt']
+                results.append(dict(trial=trial_id, attempt=attempt, **row))
+                write(args.output/'progress.json', results)
 
 
 if __name__ == '__main__':

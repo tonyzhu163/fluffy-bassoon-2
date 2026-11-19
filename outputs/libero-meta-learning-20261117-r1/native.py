@@ -47,6 +47,34 @@ class PrefixReady(Exception):
     pass
 
 
+_MISSING = object()
+
+
+def _clone_tree(value):
+    if isinstance(value, dict):
+        return {k: _clone_tree(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_clone_tree(v) for v in value]
+    if isinstance(value, tuple):
+        return tuple(_clone_tree(v) for v in value)
+    if isinstance(value, torch.Tensor):
+        return value.clone()
+    if isinstance(value, np.ndarray):
+        return value.copy()
+    return value
+
+
+def _model_device(model):
+    device = getattr(model, 'device', None)
+    if device is not None:
+        return device
+    if hasattr(model, 'parameters'):
+        param = next(model.parameters(), None)
+        if param is not None:
+            return param.device
+    return 'cuda'
+
+
 def official_transforms(model_path, norm_path):
     """Match the released pi05_libero quantile input and output transforms."""
     from openpi.transforms import Normalize, Unnormalize
@@ -87,41 +115,71 @@ class Motor:
 
     @torch.no_grad()
     def prepare(self, item):
-        original=self.model.build_prefix_cache
-        captured=[]
-        def capture(observation,*args,**kwargs):
-            captured.append((observation,original(observation,*args,**kwargs)))
+        original = self.model.build_prefix_cache
+        orig_transform = getattr(self.model, 'input_transform', None)
+        wrap_transform = orig_transform is not None and not isinstance(orig_transform, torch.nn.Module)
+        captured = []
+        transformed = []
+
+        def capture(observation, *args, **kwargs):
+            captured.append((observation, original(observation, *args, **kwargs)))
             raise PrefixReady()
-        self.model.build_prefix_cache=capture
+
+        def cached_transform(*args, **kwargs):
+            out = orig_transform(*args, **kwargs)
+            transformed.append(_clone_tree(out))
+            return out
+
+        self.model.build_prefix_cache = capture
+        if wrap_transform:
+            self.model.input_transform = cached_transform
         try:
-            self.model.predict_action_batch(item,mode='eval',noise=torch.zeros(1,10,32,device='cuda'))
+            self.model.predict_action_batch(
+                item, mode='eval', noise=torch.zeros(1, 10, 32, device=_model_device(self.model)))
         except PrefixReady:
             pass
         finally:
-            self.model.build_prefix_cache=original
-        assert len(captured)==1
-        observation,prefix=captured[0]
-        hidden,mask,cache=prefix
-        pooled=hidden.float().masked_fill(~mask[...,None],0).sum(1)/mask.sum(1,keepdim=True)
-        pooled=pooled/pooled.square().mean(-1,keepdim=True).sqrt().clamp_min(1e-6)
-        features=torch.cat((observation.state[:,:8].float(),pooled),-1)
-        assert features.shape==(1,2056) and torch.isfinite(features).all()
-        return dict(public=item,observation=observation,prefix=prefix,features=features)
+            self.model.build_prefix_cache = original
+            if wrap_transform:
+                self.model.input_transform = orig_transform
+        assert len(captured) == 1
+        observation, prefix = captured[0]
+        hidden, mask, cache = prefix
+        pooled = hidden.float().masked_fill(~mask[..., None], 0).sum(1) / mask.sum(1, keepdim=True)
+        pooled = pooled / pooled.square().mean(-1, keepdim=True).sqrt().clamp_min(1e-6)
+        features = torch.cat((observation.state[:, :8].float(), pooled), -1)
+        assert features.shape == (1, 2056) and torch.isfinite(features).all()
+        return dict(public=item, observation=observation, prefix=prefix, features=features,
+                    transformed=transformed)
 
     @torch.no_grad()
     def actions(self, prepared, noise, *, policy=None, context=None):
-        hidden,mask,cache=prepared['prefix']
+        hidden, mask, cache = prepared['prefix']
         if policy is not None:
-            cache=policy.kv_adapter(cache,mask,context)
-        original=self.model.build_prefix_cache
+            cache = policy.kv_adapter(cache, mask, context)
+        original = self.model.build_prefix_cache
+        orig_transform = getattr(self.model, 'input_transform', None)
+        cached = prepared.get('transformed')
+        wrap_transform = bool(cached) and orig_transform is not None and not isinstance(orig_transform, torch.nn.Module)
         try:
-            self.model.build_prefix_cache=lambda *a,**kw:(hidden,mask,cache)
-            actions,_=self.model.predict_action_batch(prepared['public'],mode='eval',
-                noise=torch.as_tensor(noise,device='cuda'))
+            self.model.build_prefix_cache = lambda *a, **kw: (hidden, mask, cache)
+            if wrap_transform:
+                replay = iter(cached)
+
+                def replay_transform(*args, **kwargs):
+                    value = next(replay, _MISSING)
+                    return _clone_tree(value) if value is not _MISSING else orig_transform(*args, **kwargs)
+
+                self.model.input_transform = replay_transform
+            actions, _ = self.model.predict_action_batch(
+                prepared['public'], mode='eval',
+                noise=torch.as_tensor(noise, device=_model_device(self.model)))
         finally:
-            self.model.build_prefix_cache=original
-        result=actions.detach().float().cpu().numpy()[0]
-        assert result.shape==(10,7) and np.isfinite(result).all()
+            self.model.build_prefix_cache = original
+            if wrap_transform:
+                self.model.input_transform = orig_transform
+        result = actions.detach().float().cpu().numpy()[0]
+        assert result.shape == (10, 7) and np.isfinite(result).all()
         return result
 
     def targets(self, item, commands):

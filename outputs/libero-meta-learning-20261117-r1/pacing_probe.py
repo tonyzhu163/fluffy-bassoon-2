@@ -13,13 +13,14 @@ from reference import CHECKPOINT, observation, write
 from simulator import Simulator
 
 
-def replay(policy, baseline, output):
+def replay(policy, baseline, output, *, simulator=None):
     case = baseline['case']
     assert case['variant'] == 'S20' and baseline['attempt'] == 1
-    simulator = Simulator()
+    own_simulator = simulator is None
+    env = Simulator() if own_simulator else simulator
     output.mkdir()
     try:
-        spec, first = simulator.call('create', case)
+        spec, first = env.call('create', case)
         initial = first['environment_reproducibility']['initial_state_fingerprint']
         assert initial == baseline['initial_state']
         raw = first['observation']
@@ -34,14 +35,13 @@ def replay(policy, baseline, output):
             assert chunk.shape == (10, 7) and np.isfinite(chunk).all()
             wait = np.zeros((14, 7), dtype=chunk.dtype)
             wait[:, -1] = chunk[-1, -1]
-            for index, action in enumerate(np.concatenate((chunk, wait))):
-                step = simulator.call('step', action)
-                issued.append(action.copy())
-                wait_mask.append(index >= len(chunk))
-                raw = step['observation']
-                done = step['terminated'] or step['truncated']
-                if done:
-                    break
+            actions = np.concatenate((chunk, wait))
+            step = env.call('chunk', actions)
+            steps = step['steps']
+            issued.extend(action.copy() for action in actions[:steps])
+            wait_mask.extend(index >= len(chunk) for index in range(steps))
+            raw = step['observation']
+            done = step['terminated'] or step['truncated']
         assert len(issued) <= spec['max_steps']
         np.savez_compressed(output/'commands.npz', issued=issued, is_wait=wait_mask, query_offsets=query_offsets)
         row = dict(case=case, source_trial=baseline['trial'], initial_state=initial,
@@ -51,7 +51,8 @@ def replay(policy, baseline, output):
         print(json.dumps(row), flush=True)
         return row
     finally:
-        simulator.close()
+        if own_simulator:
+            env.close()
 
 
 def main():
@@ -65,9 +66,10 @@ def main():
     assert len(rows) == 16 and len({(r['case']['suite'], r['case']['task_id']) for r in rows}) == 8
     policy = policy_config.create_trained_policy(config.get_config('pi05_libero'), str(CHECKPOINT))
     results = []
-    for row in rows:
-        results.append(replay(policy, row, out/f"trial-{row['trial']:03d}"))
-        write(out/'progress.json', results)
+    with Simulator() as simulator:
+        for row in rows:
+            results.append(replay(policy, row, out/f"trial-{row['trial']:03d}", simulator=simulator))
+            write(out/'progress.json', results)
 
 
 if __name__ == '__main__':

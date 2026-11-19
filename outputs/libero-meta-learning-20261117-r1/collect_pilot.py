@@ -24,6 +24,7 @@ def fitting_trials():
 def main():
     from native import Motor, write
     from qualify import rollout
+    from simulator import Simulator
 
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', required=True, type=Path)
@@ -38,16 +39,18 @@ def main():
     motor = Motor(args.checkpoint, reference_cadence=args.reference_cadence)
     write(args.output/'motor-config.json', dict(motor.config, executed_before_replan=motor.replan_steps))
     summary = []
-    for trial_id, cases in enumerate(trials):
-        outcomes = []
-        for attempt, case in enumerate(cases):
-            if time.time() >= args.deadline:
-                raise TimeoutError('Pilot reached its allocation limit')
-            episode = args.output/f'trial-{trial_id:03d}'/f'attempt-{attempt+1}'
-            result = rollout(motor, case, episode, role='fitting corpus pilot, frozen SFT behavior')
-            outcomes.append({k:result[k] for k in ('case','success','controls','seconds','npz_bytes')})
-        summary.append(dict(trial_id=trial_id, episodes=outcomes))
-        write(args.output/'completed-trials.json', summary)
+    with Simulator() as simulator:
+        for trial_id, cases in enumerate(trials):
+            outcomes = []
+            for attempt, case in enumerate(cases):
+                if time.time() >= args.deadline:
+                    raise TimeoutError('Pilot reached its allocation limit')
+                episode = args.output/f'trial-{trial_id:03d}'/f'attempt-{attempt+1}'
+                result = rollout(motor, case, episode, simulator=simulator,
+                                 role='fitting corpus pilot, frozen SFT behavior')
+                outcomes.append({k:result[k] for k in ('case','success','controls','seconds','npz_bytes')})
+            summary.append(dict(trial_id=trial_id, episodes=outcomes))
+            write(args.output/'completed-trials.json', summary)
 
 
 if __name__ == '__main__':

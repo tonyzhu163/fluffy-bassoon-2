@@ -12,7 +12,7 @@ from native import Motor, array_hash, make_adapter, public, qualify_gradient, wr
 from simulator import Simulator
 
 
-def rollout(motor, case, output, *, zero_adapter=False, gradient=False,
+def rollout(motor, case, output, *, zero_adapter=False, gradient=False, simulator=None,
             role='development runtime qualification; not held-out adaptation'):
     output.mkdir(parents=True,exist_ok=False)
     policy=make_adapter().eval() if zero_adapter else None
@@ -20,7 +20,8 @@ def rollout(motor, case, output, *, zero_adapter=False, gradient=False,
     rows=[]; states=[]; images=[]; features=[]; proposals=[]; executed=[]; masks=[]
     previous=np.zeros(322,np.float32); memory=None
     action_hash=hashlib.sha256()
-    env=Simulator()
+    own_simulator = simulator is None
+    env=Simulator() if own_simulator else simulator
     try:
         spec,first=env.call('create',case)
         max_steps=spec['max_steps']
@@ -48,16 +49,16 @@ def rollout(motor, case, output, *, zero_adapter=False, gradient=False,
             chunk=motor.actions(prepared,noises[len(rows)],policy=policy,context=context)
             inference_seconds=time.monotonic()-t
             delivered=np.zeros((10,7),np.float32); mask=np.zeros((10,7),bool)
-            reward=0.
-            for k,action in enumerate(chunk[:min(replan,max_steps-controls)]):
-                transition=env.call('step',action)
-                delivered[k]=action; mask[k]=True; controls+=1
+            planned=chunk[:min(replan,max_steps-controls)]
+            transition=env.call('chunk',planned)
+            steps=transition['steps']
+            executed_chunk=planned[:steps]
+            delivered[:steps]=executed_chunk; mask[:steps]=True; controls+=steps
+            for action in executed_chunk:
                 action_hash.update(action.tobytes())
-                raw=transition['observation']; reward+=transition['reward']
-                success=success or transition['success']
-                terminated=transition['terminated']; truncated=transition['truncated']
-                if terminated or truncated:
-                    break
+            raw=transition['observation']; reward=float(sum(transition['rewards']))
+            success=success or transition['any_success']
+            terminated=transition['terminated']; truncated=transition['truncated']
             states.append(item['states'][0]); images.append(np.stack((item['main_images'][0],item['wrist_images'][0])))
             features.append(prepared['features'][0].cpu().numpy()); proposals.append(chunk)
             executed.append(delivered); masks.append(mask)
@@ -81,7 +82,8 @@ def rollout(motor, case, output, *, zero_adapter=False, gradient=False,
         print(json.dumps({k:v for k,v in result.items() if k not in ('rows','initial_hashes')}),flush=True)
         return result
     finally:
-        env.close()
+        if own_simulator:
+            env.close()
 
 
 def main():
@@ -99,16 +101,17 @@ def main():
     suite=('libero_spatial','libero_goal')[args.rank]
     case=dict(suite=suite,task_id=1,init_state_id=0,seed=171117+args.rank,variant='BASE')
     results=[]
-    for ordinal,variant in enumerate(('BASE','BASE','S15','S20')):
-        if time.time()>=args.deadline:
-            raise TimeoutError('Finite qualification deadline reached')
-        result=rollout(motor,dict(case,variant=variant),args.output/f'episode-{ordinal}',
-            zero_adapter=ordinal==1,gradient=ordinal==0)
-        results.append(result)
-        if ordinal==1:
-            a,b=results[:2]
-            assert a['initial_hashes']==b['initial_hashes'] and a['initial_state']==b['initial_state'], 'Reset pairing differs'
-            assert a['action_sha256']==b['action_sha256'], 'Zero-adapter native action trace differs'
+    with Simulator() as simulator:
+        for ordinal,variant in enumerate(('BASE','BASE','S15','S20')):
+            if time.time()>=args.deadline:
+                raise TimeoutError('Finite qualification deadline reached')
+            result=rollout(motor,dict(case,variant=variant),args.output/f'episode-{ordinal}',
+                zero_adapter=ordinal==1,gradient=ordinal==0,simulator=simulator)
+            results.append(result)
+            if ordinal==1:
+                a,b=results[:2]
+                assert a['initial_hashes']==b['initial_hashes'] and a['initial_state']==b['initial_state'], 'Reset pairing differs'
+                assert a['action_sha256']==b['action_sha256'], 'Zero-adapter native action trace differs'
     write(args.output/'summary.json',dict(complete=True,rank=args.rank,episodes=[
         {k:r[k] for k in ('case','success','controls','seconds','npz_bytes','zero_adapter')} for r in results],
         paired_native_trace_exact=True,peak_cuda_bytes=torch.cuda.max_memory_allocated()))
