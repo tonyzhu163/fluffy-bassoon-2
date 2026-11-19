@@ -15,7 +15,6 @@ from fluffy_bassoon.xemb.embodiment import (
     retarget_observation_for_motor,
 )
 
-ROOT = Path("/mowenjie/fluffy-bassoon-2")
 OPENPI_CKPT = Path("/mowenjie/fluffy-bassoon/inputs/pi05-libero-openpi-20261027-r1")
 SPLITS_PATH = Path(__file__).resolve().parents[1] / "libero-meta-learning-20261117-r1" / "SPLITS.json"
 NOISE_SEED_OFFSET = 817117
@@ -50,11 +49,12 @@ def to_openpi_observation(raw: dict, prompt: str) -> dict:
         )
         for key in ("agentview_image", "robot0_eye_in_hand_image")
     ]
-    quat = np.asarray(raw["robot0_eef_quat_xyzw"], dtype=np.float64)
-    w = float(np.clip(quat[3], -1.0, 1.0))
-    den = float(np.sqrt(max(0.0, 1.0 - w * w)))
-    rotation = quat[:3] * 2.0 * np.arccos(w) / den if den > 1e-10 else np.zeros(3, dtype=np.float64)
-    state = np.concatenate((raw["robot0_eef_pos"], rotation, raw["robot0_gripper_qpos"])).astype(np.float32)
+    # Preserve reference.observation's dtype and operation order through OpenPI preprocessing.
+    quat = raw["robot0_eef_quat_xyzw"]
+    w = np.clip(quat[3], -1.0, 1.0)
+    den = np.sqrt(1.0 - w * w)
+    rotation = quat[:3] * 2.0 * np.arccos(w) / den if den > 1e-10 else np.zeros(3)
+    state = np.concatenate((raw["robot0_eef_pos"], rotation, raw["robot0_gripper_qpos"]))
     return {
         "observation/image": rgb[0],
         "observation/wrist_image": rgb[1],
@@ -88,29 +88,52 @@ def run_episode(
     max_controls=None,
     record_chunks: bool = False,
     max_record_chunks: int = 24,
+    check_reset=None,
+    audit_base_views: bool = False,
 ):
     """Execute one episode under `spec` using retargeted frozen π0.5 or active probing."""
     sim_spec, initial = simulator.call("create", dict(case, embodiment=spec.name))
     raw = initial["observation"]
     anchor = np.asarray(initial["anchor_eef_pos"], dtype=np.float32)
     released_prompt = initial["language_instruction"]
-    prompt = released_prompt if prompt is None else prompt
+    if prompt is not None and prompt != released_prompt:
+        raise ValueError(f"Expected paired prompt {prompt!r}, got {released_prompt!r} on {case}")
+    prompt = released_prompt
     horizon = int(sim_spec["max_steps"])
     limit = horizon if max_controls is None else min(horizon, int(max_controls))
     bounds = initial["action_schema"]
     low = np.asarray(bounds["low"], dtype=np.float32)
     high = np.asarray(bounds["high"], dtype=np.float32)
 
-    reset_info = dict(
-        physics=initial["environment_reproducibility"]["initial_state_fingerprint"],
-        public=public_digest(raw),
-        horizon=horizon,
-        prompt=prompt,
-    )
-    frame0_img = np.asarray(initial["agentview_64"], dtype=np.uint8)
-    frame0_state = to_openpi_observation(raw, prompt)["observation/state"].astype(np.float32)
-
     rng = np.random.default_rng(int(case["seed"]) + NOISE_SEED_OFFSET)
+    # The released adapter draws one (10, 32) float32 sample per five-control slot.
+    noise_bank = rng.standard_normal(((horizon + 4) // 5, 10, 32)).astype(np.float32)
+    frame0_img = initial["agentview_64"]
+    first_item = to_openpi_observation(raw, prompt)
+    frame0_state = first_item["observation/state"].astype(np.float32)
+    identity = initial["environment_reproducibility"]
+    reset_info = dict(
+        physics=identity["initial_state_fingerprint"],
+        perturbation_plan=identity["perturbation_plan_fingerprint"],
+        public=public_digest(raw),
+        motor_frame0={k: array_digest(v) for k, v in first_item.items() if k != "prompt"},
+        reader_frame0=dict(image=array_digest(frame0_img), state=array_digest(frame0_state)),
+        worker_step_index=initial["worker_step_index"],
+        action_schema=initial["action_schema"],
+        observation_schema=initial["observation_schema"],
+        observation_schema_version=initial["observation_schema_version"],
+        renderer=initial["renderer"],
+        renderer_vendor=initial["renderer_vendor"],
+        noise_seed=int(case["seed"]) + NOISE_SEED_OFFSET,
+        noise_sha256=array_digest(noise_bank),
+        horizon=horizon,
+        prompt=released_prompt,
+    )
+    if check_reset is not None:
+        check_reset(reset_info)
+
+    rewards = []
+    view_hashes = []
     controls = 0
     done = False
     step = None
@@ -130,11 +153,12 @@ def run_episode(
     chunk_idx = 0
 
     def execute_chunk(issued_commands: np.ndarray):
-        nonlocal raw, controls, done, step, cur_img, cur_pos, cur_jaw, chunk_idx
+        nonlocal raw, controls, done, step, cur_img, cur_pos, cur_jaw, chunk_idx, prompt
         bounded = np.clip(issued_commands, low, high).astype(np.float32)
         step = simulator.call("chunk", bounded)
         n = int(step["steps"])
         controls += n
+        rewards.extend(step["rewards"])
         next_img = np.asarray(step["agentview_64"], dtype=np.uint8)
         next_pos = np.asarray(step["positions"][-1], dtype=np.float32)
         next_jaw = float(jaw_width_from_qpos(step["gripper_positions"][-1]))
@@ -150,6 +174,7 @@ def run_episode(
         cur_pos = next_pos
         cur_jaw = next_jaw
         raw = step["observation"]
+        prompt = step["language_instruction"]
         done = bool(step["terminated"] or step["truncated"])
 
     cur_yaw, cur_scale, cur_grip = float(yaw_hat), float(scale_hat), int(grip_hat)
@@ -164,7 +189,7 @@ def run_episode(
             execute_chunk(bounded_burst)
             probe_ib.append(prev_img)
             probe_ia.append(cur_img)
-            probe_im.append(bounded_burst.mean(axis=0))
+            probe_im.append(bounded_burst[:step["steps"]].mean(axis=0))
             probe_de.append(cur_pos - prev_pos)
             probe_dj.append(np.array([cur_jaw - prev_jaw, cur_jaw], dtype=np.float32))
             probe_v.append(True)
@@ -190,28 +215,41 @@ def run_episode(
     while not done and controls < limit:
         if policy is None:
             raise RuntimeError("Policy is required when executing closed-loop motor steps")
-        motor_obs = retarget_observation_for_motor(raw, anchor, cur_yaw)
-        item = to_openpi_observation(motor_obs, prompt)
-        noise = rng.standard_normal((10, 32)).astype(np.float32)
+        if controls == 0:
+            item = first_item  # Every anchored yaw correction has zero displacement at reset.
+        else:
+            motor_obs = raw if cur_yaw == 0 else retarget_observation_for_motor(raw, anchor, cur_yaw)
+            item = to_openpi_observation(motor_obs, prompt)
+        noise = noise_bank[controls // 5]
         proposal = np.asarray(policy.infer(item, noise=noise)["actions"], dtype=np.float32)
         if proposal.shape != (10, 7) or not np.isfinite(proposal).all():
             raise ValueError(f"Invalid π0.5 proposal on {case} / {spec.name}")
         count = min(5, limit - controls)
-        issued = retarget_action_from_motor(
-            proposal[:count], cur_yaw, cur_scale, cur_grip, low, high
-        )
+        # OpenPI outputs decoded relative OSC controls, including the native gripper sign.
+        canonical = np.clip(proposal[:count], low, high)
+        if (cur_yaw, cur_scale, cur_grip) == (0.0, 1.0, 1):
+            issued = canonical
+        else:
+            issued = retarget_action_from_motor(canonical, cur_yaw, cur_scale, cur_grip, low, high)
+        if audit_base_views:
+            view_hashes.append(dict(control=controls, agent=array_digest(item["observation/image"]),
+                                    wrist=array_digest(item["observation/wrist_image"]),
+                                    state=array_digest(item["observation/state"]), commands=array_digest(issued)))
         execute_chunk(issued)
 
     record = dict(
         reset=reset_info,
         released_prompt=released_prompt,
         controls=controls,
+        native_return=sum(rewards, 0.0),
         success=bool(step["success"]) if step is not None else False,
         terminated=bool(step["terminated"]) if step is not None else False,
         truncated=bool(step["truncated"]) if step is not None else False,
         inferred=dict(yaw_deg=float(cur_yaw), xy_scale=float(cur_scale), gripper_sign=int(cur_grip)),
         seconds=round(time.monotonic() - started, 3),
     )
+    if audit_base_views:
+        record["motor_queries"] = view_hashes
     if record_chunks:
         trace = dict(
             img_before=img_before,

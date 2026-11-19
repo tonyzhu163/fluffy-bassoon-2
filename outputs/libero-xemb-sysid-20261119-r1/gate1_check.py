@@ -33,49 +33,45 @@ def main():
     else:
         tasks = splits["development"]
         emb_names = GATE1_EMBODIMENT_NAMES
+        task_keys = [(s, t) for s, ids in tasks.items() for t in ids]
+        if len(task_keys) != 8 or len(set(task_keys)) != 8:
+            raise ValueError("Gate 1 requires eight distinct development tasks")
 
     policy = load_frozen_pi05()
     args.output.mkdir(parents=True, exist_ok=True)
     rows = []
-    prompts = {}
 
     with XEmbSimulator() as simulator:
         for suite_idx, (suite, task_ids) in enumerate(sorted(tasks.items())):
             for task_id in task_ids:
-                for emb_idx, emb_name in enumerate(emb_names):
+                seed = 20300000 + 10_000 * suite_idx + 100 * int(task_id)
+                case = dict(suite=suite, task_id=int(task_id), variant="BASE",
+                            init_state_id=args.init_state_id, seed=seed)
+                reference = None
+
+                def check_reset(actual):
+                    nonlocal reference
+                    if reference is None:
+                        reference = actual
+                    elif reference != actual:
+                        differences = {k: dict(expected=reference[k], observed=actual[k])
+                                       for k in reference if reference[k] != actual[k]}
+                        write_json(args.output / "gate1-reset-mismatch.json", dict(
+                            case=case, embodiment=emb_name, arm=arm, reference="fam_nom/nominal",
+                            differences=differences,
+                        ))
+                        raise ValueError(f"Unpaired frame 0 on {case} / {emb_name} / {arm}: {list(differences)}")
+
+                for emb_name in emb_names:
                     spec = get_embodiment_spec(emb_name)
-                    seed = 20300000 + 10_000 * suite_idx + 100 * int(task_id) + emb_idx
-                    case = dict(
-                        suite=suite,
-                        task_id=int(task_id),
-                        variant="BASE",
-                        init_state_id=args.init_state_id,
-                        seed=seed,
-                    )
-                    key = (suite, int(task_id))
-                    nom_rec = run_episode(
-                        simulator,
-                        policy,
-                        case,
-                        spec,
-                        prompt=prompts.get(key),
-                        yaw_hat=0.0,
-                        scale_hat=1.0,
-                        grip_hat=1,
-                    )
-                    prompts.setdefault(key, nom_rec["reset"]["prompt"])
-                    ora_rec = run_episode(
-                        simulator,
-                        policy,
-                        case,
-                        spec,
-                        prompt=prompts[key],
-                        yaw_hat=spec.yaw_deg,
-                        scale_hat=spec.xy_scale,
-                        grip_hat=spec.gripper_sign,
-                    )
-                    if nom_rec["reset"] != ora_rec["reset"]:
-                        raise ValueError(f"Gate-1 paired reset mismatch on {case} / {emb_name}")
+                    arms = {}
+                    for arm, estimates in (("nominal", (0.0, 1.0, 1)),
+                                           ("privileged_oracle", (spec.yaw_deg, spec.xy_scale, spec.gripper_sign))):
+                        yaw, scale, grip = estimates
+                        arms[arm] = run_episode(simulator, policy, case, spec, yaw_hat=yaw,
+                                                scale_hat=scale, grip_hat=grip, check_reset=check_reset,
+                                                audit_base_views=emb_name == "fam_nom")
+                    nom_rec, ora_rec = arms["nominal"], arms["privileged_oracle"]
                     row = dict(
                         suite=suite,
                         task_id=int(task_id),
@@ -89,6 +85,19 @@ def main():
                         nominal=nom_rec,
                         privileged_oracle=ora_rec,
                     )
+                    if emb_name == "fam_nom":
+                        # BASE arms issue the same control law. Report independently rendered views
+                        # at common query times, even when their measured endpoints agree.
+                        nom_queries, ora_queries = nom_rec["motor_queries"], ora_rec["motor_queries"]
+                        row["base_drift"] = dict(
+                            nominal_queries=len(nom_queries), oracle_queries=len(ora_queries),
+                            mismatched_controls={
+                                field: [n["control"] for n, o in zip(nom_queries, ora_queries) if n[field] != o[field]]
+                                for field in ("agent", "wrist", "state", "commands")
+                            },
+                            same_success=nom_rec["success"] == ora_rec["success"],
+                            same_native_return=nom_rec["native_return"] == ora_rec["native_return"],
+                        )
                     rows.append(row)
                     write_json(args.output / "gate1-progress.json", rows)
                     print(
@@ -139,18 +148,23 @@ def main():
             oracle_rate=ora_s / len(grp),
         )
 
-    shifted = by_regime.get("shifted", dict(oracle_rate=0.0, oracle_minus_nominal=0.0))
-    nom_emb = by_embodiment.get("fam_nom")
-    nom_ok = True if nom_emb is None else nom_emb["oracle_successes"] >= nom_emb["nominal_successes"]
-    passed = (
-        shifted["oracle_rate"] >= 0.75
-        and shifted["oracle_minus_nominal"] >= 0.50
-        and nom_ok
+    overall = by_regime["overall"]
+    base = by_embodiment["fam_nom"]
+    predicates = dict(
+        overall_oracle_rate=overall["oracle_rate"] >= 0.75,
+        overall_gain=overall["oracle_minus_nominal"] >= 0.50,
+        no_base_regression=base["oracle_successes"] >= base["nominal_successes"],
     )
+    passed = None
+    if args.panel == "development":
+        if overall["trials"] != 48 or any(v["trials"] != 8 for v in by_embodiment.values()):
+            raise ValueError("Incomplete Gate 1 panel")
+        passed = all(predicates.values())
     summary = dict(
         panel=args.panel,
         passed=passed,
-        thresholds=dict(min_shifted_oracle_rate=0.75, min_shifted_gain=0.50, no_nom_regression=True),
+        thresholds=dict(min_overall_oracle_rate=0.75, min_overall_gain=0.50, no_base_regression=True),
+        predicates=predicates,
         by_regime=by_regime,
         by_embodiment=by_embodiment,
         rows=rows,

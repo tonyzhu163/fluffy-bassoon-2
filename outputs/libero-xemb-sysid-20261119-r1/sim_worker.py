@@ -29,8 +29,7 @@ class XEmbSimulator:
         self._closed = False
         self.pipe, peer = Pipe()
         env = dict(os.environ)
-        if allow_mesa:
-            env["FLUFFY_ALLOW_MESA"] = "1"
+        env["FLUFFY_ALLOW_MESA"] = "1" if allow_mesa else "0"
         try:
             self.worker = subprocess.Popen(
                 [str(SIM_PYTHON), "-Bu", str(Path(__file__).resolve()), str(peer.fileno())],
@@ -74,6 +73,49 @@ def _inspect_robots():
     return dict(robots=robot_names, grippers=gripper_names)
 
 
+def validate_reset(initial, create_spec, entry):
+    from libero.libero.envs.bddl_utils import get_problem_info
+    from libero_remote.environment.observations import describe_observation
+    from libero_remote.reproducibility import canonical_fingerprint
+
+    identity = initial["environment_reproducibility"]
+    plan = identity["perturbation_plan"]
+    if (initial["worker_step_index"] != 0 or not identity["initial_state_fingerprint"]
+            or plan["case_id"] != entry["case_id"] or plan["seed"] != create_spec["seed"]
+            or identity["perturbation_plan_fingerprint"] != canonical_fingerprint(plan)):
+        raise ValueError(f"Unexpected native reset identity for {create_spec}")
+    instruction = initial["language_instruction"]
+    if not isinstance(instruction, str) or not instruction.strip():
+        raise ValueError("Missing released reset instruction")
+    if entry["case_id"] == "BASE":
+        expected = get_problem_info(create_spec["_bddl_path"])["language_instruction"]
+        if instruction != expected:
+            raise ValueError(f"Released BASE reset prompt {instruction!r} differs from BDDL {expected!r}")
+
+    schema = initial["action_schema"]
+    expected_action = dict(version=entry["action_schema_version"], shape=[7], dtype="float32",
+                           controller="OSC_POSE", control_mode="relative", translation_frame="world",
+                           rotation_frame="world", rotation_representation="axis_angle",
+                           gripper_semantics="negative_open_positive_close_zero_hold",
+                           action_repeat=1, control_freq=20, low=[-1.0] * 7, high=[1.0] * 7)
+    for field, expected in expected_action.items():
+        if schema[field] != expected:
+            raise ValueError(f"Unexpected action_schema.{field}: {schema[field]!r}, expected {expected!r}")
+    raw = initial["observation"]
+    if (initial["observation_schema_version"] != entry["observation_schema_version"]
+            or initial["observation_schema"] != describe_observation(raw)):
+        raise ValueError("Released observation schema disagrees with manifest or reset arrays")
+    shapes = dict(agentview_image=(256, 256, 3), robot0_eye_in_hand_image=(256, 256, 3),
+                  robot0_joint_pos=(7,), robot0_joint_vel=(7,), robot0_eef_pos=(3,),
+                  robot0_eef_quat_xyzw=(4,), robot0_gripper_qpos=(2,))
+    if raw.keys() != shapes.keys():
+        raise ValueError(f"Unexpected public reset fields: {sorted(raw)}")
+    for field, shape in shapes.items():
+        dtype = np.uint8 if field.endswith("_image") else np.float32
+        if raw[field].shape != shape or raw[field].dtype != dtype or not np.isfinite(raw[field]).all():
+            raise ValueError(f"Invalid native reset array {field}")
+
+
 def serve(fd: int):
     from OpenGL import GL
     from libero_remote.environment.libero import LiberoEnvironmentAdapter
@@ -86,7 +128,8 @@ def serve(fd: int):
     anchor_eef_pos = None
     low = None
     high = None
-    renderer_checked = False
+    done = True
+    controls = 0
 
     with Connection(fd) as pipe:
         try:
@@ -103,7 +146,9 @@ def serve(fd: int):
                     spec_name = value.get("embodiment", "nom")
                     spec = get_embodiment_spec(spec_name)
                     task_entry = manifest.require(*key)
-                    max_steps = int(value.get("max_steps", task_entry["max_steps"]))
+                    max_steps = int(task_entry["max_steps"])
+                    if value.get("max_steps", max_steps) != max_steps:
+                        raise ValueError("Use max_controls on the motor to cap a rollout at the manifest horizon")
                     create_spec = dict(
                         suite=key[0],
                         task_id=key[1],
@@ -118,34 +163,37 @@ def serve(fd: int):
                         _bddl_path=str(manifest.resolve_bddl(*key)),
                     )
                     initial = env.create(create_spec)
-                    if not renderer_checked:
-                        vendor = GL.glGetString(GL.GL_VENDOR)
-                        renderer = GL.glGetString(GL.GL_RENDERER)
-                        if not vendor or not renderer:
-                            raise RuntimeError(f"Missing OpenGL context: {vendor!r} / {renderer!r}")
-                        if not allow_mesa and b"nvidia" not in vendor.lower():
-                            raise RuntimeError(f"Expected NVIDIA EGL renderer on GPU, got {vendor!r} / {renderer!r}")
-                        renderer_checked = True
+                    validate_reset(initial, create_spec, task_entry)
+                    vendor = GL.glGetString(GL.GL_VENDOR)
+                    renderer = GL.glGetString(GL.GL_RENDERER)
+                    if not vendor or not renderer or (not allow_mesa and b"nvidia" not in vendor.lower()):
+                        raise RuntimeError(f"Unexpected EGL vendor/renderer: {vendor!r} / {renderer!r}")
                     raw = initial["observation"]
                     anchor_eef_pos = np.asarray(raw["robot0_eef_pos"], dtype=np.float32).copy()
                     bounds = initial["action_schema"]
                     low = np.asarray(bounds["low"], dtype=np.float32)
                     high = np.asarray(bounds["high"], dtype=np.float32)
+                    # The anchored local coordinates equal the measured world coordinates at reset.
+                    # Compute them for every embodiment and validate the real public frame in Gate 1.
                     local_raw = to_local_proprio(raw, anchor_eef_pos, spec)
+                    controls, done = 0, False
                     initial_out = dict(
                         initial,
                         observation=local_raw,
                         agentview_64=downsample_agentview(raw["agentview_image"], 64),
                         anchor_eef_pos=anchor_eef_pos.copy(),
-                        renderer=GL.glGetString(GL.GL_RENDERER).decode(),
+                        renderer=renderer.decode(),
+                        renderer_vendor=vendor.decode(),
                     )
                     result = create_spec, initial_out
                 elif op == "chunk":
-                    if spec is None or anchor_eef_pos is None:
-                        raise RuntimeError("Call create before chunk")
+                    if done:
+                        raise RuntimeError("Call create before stepping a new or completed episode")
                     actions = np.asarray(value, dtype=np.float32)
                     if actions.ndim != 2 or actions.shape[0] < 1 or actions.shape[1] != 7:
                         raise ValueError(f"Expected [n, 7] actions for chunk, got {actions.shape}")
+                    if not np.isfinite(actions).all() or np.any(actions < low) or np.any(actions > high):
+                        raise ValueError("Issued action is nonfinite or outside the advertised bounds")
                     positions, gripper_positions, rewards = [], [], []
                     local_raw = None
                     raw = None
@@ -156,8 +204,11 @@ def serve(fd: int):
                     for issued in actions:
                         phys = apply_embodiment_action(issued, spec, low, high)
                         step = env.step(phys)
+                        controls += 1
+                        if step["worker_step_index"] != controls:
+                            raise ValueError(f"Unexpected native control index at {controls}")
                         raw = step["observation"]
-                        local_raw = to_local_proprio(raw, anchor_eef_pos, spec)
+                        local_raw = raw if spec.yaw_deg == 0 else to_local_proprio(raw, anchor_eef_pos, spec)
                         positions.append(local_raw["robot0_eef_pos"].copy())
                         gripper_positions.append(np.asarray(raw["robot0_gripper_qpos"], dtype=np.float32).copy())
                         rewards.append(float(step["reward"]))
@@ -165,7 +216,10 @@ def serve(fd: int):
                         any_success = any_success or final_success
                         terminated = bool(step["terminated"])
                         truncated = bool(step["truncated"])
-                        if terminated or truncated:
+                        done = terminated or truncated
+                        if controls == max_steps and not done:
+                            raise ValueError("Native adapter exhausted its horizon without a terminal flag")
+                        if done:
                             break
                     result = dict(
                         observation=local_raw,
@@ -178,6 +232,7 @@ def serve(fd: int):
                         any_success=any_success,
                         terminated=terminated,
                         truncated=truncated,
+                        language_instruction=step["info"]["language_instruction"],
                     )
                 else:
                     raise ValueError(f"Unknown simulator op {op!r}")
