@@ -64,13 +64,15 @@ def main():
                 v["success"] += int(success)
                 v["signs_correct"] += int(np.array_equal(estimate, truth))
                 v["trials"] += 1
-                detail.append(dict(trial=key, convention=name, method=method, estimated=np.asarray(estimate).tolist(),
+                detail.append(dict(trial=key, archive_state_exact=pair["archive_reset"]["physics_match"],
+                                   convention=name, method=method, estimated=np.asarray(estimate).tolist(),
                                    net=net, success=success))
     print(json.dumps(dict(scores=scores, detail=detail, source_archive_pin=native["source_revision"],
                           launch=(args.summary.parent.parent / "launch.txt").read_text().strip(),
                           exit=(args.summary.parent.parent / "exit.txt").read_text().strip(),
                           probe_episodes=native["probe_episodes"], query_episodes=native["query_episodes"],
                           source_sha256=file_hash(args.summary), checkpoint_sha256=file_hash(args.checkpoint),
+                          archive_resets={k: pair["archive_reset"] for k, pair in native["pairs"].items()},
                           nominal_replay=dict(success_matches=sum(r["success_matches"] for r in repro),
                                               controls_match=sum(r["controls_match"] for r in repro),
                                               reward_mismatches=sum(r["reward_mismatches"] for r in repro),

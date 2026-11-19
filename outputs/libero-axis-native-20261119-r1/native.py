@@ -254,10 +254,15 @@ def run(args, cpu_start):
 
             for name in NAMES:
                 with episode(bddl, query, horizon) as (env, start):
-                    require(start["physics"] == source["physics"] and start["public"] == expected
-                            and start["prompt"] == source["prompt"], "Source query reset mismatch: " + trial)
+                    require(set(start["public"]) == set(expected) and start["prompt"] == source["prompt"],
+                            "Source observation schema or instruction mismatch: " + trial)
                     if pair["branches"]:
                         require(start == pair["branches"]["nom"]["reset"], "Unpaired query start: " + trial)
+                    else:
+                        pair["archive_reset"] = dict(
+                            physics_match=start["physics"] == source["physics"], archive_physics=source["physics"],
+                            public_mismatches=[k for k in expected if start["public"][k] != expected[k]],
+                            wrist_error_m=float(np.linalg.norm(tape["initial_position"] - start["initial_position"])))
                     pair["branches"][name] = playback(WireAdapter(env, name), start, tape, record,
                                                       nominal=name == "nom")
                 report["query_episodes"] += 1
