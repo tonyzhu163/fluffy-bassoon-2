@@ -9,7 +9,8 @@ from reader import MODES,choose,predict
 
 
 def read_tape(path):
-    with np.load(path/'tape.npz') as z:return {k:z[k] for k in ('issued','states','hits')}
+    file=path if path.suffix=='.npz' else path/'tape.npz'
+    with np.load(file) as z:return {k:z[k] for k in ('issued','states','hits')}
 
 
 def choices(model,library,poses):
