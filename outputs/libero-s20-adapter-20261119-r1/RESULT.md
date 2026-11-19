@@ -25,5 +25,13 @@ worker use was 0.219 GPUh. The next launcher uses the desktop libraries
 and NVIDIA vendor manifest from the successful distributed LIBERO-90
 qualification. A CPU-only check in the S20 simulator interpreter loaded
 the EGL, OpenGL, and X11 symbols successfully. The S20 12-update batch-two
-fit also passed on the development RTX 4090. Full batch-four throughput and rendering in a
-scheduled S20 container still need qualification. [Qualified distributed runtime](../libero90-full-action-20261119-r1/EXECUTION.md)
+fit also passed on the development RTX 4090. [Qualified distributed runtime](../libero90-full-action-20261119-r1/EXECUTION.md)
+
+Baige Distributed Training job `job-str8aynnl1t7` started on one Pro6K
+GPU at `758c3522`. The renderer reported NVIDIA RPBZZZ6. The 12-update
+adapter smoke passed and the zero-correction commands matched the native
+solver exactly. The subsequent native smoke completed all 24 episodes with
+paired reset and shared-opening checks passing. The GPU stages used 521 s
+before the full fit. In the two-query smoke all arms passed BASE, and the
+paced arm was the only success on the S20 reset. This panel qualifies the
+runtime and evaluator. [Design](PLAN.md)
