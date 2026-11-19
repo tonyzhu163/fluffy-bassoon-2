@@ -15,7 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 from fluffy_bassoon.meta_rl.causal_decoder import CausalDecoderCore
 
 PREFIX = 400
-GROUP = 20
+BLOCK_SIZE = {80: 5, PREFIX: 20}
 CHANNELS = 13  # issued [7], post-control displacement [3], jaw [2], native reward
 STATE_DIM = 8
 PROPOSAL_SHAPE = (2, 10, 7)
@@ -41,8 +41,8 @@ def numeric(value, shape, name):
     return array
 
 
-def pack_practice(tape: Mapping) -> Practice:
-    """One completed practice, padded to the 400-control horizon. Keep its actual terminal outcome."""
+def pack_practice(tape: Mapping, prefix: int = PREFIX) -> Practice:
+    """Pack the selected control prefix and the completed practice's terminal outcome."""
     controls = np.asarray(tape["controls"])
     terminal = np.asarray(tape["terminal"])
     if controls.shape != () or controls.dtype.kind not in "iu" or int(controls) < 1:
@@ -50,7 +50,7 @@ def pack_practice(tape: Mapping) -> Practice:
     if terminal.shape != () or terminal.item() not in (False, True):
         raise ValueError("Expected binary native support terminal success")
     total = int(controls)
-    length = min(PREFIX, total)
+    length = min(prefix, total)
     initial = numeric(tape["initial_position"], (3,), "initial_position")
     fields = []
     for key, tail in (("issued", (7,)), ("positions", (3,)), ("gripper", (2,)), ("rewards", ())):
@@ -60,7 +60,7 @@ def pack_practice(tape: Mapping) -> Practice:
         fields.append(numeric(values[:length], (length, *tail), key))
     issued, positions, jaw, rewards = fields
     motion = np.diff(positions, axis=0, prepend=initial[None])
-    history = np.zeros((PREFIX, CHANNELS), dtype=np.float32)
+    history = np.zeros((prefix, CHANNELS), dtype=np.float32)
     history[:length] = np.column_stack((issued, motion, jaw, rewards))
     return Practice(torch.from_numpy(history), torch.tensor(length), torch.tensor(float(terminal.item())))
 
@@ -68,16 +68,18 @@ def pack_practice(tape: Mapping) -> Practice:
 class ActionReader(nn.Module):
     """Encode practice and current observation once, then score each full action independently."""
 
-    def __init__(self, embedding_dim: int):
+    def __init__(self, embedding_dim: int, prefix: int = PREFIX):
         super().__init__()
         if embedding_dim < 1:
             raise ValueError("Expected a nonempty pooled embedding")
         self.embedding_dim = embedding_dim
-        self.support_projection = nn.Linear(GROUP * (CHANNELS + 1), WIDTH)
+        self.prefix = prefix
+        self.group = BLOCK_SIZE[prefix]
+        self.support_projection = nn.Linear(self.group * (CHANNELS + 1), WIDTH)
         self.boundary = nn.Linear(1, WIDTH)
         self.query_projection = nn.Linear(STATE_DIM + embedding_dim, WIDTH)
         self.core = CausalDecoderCore(WIDTH, width=WIDTH, layers=2, heads=4,
-                                     memory_length=PREFIX // GROUP + 1)
+                                     memory_length=prefix // self.group + 1)
         self.action_projection = nn.Linear(10 * 7, WIDTH)
         self.score = nn.Sequential(nn.Linear(2 * WIDTH, WIDTH), nn.GELU(), nn.Linear(WIDTH, 1))
         for key, size in (("history", CHANNELS), ("state", STATE_DIM)):
@@ -94,14 +96,14 @@ class ActionReader(nn.Module):
             last = torch.zeros_like(rows)
         else:
             history, lengths, terminal = practice
-            valid_control = torch.arange(PREFIX, device=query.device)[None] < lengths[:, None]
+            valid_control = torch.arange(self.prefix, device=query.device)[None] < lengths[:, None]
             history = (history - self.history_mean) / self.history_scale
             history = torch.where(valid_control[:, :, None], history, 0.0)
             marked = torch.cat((history, valid_control[:, :, None]), dim=-1)
-            blocks = self.support_projection(marked.reshape(len(query), PREFIX // GROUP, -1))
+            blocks = self.support_projection(marked.reshape(len(query), self.prefix // self.group, -1))
             # Close the practice *after* its last valid block, including when success
             # occurs later than the prefix. The query can attend across this boundary.
-            end = (lengths + GROUP - 1) // GROUP
+            end = (lengths + self.group - 1) // self.group
             last = end + 1
             tokens = torch.cat((blocks, current.new_zeros((len(query), 2, WIDTH))), dim=1)
             tokens[rows, end] = self.boundary(terminal[:, None])
@@ -126,9 +128,16 @@ def load_scorer(path: Path, recipe: str):
     if tuple(bundle["seeds"]) != SEEDS or len(bundle["models"]) != len(SEEDS):
         raise ValueError(f"Expected one frozen reader for each of {SEEDS}")
     dim = bundle["embedding_dim"]
+    # Older bundles predate the explicit prefix field. Their projection width
+    # distinguishes the original five-control and full-practice twenty-control blocks.
+    if "prefix" in bundle:
+        prefix = bundle["prefix"]
+    else:
+        width = bundle["models"][0]["support_projection.weight"].shape[1]
+        prefix, = [p for p, size in BLOCK_SIZE.items() if size * (CHANNELS + 1) == width]
     members = []
     for weights in bundle["models"]:
-        reader = ActionReader(dim)
+        reader = ActionReader(dim, prefix)
         reader.load_state_dict(weights, strict=True)
         members.append(reader.eval().requires_grad_(False))
 
@@ -136,7 +145,7 @@ def load_scorer(path: Path, recipe: str):
     def score(support, state, embedding, proposals):
         practice = None
         if support is not None:
-            practice = Practice(*(field.unsqueeze(0) for field in pack_practice(support)))
+            practice = Practice(*(field.unsqueeze(0) for field in pack_practice(support, prefix)))
         query = np.concatenate((numeric(state, (STATE_DIM,), "state"),
                                 numeric(embedding, (dim,), "embedding")))
         query = torch.from_numpy(query).unsqueeze(0)

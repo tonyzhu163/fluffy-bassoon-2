@@ -162,8 +162,10 @@ def rollout(sim, motor, readers, folder, arm, row, raw, identity, support, match
             times["feature_seconds"] += time.monotonic() - before
             state, embedding = features[:8], features[8:]
         before = time.monotonic()
-        proposals = np.stack([motor.propose(item, g.standard_normal((10, 32), dtype=np.float32))
-                              for g in generators])
+        draws = [g.standard_normal((10, 32), dtype=np.float32) for g in generators]
+        if ordinal == 0:
+            opening_noise = [fingerprint(draw) for draw in draws]
+        proposals = np.stack([motor.propose(item, draw) for draw in draws])
         times["action_seconds"] += time.monotonic() - before
         scores = np.zeros(k, dtype=np.float32)
         if arm in LOGGED:
@@ -207,6 +209,7 @@ def rollout(sim, motor, readers, folder, arm, row, raw, identity, support, match
     record = dict(arm=arm, controls=len(issued), settling_controls=SETTLE, score=float(sum(rewards)),
                   success=success, truncated=not success, replans=ordinal, policy_calls=k * ordinal,
                   feature_calls=ordinal if arm not in ("base", "support") else 0, policy_stream=[row["seed"], stream],
+                  opening_noise_sha256=opening_noise,
                   identities=dict(issued=fingerprint(tape["issued"]), positions=fingerprint(tape["positions"]),
                                   rewards=fingerprint(tape["rewards"])),
                   arrays={p.name: sha(p.read_bytes()) for p in folder.glob("*.npz")},
@@ -248,12 +251,14 @@ def collect_trial(sim, motor, readers, folder, row, arms, source, design_sha):
         if arm == "base" and record["identities"] != episodes["matched"]["identities"]:
             raise ValueError("Discarding the extra proposal changed the live native trajectory")
     if arms == LOGGED:
-        # Both truly reset, and their opening readouts agree. Their policy draws must differ.
+        # Check the inputs to the frozen policy. Independent draws can map
+        # to identical commands, which are valid training examples.
+        draws = [digest for arm in arms for digest in episodes[arm]["opening_noise_sha256"]]
+        if len(set(draws)) != 4:
+            raise ValueError("Repeated opening noise across the independent fitting streams")
         with np.load(folder / "query0/decisions.npz") as a, np.load(folder / "query1/decisions.npz") as b:
             if any(not np.array_equal(a[key][0], b[key][0]) for key in ("state", "embedding")):
                 raise ValueError("Different opening readout across fitting continuations")
-            if np.array_equal(a["proposals"][0], b["proposals"][0]):
-                raise ValueError("Independent fitting streams returned identical opening proposals")
     totals = {key: sum(r[key] for r in episodes.values()) for key in
               ("controls", "settling_controls", "policy_calls", "feature_calls", "action_seconds",
                "feature_seconds", "reader_seconds", "simulator_step_seconds")}

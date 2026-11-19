@@ -24,6 +24,7 @@ MANIFEST = HERE.parent / "libero90-meta-retry-20261119-r1" / "cases.json"
 LR = 3e-4
 HORIZON = 400
 CADENCE = 5
+PROTOCOL_PREFIX = {"full-practice": PREFIX, "prefix80": 80}
 
 
 @dataclass
@@ -112,7 +113,7 @@ def hash_tensor(digest, tensor):
     digest.update(array.tobytes())
 
 
-def read_archive(root, manifest):
+def read_archive(root, manifest, prefix=PREFIX):
     catalogue = json.loads(manifest.read_text())
     rows = sorted((r for r in catalogue if r["split"] == "fitting"),
                   key=lambda r: (r["task_id"], r["repeat"]))
@@ -129,7 +130,7 @@ def read_archive(root, manifest):
             raise ValueError(f"Published trial disagrees with the manifest in {folder}")
         with np.load(folder / "support" / "public.npz", allow_pickle=False) as tape:
             read_outcome(folder / "support", tape)
-            practice = pack_practice(tape)
+            practice = pack_practice(tape, prefix)
         supports.append(practice)
         for field in practice:
             hash_tensor(digest, field)
@@ -146,8 +147,9 @@ def read_archive(root, manifest):
 
 def initialize(data, seed):
     torch.manual_seed(seed)
-    model = ActionReader(data.embedding_dim)
-    valid = torch.arange(PREFIX)[None] < data.supports.length[:, None]
+    prefix = data.supports.history.shape[1]
+    model = ActionReader(data.embedding_dim, prefix)
+    valid = torch.arange(prefix)[None] < data.supports.length[:, None]
     state = torch.cat([e.query[:, :STATE_DIM] for e in data.trajectories])
     for key, values in (("history", data.supports.history[valid]), ("state", state)):
         scale, mean = torch.std_mean(values, dim=0, unbiased=False)
@@ -157,18 +159,20 @@ def initialize(data, seed):
 
 
 class Sampler:
-    """Uniform task and uniform visited decision within task.
+    """Equal task mass, with either uniform trajectories or uniform visits within task.
 
     Stratification guarantees successful examples for CE at every shared update.
     BCE recombines the strata using their mass under the original sampling law.
     """
 
-    def __init__(self, episodes, seed):
+    def __init__(self, episodes, seed, protocol="full-practice"):
         self.rng = np.random.default_rng(seed)
-        task_decisions = Counter()
-        for episode in episodes:
-            task_decisions[episode.task] += len(episode.index)
-        weights = np.array([len(e.index) / (len(task_decisions) * task_decisions[e.task]) for e in episodes])
+        self.lengths = np.array([len(e.index) for e in episodes])
+        units = np.ones_like(self.lengths) if protocol == "prefix80" else self.lengths
+        task_units = Counter()
+        for episode, count in zip(episodes, units):
+            task_units[episode.task] += count
+        weights = np.array([n / (len(task_units) * task_units[e.task]) for e, n in zip(episodes, units)])
         success = np.array([e.success for e in episodes], dtype=bool)
         if not success.any():
             raise ValueError("No successful fitting query for success-conditioned imitation")
@@ -178,7 +182,6 @@ class Sampler:
             ids = np.flatnonzero(mask)
             if len(ids):
                 self.strata.append((ids, weights[ids] / weights[ids].sum()))
-        self.lengths = np.array([len(e.index) for e in episodes])
 
     def draw(self, batch_size):
         if len(self.strata) == 1:
@@ -242,7 +245,7 @@ def save_atomic(payload, path):
 
 
 def fit_seed(data, output, seed, config, every, resume):
-    sampler = Sampler(data.trajectories, seed)
+    sampler = Sampler(data.trajectories, seed, config["protocol"])
     first = initialize(data, seed)
     models = {"meta": first, "imitation": deepcopy(first)}
     optimizers = {r: torch.optim.AdamW(m.parameters(), lr=LR) for r, m in models.items()}
@@ -283,8 +286,9 @@ def source_digest():
 
 
 def fit(args):
-    data = read_archive(args.root, args.manifest)
-    config = dict(format=FORMAT, data=data.digest, code=source_digest(),
+    prefix = PROTOCOL_PREFIX[args.protocol]
+    data = read_archive(args.root, args.manifest, prefix)
+    config = dict(format=FORMAT, data=data.digest, code=source_digest(), protocol=args.protocol,
                   embedding_dim=data.embedding_dim, steps=args.steps, batch_size=args.batch_size,
                   threads=args.threads, learning_rate=LR, torch_version=str(torch.__version__),
                   numpy_version=str(np.__version__))
@@ -305,7 +309,7 @@ def fit(args):
             stage = Path(temp) / "frozen"
             stage.mkdir()
             for recipe in RECIPES:
-                torch.save(dict(format=FORMAT, recipe=recipe, embedding_dim=data.embedding_dim,
+                torch.save(dict(format=FORMAT, recipe=recipe, prefix=prefix, embedding_dim=data.embedding_dim,
                                 seeds=SEEDS, models=[m[recipe] for m in ensembles]), stage / f"{recipe}.pt")
             (stage / "config.json").write_text(json.dumps(config, indent=2) + "\n")
             stage.rename(frozen)
@@ -314,7 +318,7 @@ def fit(args):
         os.close(lock)
 
 
-def check(directory):
+def check(directory, protocol):
     """A deterministic CPU regression through the archive, checkpoint and collector APIs."""
     from unittest.mock import patch
 
@@ -351,7 +355,11 @@ def check(directory):
             np.savez(folder / "decisions.npz", state=state, embedding=embedding, index=index,
                      proposals=proposals, scores=np.zeros((n, 2), np.float32), offset=offsets,
                      length=np.minimum(CADENCE, controls - offsets))
-    data = read_archive(root, manifest)
+    prefix = PROTOCOL_PREFIX[protocol]
+    data = read_archive(root, manifest, prefix)
+    # The short successful query has 2 visits and the failed one has 80.
+    expected_mass = 0.5 if protocol == "prefix80" else 2 / 82
+    np.testing.assert_allclose(Sampler(data.trajectories, SEEDS[0], protocol).success_mass, expected_mass)
 
     # Detect an unselected BCE target, a failed-query CE contribution or a missing
     # alternate in the CE denominator. The two successes have different choices.
@@ -367,7 +375,7 @@ def check(directory):
         torch.testing.assert_close(actual, reference)
         torch.testing.assert_close(torch.autograd.grad(actual, logits)[0], torch.autograd.grad(reference, logits)[0])
 
-    options = argparse.Namespace(root=root, manifest=manifest, output=directory / "fit",
+    options = argparse.Namespace(root=root, manifest=manifest, output=directory / "fit", protocol=protocol,
                                  steps=2, batch_size=4, threads=1, checkpoint_every=1, resume=False)
     frozen = fit(options)
     # Replay the second optimizer step from an interrupted joint checkpoint.
@@ -388,7 +396,7 @@ def check(directory):
     resumed = fit_seed(data, replay, SEEDS[0], config, 1, True)
     example = data.trajectories[0]
     query, proposals = example.query[0], example.proposals[0]
-    practice = stack_practices([pack_practice(support)])
+    practice = stack_practices([pack_practice(support, prefix)])
     for recipe in RECIPES:
         path = frozen / f"{recipe}.pt"
         bundle = torch.load(path, map_location="cpu", weights_only=True)
@@ -403,7 +411,7 @@ def check(directory):
             with torch.inference_mode():
                 members = []
                 for weights in bundle["models"]:
-                    model = ActionReader(data.embedding_dim).eval()
+                    model = ActionReader(data.embedding_dim, prefix).eval()
                     model.load_state_dict(weights)
                     members.append(model(view, query[None], proposals[None])[0])
                 np.testing.assert_allclose(logits, torch.stack(members).mean(0).numpy(), rtol=0, atol=0)
@@ -413,10 +421,12 @@ def check(directory):
                 raise AssertionError("Identical proposals must tie in collector order")
         changed = support["issued"].copy()
         changed[-1] += 10
-        altered = pack_practice(dict(support, issued=changed))
-        if torch.equal(altered.history, pack_practice(support).history):
+        altered = dict(support, issued=changed)
+        if protocol == "prefix80":
+            np.testing.assert_array_equal(predict(altered, proposals), predict(support, proposals))
+        elif torch.equal(pack_practice(altered, prefix).history, practice.history[0]):
             raise AssertionError("The final practice command must be present in the history")
-    print("PASS: logged objectives, checkpoint replay, retained/cleared ensemble logits, proposal order and ties")
+    print(f"PASS {protocol}: sampling, logged objectives, checkpoint replay, history, ensemble logits and ties")
 
 
 def main():
@@ -431,12 +441,16 @@ def main():
     train.add_argument("--threads", type=int, default=2)
     train.add_argument("--checkpoint-every", type=int, default=50)
     train.add_argument("--resume", action="store_true", help="recover a fit with identical inputs and settings")
-    sub.add_parser("check", help="run constructed CPU regression in a temporary directory")
+    regression = sub.add_parser("check", help="run constructed CPU regression in a temporary directory")
+    for command in (train, regression):
+        command.add_argument("--protocol", choices=PROTOCOL_PREFIX, default="full-practice",
+                             help="prefix80: first 80 controls, equal trajectories per task; "
+                                  "full-practice (registered default): all controls, equal visits per task")
     args = parser.parse_args()
     if args.command == "check":
         torch.set_num_threads(1)
         with tempfile.TemporaryDirectory() as temp:
-            check(Path(temp))
+            check(Path(temp), args.protocol)
     else:
         if min(args.steps, args.threads, args.checkpoint_every) < 1 or args.batch_size < 2:
             parser.error("Require positive steps, threads, checkpoint interval, and batch size >= 2")

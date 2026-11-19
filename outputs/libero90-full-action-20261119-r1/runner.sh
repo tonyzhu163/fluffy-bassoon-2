@@ -34,10 +34,10 @@ case "$stage" in
         [[ "$host" =~ ^job-[a-z0-9]+-(master|worker)-[0-9]+$ ]] || {
             echo "Use a Baige Distributed Training allocation for panel stages" >&2; exit 2
         }
-        if [[ "$stage" == live-* ]]; then required+=("$own/model.py"); fi
         ;;
     *) echo "Unknown stage $stage" >&2; exit 2 ;;
 esac
+if [[ "$stage" == live-* || "$stage" == smoke-live ]]; then required+=("$own/model.py"); fi
 # These run directories are normally gitignored. Explicitly require tracked sources.
 git -C "$code" ls-files --error-unmatch -- "${required[@]}" >/dev/null
 if [[ "$stage" == smoke* ]]; then
