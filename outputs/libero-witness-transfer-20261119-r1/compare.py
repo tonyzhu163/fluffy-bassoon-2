@@ -8,7 +8,7 @@ from pathlib import Path
 def ceiling(cases, scope):
     groups = defaultdict(lambda: [0,0])
     for r in cases:
-        key = (*r["triple"], *r["order"])
+        key = (*r["triple"], *r["prompt_order"])
         if scope != "commands_and_rewards":
             key += tuple(r["variants"])
         if scope != "history_only":
@@ -25,7 +25,7 @@ def compare(directory):
     methods = {}
     for arm, result in records.items():
         for r, other in zip(base,result["cases"],strict=True):
-            for key in ("triple","order","variants","hidden","rewards","query_hits","strict"):
+            for key in ("triple","prompt_order","variants","hidden","rewards","query_hits","strict"):
                 assert r[key]==other[key]
         methods[arm]=dict(completion=result["physical_completion"]["numerator"],
                           strict=result["strict"]["native"]["numerator"],
