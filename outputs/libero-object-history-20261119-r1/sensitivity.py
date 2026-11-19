@@ -28,16 +28,21 @@ def paired(rows,q):
 
 
 if __name__=='__main__':
-    worker,out=map(Path,sys.argv[1:])
+    worker,out=map(Path,sys.argv[1:3])
+    stage=sys.argv[3] if len(sys.argv)>3 else None
+    folder=worker/'episodes'
+    if stage:
+        assert stage in ('anchor2','anchor4')
+        folder=folder/stage
     with np.load(worker/'model.npz') as z:model=dict(z)
     poses=list(range(6))
-    p=read_practices(worker/'episodes',poses)
-    q=queries(worker/'episodes',poses)
+    p=read_practices(folder,poses)
+    q=queries(folder,poses)
     report={}
     for name,orders in [('cyclic',None),('all_orders',permutations(poses,3))]:
         rows=choices(model,p,poses,orders)
         result=evaluate(model,p,q,rows)
         report[name]=dict(native=result['all']['native'],zero=result['zero'],
                           change=paired(rows,q),by_query={str(k):paired([r for r in rows if r['q']==k],q) for k in q})
-    (out/'sensitivity.json').write_text(json.dumps(report,indent=2)+'\n')
+    (out/(f'{stage}-sensitivity.json' if stage else 'sensitivity.json')).write_text(json.dumps(report,indent=2)+'\n')
     print(report['cyclic']['change'],report['all_orders']['change'])

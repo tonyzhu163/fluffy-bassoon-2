@@ -83,6 +83,8 @@ def main(worker,out,stage):
                 assert report[name][key]['native']['table']==prev[key]['native']['table']
     else:
         poses=list(range(6));folder=worker/'episodes'
+        if stage in ('anchor2', 'anchor4'):
+            folder=folder/stage
         library=read_practices(folder,poses)
         q=queries(folder,poses)
         saved=json.loads((folder/'choices.json').read_text())
@@ -102,6 +104,14 @@ def main(worker,out,stage):
             path=folder/f'p{p}-g{g}-interrupt'
             record=json.loads((path/'result.json').read_text())
             events.append(dict(pose=p,goal=g,start=record['start'],obj=record['object'],own=record['ever'][g]))
+        # Diagnostic reference using the released layout's designated target as a default.
+        nominal = int(stage == 'anchor4')
+        for row in rows:
+            goal = nominal
+            if sum(row['r']) == 1:
+                goal = row['first'] if row['r'][0] else 1-row['first']
+            row['ps']['reward_then_nominal'] = float(goal == 0)
+            row['ps']['fixed_nominal'] = float(nominal == 0)
         report['object']=evaluate(model,library,q,rows)
         report.update(executed=observed,events=events)
     (out/f'{stage}.json').write_text(json.dumps(report,indent=2)+'\n')
