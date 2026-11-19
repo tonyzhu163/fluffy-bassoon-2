@@ -5,7 +5,9 @@ fitting bowl tasks (Goal 4 and 8). Use their recorded seeds, reset IDs,
 commands, camera resolution and horizons, the pinned LIBERO-Pro2.0 simulator
 `e5500c69`, and the training archive at `6c4c5524`. Match the initial public
 observation, record divergence in wrist motion, and score native success
-at the benchmark endpoint. Inspect command activity across all 120 cached
+at the benchmark endpoint. Where the GPU is occupied, first check the same
+physics, proprioception and rewards with the camera sensors disabled.
+Inspect command activity across all 120 cached
 demonstrations for evidence that the successful S20 executions rely on
 waiting. This is a fitting-side replay check of recorded actions.
 

@@ -1,9 +1,12 @@
 """Replay released fitting demonstrations and inspect issued command activity."""
 
 import argparse
+from contextlib import nullcontext
+from functools import partial
 import json
 from pathlib import Path
 from statistics import median
+from unittest.mock import patch
 
 import h5py
 import numpy as np
@@ -17,9 +20,9 @@ TASKS = (4, 8)
 CONDITIONS = ("BASE", "S20")
 
 
-def replay(demo, archive_name, demo_name, manifest):
+def replay(demo, archive_name, demo_name, manifest, cameras):
     source = json.loads(demo.attrs["source_metadata"])
-    spec = dict(source["env_args"], camera_names=CAMERAS)
+    spec = dict(source["env_args"], camera_names=cameras)
     key = (spec["suite"], spec["task_id"], spec["variant"])
     case = manifest.require(*key)
     if spec["max_steps"] != case["max_steps"]:
@@ -53,13 +56,9 @@ def replay(demo, archive_name, demo_name, manifest):
                 reward_disagreements=reward_disagreements)
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("dataset", type=Path)
-    parser.add_argument("release", type=Path)
-    parser.add_argument("output", type=Path)
-    args = parser.parse_args()
+def run(args):
     manifest = TaskManifest.load(str(args.release / "assets/task_manifest.json"))
+    cameras = [] if args.physics_only else CAMERAS
     summaries, replays = [], []
     for task in TASKS:
         for case in CONDITIONS:
@@ -72,10 +71,30 @@ def main():
                                       median_steps=median(map(len, actions)), zero_arm_steps=sum(counts),
                                       episodes_with_zero_arm=sum(count > 0 for count in counts)))
                 for demo_name in ("demo_0", "demo_1"):
-                    result = replay(demos[demo_name], name, demo_name, manifest)
+                    result = replay(demos[demo_name], name, demo_name, manifest, cameras)
                     print(json.dumps(result, sort_keys=True), flush=True)
                     replays.append(result)
-    args.output.write_text(json.dumps(dict(command_summary=summaries, replays=replays), indent=2) + "\n")
+    evidence = dict(physics_only=args.physics_only, command_summary=summaries, replays=replays)
+    args.output.write_text(json.dumps(evidence, indent=2) + "\n")
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("dataset", type=Path)
+    parser.add_argument("release", type=Path)
+    parser.add_argument("output", type=Path)
+    parser.add_argument("--physics-only", action="store_true", help="Replay proprioception and rewards without rendering")
+    args = parser.parse_args()
+    simulator = nullcontext()
+    if args.physics_only:
+        from libero.libero import envs
+        from libero.libero.envs.env_wrapper import ControlEnv
+
+        # BASE and S20 physics and rewards are independent of camera sensors.
+        headless = partial(ControlEnv, use_camera_obs=False, has_offscreen_renderer=False)
+        simulator = patch.object(envs, "OffScreenRenderEnv", headless)
+    with simulator:
+        run(args)
 
 
 if __name__ == "__main__":

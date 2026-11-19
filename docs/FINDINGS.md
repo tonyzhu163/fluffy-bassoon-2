@@ -43,6 +43,30 @@ on the same rule split, not a solved inference problem or robotic adaptation.
 The screen changes attention, supervision and features together and does not
 isolate their effects. [Fresh confirmation, all recipes and limits](../outputs/learning-histories-fix-20261111-r1/RESULT.md).
 
+## LIBERO-Pro2.0 retry development
+
+The four-mode timing pilot had 32 fitting queries. Only 19 had any successful
+action, 12 distinguished successful from unsuccessful modes, and two of
+those 12 were delayed. On 32 development queries the retained reader scored
+20 in each fit. Clearing or swapping support scored 20, 20 and 19. Swapping
+changed up to 16 choices. The fitting-selected fixed mode scored 18, the
+best fixed mode in hindsight scored 19, the lag rule scored 21, and the
+measured action union scored 22. Ten of sixteen delayed queries failed every
+mode. Three paced outcomes changed across workers on matched reset IDs,
+making this a poor panel for resolving a one-success advantage. The evidence
+establishes sparse decision supervision and limited headroom above the lag
+rule on this action menu. [Timing pilot](../outputs/libero-decision-pretraining-20261119-r1/RESULT.md)
+
+On the released-scene development probes, reward-aware retries scored
+157/192 versus 81/192 when the selector ignored reward. Adaptive and fixed
+second-probe schedules tied at 154/192 when both used two rewards. In the
+separate bottle replay, repeat/switch scored 31/48, matching the ceiling
+given the observable tape and reward. A motion classifier scored 28/48,
+and the privileged hidden-goal ceiling was 34/48. These comparisons show
+where a simple use of feedback captures the available gains and where
+stronger continuations or more informative interactions are needed.
+[Scene probes](../outputs/libero-scene-probes-20261119-r1/RESULT.md) · [Bottle replay](../outputs/libero-failure-diagnosis-20261119-r1/RESULT.md)
+
 ## LIBERO-Gen motor qualification
 
 The released frozen Behavior Prompting Policy succeeded on 20/20 paired
