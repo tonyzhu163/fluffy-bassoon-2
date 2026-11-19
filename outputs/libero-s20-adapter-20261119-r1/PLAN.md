@@ -31,8 +31,8 @@ to BASE, adapter forced to S20, and adapter using public command–motion lag,
 as well as from-reset `adapter_base_full` and `adapter_s20_full` arms
 (running without the 40-control default opening) to measure the cross-episode
 informed motor ceiling separately from the 40-control online-lag switching
-arms. Force both flags independently to measure the informed adapter and the fixed
-flag selected on separate fitting resets. The 40-control adapter arms and the default
+arms. Select a fixed flag for each opening protocol using only the separate
+fitting resets. The 40-control adapter arms and the default
 share a charged 40-control opening. The lag estimator then uses that opening
 with threshold eight, falling back to the source-selected flag if undefined.
 The paced control and `*_full` adapter arms run from reset. Compare the paired

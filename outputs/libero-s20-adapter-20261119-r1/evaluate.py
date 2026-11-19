@@ -137,13 +137,13 @@ def collect(simulator, motor, cases, output, arms, fallback):
     return rows
 
 
-def select_fixed(rows):
-    source_success = {arm: sum(row["arms"][arm]["success"] for row in rows) for arm in FORCED}
-    fixed = max(FORCED, key=source_success.__getitem__)
+def select_fixed(rows, arms):
+    source_success = {arm: sum(row["arms"][arm]["success"] for row in rows) for arm in arms}
+    fixed = max(arms, key=source_success.__getitem__)
     return fixed, source_success
 
 
-def summarize(rows, fixed, source_success):
+def summarize(rows, fixed, fixed_full, source_success):
     readout = {}
     for panel in (*TIMING, "overall"):
         group = [row for row in rows if panel == "overall" or row["case"]["variant"] == panel]
@@ -153,6 +153,7 @@ def summarize(rows, fixed, source_success):
         scores["adapter_true_full"] = [row["arms"]["adapter_base_full" if row["case"]["variant"] == "BASE"
                                                  else "adapter_s20_full"]["success"] for row in group]
         scores["adapter_fixed"] = scores[fixed]
+        scores["adapter_fixed_full"] = scores[fixed_full]
 
         def paired_vs(reference_name):
             ref = scores[reference_name]
@@ -170,7 +171,7 @@ def summarize(rows, fixed, source_success):
                               lag_abstentions=sum(row["arms"]["adapter_lag"]["lag"] is None for row in lag_rows),
                               lag_correct=sum(row["arms"]["adapter_lag"]["timing_chosen"] ==
                                               TIMING[row["case"]["variant"]] for row in lag_rows))
-    return dict(source_fixed=fixed, source_success=source_success, panels=readout)
+    return dict(source_fixed=fixed, source_fixed_full=fixed_full, source_success=source_success, panels=readout)
 
 
 def main():
@@ -201,11 +202,13 @@ def main():
           prompt="BASE wording in both timing arms", native_relative=True))
     motor = Motor(args.checkpoint)
     with Simulator() as simulator:
-        source_rows = collect(simulator, motor, source_cases, args.output / "fitting", tuple(FORCED), None)
-        fixed, source_success = select_fixed(source_rows)
-        write(args.output / "selected-fixed.json", dict(arm=fixed, source_success=source_success))
+        source_rows = collect(simulator, motor, source_cases, args.output / "fitting", tuple(ALL_FORCED), None)
+        fixed, source_success = select_fixed(source_rows, FORCED)
+        fixed_full, full_success = select_fixed(source_rows, FORCED_FULL)
+        source_success.update(full_success)
+        write(args.output / "selected-fixed.json", dict(arm=fixed, full_arm=fixed_full, source_success=source_success))
         query = collect(simulator, motor, query_cases, args.output / args.panel, ARMS, FORCED[fixed])
-    summary = summarize(query, fixed, source_success)
+    summary = summarize(query, fixed, fixed_full, source_success)
     write(args.output / "summary.json", summary)
     print(json.dumps(summary), flush=True)
 

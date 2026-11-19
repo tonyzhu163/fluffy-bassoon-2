@@ -78,9 +78,9 @@ if [[ "$host" != job-* ]]; then
 fi
 date +%s > "$out/gpu-start.txt"
 
-if [[ $(nvidia-smi --query-gpu=name --format=csv,noheader) == *6000D* ]]; then
-    export NCCL_P2P_DISABLE=1
-fi
+case $(nvidia-smi --query-gpu=name --format=csv,noheader) in
+    *6000D*|*RPBZZZ6*) export NCCL_P2P_DISABLE=1 ;;
+esac
 export JAX_PLATFORMS=cuda FLUFFY_GPU_EXECUTION=baige
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl MUJOCO_EGL_DEVICE_ID=0
 export XLA_PYTHON_CLIENT_PREALLOCATE=false OPENPI_DATA_HOME="$legacy/cache/openpi-215abfb"
@@ -88,7 +88,31 @@ export LIBERO_PRO_ROOT="$sim/simulator-source" LIBERO_CONFIG_PATH="$sim/libero-c
 export TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD=1 PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1
 export OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 MKL_NUM_THREADS=4
 export PYTHONPATH="$code/src:$release:$sim/simulator-source"
+if [[ "$host" == job-* ]]; then
+    # Supply GLVND dispatch while retaining the container's NVIDIA vendor libraries.
+    glvnd="$root/setups/libero-gen-history-pilot-20261111-r1/os-libs01/prefix/usr/lib/x86_64-linux-gnu"
+    test -f "$glvnd/libEGL.so.1"
+    test -f "$glvnd/libGL.so.1"
+    export LD_LIBRARY_PATH="$glvnd${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+fi
 "$root/setups/robocasa365-native-20261101-r1/env/bin/python" -Bu "$code/scripts/[train]gpu_probe.py" \
     --expected-count 1 --purpose training "${probe[@]}" --output "$out/gpu.json" > "$out/probe.log" 2>&1
+if [[ "$host" == job-* && "$stage" == smoke ]]; then
+    "$sim/env/bin/python" -B - <<'PY' > "$out/egl.log" 2>&1
+from mujoco.egl import GLContext
+from OpenGL import GL
+
+context = GLContext(16, 16)
+try:
+    context.make_current()
+    vendor = GL.glGetString(GL.GL_VENDOR)
+    renderer = GL.glGetString(GL.GL_RENDERER)
+    print(vendor, renderer)
+    if not vendor or b"nvidia" not in vendor.lower() or not renderer:
+        raise RuntimeError("Require NVIDIA EGL rendering on the assigned device")
+finally:
+    context.free()
+PY
+fi
 timeout --kill-after=20s "$time_limit" "$python" -Bu "${command[@]}" > "$out/run.log" 2>&1
 date +%s > "$out/gpu-end.txt"
