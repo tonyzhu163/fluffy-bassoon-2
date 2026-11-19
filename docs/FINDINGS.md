@@ -1,5 +1,7 @@
 # Verified findings
 
+- On a previously studied Goal 2 bottle-placement pose, reducing realized pad/bottle friction from 2.00 to 0.95 left all measured precontact observations identical and made a regrasp fail. The fixed nominal frozen-policy tape still succeeded under both materials, tying the material-aware oracle at 2/2. Six native 300-control replays used zero GPU-hours. [Friction gate and per-control readback](../outputs/libero-xemb-contact-20261119-r1/RESULT.md)
+
 The controlled OpenDrawer reader used one probe to choose a useful correction on measured native branches. The broader RoboCasa studies found no consistent held-out benefit from retaining history. The results below distinguish selection among executable actions, learned motor control and source-policy competence. [Controlled reader](#native-history-under-a-persistent-calibration-error) · [Multi-task comparison](#corrected-three--versus-six-task-transformer-comparison) · [Corpus diagnosis](../outputs/project-diagnosis-20261116-r1/RESULT.md)
 
 ## Synthetic learning histories
