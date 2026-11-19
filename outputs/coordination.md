@@ -4,6 +4,7 @@
 
 | Work | Cluster / job / source | Last check, progress and next action |
 | --- | --- | --- |
+| Frozen π0.5 noise and physical trajectory variation | Baige CPU, archived standard LIBERO-90 fitting data | Nov 19. Measuring the 15 tasks with all 20 matched query pairs published at snapshot. Native outcome disagreement and wrist separation at fixed control counts. Zero GPU-hours. [Plan](libero-native-noise-20261119-r1/PLAN.md) |
 | Same-goal grasp or transport recovery | Baige CPU, simulation complete at `eb5e109c` | Nov 19. 96 native branches, four cabinet pairs required disjoint corrections after two zeros. Motion reader 6/8, swapped 0/8, fixed and five-frame π0.5 4/8. No exactly matched final images. Zero GPU-hours. [Result](libero-temporal-recovery-20261119-r1/RESULT.md) |
 | Bowl-to-bottle transfer of frozen completion readers | Baige CPU, replay and four transfer arms complete | Nov 19. Bowl-only fit, six bottle poses. Strict native retries were π0.5 9/12, general PT 6/12, pooled RGB 7/12. A six-feature motion control scored 10/12 with the same fitting data. Zero GPU-hours. [Result](libero-witness-transfer-20261119-r1/RESULT.md) |
 | Frozen vision towers on paired bowl failures | Baige CPU, three arms complete at `848334f0` | Nov 19. Robot, general PT and raw RGB classified 16, 15 and 14 of 16 bowl practices. All chose 4/4 strict corrections. Crossed native success 23, 24 and 24/32. [Result](libero-witness-encoders-20261119-r1/RESULT.md) |
