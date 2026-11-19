@@ -63,6 +63,9 @@ the [documentation index](docs/README.md). Keep LycoReco work and runs pinned to
   queue capacity, limits and actual accelerator type before scheduling. Keep
   GPU isolation at the exclusive scheduler container. Avoid nested device
   namespaces and bubblewrap so the job retains scheduler GPU visibility.
+- During Baige computer use, reuse and navigate existing browser windows,
+  tabs and console terminals. Open a new one only when no suitable existing
+  surface is available or the user requests it.
 - Launch verified, in-scope work once resources are ready. Allocations or
   incremental budgets up to 50 GPU-hours need no further approval. Track
   cumulative use across workers. Ask before an unapproved budget above 50
