@@ -1,0 +1,5 @@
+# Does the released S18 offset change the motion evidence?
+
+The released S18 operator adds a calibration vector to reported robot positions. With a constant bias, the difference between consecutive positions cancels that vector. Verify this prediction natively before treating success on a constructed actuator reversal as evidence about LIBERO-Pro2.0 calibration.
+
+Use the first reset ID 2 on each of the eight project development tasks, with a single prespecified seed per matched BASE and S18 pair. Issue five identical controls along X and then five along Y. Check initial simulator fingerprints and compare public wrist positions and successive displacements, including the reset observation. Record native terminal flags and retain all matched and unmatched pairs. Physics-only execution is valid for this proprioceptive question. Compare the absolute offset to the maximum BASE/S18 difference in the measured displacements; record the actual per-pair residuals. The intervention does not evaluate task completion, policy vision or the value of a cross-modal reference. CPU only, five-minute cap, zero GPU-hours.
