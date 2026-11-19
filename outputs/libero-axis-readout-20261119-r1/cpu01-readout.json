@@ -1,0 +1,3742 @@
+{
+ "run_source": "80f0eef854daf5e9b937acac9f67cec0fd6b37df aibox-rffe453e3884-5f96c78b88-6ssrn 475576",
+ "exit": "0 1795072359 1795072355",
+ "source_files": {
+  "predictions.npz": "c1d3e93ecbe849e1023b4ada4ffd6f99978c70b2dac74e3738ad2e99d5ccbc6d",
+  "summary.json": "1f9e61b39e54b83e6d3f6d074ecb2ee228ce0afc9a6f67dd72f771ecc9a78c64"
+ },
+ "original_head_replay": {
+  "rows": 1440,
+  "signs_and_targets_exact": true,
+  "max_abs_logit_error": {
+   "matched": 0.0,
+   "opposite": 0.0
+  },
+  "atol": 1e-06,
+  "rtol": 1e-05,
+  "source": "/mowenjie/fluffy-bassoon-2/outputs/libero-axis-calibration-20261119-r1/cpu01/fit/balanced/predictions.jsonl"
+ },
+ "training": {
+  "split": "fitting",
+  "keys": [
+   "libero_10-2-r0-BASE",
+   "libero_10-2-r1-BASE",
+   "libero_10-9-r0-BASE",
+   "libero_10-9-r1-BASE",
+   "libero_goal-5-r0-BASE",
+   "libero_goal-5-r1-BASE",
+   "libero_goal-7-r0-BASE",
+   "libero_goal-7-r1-BASE",
+   "libero_object-2-r0-BASE",
+   "libero_object-2-r1-BASE",
+   "libero_object-6-r0-BASE",
+   "libero_object-6-r1-BASE",
+   "libero_spatial-2-r0-BASE",
+   "libero_spatial-2-r1-BASE",
+   "libero_spatial-4-r0-BASE",
+   "libero_spatial-4-r1-BASE"
+  ],
+  "conventions": [
+   "nom",
+   "x",
+   "y"
+  ],
+  "directions": [
+   "nom",
+   "x",
+   "y",
+   "xy"
+  ],
+  "context": "matched",
+  "target": "calibration signs",
+  "lambda_sum": 1.0,
+  "intercept": "unpenalized",
+  "width": 48,
+  "standardization": "fit population std",
+  "zero_std_scale": 1,
+  "seed_selection": "fixed",
+  "device": "cpu"
+ },
+ "split_audits": {
+  "fitting": {
+   "split": "fitting",
+   "motor": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-openpi-20261027-r1",
+   "expected_trials": 16,
+   "retained_trials": 16,
+   "prefix_controls": 80,
+   "min_abs_command": 1e-05,
+   "probe_indices": {
+    "libero_10-2-r0-BASE": [
+     36,
+     12
+    ],
+    "libero_10-2-r1-BASE": [
+     13,
+     25
+    ],
+    "libero_10-9-r0-BASE": [
+     4,
+     53
+    ],
+    "libero_10-9-r1-BASE": [
+     9,
+     70
+    ],
+    "libero_goal-5-r0-BASE": [
+     11,
+     79
+    ],
+    "libero_goal-5-r1-BASE": [
+     11,
+     52
+    ],
+    "libero_goal-7-r0-BASE": [
+     35,
+     17
+    ],
+    "libero_goal-7-r1-BASE": [
+     37,
+     14
+    ],
+    "libero_object-2-r0-BASE": [
+     20,
+     79
+    ],
+    "libero_object-2-r1-BASE": [
+     17,
+     51
+    ],
+    "libero_object-6-r0-BASE": [
+     49,
+     16
+    ],
+    "libero_object-6-r1-BASE": [
+     56,
+     24
+    ],
+    "libero_spatial-2-r0-BASE": [
+     12,
+     70
+    ],
+    "libero_spatial-2-r1-BASE": [
+     9,
+     59
+    ],
+    "libero_spatial-4-r0-BASE": [
+     7,
+     79
+    ],
+    "libero_spatial-4-r1-BASE": [
+     10,
+     79
+    ]
+   },
+   "excluded": {}
+  },
+  "development": {
+   "split": "development",
+   "motor": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-openpi-20261027-r1",
+   "expected_trials": 16,
+   "retained_trials": 15,
+   "prefix_controls": 80,
+   "min_abs_command": 1e-05,
+   "probe_indices": {
+    "libero_10-0-r0-BASE": [
+     74,
+     12
+    ],
+    "libero_10-0-r1-BASE": [
+     75,
+     16
+    ],
+    "libero_10-3-r0-BASE": [
+     16,
+     null
+    ],
+    "libero_10-3-r1-BASE": [
+     11,
+     30
+    ],
+    "libero_goal-0-r0-BASE": [
+     11,
+     63
+    ],
+    "libero_goal-0-r1-BASE": [
+     8,
+     64
+    ],
+    "libero_goal-1-r0-BASE": [
+     12,
+     67
+    ],
+    "libero_goal-1-r1-BASE": [
+     13,
+     69
+    ],
+    "libero_object-0-r0-BASE": [
+     40,
+     78
+    ],
+    "libero_object-0-r1-BASE": [
+     50,
+     19
+    ],
+    "libero_object-7-r0-BASE": [
+     46,
+     15
+    ],
+    "libero_object-7-r1-BASE": [
+     45,
+     9
+    ],
+    "libero_spatial-1-r0-BASE": [
+     76,
+     28
+    ],
+    "libero_spatial-1-r1-BASE": [
+     70,
+     12
+    ],
+    "libero_spatial-7-r0-BASE": [
+     54,
+     75
+    ],
+    "libero_spatial-7-r1-BASE": [
+     59,
+     72
+    ]
+   },
+   "excluded": {
+    "libero_10-3-r0-BASE": [
+     "missing_y_probe"
+    ]
+   }
+  }
+ },
+ "results": {
+  "fitting": {
+   "sign_correlation": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "x": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "y": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "xy": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "x": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "y": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "xy": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "x": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "x": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     }
+    }
+   },
+   "trained-41-head": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "x": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "y": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "xy": {
+       "n": 16,
+       "both": 9,
+       "x": 14,
+       "y": 11
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "x": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "y": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "xy": {
+       "n": 64,
+       "both": 37,
+       "x": 55,
+       "y": 46
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 0,
+       "x": 2,
+       "y": 5
+      },
+      "x": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 0,
+       "x": 9,
+       "y": 18
+      },
+      "x": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     }
+    }
+   },
+   "trained-41-support": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "x": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "y": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "xy": {
+       "n": 16,
+       "both": 9,
+       "x": 15,
+       "y": 10
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "x": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "y": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "xy": {
+       "n": 64,
+       "both": 38,
+       "x": 57,
+       "y": 43
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 0,
+       "x": 1,
+       "y": 6
+      },
+      "x": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 2,
+       "x": 7,
+       "y": 21
+      },
+      "x": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     }
+    }
+   },
+   "trained-41-query": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 14,
+       "x": 15,
+       "y": 15
+      },
+      "x": {
+       "n": 16,
+       "both": 15,
+       "x": 15,
+       "y": 16
+      },
+      "y": {
+       "n": 16,
+       "both": 15,
+       "x": 16,
+       "y": 15
+      },
+      "xy": {
+       "n": 16,
+       "both": 3,
+       "x": 15,
+       "y": 4
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 58,
+       "x": 61,
+       "y": 61
+      },
+      "x": {
+       "n": 64,
+       "both": 61,
+       "x": 61,
+       "y": 64
+      },
+      "y": {
+       "n": 64,
+       "both": 61,
+       "x": 64,
+       "y": 61
+      },
+      "xy": {
+       "n": 64,
+       "both": 16,
+       "x": 55,
+       "y": 21
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 0,
+       "x": 1,
+       "y": 12
+      },
+      "x": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 1
+      },
+      "y": {
+       "n": 16,
+       "both": 0,
+       "x": 1,
+       "y": 0
+      },
+      "xy": {
+       "n": 16,
+       "both": 0,
+       "x": 1,
+       "y": 1
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 4,
+       "x": 9,
+       "y": 43
+      },
+      "x": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 3
+      },
+      "y": {
+       "n": 64,
+       "both": 0,
+       "x": 3,
+       "y": 0
+      },
+      "xy": {
+       "n": 64,
+       "both": 0,
+       "x": 3,
+       "y": 3
+      }
+     }
+    }
+   },
+   "random-41-support": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "x": {
+       "n": 16,
+       "both": 15,
+       "x": 15,
+       "y": 16
+      },
+      "y": {
+       "n": 16,
+       "both": 15,
+       "x": 16,
+       "y": 15
+      },
+      "xy": {
+       "n": 16,
+       "both": 4,
+       "x": 15,
+       "y": 5
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 63,
+       "x": 64,
+       "y": 63
+      },
+      "x": {
+       "n": 64,
+       "both": 60,
+       "x": 60,
+       "y": 64
+      },
+      "y": {
+       "n": 64,
+       "both": 61,
+       "x": 64,
+       "y": 61
+      },
+      "xy": {
+       "n": 64,
+       "both": 33,
+       "x": 59,
+       "y": 38
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 0,
+       "x": 1,
+       "y": 11
+      },
+      "x": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 1
+      },
+      "y": {
+       "n": 16,
+       "both": 0,
+       "x": 1,
+       "y": 0
+      },
+      "xy": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 0,
+       "x": 5,
+       "y": 26
+      },
+      "x": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 3
+      },
+      "y": {
+       "n": 64,
+       "both": 0,
+       "x": 4,
+       "y": 0
+      },
+      "xy": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 1
+      }
+     }
+    }
+   },
+   "random-41-query": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 15,
+       "x": 16,
+       "y": 15
+      },
+      "x": {
+       "n": 16,
+       "both": 15,
+       "x": 15,
+       "y": 16
+      },
+      "y": {
+       "n": 16,
+       "both": 13,
+       "x": 16,
+       "y": 13
+      },
+      "xy": {
+       "n": 16,
+       "both": 8,
+       "x": 14,
+       "y": 9
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 62,
+       "x": 64,
+       "y": 62
+      },
+      "x": {
+       "n": 64,
+       "both": 59,
+       "x": 59,
+       "y": 64
+      },
+      "y": {
+       "n": 64,
+       "both": 53,
+       "x": 64,
+       "y": 53
+      },
+      "xy": {
+       "n": 64,
+       "both": 34,
+       "x": 59,
+       "y": 36
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 1,
+       "x": 2,
+       "y": 7
+      },
+      "x": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 3
+      },
+      "y": {
+       "n": 16,
+       "both": 0,
+       "x": 1,
+       "y": 0
+      },
+      "xy": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 1
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 3,
+       "x": 5,
+       "y": 28
+      },
+      "x": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 11
+      },
+      "y": {
+       "n": 64,
+       "both": 0,
+       "x": 5,
+       "y": 0
+      },
+      "xy": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 2
+      }
+     }
+    }
+   },
+   "trained-42-head": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "x": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "y": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "xy": {
+       "n": 16,
+       "both": 10,
+       "x": 13,
+       "y": 13
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "x": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "y": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "xy": {
+       "n": 64,
+       "both": 41,
+       "x": 52,
+       "y": 53
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 0,
+       "x": 3,
+       "y": 3
+      },
+      "x": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 0,
+       "x": 12,
+       "y": 11
+      },
+      "x": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     }
+    }
+   },
+   "trained-42-support": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "x": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "y": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "xy": {
+       "n": 16,
+       "both": 11,
+       "x": 16,
+       "y": 11
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "x": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "y": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "xy": {
+       "n": 64,
+       "both": 44,
+       "x": 62,
+       "y": 45
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 5
+      },
+      "x": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 1,
+       "x": 2,
+       "y": 19
+      },
+      "x": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     }
+    }
+   },
+   "trained-42-query": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 14,
+       "x": 15,
+       "y": 15
+      },
+      "x": {
+       "n": 16,
+       "both": 15,
+       "x": 15,
+       "y": 16
+      },
+      "y": {
+       "n": 16,
+       "both": 13,
+       "x": 16,
+       "y": 13
+      },
+      "xy": {
+       "n": 16,
+       "both": 5,
+       "x": 12,
+       "y": 7
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 61,
+       "x": 63,
+       "y": 62
+      },
+      "x": {
+       "n": 64,
+       "both": 60,
+       "x": 60,
+       "y": 64
+      },
+      "y": {
+       "n": 64,
+       "both": 58,
+       "x": 64,
+       "y": 58
+      },
+      "xy": {
+       "n": 64,
+       "both": 13,
+       "x": 49,
+       "y": 22
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 2,
+       "x": 4,
+       "y": 9
+      },
+      "x": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 3
+      },
+      "y": {
+       "n": 16,
+       "both": 0,
+       "x": 1,
+       "y": 0
+      },
+      "xy": {
+       "n": 16,
+       "both": 0,
+       "x": 1,
+       "y": 1
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 6,
+       "x": 15,
+       "y": 42
+      },
+      "x": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 6
+      },
+      "y": {
+       "n": 64,
+       "both": 0,
+       "x": 4,
+       "y": 0
+      },
+      "xy": {
+       "n": 64,
+       "both": 0,
+       "x": 1,
+       "y": 2
+      }
+     }
+    }
+   },
+   "random-42-support": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "x": {
+       "n": 16,
+       "both": 15,
+       "x": 15,
+       "y": 16
+      },
+      "y": {
+       "n": 16,
+       "both": 15,
+       "x": 16,
+       "y": 15
+      },
+      "xy": {
+       "n": 16,
+       "both": 12,
+       "x": 14,
+       "y": 14
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "x": {
+       "n": 64,
+       "both": 57,
+       "x": 57,
+       "y": 64
+      },
+      "y": {
+       "n": 64,
+       "both": 63,
+       "x": 64,
+       "y": 63
+      },
+      "xy": {
+       "n": 64,
+       "both": 38,
+       "x": 51,
+       "y": 51
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 0,
+       "x": 2,
+       "y": 2
+      },
+      "x": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 1
+      },
+      "y": {
+       "n": 16,
+       "both": 0,
+       "x": 1,
+       "y": 0
+      },
+      "xy": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 0,
+       "x": 13,
+       "y": 13
+      },
+      "x": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 1
+      },
+      "y": {
+       "n": 64,
+       "both": 0,
+       "x": 7,
+       "y": 0
+      },
+      "xy": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     }
+    }
+   },
+   "random-42-query": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "x": {
+       "n": 16,
+       "both": 15,
+       "x": 15,
+       "y": 16
+      },
+      "y": {
+       "n": 16,
+       "both": 14,
+       "x": 16,
+       "y": 14
+      },
+      "xy": {
+       "n": 16,
+       "both": 9,
+       "x": 14,
+       "y": 10
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "x": {
+       "n": 64,
+       "both": 55,
+       "x": 55,
+       "y": 64
+      },
+      "y": {
+       "n": 64,
+       "both": 54,
+       "x": 64,
+       "y": 54
+      },
+      "xy": {
+       "n": 64,
+       "both": 36,
+       "x": 51,
+       "y": 45
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 1,
+       "x": 2,
+       "y": 6
+      },
+      "x": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 2
+      },
+      "y": {
+       "n": 16,
+       "both": 0,
+       "x": 1,
+       "y": 0
+      },
+      "xy": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 4,
+       "x": 13,
+       "y": 19
+      },
+      "x": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 10
+      },
+      "y": {
+       "n": 64,
+       "both": 0,
+       "x": 9,
+       "y": 0
+      },
+      "xy": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     }
+    }
+   },
+   "trained-43-head": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "x": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "y": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "xy": {
+       "n": 16,
+       "both": 11,
+       "x": 15,
+       "y": 12
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "x": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "y": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "xy": {
+       "n": 64,
+       "both": 33,
+       "x": 60,
+       "y": 37
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 0,
+       "x": 1,
+       "y": 4
+      },
+      "x": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 0,
+       "x": 4,
+       "y": 27
+      },
+      "x": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     }
+    }
+   },
+   "trained-43-support": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "x": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "y": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "xy": {
+       "n": 16,
+       "both": 8,
+       "x": 16,
+       "y": 8
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "x": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "y": {
+       "n": 64,
+       "both": 64,
+       "x": 64,
+       "y": 64
+      },
+      "xy": {
+       "n": 64,
+       "both": 34,
+       "x": 58,
+       "y": 40
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 8
+      },
+      "x": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 0,
+       "x": 6,
+       "y": 24
+      },
+      "x": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     }
+    }
+   },
+   "trained-43-query": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 15,
+       "x": 16,
+       "y": 15
+      },
+      "x": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "y": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "xy": {
+       "n": 16,
+       "both": 7,
+       "x": 16,
+       "y": 7
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 63,
+       "x": 64,
+       "y": 63
+      },
+      "x": {
+       "n": 64,
+       "both": 63,
+       "x": 64,
+       "y": 63
+      },
+      "y": {
+       "n": 64,
+       "both": 61,
+       "x": 63,
+       "y": 62
+      },
+      "xy": {
+       "n": 64,
+       "both": 19,
+       "x": 64,
+       "y": 19
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 9
+      },
+      "x": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 1
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 45
+      },
+      "x": {
+       "n": 64,
+       "both": 0,
+       "x": 1,
+       "y": 2
+      },
+      "y": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 1
+      },
+      "xy": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 1
+      }
+     }
+    }
+   },
+   "random-43-support": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 15,
+       "x": 15,
+       "y": 16
+      },
+      "x": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "y": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "xy": {
+       "n": 16,
+       "both": 6,
+       "x": 8,
+       "y": 14
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 62,
+       "x": 62,
+       "y": 64
+      },
+      "x": {
+       "n": 64,
+       "both": 62,
+       "x": 62,
+       "y": 64
+      },
+      "y": {
+       "n": 64,
+       "both": 61,
+       "x": 64,
+       "y": 61
+      },
+      "xy": {
+       "n": 64,
+       "both": 16,
+       "x": 28,
+       "y": 51
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 0,
+       "x": 8,
+       "y": 2
+      },
+      "x": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 16,
+       "both": 0,
+       "x": 1,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 1,
+       "x": 36,
+       "y": 13
+      },
+      "x": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 3
+      },
+      "y": {
+       "n": 64,
+       "both": 0,
+       "x": 2,
+       "y": 0
+      },
+      "xy": {
+       "n": 64,
+       "both": 0,
+       "x": 2,
+       "y": 0
+      }
+     }
+    }
+   },
+   "random-43-query": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 16,
+       "x": 16,
+       "y": 16
+      },
+      "x": {
+       "n": 16,
+       "both": 14,
+       "x": 14,
+       "y": 16
+      },
+      "y": {
+       "n": 16,
+       "both": 13,
+       "x": 16,
+       "y": 13
+      },
+      "xy": {
+       "n": 16,
+       "both": 9,
+       "x": 12,
+       "y": 11
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 61,
+       "x": 63,
+       "y": 62
+      },
+      "x": {
+       "n": 64,
+       "both": 57,
+       "x": 57,
+       "y": 63
+      },
+      "y": {
+       "n": 64,
+       "both": 56,
+       "x": 64,
+       "y": 56
+      },
+      "xy": {
+       "n": 64,
+       "both": 26,
+       "x": 47,
+       "y": 37
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 16,
+       "both": 2,
+       "x": 4,
+       "y": 5
+      },
+      "x": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 3
+      },
+      "y": {
+       "n": 16,
+       "both": 0,
+       "x": 2,
+       "y": 0
+      },
+      "xy": {
+       "n": 16,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 64,
+       "both": 6,
+       "x": 17,
+       "y": 27
+      },
+      "x": {
+       "n": 64,
+       "both": 0,
+       "x": 0,
+       "y": 8
+      },
+      "y": {
+       "n": 64,
+       "both": 1,
+       "x": 7,
+       "y": 1
+      },
+      "xy": {
+       "n": 64,
+       "both": 0,
+       "x": 1,
+       "y": 2
+      }
+     }
+    }
+   }
+  },
+  "development": {
+   "sign_correlation": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 15,
+       "x": 15,
+       "y": 15
+      },
+      "x": {
+       "n": 15,
+       "both": 15,
+       "x": 15,
+       "y": 15
+      },
+      "y": {
+       "n": 15,
+       "both": 15,
+       "x": 15,
+       "y": 15
+      },
+      "xy": {
+       "n": 15,
+       "both": 15,
+       "x": 15,
+       "y": 15
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 60,
+       "x": 60,
+       "y": 60
+      },
+      "x": {
+       "n": 60,
+       "both": 60,
+       "x": 60,
+       "y": 60
+      },
+      "y": {
+       "n": 60,
+       "both": 60,
+       "x": 60,
+       "y": 60
+      },
+      "xy": {
+       "n": 60,
+       "both": 60,
+       "x": 60,
+       "y": 60
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "x": {
+       "n": 15,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 15,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 15,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "x": {
+       "n": 60,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 60,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 60,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     }
+    }
+   },
+   "trained-41-head": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 11,
+       "x": 12,
+       "y": 14
+      },
+      "x": {
+       "n": 15,
+       "both": 8,
+       "x": 10,
+       "y": 13
+      },
+      "y": {
+       "n": 15,
+       "both": 11,
+       "x": 12,
+       "y": 14
+      },
+      "xy": {
+       "n": 15,
+       "both": 7,
+       "x": 12,
+       "y": 9
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 37,
+       "x": 43,
+       "y": 54
+      },
+      "x": {
+       "n": 60,
+       "both": 42,
+       "x": 48,
+       "y": 54
+      },
+      "y": {
+       "n": 60,
+       "both": 42,
+       "x": 48,
+       "y": 54
+      },
+      "xy": {
+       "n": 60,
+       "both": 28,
+       "x": 46,
+       "y": 37
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 1,
+       "x": 3,
+       "y": 6
+      },
+      "x": {
+       "n": 15,
+       "both": 0,
+       "x": 3,
+       "y": 1
+      },
+      "y": {
+       "n": 15,
+       "both": 0,
+       "x": 5,
+       "y": 2
+      },
+      "xy": {
+       "n": 15,
+       "both": 0,
+       "x": 3,
+       "y": 1
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 5,
+       "x": 14,
+       "y": 23
+      },
+      "x": {
+       "n": 60,
+       "both": 0,
+       "x": 12,
+       "y": 6
+      },
+      "y": {
+       "n": 60,
+       "both": 0,
+       "x": 12,
+       "y": 6
+      },
+      "xy": {
+       "n": 60,
+       "both": 0,
+       "x": 17,
+       "y": 6
+      }
+     }
+    }
+   },
+   "trained-41-support": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 13,
+       "x": 13,
+       "y": 15
+      },
+      "x": {
+       "n": 15,
+       "both": 14,
+       "x": 14,
+       "y": 15
+      },
+      "y": {
+       "n": 15,
+       "both": 13,
+       "x": 13,
+       "y": 15
+      },
+      "xy": {
+       "n": 15,
+       "both": 5,
+       "x": 11,
+       "y": 9
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 53,
+       "x": 53,
+       "y": 60
+      },
+      "x": {
+       "n": 60,
+       "both": 57,
+       "x": 57,
+       "y": 60
+      },
+      "y": {
+       "n": 60,
+       "both": 56,
+       "x": 56,
+       "y": 60
+      },
+      "xy": {
+       "n": 60,
+       "both": 27,
+       "x": 49,
+       "y": 38
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 0,
+       "x": 4,
+       "y": 6
+      },
+      "x": {
+       "n": 15,
+       "both": 0,
+       "x": 2,
+       "y": 0
+      },
+      "y": {
+       "n": 15,
+       "both": 0,
+       "x": 1,
+       "y": 0
+      },
+      "xy": {
+       "n": 15,
+       "both": 0,
+       "x": 2,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 0,
+       "x": 11,
+       "y": 22
+      },
+      "x": {
+       "n": 60,
+       "both": 0,
+       "x": 4,
+       "y": 0
+      },
+      "y": {
+       "n": 60,
+       "both": 0,
+       "x": 3,
+       "y": 0
+      },
+      "xy": {
+       "n": 60,
+       "both": 0,
+       "x": 7,
+       "y": 0
+      }
+     }
+    }
+   },
+   "trained-41-query": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 8,
+       "x": 8,
+       "y": 15
+      },
+      "x": {
+       "n": 15,
+       "both": 14,
+       "x": 14,
+       "y": 15
+      },
+      "y": {
+       "n": 15,
+       "both": 8,
+       "x": 14,
+       "y": 9
+      },
+      "xy": {
+       "n": 15,
+       "both": 2,
+       "x": 13,
+       "y": 4
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 37,
+       "x": 38,
+       "y": 59
+      },
+      "x": {
+       "n": 60,
+       "both": 58,
+       "x": 58,
+       "y": 60
+      },
+      "y": {
+       "n": 60,
+       "both": 35,
+       "x": 57,
+       "y": 36
+      },
+      "xy": {
+       "n": 60,
+       "both": 9,
+       "x": 51,
+       "y": 15
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 0,
+       "x": 2,
+       "y": 11
+      },
+      "x": {
+       "n": 15,
+       "both": 0,
+       "x": 1,
+       "y": 6
+      },
+      "y": {
+       "n": 15,
+       "both": 0,
+       "x": 1,
+       "y": 0
+      },
+      "xy": {
+       "n": 15,
+       "both": 0,
+       "x": 7,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 3,
+       "x": 9,
+       "y": 45
+      },
+      "x": {
+       "n": 60,
+       "both": 2,
+       "x": 3,
+       "y": 24
+      },
+      "y": {
+       "n": 60,
+       "both": 0,
+       "x": 2,
+       "y": 0
+      },
+      "xy": {
+       "n": 60,
+       "both": 0,
+       "x": 22,
+       "y": 1
+      }
+     }
+    }
+   },
+   "random-41-support": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 12,
+       "x": 12,
+       "y": 15
+      },
+      "x": {
+       "n": 15,
+       "both": 15,
+       "x": 15,
+       "y": 15
+      },
+      "y": {
+       "n": 15,
+       "both": 14,
+       "x": 15,
+       "y": 14
+      },
+      "xy": {
+       "n": 15,
+       "both": 2,
+       "x": 10,
+       "y": 7
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 51,
+       "x": 51,
+       "y": 60
+      },
+      "x": {
+       "n": 60,
+       "both": 53,
+       "x": 53,
+       "y": 60
+      },
+      "y": {
+       "n": 60,
+       "both": 57,
+       "x": 58,
+       "y": 59
+      },
+      "xy": {
+       "n": 60,
+       "both": 25,
+       "x": 44,
+       "y": 41
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 0,
+       "x": 5,
+       "y": 8
+      },
+      "x": {
+       "n": 15,
+       "both": 0,
+       "x": 0,
+       "y": 1
+      },
+      "y": {
+       "n": 15,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "xy": {
+       "n": 15,
+       "both": 0,
+       "x": 3,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 0,
+       "x": 16,
+       "y": 19
+      },
+      "x": {
+       "n": 60,
+       "both": 0,
+       "x": 2,
+       "y": 1
+      },
+      "y": {
+       "n": 60,
+       "both": 0,
+       "x": 7,
+       "y": 0
+      },
+      "xy": {
+       "n": 60,
+       "both": 0,
+       "x": 9,
+       "y": 0
+      }
+     }
+    }
+   },
+   "random-41-query": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 13,
+       "x": 13,
+       "y": 15
+      },
+      "x": {
+       "n": 15,
+       "both": 11,
+       "x": 11,
+       "y": 15
+      },
+      "y": {
+       "n": 15,
+       "both": 10,
+       "x": 14,
+       "y": 10
+      },
+      "xy": {
+       "n": 15,
+       "both": 5,
+       "x": 9,
+       "y": 9
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 54,
+       "x": 55,
+       "y": 59
+      },
+      "x": {
+       "n": 60,
+       "both": 43,
+       "x": 43,
+       "y": 60
+      },
+      "y": {
+       "n": 60,
+       "both": 41,
+       "x": 56,
+       "y": 42
+      },
+      "xy": {
+       "n": 60,
+       "both": 21,
+       "x": 37,
+       "y": 31
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 2,
+       "x": 6,
+       "y": 6
+      },
+      "x": {
+       "n": 15,
+       "both": 1,
+       "x": 1,
+       "y": 5
+      },
+      "y": {
+       "n": 15,
+       "both": 0,
+       "x": 4,
+       "y": 0
+      },
+      "xy": {
+       "n": 15,
+       "both": 0,
+       "x": 2,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 13,
+       "x": 23,
+       "y": 29
+      },
+      "x": {
+       "n": 60,
+       "both": 3,
+       "x": 4,
+       "y": 18
+      },
+      "y": {
+       "n": 60,
+       "both": 0,
+       "x": 17,
+       "y": 0
+      },
+      "xy": {
+       "n": 60,
+       "both": 0,
+       "x": 5,
+       "y": 1
+      }
+     }
+    }
+   },
+   "trained-42-head": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 13,
+       "x": 14,
+       "y": 14
+      },
+      "x": {
+       "n": 15,
+       "both": 10,
+       "x": 11,
+       "y": 14
+      },
+      "y": {
+       "n": 15,
+       "both": 9,
+       "x": 12,
+       "y": 12
+      },
+      "xy": {
+       "n": 15,
+       "both": 4,
+       "x": 8,
+       "y": 9
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 48,
+       "x": 55,
+       "y": 53
+      },
+      "x": {
+       "n": 60,
+       "both": 41,
+       "x": 45,
+       "y": 56
+      },
+      "y": {
+       "n": 60,
+       "both": 40,
+       "x": 53,
+       "y": 47
+      },
+      "xy": {
+       "n": 60,
+       "both": 22,
+       "x": 41,
+       "y": 38
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 2,
+       "x": 7,
+       "y": 6
+      },
+      "x": {
+       "n": 15,
+       "both": 0,
+       "x": 3,
+       "y": 3
+      },
+      "y": {
+       "n": 15,
+       "both": 0,
+       "x": 4,
+       "y": 1
+      },
+      "xy": {
+       "n": 15,
+       "both": 0,
+       "x": 1,
+       "y": 1
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 3,
+       "x": 19,
+       "y": 22
+      },
+      "x": {
+       "n": 60,
+       "both": 0,
+       "x": 7,
+       "y": 13
+      },
+      "y": {
+       "n": 60,
+       "both": 0,
+       "x": 15,
+       "y": 4
+      },
+      "xy": {
+       "n": 60,
+       "both": 0,
+       "x": 5,
+       "y": 7
+      }
+     }
+    }
+   },
+   "trained-42-support": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 14,
+       "x": 14,
+       "y": 15
+      },
+      "x": {
+       "n": 15,
+       "both": 13,
+       "x": 13,
+       "y": 15
+      },
+      "y": {
+       "n": 15,
+       "both": 13,
+       "x": 14,
+       "y": 14
+      },
+      "xy": {
+       "n": 15,
+       "both": 9,
+       "x": 12,
+       "y": 10
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 57,
+       "x": 57,
+       "y": 60
+      },
+      "x": {
+       "n": 60,
+       "both": 53,
+       "x": 53,
+       "y": 60
+      },
+      "y": {
+       "n": 60,
+       "both": 56,
+       "x": 57,
+       "y": 59
+      },
+      "xy": {
+       "n": 60,
+       "both": 33,
+       "x": 48,
+       "y": 42
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 2,
+       "x": 3,
+       "y": 5
+      },
+      "x": {
+       "n": 15,
+       "both": 0,
+       "x": 1,
+       "y": 1
+      },
+      "y": {
+       "n": 15,
+       "both": 0,
+       "x": 2,
+       "y": 0
+      },
+      "xy": {
+       "n": 15,
+       "both": 0,
+       "x": 1,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 3,
+       "x": 12,
+       "y": 18
+      },
+      "x": {
+       "n": 60,
+       "both": 0,
+       "x": 3,
+       "y": 1
+      },
+      "y": {
+       "n": 60,
+       "both": 0,
+       "x": 7,
+       "y": 0
+      },
+      "xy": {
+       "n": 60,
+       "both": 0,
+       "x": 3,
+       "y": 0
+      }
+     }
+    }
+   },
+   "trained-42-query": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 9,
+       "x": 14,
+       "y": 10
+      },
+      "x": {
+       "n": 15,
+       "both": 9,
+       "x": 9,
+       "y": 11
+      },
+      "y": {
+       "n": 15,
+       "both": 14,
+       "x": 15,
+       "y": 14
+      },
+      "xy": {
+       "n": 15,
+       "both": 2,
+       "x": 8,
+       "y": 8
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 34,
+       "x": 55,
+       "y": 39
+      },
+      "x": {
+       "n": 60,
+       "both": 37,
+       "x": 41,
+       "y": 43
+      },
+      "y": {
+       "n": 60,
+       "both": 51,
+       "x": 60,
+       "y": 51
+      },
+      "xy": {
+       "n": 60,
+       "both": 11,
+       "x": 31,
+       "y": 33
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 1,
+       "x": 7,
+       "y": 7
+      },
+      "x": {
+       "n": 15,
+       "both": 0,
+       "x": 0,
+       "y": 1
+      },
+      "y": {
+       "n": 15,
+       "both": 4,
+       "x": 6,
+       "y": 4
+      },
+      "xy": {
+       "n": 15,
+       "both": 0,
+       "x": 1,
+       "y": 5
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 7,
+       "x": 29,
+       "y": 27
+      },
+      "x": {
+       "n": 60,
+       "both": 0,
+       "x": 0,
+       "y": 9
+      },
+      "y": {
+       "n": 60,
+       "both": 13,
+       "x": 19,
+       "y": 17
+      },
+      "xy": {
+       "n": 60,
+       "both": 0,
+       "x": 5,
+       "y": 21
+      }
+     }
+    }
+   },
+   "random-42-support": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 15,
+       "x": 15,
+       "y": 15
+      },
+      "x": {
+       "n": 15,
+       "both": 11,
+       "x": 11,
+       "y": 15
+      },
+      "y": {
+       "n": 15,
+       "both": 15,
+       "x": 15,
+       "y": 15
+      },
+      "xy": {
+       "n": 15,
+       "both": 8,
+       "x": 10,
+       "y": 13
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 58,
+       "x": 58,
+       "y": 60
+      },
+      "x": {
+       "n": 60,
+       "both": 43,
+       "x": 43,
+       "y": 60
+      },
+      "y": {
+       "n": 60,
+       "both": 60,
+       "x": 60,
+       "y": 60
+      },
+      "xy": {
+       "n": 60,
+       "both": 26,
+       "x": 38,
+       "y": 48
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 0,
+       "x": 5,
+       "y": 2
+      },
+      "x": {
+       "n": 15,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 15,
+       "both": 0,
+       "x": 4,
+       "y": 0
+      },
+      "xy": {
+       "n": 15,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 0,
+       "x": 22,
+       "y": 12
+      },
+      "x": {
+       "n": 60,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 60,
+       "both": 0,
+       "x": 17,
+       "y": 0
+      },
+      "xy": {
+       "n": 60,
+       "both": 0,
+       "x": 2,
+       "y": 0
+      }
+     }
+    }
+   },
+   "random-42-query": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 10,
+       "x": 14,
+       "y": 11
+      },
+      "x": {
+       "n": 15,
+       "both": 7,
+       "x": 7,
+       "y": 12
+      },
+      "y": {
+       "n": 15,
+       "both": 13,
+       "x": 14,
+       "y": 13
+      },
+      "xy": {
+       "n": 15,
+       "both": 2,
+       "x": 7,
+       "y": 10
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 39,
+       "x": 55,
+       "y": 44
+      },
+      "x": {
+       "n": 60,
+       "both": 30,
+       "x": 30,
+       "y": 45
+      },
+      "y": {
+       "n": 60,
+       "both": 55,
+       "x": 56,
+       "y": 55
+      },
+      "xy": {
+       "n": 60,
+       "both": 17,
+       "x": 29,
+       "y": 48
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 0,
+       "x": 8,
+       "y": 5
+      },
+      "x": {
+       "n": 15,
+       "both": 1,
+       "x": 1,
+       "y": 2
+      },
+      "y": {
+       "n": 15,
+       "both": 3,
+       "x": 8,
+       "y": 3
+      },
+      "xy": {
+       "n": 15,
+       "both": 0,
+       "x": 1,
+       "y": 4
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 0,
+       "x": 31,
+       "y": 12
+      },
+      "x": {
+       "n": 60,
+       "both": 4,
+       "x": 4,
+       "y": 5
+      },
+      "y": {
+       "n": 60,
+       "both": 15,
+       "x": 30,
+       "y": 15
+      },
+      "xy": {
+       "n": 60,
+       "both": 0,
+       "x": 5,
+       "y": 16
+      }
+     }
+    }
+   },
+   "trained-43-head": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 12,
+       "x": 13,
+       "y": 14
+      },
+      "x": {
+       "n": 15,
+       "both": 10,
+       "x": 11,
+       "y": 14
+      },
+      "y": {
+       "n": 15,
+       "both": 10,
+       "x": 12,
+       "y": 13
+      },
+      "xy": {
+       "n": 15,
+       "both": 4,
+       "x": 8,
+       "y": 8
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 42,
+       "x": 48,
+       "y": 54
+      },
+      "x": {
+       "n": 60,
+       "both": 31,
+       "x": 39,
+       "y": 52
+      },
+      "y": {
+       "n": 60,
+       "both": 38,
+       "x": 46,
+       "y": 50
+      },
+      "xy": {
+       "n": 60,
+       "both": 23,
+       "x": 36,
+       "y": 39
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 3,
+       "x": 7,
+       "y": 7
+      },
+      "x": {
+       "n": 15,
+       "both": 0,
+       "x": 3,
+       "y": 2
+      },
+      "y": {
+       "n": 15,
+       "both": 0,
+       "x": 4,
+       "y": 1
+      },
+      "xy": {
+       "n": 15,
+       "both": 0,
+       "x": 2,
+       "y": 1
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 8,
+       "x": 24,
+       "y": 21
+      },
+      "x": {
+       "n": 60,
+       "both": 2,
+       "x": 14,
+       "y": 10
+      },
+      "y": {
+       "n": 60,
+       "both": 0,
+       "x": 21,
+       "y": 8
+      },
+      "xy": {
+       "n": 60,
+       "both": 0,
+       "x": 12,
+       "y": 6
+      }
+     }
+    }
+   },
+   "trained-43-support": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 12,
+       "x": 12,
+       "y": 15
+      },
+      "x": {
+       "n": 15,
+       "both": 14,
+       "x": 14,
+       "y": 15
+      },
+      "y": {
+       "n": 15,
+       "both": 15,
+       "x": 15,
+       "y": 15
+      },
+      "xy": {
+       "n": 15,
+       "both": 8,
+       "x": 12,
+       "y": 11
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 54,
+       "x": 54,
+       "y": 60
+      },
+      "x": {
+       "n": 60,
+       "both": 59,
+       "x": 59,
+       "y": 60
+      },
+      "y": {
+       "n": 60,
+       "both": 59,
+       "x": 59,
+       "y": 60
+      },
+      "xy": {
+       "n": 60,
+       "both": 33,
+       "x": 50,
+       "y": 43
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 0,
+       "x": 3,
+       "y": 4
+      },
+      "x": {
+       "n": 15,
+       "both": 0,
+       "x": 0,
+       "y": 0
+      },
+      "y": {
+       "n": 15,
+       "both": 0,
+       "x": 1,
+       "y": 0
+      },
+      "xy": {
+       "n": 15,
+       "both": 0,
+       "x": 3,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 0,
+       "x": 10,
+       "y": 17
+      },
+      "x": {
+       "n": 60,
+       "both": 0,
+       "x": 1,
+       "y": 0
+      },
+      "y": {
+       "n": 60,
+       "both": 0,
+       "x": 1,
+       "y": 0
+      },
+      "xy": {
+       "n": 60,
+       "both": 0,
+       "x": 6,
+       "y": 0
+      }
+     }
+    }
+   },
+   "trained-43-query": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 11,
+       "x": 12,
+       "y": 14
+      },
+      "x": {
+       "n": 15,
+       "both": 14,
+       "x": 14,
+       "y": 15
+      },
+      "y": {
+       "n": 15,
+       "both": 11,
+       "x": 11,
+       "y": 12
+      },
+      "xy": {
+       "n": 15,
+       "both": 6,
+       "x": 14,
+       "y": 7
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 47,
+       "x": 48,
+       "y": 55
+      },
+      "x": {
+       "n": 60,
+       "both": 54,
+       "x": 56,
+       "y": 58
+      },
+      "y": {
+       "n": 60,
+       "both": 49,
+       "x": 49,
+       "y": 51
+      },
+      "xy": {
+       "n": 60,
+       "both": 22,
+       "x": 51,
+       "y": 31
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 0,
+       "x": 1,
+       "y": 8
+      },
+      "x": {
+       "n": 15,
+       "both": 3,
+       "x": 4,
+       "y": 3
+      },
+      "y": {
+       "n": 15,
+       "both": 0,
+       "x": 1,
+       "y": 0
+      },
+      "xy": {
+       "n": 15,
+       "both": 0,
+       "x": 3,
+       "y": 1
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 0,
+       "x": 9,
+       "y": 29
+      },
+      "x": {
+       "n": 60,
+       "both": 9,
+       "x": 11,
+       "y": 9
+      },
+      "y": {
+       "n": 60,
+       "both": 0,
+       "x": 4,
+       "y": 2
+      },
+      "xy": {
+       "n": 60,
+       "both": 4,
+       "x": 12,
+       "y": 5
+      }
+     }
+    }
+   },
+   "random-43-support": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 14,
+       "x": 14,
+       "y": 15
+      },
+      "x": {
+       "n": 15,
+       "both": 12,
+       "x": 12,
+       "y": 15
+      },
+      "y": {
+       "n": 15,
+       "both": 14,
+       "x": 15,
+       "y": 14
+      },
+      "xy": {
+       "n": 15,
+       "both": 4,
+       "x": 5,
+       "y": 14
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 54,
+       "x": 54,
+       "y": 60
+      },
+      "x": {
+       "n": 60,
+       "both": 51,
+       "x": 51,
+       "y": 60
+      },
+      "y": {
+       "n": 60,
+       "both": 59,
+       "x": 60,
+       "y": 59
+      },
+      "xy": {
+       "n": 60,
+       "both": 15,
+       "x": 22,
+       "y": 53
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 0,
+       "x": 10,
+       "y": 1
+      },
+      "x": {
+       "n": 15,
+       "both": 0,
+       "x": 0,
+       "y": 1
+      },
+      "y": {
+       "n": 15,
+       "both": 0,
+       "x": 3,
+       "y": 0
+      },
+      "xy": {
+       "n": 15,
+       "both": 0,
+       "x": 1,
+       "y": 0
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 0,
+       "x": 38,
+       "y": 7
+      },
+      "x": {
+       "n": 60,
+       "both": 0,
+       "x": 0,
+       "y": 1
+      },
+      "y": {
+       "n": 60,
+       "both": 0,
+       "x": 9,
+       "y": 0
+      },
+      "xy": {
+       "n": 60,
+       "both": 0,
+       "x": 6,
+       "y": 0
+      }
+     }
+    }
+   },
+   "random-43-query": {
+    "matched": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 10,
+       "x": 12,
+       "y": 11
+      },
+      "x": {
+       "n": 15,
+       "both": 9,
+       "x": 12,
+       "y": 11
+      },
+      "y": {
+       "n": 15,
+       "both": 13,
+       "x": 13,
+       "y": 15
+      },
+      "xy": {
+       "n": 15,
+       "both": 6,
+       "x": 7,
+       "y": 13
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 36,
+       "x": 48,
+       "y": 40
+      },
+      "x": {
+       "n": 60,
+       "both": 38,
+       "x": 49,
+       "y": 41
+      },
+      "y": {
+       "n": 60,
+       "both": 49,
+       "x": 53,
+       "y": 55
+      },
+      "xy": {
+       "n": 60,
+       "both": 20,
+       "x": 32,
+       "y": 46
+      }
+     }
+    },
+    "opposite": {
+     "original_direction": {
+      "nom": {
+       "n": 15,
+       "both": 1,
+       "x": 8,
+       "y": 2
+      },
+      "x": {
+       "n": 15,
+       "both": 0,
+       "x": 2,
+       "y": 0
+      },
+      "y": {
+       "n": 15,
+       "both": 1,
+       "x": 3,
+       "y": 4
+      },
+      "xy": {
+       "n": 15,
+       "both": 2,
+       "x": 3,
+       "y": 4
+      }
+     },
+     "all_directions": {
+      "nom": {
+       "n": 60,
+       "both": 2,
+       "x": 28,
+       "y": 14
+      },
+      "x": {
+       "n": 60,
+       "both": 1,
+       "x": 7,
+       "y": 5
+      },
+      "y": {
+       "n": 60,
+       "both": 8,
+       "x": 11,
+       "y": 19
+      },
+      "xy": {
+       "n": 60,
+       "both": 8,
+       "x": 12,
+       "y": 20
+      }
+     }
+    }
+   }
+  }
+ }
+}
