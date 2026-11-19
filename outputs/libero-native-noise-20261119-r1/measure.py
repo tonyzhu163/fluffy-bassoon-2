@@ -4,7 +4,6 @@ import argparse
 from dataclasses import dataclass
 import json
 from pathlib import Path
-import re
 
 import numpy as np
 
@@ -20,15 +19,14 @@ class Query:
     initial: np.ndarray
     state: np.ndarray
     embedding: np.ndarray
-    noise: list
     proposals: np.ndarray
     positions: np.ndarray
     success: bool
 
 
-def read_query(folder, published):
+def read_query(folder, published, seed, stream):
     record = json.loads((folder / "result.json").read_text())
-    if record != published or record["arm"] != folder.name:
+    if record != published or record["arm"] != folder.name or record["policy_stream"] != [seed, stream]:
         raise ValueError(f"{folder}: episode record disagrees with published trial")
     with np.load(folder / "public.npz", allow_pickle=False) as tape:
         initial, positions, issued = tape["initial_position"], tape["positions"], tape["issued"]
@@ -46,6 +44,10 @@ def read_query(folder, published):
     with np.load(folder / "decisions.npz", allow_pickle=False) as decisions:
         state, embedding, proposals = (decisions[k][0] for k in ("state", "embedding", "proposals"))
         slot, offset, length = (decisions[k][0].item() for k in ("index", "offset", "length"))
+        choices = decisions["index"]
+    coin = np.random.default_rng(np.random.SeedSequence([seed, stream, 2]))
+    if not np.array_equal(choices, coin.integers(2, size=record["replans"])):
+        raise ValueError(f"{folder}: archived choices disagree with the collector's coin stream")
     if not (state.shape == (8,) and np.array_equal(state[:3], initial.astype(np.float32))
             and np.isfinite(state).all() and embedding.ndim == 1 and embedding.size
             and np.isfinite(embedding).all()):
@@ -54,10 +56,7 @@ def read_query(folder, published):
             and type(slot) is int and slot in (0, 1) and offset == 0 and type(length) is int
             and length == min(5, n) and np.array_equal(proposals[slot, :length], issued[:length])):
         raise ValueError(f"{folder}: selected opening prefix disagrees with issued controls")
-    noise = record["opening_noise_sha256"]
-    if len(noise) != 2 or not all(isinstance(h, str) and re.fullmatch("[0-9a-f]{64}", h) for h in noise):
-        raise ValueError(f"{folder}: expected two opening noise hashes")
-    return Query(initial, state, embedding, noise, proposals, positions, success)
+    return Query(initial, state, embedding, proposals, positions, success)
 
 
 def summary(values):
@@ -80,11 +79,10 @@ def measure(root):
             row = trial["manifest_row"]
             if (row["split"], row["task_id"], row["repeat"]) != ("fitting", task, repeat):
                 raise ValueError(f"{folder}: unexpected manifest row")
-            a, b = (read_query(folder / arm, trial["episodes"][arm]) for arm in ("query0", "query1"))
+            a, b = (read_query(folder / arm, trial["episodes"][arm], row["seed"], stream)
+                    for stream, arm in enumerate(("query0", "query1"), start=1))
             if not all(np.array_equal(getattr(a, k), getattr(b, k)) for k in ("initial", "state", "embedding")):
                 raise ValueError(f"{folder}: opening wrist, state or embedding differs between queries")
-            if len(set(a.noise + b.noise)) != 4:
-                raise ValueError(f"{folder}: repeated opening noise hash")
 
             counts[int(a.success), int(b.success)] += 1
             for control in CONTROLS:
