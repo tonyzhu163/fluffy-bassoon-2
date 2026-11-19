@@ -1,0 +1,4814 @@
+{
+  "complete": true,
+  "panel": "poc",
+  "archive": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-sysid-20261119-r1/gpu02col/archive/archive.json",
+  "archive_sha256": "832029f23f298c4edb0a5caf6c0da634660230acc6cb380d3a44689910a97767",
+  "matched_support_cap": 15,
+  "runtime": {
+    "python": "/mowenjie/fluffy-bassoon/envs/openpi-215abfb/bin/python",
+    "packages": {
+      "jax": "0.5.3",
+      "jaxlib": "0.5.3",
+      "flax": "0.10.2",
+      "optax": "0.2.4",
+      "numpy": "1.26.4"
+    },
+    "devices": [
+      "cuda:0"
+    ],
+    "backend": "gpu"
+  },
+  "steps": 1500,
+  "batch_size": 32,
+  "seeds": [
+    41
+  ],
+  "modes": {
+    "active_probe": {
+      "nominal_gain": 0.04848918298827482,
+      "constant_nominal": {
+        "familiar": {
+          "trials": 1,
+          "yaw_err_deg": 0.0,
+          "scale_rel_err": 0.0,
+          "grip_acc": 1.0,
+          "all_correct": 1.0
+        },
+        "compositional_ood": {
+          "trials": 1,
+          "yaw_err_deg": 180.0,
+          "scale_rel_err": 0.5384615384615384,
+          "grip_acc": 0.0,
+          "all_correct": 0.0
+        },
+        "continuous_angle_ood": {
+          "trials": 1,
+          "yaw_err_deg": 45.0,
+          "scale_rel_err": 0.0,
+          "grip_acc": 1.0,
+          "all_correct": 0.0
+        },
+        "overall": {
+          "trials": 3,
+          "yaw_err_deg": 75.0,
+          "scale_rel_err": 0.1794871794871795,
+          "grip_acc": 0.6666666666666666,
+          "all_correct": 0.3333333333333333
+        }
+      },
+      "training_prior": {
+        "familiar": {
+          "trials": 1,
+          "yaw_err_deg": 5.69182418530545e-07,
+          "scale_rel_err": 0.0010679960250854492,
+          "grip_acc": 1.0,
+          "all_correct": 1.0
+        },
+        "compositional_ood": {
+          "trials": 1,
+          "yaw_err_deg": 179.99999943081758,
+          "scale_rel_err": 0.5401046092693622,
+          "grip_acc": 0.0,
+          "all_correct": 0.0
+        },
+        "continuous_angle_ood": {
+          "trials": 1,
+          "yaw_err_deg": 45.00000056918242,
+          "scale_rel_err": 0.0010679960250854492,
+          "grip_acc": 1.0,
+          "all_correct": 0.0
+        },
+        "overall": {
+          "trials": 3,
+          "yaw_err_deg": 75.00000018972747,
+          "scale_rel_err": 0.18074686710651103,
+          "grip_acc": 0.6666666666666666,
+          "all_correct": 0.3333333333333333
+        }
+      },
+      "analytic_proprio_sysid": {
+        "retained": {
+          "familiar": {
+            "trials": 1,
+            "yaw_err_deg": 8.585348129272461,
+            "scale_rel_err": 0.000705420970916748,
+            "grip_acc": 1.0,
+            "all_correct": 1.0
+          },
+          "compositional_ood": {
+            "trials": 1,
+            "yaw_err_deg": 172.41892385482788,
+            "scale_rel_err": 0.1073417663574219,
+            "grip_acc": 1.0,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 1,
+            "yaw_err_deg": 54.55549430847168,
+            "scale_rel_err": 0.015277981758117676,
+            "grip_acc": 1.0,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 3,
+            "yaw_err_deg": 78.519922097524,
+            "scale_rel_err": 0.04110838969548544,
+            "grip_acc": 1.0,
+            "all_correct": 0.3333333333333333
+          }
+        },
+        "cleared": {
+          "familiar": {
+            "trials": 1,
+            "yaw_err_deg": 0.0,
+            "scale_rel_err": 0.0,
+            "grip_acc": 1.0,
+            "all_correct": 1.0
+          },
+          "compositional_ood": {
+            "trials": 1,
+            "yaw_err_deg": 180.0,
+            "scale_rel_err": 0.5384615384615384,
+            "grip_acc": 0.0,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 1,
+            "yaw_err_deg": 45.0,
+            "scale_rel_err": 0.0,
+            "grip_acc": 1.0,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 3,
+            "yaw_err_deg": 75.0,
+            "scale_rel_err": 0.1794871794871795,
+            "grip_acc": 0.6666666666666666,
+            "all_correct": 0.3333333333333333
+          }
+        },
+        "swapped_donor": {
+          "familiar": {
+            "trials": 1,
+            "yaw_err_deg": 9.55549430847168,
+            "scale_rel_err": 0.015277981758117676,
+            "grip_acc": 1.0,
+            "all_correct": 1.0
+          },
+          "compositional_ood": {
+            "trials": 1,
+            "yaw_err_deg": 171.41465187072754,
+            "scale_rel_err": 0.5373762754293588,
+            "grip_acc": 0.0,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 1,
+            "yaw_err_deg": 52.58107614517212,
+            "scale_rel_err": 0.4197721481323242,
+            "grip_acc": 0.0,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 3,
+            "yaw_err_deg": 77.85040744145711,
+            "scale_rel_err": 0.3241421351066002,
+            "grip_acc": 0.3333333333333333,
+            "all_correct": 0.3333333333333333
+          }
+        }
+      },
+      "analytic_visual_sysid": {
+        "available": true,
+        "projection": [
+          [
+            6.24523361577794,
+            71.17948702314564
+          ],
+          [
+            -51.80231479558759,
+            -10.206934297779746
+          ],
+          [
+            5.906308487885795,
+            -13.605479061080406
+          ]
+        ],
+        "retained": {
+          "familiar": {
+            "trials": 1,
+            "yaw_err_deg": 9.630991312810295,
+            "scale_rel_err": 0.000705420970916748,
+            "grip_acc": 1.0,
+            "all_correct": 1.0
+          },
+          "compositional_ood": {
+            "trials": 1,
+            "yaw_err_deg": 6.80730305331582,
+            "scale_rel_err": 0.1073417663574219,
+            "grip_acc": 1.0,
+            "all_correct": 1.0
+          },
+          "continuous_angle_ood": {
+            "trials": 1,
+            "yaw_err_deg": 2.678114426047614,
+            "scale_rel_err": 0.015277981758117676,
+            "grip_acc": 1.0,
+            "all_correct": 1.0
+          },
+          "overall": {
+            "trials": 3,
+            "yaw_err_deg": 6.37213626405791,
+            "scale_rel_err": 0.04110838969548544,
+            "grip_acc": 1.0,
+            "all_correct": 1.0
+          }
+        },
+        "cleared": {
+          "familiar": {
+            "trials": 1,
+            "yaw_err_deg": 0.0,
+            "scale_rel_err": 0.0,
+            "grip_acc": 1.0,
+            "all_correct": 1.0
+          },
+          "compositional_ood": {
+            "trials": 1,
+            "yaw_err_deg": 180.0,
+            "scale_rel_err": 0.5384615384615384,
+            "grip_acc": 0.0,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 1,
+            "yaw_err_deg": 45.0,
+            "scale_rel_err": 0.0,
+            "grip_acc": 1.0,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 3,
+            "yaw_err_deg": 75.0,
+            "scale_rel_err": 0.1794871794871795,
+            "grip_acc": 0.6666666666666666,
+            "all_correct": 0.3333333333333333
+          }
+        },
+        "swapped_donor": {
+          "familiar": {
+            "trials": 1,
+            "yaw_err_deg": 47.678114426047614,
+            "scale_rel_err": 0.015277981758117676,
+            "grip_acc": 1.0,
+            "all_correct": 0.0
+          },
+          "compositional_ood": {
+            "trials": 1,
+            "yaw_err_deg": 170.3690086871897,
+            "scale_rel_err": 0.5373762754293588,
+            "grip_acc": 0.0,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 1,
+            "yaw_err_deg": 141.80730305331582,
+            "scale_rel_err": 0.4197721481323242,
+            "grip_acc": 0.0,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 3,
+            "yaw_err_deg": 119.95147538885105,
+            "scale_rel_err": 0.3241421351066002,
+            "grip_acc": 0.3333333333333333,
+            "all_correct": 0.0
+          }
+        }
+      },
+      "models": {
+        "frame0_probe": {
+          "retained": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 0.6610466241836548,
+                "std": 0.0,
+                "values": [
+                  0.6610466241836548
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.004949212074279785,
+                "std": 0.0,
+                "values": [
+                  0.004949212074279785
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 179.33895337581635,
+                "std": 0.0,
+                "values": [
+                  179.33895337581635
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.5308473660395695,
+                "std": 0.0,
+                "values": [
+                  0.5308473660395695
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 44.338953375816345,
+                "std": 0.0,
+                "values": [
+                  44.338953375816345
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.004949212074279785,
+                "std": 0.0,
+                "values": [
+                  0.004949212074279785
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 74.77965112527211,
+                "std": 0.0,
+                "values": [
+                  74.77965112527211
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.18024859672937635,
+                "std": 0.0,
+                "values": [
+                  0.18024859672937635
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.6666666666666666,
+                "std": 0.0,
+                "values": [
+                  0.6666666666666666
+                ]
+              },
+              "all_correct": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              }
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 0.6610466241836548,
+                "std": 0.0,
+                "values": [
+                  0.6610466241836548
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.004949212074279785,
+                "std": 0.0,
+                "values": [
+                  0.004949212074279785
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 179.33895337581635,
+                "std": 0.0,
+                "values": [
+                  179.33895337581635
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.5308473660395695,
+                "std": 0.0,
+                "values": [
+                  0.5308473660395695
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 44.338953375816345,
+                "std": 0.0,
+                "values": [
+                  44.338953375816345
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.004949212074279785,
+                "std": 0.0,
+                "values": [
+                  0.004949212074279785
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 74.77965112527211,
+                "std": 0.0,
+                "values": [
+                  74.77965112527211
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.18024859672937635,
+                "std": 0.0,
+                "values": [
+                  0.18024859672937635
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.6666666666666666,
+                "std": 0.0,
+                "values": [
+                  0.6666666666666666
+                ]
+              },
+              "all_correct": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              }
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 0.6610466241836548,
+                "std": 0.0,
+                "values": [
+                  0.6610466241836548
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.004949212074279785,
+                "std": 0.0,
+                "values": [
+                  0.004949212074279785
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 179.33895337581635,
+                "std": 0.0,
+                "values": [
+                  179.33895337581635
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.5308473660395695,
+                "std": 0.0,
+                "values": [
+                  0.5308473660395695
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 44.338953375816345,
+                "std": 0.0,
+                "values": [
+                  44.338953375816345
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.004949212074279785,
+                "std": 0.0,
+                "values": [
+                  0.004949212074279785
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 74.77965112527211,
+                "std": 0.0,
+                "values": [
+                  74.77965112527211
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.18024859672937635,
+                "std": 0.0,
+                "values": [
+                  0.18024859672937635
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.6666666666666666,
+                "std": 0.0,
+                "values": [
+                  0.6666666666666666
+                ]
+              },
+              "all_correct": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              }
+            }
+          },
+          "seeds": [
+            {
+              "seed": 41,
+              "seconds": 108.783,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-sysid-20261119-r1/gpu02fit/train/checkpoints/active_probe-frame0_probe-seed41.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 1.5509446859359741,
+                  "yaw_loss": 0.841680645942688,
+                  "scale_loss": 0.044175729155540466,
+                  "grip_loss": 0.6650882959365845
+                },
+                {
+                  "step": 300,
+                  "loss": 0.9701964855194092,
+                  "yaw_loss": 0.5933356285095215,
+                  "scale_loss": 0.0602245032787323,
+                  "grip_loss": 0.3166363537311554
+                },
+                {
+                  "step": 600,
+                  "loss": 0.9717143774032593,
+                  "yaw_loss": 0.5234203338623047,
+                  "scale_loss": 0.07116734236478806,
+                  "grip_loss": 0.37712669372558594
+                },
+                {
+                  "step": 900,
+                  "loss": 1.289751410484314,
+                  "yaw_loss": 0.9383633732795715,
+                  "scale_loss": 0.0298695620149374,
+                  "grip_loss": 0.3215184509754181
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.9884839057922363,
+                  "yaw_loss": 0.5576350688934326,
+                  "scale_loss": 0.051689885556697845,
+                  "grip_loss": 0.37915897369384766
+                },
+                {
+                  "step": 1500,
+                  "loss": 1.0223909616470337,
+                  "yaw_loss": 0.4683423638343811,
+                  "scale_loss": 0.07079535722732544,
+                  "grip_loss": 0.48325327038764954
+                }
+              ],
+              "training": {
+                "overall": {
+                  "trials": 28,
+                  "yaw_err_deg": 51.713375802551,
+                  "scale_rel_err": 0.13062657264795172,
+                  "grip_acc": 0.8571428571428571,
+                  "all_correct": 0.14285714285714285
+                }
+              },
+              "retained": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 0.6610466241836548,
+                  "scale_rel_err": 0.004949212074279785,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 179.33895337581635,
+                  "scale_rel_err": 0.5308473660395695,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 44.338953375816345,
+                  "scale_rel_err": 0.004949212074279785,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 74.77965112527211,
+                  "scale_rel_err": 0.18024859672937635,
+                  "grip_acc": 0.6666666666666666,
+                  "all_correct": 0.3333333333333333
+                }
+              },
+              "cleared": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 0.6610466241836548,
+                  "scale_rel_err": 0.004949212074279785,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 179.33895337581635,
+                  "scale_rel_err": 0.5308473660395695,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 44.338953375816345,
+                  "scale_rel_err": 0.004949212074279785,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 74.77965112527211,
+                  "scale_rel_err": 0.18024859672937635,
+                  "grip_acc": 0.6666666666666666,
+                  "all_correct": 0.3333333333333333
+                }
+              },
+              "swapped_donor": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 0.6610466241836548,
+                  "scale_rel_err": 0.004949212074279785,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 179.33895337581635,
+                  "scale_rel_err": 0.5308473660395695,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 44.338953375816345,
+                  "scale_rel_err": 0.004949212074279785,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 74.77965112527211,
+                  "scale_rel_err": 0.18024859672937635,
+                  "grip_acc": 0.6666666666666666,
+                  "all_correct": 0.3333333333333333
+                }
+              }
+            }
+          ]
+        },
+        "joint_transformer": {
+          "retained": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 0.7549406886100769,
+                "std": 0.0,
+                "values": [
+                  0.7549406886100769
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0028252601623535156,
+                "std": 0.0,
+                "values": [
+                  0.0028252601623535156
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 178.15490651130676,
+                "std": 0.0,
+                "values": [
+                  178.15490651130676
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.23056081625131455,
+                "std": 0.0,
+                "values": [
+                  0.23056081625131455
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 52.038609981536865,
+                "std": 0.0,
+                "values": [
+                  52.038609981536865
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.18892008066177368,
+                "std": 0.0,
+                "values": [
+                  0.18892008066177368
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 76.98281906048457,
+                "std": 0.0,
+                "values": [
+                  76.98281906048457
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.14076871902514723,
+                "std": 0.0,
+                "values": [
+                  0.14076871902514723
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              }
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 180.0,
+                "std": 0.0,
+                "values": [
+                  180.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.5384615384615384,
+                "std": 0.0,
+                "values": [
+                  0.5384615384615384
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 45.0,
+                "std": 0.0,
+                "values": [
+                  45.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 75.0,
+                "std": 0.0,
+                "values": [
+                  75.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.1794871794871795,
+                "std": 0.0,
+                "values": [
+                  0.1794871794871795
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.6666666666666666,
+                "std": 0.0,
+                "values": [
+                  0.6666666666666666
+                ]
+              },
+              "all_correct": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              }
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 7.038609981536865,
+                "std": 0.0,
+                "values": [
+                  7.038609981536865
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.18892008066177368,
+                "std": 0.0,
+                "values": [
+                  0.18892008066177368
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 179.24505931138992,
+                "std": 0.0,
+                "values": [
+                  179.24505931138992
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.5341149843656099,
+                "std": 0.0,
+                "values": [
+                  0.5341149843656099
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 46.84509348869324,
+                "std": 0.0,
+                "values": [
+                  46.84509348869324
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.2001354694366455,
+                "std": 0.0,
+                "values": [
+                  0.2001354694366455
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 77.70958759387334,
+                "std": 0.0,
+                "values": [
+                  77.70958759387334
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.3077235114880097,
+                "std": 0.0,
+                "values": [
+                  0.3077235114880097
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              },
+              "all_correct": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              }
+            }
+          },
+          "seeds": [
+            {
+              "seed": 41,
+              "seconds": 22.0,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-sysid-20261119-r1/gpu02fit/train/checkpoints/active_probe-joint_transformer-seed41.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 3.2795348167419434,
+                  "yaw_loss": 1.046302318572998,
+                  "scale_loss": 0.5704197883605957,
+                  "grip_loss": 1.6628128290176392
+                },
+                {
+                  "step": 300,
+                  "loss": 0.0023669605143368244,
+                  "yaw_loss": 0.0005776286125183105,
+                  "scale_loss": 0.001419566571712494,
+                  "grip_loss": 0.00036976521369069815
+                },
+                {
+                  "step": 600,
+                  "loss": 0.0001566573337186128,
+                  "yaw_loss": 3.257766366004944e-05,
+                  "scale_loss": 6.678399950033054e-05,
+                  "grip_loss": 5.729567419621162e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 6.323591514956206e-05,
+                  "yaw_loss": 1.1363998055458069e-05,
+                  "scale_loss": 3.8610425690421835e-05,
+                  "grip_loss": 1.3261488675198052e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 8.603401511209086e-05,
+                  "yaw_loss": 2.723187208175659e-06,
+                  "scale_loss": 7.141254900489002e-05,
+                  "grip_loss": 1.1898280718014576e-05
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.00030553372926078737,
+                  "yaw_loss": 0.00016361474990844727,
+                  "scale_loss": 0.00013245735317468643,
+                  "grip_loss": 9.461624358664267e-06
+                }
+              ],
+              "training": {
+                "overall": {
+                  "trials": 28,
+                  "yaw_err_deg": 0.6500928028960645,
+                  "scale_rel_err": 0.011954313905388701,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                }
+              },
+              "retained": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 0.7549406886100769,
+                  "scale_rel_err": 0.0028252601623535156,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 178.15490651130676,
+                  "scale_rel_err": 0.23056081625131455,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 52.038609981536865,
+                  "scale_rel_err": 0.18892008066177368,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 76.98281906048457,
+                  "scale_rel_err": 0.14076871902514723,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.3333333333333333
+                }
+              },
+              "cleared": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 0.0,
+                  "scale_rel_err": 0.0,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 180.0,
+                  "scale_rel_err": 0.5384615384615384,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 45.0,
+                  "scale_rel_err": 0.0,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 75.0,
+                  "scale_rel_err": 0.1794871794871795,
+                  "grip_acc": 0.6666666666666666,
+                  "all_correct": 0.3333333333333333
+                }
+              },
+              "swapped_donor": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 7.038609981536865,
+                  "scale_rel_err": 0.18892008066177368,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 179.24505931138992,
+                  "scale_rel_err": 0.5341149843656099,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 46.84509348869324,
+                  "scale_rel_err": 0.2001354694366455,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 77.70958759387334,
+                  "scale_rel_err": 0.3077235114880097,
+                  "grip_acc": 0.3333333333333333,
+                  "all_correct": 0.3333333333333333
+                }
+              }
+            }
+          ]
+        },
+        "factored_no_equiv": {
+          "retained": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 1.4130744934082031,
+                "std": 0.0,
+                "values": [
+                  1.4130744934082031
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0023130178451538086,
+                "std": 0.0,
+                "values": [
+                  0.0023130178451538086
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 1.2458648681640625,
+                "std": 0.0,
+                "values": [
+                  1.2458648681640625
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.008737252308772194,
+                "std": 0.0,
+                "values": [
+                  0.008737252308772194
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 29.43972873687744,
+                "std": 0.0,
+                "values": [
+                  29.43972873687744
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.03833317756652832,
+                "std": 0.0,
+                "values": [
+                  0.03833317756652832
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 10.699556032816568,
+                "std": 0.0,
+                "values": [
+                  10.699556032816568
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.01646114924015144,
+                "std": 0.0,
+                "values": [
+                  0.01646114924015144
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.6666666666666666,
+                "std": 0.0,
+                "values": [
+                  0.6666666666666666
+                ]
+              }
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 180.0,
+                "std": 0.0,
+                "values": [
+                  180.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.5384615384615384,
+                "std": 0.0,
+                "values": [
+                  0.5384615384615384
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 45.0,
+                "std": 0.0,
+                "values": [
+                  45.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 75.0,
+                "std": 0.0,
+                "values": [
+                  75.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.1794871794871795,
+                "std": 0.0,
+                "values": [
+                  0.1794871794871795
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.6666666666666666,
+                "std": 0.0,
+                "values": [
+                  0.6666666666666666
+                ]
+              },
+              "all_correct": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              }
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 15.560271263122559,
+                "std": 0.0,
+                "values": [
+                  15.560271263122559
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.03833317756652832,
+                "std": 0.0,
+                "values": [
+                  0.03833317756652832
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 178.5869255065918,
+                "std": 0.0,
+                "values": [
+                  178.5869255065918
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.5420200274540827,
+                "std": 0.0,
+                "values": [
+                  0.5420200274540827
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 136.24586486816406,
+                "std": 0.0,
+                "values": [
+                  136.24586486816406
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.3556792140007019,
+                "std": 0.0,
+                "values": [
+                  0.3556792140007019
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 110.13102054595947,
+                "std": 0.0,
+                "values": [
+                  110.13102054595947
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.31201080634043765,
+                "std": 0.0,
+                "values": [
+                  0.31201080634043765
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            }
+          },
+          "seeds": [
+            {
+              "seed": 41,
+              "seconds": 15.615,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-sysid-20261119-r1/gpu02fit/train/checkpoints/active_probe-factored_no_equiv-seed41.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 2.139206886291504,
+                  "yaw_loss": 1.129958152770996,
+                  "scale_loss": 0.11096934229135513,
+                  "grip_loss": 0.8982793092727661
+                },
+                {
+                  "step": 300,
+                  "loss": 0.5940752625465393,
+                  "yaw_loss": 0.5932059288024902,
+                  "scale_loss": 0.0007282294100150466,
+                  "grip_loss": 0.0001410702825523913
+                },
+                {
+                  "step": 600,
+                  "loss": 0.0005879401578567922,
+                  "yaw_loss": 7.41221010684967e-05,
+                  "scale_loss": 0.00046683254186064005,
+                  "grip_loss": 4.698548946180381e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.0002599708968773484,
+                  "yaw_loss": 3.935769200325012e-06,
+                  "scale_loss": 0.00023510551545768976,
+                  "grip_loss": 2.0929615857312456e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.00018104580522049218,
+                  "yaw_loss": 2.2724270820617676e-06,
+                  "scale_loss": 0.0001663164293859154,
+                  "grip_loss": 1.2456943295546807e-05
+                },
+                {
+                  "step": 1500,
+                  "loss": 9.135664731729776e-05,
+                  "yaw_loss": 9.890645742416382e-07,
+                  "scale_loss": 8.12795406091027e-05,
+                  "grip_loss": 9.088040314964019e-06
+                }
+              ],
+              "training": {
+                "overall": {
+                  "trials": 28,
+                  "yaw_err_deg": 0.04838162354592766,
+                  "scale_rel_err": 0.007356714976252249,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                }
+              },
+              "retained": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 1.4130744934082031,
+                  "scale_rel_err": 0.0023130178451538086,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 1.2458648681640625,
+                  "scale_rel_err": 0.008737252308772194,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 29.43972873687744,
+                  "scale_rel_err": 0.03833317756652832,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 10.699556032816568,
+                  "scale_rel_err": 0.01646114924015144,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.6666666666666666
+                }
+              },
+              "cleared": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 0.0,
+                  "scale_rel_err": 0.0,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 180.0,
+                  "scale_rel_err": 0.5384615384615384,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 45.0,
+                  "scale_rel_err": 0.0,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 75.0,
+                  "scale_rel_err": 0.1794871794871795,
+                  "grip_acc": 0.6666666666666666,
+                  "all_correct": 0.3333333333333333
+                }
+              },
+              "swapped_donor": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 15.560271263122559,
+                  "scale_rel_err": 0.03833317756652832,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 178.5869255065918,
+                  "scale_rel_err": 0.5420200274540827,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 136.24586486816406,
+                  "scale_rel_err": 0.3556792140007019,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 110.13102054595947,
+                  "scale_rel_err": 0.31201080634043765,
+                  "grip_acc": 0.3333333333333333,
+                  "all_correct": 0.0
+                }
+              }
+            }
+          ]
+        },
+        "factored_equiv": {
+          "retained": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 0.2955261170864105,
+                "std": 0.0,
+                "values": [
+                  0.2955261170864105
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.00544130802154541,
+                "std": 0.0,
+                "values": [
+                  0.00544130802154541
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 7.2979278564453125,
+                "std": 0.0,
+                "values": [
+                  7.2979278564453125
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0070587855118971945,
+                "std": 0.0,
+                "values": [
+                  0.0070587855118971945
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 36.136271476745605,
+                "std": 0.0,
+                "values": [
+                  36.136271476745605
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.04175364971160889,
+                "std": 0.0,
+                "values": [
+                  0.04175364971160889
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 14.576575150092443,
+                "std": 0.0,
+                "values": [
+                  14.576575150092443
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.018084581081683832,
+                "std": 0.0,
+                "values": [
+                  0.018084581081683832
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.6666666666666666,
+                "std": 0.0,
+                "values": [
+                  0.6666666666666666
+                ]
+              }
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 180.0,
+                "std": 0.0,
+                "values": [
+                  180.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.5384615384615384,
+                "std": 0.0,
+                "values": [
+                  0.5384615384615384
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 45.0,
+                "std": 0.0,
+                "values": [
+                  45.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 75.0,
+                "std": 0.0,
+                "values": [
+                  75.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.1794871794871795,
+                "std": 0.0,
+                "values": [
+                  0.1794871794871795
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.6666666666666666,
+                "std": 0.0,
+                "values": [
+                  0.6666666666666666
+                ]
+              },
+              "all_correct": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              }
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 8.863728523254395,
+                "std": 0.0,
+                "values": [
+                  8.863728523254395
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.04175364971160889,
+                "std": 0.0,
+                "values": [
+                  0.04175364971160889
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 179.7044738829136,
+                "std": 0.0,
+                "values": [
+                  179.7044738829136
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.5468327815716083,
+                "std": 0.0,
+                "values": [
+                  0.5468327815716083
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 127.70207214355469,
+                "std": 0.0,
+                "values": [
+                  127.70207214355469
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.35458821058273315,
+                "std": 0.0,
+                "values": [
+                  0.35458821058273315
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 105.42342484990756,
+                "std": 0.0,
+                "values": [
+                  105.42342484990756
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.3143915472886501,
+                "std": 0.0,
+                "values": [
+                  0.3143915472886501
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              },
+              "all_correct": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              }
+            }
+          },
+          "seeds": [
+            {
+              "seed": 41,
+              "seconds": 10.286,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-sysid-20261119-r1/gpu02fit/train/checkpoints/active_probe-factored_equiv-seed41.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 2.0712475776672363,
+                  "yaw_loss": 1.0619990825653076,
+                  "scale_loss": 0.11096934229135513,
+                  "grip_loss": 0.8982793092727661
+                },
+                {
+                  "step": 300,
+                  "loss": 0.0009772407356649637,
+                  "yaw_loss": 3.453157842159271e-05,
+                  "scale_loss": 0.0007915624300949275,
+                  "grip_loss": 0.000151146698044613
+                },
+                {
+                  "step": 600,
+                  "loss": 0.0006666196859441698,
+                  "yaw_loss": 0.00019782409071922302,
+                  "scale_loss": 0.00042143877362832427,
+                  "grip_loss": 4.735682159662247e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.0002564758760854602,
+                  "yaw_loss": 5.587935447692871e-06,
+                  "scale_loss": 0.00022995282779447734,
+                  "grip_loss": 2.0935111024300568e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.0001723957248032093,
+                  "yaw_loss": 6.318092346191406e-06,
+                  "scale_loss": 0.00015361754049081355,
+                  "grip_loss": 1.2460098332667258e-05
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.00010077097977045923,
+                  "yaw_loss": 2.2586435079574585e-05,
+                  "scale_loss": 6.907108763698488e-05,
+                  "grip_loss": 9.113457053899765e-06
+                }
+              ],
+              "training": {
+                "overall": {
+                  "trials": 28,
+                  "yaw_err_deg": 0.21271103214738624,
+                  "scale_rel_err": 0.006292686885825627,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                }
+              },
+              "retained": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 0.2955261170864105,
+                  "scale_rel_err": 0.00544130802154541,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 7.2979278564453125,
+                  "scale_rel_err": 0.0070587855118971945,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 36.136271476745605,
+                  "scale_rel_err": 0.04175364971160889,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 14.576575150092443,
+                  "scale_rel_err": 0.018084581081683832,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.6666666666666666
+                }
+              },
+              "cleared": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 0.0,
+                  "scale_rel_err": 0.0,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 180.0,
+                  "scale_rel_err": 0.5384615384615384,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 45.0,
+                  "scale_rel_err": 0.0,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 75.0,
+                  "scale_rel_err": 0.1794871794871795,
+                  "grip_acc": 0.6666666666666666,
+                  "all_correct": 0.3333333333333333
+                }
+              },
+              "swapped_donor": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 8.863728523254395,
+                  "scale_rel_err": 0.04175364971160889,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 179.7044738829136,
+                  "scale_rel_err": 0.5468327815716083,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 127.70207214355469,
+                  "scale_rel_err": 0.35458821058273315,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 105.42342484990756,
+                  "scale_rel_err": 0.3143915472886501,
+                  "grip_acc": 0.3333333333333333,
+                  "all_correct": 0.3333333333333333
+                }
+              }
+            }
+          ]
+        }
+      },
+      "train_trials": 28,
+      "dev_trials": 3,
+      "donor_indices": [
+        30,
+        28,
+        29
+      ]
+    },
+    "passive_attempt1": {
+      "nominal_gain": 0.058337886810930065,
+      "constant_nominal": {
+        "familiar": {
+          "trials": 1,
+          "yaw_err_deg": 0.0,
+          "scale_rel_err": 0.0,
+          "grip_acc": 1.0,
+          "all_correct": 1.0
+        },
+        "compositional_ood": {
+          "trials": 1,
+          "yaw_err_deg": 180.0,
+          "scale_rel_err": 0.5384615384615384,
+          "grip_acc": 0.0,
+          "all_correct": 0.0
+        },
+        "continuous_angle_ood": {
+          "trials": 1,
+          "yaw_err_deg": 45.0,
+          "scale_rel_err": 0.0,
+          "grip_acc": 1.0,
+          "all_correct": 0.0
+        },
+        "overall": {
+          "trials": 3,
+          "yaw_err_deg": 75.0,
+          "scale_rel_err": 0.1794871794871795,
+          "grip_acc": 0.6666666666666666,
+          "all_correct": 0.3333333333333333
+        }
+      },
+      "training_prior": {
+        "familiar": {
+          "trials": 1,
+          "yaw_err_deg": 5.69182418530545e-07,
+          "scale_rel_err": 0.0010679960250854492,
+          "grip_acc": 1.0,
+          "all_correct": 1.0
+        },
+        "compositional_ood": {
+          "trials": 1,
+          "yaw_err_deg": 179.99999943081758,
+          "scale_rel_err": 0.5401046092693622,
+          "grip_acc": 0.0,
+          "all_correct": 0.0
+        },
+        "continuous_angle_ood": {
+          "trials": 1,
+          "yaw_err_deg": 45.00000056918242,
+          "scale_rel_err": 0.0010679960250854492,
+          "grip_acc": 1.0,
+          "all_correct": 0.0
+        },
+        "overall": {
+          "trials": 3,
+          "yaw_err_deg": 75.00000018972747,
+          "scale_rel_err": 0.18074686710651103,
+          "grip_acc": 0.6666666666666666,
+          "all_correct": 0.3333333333333333
+        }
+      },
+      "analytic_proprio_sysid": {
+        "retained": {
+          "familiar": {
+            "trials": 1,
+            "yaw_err_deg": 0.256650447845459,
+            "scale_rel_err": 0.03495669364929199,
+            "grip_acc": 1.0,
+            "all_correct": 1.0
+          },
+          "compositional_ood": {
+            "trials": 1,
+            "yaw_err_deg": 179.89377802610397,
+            "scale_rel_err": 0.034567429469181975,
+            "grip_acc": 1.0,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 1,
+            "yaw_err_deg": 41.97117829322815,
+            "scale_rel_err": 0.030173540115356445,
+            "grip_acc": 1.0,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 3,
+            "yaw_err_deg": 74.04053558905919,
+            "scale_rel_err": 0.03323255441127681,
+            "grip_acc": 1.0,
+            "all_correct": 0.3333333333333333
+          }
+        },
+        "cleared": {
+          "familiar": {
+            "trials": 1,
+            "yaw_err_deg": 0.0,
+            "scale_rel_err": 0.0,
+            "grip_acc": 1.0,
+            "all_correct": 1.0
+          },
+          "compositional_ood": {
+            "trials": 1,
+            "yaw_err_deg": 180.0,
+            "scale_rel_err": 0.5384615384615384,
+            "grip_acc": 0.0,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 1,
+            "yaw_err_deg": 45.0,
+            "scale_rel_err": 0.0,
+            "grip_acc": 1.0,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 3,
+            "yaw_err_deg": 75.0,
+            "scale_rel_err": 0.1794871794871795,
+            "grip_acc": 0.6666666666666666,
+            "all_correct": 0.3333333333333333
+          }
+        },
+        "swapped_donor": {
+          "familiar": {
+            "trials": 1,
+            "yaw_err_deg": 3.0288217067718506,
+            "scale_rel_err": 0.030173540115356445,
+            "grip_acc": 1.0,
+            "all_correct": 1.0
+          },
+          "compositional_ood": {
+            "trials": 1,
+            "yaw_err_deg": 179.74334955215454,
+            "scale_rel_err": 0.48468200977031994,
+            "grip_acc": 0.0,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 1,
+            "yaw_err_deg": 44.89377802610397,
+            "scale_rel_err": 0.37246882915496826,
+            "grip_acc": 0.0,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 3,
+            "yaw_err_deg": 75.88864976167679,
+            "scale_rel_err": 0.2957747930135482,
+            "grip_acc": 0.3333333333333333,
+            "all_correct": 0.3333333333333333
+          }
+        }
+      },
+      "analytic_visual_sysid": {
+        "available": true,
+        "projection": [
+          [
+            -94.06141898647418,
+            -6.950671615769351
+          ],
+          [
+            -36.78725376910944,
+            10.862703033069991
+          ],
+          [
+            -222.35239211805225,
+            -116.05780769578934
+          ]
+        ],
+        "retained": {
+          "familiar": {
+            "trials": 1,
+            "yaw_err_deg": 76.08408653844253,
+            "scale_rel_err": 0.03495669364929199,
+            "grip_acc": 1.0,
+            "all_correct": 0.0
+          },
+          "compositional_ood": {
+            "trials": 1,
+            "yaw_err_deg": 87.86264339193968,
+            "scale_rel_err": 0.034567429469181975,
+            "grip_acc": 1.0,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 1,
+            "yaw_err_deg": 25.384940974442628,
+            "scale_rel_err": 0.030173540115356445,
+            "grip_acc": 1.0,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 3,
+            "yaw_err_deg": 63.11055696827495,
+            "scale_rel_err": 0.03323255441127681,
+            "grip_acc": 1.0,
+            "all_correct": 0.0
+          }
+        },
+        "cleared": {
+          "familiar": {
+            "trials": 1,
+            "yaw_err_deg": 0.0,
+            "scale_rel_err": 0.0,
+            "grip_acc": 1.0,
+            "all_correct": 1.0
+          },
+          "compositional_ood": {
+            "trials": 1,
+            "yaw_err_deg": 180.0,
+            "scale_rel_err": 0.5384615384615384,
+            "grip_acc": 0.0,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 1,
+            "yaw_err_deg": 45.0,
+            "scale_rel_err": 0.0,
+            "grip_acc": 1.0,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 3,
+            "yaw_err_deg": 75.0,
+            "scale_rel_err": 0.1794871794871795,
+            "grip_acc": 0.6666666666666666,
+            "all_correct": 0.3333333333333333
+          }
+        },
+        "swapped_donor": {
+          "familiar": {
+            "trials": 1,
+            "yaw_err_deg": 70.38494097444263,
+            "scale_rel_err": 0.030173540115356445,
+            "grip_acc": 1.0,
+            "all_correct": 0.0
+          },
+          "compositional_ood": {
+            "trials": 1,
+            "yaw_err_deg": 103.91591346155748,
+            "scale_rel_err": 0.48468200977031994,
+            "grip_acc": 0.0,
+            "all_correct": 0.0
+          },
+          "continuous_angle_ood": {
+            "trials": 1,
+            "yaw_err_deg": 137.13735660806032,
+            "scale_rel_err": 0.37246882915496826,
+            "grip_acc": 0.0,
+            "all_correct": 0.0
+          },
+          "overall": {
+            "trials": 3,
+            "yaw_err_deg": 103.81273701468682,
+            "scale_rel_err": 0.2957747930135482,
+            "grip_acc": 0.3333333333333333,
+            "all_correct": 0.0
+          }
+        }
+      },
+      "models": {
+        "frame0_probe": {
+          "retained": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 0.6606738567352295,
+                "std": 0.0,
+                "values": [
+                  0.6606738567352295
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.004930019378662109,
+                "std": 0.0,
+                "values": [
+                  0.004930019378662109
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 179.33932614326477,
+                "std": 0.0,
+                "values": [
+                  179.33932614326477
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.5308768932635967,
+                "std": 0.0,
+                "values": [
+                  0.5308768932635967
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 44.33932614326477,
+                "std": 0.0,
+                "values": [
+                  44.33932614326477
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.004930019378662109,
+                "std": 0.0,
+                "values": [
+                  0.004930019378662109
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 74.77977538108826,
+                "std": 0.0,
+                "values": [
+                  74.77977538108826
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.18024564400697363,
+                "std": 0.0,
+                "values": [
+                  0.18024564400697363
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.6666666666666666,
+                "std": 0.0,
+                "values": [
+                  0.6666666666666666
+                ]
+              },
+              "all_correct": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              }
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 0.6606738567352295,
+                "std": 0.0,
+                "values": [
+                  0.6606738567352295
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.004930019378662109,
+                "std": 0.0,
+                "values": [
+                  0.004930019378662109
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 179.33932614326477,
+                "std": 0.0,
+                "values": [
+                  179.33932614326477
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.5308768932635967,
+                "std": 0.0,
+                "values": [
+                  0.5308768932635967
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 44.33932614326477,
+                "std": 0.0,
+                "values": [
+                  44.33932614326477
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.004930019378662109,
+                "std": 0.0,
+                "values": [
+                  0.004930019378662109
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 74.77977538108826,
+                "std": 0.0,
+                "values": [
+                  74.77977538108826
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.18024564400697363,
+                "std": 0.0,
+                "values": [
+                  0.18024564400697363
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.6666666666666666,
+                "std": 0.0,
+                "values": [
+                  0.6666666666666666
+                ]
+              },
+              "all_correct": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              }
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 0.6606738567352295,
+                "std": 0.0,
+                "values": [
+                  0.6606738567352295
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.004930019378662109,
+                "std": 0.0,
+                "values": [
+                  0.004930019378662109
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 179.33932614326477,
+                "std": 0.0,
+                "values": [
+                  179.33932614326477
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.5308768932635967,
+                "std": 0.0,
+                "values": [
+                  0.5308768932635967
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 44.33932614326477,
+                "std": 0.0,
+                "values": [
+                  44.33932614326477
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.004930019378662109,
+                "std": 0.0,
+                "values": [
+                  0.004930019378662109
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 74.77977538108826,
+                "std": 0.0,
+                "values": [
+                  74.77977538108826
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.18024564400697363,
+                "std": 0.0,
+                "values": [
+                  0.18024564400697363
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.6666666666666666,
+                "std": 0.0,
+                "values": [
+                  0.6666666666666666
+                ]
+              },
+              "all_correct": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              }
+            }
+          },
+          "seeds": [
+            {
+              "seed": 41,
+              "seconds": 3.848,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-sysid-20261119-r1/gpu02fit/train/checkpoints/passive_attempt1-frame0_probe-seed41.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 1.5509446859359741,
+                  "yaw_loss": 0.841680645942688,
+                  "scale_loss": 0.044175729155540466,
+                  "grip_loss": 0.6650882959365845
+                },
+                {
+                  "step": 300,
+                  "loss": 0.9702147245407104,
+                  "yaw_loss": 0.593338131904602,
+                  "scale_loss": 0.06022735312581062,
+                  "grip_loss": 0.31664925813674927
+                },
+                {
+                  "step": 600,
+                  "loss": 0.9717082977294922,
+                  "yaw_loss": 0.5234174728393555,
+                  "scale_loss": 0.07116754353046417,
+                  "grip_loss": 0.37712326645851135
+                },
+                {
+                  "step": 900,
+                  "loss": 1.289754033088684,
+                  "yaw_loss": 0.9383670091629028,
+                  "scale_loss": 0.029867658391594887,
+                  "grip_loss": 0.3215194046497345
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.9884872436523438,
+                  "yaw_loss": 0.55763840675354,
+                  "scale_loss": 0.05169026553630829,
+                  "grip_loss": 0.37915855646133423
+                },
+                {
+                  "step": 1500,
+                  "loss": 1.022388219833374,
+                  "yaw_loss": 0.46834078431129456,
+                  "scale_loss": 0.07079330831766129,
+                  "grip_loss": 0.4832541346549988
+                }
+              ],
+              "training": {
+                "overall": {
+                  "trials": 28,
+                  "yaw_err_deg": 51.71288643351623,
+                  "scale_rel_err": 0.13060562661229952,
+                  "grip_acc": 0.8571428571428571,
+                  "all_correct": 0.14285714285714285
+                }
+              },
+              "retained": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 0.6606738567352295,
+                  "scale_rel_err": 0.004930019378662109,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 179.33932614326477,
+                  "scale_rel_err": 0.5308768932635967,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 44.33932614326477,
+                  "scale_rel_err": 0.004930019378662109,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 74.77977538108826,
+                  "scale_rel_err": 0.18024564400697363,
+                  "grip_acc": 0.6666666666666666,
+                  "all_correct": 0.3333333333333333
+                }
+              },
+              "cleared": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 0.6606738567352295,
+                  "scale_rel_err": 0.004930019378662109,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 179.33932614326477,
+                  "scale_rel_err": 0.5308768932635967,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 44.33932614326477,
+                  "scale_rel_err": 0.004930019378662109,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 74.77977538108826,
+                  "scale_rel_err": 0.18024564400697363,
+                  "grip_acc": 0.6666666666666666,
+                  "all_correct": 0.3333333333333333
+                }
+              },
+              "swapped_donor": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 0.6606738567352295,
+                  "scale_rel_err": 0.004930019378662109,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 179.33932614326477,
+                  "scale_rel_err": 0.5308768932635967,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 44.33932614326477,
+                  "scale_rel_err": 0.004930019378662109,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 74.77977538108826,
+                  "scale_rel_err": 0.18024564400697363,
+                  "grip_acc": 0.6666666666666666,
+                  "all_correct": 0.3333333333333333
+                }
+              }
+            }
+          ]
+        },
+        "joint_transformer": {
+          "retained": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 66.08739471435547,
+                "std": 0.0,
+                "values": [
+                  66.08739471435547
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.1394473910331726,
+                "std": 0.0,
+                "values": [
+                  0.1394473910331726
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 177.07643175125122,
+                "std": 0.0,
+                "values": [
+                  177.07643175125122
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.3160936649029071,
+                "std": 0.0,
+                "values": [
+                  0.3160936649029071
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 32.87683868408203,
+                "std": 0.0,
+                "values": [
+                  32.87683868408203
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.09683918952941895,
+                "std": 0.0,
+                "values": [
+                  0.09683918952941895
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 92.01355504989624,
+                "std": 0.0,
+                "values": [
+                  92.01355504989624
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.18412674848849955,
+                "std": 0.0,
+                "values": [
+                  0.18412674848849955
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 180.0,
+                "std": 0.0,
+                "values": [
+                  180.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.5384615384615384,
+                "std": 0.0,
+                "values": [
+                  0.5384615384615384
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 45.0,
+                "std": 0.0,
+                "values": [
+                  45.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 75.0,
+                "std": 0.0,
+                "values": [
+                  75.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.1794871794871795,
+                "std": 0.0,
+                "values": [
+                  0.1794871794871795
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.6666666666666666,
+                "std": 0.0,
+                "values": [
+                  0.6666666666666666
+                ]
+              },
+              "all_correct": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              }
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 77.87683868408203,
+                "std": 0.0,
+                "values": [
+                  77.87683868408203
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.09683918952941895,
+                "std": 0.0,
+                "values": [
+                  0.09683918952941895
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 113.91260528564453,
+                "std": 0.0,
+                "values": [
+                  113.91260528564453
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.3239270907181959,
+                "std": 0.0,
+                "values": [
+                  0.3239270907181959
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 42.07643175125122,
+                "std": 0.0,
+                "values": [
+                  42.07643175125122
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.14453911781311035,
+                "std": 0.0,
+                "values": [
+                  0.14453911781311035
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 77.9552919069926,
+                "std": 0.0,
+                "values": [
+                  77.9552919069926
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.1884351326869084,
+                "std": 0.0,
+                "values": [
+                  0.1884351326869084
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            }
+          },
+          "seeds": [
+            {
+              "seed": 41,
+              "seconds": 10.342,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-sysid-20261119-r1/gpu02fit/train/checkpoints/passive_attempt1-joint_transformer-seed41.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 3.2412524223327637,
+                  "yaw_loss": 0.9926577806472778,
+                  "scale_loss": 0.48376622796058655,
+                  "grip_loss": 1.7648284435272217
+                },
+                {
+                  "step": 300,
+                  "loss": 0.17527955770492554,
+                  "yaw_loss": 0.1604958027601242,
+                  "scale_loss": 0.010541804134845734,
+                  "grip_loss": 0.004241949878633022
+                },
+                {
+                  "step": 600,
+                  "loss": 0.0019896579906344414,
+                  "yaw_loss": 0.0013128798454999924,
+                  "scale_loss": 0.0005971864447928965,
+                  "grip_loss": 7.959167123772204e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.0006045178161002696,
+                  "yaw_loss": 4.5668333768844604e-05,
+                  "scale_loss": 0.0005384313408285379,
+                  "grip_loss": 2.0418119675014168e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.00013389327796176076,
+                  "yaw_loss": 5.691312253475189e-05,
+                  "scale_loss": 6.337145168799907e-05,
+                  "grip_loss": 1.3608698282041587e-05
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.0032160982955247164,
+                  "yaw_loss": 0.0012717321515083313,
+                  "scale_loss": 0.0019298418192192912,
+                  "grip_loss": 1.452424839953892e-05
+                }
+              ],
+              "training": {
+                "overall": {
+                  "trials": 28,
+                  "yaw_err_deg": 1.450621216424874,
+                  "scale_rel_err": 0.038343846745120855,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                }
+              },
+              "retained": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 66.08739471435547,
+                  "scale_rel_err": 0.1394473910331726,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 177.07643175125122,
+                  "scale_rel_err": 0.3160936649029071,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 32.87683868408203,
+                  "scale_rel_err": 0.09683918952941895,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 92.01355504989624,
+                  "scale_rel_err": 0.18412674848849955,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                }
+              },
+              "cleared": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 0.0,
+                  "scale_rel_err": 0.0,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 180.0,
+                  "scale_rel_err": 0.5384615384615384,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 45.0,
+                  "scale_rel_err": 0.0,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 75.0,
+                  "scale_rel_err": 0.1794871794871795,
+                  "grip_acc": 0.6666666666666666,
+                  "all_correct": 0.3333333333333333
+                }
+              },
+              "swapped_donor": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 77.87683868408203,
+                  "scale_rel_err": 0.09683918952941895,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 113.91260528564453,
+                  "scale_rel_err": 0.3239270907181959,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 42.07643175125122,
+                  "scale_rel_err": 0.14453911781311035,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 77.9552919069926,
+                  "scale_rel_err": 0.1884351326869084,
+                  "grip_acc": 0.3333333333333333,
+                  "all_correct": 0.0
+                }
+              }
+            }
+          ]
+        },
+        "factored_no_equiv": {
+          "retained": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 1.7941479682922363,
+                "std": 0.0,
+                "values": [
+                  1.7941479682922363
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0838998556137085,
+                "std": 0.0,
+                "values": [
+                  0.0838998556137085
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 33.2882080078125,
+                "std": 0.0,
+                "values": [
+                  33.2882080078125
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.011284663127018889,
+                "std": 0.0,
+                "values": [
+                  0.011284663127018889
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 160.87338256835938,
+                "std": 0.0,
+                "values": [
+                  160.87338256835938
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.16892743110656738,
+                "std": 0.0,
+                "values": [
+                  0.16892743110656738
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 65.31857951482137,
+                "std": 0.0,
+                "values": [
+                  65.31857951482137
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.08803731661576493,
+                "std": 0.0,
+                "values": [
+                  0.08803731661576493
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              }
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 180.0,
+                "std": 0.0,
+                "values": [
+                  180.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.5384615384615384,
+                "std": 0.0,
+                "values": [
+                  0.5384615384615384
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 45.0,
+                "std": 0.0,
+                "values": [
+                  45.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 75.0,
+                "std": 0.0,
+                "values": [
+                  75.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.1794871794871795,
+                "std": 0.0,
+                "values": [
+                  0.1794871794871795
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.6666666666666666,
+                "std": 0.0,
+                "values": [
+                  0.6666666666666666
+                ]
+              },
+              "all_correct": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              }
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 154.12661743164062,
+                "std": 0.0,
+                "values": [
+                  154.12661743164062
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.16892743110656738,
+                "std": 0.0,
+                "values": [
+                  0.16892743110656738
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 178.20585203170776,
+                "std": 0.0,
+                "values": [
+                  178.20585203170776
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.6675382394057053,
+                "std": 0.0,
+                "values": [
+                  0.6675382394057053
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 101.7117919921875,
+                "std": 0.0,
+                "values": [
+                  101.7117919921875
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.35733503103256226,
+                "std": 0.0,
+                "values": [
+                  0.35733503103256226
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 144.68142048517862,
+                "std": 0.0,
+                "values": [
+                  144.68142048517862
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.3979335671816117,
+                "std": 0.0,
+                "values": [
+                  0.3979335671816117
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            }
+          },
+          "seeds": [
+            {
+              "seed": 41,
+              "seconds": 7.607,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-sysid-20261119-r1/gpu02fit/train/checkpoints/passive_attempt1-factored_no_equiv-seed41.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 2.3710732460021973,
+                  "yaw_loss": 0.9222230911254883,
+                  "scale_loss": 0.12179539352655411,
+                  "grip_loss": 1.327054738998413
+                },
+                {
+                  "step": 300,
+                  "loss": 0.6028598546981812,
+                  "yaw_loss": 0.6007136106491089,
+                  "scale_loss": 0.002063686028122902,
+                  "grip_loss": 8.252508996520191e-05
+                },
+                {
+                  "step": 600,
+                  "loss": 0.0008028619922697544,
+                  "yaw_loss": 0.00021707266569137573,
+                  "scale_loss": 0.0005596283590421081,
+                  "grip_loss": 2.6160949346376583e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.0007005037623457611,
+                  "yaw_loss": 1.5407800674438477e-05,
+                  "scale_loss": 0.0006734930793754756,
+                  "grip_loss": 1.1602869562921114e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.0005032882909290493,
+                  "yaw_loss": 4.298985004425049e-06,
+                  "scale_loss": 0.0004922728985548019,
+                  "grip_loss": 6.716425559716299e-06
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.00026453810278326273,
+                  "yaw_loss": 2.028420567512512e-06,
+                  "scale_loss": 0.00025745981838554144,
+                  "grip_loss": 5.049870196671691e-06
+                }
+              ],
+              "training": {
+                "overall": {
+                  "trials": 28,
+                  "yaw_err_deg": 0.05629773192257354,
+                  "scale_rel_err": 0.01714760519878444,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                }
+              },
+              "retained": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 1.7941479682922363,
+                  "scale_rel_err": 0.0838998556137085,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 33.2882080078125,
+                  "scale_rel_err": 0.011284663127018889,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 160.87338256835938,
+                  "scale_rel_err": 0.16892743110656738,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 65.31857951482137,
+                  "scale_rel_err": 0.08803731661576493,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.3333333333333333
+                }
+              },
+              "cleared": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 0.0,
+                  "scale_rel_err": 0.0,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 180.0,
+                  "scale_rel_err": 0.5384615384615384,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 45.0,
+                  "scale_rel_err": 0.0,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 75.0,
+                  "scale_rel_err": 0.1794871794871795,
+                  "grip_acc": 0.6666666666666666,
+                  "all_correct": 0.3333333333333333
+                }
+              },
+              "swapped_donor": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 154.12661743164062,
+                  "scale_rel_err": 0.16892743110656738,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 178.20585203170776,
+                  "scale_rel_err": 0.6675382394057053,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 101.7117919921875,
+                  "scale_rel_err": 0.35733503103256226,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 144.68142048517862,
+                  "scale_rel_err": 0.3979335671816117,
+                  "grip_acc": 0.3333333333333333,
+                  "all_correct": 0.0
+                }
+              }
+            }
+          ]
+        },
+        "factored_equiv": {
+          "retained": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 13.790018081665039,
+                "std": 0.0,
+                "values": [
+                  13.790018081665039
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.08326303958892822,
+                "std": 0.0,
+                "values": [
+                  0.08326303958892822
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 1.969329833984375,
+                "std": 0.0,
+                "values": [
+                  1.969329833984375
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.011047803438626836,
+                "std": 0.0,
+                "values": [
+                  0.011047803438626836
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 14.46893310546875,
+                "std": 0.0,
+                "values": [
+                  14.46893310546875
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.16894817352294922,
+                "std": 0.0,
+                "values": [
+                  0.16894817352294922
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 10.076093673706055,
+                "std": 0.0,
+                "values": [
+                  10.076093673706055
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.08775300551683475,
+                "std": 0.0,
+                "values": [
+                  0.08775300551683475
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            }
+          },
+          "cleared": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 180.0,
+                "std": 0.0,
+                "values": [
+                  180.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.5384615384615384,
+                "std": 0.0,
+                "values": [
+                  0.5384615384615384
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 45.0,
+                "std": 0.0,
+                "values": [
+                  45.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 75.0,
+                "std": 0.0,
+                "values": [
+                  75.0
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.1794871794871795,
+                "std": 0.0,
+                "values": [
+                  0.1794871794871795
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.6666666666666666,
+                "std": 0.0,
+                "values": [
+                  0.6666666666666666
+                ]
+              },
+              "all_correct": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              }
+            }
+          },
+          "swapped_donor": {
+            "familiar": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 30.53106689453125,
+                "std": 0.0,
+                "values": [
+                  30.53106689453125
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.16894817352294922,
+                "std": 0.0,
+                "values": [
+                  0.16894817352294922
+                ]
+              },
+              "grip_acc": {
+                "mean": 1.0,
+                "std": 0.0,
+                "values": [
+                  1.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "compositional_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 166.20998191833496,
+                "std": 0.0,
+                "values": [
+                  166.20998191833496
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.6665585224445049,
+                "std": 0.0,
+                "values": [
+                  0.6665585224445049
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "continuous_angle_ood": {
+              "trials": 1,
+              "yaw_err_deg": {
+                "mean": 136.96932983398438,
+                "std": 0.0,
+                "values": [
+                  136.96932983398438
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.3571810722351074,
+                "std": 0.0,
+                "values": [
+                  0.3571810722351074
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            },
+            "overall": {
+              "trials": 3,
+              "yaw_err_deg": {
+                "mean": 111.23679288228352,
+                "std": 0.0,
+                "values": [
+                  111.23679288228352
+                ]
+              },
+              "scale_rel_err": {
+                "mean": 0.3975625894008538,
+                "std": 0.0,
+                "values": [
+                  0.3975625894008538
+                ]
+              },
+              "grip_acc": {
+                "mean": 0.3333333333333333,
+                "std": 0.0,
+                "values": [
+                  0.3333333333333333
+                ]
+              },
+              "all_correct": {
+                "mean": 0.0,
+                "std": 0.0,
+                "values": [
+                  0.0
+                ]
+              }
+            }
+          },
+          "seeds": [
+            {
+              "seed": 41,
+              "seconds": 7.634,
+              "checkpoint": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-sysid-20261119-r1/gpu02fit/train/checkpoints/passive_attempt1-factored_equiv-seed41.msgpack",
+              "curve": [
+                {
+                  "step": 1,
+                  "loss": 2.387094020843506,
+                  "yaw_loss": 0.9382438063621521,
+                  "scale_loss": 0.1217954009771347,
+                  "grip_loss": 1.327054738998413
+                },
+                {
+                  "step": 300,
+                  "loss": 0.5735127925872803,
+                  "yaw_loss": 0.5711714029312134,
+                  "scale_loss": 0.0022567713167518377,
+                  "grip_loss": 8.462216646876186e-05
+                },
+                {
+                  "step": 600,
+                  "loss": 0.06555362045764923,
+                  "yaw_loss": 0.06473653018474579,
+                  "scale_loss": 0.0007896764436736703,
+                  "grip_loss": 2.7409651011112146e-05
+                },
+                {
+                  "step": 900,
+                  "loss": 0.001641519833356142,
+                  "yaw_loss": 0.0008218511939048767,
+                  "scale_loss": 0.0008080499246716499,
+                  "grip_loss": 1.161867749033263e-05
+                },
+                {
+                  "step": 1200,
+                  "loss": 0.0010362127795815468,
+                  "yaw_loss": 0.0005424190312623978,
+                  "scale_loss": 0.00048708004760555923,
+                  "grip_loss": 6.713667062285822e-06
+                },
+                {
+                  "step": 1500,
+                  "loss": 0.0002718332689255476,
+                  "yaw_loss": 5.925074219703674e-06,
+                  "scale_loss": 0.00026086956495419145,
+                  "grip_loss": 5.038625658926321e-06
+                }
+              ],
+              "training": {
+                "overall": {
+                  "trials": 28,
+                  "yaw_err_deg": 0.1375865514024294,
+                  "scale_rel_err": 0.01699475365110172,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                }
+              },
+              "retained": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 13.790018081665039,
+                  "scale_rel_err": 0.08326303958892822,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 1.969329833984375,
+                  "scale_rel_err": 0.011047803438626836,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 14.46893310546875,
+                  "scale_rel_err": 0.16894817352294922,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 10.076093673706055,
+                  "scale_rel_err": 0.08775300551683475,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                }
+              },
+              "cleared": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 0.0,
+                  "scale_rel_err": 0.0,
+                  "grip_acc": 1.0,
+                  "all_correct": 1.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 180.0,
+                  "scale_rel_err": 0.5384615384615384,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 45.0,
+                  "scale_rel_err": 0.0,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 75.0,
+                  "scale_rel_err": 0.1794871794871795,
+                  "grip_acc": 0.6666666666666666,
+                  "all_correct": 0.3333333333333333
+                }
+              },
+              "swapped_donor": {
+                "familiar": {
+                  "trials": 1,
+                  "yaw_err_deg": 30.53106689453125,
+                  "scale_rel_err": 0.16894817352294922,
+                  "grip_acc": 1.0,
+                  "all_correct": 0.0
+                },
+                "compositional_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 166.20998191833496,
+                  "scale_rel_err": 0.6665585224445049,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "continuous_angle_ood": {
+                  "trials": 1,
+                  "yaw_err_deg": 136.96932983398438,
+                  "scale_rel_err": 0.3571810722351074,
+                  "grip_acc": 0.0,
+                  "all_correct": 0.0
+                },
+                "overall": {
+                  "trials": 3,
+                  "yaw_err_deg": 111.23679288228352,
+                  "scale_rel_err": 0.3975625894008538,
+                  "grip_acc": 0.3333333333333333,
+                  "all_correct": 0.0
+                }
+              }
+            }
+          ]
+        }
+      },
+      "train_trials": 28,
+      "dev_trials": 3,
+      "donor_indices": [
+        30,
+        28,
+        29
+      ]
+    }
+  },
+  "offline_gate_passed": null,
+  "offline_gate_details": {
+    "status": "unrequested"
+  }
+}
