@@ -1,0 +1,19 @@
+# Can contact on the previous attempt help after calibrating the action frame?
+
+Use the frozen OpenPI π0.5 motor on the released LIBERO-Pro2.0 Goal 2 bottle task. Cross the nominal and reversed X command conventions with the released BASE and D17 recoverable grasp conditions. The controller convention is constructed. The grasp condition is assigned for the entire trial and reinstantiated after reset. D17 activation depends on what the robot does. Score every assignment using native task success. This pilot holds out a combination of familiar factors on one fitting task. The official held-out tasks stay sealed.
+
+## Motor gate
+
+Before fitting a reader, check whether a live motor can use both answers. Cross all four environments with all four executable settings of the X decoder and a single public-command-triggered regrasp routine. A correct X decoder inverts the physical wire transform. Every branch replans from its own images and state using the same BASE instruction, the same initial physics, paired motor noise, native horizon and five controls per ordinary replan. Count recovery commands in the horizon. Preserve the native event diagnostic for analysis. Do not give the motor the event, object pose or future controls.
+
+Use query pose IDs 30 through 35, with episode seed 19193000 + pose. This gives six physical starts and 96 closed-loop branches. The earlier recovery comparison used poses 24–29 and pose-specific tapes. Choose all six new poses before inspecting outcomes. Report assigned and fired counts, trigger timing and the effect of both wire decode and regrasp. Verify initial physics, public observation and first native proposal across branches. Budget up to 90 minutes on one distributed Pro6K for this gate, with automatic retries disabled. Stop on an invalid comparison and diagnose before a new attempt.
+
+Proceed to reader fitting only if correct X decoding plus the D17-specific regrasp gives more native successes than **each** of always regrasp and never regrasp, with the true X convention supplied to all three. Require a recovery from regrasp in the reversed-X/D17 cell. Include the full set of outcomes alongside this exploratory decision. A tie or loss is a reason to stop training this particular contact decision. In particular, the value of decoding X alone cannot open the gate.
+
+## Conditional reader experiment
+
+If the gate opens, train on ordinary BASE, reversed-X BASE and ordinary D17. Reserve reversed-X D17 throughout fitting, tuning and choice of thresholds. Gate poses and their outcomes are development evidence only. Freeze the architecture on the three training cells, then use new support/query pose pairs, common randomness and both factors held across resets. Fit a factored command–effect reader and a joint reader to identical fitting trials, feedback and labels. Compare to the analytic sign estimator and fitting-selected fixed grasp rule.
+
+Primary endpoint is native success on the fresh query under the combined fault. Compare a fixed free-space probe, a practice trajectory including grasp contact, a cleared or reassigned practice tape, and a controller that can use its current attempt's public observations. Match the total physical control allowance, count every exploratory control, and report actual controls and cumulative success as well as query success. Include paired source histories with only grasp or only wire changed. If the current attempt or free-space probe matches practice, report that equivalence on the measured panel. No claim of generalization to new robot morphologies follows from this task.
+
+Earlier evidence: [command conventions](../libero-axis-native-20261119-r1/RESULT.md), [grasp versus transport failures](../libero-temporal-recovery-20261119-r1/RESULT.md) and [live current-attempt baseline](../libero-first-controls-20261119-r1/RESULT.md).
