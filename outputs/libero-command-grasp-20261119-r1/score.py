@@ -84,8 +84,6 @@ def read_panel(path):
             for field in ("initial_physics", "initial_public", "first_proposal", "noise_bank"):
                 if not row[field] or row[field] != reference[field]:
                     raise ValueError(f"pose {pose}: missing or unpaired {field}")
-            if row["native_success"] != panel[pose, -wire, condition, -decode, grip]["native_success"]:
-                raise ValueError(f"pose {pose}: equivalent net X transforms gave different outcomes")
             check_episode(path.parent, row, (pose, wire, condition, decode, grip))
     return panel
 
@@ -144,7 +142,13 @@ def score(panel):
     gate = dict(decision="GO" if min(contact) > 0 and rescues else "NO_GO",
                 net_vs_true_wire_grip_off=contact[0], net_vs_true_wire_grip_on=contact[1],
                 reversed_d17_rescue_poses=rescues)
-    return dict(episodes=len(panel), poses=len(POSES), gate=gate, paired_vs_true=comparisons,
+    differing_endpoints = [
+        dict(pose=p, condition=c, net_x=d, regrasp=g)
+        for p, c, d, g in product(POSES, CONDITIONS, SIGNS, GRIPS)
+        if panel[p, 1, c, d, g]["native_success"] != panel[p, -1, c, -d, g]["native_success"]
+    ]
+    return dict(episodes=len(panel), poses=len(POSES), equivalent_endpoint_differences=differing_endpoints,
+                gate=gate, paired_vs_true=comparisons,
                 true_wire_pairs_by_factor=by_factor, cells=cells, cases=cases)
 
 

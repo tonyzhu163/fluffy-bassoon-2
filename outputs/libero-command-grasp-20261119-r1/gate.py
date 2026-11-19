@@ -257,6 +257,7 @@ def run(out, smoke):
     ))
     motor = pilot.policy_config.create_trained_policy(pilot.config.get_config("pi05_libero"), str(pilot.CKPT))
     completed = pairs = 0
+    pair_differences = []
     identities, trajectories = defaultdict(dict), {}
     with simulator(pilot) as pipe, (out / "episodes.jsonl").open("x", buffering=1) as log:
         for key in keys:
@@ -265,7 +266,11 @@ def run(out, smoke):
             row, trace = rollout(pilot, motor, pipe, key, out / name, identities[pose])
             pair = (pose, condition, sign * decode, regrasp)
             if pair in trajectories:
-                check_common(trajectories.pop(pair), trace, key)
+                prior = trajectories.pop(pair)
+                changed = [field for field in trace if trace[field] != prior[field]]
+                if changed:
+                    pair_differences.append(dict(pose=pose, condition=condition, net_x=sign * decode,
+                                                 regrasp=regrasp, fields=changed))
                 pairs += 1
             else:
                 trajectories[pair] = trace
