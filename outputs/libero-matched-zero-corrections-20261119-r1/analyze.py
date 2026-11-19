@@ -1,6 +1,6 @@
 """Paired choice of destination and cadence from two rewards and observed practice executions."""
 from collections import defaultdict
-from itertools import product
+from itertools import permutations, product
 import json
 from pathlib import Path
 import sys
@@ -11,10 +11,10 @@ from vision import MODES, fit, predict, read_split
 ACTIONS = tuple(product((0,1),(5,10)))
 
 
-def trials(practice, queries):
+def trials(practice, queries, *, all_orders=False):
     poses = sorted({p for p,g,j in practice})
-    for i,p in enumerate(poses):
-        s, q = poses[(i+1)%len(poses)], poses[(i+2)%len(poses)]
+    cyclic = [(p,poses[(i+1)%len(poses)],poses[(i+2)%len(poses)]) for i,p in enumerate(poses)]
+    for p,s,q in (permutations(poses,3) if all_orders else cyclic):
         for first,j,k in product((0,1),range(4),range(4)):
             keys = ((p,first,j), (s,1-first,k))
             hits = np.stack([practice[key]['native'] for key in keys])
