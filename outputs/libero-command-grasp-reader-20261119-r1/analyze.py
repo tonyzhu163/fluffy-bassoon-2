@@ -110,7 +110,13 @@ class Pairing:
         physics = r["initial_physics"]
         require(self.pose_by_physics.setdefault(physics, pose) == pose, path,
                 "two distinct scheduled poses share a physical start")
-        reset = (physics, r["initial_public"], ep.states[0].tolist(), r.get("noise_bank"))
+        images = {k: v for k, v in r["initial_public"].items() if k.endswith("_image")}
+        robot = {k: v for k, v in r["initial_public"].items() if not k.endswith("_image")}
+        first = self.camera_by_pose.setdefault(pose, images)
+        changed = [k for k in images if images[k] != first[k]]
+        if changed:
+            self.reset_camera_differences.append(dict(episode="/".join(path.parts[-3:]), fields=changed))
+        reset = (physics, robot, ep.states[0].tolist(), r.get("noise_bank"))
         require(self.reset_by_pose.setdefault(pose, reset) == reset, path,
                 "different reset physics, public inputs or motor noise at the same pose")
         key = (pose, r["wire"], r["condition"])
