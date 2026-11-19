@@ -1,0 +1,719 @@
+{
+  "gate0": true,
+  "physically_effective_default": true,
+  "gate1": false,
+  "scores": {
+    "ever": {
+      "fixed": {
+        "default": 2,
+        "regrasp": 1,
+        "transport": 0
+      },
+      "oracle": 2,
+      "best_fixed": 2,
+      "oracle_gain": 0
+    },
+    "final": {
+      "fixed": {
+        "default": 2,
+        "regrasp": 1,
+        "transport": 0
+      },
+      "oracle": 2,
+      "best_fixed": 2,
+      "oracle_gain": 0
+    }
+  },
+  "pairs": {
+    "default": {
+      "public_samples": 40,
+      "last_precontact_control": 39,
+      "public_field_mismatch_indices": {
+        "robot0_joint_pos": [],
+        "robot0_joint_vel": [],
+        "robot0_eef_pos": [],
+        "robot0_eef_quat_xyzw": [],
+        "robot0_gripper_qpos": [],
+        "agentview": [],
+        "robot0_eye_in_hand": []
+      },
+      "reset_physics_equal": true,
+      "precontact_commands_rewards_and_flags_equal": true,
+      "public_precontact_equal": true,
+      "full_commands_equal": true,
+      "changed_realized_mu_by_geom_pair": {
+        "gripper0_finger1_pad_collision / wine_bottle_1_g11": [
+          2.0,
+          0.95
+        ],
+        "gripper0_finger1_pad_collision / wine_bottle_1_g12": [
+          2.0,
+          0.95
+        ],
+        "gripper0_finger1_pad_collision / wine_bottle_1_g13": [
+          2.0,
+          0.95
+        ],
+        "gripper0_finger1_pad_collision / wine_bottle_1_g14": [
+          2.0,
+          0.95
+        ],
+        "gripper0_finger2_pad_collision / wine_bottle_1_g9": [
+          2.0,
+          0.95
+        ]
+      },
+      "max_bottle_gap_m": 0.0017707712387655475,
+      "first_bottle_gap_over_1mm": 44
+    },
+    "regrasp": {
+      "public_samples": 40,
+      "last_precontact_control": 39,
+      "public_field_mismatch_indices": {
+        "robot0_joint_pos": [],
+        "robot0_joint_vel": [],
+        "robot0_eef_pos": [],
+        "robot0_eef_quat_xyzw": [],
+        "robot0_gripper_qpos": [],
+        "agentview": [],
+        "robot0_eye_in_hand": []
+      },
+      "reset_physics_equal": true,
+      "precontact_commands_rewards_and_flags_equal": true,
+      "public_precontact_equal": true,
+      "full_commands_equal": false,
+      "changed_realized_mu_by_geom_pair": {
+        "gripper0_finger1_collision / wine_bottle_1_g13": [
+          1.0,
+          0.95
+        ],
+        "gripper0_finger1_collision / wine_bottle_1_g14": [
+          1.0,
+          0.95
+        ],
+        "gripper0_finger1_pad_collision / wine_bottle_1_g13": [
+          2.0,
+          0.95
+        ],
+        "gripper0_finger1_pad_collision / wine_bottle_1_g14": [
+          2.0,
+          0.95
+        ],
+        "gripper0_finger2_collision / wine_bottle_1_g7": [
+          1.0,
+          0.95
+        ],
+        "gripper0_finger2_collision / wine_bottle_1_g8": [
+          1.0,
+          0.95
+        ],
+        "gripper0_finger2_collision / wine_bottle_1_g9": [
+          1.0,
+          0.95
+        ],
+        "gripper0_finger2_pad_collision / wine_bottle_1_g9": [
+          2.0,
+          0.95
+        ]
+      },
+      "max_bottle_gap_m": 0.35253476610607076,
+      "first_bottle_gap_over_1mm": 44
+    },
+    "transport": {
+      "public_samples": 41,
+      "last_precontact_control": 40,
+      "public_field_mismatch_indices": {
+        "robot0_joint_pos": [],
+        "robot0_joint_vel": [],
+        "robot0_eef_pos": [],
+        "robot0_eef_quat_xyzw": [],
+        "robot0_gripper_qpos": [],
+        "agentview": [],
+        "robot0_eye_in_hand": []
+      },
+      "reset_physics_equal": true,
+      "precontact_commands_rewards_and_flags_equal": true,
+      "public_precontact_equal": true,
+      "full_commands_equal": true,
+      "changed_realized_mu_by_geom_pair": {
+        "gripper0_finger1_pad_collision / wine_bottle_1_g13": [
+          2.0,
+          0.95
+        ],
+        "gripper0_finger1_pad_collision / wine_bottle_1_g14": [
+          2.0,
+          0.95
+        ],
+        "gripper0_finger2_pad_collision / wine_bottle_1_g9": [
+          2.0,
+          0.95
+        ]
+      },
+      "max_bottle_gap_m": 0.027478609582159565,
+      "first_bottle_gap_over_1mm": 46
+    }
+  },
+  "rows": {
+    "default": [
+      {
+        "mode": "default",
+        "material": "ordinary",
+        "physics": "fdf4a9da8598cf1f087e097c487794ce7685a7efea531b851a4b01a0c3eed09a",
+        "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+        "finger_settings": {
+          "gripper0_finger1_collision": [
+            [
+              1.0,
+              0.005,
+              0.0001
+            ],
+            [
+              1.0,
+              0.005,
+              0.0001
+            ]
+          ],
+          "gripper0_finger2_collision": [
+            [
+              1.0,
+              0.005,
+              0.0001
+            ],
+            [
+              1.0,
+              0.005,
+              0.0001
+            ]
+          ],
+          "gripper0_finger1_pad_collision": [
+            [
+              2.0,
+              0.05,
+              0.0001
+            ],
+            [
+              2.0,
+              0.05,
+              0.0001
+            ]
+          ],
+          "gripper0_finger2_pad_collision": [
+            [
+              2.0,
+              0.05,
+              0.0001
+            ],
+            [
+              2.0,
+              0.05,
+              0.0001
+            ]
+          ]
+        },
+        "solver_sliding_mu": {
+          "gripper0_finger1_pad_collision / wine_bottle_1_g13": 2.0,
+          "gripper0_finger1_pad_collision / wine_bottle_1_g14": 2.0,
+          "gripper0_finger2_pad_collision / wine_bottle_1_g9": 2.0,
+          "gripper0_finger1_pad_collision / wine_bottle_1_g11": 2.0,
+          "gripper0_finger1_pad_collision / wine_bottle_1_g12": 2.0
+        },
+        "first_finger": {
+          "control": 40,
+          "substep": 989,
+          "geoms": [
+            "gripper0_finger1_pad_collision",
+            "wine_bottle_1_g13"
+          ]
+        },
+        "first_finger_bottle": {
+          "control": 40,
+          "substep": 989,
+          "geoms": [
+            "gripper0_finger1_pad_collision",
+            "wine_bottle_1_g13"
+          ]
+        },
+        "integration_steps": 7500,
+        "first_hit": 95,
+        "ever": true,
+        "final": true,
+        "bilateral_controls": 64,
+        "max_lift_m": 0.27172991375629685,
+        "reward_at_first_hit": 1.0,
+        "native_return_to_termination": 1.0,
+        "native_reward_sum_300": 206.0,
+        "final_reward": 1.0,
+        "commands_sha256": "94d07baf0bede48e38ba25bf507935129f464cb602ac257e2523bfd4e02562ec",
+        "regrasp_close_zero_based": null,
+        "archive_states_exact": true,
+        "archive_goal_hits_exact": true
+      },
+      {
+        "mode": "default",
+        "material": "reduced",
+        "physics": "fdf4a9da8598cf1f087e097c487794ce7685a7efea531b851a4b01a0c3eed09a",
+        "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+        "finger_settings": {
+          "gripper0_finger1_collision": [
+            [
+              1.0,
+              0.005,
+              0.0001
+            ],
+            [
+              0.05,
+              0.005,
+              0.0001
+            ]
+          ],
+          "gripper0_finger2_collision": [
+            [
+              1.0,
+              0.005,
+              0.0001
+            ],
+            [
+              0.05,
+              0.005,
+              0.0001
+            ]
+          ],
+          "gripper0_finger1_pad_collision": [
+            [
+              2.0,
+              0.05,
+              0.0001
+            ],
+            [
+              0.05,
+              0.05,
+              0.0001
+            ]
+          ],
+          "gripper0_finger2_pad_collision": [
+            [
+              2.0,
+              0.05,
+              0.0001
+            ],
+            [
+              0.05,
+              0.05,
+              0.0001
+            ]
+          ]
+        },
+        "solver_sliding_mu": {
+          "gripper0_finger1_pad_collision / wine_bottle_1_g13": 0.95,
+          "gripper0_finger1_pad_collision / wine_bottle_1_g14": 0.95,
+          "gripper0_finger2_pad_collision / wine_bottle_1_g9": 0.95,
+          "gripper0_finger1_pad_collision / wine_bottle_1_g11": 0.95,
+          "gripper0_finger1_pad_collision / wine_bottle_1_g12": 0.95
+        },
+        "first_finger": {
+          "control": 40,
+          "substep": 989,
+          "geoms": [
+            "gripper0_finger1_pad_collision",
+            "wine_bottle_1_g13"
+          ]
+        },
+        "first_finger_bottle": {
+          "control": 40,
+          "substep": 989,
+          "geoms": [
+            "gripper0_finger1_pad_collision",
+            "wine_bottle_1_g13"
+          ]
+        },
+        "integration_steps": 7500,
+        "first_hit": 95,
+        "ever": true,
+        "final": true,
+        "bilateral_controls": 65,
+        "max_lift_m": 0.2720260787749792,
+        "reward_at_first_hit": 1.0,
+        "native_return_to_termination": 1.0,
+        "native_reward_sum_300": 206.0,
+        "final_reward": 1.0,
+        "commands_sha256": "94d07baf0bede48e38ba25bf507935129f464cb602ac257e2523bfd4e02562ec",
+        "regrasp_close_zero_based": null
+      }
+    ],
+    "regrasp": [
+      {
+        "mode": "regrasp",
+        "material": "ordinary",
+        "physics": "fdf4a9da8598cf1f087e097c487794ce7685a7efea531b851a4b01a0c3eed09a",
+        "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+        "finger_settings": {
+          "gripper0_finger1_collision": [
+            [
+              1.0,
+              0.005,
+              0.0001
+            ],
+            [
+              1.0,
+              0.005,
+              0.0001
+            ]
+          ],
+          "gripper0_finger2_collision": [
+            [
+              1.0,
+              0.005,
+              0.0001
+            ],
+            [
+              1.0,
+              0.005,
+              0.0001
+            ]
+          ],
+          "gripper0_finger1_pad_collision": [
+            [
+              2.0,
+              0.05,
+              0.0001
+            ],
+            [
+              2.0,
+              0.05,
+              0.0001
+            ]
+          ],
+          "gripper0_finger2_pad_collision": [
+            [
+              2.0,
+              0.05,
+              0.0001
+            ],
+            [
+              2.0,
+              0.05,
+              0.0001
+            ]
+          ]
+        },
+        "solver_sliding_mu": {
+          "gripper0_finger1_pad_collision / wine_bottle_1_g13": 2.0,
+          "gripper0_finger1_pad_collision / wine_bottle_1_g14": 2.0,
+          "gripper0_finger2_pad_collision / wine_bottle_1_g9": 2.0,
+          "gripper0_finger2_collision / wine_bottle_1_g9": 1.0,
+          "gripper0_finger2_collision / wine_bottle_1_g8": 1.0,
+          "gripper0_finger2_pad_collision / wine_bottle_1_g8": 2.0,
+          "gripper0_finger2_pad_collision / wine_bottle_1_g4": 2.0,
+          "gripper0_finger1_collision / wine_bottle_1_g14": 1.0,
+          "gripper0_finger1_collision / wine_bottle_1_g13": 1.0,
+          "gripper0_finger2_collision / wine_bottle_1_g7": 1.0,
+          "gripper0_finger1_collision / wine_bottle_1_g10": 1.0,
+          "gripper0_finger1_collision / wine_bottle_1_g15": 1.0
+        },
+        "first_finger": {
+          "control": 40,
+          "substep": 989,
+          "geoms": [
+            "gripper0_finger1_pad_collision",
+            "wine_bottle_1_g13"
+          ]
+        },
+        "first_finger_bottle": {
+          "control": 40,
+          "substep": 989,
+          "geoms": [
+            "gripper0_finger1_pad_collision",
+            "wine_bottle_1_g13"
+          ]
+        },
+        "integration_steps": 7500,
+        "first_hit": 175,
+        "ever": true,
+        "final": true,
+        "bilateral_controls": 16,
+        "max_lift_m": 0.2717852632322856,
+        "reward_at_first_hit": 1.0,
+        "native_return_to_termination": 1.0,
+        "native_reward_sum_300": 126.0,
+        "final_reward": 1.0,
+        "commands_sha256": "2019a65cdb01d4c1415cb4badfab77333337ba3f19314b191b4a458dce568b75",
+        "regrasp_close_zero_based": 32
+      },
+      {
+        "mode": "regrasp",
+        "material": "reduced",
+        "physics": "fdf4a9da8598cf1f087e097c487794ce7685a7efea531b851a4b01a0c3eed09a",
+        "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+        "finger_settings": {
+          "gripper0_finger1_collision": [
+            [
+              1.0,
+              0.005,
+              0.0001
+            ],
+            [
+              0.05,
+              0.005,
+              0.0001
+            ]
+          ],
+          "gripper0_finger2_collision": [
+            [
+              1.0,
+              0.005,
+              0.0001
+            ],
+            [
+              0.05,
+              0.005,
+              0.0001
+            ]
+          ],
+          "gripper0_finger1_pad_collision": [
+            [
+              2.0,
+              0.05,
+              0.0001
+            ],
+            [
+              0.05,
+              0.05,
+              0.0001
+            ]
+          ],
+          "gripper0_finger2_pad_collision": [
+            [
+              2.0,
+              0.05,
+              0.0001
+            ],
+            [
+              0.05,
+              0.05,
+              0.0001
+            ]
+          ]
+        },
+        "solver_sliding_mu": {
+          "gripper0_finger1_pad_collision / wine_bottle_1_g13": 0.95,
+          "gripper0_finger1_pad_collision / wine_bottle_1_g14": 0.95,
+          "gripper0_finger2_pad_collision / wine_bottle_1_g9": 0.95,
+          "gripper0_finger2_collision / wine_bottle_1_g9": 0.95,
+          "gripper0_finger2_collision / wine_bottle_1_g8": 0.95,
+          "gripper0_finger1_collision / wine_bottle_1_g14": 0.95,
+          "gripper0_finger1_collision / wine_bottle_1_g13": 0.95,
+          "gripper0_finger2_collision / wine_bottle_1_g7": 0.95
+        },
+        "first_finger": {
+          "control": 40,
+          "substep": 989,
+          "geoms": [
+            "gripper0_finger1_pad_collision",
+            "wine_bottle_1_g13"
+          ]
+        },
+        "first_finger_bottle": {
+          "control": 40,
+          "substep": 989,
+          "geoms": [
+            "gripper0_finger1_pad_collision",
+            "wine_bottle_1_g13"
+          ]
+        },
+        "integration_steps": 7500,
+        "first_hit": null,
+        "ever": false,
+        "final": false,
+        "bilateral_controls": 3,
+        "max_lift_m": 0.01461115231682164,
+        "reward_at_first_hit": null,
+        "native_return_to_termination": 0.0,
+        "native_reward_sum_300": 0.0,
+        "final_reward": 0.0,
+        "commands_sha256": "d0ddc6350b62177c0ee4da42e6f397f06327a71a7d5d175212f78be5c77c811c",
+        "regrasp_close_zero_based": 32
+      }
+    ],
+    "transport": [
+      {
+        "mode": "transport",
+        "material": "ordinary",
+        "physics": "fdf4a9da8598cf1f087e097c487794ce7685a7efea531b851a4b01a0c3eed09a",
+        "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+        "finger_settings": {
+          "gripper0_finger1_collision": [
+            [
+              1.0,
+              0.005,
+              0.0001
+            ],
+            [
+              1.0,
+              0.005,
+              0.0001
+            ]
+          ],
+          "gripper0_finger2_collision": [
+            [
+              1.0,
+              0.005,
+              0.0001
+            ],
+            [
+              1.0,
+              0.005,
+              0.0001
+            ]
+          ],
+          "gripper0_finger1_pad_collision": [
+            [
+              2.0,
+              0.05,
+              0.0001
+            ],
+            [
+              2.0,
+              0.05,
+              0.0001
+            ]
+          ],
+          "gripper0_finger2_pad_collision": [
+            [
+              2.0,
+              0.05,
+              0.0001
+            ],
+            [
+              2.0,
+              0.05,
+              0.0001
+            ]
+          ]
+        },
+        "solver_sliding_mu": {
+          "gripper0_finger1_pad_collision / wine_bottle_1_g13": 2.0,
+          "gripper0_finger1_pad_collision / wine_bottle_1_g14": 2.0,
+          "gripper0_finger2_pad_collision / wine_bottle_1_g9": 2.0
+        },
+        "first_finger": {
+          "control": 41,
+          "substep": 1013,
+          "geoms": [
+            "gripper0_finger1_pad_collision",
+            "wine_bottle_1_g13"
+          ]
+        },
+        "first_finger_bottle": {
+          "control": 41,
+          "substep": 1013,
+          "geoms": [
+            "gripper0_finger1_pad_collision",
+            "wine_bottle_1_g13"
+          ]
+        },
+        "integration_steps": 7500,
+        "first_hit": null,
+        "ever": false,
+        "final": false,
+        "bilateral_controls": 12,
+        "max_lift_m": 0.07806141955841639,
+        "reward_at_first_hit": null,
+        "native_return_to_termination": 0.0,
+        "native_reward_sum_300": 0.0,
+        "final_reward": 0.0,
+        "commands_sha256": "505a8731c5ac7b559e53669be0fc060e64891166240ab4ee9f6d13dde584b838",
+        "regrasp_close_zero_based": null
+      },
+      {
+        "mode": "transport",
+        "material": "reduced",
+        "physics": "fdf4a9da8598cf1f087e097c487794ce7685a7efea531b851a4b01a0c3eed09a",
+        "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+        "finger_settings": {
+          "gripper0_finger1_collision": [
+            [
+              1.0,
+              0.005,
+              0.0001
+            ],
+            [
+              0.05,
+              0.005,
+              0.0001
+            ]
+          ],
+          "gripper0_finger2_collision": [
+            [
+              1.0,
+              0.005,
+              0.0001
+            ],
+            [
+              0.05,
+              0.005,
+              0.0001
+            ]
+          ],
+          "gripper0_finger1_pad_collision": [
+            [
+              2.0,
+              0.05,
+              0.0001
+            ],
+            [
+              0.05,
+              0.05,
+              0.0001
+            ]
+          ],
+          "gripper0_finger2_pad_collision": [
+            [
+              2.0,
+              0.05,
+              0.0001
+            ],
+            [
+              0.05,
+              0.05,
+              0.0001
+            ]
+          ]
+        },
+        "solver_sliding_mu": {
+          "gripper0_finger1_pad_collision / wine_bottle_1_g13": 0.95,
+          "gripper0_finger1_pad_collision / wine_bottle_1_g14": 0.95,
+          "gripper0_finger2_pad_collision / wine_bottle_1_g9": 0.95
+        },
+        "first_finger": {
+          "control": 41,
+          "substep": 1013,
+          "geoms": [
+            "gripper0_finger1_pad_collision",
+            "wine_bottle_1_g13"
+          ]
+        },
+        "first_finger_bottle": {
+          "control": 41,
+          "substep": 1013,
+          "geoms": [
+            "gripper0_finger1_pad_collision",
+            "wine_bottle_1_g13"
+          ]
+        },
+        "integration_steps": 7500,
+        "first_hit": null,
+        "ever": false,
+        "final": false,
+        "bilateral_controls": 12,
+        "max_lift_m": 0.07745866993809991,
+        "reward_at_first_hit": null,
+        "native_return_to_termination": 0.0,
+        "native_reward_sum_300": 0.0,
+        "final_reward": 0.0,
+        "commands_sha256": "505a8731c5ac7b559e53669be0fc060e64891166240ab4ee9f6d13dde584b838",
+        "regrasp_close_zero_based": null
+      }
+    ]
+  },
+  "gpu_hours": 0
+}
