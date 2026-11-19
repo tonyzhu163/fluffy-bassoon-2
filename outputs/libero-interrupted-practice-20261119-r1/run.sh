@@ -26,6 +26,8 @@ for i in {1..30}; do
 done
 date +%s > "$out/gpu-start.txt"
 "$root/setups/robocasa365-native-20261101-r1/env/bin/python" -Bu "$code/scripts/[train]gpu_probe.py" --expected-count 1 --purpose training --direct-hostname "$(hostname)" --output "$out/gpu.json" > "$out/probe.log" 2>&1
-timeout --kill-after=15s 55m "$legacy/envs/openpi-215abfb/bin/python" -Bu "$here/live.py" "$out/episodes" > "$out/run.log" 2>&1
+mode=()
+if [[ ${3:-panel} == drop ]]; then mode=(--drop); fi
+timeout --kill-after=15s 55m "$legacy/envs/openpi-215abfb/bin/python" -Bu "$here/live.py" "$out/episodes" "${mode[@]}" > "$out/run.log" 2>&1
 date +%s > "$out/gpu-end.txt"
 flock -u 9

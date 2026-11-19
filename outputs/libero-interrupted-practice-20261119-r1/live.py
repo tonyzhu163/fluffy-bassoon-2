@@ -40,7 +40,7 @@ def trial(motor,pipe,raw,prompt,seed):
                 contact=np.array(contact),heights=np.array(heights)),start
 
 
-def main(output):
+def main(output,drop=False):
     devices=pilot.jax.devices()
     assert len(devices)==1 and devices[0].platform=='gpu'
     for repo,pin in [(pilot.SRC,'215abfb217dbac7d5f1273282331b9b1866c0479'),(pilot.PRO,'e5500c690c1498eca1b7050350654964190cdf70')]:
@@ -51,8 +51,8 @@ def main(output):
         for p in range(24,30):
             identity=None
             for g in (0,1):
-                for mode in ('sham','interrupt','query'):
-                    raw,physics,prompts=pilot.call(pipe,'reset',(p,mode=='interrupt'))
+                for mode in (('D18',) if drop else ('sham','interrupt','query')):
+                    raw,physics,prompts=pilot.call(pipe,'reset',(p,False,'D18') if drop else (p,mode=='interrupt'))
                     fingerprint=(physics,{k:hashlib.sha256(v.tobytes()).hexdigest() for k,v in raw.items()})
                     if identity is None:identity=fingerprint
                     assert identity==fingerprint
@@ -64,12 +64,23 @@ def main(output):
                         n=start if start is not None else 300
                         for k in ('states','hits','contact','heights','issued'):
                             np.testing.assert_array_equal(tape[k][:n],sham[k][:n])
+                    extra={}
+                    if drop:
+                        import json
+                        base=output.parent.parent/'closed01/episodes'/f'p{p}-g{g}-sham'
+                        rec=json.loads((base/'result.json').read_text())
+                        assert seed==rec['seed'] and physics==rec['physics']
+                        n=300 if start is None else start
+                        with np.load(base/'tape.npz') as original_tape:
+                            for field in ('issued','states','hits','contact','heights'):
+                                np.testing.assert_array_equal(tape[field][:n],original_tape[field][:n])
+                        extra['event']=pilot.call(pipe,'event',None)
                     path=output/f'p{p}-g{g}-{mode}'
                     path.mkdir()
                     np.savez_compressed(path/'tape.npz',**tape)
                     pilot.write(path/'result.json',dict(pose=p,goal=g,mode=mode,seed=seed,start=start,physics=physics,
-                                ever=tape['hits'].any(axis=0).tolist(),final=tape['hits'][-1].tolist()))
+                                ever=tape['hits'].any(axis=0).tolist(),final=tape['hits'][-1].tolist(),**extra))
             print('completed pose',p,flush=True)
 
 
-if __name__=='__main__':main(Path(sys.argv[1]))
+if __name__=='__main__':main(Path(sys.argv[1]),sys.argv[2:]==['--drop'])

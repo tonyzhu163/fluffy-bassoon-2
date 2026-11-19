@@ -21,10 +21,15 @@ def serve(pipe):
         while True:
             op,value=pipe.recv()
             if op=='reset':
-                pose,interrupted=value
+                pose,interrupted=value[:2]
+                released=len(value)==3 and value[2]=='D18'
+                assert not (interrupted and released)
+                variant='D18' if released else 'BASE'
+                path=m.resolve_bddl('libero_goal',2,variant)
+                event=None
                 env.close()
-                reset=env.create(dict(suite='libero_goal',task_id=2,variant='BASE',init_state_id=pose,seed=18180100+pose,
-                                _bddl_path=str(paths[0]),camera_names=['agentview','robot0_eye_in_hand'],camera_height=256,
+                reset=env.create(dict(suite='libero_goal',task_id=2,variant=variant,init_state_id=pose,seed=18180100+pose,
+                                _bddl_path=str(path),camera_names=['agentview','robot0_eye_in_hand'],camera_height=256,
                                 camera_width=256,control_mode='relative',max_steps=300))
                 w=env._env.env
                 obj=w.objects_dict['wine_bottle_1']
@@ -47,8 +52,17 @@ def serve(pipe):
                     height=float(w.sim.data.body_xpos[body,2]-z0)
                     contacts.append(contact);heights.append(height)
                     step+=1
-                    if start is None and contact and height>=.03 and step<300:start=step
+                    if released:
+                        logs=w.perturbation_runtime.diagnostics()
+                        assert logs['case_id']=='D18'
+                        changes=[v for v in logs['events'] if v['event']=='dynamic_state_change']
+                        if changes and event is None:
+                            assert len(changes)==1 and changes[0]['target']=='wine_bottle_1'
+                            event=dict(control=step,details=changes[0])
+                            start=step-1
+                    elif start is None and contact and height>=.03 and step<300:start=step
                 result=raw,states,hits,contacts,heights,start
+            elif op=='event':result=event
             else:raise ValueError(op)
             pipe.send((True,result))
     except EOFError:pass
