@@ -19,11 +19,10 @@ class RackWorld:
         return self.pipe.recv()
 
 
-def main(out):
+def main(out,prior):
     assert len(pilot.jax.devices())==1 and pilot.jax.devices()[0].platform=='gpu'
     motor=pilot.policy_config.create_trained_policy(pilot.config.get_config('pi05_libero'),str(pilot.CKPT))
     out.mkdir()
-    prior=out.parent.parent/'open01/episodes'
     with simulator((2,9)) as pipe:
         for pose in range(12,24):
             with np.load(prior/f'pose{pose}'/'public.npz') as a:
@@ -38,4 +37,4 @@ def main(out):
 
 
 if __name__=='__main__':
-    main(Path(sys.argv[1]))
+    main(Path(sys.argv[1]), Path(sys.argv[2]))
