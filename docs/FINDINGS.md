@@ -79,6 +79,16 @@ making this a poor panel for resolving a one-success advantage. The evidence
 establishes sparse decision supervision and limited headroom above the lag
 rule on this action menu. [Timing pilot](../outputs/libero-decision-pretraining-20261119-r1/RESULT.md)
 
+A 2,048-update timing adapter fit used 8,192 windows from 1,299 released
+demonstrations across 24 fitting tasks. On eight development tasks, true
+timing from reset scored 4/16 BASE and 1/16 S20, versus 16/16 BASE and
+1/16 S20 for frozen π0.5 and its zero-correction solver control. Fixed
+pacing scored 9/16 BASE and 5/16 S20. True timing from reset had zero wins
+and one loss against its fitting-selected fixed flag. The public lag rule
+identified all 32 timing settings. Held-out demonstration loss improved,
+while the learned correction failed to open useful live timing-selection
+headroom. [Native S20 motor comparison](../outputs/libero-s20-adapter-20261119-r1/RESULT.md#native-development-benchmark)
+
 On the released-scene development probes, reward-aware retries scored
 157/192 versus 81/192 when the selector ignored reward. Adaptive and fixed
 second-probe schedules tied at 154/192 when both used two rewards. In the

@@ -51,3 +51,39 @@ On held-out fitting-task resets, flow-matching loss for BASE/S20 was
 0.257/0.852 for the swapped flag. This measures prediction of observed
 demonstrator actions. Native success is measured on the separate live
 development panel.
+
+## Native development benchmark
+
+The frozen checkpoint completed 32 fitting episodes for control selection
+and 256 development episodes across 32 matched cases. All paired reset and
+opening checks passed. The separate fixed choices for after-opening and
+from-reset evaluation both selected the BASE flag on fitting cases.
+[Paired development evidence](dist03-dev.json)
+
+| Controller | BASE | S20 | Total |
+| --- | ---: | ---: | ---: |
+| Frozen π0.5 | 16/16 | 1/16 | 17/32 |
+| Same solver with zero correction | 16/16 | 1/16 | 17/32 |
+| Frozen π0.5 with pacing | 9/16 | 5/16 | 14/32 |
+| True timing after shared opening | 3/16 | 0/16 | 3/32 |
+| Fixed flag after shared opening | 3/16 | 0/16 | 3/32 |
+| Public lag after shared opening | 3/16 | 0/16 | 3/32 |
+| True timing from reset | 4/16 | 1/16 | 5/32 |
+| Fixed flag from reset | 4/16 | 2/16 | 6/32 |
+
+The public lag rule identified the timing setting on all 32 cases. True
+timing had zero paired wins and losses against fixed after the shared
+opening, and zero wins and one loss against fixed from reset. Either true
+timing arm added zero successes to the 21-case union of frozen π0.5,
+pacing and zero correction. The single additional success in the 22-case
+union across all arms was the BASE flag from reset on the S20 LIBERO-Object
+task 0, reset 19. The learned correction improved held-out demonstration
+loss and degraded live execution. This adapter provides little action
+coverage for a timing-history learner on this panel. The official test
+tasks remain reserved.
+
+The evaluator exited 0 at 17:17:49 Shanghai on Nov 19. It used 2,793
+seconds on the allocated Pro6K GPU. Cumulative worker use for qualification,
+fitting and evaluation was 1.284 GPUh, including prior attempts. Raw
+episodes and the frozen checkpoint are on the Baige project volume under
+this run ID.
