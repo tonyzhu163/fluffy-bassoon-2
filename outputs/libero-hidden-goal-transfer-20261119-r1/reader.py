@@ -29,13 +29,22 @@ def source_scores(source, panel, model):
         panel[row['scene'], row['layout']]['meta']['scores'][str(goal)] = model.targets[near].mean(axis=0).tolist()
 
 
-def tapes(panel, triples):
+def pose_orders(panel, all_poses):
+    for pose, layout in sorted(panel):
+        if all_poses:
+            other = sorted(p for p, l in panel if l == layout and p != pose)
+            for second, query in permutations(other, 2):
+                yield pose, second, query, layout
+        else:
+            second = next_scene(panel, pose)
+            yield pose, second, next_scene(panel, second), layout
+
+
+def tapes(panel, triples, *, all_poses=False):
     result = []
-    for (pose, layout), first in sorted(panel.items()):
-        p2 = next_scene(panel, pose)
-        p3 = next_scene(panel, p2)
+    for pose, p2, p3, layout in pose_orders(panel, all_poses):
         assert len({pose, p2, p3}) == 3
-        second, query = panel[p2, layout], panel[p3, layout]
+        first, second, query = (panel[p, layout] for p in (pose, p2, p3))
         for goals in triples:
             for order in permutations(goals):
                 reach = [block['meta']['scores'][str(g)][0] for block, g in zip((first, second), order[:2])]
@@ -100,8 +109,8 @@ def distributions(values):
     return ties / ties.sum(axis=1, keepdims=True)
 
 
-def evaluate(panel, triples, frozen):
-    data = tapes(panel, triples)
+def evaluate(panel, triples, frozen, *, all_poses=False):
+    data = tapes(panel, triples, all_poses=all_poses)
     native, bits = data['native'], data['reward']
     config = json.loads((frozen / 'config.json').read_text())
     predictions = {}
