@@ -75,6 +75,8 @@ def read_panel(path):
     if panel.keys() != expected:
         raise ValueError(f"incomplete or unexpected panel: missing={expected - panel.keys()}, "
                          f"extra={panel.keys() - expected}")
+    if len({r["initial_physics"] for r in panel.values()}) != len(POSES):
+        raise ValueError("expected six distinct physical starts")
     for pose in POSES:
         reference = panel[pose, 1, "BASE", 1, 0]
         for wire, condition, decode, grip in product(SIGNS, CONDITIONS, SIGNS, GRIPS):
