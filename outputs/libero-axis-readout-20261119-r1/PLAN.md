@@ -1,0 +1,7 @@
+# Where is calibration information available in the frozen reader?
+
+The [two-axis pilot](../libero-axis-calibration-20261119-r1/PLAN.md) found that the analytic command–motion rule could recover calibration, while the jointly trained reader missed many first commands. This secondary, exploratory fit uses the same development cases already examined. It cannot independently confirm generalization.
+
+Freeze the three direction-balanced checkpoints and fit a linear ridge readout to the two calibration signs using only the original fitting tasks and three familiar conventions. Read either the hidden state after the second support token or the hidden state at the query. Apply the decoded signs to the nominal first motor command explicitly. Use all four support directions, the same nominal query, zero test-time gradient updates and a fixed ridge penalty of 1 on the summed objective. Compare both readouts against their seed-matched untrained encoders with the fitting normalization and against the original trained command head. Keep the opposite-support intervention.
+
+If the trained representation consistently improves on the original head and random features, some transferable calibration information was available to a different output rule. A failure of the linear probe leaves nonlinear information unresolved. Fit all heads on Baige CPU, with one compute thread, a five-minute limit and zero GPU-hours. Keep official test tasks sealed.

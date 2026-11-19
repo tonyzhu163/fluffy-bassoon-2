@@ -1,0 +1,15 @@
+# The joint reader inconsistently recovered an identifiable motor correction
+
+The analytic sign of the sum of command times measured displacement, estimated separately for X and Y, recovered both required signs on **15/15 development queries** under the held-out double reversal. Each of four probe directions gave 15/15. No choices were fitted for this reference. The fresh Transformer learned to use some history, but its accuracy depended on its training distribution and seed. It saw the nominal π0.5 proposal at the query and two command–motion tokens from the earlier reset.
+
+| Fit, in seed order 41 / 42 / 43 | Familiar conventions, four directions, /180 | Double reversal, recorded direction, /15 | Double reversal, four directions, /60 | Double reversal, opposite history, /60 |
+| --- | --- | --- | --- | --- |
+| Recorded probes | 84 / 81 / 91 | 7 / 5 / 8 | 14 / 10 / 18 | 0 / 3 / 2 |
+| Direction-balanced training | 121 / 129 / 111 | 7 / 4 / 4 | 28 / 22 / 23 | 0 / 0 / 0 |
+| Analytic sign estimator | 180 | 15 | 60 | 0 |
+
+Clearing history gave 0/60 on the double reversal for all six fits. Each axis retained its nominal sign in two of the three fitting conventions, making nominal the marginal default for both axes. The privileged decoder scored 60/60, and selecting the closest of the three familiar corrections scored 0/60 on this convention. The opposite-history scores used the original target and query. All three balanced fits improved over their seed-matched counterparts on the direction-balanced endpoint. The recorded-direction endpoint showed no corresponding improvement. Across four directions, even familiar-convention accuracy was only 62–72% for the balanced fits, which limits attribution of the remaining errors specifically to composition.
+
+The data contain 16 original fitting reset pairs on eight tasks and 15 usable development pairs on eight disjoint tasks. One of 16 development pairs (`libero_10-3-r0-BASE`) had no Y-dominant command in the first 80 controls. The 60 evaluation examples reuse these 15 retained pairs under four reflected directions. The three seeds share those pairs. This is an exploratory, offline first-command diagnostic. Native rollout success, base VLA learning and any advantage of robot-pretrained initialization require separate evaluations. Investigate which calibration information a readout can extract from the existing reader before scaling the VLA comparison.
+
+Baige development CPU `cpu01`, 26 seconds wall time, 2,400 updates total and zero GPU-hours. Source `00e2e507e35578059074902b371f0acd83f0e6b5`. All six final checkpoints, optimizer and sampler RNG state, raw predictions, logs and metrics are preserved under `/mowenjie/fluffy-bassoon-2/outputs/libero-axis-calibration-20261119-r1/cpu01/`. The readout recomputed all per-direction/per-convention counts from 8,640 prediction records, checked identical cleared predictions at each query, and recorded SHA-256 hashes for both prediction files and all six checkpoints. [Verified counts, coverage and hashes](cpu01-readout.json) · [Run plan](PLAN.md) · [Recount script](readout.py)

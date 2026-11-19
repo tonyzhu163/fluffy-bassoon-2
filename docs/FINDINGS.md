@@ -45,6 +45,8 @@ isolate their effects. [Fresh confirmation, all recipes and limits](../outputs/l
 
 ## LIBERO-Pro2.0 retry development
 
+In a coordinate-calibration diagnostic on archived BASE trajectories, a command–motion sign rule recovered both coordinates of the first frozen π0.5 command on all 15 eligible development reset pairs with both axes reversed. A fresh reader trained on the three other conventions and balanced probe directions recovered both signs on 28, 22 and 23 of the 60 direction variants in three fits. Clearing history or supplying opposite-convention history gave 0/60 in each fit. Each physical query contributes four direction variants. These scores measure offline command recovery. [Calibration results and controls](../outputs/libero-axis-calibration-20261119-r1/RESULT.md)
+
 The four-mode timing pilot had 32 fitting queries. Only 19 had any successful
 action, 12 distinguished successful from unsuccessful modes, and two of
 those 12 were delayed. On 32 development queries the retained reader scored
