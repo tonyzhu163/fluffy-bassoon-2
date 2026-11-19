@@ -281,7 +281,8 @@ def run(out, smoke):
     if not smoke and (completed != 96 or pairs != 48 or trajectories):
         raise ValueError("Incomplete paired pilot")
     write_json(out / "complete.json", dict(mode=out.name, episodes=completed, equivalent_pairs_checked=pairs,
-               distinct_physics=len({v["initial_physics"] for v in identities.values()})))
+               distinct_physics=len({v["initial_physics"] for v in identities.values()}),
+               trajectory_differences=pair_differences))
 
 
 def main():

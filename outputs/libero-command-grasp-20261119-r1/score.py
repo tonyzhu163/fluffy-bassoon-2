@@ -159,7 +159,21 @@ def main():
     if path.is_dir():
         path = path / "episodes.jsonl"
     try:
-        report = score(read_panel(path))
+        panel = read_panel(path)
+        report = score(panel)
+        differences = []
+        for pose, condition, net_x, grip in product(POSES, CONDITIONS, SIGNS, GRIPS):
+            traces = []
+            for wire in SIGNS:
+                row = panel[pose, wire, condition, wire * net_x, grip]
+                record = json.loads((path.parent / row["episode"] / "result.json").read_text())
+                traces.append(record["trajectory"])
+            left, right = traces
+            changed = [k for k in left if left[k] != right[k]]
+            if changed:
+                differences.append(dict(pose=pose, condition=condition, net_x=net_x,
+                                        regrasp=grip, fields=changed))
+        report["trajectory_differences"] = differences
     except (KeyError, TypeError, ValueError, OSError) as exc:
         parser.exit(2, f"Invalid pilot evidence: {exc}\n")
     print(json.dumps(report, indent=2))
