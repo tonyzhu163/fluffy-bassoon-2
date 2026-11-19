@@ -7,6 +7,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import mujoco
 import pilot
+from visual import public_rgb
 
 
 class Frames:
@@ -15,8 +16,7 @@ class Frames:
         self.reset=self.frame(sim)
 
     def frame(self,sim):
-        self.renderer.update_scene(sim.data._data,camera='agentview')
-        return self.renderer.render().copy()
+        return public_rgb(sim,self.renderer)
 
     def choose(self,sim):
         self.decision=self.frame(sim)

@@ -5,13 +5,21 @@ from pathlib import Path
 import sys
 import numpy as np
 import json
+import mujoco
 import pilot
+
+
+def public_rgb(sim,renderer):
+    options=mujoco.MjvOption()
+    options.geomgroup[0]=0
+    options.geomgroup[1]=1
+    renderer.update_scene(sim.data._data,camera='agentview',scene_option=options)
+    return renderer.render()[:,::-1].copy()
 
 
 def image(sim,renderer):
     # Mean-pool the public RGB stream to limit spatial sensitivity to a single pose.
-    renderer.update_scene(sim.data._data,camera='agentview')
-    rgb=renderer.render()
+    rgb=public_rgb(sim,renderer)
     return rgb.reshape(32,4,32,4,3).mean(axis=(1,3)).astype(np.float32)
 
 
