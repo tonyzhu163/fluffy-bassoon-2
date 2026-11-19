@@ -15,7 +15,7 @@ def main(root,out):
     panel={};queries={};events=[]
     for p in range(24,30):
         for g in (0,1):
-            for b,run,mode in [(False,'closed01','sham'),(True,'release01','D18')]:
+            for b,run,mode in [(False,'closed01','sham'),(True,'release02','D18')]:
                 path=root/run/'episodes'/f'p{p}-g{g}-{mode}'
                 r=json.loads((path/'result.json').read_text())
                 if b:

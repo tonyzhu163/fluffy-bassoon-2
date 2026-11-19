@@ -27,12 +27,17 @@ def simulator():
         worker.wait(timeout=30)
 
 
-def trial(motor,pipe,raw,prompt,seed):
+def trial(motor,pipe,raw,prompt,seed,prefix=None):
     rng=np.random.default_rng(seed)
     issued,states,hits,contact,heights=[],[],[],[],[]
+    start=None
     while len(issued)<300:
         x=pilot.observation(raw,prompt)
-        a=motor.infer(x,noise=rng.standard_normal((10,32)).astype(np.float32))['actions'][:5]
+        noise=rng.standard_normal((10,32)).astype(np.float32)
+        if prefix is not None and start is None:
+            a=prefix[len(issued):len(issued)+5]
+        else:
+            a=motor.infer(x,noise=noise)['actions'][:5]
         assert a.shape==(5,7) and np.isfinite(a).all()
         raw,s,h,c,z,start=pilot.call(pipe,'chunk',a)
         states.extend(s);hits.extend(h);contact.extend(c);heights.extend(z);issued.extend(a)
@@ -57,7 +62,11 @@ def main(output,drop=False):
                     if identity is None:identity=fingerprint
                     assert identity==fingerprint
                     seed=(19195100 if mode=='query' else 19195000)+p
-                    tape,start=trial(motor,pipe,raw,prompts[g],seed)
+                    prefix=None
+                    if drop:
+                        base=output.parent.parent/'closed01/episodes'/f'p{p}-g{g}-sham'
+                        with np.load(base/'tape.npz') as reference:prefix=reference['issued']
+                    tape,start=trial(motor,pipe,raw,prompts[g],seed,prefix)
                     if mode=='sham':sham,original=tape,start
                     if mode=='interrupt':
                         assert start==original
