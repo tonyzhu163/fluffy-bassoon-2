@@ -3,7 +3,7 @@
 # runner.sh FULL_GIT_PIN STAGE EPISODE_ROOT [--shard-index I --shards N] [--meta FILE --imitation FILE]
 set -euo pipefail
 if (( $# < 3 )); then
-    echo "Usage: bash runner.sh PIN {smoke|fitting|development|live-development|live-test} EPISODE_ROOT [options]" >&2
+    echo "Usage: bash runner.sh PIN {smoke|smoke-live|fitting|development|live-development|live-test} EPISODE_ROOT [options]" >&2
     exit 2
 fi
 pin=$1
@@ -24,8 +24,8 @@ own="outputs/$(basename "$here")"
 required=("$own/runner.sh" "$own/rollouts.py" "$sister/collect.py" "$sister/standard_sim.py" "$sister/cases.json")
 probe_mode=(--baige-container --purpose evaluation)
 case "$stage" in
-    smoke)
-        [[ "$host" == aibox-* && $# == 0 ]] || { echo "Smoke takes exactly one fitting case on a Baige development machine" >&2; exit 2; }
+    smoke|smoke-live)
+        [[ "$host" == aibox-* ]] || { echo "Smoke takes exactly one fitting case on a Baige development machine" >&2; exit 2; }
         exec 9>>"$shared/outputs/libero-bowl-decisions-20261118-r1/device.lock"
         flock -w 600 9
         probe_mode=(--direct-hostname "$host" --purpose training)
@@ -40,7 +40,7 @@ case "$stage" in
 esac
 # These run directories are normally gitignored. Explicitly require tracked sources.
 git -C "$code" ls-files --error-unmatch -- "${required[@]}" >/dev/null
-if [[ "$stage" == smoke ]]; then
+if [[ "$stage" == smoke* ]]; then
     [[ ${CGPU_COUNT:?} == 1 && ${NVIDIA_VISIBLE_DEVICES:?} == "${NVIDIA_VISIBLE_GPUS_UUID:?}" && "$NVIDIA_VISIBLE_DEVICES" != *,* ]]
     export CUDA_VISIBLE_DEVICES="$NVIDIA_VISIBLE_DEVICES"
 else
@@ -65,7 +65,7 @@ export MAGICK_HOME=/mowenjie/libs/libero-plus-imagemagick
 export MAGICK_CODER_MODULE_PATH="$MAGICK_HOME/usr/lib/x86_64-linux-gnu/ImageMagick-6.9.11/modules-Q16/coders"
 export LD_LIBRARY_PATH="$MAGICK_HOME/usr/lib/x86_64-linux-gnu${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
-if [[ "$stage" != smoke ]]; then
+if [[ "$stage" != smoke* ]]; then
     # GLVND dispatch from the qualified runtime plus the allocated driver.
     glvnd="$shared/setups/libero-gen-history-pilot-20261111-r1/os-libs01/prefix/usr/lib/x86_64-linux-gnu"
     test -f "$glvnd/libEGL.so.1" && test -f "$glvnd/libGL.so.1"
@@ -93,5 +93,5 @@ for flag in "$@"; do
     case "$flag" in --pin*|--output*|--stage*|--) echo "Reserved rollout argument $flag" >&2; exit 2;; esac
 done
 command=("$model_python" -Bu "$here/rollouts.py" "$stage" "$@" --pin "$pin" --output "$output")
-if [[ "$stage" == smoke ]]; then command=(timeout --kill-after=15s 15m "${command[@]}"); fi
+if [[ "$stage" == smoke* ]]; then command=(timeout --kill-after=15s 15m "${command[@]}"); fi
 "${command[@]}" 2>&1 | tee "$attempt/rollout.log"

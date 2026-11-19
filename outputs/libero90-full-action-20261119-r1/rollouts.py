@@ -28,7 +28,7 @@ MANIFEST = SISTER / "cases.json"
 MANIFEST_SHA = "398742aa78dbdd62334718c264f15dbbd0c041d2643c3d2571f19953ce25ca86"
 LOGGED = ("query0", "query1")
 LIVE = ("base", "matched", "meta_intact", "meta_cleared", "imitation_intact", "imitation_cleared")
-STAGES = ("smoke", "fitting", "development", "live-development", "live-test")
+STAGES = ("smoke", "smoke-live", "fitting", "development", "live-development", "live-test")
 
 
 class FrozenMotor(NativeMotor):
@@ -277,8 +277,8 @@ def read_published(folder, row, arms, design_sha):
 
 
 def run(args):
-    live = args.stage.startswith("live-")
-    smoke = args.stage == "smoke"
+    live = args.stage.startswith("live-") or args.stage == "smoke-live"
+    smoke = args.stage in ("smoke", "smoke-live")
     host = socket.gethostname()
     if smoke:
         if not host.startswith("aibox-") or (args.shard_index, args.shards) != (0, 1):
@@ -294,7 +294,10 @@ def run(args):
         raise ValueError("Expected the registered 48/12/30 manifest")
     split = "fitting" if smoke else args.stage.removeprefix("live-")
     rows = [r for r in manifest_rows(data) if r["split"] == split]
-    rows = rows[:1] if smoke else rows[args.shard_index::args.shards]
+    if args.stage == "smoke-live":
+        rows = rows[1:2]  # fresh fitting pose for end-to-end interface qualification
+    else:
+        rows = rows[:1] if smoke else rows[args.shard_index::args.shards]
     if not rows:
         raise ValueError("Empty rollout shard")
     arms = LIVE if live else LOGGED
