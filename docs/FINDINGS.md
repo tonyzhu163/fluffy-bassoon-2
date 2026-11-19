@@ -67,6 +67,16 @@ where a simple use of feedback captures the available gains and where
 stronger continuations or more informative interactions are needed.
 [Scene probes](../outputs/libero-scene-probes-20261119-r1/RESULT.md) · [Bottle replay](../outputs/libero-failure-diagnosis-20261119-r1/RESULT.md)
 
+On a custom two-instruction LIBERO-Object development study, a bowl-trained
+reader of commands, sensed motion and rewards reached 192/288 native successes.
+Commands and rewards alone reached the same score, the ceiling of the measured
+query alternatives. Motion changed 38 choices and zero native outcomes.
+Both instructions placed soup in the soup scene. In the salad-dressing scene
+both instructions worked and two rewards sufficed. In the ketchup scene only
+the ketchup instruction placed either object. The 288 paired assignments
+reused 108 simulated episodes on six reset poses per layout.
+[Layout-level outcomes and intervention checks](../outputs/libero-object-history-20261119-r1/RESULT.md)
+
 ## LIBERO-Gen motor qualification
 
 The released frozen Behavior Prompting Policy succeeded on 20/20 paired
