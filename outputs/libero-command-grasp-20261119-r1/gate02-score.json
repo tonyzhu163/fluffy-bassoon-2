@@ -1,0 +1,851 @@
+{
+  "episodes": 96,
+  "poses": 6,
+  "equivalent_endpoint_differences": [],
+  "gate": {
+    "decision": "GO",
+    "net_vs_true_wire_grip_off": 2,
+    "net_vs_true_wire_grip_on": 2,
+    "reversed_d17_rescue_poses": [
+      30
+    ]
+  },
+  "paired_vs_true": {
+    "fixed_decode_+1_grip_0": {
+      "cases": 24,
+      "true_success": 24,
+      "comparator_success": 11,
+      "true_only": 13,
+      "comparator_only": 0,
+      "both": 11,
+      "neither": 0,
+      "net": 13
+    },
+    "fixed_decode_+1_grip_1": {
+      "cases": 24,
+      "true_success": 24,
+      "comparator_success": 11,
+      "true_only": 13,
+      "comparator_only": 0,
+      "both": 11,
+      "neither": 0,
+      "net": 13
+    },
+    "fixed_decode_-1_grip_0": {
+      "cases": 24,
+      "true_success": 24,
+      "comparator_success": 11,
+      "true_only": 13,
+      "comparator_only": 0,
+      "both": 11,
+      "neither": 0,
+      "net": 13
+    },
+    "fixed_decode_-1_grip_1": {
+      "cases": 24,
+      "true_success": 24,
+      "comparator_success": 11,
+      "true_only": 13,
+      "comparator_only": 0,
+      "both": 11,
+      "neither": 0,
+      "net": 13
+    },
+    "true_wire_grip_off": {
+      "cases": 24,
+      "true_success": 24,
+      "comparator_success": 22,
+      "true_only": 2,
+      "comparator_only": 0,
+      "both": 22,
+      "neither": 0,
+      "net": 2
+    },
+    "true_wire_grip_on": {
+      "cases": 24,
+      "true_success": 24,
+      "comparator_success": 22,
+      "true_only": 2,
+      "comparator_only": 0,
+      "both": 22,
+      "neither": 0,
+      "net": 2
+    },
+    "fixed_decode_+1_true_grip": {
+      "cases": 24,
+      "true_success": 24,
+      "comparator_success": 12,
+      "true_only": 12,
+      "comparator_only": 0,
+      "both": 12,
+      "neither": 0,
+      "net": 12
+    },
+    "fixed_decode_-1_true_grip": {
+      "cases": 24,
+      "true_success": 24,
+      "comparator_success": 12,
+      "true_only": 12,
+      "comparator_only": 0,
+      "both": 12,
+      "neither": 0,
+      "net": 12
+    }
+  },
+  "true_wire_pairs_by_factor": [
+    {
+      "wire": 1,
+      "condition": "BASE",
+      "comparator": "true_wire_grip_on",
+      "cases": 6,
+      "true_success": 6,
+      "comparator_success": 5,
+      "true_only": 1,
+      "comparator_only": 0,
+      "both": 5,
+      "neither": 0,
+      "net": 1
+    },
+    {
+      "wire": 1,
+      "condition": "D17",
+      "comparator": "true_wire_grip_off",
+      "cases": 6,
+      "true_success": 6,
+      "comparator_success": 5,
+      "true_only": 1,
+      "comparator_only": 0,
+      "both": 5,
+      "neither": 0,
+      "net": 1
+    },
+    {
+      "wire": -1,
+      "condition": "BASE",
+      "comparator": "true_wire_grip_on",
+      "cases": 6,
+      "true_success": 6,
+      "comparator_success": 5,
+      "true_only": 1,
+      "comparator_only": 0,
+      "both": 5,
+      "neither": 0,
+      "net": 1
+    },
+    {
+      "wire": -1,
+      "condition": "D17",
+      "comparator": "true_wire_grip_off",
+      "cases": 6,
+      "true_success": 6,
+      "comparator_success": 5,
+      "true_only": 1,
+      "comparator_only": 0,
+      "both": 5,
+      "neither": 0,
+      "net": 1
+    }
+  ],
+  "cells": [
+    {
+      "wire": 1,
+      "condition": "BASE",
+      "decode": 1,
+      "regrasp": 0,
+      "successes": 6,
+      "episodes": 6,
+      "regrasp_executed": 0
+    },
+    {
+      "wire": 1,
+      "condition": "BASE",
+      "decode": 1,
+      "regrasp": 1,
+      "successes": 5,
+      "episodes": 6,
+      "regrasp_executed": 6
+    },
+    {
+      "wire": 1,
+      "condition": "BASE",
+      "decode": -1,
+      "regrasp": 0,
+      "successes": 0,
+      "episodes": 6,
+      "regrasp_executed": 0
+    },
+    {
+      "wire": 1,
+      "condition": "BASE",
+      "decode": -1,
+      "regrasp": 1,
+      "successes": 0,
+      "episodes": 6,
+      "regrasp_executed": 4
+    },
+    {
+      "wire": 1,
+      "condition": "D17",
+      "decode": 1,
+      "regrasp": 0,
+      "successes": 5,
+      "episodes": 6,
+      "regrasp_executed": 0,
+      "d17_opportunity": {
+        "yes": 6,
+        "observed": 6
+      },
+      "d17_triggered": {
+        "yes": 6,
+        "observed": 6
+      },
+      "d17_event_controls_by_pose": {
+        "30": 32,
+        "31": 44,
+        "32": 43,
+        "33": 36,
+        "34": 43,
+        "35": 45
+      }
+    },
+    {
+      "wire": 1,
+      "condition": "D17",
+      "decode": 1,
+      "regrasp": 1,
+      "successes": 6,
+      "episodes": 6,
+      "regrasp_executed": 6,
+      "d17_opportunity": {
+        "yes": 6,
+        "observed": 6
+      },
+      "d17_triggered": {
+        "yes": 6,
+        "observed": 6
+      },
+      "d17_event_controls_by_pose": {
+        "30": 32,
+        "31": 44,
+        "32": 43,
+        "33": 36,
+        "34": 43,
+        "35": 45
+      }
+    },
+    {
+      "wire": 1,
+      "condition": "D17",
+      "decode": -1,
+      "regrasp": 0,
+      "successes": 0,
+      "episodes": 6,
+      "regrasp_executed": 0,
+      "d17_opportunity": {
+        "yes": 0,
+        "observed": 6
+      },
+      "d17_triggered": {
+        "yes": 0,
+        "observed": 6
+      },
+      "d17_event_controls_by_pose": {}
+    },
+    {
+      "wire": 1,
+      "condition": "D17",
+      "decode": -1,
+      "regrasp": 1,
+      "successes": 0,
+      "episodes": 6,
+      "regrasp_executed": 4,
+      "d17_opportunity": {
+        "yes": 0,
+        "observed": 6
+      },
+      "d17_triggered": {
+        "yes": 0,
+        "observed": 6
+      },
+      "d17_event_controls_by_pose": {}
+    },
+    {
+      "wire": -1,
+      "condition": "BASE",
+      "decode": 1,
+      "regrasp": 0,
+      "successes": 0,
+      "episodes": 6,
+      "regrasp_executed": 0
+    },
+    {
+      "wire": -1,
+      "condition": "BASE",
+      "decode": 1,
+      "regrasp": 1,
+      "successes": 0,
+      "episodes": 6,
+      "regrasp_executed": 4
+    },
+    {
+      "wire": -1,
+      "condition": "BASE",
+      "decode": -1,
+      "regrasp": 0,
+      "successes": 6,
+      "episodes": 6,
+      "regrasp_executed": 0
+    },
+    {
+      "wire": -1,
+      "condition": "BASE",
+      "decode": -1,
+      "regrasp": 1,
+      "successes": 5,
+      "episodes": 6,
+      "regrasp_executed": 6
+    },
+    {
+      "wire": -1,
+      "condition": "D17",
+      "decode": 1,
+      "regrasp": 0,
+      "successes": 0,
+      "episodes": 6,
+      "regrasp_executed": 0,
+      "d17_opportunity": {
+        "yes": 0,
+        "observed": 6
+      },
+      "d17_triggered": {
+        "yes": 0,
+        "observed": 6
+      },
+      "d17_event_controls_by_pose": {}
+    },
+    {
+      "wire": -1,
+      "condition": "D17",
+      "decode": 1,
+      "regrasp": 1,
+      "successes": 0,
+      "episodes": 6,
+      "regrasp_executed": 4,
+      "d17_opportunity": {
+        "yes": 0,
+        "observed": 6
+      },
+      "d17_triggered": {
+        "yes": 0,
+        "observed": 6
+      },
+      "d17_event_controls_by_pose": {}
+    },
+    {
+      "wire": -1,
+      "condition": "D17",
+      "decode": -1,
+      "regrasp": 0,
+      "successes": 5,
+      "episodes": 6,
+      "regrasp_executed": 0,
+      "d17_opportunity": {
+        "yes": 6,
+        "observed": 6
+      },
+      "d17_triggered": {
+        "yes": 6,
+        "observed": 6
+      },
+      "d17_event_controls_by_pose": {
+        "30": 32,
+        "31": 44,
+        "32": 43,
+        "33": 36,
+        "34": 43,
+        "35": 45
+      }
+    },
+    {
+      "wire": -1,
+      "condition": "D17",
+      "decode": -1,
+      "regrasp": 1,
+      "successes": 6,
+      "episodes": 6,
+      "regrasp_executed": 6,
+      "d17_opportunity": {
+        "yes": 6,
+        "observed": 6
+      },
+      "d17_triggered": {
+        "yes": 6,
+        "observed": 6
+      },
+      "d17_event_controls_by_pose": {
+        "30": 32,
+        "31": 44,
+        "32": 43,
+        "33": 36,
+        "34": 43,
+        "35": 45
+      }
+    }
+  ],
+  "cases": [
+    {
+      "pose": 30,
+      "wire": 1,
+      "condition": "BASE",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": true,
+        "fixed_decode_+1_grip_1": true,
+        "fixed_decode_-1_grip_0": false,
+        "fixed_decode_-1_grip_1": false,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": true,
+        "fixed_decode_-1_true_grip": false
+      }
+    },
+    {
+      "pose": 30,
+      "wire": 1,
+      "condition": "D17",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": false,
+        "fixed_decode_+1_grip_1": true,
+        "fixed_decode_-1_grip_0": false,
+        "fixed_decode_-1_grip_1": false,
+        "true": true,
+        "true_wire_grip_off": false,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": true,
+        "fixed_decode_-1_true_grip": false
+      }
+    },
+    {
+      "pose": 30,
+      "wire": -1,
+      "condition": "BASE",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": false,
+        "fixed_decode_+1_grip_1": false,
+        "fixed_decode_-1_grip_0": true,
+        "fixed_decode_-1_grip_1": true,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": false,
+        "fixed_decode_-1_true_grip": true
+      }
+    },
+    {
+      "pose": 30,
+      "wire": -1,
+      "condition": "D17",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": false,
+        "fixed_decode_+1_grip_1": false,
+        "fixed_decode_-1_grip_0": false,
+        "fixed_decode_-1_grip_1": true,
+        "true": true,
+        "true_wire_grip_off": false,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": false,
+        "fixed_decode_-1_true_grip": true
+      }
+    },
+    {
+      "pose": 31,
+      "wire": 1,
+      "condition": "BASE",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": true,
+        "fixed_decode_+1_grip_1": true,
+        "fixed_decode_-1_grip_0": false,
+        "fixed_decode_-1_grip_1": false,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": true,
+        "fixed_decode_-1_true_grip": false
+      }
+    },
+    {
+      "pose": 31,
+      "wire": 1,
+      "condition": "D17",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": true,
+        "fixed_decode_+1_grip_1": true,
+        "fixed_decode_-1_grip_0": false,
+        "fixed_decode_-1_grip_1": false,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": true,
+        "fixed_decode_-1_true_grip": false
+      }
+    },
+    {
+      "pose": 31,
+      "wire": -1,
+      "condition": "BASE",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": false,
+        "fixed_decode_+1_grip_1": false,
+        "fixed_decode_-1_grip_0": true,
+        "fixed_decode_-1_grip_1": true,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": false,
+        "fixed_decode_-1_true_grip": true
+      }
+    },
+    {
+      "pose": 31,
+      "wire": -1,
+      "condition": "D17",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": false,
+        "fixed_decode_+1_grip_1": false,
+        "fixed_decode_-1_grip_0": true,
+        "fixed_decode_-1_grip_1": true,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": false,
+        "fixed_decode_-1_true_grip": true
+      }
+    },
+    {
+      "pose": 32,
+      "wire": 1,
+      "condition": "BASE",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": true,
+        "fixed_decode_+1_grip_1": true,
+        "fixed_decode_-1_grip_0": false,
+        "fixed_decode_-1_grip_1": false,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": true,
+        "fixed_decode_-1_true_grip": false
+      }
+    },
+    {
+      "pose": 32,
+      "wire": 1,
+      "condition": "D17",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": true,
+        "fixed_decode_+1_grip_1": true,
+        "fixed_decode_-1_grip_0": false,
+        "fixed_decode_-1_grip_1": false,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": true,
+        "fixed_decode_-1_true_grip": false
+      }
+    },
+    {
+      "pose": 32,
+      "wire": -1,
+      "condition": "BASE",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": false,
+        "fixed_decode_+1_grip_1": false,
+        "fixed_decode_-1_grip_0": true,
+        "fixed_decode_-1_grip_1": true,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": false,
+        "fixed_decode_-1_true_grip": true
+      }
+    },
+    {
+      "pose": 32,
+      "wire": -1,
+      "condition": "D17",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": false,
+        "fixed_decode_+1_grip_1": false,
+        "fixed_decode_-1_grip_0": true,
+        "fixed_decode_-1_grip_1": true,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": false,
+        "fixed_decode_-1_true_grip": true
+      }
+    },
+    {
+      "pose": 33,
+      "wire": 1,
+      "condition": "BASE",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": true,
+        "fixed_decode_+1_grip_1": false,
+        "fixed_decode_-1_grip_0": false,
+        "fixed_decode_-1_grip_1": false,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": false,
+        "fixed_decode_+1_true_grip": true,
+        "fixed_decode_-1_true_grip": false
+      }
+    },
+    {
+      "pose": 33,
+      "wire": 1,
+      "condition": "D17",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": true,
+        "fixed_decode_+1_grip_1": true,
+        "fixed_decode_-1_grip_0": false,
+        "fixed_decode_-1_grip_1": false,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": true,
+        "fixed_decode_-1_true_grip": false
+      }
+    },
+    {
+      "pose": 33,
+      "wire": -1,
+      "condition": "BASE",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": false,
+        "fixed_decode_+1_grip_1": false,
+        "fixed_decode_-1_grip_0": true,
+        "fixed_decode_-1_grip_1": false,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": false,
+        "fixed_decode_+1_true_grip": false,
+        "fixed_decode_-1_true_grip": true
+      }
+    },
+    {
+      "pose": 33,
+      "wire": -1,
+      "condition": "D17",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": false,
+        "fixed_decode_+1_grip_1": false,
+        "fixed_decode_-1_grip_0": true,
+        "fixed_decode_-1_grip_1": true,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": false,
+        "fixed_decode_-1_true_grip": true
+      }
+    },
+    {
+      "pose": 34,
+      "wire": 1,
+      "condition": "BASE",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": true,
+        "fixed_decode_+1_grip_1": true,
+        "fixed_decode_-1_grip_0": false,
+        "fixed_decode_-1_grip_1": false,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": true,
+        "fixed_decode_-1_true_grip": false
+      }
+    },
+    {
+      "pose": 34,
+      "wire": 1,
+      "condition": "D17",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": true,
+        "fixed_decode_+1_grip_1": true,
+        "fixed_decode_-1_grip_0": false,
+        "fixed_decode_-1_grip_1": false,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": true,
+        "fixed_decode_-1_true_grip": false
+      }
+    },
+    {
+      "pose": 34,
+      "wire": -1,
+      "condition": "BASE",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": false,
+        "fixed_decode_+1_grip_1": false,
+        "fixed_decode_-1_grip_0": true,
+        "fixed_decode_-1_grip_1": true,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": false,
+        "fixed_decode_-1_true_grip": true
+      }
+    },
+    {
+      "pose": 34,
+      "wire": -1,
+      "condition": "D17",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": false,
+        "fixed_decode_+1_grip_1": false,
+        "fixed_decode_-1_grip_0": true,
+        "fixed_decode_-1_grip_1": true,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": false,
+        "fixed_decode_-1_true_grip": true
+      }
+    },
+    {
+      "pose": 35,
+      "wire": 1,
+      "condition": "BASE",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": true,
+        "fixed_decode_+1_grip_1": true,
+        "fixed_decode_-1_grip_0": false,
+        "fixed_decode_-1_grip_1": false,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": true,
+        "fixed_decode_-1_true_grip": false
+      }
+    },
+    {
+      "pose": 35,
+      "wire": 1,
+      "condition": "D17",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": true,
+        "fixed_decode_+1_grip_1": true,
+        "fixed_decode_-1_grip_0": false,
+        "fixed_decode_-1_grip_1": false,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": true,
+        "fixed_decode_-1_true_grip": false
+      }
+    },
+    {
+      "pose": 35,
+      "wire": -1,
+      "condition": "BASE",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": false,
+        "fixed_decode_+1_grip_1": false,
+        "fixed_decode_-1_grip_0": true,
+        "fixed_decode_-1_grip_1": true,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": false,
+        "fixed_decode_-1_true_grip": true
+      }
+    },
+    {
+      "pose": 35,
+      "wire": -1,
+      "condition": "D17",
+      "outcomes": {
+        "fixed_decode_+1_grip_0": false,
+        "fixed_decode_+1_grip_1": false,
+        "fixed_decode_-1_grip_0": true,
+        "fixed_decode_-1_grip_1": true,
+        "true": true,
+        "true_wire_grip_off": true,
+        "true_wire_grip_on": true,
+        "fixed_decode_+1_true_grip": false,
+        "fixed_decode_-1_true_grip": true
+      }
+    }
+  ],
+  "trajectory_differences": [
+    {
+      "pose": 32,
+      "condition": "BASE",
+      "net_x": -1,
+      "regrasp": 0,
+      "fields": [
+        "query_rgb",
+        "query_state",
+        "query_proposal",
+        "selected",
+        "robot_state",
+        "final_rgb",
+        "final_state",
+        "native_input",
+        "applied"
+      ]
+    },
+    {
+      "pose": 32,
+      "condition": "BASE",
+      "net_x": -1,
+      "regrasp": 1,
+      "fields": [
+        "query_rgb",
+        "query_state",
+        "query_proposal",
+        "selected",
+        "robot_state",
+        "final_rgb",
+        "final_state",
+        "native_input",
+        "applied"
+      ]
+    },
+    {
+      "pose": 32,
+      "condition": "D17",
+      "net_x": -1,
+      "regrasp": 0,
+      "fields": [
+        "query_rgb",
+        "query_state",
+        "query_proposal",
+        "selected",
+        "robot_state",
+        "final_rgb",
+        "final_state",
+        "native_input",
+        "applied"
+      ]
+    },
+    {
+      "pose": 32,
+      "condition": "D17",
+      "net_x": -1,
+      "regrasp": 1,
+      "fields": [
+        "query_rgb",
+        "query_state",
+        "query_proposal",
+        "selected",
+        "robot_state",
+        "final_rgb",
+        "final_state",
+        "native_input",
+        "applied"
+      ]
+    }
+  ]
+}
