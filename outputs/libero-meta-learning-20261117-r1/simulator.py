@@ -71,7 +71,7 @@ def serve(fd):
                     actions = list(value)
                     if not actions:
                         raise ValueError('Require at least one action for chunk')
-                    positions, rewards = [], []
+                    positions, gripper_positions, rewards = [], [], []
                     raw = None
                     final_success = False
                     any_success = False
@@ -81,6 +81,8 @@ def serve(fd):
                         step = env.step(action)
                         raw = step['observation']
                         positions.append(raw['robot0_eef_pos'].copy())
+                        if 'robot0_gripper_qpos' in raw:
+                            gripper_positions.append(raw['robot0_gripper_qpos'].copy())
                         rewards.append(float(step['reward']))
                         final_success = bool(step['success'])
                         any_success = any_success or final_success
@@ -88,7 +90,8 @@ def serve(fd):
                         truncated = bool(step['truncated'])
                         if terminated or truncated:
                             break
-                    result = dict(observation=raw, positions=positions, rewards=rewards,
+                    result = dict(observation=raw, positions=positions,
+                                  gripper_positions=gripper_positions, rewards=rewards,
                                   steps=len(rewards), success=final_success,
                                   any_success=any_success, terminated=terminated,
                                   truncated=truncated)

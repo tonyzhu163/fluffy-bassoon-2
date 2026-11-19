@@ -73,7 +73,11 @@ def _fake_libero_remote():
             done = self.step_count >= self.term_at
             success = self.step_count == self.target
             return {
-                "observation": {"robot0_eef_pos": _CopyList(self.pos), "agentview_image": f"img_{self.step_count}"},
+                "observation": {
+                    "robot0_eef_pos": _CopyList(self.pos),
+                    "robot0_gripper_qpos": _CopyList([float(self.step_count), -float(self.step_count)]),
+                    "agentview_image": f"img_{self.step_count}",
+                },
                 "reward": 1.0 if success else 0.0,
                 "success": success,
                 "terminated": done,
@@ -192,6 +196,7 @@ def test_simulator_reuse_and_chunk_ipc():
             assert ok, chunk
             assert chunk["steps"] == 2
             assert chunk["positions"] == [[1.5, 0.0, 0.0], [2.0, 0.0, 0.0]]
+            assert chunk["gripper_positions"] == [[2.0, -2.0], [3.0, -3.0]]
             assert chunk["rewards"] == [1.0, 0.0]
             assert chunk["any_success"] is True and chunk["success"] is False
             assert chunk["terminated"] is True and chunk["truncated"] is False
