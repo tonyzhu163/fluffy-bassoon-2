@@ -1,0 +1,654 @@
+{
+  "archive": "/mowenjie/fluffy-bassoon-2/outputs/libero-retry-headroom-20261119-r1/paired01/episodes",
+  "design": {
+    "splits": {
+      "libero_spatial": [
+        1,
+        7
+      ],
+      "libero_object": [
+        0,
+        7
+      ],
+      "libero_goal": [
+        0,
+        1
+      ],
+      "libero_10": [
+        0,
+        3
+      ]
+    },
+    "lag_anchors": {
+      "BASE": 0.0,
+      "S20": 13.0
+    },
+    "checkpoint": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-openpi-20261027-r1",
+    "modes": {
+      "default": [
+        5,
+        0
+      ],
+      "paced": [
+        10,
+        14
+      ]
+    }
+  },
+  "packages": {
+    "mujoco": "3.2.3",
+    "robosuite": "1.4.0",
+    "numpy": "1.26.4",
+    "PyOpenGL": "3.1.10"
+  },
+  "sources": {
+    "libero_10-0-default": {
+      "folder": "/mowenjie/fluffy-bassoon-2/outputs/libero-retry-headroom-20261119-r1/paired01/episodes/libero_10-0-r0-BASE/default",
+      "record_sha256": "ece478c8d7483542a6a4b5ade062dd1b4596953b42dfde5bf50e841aec282815",
+      "npz_sha256": "510f747285c51bdc5ec69b5915efebf18ad5e5efea39066ff329fda100359296",
+      "actions_sha256": "265d512404e0285595b3144d2c6c86e72f80fd802856aea78397b724d2f9f03c",
+      "bddl": "/mowenjie/fluffy-bassoon-2/sources/libero-pro2-e5500c69/assets/bddl/libero-pro2.0-1680-v1/libero_10/00_base/BASE__LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket.bddl",
+      "bddl_sha256": "8eec97d65c1429d4cc36049ae5634f87f7282293e5a594d90eee8e9b39776b56",
+      "record": {
+        "case": {
+          "suite": "libero_10",
+          "task_id": 0,
+          "variant": "BASE",
+          "init_state_id": 1,
+          "seed": 19110001
+        },
+        "mode": "default",
+        "success": true,
+        "controls": 281,
+        "waits": 0,
+        "identity": {
+          "physics": "28960122f8f29c4181132c88bbfbbaf9fd5f21cbbfcd894ac952108fb6c0b537",
+          "public": {
+            "agentview_image": "24eff2b6e06ac63b92cd6a87c8861bcee9faba2f12e2191689d77d557471d8ea",
+            "robot0_eye_in_hand_image": "ecd0e59f460b4b7fa4651d64b6629c118086030c2f6f7965c3ff825cce635899",
+            "robot0_joint_pos": "7608fdfa9c796337d9bc125a9a996915e8fe09c90be53dab0ece4766df73c632",
+            "robot0_joint_vel": "e4a1bd0a07faa5e6f6ceff4b918ea73bcb910cd1a88b1ffa797f401b528f265f",
+            "robot0_eef_pos": "270a57c845265f0f8fd3f847f3d0bcfc20f529337f676a5cc6f208df54248ae3",
+            "robot0_eef_quat_xyzw": "e6b4102595b4db6185defe76e16eef00eb2e072fe37193dde180fcf44201fb85",
+            "robot0_gripper_qpos": "c81099f1719288762119ccdf4d77fc5f43ab568df6f6f954d7f2f50dee115d61"
+          },
+          "horizon": 520,
+          "prompt": "put both the alphabet soup and the tomato sauce in the basket"
+        },
+        "opening_sha256": "cb1db6ad3f42784a783784485edc4b3bcb1886fb0d9938b466ea3e87f606f399",
+        "released_prompt": "put both the alphabet soup and the tomato sauce in the basket",
+        "seconds": 16.748946129344404
+      }
+    },
+    "libero_10-0-paced": {
+      "folder": "/mowenjie/fluffy-bassoon-2/outputs/libero-retry-headroom-20261119-r1/paired01/episodes/libero_10-0-r0-BASE/paced",
+      "record_sha256": "758640b67f5ec2b3e936de5e1a2ad102b3a4a55b04da46ba9c185442de62bfed",
+      "npz_sha256": "52d2eca2101e2bbe54958dad59b2f3b6619e012df59ba8b0687b052233f9c115",
+      "actions_sha256": "62890fec9f903cc2f49bc72390922b8894aa14b76010b6813f41b71279f55cf4",
+      "bddl": "/mowenjie/fluffy-bassoon-2/sources/libero-pro2-e5500c69/assets/bddl/libero-pro2.0-1680-v1/libero_10/00_base/BASE__LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket.bddl",
+      "bddl_sha256": "8eec97d65c1429d4cc36049ae5634f87f7282293e5a594d90eee8e9b39776b56",
+      "record": {
+        "case": {
+          "suite": "libero_10",
+          "task_id": 0,
+          "variant": "BASE",
+          "init_state_id": 1,
+          "seed": 19110001
+        },
+        "mode": "paced",
+        "success": false,
+        "controls": 520,
+        "waits": 300,
+        "identity": {
+          "physics": "28960122f8f29c4181132c88bbfbbaf9fd5f21cbbfcd894ac952108fb6c0b537",
+          "public": {
+            "agentview_image": "24eff2b6e06ac63b92cd6a87c8861bcee9faba2f12e2191689d77d557471d8ea",
+            "robot0_eye_in_hand_image": "ecd0e59f460b4b7fa4651d64b6629c118086030c2f6f7965c3ff825cce635899",
+            "robot0_joint_pos": "7608fdfa9c796337d9bc125a9a996915e8fe09c90be53dab0ece4766df73c632",
+            "robot0_joint_vel": "e4a1bd0a07faa5e6f6ceff4b918ea73bcb910cd1a88b1ffa797f401b528f265f",
+            "robot0_eef_pos": "270a57c845265f0f8fd3f847f3d0bcfc20f529337f676a5cc6f208df54248ae3",
+            "robot0_eef_quat_xyzw": "e6b4102595b4db6185defe76e16eef00eb2e072fe37193dde180fcf44201fb85",
+            "robot0_gripper_qpos": "c81099f1719288762119ccdf4d77fc5f43ab568df6f6f954d7f2f50dee115d61"
+          },
+          "horizon": 520,
+          "prompt": "put both the alphabet soup and the tomato sauce in the basket"
+        },
+        "opening_sha256": "cb1db6ad3f42784a783784485edc4b3bcb1886fb0d9938b466ea3e87f606f399",
+        "released_prompt": "put both the alphabet soup and the tomato sauce in the basket",
+        "seconds": 18.013067935593426
+      }
+    },
+    "libero_10-3-default": {
+      "folder": "/mowenjie/fluffy-bassoon-2/outputs/libero-retry-headroom-20261119-r1/paired01/episodes/libero_10-3-r0-BASE/default",
+      "record_sha256": "d5900f6c7ab12bfb3619cecf4e466d30271dcf99ac6f9b53c26432238d6b714e",
+      "npz_sha256": "c264a0db031867c7cf62461feba68be6d73a5e5459f1deb9b4ffc584e1379928",
+      "actions_sha256": "8dffd7b3c9076d890583af1229120a5e2bcf691ba28a47792f09251b14beb01f",
+      "bddl": "/mowenjie/fluffy-bassoon-2/sources/libero-pro2-e5500c69/assets/bddl/libero-pro2.0-1680-v1/libero_10/00_base/BASE__KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it.bddl",
+      "bddl_sha256": "5e31c8ad9257e2a3a7f48d1a3c63a3d37ae459d1c7d6b07850a113b75ffc1d62",
+      "record": {
+        "case": {
+          "suite": "libero_10",
+          "task_id": 3,
+          "variant": "BASE",
+          "init_state_id": 1,
+          "seed": 19110301
+        },
+        "mode": "default",
+        "success": true,
+        "controls": 206,
+        "waits": 0,
+        "identity": {
+          "physics": "49c3203c3face55f3cdb13548da84409ed866e80adb375e021dd2f587fa9fa14",
+          "public": {
+            "agentview_image": "06c91debff13e954f48b260956e9259cba201835c743397623c5a3e7ec2adde0",
+            "robot0_eye_in_hand_image": "60cf9482d4822198b55a6316125db9c1d6da9e708ad2830860d5f4bcd606b382",
+            "robot0_joint_pos": "4e1b4105a1ef859e4ec273d05b6aaa99162836eba3db6acea517528bb8bfa3e7",
+            "robot0_joint_vel": "3f7c76eea3ee15ca0bb78ec524cd3bee154d1a4ec84e999a51978685d5ee5a8b",
+            "robot0_eef_pos": "aebb171420ea44db2041bd7d783a0882a2b680251b042d1e8820b8c2326f5155",
+            "robot0_eef_quat_xyzw": "3ba99e4f9bf96b1d725778aef88ce74c41ab42ee753245ee9f89ad42d291d413",
+            "robot0_gripper_qpos": "6cb4cf26a1085ff27265d0ad9ce128540c151107c9e243ad3951015d79a703c9"
+          },
+          "horizon": 520,
+          "prompt": "put the black bowl in the bottom drawer of the cabinet and close it"
+        },
+        "opening_sha256": "1c71d2d401e8fb24ec8010aa920f6134acda8deb873c7478264ad998d8db647c",
+        "released_prompt": "put the black bowl in the bottom drawer of the cabinet and close it",
+        "seconds": 11.775340824387968
+      }
+    },
+    "libero_10-3-paced": {
+      "folder": "/mowenjie/fluffy-bassoon-2/outputs/libero-retry-headroom-20261119-r1/paired01/episodes/libero_10-3-r0-BASE/paced",
+      "record_sha256": "5dcd6f750ad755218c9985d1120271af012ea1a9ac19bda5d532c120c2ac8366",
+      "npz_sha256": "2ec54a0e656e9cd9dae507cdd4d94d0c0fa15aefe63e547278474957bb51c97b",
+      "actions_sha256": "2f5f476d319cab74961fcdbb6d81cb1fd76a656bdb46c82fb85dfee6c64df2d6",
+      "bddl": "/mowenjie/fluffy-bassoon-2/sources/libero-pro2-e5500c69/assets/bddl/libero-pro2.0-1680-v1/libero_10/00_base/BASE__KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it.bddl",
+      "bddl_sha256": "5e31c8ad9257e2a3a7f48d1a3c63a3d37ae459d1c7d6b07850a113b75ffc1d62",
+      "record": {
+        "case": {
+          "suite": "libero_10",
+          "task_id": 3,
+          "variant": "BASE",
+          "init_state_id": 1,
+          "seed": 19110301
+        },
+        "mode": "paced",
+        "success": true,
+        "controls": 507,
+        "waits": 294,
+        "identity": {
+          "physics": "49c3203c3face55f3cdb13548da84409ed866e80adb375e021dd2f587fa9fa14",
+          "public": {
+            "agentview_image": "06c91debff13e954f48b260956e9259cba201835c743397623c5a3e7ec2adde0",
+            "robot0_eye_in_hand_image": "60cf9482d4822198b55a6316125db9c1d6da9e708ad2830860d5f4bcd606b382",
+            "robot0_joint_pos": "4e1b4105a1ef859e4ec273d05b6aaa99162836eba3db6acea517528bb8bfa3e7",
+            "robot0_joint_vel": "3f7c76eea3ee15ca0bb78ec524cd3bee154d1a4ec84e999a51978685d5ee5a8b",
+            "robot0_eef_pos": "aebb171420ea44db2041bd7d783a0882a2b680251b042d1e8820b8c2326f5155",
+            "robot0_eef_quat_xyzw": "3ba99e4f9bf96b1d725778aef88ce74c41ab42ee753245ee9f89ad42d291d413",
+            "robot0_gripper_qpos": "6cb4cf26a1085ff27265d0ad9ce128540c151107c9e243ad3951015d79a703c9"
+          },
+          "horizon": 520,
+          "prompt": "put the black bowl in the bottom drawer of the cabinet and close it"
+        },
+        "opening_sha256": "1c71d2d401e8fb24ec8010aa920f6134acda8deb873c7478264ad998d8db647c",
+        "released_prompt": "put the black bowl in the bottom drawer of the cabinet and close it",
+        "seconds": 14.404646990820765
+      }
+    },
+    "libero_goal-0-default": {
+      "folder": "/mowenjie/fluffy-bassoon-2/outputs/libero-retry-headroom-20261119-r1/paired01/episodes/libero_goal-0-r0-BASE/default",
+      "record_sha256": "661235351d063b12f15bf6d831be72a060710229df9bcfc9de50111aa291a435",
+      "npz_sha256": "9ed6fbe4457b63bd2b6eeb56f7702b3a62cfc5f7926c394de396dd6125e14874",
+      "actions_sha256": "4fb0de5663a9680643c903b6aca16cdc26fb6b2b7bc76b0abeadca80521b8eb9",
+      "bddl": "/mowenjie/fluffy-bassoon-2/sources/libero-pro2-e5500c69/assets/bddl/libero-pro2.0-1680-v1/libero_goal/00_base/BASE__open_the_middle_drawer_of_the_cabinet.bddl",
+      "bddl_sha256": "66895eaadfde21d257accc104dde6568b31221ae01574594a619ece8e5432fcc",
+      "record": {
+        "case": {
+          "suite": "libero_goal",
+          "task_id": 0,
+          "variant": "BASE",
+          "init_state_id": 1,
+          "seed": 19120001
+        },
+        "mode": "default",
+        "success": true,
+        "controls": 106,
+        "waits": 0,
+        "identity": {
+          "physics": "8b60ec9c24ee9b9a88ac53797bbaec2daf797d28ccd1ab1422469a0a0f247ef2",
+          "public": {
+            "agentview_image": "c7772ed978738b89b543f26d10d04a219e19e67f4416cd065bce8bc5a3dce37c",
+            "robot0_eye_in_hand_image": "95e232391f79ecf66ac9c323764364c03edae358af90bfc54519b1852d4d4948",
+            "robot0_joint_pos": "92b9c99c920f29998ef0943c066f0edfc09e9d48c018b40c51d5a2df5d248f7c",
+            "robot0_joint_vel": "07f3f0e0cbd8fdeb5f30616569156a5ecdff5eea8dc5840e05bce13eb4dd7bf4",
+            "robot0_eef_pos": "3307bc0afaa8639d0c724af1d09049c724481c040db7b9379fb36c4e6bf3ed96",
+            "robot0_eef_quat_xyzw": "f2833a66d247dfdd907b29490acd3f32ae097f5537eeb1e90be3436dbb65c7c3",
+            "robot0_gripper_qpos": "4cac5dba91c8a8335c038e03ce2ef9a71f432a26a4a12c65c468939914dd2484"
+          },
+          "horizon": 300,
+          "prompt": "open the middle layer of the drawer"
+        },
+        "opening_sha256": "ad46209a0019d3dff757adda4fe504be3826e7a4ce16d11854b99b34e4d45329",
+        "released_prompt": "open the middle layer of the drawer",
+        "seconds": 9.107342089526355
+      }
+    },
+    "libero_goal-0-paced": {
+      "folder": "/mowenjie/fluffy-bassoon-2/outputs/libero-retry-headroom-20261119-r1/paired01/episodes/libero_goal-0-r0-BASE/paced",
+      "record_sha256": "e376811c7152e8487c4622a3a0e199e3486df8e61d1577919b8b03b218830c25",
+      "npz_sha256": "42ac9e5a48055dd344baa7f2da7d271ccb311cfcf6686c243326d4a6fa32f2ed",
+      "actions_sha256": "932917da74878d892372f26a7cdcd422f7f1cf28968ba56228726440cf8dfa6a",
+      "bddl": "/mowenjie/fluffy-bassoon-2/sources/libero-pro2-e5500c69/assets/bddl/libero-pro2.0-1680-v1/libero_goal/00_base/BASE__open_the_middle_drawer_of_the_cabinet.bddl",
+      "bddl_sha256": "66895eaadfde21d257accc104dde6568b31221ae01574594a619ece8e5432fcc",
+      "record": {
+        "case": {
+          "suite": "libero_goal",
+          "task_id": 0,
+          "variant": "BASE",
+          "init_state_id": 1,
+          "seed": 19120001
+        },
+        "mode": "paced",
+        "success": true,
+        "controls": 267,
+        "waits": 154,
+        "identity": {
+          "physics": "8b60ec9c24ee9b9a88ac53797bbaec2daf797d28ccd1ab1422469a0a0f247ef2",
+          "public": {
+            "agentview_image": "c7772ed978738b89b543f26d10d04a219e19e67f4416cd065bce8bc5a3dce37c",
+            "robot0_eye_in_hand_image": "95e232391f79ecf66ac9c323764364c03edae358af90bfc54519b1852d4d4948",
+            "robot0_joint_pos": "92b9c99c920f29998ef0943c066f0edfc09e9d48c018b40c51d5a2df5d248f7c",
+            "robot0_joint_vel": "07f3f0e0cbd8fdeb5f30616569156a5ecdff5eea8dc5840e05bce13eb4dd7bf4",
+            "robot0_eef_pos": "3307bc0afaa8639d0c724af1d09049c724481c040db7b9379fb36c4e6bf3ed96",
+            "robot0_eef_quat_xyzw": "f2833a66d247dfdd907b29490acd3f32ae097f5537eeb1e90be3436dbb65c7c3",
+            "robot0_gripper_qpos": "4cac5dba91c8a8335c038e03ce2ef9a71f432a26a4a12c65c468939914dd2484"
+          },
+          "horizon": 300,
+          "prompt": "open the middle layer of the drawer"
+        },
+        "opening_sha256": "ad46209a0019d3dff757adda4fe504be3826e7a4ce16d11854b99b34e4d45329",
+        "released_prompt": "open the middle layer of the drawer",
+        "seconds": 11.309222768992186
+      }
+    },
+    "libero_goal-1-default": {
+      "folder": "/mowenjie/fluffy-bassoon-2/outputs/libero-retry-headroom-20261119-r1/paired01/episodes/libero_goal-1-r0-BASE/default",
+      "record_sha256": "d47f46953be5fed35297bd89ba4d3b0bbe6c3a07cd1a2f87412e7c587f52119a",
+      "npz_sha256": "7369acac2bb167ed6104b55d7968c85d6d5a64571aba50cfdafb6a4cad72e6c3",
+      "actions_sha256": "66734bd42659636db5d5dc5492e8081306cb87a7a9f3e713c3232ec4521ef3f6",
+      "bddl": "/mowenjie/fluffy-bassoon-2/sources/libero-pro2-e5500c69/assets/bddl/libero-pro2.0-1680-v1/libero_goal/00_base/BASE__put_the_bowl_on_the_stove.bddl",
+      "bddl_sha256": "7a6bb627da6e87025c1cfdd19fff5f8a2c873226734393657505dde2401144a6",
+      "record": {
+        "case": {
+          "suite": "libero_goal",
+          "task_id": 1,
+          "variant": "BASE",
+          "init_state_id": 1,
+          "seed": 19120101
+        },
+        "mode": "default",
+        "success": true,
+        "controls": 82,
+        "waits": 0,
+        "identity": {
+          "physics": "5a1ae5abe2c1e6725a9d888946c1550b6a50b13dfe7f14555327c188033c4cf7",
+          "public": {
+            "agentview_image": "23cc0d0cbbf5de504ce12e5c9ff3214676e05e2ec70bf4d86880353731b0b395",
+            "robot0_eye_in_hand_image": "506bcc73aa8e61a852f4f3c8e4082a3ecd11d805e9b3a861a445113ee041c272",
+            "robot0_joint_pos": "3567764168112bc70bf082577fd2d757a11dcd6b2d2c0e0b90c2877f69b09817",
+            "robot0_joint_vel": "0453452d4802054abc672c86308894b289a628ed080d4d56845b93d1c2676afb",
+            "robot0_eef_pos": "a188b1113ba7b09c044fc6b80a9789c2b24a39700f5ece31c794dcd6b7b6ce67",
+            "robot0_eef_quat_xyzw": "dc5984a6ad1a2cfedf3e759ec8b5f77d8d3dec053e36c69c167557f2ac146de2",
+            "robot0_gripper_qpos": "de9442f9cc1d722de9eb50eef2f1f266483fd3d707e0f1435d1dd9b1765e7738"
+          },
+          "horizon": 300,
+          "prompt": "put the bowl on the stove"
+        },
+        "opening_sha256": "8d28b9638340786bd27077f9b54ebae42b0eb00cca62a5ba6502ce5ee37e9a6b",
+        "released_prompt": "put the bowl on the stove",
+        "seconds": 8.253962996415794
+      }
+    },
+    "libero_goal-1-paced": {
+      "folder": "/mowenjie/fluffy-bassoon-2/outputs/libero-retry-headroom-20261119-r1/paired01/episodes/libero_goal-1-r0-BASE/paced",
+      "record_sha256": "25694d55549356a737c4331274aea87708858e0a27024ac552586b4cddc0da1a",
+      "npz_sha256": "6285b2e479a5a6f9ac4720ce2f1b835ca9b8ec773c4794a4252df36693b8ff58",
+      "actions_sha256": "d10b136e8e0807fca68ac454ce77698f24e4553d009fca83d4245a849069f9ec",
+      "bddl": "/mowenjie/fluffy-bassoon-2/sources/libero-pro2-e5500c69/assets/bddl/libero-pro2.0-1680-v1/libero_goal/00_base/BASE__put_the_bowl_on_the_stove.bddl",
+      "bddl_sha256": "7a6bb627da6e87025c1cfdd19fff5f8a2c873226734393657505dde2401144a6",
+      "record": {
+        "case": {
+          "suite": "libero_goal",
+          "task_id": 1,
+          "variant": "BASE",
+          "init_state_id": 1,
+          "seed": 19120101
+        },
+        "mode": "paced",
+        "success": true,
+        "controls": 267,
+        "waits": 154,
+        "identity": {
+          "physics": "5a1ae5abe2c1e6725a9d888946c1550b6a50b13dfe7f14555327c188033c4cf7",
+          "public": {
+            "agentview_image": "23cc0d0cbbf5de504ce12e5c9ff3214676e05e2ec70bf4d86880353731b0b395",
+            "robot0_eye_in_hand_image": "506bcc73aa8e61a852f4f3c8e4082a3ecd11d805e9b3a861a445113ee041c272",
+            "robot0_joint_pos": "3567764168112bc70bf082577fd2d757a11dcd6b2d2c0e0b90c2877f69b09817",
+            "robot0_joint_vel": "0453452d4802054abc672c86308894b289a628ed080d4d56845b93d1c2676afb",
+            "robot0_eef_pos": "a188b1113ba7b09c044fc6b80a9789c2b24a39700f5ece31c794dcd6b7b6ce67",
+            "robot0_eef_quat_xyzw": "dc5984a6ad1a2cfedf3e759ec8b5f77d8d3dec053e36c69c167557f2ac146de2",
+            "robot0_gripper_qpos": "de9442f9cc1d722de9eb50eef2f1f266483fd3d707e0f1435d1dd9b1765e7738"
+          },
+          "horizon": 300,
+          "prompt": "put the bowl on the stove"
+        },
+        "opening_sha256": "8d28b9638340786bd27077f9b54ebae42b0eb00cca62a5ba6502ce5ee37e9a6b",
+        "released_prompt": "put the bowl on the stove",
+        "seconds": 11.135443589650095
+      }
+    },
+    "libero_object-0-default": {
+      "folder": "/mowenjie/fluffy-bassoon-2/outputs/libero-retry-headroom-20261119-r1/paired01/episodes/libero_object-0-r0-BASE/default",
+      "record_sha256": "3a21cf88985183ed91dddd1327330a6b2a489354a70bbbe4c4f8f657033d6203",
+      "npz_sha256": "ac2f3d27a0b4ee8ec47ec5f51afc83dcd8e39bdd1a64c3ead69a260414cb7766",
+      "actions_sha256": "a5c326200b03d05160ef9cc31233662c8d0c935b21c0cf60d7b2889212b70c39",
+      "bddl": "/mowenjie/fluffy-bassoon-2/sources/libero-pro2-e5500c69/assets/bddl/libero-pro2.0-1680-v1/libero_object/00_base/BASE__pick_up_the_alphabet_soup_and_place_it_in_the_basket.bddl",
+      "bddl_sha256": "04435a67d866287112f8952460941d2ac26fc96b88df343155dfde32e5a7df7c",
+      "record": {
+        "case": {
+          "suite": "libero_object",
+          "task_id": 0,
+          "variant": "BASE",
+          "init_state_id": 1,
+          "seed": 19130001
+        },
+        "mode": "default",
+        "success": true,
+        "controls": 133,
+        "waits": 0,
+        "identity": {
+          "physics": "fc86edcdde17e9182505f16b6b3d5391c223d9915f05aae703fd5d1aa91d386f",
+          "public": {
+            "agentview_image": "3ccebafa44addc9c6c70faeede876d34980f99a7056c32aea5f51bfb91bc9e64",
+            "robot0_eye_in_hand_image": "1852002887288a6142526a68b9b14d6542c995523b6bd4b73775de9475e5452f",
+            "robot0_joint_pos": "2b41e026945b4e9a99b87f7523b1d1fb2790cc6348c68bb9f2cc1960bc578c93",
+            "robot0_joint_vel": "1fc00aaef44a025162db1b5c2b01ab33ddb64ca7380f6ad722ea4f65c75ac443",
+            "robot0_eef_pos": "0d19fc98b81e487d280657db0d081ece2c2357f0abd59deb7c158d8386ecba36",
+            "robot0_eef_quat_xyzw": "039ed9e9cea1efc3af4385cf8d4f88192bb90590be3f819d28485fbff8b9b922",
+            "robot0_gripper_qpos": "7325345e68ea55b1b44d6a003d8693bd69bda90cbca95e92d117c5a9e81a1b1a"
+          },
+          "horizon": 280,
+          "prompt": "pick the alphabet soup and place it in the basket"
+        },
+        "opening_sha256": "4a5ae0ea0cdd08f2b7aa26d7f6ddf8be3cd7536458853c1838dc0f927b9f2ab0",
+        "released_prompt": "pick the alphabet soup and place it in the basket",
+        "seconds": 9.971362063661218
+      }
+    },
+    "libero_object-0-paced": {
+      "folder": "/mowenjie/fluffy-bassoon-2/outputs/libero-retry-headroom-20261119-r1/paired01/episodes/libero_object-0-r0-BASE/paced",
+      "record_sha256": "a2a4b6050f2bc94572d072e2f98bcce73cbbc89269286ec5354f6e583eac0199",
+      "npz_sha256": "a73a9325af7a6fcab87df41bc8c2d10a7d7bdbbe50304dd4e8fe3b031f962772",
+      "actions_sha256": "f9bf5a30a4a4c27e5b9c3efa063cb7b33a0f243f17723e22d6883ee3b6fab07d",
+      "bddl": "/mowenjie/fluffy-bassoon-2/sources/libero-pro2-e5500c69/assets/bddl/libero-pro2.0-1680-v1/libero_object/00_base/BASE__pick_up_the_alphabet_soup_and_place_it_in_the_basket.bddl",
+      "bddl_sha256": "04435a67d866287112f8952460941d2ac26fc96b88df343155dfde32e5a7df7c",
+      "record": {
+        "case": {
+          "suite": "libero_object",
+          "task_id": 0,
+          "variant": "BASE",
+          "init_state_id": 1,
+          "seed": 19130001
+        },
+        "mode": "paced",
+        "success": false,
+        "controls": 280,
+        "waits": 160,
+        "identity": {
+          "physics": "fc86edcdde17e9182505f16b6b3d5391c223d9915f05aae703fd5d1aa91d386f",
+          "public": {
+            "agentview_image": "3ccebafa44addc9c6c70faeede876d34980f99a7056c32aea5f51bfb91bc9e64",
+            "robot0_eye_in_hand_image": "1852002887288a6142526a68b9b14d6542c995523b6bd4b73775de9475e5452f",
+            "robot0_joint_pos": "2b41e026945b4e9a99b87f7523b1d1fb2790cc6348c68bb9f2cc1960bc578c93",
+            "robot0_joint_vel": "1fc00aaef44a025162db1b5c2b01ab33ddb64ca7380f6ad722ea4f65c75ac443",
+            "robot0_eef_pos": "0d19fc98b81e487d280657db0d081ece2c2357f0abd59deb7c158d8386ecba36",
+            "robot0_eef_quat_xyzw": "039ed9e9cea1efc3af4385cf8d4f88192bb90590be3f819d28485fbff8b9b922",
+            "robot0_gripper_qpos": "7325345e68ea55b1b44d6a003d8693bd69bda90cbca95e92d117c5a9e81a1b1a"
+          },
+          "horizon": 280,
+          "prompt": "pick the alphabet soup and place it in the basket"
+        },
+        "opening_sha256": "4a5ae0ea0cdd08f2b7aa26d7f6ddf8be3cd7536458853c1838dc0f927b9f2ab0",
+        "released_prompt": "pick the alphabet soup and place it in the basket",
+        "seconds": 11.328411730006337
+      }
+    },
+    "libero_object-7-default": {
+      "folder": "/mowenjie/fluffy-bassoon-2/outputs/libero-retry-headroom-20261119-r1/paired01/episodes/libero_object-7-r0-BASE/default",
+      "record_sha256": "ef3a9389d0e88aff90ecd623aea68d3a1187b98a7ed4008cb0057f4695a18a69",
+      "npz_sha256": "4b69193a6893635521968d93b75ef75ba676da2cd862650ae2af84a1c2f7d3e0",
+      "actions_sha256": "aeb50f2fbbdadf528ca84b9ae9a69a4bcfbf4f22f403bbec8ab3644f687e6e6e",
+      "bddl": "/mowenjie/fluffy-bassoon-2/sources/libero-pro2-e5500c69/assets/bddl/libero-pro2.0-1680-v1/libero_object/00_base/BASE__pick_up_the_milk_and_place_it_in_the_basket.bddl",
+      "bddl_sha256": "bfed2e75871def0ed4bdd748eb7af1b37f11e4d92c516affefde1925a863ba89",
+      "record": {
+        "case": {
+          "suite": "libero_object",
+          "task_id": 7,
+          "variant": "BASE",
+          "init_state_id": 1,
+          "seed": 19130701
+        },
+        "mode": "default",
+        "success": true,
+        "controls": 127,
+        "waits": 0,
+        "identity": {
+          "physics": "f1c72b4f2b10f153a503f6e82af60a91e6128925510c0352725f9e9a9ed2091e",
+          "public": {
+            "agentview_image": "81bdd8b7888ea2d901dcc8b5b5272bd167adaa9094daf4ce55c2bdf43832a702",
+            "robot0_eye_in_hand_image": "43fad75f1f027702b8d276f72f4befcf281554b1e32514a0f3e917e0436b9c41",
+            "robot0_joint_pos": "f8d4b27c02973cac263627c4fda2b4ab0e439ff8072090efcb3323cac00f4311",
+            "robot0_joint_vel": "0df3c9f240326b0bc1c41932bedbba7391dc9901ffa55ad350619d561574e5ac",
+            "robot0_eef_pos": "330954f58b5678cfb25ce1920196fc2c3c49c07fd0cb7e7bd05872aa44f0aaa1",
+            "robot0_eef_quat_xyzw": "e8e4fcd28fa92953b087701d7722fc3d82903dc07c343539db6a611b264eea70",
+            "robot0_gripper_qpos": "978988c94ff6f9686648a9dde6f48aff5a1f519e99af10ec6a16e42bd2a07652"
+          },
+          "horizon": 280,
+          "prompt": "pick the milk and place it in the basket"
+        },
+        "opening_sha256": "319a6d4386dedf05225a616da8d904c33e437e31b0ebf06299b90f176a8d2174",
+        "released_prompt": "pick the milk and place it in the basket",
+        "seconds": 9.885449533350766
+      }
+    },
+    "libero_object-7-paced": {
+      "folder": "/mowenjie/fluffy-bassoon-2/outputs/libero-retry-headroom-20261119-r1/paired01/episodes/libero_object-7-r0-BASE/paced",
+      "record_sha256": "7557717a54a10c8c246ce37097bb2ea56a22f93e7f7f8deb98fb8ba209bf14be",
+      "npz_sha256": "08f8290a7bdc5403c17b05fa32f9844bde21c1b4a4daf6c3a39333a74eaa92be",
+      "actions_sha256": "003d71525b6735c83f21601a57f7bc895724fc4c1d522a3aa72208f7eadf2781",
+      "bddl": "/mowenjie/fluffy-bassoon-2/sources/libero-pro2-e5500c69/assets/bddl/libero-pro2.0-1680-v1/libero_object/00_base/BASE__pick_up_the_milk_and_place_it_in_the_basket.bddl",
+      "bddl_sha256": "bfed2e75871def0ed4bdd748eb7af1b37f11e4d92c516affefde1925a863ba89",
+      "record": {
+        "case": {
+          "suite": "libero_object",
+          "task_id": 7,
+          "variant": "BASE",
+          "init_state_id": 1,
+          "seed": 19130701
+        },
+        "mode": "paced",
+        "success": true,
+        "controls": 272,
+        "waits": 154,
+        "identity": {
+          "physics": "f1c72b4f2b10f153a503f6e82af60a91e6128925510c0352725f9e9a9ed2091e",
+          "public": {
+            "agentview_image": "81bdd8b7888ea2d901dcc8b5b5272bd167adaa9094daf4ce55c2bdf43832a702",
+            "robot0_eye_in_hand_image": "43fad75f1f027702b8d276f72f4befcf281554b1e32514a0f3e917e0436b9c41",
+            "robot0_joint_pos": "f8d4b27c02973cac263627c4fda2b4ab0e439ff8072090efcb3323cac00f4311",
+            "robot0_joint_vel": "0df3c9f240326b0bc1c41932bedbba7391dc9901ffa55ad350619d561574e5ac",
+            "robot0_eef_pos": "330954f58b5678cfb25ce1920196fc2c3c49c07fd0cb7e7bd05872aa44f0aaa1",
+            "robot0_eef_quat_xyzw": "e8e4fcd28fa92953b087701d7722fc3d82903dc07c343539db6a611b264eea70",
+            "robot0_gripper_qpos": "978988c94ff6f9686648a9dde6f48aff5a1f519e99af10ec6a16e42bd2a07652"
+          },
+          "horizon": 280,
+          "prompt": "pick the milk and place it in the basket"
+        },
+        "opening_sha256": "319a6d4386dedf05225a616da8d904c33e437e31b0ebf06299b90f176a8d2174",
+        "released_prompt": "pick the milk and place it in the basket",
+        "seconds": 11.165401654317975
+      }
+    },
+    "libero_spatial-1-default": {
+      "folder": "/mowenjie/fluffy-bassoon-2/outputs/libero-retry-headroom-20261119-r1/paired01/episodes/libero_spatial-1-r0-BASE/default",
+      "record_sha256": "7686d89cc7dec52630ee0a3c8dd614d8aac49c2f70fe91c91d446ec8018b6249",
+      "npz_sha256": "164143171a36c99c7da57914f12dafbff1055ee6dfd9d00409c274d9b0e24a91",
+      "actions_sha256": "40e838b649a2063bd4bba31e465517a1a6fafe2a60af908b2618e418a55f79a3",
+      "bddl": "/mowenjie/fluffy-bassoon-2/sources/libero-pro2-e5500c69/assets/bddl/libero-pro2.0-1680-v1/libero_spatial/00_base/BASE__pick_up_the_black_bowl_next_to_the_ramekin_and_place_it_on_the_plate.bddl",
+      "bddl_sha256": "fa455a550f810dae713d2630f0b9e083ddefc5ec30bad45fc834db5f733425cf",
+      "record": {
+        "case": {
+          "suite": "libero_spatial",
+          "task_id": 1,
+          "variant": "BASE",
+          "init_state_id": 1,
+          "seed": 19140101
+        },
+        "mode": "default",
+        "success": true,
+        "controls": 95,
+        "waits": 0,
+        "identity": {
+          "physics": "df2d0642b5aebcca79b546e12ff486ca6288108b6362f9666557ac9ff40116a7",
+          "public": {
+            "agentview_image": "90799f0c36281bc9054870cca3cd0771da8e3ac49a08de6629f4999904622ea7",
+            "robot0_eye_in_hand_image": "50abcd0bce3220db7e9a859fbdd0a33bb33ab3d4b541026d3f6bfa82ce4ce43a",
+            "robot0_joint_pos": "9c3da1ff6da2ea582e5577e8fcf5da03caea2c122a47323ef63c705e3dc1761e",
+            "robot0_joint_vel": "f1bbde4b2f38641ff7cc368da2c6a663f8c79d598d6f1a077b8a7918deca2225",
+            "robot0_eef_pos": "90d5ed1f31bd5866f66a0bb4adcb2bb9afdd161285fc7efe46639cd5a81e9b25",
+            "robot0_eef_quat_xyzw": "0eff97ff3e6caf382787766f5bb4bfc350f73277359dd4d2d4d21ff8ed1a1c99",
+            "robot0_gripper_qpos": "f47eb9732bbdab4bc6607a2923ee6cef595f9b1af32bafb3af28d74f10c9fe1c"
+          },
+          "horizon": 220,
+          "prompt": "pick the akita black bowl next to the ramekin and place it on the plate"
+        },
+        "opening_sha256": "97c30a4fd7533a55e74a96a0e8e58f0f17454e9b87db5208f15a0e1e628a14c4",
+        "released_prompt": "pick the akita black bowl next to the ramekin and place it on the plate",
+        "seconds": 9.87741470336914
+      }
+    },
+    "libero_spatial-1-paced": {
+      "folder": "/mowenjie/fluffy-bassoon-2/outputs/libero-retry-headroom-20261119-r1/paired01/episodes/libero_spatial-1-r0-BASE/paced",
+      "record_sha256": "befeea9a5f473fa9ba87fe68e7252ebb3c74bc36b4cd626f08b7fef91a18bf82",
+      "npz_sha256": "89713c30b95df409f0e1762609ec382e2223c0047542e64dad7e52baa3eb4782",
+      "actions_sha256": "2399e77e02a7e8a1078c014eae47a250804bba5df75d4213d0a5520cf0deac3d",
+      "bddl": "/mowenjie/fluffy-bassoon-2/sources/libero-pro2-e5500c69/assets/bddl/libero-pro2.0-1680-v1/libero_spatial/00_base/BASE__pick_up_the_black_bowl_next_to_the_ramekin_and_place_it_on_the_plate.bddl",
+      "bddl_sha256": "fa455a550f810dae713d2630f0b9e083ddefc5ec30bad45fc834db5f733425cf",
+      "record": {
+        "case": {
+          "suite": "libero_spatial",
+          "task_id": 1,
+          "variant": "BASE",
+          "init_state_id": 1,
+          "seed": 19140101
+        },
+        "mode": "paced",
+        "success": true,
+        "controls": 200,
+        "waits": 112,
+        "identity": {
+          "physics": "df2d0642b5aebcca79b546e12ff486ca6288108b6362f9666557ac9ff40116a7",
+          "public": {
+            "agentview_image": "90799f0c36281bc9054870cca3cd0771da8e3ac49a08de6629f4999904622ea7",
+            "robot0_eye_in_hand_image": "50abcd0bce3220db7e9a859fbdd0a33bb33ab3d4b541026d3f6bfa82ce4ce43a",
+            "robot0_joint_pos": "9c3da1ff6da2ea582e5577e8fcf5da03caea2c122a47323ef63c705e3dc1761e",
+            "robot0_joint_vel": "f1bbde4b2f38641ff7cc368da2c6a663f8c79d598d6f1a077b8a7918deca2225",
+            "robot0_eef_pos": "90d5ed1f31bd5866f66a0bb4adcb2bb9afdd161285fc7efe46639cd5a81e9b25",
+            "robot0_eef_quat_xyzw": "0eff97ff3e6caf382787766f5bb4bfc350f73277359dd4d2d4d21ff8ed1a1c99",
+            "robot0_gripper_qpos": "f47eb9732bbdab4bc6607a2923ee6cef595f9b1af32bafb3af28d74f10c9fe1c"
+          },
+          "horizon": 220,
+          "prompt": "pick the akita black bowl next to the ramekin and place it on the plate"
+        },
+        "opening_sha256": "97c30a4fd7533a55e74a96a0e8e58f0f17454e9b87db5208f15a0e1e628a14c4",
+        "released_prompt": "pick the akita black bowl next to the ramekin and place it on the plate",
+        "seconds": 11.10518975649029
+      }
+    },
+    "libero_spatial-7-default": {
+      "folder": "/mowenjie/fluffy-bassoon-2/outputs/libero-retry-headroom-20261119-r1/paired01/episodes/libero_spatial-7-r0-BASE/default",
+      "record_sha256": "fdca9b6da7f0d70fb3638bdcd5eafc4a27ccdb7fc8e4e0cc5361b69c1c2774c8",
+      "npz_sha256": "32ae80f1e4d11204a0c7c86975928dcb58499bd50f35bf83d27666f3dfc2e7ae",
+      "actions_sha256": "5da39c172919272610bd48502d47f15ceb95250a0bce5e0d26a58dfa9e63a2f7",
+      "bddl": "/mowenjie/fluffy-bassoon-2/sources/libero-pro2-e5500c69/assets/bddl/libero-pro2.0-1680-v1/libero_spatial/00_base/BASE__pick_up_the_black_bowl_on_the_stove_and_place_it_on_the_plate.bddl",
+      "bddl_sha256": "519a1881e239c10ea9e5892adb1602ce8229be61b8661c1d356c8d1ee5059caa",
+      "record": {
+        "case": {
+          "suite": "libero_spatial",
+          "task_id": 7,
+          "variant": "BASE",
+          "init_state_id": 1,
+          "seed": 19140701
+        },
+        "mode": "default",
+        "success": true,
+        "controls": 118,
+        "waits": 0,
+        "identity": {
+          "physics": "07201c3f6b091547b718ff3826ebe328887e0de2f08d7dd64a45ddbaa3751384",
+          "public": {
+            "agentview_image": "7b6a1d32c1f8f11f822c95848a2951ef13e356c8b781660ca3ebb653035da13b",
+            "robot0_eye_in_hand_image": "07bbc7a894cab497948d1166f69710490587ecff429e850119d2c9a624333a06",
+            "robot0_joint_pos": "60ee2c929e94ce472a7019b406d11dd1beedcca85b6c1ee3c53a52e18441f139",
+            "robot0_joint_vel": "f89caff606730110efb63eb623a12fb6583e5c2b17d650ad6b09dd1e31164468",
+            "robot0_eef_pos": "7cfdf6713f6410414bc03eb368cde3a6e842778473298e4dfd28dc51467ee375",
+            "robot0_eef_quat_xyzw": "914273a5ee70c9eda0ce7b7144152ac6bf00fe78fa8ca87c801f1dd4a4e4fafa",
+            "robot0_gripper_qpos": "1187f5f40489ef796b83dc5cb7bbab4b7e467ec02815e4bc1a35db0047c194cc"
+          },
+          "horizon": 220,
+          "prompt": "pick the akita black bowl on the stove and place it on the plate"
+        },
+        "opening_sha256": "85c0eadc2561097e574863fd7ef86c062039d25322e1e4d73e52a5fb851612b4",
+        "released_prompt": "pick the akita black bowl on the stove and place it on the plate",
+        "seconds": 11.162365853786469
+      }
+    },
+    "libero_spatial-7-paced": {
+      "folder": "/mowenjie/fluffy-bassoon-2/outputs/libero-retry-headroom-20261119-r1/paired01/episodes/libero_spatial-7-r0-BASE/paced",
+      "record_sha256": "e01c5fb4df1687e2b7a17fa721eb1f91cad37fa90c25c71d578355d6699f9c2f",
+      "npz_sha256": "a9cae3845f1eb920d6fa089cbaab03018c27fb3190e8c6937531178bb3512bd6",
+      "actions_sha256": "09412154a72ec6877917d9e342382a98855961764c0fb549657243fcdef9f802",
+      "bddl": "/mowenjie/fluffy-bassoon-2/sources/libero-pro2-e5500c69/assets/bddl/libero-pro2.0-1680-v1/libero_spatial/00_base/BASE__pick_up_the_black_bowl_on_the_stove_and_place_it_on_the_plate.bddl",
+      "bddl_sha256": "519a1881e239c10ea9e5892adb1602ce8229be61b8661c1d356c8d1ee5059caa",
+      "record": {
+        "case": {
+          "suite": "libero_spatial",
+          "task_id": 7,
+          "variant": "BASE",
+          "init_state_id": 1,
+          "seed": 19140701
+        },
+        "mode": "paced",
+        "success": true,
+        "controls": 202,
+        "waits": 112,
+        "identity": {
+          "physics": "07201c3f6b091547b718ff3826ebe328887e0de2f08d7dd64a45ddbaa3751384",
+          "public": {
+            "agentview_image": "7b6a1d32c1f8f11f822c95848a2951ef13e356c8b781660ca3ebb653035da13b",
+            "robot0_eye_in_hand_image": "07bbc7a894cab497948d1166f69710490587ecff429e850119d2c9a624333a06",
+            "robot0_joint_pos": "60ee2c929e94ce472a7019b406d11dd1beedcca85b6c1ee3c53a52e18441f139",
+            "robot0_joint_vel": "f89caff606730110efb63eb623a12fb6583e5c2b17d650ad6b09dd1e31164468",
+            "robot0_eef_pos": "7cfdf6713f6410414bc03eb368cde3a6e842778473298e4dfd28dc51467ee375",
+            "robot0_eef_quat_xyzw": "914273a5ee70c9eda0ce7b7144152ac6bf00fe78fa8ca87c801f1dd4a4e4fafa",
+            "robot0_gripper_qpos": "1187f5f40489ef796b83dc5cb7bbab4b7e467ec02815e4bc1a35db0047c194cc"
+          },
+          "horizon": 220,
+          "prompt": "pick the akita black bowl on the stove and place it on the plate"
+        },
+        "opening_sha256": "85c0eadc2561097e574863fd7ef86c062039d25322e1e4d73e52a5fb851612b4",
+        "released_prompt": "pick the akita black bowl on the stove and place it on the plate",
+        "seconds": 11.728022084571421
+      }
+    }
+  }
+}
