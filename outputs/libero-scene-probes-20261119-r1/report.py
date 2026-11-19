@@ -106,7 +106,16 @@ def score_pair(source,test,pair):
                   block_oracle=sum(fixed_best([b]) for b in blocks),
                   known_hidden_goal_query=sum(b['query_coverage'] for b in blocks))
     sides=[b['support_hits'] for b in blocks]
-    return dict(goals=list(pair),assignments=2*len(blocks),totals=totals,
+    sensitivity={}
+    for budget in (100,150,200,250,300):
+        values=dict(selected=0.,fit_constant=0.,balanced=0.)
+        for b in blocks:
+            pose,layout=b['scene'],b['layout']
+            x,_=outcomes(test[pose,layout]['records'],test[next_scene(test,pose),layout]['records'],pair,budget)
+            for name,p in [('selected',b['choice_probability_first']),('fit_constant',fixed),('balanced',.5)]:
+                values[name]+=float(p*x[0].sum()+(1-p)*x[1].sum())
+        sensitivity[str(budget)]=values
+    return dict(goals=list(pair),assignments=2*len(blocks),totals=totals,budget_sensitivity=sensitivity,
                 reachability=dict(first_only=sides.count([True,False]),second_only=sides.count([False,True]),
                                   both=sides.count([True,True]),neither=sides.count([False,False])),
                 differences_by_pose=[sum(sum(b['native']['selected'])-sum(b['native']['fit_constant'])
