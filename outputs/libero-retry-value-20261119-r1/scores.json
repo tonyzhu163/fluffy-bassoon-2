@@ -1,0 +1,4239 @@
+{
+  "source": {
+    "tapes": 64,
+    "rows": 6144,
+    "native_advantages": {
+      "-1.0": 1536,
+      "0.0": 2304,
+      "1.0": 2304
+    },
+    "query_success": {
+      "32": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "33": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "34": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "35": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    }
+  },
+  "bowl": {
+    "all": {
+      "n": 1024,
+      "ceiling": 896.0,
+      "native": {
+        "completion_joint": 786.0,
+        "completion_jaw": 754.0,
+        "table": 704.0,
+        "utility_rewards": 672.0,
+        "intent_rewards": 672.0,
+        "utility_commands": 656.0,
+        "intent_commands": 728.0,
+        "utility_motion": 779.0,
+        "intent_motion": 786.0,
+        "utility_joint_0.001": 700.0,
+        "intent_joint_0.001": 768.0,
+        "utility_joint": 759.0,
+        "intent_joint": 772.0,
+        "utility_joint_0.1": 788.0,
+        "intent_joint_0.1": 785.0
+      },
+      "final": {
+        "completion_joint": 786.0,
+        "completion_jaw": 754.0,
+        "table": 704.0,
+        "utility_rewards": 672.0,
+        "intent_rewards": 672.0,
+        "utility_commands": 656.0,
+        "intent_commands": 728.0,
+        "utility_motion": 779.0,
+        "intent_motion": 786.0,
+        "utility_joint_0.001": 700.0,
+        "intent_joint_0.001": 768.0,
+        "utility_joint": 759.0,
+        "intent_joint": 772.0,
+        "utility_joint_0.1": 788.0,
+        "intent_joint_0.1": 785.0
+      },
+      "correct": {
+        "completion_joint": 912.0,
+        "completion_jaw": 876.0,
+        "table": 832.0,
+        "utility_rewards": 768.0,
+        "intent_rewards": 768.0,
+        "utility_commands": 760.0,
+        "intent_commands": 840.0,
+        "utility_motion": 903.0,
+        "intent_motion": 906.0,
+        "utility_joint_0.001": 802.0,
+        "intent_joint_0.001": 877.0,
+        "utility_joint": 871.0,
+        "intent_joint": 884.0,
+        "utility_joint_0.1": 912.0,
+        "intent_joint_0.1": 908.0
+      },
+      "paired": {
+        "utility_commands": {
+          "gains": 108.0,
+          "losses": 5.0
+        },
+        "intent_joint": {
+          "gains": 37.0,
+          "losses": 50.0
+        },
+        "completion_joint": {
+          "gains": 75.0,
+          "losses": 102.0
+        },
+        "completion_jaw": {
+          "gains": 98.0,
+          "losses": 93.0
+        },
+        "table": {
+          "gains": 85.0,
+          "losses": 30.0
+        }
+      }
+    },
+    "zero": {
+      "n": 512,
+      "ceiling": 448.0,
+      "native": {
+        "completion_joint": 338.0,
+        "completion_jaw": 306.0,
+        "table": 256.0,
+        "utility_rewards": 224.0,
+        "intent_rewards": 224.0,
+        "utility_commands": 280.0,
+        "intent_commands": 280.0,
+        "utility_motion": 331.0,
+        "intent_motion": 338.0,
+        "utility_joint_0.001": 320.0,
+        "intent_joint_0.001": 320.0,
+        "utility_joint": 328.0,
+        "intent_joint": 324.0,
+        "utility_joint_0.1": 340.0,
+        "intent_joint_0.1": 337.0
+      },
+      "final": {
+        "completion_joint": 338.0,
+        "completion_jaw": 306.0,
+        "table": 256.0,
+        "utility_rewards": 224.0,
+        "intent_rewards": 224.0,
+        "utility_commands": 280.0,
+        "intent_commands": 280.0,
+        "utility_motion": 331.0,
+        "intent_motion": 338.0,
+        "utility_joint_0.001": 320.0,
+        "intent_joint_0.001": 320.0,
+        "utility_joint": 328.0,
+        "intent_joint": 324.0,
+        "utility_joint_0.1": 340.0,
+        "intent_joint_0.1": 337.0
+      },
+      "correct": {
+        "completion_joint": 400.0,
+        "completion_jaw": 364.0,
+        "table": 320.0,
+        "utility_rewards": 256.0,
+        "intent_rewards": 256.0,
+        "utility_commands": 328.0,
+        "intent_commands": 328.0,
+        "utility_motion": 391.0,
+        "intent_motion": 394.0,
+        "utility_joint_0.001": 366.0,
+        "intent_joint_0.001": 365.0,
+        "utility_joint": 376.0,
+        "intent_joint": 372.0,
+        "utility_joint_0.1": 400.0,
+        "intent_joint_0.1": 396.0
+      },
+      "paired": {
+        "utility_commands": {
+          "gains": 53.0,
+          "losses": 5.0
+        },
+        "intent_joint": {
+          "gains": 37.0,
+          "losses": 33.0
+        },
+        "completion_joint": {
+          "gains": 75.0,
+          "losses": 85.0
+        },
+        "completion_jaw": {
+          "gains": 98.0,
+          "losses": 76.0
+        },
+        "table": {
+          "gains": 85.0,
+          "losses": 13.0
+        }
+      }
+    },
+    "by_query": {
+      "44": {
+        "n": 256,
+        "ceiling": 256.0,
+        "native": {
+          "completion_joint": 224.0,
+          "completion_jaw": 212.0,
+          "table": 208.0,
+          "utility_rewards": 184.0,
+          "intent_rewards": 184.0,
+          "utility_commands": 192.0,
+          "intent_commands": 208.0,
+          "utility_motion": 224.0,
+          "intent_motion": 223.0,
+          "utility_joint_0.001": 198.0,
+          "intent_joint_0.001": 212.0,
+          "utility_joint": 209.0,
+          "intent_joint": 214.0,
+          "utility_joint_0.1": 224.0,
+          "intent_joint_0.1": 220.0
+        },
+        "final": {
+          "completion_joint": 224.0,
+          "completion_jaw": 212.0,
+          "table": 208.0,
+          "utility_rewards": 184.0,
+          "intent_rewards": 184.0,
+          "utility_commands": 192.0,
+          "intent_commands": 208.0,
+          "utility_motion": 224.0,
+          "intent_motion": 223.0,
+          "utility_joint_0.001": 198.0,
+          "intent_joint_0.001": 212.0,
+          "utility_joint": 209.0,
+          "intent_joint": 214.0,
+          "utility_joint_0.1": 224.0,
+          "intent_joint_0.1": 220.0
+        },
+        "correct": {
+          "completion_joint": 224.0,
+          "completion_jaw": 212.0,
+          "table": 208.0,
+          "utility_rewards": 184.0,
+          "intent_rewards": 184.0,
+          "utility_commands": 192.0,
+          "intent_commands": 208.0,
+          "utility_motion": 224.0,
+          "intent_motion": 223.0,
+          "utility_joint_0.001": 198.0,
+          "intent_joint_0.001": 212.0,
+          "utility_joint": 209.0,
+          "intent_joint": 214.0,
+          "utility_joint_0.1": 224.0,
+          "intent_joint_0.1": 220.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 19.0,
+            "losses": 2.0
+          },
+          "intent_joint": {
+            "gains": 15.0,
+            "losses": 20.0
+          },
+          "completion_joint": {
+            "gains": 19.0,
+            "losses": 34.0
+          },
+          "completion_jaw": {
+            "gains": 30.0,
+            "losses": 33.0
+          },
+          "table": {
+            "gains": 10.0,
+            "losses": 9.0
+          }
+        }
+      },
+      "45": {
+        "n": 256,
+        "ceiling": 256.0,
+        "native": {
+          "completion_joint": 224.0,
+          "completion_jaw": 212.0,
+          "table": 208.0,
+          "utility_rewards": 184.0,
+          "intent_rewards": 184.0,
+          "utility_commands": 192.0,
+          "intent_commands": 208.0,
+          "utility_motion": 224.0,
+          "intent_motion": 224.0,
+          "utility_joint_0.001": 200.0,
+          "intent_joint_0.001": 216.0,
+          "utility_joint": 206.0,
+          "intent_joint": 216.0,
+          "utility_joint_0.1": 224.0,
+          "intent_joint_0.1": 224.0
+        },
+        "final": {
+          "completion_joint": 224.0,
+          "completion_jaw": 212.0,
+          "table": 208.0,
+          "utility_rewards": 184.0,
+          "intent_rewards": 184.0,
+          "utility_commands": 192.0,
+          "intent_commands": 208.0,
+          "utility_motion": 224.0,
+          "intent_motion": 224.0,
+          "utility_joint_0.001": 200.0,
+          "intent_joint_0.001": 216.0,
+          "utility_joint": 206.0,
+          "intent_joint": 216.0,
+          "utility_joint_0.1": 224.0,
+          "intent_joint_0.1": 224.0
+        },
+        "correct": {
+          "completion_joint": 224.0,
+          "completion_jaw": 212.0,
+          "table": 208.0,
+          "utility_rewards": 184.0,
+          "intent_rewards": 184.0,
+          "utility_commands": 192.0,
+          "intent_commands": 208.0,
+          "utility_motion": 224.0,
+          "intent_motion": 224.0,
+          "utility_joint_0.001": 200.0,
+          "intent_joint_0.001": 216.0,
+          "utility_joint": 206.0,
+          "intent_joint": 216.0,
+          "utility_joint_0.1": 224.0,
+          "intent_joint_0.1": 224.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 14.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 14.0,
+            "losses": 24.0
+          },
+          "completion_joint": {
+            "gains": 29.0,
+            "losses": 47.0
+          },
+          "completion_jaw": {
+            "gains": 32.0,
+            "losses": 38.0
+          },
+          "table": {
+            "gains": 8.0,
+            "losses": 10.0
+          }
+        }
+      },
+      "46": {
+        "n": 256,
+        "ceiling": 256.0,
+        "native": {
+          "completion_joint": 232.0,
+          "completion_jaw": 226.0,
+          "table": 208.0,
+          "utility_rewards": 200.0,
+          "intent_rewards": 200.0,
+          "utility_commands": 190.0,
+          "intent_commands": 212.0,
+          "utility_motion": 226.0,
+          "intent_motion": 229.0,
+          "utility_joint_0.001": 202.0,
+          "intent_joint_0.001": 226.0,
+          "utility_joint": 228.0,
+          "intent_joint": 226.0,
+          "utility_joint_0.1": 232.0,
+          "intent_joint_0.1": 232.0
+        },
+        "final": {
+          "completion_joint": 232.0,
+          "completion_jaw": 226.0,
+          "table": 208.0,
+          "utility_rewards": 200.0,
+          "intent_rewards": 200.0,
+          "utility_commands": 190.0,
+          "intent_commands": 212.0,
+          "utility_motion": 226.0,
+          "intent_motion": 229.0,
+          "utility_joint_0.001": 202.0,
+          "intent_joint_0.001": 226.0,
+          "utility_joint": 228.0,
+          "intent_joint": 226.0,
+          "utility_joint_0.1": 232.0,
+          "intent_joint_0.1": 232.0
+        },
+        "correct": {
+          "completion_joint": 232.0,
+          "completion_jaw": 226.0,
+          "table": 208.0,
+          "utility_rewards": 200.0,
+          "intent_rewards": 200.0,
+          "utility_commands": 190.0,
+          "intent_commands": 212.0,
+          "utility_motion": 226.0,
+          "intent_motion": 229.0,
+          "utility_joint_0.001": 202.0,
+          "intent_joint_0.001": 226.0,
+          "utility_joint": 228.0,
+          "intent_joint": 226.0,
+          "utility_joint_0.1": 232.0,
+          "intent_joint_0.1": 232.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 41.0,
+            "losses": 3.0
+          },
+          "intent_joint": {
+            "gains": 4.0,
+            "losses": 2.0
+          },
+          "completion_joint": {
+            "gains": 13.0,
+            "losses": 17.0
+          },
+          "completion_jaw": {
+            "gains": 19.0,
+            "losses": 17.0
+          },
+          "table": {
+            "gains": 31.0,
+            "losses": 11.0
+          }
+        }
+      },
+      "47": {
+        "n": 256,
+        "ceiling": 128.0,
+        "native": {
+          "completion_joint": 106.0,
+          "completion_jaw": 104.0,
+          "table": 80.0,
+          "utility_rewards": 104.0,
+          "intent_rewards": 104.0,
+          "utility_commands": 82.0,
+          "intent_commands": 100.0,
+          "utility_motion": 105.0,
+          "intent_motion": 110.0,
+          "utility_joint_0.001": 100.0,
+          "intent_joint_0.001": 114.0,
+          "utility_joint": 116.0,
+          "intent_joint": 116.0,
+          "utility_joint_0.1": 108.0,
+          "intent_joint_0.1": 109.0
+        },
+        "final": {
+          "completion_joint": 106.0,
+          "completion_jaw": 104.0,
+          "table": 80.0,
+          "utility_rewards": 104.0,
+          "intent_rewards": 104.0,
+          "utility_commands": 82.0,
+          "intent_commands": 100.0,
+          "utility_motion": 105.0,
+          "intent_motion": 110.0,
+          "utility_joint_0.001": 100.0,
+          "intent_joint_0.001": 114.0,
+          "utility_joint": 116.0,
+          "intent_joint": 116.0,
+          "utility_joint_0.1": 108.0,
+          "intent_joint_0.1": 109.0
+        },
+        "correct": {
+          "completion_joint": 232.0,
+          "completion_jaw": 226.0,
+          "table": 208.0,
+          "utility_rewards": 200.0,
+          "intent_rewards": 200.0,
+          "utility_commands": 186.0,
+          "intent_commands": 212.0,
+          "utility_motion": 229.0,
+          "intent_motion": 230.0,
+          "utility_joint_0.001": 202.0,
+          "intent_joint_0.001": 223.0,
+          "utility_joint": 228.0,
+          "intent_joint": 228.0,
+          "utility_joint_0.1": 232.0,
+          "intent_joint_0.1": 232.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 34.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 4.0,
+            "losses": 4.0
+          },
+          "completion_joint": {
+            "gains": 14.0,
+            "losses": 4.0
+          },
+          "completion_jaw": {
+            "gains": 17.0,
+            "losses": 5.0
+          },
+          "table": {
+            "gains": 36.0,
+            "losses": 0.0
+          }
+        }
+      }
+    }
+  },
+  "archived_bottle": {
+    "all": {
+      "n": 96,
+      "ceiling": 88.0,
+      "native": {
+        "completion_joint": 63.0,
+        "completion_jaw": 69.0,
+        "table": 60.0,
+        "utility_rewards": 62.0,
+        "intent_rewards": 62.0,
+        "utility_commands": 40.0,
+        "intent_commands": 64.0,
+        "utility_motion": 73.0,
+        "intent_motion": 72.0,
+        "utility_joint_0.001": 40.0,
+        "intent_joint_0.001": 64.0,
+        "utility_joint": 40.0,
+        "intent_joint": 64.0,
+        "utility_joint_0.1": 72.0,
+        "intent_joint_0.1": 72.0
+      },
+      "final": {
+        "completion_joint": 59.0,
+        "completion_jaw": 64.5,
+        "table": 58.0,
+        "utility_rewards": 57.0,
+        "intent_rewards": 57.0,
+        "utility_commands": 32.0,
+        "intent_commands": 56.0,
+        "utility_motion": 67.0,
+        "intent_motion": 66.0,
+        "utility_joint_0.001": 32.0,
+        "intent_joint_0.001": 56.0,
+        "utility_joint": 32.0,
+        "intent_joint": 56.0,
+        "utility_joint_0.1": 66.0,
+        "intent_joint_0.1": 66.0
+      },
+      "correct": {
+        "completion_joint": 63.0,
+        "completion_jaw": 72.0,
+        "table": 60.0,
+        "utility_rewards": 66.0,
+        "intent_rewards": 66.0,
+        "utility_commands": 48.0,
+        "intent_commands": 72.0,
+        "utility_motion": 77.0,
+        "intent_motion": 78.0,
+        "utility_joint_0.001": 48.0,
+        "intent_joint_0.001": 72.0,
+        "utility_joint": 48.0,
+        "intent_joint": 72.0,
+        "utility_joint_0.1": 78.0,
+        "intent_joint_0.1": 78.0
+      },
+      "paired": {
+        "utility_commands": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "intent_joint": {
+          "gains": 0.0,
+          "losses": 24.0
+        },
+        "completion_joint": {
+          "gains": 25.0,
+          "losses": 48.0
+        },
+        "completion_jaw": {
+          "gains": 16.0,
+          "losses": 45.0
+        },
+        "table": {
+          "gains": 28.0,
+          "losses": 48.0
+        }
+      }
+    },
+    "zero": {
+      "n": 60,
+      "ceiling": 52.0,
+      "native": {
+        "completion_joint": 27.0,
+        "completion_jaw": 33.0,
+        "table": 24.0,
+        "utility_rewards": 26.0,
+        "intent_rewards": 26.0,
+        "utility_commands": 28.0,
+        "intent_commands": 28.0,
+        "utility_motion": 37.0,
+        "intent_motion": 36.0,
+        "utility_joint_0.001": 28.0,
+        "intent_joint_0.001": 28.0,
+        "utility_joint": 28.0,
+        "intent_joint": 28.0,
+        "utility_joint_0.1": 36.0,
+        "intent_joint_0.1": 36.0
+      },
+      "final": {
+        "completion_joint": 25.0,
+        "completion_jaw": 30.5,
+        "table": 24.0,
+        "utility_rewards": 23.0,
+        "intent_rewards": 23.0,
+        "utility_commands": 22.0,
+        "intent_commands": 22.0,
+        "utility_motion": 33.0,
+        "intent_motion": 32.0,
+        "utility_joint_0.001": 22.0,
+        "intent_joint_0.001": 22.0,
+        "utility_joint": 22.0,
+        "intent_joint": 22.0,
+        "utility_joint_0.1": 32.0,
+        "intent_joint_0.1": 32.0
+      },
+      "correct": {
+        "completion_joint": 27.0,
+        "completion_jaw": 36.0,
+        "table": 24.0,
+        "utility_rewards": 30.0,
+        "intent_rewards": 30.0,
+        "utility_commands": 36.0,
+        "intent_commands": 36.0,
+        "utility_motion": 41.0,
+        "intent_motion": 42.0,
+        "utility_joint_0.001": 36.0,
+        "intent_joint_0.001": 36.0,
+        "utility_joint": 36.0,
+        "intent_joint": 36.0,
+        "utility_joint_0.1": 42.0,
+        "intent_joint_0.1": 42.0
+      },
+      "paired": {
+        "utility_commands": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "intent_joint": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "completion_joint": {
+          "gains": 25.0,
+          "losses": 24.0
+        },
+        "completion_jaw": {
+          "gains": 16.0,
+          "losses": 21.0
+        },
+        "table": {
+          "gains": 28.0,
+          "losses": 24.0
+        }
+      }
+    },
+    "by_query": {
+      "6": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 12.0,
+          "completion_jaw": 13.5,
+          "table": 12.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 8.0,
+          "intent_commands": 12.0,
+          "utility_motion": 14.0,
+          "intent_motion": 14.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 8.0,
+          "intent_joint": 12.0,
+          "utility_joint_0.1": 14.0,
+          "intent_joint_0.1": 14.0
+        },
+        "final": {
+          "completion_joint": 12.0,
+          "completion_jaw": 13.5,
+          "table": 12.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 8.0,
+          "intent_commands": 12.0,
+          "utility_motion": 14.0,
+          "intent_motion": 14.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 8.0,
+          "intent_joint": 12.0,
+          "utility_joint_0.1": 14.0,
+          "intent_joint_0.1": 14.0
+        },
+        "correct": {
+          "completion_joint": 12.0,
+          "completion_jaw": 13.5,
+          "table": 12.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 8.0,
+          "intent_commands": 12.0,
+          "utility_motion": 14.0,
+          "intent_motion": 14.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 8.0,
+          "intent_joint": 12.0,
+          "utility_joint_0.1": 14.0,
+          "intent_joint_0.1": 14.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 4.0
+          },
+          "completion_joint": {
+            "gains": 4.0,
+            "losses": 8.0
+          },
+          "completion_jaw": {
+            "gains": 2.0,
+            "losses": 7.5
+          },
+          "table": {
+            "gains": 4.0,
+            "losses": 8.0
+          }
+        }
+      },
+      "7": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 13.0,
+          "completion_jaw": 13.5,
+          "table": 12.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 8.0,
+          "intent_commands": 12.0,
+          "utility_motion": 14.0,
+          "intent_motion": 14.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 8.0,
+          "intent_joint": 12.0,
+          "utility_joint_0.1": 14.0,
+          "intent_joint_0.1": 14.0
+        },
+        "final": {
+          "completion_joint": 13.0,
+          "completion_jaw": 13.5,
+          "table": 12.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 8.0,
+          "intent_commands": 12.0,
+          "utility_motion": 14.0,
+          "intent_motion": 14.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 8.0,
+          "intent_joint": 12.0,
+          "utility_joint_0.1": 14.0,
+          "intent_joint_0.1": 14.0
+        },
+        "correct": {
+          "completion_joint": 13.0,
+          "completion_jaw": 13.5,
+          "table": 12.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 8.0,
+          "intent_commands": 12.0,
+          "utility_motion": 14.0,
+          "intent_motion": 14.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 8.0,
+          "intent_joint": 12.0,
+          "utility_joint_0.1": 14.0,
+          "intent_joint_0.1": 14.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 4.0
+          },
+          "completion_joint": {
+            "gains": 3.0,
+            "losses": 8.0
+          },
+          "completion_jaw": {
+            "gains": 2.0,
+            "losses": 7.5
+          },
+          "table": {
+            "gains": 4.0,
+            "losses": 8.0
+          }
+        }
+      },
+      "8": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 12.0,
+          "completion_jaw": 12.0,
+          "table": 10.0,
+          "utility_rewards": 11.0,
+          "intent_rewards": 11.0,
+          "utility_commands": 8.0,
+          "intent_commands": 12.0,
+          "utility_motion": 13.0,
+          "intent_motion": 13.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 8.0,
+          "intent_joint": 12.0,
+          "utility_joint_0.1": 13.0,
+          "intent_joint_0.1": 13.0
+        },
+        "final": {
+          "completion_joint": 8.0,
+          "completion_jaw": 7.5,
+          "table": 8.0,
+          "utility_rewards": 6.0,
+          "intent_rewards": 6.0,
+          "utility_commands": 0.0,
+          "intent_commands": 4.0,
+          "utility_motion": 7.0,
+          "intent_motion": 7.0,
+          "utility_joint_0.001": 0.0,
+          "intent_joint_0.001": 4.0,
+          "utility_joint": 0.0,
+          "intent_joint": 4.0,
+          "utility_joint_0.1": 7.0,
+          "intent_joint_0.1": 7.0
+        },
+        "correct": {
+          "completion_joint": 12.0,
+          "completion_jaw": 12.0,
+          "table": 10.0,
+          "utility_rewards": 11.0,
+          "intent_rewards": 11.0,
+          "utility_commands": 8.0,
+          "intent_commands": 12.0,
+          "utility_motion": 13.0,
+          "intent_motion": 13.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 8.0,
+          "intent_joint": 12.0,
+          "utility_joint_0.1": 13.0,
+          "intent_joint_0.1": 13.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 4.0
+          },
+          "completion_joint": {
+            "gains": 4.0,
+            "losses": 8.0
+          },
+          "completion_jaw": {
+            "gains": 3.5,
+            "losses": 7.5
+          },
+          "table": {
+            "gains": 6.0,
+            "losses": 8.0
+          }
+        }
+      },
+      "9": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 8.0,
+          "completion_jaw": 10.5,
+          "table": 8.0,
+          "utility_rewards": 10.0,
+          "intent_rewards": 10.0,
+          "utility_commands": 8.0,
+          "intent_commands": 12.0,
+          "utility_motion": 12.0,
+          "intent_motion": 12.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 8.0,
+          "intent_joint": 12.0,
+          "utility_joint_0.1": 12.0,
+          "intent_joint_0.1": 12.0
+        },
+        "final": {
+          "completion_joint": 8.0,
+          "completion_jaw": 10.5,
+          "table": 8.0,
+          "utility_rewards": 10.0,
+          "intent_rewards": 10.0,
+          "utility_commands": 8.0,
+          "intent_commands": 12.0,
+          "utility_motion": 12.0,
+          "intent_motion": 12.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 8.0,
+          "intent_joint": 12.0,
+          "utility_joint_0.1": 12.0,
+          "intent_joint_0.1": 12.0
+        },
+        "correct": {
+          "completion_joint": 8.0,
+          "completion_jaw": 10.5,
+          "table": 8.0,
+          "utility_rewards": 10.0,
+          "intent_rewards": 10.0,
+          "utility_commands": 8.0,
+          "intent_commands": 12.0,
+          "utility_motion": 12.0,
+          "intent_motion": 12.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 8.0,
+          "intent_joint": 12.0,
+          "utility_joint_0.1": 12.0,
+          "intent_joint_0.1": 12.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 4.0
+          },
+          "completion_joint": {
+            "gains": 8.0,
+            "losses": 8.0
+          },
+          "completion_jaw": {
+            "gains": 5.0,
+            "losses": 7.5
+          },
+          "table": {
+            "gains": 8.0,
+            "losses": 8.0
+          }
+        }
+      },
+      "10": {
+        "n": 16,
+        "ceiling": 8.0,
+        "native": {
+          "completion_joint": 8.0,
+          "completion_jaw": 7.5,
+          "table": 8.0,
+          "utility_rewards": 6.0,
+          "intent_rewards": 6.0,
+          "utility_commands": 0.0,
+          "intent_commands": 4.0,
+          "utility_motion": 7.0,
+          "intent_motion": 6.0,
+          "utility_joint_0.001": 0.0,
+          "intent_joint_0.001": 4.0,
+          "utility_joint": 0.0,
+          "intent_joint": 4.0,
+          "utility_joint_0.1": 6.0,
+          "intent_joint_0.1": 6.0
+        },
+        "final": {
+          "completion_joint": 8.0,
+          "completion_jaw": 7.5,
+          "table": 8.0,
+          "utility_rewards": 6.0,
+          "intent_rewards": 6.0,
+          "utility_commands": 0.0,
+          "intent_commands": 4.0,
+          "utility_motion": 7.0,
+          "intent_motion": 6.0,
+          "utility_joint_0.001": 0.0,
+          "intent_joint_0.001": 4.0,
+          "utility_joint": 0.0,
+          "intent_joint": 4.0,
+          "utility_joint_0.1": 6.0,
+          "intent_joint_0.1": 6.0
+        },
+        "correct": {
+          "completion_joint": 8.0,
+          "completion_jaw": 10.5,
+          "table": 8.0,
+          "utility_rewards": 10.0,
+          "intent_rewards": 10.0,
+          "utility_commands": 8.0,
+          "intent_commands": 12.0,
+          "utility_motion": 11.0,
+          "intent_motion": 12.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 8.0,
+          "intent_joint": 12.0,
+          "utility_joint_0.1": 12.0,
+          "intent_joint_0.1": 12.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 4.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 8.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 7.5
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 8.0
+          }
+        }
+      },
+      "11": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 10.0,
+          "completion_jaw": 12.0,
+          "table": 10.0,
+          "utility_rewards": 11.0,
+          "intent_rewards": 11.0,
+          "utility_commands": 8.0,
+          "intent_commands": 12.0,
+          "utility_motion": 13.0,
+          "intent_motion": 13.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 8.0,
+          "intent_joint": 12.0,
+          "utility_joint_0.1": 13.0,
+          "intent_joint_0.1": 13.0
+        },
+        "final": {
+          "completion_joint": 10.0,
+          "completion_jaw": 12.0,
+          "table": 10.0,
+          "utility_rewards": 11.0,
+          "intent_rewards": 11.0,
+          "utility_commands": 8.0,
+          "intent_commands": 12.0,
+          "utility_motion": 13.0,
+          "intent_motion": 13.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 8.0,
+          "intent_joint": 12.0,
+          "utility_joint_0.1": 13.0,
+          "intent_joint_0.1": 13.0
+        },
+        "correct": {
+          "completion_joint": 10.0,
+          "completion_jaw": 12.0,
+          "table": 10.0,
+          "utility_rewards": 11.0,
+          "intent_rewards": 11.0,
+          "utility_commands": 8.0,
+          "intent_commands": 12.0,
+          "utility_motion": 13.0,
+          "intent_motion": 13.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 8.0,
+          "intent_joint": 12.0,
+          "utility_joint_0.1": 13.0,
+          "intent_joint_0.1": 13.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 4.0
+          },
+          "completion_joint": {
+            "gains": 6.0,
+            "losses": 8.0
+          },
+          "completion_jaw": {
+            "gains": 3.5,
+            "losses": 7.5
+          },
+          "table": {
+            "gains": 6.0,
+            "losses": 8.0
+          }
+        }
+      }
+    }
+  },
+  "custom_bottle": {
+    "all": {
+      "n": 96,
+      "ceiling": 80.0,
+      "native": {
+        "completion_joint": 73.0,
+        "completion_jaw": 65.0,
+        "table": 62.0,
+        "utility_rewards": 65.0,
+        "intent_rewards": 65.0,
+        "utility_commands": 57.0,
+        "intent_commands": 61.0,
+        "utility_motion": 75.0,
+        "intent_motion": 75.0,
+        "utility_joint_0.001": 57.0,
+        "intent_joint_0.001": 71.0,
+        "utility_joint": 66.0,
+        "intent_joint": 72.0,
+        "utility_joint_0.1": 74.0,
+        "intent_joint_0.1": 74.0
+      },
+      "final": {
+        "completion_joint": 73.0,
+        "completion_jaw": 65.0,
+        "table": 62.0,
+        "utility_rewards": 65.0,
+        "intent_rewards": 65.0,
+        "utility_commands": 57.0,
+        "intent_commands": 61.0,
+        "utility_motion": 75.0,
+        "intent_motion": 75.0,
+        "utility_joint_0.001": 57.0,
+        "intent_joint_0.001": 71.0,
+        "utility_joint": 66.0,
+        "intent_joint": 72.0,
+        "utility_joint_0.1": 74.0,
+        "intent_joint_0.1": 74.0
+      },
+      "correct": {
+        "completion_joint": 88.0,
+        "completion_jaw": 78.0,
+        "table": 72.0,
+        "utility_rewards": 78.0,
+        "intent_rewards": 78.0,
+        "utility_commands": 69.0,
+        "intent_commands": 74.0,
+        "utility_motion": 90.0,
+        "intent_motion": 90.0,
+        "utility_joint_0.001": 71.0,
+        "intent_joint_0.001": 86.0,
+        "utility_joint": 80.0,
+        "intent_joint": 87.0,
+        "utility_joint_0.1": 88.0,
+        "intent_joint_0.1": 89.0
+      },
+      "paired": {
+        "utility_commands": {
+          "gains": 10.0,
+          "losses": 1.0
+        },
+        "intent_joint": {
+          "gains": 1.0,
+          "losses": 7.0
+        },
+        "completion_joint": {
+          "gains": 2.0,
+          "losses": 9.0
+        },
+        "completion_jaw": {
+          "gains": 9.5,
+          "losses": 8.5
+        },
+        "table": {
+          "gains": 16.0,
+          "losses": 12.0
+        }
+      }
+    },
+    "zero": {
+      "n": 36,
+      "ceiling": 30.0,
+      "native": {
+        "completion_joint": 23.0,
+        "completion_jaw": 15.0,
+        "table": 12.0,
+        "utility_rewards": 15.0,
+        "intent_rewards": 15.0,
+        "utility_commands": 13.0,
+        "intent_commands": 11.0,
+        "utility_motion": 25.0,
+        "intent_motion": 25.0,
+        "utility_joint_0.001": 17.0,
+        "intent_joint_0.001": 21.0,
+        "utility_joint": 19.0,
+        "intent_joint": 22.0,
+        "utility_joint_0.1": 24.0,
+        "intent_joint_0.1": 24.0
+      },
+      "final": {
+        "completion_joint": 23.0,
+        "completion_jaw": 15.0,
+        "table": 12.0,
+        "utility_rewards": 15.0,
+        "intent_rewards": 15.0,
+        "utility_commands": 13.0,
+        "intent_commands": 11.0,
+        "utility_motion": 25.0,
+        "intent_motion": 25.0,
+        "utility_joint_0.001": 17.0,
+        "intent_joint_0.001": 21.0,
+        "utility_joint": 19.0,
+        "intent_joint": 22.0,
+        "utility_joint_0.1": 24.0,
+        "intent_joint_0.1": 24.0
+      },
+      "correct": {
+        "completion_joint": 28.0,
+        "completion_jaw": 18.0,
+        "table": 12.0,
+        "utility_rewards": 18.0,
+        "intent_rewards": 18.0,
+        "utility_commands": 17.0,
+        "intent_commands": 14.0,
+        "utility_motion": 30.0,
+        "intent_motion": 30.0,
+        "utility_joint_0.001": 23.0,
+        "intent_joint_0.001": 26.0,
+        "utility_joint": 23.0,
+        "intent_joint": 27.0,
+        "utility_joint_0.1": 28.0,
+        "intent_joint_0.1": 29.0
+      },
+      "paired": {
+        "utility_commands": {
+          "gains": 7.0,
+          "losses": 1.0
+        },
+        "intent_joint": {
+          "gains": 1.0,
+          "losses": 4.0
+        },
+        "completion_joint": {
+          "gains": 2.0,
+          "losses": 6.0
+        },
+        "completion_jaw": {
+          "gains": 9.5,
+          "losses": 5.5
+        },
+        "table": {
+          "gains": 16.0,
+          "losses": 9.0
+        }
+      }
+    },
+    "by_query": {
+      "24": {
+        "n": 16,
+        "ceiling": 8.0,
+        "native": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "final": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "correct": {
+          "completion_joint": 15.0,
+          "completion_jaw": 14.0,
+          "table": 12.0,
+          "utility_rewards": 14.0,
+          "intent_rewards": 14.0,
+          "utility_commands": 12.0,
+          "intent_commands": 13.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 14.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 14.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 15.0,
+          "intent_joint_0.1": 16.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "25": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 15.0,
+          "completion_jaw": 14.0,
+          "table": 14.0,
+          "utility_rewards": 14.0,
+          "intent_rewards": 14.0,
+          "utility_commands": 14.0,
+          "intent_commands": 13.0,
+          "utility_motion": 15.0,
+          "intent_motion": 15.0,
+          "utility_joint_0.001": 14.0,
+          "intent_joint_0.001": 15.0,
+          "utility_joint": 15.0,
+          "intent_joint": 15.0,
+          "utility_joint_0.1": 15.0,
+          "intent_joint_0.1": 15.0
+        },
+        "final": {
+          "completion_joint": 15.0,
+          "completion_jaw": 14.0,
+          "table": 14.0,
+          "utility_rewards": 14.0,
+          "intent_rewards": 14.0,
+          "utility_commands": 14.0,
+          "intent_commands": 13.0,
+          "utility_motion": 15.0,
+          "intent_motion": 15.0,
+          "utility_joint_0.001": 14.0,
+          "intent_joint_0.001": 15.0,
+          "utility_joint": 15.0,
+          "intent_joint": 15.0,
+          "utility_joint_0.1": 15.0,
+          "intent_joint_0.1": 15.0
+        },
+        "correct": {
+          "completion_joint": 15.0,
+          "completion_jaw": 14.0,
+          "table": 14.0,
+          "utility_rewards": 14.0,
+          "intent_rewards": 14.0,
+          "utility_commands": 14.0,
+          "intent_commands": 13.0,
+          "utility_motion": 15.0,
+          "intent_motion": 15.0,
+          "utility_joint_0.001": 14.0,
+          "intent_joint_0.001": 15.0,
+          "utility_joint": 15.0,
+          "intent_joint": 15.0,
+          "utility_joint_0.1": 15.0,
+          "intent_joint_0.1": 15.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 1.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 1.5,
+            "losses": 0.5
+          },
+          "table": {
+            "gains": 1.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "26": {
+        "n": 16,
+        "ceiling": 8.0,
+        "native": {
+          "completion_joint": 7.0,
+          "completion_jaw": 6.0,
+          "table": 8.0,
+          "utility_rewards": 6.0,
+          "intent_rewards": 6.0,
+          "utility_commands": 4.0,
+          "intent_commands": 4.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 3.0,
+          "intent_joint_0.001": 6.0,
+          "utility_joint": 4.0,
+          "intent_joint": 6.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "final": {
+          "completion_joint": 7.0,
+          "completion_jaw": 6.0,
+          "table": 8.0,
+          "utility_rewards": 6.0,
+          "intent_rewards": 6.0,
+          "utility_commands": 4.0,
+          "intent_commands": 4.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 3.0,
+          "intent_joint_0.001": 6.0,
+          "utility_joint": 4.0,
+          "intent_joint": 6.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "correct": {
+          "completion_joint": 15.0,
+          "completion_jaw": 13.0,
+          "table": 14.0,
+          "utility_rewards": 13.0,
+          "intent_rewards": 13.0,
+          "utility_commands": 12.0,
+          "intent_commands": 12.0,
+          "utility_motion": 15.0,
+          "intent_motion": 15.0,
+          "utility_joint_0.001": 11.0,
+          "intent_joint_0.001": 13.0,
+          "utility_joint": 12.0,
+          "intent_joint": 13.0,
+          "utility_joint_0.1": 15.0,
+          "intent_joint_0.1": 15.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 2.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 3.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 2.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 4.0
+          }
+        }
+      },
+      "27": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 13.0,
+          "completion_jaw": 11.0,
+          "table": 10.0,
+          "utility_rewards": 11.0,
+          "intent_rewards": 11.0,
+          "utility_commands": 10.0,
+          "intent_commands": 10.0,
+          "utility_motion": 13.0,
+          "intent_motion": 13.0,
+          "utility_joint_0.001": 11.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 12.0,
+          "intent_joint": 13.0,
+          "utility_joint_0.1": 13.0,
+          "intent_joint_0.1": 13.0
+        },
+        "final": {
+          "completion_joint": 13.0,
+          "completion_jaw": 11.0,
+          "table": 10.0,
+          "utility_rewards": 11.0,
+          "intent_rewards": 11.0,
+          "utility_commands": 10.0,
+          "intent_commands": 10.0,
+          "utility_motion": 13.0,
+          "intent_motion": 13.0,
+          "utility_joint_0.001": 11.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 12.0,
+          "intent_joint": 13.0,
+          "utility_joint_0.1": 13.0,
+          "intent_joint_0.1": 13.0
+        },
+        "correct": {
+          "completion_joint": 13.0,
+          "completion_jaw": 11.0,
+          "table": 10.0,
+          "utility_rewards": 11.0,
+          "intent_rewards": 11.0,
+          "utility_commands": 10.0,
+          "intent_commands": 10.0,
+          "utility_motion": 13.0,
+          "intent_motion": 13.0,
+          "utility_joint_0.001": 11.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 12.0,
+          "intent_joint": 13.0,
+          "utility_joint_0.1": 13.0,
+          "intent_joint_0.1": 13.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 3.0,
+            "losses": 1.0
+          },
+          "intent_joint": {
+            "gains": 1.0,
+            "losses": 2.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 1.0
+          },
+          "completion_jaw": {
+            "gains": 3.0,
+            "losses": 2.0
+          },
+          "table": {
+            "gains": 6.0,
+            "losses": 4.0
+          }
+        }
+      },
+      "28": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 14.0,
+          "completion_jaw": 12.0,
+          "table": 10.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 9.0,
+          "intent_commands": 12.0,
+          "utility_motion": 15.0,
+          "intent_motion": 15.0,
+          "utility_joint_0.001": 9.0,
+          "intent_joint_0.001": 14.0,
+          "utility_joint": 13.0,
+          "intent_joint": 14.0,
+          "utility_joint_0.1": 14.0,
+          "intent_joint_0.1": 14.0
+        },
+        "final": {
+          "completion_joint": 14.0,
+          "completion_jaw": 12.0,
+          "table": 10.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 9.0,
+          "intent_commands": 12.0,
+          "utility_motion": 15.0,
+          "intent_motion": 15.0,
+          "utility_joint_0.001": 9.0,
+          "intent_joint_0.001": 14.0,
+          "utility_joint": 13.0,
+          "intent_joint": 14.0,
+          "utility_joint_0.1": 14.0,
+          "intent_joint_0.1": 14.0
+        },
+        "correct": {
+          "completion_joint": 14.0,
+          "completion_jaw": 12.0,
+          "table": 10.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 9.0,
+          "intent_commands": 12.0,
+          "utility_motion": 15.0,
+          "intent_motion": 15.0,
+          "utility_joint_0.001": 9.0,
+          "intent_joint_0.001": 14.0,
+          "utility_joint": 13.0,
+          "intent_joint": 14.0,
+          "utility_joint_0.1": 14.0,
+          "intent_joint_0.1": 14.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 4.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 1.0
+          },
+          "completion_joint": {
+            "gains": 2.0,
+            "losses": 3.0
+          },
+          "completion_jaw": {
+            "gains": 3.0,
+            "losses": 2.0
+          },
+          "table": {
+            "gains": 5.0,
+            "losses": 2.0
+          }
+        }
+      },
+      "29": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 16.0,
+          "completion_jaw": 14.0,
+          "table": 12.0,
+          "utility_rewards": 14.0,
+          "intent_rewards": 14.0,
+          "utility_commands": 12.0,
+          "intent_commands": 14.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 12.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 14.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "final": {
+          "completion_joint": 16.0,
+          "completion_jaw": 14.0,
+          "table": 12.0,
+          "utility_rewards": 14.0,
+          "intent_rewards": 14.0,
+          "utility_commands": 12.0,
+          "intent_commands": 14.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 12.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 14.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "correct": {
+          "completion_joint": 16.0,
+          "completion_jaw": 14.0,
+          "table": 12.0,
+          "utility_rewards": 14.0,
+          "intent_rewards": 14.0,
+          "utility_commands": 12.0,
+          "intent_commands": 14.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 12.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 14.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 2.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 2.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 2.0
+          },
+          "completion_jaw": {
+            "gains": 2.0,
+            "losses": 2.0
+          },
+          "table": {
+            "gains": 4.0,
+            "losses": 2.0
+          }
+        }
+      }
+    }
+  },
+  "D18_bottle": {
+    "all": {
+      "n": 96,
+      "ceiling": 80.0,
+      "native": {
+        "completion_joint": 75.0,
+        "completion_jaw": 66.0,
+        "table": 60.0,
+        "utility_rewards": 66.0,
+        "intent_rewards": 66.0,
+        "utility_commands": 64.0,
+        "intent_commands": 73.0,
+        "utility_motion": 76.0,
+        "intent_motion": 76.0,
+        "utility_joint_0.001": 62.0,
+        "intent_joint_0.001": 71.0,
+        "utility_joint": 71.0,
+        "intent_joint": 74.0,
+        "utility_joint_0.1": 73.0,
+        "intent_joint_0.1": 75.0
+      },
+      "final": {
+        "completion_joint": 75.0,
+        "completion_jaw": 66.0,
+        "table": 60.0,
+        "utility_rewards": 66.0,
+        "intent_rewards": 66.0,
+        "utility_commands": 64.0,
+        "intent_commands": 73.0,
+        "utility_motion": 76.0,
+        "intent_motion": 76.0,
+        "utility_joint_0.001": 62.0,
+        "intent_joint_0.001": 71.0,
+        "utility_joint": 71.0,
+        "intent_joint": 74.0,
+        "utility_joint_0.1": 73.0,
+        "intent_joint_0.1": 75.0
+      },
+      "correct": {
+        "completion_joint": 90.0,
+        "completion_jaw": 78.0,
+        "table": 68.0,
+        "utility_rewards": 78.0,
+        "intent_rewards": 78.0,
+        "utility_commands": 73.0,
+        "intent_commands": 87.0,
+        "utility_motion": 91.0,
+        "intent_motion": 91.0,
+        "utility_joint_0.001": 72.0,
+        "intent_joint_0.001": 86.0,
+        "utility_joint": 84.0,
+        "intent_joint": 89.0,
+        "utility_joint_0.1": 87.0,
+        "intent_joint_0.1": 90.0
+      },
+      "paired": {
+        "utility_commands": {
+          "gains": 7.0,
+          "losses": 0.0
+        },
+        "intent_joint": {
+          "gains": 0.0,
+          "losses": 3.0
+        },
+        "completion_joint": {
+          "gains": 3.0,
+          "losses": 7.0
+        },
+        "completion_jaw": {
+          "gains": 10.0,
+          "losses": 5.0
+        },
+        "table": {
+          "gains": 12.0,
+          "losses": 1.0
+        }
+      }
+    },
+    "zero": {
+      "n": 36,
+      "ceiling": 28.0,
+      "native": {
+        "completion_joint": 23.0,
+        "completion_jaw": 14.0,
+        "table": 8.0,
+        "utility_rewards": 14.0,
+        "intent_rewards": 14.0,
+        "utility_commands": 18.0,
+        "intent_commands": 21.0,
+        "utility_motion": 24.0,
+        "intent_motion": 24.0,
+        "utility_joint_0.001": 19.0,
+        "intent_joint_0.001": 19.0,
+        "utility_joint": 20.0,
+        "intent_joint": 22.0,
+        "utility_joint_0.1": 21.0,
+        "intent_joint_0.1": 23.0
+      },
+      "final": {
+        "completion_joint": 23.0,
+        "completion_jaw": 14.0,
+        "table": 8.0,
+        "utility_rewards": 14.0,
+        "intent_rewards": 14.0,
+        "utility_commands": 18.0,
+        "intent_commands": 21.0,
+        "utility_motion": 24.0,
+        "intent_motion": 24.0,
+        "utility_joint_0.001": 19.0,
+        "intent_joint_0.001": 19.0,
+        "utility_joint": 20.0,
+        "intent_joint": 22.0,
+        "utility_joint_0.1": 21.0,
+        "intent_joint_0.1": 23.0
+      },
+      "correct": {
+        "completion_joint": 30.0,
+        "completion_jaw": 18.0,
+        "table": 8.0,
+        "utility_rewards": 18.0,
+        "intent_rewards": 18.0,
+        "utility_commands": 22.0,
+        "intent_commands": 27.0,
+        "utility_motion": 31.0,
+        "intent_motion": 31.0,
+        "utility_joint_0.001": 24.0,
+        "intent_joint_0.001": 26.0,
+        "utility_joint": 26.0,
+        "intent_joint": 29.0,
+        "utility_joint_0.1": 27.0,
+        "intent_joint_0.1": 30.0
+      },
+      "paired": {
+        "utility_commands": {
+          "gains": 2.0,
+          "losses": 0.0
+        },
+        "intent_joint": {
+          "gains": 0.0,
+          "losses": 2.0
+        },
+        "completion_joint": {
+          "gains": 3.0,
+          "losses": 6.0
+        },
+        "completion_jaw": {
+          "gains": 10.0,
+          "losses": 4.0
+        },
+        "table": {
+          "gains": 12.0,
+          "losses": 0.0
+        }
+      }
+    },
+    "by_query": {
+      "24": {
+        "n": 16,
+        "ceiling": 8.0,
+        "native": {
+          "completion_joint": 8.0,
+          "completion_jaw": 7.0,
+          "table": 8.0,
+          "utility_rewards": 7.0,
+          "intent_rewards": 7.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "final": {
+          "completion_joint": 8.0,
+          "completion_jaw": 7.0,
+          "table": 8.0,
+          "utility_rewards": 7.0,
+          "intent_rewards": 7.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "correct": {
+          "completion_joint": 15.0,
+          "completion_jaw": 13.0,
+          "table": 12.0,
+          "utility_rewards": 13.0,
+          "intent_rewards": 13.0,
+          "utility_commands": 10.0,
+          "intent_commands": 15.0,
+          "utility_motion": 15.0,
+          "intent_motion": 15.0,
+          "utility_joint_0.001": 10.0,
+          "intent_joint_0.001": 15.0,
+          "utility_joint": 13.0,
+          "intent_joint": 15.0,
+          "utility_joint_0.1": 14.0,
+          "intent_joint_0.1": 15.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 1.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "25": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 16.0,
+          "completion_jaw": 14.0,
+          "table": 12.0,
+          "utility_rewards": 14.0,
+          "intent_rewards": 14.0,
+          "utility_commands": 14.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 15.0,
+          "intent_joint_0.001": 15.0,
+          "utility_joint": 15.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 15.0,
+          "intent_joint_0.1": 15.0
+        },
+        "final": {
+          "completion_joint": 16.0,
+          "completion_jaw": 14.0,
+          "table": 12.0,
+          "utility_rewards": 14.0,
+          "intent_rewards": 14.0,
+          "utility_commands": 14.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 15.0,
+          "intent_joint_0.001": 15.0,
+          "utility_joint": 15.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 15.0,
+          "intent_joint_0.1": 15.0
+        },
+        "correct": {
+          "completion_joint": 16.0,
+          "completion_jaw": 14.0,
+          "table": 12.0,
+          "utility_rewards": 14.0,
+          "intent_rewards": 14.0,
+          "utility_commands": 14.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 15.0,
+          "intent_joint_0.001": 15.0,
+          "utility_joint": 15.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 15.0,
+          "intent_joint_0.1": 15.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 1.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 1.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 1.0
+          },
+          "completion_jaw": {
+            "gains": 1.5,
+            "losses": 0.5
+          },
+          "table": {
+            "gains": 3.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "26": {
+        "n": 16,
+        "ceiling": 8.0,
+        "native": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 7.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "final": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 7.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "correct": {
+          "completion_joint": 16.0,
+          "completion_jaw": 14.0,
+          "table": 12.0,
+          "utility_rewards": 14.0,
+          "intent_rewards": 14.0,
+          "utility_commands": 15.0,
+          "intent_commands": 15.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 15.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "27": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 16.0,
+          "completion_jaw": 13.0,
+          "table": 10.0,
+          "utility_rewards": 13.0,
+          "intent_rewards": 13.0,
+          "utility_commands": 12.0,
+          "intent_commands": 14.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 12.0,
+          "intent_joint_0.001": 14.0,
+          "utility_joint": 15.0,
+          "intent_joint": 15.0,
+          "utility_joint_0.1": 15.0,
+          "intent_joint_0.1": 16.0
+        },
+        "final": {
+          "completion_joint": 16.0,
+          "completion_jaw": 13.0,
+          "table": 10.0,
+          "utility_rewards": 13.0,
+          "intent_rewards": 13.0,
+          "utility_commands": 12.0,
+          "intent_commands": 14.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 12.0,
+          "intent_joint_0.001": 14.0,
+          "utility_joint": 15.0,
+          "intent_joint": 15.0,
+          "utility_joint_0.1": 15.0,
+          "intent_joint_0.1": 16.0
+        },
+        "correct": {
+          "completion_joint": 16.0,
+          "completion_jaw": 13.0,
+          "table": 10.0,
+          "utility_rewards": 13.0,
+          "intent_rewards": 13.0,
+          "utility_commands": 12.0,
+          "intent_commands": 14.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 12.0,
+          "intent_joint_0.001": 14.0,
+          "utility_joint": 15.0,
+          "intent_joint": 15.0,
+          "utility_joint_0.1": 15.0,
+          "intent_joint_0.1": 16.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 3.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 1.0
+          },
+          "completion_jaw": {
+            "gains": 2.5,
+            "losses": 0.5
+          },
+          "table": {
+            "gains": 5.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "28": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 14.0,
+          "completion_jaw": 12.0,
+          "table": 10.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 11.0,
+          "intent_commands": 13.0,
+          "utility_motion": 14.0,
+          "intent_motion": 14.0,
+          "utility_joint_0.001": 10.0,
+          "intent_joint_0.001": 13.0,
+          "utility_joint": 13.0,
+          "intent_joint": 13.0,
+          "utility_joint_0.1": 14.0,
+          "intent_joint_0.1": 14.0
+        },
+        "final": {
+          "completion_joint": 14.0,
+          "completion_jaw": 12.0,
+          "table": 10.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 11.0,
+          "intent_commands": 13.0,
+          "utility_motion": 14.0,
+          "intent_motion": 14.0,
+          "utility_joint_0.001": 10.0,
+          "intent_joint_0.001": 13.0,
+          "utility_joint": 13.0,
+          "intent_joint": 13.0,
+          "utility_joint_0.1": 14.0,
+          "intent_joint_0.1": 14.0
+        },
+        "correct": {
+          "completion_joint": 14.0,
+          "completion_jaw": 12.0,
+          "table": 10.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 11.0,
+          "intent_commands": 13.0,
+          "utility_motion": 14.0,
+          "intent_motion": 14.0,
+          "utility_joint_0.001": 10.0,
+          "intent_joint_0.001": 13.0,
+          "utility_joint": 13.0,
+          "intent_joint": 13.0,
+          "utility_joint_0.1": 14.0,
+          "intent_joint_0.1": 14.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 2.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 1.0,
+            "losses": 2.0
+          },
+          "completion_jaw": {
+            "gains": 2.5,
+            "losses": 1.5
+          },
+          "table": {
+            "gains": 3.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "29": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 13.0,
+          "completion_jaw": 12.0,
+          "table": 12.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 11.0,
+          "intent_commands": 14.0,
+          "utility_motion": 14.0,
+          "intent_motion": 14.0,
+          "utility_joint_0.001": 10.0,
+          "intent_joint_0.001": 13.0,
+          "utility_joint": 12.0,
+          "intent_joint": 14.0,
+          "utility_joint_0.1": 13.0,
+          "intent_joint_0.1": 14.0
+        },
+        "final": {
+          "completion_joint": 13.0,
+          "completion_jaw": 12.0,
+          "table": 12.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 11.0,
+          "intent_commands": 14.0,
+          "utility_motion": 14.0,
+          "intent_motion": 14.0,
+          "utility_joint_0.001": 10.0,
+          "intent_joint_0.001": 13.0,
+          "utility_joint": 12.0,
+          "intent_joint": 14.0,
+          "utility_joint_0.1": 13.0,
+          "intent_joint_0.1": 14.0
+        },
+        "correct": {
+          "completion_joint": 13.0,
+          "completion_jaw": 12.0,
+          "table": 12.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 11.0,
+          "intent_commands": 14.0,
+          "utility_motion": 14.0,
+          "intent_motion": 14.0,
+          "utility_joint_0.001": 10.0,
+          "intent_joint_0.001": 13.0,
+          "utility_joint": 12.0,
+          "intent_joint": 14.0,
+          "utility_joint_0.1": 13.0,
+          "intent_joint_0.1": 14.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 1.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 2.0
+          },
+          "completion_joint": {
+            "gains": 2.0,
+            "losses": 3.0
+          },
+          "completion_jaw": {
+            "gains": 2.5,
+            "losses": 2.5
+          },
+          "table": {
+            "gains": 1.0,
+            "losses": 1.0
+          }
+        }
+      }
+    }
+  },
+  "soup": {
+    "all": {
+      "n": 96,
+      "ceiling": 48.0,
+      "native": {
+        "completion_joint": 48.0,
+        "completion_jaw": 48.0,
+        "table": 48.0,
+        "utility_rewards": 48.0,
+        "intent_rewards": 48.0,
+        "utility_commands": 48.0,
+        "intent_commands": 48.0,
+        "utility_motion": 48.0,
+        "intent_motion": 48.0,
+        "utility_joint_0.001": 48.0,
+        "intent_joint_0.001": 48.0,
+        "utility_joint": 48.0,
+        "intent_joint": 48.0,
+        "utility_joint_0.1": 48.0,
+        "intent_joint_0.1": 48.0
+      },
+      "final": {
+        "completion_joint": 48.0,
+        "completion_jaw": 48.0,
+        "table": 48.0,
+        "utility_rewards": 48.0,
+        "intent_rewards": 48.0,
+        "utility_commands": 48.0,
+        "intent_commands": 48.0,
+        "utility_motion": 48.0,
+        "intent_motion": 48.0,
+        "utility_joint_0.001": 48.0,
+        "intent_joint_0.001": 48.0,
+        "utility_joint": 48.0,
+        "intent_joint": 48.0,
+        "utility_joint_0.1": 48.0,
+        "intent_joint_0.1": 48.0
+      },
+      "correct": {
+        "completion_joint": 34.0,
+        "completion_jaw": 48.0,
+        "table": 24.0,
+        "utility_rewards": 48.0,
+        "intent_rewards": 48.0,
+        "utility_commands": 51.0,
+        "intent_commands": 51.0,
+        "utility_motion": 60.0,
+        "intent_motion": 57.0,
+        "utility_joint_0.001": 44.0,
+        "intent_joint_0.001": 52.0,
+        "utility_joint": 49.0,
+        "intent_joint": 50.0,
+        "utility_joint_0.1": 55.0,
+        "intent_joint_0.1": 52.0
+      },
+      "paired": {
+        "utility_commands": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "intent_joint": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "completion_joint": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "completion_jaw": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "table": {
+          "gains": 0.0,
+          "losses": 0.0
+        }
+      }
+    },
+    "zero": {
+      "n": 48,
+      "ceiling": 0.0,
+      "native": {
+        "completion_joint": 0.0,
+        "completion_jaw": 0.0,
+        "table": 0.0,
+        "utility_rewards": 0.0,
+        "intent_rewards": 0.0,
+        "utility_commands": 0.0,
+        "intent_commands": 0.0,
+        "utility_motion": 0.0,
+        "intent_motion": 0.0,
+        "utility_joint_0.001": 0.0,
+        "intent_joint_0.001": 0.0,
+        "utility_joint": 0.0,
+        "intent_joint": 0.0,
+        "utility_joint_0.1": 0.0,
+        "intent_joint_0.1": 0.0
+      },
+      "final": {
+        "completion_joint": 0.0,
+        "completion_jaw": 0.0,
+        "table": 0.0,
+        "utility_rewards": 0.0,
+        "intent_rewards": 0.0,
+        "utility_commands": 0.0,
+        "intent_commands": 0.0,
+        "utility_motion": 0.0,
+        "intent_motion": 0.0,
+        "utility_joint_0.001": 0.0,
+        "intent_joint_0.001": 0.0,
+        "utility_joint": 0.0,
+        "intent_joint": 0.0,
+        "utility_joint_0.1": 0.0,
+        "intent_joint_0.1": 0.0
+      },
+      "correct": {
+        "completion_joint": 17.0,
+        "completion_jaw": 24.0,
+        "table": 0.0,
+        "utility_rewards": 24.0,
+        "intent_rewards": 24.0,
+        "utility_commands": 27.0,
+        "intent_commands": 27.0,
+        "utility_motion": 36.0,
+        "intent_motion": 33.0,
+        "utility_joint_0.001": 20.0,
+        "intent_joint_0.001": 28.0,
+        "utility_joint": 25.0,
+        "intent_joint": 26.0,
+        "utility_joint_0.1": 31.0,
+        "intent_joint_0.1": 28.0
+      },
+      "paired": {
+        "utility_commands": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "intent_joint": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "completion_joint": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "completion_jaw": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "table": {
+          "gains": 0.0,
+          "losses": 0.0
+        }
+      }
+    },
+    "by_query": {
+      "0": {
+        "n": 16,
+        "ceiling": 8.0,
+        "native": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "final": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "correct": {
+          "completion_joint": 6.0,
+          "completion_jaw": 8.0,
+          "table": 4.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 7.0,
+          "intent_commands": 7.0,
+          "utility_motion": 10.0,
+          "intent_motion": 9.0,
+          "utility_joint_0.001": 7.0,
+          "intent_joint_0.001": 7.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 9.0,
+          "intent_joint_0.1": 8.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "1": {
+        "n": 16,
+        "ceiling": 8.0,
+        "native": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "final": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "correct": {
+          "completion_joint": 6.0,
+          "completion_jaw": 8.0,
+          "table": 4.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 9.0,
+          "intent_commands": 9.0,
+          "utility_motion": 8.0,
+          "intent_motion": 9.0,
+          "utility_joint_0.001": 7.0,
+          "intent_joint_0.001": 9.0,
+          "utility_joint": 9.0,
+          "intent_joint": 9.0,
+          "utility_joint_0.1": 9.0,
+          "intent_joint_0.1": 9.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "2": {
+        "n": 16,
+        "ceiling": 8.0,
+        "native": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "final": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "correct": {
+          "completion_joint": 6.0,
+          "completion_jaw": 8.0,
+          "table": 4.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 10.0,
+          "intent_commands": 9.0,
+          "utility_motion": 9.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 9.0,
+          "utility_joint": 9.0,
+          "intent_joint": 9.0,
+          "utility_joint_0.1": 10.0,
+          "intent_joint_0.1": 9.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "3": {
+        "n": 16,
+        "ceiling": 8.0,
+        "native": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "final": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "correct": {
+          "completion_joint": 2.0,
+          "completion_jaw": 8.0,
+          "table": 4.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 9.0,
+          "intent_commands": 9.0,
+          "utility_motion": 11.0,
+          "intent_motion": 10.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 9.0,
+          "utility_joint": 9.0,
+          "intent_joint": 9.0,
+          "utility_joint_0.1": 10.0,
+          "intent_joint_0.1": 9.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "4": {
+        "n": 16,
+        "ceiling": 8.0,
+        "native": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "final": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "correct": {
+          "completion_joint": 6.0,
+          "completion_jaw": 8.0,
+          "table": 4.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 9.0,
+          "intent_commands": 9.0,
+          "utility_motion": 12.0,
+          "intent_motion": 11.0,
+          "utility_joint_0.001": 7.0,
+          "intent_joint_0.001": 10.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 9.0,
+          "intent_joint_0.1": 9.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "5": {
+        "n": 16,
+        "ceiling": 8.0,
+        "native": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "final": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "correct": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 4.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 7.0,
+          "intent_commands": 8.0,
+          "utility_motion": 10.0,
+          "intent_motion": 10.0,
+          "utility_joint_0.001": 7.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 6.0,
+          "intent_joint": 7.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      }
+    }
+  },
+  "dressing": {
+    "all": {
+      "n": 96,
+      "ceiling": 96.0,
+      "native": {
+        "completion_joint": 96.0,
+        "completion_jaw": 96.0,
+        "table": 96.0,
+        "utility_rewards": 96.0,
+        "intent_rewards": 96.0,
+        "utility_commands": 96.0,
+        "intent_commands": 96.0,
+        "utility_motion": 96.0,
+        "intent_motion": 96.0,
+        "utility_joint_0.001": 96.0,
+        "intent_joint_0.001": 96.0,
+        "utility_joint": 96.0,
+        "intent_joint": 96.0,
+        "utility_joint_0.1": 96.0,
+        "intent_joint_0.1": 96.0
+      },
+      "final": {
+        "completion_joint": 96.0,
+        "completion_jaw": 96.0,
+        "table": 96.0,
+        "utility_rewards": 96.0,
+        "intent_rewards": 96.0,
+        "utility_commands": 96.0,
+        "intent_commands": 96.0,
+        "utility_motion": 96.0,
+        "intent_motion": 96.0,
+        "utility_joint_0.001": 96.0,
+        "intent_joint_0.001": 96.0,
+        "utility_joint": 96.0,
+        "intent_joint": 96.0,
+        "utility_joint_0.1": 96.0,
+        "intent_joint_0.1": 96.0
+      },
+      "correct": {
+        "completion_joint": 96.0,
+        "completion_jaw": 96.0,
+        "table": 96.0,
+        "utility_rewards": 96.0,
+        "intent_rewards": 96.0,
+        "utility_commands": 96.0,
+        "intent_commands": 96.0,
+        "utility_motion": 96.0,
+        "intent_motion": 96.0,
+        "utility_joint_0.001": 96.0,
+        "intent_joint_0.001": 96.0,
+        "utility_joint": 96.0,
+        "intent_joint": 96.0,
+        "utility_joint_0.1": 96.0,
+        "intent_joint_0.1": 96.0
+      },
+      "paired": {
+        "utility_commands": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "intent_joint": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "completion_joint": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "completion_jaw": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "table": {
+          "gains": 0.0,
+          "losses": 0.0
+        }
+      }
+    },
+    "zero": {
+      "n": 0,
+      "ceiling": 0.0,
+      "native": {
+        "completion_joint": 0.0,
+        "completion_jaw": 0.0,
+        "table": 0.0,
+        "utility_rewards": 0.0,
+        "intent_rewards": 0.0,
+        "utility_commands": 0.0,
+        "intent_commands": 0.0,
+        "utility_motion": 0.0,
+        "intent_motion": 0.0,
+        "utility_joint_0.001": 0.0,
+        "intent_joint_0.001": 0.0,
+        "utility_joint": 0.0,
+        "intent_joint": 0.0,
+        "utility_joint_0.1": 0.0,
+        "intent_joint_0.1": 0.0
+      },
+      "final": {
+        "completion_joint": 0.0,
+        "completion_jaw": 0.0,
+        "table": 0.0,
+        "utility_rewards": 0.0,
+        "intent_rewards": 0.0,
+        "utility_commands": 0.0,
+        "intent_commands": 0.0,
+        "utility_motion": 0.0,
+        "intent_motion": 0.0,
+        "utility_joint_0.001": 0.0,
+        "intent_joint_0.001": 0.0,
+        "utility_joint": 0.0,
+        "intent_joint": 0.0,
+        "utility_joint_0.1": 0.0,
+        "intent_joint_0.1": 0.0
+      },
+      "correct": {
+        "completion_joint": 0.0,
+        "completion_jaw": 0.0,
+        "table": 0.0,
+        "utility_rewards": 0.0,
+        "intent_rewards": 0.0,
+        "utility_commands": 0.0,
+        "intent_commands": 0.0,
+        "utility_motion": 0.0,
+        "intent_motion": 0.0,
+        "utility_joint_0.001": 0.0,
+        "intent_joint_0.001": 0.0,
+        "utility_joint": 0.0,
+        "intent_joint": 0.0,
+        "utility_joint_0.1": 0.0,
+        "intent_joint_0.1": 0.0
+      },
+      "paired": {
+        "utility_commands": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "intent_joint": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "completion_joint": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "completion_jaw": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "table": {
+          "gains": 0.0,
+          "losses": 0.0
+        }
+      }
+    },
+    "by_query": {
+      "0": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 16.0,
+          "completion_jaw": 16.0,
+          "table": 16.0,
+          "utility_rewards": 16.0,
+          "intent_rewards": 16.0,
+          "utility_commands": 16.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 16.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "final": {
+          "completion_joint": 16.0,
+          "completion_jaw": 16.0,
+          "table": 16.0,
+          "utility_rewards": 16.0,
+          "intent_rewards": 16.0,
+          "utility_commands": 16.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 16.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "correct": {
+          "completion_joint": 16.0,
+          "completion_jaw": 16.0,
+          "table": 16.0,
+          "utility_rewards": 16.0,
+          "intent_rewards": 16.0,
+          "utility_commands": 16.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 16.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "1": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 16.0,
+          "completion_jaw": 16.0,
+          "table": 16.0,
+          "utility_rewards": 16.0,
+          "intent_rewards": 16.0,
+          "utility_commands": 16.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 16.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "final": {
+          "completion_joint": 16.0,
+          "completion_jaw": 16.0,
+          "table": 16.0,
+          "utility_rewards": 16.0,
+          "intent_rewards": 16.0,
+          "utility_commands": 16.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 16.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "correct": {
+          "completion_joint": 16.0,
+          "completion_jaw": 16.0,
+          "table": 16.0,
+          "utility_rewards": 16.0,
+          "intent_rewards": 16.0,
+          "utility_commands": 16.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 16.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "2": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 16.0,
+          "completion_jaw": 16.0,
+          "table": 16.0,
+          "utility_rewards": 16.0,
+          "intent_rewards": 16.0,
+          "utility_commands": 16.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 16.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "final": {
+          "completion_joint": 16.0,
+          "completion_jaw": 16.0,
+          "table": 16.0,
+          "utility_rewards": 16.0,
+          "intent_rewards": 16.0,
+          "utility_commands": 16.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 16.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "correct": {
+          "completion_joint": 16.0,
+          "completion_jaw": 16.0,
+          "table": 16.0,
+          "utility_rewards": 16.0,
+          "intent_rewards": 16.0,
+          "utility_commands": 16.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 16.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "3": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 16.0,
+          "completion_jaw": 16.0,
+          "table": 16.0,
+          "utility_rewards": 16.0,
+          "intent_rewards": 16.0,
+          "utility_commands": 16.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 16.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "final": {
+          "completion_joint": 16.0,
+          "completion_jaw": 16.0,
+          "table": 16.0,
+          "utility_rewards": 16.0,
+          "intent_rewards": 16.0,
+          "utility_commands": 16.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 16.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "correct": {
+          "completion_joint": 16.0,
+          "completion_jaw": 16.0,
+          "table": 16.0,
+          "utility_rewards": 16.0,
+          "intent_rewards": 16.0,
+          "utility_commands": 16.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 16.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "4": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 16.0,
+          "completion_jaw": 16.0,
+          "table": 16.0,
+          "utility_rewards": 16.0,
+          "intent_rewards": 16.0,
+          "utility_commands": 16.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 16.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "final": {
+          "completion_joint": 16.0,
+          "completion_jaw": 16.0,
+          "table": 16.0,
+          "utility_rewards": 16.0,
+          "intent_rewards": 16.0,
+          "utility_commands": 16.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 16.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "correct": {
+          "completion_joint": 16.0,
+          "completion_jaw": 16.0,
+          "table": 16.0,
+          "utility_rewards": 16.0,
+          "intent_rewards": 16.0,
+          "utility_commands": 16.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 16.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "5": {
+        "n": 16,
+        "ceiling": 16.0,
+        "native": {
+          "completion_joint": 16.0,
+          "completion_jaw": 16.0,
+          "table": 16.0,
+          "utility_rewards": 16.0,
+          "intent_rewards": 16.0,
+          "utility_commands": 16.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 16.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "final": {
+          "completion_joint": 16.0,
+          "completion_jaw": 16.0,
+          "table": 16.0,
+          "utility_rewards": 16.0,
+          "intent_rewards": 16.0,
+          "utility_commands": 16.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 16.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "correct": {
+          "completion_joint": 16.0,
+          "completion_jaw": 16.0,
+          "table": 16.0,
+          "utility_rewards": 16.0,
+          "intent_rewards": 16.0,
+          "utility_commands": 16.0,
+          "intent_commands": 16.0,
+          "utility_motion": 16.0,
+          "intent_motion": 16.0,
+          "utility_joint_0.001": 16.0,
+          "intent_joint_0.001": 16.0,
+          "utility_joint": 16.0,
+          "intent_joint": 16.0,
+          "utility_joint_0.1": 16.0,
+          "intent_joint_0.1": 16.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      }
+    }
+  },
+  "ketchup": {
+    "all": {
+      "n": 96,
+      "ceiling": 48.0,
+      "native": {
+        "completion_joint": 48.0,
+        "completion_jaw": 46.0,
+        "table": 44.0,
+        "utility_rewards": 46.0,
+        "intent_rewards": 46.0,
+        "utility_commands": 48.0,
+        "intent_commands": 48.0,
+        "utility_motion": 44.0,
+        "intent_motion": 44.0,
+        "utility_joint_0.001": 48.0,
+        "intent_joint_0.001": 48.0,
+        "utility_joint": 48.0,
+        "intent_joint": 48.0,
+        "utility_joint_0.1": 48.0,
+        "intent_joint_0.1": 48.0
+      },
+      "final": {
+        "completion_joint": 48.0,
+        "completion_jaw": 46.0,
+        "table": 44.0,
+        "utility_rewards": 46.0,
+        "intent_rewards": 46.0,
+        "utility_commands": 48.0,
+        "intent_commands": 48.0,
+        "utility_motion": 44.0,
+        "intent_motion": 44.0,
+        "utility_joint_0.001": 48.0,
+        "intent_joint_0.001": 48.0,
+        "utility_joint": 48.0,
+        "intent_joint": 48.0,
+        "utility_joint_0.1": 48.0,
+        "intent_joint_0.1": 48.0
+      },
+      "correct": {
+        "completion_joint": 66.0,
+        "completion_jaw": 70.0,
+        "table": 92.0,
+        "utility_rewards": 70.0,
+        "intent_rewards": 70.0,
+        "utility_commands": 74.0,
+        "intent_commands": 74.0,
+        "utility_motion": 70.0,
+        "intent_motion": 64.0,
+        "utility_joint_0.001": 68.0,
+        "intent_joint_0.001": 66.0,
+        "utility_joint": 68.0,
+        "intent_joint": 66.0,
+        "utility_joint_0.1": 72.0,
+        "intent_joint_0.1": 70.0
+      },
+      "paired": {
+        "utility_commands": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "intent_joint": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "completion_joint": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "completion_jaw": {
+          "gains": 2.0,
+          "losses": 0.0
+        },
+        "table": {
+          "gains": 4.0,
+          "losses": 0.0
+        }
+      }
+    },
+    "zero": {
+      "n": 52,
+      "ceiling": 4.0,
+      "native": {
+        "completion_joint": 4.0,
+        "completion_jaw": 2.0,
+        "table": 0.0,
+        "utility_rewards": 2.0,
+        "intent_rewards": 2.0,
+        "utility_commands": 4.0,
+        "intent_commands": 4.0,
+        "utility_motion": 0.0,
+        "intent_motion": 0.0,
+        "utility_joint_0.001": 4.0,
+        "intent_joint_0.001": 4.0,
+        "utility_joint": 4.0,
+        "intent_joint": 4.0,
+        "utility_joint_0.1": 4.0,
+        "intent_joint_0.1": 4.0
+      },
+      "final": {
+        "completion_joint": 4.0,
+        "completion_jaw": 2.0,
+        "table": 0.0,
+        "utility_rewards": 2.0,
+        "intent_rewards": 2.0,
+        "utility_commands": 4.0,
+        "intent_commands": 4.0,
+        "utility_motion": 0.0,
+        "intent_motion": 0.0,
+        "utility_joint_0.001": 4.0,
+        "intent_joint_0.001": 4.0,
+        "utility_joint": 4.0,
+        "intent_joint": 4.0,
+        "utility_joint_0.1": 4.0,
+        "intent_joint_0.1": 4.0
+      },
+      "correct": {
+        "completion_joint": 22.0,
+        "completion_jaw": 26.0,
+        "table": 48.0,
+        "utility_rewards": 26.0,
+        "intent_rewards": 26.0,
+        "utility_commands": 30.0,
+        "intent_commands": 30.0,
+        "utility_motion": 26.0,
+        "intent_motion": 20.0,
+        "utility_joint_0.001": 24.0,
+        "intent_joint_0.001": 22.0,
+        "utility_joint": 24.0,
+        "intent_joint": 22.0,
+        "utility_joint_0.1": 28.0,
+        "intent_joint_0.1": 26.0
+      },
+      "paired": {
+        "utility_commands": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "intent_joint": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "completion_joint": {
+          "gains": 0.0,
+          "losses": 0.0
+        },
+        "completion_jaw": {
+          "gains": 2.0,
+          "losses": 0.0
+        },
+        "table": {
+          "gains": 4.0,
+          "losses": 0.0
+        }
+      }
+    },
+    "by_query": {
+      "0": {
+        "n": 16,
+        "ceiling": 8.0,
+        "native": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "final": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "correct": {
+          "completion_joint": 12.0,
+          "completion_jaw": 12.0,
+          "table": 16.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 12.0,
+          "intent_commands": 12.0,
+          "utility_motion": 10.0,
+          "intent_motion": 10.0,
+          "utility_joint_0.001": 12.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 12.0,
+          "intent_joint": 12.0,
+          "utility_joint_0.1": 14.0,
+          "intent_joint_0.1": 14.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "1": {
+        "n": 16,
+        "ceiling": 8.0,
+        "native": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "final": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "correct": {
+          "completion_joint": 12.0,
+          "completion_jaw": 12.0,
+          "table": 16.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 14.0,
+          "intent_commands": 12.0,
+          "utility_motion": 12.0,
+          "intent_motion": 12.0,
+          "utility_joint_0.001": 12.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 12.0,
+          "intent_joint": 12.0,
+          "utility_joint_0.1": 12.0,
+          "intent_joint_0.1": 12.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "2": {
+        "n": 16,
+        "ceiling": 8.0,
+        "native": {
+          "completion_joint": 8.0,
+          "completion_jaw": 7.0,
+          "table": 6.0,
+          "utility_rewards": 7.0,
+          "intent_rewards": 7.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 6.0,
+          "intent_motion": 6.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "final": {
+          "completion_joint": 8.0,
+          "completion_jaw": 7.0,
+          "table": 6.0,
+          "utility_rewards": 7.0,
+          "intent_rewards": 7.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 6.0,
+          "intent_motion": 6.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "correct": {
+          "completion_joint": 12.0,
+          "completion_jaw": 11.0,
+          "table": 14.0,
+          "utility_rewards": 11.0,
+          "intent_rewards": 11.0,
+          "utility_commands": 14.0,
+          "intent_commands": 14.0,
+          "utility_motion": 12.0,
+          "intent_motion": 12.0,
+          "utility_joint_0.001": 14.0,
+          "intent_joint_0.001": 14.0,
+          "utility_joint": 14.0,
+          "intent_joint": 12.0,
+          "utility_joint_0.1": 12.0,
+          "intent_joint_0.1": 12.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 1.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 2.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "3": {
+        "n": 16,
+        "ceiling": 8.0,
+        "native": {
+          "completion_joint": 8.0,
+          "completion_jaw": 7.0,
+          "table": 6.0,
+          "utility_rewards": 7.0,
+          "intent_rewards": 7.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 6.0,
+          "intent_motion": 6.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "final": {
+          "completion_joint": 8.0,
+          "completion_jaw": 7.0,
+          "table": 6.0,
+          "utility_rewards": 7.0,
+          "intent_rewards": 7.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 6.0,
+          "intent_motion": 6.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "correct": {
+          "completion_joint": 14.0,
+          "completion_jaw": 11.0,
+          "table": 14.0,
+          "utility_rewards": 11.0,
+          "intent_rewards": 11.0,
+          "utility_commands": 14.0,
+          "intent_commands": 14.0,
+          "utility_motion": 12.0,
+          "intent_motion": 10.0,
+          "utility_joint_0.001": 12.0,
+          "intent_joint_0.001": 12.0,
+          "utility_joint": 12.0,
+          "intent_joint": 14.0,
+          "utility_joint_0.1": 14.0,
+          "intent_joint_0.1": 14.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 1.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 2.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "4": {
+        "n": 16,
+        "ceiling": 8.0,
+        "native": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "final": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "correct": {
+          "completion_joint": 8.0,
+          "completion_jaw": 12.0,
+          "table": 16.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 10.0,
+          "intent_commands": 12.0,
+          "utility_motion": 12.0,
+          "intent_motion": 12.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 10.0,
+          "intent_joint_0.1": 8.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      },
+      "5": {
+        "n": 16,
+        "ceiling": 8.0,
+        "native": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "final": {
+          "completion_joint": 8.0,
+          "completion_jaw": 8.0,
+          "table": 8.0,
+          "utility_rewards": 8.0,
+          "intent_rewards": 8.0,
+          "utility_commands": 8.0,
+          "intent_commands": 8.0,
+          "utility_motion": 8.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 8.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 8.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 8.0,
+          "intent_joint_0.1": 8.0
+        },
+        "correct": {
+          "completion_joint": 8.0,
+          "completion_jaw": 12.0,
+          "table": 16.0,
+          "utility_rewards": 12.0,
+          "intent_rewards": 12.0,
+          "utility_commands": 10.0,
+          "intent_commands": 10.0,
+          "utility_motion": 12.0,
+          "intent_motion": 8.0,
+          "utility_joint_0.001": 10.0,
+          "intent_joint_0.001": 8.0,
+          "utility_joint": 10.0,
+          "intent_joint": 8.0,
+          "utility_joint_0.1": 10.0,
+          "intent_joint_0.1": 10.0
+        },
+        "paired": {
+          "utility_commands": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "intent_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_joint": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "completion_jaw": {
+            "gains": 0.0,
+            "losses": 0.0
+          },
+          "table": {
+            "gains": 0.0,
+            "losses": 0.0
+          }
+        }
+      }
+    }
+  }
+}
