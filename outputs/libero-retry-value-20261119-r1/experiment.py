@@ -31,10 +31,11 @@ def live_panel(folder, poses, alternate=None, mode='interrupt'):
     return tapes, outcomes
 
 
-def histories(tapes, outcomes, draws, train=False):
+def histories(tapes, outcomes, draws, train=False, orders=None):
     poses = sorted(outcomes)
-    orders = permutations(poses, 3) if train else [
-        (p,poses[(i+1)%len(poses)],poses[(i+2)%len(poses)]) for i,p in enumerate(poses)]
+    if orders is None:
+        orders = permutations(poses, 3) if train else [
+            (p,poses[(i+1)%len(poses)],poses[(i+2)%len(poses)]) for i,p in enumerate(poses)]
     index = {k:i for i,k in enumerate(tapes)}
     complete = {k:t['hits'].any(axis=0) for k,t in tapes.items()}
     rows = []
@@ -129,8 +130,7 @@ def completion_preferences(data,tapes):
     return methods
 
 
-def evaluate(bank,tapes,outcomes,draws):
-    data=histories(tapes,outcomes,draws)
+def methods(bank,data,tapes):
     ps=completion_preferences(data,tapes)
     for mode in MODES:
         for penalty in PENALTIES if mode=='joint' else (.01,):
@@ -143,6 +143,10 @@ def evaluate(bank,tapes,outcomes,draws):
     np.testing.assert_array_equal(flipped[:,0],1-ps['utility_joint'])
     np.testing.assert_array_equal(flipped[:,1],1-ps['intent_joint'])
 
+    return ps
+
+
+def summarize_panel(data,ps,outcomes):
     def summarize(mask):
         def score(p, hits):
             return (p*hits[:,0]+(1-p)*hits[:,1])[mask]
@@ -158,6 +162,11 @@ def evaluate(bank,tapes,outcomes,draws):
                     paired=diffs)
     return dict(all=summarize(np.ones(len(data['h']),dtype=bool)), zero=summarize(~data['rewards'].any(axis=1)),
                 by_query={int(q):summarize(data['q']==q) for q in sorted(outcomes)})
+
+
+def evaluate(bank,tapes,outcomes,draws):
+    data=histories(tapes,outcomes,draws)
+    return summarize_panel(data,methods(bank,data,tapes),outcomes)
 
 
 def main(out):
