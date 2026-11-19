@@ -89,11 +89,20 @@ export TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD=1 PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSER
 export OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 MKL_NUM_THREADS=4
 export PYTHONPATH="$code/src:$release:$sim/simulator-source"
 if [[ "$host" == job-* ]]; then
-    # Supply GLVND dispatch while retaining the container's NVIDIA vendor libraries.
-    glvnd="$root/setups/libero-gen-history-pilot-20261111-r1/os-libs01/prefix/usr/lib/x86_64-linux-gnu"
-    test -f "$glvnd/libEGL.so.1"
-    test -f "$glvnd/libGL.so.1"
-    export LD_LIBRARY_PATH="$glvnd${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    # Match the distributed LIBERO-90 qualification and keep the vendor driver paths.
+    libs="$root/setups/libero90-full-action-20261119-r1/desktop-libs02"
+    glvnd="$libs/prefix/usr/lib/x86_64-linux-gnu"
+    test -r "$glvnd/libEGL.so.1"
+    test -r "$glvnd/libOpenGL.so.0"
+    test -r "$glvnd/libX11.so.6"
+    test -r "$libs/nvidia-vendor.json"
+    IFS=: read -ra paths <<< "${LD_LIBRARY_PATH:-}"
+    driver_paths=""
+    for path in "${paths[@]}"; do
+        if [[ -n "$path" && ! -f "$path/libtorch_python.so" ]]; then driver_paths+=":$path"; fi
+    done
+    export LD_LIBRARY_PATH="$glvnd:$libs/prefix/lib/x86_64-linux-gnu$driver_paths"
+    export __EGL_VENDOR_LIBRARY_FILENAMES="$libs/nvidia-vendor.json"
 fi
 "$root/setups/robocasa365-native-20261101-r1/env/bin/python" -Bu "$code/scripts/[train]gpu_probe.py" \
     --expected-count 1 --purpose training "${probe[@]}" --output "$out/gpu.json" > "$out/probe.log" 2>&1

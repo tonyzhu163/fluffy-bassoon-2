@@ -16,5 +16,14 @@ selects a separate fixed timing flag
 for the from-reset comparison using fitting resets. The scheduler launcher
 loads the shared GLVND dispatch libraries and checks NVIDIA EGL before its
 training smoke. The same dispatch libraries restored the missing EGL symbol
-in the simulator interpreter on Baige. A clean scheduled fit will start with
-fresh optimizer and sampler state. [Experiment design](PLAN.md)
+in the simulator interpreter on Baige. [Experiment design](PLAN.md)
+
+`job-ryv45l3e307r` at `41068e3c` passed the Pro6K device probe. It exited
+after 17 seconds in the EGL smoke because PyOpenGL still could not load its
+OpenGL entry point. The fit and rollouts remain unexecuted. Cumulative
+worker use was 0.219 GPUh. The next launcher uses the desktop libraries
+and NVIDIA vendor manifest from the successful distributed LIBERO-90
+qualification. A CPU-only check in the S20 simulator interpreter loaded
+the EGL, OpenGL, and X11 symbols successfully. The S20 12-update batch-two
+fit also passed on the development RTX 4090. Full batch-four throughput and rendering in a
+scheduled S20 container still need qualification. [Qualified distributed runtime](../libero90-full-action-20261119-r1/EXECUTION.md)
