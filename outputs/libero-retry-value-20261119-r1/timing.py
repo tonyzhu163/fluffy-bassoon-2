@@ -32,9 +32,12 @@ def setup():
 
 
 def execute(job):
-    out,pose,goal,mode=job
-    worker='nominal02' if pose<12 else 'paired01' if pose<16 else 'pacing01'
-    path=PILOT/worker/'episodes'/f's{pose}-BASE-g{goal}-gain1'
+    out,pose,goal,mode=job[:4]
+    if len(job)==5:
+        path=job[4]
+    else:
+        worker='nominal02' if pose<12 else 'paired01' if pose<16 else 'pacing01'
+        path=PILOT/worker/'episodes'/f's{pose}-BASE-g{goal}-gain1'
     rec=json.loads((path/'result.json').read_text())
     assert rec['scene']==pose and rec['goal']==goal and rec['variant']=='BASE' and rec['gain']==1
     with np.load(path/'public.npz') as tape:
