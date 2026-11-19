@@ -4,6 +4,7 @@
 
 | Work | Cluster / job / source | Last check, progress and next action |
 | --- | --- | --- |
+| Frozen vision towers on paired bowl failures | Baige CPU, preparation | Nov 19. Compare robot-tuned and general visual features at fixed inputs, motor and readout. [Plan](libero-witness-encoders-20261119-r1/PLAN.md) |
 | Same-command visual evidence for opposite bowl corrections | Baige CPU, qualification | Nov 19. Predeclared D18 versus BASE on eight bowl poses, with both retry destinations and public-motion controls. Zero GPU-hours. [Plan](libero-visual-witness-20261119-r1/PLAN.md) |
 | Released S18 proprioceptive observability | Baige development CPU, `cpu01` complete at `6cffa2c0` | Nov 19. All eight pairs shared initial physics. S18 added a fixed public wrist offset while the 80 matched displacements differed by at most 1.21e-7 m. Zero GPU-hours. [Result](libero-s18-probe-20261119-r1/RESULT.md) |
 | Shared-axis calibration learner and physical probe transfer | Baige development CPU, `cpu01` fit and `cpu02` native complete | Nov 19, 15:35 Shanghai. All three shared estimators recovered 60/60 archived double reversals versus 0/60 joint. Native reader and analytic estimator 64/64, cleared 16/64, opposite 0/64 across 16 query starts. Four archive-state hashes differed. All nominal rewards reproduced. Close the constructed mechanism. Zero GPU-hours. [Reader](libero-axis-factor-20261119-r1/RESULT.md) · [Native evaluation](libero-axis-native-20261119-r1/RESULT.md) |
