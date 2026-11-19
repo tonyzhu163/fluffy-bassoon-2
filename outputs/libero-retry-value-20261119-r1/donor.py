@@ -10,7 +10,7 @@ from timing import ORDERS,PRACTICE,QUERY
 from experiment import histories,methods,read_tape
 
 
-def main(out):
+def main(out,compare_stages=False):
     worker=out.parent/'timing01'
     folder=worker/'episodes'
     with np.load(out.parent/'value01/model.npz') as file:
@@ -21,15 +21,19 @@ def main(out):
         pair=[read_tape(folder/f'p{q}-g{g}-query.npz')['hits'] for g in (0,1)]
         outcomes[q]=(np.stack([x.any(axis=0) for x in pair]),np.stack([x[-1] for x in pair]))
     report={}
-    for mode in ('late','early'):
-        tapes={(p,g,0,b):read_tape(folder/f'p{p}-g{g}-{mode if b else "normal"}.npz')
+    practices=json.loads((worker/'timing.json').read_text())['practices']
+    fired={(r['pose'],r['goal'],r['mode']) for r in practices if r['start'] is not None}
+    variants=[('late','early')] if compare_stages else [('late','normal'),('early','normal')]
+    for mode,alternative in variants:
+        tapes={(p,g,0,b):read_tape(folder/f'p{p}-g{g}-{mode if b else alternative}.npz')
                for p,g,b in product(PRACTICE,(0,1),(False,True))}
         for p,g in product(PRACTICE,(0,1)):
             np.testing.assert_array_equal(tapes[p,g,0,False]['issued'],tapes[p,g,0,True]['issued'])
         d=histories(tapes,outcomes,1,orders=ORDERS)
         actual=methods(bank,d,tapes)
-        for k,p in actual.items():
-            np.testing.assert_array_equal(p,frozen[mode][k])
+        if not compare_stages:
+            for k,p in actual.items():
+                np.testing.assert_array_equal(p,frozen[mode][k])
         names=['utility_joint','utility_commands','utility_motion','intent_joint','completion_joint','completion_jaw']
         donor={k:np.zeros(len(d['h'])) for k in names}
         idx={key:i for i,key in enumerate(tapes)}
@@ -56,8 +60,15 @@ def main(out):
             return dict(n=int(mask.sum()),start_reward_bound=sum(v.max() for v in start_groups.values()),
                         assignment_bound=sum(v.max() for v in full_groups.values()),methods=result)
         report[mode]=dict(all=summary(np.ones(len(d['h']),bool)),zero=summary(~d['rewards'].any(axis=1)))
-    (out/'donor.json').write_text(json.dumps(report,indent=2)+'\n')
+        if compare_stages:
+            both=np.array([all((p,g,m) in fired for m in ('late','early')) for p,g,j,b in tapes])
+            eligible=both[d['keys']].all(axis=1)
+            report[mode]['both_events_fire']=summary(eligible)
+            report[mode]['both_events_fire_zero']=summary(eligible & ~d['rewards'].any(axis=1))
+            report[mode]['eligible_query_poses']=sorted(map(int,set(d['q'][eligible])))
+    path=out/('stage-comparison.json' if compare_stages else 'donor.json')
+    path.write_text(json.dumps(report,indent=2)+'\n')
 
 
 if __name__=='__main__':
-    main(Path(sys.argv[1]))
+    main(Path(sys.argv[1]),sys.argv[2:]==['--compare-stages'])
