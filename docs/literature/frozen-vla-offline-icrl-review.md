@@ -2,6 +2,14 @@
 
 This review compares the supervision required by published offline objectives, the interfaces that can steer a frozen motor and differences from the repository implementations. [Research design](../PAPER.md) · [Verified findings](../FINDINGS.md)
 
+## The closest comparison for reranking frozen actions
+
+Hsieh et al. train a small verifier on autonomous rollouts from a frozen VLA. They supervise executed action prefixes with terminal outcomes, draw two fresh candidates at deployment, and execute the preferred one. On four LIBERO-10 tasks they report 78.8% for the single-draw policy, 80.3% for a verifier trained on the current observation (HDM), and 82.3% for a verifier given up to three preceding queries in the ongoing episode (HDH). The simulation study fits verifiers for each task and tests on held-out initial states. These are comparisons within their study. [HDH, Sections IV-B and IV-C and Appendix B](https://arxiv.org/html/2611.14834v1)
+
+The LIBERO-90 study asks how much one *completed practice attempt* adds after a reset on a task held out from reader fitting. The outcome reader and the imitation reader each see genuine and cleared practice during training. Holding weights, current observations and candidate budgets fixed at the opening makes it possible to attribute a change in retry behavior to the available practice. A live gain over the unmodified VLA measures system performance. A gain over the same reader with cleared practice measures the value of past experience. A claim that the outcome objective teaches *stronger history use than imitation* requires the difference between the two within-reader gains and its uncertainty. [Study design](../../outputs/libero90-full-action-20261119-r1/PLAN.md)
+
+On nominal LIBERO the task persists across attempts while the pose changes. A positive effect can reflect learning how the motor usually behaves on that task. Establishing that a specific failure identified a corrective action would require varying diagnostic information while holding task identity fixed. The funded arms compare full practice with cleared practice. A direct comparison against an independently trained HDH-style within-episode verifier would address a further question about which time scale of memory helps. [HDH](https://arxiv.org/html/2611.14834v1) · [VLRLA](https://arxiv.org/abs/2610.19517)
+
 ## Scope and strength of evidence
 
 The review separates three problems: generating experience, learning from it,
