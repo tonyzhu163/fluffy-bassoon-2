@@ -1,0 +1,1392 @@
+{
+  "benchmark_summary": {
+    "by_group": {
+      "base": {
+        "cancelled": 0,
+        "completed": 16,
+        "failed": 0,
+        "mean_step_count": 148.5625,
+        "success_rate": 1.0,
+        "successful": 16,
+        "total": 16
+      },
+      "dynamic": {
+        "cancelled": 0,
+        "completed": 28,
+        "failed": 0,
+        "mean_step_count": 225.46428571428572,
+        "success_rate": 0.7857142857142857,
+        "successful": 22,
+        "total": 28
+      },
+      "static": {
+        "cancelled": 0,
+        "completed": 32,
+        "failed": 0,
+        "mean_step_count": 323.25,
+        "success_rate": 0.0625,
+        "successful": 2,
+        "total": 32
+      }
+    },
+    "by_seed": {
+      "142": {
+        "cancelled": 0,
+        "completed": 38,
+        "failed": 0,
+        "mean_step_count": 252.92105263157896,
+        "success_rate": 0.5526315789473685,
+        "successful": 21,
+        "total": 38
+      },
+      "143": {
+        "cancelled": 0,
+        "completed": 38,
+        "failed": 0,
+        "mean_step_count": 247.97368421052633,
+        "success_rate": 0.5,
+        "successful": 19,
+        "total": 38
+      }
+    },
+    "by_suite": {
+      "libero_10": {
+        "cancelled": 0,
+        "completed": 20,
+        "failed": 0,
+        "mean_step_count": 387.1,
+        "success_rate": 0.55,
+        "successful": 11,
+        "total": 20
+      },
+      "libero_goal": {
+        "cancelled": 0,
+        "completed": 16,
+        "failed": 0,
+        "mean_step_count": 191.3125,
+        "success_rate": 0.625,
+        "successful": 10,
+        "total": 16
+      },
+      "libero_object": {
+        "cancelled": 0,
+        "completed": 20,
+        "failed": 0,
+        "mean_step_count": 226.45,
+        "success_rate": 0.45,
+        "successful": 9,
+        "total": 20
+      },
+      "libero_spatial": {
+        "cancelled": 0,
+        "completed": 20,
+        "failed": 0,
+        "mean_step_count": 185.1,
+        "success_rate": 0.5,
+        "successful": 10,
+        "total": 20
+      }
+    },
+    "by_variant": {
+      "BASE": {
+        "cancelled": 0,
+        "completed": 16,
+        "failed": 0,
+        "mean_step_count": 148.5625,
+        "success_rate": 1.0,
+        "successful": 16,
+        "total": 16
+      },
+      "D17": {
+        "cancelled": 0,
+        "completed": 14,
+        "failed": 0,
+        "mean_step_count": 211.78571428571428,
+        "success_rate": 0.9285714285714286,
+        "successful": 13,
+        "total": 14
+      },
+      "D18": {
+        "cancelled": 0,
+        "completed": 14,
+        "failed": 0,
+        "mean_step_count": 239.14285714285714,
+        "success_rate": 0.6428571428571429,
+        "successful": 9,
+        "total": 14
+      },
+      "S15": {
+        "cancelled": 0,
+        "completed": 16,
+        "failed": 0,
+        "mean_step_count": 330,
+        "success_rate": 0.0,
+        "successful": 0,
+        "total": 16
+      },
+      "S20": {
+        "cancelled": 0,
+        "completed": 16,
+        "failed": 0,
+        "mean_step_count": 316.5,
+        "success_rate": 0.125,
+        "successful": 2,
+        "total": 16
+      }
+    },
+    "overall": {
+      "cancelled": 0,
+      "completed": 76,
+      "failed": 0,
+      "mean_step_count": 250.44736842105263,
+      "success_rate": 0.5263157894736842,
+      "successful": 40,
+      "total": 76
+    },
+    "run_id": "run_496a4ffe50764fedba039815a6b4870e",
+    "schema_version": "libero-pro-grouped-eval-summary-v1"
+  },
+  "action_bounds": {
+    "commands": 19034,
+    "clipped_commands": 9547,
+    "clipped_coordinates": [
+      0,
+      0,
+      3,
+      0,
+      0,
+      0,
+      9547
+    ],
+    "max_correction": [
+      0.0,
+      0.0,
+      0.019188035279512405,
+      0.0,
+      0.0,
+      0.0,
+      0.018662305548787117
+    ]
+  },
+  "accepted_gpu_seconds": 1269,
+  "initial_failure_gpu_seconds": 57,
+  "finished": "2026-11-19T12:42:35+08:00",
+  "episodes": [
+    {
+      "case": [
+        "libero_10",
+        0,
+        "base",
+        142,
+        0
+      ],
+      "horizon": 520,
+      "controls": 263,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "identity",
+      "release_case": "a2ed26a90a5050be1ec3b762eedfa509c2a7a22896fc530130cde9ef432912b5"
+    },
+    {
+      "case": [
+        "libero_10",
+        0,
+        "base",
+        143,
+        3
+      ],
+      "horizon": 520,
+      "controls": 274,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "identity",
+      "release_case": "04ec1f9c121a1cac208d7e585197845ade1dabd49ec68163df526ea3059e6867"
+    },
+    {
+      "case": [
+        "libero_10",
+        0,
+        "S15",
+        142,
+        0
+      ],
+      "horizon": 520,
+      "controls": 520,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_extrinsics_or_cross_camera_calibration",
+      "release_case": "ebec6e5397c052590d46f53c45625d018796128bd3219226a75353e7fd3aadea"
+    },
+    {
+      "case": [
+        "libero_10",
+        0,
+        "S15",
+        143,
+        3
+      ],
+      "horizon": 520,
+      "controls": 520,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_extrinsics_or_cross_camera_calibration",
+      "release_case": "c4a1ed258963f467363b10b290fda0bd21f6abda7615cc5df08d1f189fa62b78"
+    },
+    {
+      "case": [
+        "libero_10",
+        0,
+        "S20",
+        142,
+        0
+      ],
+      "horizon": 520,
+      "controls": 520,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_rate_delay_or_action_window",
+      "release_case": "bc007a73e83df29c0ed747cfd29ebe218709eebe214a4997c5796d80c0dd838b"
+    },
+    {
+      "case": [
+        "libero_10",
+        0,
+        "S20",
+        143,
+        3
+      ],
+      "horizon": 520,
+      "controls": 520,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_rate_delay_or_action_window",
+      "release_case": "f4912ddf025c466b63a757604abd1dd66eba6e18f80177bbda3b48c5d921903e"
+    },
+    {
+      "case": [
+        "libero_10",
+        0,
+        "D17",
+        142,
+        0
+      ],
+      "horizon": 520,
+      "controls": 286,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "grasp_failure_result",
+      "release_case": "40156906d0379459de2a7190718ea1c71329cfd608ee4163b15ca42cd42a61ad"
+    },
+    {
+      "case": [
+        "libero_10",
+        0,
+        "D17",
+        143,
+        3
+      ],
+      "horizon": 520,
+      "controls": 298,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "grasp_failure_result",
+      "release_case": "314e7a7b5bba887cb8bfbfd7f0e529888604037441181c223423b5344c2d38b5"
+    },
+    {
+      "case": [
+        "libero_10",
+        0,
+        "D18",
+        142,
+        0
+      ],
+      "horizon": 520,
+      "controls": 520,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "reachable_collision_free_drop_state",
+      "release_case": "c6d859227f4018fb99ab817bc8a4d7a0e15da73774f2b614946be77401262b23"
+    },
+    {
+      "case": [
+        "libero_10",
+        0,
+        "D18",
+        143,
+        3
+      ],
+      "horizon": 520,
+      "controls": 337,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "reachable_collision_free_drop_state",
+      "release_case": "b9534b520bbd524532aa4a47d5b6f2d26d07129855892ebc595e054f098bb9d4"
+    },
+    {
+      "case": [
+        "libero_10",
+        3,
+        "base",
+        142,
+        0
+      ],
+      "horizon": 520,
+      "controls": 217,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "identity",
+      "release_case": "a2ed26a90a5050be1ec3b762eedfa509c2a7a22896fc530130cde9ef432912b5"
+    },
+    {
+      "case": [
+        "libero_10",
+        3,
+        "base",
+        143,
+        3
+      ],
+      "horizon": 520,
+      "controls": 216,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "identity",
+      "release_case": "04ec1f9c121a1cac208d7e585197845ade1dabd49ec68163df526ea3059e6867"
+    },
+    {
+      "case": [
+        "libero_10",
+        3,
+        "S15",
+        142,
+        0
+      ],
+      "horizon": 520,
+      "controls": 520,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_extrinsics_or_cross_camera_calibration",
+      "release_case": "ebec6e5397c052590d46f53c45625d018796128bd3219226a75353e7fd3aadea"
+    },
+    {
+      "case": [
+        "libero_10",
+        3,
+        "S15",
+        143,
+        3
+      ],
+      "horizon": 520,
+      "controls": 520,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_extrinsics_or_cross_camera_calibration",
+      "release_case": "c4a1ed258963f467363b10b290fda0bd21f6abda7615cc5df08d1f189fa62b78"
+    },
+    {
+      "case": [
+        "libero_10",
+        3,
+        "S20",
+        142,
+        0
+      ],
+      "horizon": 520,
+      "controls": 520,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_rate_delay_or_action_window",
+      "release_case": "bc007a73e83df29c0ed747cfd29ebe218709eebe214a4997c5796d80c0dd838b"
+    },
+    {
+      "case": [
+        "libero_10",
+        3,
+        "S20",
+        143,
+        3
+      ],
+      "horizon": 520,
+      "controls": 520,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_rate_delay_or_action_window",
+      "release_case": "f4912ddf025c466b63a757604abd1dd66eba6e18f80177bbda3b48c5d921903e"
+    },
+    {
+      "case": [
+        "libero_10",
+        3,
+        "D17",
+        142,
+        0
+      ],
+      "horizon": 520,
+      "controls": 383,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "grasp_failure_result",
+      "release_case": "2ed5cf92a83224ce5272ebe51ae559ab372b6fa24ae6d33ab6f0d658e2fb7d3f"
+    },
+    {
+      "case": [
+        "libero_10",
+        3,
+        "D17",
+        143,
+        3
+      ],
+      "horizon": 520,
+      "controls": 261,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "grasp_failure_result",
+      "release_case": "b81da820408a0cfc2462d275e7902a29ca498572cdada613f46526785d871734"
+    },
+    {
+      "case": [
+        "libero_10",
+        3,
+        "D18",
+        142,
+        0
+      ],
+      "horizon": 520,
+      "controls": 269,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "reachable_collision_free_drop_state",
+      "release_case": "0641eb3c3f78957be3471a48df35e45a73e0a73ff2b5022930f2fb048e730439"
+    },
+    {
+      "case": [
+        "libero_10",
+        3,
+        "D18",
+        143,
+        3
+      ],
+      "horizon": 520,
+      "controls": 258,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "reachable_collision_free_drop_state",
+      "release_case": "4dbc70001c9cf5b8a02d6812fb82af437c4946466b43fba84359c1aea7164616"
+    },
+    {
+      "case": [
+        "libero_goal",
+        0,
+        "base",
+        142,
+        0
+      ],
+      "horizon": 300,
+      "controls": 117,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "identity",
+      "release_case": "a2ed26a90a5050be1ec3b762eedfa509c2a7a22896fc530130cde9ef432912b5"
+    },
+    {
+      "case": [
+        "libero_goal",
+        0,
+        "base",
+        143,
+        3
+      ],
+      "horizon": 300,
+      "controls": 122,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "identity",
+      "release_case": "04ec1f9c121a1cac208d7e585197845ade1dabd49ec68163df526ea3059e6867"
+    },
+    {
+      "case": [
+        "libero_goal",
+        0,
+        "S15",
+        142,
+        0
+      ],
+      "horizon": 300,
+      "controls": 300,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_extrinsics_or_cross_camera_calibration",
+      "release_case": "445844a6220c8c20b5a238c076ddf410886ed094afeeae2d5111ba8c8ab5c72b"
+    },
+    {
+      "case": [
+        "libero_goal",
+        0,
+        "S15",
+        143,
+        3
+      ],
+      "horizon": 300,
+      "controls": 300,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_extrinsics_or_cross_camera_calibration",
+      "release_case": "9523f77bfcc85dd022cf33e85caf5813dbd5706f0807f2c0cb488e9ff9bba5e8"
+    },
+    {
+      "case": [
+        "libero_goal",
+        0,
+        "S20",
+        142,
+        0
+      ],
+      "horizon": 300,
+      "controls": 183,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "fixed_rate_delay_or_action_window",
+      "release_case": "dc715d078fcadc1896dea4facf50dfa0feeb6bb8c7ec15067a036d51ad48cb8f"
+    },
+    {
+      "case": [
+        "libero_goal",
+        0,
+        "S20",
+        143,
+        3
+      ],
+      "horizon": 300,
+      "controls": 201,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "fixed_rate_delay_or_action_window",
+      "release_case": "26130380ea3126d41ef6fd15ef06f287c396eecd87b2a985049f2c83b9dd76ba"
+    },
+    {
+      "case": [
+        "libero_goal",
+        1,
+        "base",
+        142,
+        0
+      ],
+      "horizon": 300,
+      "controls": 85,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "identity",
+      "release_case": "a2ed26a90a5050be1ec3b762eedfa509c2a7a22896fc530130cde9ef432912b5"
+    },
+    {
+      "case": [
+        "libero_goal",
+        1,
+        "base",
+        143,
+        3
+      ],
+      "horizon": 300,
+      "controls": 83,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "identity",
+      "release_case": "04ec1f9c121a1cac208d7e585197845ade1dabd49ec68163df526ea3059e6867"
+    },
+    {
+      "case": [
+        "libero_goal",
+        1,
+        "S15",
+        142,
+        0
+      ],
+      "horizon": 300,
+      "controls": 300,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_extrinsics_or_cross_camera_calibration",
+      "release_case": "abca9b943bfe9577dbd31723aa36a7992c1a1aa850194759837f00d4afd0513b"
+    },
+    {
+      "case": [
+        "libero_goal",
+        1,
+        "S15",
+        143,
+        3
+      ],
+      "horizon": 300,
+      "controls": 300,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_extrinsics_or_cross_camera_calibration",
+      "release_case": "dc954195e4de8259b1256703483a6e2a53c029fbc2c51832fb1ef94599c542cb"
+    },
+    {
+      "case": [
+        "libero_goal",
+        1,
+        "S20",
+        142,
+        0
+      ],
+      "horizon": 300,
+      "controls": 300,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_rate_delay_or_action_window",
+      "release_case": "bc007a73e83df29c0ed747cfd29ebe218709eebe214a4997c5796d80c0dd838b"
+    },
+    {
+      "case": [
+        "libero_goal",
+        1,
+        "S20",
+        143,
+        3
+      ],
+      "horizon": 300,
+      "controls": 300,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_rate_delay_or_action_window",
+      "release_case": "f4912ddf025c466b63a757604abd1dd66eba6e18f80177bbda3b48c5d921903e"
+    },
+    {
+      "case": [
+        "libero_goal",
+        1,
+        "D17",
+        142,
+        0
+      ],
+      "horizon": 300,
+      "controls": 130,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "grasp_failure_result",
+      "release_case": "2ed5cf92a83224ce5272ebe51ae559ab372b6fa24ae6d33ab6f0d658e2fb7d3f"
+    },
+    {
+      "case": [
+        "libero_goal",
+        1,
+        "D17",
+        143,
+        3
+      ],
+      "horizon": 300,
+      "controls": 127,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "grasp_failure_result",
+      "release_case": "b81da820408a0cfc2462d275e7902a29ca498572cdada613f46526785d871734"
+    },
+    {
+      "case": [
+        "libero_goal",
+        1,
+        "D18",
+        142,
+        0
+      ],
+      "horizon": 300,
+      "controls": 106,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "reachable_collision_free_drop_state",
+      "release_case": "0641eb3c3f78957be3471a48df35e45a73e0a73ff2b5022930f2fb048e730439"
+    },
+    {
+      "case": [
+        "libero_goal",
+        1,
+        "D18",
+        143,
+        3
+      ],
+      "horizon": 300,
+      "controls": 107,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "reachable_collision_free_drop_state",
+      "release_case": "4dbc70001c9cf5b8a02d6812fb82af437c4946466b43fba84359c1aea7164616"
+    },
+    {
+      "case": [
+        "libero_object",
+        0,
+        "base",
+        142,
+        0
+      ],
+      "horizon": 280,
+      "controls": 158,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "identity",
+      "release_case": "a2ed26a90a5050be1ec3b762eedfa509c2a7a22896fc530130cde9ef432912b5"
+    },
+    {
+      "case": [
+        "libero_object",
+        0,
+        "base",
+        143,
+        3
+      ],
+      "horizon": 280,
+      "controls": 138,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "identity",
+      "release_case": "04ec1f9c121a1cac208d7e585197845ade1dabd49ec68163df526ea3059e6867"
+    },
+    {
+      "case": [
+        "libero_object",
+        0,
+        "S15",
+        142,
+        0
+      ],
+      "horizon": 280,
+      "controls": 280,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_extrinsics_or_cross_camera_calibration",
+      "release_case": "abca9b943bfe9577dbd31723aa36a7992c1a1aa850194759837f00d4afd0513b"
+    },
+    {
+      "case": [
+        "libero_object",
+        0,
+        "S15",
+        143,
+        3
+      ],
+      "horizon": 280,
+      "controls": 280,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_extrinsics_or_cross_camera_calibration",
+      "release_case": "dc954195e4de8259b1256703483a6e2a53c029fbc2c51832fb1ef94599c542cb"
+    },
+    {
+      "case": [
+        "libero_object",
+        0,
+        "S20",
+        142,
+        0
+      ],
+      "horizon": 280,
+      "controls": 280,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_rate_delay_or_action_window",
+      "release_case": "bc007a73e83df29c0ed747cfd29ebe218709eebe214a4997c5796d80c0dd838b"
+    },
+    {
+      "case": [
+        "libero_object",
+        0,
+        "S20",
+        143,
+        3
+      ],
+      "horizon": 280,
+      "controls": 280,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_rate_delay_or_action_window",
+      "release_case": "f4912ddf025c466b63a757604abd1dd66eba6e18f80177bbda3b48c5d921903e"
+    },
+    {
+      "case": [
+        "libero_object",
+        0,
+        "D17",
+        142,
+        0
+      ],
+      "horizon": 280,
+      "controls": 280,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "grasp_failure_result",
+      "release_case": "40156906d0379459de2a7190718ea1c71329cfd608ee4163b15ca42cd42a61ad"
+    },
+    {
+      "case": [
+        "libero_object",
+        0,
+        "D17",
+        143,
+        3
+      ],
+      "horizon": 280,
+      "controls": 182,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "grasp_failure_result",
+      "release_case": "314e7a7b5bba887cb8bfbfd7f0e529888604037441181c223423b5344c2d38b5"
+    },
+    {
+      "case": [
+        "libero_object",
+        0,
+        "D18",
+        142,
+        0
+      ],
+      "horizon": 280,
+      "controls": 213,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "reachable_collision_free_drop_state",
+      "release_case": "c6d859227f4018fb99ab817bc8a4d7a0e15da73774f2b614946be77401262b23"
+    },
+    {
+      "case": [
+        "libero_object",
+        0,
+        "D18",
+        143,
+        3
+      ],
+      "horizon": 280,
+      "controls": 280,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "reachable_collision_free_drop_state",
+      "release_case": "b9534b520bbd524532aa4a47d5b6f2d26d07129855892ebc595e054f098bb9d4"
+    },
+    {
+      "case": [
+        "libero_object",
+        7,
+        "base",
+        142,
+        0
+      ],
+      "horizon": 280,
+      "controls": 125,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "identity",
+      "release_case": "a2ed26a90a5050be1ec3b762eedfa509c2a7a22896fc530130cde9ef432912b5"
+    },
+    {
+      "case": [
+        "libero_object",
+        7,
+        "base",
+        143,
+        3
+      ],
+      "horizon": 280,
+      "controls": 126,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "identity",
+      "release_case": "04ec1f9c121a1cac208d7e585197845ade1dabd49ec68163df526ea3059e6867"
+    },
+    {
+      "case": [
+        "libero_object",
+        7,
+        "S15",
+        142,
+        0
+      ],
+      "horizon": 280,
+      "controls": 280,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_extrinsics_or_cross_camera_calibration",
+      "release_case": "abca9b943bfe9577dbd31723aa36a7992c1a1aa850194759837f00d4afd0513b"
+    },
+    {
+      "case": [
+        "libero_object",
+        7,
+        "S15",
+        143,
+        3
+      ],
+      "horizon": 280,
+      "controls": 280,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_extrinsics_or_cross_camera_calibration",
+      "release_case": "dc954195e4de8259b1256703483a6e2a53c029fbc2c51832fb1ef94599c542cb"
+    },
+    {
+      "case": [
+        "libero_object",
+        7,
+        "S20",
+        142,
+        0
+      ],
+      "horizon": 280,
+      "controls": 280,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_rate_delay_or_action_window",
+      "release_case": "bc007a73e83df29c0ed747cfd29ebe218709eebe214a4997c5796d80c0dd838b"
+    },
+    {
+      "case": [
+        "libero_object",
+        7,
+        "S20",
+        143,
+        3
+      ],
+      "horizon": 280,
+      "controls": 280,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_rate_delay_or_action_window",
+      "release_case": "f4912ddf025c466b63a757604abd1dd66eba6e18f80177bbda3b48c5d921903e"
+    },
+    {
+      "case": [
+        "libero_object",
+        7,
+        "D17",
+        142,
+        0
+      ],
+      "horizon": 280,
+      "controls": 167,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "grasp_failure_result",
+      "release_case": "b1a32637f9d3cef01066191f4b1add2a2a6d2855a9900d1d15ae67e3fa5fcfb8"
+    },
+    {
+      "case": [
+        "libero_object",
+        7,
+        "D17",
+        143,
+        3
+      ],
+      "horizon": 280,
+      "controls": 177,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "grasp_failure_result",
+      "release_case": "a34d2de9dd7a0db92463e47a232bfac32c058ced55298153d37765501274df5f"
+    },
+    {
+      "case": [
+        "libero_object",
+        7,
+        "D18",
+        142,
+        0
+      ],
+      "horizon": 280,
+      "controls": 163,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "reachable_collision_free_drop_state",
+      "release_case": "89f4a6a9ce535654062f6d4b9ac2db43e0c181af876f1e4f3cc498aa42a19261"
+    },
+    {
+      "case": [
+        "libero_object",
+        7,
+        "D18",
+        143,
+        3
+      ],
+      "horizon": 280,
+      "controls": 280,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "reachable_collision_free_drop_state",
+      "release_case": "7d04b22fc02977727d2f202c28aa229bfde08e408d3086dde0c3d81b0c870bb8"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        1,
+        "base",
+        142,
+        0
+      ],
+      "horizon": 220,
+      "controls": 113,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "identity",
+      "release_case": "a2ed26a90a5050be1ec3b762eedfa509c2a7a22896fc530130cde9ef432912b5"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        1,
+        "base",
+        143,
+        3
+      ],
+      "horizon": 220,
+      "controls": 106,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "identity",
+      "release_case": "04ec1f9c121a1cac208d7e585197845ade1dabd49ec68163df526ea3059e6867"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        1,
+        "S15",
+        142,
+        0
+      ],
+      "horizon": 220,
+      "controls": 220,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_extrinsics_or_cross_camera_calibration",
+      "release_case": "abca9b943bfe9577dbd31723aa36a7992c1a1aa850194759837f00d4afd0513b"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        1,
+        "S15",
+        143,
+        3
+      ],
+      "horizon": 220,
+      "controls": 220,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_extrinsics_or_cross_camera_calibration",
+      "release_case": "dc954195e4de8259b1256703483a6e2a53c029fbc2c51832fb1ef94599c542cb"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        1,
+        "S20",
+        142,
+        0
+      ],
+      "horizon": 220,
+      "controls": 220,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_rate_delay_or_action_window",
+      "release_case": "bc007a73e83df29c0ed747cfd29ebe218709eebe214a4997c5796d80c0dd838b"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        1,
+        "S20",
+        143,
+        3
+      ],
+      "horizon": 220,
+      "controls": 220,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_rate_delay_or_action_window",
+      "release_case": "f4912ddf025c466b63a757604abd1dd66eba6e18f80177bbda3b48c5d921903e"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        1,
+        "D17",
+        142,
+        0
+      ],
+      "horizon": 220,
+      "controls": 155,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "grasp_failure_result",
+      "release_case": "2ed5cf92a83224ce5272ebe51ae559ab372b6fa24ae6d33ab6f0d658e2fb7d3f"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        1,
+        "D17",
+        143,
+        3
+      ],
+      "horizon": 220,
+      "controls": 147,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "grasp_failure_result",
+      "release_case": "b81da820408a0cfc2462d275e7902a29ca498572cdada613f46526785d871734"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        1,
+        "D18",
+        142,
+        0
+      ],
+      "horizon": 220,
+      "controls": 160,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "reachable_collision_free_drop_state",
+      "release_case": "0641eb3c3f78957be3471a48df35e45a73e0a73ff2b5022930f2fb048e730439"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        1,
+        "D18",
+        143,
+        3
+      ],
+      "horizon": 220,
+      "controls": 220,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "reachable_collision_free_drop_state",
+      "release_case": "4dbc70001c9cf5b8a02d6812fb82af437c4946466b43fba84359c1aea7164616"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        7,
+        "base",
+        142,
+        0
+      ],
+      "horizon": 220,
+      "controls": 118,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "identity",
+      "release_case": "a2ed26a90a5050be1ec3b762eedfa509c2a7a22896fc530130cde9ef432912b5"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        7,
+        "base",
+        143,
+        3
+      ],
+      "horizon": 220,
+      "controls": 116,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "identity",
+      "release_case": "04ec1f9c121a1cac208d7e585197845ade1dabd49ec68163df526ea3059e6867"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        7,
+        "S15",
+        142,
+        0
+      ],
+      "horizon": 220,
+      "controls": 220,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_extrinsics_or_cross_camera_calibration",
+      "release_case": "ebec6e5397c052590d46f53c45625d018796128bd3219226a75353e7fd3aadea"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        7,
+        "S15",
+        143,
+        3
+      ],
+      "horizon": 220,
+      "controls": 220,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_extrinsics_or_cross_camera_calibration",
+      "release_case": "c4a1ed258963f467363b10b290fda0bd21f6abda7615cc5df08d1f189fa62b78"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        7,
+        "S20",
+        142,
+        0
+      ],
+      "horizon": 220,
+      "controls": 220,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_rate_delay_or_action_window",
+      "release_case": "bc007a73e83df29c0ed747cfd29ebe218709eebe214a4997c5796d80c0dd838b"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        7,
+        "S20",
+        143,
+        3
+      ],
+      "horizon": 220,
+      "controls": 220,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "fixed_rate_delay_or_action_window",
+      "release_case": "f4912ddf025c466b63a757604abd1dd66eba6e18f80177bbda3b48c5d921903e"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        7,
+        "D17",
+        142,
+        0
+      ],
+      "horizon": 220,
+      "controls": 205,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "grasp_failure_result",
+      "release_case": "2ed5cf92a83224ce5272ebe51ae559ab372b6fa24ae6d33ab6f0d658e2fb7d3f"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        7,
+        "D17",
+        143,
+        3
+      ],
+      "horizon": 220,
+      "controls": 167,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "grasp_failure_result",
+      "release_case": "b81da820408a0cfc2462d275e7902a29ca498572cdada613f46526785d871734"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        7,
+        "D18",
+        142,
+        0
+      ],
+      "horizon": 220,
+      "controls": 215,
+      "success": true,
+      "terminated": true,
+      "truncated": false,
+      "released_variant": "reachable_collision_free_drop_state",
+      "release_case": "0641eb3c3f78957be3471a48df35e45a73e0a73ff2b5022930f2fb048e730439"
+    },
+    {
+      "case": [
+        "libero_spatial",
+        7,
+        "D18",
+        143,
+        3
+      ],
+      "horizon": 220,
+      "controls": 220,
+      "success": false,
+      "terminated": false,
+      "truncated": true,
+      "released_variant": "reachable_collision_free_drop_state",
+      "release_case": "4dbc70001c9cf5b8a02d6812fb82af437c4946466b43fba84359c1aea7164616"
+    }
+  ]
+}
