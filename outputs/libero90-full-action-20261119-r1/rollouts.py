@@ -126,7 +126,7 @@ def checked_tape(issued, positions, gripper, rewards, initial, success):
     return dict(arrays, controls=np.int32(count), terminal=np.bool_(success))
 
 
-def rollout(sim, motor, readers, folder, arm, row, raw, identity, support):
+def rollout(sim, motor, readers, folder, arm, row, raw, identity, support, matched_views=None):
     folder.mkdir()
     started = time.monotonic()
     is_query = arm != "support"
@@ -137,16 +137,30 @@ def rollout(sim, motor, readers, folder, arm, row, raw, identity, support):
     initial = raw["robot0_eef_pos"].copy()
     issued, positions, gripper, rewards = [], [], [], []
     decisions = {key: [] for key in ("state", "embedding", "proposals", "scores", "index", "offset", "length")}
+    if arm in ("matched", "base"):
+        decisions["input_sha256"] = []
     times = dict(action_seconds=0., feature_seconds=0., reader_seconds=0., simulator_step_seconds=0.)
     ordinal = 0
     while len(issued) < HORIZON:
         item = policy_input(raw, identity["prompt"])
-        before = time.monotonic()
-        if is_query:
+        if arm in ("matched", "base"):
+            # Include both model input images, pre-cast proprioception and instruction.
+            inputs = [fingerprint(item["observation/" + k]) for k in ("image", "wrist_image", "state")]
+            view = sha(json.dumps([*inputs, item["prompt"]]).encode())
+            decisions["input_sha256"].append(view)
+        if arm == "base":
+            hashes, embeddings = matched_views
+            if ordinal >= len(hashes) or hashes[ordinal] != view:
+                raise ValueError("Cannot reuse a readout from a different motor input")
+            state = item["observation/state"].astype(np.float32)
+            embedding = embeddings[ordinal]
+        elif is_query:
+            before = time.monotonic()
             features = motor.query_features(item)
             if features.size <= 8 or not np.array_equal(features[:8], item["observation/state"].astype(np.float32)):
                 raise ValueError("pi05 query features do not start with the current physical state")
             times["feature_seconds"] += time.monotonic() - before
+            state, embedding = features[:8], features[8:]
         before = time.monotonic()
         proposals = np.stack([motor.propose(item, g.standard_normal((10, 32), dtype=np.float32))
                               for g in generators])
@@ -172,7 +186,7 @@ def rollout(sim, motor, readers, folder, arm, row, raw, identity, support):
         if not 0 < n <= len(commands) or (n < len(commands) and not step["success"]):
             raise ValueError("Invalid number of executed LIBERO controls")
         if is_query:
-            for key, value in (("state", features[:8]), ("embedding", features[8:]), ("proposals", proposals),
+            for key, value in (("state", state), ("embedding", embedding), ("proposals", proposals),
                                ("scores", scores), ("index", index), ("offset", offset), ("length", n)):
                 decisions[key].append(value)
         issued.extend(commands[:n])
@@ -192,7 +206,7 @@ def rollout(sim, motor, readers, folder, arm, row, raw, identity, support):
         np.savez_compressed(folder / "decisions.npz", **decisions)
     record = dict(arm=arm, controls=len(issued), settling_controls=SETTLE, score=float(sum(rewards)),
                   success=success, truncated=not success, replans=ordinal, policy_calls=k * ordinal,
-                  feature_calls=ordinal if is_query else 0, policy_stream=[row["seed"], stream],
+                  feature_calls=ordinal if arm not in ("base", "support") else 0, policy_stream=[row["seed"], stream],
                   identities=dict(issued=fingerprint(tape["issued"]), positions=fingerprint(tape["positions"]),
                                   rewards=fingerprint(tape["rewards"])),
                   arrays={p.name: sha(p.read_bytes()) for p in folder.glob("*.npz")},
@@ -206,7 +220,11 @@ def collect_trial(sim, motor, readers, folder, row, arms, source, design_sha):
     episodes, identities = {}, {}
     support = None
     reset_seconds = 0.
-    for arm in ("support", *arms):
+    # Only the base's saved diagnostic embeddings are reused. Each policy
+    # still samples and executes its own actions on a newly reset simulator.
+    execution_order = ("matched", "base", *arms[2:]) if arms == LIVE else arms
+    matched_views = None
+    for arm in ("support", *execution_order):
         role = "support" if arm == "support" else "query"
         case = dict(task_id=row["task_id"], init_state_id=row[role + "_id"], seed=SCENE_SEED)
         before = time.monotonic()
@@ -220,11 +238,14 @@ def collect_trial(sim, motor, readers, folder, row, arms, source, design_sha):
             if practice["prompt"] != identity["prompt"] or any(
                     practice[key] == identity[key] for key in ("physics", "bank_state_sha256")):
                 raise ValueError("Practice and retry must restore different poses of the same task")
-        record, tape = rollout(sim, motor, readers, folder / arm, arm, row, raw, identity, support)
+        record, tape = rollout(sim, motor, readers, folder / arm, arm, row, raw, identity, support, matched_views)
         episodes[arm] = record
         if arm == "support":
             support = tape
-        if arm == "matched" and record["identities"] != episodes["base"]["identities"]:
+        if arm == "matched":
+            with np.load(folder / arm / "decisions.npz", allow_pickle=False) as archive:
+                matched_views = archive["input_sha256"], archive["embedding"]
+        if arm == "base" and record["identities"] != episodes["matched"]["identities"]:
             raise ValueError("Discarding the extra proposal changed the live native trajectory")
     if arms == LOGGED:
         # Both truly reset, and their opening readouts agree. Their policy draws must differ.

@@ -34,8 +34,9 @@ def analyze(root, split):
             if type(record["success"]) is not bool:
                 raise ValueError(f"Invalid success in {name}/{arm}")
             row[arm] = int(record["success"])
-            for field in ("controls", "policy_calls", "feature_calls"):
-                totals[arm][field] += record.get(field, 0)
+            for field in ("controls", "settling_controls", "replans", "policy_calls", "feature_calls",
+                          "action_seconds", "feature_seconds", "reader_seconds", "simulator_step_seconds"):
+                totals[arm][field] += record[field]
         data[case["task_id"]].append(row)
     per_task = {}
     for task, rows in data.items():
@@ -52,7 +53,18 @@ def analyze(root, split):
             tasks_tied=int(sum(delta==0)))
     interaction = [v["meta_intact"]-v["meta_cleared"]-v["imitation_intact"]+v["imitation_cleared"]
                    for v in per_task.values()]
-    return dict(split=split,tasks=len(data),cases=len(flat),per_task=per_task,paired=pairs,
+    decisions = {}
+    eligible = True
+    for name in ("meta_intact_minus_base", "meta_intact_minus_meta_cleared",
+                 "meta_intact_minus_imitation_intact"):
+        positive = pairs[name]["lower"] > 0
+        decisions[name] = dict(eligible=eligible, positive_claim=bool(eligible and positive))
+        eligible = bool(eligible and positive)
+    for costs in totals.values():
+        costs["policy_seconds_per_replan"] = costs["action_seconds"] / costs["replans"]
+        costs["logging_or_reader_feature_seconds_per_replan"] = costs["feature_seconds"] / costs["replans"]
+        costs["reader_seconds_per_replan"] = costs["reader_seconds"] / costs["replans"]
+    return dict(fixed_sequence=decisions, split=split,tasks=len(data),cases=len(flat),per_task=per_task,paired=pairs,
                 history_gain_difference=interval(interaction),
                 rates={arm:interval([v[arm] for v in per_task.values()]) for arm in ARMS},
                 at_least_one_success={arm:np.mean([r[arm] or r["support"] for r in flat]) for arm in ARMS},

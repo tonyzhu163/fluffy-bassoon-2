@@ -54,6 +54,7 @@ probe_python="$shared/setups/robocasa365-native-20261101-r1/env/bin/python"
 export READER_PYTHON="$probe_python"
 export LIBERO_SIM_PYTHON=/mowenjie/envs/wam-libero-plus-py310/bin/python
 export LIBERO_STD_ROOT="$shared/deps/libero-dsrl-87edbd1-20261029-r1/repo"
+export LIBERO_SIM_PYTHONPATH="$LIBERO_STD_ROOT:$OPENPI_ROOT/packages/openpi-client/src:$legacy/envs/pi05-plus-client-deps"
 export LIBERO_CONFIG_PATH="$shared/cache/libero-dsrl-87edbd1-20261029-r1"
 export PYTHONPATH="$OPENPI_ROOT/src:$OPENPI_ROOT/packages/openpi-client/src:$code/src"
 export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl MUJOCO_EGL_DEVICE_ID=0

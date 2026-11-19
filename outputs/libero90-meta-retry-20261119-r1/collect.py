@@ -14,6 +14,8 @@ import json
 import math
 import os
 from pathlib import Path
+import shutil
+import signal
 import socket
 import subprocess
 import sys
@@ -106,10 +108,10 @@ def policy_input(raw, prompt):
         rotated = np.ascontiguousarray(raw[key][::-1, ::-1])
         return image_tools.convert_to_uint8(image_tools.resize_with_pad(rotated, 224, 224))
 
-    quat = raw["robot0_eef_quat"]
-    w = np.clip(quat[3], -1., 1.)
-    den = np.sqrt(1. - w * w)
-    rotation = np.zeros(3) if math.isclose(den, 0.) else quat[:3] * 2. * math.acos(w) / den
+    quat = raw["robot0_eef_quat"].copy()
+    quat[3] = np.clip(quat[3], -1., 1.)
+    den = np.sqrt(1. - quat[3] * quat[3])
+    rotation = np.zeros(3) if math.isclose(den, 0.) else quat[:3] * 2. * math.acos(quat[3]) / den
     return {"observation/image": image("agentview_image"), "observation/wrist_image": image("robot0_eye_in_hand_image"),
             "observation/state": np.concatenate((raw["robot0_eef_pos"], rotation, raw["robot0_gripper_qpos"])),
             "prompt": prompt}
@@ -199,6 +201,10 @@ def rollout(sim, motor, folder, case, identity, raw, cadence, noise, shared_open
         n = len(step["rewards"])
         if not (0 < n <= len(commands)) or (n != len(commands) and not step["success"]):
             raise ValueError("Missing live controls")
+        for key, width in (("positions", 3), ("quats", 4), ("gripper", 2)):
+            values = np.asarray(step[key])
+            if values.shape != (n, width) or not np.isfinite(values).all():
+                raise ValueError(f"Invalid control-rate {key} at offset {offset}")
         issued.extend(commands[:n])
         positions.extend(step["positions"])
         gripper.extend(step["gripper"])
@@ -297,13 +303,11 @@ def bind_design(root, data, runtime, args):
     design = dict(suite=SUITE, manifest_sha256=sha(data), runtime=runtime,
                   collector_sha256={name: sha((HERE / name).read_bytes())
                                     for name in ("collect.py", "standard_sim.py", "runner.sh")},
-                  cadences=CADENCES, cameras=CAMERAS, camera_resolution=RESOLUTION, model_resolution=224,
+                  cadences=CADENCES, cameras=list(CAMERAS), camera_resolution=RESOLUTION, model_resolution=224,
                   settle_steps=SETTLE, horizon=HORIZON, scene_seed=SCENE_SEED, flow_steps=10,
                   noise="PCG64 SeedSequence([manifest seed, role=0 support/1 query]), indexed by control // 5",
                   policy_calls="replans needed for a standalone episode; fresh_policy_calls counts actual inference",
                   readout="settled public proprioception and mask-mean frozen image/language prefix, before retry")
-    # JSON uses arrays for tuples. Keep the in-memory representation identical on resume.
-    design["cameras"] = list(CAMERAS)
     with lock(root / ".design.lock"):
         bind_json(root / "design.json", design)
         manifest = root / "manifest.json"
@@ -344,30 +348,30 @@ def read_finished(folder, row, design_sha):
 
 
 def run(args, data, selected, plan):
+    started, started_unix = time.monotonic(), time.time()
     root = args.output.resolve()
-    runtime = runtime_identity()
-    design_sha = bind_design(root, data, runtime, args)
     stage = root / args.stage
-    locks = stage / ".locks"
-    locks.mkdir(parents=True, exist_ok=True)
     jobs = root / ".jobs"
-    jobs.mkdir(exist_ok=True)
+    jobs.mkdir(parents=True, exist_ok=True)
     attempt = Path(tempfile.mkdtemp(dir=jobs, prefix=f"{args.stage}-{args.shard_index:04d}-"))
-    started = time.monotonic()
-    receipt = dict(plan, host=socket.gethostname(), pid=os.getpid(), started_unix=time.time(),
+    receipt = dict(plan=plan, host=socket.gethostname(), pid=os.getpid(), started_unix=started_unix,
                    code_revision=subprocess.check_output(["git", "-C", str(HERE), "rev-parse", "HEAD"],
                                                          text=True).strip(),
-                   attempt=str(attempt), design_sha256=design_sha, status="running",
+                   attempt=str(attempt), storage_free_bytes=shutil.disk_usage(root).free, status="running",
                    collected=0, resumed=0, fresh_policy_calls=0, controls=0, settling_controls=0)
     write_json(attempt / "job.json", receipt)
     print(json.dumps(receipt), flush=True)
     try:
+        design_sha = bind_design(root, data, runtime_identity(), args)
+        receipt["design_sha256"] = design_sha
+        locks = stage / ".locks"
+        locks.mkdir(parents=True, exist_ok=True)
         probe = attempt / "gpu.json"
         subprocess.run([os.environ["BAIGE_PROBE_PYTHON"], "-Bu", str(HERE.parents[1] / "scripts/[train]gpu_probe.py"),
                         "--expected-count", "1", "--purpose", "evaluation", "--baige-container", "--output", str(probe)],
                        check=True)
         gpu = json.loads(probe.read_text())["devices"][0]["cuda_name"]
-        if "4090" not in gpu and "6000D" not in gpu:
+        if not any(name in gpu for name in ("4090", "6000D", "RPBZZZ6")):
             raise RuntimeError(f"Expected distributed RTX 4090 or RTX PRO 6000D, got {gpu}")
         with ExitStack() as stack, (attempt / "progress.jsonl").open("a", buffering=1) as progress:
             motor = None
@@ -426,13 +430,19 @@ def main():
     data = args.manifest.read_bytes()
     selected = select(manifest_rows(data), args.stage, args.shard_index, args.shards)
     count = len(selected)
+    max_calls = count * sum(math.ceil(HORIZON / cadence) for cadence in (NATIVE_CADENCE, *CADENCES.values()))
     plan = dict(stage=args.stage, shard_index=args.shard_index, shards=args.shards, manifest_sha256=sha(data),
                 histories=count, episodes=count * 3, max_controls=count * 3 * HORIZON, settling_controls=count * 3 * SETTLE,
-                max_policy_calls=count * (2 * math.ceil(HORIZON / NATIVE_CADENCE) + math.ceil(HORIZON / CADENCES["alternate"])),
+                max_policy_calls=max_calls, max_fresh_policy_calls=max_calls - count, reset_feature_calls=count,
                 first=trial_name(selected[0][1]) if selected else None, last=trial_name(selected[-1][1]) if selected else None)
     if args.plan or not count:
         print(json.dumps(plan))
         return
+    # Give normal scheduler termination the same cost receipt and cleanup as Ctrl-C.
+    def terminate(signum, _frame):
+        raise SystemExit(128 + signum)
+
+    signal.signal(signal.SIGTERM, terminate)
     run(args, data, selected, plan)
 
 

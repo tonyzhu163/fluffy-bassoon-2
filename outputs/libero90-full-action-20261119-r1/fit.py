@@ -78,7 +78,9 @@ def integer_vector(tape, key, size):
 def read_query(folder, task, support_id):
     with np.load(folder / "public.npz", allow_pickle=False) as public:
         controls, success = read_outcome(folder, public)
-        issued = numeric(public["issued"], (controls, 7), "issued")
+        issued = public["issued"]
+        if issued.shape != (controls, 7) or not np.isfinite(issued).all():
+            raise ValueError(f"Invalid issued controls in {folder}")
     n = (controls + CADENCE - 1) // CADENCE
     with np.load(folder / "decisions.npz", allow_pickle=False) as decisions:
         offsets = integer_vector(decisions, "offset", n)
@@ -89,9 +91,10 @@ def read_query(folder, task, support_id):
                 or not np.isin(index, (0, 1)).all()
                 or numeric(decisions["scores"], (n, 2), "scores").any()):
             raise ValueError(f"Invalid randomized collection decisions in {folder}")
-        proposals = numeric(decisions["proposals"], (n, *PROPOSAL_SHAPE), "proposals")
-        chosen = proposals[np.arange(n), index, :CADENCE].reshape(-1, 7)
-        if not np.array_equal(chosen[:controls], issued):
+        native = decisions["proposals"]
+        proposals = numeric(native, (n, *PROPOSAL_SHAPE), "proposals")
+        chosen = native[np.arange(n), index, :CADENCE].reshape(-1, 7)
+        if chosen.dtype != issued.dtype or chosen[:controls].tobytes() != issued.tobytes():
             raise ValueError(f"Executed controls differ from the logged choice in {folder}")
         state = numeric(decisions["state"], (n, STATE_DIM), "state")
         embedding = decisions["embedding"]
@@ -154,7 +157,7 @@ def initialize(data, seed):
 
 
 class Sampler:
-    """Uniform task, trajectory within task, and visited decision within trajectory.
+    """Uniform task and uniform visited decision within task.
 
     Stratification guarantees successful examples for CE at every shared update.
     BCE recombines the strata using their mass under the original sampling law.
@@ -162,8 +165,10 @@ class Sampler:
 
     def __init__(self, episodes, seed):
         self.rng = np.random.default_rng(seed)
-        task_counts = Counter(e.task for e in episodes)
-        weights = np.array([1 / (len(task_counts) * task_counts[e.task]) for e in episodes])
+        task_decisions = Counter()
+        for episode in episodes:
+            task_decisions[episode.task] += len(episode.index)
+        weights = np.array([len(e.index) / (len(task_decisions) * task_decisions[e.task]) for e in episodes])
         success = np.array([e.success for e in episodes], dtype=bool)
         if not success.any():
             raise ValueError("No successful fitting query for success-conditioned imitation")
@@ -407,8 +412,10 @@ def check(directory):
             if ties[0] != ties[1] or ties.argmax() != 0:
                 raise AssertionError("Identical proposals must tie in collector order")
         changed = support["issued"].copy()
-        changed[PREFIX:] += 10
-        np.testing.assert_array_equal(predict(dict(support, issued=changed), proposals), predict(support, proposals))
+        changed[-1] += 10
+        altered = pack_practice(dict(support, issued=changed))
+        if torch.equal(altered.history, pack_practice(support).history):
+            raise AssertionError("The final practice command must be present in the history")
     print("PASS: logged objectives, checkpoint replay, retained/cleared ensemble logits, proposal order and ties")
 
 

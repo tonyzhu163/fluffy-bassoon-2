@@ -31,9 +31,8 @@ def fingerprint(array):
 def public_observation(raw):
     public = {key: np.asarray(raw[key]).copy() for key in PUBLIC_SHAPES}
     for key, value in public.items():
-        if value.shape != PUBLIC_SHAPES[key] or (
-            value.dtype != np.uint8 if key.endswith("_image") else not np.isfinite(value).all()
-        ):
+        valid = value.dtype == np.uint8 if key.endswith("_image") else np.isfinite(value).all()
+        if value.shape != PUBLIC_SHAPES[key] or not valid:
             raise ValueError(f"Invalid public LIBERO channel {key}: {value.shape}, {value.dtype}")
     return public
 
@@ -46,7 +45,7 @@ class Simulator:
         try:
             self.proc = subprocess.Popen(
                 [os.environ["LIBERO_SIM_PYTHON"], "-Bu", __file__, str(peer.fileno())],
-                env=dict(os.environ, PYTHONPATH=os.environ["LIBERO_STD_ROOT"]),
+                env=dict(os.environ, PYTHONPATH=os.environ.get("LIBERO_SIM_PYTHONPATH", os.environ["LIBERO_STD_ROOT"])),
                 pass_fds=(peer.fileno(),),
             )
         except BaseException:
@@ -89,6 +88,7 @@ class StandardLibero:
         self.env_type = OffScreenRenderEnv
         self.env = None
         self.task_id = None
+        self.renderer = None
 
     def reset(self, case):
         task_id, state_id, seed = (case[key] for key in ("task_id", "init_state_id", "seed"))
@@ -114,10 +114,18 @@ class StandardLibero:
         self.env.set_init_state(state)
         for _ in range(SETTLE):
             raw, _, _, _ = self.env.step([0.] * 6 + [-1.])
+        if self.renderer is None:
+            from OpenGL import GL
+
+            self.env.sim._render_context_offscreen.gl_ctx.make_current()
+            vendor, renderer = GL.glGetString(GL.GL_VENDOR), GL.glGetString(GL.GL_RENDERER)
+            if not vendor or b"nvidia" not in vendor.lower() or not renderer:
+                raise RuntimeError(f"Expected the allocated NVIDIA EGL renderer, found {vendor!r}, {renderer!r}")
+            self.renderer = renderer.decode()
         self.count, self.done = 0, False
         obs = public_observation(raw)
         identity = dict(
-            task_name=self.task.name, prompt=self.task.language, horizon=HORIZON,
+            task_name=self.task.name, prompt=self.task.language, horizon=HORIZON, renderer=self.renderer,
             bank_size=len(self.states), bddl_sha256=self.bddl_sha, bank_state_sha256=fingerprint(state),
             physics=fingerprint(self.env.get_sim_state()), public={k: fingerprint(v) for k, v in obs.items()},
         )

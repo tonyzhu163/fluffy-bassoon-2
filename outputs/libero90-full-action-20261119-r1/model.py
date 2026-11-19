@@ -14,8 +14,8 @@ from torch.nn import functional as F
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 from fluffy_bassoon.meta_rl.causal_decoder import CausalDecoderCore
 
-PREFIX = 80
-GROUP = 5
+PREFIX = 400
+GROUP = 20
 CHANNELS = 13  # issued [7], post-control displacement [3], jaw [2], native reward
 STATE_DIM = 8
 PROPOSAL_SHAPE = (2, 10, 7)
@@ -42,7 +42,7 @@ def numeric(value, shape, name):
 
 
 def pack_practice(tape: Mapping) -> Practice:
-    """One completed practice, padded to 80 controls. Keep its actual terminal outcome."""
+    """One completed practice, padded to the 400-control horizon. Keep its actual terminal outcome."""
     controls = np.asarray(tape["controls"])
     terminal = np.asarray(tape["terminal"])
     if controls.shape != () or controls.dtype.kind not in "iu" or int(controls) < 1:
@@ -108,9 +108,14 @@ class ActionReader(nn.Module):
             tokens[rows, last] = current
         valid = torch.arange(tokens.shape[1], device=query.device)[:, None] <= last[None]
         encoded = self.core.sequence(tokens.transpose(0, 1), valid=valid, reset=torch.zeros_like(valid))
-        context = encoded[last, rows].unsqueeze(1).expand(-1, proposals.shape[1], -1)
-        actions = self.action_projection(proposals.flatten(2))
-        return self.score(torch.cat((context, actions), dim=-1)).squeeze(-1)
+        context = encoded[last, rows]
+        # Use the same matrix shape and row for both alternatives. Some CPU
+        # kernels round duplicate rows of a flattened proposal batch differently.
+        logits = []
+        for proposal in proposals.unbind(dim=1):
+            action = self.action_projection(proposal.flatten(1).contiguous())
+            logits.append(self.score(torch.cat((context, action), dim=1)))
+        return torch.cat(logits, dim=1)
 
 
 def load_scorer(path: Path, recipe: str):
@@ -136,9 +141,12 @@ def load_scorer(path: Path, recipe: str):
                                 numeric(embedding, (dim,), "embedding")))
         query = torch.from_numpy(query).unsqueeze(0)
         actions = torch.from_numpy(numeric(proposals, PROPOSAL_SHAPE, "proposals")).unsqueeze(0)
+        duplicate = torch.equal(actions[:, 0], actions[:, 1])
+        if duplicate:
+            actions = actions[:, :1]
         logits = torch.stack([member(practice, query, actions)[0] for member in members]).mean(0)
         if not torch.isfinite(logits).all():
             raise ValueError("Nonfinite ensemble logits")
-        return logits.numpy()
+        return (logits.repeat(2) if duplicate else logits).numpy()
 
     return score
