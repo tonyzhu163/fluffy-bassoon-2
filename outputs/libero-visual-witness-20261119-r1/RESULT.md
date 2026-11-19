@@ -4,7 +4,7 @@ The physical reversal recurred on two of four prespecified development triples. 
 
 ![Final camera views for the two matched practices, with the successful retry in each row](histories.png)
 
-The pictured practices used poses 16 and 17. When the bowl missed the cabinet and reached the plate, two zeros ruled out the plate. Swapping the placement outcomes ruled out the cabinet. Both histories used exactly the same two issued 300-control command sequences. Both quiz branches began on pose 18 with the same physics, images and robot state. This inference uses the assumption that the hidden destination is one of the two available options.
+The pictured practices used poses 16 and 17. When the bowl missed the cabinet and reached the plate, two zeros ruled out the plate. Swapping the placement outcomes ruled out the cabinet. Both histories used exactly the same two issued 300-control command sequences. Both query branches began on pose 18 with the same physics, images and robot state. This inference uses the assumption that the hidden destination is one of the two available options.
 
 ## Development readouts
 

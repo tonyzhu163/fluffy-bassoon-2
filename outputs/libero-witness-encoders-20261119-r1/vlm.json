@@ -1,0 +1,828 @@
+{
+  "arm": "vlm",
+  "checkpoint": {
+    "id": "google/paligemma-3b-pt-224",
+    "revision": "35e4f46485b4d07967e7e9935bc3786aad50687c",
+    "file": "/mowenjie/fluffy-bassoon-2/inputs/libero-witness-paligemma-pt-20261119-r1/vision.safetensors",
+    "reference": "pt",
+    "prefix": "vision_tower.",
+    "source_dtypes": [
+      "torch.float32"
+    ],
+    "source_tensor_sha256": {
+      "vision_tower.vision_model.embeddings.patch_embedding.weight": "bd6c821e92ff59a3e47831172f57709207abbd7196c22191eac0ca6fe2b73727",
+      "vision_tower.vision_model.encoder.layers.26.layer_norm2.weight": "7fb39a85c0d3753ff5d8c07097753560b5dad138b029537a6aab90be476edc82"
+    },
+    "tensor_count": 437,
+    "parameter_count": 412442352,
+    "architecture": {
+      "hidden_size": 1152,
+      "intermediate_size": 4304,
+      "num_hidden_layers": 27,
+      "num_attention_heads": 16,
+      "patch_size": 14,
+      "image_size": 224,
+      "num_channels": 3,
+      "hidden_act": "gelu_pytorch_tanh",
+      "layer_norm_eps": 1e-06,
+      "attention_dropout": 0.0,
+      "vision_use_head": false
+    },
+    "transformers_version": "4.53.2",
+    "attention_implementation": "sdpa"
+  },
+  "device": "cpu",
+  "torch_version": "2.11.0+cu128",
+  "threads": 4,
+  "interop_threads": 1,
+  "batch_size": 4,
+  "input_dtype": "bfloat16",
+  "encoder_dtype": "bfloat16",
+  "pooling_dtype": "float32",
+  "difference_centroid_distance_variance_dtype": "float64",
+  "variance": "mean of per-coordinate population variances on fitting tapes per goal; no whitening",
+  "matmul_precision": "highest",
+  "controls": [
+    0,
+    75,
+    150,
+    225,
+    300
+  ],
+  "cameras": 2,
+  "input_hw": [
+    96,
+    96
+  ],
+  "resize_hw": [
+    224,
+    224
+  ],
+  "scale": "[-1,1]",
+  "interpolation": "bilinear, antialias=True, align_corners=False",
+  "grid_hw": [
+    16,
+    16
+  ],
+  "pooled_hw": [
+    2,
+    2
+  ],
+  "channels": 1152,
+  "feature_dim": 36864,
+  "fit_diagnostics": {
+    "0": {
+      "hits": 4,
+      "misses": 4,
+      "mean_feature_variance": 0.09194533094840371
+    },
+    "1": {
+      "hits": 4,
+      "misses": 4,
+      "mean_feature_variance": 0.085007683712471
+    }
+  },
+  "tapes_path": "/mowenjie/fluffy-bassoon-2/outputs/libero-visual-witness-20261119-r1/cpu02",
+  "strict_reference": "/mowenjie/fluffy-bassoon-2/outputs/libero-visual-witness-20261119-r1/score01/score.json",
+  "strict_reference_sha256": "7b3558c4a2e76a4a701fc8d91db5ffec35be1bcb82ea88ff08282dd5bd52942d",
+  "splits": {
+    "fit": {
+      "physical_completion": {
+        "numerator": 16.0,
+        "denominator": 16
+      },
+      "physical_by_class": {
+        "hit": {
+          "numerator": 8.0,
+          "denominator": 8
+        },
+        "miss": {
+          "numerator": 8.0,
+          "denominator": 8
+        }
+      },
+      "tapes": [
+        {
+          "pose": 12,
+          "goal": 0,
+          "variant": "BASE",
+          "hit": true,
+          "score": 0.5840915575121025,
+          "correct": 1.0
+        },
+        {
+          "pose": 12,
+          "goal": 0,
+          "variant": "D18",
+          "hit": false,
+          "score": 0.42010383056051637,
+          "correct": 1.0
+        },
+        {
+          "pose": 12,
+          "goal": 1,
+          "variant": "BASE",
+          "hit": true,
+          "score": 0.5776183407471116,
+          "correct": 1.0
+        },
+        {
+          "pose": 12,
+          "goal": 1,
+          "variant": "D18",
+          "hit": false,
+          "score": 0.4059589203613254,
+          "correct": 1.0
+        },
+        {
+          "pose": 13,
+          "goal": 0,
+          "variant": "BASE",
+          "hit": true,
+          "score": 0.5606027471764525,
+          "correct": 1.0
+        },
+        {
+          "pose": 13,
+          "goal": 0,
+          "variant": "D18",
+          "hit": false,
+          "score": 0.4282040294936464,
+          "correct": 1.0
+        },
+        {
+          "pose": 13,
+          "goal": 1,
+          "variant": "BASE",
+          "hit": true,
+          "score": 0.5756189730478934,
+          "correct": 1.0
+        },
+        {
+          "pose": 13,
+          "goal": 1,
+          "variant": "D18",
+          "hit": false,
+          "score": 0.43674766939218923,
+          "correct": 1.0
+        },
+        {
+          "pose": 14,
+          "goal": 0,
+          "variant": "BASE",
+          "hit": true,
+          "score": 0.5666333792506573,
+          "correct": 1.0
+        },
+        {
+          "pose": 14,
+          "goal": 0,
+          "variant": "D18",
+          "hit": false,
+          "score": 0.41871422316432855,
+          "correct": 1.0
+        },
+        {
+          "pose": 14,
+          "goal": 1,
+          "variant": "BASE",
+          "hit": true,
+          "score": 0.5582821736837694,
+          "correct": 1.0
+        },
+        {
+          "pose": 14,
+          "goal": 1,
+          "variant": "D18",
+          "hit": false,
+          "score": 0.42688979049274306,
+          "correct": 1.0
+        },
+        {
+          "pose": 15,
+          "goal": 0,
+          "variant": "BASE",
+          "hit": true,
+          "score": 0.604955001307937,
+          "correct": 1.0
+        },
+        {
+          "pose": 15,
+          "goal": 0,
+          "variant": "D18",
+          "hit": false,
+          "score": 0.40435986266875906,
+          "correct": 1.0
+        },
+        {
+          "pose": 15,
+          "goal": 1,
+          "variant": "BASE",
+          "hit": true,
+          "score": 0.5639082925070592,
+          "correct": 1.0
+        },
+        {
+          "pose": 15,
+          "goal": 1,
+          "variant": "D18",
+          "hit": false,
+          "score": 0.41083334766810253,
+          "correct": 1.0
+        }
+      ],
+      "balanced_strict_corrections": {
+        "cyclic": {
+          "strict_groups": 4,
+          "own": {
+            "numerator": 8.0,
+            "denominator": 8
+          },
+          "swapped": {
+            "numerator": 0.0,
+            "denominator": 8
+          },
+          "own_minus_swapped": {
+            "numerator": 8.0,
+            "denominator": 8
+          }
+        },
+        "all_ordered": {
+          "strict_groups": 24,
+          "own": {
+            "numerator": 48.0,
+            "denominator": 48
+          },
+          "swapped": {
+            "numerator": 0.0,
+            "denominator": 48
+          },
+          "own_minus_swapped": {
+            "numerator": 48.0,
+            "denominator": 48
+          }
+        }
+      }
+    },
+    "development": {
+      "physical_completion": {
+        "numerator": 15.0,
+        "denominator": 16
+      },
+      "physical_by_class": {
+        "hit": {
+          "numerator": 7.0,
+          "denominator": 7
+        },
+        "miss": {
+          "numerator": 8.0,
+          "denominator": 9
+        }
+      },
+      "tapes": [
+        {
+          "pose": 16,
+          "goal": 0,
+          "variant": "BASE",
+          "hit": true,
+          "score": 0.5302782271972697,
+          "correct": 1.0
+        },
+        {
+          "pose": 16,
+          "goal": 0,
+          "variant": "D18",
+          "hit": false,
+          "score": 0.4592684515315906,
+          "correct": 1.0
+        },
+        {
+          "pose": 16,
+          "goal": 1,
+          "variant": "BASE",
+          "hit": true,
+          "score": 0.5335318350775947,
+          "correct": 1.0
+        },
+        {
+          "pose": 16,
+          "goal": 1,
+          "variant": "D18",
+          "hit": false,
+          "score": 0.4768557805449013,
+          "correct": 1.0
+        },
+        {
+          "pose": 17,
+          "goal": 0,
+          "variant": "BASE",
+          "hit": true,
+          "score": 0.5540848379043467,
+          "correct": 1.0
+        },
+        {
+          "pose": 17,
+          "goal": 0,
+          "variant": "D18",
+          "hit": false,
+          "score": 0.4834482295569671,
+          "correct": 1.0
+        },
+        {
+          "pose": 17,
+          "goal": 1,
+          "variant": "BASE",
+          "hit": true,
+          "score": 0.5390350085880025,
+          "correct": 1.0
+        },
+        {
+          "pose": 17,
+          "goal": 1,
+          "variant": "D18",
+          "hit": false,
+          "score": 0.46609279872339054,
+          "correct": 1.0
+        },
+        {
+          "pose": 18,
+          "goal": 0,
+          "variant": "BASE",
+          "hit": true,
+          "score": 0.5482495373290187,
+          "correct": 1.0
+        },
+        {
+          "pose": 18,
+          "goal": 0,
+          "variant": "D18",
+          "hit": false,
+          "score": 0.4536803384901521,
+          "correct": 1.0
+        },
+        {
+          "pose": 18,
+          "goal": 1,
+          "variant": "BASE",
+          "hit": true,
+          "score": 0.52753642591124,
+          "correct": 1.0
+        },
+        {
+          "pose": 18,
+          "goal": 1,
+          "variant": "D18",
+          "hit": false,
+          "score": 0.472068894483258,
+          "correct": 1.0
+        },
+        {
+          "pose": 19,
+          "goal": 0,
+          "variant": "BASE",
+          "hit": false,
+          "score": 0.5010760921731923,
+          "correct": 0.0
+        },
+        {
+          "pose": 19,
+          "goal": 0,
+          "variant": "D18",
+          "hit": false,
+          "score": 0.4982772504769974,
+          "correct": 1.0
+        },
+        {
+          "pose": 19,
+          "goal": 1,
+          "variant": "BASE",
+          "hit": true,
+          "score": 0.5361247117495326,
+          "correct": 1.0
+        },
+        {
+          "pose": 19,
+          "goal": 1,
+          "variant": "D18",
+          "hit": false,
+          "score": 0.44526185852767486,
+          "correct": 1.0
+        }
+      ],
+      "balanced_strict_corrections": {
+        "cyclic": {
+          "strict_groups": 2,
+          "own": {
+            "numerator": 4.0,
+            "denominator": 4
+          },
+          "swapped": {
+            "numerator": 0.0,
+            "denominator": 4
+          },
+          "own_minus_swapped": {
+            "numerator": 4.0,
+            "denominator": 4
+          }
+        },
+        "all_ordered": {
+          "strict_groups": 12,
+          "own": {
+            "numerator": 24.0,
+            "denominator": 24
+          },
+          "swapped": {
+            "numerator": 0.0,
+            "denominator": 24
+          },
+          "own_minus_swapped": {
+            "numerator": 24.0,
+            "denominator": 24
+          }
+        }
+      }
+    }
+  },
+  "main_raw_rgb": {
+    "controls": [
+      0,
+      25,
+      50,
+      75,
+      100,
+      125,
+      150,
+      175,
+      200,
+      225,
+      250,
+      275,
+      300
+    ],
+    "pooled_hw": [
+      8,
+      8
+    ],
+    "feature_dim": 4608,
+    "source": "archived score.json",
+    "splits": {
+      "fit": {
+        "physical_completion": {
+          "numerator": 16.0,
+          "denominator": 16
+        },
+        "physical_by_class": {
+          "hit": {
+            "numerator": 8.0,
+            "denominator": 8
+          },
+          "miss": {
+            "numerator": 8.0,
+            "denominator": 8
+          }
+        },
+        "tapes": [
+          {
+            "pose": 12,
+            "goal": 0,
+            "variant": "BASE",
+            "hit": true,
+            "score": 0.5314256134864612,
+            "correct": 1.0
+          },
+          {
+            "pose": 12,
+            "goal": 0,
+            "variant": "D18",
+            "hit": false,
+            "score": 0.46815750598018707,
+            "correct": 1.0
+          },
+          {
+            "pose": 12,
+            "goal": 1,
+            "variant": "BASE",
+            "hit": true,
+            "score": 0.5263274855399297,
+            "correct": 1.0
+          },
+          {
+            "pose": 12,
+            "goal": 1,
+            "variant": "D18",
+            "hit": false,
+            "score": 0.44573752257911836,
+            "correct": 1.0
+          },
+          {
+            "pose": 13,
+            "goal": 0,
+            "variant": "BASE",
+            "hit": true,
+            "score": 0.5445363137827454,
+            "correct": 1.0
+          },
+          {
+            "pose": 13,
+            "goal": 0,
+            "variant": "D18",
+            "hit": false,
+            "score": 0.4699272925224315,
+            "correct": 1.0
+          },
+          {
+            "pose": 13,
+            "goal": 1,
+            "variant": "BASE",
+            "hit": true,
+            "score": 0.5260588098068416,
+            "correct": 1.0
+          },
+          {
+            "pose": 13,
+            "goal": 1,
+            "variant": "D18",
+            "hit": false,
+            "score": 0.4665276150241554,
+            "correct": 1.0
+          },
+          {
+            "pose": 14,
+            "goal": 0,
+            "variant": "BASE",
+            "hit": true,
+            "score": 0.5200954555523944,
+            "correct": 1.0
+          },
+          {
+            "pose": 14,
+            "goal": 0,
+            "variant": "D18",
+            "hit": false,
+            "score": 0.4686420195227618,
+            "correct": 1.0
+          },
+          {
+            "pose": 14,
+            "goal": 1,
+            "variant": "BASE",
+            "hit": true,
+            "score": 0.5282829052005575,
+            "correct": 1.0
+          },
+          {
+            "pose": 14,
+            "goal": 1,
+            "variant": "D18",
+            "hit": false,
+            "score": 0.48495816276580256,
+            "correct": 1.0
+          },
+          {
+            "pose": 15,
+            "goal": 0,
+            "variant": "BASE",
+            "hit": true,
+            "score": 0.5782940624155163,
+            "correct": 1.0
+          },
+          {
+            "pose": 15,
+            "goal": 0,
+            "variant": "D18",
+            "hit": false,
+            "score": 0.44634992979600097,
+            "correct": 1.0
+          },
+          {
+            "pose": 15,
+            "goal": 1,
+            "variant": "BASE",
+            "hit": true,
+            "score": 0.5370947192515249,
+            "correct": 1.0
+          },
+          {
+            "pose": 15,
+            "goal": 1,
+            "variant": "D18",
+            "hit": false,
+            "score": 0.4596064376066155,
+            "correct": 1.0
+          }
+        ],
+        "balanced_strict_corrections": {
+          "cyclic": {
+            "strict_groups": 4,
+            "own": {
+              "numerator": 8.0,
+              "denominator": 8
+            },
+            "swapped": {
+              "numerator": 0.0,
+              "denominator": 8
+            },
+            "own_minus_swapped": {
+              "numerator": 8.0,
+              "denominator": 8
+            }
+          },
+          "all_ordered": {
+            "strict_groups": 24,
+            "own": {
+              "numerator": 48.0,
+              "denominator": 48
+            },
+            "swapped": {
+              "numerator": 0.0,
+              "denominator": 48
+            },
+            "own_minus_swapped": {
+              "numerator": 48.0,
+              "denominator": 48
+            }
+          }
+        }
+      },
+      "development": {
+        "physical_completion": {
+          "numerator": 11.0,
+          "denominator": 16
+        },
+        "physical_by_class": {
+          "hit": {
+            "numerator": 4.0,
+            "denominator": 7
+          },
+          "miss": {
+            "numerator": 7.0,
+            "denominator": 9
+          }
+        },
+        "tapes": [
+          {
+            "pose": 16,
+            "goal": 0,
+            "variant": "BASE",
+            "hit": true,
+            "score": 0.49860974127228824,
+            "correct": 0.0
+          },
+          {
+            "pose": 16,
+            "goal": 0,
+            "variant": "D18",
+            "hit": false,
+            "score": 0.4746040743472062,
+            "correct": 1.0
+          },
+          {
+            "pose": 16,
+            "goal": 1,
+            "variant": "BASE",
+            "hit": true,
+            "score": 0.5145121629556321,
+            "correct": 1.0
+          },
+          {
+            "pose": 16,
+            "goal": 1,
+            "variant": "D18",
+            "hit": false,
+            "score": 0.49005551061798436,
+            "correct": 1.0
+          },
+          {
+            "pose": 17,
+            "goal": 0,
+            "variant": "BASE",
+            "hit": true,
+            "score": 0.5054017352004232,
+            "correct": 1.0
+          },
+          {
+            "pose": 17,
+            "goal": 0,
+            "variant": "D18",
+            "hit": false,
+            "score": 0.47135831324285615,
+            "correct": 1.0
+          },
+          {
+            "pose": 17,
+            "goal": 1,
+            "variant": "BASE",
+            "hit": true,
+            "score": 0.49900520787126806,
+            "correct": 0.0
+          },
+          {
+            "pose": 17,
+            "goal": 1,
+            "variant": "D18",
+            "hit": false,
+            "score": 0.48647357039382066,
+            "correct": 1.0
+          },
+          {
+            "pose": 18,
+            "goal": 0,
+            "variant": "BASE",
+            "hit": true,
+            "score": 0.5156632092125663,
+            "correct": 1.0
+          },
+          {
+            "pose": 18,
+            "goal": 0,
+            "variant": "D18",
+            "hit": false,
+            "score": 0.490729071696298,
+            "correct": 1.0
+          },
+          {
+            "pose": 18,
+            "goal": 1,
+            "variant": "BASE",
+            "hit": true,
+            "score": 0.5045177182680834,
+            "correct": 1.0
+          },
+          {
+            "pose": 18,
+            "goal": 1,
+            "variant": "D18",
+            "hit": false,
+            "score": 0.480495917955828,
+            "correct": 1.0
+          },
+          {
+            "pose": 19,
+            "goal": 0,
+            "variant": "BASE",
+            "hit": false,
+            "score": 0.5167512775660558,
+            "correct": 0.0
+          },
+          {
+            "pose": 19,
+            "goal": 0,
+            "variant": "D18",
+            "hit": false,
+            "score": 0.5143398133502959,
+            "correct": 0.0
+          },
+          {
+            "pose": 19,
+            "goal": 1,
+            "variant": "BASE",
+            "hit": true,
+            "score": 0.49835507406302443,
+            "correct": 0.0
+          },
+          {
+            "pose": 19,
+            "goal": 1,
+            "variant": "D18",
+            "hit": false,
+            "score": 0.46901113327953414,
+            "correct": 1.0
+          }
+        ],
+        "balanced_strict_corrections": {
+          "cyclic": {
+            "strict_groups": 2,
+            "own": {
+              "numerator": 4.0,
+              "denominator": 4
+            },
+            "swapped": {
+              "numerator": 0.0,
+              "denominator": 4
+            },
+            "own_minus_swapped": {
+              "numerator": 4.0,
+              "denominator": 4
+            }
+          },
+          "all_ordered": {
+            "strict_groups": 12,
+            "own": {
+              "numerator": 24.0,
+              "denominator": 24
+            },
+            "swapped": {
+              "numerator": 0.0,
+              "denominator": 24
+            },
+            "own_minus_swapped": {
+              "numerator": 24.0,
+              "denominator": 24
+            }
+          }
+        }
+      }
+    }
+  },
+  "elapsed_seconds": 62.42229663301259
+}
