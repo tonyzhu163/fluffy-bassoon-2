@@ -1,0 +1,1137 @@
+{
+ "fitting": {
+  "split": "fitting",
+  "motor": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-openpi-20261027-r1",
+  "expected_trials": 16,
+  "retained_trials": 16,
+  "prefix_controls": 80,
+  "min_abs_command": 1e-05,
+  "probe_indices": {
+   "libero_10-2-r0-BASE": [
+    36,
+    12
+   ],
+   "libero_10-2-r1-BASE": [
+    13,
+    25
+   ],
+   "libero_10-9-r0-BASE": [
+    4,
+    53
+   ],
+   "libero_10-9-r1-BASE": [
+    9,
+    70
+   ],
+   "libero_goal-5-r0-BASE": [
+    11,
+    79
+   ],
+   "libero_goal-5-r1-BASE": [
+    11,
+    52
+   ],
+   "libero_goal-7-r0-BASE": [
+    35,
+    17
+   ],
+   "libero_goal-7-r1-BASE": [
+    37,
+    14
+   ],
+   "libero_object-2-r0-BASE": [
+    20,
+    79
+   ],
+   "libero_object-2-r1-BASE": [
+    17,
+    51
+   ],
+   "libero_object-6-r0-BASE": [
+    49,
+    16
+   ],
+   "libero_object-6-r1-BASE": [
+    56,
+    24
+   ],
+   "libero_spatial-2-r0-BASE": [
+    12,
+    70
+   ],
+   "libero_spatial-2-r1-BASE": [
+    9,
+    59
+   ],
+   "libero_spatial-4-r0-BASE": [
+    7,
+    79
+   ],
+   "libero_spatial-4-r1-BASE": [
+    10,
+    79
+   ]
+  },
+  "excluded": {}
+ },
+ "development": {
+  "split": "development",
+  "motor": "/mowenjie/fluffy-bassoon/inputs/pi05-libero-openpi-20261027-r1",
+  "expected_trials": 16,
+  "retained_trials": 15,
+  "prefix_controls": 80,
+  "min_abs_command": 1e-05,
+  "probe_indices": {
+   "libero_10-0-r0-BASE": [
+    74,
+    12
+   ],
+   "libero_10-0-r1-BASE": [
+    75,
+    16
+   ],
+   "libero_10-3-r0-BASE": [
+    16,
+    null
+   ],
+   "libero_10-3-r1-BASE": [
+    11,
+    30
+   ],
+   "libero_goal-0-r0-BASE": [
+    11,
+    63
+   ],
+   "libero_goal-0-r1-BASE": [
+    8,
+    64
+   ],
+   "libero_goal-1-r0-BASE": [
+    12,
+    67
+   ],
+   "libero_goal-1-r1-BASE": [
+    13,
+    69
+   ],
+   "libero_object-0-r0-BASE": [
+    40,
+    78
+   ],
+   "libero_object-0-r1-BASE": [
+    50,
+    19
+   ],
+   "libero_object-7-r0-BASE": [
+    46,
+    15
+   ],
+   "libero_object-7-r1-BASE": [
+    45,
+    9
+   ],
+   "libero_spatial-1-r0-BASE": [
+    76,
+    28
+   ],
+   "libero_spatial-1-r1-BASE": [
+    70,
+    12
+   ],
+   "libero_spatial-7-r0-BASE": [
+    54,
+    75
+   ],
+   "libero_spatial-7-r1-BASE": [
+    59,
+    72
+   ]
+  },
+  "excluded": {
+   "libero_10-3-r0-BASE": [
+    "missing_y_probe"
+   ]
+  }
+ },
+ "episodes": "/mowenjie/fluffy-bassoon-2/outputs/libero-decision-pretraining-20261119-r1/menu02/episodes",
+ "seeds": [
+  41,
+  42,
+  43
+ ],
+ "steps": 400,
+ "optimizer": "AdamW",
+ "conventions": {
+  "nom": [
+   1,
+   1
+  ],
+  "x": [
+   -1,
+   1
+  ],
+  "y": [
+   1,
+   -1
+  ],
+  "xy": [
+   -1,
+   -1
+  ]
+ },
+ "held_out": "xy",
+ "fit_target": "Calibration signs, per-axis BCE with logits; zero logits give +1.",
+ "normalizers": {
+  "joint": {
+   "mean": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "scale": [
+    0.7535680532455444,
+    0.23015496134757996,
+    0.008772086352109909,
+    0.0031078250613063574,
+    0.2274673581123352,
+    0.7346100807189941,
+    0.002689352724701166,
+    0.008673310279846191
+   ]
+  },
+  "shared": {
+   "mean": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "scale": [
+    0.7441494464874268,
+    0.008722838014364243,
+    0.22881510853767395,
+    0.0029061310924589634
+   ]
+  }
+ },
+ "normalizer_population": "All matched fitting sources x three conventions x four directions; population std, pooled axes for shared. Scale 1 for std <= 1e-8.",
+ "fits": {
+  "joint-41": {
+   "arm": "joint",
+   "seed": 41,
+   "step": 400,
+   "width": 32,
+   "lr": 0.001,
+   "weight_decay": 0.01,
+   "source_batch": 40,
+   "empty_sources": 4,
+   "fitting_keys": [
+    "libero_10-2-r0-BASE",
+    "libero_10-2-r1-BASE",
+    "libero_10-9-r0-BASE",
+    "libero_10-9-r1-BASE",
+    "libero_goal-5-r0-BASE",
+    "libero_goal-5-r1-BASE",
+    "libero_goal-7-r0-BASE",
+    "libero_goal-7-r1-BASE",
+    "libero_object-2-r0-BASE",
+    "libero_object-2-r1-BASE",
+    "libero_object-6-r0-BASE",
+    "libero_object-6-r1-BASE",
+    "libero_spatial-2-r0-BASE",
+    "libero_spatial-2-r1-BASE",
+    "libero_spatial-4-r0-BASE",
+    "libero_spatial-4-r1-BASE"
+   ],
+   "fitting_conventions": [
+    "nom",
+    "x",
+    "y"
+   ],
+   "directions": [
+    "nom",
+    "x",
+    "y",
+    "xy"
+   ],
+   "final_loss": 0.09503303468227386,
+   "parameters": 1410,
+   "draw_sha256": "ad828eba05429458ec71511b87474279bf0b8af865e7c911f0462859eabf2f3c"
+  },
+  "joint-42": {
+   "arm": "joint",
+   "seed": 42,
+   "step": 400,
+   "width": 32,
+   "lr": 0.001,
+   "weight_decay": 0.01,
+   "source_batch": 40,
+   "empty_sources": 4,
+   "fitting_keys": [
+    "libero_10-2-r0-BASE",
+    "libero_10-2-r1-BASE",
+    "libero_10-9-r0-BASE",
+    "libero_10-9-r1-BASE",
+    "libero_goal-5-r0-BASE",
+    "libero_goal-5-r1-BASE",
+    "libero_goal-7-r0-BASE",
+    "libero_goal-7-r1-BASE",
+    "libero_object-2-r0-BASE",
+    "libero_object-2-r1-BASE",
+    "libero_object-6-r0-BASE",
+    "libero_object-6-r1-BASE",
+    "libero_spatial-2-r0-BASE",
+    "libero_spatial-2-r1-BASE",
+    "libero_spatial-4-r0-BASE",
+    "libero_spatial-4-r1-BASE"
+   ],
+   "fitting_conventions": [
+    "nom",
+    "x",
+    "y"
+   ],
+   "directions": [
+    "nom",
+    "x",
+    "y",
+    "xy"
+   ],
+   "final_loss": 0.08849186450242996,
+   "parameters": 1410,
+   "draw_sha256": "8a373b589e6f3fa9018afd0471e5135788d1f817072851c08934e132fa330d3d"
+  },
+  "joint-43": {
+   "arm": "joint",
+   "seed": 43,
+   "step": 400,
+   "width": 32,
+   "lr": 0.001,
+   "weight_decay": 0.01,
+   "source_batch": 40,
+   "empty_sources": 4,
+   "fitting_keys": [
+    "libero_10-2-r0-BASE",
+    "libero_10-2-r1-BASE",
+    "libero_10-9-r0-BASE",
+    "libero_10-9-r1-BASE",
+    "libero_goal-5-r0-BASE",
+    "libero_goal-5-r1-BASE",
+    "libero_goal-7-r0-BASE",
+    "libero_goal-7-r1-BASE",
+    "libero_object-2-r0-BASE",
+    "libero_object-2-r1-BASE",
+    "libero_object-6-r0-BASE",
+    "libero_object-6-r1-BASE",
+    "libero_spatial-2-r0-BASE",
+    "libero_spatial-2-r1-BASE",
+    "libero_spatial-4-r0-BASE",
+    "libero_spatial-4-r1-BASE"
+   ],
+   "fitting_conventions": [
+    "nom",
+    "x",
+    "y"
+   ],
+   "directions": [
+    "nom",
+    "x",
+    "y",
+    "xy"
+   ],
+   "final_loss": 0.08688246458768845,
+   "parameters": 1410,
+   "draw_sha256": "46e235488d647ed3345d0acc1f00269284386ca76530e41051e92713aabb6ede"
+  },
+  "shared-41": {
+   "arm": "shared",
+   "seed": 41,
+   "step": 400,
+   "width": 32,
+   "lr": 0.001,
+   "weight_decay": 0.01,
+   "source_batch": 40,
+   "empty_sources": 4,
+   "fitting_keys": [
+    "libero_10-2-r0-BASE",
+    "libero_10-2-r1-BASE",
+    "libero_10-9-r0-BASE",
+    "libero_10-9-r1-BASE",
+    "libero_goal-5-r0-BASE",
+    "libero_goal-5-r1-BASE",
+    "libero_goal-7-r0-BASE",
+    "libero_goal-7-r1-BASE",
+    "libero_object-2-r0-BASE",
+    "libero_object-2-r1-BASE",
+    "libero_object-6-r0-BASE",
+    "libero_object-6-r1-BASE",
+    "libero_spatial-2-r0-BASE",
+    "libero_spatial-2-r1-BASE",
+    "libero_spatial-4-r0-BASE",
+    "libero_spatial-4-r1-BASE"
+   ],
+   "fitting_conventions": [
+    "nom",
+    "x",
+    "y"
+   ],
+   "directions": [
+    "nom",
+    "x",
+    "y",
+    "xy"
+   ],
+   "final_loss": 0.07831265777349472,
+   "parameters": 1249,
+   "draw_sha256": "ad828eba05429458ec71511b87474279bf0b8af865e7c911f0462859eabf2f3c"
+  },
+  "shared-42": {
+   "arm": "shared",
+   "seed": 42,
+   "step": 400,
+   "width": 32,
+   "lr": 0.001,
+   "weight_decay": 0.01,
+   "source_batch": 40,
+   "empty_sources": 4,
+   "fitting_keys": [
+    "libero_10-2-r0-BASE",
+    "libero_10-2-r1-BASE",
+    "libero_10-9-r0-BASE",
+    "libero_10-9-r1-BASE",
+    "libero_goal-5-r0-BASE",
+    "libero_goal-5-r1-BASE",
+    "libero_goal-7-r0-BASE",
+    "libero_goal-7-r1-BASE",
+    "libero_object-2-r0-BASE",
+    "libero_object-2-r1-BASE",
+    "libero_object-6-r0-BASE",
+    "libero_object-6-r1-BASE",
+    "libero_spatial-2-r0-BASE",
+    "libero_spatial-2-r1-BASE",
+    "libero_spatial-4-r0-BASE",
+    "libero_spatial-4-r1-BASE"
+   ],
+   "fitting_conventions": [
+    "nom",
+    "x",
+    "y"
+   ],
+   "directions": [
+    "nom",
+    "x",
+    "y",
+    "xy"
+   ],
+   "final_loss": 0.0749976709485054,
+   "parameters": 1249,
+   "draw_sha256": "8a373b589e6f3fa9018afd0471e5135788d1f817072851c08934e132fa330d3d"
+  },
+  "shared-43": {
+   "arm": "shared",
+   "seed": 43,
+   "step": 400,
+   "width": 32,
+   "lr": 0.001,
+   "weight_decay": 0.01,
+   "source_batch": 40,
+   "empty_sources": 4,
+   "fitting_keys": [
+    "libero_10-2-r0-BASE",
+    "libero_10-2-r1-BASE",
+    "libero_10-9-r0-BASE",
+    "libero_10-9-r1-BASE",
+    "libero_goal-5-r0-BASE",
+    "libero_goal-5-r1-BASE",
+    "libero_goal-7-r0-BASE",
+    "libero_goal-7-r1-BASE",
+    "libero_object-2-r0-BASE",
+    "libero_object-2-r1-BASE",
+    "libero_object-6-r0-BASE",
+    "libero_object-6-r1-BASE",
+    "libero_spatial-2-r0-BASE",
+    "libero_spatial-2-r1-BASE",
+    "libero_spatial-4-r0-BASE",
+    "libero_spatial-4-r1-BASE"
+   ],
+   "fitting_conventions": [
+    "nom",
+    "x",
+    "y"
+   ],
+   "directions": [
+    "nom",
+    "x",
+    "y",
+    "xy"
+   ],
+   "final_loss": 0.07495420426130295,
+   "parameters": 1249,
+   "draw_sha256": "46e235488d647ed3345d0acc1f00269284386ca76530e41051e92713aabb6ede"
+  }
+ },
+ "counts": {
+  "true_sign_oracle": {
+   "matched": {
+    "nom": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "x": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "y": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "xy": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    }
+   },
+   "cleared": {
+    "nom": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "x": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "y": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "xy": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    }
+   },
+   "opposite": {
+    "nom": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "x": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "y": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "xy": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    }
+   }
+  },
+  "sign_correlation": {
+   "matched": {
+    "nom": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "x": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "y": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "xy": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    }
+   },
+   "cleared": {
+    "nom": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "x": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 60
+    },
+    "y": {
+     "n": 60,
+     "joint": 0,
+     "x": 60,
+     "y": 0
+    },
+    "xy": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    }
+   },
+   "opposite": {
+    "nom": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    },
+    "x": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    },
+    "y": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    },
+    "xy": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    }
+   }
+  },
+  "joint-41": {
+   "matched": {
+    "nom": {
+     "n": 60,
+     "joint": 58,
+     "x": 58,
+     "y": 60
+    },
+    "x": {
+     "n": 60,
+     "joint": 59,
+     "x": 59,
+     "y": 60
+    },
+    "y": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "xy": {
+     "n": 60,
+     "joint": 0,
+     "x": 20,
+     "y": 22
+    }
+   },
+   "cleared": {
+    "nom": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "x": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 60
+    },
+    "y": {
+     "n": 60,
+     "joint": 0,
+     "x": 60,
+     "y": 0
+    },
+    "xy": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    }
+   },
+   "opposite": {
+    "nom": {
+     "n": 60,
+     "joint": 18,
+     "x": 40,
+     "y": 38
+    },
+    "x": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    },
+    "y": {
+     "n": 60,
+     "joint": 0,
+     "x": 1,
+     "y": 0
+    },
+    "xy": {
+     "n": 60,
+     "joint": 0,
+     "x": 2,
+     "y": 0
+    }
+   }
+  },
+  "joint-42": {
+   "matched": {
+    "nom": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "x": {
+     "n": 60,
+     "joint": 57,
+     "x": 57,
+     "y": 60
+    },
+    "y": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "xy": {
+     "n": 60,
+     "joint": 0,
+     "x": 28,
+     "y": 26
+    }
+   },
+   "cleared": {
+    "nom": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "x": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 60
+    },
+    "y": {
+     "n": 60,
+     "joint": 0,
+     "x": 60,
+     "y": 0
+    },
+    "xy": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    }
+   },
+   "opposite": {
+    "nom": {
+     "n": 60,
+     "joint": 6,
+     "x": 32,
+     "y": 34
+    },
+    "x": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    },
+    "y": {
+     "n": 60,
+     "joint": 0,
+     "x": 3,
+     "y": 0
+    },
+    "xy": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    }
+   }
+  },
+  "joint-43": {
+   "matched": {
+    "nom": {
+     "n": 60,
+     "joint": 55,
+     "x": 55,
+     "y": 60
+    },
+    "x": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "y": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "xy": {
+     "n": 60,
+     "joint": 0,
+     "x": 21,
+     "y": 26
+    }
+   },
+   "cleared": {
+    "nom": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "x": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 60
+    },
+    "y": {
+     "n": 60,
+     "joint": 0,
+     "x": 60,
+     "y": 0
+    },
+    "xy": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    }
+   },
+   "opposite": {
+    "nom": {
+     "n": 60,
+     "joint": 13,
+     "x": 39,
+     "y": 34
+    },
+    "x": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    },
+    "y": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    },
+    "xy": {
+     "n": 60,
+     "joint": 0,
+     "x": 5,
+     "y": 0
+    }
+   }
+  },
+  "shared-41": {
+   "matched": {
+    "nom": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "x": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "y": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "xy": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    }
+   },
+   "cleared": {
+    "nom": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "x": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 60
+    },
+    "y": {
+     "n": 60,
+     "joint": 0,
+     "x": 60,
+     "y": 0
+    },
+    "xy": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    }
+   },
+   "opposite": {
+    "nom": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    },
+    "x": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    },
+    "y": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    },
+    "xy": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    }
+   }
+  },
+  "shared-42": {
+   "matched": {
+    "nom": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "x": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "y": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "xy": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    }
+   },
+   "cleared": {
+    "nom": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "x": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 60
+    },
+    "y": {
+     "n": 60,
+     "joint": 0,
+     "x": 60,
+     "y": 0
+    },
+    "xy": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    }
+   },
+   "opposite": {
+    "nom": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    },
+    "x": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    },
+    "y": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    },
+    "xy": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    }
+   }
+  },
+  "shared-43": {
+   "matched": {
+    "nom": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "x": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "y": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "xy": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    }
+   },
+   "cleared": {
+    "nom": {
+     "n": 60,
+     "joint": 60,
+     "x": 60,
+     "y": 60
+    },
+    "x": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 60
+    },
+    "y": {
+     "n": 60,
+     "joint": 0,
+     "x": 60,
+     "y": 0
+    },
+    "xy": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    }
+   },
+   "opposite": {
+    "nom": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    },
+    "x": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    },
+    "y": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    },
+    "xy": {
+     "n": 60,
+     "joint": 0,
+     "x": 0,
+     "y": 0
+    }
+   }
+  }
+ },
+ "counts_by_direction": "counts.json",
+ "prediction_axes": [
+  "direction",
+  "convention",
+  "development/trial",
+  "axis"
+ ],
+ "predictions": "predictions.npz",
+ "portable": "shared-41.npz",
+ "portable_verified": "Signs equal Torch on every development support condition.",
+ "scoring": "Compare signs of nominal proposal times estimated signs with the target command signs. Counts pool four directions per source. Zero correlation gives +1.",
+ "attempt": {
+  "exit": 0,
+  "start": 1795072956,
+  "end": 1795072978,
+  "launch": "6cffa2c0d8b2be4f7acfb1ca827a7b15c7b41c7e aibox-rffe453e3884-5f96c78b88-6ssrn 476532",
+  "artifacts": "Baige /mowenjie/fluffy-bassoon-2/outputs/libero-axis-factor-20261119-r1/cpu01"
+ }
+}
