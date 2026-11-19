@@ -43,6 +43,10 @@ on the same rule split, not a solved inference problem or robotic adaptation.
 The screen changes attention, supervision and features together and does not
 isolate their effects. [Fresh confirmation, all recipes and limits](../outputs/learning-histories-fix-20261111-r1/RESULT.md).
 
+## Sampling variation on standard LIBERO-90
+
+Across 300 matched query poses on 15 fitting tasks, two independently sampled frozen π0.5 rollouts had median wrist separations of 2.21 mm after the first five controls and 1.15 cm after 50. Both succeeded on 74 poses, one succeeded on 20, and neither succeeded on 206. Hindsight selection between complete recorded rollouts raises 28.0% average single-draw success to 31.3% on this snapshot. A per-decision selector and a history-conditioned LoRA policy require live paired evaluation. [Matched trajectories, native outcomes and scope](../outputs/libero-native-noise-20261119-r1/RESULT.md)
+
 ## LIBERO-Pro2.0 retry development
 
 For the same bottle instruction, released D17 and D18 produced four of twelve pose/goal pairs with two failed practices and disjoint successful query corrections. Retreat and regrasp reached 10/12 D17 queries and zero D18. The archived D18 recovery reached 4/12 D18 and zero D17. Six public wrist/jaw features chose 6/8 correct strict retries, versus 0/8 after swapping histories and 4/8 for the fixed choice. Five-frame π0.5 features chose 4/8. All paired terminal images differed. All four qualifying pairs concerned the cabinet. [Same-goal recovery evidence](../outputs/libero-temporal-recovery-20261119-r1/RESULT.md)
