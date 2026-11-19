@@ -93,6 +93,7 @@ def sample(model, obs, noise, params, timing):
         original, features = velocity(model, obs, mask, cache, noisy, jnp.broadcast_to(time, (len(noisy),)))
         base_step = noisy + dt * original
         update = dt * correction(params, features, timing)
+        update = jnp.where(timing[:, None, None] >= 0, update, 0.)
         return base_step.at[..., :ACTION_DIM].add(update), time + dt
 
     actions, _ = jax.lax.while_loop(lambda carry: carry[1] >= -dt / 2, denoise, (noise, 1.))

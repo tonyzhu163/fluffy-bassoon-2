@@ -80,15 +80,20 @@ def main():
         preview = dataset.sample(args.batch, np.random.default_rng(1921), partition="train")
         features, _ = motor.training_features(preview, jax.random.fold_in(key, 0))
         params = adapter_init(jax.random.fold_in(key, 7), features.shape[-1] + 1)
+        residual = np.asarray(correction(params, features, jnp.asarray(preview["timing"])))
+        if not np.all(residual == 0.):
+            raise ValueError("The untrained adapter must contribute exactly zero velocity")
         opt_state = optimizer.init(params)
         motor.params = params
         noise = np.random.default_rng(9317).standard_normal((HORIZON, FLOW_DIM)).astype(np.float32)
         original = motor.proposal(preview["raw"][0], preview["prompt"][0], noise)
         zero_adapter = motor.proposal(preview["raw"][0], preview["prompt"][0], noise, int(preview["timing"][0]))
+        sham = motor.proposal(preview["raw"][0], preview["prompt"][0], noise, -1)
         parity = float(np.max(np.abs(original - zero_adapter)))
-        if parity > 1e-4:
-            raise ValueError(f"Zero adapter changed decoded commands by {parity}")
-        print(json.dumps(dict(zero_adapter_max_command_error=parity,
+        if not np.array_equal(sham, zero_adapter):
+            raise ValueError("The zero-weight adapter and shared-solver control must agree exactly")
+        print(json.dumps(dict(native_vs_shared_solver_max_command_error=parity,
+                              shared_solver_zero_adapter_exact=True,
                               adapter_parameters=sum(int(p.size) for p in jax.tree.leaves(params)))), flush=True)
         start = 0
         if args.resume:

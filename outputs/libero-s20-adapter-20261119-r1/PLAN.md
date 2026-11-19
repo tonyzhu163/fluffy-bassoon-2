@@ -5,8 +5,9 @@ two-layer velocity adapter on the frozen JAX OpenPI π0.5 action expert.
 Use normalized action-expert features, current public state and a one-bit
 BASE/S20 setting. Add the learned velocity correction on the seven physical
 action coordinates and keep the original ten denoising steps. Start with
-zero correction and check native command agreement with the released motor
-before the first optimizer update. [Preceding replay](../libero-s20-motor-20261119-r1/RESULT.md)
+zero correction. Check exact command agreement with the same solver's
+forced-zero control and measure the decoded difference from the original
+release solver before the first optimizer update. [Preceding replay](../libero-s20-motor-20261119-r1/RESULT.md)
 
 Use the released successful demonstrations on the 24 fitting tasks at
 `6c4c5524`, dropping declared duplicates and holding out task/reset groups
@@ -24,7 +25,8 @@ timing and zero correction. In the full fit the draw count is 8,192 windows.
 Report distinct trajectories and task/reset groups actually sampled.
 
 Evaluate on the eight project development tasks, each with two fresh resets
-under BASE and S20. Compare default, original paced execution, adapter forced
+under BASE and S20. Compare default, original paced execution, the adapter's
+solver with its correction forced to zero, and the learned adapter forced
 to BASE, adapter forced to S20, and adapter using public command–motion lag.
 Force both flags independently to measure the informed adapter and the fixed
 flag selected on separate fitting resets. The adapter arms and the default

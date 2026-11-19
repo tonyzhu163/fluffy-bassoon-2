@@ -21,7 +21,7 @@ from simulator import Simulator
 
 TIMING = {"BASE": 0, "S20": 1}
 FORCED = {"adapter_base": 0, "adapter_s20": 1}
-ARMS = ("default", "paced", *FORCED, "adapter_lag")
+ARMS = ("default", "paced", "solver_zero", *FORCED, "adapter_lag")
 PREFIX_CONTROLS = 40
 LAG_THRESHOLD = 8
 LAG_MAX = 21
@@ -86,7 +86,7 @@ def episode(simulator, motor, case, arm, prompt, fallback):
                        gripper=digest(gripper), rewards=digest(rewards), public=public_digest(raw),
                        ended=done)
 
-    timing = FORCED.get(arm)
+    timing = -1 if arm == "solver_zero" else FORCED.get(arm)
     lag = None
     if arm == "adapter_lag" and not done:
         lag = estimate_command_lag(issued, positions, positions_timing="after",
