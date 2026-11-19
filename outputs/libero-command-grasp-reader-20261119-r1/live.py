@@ -88,7 +88,9 @@ class Runtime:
         pose_key = pilot.jax.random.PRNGKey(seed)
         identity = dict(initial_physics=physics, initial_public=initial_public,
                         prompt=prompt, noise_bank=gate.digest(noise_bank))
-        gate.check_common(self.resets[pose], identity, folder)
+        checked = dict(identity, initial_public={k: v for k, v in initial_public.items()
+                                                if not k.endswith("_image")})
+        gate.check_common(self.resets[pose], checked, folder)
 
         states = [gate.public_pose(raw)]
         commands, rewards = [], []

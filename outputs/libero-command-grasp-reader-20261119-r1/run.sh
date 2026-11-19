@@ -62,6 +62,11 @@ try:
 finally:
     context.free()
 PY
-timeout --kill-after=20s 105m "$legacy/envs/openpi-215abfb/bin/python" -Bu "$here/driver.py" --output "$out/native" > "$out/run.log" 2>&1
+fit_args=()
+if [[ $# == 3 ]]; then
+    [[ "$3" =~ ^[a-z0-9]+$ && "$3" != "$attempt" ]]
+    fit_args=(--fit-from "$(dirname "$out")/$3/native")
+fi
+timeout --kill-after=20s 105m "$legacy/envs/openpi-215abfb/bin/python" -Bu "$here/driver.py" --output "$out/native" "${fit_args[@]}" > "$out/run.log" 2>&1
 test -s "$out/native/complete.json"
 "$legacy/envs/openpi-215abfb/bin/python" -B "$here/analyze.py" "$out/native" > "$out/analysis.json"

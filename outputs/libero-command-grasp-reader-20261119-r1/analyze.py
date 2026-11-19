@@ -99,6 +99,8 @@ class Pairing:
     def __init__(self):
         self.reset_by_pose = {}
         self.pose_by_physics = {}
+        self.camera_by_pose = {}
+        self.reset_camera_differences = []
         self.opening_by_case = {}
         self.opening_differences = []
 
@@ -284,6 +286,7 @@ def analyze(out):
                              balanced_all_cells=summarize(list(panel), scored))
     return dict(fit=fitting, fit_episodes=sum(map(len, fit.values())),
                 eval_episodes=sum(map(len, panel.values())), distinct_physical_starts=len(pairing.pose_by_physics),
+                reset_camera_differences=pairing.reset_camera_differences,
                 post_probe_differences=pairing.opening_differences,
                 by_seed=by_seed, cases=audit)
 

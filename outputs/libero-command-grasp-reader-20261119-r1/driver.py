@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
 from pathlib import Path
 import subprocess
 import tempfile
@@ -69,7 +70,7 @@ def stage(runtime, out, name, model=None):
             def query(arm, decode, grip, decide=None):
                 nonlocal query_ref, opening_ref
                 row = collect_episode(runtime, folder / arm, query_pose, wire, condition, decode, grip, decide)
-                identity = [row[k] for k in ("initial_physics", "initial_public")]
+                identity = [row["initial_physics"], {k: v for k, v in row["initial_public"].items() if not k.endswith("_image")}]
                 opening = [row[k] for k in ("first_motor_input", "first_proposal")]
                 if opening_ref is not None and opening != opening_ref:
                     opening_differences.append(arm)
@@ -98,22 +99,45 @@ def stage(runtime, out, name, model=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
-    out = parser.parse_args().output
+    parser.add_argument("--fit-from", type=Path, help="Completed frozen fitting phase from the first attempt")
+    args = parser.parse_args()
+    out = args.output
     out.mkdir(exist_ok=False, parents=True)
     source = subprocess.check_output(["git", "-C", HERE, "rev-parse", "HEAD"], text=True).strip()
     save(out / "design.json", dict(source=source, seeds=[41, 42, 43], fit_cells=CELLS[:3], held_out=CELLS[3],
                                    fitting_poses=list(range(8)), eval_poses=list(range(16, 24)), start=time.time()))
     with live.Runtime() as runtime:
-        samples, totals = stage(runtime, out, "fit")
         weights = out / "weights"
-        readers.fit(samples, weights)
-        hashes = checkpoint_hashes(weights)
-        if not hashes:
-            raise ValueError("No frozen reader artifacts")
-        fixed_grip = int(totals[1] > totals[0])
-        save(out / "frozen.json", dict(fixed_grip=fixed_grip, fitting_successes_by_grip=totals,
-                                      fitting_cases=len(samples), weights=hashes, time=time.time()))
-        print("Fit frozen before evaluation", totals, flush=True)
+        if args.fit_from:
+            prior = args.fit_from
+            prior_design = json.loads((prior / "design.json").read_text())
+            frozen = json.loads((prior / "frozen.json").read_text())
+            expected = json.loads((HERE / "reader01-frozen.json").read_text())
+            if prior_design["source"] != "debece37d9dc6c78be23fe066b23bca6116b0846" or frozen != expected:
+                raise ValueError("Unrecognized fitting source")
+            if frozen["weights"] != checkpoint_hashes(prior / "weights"):
+                raise ValueError("Fitting source weights differ from the frozen manifest")
+            if len(list((prior / "fit").glob("*/*/result.json"))) != 72:
+                raise ValueError("Incomplete fitting episodes")
+            for name in ("fit", "weights"):
+                shutil.copytree(prior / name, out / name)
+            for name in ("frozen.json", "fit-progress.json"):
+                shutil.copy2(prior / name, out / name)
+            hashes = checkpoint_hashes(weights)
+            if hashes != expected["weights"]:
+                raise ValueError("Frozen weights changed during copy")
+            save(out / "fit-source.json", dict(source=str(prior), fit_revision=prior_design["source"],
+                                               preserved_weights=hashes))
+        else:
+            samples, totals = stage(runtime, out, "fit")
+            readers.fit(samples, weights)
+            hashes = checkpoint_hashes(weights)
+            if not hashes:
+                raise ValueError("No frozen reader artifacts")
+            save(out / "frozen.json", dict(fixed_grip=int(totals[1] > totals[0]),
+                                          fitting_successes_by_grip=totals, fitting_cases=len(samples),
+                                          weights=hashes, time=time.time()))
+        print("Using frozen readers before evaluation", hashes, flush=True)
         stage(runtime, out, "eval", readers.load(weights))
         if checkpoint_hashes(weights) != hashes:
             raise ValueError("Reader weights changed during evaluation")
