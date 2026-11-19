@@ -8,9 +8,10 @@ import json
 import pilot
 
 
-def image(sim):
+def image(sim,renderer):
     # Mean-pool the public RGB stream to limit spatial sensitivity to a single pose.
-    rgb=sim.render(width=128,height=128,camera_name='agentview')
+    renderer.update_scene(sim.data._data,camera='agentview')
+    rgb=renderer.render()
     return rgb.reshape(32,4,32,4,3).mean(axis=(1,3)).astype(np.float32)
 
 
@@ -21,12 +22,12 @@ class Camera:
         self.choice=None
 
     def start(self,sim):
-        from robosuite.utils.binding_utils import MjRenderContextOffscreen
-        MjRenderContextOffscreen(sim,-1)
-        self.initial=image(sim)
+        import mujoco
+        self.renderer=mujoco.Renderer(sim.model._model,height=128,width=128)
+        self.initial=image(sim,self.renderer)
 
     def choose(self,sim):
-        self.delta=image(sim)-self.initial
+        self.delta=image(sim,self.renderer)-self.initial
         self.choice='suffix'
         if self.model is not None:
             midpoint,direction=self.model
@@ -39,6 +40,7 @@ def trial(job):
     pose,g,model=job
     camera=Camera(model)
     row=pilot.simulate((pose,g,'suffix'),camera=camera)
+    camera.renderer.close()
     row['camera_choice']=camera.choice
     return row,camera.initial,camera.delta
 
