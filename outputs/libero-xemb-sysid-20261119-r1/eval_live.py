@@ -67,7 +67,7 @@ def select_panel(archive, audit, panel, init_id, archive_sha, seed):
                 or not offline_gate(audit, 20.0)[0]):
             raise ValueError("Full live evaluation requires the full archive and passed 20-degree offline gate")
     else:
-        if panel == "poc" and (archive["panel"] != "poc" or seed != 41 or audit["steps"] != 1500
+        if panel == "poc" and (archive["panel"] != "poc" or seed != 41 or audit["seeds"] != [41] or audit["steps"] != 1500
                                or archive["passive_max_controls"] != SUPPORT_BUDGET):
             raise ValueError("Pilot requires its registered 28 fitting trials, cap 15 and 1500-step seed 41 fit")
         rows = [r for r in rows if (r["suite"], r["task_id"]) == POC_TASK and r["embodiment"] in POC_EMBODIMENTS]

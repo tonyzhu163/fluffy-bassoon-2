@@ -1,6 +1,6 @@
 # Collector and reader audit
 
-**Ready for Linux qualification.** On November 19, 2026, the five owned Python files passed macOS static checks. This audit used 0 GPU-hours and started no remote jobs. Runtime qualification of these exact files, native signal measurements and reader performance remain pending. An independent integration picked up an intermediate revision at `65c83998` while the audit was in progress. The source fingerprints below identify the handoff. [Execution record for earlier revisions](EXECUTION.md)
+**Ready for Linux qualification.** On November 19, 2026, the five owned Python files passed macOS static checks. This audit used 0 GPU-hours and started no remote jobs. Runtime qualification of these exact files and their native reader performance remain pending. An independent integration picked up an intermediate revision at `65c83998` while the audit was in progress. The source fingerprints below identify the handoff. [Execution record for earlier revisions](EXECUTION.md)
 
 ## Panels and controls
 
@@ -20,6 +20,12 @@ Both panels use native success. The motor also records the native reward sequenc
 - **Inference integrity.** Flax serializes layer lists as state dictionaries. Live restore now reconstructs lists against the configured architecture and checks the mode, model, seed, final step, archive digest and input schema before inference. Checkpoints retain optimizer and sampler state. Earlier weights require refitting because their motion units differ. [Checkpoint writer](train_readers.py) · [Loader](eval_live.py)
 - **Analytic comparisons.** Proprioceptive yaw comes from measured command/displacement alignment. The nominal gain calibrates translation scale and the jaw–command correlation estimates polarity. The inexpensive visual alternative solves brightness constancy on moving pixels, fits a camera projection on nominal public fitting traces, removes measured vertical motion and contracts recovered planar motion with issued XY. It uses the proprioceptive scale and gripper estimates. A rank-deficient calibration records the reason the visual comparison is unavailable. Native camera motion, contacts and scene-specific projection can degrade this estimator. The training-prior and nominal scores make the frame-zero control interpretable under the registered imbalance. Always predicting positive grip scores 5/12 overall, 3/4 familiar and 0/4 compositional. [Analytic estimators](../../src/fluffy_bassoon/xemb/readers.py) · [Offline comparisons](train_readers.py)
 
+## Readback of existing native evidence
+
+The archived pilot collector at `65c83998` contains 28 fitting and three development rows. Static inspection of the JSON found **465 active and 465 passive controls** and one shared seed, physics fingerprint, reader image/state pair, passive noise bank and opening proposal within each of five reset groups. Across the 93 executed active chunks, median wrist displacement was **32.62 mm**, median absolute jaw displacement was **10.57 mm**, and median mean absolute RGB change was **1.34 intensity levels** on the 0–255 scale. The stored camera differences are small enough that dividing an already normalized online image by 255 again would materially change the reader input. [Native archive](evidence/gpu02col/archive/archive.json) · [Producer revision](evidence/gpu02col/launch.txt)
+
+Seven Linux tests passed on that intermediate revision. Its analytic visual estimator also returned a full-rank calibration on the three-episode offline smoke fixture. Mean yaw error there was 10.46° versus 78.52° for proprioception alone. This is evidence that the visual comparator can run on native frames. Live adaptation and transfer across tasks require their own outcomes. [Earlier unit results](evidence/cpu04/run.log) · [Analytic smoke readback](evidence/readerqual01/preflight.json)
+
 ## Runtime boundary and qualification
 
 The repository environment declares Torch and NumPy. The launcher uses the separate native Torch interpreter for the CUDA allocation probe, the OpenPI `215abfb2` interpreter for the frozen policy and JAX/Flax/Optax readers, and the simulator interpreter for LIBERO and EGL. The test stage appends the Torch environment’s pytest site after the OpenPI packages. The reader tests require JAX in the configured OpenPI runtime and check the numerical imports there. Training records the executable, package versions and locations, backend and devices. The earlier Linux CPU smoke at `6a93ea8b` exercised four 20-update fits, and the motor smoke at `95388e6e` exercised a real probe. Those runs preceded these reader repairs. [Package declaration](../../pyproject.toml) · [Launcher](run.sh) · [Earlier execution](EXECUTION.md)
@@ -34,6 +40,6 @@ Mac arm64, uv-managed CPython 3.11.14. In-memory compilation passed for the five
 | --- | --- |
 | collect.py | `9f03437adbf21b260e173cb22e53d8d268207674081e552eae7ed4e3f8d4da33` |
 | train_readers.py | `4e36a33bcca9b32c83392cd4608f3f01d6e7d7f3855ef9c90309608a46141528` |
-| eval_live.py | `7920507dc97aa3c830585c5dc5a7b58624dbdb5b904248cd0c943edd7c2dcb78` |
+| eval_live.py | `d3573bdbeb67702759712822e3e9112865ba666da23ed0f8551ac9289977dff8` |
 | readers.py | `b34d2a2efff42536bd1df024555036dfdf00b3f139dc6a46c46321c9b3fd4a35` |
 | test_xemb_sysid.py | `de26b4a3ee9005d92d24a81133e68e9baedd983e30b4214d2c1e655a05885fa2` |
