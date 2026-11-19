@@ -1,0 +1,912 @@
+{
+  "panel": "smoke",
+  "passed": null,
+  "thresholds": {
+    "min_overall_oracle_rate": 0.75,
+    "min_overall_gain": 0.5,
+    "no_base_regression": true
+  },
+  "predicates": {
+    "overall_oracle_rate": true,
+    "overall_gain": true,
+    "no_base_regression": true
+  },
+  "by_regime": {
+    "familiar": {
+      "trials": 1,
+      "nominal_successes": 1,
+      "oracle_successes": 1,
+      "nominal_rate": 1.0,
+      "oracle_rate": 1.0,
+      "oracle_minus_nominal": 0.0
+    },
+    "compositional_ood": {
+      "trials": 1,
+      "nominal_successes": 0,
+      "oracle_successes": 1,
+      "nominal_rate": 0.0,
+      "oracle_rate": 1.0,
+      "oracle_minus_nominal": 1.0
+    },
+    "shifted": {
+      "trials": 1,
+      "nominal_successes": 0,
+      "oracle_successes": 1,
+      "nominal_rate": 0.0,
+      "oracle_rate": 1.0,
+      "oracle_minus_nominal": 1.0
+    },
+    "overall": {
+      "trials": 2,
+      "nominal_successes": 1,
+      "oracle_successes": 2,
+      "nominal_rate": 0.5,
+      "oracle_rate": 1.0,
+      "oracle_minus_nominal": 0.5
+    }
+  },
+  "by_embodiment": {
+    "fam_nom": {
+      "trials": 1,
+      "nominal_successes": 1,
+      "oracle_successes": 1,
+      "nominal_rate": 1.0,
+      "oracle_rate": 1.0
+    },
+    "comp_180_lo_inv": {
+      "trials": 1,
+      "nominal_successes": 0,
+      "oracle_successes": 1,
+      "nominal_rate": 0.0,
+      "oracle_rate": 1.0
+    }
+  },
+  "rows": [
+    {
+      "suite": "libero_goal",
+      "task_id": 4,
+      "init_state_id": 13,
+      "seed": 20300400,
+      "embodiment": "fam_nom",
+      "regime": "familiar",
+      "yaw_deg": 0.0,
+      "xy_scale": 1.0,
+      "gripper_sign": 1,
+      "nominal": {
+        "reset": {
+          "physics": "3df82be9f16989258cdb682ad7a61faa95e0d370ef3f92c311aaeecff9dfd504",
+          "perturbation_plan": "afc5bad565e66ae59e0d3ed4ff63224e70515fa33416b30dc429af9480033d3f",
+          "public": {
+            "agentview_image": "d87bf7ca02f745452aa764c3cb5ea665c4fa5456a05a5dd0fa7fddca50febd03",
+            "robot0_eye_in_hand_image": "245cb9db9bfa338cba9a302045d1f495bd0bd05c33e877eb52a2b7df755425b0",
+            "robot0_joint_pos": "4cb81ce2a3a1b62acbe162cca5440e41740e8851d65f63d7bc8f27f8ba40a8a8",
+            "robot0_joint_vel": "71d1cf134feeafc79120c2698cb5b2980c5d1ed245a15c96859a7f6011d6e808",
+            "robot0_eef_pos": "d505b6918cd9b1c95d1cc637b4f777d65694c91fb3f99899db7da19ea3b94493",
+            "robot0_eef_quat_xyzw": "fe9a549faff1f5edf754fbe65b03be073e05297c4c9adb1ff41672e89b3f7dbf",
+            "robot0_gripper_qpos": "a309098d325565448b91daf5d64f96853e3b4fc3da387ba38695a4ad266915d0"
+          },
+          "motor_frame0": {
+            "observation/image": "2557671a9e67a59e6e8502e608218a304bfeb04db74ff5ccc1952e3c201ff3e4",
+            "observation/wrist_image": "3d3a2f185efe24201fb3cbbde456332fa2b24ccd3250a7f27c6cff2d68505f0a",
+            "observation/state": "6bd8f66d81d95a2ed1f664b34ac9de87878067154839dc19215facaa4a2baeb5"
+          },
+          "reader_frame0": {
+            "image": "dee7cfeb958920a7ff5276f8d300abc270cec44da6177bdd0545cd81f4e80455",
+            "state": "6bd8f66d81d95a2ed1f664b34ac9de87878067154839dc19215facaa4a2baeb5"
+          },
+          "worker_step_index": 0,
+          "action_schema": {
+            "version": "libero_action_v1",
+            "shape": [
+              7
+            ],
+            "dtype": "float32",
+            "low": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            "high": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "controller": "OSC_POSE",
+            "control_mode": "relative",
+            "translation_frame": "world",
+            "rotation_frame": "world",
+            "rotation_representation": "axis_angle",
+            "gripper_semantics": "negative_open_positive_close_zero_hold",
+            "control_freq": 20,
+            "action_repeat": 1
+          },
+          "observation_schema": {
+            "agentview_image": {
+              "shape": [
+                256,
+                256,
+                3
+              ],
+              "dtype": "uint8",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_eye_in_hand_image": {
+              "shape": [
+                256,
+                256,
+                3
+              ],
+              "dtype": "uint8",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_joint_pos": {
+              "shape": [
+                7
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_joint_vel": {
+              "shape": [
+                7
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_eef_pos": {
+              "shape": [
+                3
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_eef_quat_xyzw": {
+              "shape": [
+                4
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_gripper_qpos": {
+              "shape": [
+                2
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            }
+          },
+          "observation_schema_version": "libero_standard_v1",
+          "renderer": "NVIDIA RPBZZZ6/PCIe/SSE2",
+          "renderer_vendor": "NVIDIA Corporation",
+          "noise_seed": 21117517,
+          "noise_sha256": "03a9d475c6ad830a3bff0d664ead19f14fd25e683748fe067784c05e140a96b6",
+          "horizon": 300,
+          "prompt": "put the bowl on the top of the drawer"
+        },
+        "released_prompt": "put the bowl on the top of the drawer",
+        "controls": 87,
+        "native_return": 1.0,
+        "success": true,
+        "terminated": true,
+        "truncated": false,
+        "inferred": {
+          "yaw_deg": 0.0,
+          "xy_scale": 1.0,
+          "gripper_sign": 1
+        },
+        "seconds": 55.995,
+        "motor_queries": [
+          {
+            "control": 0,
+            "agent": "2557671a9e67a59e6e8502e608218a304bfeb04db74ff5ccc1952e3c201ff3e4",
+            "wrist": "3d3a2f185efe24201fb3cbbde456332fa2b24ccd3250a7f27c6cff2d68505f0a",
+            "state": "6bd8f66d81d95a2ed1f664b34ac9de87878067154839dc19215facaa4a2baeb5",
+            "commands": "02e3dc2a1cd2d3ab6281f4c99d39d829c72ee32e79eac878a406e9439123d1a5"
+          },
+          {
+            "control": 5,
+            "agent": "e2402fdff83158534fb49013b4b5aee8ab645e52693a9e82900058833c7313c3",
+            "wrist": "c5061d644dd5fa985d9154674a103a76e4f1ecb75a0c494f7670d55c97462fe4",
+            "state": "36f1da8c755bef53cefd27b26e3a0904f714ae4574fc344abe9b04887cc86c89",
+            "commands": "958b4dbf02b3471cf4859a9bd267094d7b0ae01ba5a8c110f275cb8d9e870532"
+          },
+          {
+            "control": 10,
+            "agent": "acab8464414bfc5959ecf1635a1942b9e13cd4c6300b3b38033ce992602c4284",
+            "wrist": "72e9d75ee95f32a9a7f9f35c0e93ddcecbf56c4b89c0d24f1d422c3865145864",
+            "state": "b79ca35380690fe929cfdf6279ef606f88ff89339e32239455272d0c1076b140",
+            "commands": "0ca3b89222db33e5fba6feb340fe966467b1329df8d7d9c1c6641f13b2c4f9f6"
+          },
+          {
+            "control": 15,
+            "agent": "8dc6ac45c3601c904ab2b7be06c614898cebb9c0531539c18e95197c6ec93657",
+            "wrist": "c4f777f9fd0e5b805e5a6c1f6bd478fd124066fe8e098c6a5042e0224bfe31a4",
+            "state": "755313841553925aa58b3a2511c4f429cc8c319182a272cd7937c1f7a302b19e",
+            "commands": "f00e09c0fbd66a31df3875da72b8ab2b789fa3d4c6b5b38d711674321a991a8f"
+          },
+          {
+            "control": 20,
+            "agent": "0c66e85eb29b013ddf26cab02b1479c95478ab55582c78badde9e8e0a013ba8c",
+            "wrist": "e058245a21775f1b1760bcbbe86b25cd2f6ed8eda766fc2919d3e903837be739",
+            "state": "a3d9862401abebeb866ca093b2484cb307f14d26759205681e53844ec5acbbe2",
+            "commands": "4add9583624243ffe59bd230e8e53f4995ef762ef5e1a102423712e0e7b13f9d"
+          },
+          {
+            "control": 25,
+            "agent": "9c4e57cd9b0f2e7aaf00669e0c11594a784ac5883fcae99a1b0b844beb884ae5",
+            "wrist": "6adf2c328f8a54bc3916df675b0f0b1a488f5670fb6bfbf0e54624d9e186dbbe",
+            "state": "b298be484a0a64035b296eade28239b4bd7d54f4029d780a6ac0e88a6a54a4e6",
+            "commands": "59b5b61ca0156daf5e7632709f7bcbd81dbf9b8e20d3f50d377054f3ac1e64a4"
+          },
+          {
+            "control": 30,
+            "agent": "e7eb130ce0b525da1b493f7230653cf96bf4a02cbb6f94e28bf4ef4b3c03289e",
+            "wrist": "5c63044da7047e199be43fc48a8db61f98ef3de731248a841cff1d6a62394d55",
+            "state": "f9312a0799ee92342e30ff430744b104d19f6fbf18b9083c68e14ad1a923aac6",
+            "commands": "6f6613ba79decbccea36e2bd17ec820495cb4d6af34eb46e068ef7b61f0340ef"
+          },
+          {
+            "control": 35,
+            "agent": "9d8719c84023a063b16bd7780db30cef39529385248377dd71d86f59a301d6ee",
+            "wrist": "b8a9a73c68c71f3ab51ad43707f7d5e2d5ec80d961b938850626dbf5c4a4efb5",
+            "state": "45744c63b183776428db62a1774f4fc3ab3899b2693903501a4f4dcaf9b834b2",
+            "commands": "264754382b2942e6e7b0b73d502e0d8676295819df85224853203ed07641f0a2"
+          },
+          {
+            "control": 40,
+            "agent": "f37b32e371a96f27240d416d32d87921ff6be2b2a65055f59fed7c4cb3098d0e",
+            "wrist": "1469c8b7c76af742718f1813f7bce1b49c47534ec8476860189ca7924dfe52fc",
+            "state": "e88fd455564ca9d9ef607b96a3c852f6911e8484c0aea73d5cd9e990aafa2500",
+            "commands": "f2b662dcc41f5b0ec88115c2014aa1241a46b0ff78d68a86d422e00bd29a545c"
+          },
+          {
+            "control": 45,
+            "agent": "38736d05cd47f06d382de2b18a20ba7bed6ec467141d61dcc2f4300f1e4a9480",
+            "wrist": "f809a9c63d62904bed32499ff1fafff14028cc32a78a9a219023bea0ff395518",
+            "state": "7d73701d416e3f078c13a4d824d7c447271872bbae1e20aecf2f0770f1099502",
+            "commands": "f00dfe11bf344d0fc8fc57f78cb6078e930e46030ecfcade576c2a16e2183ad2"
+          },
+          {
+            "control": 50,
+            "agent": "f32e0030028a6f4865d802367b95fd3050ad381d86277111a9304a9eb6c26e65",
+            "wrist": "9c643a0625bb4b3218798540526c43bbe961d53fd29136760198ba8398437291",
+            "state": "3b7220602d2af8e3582bc57c60a9957b0aec4a2df23fb44e071cab4cf894cf9f",
+            "commands": "8e7b353f97a4de1c10441860fcb60ae19c23666117bb7734b6bc8b6e89dbc281"
+          },
+          {
+            "control": 55,
+            "agent": "940159cade8c7455d6344064ad87f47810abe3be98305c241e73b251792af1c9",
+            "wrist": "feb503d2a1c1e359822b2afa4207d1754ab5c76448da074dc18b58981e6537e1",
+            "state": "3daffe6d4a478e724ee3cb4f50e8eede4b5e6d902d3bcb301a227d44924ea842",
+            "commands": "238f3fc60946190c1cf26a763f2ba276a0fc6a8277ba1ce65103e5a012005a95"
+          },
+          {
+            "control": 60,
+            "agent": "02ad67c4a0fb45257da3084b018871b45e5f31a956ea4a75537ceaf2255faa6f",
+            "wrist": "397fc08aa650856ca671e75860236b79391f8a906786794cc9834b3744061c38",
+            "state": "a2ea6ed54e1c90a3d06c597ffe63b7fb256e1740b6ea48950fcf22814e1d3978",
+            "commands": "7828d66a8b3e7ebeb3768989ee6dfdd5febd23bc91e92a9024895fd4aea028ee"
+          },
+          {
+            "control": 65,
+            "agent": "c2827d1c06492ad6836017ddd8a802eaa845fdb54f0482b1ca7da903d445d457",
+            "wrist": "bdc268e953395ea47135c3e0cf916b34bd14409347e8ac417682814c8aff5805",
+            "state": "0a2f3148e1f155ac08eeeeddc147b88700c7a67eb661e03955e1872ce0d945b6",
+            "commands": "b26a65cfe6cd1b7e41864365b75143e46301425ad58fbc2f94b28dfd22776cd5"
+          },
+          {
+            "control": 70,
+            "agent": "b83126f8373b51e58efdf02768b794662a4c3df374595720e79f3c2e557c3260",
+            "wrist": "92d2e351f92257d10ab4fa0c76604d632338cc65cb0f2d3862f32ac54c58392d",
+            "state": "4af3002ee66887853744013d2b958565dd693f466c43191493b3c64d39787521",
+            "commands": "a35d39143aefecc16a7df11e40f1a7eb78e0fe7ee8e7179dbaf857fa24b9372b"
+          },
+          {
+            "control": 75,
+            "agent": "2d51d7899a212bc788862f62660baa78e0a183f9ca9204d59546d55349407a9d",
+            "wrist": "336999bce2bea576de5571ed979a3b4ae8b5a245c1a266c46f21c51fa1dc36ec",
+            "state": "93d20371f7e48999b42435bef9ed63b324a5d94c0977ec6d9eb94cb06b9b5895",
+            "commands": "fb057cb751a8dc08e38320ac4942b209cc1a229107a19873a153f588d389c4af"
+          },
+          {
+            "control": 80,
+            "agent": "dcd1dcf16f83191581b8a08dbe95e412672dbbae9737a57aa6a6249615ef6fd6",
+            "wrist": "013223216efd8237166ce60629cbaf09cd8cc1949aac08fdb38ba9b01ced601c",
+            "state": "b03437c112ada66aa832f9d945a0ea9794e6b1828ec05d03774471b29b9b9d13",
+            "commands": "94f6c617ce13e697498c227b2fff0ac290e318bc7cf2e32a539dee37b9542777"
+          },
+          {
+            "control": 85,
+            "agent": "0552eab1a08095f7ad6bfb4594e74671b56b3d1f50e55b37af8361a1072e577e",
+            "wrist": "6efc5bc6dddee0881378bb966a68a4a1b9e58b866232bb7ca362d5da6b101fcd",
+            "state": "b0f350172855af29ee9e2e5099aad2876d075ecdf0dfb260e865db188c1fdbf9",
+            "commands": "d9d50b740a254ed6dc52e3ec1563e466bbd7e09b5a5a81519a0abac91f5ef5b4"
+          }
+        ]
+      },
+      "privileged_oracle": {
+        "reset": {
+          "physics": "3df82be9f16989258cdb682ad7a61faa95e0d370ef3f92c311aaeecff9dfd504",
+          "perturbation_plan": "afc5bad565e66ae59e0d3ed4ff63224e70515fa33416b30dc429af9480033d3f",
+          "public": {
+            "agentview_image": "d87bf7ca02f745452aa764c3cb5ea665c4fa5456a05a5dd0fa7fddca50febd03",
+            "robot0_eye_in_hand_image": "245cb9db9bfa338cba9a302045d1f495bd0bd05c33e877eb52a2b7df755425b0",
+            "robot0_joint_pos": "4cb81ce2a3a1b62acbe162cca5440e41740e8851d65f63d7bc8f27f8ba40a8a8",
+            "robot0_joint_vel": "71d1cf134feeafc79120c2698cb5b2980c5d1ed245a15c96859a7f6011d6e808",
+            "robot0_eef_pos": "d505b6918cd9b1c95d1cc637b4f777d65694c91fb3f99899db7da19ea3b94493",
+            "robot0_eef_quat_xyzw": "fe9a549faff1f5edf754fbe65b03be073e05297c4c9adb1ff41672e89b3f7dbf",
+            "robot0_gripper_qpos": "a309098d325565448b91daf5d64f96853e3b4fc3da387ba38695a4ad266915d0"
+          },
+          "motor_frame0": {
+            "observation/image": "2557671a9e67a59e6e8502e608218a304bfeb04db74ff5ccc1952e3c201ff3e4",
+            "observation/wrist_image": "3d3a2f185efe24201fb3cbbde456332fa2b24ccd3250a7f27c6cff2d68505f0a",
+            "observation/state": "6bd8f66d81d95a2ed1f664b34ac9de87878067154839dc19215facaa4a2baeb5"
+          },
+          "reader_frame0": {
+            "image": "dee7cfeb958920a7ff5276f8d300abc270cec44da6177bdd0545cd81f4e80455",
+            "state": "6bd8f66d81d95a2ed1f664b34ac9de87878067154839dc19215facaa4a2baeb5"
+          },
+          "worker_step_index": 0,
+          "action_schema": {
+            "version": "libero_action_v1",
+            "shape": [
+              7
+            ],
+            "dtype": "float32",
+            "low": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            "high": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "controller": "OSC_POSE",
+            "control_mode": "relative",
+            "translation_frame": "world",
+            "rotation_frame": "world",
+            "rotation_representation": "axis_angle",
+            "gripper_semantics": "negative_open_positive_close_zero_hold",
+            "control_freq": 20,
+            "action_repeat": 1
+          },
+          "observation_schema": {
+            "agentview_image": {
+              "shape": [
+                256,
+                256,
+                3
+              ],
+              "dtype": "uint8",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_eye_in_hand_image": {
+              "shape": [
+                256,
+                256,
+                3
+              ],
+              "dtype": "uint8",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_joint_pos": {
+              "shape": [
+                7
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_joint_vel": {
+              "shape": [
+                7
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_eef_pos": {
+              "shape": [
+                3
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_eef_quat_xyzw": {
+              "shape": [
+                4
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_gripper_qpos": {
+              "shape": [
+                2
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            }
+          },
+          "observation_schema_version": "libero_standard_v1",
+          "renderer": "NVIDIA RPBZZZ6/PCIe/SSE2",
+          "renderer_vendor": "NVIDIA Corporation",
+          "noise_seed": 21117517,
+          "noise_sha256": "03a9d475c6ad830a3bff0d664ead19f14fd25e683748fe067784c05e140a96b6",
+          "horizon": 300,
+          "prompt": "put the bowl on the top of the drawer"
+        },
+        "released_prompt": "put the bowl on the top of the drawer",
+        "controls": 87,
+        "native_return": 1.0,
+        "success": true,
+        "terminated": true,
+        "truncated": false,
+        "inferred": {
+          "yaw_deg": 0.0,
+          "xy_scale": 1.0,
+          "gripper_sign": 1
+        },
+        "seconds": 2.502,
+        "motor_queries": [
+          {
+            "control": 0,
+            "agent": "2557671a9e67a59e6e8502e608218a304bfeb04db74ff5ccc1952e3c201ff3e4",
+            "wrist": "3d3a2f185efe24201fb3cbbde456332fa2b24ccd3250a7f27c6cff2d68505f0a",
+            "state": "6bd8f66d81d95a2ed1f664b34ac9de87878067154839dc19215facaa4a2baeb5",
+            "commands": "02e3dc2a1cd2d3ab6281f4c99d39d829c72ee32e79eac878a406e9439123d1a5"
+          },
+          {
+            "control": 5,
+            "agent": "e2402fdff83158534fb49013b4b5aee8ab645e52693a9e82900058833c7313c3",
+            "wrist": "c5061d644dd5fa985d9154674a103a76e4f1ecb75a0c494f7670d55c97462fe4",
+            "state": "36f1da8c755bef53cefd27b26e3a0904f714ae4574fc344abe9b04887cc86c89",
+            "commands": "958b4dbf02b3471cf4859a9bd267094d7b0ae01ba5a8c110f275cb8d9e870532"
+          },
+          {
+            "control": 10,
+            "agent": "acab8464414bfc5959ecf1635a1942b9e13cd4c6300b3b38033ce992602c4284",
+            "wrist": "72e9d75ee95f32a9a7f9f35c0e93ddcecbf56c4b89c0d24f1d422c3865145864",
+            "state": "b79ca35380690fe929cfdf6279ef606f88ff89339e32239455272d0c1076b140",
+            "commands": "0ca3b89222db33e5fba6feb340fe966467b1329df8d7d9c1c6641f13b2c4f9f6"
+          },
+          {
+            "control": 15,
+            "agent": "8dc6ac45c3601c904ab2b7be06c614898cebb9c0531539c18e95197c6ec93657",
+            "wrist": "c4f777f9fd0e5b805e5a6c1f6bd478fd124066fe8e098c6a5042e0224bfe31a4",
+            "state": "755313841553925aa58b3a2511c4f429cc8c319182a272cd7937c1f7a302b19e",
+            "commands": "f00e09c0fbd66a31df3875da72b8ab2b789fa3d4c6b5b38d711674321a991a8f"
+          },
+          {
+            "control": 20,
+            "agent": "0c66e85eb29b013ddf26cab02b1479c95478ab55582c78badde9e8e0a013ba8c",
+            "wrist": "e058245a21775f1b1760bcbbe86b25cd2f6ed8eda766fc2919d3e903837be739",
+            "state": "a3d9862401abebeb866ca093b2484cb307f14d26759205681e53844ec5acbbe2",
+            "commands": "4add9583624243ffe59bd230e8e53f4995ef762ef5e1a102423712e0e7b13f9d"
+          },
+          {
+            "control": 25,
+            "agent": "9c4e57cd9b0f2e7aaf00669e0c11594a784ac5883fcae99a1b0b844beb884ae5",
+            "wrist": "6adf2c328f8a54bc3916df675b0f0b1a488f5670fb6bfbf0e54624d9e186dbbe",
+            "state": "b298be484a0a64035b296eade28239b4bd7d54f4029d780a6ac0e88a6a54a4e6",
+            "commands": "59b5b61ca0156daf5e7632709f7bcbd81dbf9b8e20d3f50d377054f3ac1e64a4"
+          },
+          {
+            "control": 30,
+            "agent": "e7eb130ce0b525da1b493f7230653cf96bf4a02cbb6f94e28bf4ef4b3c03289e",
+            "wrist": "5c63044da7047e199be43fc48a8db61f98ef3de731248a841cff1d6a62394d55",
+            "state": "f9312a0799ee92342e30ff430744b104d19f6fbf18b9083c68e14ad1a923aac6",
+            "commands": "6f6613ba79decbccea36e2bd17ec820495cb4d6af34eb46e068ef7b61f0340ef"
+          },
+          {
+            "control": 35,
+            "agent": "9d8719c84023a063b16bd7780db30cef39529385248377dd71d86f59a301d6ee",
+            "wrist": "b8a9a73c68c71f3ab51ad43707f7d5e2d5ec80d961b938850626dbf5c4a4efb5",
+            "state": "45744c63b183776428db62a1774f4fc3ab3899b2693903501a4f4dcaf9b834b2",
+            "commands": "264754382b2942e6e7b0b73d502e0d8676295819df85224853203ed07641f0a2"
+          },
+          {
+            "control": 40,
+            "agent": "f37b32e371a96f27240d416d32d87921ff6be2b2a65055f59fed7c4cb3098d0e",
+            "wrist": "1469c8b7c76af742718f1813f7bce1b49c47534ec8476860189ca7924dfe52fc",
+            "state": "e88fd455564ca9d9ef607b96a3c852f6911e8484c0aea73d5cd9e990aafa2500",
+            "commands": "f2b662dcc41f5b0ec88115c2014aa1241a46b0ff78d68a86d422e00bd29a545c"
+          },
+          {
+            "control": 45,
+            "agent": "38736d05cd47f06d382de2b18a20ba7bed6ec467141d61dcc2f4300f1e4a9480",
+            "wrist": "f809a9c63d62904bed32499ff1fafff14028cc32a78a9a219023bea0ff395518",
+            "state": "7d73701d416e3f078c13a4d824d7c447271872bbae1e20aecf2f0770f1099502",
+            "commands": "f00dfe11bf344d0fc8fc57f78cb6078e930e46030ecfcade576c2a16e2183ad2"
+          },
+          {
+            "control": 50,
+            "agent": "f32e0030028a6f4865d802367b95fd3050ad381d86277111a9304a9eb6c26e65",
+            "wrist": "9c643a0625bb4b3218798540526c43bbe961d53fd29136760198ba8398437291",
+            "state": "3b7220602d2af8e3582bc57c60a9957b0aec4a2df23fb44e071cab4cf894cf9f",
+            "commands": "8e7b353f97a4de1c10441860fcb60ae19c23666117bb7734b6bc8b6e89dbc281"
+          },
+          {
+            "control": 55,
+            "agent": "940159cade8c7455d6344064ad87f47810abe3be98305c241e73b251792af1c9",
+            "wrist": "feb503d2a1c1e359822b2afa4207d1754ab5c76448da074dc18b58981e6537e1",
+            "state": "3daffe6d4a478e724ee3cb4f50e8eede4b5e6d902d3bcb301a227d44924ea842",
+            "commands": "238f3fc60946190c1cf26a763f2ba276a0fc6a8277ba1ce65103e5a012005a95"
+          },
+          {
+            "control": 60,
+            "agent": "02ad67c4a0fb45257da3084b018871b45e5f31a956ea4a75537ceaf2255faa6f",
+            "wrist": "397fc08aa650856ca671e75860236b79391f8a906786794cc9834b3744061c38",
+            "state": "a2ea6ed54e1c90a3d06c597ffe63b7fb256e1740b6ea48950fcf22814e1d3978",
+            "commands": "7828d66a8b3e7ebeb3768989ee6dfdd5febd23bc91e92a9024895fd4aea028ee"
+          },
+          {
+            "control": 65,
+            "agent": "c2827d1c06492ad6836017ddd8a802eaa845fdb54f0482b1ca7da903d445d457",
+            "wrist": "bdc268e953395ea47135c3e0cf916b34bd14409347e8ac417682814c8aff5805",
+            "state": "0a2f3148e1f155ac08eeeeddc147b88700c7a67eb661e03955e1872ce0d945b6",
+            "commands": "b26a65cfe6cd1b7e41864365b75143e46301425ad58fbc2f94b28dfd22776cd5"
+          },
+          {
+            "control": 70,
+            "agent": "b83126f8373b51e58efdf02768b794662a4c3df374595720e79f3c2e557c3260",
+            "wrist": "92d2e351f92257d10ab4fa0c76604d632338cc65cb0f2d3862f32ac54c58392d",
+            "state": "4af3002ee66887853744013d2b958565dd693f466c43191493b3c64d39787521",
+            "commands": "a35d39143aefecc16a7df11e40f1a7eb78e0fe7ee8e7179dbaf857fa24b9372b"
+          },
+          {
+            "control": 75,
+            "agent": "2d51d7899a212bc788862f62660baa78e0a183f9ca9204d59546d55349407a9d",
+            "wrist": "336999bce2bea576de5571ed979a3b4ae8b5a245c1a266c46f21c51fa1dc36ec",
+            "state": "93d20371f7e48999b42435bef9ed63b324a5d94c0977ec6d9eb94cb06b9b5895",
+            "commands": "fb057cb751a8dc08e38320ac4942b209cc1a229107a19873a153f588d389c4af"
+          },
+          {
+            "control": 80,
+            "agent": "dcd1dcf16f83191581b8a08dbe95e412672dbbae9737a57aa6a6249615ef6fd6",
+            "wrist": "013223216efd8237166ce60629cbaf09cd8cc1949aac08fdb38ba9b01ced601c",
+            "state": "b03437c112ada66aa832f9d945a0ea9794e6b1828ec05d03774471b29b9b9d13",
+            "commands": "94f6c617ce13e697498c227b2fff0ac290e318bc7cf2e32a539dee37b9542777"
+          },
+          {
+            "control": 85,
+            "agent": "0552eab1a08095f7ad6bfb4594e74671b56b3d1f50e55b37af8361a1072e577e",
+            "wrist": "6efc5bc6dddee0881378bb966a68a4a1b9e58b866232bb7ca362d5da6b101fcd",
+            "state": "b0f350172855af29ee9e2e5099aad2876d075ecdf0dfb260e865db188c1fdbf9",
+            "commands": "d9d50b740a254ed6dc52e3ec1563e466bbd7e09b5a5a81519a0abac91f5ef5b4"
+          }
+        ]
+      },
+      "base_drift": {
+        "nominal_queries": 18,
+        "oracle_queries": 18,
+        "mismatched_controls": {
+          "agent": [],
+          "wrist": [],
+          "state": [],
+          "commands": []
+        },
+        "same_success": true,
+        "same_native_return": true
+      }
+    },
+    {
+      "suite": "libero_goal",
+      "task_id": 4,
+      "init_state_id": 13,
+      "seed": 20300400,
+      "embodiment": "comp_180_lo_inv",
+      "regime": "compositional_ood",
+      "yaw_deg": 180.0,
+      "xy_scale": 0.65,
+      "gripper_sign": -1,
+      "nominal": {
+        "reset": {
+          "physics": "3df82be9f16989258cdb682ad7a61faa95e0d370ef3f92c311aaeecff9dfd504",
+          "perturbation_plan": "afc5bad565e66ae59e0d3ed4ff63224e70515fa33416b30dc429af9480033d3f",
+          "public": {
+            "agentview_image": "d87bf7ca02f745452aa764c3cb5ea665c4fa5456a05a5dd0fa7fddca50febd03",
+            "robot0_eye_in_hand_image": "245cb9db9bfa338cba9a302045d1f495bd0bd05c33e877eb52a2b7df755425b0",
+            "robot0_joint_pos": "4cb81ce2a3a1b62acbe162cca5440e41740e8851d65f63d7bc8f27f8ba40a8a8",
+            "robot0_joint_vel": "71d1cf134feeafc79120c2698cb5b2980c5d1ed245a15c96859a7f6011d6e808",
+            "robot0_eef_pos": "d505b6918cd9b1c95d1cc637b4f777d65694c91fb3f99899db7da19ea3b94493",
+            "robot0_eef_quat_xyzw": "fe9a549faff1f5edf754fbe65b03be073e05297c4c9adb1ff41672e89b3f7dbf",
+            "robot0_gripper_qpos": "a309098d325565448b91daf5d64f96853e3b4fc3da387ba38695a4ad266915d0"
+          },
+          "motor_frame0": {
+            "observation/image": "2557671a9e67a59e6e8502e608218a304bfeb04db74ff5ccc1952e3c201ff3e4",
+            "observation/wrist_image": "3d3a2f185efe24201fb3cbbde456332fa2b24ccd3250a7f27c6cff2d68505f0a",
+            "observation/state": "6bd8f66d81d95a2ed1f664b34ac9de87878067154839dc19215facaa4a2baeb5"
+          },
+          "reader_frame0": {
+            "image": "dee7cfeb958920a7ff5276f8d300abc270cec44da6177bdd0545cd81f4e80455",
+            "state": "6bd8f66d81d95a2ed1f664b34ac9de87878067154839dc19215facaa4a2baeb5"
+          },
+          "worker_step_index": 0,
+          "action_schema": {
+            "version": "libero_action_v1",
+            "shape": [
+              7
+            ],
+            "dtype": "float32",
+            "low": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            "high": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "controller": "OSC_POSE",
+            "control_mode": "relative",
+            "translation_frame": "world",
+            "rotation_frame": "world",
+            "rotation_representation": "axis_angle",
+            "gripper_semantics": "negative_open_positive_close_zero_hold",
+            "control_freq": 20,
+            "action_repeat": 1
+          },
+          "observation_schema": {
+            "agentview_image": {
+              "shape": [
+                256,
+                256,
+                3
+              ],
+              "dtype": "uint8",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_eye_in_hand_image": {
+              "shape": [
+                256,
+                256,
+                3
+              ],
+              "dtype": "uint8",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_joint_pos": {
+              "shape": [
+                7
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_joint_vel": {
+              "shape": [
+                7
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_eef_pos": {
+              "shape": [
+                3
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_eef_quat_xyzw": {
+              "shape": [
+                4
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_gripper_qpos": {
+              "shape": [
+                2
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            }
+          },
+          "observation_schema_version": "libero_standard_v1",
+          "renderer": "NVIDIA RPBZZZ6/PCIe/SSE2",
+          "renderer_vendor": "NVIDIA Corporation",
+          "noise_seed": 21117517,
+          "noise_sha256": "03a9d475c6ad830a3bff0d664ead19f14fd25e683748fe067784c05e140a96b6",
+          "horizon": 300,
+          "prompt": "put the bowl on the top of the drawer"
+        },
+        "released_prompt": "put the bowl on the top of the drawer",
+        "controls": 300,
+        "native_return": 0.0,
+        "success": false,
+        "terminated": false,
+        "truncated": true,
+        "inferred": {
+          "yaw_deg": 0.0,
+          "xy_scale": 1.0,
+          "gripper_sign": 1
+        },
+        "seconds": 7.784
+      },
+      "privileged_oracle": {
+        "reset": {
+          "physics": "3df82be9f16989258cdb682ad7a61faa95e0d370ef3f92c311aaeecff9dfd504",
+          "perturbation_plan": "afc5bad565e66ae59e0d3ed4ff63224e70515fa33416b30dc429af9480033d3f",
+          "public": {
+            "agentview_image": "d87bf7ca02f745452aa764c3cb5ea665c4fa5456a05a5dd0fa7fddca50febd03",
+            "robot0_eye_in_hand_image": "245cb9db9bfa338cba9a302045d1f495bd0bd05c33e877eb52a2b7df755425b0",
+            "robot0_joint_pos": "4cb81ce2a3a1b62acbe162cca5440e41740e8851d65f63d7bc8f27f8ba40a8a8",
+            "robot0_joint_vel": "71d1cf134feeafc79120c2698cb5b2980c5d1ed245a15c96859a7f6011d6e808",
+            "robot0_eef_pos": "d505b6918cd9b1c95d1cc637b4f777d65694c91fb3f99899db7da19ea3b94493",
+            "robot0_eef_quat_xyzw": "fe9a549faff1f5edf754fbe65b03be073e05297c4c9adb1ff41672e89b3f7dbf",
+            "robot0_gripper_qpos": "a309098d325565448b91daf5d64f96853e3b4fc3da387ba38695a4ad266915d0"
+          },
+          "motor_frame0": {
+            "observation/image": "2557671a9e67a59e6e8502e608218a304bfeb04db74ff5ccc1952e3c201ff3e4",
+            "observation/wrist_image": "3d3a2f185efe24201fb3cbbde456332fa2b24ccd3250a7f27c6cff2d68505f0a",
+            "observation/state": "6bd8f66d81d95a2ed1f664b34ac9de87878067154839dc19215facaa4a2baeb5"
+          },
+          "reader_frame0": {
+            "image": "dee7cfeb958920a7ff5276f8d300abc270cec44da6177bdd0545cd81f4e80455",
+            "state": "6bd8f66d81d95a2ed1f664b34ac9de87878067154839dc19215facaa4a2baeb5"
+          },
+          "worker_step_index": 0,
+          "action_schema": {
+            "version": "libero_action_v1",
+            "shape": [
+              7
+            ],
+            "dtype": "float32",
+            "low": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            "high": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "controller": "OSC_POSE",
+            "control_mode": "relative",
+            "translation_frame": "world",
+            "rotation_frame": "world",
+            "rotation_representation": "axis_angle",
+            "gripper_semantics": "negative_open_positive_close_zero_hold",
+            "control_freq": 20,
+            "action_repeat": 1
+          },
+          "observation_schema": {
+            "agentview_image": {
+              "shape": [
+                256,
+                256,
+                3
+              ],
+              "dtype": "uint8",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_eye_in_hand_image": {
+              "shape": [
+                256,
+                256,
+                3
+              ],
+              "dtype": "uint8",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_joint_pos": {
+              "shape": [
+                7
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_joint_vel": {
+              "shape": [
+                7
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_eef_pos": {
+              "shape": [
+                3
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_eef_quat_xyzw": {
+              "shape": [
+                4
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            },
+            "robot0_gripper_qpos": {
+              "shape": [
+                2
+              ],
+              "dtype": "float32",
+              "byte_order": "little",
+              "layout": "C"
+            }
+          },
+          "observation_schema_version": "libero_standard_v1",
+          "renderer": "NVIDIA RPBZZZ6/PCIe/SSE2",
+          "renderer_vendor": "NVIDIA Corporation",
+          "noise_seed": 21117517,
+          "noise_sha256": "03a9d475c6ad830a3bff0d664ead19f14fd25e683748fe067784c05e140a96b6",
+          "horizon": 300,
+          "prompt": "put the bowl on the top of the drawer"
+        },
+        "released_prompt": "put the bowl on the top of the drawer",
+        "controls": 100,
+        "native_return": 1.0,
+        "success": true,
+        "terminated": true,
+        "truncated": false,
+        "inferred": {
+          "yaw_deg": 180.0,
+          "xy_scale": 0.65,
+          "gripper_sign": -1
+        },
+        "seconds": 2.758
+      }
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "panel": "smoke",
+  "modes": [
+    "active_probe"
+  ],
+  "passive_max_controls": 120,
+  "frame0_bitwise_identical_verified": true,
+  "reset_groups": 2,
+  "trials": [
+    {
+      "index": 0,
+      "split": "train",
+      "suite": "libero_goal",
+      "task_id": 4,
+      "init_state_id": 0,
+      "seed": 20100400,
+      "embodiment": "nom",
+      "regime": "train",
+      "yaw_deg": 0.0,
+      "xy_scale": 1.0,
+      "gripper_sign": 1,
+      "physics": "5605f776822bd1920f7ffa02b5afea25bdd95111637e93d4c6ef9f34ff4fea5b",
+      "frame0_img_sha256": "3446a5ad1f938fce8fc65cf9fd09b09e68fbd7b2cd8e7094d35bb8e99f6025d4",
+      "frame0_state_sha256": "93749586fa57352843aa59e9b7a23221d45a8512ecf06f63f7be61ffa4875662",
+      "active_path": "tapes/0000-train-active.npz",
+      "active_controls": 15,
+      "active_delta_jaw": [
+        -0.02650533616542816,
+        0.009345225989818573,
+        -0.0105668306350708
+      ],
+      "active_delta_eef_norm_mm": [
+        27.260408401489258,
+        34.45039749145508,
+        34.76498794555664
+      ],
+      "active_img_diff_l1": [
+        1.3981119394302368,
+        1.7779947519302368,
+        2.0336101055145264
+      ]
+    },
+    {
+      "index": 1,
+      "split": "train",
+      "suite": "libero_goal",
+      "task_id": 4,
+      "init_state_id": 0,
+      "seed": 20100400,
+      "embodiment": "yaw90",
+      "regime": "train",
+      "yaw_deg": 90.0,
+      "xy_scale": 1.0,
+      "gripper_sign": 1,
+      "physics": "5605f776822bd1920f7ffa02b5afea25bdd95111637e93d4c6ef9f34ff4fea5b",
+      "frame0_img_sha256": "3446a5ad1f938fce8fc65cf9fd09b09e68fbd7b2cd8e7094d35bb8e99f6025d4",
+      "frame0_state_sha256": "93749586fa57352843aa59e9b7a23221d45a8512ecf06f63f7be61ffa4875662",
+      "active_path": "tapes/0001-train-active.npz",
+      "active_controls": 15,
+      "active_delta_jaw": [
+        -0.02638448029756546,
+        0.009330250322818756,
+        -0.010653570294380188
+      ],
+      "active_delta_eef_norm_mm": [
+        33.104209899902344,
+        28.490581512451172,
+        26.813400268554688
+      ],
+      "active_img_diff_l1": [
+        1.2744954824447632,
+        1.1617025136947632,
+        1.2897135019302368
+      ]
+    },
+    {
+      "index": 2,
+      "split": "dev",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "init_state_id": 11,
+      "seed": 20200111,
+      "embodiment": "fam_nom",
+      "regime": "familiar",
+      "yaw_deg": 0.0,
+      "xy_scale": 1.0,
+      "gripper_sign": 1,
+      "physics": "285d20c0692497b2d0dcb84cdb803b592229f8cb034bfc35327097b17cab4732",
+      "frame0_img_sha256": "a5d4b2b74d44a0accb5c2f7d51bdbcd3600f9d91c57d7e57890c4c8a2149e06a",
+      "frame0_state_sha256": "78d0093a08dc96d294949434229cdbf8cbe73176785a207b991234164184ac0e",
+      "active_path": "tapes/0002-dev-active.npz",
+      "active_controls": 15,
+      "active_delta_jaw": [
+        -0.026505358517169952,
+        0.009345214813947678,
+        -0.010566998273134232
+      ],
+      "active_delta_eef_norm_mm": [
+        27.426546096801758,
+        34.476531982421875,
+        34.854148864746094
+      ],
+      "active_img_diff_l1": [
+        1.327392578125,
+        1.5752767324447632,
+        1.8020833730697632
+      ]
+    },
+    {
+      "index": 3,
+      "split": "dev",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "init_state_id": 11,
+      "seed": 20200111,
+      "embodiment": "comp_180_lo_inv",
+      "regime": "compositional_ood",
+      "yaw_deg": 180.0,
+      "xy_scale": 0.65,
+      "gripper_sign": -1,
+      "physics": "285d20c0692497b2d0dcb84cdb803b592229f8cb034bfc35327097b17cab4732",
+      "frame0_img_sha256": "a5d4b2b74d44a0accb5c2f7d51bdbcd3600f9d91c57d7e57890c4c8a2149e06a",
+      "frame0_state_sha256": "78d0093a08dc96d294949434229cdbf8cbe73176785a207b991234164184ac0e",
+      "active_path": "tapes/0003-dev-active.npz",
+      "active_controls": 15,
+      "active_delta_jaw": [
+        0.0006342977285385132,
+        -0.02702575922012329,
+        0.009314116090536118
+      ],
+      "active_delta_eef_norm_mm": [
+        17.64856719970703,
+        22.401691436767578,
+        15.653889656066895
+      ],
+      "active_img_diff_l1": [
+        0.8091633915901184,
+        0.95068359375,
+        0.7867838740348816
+      ]
+    },
+    {
+      "index": 4,
+      "split": "dev",
+      "suite": "libero_goal",
+      "task_id": 1,
+      "init_state_id": 11,
+      "seed": 20200111,
+      "embodiment": "cont_45_nom",
+      "regime": "continuous_angle_ood",
+      "yaw_deg": 45.0,
+      "xy_scale": 1.0,
+      "gripper_sign": 1,
+      "physics": "285d20c0692497b2d0dcb84cdb803b592229f8cb034bfc35327097b17cab4732",
+      "frame0_img_sha256": "a5d4b2b74d44a0accb5c2f7d51bdbcd3600f9d91c57d7e57890c4c8a2149e06a",
+      "frame0_state_sha256": "78d0093a08dc96d294949434229cdbf8cbe73176785a207b991234164184ac0e",
+      "active_path": "tapes/0004-dev-active.npz",
+      "active_controls": 15,
+      "active_delta_jaw": [
+        -0.026431024074554443,
+        0.009311094880104065,
+        -0.010570257902145386
+      ],
+      "active_delta_eef_norm_mm": [
+        30.379253387451172,
+        32.24777603149414,
+        32.61526107788086
+      ],
+      "active_img_diff_l1": [
+        1.4773763418197632,
+        1.470703125,
+        1.423095703125
+      ]
+    }
+  ]
+}
