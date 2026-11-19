@@ -32,7 +32,7 @@ POC_EMBODIMENTS = ("fam_nom", "comp_180_lo_inv", "cont_45_nom")
 
 def chunk_counts(valid, controls):
     """Five-control chunks can end early only in the final executed chunk."""
-    if valid.dtype != np.bool_ or valid.ndim != 1 or not 0 < controls <= len(valid) * CHUNK_SIZE:
+    if type(controls) is not int or valid.dtype != np.bool_ or valid.ndim != 1 or not 0 < controls <= len(valid) * CHUNK_SIZE:
         raise ValueError("Invalid support mask or control count")
     counts = np.clip(controls - np.arange(len(valid)) * CHUNK_SIZE, 0, CHUNK_SIZE)
     if not np.array_equal(valid, counts > 0):

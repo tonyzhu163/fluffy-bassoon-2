@@ -13,6 +13,10 @@ MODEL_NAMES = (
 )
 
 
+FRAME0_FIELDS = ("frame0_img", "frame0_state")
+HISTORY_FIELDS = ("img_before", "img_after", "issued_mean", "delta_eef", "delta_jaw", "valid")
+
+
 @dataclass(frozen=True)
 class ReaderConfig:
     """Hyperparameters shared across cross-embodiment neural history readers."""
@@ -116,7 +120,8 @@ def image_motion(before, after, valid):
 def fit_visual_projection(motion, delta_eef, valid):
     """Calibrate pixels per metre from nominal fitting traces in public coordinates."""
     projection, _, rank, _ = np.linalg.lstsq(delta_eef[valid], motion[valid], rcond=1e-5)
-    if rank < 3 or np.linalg.matrix_rank(projection[:2]) < 2:
+    singular = np.linalg.svd(projection[:2], compute_uv=False)
+    if rank < 3 or singular[-1] <= 1e-5 * singular[0]:
         raise ValueError("Nominal calibration did not excite a measurable planar camera projection")
     return projection
 
@@ -350,6 +355,17 @@ def _normalize_cs(c_raw, s_raw, has_valid):
     return cos_hat, sin_hat
 
 
+def _procrustes_yaw(commands, vectors, weights, has_valid):
+    """Weighted SO(2) alignment of public command XY to visual motion XY."""
+    import jax.numpy as jnp
+
+    ax, ay = commands[..., 0], commands[..., 1]
+    vx, vy = vectors[..., 0], vectors[..., 1]
+    dot = jnp.sum(weights * (ax * vx + ay * vy), axis=-1)
+    cross = jnp.sum(weights * (ax * vy - ay * vx), axis=-1)
+    return _normalize_cs(dot, cross, has_valid)
+
+
 def _vis_inputs(img_before, img_after):
     import jax.numpy as jnp
 
@@ -358,6 +374,29 @@ def _vis_inputs(img_before, img_after):
     diff = img_after - img_before
     x = jnp.concatenate((diff, img_before, coords), axis=-1)
     return x.reshape(b * k, h, w, 8), b, k
+
+
+def _unit_rgb(value):
+    import jax.numpy as jnp
+
+    image = jnp.asarray(value)
+    # Disk tapes use bytes. The motor's online callback already supplies [0, 1].
+    return image.astype(jnp.float32) / 255.0 if image.dtype == jnp.uint8 else image.astype(jnp.float32)
+
+
+def _history_visual_features(params, batch):
+    import jax.numpy as jnp
+
+    mask = jnp.asarray(batch["valid"], dtype=bool)[..., None, None, None]
+    before = jnp.where(mask, _unit_rgb(batch["img_before"]), 0.0)
+    after = jnp.where(mask, _unit_rgb(batch["img_after"]), 0.0)
+    images, b, k = _vis_inputs(before, after)
+    return _apply_cnn(params["cnn"], images).reshape(b, k, -1)
+
+
+def visual_motion_vectors(params, batch):
+    """Read the equivariant model's pre-contraction visual XY and confidence logit."""
+    return _apply_mlp(params["vis_vec"], _history_visual_features(params, batch))
 
 
 def _apply_scale_and_grip(params, issued_mean, delta_eef, delta_jaw, valid):
@@ -403,13 +442,8 @@ def apply_reader(params, cfg: ReaderConfig, batch):
     import jax
     import jax.numpy as jnp
 
-    def unit_rgb(value):
-        image = jnp.asarray(value)
-        # Disk tapes use bytes. The motor's online callback already supplies [0, 1].
-        return image.astype(jnp.float32) / 255.0 if image.dtype == jnp.uint8 else image.astype(jnp.float32)
-
     if cfg.model_type == "frame0_probe":
-        f0_img = unit_rgb(batch["frame0_img"])
+        f0_img = _unit_rgb(batch["frame0_img"])
         f0_state = jnp.asarray(batch["frame0_state"], dtype=jnp.float32)
         b, h, w, _ = f0_img.shape
         coords = jnp.broadcast_to(_coord_grid(h, w)[None], (b, h, w, 2))
@@ -420,6 +454,7 @@ def apply_reader(params, cfg: ReaderConfig, batch):
 
     valid = jnp.asarray(batch["valid"], dtype=bool)
     has_valid = jnp.any(valid, axis=1)
+
     def signal(field):
         return jnp.where(valid[..., None], jnp.asarray(batch[field], dtype=jnp.float32), 0.0)
 
@@ -427,13 +462,8 @@ def apply_reader(params, cfg: ReaderConfig, batch):
     # Commands are dimensionless. Feed centimetres to the neural motion heads.
     delta_eef = 100.0 * signal("delta_eef")
     delta_jaw = 100.0 * signal("delta_jaw")
-    pixels_valid = valid[..., None, None, None]
-    img_before = jnp.where(pixels_valid, unit_rgb(batch["img_before"]), 0.0)
-    img_after = jnp.where(pixels_valid, unit_rgb(batch["img_after"]), 0.0)
-    vis_in, b, k = _vis_inputs(img_before, img_after)
-    vis = _apply_cnn(params["cnn"], vis_in).reshape(b, k, cfg.cnn_width)
-
     if cfg.model_type == "joint_transformer":
+        vis = _history_visual_features(params, batch)
         tok = jnp.concatenate((vis, issued, delta_eef, delta_jaw), axis=-1)
         raw = _apply_transformer(params["tx"], tok, valid, cfg.transformer_heads)
         cos_hat, sin_hat = _normalize_cs(raw[:, 0], raw[:, 1], has_valid)
@@ -444,6 +474,7 @@ def apply_reader(params, cfg: ReaderConfig, batch):
     log_scale, grip_logit = _apply_scale_and_grip(params, issued, delta_eef, delta_jaw, valid)
 
     if cfg.model_type == "factored_no_equiv":
+        vis = _history_visual_features(params, batch)
         vis_in_head = jnp.concatenate((vis, issued[..., :2]), axis=-1)
         v_out = _apply_mlp(params["vis_head"], vis_in_head)
         v_w = jnp.where(valid, jax.nn.softplus(v_out[..., 2]) + 1e-4, 0.0)
@@ -454,13 +485,9 @@ def apply_reader(params, cfg: ReaderConfig, batch):
 
     if cfg.model_type == "factored_equiv":
         # Purely visual motion vector [vx, vy] + confidence weight; NO action input before Procrustes.
-        vec_out = _apply_mlp(params["vis_vec"], vis)
-        vx, vy = vec_out[..., 0], vec_out[..., 1]
+        vec_out = visual_motion_vectors(params, batch)
         w = jnp.where(valid, jax.nn.softplus(vec_out[..., 2]) + 1e-4, 0.0)
-        ax, ay = issued[..., 0], issued[..., 1]
-        c_raw = jnp.sum(w * (ax * vx + ay * vy), axis=1)
-        s_raw = jnp.sum(w * (ax * vy - ay * vx), axis=1)
-        cos_hat, sin_hat = _normalize_cs(c_raw, s_raw, has_valid)
+        cos_hat, sin_hat = _procrustes_yaw(issued[..., :2], vec_out[..., :2], w, has_valid)
         return cos_hat, sin_hat, log_scale, grip_logit
 
     raise ValueError(cfg.model_type)
@@ -482,7 +509,8 @@ def reader_loss(params, cfg: ReaderConfig, batch):
     import jax
     import jax.numpy as jnp
 
-    cos_h, sin_h, log_scale_h, grip_logit_h = apply_reader(params, cfg, batch)
+    fields = FRAME0_FIELDS if cfg.model_type == "frame0_probe" else HISTORY_FIELDS
+    cos_h, sin_h, log_scale_h, grip_logit_h = apply_reader(params, cfg, {k: batch[k] for k in fields})
     yaw_rad = jnp.deg2rad(jnp.asarray(batch["yaw_deg"], dtype=jnp.float32))
     cos_t = jnp.cos(yaw_rad)
     sin_t = jnp.sin(yaw_rad)

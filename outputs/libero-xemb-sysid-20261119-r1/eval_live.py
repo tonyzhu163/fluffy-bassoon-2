@@ -16,7 +16,7 @@ from fluffy_bassoon.xemb.readers import (
     ReaderConfig, analytic_proprio_sysid, analytic_visual_yaw, image_motion, init_reader, predict_embodiment,
 )
 from collect import POC_EMBODIMENTS, POC_TASK, SUPPORT_BUDGET, issued_exposure, read_support, validate_archive
-from train_readers import make_donor_permutation, offline_gate
+from train_readers import SEEDS, make_donor_permutation, offline_gate
 from motor_iface import SPLITS_PATH, load_frozen_pi05, run_episode, write_json
 from sim_worker import XEmbSimulator
 
@@ -62,10 +62,14 @@ def select_panel(archive, audit, panel, init_id, archive_sha, seed):
         raise ValueError("A completed fit for this archive and seed is required")
     rows = [r for r in archive["trials"] if r["split"] == "dev"]
     if panel == "development":
-        if (archive["panel"] != "full" or audit.get("offline_gate_passed") is not True
+        if (archive["panel"] != "full" or tuple(audit["seeds"]) != SEEDS or audit["steps"] != 1500
+                or audit.get("offline_gate_passed") is not True
                 or not offline_gate(audit, 20.0)[0]):
             raise ValueError("Full live evaluation requires the full archive and passed 20-degree offline gate")
     else:
+        if panel == "poc" and (archive["panel"] != "poc" or seed != 41 or audit["steps"] != 1500
+                               or archive["passive_max_controls"] != SUPPORT_BUDGET):
+            raise ValueError("Pilot requires its registered 28 fitting trials, cap 15 and 1500-step seed 41 fit")
         rows = [r for r in rows if (r["suite"], r["task_id"]) == POC_TASK and r["embodiment"] in POC_EMBODIMENTS]
         if len(rows) != len(POC_EMBODIMENTS):
             raise ValueError("Missing fixed small development panel")
@@ -174,9 +178,9 @@ def main():
         ("joint_transformer_active", "active_probe", "joint_transformer"),
         ("factored_no_equiv_active", "active_probe", "factored_no_equiv"),
     ):
-        if arm in arms:
-            readers[arm] = load_reader_checkpoint(args.train_dir / "checkpoints", mode, model_type,
-                                                  args.seed_ckpt, archive_sha, audit["steps"])
+        readers[arm] = load_reader_checkpoint(args.train_dir / "checkpoints", mode, model_type,
+                                              args.seed_ckpt, archive_sha, audit["steps"])
+
     def online_reader(probe_trace):
         return infer_one(*readers["ours_retained_active"], probe_trace)
 
@@ -316,8 +320,6 @@ def main():
 
     contrasts = {}
     for main_arm in ("ours_retained_active", "ours_retained_passive", "ours_online_prefix"):
-        if main_arm not in arms:
-            continue
         contrasts[main_arm] = {
             comp: task_clustered_bootstrap(rows, main_arm, comp)
             for comp in arms
@@ -333,6 +335,16 @@ def main():
         paired_contrasts_overall=contrasts,
         rows=rows,
     )
+    if args.panel == "poc":
+        rescues = {}
+        for row in rows:
+            success = {a: rec["success"] for a, rec in row["arms"].items()}
+            if (row["embodiment"] != "fam_nom" and success["privileged_oracle"]
+                    and not any(success[a] for a in ("nominal", "ours_cleared", "ours_swapped_donor"))):
+                winners = [a for a in ("ours_retained_active", "ours_retained_passive") if success[a]]
+                if winners:
+                    rescues[row["embodiment"]] = winners
+        summary["pilot_rescues"] = rescues
     write_json(args.output / "live-eval-summary.json", summary)
     print(json.dumps(dict(trials=len(rows), by_regime=by_regime, contrasts=contrasts), indent=2), flush=True)
 

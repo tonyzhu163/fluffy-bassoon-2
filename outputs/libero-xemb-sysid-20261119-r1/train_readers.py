@@ -5,6 +5,7 @@ from dataclasses import asdict
 import hashlib
 from importlib import metadata
 import json
+import os
 import sys
 from pathlib import Path
 import time
@@ -17,6 +18,8 @@ import optax
 
 from fluffy_bassoon.xemb.embodiment import EVAL_REGIMES, circular_yaw_error_deg
 from fluffy_bassoon.xemb.readers import (
+    FRAME0_FIELDS,
+    HISTORY_FIELDS,
     MODEL_NAMES,
     ReaderConfig,
     analytic_proprio_sysid,
@@ -27,6 +30,7 @@ from fluffy_bassoon.xemb.readers import (
     init_reader,
     predict_embodiment,
     reader_loss,
+    visual_motion_vectors,
 )
 from collect import SUPPORT_BUDGET, issued_exposure, read_support, validate_archive
 from motor_iface import write_json
@@ -45,12 +49,12 @@ def load_mode_split(archive_dir: Path, trials: list, mode: str, split_name: str)
 
 
 def score_predictions(rows: list, yaw_hat, scale_hat, grip_hat):
-    yaw_errs = np.array([circular_yaw_error_deg(yh, r["yaw_deg"]) for yh, r in zip(yaw_hat, rows)], dtype=np.float64)
+    yaw_errs = np.array([circular_yaw_error_deg(yh, r["yaw_deg"]) for yh, r in zip(yaw_hat, rows, strict=True)], dtype=np.float64)
     scale_errs = np.array(
-        [abs(float(sh) - float(r["xy_scale"])) / float(r["xy_scale"]) for sh, r in zip(scale_hat, rows)],
+        [abs(float(sh) - float(r["xy_scale"])) / float(r["xy_scale"]) for sh, r in zip(scale_hat, rows, strict=True)],
         dtype=np.float64,
     )
-    grip_ok = np.array([int(gh) == int(r["gripper_sign"]) for gh, r in zip(grip_hat, rows)], dtype=bool)
+    grip_ok = np.array([int(gh) == int(r["gripper_sign"]) for gh, r in zip(grip_hat, rows, strict=True)], dtype=bool)
     all_ok = (yaw_errs < 15.0) & (scale_errs < 0.20) & grip_ok
 
     out = {}
@@ -86,9 +90,10 @@ def make_donor_permutation(rows: list, rng: np.random.Generator) -> np.ndarray:
 def predict_in_batches(params, cfg: ReaderConfig, data: dict, batch_size: int = 32):
     n = len(data["yaw_deg"])
     y_all, s_all, g_all = [], [], []
+    fields = FRAME0_FIELDS if cfg.model_type == "frame0_probe" else HISTORY_FIELDS
     for start in range(0, n, batch_size):
         end = min(n, start + batch_size)
-        sl = {k: v[start:end] for k, v in data.items()}
+        sl = {k: data[k][start:end] for k in fields}
         yh, sh, gh = predict_embodiment(params, cfg, sl)
         y_all.append(yh)
         s_all.append(sh)
@@ -141,8 +146,8 @@ def train_one(mode, model_type, seed, train_data, steps, batch_size, nominal_gai
         return optax.apply_updates(p, updates), os_state, loss, metrics
 
     rng = np.random.default_rng(seed)
-    if model_type == "frame0_probe":
-        train_data = {k: train_data[k] for k in ("frame0_img", "frame0_state", "yaw_deg", "xy_scale", "gripper_sign")}
+    fields = FRAME0_FIELDS if model_type == "frame0_probe" else HISTORY_FIELDS
+    train_data = {k: train_data[k] for k in (*fields, "yaw_deg", "xy_scale", "gripper_sign")}
     n_train = len(train_data["yaw_deg"])
     curve = []
     started = time.monotonic()
@@ -172,7 +177,6 @@ def train_one(mode, model_type, seed, train_data, steps, batch_size, nominal_gai
 
 
 def audit_model(params, cfg, dev_data, dev_rows, donor_perm):
-
     y_ret, s_ret, g_ret = predict_in_batches(params, cfg, dev_data)
     cleared_data = dict(dev_data, valid=np.zeros_like(dev_data["valid"]))
     y_clr, s_clr, g_clr = predict_in_batches(params, cfg, cleared_data)
@@ -183,10 +187,38 @@ def audit_model(params, cfg, dev_data, dev_rows, donor_perm):
         for a, b in zip((y_ret, s_ret, g_ret), (y_clr, s_clr, g_clr), strict=True):
             if not np.allclose(a, b, atol=1e-5, rtol=0) or not np.allclose(a, a[donor_perm], atol=1e-5, rtol=0):
                 raise ValueError("Frame-0 prediction changed within a matched reset")
+    diagnostics = {}
+    if cfg.model_type == "factored_equiv":
+        indices = [i for i, row in enumerate(dev_rows) if row["regime"] == "continuous_angle_ood"][:4]
+        if indices:
+            sample = {k: dev_data[k][indices] for k in ("img_before", "img_after", "valid")}
+            vectors = np.asarray(visual_motion_vectors(params, sample))
+            diagnostics["sample_cont_ood"] = [
+                dict(embodiment=dev_rows[i]["embodiment"], true_yaw=dev_rows[i]["yaw_deg"], pred_yaw=float(y_ret[i]),
+                     v_hat_first_chunks=vectors[j, :3, :2].tolist(), valid=sample["valid"][j, :3].tolist(),
+                     issued_xy_first_chunks=dev_data["issued_mean"][i, :3, :2].tolist())
+                for j, i in enumerate(indices)
+            ]
     return dict(
-        retained=score_predictions(dev_rows, y_ret, s_ret, g_ret),
+        diagnostics=diagnostics, retained=score_predictions(dev_rows, y_ret, s_ret, g_ret),
         cleared=score_predictions(dev_rows, y_clr, s_clr, g_clr),
         swapped_donor=score_predictions(dev_rows, y_ret[donor_perm], s_ret[donor_perm], g_ret[donor_perm]),
+    )
+
+
+def signal_summary(data):
+    """Measure observed motions in archive units, excluding unexecuted chunks."""
+    valid = data["valid"]
+    eef_mm = 1000 * np.linalg.norm(data["delta_eef"][valid], axis=-1)
+    jaw_mm = 1000 * np.abs(data["delta_jaw"][..., 0][valid])
+    before = data["img_before"][valid].astype(np.int16)
+    diff = np.abs(data["img_after"][valid] - before)
+    counts, frequencies = np.unique(data["chunk_steps"].sum(axis=1), return_counts=True)
+    return dict(
+        controls_per_tape={str(n): int(f) for n, f in zip(counts, frequencies, strict=True)},
+        valid_chunks=int(valid.sum()), padded_chunks=int((~valid).sum()),
+        mean_eef_motion_mm=float(eef_mm.mean()), mean_abs_jaw_motion_mm=float(jaw_mm.mean()),
+        mean_abs_rgb_difference_0_255=float(diff.mean()),
     )
 
 
@@ -220,7 +252,7 @@ def analytic_audit(train_data, train_rows, dev_data, dev_rows, donor_perm):
              np.exp(np.log(train_data["xy_scale"]).mean()), 1 if train_data["gripper_sign"].mean() >= 0 else -1)
     prior_scores = score_predictions(dev_rows, *(np.full(len(dev_rows), x) for x in prior))
     return dict(nominal_gain=gain, constant_nominal=cleared, training_prior=prior_scores,
-                analytic_proprio_sysid=report(yaw), analytic_visual_sysid=visual)
+                analytic_proprio_sysid=dict(nominal_gain=gain, **report(yaw)), analytic_visual_sysid=visual)
 
 
 def offline_gate(report, threshold):
@@ -264,11 +296,22 @@ def main():
     ckpt_dir = args.output / "checkpoints"
     ckpt_dir.mkdir()
     packages = {p: metadata.version(p) for p in ("jax", "jaxlib", "flax", "optax", "numpy")}
-    devices = [str(d) for d in jax.devices()]
-    report = dict(complete=False, panel=archive["panel"], archive=str(args.archive), archive_sha256=archive_sha,
-                  matched_support_cap=SUPPORT_BUDGET, runtime=dict(python=sys.executable, packages=packages,
-                  devices=devices, backend=jax.default_backend()), steps=args.steps, batch_size=args.batch_size,
-                  seeds=list(seeds), modes={}, offline_gate_passed=None)
+    devices = jax.devices()
+    requested_backend = os.environ.get("JAX_PLATFORMS")
+    if requested_backend == "cuda" and (len(devices) != 1 or devices[0].platform != "gpu"):
+        raise RuntimeError(f"Expected one JAX CUDA device in the allocated runtime, got {devices}")
+    if requested_backend == "cpu" and any(d.platform != "cpu" for d in devices):
+        raise RuntimeError(f"CPU qualification exposed an accelerator: {devices}")
+    runtime = dict(
+        python=sys.executable, packages=packages, backend=jax.default_backend(),
+        devices=[str(d) for d in devices],
+        package_locations={p: str(metadata.distribution(p).locate_file("")) for p in packages},
+    )
+    report = dict(
+        complete=False, panel=archive["panel"], archive=str(args.archive), archive_sha256=archive_sha,
+        matched_support_cap=SUPPORT_BUDGET, runtime=runtime, steps=args.steps,
+        batch_size=args.batch_size, seeds=list(seeds), modes={}, offline_gate_passed=None,
+    )
     for mode in archive["modes"]:
         train_data, train_rows = load_mode_split(args.archive.parent, archive["trials"], mode, "train")
         dev_data, dev_rows = load_mode_split(args.archive.parent, archive["trials"], mode, "dev")
@@ -276,6 +319,7 @@ def main():
         result = analytic_audit(train_data, train_rows, dev_data, dev_rows, donor_perm)
         models = {}
         report["modes"][mode] = dict(**result, models=models, train_trials=len(train_rows), dev_trials=len(dev_rows),
+                                     train_signal=signal_summary(train_data), dev_signal=signal_summary(dev_data),
                                      donor_indices=[dev_rows[i]["index"] for i in donor_perm])
         for model_type in MODEL_NAMES:
             per_seed = []
@@ -284,6 +328,7 @@ def main():
                                              result["nominal_gain"], ckpt_dir, archive_sha)
                 train_predictions = predict_in_batches(params, cfg, train_data)
                 fit["training"] = score_predictions(train_rows, *train_predictions)
+                fit["fitting"] = score_predictions(train_rows, *predict_in_batches(params, cfg, train_data))
                 fit.update(audit_model(params, cfg, dev_data, dev_rows, donor_perm))
                 per_seed.append(fit)
                 print(json.dumps(dict(mode=mode, model=model_type, seed=seed, overall=fit["retained"]["overall"])),

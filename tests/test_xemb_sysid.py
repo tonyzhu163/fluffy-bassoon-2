@@ -1,5 +1,6 @@
 """Unit tests for cross-embodiment coordinate transforms, analytic SysID, and JAX readers."""
 
+from functools import partial
 import math
 import os
 from pathlib import Path
@@ -148,7 +149,7 @@ def test_procrustes_so2_equivariance_and_cleared_invariance():
         reader_loss,
         rot2,
     )
-    from fluffy_bassoon.xemb.readers import _normalize_cs
+    from fluffy_bassoon.xemb.readers import _procrustes_yaw
 
     # 1. Exact continuous SO(2) Procrustes recovery across arbitrary angles and scales.
     rng = np.random.default_rng(7)
@@ -157,9 +158,9 @@ def test_procrustes_so2_equivariance_and_cleared_invariance():
     for true_yaw in (-173.4, -135.0, -45.0, 0.0, 33.7, 90.0, 135.0, 179.5):
         for scale in (0.4, 1.0, 2.3):
             v_hat = scale * (issued_xy @ rot2(true_yaw).T)
-            c_raw = np.sum(weights * (issued_xy[:, 0] * v_hat[:, 0] + issued_xy[:, 1] * v_hat[:, 1]))
-            s_raw = np.sum(weights * (issued_xy[:, 0] * v_hat[:, 1] - issued_xy[:, 1] * v_hat[:, 0]))
-            cos_h, sin_h = _normalize_cs(jnp.array([c_raw]), jnp.array([s_raw]), jnp.array([True]))
+            cos_h, sin_h = _procrustes_yaw(
+                jnp.asarray(issued_xy)[None], jnp.asarray(v_hat)[None], jnp.asarray(weights)[None], jnp.array([True])
+            )
             pred_deg = float(np.degrees(np.arctan2(np.asarray(sin_h)[0], np.asarray(cos_h)[0])))
             assert circular_yaw_error_deg(pred_deg, true_yaw) < 1e-4
 
@@ -213,7 +214,7 @@ def test_procrustes_so2_equivariance_and_cleared_invariance():
 
         # Forward and finite gradient check including an all-False row.
         (loss, metrics), grads = jax.value_and_grad(
-            lambda p: reader_loss(p, cfg, padded), has_aux=True
+            partial(reader_loss, cfg=cfg, batch=padded), has_aux=True
         )(params)
         assert jnp.isfinite(loss)
         assert all(jnp.isfinite(v) for v in metrics.values())
@@ -234,6 +235,7 @@ def test_procrustes_so2_equivariance_and_cleared_invariance():
             cos_h, sin_h, log_s, grip_l = apply_reader(params, cfg, batch)
             assert cos_h.shape == (b,) and jnp.isfinite(log_s).all() and jnp.isfinite(grip_l).all()
 
+
 def test_shifted_images_and_calibrated_visual_yaw():
     from fluffy_bassoon.xemb import rot2
     from fluffy_bassoon.xemb.readers import (
@@ -241,8 +243,10 @@ def test_shifted_images_and_calibrated_visual_yaw():
     )
 
     yy, xx = np.mgrid[:64, :64]
+
     def texture(x, y):
         return (np.cos(x * 0.10) + np.sin(y * 0.12))[..., None]
+
     valid = np.array([[True, False]])
     before = np.stack([texture(xx, yy), texture(xx, yy)])[None]
     after = np.stack([texture(xx - 0.8, yy + 0.6), np.full_like(before[0, 0], np.nan)])[None]
@@ -300,6 +304,15 @@ def test_checkpoint_restores_lists_and_preserves_predictions(run_scripts, tmp_pa
     from fluffy_bassoon.xemb import ReaderConfig, apply_reader, init_reader
     from train_readers import save_checkpoint
 
+    if os.environ.get("JAX_PLATFORMS") == "cpu":
+        assert jax.default_backend() == "cpu"
+    if "OPENPI_DATA_HOME" in os.environ:
+        import flax
+        import optax
+
+        for module in (jax, flax, optax, np):
+            assert "robocasa365-native-20261101-r1" not in Path(module.__file__).parts, module.__file__
+
     cfg = ReaderConfig(model_type="joint_transformer", cnn_width=16, transformer_width=16,
                        transformer_layers=1, max_chunks=1)
     params = init_reader(jax.random.key(41), cfg)
@@ -349,14 +362,20 @@ def test_panel_integrity_donors_and_live_gate(run_scripts):
         seeds.add(query_seed(suites, row["suite"], row["task_id"], 13))
     assert len(seeds) == 8
     metric = {"retained": {"continuous_angle_ood": {"yaw_err_deg": {"mean": 20.0}}}}
-    report = dict(complete=True, seeds=[41, 42, 43], panel="full", archive_sha256="archive",
+    report = dict(complete=True, steps=1500, seeds=[41, 42, 43], panel="full", archive_sha256="archive",
                   modes={"active_probe": {"models": {"factored_equiv": metric}}}, offline_gate_passed=True)
     assert offline_gate({"modes": {}}, 20.)[0] is False
     with pytest.raises(ValueError, match="gate"):
         select_panel(archive, report, "development", 13, "archive", 41)
     metric["retained"]["continuous_angle_ood"]["yaw_err_deg"]["mean"] = 19.9
     assert len(select_panel(archive, report, "development", 13, "archive", 41)) == 96
-    assert len(select_panel(archive, report, "poc", 13, "archive", 41)) == 3
+    with pytest.raises(ValueError, match="Pilot"):
+        select_panel(archive, report, "poc", 13, "archive", 41)
+    pilot_rows = [rows[schedule.index(entry)] for entry in build_schedule("poc")]
+    poc = dict(archive, panel="poc", trials=pilot_rows)
+    assert validate_archive(poc) == 5
+    poc_report = dict(report, panel="poc", steps=1500, seeds=[41], offline_gate_passed=None)
+    assert len(select_panel(poc, poc_report, "poc", 13, "archive", 41)) == 3
     with pytest.raises(ValueError, match="completed fit"):
         select_panel(archive, dict(report, complete=False), "poc", 13, "archive", 41)
 
