@@ -1,0 +1,178 @@
+{
+  "identities": {
+    "support": {
+      "physics": "e9fcf5ef2853fae7e76cc1f90b2379380b10053184584f0533f906f3a936ec30",
+      "public": {
+        "agentview_image": "f7879963c42b5fe4af3f7368a803e05a88edf8e2516b960b61f3c98cf7e3401b",
+        "robot0_eye_in_hand_image": "a6b1a872aad9fa6b9ec98f1e6c18106f8e5c3ac77146167f9fb3e39d0b2732e5",
+        "robot0_joint_pos": "98de621583d18e512f7592b503b98762c45e9c0c28a5717fbe36f936c6e38da2",
+        "robot0_joint_vel": "6ddfc03b1f88cee845deb36b505174b88b6090f8be52a741b28515d922be40ed",
+        "robot0_eef_pos": "db838bf78def69ae003150ddbae74492ea808aee50effccea8cbae7e1635eb84",
+        "robot0_eef_quat_xyzw": "6587dccf39fc6c57fc690c12b9f75c0b4a9072c5e9ed7f3bca5b3852cd3316c2",
+        "robot0_gripper_qpos": "f38f7d178c7db7ccee73331800f55a4b453e8b6130f694b1865e6535dc27c893"
+      },
+      "horizon": 300,
+      "prompt": "push the plate to the front of the stove"
+    },
+    "query": {
+      "physics": "5050d7be2a95cf71353885237339bb29c00197b70eb81023e919a2a4e847e2fd",
+      "public": {
+        "agentview_image": "ad1462caecdd7c7e3c213fcdf7abcf48d29ec3c3b1cebfcf5e113e9728ab09b8",
+        "robot0_eye_in_hand_image": "9eb174521e4e63ad82a4072080f0fdc43ae11ab750083f42b5187f7071b42f10",
+        "robot0_joint_pos": "1973da7f42f10b5decfe21ffd2e36adabc14a8d44155c68ab1ad841d61358fca",
+        "robot0_joint_vel": "bcb9c566e7a5d8bc5798cf11d1ade7f9addbc1a63f6fabbfc45a6dd1613152ef",
+        "robot0_eef_pos": "f6215e8d0e10b4fa5f6a425c65e66d351b5aedccfb530051d123f04432b985bb",
+        "robot0_eef_quat_xyzw": "53a4a58f29d06619d27b75771e3a0169c4085608a2e3fb85a076f243762edfe4",
+        "robot0_gripper_qpos": "4a01ebd1fd1549de0ee87f5f8b717dfbaccc3f5f783c9dbb75d14193c113b4d3"
+      },
+      "horizon": 300,
+      "prompt": "push the plate to the front of the stove"
+    }
+  },
+  "opening_hashes": {
+    "support": "7190687428323682960878db65d38718452ed29f5cc537bf8c790325f63af1f9",
+    "query": "3f437a3c0a68256fe950bcec28fbfd30c6c0b5e768613b1acf7440de9e17064a"
+  },
+  "tapes": [
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-decision-pretraining-20261119-r1/menu02/episodes/fitting/libero_goal-5-r1-BASE/support/public.npz",
+      "sha256": "e4e7d85237333c8028544d7ecfa3fab075749a4d269905e10b87182ad7f3df4c",
+      "mode": "support",
+      "case": {
+        "suite": "libero_goal",
+        "task_id": 5,
+        "variant": "BASE",
+        "init_state_id": 3,
+        "seed": 19220503
+      },
+      "controls": 129,
+      "first_native_hit": 129
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-decision-pretraining-20261119-r1/menu02/episodes/fitting/libero_goal-5-r1-BASE/default/public.npz",
+      "sha256": "19699d31bd304580fa59c6f80ffafa0a8a75fd728a3daadf413e3df81541f1e5",
+      "mode": "default",
+      "case": {
+        "suite": "libero_goal",
+        "task_id": 5,
+        "variant": "BASE",
+        "init_state_id": 4,
+        "seed": 19220504
+      },
+      "controls": 137,
+      "first_native_hit": 137
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-decision-pretraining-20261119-r1/menu02/episodes/fitting/libero_goal-5-r1-BASE/short_wait/public.npz",
+      "sha256": "5909f230cfc9d7f78c8268fcf2f894f1aaa7b657b9dd151565ec99d16542a861",
+      "mode": "short_wait",
+      "case": {
+        "suite": "libero_goal",
+        "task_id": 5,
+        "variant": "BASE",
+        "init_state_id": 4,
+        "seed": 19220504
+      },
+      "controls": 300,
+      "first_native_hit": null
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-decision-pretraining-20261119-r1/menu02/episodes/fitting/libero_goal-5-r1-BASE/paced/public.npz",
+      "sha256": "c1cef98db87880ca6ca0759593d6264b9455288de0ae6038826e515f41886bf5",
+      "mode": "paced",
+      "case": {
+        "suite": "libero_goal",
+        "task_id": 5,
+        "variant": "BASE",
+        "init_state_id": 4,
+        "seed": 19220504
+      },
+      "controls": 300,
+      "first_native_hit": null
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-decision-pretraining-20261119-r1/menu02/episodes/fitting/libero_goal-5-r1-BASE/gripper_wait/public.npz",
+      "sha256": "48b9752e064d42922300dc65e096ac0708f21e70297e768bdc9b09b4d57c4cc5",
+      "mode": "gripper_wait",
+      "case": {
+        "suite": "libero_goal",
+        "task_id": 5,
+        "variant": "BASE",
+        "init_state_id": 4,
+        "seed": 19220504
+      },
+      "controls": 300,
+      "first_native_hit": null
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-decision-pretraining-20261119-r1/menu02/episodes/fitting/libero_goal-5-r1-S20/support/public.npz",
+      "sha256": "bbc6ffc10813ad5749a54591e4f6d9cbbe5d9ab6321ec1057e30505a24c88b3a",
+      "mode": "support",
+      "case": {
+        "suite": "libero_goal",
+        "task_id": 5,
+        "variant": "S20",
+        "init_state_id": 3,
+        "seed": 19220503
+      },
+      "controls": 300,
+      "first_native_hit": null
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-decision-pretraining-20261119-r1/menu02/episodes/fitting/libero_goal-5-r1-S20/default/public.npz",
+      "sha256": "1df1f50d0c18fdf78b474dcf01d9ed88d714cb41d8779e2d5674c32b3b3a1dfe",
+      "mode": "default",
+      "case": {
+        "suite": "libero_goal",
+        "task_id": 5,
+        "variant": "S20",
+        "init_state_id": 4,
+        "seed": 19220504
+      },
+      "controls": 300,
+      "first_native_hit": null
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-decision-pretraining-20261119-r1/menu02/episodes/fitting/libero_goal-5-r1-S20/short_wait/public.npz",
+      "sha256": "db5bc96adef72fca26ec8a63d53f97c6eeb19d0991e965d27c7e4e163252dcbb",
+      "mode": "short_wait",
+      "case": {
+        "suite": "libero_goal",
+        "task_id": 5,
+        "variant": "S20",
+        "init_state_id": 4,
+        "seed": 19220504
+      },
+      "controls": 222,
+      "first_native_hit": 222
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-decision-pretraining-20261119-r1/menu02/episodes/fitting/libero_goal-5-r1-S20/paced/public.npz",
+      "sha256": "9b0d6756e075d0cb9ade0d57b445692e5be5189720f7abc4d9c6785881c5c7be",
+      "mode": "paced",
+      "case": {
+        "suite": "libero_goal",
+        "task_id": 5,
+        "variant": "S20",
+        "init_state_id": 4,
+        "seed": 19220504
+      },
+      "controls": 300,
+      "first_native_hit": null
+    },
+    {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-decision-pretraining-20261119-r1/menu02/episodes/fitting/libero_goal-5-r1-S20/gripper_wait/public.npz",
+      "sha256": "587f6bdf9173990be077ac7dd9cb19abe04ad5230509b2e47d414c8fb4aff23e",
+      "mode": "gripper_wait",
+      "case": {
+        "suite": "libero_goal",
+        "task_id": 5,
+        "variant": "S20",
+        "init_state_id": 4,
+        "seed": 19220504
+      },
+      "controls": 300,
+      "first_native_hit": null
+    }
+  ]
+}
