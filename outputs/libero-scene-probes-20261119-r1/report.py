@@ -141,7 +141,9 @@ def summarize(root):
             distinct_physics=len({panel[s,l]['meta']['physics'] for l in LAYOUTS}),
             distinct_camera=len({panel[s,l]['meta']['public']['agentview_image'] for l in LAYOUTS}))
             for s in sorted({s for s,_ in panel})}
-    return dict(fit=read(root/'fit.json'),complete=done,panels=summaries,pairs=result,layouts=public)
+    from feedback import evaluate
+    feedback=evaluate(source,test,result)
+    return dict(feedback=feedback,fit=read(root/'fit.json'),complete=done,panels=summaries,pairs=result,layouts=public)
 
 
 if __name__=='__main__':
