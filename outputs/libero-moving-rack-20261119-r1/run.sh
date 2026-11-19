@@ -24,4 +24,6 @@ start=$(date +%s)
 trap 'rc=$?; echo "$rc $(date +%s) $start" > "$out/exit.txt"' EXIT
 echo "$pin $(hostname) $$" > "$out/launch.txt"
 "$root/setups/robocasa365-native-20261101-r1/env/bin/python" -Bu "$code/scripts/[train]gpu_probe.py" --expected-count 1 --purpose training --direct-hostname "$(hostname)" --output "$out/gpu.json" > "$out/probe.log" 2>&1
-timeout --kill-after=20s 45m "$legacy/envs/openpi-215abfb/bin/python" -Bu "$here/fresh_openings.py" "$out/episodes" > "$out/run.log" 2>&1
+worker=fresh_openings.py
+if [[ ${3:-open} == live ]]; then worker=live_motor.py; fi
+timeout --kill-after=20s 45m "$legacy/envs/openpi-215abfb/bin/python" -Bu "$here/$worker" "$out/episodes" > "$out/run.log" 2>&1
