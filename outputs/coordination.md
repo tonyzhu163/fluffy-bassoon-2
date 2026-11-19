@@ -4,7 +4,7 @@
 
 | Work | Cluster / job / source | Last check, progress and next action |
 | --- | --- | --- |
-| Bowl-to-bottle transfer of frozen completion readers | Baige CPU, preparing | Nov 19. Re-render six earlier bottle starts and independent queries. Fit all readers exclusively on bowl practices. [Plan](libero-witness-transfer-20261119-r1/PLAN.md) |
+| Bowl-to-bottle transfer of frozen completion readers | Baige CPU, replay and four transfer arms complete | Nov 19. Bowl-only fit, six bottle poses. Strict native retries were π0.5 9/12, general PT 6/12, pooled RGB 7/12. A six-feature motion control scored 10/12 with the same fitting data. Zero GPU-hours. [Result](libero-witness-transfer-20261119-r1/RESULT.md) |
 | Frozen vision towers on paired bowl failures | Baige CPU, three arms complete at `848334f0` | Nov 19. Robot, general PT and raw RGB classified 16, 15 and 14 of 16 bowl practices. All chose 4/4 strict corrections. Crossed native success 23, 24 and 24/32. [Result](libero-witness-encoders-20261119-r1/RESULT.md) |
 | Same-command visual evidence for opposite bowl corrections | Baige CPU, cpu02 complete at `3a3994de` | Nov 19. Two of four cyclic development triples required opposite corrections after two zeros. RGB 4/4, swapped 0/4, commands and motion 2/4. Final images alone also 4/4. Thirty-two native branches, zero GPU-hours. [Result](libero-visual-witness-20261119-r1/RESULT.md) |
 | Released S18 proprioceptive observability | Baige development CPU, `cpu01` complete at `6cffa2c0` | Nov 19. All eight pairs shared initial physics. S18 added a fixed public wrist offset while the 80 matched displacements differed by at most 1.21e-7 m. Zero GPU-hours. [Result](libero-s18-probe-20261119-r1/RESULT.md) |
