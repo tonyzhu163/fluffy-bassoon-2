@@ -20,27 +20,29 @@ def serve(pipe, task_ids=(4, 8)):
             op, value = pipe.recv()
             if op == 'reset':
                 env.close()
-                scene, variant = value
+                scene, variant = value[:2]
+                world_task = value[2] if len(value) == 3 else task_ids[0]
+                world_index = task_ids.index(world_task)
                 paths = [manifest.resolve_bddl('libero_goal', task, variant) for task in task_ids]
                 problems = [robosuite_parse_problem(str(p)) for p in paths]
                 goals = [p['goal_state'] for p in problems]
                 prompts = [' '.join(p['language_instruction']) if isinstance(p['language_instruction'], list)
                            else p['language_instruction'] for p in problems]
                 initial = env.create(dict(suite='libero_goal', task_id=task_ids[0], variant=variant,
-                    init_state_id=scene, seed=18180100 + scene, _bddl_path=str(paths[0]),
+                    init_state_id=scene, seed=18180100 + scene, _bddl_path=str(paths[world_index]),
                     camera_names=['agentview', 'robot0_eye_in_hand'], camera_height=256,
                     camera_width=256, control_mode='relative', max_steps=300))
                 world = env._env.env
-                assert world.parsed_problem['goal_state'] == goals[0]
+                assert world.parsed_problem['goal_state'] == goals[world_index]
                 assert not any(all(world._eval_predicate(term) for term in g) for g in goals)
-                assert initial['language_instruction'].lower() == prompts[0].lower()
+                assert initial['language_instruction'].lower() == prompts[world_index].lower()
                 result = initial['observation'], initial['environment_reproducibility']['initial_state_fingerprint'], prompts
             elif op == 'chunk':
                 outcomes, states = [], []
                 for action in value:
                     step = env.step(action)
                     hits = [all(world._eval_predicate(term) for term in g) for g in goals]
-                    assert hits[0] == step['success']
+                    assert hits[world_index] == step['success']
                     outcomes.append(hits)
                     raw = step['observation']
                     states.append(np.concatenate([raw[k] for k in
@@ -60,5 +62,5 @@ def serve(pipe, task_ids=(4, 8)):
 if __name__ == '__main__':
     with Connection(int(sys.argv[1])) as connection:
         tasks = tuple(map(int, sys.argv[2:])) if len(sys.argv) > 2 else (4, 8)
-        assert len(tasks) == 2
+        assert len(tasks) >= 2 and len(set(tasks)) == len(tasks)
         serve(connection, tasks)
