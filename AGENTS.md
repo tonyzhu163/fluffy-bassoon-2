@@ -1,110 +1,94 @@
 # Repository guidance
 
 This repository studies few-shot adaptation of frozen robot policies. LIBERO-Pro2.0
-is the primary benchmark. RoboCasa365 and RoboTwin supply native controls and
-online baselines through RLinf. Use native rewards in simulation. Flora-Rewarder
-is planned for physical-robot testing. Start with [docs/README.md](docs/README.md).
-It was split from `tonyzhu163/fluffy-bassoon`
-(branch `lycoreco_rl`); see [PROVENANCE.md](PROVENANCE.md). LycoReco work and runs pinned to fluffy-bassoon
-commits stay there.
+is the primary transfer benchmark. Use native rewards in simulation. Start with
+the [documentation index](docs/README.md). Keep LycoReco work and runs pinned to
+`fluffy-bassoon` commits in that repository. [Provenance](PROVENANCE.md)
 
-Keep this file short and durable. Do not append experiment recipes, dated
-decisions, run histories, job IDs, availability snapshots, or session notes.
-Keep `docs/` to its five core documents plus `literature/` and `robotwin/`. Put per-run contracts, dated plans and raw
-evidence in `outputs/<run-id>/`, verified results in `docs/FINDINGS.md`, and
-live status in the single `outputs/coordination.md`. Delete or archive finished
-runs per the [retention policy](README.md#artifact-retention).
+## Research factory
+
+- Give each independent research question or hypothesis its own workstream.
+  Check the [coordination board](outputs/coordination.md) for overlapping work
+  and shared compute before assigning workers. Review prior work before claiming novelty.
+- Prioritize falsifiable hypotheses whose answers would change a research decision.
+  State what observation would count against each hypothesis. Start with the
+  least expensive experiment that distinguishes competing explanations.
+- As orchestrator, delegate investigations, implementation, experiments and critical
+  reviews through the existing worker CLI (locally, `codex exec`). Parallelize
+  independent tasks. Give each worker the question, context, deliverable, resource
+  budget and stop condition, then let it work independently within that scope.
+- Track hypotheses, owners, progress and open questions on the coordination board.
+  Before a worker exits, save its evidence and conclusions in the run directory.
+  Synthesize results across workers. For gains and null results alike, explain
+  what the controls establish and which alternative explanations remain.
+- Propose follow-up hypotheses from the evidence. Pursue, reprioritize or stop
+  work according to what it can teach for the time and compute it costs.
+
+## Evidence and records
+
+- Give each run a fresh `outputs/<run-id>/`. Keep its question, plan, exact code
+  revision, configs, seeds, metrics, logs and result together. An exploratory
+  run needs only a short plan and result note alongside its evidence. Reserve
+  full audits and hash readbacks for confirmatory results.
+- Record verified findings, including negative results, with evidence links in
+  [FINDINGS.md](docs/FINDINGS.md). Keep `docs/` to its five core documents,
+  `literature/` and `robotwin/`. Keep this guide short and durable. Put dated
+  material in run directories and apply the [retention policy](README.md#artifact-retention)
+  when work closes.
+- Keep tests for core behavior and numerical agreement with a reference. Check
+  one-run plans, launch scripts and bookkeeping in the run itself. Tie each
+  added test or pass/fail threshold to a concrete failure, validity constraint
+  or decision.
 
 ## Development and deployment
 
-- Prefer simple solutions and use `uv` for Python environments. Run model
-  computation and tests on allocated Linux resources; use macOS for editing
-  and static checks.
-- Keep only tests that protect core behaviour (learners, models, motors,
-  environments, checkpoints, GPU probing) or numerical qualification (values
-  matching a reference). Do not add tests for one run's plans, admission,
-  receipts, provenance, launch scripts or campaign bookkeeping; check those
-  in the run itself and record the evidence in `outputs/<run-id>/`.
-- Justify each added test or pass/fail threshold with the concrete failure,
-  validity constraint, or decision it protects. Do not invent numerical
-  admission gates or add tests merely to complete a checklist. Prefer
-  descriptive results and targeted checks that resolve a real uncertainty.
-- Size the record to the run. An exploratory run needs only a short plan, the
-  run itself and a result note in `outputs/<run-id>/`. Reserve full audits,
-  receipts and hash readbacks for confirmatory panels whose results enter
-  `docs/FINDINGS.md`.
-- Use Git directly on Macs with direct access. On Macs that require a proxy,
-  run `proxy_on` or `proxy_on_clash` in the same shell as Git.
-- Keep the main clone on `main` and commit routine changes (fixes, docs,
-  configs, small additions) directly to `main`. Use detached worktrees for
-  commit-pinned runs.
-- Create a feature branch only for a major feature change. Merge it into
-  `main` as soon as its tests pass, then delete the branch locally and on
-  `origin`. Rebase onto `main` before starting new work; long-lived parallel
-  branches diverge into conflicting copies of the same commits. Push `outputs/coordination.md` edits straight to `main`,
-  changing only your own row, never only on a feature branch.
-- For new runs, review and use the latest code on `main` before launch,
-  recording its exact commit and relevant validation. Keep active runs
-  immutable and record any later migration explicitly.
-- Deploy verified commits through Git. If server access fails, transfer a Git
-  bundle; use `rsync`/`scp` for artifacts. Verify the commit on each host and
-  never modify an active run's worktree. Reconcile dirty or diverged checkouts
-  without overwriting changes.
-- Never commit credentials, machine-local SSH configuration, or secret-bearing
-  logs. Protect shared data and checkpoints needed by active jobs.
-- Launch accelerator jobs within the user-approved task scope as soon as verified code
-  and allocated resources are ready; no repeated launch confirmation is needed.
-  Do not ask for approval for compute allocations or incremental budgets up to
-  50 GPU-hours within the requested task; proceed and record cumulative usage.
-  Ask before unapproved budgets above 50 GPU-hours, scientific-scope
-  expansion, or exceeding an explicit user hard cap. CPU tests and static
-  checks need no ask.
+- Use `uv` for Python environments. Edit and run static checks on macOS. Run
+  tests and model computation on allocated Linux resources.
+- Commit routine changes directly to `main` in the main clone. Isolate potentially
+  conflicting worker edits in separate worktrees. Use feature branches only for
+  major changes. Rebase on current `main` before starting work, merge promptly
+  after tests pass and delete merged branches locally and on `origin`. Push
+  coordination updates directly to `main`, editing only your own row.
+- Review and validate current `main` for new runs. Deploy the verified commit
+  through Git and check it on each host. Use detached worktrees for pinned runs.
+  Keep active worktrees and contracts immutable and record any later migration.
+  Preserve local changes when reconciling divergent checkouts.
+- Use Git directly where available. On Macs requiring a proxy, run `proxy_on`
+  or `proxy_on_clash` in the same shell as Git. If remote Git access fails,
+  transfer a Git bundle. Use `rsync` or `scp` for artifacts.
 
-## Environment access
+## Compute and storage
 
-Baige is the default environment for computation, job launches, availability
-checks and job-status questions unless the user names another environment.
-
-| Environment | Entry point | Rules |
-| --- | --- | --- |
-| Baige | Authenticated console or configured development SSH endpoint | The user's scheduler containers are exclusive; use their allocation as the isolation boundary. |
-| Ali PPU | Authenticated Alibaba Cloud PAI console or configured DSW development endpoint | Use allocated PPU resources; preserve vendor framework and accelerator libraries, and qualify workloads on the actual device. |
-
-- Keep SSH routing and authentication local. Never store authentication
-  material here.
-- Before scheduling, check the target's queue capacity, resource limits and
-  actual accelerator type. Discover current hardware and limits instead of
-  keeping node inventories here.
-
-## Storage and environments
-
-- Use project-specific shared NVMe for code, environments, caches and outputs,
-  rather than NFS home. Check capacity, quota and a write probe before setup.
-- Never reuse a run ID or move shared environments and model caches while
-  active jobs depend on them.
-- Prefer direct downloads. If blocked, use a Git bundle for private code;
-  public mirrors must never receive private-repo credentials. Use the user's
-  own Hugging Face authentication for gated weights.
+- Default to Baige for compute, launches, availability and job status. Check
+  queue capacity, limits and actual accelerator type before scheduling. Keep
+  GPU isolation at the exclusive scheduler container. Avoid nested device
+  namespaces and bubblewrap so the job retains scheduler GPU visibility.
+- Launch verified, in-scope work once resources are ready. Allocations or
+  incremental budgets up to 50 GPU-hours need no further approval. Track
+  cumulative use across workers. Ask before an unapproved budget above 50
+  GPU-hours, a scope expansion or exceeding an explicit user cap. CPU tests
+  and static checks need no approval.
+- Use project-specific shared NVMe for code, environments, caches and outputs.
+  Check capacity and quota and verify a write before setup. Protect data,
+  environments, caches and checkpoints that active jobs depend on.
+- Keep SSH configuration, credentials and secret-bearing logs out of Git.
+  Prefer direct downloads. Keep private credentials off public mirrors and use
+  the user's Hugging Face authentication for gated weights.
 
 ## Accelerator jobs
 
-- On Baige, retain scheduler GPU visibility without extra device namespaces or
-  bubblewrap. For evaluation-only work on an unchanged qualified runtime, use a
-  lightweight GPU-count/CUDA check and a real simulator episode.
-- On Ali PPU, validate framework/device support and core numerical behavior
-  inside the allocated instance before model work; CPU fallback does not
-  qualify accelerator support.
-- Scheduler availability, GPU health and allocation isolation are separate
-  checks. Run `scripts/[train]gpu_probe.py` inside the actual job step with
-  `--expected-count` and `--output`. `IDLE` or readable `nvidia-smi` is
-  insufficient. Bind inference and rendering to allocated GPUs.
-- Use job-local `NCCL_P2P_DISABLE=1` for RTX 6000D distributed work.
-- Measure batch capacity and update time. Tune execution batches without
-  changing the saved global batch, loss weighting or optimizer schedule.
-- After launch, verify advancing updates or completed artifacts, then monitor
-  every 20 minutes. Report cluster, job ID, progress, last check and next action
-  in task updates. Diagnose failures before retrying with a new output identity.
-- Before stopping or moving work, verify ownership and the exact job/step.
-  Preserve a complete resumable checkpoint, including optimizer, sampler and
-  RNG state. Never terminate another user's work or alter an active run's
-  contract.
+- Run `scripts/[train]gpu_probe.py` inside the GPU job step with `--expected-count`
+  and `--output`. For evaluation alone on an unchanged, qualified Baige runtime,
+  a GPU-count/CUDA check and one real simulator episode suffice. Bind inference
+  and rendering to allocated GPUs. Set job-local `NCCL_P2P_DISABLE=1` for RTX
+  6000D distributed work.
+- On Ali PPU, preserve vendor libraries and qualify framework support and core
+  numerical behavior on the allocated PPU before model work.
+- Measure batch capacity and update time. When tuning execution batches,
+  preserve the saved global batch, loss weighting and optimizer schedule.
+- Verify advancing updates or completed artifacts after launch, then check every
+  20 minutes. Report cluster, job ID, progress, last check and next action.
+  Diagnose failures before retrying under a fresh run ID.
+- Before stopping or moving work, verify ownership and the exact job step.
+  Stop only your own jobs. Preserve a resumable checkpoint with model,
+  optimizer, sampler and RNG state.
