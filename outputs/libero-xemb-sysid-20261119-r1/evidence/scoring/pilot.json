@@ -1,0 +1,3144 @@
+{
+  "pilot": {
+    "panel": "poc",
+    "counts": {
+      "cases": 3,
+      "episodes": 33
+    },
+    "parity": [
+      {
+        "suite": "libero_goal",
+        "task_id": 1,
+        "init_state_id": 13,
+        "physics": "47e00ff47a7b002822687e0cc37a5dc66123d7ea4c4fb948636b967fb16b67c0",
+        "noise_seed": 21227230,
+        "noise_sha256": "7d8d72af201c5441808dddb4a6eca953797b3c1a8d4a23d66167b483cdefe69e",
+        "identical_query_resets": true,
+        "opening_proposal_sha256": "157fbd685729bc2ec08a1bc12a0e6252cf5ecaa173c52374c227ddb6917407cd"
+      }
+    ],
+    "groups": {
+      "overall": {
+        "cases": 3,
+        "arms": {
+          "analytic_proprio_sysid": {
+            "n": 3,
+            "successes": 1,
+            "success_rate": 0.3333333333333333,
+            "return_sum": 1.0,
+            "return_mean": 0.3333333333333333,
+            "controls": 694,
+            "return_sources": {
+              "per_control": 3
+            }
+          },
+          "analytic_visual_sysid": {
+            "n": 3,
+            "successes": 3,
+            "success_rate": 1.0,
+            "return_sum": 3.0,
+            "return_mean": 1.0,
+            "controls": 288,
+            "return_sources": {
+              "per_control": 3
+            }
+          },
+          "factored_no_equiv_active": {
+            "n": 3,
+            "successes": 3,
+            "success_rate": 1.0,
+            "return_sum": 3.0,
+            "return_mean": 1.0,
+            "controls": 398,
+            "return_sources": {
+              "per_control": 3
+            }
+          },
+          "joint_transformer_active": {
+            "n": 3,
+            "successes": 1,
+            "success_rate": 0.3333333333333333,
+            "return_sum": 1.0,
+            "return_mean": 0.3333333333333333,
+            "controls": 694,
+            "return_sources": {
+              "per_control": 3
+            }
+          },
+          "nominal": {
+            "n": 3,
+            "successes": 1,
+            "success_rate": 0.3333333333333333,
+            "return_sum": 1.0,
+            "return_mean": 0.3333333333333333,
+            "controls": 696,
+            "return_sources": {
+              "per_control": 3
+            }
+          },
+          "ours_cleared": {
+            "n": 3,
+            "successes": 1,
+            "success_rate": 0.3333333333333333,
+            "return_sum": 1.0,
+            "return_mean": 0.3333333333333333,
+            "controls": 696,
+            "return_sources": {
+              "per_control": 3
+            }
+          },
+          "ours_online_prefix": {
+            "n": 3,
+            "successes": 3,
+            "success_rate": 1.0,
+            "return_sum": 3.0,
+            "return_mean": 1.0,
+            "controls": 352,
+            "return_sources": {
+              "per_control": 3
+            }
+          },
+          "ours_retained_active": {
+            "n": 3,
+            "successes": 3,
+            "success_rate": 1.0,
+            "return_sum": 3.0,
+            "return_mean": 1.0,
+            "controls": 396,
+            "return_sources": {
+              "per_control": 3
+            }
+          },
+          "ours_retained_passive": {
+            "n": 3,
+            "successes": 3,
+            "success_rate": 1.0,
+            "return_sum": 3.0,
+            "return_mean": 1.0,
+            "controls": 309,
+            "return_sources": {
+              "per_control": 3
+            }
+          },
+          "ours_swapped_donor": {
+            "n": 3,
+            "successes": 1,
+            "success_rate": 0.3333333333333333,
+            "return_sum": 1.0,
+            "return_mean": 0.3333333333333333,
+            "controls": 692,
+            "return_sources": {
+              "per_control": 3
+            }
+          },
+          "privileged_oracle": {
+            "n": 3,
+            "successes": 3,
+            "success_rate": 1.0,
+            "return_sum": 3.0,
+            "return_mean": 1.0,
+            "controls": 294,
+            "return_sources": {
+              "per_control": 3
+            }
+          }
+        },
+        "paired": {
+          "ours_retained_active": {
+            "analytic_proprio_sysid": {
+              "n": 3,
+              "wins": 2,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 66.66666666666667,
+              "mean_return_gain": 0.6666666666666666
+            },
+            "analytic_visual_sysid": {
+              "n": 3,
+              "wins": 0,
+              "losses": 0,
+              "ties": 3,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "factored_no_equiv_active": {
+              "n": 3,
+              "wins": 0,
+              "losses": 0,
+              "ties": 3,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "joint_transformer_active": {
+              "n": 3,
+              "wins": 2,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 66.66666666666667,
+              "mean_return_gain": 0.6666666666666666
+            },
+            "nominal": {
+              "n": 3,
+              "wins": 2,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 66.66666666666667,
+              "mean_return_gain": 0.6666666666666666
+            },
+            "ours_cleared": {
+              "n": 3,
+              "wins": 2,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 66.66666666666667,
+              "mean_return_gain": 0.6666666666666666
+            },
+            "ours_online_prefix": {
+              "n": 3,
+              "wins": 0,
+              "losses": 0,
+              "ties": 3,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_retained_passive": {
+              "n": 3,
+              "wins": 0,
+              "losses": 0,
+              "ties": 3,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_swapped_donor": {
+              "n": 3,
+              "wins": 2,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 66.66666666666667,
+              "mean_return_gain": 0.6666666666666666
+            },
+            "privileged_oracle": {
+              "n": 3,
+              "wins": 0,
+              "losses": 0,
+              "ties": 3,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            }
+          },
+          "ours_retained_passive": {
+            "analytic_proprio_sysid": {
+              "n": 3,
+              "wins": 2,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 66.66666666666667,
+              "mean_return_gain": 0.6666666666666666
+            },
+            "analytic_visual_sysid": {
+              "n": 3,
+              "wins": 0,
+              "losses": 0,
+              "ties": 3,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "factored_no_equiv_active": {
+              "n": 3,
+              "wins": 0,
+              "losses": 0,
+              "ties": 3,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "joint_transformer_active": {
+              "n": 3,
+              "wins": 2,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 66.66666666666667,
+              "mean_return_gain": 0.6666666666666666
+            },
+            "nominal": {
+              "n": 3,
+              "wins": 2,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 66.66666666666667,
+              "mean_return_gain": 0.6666666666666666
+            },
+            "ours_cleared": {
+              "n": 3,
+              "wins": 2,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 66.66666666666667,
+              "mean_return_gain": 0.6666666666666666
+            },
+            "ours_online_prefix": {
+              "n": 3,
+              "wins": 0,
+              "losses": 0,
+              "ties": 3,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_retained_active": {
+              "n": 3,
+              "wins": 0,
+              "losses": 0,
+              "ties": 3,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_swapped_donor": {
+              "n": 3,
+              "wins": 2,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 66.66666666666667,
+              "mean_return_gain": 0.6666666666666666
+            },
+            "privileged_oracle": {
+              "n": 3,
+              "wins": 0,
+              "losses": 0,
+              "ties": 3,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            }
+          }
+        }
+      },
+      "shifted": {
+        "cases": 2,
+        "arms": {
+          "analytic_proprio_sysid": {
+            "n": 2,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 600,
+            "return_sources": {
+              "per_control": 2
+            }
+          },
+          "analytic_visual_sysid": {
+            "n": 2,
+            "successes": 2,
+            "success_rate": 1.0,
+            "return_sum": 2.0,
+            "return_mean": 1.0,
+            "controls": 192,
+            "return_sources": {
+              "per_control": 2
+            }
+          },
+          "factored_no_equiv_active": {
+            "n": 2,
+            "successes": 2,
+            "success_rate": 1.0,
+            "return_sum": 2.0,
+            "return_mean": 1.0,
+            "controls": 302,
+            "return_sources": {
+              "per_control": 2
+            }
+          },
+          "joint_transformer_active": {
+            "n": 2,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 600,
+            "return_sources": {
+              "per_control": 2
+            }
+          },
+          "nominal": {
+            "n": 2,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 600,
+            "return_sources": {
+              "per_control": 2
+            }
+          },
+          "ours_cleared": {
+            "n": 2,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 600,
+            "return_sources": {
+              "per_control": 2
+            }
+          },
+          "ours_online_prefix": {
+            "n": 2,
+            "successes": 2,
+            "success_rate": 1.0,
+            "return_sum": 2.0,
+            "return_mean": 1.0,
+            "controls": 243,
+            "return_sources": {
+              "per_control": 2
+            }
+          },
+          "ours_retained_active": {
+            "n": 2,
+            "successes": 2,
+            "success_rate": 1.0,
+            "return_sum": 2.0,
+            "return_mean": 1.0,
+            "controls": 302,
+            "return_sources": {
+              "per_control": 2
+            }
+          },
+          "ours_retained_passive": {
+            "n": 2,
+            "successes": 2,
+            "success_rate": 1.0,
+            "return_sum": 2.0,
+            "return_mean": 1.0,
+            "controls": 207,
+            "return_sources": {
+              "per_control": 2
+            }
+          },
+          "ours_swapped_donor": {
+            "n": 2,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 600,
+            "return_sources": {
+              "per_control": 2
+            }
+          },
+          "privileged_oracle": {
+            "n": 2,
+            "successes": 2,
+            "success_rate": 1.0,
+            "return_sum": 2.0,
+            "return_mean": 1.0,
+            "controls": 198,
+            "return_sources": {
+              "per_control": 2
+            }
+          }
+        },
+        "paired": {
+          "ours_retained_active": {
+            "analytic_proprio_sysid": {
+              "n": 2,
+              "wins": 2,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "analytic_visual_sysid": {
+              "n": 2,
+              "wins": 0,
+              "losses": 0,
+              "ties": 2,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "factored_no_equiv_active": {
+              "n": 2,
+              "wins": 0,
+              "losses": 0,
+              "ties": 2,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "joint_transformer_active": {
+              "n": 2,
+              "wins": 2,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "nominal": {
+              "n": 2,
+              "wins": 2,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_cleared": {
+              "n": 2,
+              "wins": 2,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_online_prefix": {
+              "n": 2,
+              "wins": 0,
+              "losses": 0,
+              "ties": 2,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_retained_passive": {
+              "n": 2,
+              "wins": 0,
+              "losses": 0,
+              "ties": 2,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_swapped_donor": {
+              "n": 2,
+              "wins": 2,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "privileged_oracle": {
+              "n": 2,
+              "wins": 0,
+              "losses": 0,
+              "ties": 2,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            }
+          },
+          "ours_retained_passive": {
+            "analytic_proprio_sysid": {
+              "n": 2,
+              "wins": 2,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "analytic_visual_sysid": {
+              "n": 2,
+              "wins": 0,
+              "losses": 0,
+              "ties": 2,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "factored_no_equiv_active": {
+              "n": 2,
+              "wins": 0,
+              "losses": 0,
+              "ties": 2,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "joint_transformer_active": {
+              "n": 2,
+              "wins": 2,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "nominal": {
+              "n": 2,
+              "wins": 2,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_cleared": {
+              "n": 2,
+              "wins": 2,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_online_prefix": {
+              "n": 2,
+              "wins": 0,
+              "losses": 0,
+              "ties": 2,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_retained_active": {
+              "n": 2,
+              "wins": 0,
+              "losses": 0,
+              "ties": 2,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_swapped_donor": {
+              "n": 2,
+              "wins": 2,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "privileged_oracle": {
+              "n": 2,
+              "wins": 0,
+              "losses": 0,
+              "ties": 2,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            }
+          }
+        }
+      },
+      "compositional_ood": {
+        "cases": 1,
+        "arms": {
+          "analytic_proprio_sysid": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "analytic_visual_sysid": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 95,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "factored_no_equiv_active": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 101,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "joint_transformer_active": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "nominal": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_cleared": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_online_prefix": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 123,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_retained_active": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 101,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_retained_passive": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 99,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_swapped_donor": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "privileged_oracle": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 101,
+            "return_sources": {
+              "per_control": 1
+            }
+          }
+        },
+        "paired": {
+          "ours_retained_active": {
+            "analytic_proprio_sysid": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "analytic_visual_sysid": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "factored_no_equiv_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "joint_transformer_active": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "nominal": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_cleared": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_online_prefix": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_retained_passive": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_swapped_donor": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "privileged_oracle": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            }
+          },
+          "ours_retained_passive": {
+            "analytic_proprio_sysid": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "analytic_visual_sysid": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "factored_no_equiv_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "joint_transformer_active": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "nominal": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_cleared": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_online_prefix": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_retained_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_swapped_donor": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "privileged_oracle": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            }
+          }
+        }
+      },
+      "continuous_angle_ood": {
+        "cases": 1,
+        "arms": {
+          "analytic_proprio_sysid": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "analytic_visual_sysid": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 97,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "factored_no_equiv_active": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 201,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "joint_transformer_active": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "nominal": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_cleared": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_online_prefix": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 120,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_retained_active": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 201,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_retained_passive": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 108,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_swapped_donor": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "privileged_oracle": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 97,
+            "return_sources": {
+              "per_control": 1
+            }
+          }
+        },
+        "paired": {
+          "ours_retained_active": {
+            "analytic_proprio_sysid": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "analytic_visual_sysid": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "factored_no_equiv_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "joint_transformer_active": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "nominal": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_cleared": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_online_prefix": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_retained_passive": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_swapped_donor": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "privileged_oracle": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            }
+          },
+          "ours_retained_passive": {
+            "analytic_proprio_sysid": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "analytic_visual_sysid": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "factored_no_equiv_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "joint_transformer_active": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "nominal": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_cleared": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_online_prefix": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_retained_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_swapped_donor": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "privileged_oracle": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            }
+          }
+        }
+      },
+      "familiar": {
+        "cases": 1,
+        "arms": {
+          "analytic_proprio_sysid": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 94,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "analytic_visual_sysid": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 96,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "factored_no_equiv_active": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 96,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "joint_transformer_active": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 94,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "nominal": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 96,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_cleared": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 96,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_online_prefix": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 109,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_retained_active": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 94,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_retained_passive": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 102,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_swapped_donor": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 92,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "privileged_oracle": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 96,
+            "return_sources": {
+              "per_control": 1
+            }
+          }
+        },
+        "paired": {
+          "ours_retained_active": {
+            "analytic_proprio_sysid": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "analytic_visual_sysid": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "factored_no_equiv_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "joint_transformer_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "nominal": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_cleared": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_online_prefix": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_retained_passive": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_swapped_donor": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "privileged_oracle": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            }
+          },
+          "ours_retained_passive": {
+            "analytic_proprio_sysid": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "analytic_visual_sysid": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "factored_no_equiv_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "joint_transformer_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "nominal": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_cleared": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_online_prefix": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_retained_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_swapped_donor": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "privileged_oracle": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            }
+          }
+        }
+      },
+      "comp_180_lo_inv": {
+        "cases": 1,
+        "arms": {
+          "analytic_proprio_sysid": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "analytic_visual_sysid": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 95,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "factored_no_equiv_active": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 101,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "joint_transformer_active": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "nominal": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_cleared": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_online_prefix": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 123,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_retained_active": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 101,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_retained_passive": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 99,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_swapped_donor": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "privileged_oracle": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 101,
+            "return_sources": {
+              "per_control": 1
+            }
+          }
+        },
+        "paired": {
+          "ours_retained_active": {
+            "analytic_proprio_sysid": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "analytic_visual_sysid": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "factored_no_equiv_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "joint_transformer_active": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "nominal": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_cleared": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_online_prefix": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_retained_passive": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_swapped_donor": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "privileged_oracle": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            }
+          },
+          "ours_retained_passive": {
+            "analytic_proprio_sysid": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "analytic_visual_sysid": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "factored_no_equiv_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "joint_transformer_active": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "nominal": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_cleared": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_online_prefix": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_retained_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_swapped_donor": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "privileged_oracle": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            }
+          }
+        }
+      },
+      "cont_45_nom": {
+        "cases": 1,
+        "arms": {
+          "analytic_proprio_sysid": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "analytic_visual_sysid": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 97,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "factored_no_equiv_active": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 201,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "joint_transformer_active": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "nominal": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_cleared": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_online_prefix": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 120,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_retained_active": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 201,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_retained_passive": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 108,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_swapped_donor": {
+            "n": 1,
+            "successes": 0,
+            "success_rate": 0.0,
+            "return_sum": 0.0,
+            "return_mean": 0.0,
+            "controls": 300,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "privileged_oracle": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 97,
+            "return_sources": {
+              "per_control": 1
+            }
+          }
+        },
+        "paired": {
+          "ours_retained_active": {
+            "analytic_proprio_sysid": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "analytic_visual_sysid": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "factored_no_equiv_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "joint_transformer_active": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "nominal": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_cleared": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_online_prefix": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_retained_passive": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_swapped_donor": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "privileged_oracle": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            }
+          },
+          "ours_retained_passive": {
+            "analytic_proprio_sysid": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "analytic_visual_sysid": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "factored_no_equiv_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "joint_transformer_active": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "nominal": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_cleared": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "ours_online_prefix": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_retained_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_swapped_donor": {
+              "n": 1,
+              "wins": 1,
+              "losses": 0,
+              "ties": 0,
+              "success_gain_pp": 100.0,
+              "mean_return_gain": 1.0
+            },
+            "privileged_oracle": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            }
+          }
+        }
+      },
+      "fam_nom": {
+        "cases": 1,
+        "arms": {
+          "analytic_proprio_sysid": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 94,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "analytic_visual_sysid": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 96,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "factored_no_equiv_active": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 96,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "joint_transformer_active": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 94,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "nominal": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 96,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_cleared": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 96,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_online_prefix": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 109,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_retained_active": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 94,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_retained_passive": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 102,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "ours_swapped_donor": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 92,
+            "return_sources": {
+              "per_control": 1
+            }
+          },
+          "privileged_oracle": {
+            "n": 1,
+            "successes": 1,
+            "success_rate": 1.0,
+            "return_sum": 1.0,
+            "return_mean": 1.0,
+            "controls": 96,
+            "return_sources": {
+              "per_control": 1
+            }
+          }
+        },
+        "paired": {
+          "ours_retained_active": {
+            "analytic_proprio_sysid": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "analytic_visual_sysid": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "factored_no_equiv_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "joint_transformer_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "nominal": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_cleared": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_online_prefix": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_retained_passive": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_swapped_donor": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "privileged_oracle": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            }
+          },
+          "ours_retained_passive": {
+            "analytic_proprio_sysid": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "analytic_visual_sysid": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "factored_no_equiv_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "joint_transformer_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "nominal": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_cleared": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_online_prefix": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_retained_active": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "ours_swapped_donor": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            },
+            "privileged_oracle": {
+              "n": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 1,
+              "success_gain_pp": 0.0,
+              "mean_return_gain": 0.0
+            }
+          }
+        }
+      }
+    },
+    "cases": [
+      {
+        "suite": "libero_goal",
+        "task_id": 1,
+        "embodiment": "fam_nom",
+        "true_latent": {
+          "yaw_deg": 0,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "familiar",
+        "seed": 20410113,
+        "arms": {
+          "nominal": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 96,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 0,
+              "support_observed": 0,
+              "query_prefix": 0,
+              "query_motor": 96,
+              "query_limit": 300,
+              "total_executed": 96
+            },
+            "inferred": {
+              "yaw_deg": 0.0,
+              "xy_scale": 1.0,
+              "gripper_sign": 1
+            }
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 96,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 0,
+              "support_observed": 0,
+              "query_prefix": 0,
+              "query_motor": 96,
+              "query_limit": 300,
+              "total_executed": 96
+            },
+            "inferred": {
+              "yaw_deg": 0.0,
+              "xy_scale": 1.0,
+              "gripper_sign": 1
+            }
+          },
+          "analytic_proprio_sysid": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 94,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 94,
+              "query_limit": 300,
+              "total_executed": 109
+            },
+            "inferred": {
+              "yaw_deg": -8.585348129272461,
+              "xy_scale": 0.9992945790290833,
+              "gripper_sign": 1
+            }
+          },
+          "joint_transformer_active": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 94,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 94,
+              "query_limit": 300,
+              "total_executed": 109
+            },
+            "inferred": {
+              "yaw_deg": 0.7490226030349731,
+              "xy_scale": 0.9970893263816833,
+              "gripper_sign": 1
+            }
+          },
+          "factored_no_equiv_active": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 96,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 96,
+              "query_limit": 300,
+              "total_executed": 111
+            },
+            "inferred": {
+              "yaw_deg": -1.4168354272842407,
+              "xy_scale": 1.0023130178451538,
+              "gripper_sign": 1
+            }
+          },
+          "ours_retained_active": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 94,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 94,
+              "query_limit": 300,
+              "total_executed": 109
+            },
+            "inferred": {
+              "yaw_deg": -0.29422417283058167,
+              "xy_scale": 1.0054413080215454,
+              "gripper_sign": 1
+            }
+          },
+          "ours_retained_passive": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 102,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 102,
+              "query_limit": 300,
+              "total_executed": 117
+            },
+            "inferred": {
+              "yaw_deg": -13.78486156463623,
+              "xy_scale": 1.0832630395889282,
+              "gripper_sign": 1
+            }
+          },
+          "ours_cleared": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 96,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 0,
+              "query_prefix": 0,
+              "query_motor": 96,
+              "query_limit": 300,
+              "total_executed": 111
+            },
+            "inferred": {
+              "yaw_deg": 0.0,
+              "xy_scale": 1.0,
+              "gripper_sign": 1
+            }
+          },
+          "ours_swapped_donor": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 92,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 92,
+              "query_limit": 300,
+              "total_executed": 107
+            },
+            "inferred": {
+              "yaw_deg": 8.867036819458008,
+              "xy_scale": 1.0417536497116089,
+              "gripper_sign": 1
+            }
+          },
+          "ours_online_prefix": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 109,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 0,
+              "support_observed": 0,
+              "query_prefix": 15,
+              "query_motor": 94,
+              "query_limit": 300,
+              "total_executed": 109
+            },
+            "inferred": {
+              "yaw_deg": 8.205099105834961,
+              "xy_scale": 0.994813084602356,
+              "gripper_sign": 1
+            }
+          },
+          "analytic_visual_sysid": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 96,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 96,
+              "query_limit": 300,
+              "total_executed": 111
+            },
+            "inferred": {
+              "yaw_deg": -9.630991312810298,
+              "xy_scale": 0.9992945790290833,
+              "gripper_sign": 1
+            }
+          }
+        },
+        "donor_embodiment": "cont_45_nom",
+        "active_passive_both_15": true
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 1,
+        "embodiment": "comp_180_lo_inv",
+        "true_latent": {
+          "yaw_deg": 180,
+          "xy_scale": 0.65,
+          "gripper_sign": -1
+        },
+        "regime": "compositional_ood",
+        "seed": 20410113,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "per_control",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true,
+            "control_budget": {
+              "support_acquired": 0,
+              "support_observed": 0,
+              "query_prefix": 0,
+              "query_motor": 300,
+              "query_limit": 300,
+              "total_executed": 300
+            },
+            "inferred": {
+              "yaw_deg": 0.0,
+              "xy_scale": 1.0,
+              "gripper_sign": 1
+            }
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 101,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 0,
+              "support_observed": 0,
+              "query_prefix": 0,
+              "query_motor": 101,
+              "query_limit": 300,
+              "total_executed": 101
+            },
+            "inferred": {
+              "yaw_deg": 180.0,
+              "xy_scale": 0.65,
+              "gripper_sign": -1
+            }
+          },
+          "analytic_proprio_sysid": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "per_control",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 300,
+              "query_limit": 300,
+              "total_executed": 315
+            },
+            "inferred": {
+              "yaw_deg": -7.581076145172119,
+              "xy_scale": 0.5802278518676758,
+              "gripper_sign": -1
+            }
+          },
+          "joint_transformer_active": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "per_control",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 300,
+              "query_limit": 300,
+              "total_executed": 315
+            },
+            "inferred": {
+              "yaw_deg": -1.8424406051635742,
+              "xy_scale": 0.7998930215835571,
+              "gripper_sign": -1
+            }
+          },
+          "factored_no_equiv_active": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 101,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 101,
+              "query_limit": 300,
+              "total_executed": 116
+            },
+            "inferred": {
+              "yaw_deg": -178.75372314453125,
+              "xy_scale": 0.6443207859992981,
+              "gripper_sign": -1
+            }
+          },
+          "ours_retained_active": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 101,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 101,
+              "query_limit": 300,
+              "total_executed": 116
+            },
+            "inferred": {
+              "yaw_deg": 172.7166748046875,
+              "xy_scale": 0.6454117894172668,
+              "gripper_sign": -1
+            }
+          },
+          "ours_retained_passive": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 99,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 99,
+              "query_limit": 300,
+              "total_executed": 114
+            },
+            "inferred": {
+              "yaw_deg": -178.03152465820312,
+              "xy_scale": 0.6428189277648926,
+              "gripper_sign": -1
+            }
+          },
+          "ours_cleared": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "per_control",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 0,
+              "query_prefix": 0,
+              "query_motor": 300,
+              "query_limit": 300,
+              "total_executed": 315
+            },
+            "inferred": {
+              "yaw_deg": 0.0,
+              "xy_scale": 1.0,
+              "gripper_sign": 1
+            }
+          },
+          "ours_swapped_donor": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "per_control",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 300,
+              "query_limit": 300,
+              "total_executed": 315
+            },
+            "inferred": {
+              "yaw_deg": -0.29422417283058167,
+              "xy_scale": 1.0054413080215454,
+              "gripper_sign": 1
+            }
+          },
+          "ours_online_prefix": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 123,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 0,
+              "support_observed": 0,
+              "query_prefix": 15,
+              "query_motor": 108,
+              "query_limit": 300,
+              "total_executed": 123
+            },
+            "inferred": {
+              "yaw_deg": 171.5977020263672,
+              "xy_scale": 0.6380327343940735,
+              "gripper_sign": -1
+            }
+          },
+          "analytic_visual_sysid": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 95,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 95,
+              "query_limit": 300,
+              "total_executed": 110
+            },
+            "inferred": {
+              "yaw_deg": -173.19269694668418,
+              "xy_scale": 0.5802278518676758,
+              "gripper_sign": -1
+            }
+          }
+        },
+        "donor_embodiment": "fam_nom",
+        "active_passive_both_15": true
+      },
+      {
+        "suite": "libero_goal",
+        "task_id": 1,
+        "embodiment": "cont_45_nom",
+        "true_latent": {
+          "yaw_deg": 45,
+          "xy_scale": 1,
+          "gripper_sign": 1
+        },
+        "regime": "continuous_angle_ood",
+        "seed": 20410113,
+        "arms": {
+          "nominal": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "per_control",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true,
+            "control_budget": {
+              "support_acquired": 0,
+              "support_observed": 0,
+              "query_prefix": 0,
+              "query_motor": 300,
+              "query_limit": 300,
+              "total_executed": 300
+            },
+            "inferred": {
+              "yaw_deg": 0.0,
+              "xy_scale": 1.0,
+              "gripper_sign": 1
+            }
+          },
+          "privileged_oracle": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 97,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 0,
+              "support_observed": 0,
+              "query_prefix": 0,
+              "query_motor": 97,
+              "query_limit": 300,
+              "total_executed": 97
+            },
+            "inferred": {
+              "yaw_deg": 45.0,
+              "xy_scale": 1.0,
+              "gripper_sign": 1
+            }
+          },
+          "analytic_proprio_sysid": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "per_control",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 300,
+              "query_limit": 300,
+              "total_executed": 315
+            },
+            "inferred": {
+              "yaw_deg": -9.55549430847168,
+              "xy_scale": 0.9847220182418823,
+              "gripper_sign": 1
+            }
+          },
+          "joint_transformer_active": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "per_control",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 300,
+              "query_limit": 300,
+              "total_executed": 315
+            },
+            "inferred": {
+              "yaw_deg": -7.012170314788818,
+              "xy_scale": 0.8110581040382385,
+              "gripper_sign": 1
+            }
+          },
+          "factored_no_equiv_active": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 201,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 201,
+              "query_limit": 300,
+              "total_executed": 216
+            },
+            "inferred": {
+              "yaw_deg": 15.569881439208984,
+              "xy_scale": 1.0383331775665283,
+              "gripper_sign": 1
+            }
+          },
+          "ours_retained_active": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 201,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 201,
+              "query_limit": 300,
+              "total_executed": 216
+            },
+            "inferred": {
+              "yaw_deg": 8.867036819458008,
+              "xy_scale": 1.0417536497116089,
+              "gripper_sign": 1
+            }
+          },
+          "ours_retained_passive": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 108,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 108,
+              "query_limit": 300,
+              "total_executed": 123
+            },
+            "inferred": {
+              "yaw_deg": 30.52930450439453,
+              "xy_scale": 1.1689481735229492,
+              "gripper_sign": 1
+            }
+          },
+          "ours_cleared": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "per_control",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 0,
+              "query_prefix": 0,
+              "query_motor": 300,
+              "query_limit": 300,
+              "total_executed": 315
+            },
+            "inferred": {
+              "yaw_deg": 0.0,
+              "xy_scale": 1.0,
+              "gripper_sign": 1
+            }
+          },
+          "ours_swapped_donor": {
+            "success": false,
+            "native_return": 0.0,
+            "return_source": "per_control",
+            "controls": 300,
+            "terminated": false,
+            "truncated": true,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 300,
+              "query_limit": 300,
+              "total_executed": 315
+            },
+            "inferred": {
+              "yaw_deg": 172.7166748046875,
+              "xy_scale": 0.6454117894172668,
+              "gripper_sign": -1
+            }
+          },
+          "ours_online_prefix": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 120,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 0,
+              "support_observed": 0,
+              "query_prefix": 15,
+              "query_motor": 105,
+              "query_limit": 300,
+              "total_executed": 120
+            },
+            "inferred": {
+              "yaw_deg": 51.42051696777344,
+              "xy_scale": 1.046435832977295,
+              "gripper_sign": 1
+            }
+          },
+          "analytic_visual_sysid": {
+            "success": true,
+            "native_return": 1.0,
+            "return_source": "per_control",
+            "controls": 97,
+            "terminated": true,
+            "truncated": false,
+            "control_budget": {
+              "support_acquired": 15,
+              "support_observed": 15,
+              "query_prefix": 0,
+              "query_motor": 97,
+              "query_limit": 300,
+              "total_executed": 112
+            },
+            "inferred": {
+              "yaw_deg": 47.67811442604762,
+              "xy_scale": 0.9847220182418823,
+              "gripper_sign": 1
+            }
+          }
+        },
+        "donor_embodiment": "comp_180_lo_inv",
+        "active_passive_both_15": true
+      }
+    ],
+    "archived_count_disagreements": [],
+    "first_poc_outcome_rule": true,
+    "first_poc_witnesses": {
+      "comp_180_lo_inv": [
+        "ours_retained_active",
+        "ours_retained_passive"
+      ],
+      "cont_45_nom": [
+        "ours_retained_active",
+        "ours_retained_passive"
+      ]
+    },
+    "missing_registered_arms": [],
+    "source": {
+      "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-sysid-20261119-r1/gpu03eval/live/live-eval-summary.json",
+      "sha256": "339ebd0472ae2c6aec5f0616fad25cce0ad993cb0710915dd220580d0db7351b"
+    },
+    "support_archive_sha256": "832029f23f298c4edb0a5caf6c0da634660230acc6cb380d3a44689910a97767",
+    "support_verification": {
+      "source": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-sysid-20261119-r1/gpu02col/archive/archive.json",
+        "sha256": "832029f23f298c4edb0a5caf6c0da634660230acc6cb380d3a44689910a97767"
+      },
+      "train_trials": 28,
+      "dev_trials": 3,
+      "support_reset": 11,
+      "query_reset": 13,
+      "paired_support_reset_groups": 5,
+      "support_query_physics_distinct": true
+    },
+    "fit_verification": {
+      "source": {
+        "path": "/mowenjie/fluffy-bassoon-2/outputs/libero-xemb-sysid-20261119-r1/gpu02fit/train/offline-audit.json",
+        "sha256": "5aa1dd6b9cf952d5531b717130aacc9f532c7f9e00325a7c61162c184af24c22"
+      },
+      "steps": 1500,
+      "seeds": [
+        41
+      ],
+      "visual_available": true,
+      "visual_unavailable_reason": null
+    }
+  }
+}

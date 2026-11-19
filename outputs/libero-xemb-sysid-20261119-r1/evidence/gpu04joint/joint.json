@@ -1,0 +1,696 @@
+{
+  "arm": "analytic_public_joint_sysid",
+  "complete": false,
+  "sources": {
+    "predictions_sha256": "913bffcec050ca818fbc0bd04f3281887c5eceb29c7228d6fb2fad46530f79f8",
+    "pilot_sha256": "339ebd0472ae2c6aec5f0616fad25cce0ad993cb0710915dd220580d0db7351b",
+    "archive_sha256": "832029f23f298c4edb0a5caf6c0da634660230acc6cb380d3a44689910a97767",
+    "joint_queries.py": "fc7c50bfda9801f1a1b1f2e6831bb13cc6e491889a27f2235351e3c928f439c8",
+    "motor_iface.py": "b7fa574f0bf091dd2ece7d086d2ef3c1f56dfd5f8710e3556376d5eee57068dc",
+    "sim_worker.py": "efcb3c38a4a0a82577e3ed38be248fae6669cfea6dea1681320d8bfe8e0348dd",
+    "score_poc.py": "950c6ce5bcf82cfcad270c658017e974616fec15138f173101bc30a300195882"
+  },
+  "query_reset": {
+    "physics": "47e00ff47a7b002822687e0cc37a5dc66123d7ea4c4fb948636b967fb16b67c0",
+    "perturbation_plan": "2fc19a30e935ab99a23313bfcf24db8a40781ab727d8342f35ce66ed0a2aa644",
+    "public": {
+      "agentview_image": "71af22e51aaf2dad6789f05794195014299715c71474386b7e9dbfa5acd4758e",
+      "robot0_eye_in_hand_image": "5113d75ab916fced78acf549da30d329014f2b5c57d6d3a50ca378172eb2ee01",
+      "robot0_joint_pos": "e529ab58266062c6f5f6a1544fb35c5840c1ff420219a527f37410ee7c53b82a",
+      "robot0_joint_vel": "061cf88a2053a5526079f08a8380aae053bc0882d59adefe54e8fd5702dcafb8",
+      "robot0_eef_pos": "ae11c40a1cd510615b0897fd5490ebb8b5387e4c40f30b869a3dd849b77896ca",
+      "robot0_eef_quat_xyzw": "47807b96ddf310a038405efbf4be2969804504e5bf0876f55a14482bee87d0d5",
+      "robot0_gripper_qpos": "bae5f8f1d7a1dfcbca75cffd33fa1ef9251220d506392c29aa90ea68efd1904c"
+    },
+    "motor_frame0": {
+      "observation/image": "44821962a9648572bb23652a0060d7cb398e97467a98cc92c166c47035db4451",
+      "observation/wrist_image": "ffe48f12b3b1fa2d08d4d19482be80dd90250c8a7ab7b8997ba33004cf8b10e4",
+      "observation/state": "990a800b5dfa4842e2fdc779640be53263ae661d00a80188f46009b7829121d7"
+    },
+    "reader_frame0": {
+      "image": "325f893f2bde918464e46a41bc0e3a9f27740299dca6d8674a2d533d9d01b388",
+      "state": "990a800b5dfa4842e2fdc779640be53263ae661d00a80188f46009b7829121d7"
+    },
+    "worker_step_index": 0,
+    "action_schema": {
+      "version": "libero_action_v1",
+      "shape": [
+        7
+      ],
+      "dtype": "float32",
+      "low": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "high": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "controller": "OSC_POSE",
+      "control_mode": "relative",
+      "translation_frame": "world",
+      "rotation_frame": "world",
+      "rotation_representation": "axis_angle",
+      "gripper_semantics": "negative_open_positive_close_zero_hold",
+      "control_freq": 20,
+      "action_repeat": 1
+    },
+    "observation_schema": {
+      "agentview_image": {
+        "shape": [
+          256,
+          256,
+          3
+        ],
+        "dtype": "uint8",
+        "byte_order": "little",
+        "layout": "C"
+      },
+      "robot0_eye_in_hand_image": {
+        "shape": [
+          256,
+          256,
+          3
+        ],
+        "dtype": "uint8",
+        "byte_order": "little",
+        "layout": "C"
+      },
+      "robot0_joint_pos": {
+        "shape": [
+          7
+        ],
+        "dtype": "float32",
+        "byte_order": "little",
+        "layout": "C"
+      },
+      "robot0_joint_vel": {
+        "shape": [
+          7
+        ],
+        "dtype": "float32",
+        "byte_order": "little",
+        "layout": "C"
+      },
+      "robot0_eef_pos": {
+        "shape": [
+          3
+        ],
+        "dtype": "float32",
+        "byte_order": "little",
+        "layout": "C"
+      },
+      "robot0_eef_quat_xyzw": {
+        "shape": [
+          4
+        ],
+        "dtype": "float32",
+        "byte_order": "little",
+        "layout": "C"
+      },
+      "robot0_gripper_qpos": {
+        "shape": [
+          2
+        ],
+        "dtype": "float32",
+        "byte_order": "little",
+        "layout": "C"
+      }
+    },
+    "observation_schema_version": "libero_standard_v1",
+    "renderer": "NVIDIA RPBZZZ6/PCIe/SSE2",
+    "renderer_vendor": "NVIDIA Corporation",
+    "noise_seed": 21227230,
+    "noise_sha256": "7d8d72af201c5441808dddb4a6eca953797b3c1a8d4a23d66167b483cdefe69e",
+    "horizon": 300,
+    "prompt": "put the bowl on the stove"
+  },
+  "opening_proposal_sha256": "157fbd685729bc2ec08a1bc12a0e6252cf5ecaa173c52374c227ddb6917407cd",
+  "rows": [
+    {
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "BASE",
+      "embodiment": "fam_nom",
+      "support_init_state_id": 11,
+      "support_seed": 20210111,
+      "support_archive_index": 28,
+      "support_controls": 15,
+      "query_init_state_id": 13,
+      "query_seed": 20410113,
+      "support_physics": "285d20c0692497b2d0dcb84cdb803b592229f8cb034bfc35327097b17cab4732",
+      "inferred": {
+        "yaw_deg": 0.5907134896371531,
+        "xy_scale": 0.9992945904768508,
+        "gripper_sign": 1
+      },
+      "diagnostics": {
+        "wrist_yaw_deg": -8.585347876045489,
+        "wrist_referenced_yaw_deg": 0.16557350198908694,
+        "joint_raw_yaw_deg": -8.160207888397418,
+        "predicted_world_delta_m": [
+          [
+            0.02658788264767433,
+            0.00013119521808890037,
+            -0.006098917469657299
+          ],
+          [
+            0.009140875946746011,
+            0.03229336752330863,
+            0.0032777135545531523
+          ],
+          [
+            -0.012580448630698574,
+            -0.010302677052944513,
+            0.030194321547183225
+          ]
+        ]
+      },
+      "pilot_arms": {
+        "nominal": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 96,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": 0.0,
+            "xy_scale": 1.0,
+            "gripper_sign": 1
+          }
+        },
+        "privileged_oracle": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 96,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": 0.0,
+            "xy_scale": 1.0,
+            "gripper_sign": 1
+          }
+        },
+        "analytic_proprio_sysid": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 94,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": -8.585348129272461,
+            "xy_scale": 0.9992945790290833,
+            "gripper_sign": 1
+          }
+        },
+        "joint_transformer_active": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 94,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": 0.7490226030349731,
+            "xy_scale": 0.9970893263816833,
+            "gripper_sign": 1
+          }
+        },
+        "factored_no_equiv_active": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 96,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": -1.4168354272842407,
+            "xy_scale": 1.0023130178451538,
+            "gripper_sign": 1
+          }
+        },
+        "ours_retained_active": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 94,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": -0.29422417283058167,
+            "xy_scale": 1.0054413080215454,
+            "gripper_sign": 1
+          }
+        },
+        "ours_retained_passive": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 102,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": -13.78486156463623,
+            "xy_scale": 1.0832630395889282,
+            "gripper_sign": 1
+          }
+        },
+        "ours_cleared": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 96,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": 0.0,
+            "xy_scale": 1.0,
+            "gripper_sign": 1
+          }
+        },
+        "ours_swapped_donor": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 92,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": 8.867036819458008,
+            "xy_scale": 1.0417536497116089,
+            "gripper_sign": 1
+          }
+        },
+        "ours_online_prefix": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 109,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": 8.205099105834961,
+            "xy_scale": 0.994813084602356,
+            "gripper_sign": 1
+          }
+        },
+        "analytic_visual_sysid": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 96,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": -9.630991312810298,
+            "xy_scale": 0.9992945790290833,
+            "gripper_sign": 1
+          }
+        }
+      }
+    },
+    {
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "BASE",
+      "embodiment": "comp_180_lo_inv",
+      "support_init_state_id": 11,
+      "support_seed": 20210111,
+      "support_archive_index": 29,
+      "support_controls": 15,
+      "query_init_state_id": 13,
+      "query_seed": 20410113,
+      "support_physics": "285d20c0692497b2d0dcb84cdb803b592229f8cb034bfc35327097b17cab4732",
+      "inferred": {
+        "yaw_deg": -175.07223325771815,
+        "xy_scale": 0.5802278694677405,
+        "gripper_sign": -1
+      },
+      "diagnostics": {
+        "wrist_yaw_deg": -7.581075944731972,
+        "wrist_referenced_yaw_deg": 1.169845433302612,
+        "joint_raw_yaw_deg": 176.17684536424724,
+        "predicted_world_delta_m": [
+          [
+            -0.01617137354538093,
+            -0.001054850378485211,
+            0.006243171442793758
+          ],
+          [
+            -0.004730580156108487,
+            -0.023445429090720643,
+            -3.403176718925127e-05
+          ],
+          [
+            0.0033985529594983276,
+            0.004680246532349082,
+            0.007305618468533888
+          ]
+        ]
+      },
+      "pilot_arms": {
+        "nominal": {
+          "success": false,
+          "native_return": 0.0,
+          "return_source": "per_control",
+          "controls": 300,
+          "terminated": false,
+          "truncated": true,
+          "inferred": {
+            "yaw_deg": 0.0,
+            "xy_scale": 1.0,
+            "gripper_sign": 1
+          }
+        },
+        "privileged_oracle": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 101,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": 180.0,
+            "xy_scale": 0.65,
+            "gripper_sign": -1
+          }
+        },
+        "analytic_proprio_sysid": {
+          "success": false,
+          "native_return": 0.0,
+          "return_source": "per_control",
+          "controls": 300,
+          "terminated": false,
+          "truncated": true,
+          "inferred": {
+            "yaw_deg": -7.581076145172119,
+            "xy_scale": 0.5802278518676758,
+            "gripper_sign": -1
+          }
+        },
+        "joint_transformer_active": {
+          "success": false,
+          "native_return": 0.0,
+          "return_source": "per_control",
+          "controls": 300,
+          "terminated": false,
+          "truncated": true,
+          "inferred": {
+            "yaw_deg": -1.8424406051635742,
+            "xy_scale": 0.7998930215835571,
+            "gripper_sign": -1
+          }
+        },
+        "factored_no_equiv_active": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 101,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": -178.75372314453125,
+            "xy_scale": 0.6443207859992981,
+            "gripper_sign": -1
+          }
+        },
+        "ours_retained_active": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 101,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": 172.7166748046875,
+            "xy_scale": 0.6454117894172668,
+            "gripper_sign": -1
+          }
+        },
+        "ours_retained_passive": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 99,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": -178.03152465820312,
+            "xy_scale": 0.6428189277648926,
+            "gripper_sign": -1
+          }
+        },
+        "ours_cleared": {
+          "success": false,
+          "native_return": 0.0,
+          "return_source": "per_control",
+          "controls": 300,
+          "terminated": false,
+          "truncated": true,
+          "inferred": {
+            "yaw_deg": 0.0,
+            "xy_scale": 1.0,
+            "gripper_sign": 1
+          }
+        },
+        "ours_swapped_donor": {
+          "success": false,
+          "native_return": 0.0,
+          "return_source": "per_control",
+          "controls": 300,
+          "terminated": false,
+          "truncated": true,
+          "inferred": {
+            "yaw_deg": -0.29422417283058167,
+            "xy_scale": 1.0054413080215454,
+            "gripper_sign": 1
+          }
+        },
+        "ours_online_prefix": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 123,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": 171.5977020263672,
+            "xy_scale": 0.6380327343940735,
+            "gripper_sign": -1
+          }
+        },
+        "analytic_visual_sysid": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 95,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": -173.19269694668418,
+            "xy_scale": 0.5802278518676758,
+            "gripper_sign": -1
+          }
+        }
+      }
+    },
+    {
+      "suite": "libero_goal",
+      "task_id": 1,
+      "variant": "BASE",
+      "embodiment": "cont_45_nom",
+      "support_init_state_id": 11,
+      "support_seed": 20210111,
+      "support_archive_index": 30,
+      "support_controls": 15,
+      "query_init_state_id": 13,
+      "query_seed": 20410113,
+      "support_physics": "285d20c0692497b2d0dcb84cdb803b592229f8cb034bfc35327097b17cab4732",
+      "inferred": {
+        "yaw_deg": 44.29444408226354,
+        "xy_scale": 0.9847220240643628,
+        "gripper_sign": 1
+      },
+      "diagnostics": {
+        "wrist_yaw_deg": -9.555494351237451,
+        "wrist_referenced_yaw_deg": -0.8045729732028803,
+        "joint_raw_yaw_deg": 35.543522704228955,
+        "predicted_world_delta_m": [
+          [
+            0.013228763859066737,
+            0.02308995781733022,
+            -0.01354415266249379
+          ],
+          [
+            -0.013250809925635593,
+            0.031835487820686056,
+            0.0024873358216873503
+          ],
+          [
+            -0.008307758668096795,
+            -0.024164606909002573,
+            0.022272208094668094
+          ]
+        ]
+      },
+      "pilot_arms": {
+        "nominal": {
+          "success": false,
+          "native_return": 0.0,
+          "return_source": "per_control",
+          "controls": 300,
+          "terminated": false,
+          "truncated": true,
+          "inferred": {
+            "yaw_deg": 0.0,
+            "xy_scale": 1.0,
+            "gripper_sign": 1
+          }
+        },
+        "privileged_oracle": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 97,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": 45.0,
+            "xy_scale": 1.0,
+            "gripper_sign": 1
+          }
+        },
+        "analytic_proprio_sysid": {
+          "success": false,
+          "native_return": 0.0,
+          "return_source": "per_control",
+          "controls": 300,
+          "terminated": false,
+          "truncated": true,
+          "inferred": {
+            "yaw_deg": -9.55549430847168,
+            "xy_scale": 0.9847220182418823,
+            "gripper_sign": 1
+          }
+        },
+        "joint_transformer_active": {
+          "success": false,
+          "native_return": 0.0,
+          "return_source": "per_control",
+          "controls": 300,
+          "terminated": false,
+          "truncated": true,
+          "inferred": {
+            "yaw_deg": -7.012170314788818,
+            "xy_scale": 0.8110581040382385,
+            "gripper_sign": 1
+          }
+        },
+        "factored_no_equiv_active": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 201,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": 15.569881439208984,
+            "xy_scale": 1.0383331775665283,
+            "gripper_sign": 1
+          }
+        },
+        "ours_retained_active": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 201,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": 8.867036819458008,
+            "xy_scale": 1.0417536497116089,
+            "gripper_sign": 1
+          }
+        },
+        "ours_retained_passive": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 108,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": 30.52930450439453,
+            "xy_scale": 1.1689481735229492,
+            "gripper_sign": 1
+          }
+        },
+        "ours_cleared": {
+          "success": false,
+          "native_return": 0.0,
+          "return_source": "per_control",
+          "controls": 300,
+          "terminated": false,
+          "truncated": true,
+          "inferred": {
+            "yaw_deg": 0.0,
+            "xy_scale": 1.0,
+            "gripper_sign": 1
+          }
+        },
+        "ours_swapped_donor": {
+          "success": false,
+          "native_return": 0.0,
+          "return_source": "per_control",
+          "controls": 300,
+          "terminated": false,
+          "truncated": true,
+          "inferred": {
+            "yaw_deg": 172.7166748046875,
+            "xy_scale": 0.6454117894172668,
+            "gripper_sign": -1
+          }
+        },
+        "ours_online_prefix": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 120,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": 51.42051696777344,
+            "xy_scale": 1.046435832977295,
+            "gripper_sign": 1
+          }
+        },
+        "analytic_visual_sysid": {
+          "success": true,
+          "native_return": 1.0,
+          "return_source": "per_control",
+          "controls": 97,
+          "terminated": true,
+          "truncated": false,
+          "inferred": {
+            "yaw_deg": 47.67811442604762,
+            "xy_scale": 0.9847220182418823,
+            "gripper_sign": 1
+          }
+        }
+      }
+    }
+  ]
+}
