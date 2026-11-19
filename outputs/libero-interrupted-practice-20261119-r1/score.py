@@ -111,7 +111,7 @@ def decide(rewards, likelihood):
     return float(p[0]>p[1]) if not np.isclose(p[0],p[1],rtol=0,atol=1e-10) else .5
 
 
-def score(data, model, family, poses, draws):
+def score(data, model, family, poses, draws, query_reader=query):
     poses=list(poses)
     panel={k:r for k,r in data.items() if k[0]==family and k[1] in poses}
     assert len(panel)==len(poses)*2*draws*2
@@ -123,7 +123,7 @@ def score(data, model, family, poses, draws):
     for i,p in enumerate(poses):
         s,q=poses[(i+1)%len(poses)],poses[(i+2)%len(poses)]
         if family=='bottle':q-=6
-        hit,final=query(family,q)
+        hit,final=query_reader(family,q)
         for first,j,k in product((0,1),range(draws),range(draws)):
             def matrices(b,c):
                 keys=((family,p,first,j,b),(family,s,1-first,k,c))
