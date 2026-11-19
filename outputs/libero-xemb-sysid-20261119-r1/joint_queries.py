@@ -1,4 +1,4 @@
-"""Run the three paired first-POC queries using the joint reader's predictions.json.
+"""Compare frozen first-POC predictions on three starts in one scheduler allocation.
 
 Supply --predictions, the completed --pilot live-eval-summary.json, and a fresh
 --output JSON file. A partial output retains completed cases. Use the pilot's
@@ -103,16 +103,18 @@ class PairedOpening:
     def __init__(self, policy, expected):
         self.policy = policy
         self.expected = expected
+        self.first = None
 
     def infer(self, item, *, noise):
         result = self.policy.infer(item, noise=noise)
-        if self.expected is not None:
+        if self.first is None:
             import numpy as np
             from motor_iface import array_digest
 
-            actual = array_digest(np.asarray(result["actions"], dtype=np.float32))
-            require(actual == self.expected, f"Opening frozen proposal {actual} differs from pilot {self.expected}")
-            self.expected = None
+            self.first = np.asarray(result["actions"], dtype=np.float32).copy()
+            actual = array_digest(self.first)
+            if self.expected is not None:
+                require(actual == self.expected, f"Opening proposal {actual} differs within allocation from {self.expected}")
         return result
 
 
@@ -136,22 +138,32 @@ def run(args):
     for file in ("joint_queries.py", "motor_iface.py", "sim_worker.py", "score_poc.py"):
         sources[file] = hashlib.sha256((HERE / file).read_bytes()).hexdigest()
     summary = dict(arm=ARM, complete=False, sources=sources, query_reset=reset,
-                   opening_proposal_sha256=opening, rows=list(cases.values()))
+                   historical_opening_sha256=opening, opening_proposal_sha256=None, rows=list(cases.values()))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.touch(exist_ok=False)
     write_json(args.output, summary)
     policy = load_frozen_pi05()
     with XEmbSimulator() as simulator:
         for name, case in cases.items():
-            est = case["inferred"]
-            rec = run_episode(simulator, PairedOpening(policy, opening), QUERY, get_embodiment_spec(name),
-                              prompt=reset["prompt"], check_reset=match_reset, yaw_hat=est["yaw_deg"],
-                              scale_hat=est["xy_scale"], grip_hat=est["gripper_sign"])
-            require(rec["opening_proposal_sha256"] == opening and rec["inferred"] == est,
-                    f"{name}: fresh opening proposal or applied estimate differs")
-            case["joint_query"] = dict(**episode(rec, name, legacy=False), native_rewards=rec["native_rewards"],
-                                       opening_proposal_sha256=rec["opening_proposal_sha256"])
-            write_json(args.output, summary)
+            estimates = {arm: case["pilot_arms"][arm]["inferred"]
+                         for arm in ("nominal", "ours_retained_active", "analytic_visual_sysid")}
+            estimates[ARM] = case["inferred"]
+            case["fresh_arms"] = {}
+            for arm, est in estimates.items():
+                paired = PairedOpening(policy, summary["opening_proposal_sha256"])
+                rec = run_episode(simulator, paired, QUERY, get_embodiment_spec(name),
+                                  prompt=reset["prompt"], check_reset=match_reset, yaw_hat=est["yaw_deg"],
+                                  scale_hat=est["xy_scale"], grip_hat=est["gripper_sign"])
+                if summary["opening_proposal_sha256"] is None:
+                    summary["opening_proposal_sha256"] = rec["opening_proposal_sha256"]
+                    summary["opening_proposal"] = paired.first.tolist()
+                require(rec["opening_proposal_sha256"] == summary["opening_proposal_sha256"]
+                        and rec["inferred"] == est, f"{name}/{arm}: opening or applied estimate differs")
+                case["fresh_arms"][arm] = dict(**episode(rec, name, legacy=False), inferred=est,
+                                               native_rewards=rec["native_rewards"],
+                                               opening_proposal_sha256=rec["opening_proposal_sha256"])
+                print(name, arm, rec["success"], rec["native_return"], flush=True)
+                write_json(args.output, summary)
     summary["complete"] = True
     write_json(args.output, summary)
 
