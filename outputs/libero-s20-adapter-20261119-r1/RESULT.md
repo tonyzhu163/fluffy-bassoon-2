@@ -35,3 +35,19 @@ paired reset and shared-opening checks passing. The GPU stages used 521 s
 before the full fit. In the two-query smoke all arms passed BASE, and the
 paced arm was the only success on the S20 reset. This panel qualifies the
 runtime and evaluator. [Design](PLAN.md)
+
+## Full adapter fit
+
+`dist03fit` completed all 2,048 updates at batch four, using 8,192 windows,
+balanced equally across BASE and S20. The windows came from 1,299 distinct
+demonstrations and 602 task/reset combinations across all 24 fitting tasks.
+They contained 79,008 valid action targets, including those from 505 partial
+windows. The audit matched every sampled window to the fitting manifest and
+verified the final checkpoint. The worker used 521 s and handed the frozen
+checkpoint to the development evaluator. [Fit evidence](dist03-fit.json)
+
+On held-out fitting-task resets, flow-matching loss for BASE/S20 was
+0.482/1.765 for frozen π0.5, 0.255/0.795 for the true timing flag, and
+0.257/0.852 for the swapped flag. This measures prediction of observed
+demonstrator actions. Native success is measured on the separate live
+development panel.
