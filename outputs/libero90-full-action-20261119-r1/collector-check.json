@@ -1,0 +1,147 @@
+{
+  "manifest_row": {
+    "split": "fitting",
+    "task_id": 0,
+    "repeat": 0,
+    "support_id": 14,
+    "query_id": 15,
+    "seed": 27110100
+  },
+  "source_pin": "d1b0eb85cc6186e269efff02eaeb28caedccafaa",
+  "design_sha256": "4e49d9a28907a4a6942a89af4cc15bb54f9b4cf4ec17da9b97a92ae5e73e9ac7",
+  "env_seed": 7,
+  "reset": {
+    "support": {
+      "task_name": "KITCHEN_SCENE10_close_the_top_drawer_of_the_cabinet",
+      "prompt": "close the top drawer of the cabinet",
+      "horizon": 400,
+      "bank_size": 50,
+      "bddl_sha256": "a0824cbe6b3146c00984f5a01307a3e39aac9ddc434ee4ff040b5536a0c48bbc",
+      "bank_state_sha256": "d331c8cb776e6eb14a66b2a2a17202d1fc91558531509d078a4cda19721e57b5",
+      "physics": "b234eb3385e90061398977e4b787200427e75c1037d9768f67666552888c68a3",
+      "public": {
+        "agentview_image": "1a871f5293cf221841ab470953cc30b54d9b4b22637f557e2d52c846b0ae0fcc",
+        "robot0_eye_in_hand_image": "5db43ede6696fa41fb3ec0c21a1af86ae6db82d7166d685def3e31463dcd0c42",
+        "robot0_eef_pos": "4034805ba4020c5b9f332f175cb0ea2fab0f79dbebe28e5ffa6223f3266442c4",
+        "robot0_eef_quat": "8cb586a2773d0345f2a626759af1884b70ce877798358443da1cdc001a9d0481",
+        "robot0_gripper_qpos": "f727338c75e9ab36feb9c6325bd49e898e6e6630600dfd22ba49981f7dae1723"
+      }
+    },
+    "query": {
+      "task_name": "KITCHEN_SCENE10_close_the_top_drawer_of_the_cabinet",
+      "prompt": "close the top drawer of the cabinet",
+      "horizon": 400,
+      "bank_size": 50,
+      "bddl_sha256": "a0824cbe6b3146c00984f5a01307a3e39aac9ddc434ee4ff040b5536a0c48bbc",
+      "bank_state_sha256": "e9e8d665792b0beac78e84d48de14ff91d16d60ff6b46c08565afaeef6159e9b",
+      "physics": "170f3bbebee6c36969d748fa9be2ceee7371830a0986335f3599100ded96a031",
+      "public": {
+        "agentview_image": "a7fbc40a80177c150a46c831d2cb8b52817a743f77c28b55cebd97a3ccb2b427",
+        "robot0_eye_in_hand_image": "2f1a8e9fac8576e6bc355faf71bdda61e3aeb0a202e4520018b491f9e5b41752",
+        "robot0_eef_pos": "e91527e9ee9f260fa6f09c2c1f80f42f883c44c2f023a637288167c4c42085fe",
+        "robot0_eef_quat": "5dcc75e8c2564210ecf9eeb010361025c87977ade79196fe4dbd7c1652257b72",
+        "robot0_gripper_qpos": "d2e8f5011388a877eb4bd88ca12fa761bd92ac42a702e4a1c9dff6bb18f86fe7"
+      }
+    }
+  },
+  "episodes": {
+    "support": {
+      "arm": "support",
+      "controls": 400,
+      "settling_controls": 10,
+      "score": 0.0,
+      "success": false,
+      "truncated": true,
+      "replans": 80,
+      "policy_calls": 80,
+      "feature_calls": 0,
+      "policy_stream": [
+        27110100,
+        0
+      ],
+      "identities": {
+        "issued": "b04f05500a5feea2d1de7d79fc87b5b836bcd8fbab190745ef195e5d135befd6",
+        "positions": "317807aef7b0772ea18acd04f67bd796854ef449399098829ce040c57904d42f",
+        "rewards": "82f0b259f0e7ce86ffd2ddb83803842efdf3c513ce11e83ae5a64161fc33381d"
+      },
+      "arrays": {
+        "public.npz": "729bd767970985321af880c595be41856ac6eb6e12bfbde52b943f6f2941bee8"
+      },
+      "elapsed_seconds": 39.10712473746389,
+      "action_seconds": 31.117037962190807,
+      "feature_seconds": 0.0,
+      "reader_seconds": 0.0,
+      "simulator_step_seconds": 7.699506057426333
+    },
+    "query0": {
+      "arm": "query0",
+      "controls": 294,
+      "settling_controls": 10,
+      "score": 1.0,
+      "success": true,
+      "truncated": false,
+      "replans": 59,
+      "policy_calls": 118,
+      "feature_calls": 59,
+      "policy_stream": [
+        27110100,
+        1
+      ],
+      "identities": {
+        "issued": "222026edc57153e8fd07d3df314cbab45d7dfdd06bc72f3405fba2cbcd3f5118",
+        "positions": "02d325419861f715aa97dadb2fdfb02d70e7bd743ea036babd82d04034fd365c",
+        "rewards": "a652b6eee2578074a18489d7c1cc97250533f9448378e13b9c2cecb88954ef22"
+      },
+      "arrays": {
+        "public.npz": "0d05be5823dfc2e3f664b3cfe7dba9464ad4aed69a0b8ca04a0f4298ca29947b",
+        "decisions.npz": "4fb8913c80eae12924ff1fafdabfb0e349d4868f7a64147b7f48e3bca94af246"
+      },
+      "elapsed_seconds": 18.57431599497795,
+      "action_seconds": 8.933588808402419,
+      "feature_seconds": 4.033066266216338,
+      "reader_seconds": 0.0,
+      "simulator_step_seconds": 5.407138946466148
+    },
+    "query1": {
+      "arm": "query1",
+      "controls": 400,
+      "settling_controls": 10,
+      "score": 0.0,
+      "success": false,
+      "truncated": true,
+      "replans": 80,
+      "policy_calls": 160,
+      "feature_calls": 80,
+      "policy_stream": [
+        27110100,
+        2
+      ],
+      "identities": {
+        "issued": "5b24eda373ff4db04367ddd9d245301f28d60ba712bd4841da19e335aa7dd41f",
+        "positions": "f7227786e8189c2bd72c931203282d9f3b827d43261ad4844d3b9eba8cb95965",
+        "rewards": "82f0b259f0e7ce86ffd2ddb83803842efdf3c513ce11e83ae5a64161fc33381d"
+      },
+      "arrays": {
+        "public.npz": "b7c0638c8d64d1f676544f0572ab63035eb20fbe4e97eb3508fa5f17057731b4",
+        "decisions.npz": "cdb998b705e7b8cef5e73154acd7808ba4929d877fe2bcd5497b396dc6de16a8"
+      },
+      "elapsed_seconds": 21.955047603696585,
+      "action_seconds": 12.158924039453268,
+      "feature_seconds": 1.8187411362305284,
+      "reader_seconds": 0.0,
+      "simulator_step_seconds": 7.702989311888814
+    }
+  },
+  "elapsed_seconds": 92.37604649085552,
+  "reset_seconds": 12.66399156395346,
+  "totals": {
+    "controls": 1094,
+    "settling_controls": 30,
+    "policy_calls": 358,
+    "feature_calls": 139,
+    "action_seconds": 52.209550810046494,
+    "feature_seconds": 5.851807402446866,
+    "reader_seconds": 0.0,
+    "simulator_step_seconds": 20.809634315781295
+  }
+}
