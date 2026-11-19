@@ -17,11 +17,11 @@ HERE=Path(__file__).resolve().parent
 
 
 @contextmanager
-def simulator():
+def simulator(anchor,ids):
     pipe,peer=Pipe()
     env=dict(os.environ,TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD='1',PYTHONPATH=f'{pilot.PRO}:{pilot.SETUP}/simulator-source',
              LIBERO_CONFIG_PATH=str(pilot.SETUP/'libero-config'),LIBERO_PRO_ROOT=str(pilot.SETUP/'simulator-source'))
-    proc=subprocess.Popen([pilot.SETUP/'env/bin/python','-Bu',HERE/'object_sim.py',str(peer.fileno())],
+    proc=subprocess.Popen([pilot.SETUP/'env/bin/python','-Bu',HERE/'object_sim.py',str(peer.fileno()),str(anchor),*map(str,ids)],
                           pass_fds=(peer.fileno(),),env=env)
     peer.close()
     try:yield pipe
@@ -30,14 +30,24 @@ def simulator():
         proc.wait(timeout=30)
 
 
-def main(out,model):
+def main(out,model,reciprocal=False):
     devices=pilot.jax.devices()
     assert len(devices)==1 and devices[0].platform=='gpu'
     for repo,pin in [(pilot.SRC,'215abfb217dbac7d5f1273282331b9b1866c0479'),(pilot.PRO,'e5500c690c1498eca1b7050350654964190cdf70')]:
         assert subprocess.check_output(['git','-C',repo,'rev-parse','HEAD'],text=True).strip()==pin
     motor=pilot.policy_config.create_trained_policy(pilot.config.get_config('pi05_libero'),str(pilot.CKPT))
     out.mkdir()
-    with simulator() as pipe:
+    if reciprocal:
+        for anchor in (2,4):
+            directory=out/f'anchor{anchor}'
+            directory.mkdir()
+            collect(directory,model,motor,anchor,(2,4))
+    else:
+        collect(out,model,motor,0,(0,7))
+
+
+def collect(out,model,motor,anchor,ids):
+    with simulator(anchor,ids) as pipe:
         starts={}
         def execute(p,g,mode):
             raw,physics,prompts=pilot.call(pipe,'reset',(p,mode=='interrupt'))
@@ -50,7 +60,7 @@ def main(out,model):
             path.mkdir()
             np.savez_compressed(path/'tape.npz',**tape)
             pilot.write(path/'result.json',dict(pose=p,goal=g,prompt=prompts[g],mode=mode,seed=seed,start=start,
-                        object=obj,physics=physics,ever=tape['hits'].any(axis=0).tolist(),final=tape['hits'][-1].tolist()))
+                        object=obj,physics=physics,anchor=anchor,task_id=ids[g],ever=tape['hits'].any(axis=0).tolist(),final=tape['hits'][-1].tolist()))
             return tape,start,obj
         for p in range(6):
             for g in (0,1):
@@ -66,4 +76,4 @@ def main(out,model):
             print('query pose',row['q'],flush=True)
 
 
-if __name__=='__main__':main(*map(Path,sys.argv[1:]))
+if __name__=='__main__':main(Path(sys.argv[1]),Path(sys.argv[2]),sys.argv[3:]==['--reciprocal'])
