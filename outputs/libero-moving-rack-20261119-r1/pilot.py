@@ -17,7 +17,7 @@ OPTIONS=('suffix','track','shift')
 SHIFT=np.array([-.06,.045,0.])
 
 
-def simulate(job):
+def simulate(job, camera=None):
     pose,regime,option=job
     p=old.tape(pose,'BASE',pose>=6)
     with np.load(p/'public.npz') as z:
@@ -33,6 +33,8 @@ def simulate(job):
         reset=env.reset(pose,18180100+pose)
         physics=reset['environment_reproducibility']['initial_state_fingerprint']
         world=env._env.env
+        if camera is not None:
+            camera.start(world.sim)
         body=world.obj_body_id['wine_rack_1']
         start=world.sim.data.body_xpos[body].copy()
         ref=None
@@ -40,12 +42,15 @@ def simulate(job):
         largest=0.
         floor=None
         prefix=hashlib.sha256()
+        active_option=option
         for i in range(300):
             if ref is None:
                 action=commands[i]
             else:
                 age=i-trigger
-                if option=='shift':
+                if camera is not None and age==5:
+                    active_option=camera.choose(world.sim)
+                if active_option=='shift':
                     _,k,hit,_,s=ref
                     # Moving the observed wrist the opposite way translates the target by SHIFT.
                     progress=min(1.,(age+4)/max(1,hit-k))
@@ -53,7 +58,7 @@ def simulate(job):
                     virtual[:3]-=progress*SHIFT
                     action=old.next_action('track',ref,age,virtual)
                 else:
-                    action=old.next_action(option,ref,age,state)
+                    action=old.next_action(active_option,ref,age,state)
             step=env.step(action)
             raw=step['observation']
             state=np.concatenate([raw[x] for x in ('robot0_eef_pos','robot0_eef_quat_xyzw','robot0_gripper_qpos')])
