@@ -41,7 +41,11 @@ if [[ "$stage" == "test" || "$stage" == "cpu-smoke" ]]; then
     export MUJOCO_EGL_DEVICE_ID=1 __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json
     export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 LP_NUM_THREADS=1
     if [[ "$stage" == "test" ]]; then
-        timeout --kill-after=15s 10m "$python" -m pytest -q "$code/tests/test_xemb_sysid.py" > "$out/run.log" 2>&1
+        if "$python" -c "import pytest" >/dev/null 2>&1; then
+            timeout --kill-after=15s 10m "$python" -m pytest -q "$code/tests/test_xemb_sysid.py" > "$out/run.log" 2>&1
+        else
+            timeout --kill-after=15s 10m "$python" -Bu -c "import sys; sys.path.insert(0, '$code/tests'); import test_xemb_sysid as t; [getattr(t, n)() for n in dir(t) if n.startswith('test_')]; print('all unit tests passed')" > "$out/run.log" 2>&1
+        fi
     else
         timeout --kill-after=15s 15m "$python" -Bu "$here/collect.py" \
             --output "$out/archive" --panel smoke --modes active_probe --allow-mesa > "$out/collect.log" 2>&1

@@ -17,7 +17,7 @@ from fluffy_bassoon.xemb.embodiment import (
 
 ROOT = Path("/mowenjie/fluffy-bassoon-2")
 OPENPI_CKPT = Path("/mowenjie/fluffy-bassoon/inputs/pi05-libero-openpi-20261027-r1")
-SPLITS_PATH = ROOT / "outputs/libero-meta-learning-20261117-r1/SPLITS.json"
+SPLITS_PATH = Path(__file__).resolve().parents[1] / "libero-meta-learning-20261117-r1" / "SPLITS.json"
 NOISE_SEED_OFFSET = 817117
 
 

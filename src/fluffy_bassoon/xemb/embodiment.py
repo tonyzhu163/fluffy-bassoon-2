@@ -66,8 +66,8 @@ _EMBODIMENT_BY_NAME = {
 # Three 5-control chunks (15 controls total) probing +X, +Y, return/+Z, and gripper sign.
 ACTIVE_PROBE_BURSTS = np.asarray(
     [
-        np.tile(np.array([0.55, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0], dtype=np.float32), (5, 1)),
-        np.tile(np.array([0.0, 0.55, 0.0, 0.0, 0.0, 0.0, -1.0], dtype=np.float32), (5, 1)),
+        np.tile(np.array([0.62, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0], dtype=np.float32), (5, 1)),
+        np.tile(np.array([0.0, 0.62, 0.0, 0.0, 0.0, 0.0, -1.0], dtype=np.float32), (5, 1)),
         np.tile(np.array([-0.35, -0.35, 0.45, 0.0, 0.0, 0.0, 1.0], dtype=np.float32), (5, 1)),
     ],
     dtype=np.float32,

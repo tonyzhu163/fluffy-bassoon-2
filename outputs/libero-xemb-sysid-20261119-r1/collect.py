@@ -178,6 +178,11 @@ def main():
                     active_path=act_path,
                     active_controls=act_meta["controls"],
                     active_delta_jaw=act_trace["delta_jaw"][:, 0].tolist(),
+                    active_delta_eef_norm_mm=(np.linalg.norm(act_trace["delta_eef"], axis=-1) * 1000.0).tolist(),
+                    active_img_diff_l1=np.mean(
+                        np.abs(act_trace["img_after"].astype(np.float32) - act_trace["img_before"].astype(np.float32)),
+                        axis=(1, 2, 3),
+                    ).tolist(),
                 )
 
             if "passive_attempt1" in modes:
