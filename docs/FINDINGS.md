@@ -1,7 +1,5 @@
 # Verified findings
 
-- On a previously studied Goal 2 bottle-placement pose, reducing realized pad/bottle friction from 2.00 to 0.95 left all measured precontact observations identical and made a regrasp fail. The fixed nominal frozen-policy tape still succeeded under both materials, tying the material-aware oracle at 2/2. Six native 300-control replays used zero GPU-hours. [Friction gate and per-control readback](../outputs/libero-xemb-contact-20261119-r1/RESULT.md)
-
 The controlled OpenDrawer reader used one probe to choose a useful correction on measured native branches. The broader RoboCasa studies found no consistent held-out benefit from retaining history. The results below distinguish selection among executable actions, learned motor control and source-policy competence. [Controlled reader](#native-history-under-a-persistent-calibration-error) · [Multi-task comparison](#corrected-three--versus-six-task-transformer-comparison) · [Corpus diagnosis](../outputs/project-diagnosis-20261116-r1/RESULT.md)
 
 ## Synthetic learning histories
@@ -129,6 +127,11 @@ The 320 assignments reuse five practice poses and four query poses in fixed-comm
 simulator replay. [Physical intervention and transfer checks](../outputs/libero-release-phase-20261119-r1/RESULT.md)
 
 A randomized single-retry scorer averaged 19.0/32 development successes. Giving the same transformer both measured retry outcomes for every fitting history raised the mean to 19.5 and the episode cost from 64 to 96. At equal 48-episode budgets the single, sparsely paired and fully paired fits averaged 18.25, 18.375 and 18.00. A two-row lag table fitted on the same single or full labels reached 20.25 in both equal-budget arms. The best measured candidate reached 22 and the existing lag rule reached 21. All fits reused the same eight development tasks. [Logged and branched comparison](../outputs/libero-logged-retry-20261119-r1/RESULT.md)
+
+### Embodiment and calibration controls
+
+- Rotating the physical agentview camera about its optical axis by 0°, +90° or −90° changed the reset image while preserving measured physics and public proprioception. An RGB template fitted on eight training tasks identified 21/24 orientations on eight development tasks, compared with 8/24 for a cleared orientation input. Errors clustered on one task. [Physical camera-roll audit](../outputs/libero-xemb-camera-20261119-r1/RESULT.md)
+- On a previously studied Goal 2 bottle-placement pose, reducing realized pad/bottle friction from 2.00 to 0.95 left all measured precontact observations identical and made a regrasp fail. The fixed nominal frozen-policy tape still succeeded under both materials, tying the material-aware oracle at 2/2. Six native 300-control replays used zero GPU-hours. [Friction gate and per-control readback](../outputs/libero-xemb-contact-20261119-r1/RESULT.md)
 
 ## LIBERO-Gen motor qualification
 
