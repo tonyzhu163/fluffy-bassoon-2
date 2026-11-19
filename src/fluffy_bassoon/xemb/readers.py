@@ -52,6 +52,9 @@ def analytic_proprio_sysid(
     if unbatched:
         iss, deef, djaw, val = iss[None], deef[None], djaw[None], val[None]
 
+    iss = np.where(val[..., None], iss, 0.0)
+    deef = np.where(val[..., None], deef, 0.0)
+    djaw = np.where(val[..., None], djaw, 0.0)
     w = val.astype(np.float64)
     has_valid = val.any(axis=1)
 
@@ -80,12 +83,53 @@ def fit_nominal_gain(issued_mean: np.ndarray, delta_eef: np.ndarray, valid: np.n
     """Fit scalar m-per-command gain on nominal (xy_scale=1.0) training trials."""
     iss = np.asarray(issued_mean, dtype=np.float64)
     deef = np.asarray(delta_eef, dtype=np.float64)
-    w = np.asarray(valid, dtype=np.float64)
+    w = np.asarray(valid, dtype=bool)
+    iss = np.where(w[..., None], iss, 0.0)
+    deef = np.where(w[..., None], deef, 0.0)
     num = float(np.sum(w * np.sum(iss[..., :3] * deef[..., :3], axis=-1)))
     den = float(np.sum(w * np.sum(iss[..., :3] ** 2, axis=-1)))
-    if den <= 1e-12 or num <= 0.0:
+    if not np.isfinite(num + den) or den <= 1e-12 or num <= 0.0:
         raise ValueError("Cannot calibrate nominal gain from degenerate training trajectories")
     return num / den
+
+
+def image_motion(before, after, valid):
+    """Estimate image translation (pixels) by motion-weighted brightness constancy.
+
+    Work one valid frame pair at a time. Static background gets zero weight.
+    A textureless pair has no observable translation and yields a zero vector.
+    """
+    motion = np.zeros((*valid.shape, 2), dtype=np.float64)
+    for index in zip(*np.nonzero(valid), strict=True):
+        a = before[index].astype(np.float64).mean(axis=-1)
+        b = after[index].astype(np.float64).mean(axis=-1)
+        gy, gx = np.gradient((a + b) * 0.5)
+        dt = (b - a).ravel()
+        weight = np.sqrt(np.abs(dt))
+        design = np.column_stack((gx.ravel(), gy.ravel())) * weight[:, None]
+        flow, _, rank, _ = np.linalg.lstsq(design, -weight * dt, rcond=1e-5)
+        if rank == 2:
+            motion[index] = flow
+    return motion
+
+
+def fit_visual_projection(motion, delta_eef, valid):
+    """Calibrate pixels per metre from nominal fitting traces in public coordinates."""
+    projection, _, rank, _ = np.linalg.lstsq(delta_eef[valid], motion[valid], rcond=1e-5)
+    if rank < 3 or np.linalg.matrix_rank(projection[:2]) < 2:
+        raise ValueError("Nominal calibration did not excite a measurable planar camera projection")
+    return projection
+
+
+def analytic_visual_yaw(issued, motion, local_dz, valid, projection):
+    """Remove vertical image motion and fit planar rotation against issued XY."""
+    planar = motion - local_dz[..., None] * projection[2]
+    xy = planar @ np.linalg.pinv(projection[:2], rcond=1e-5)
+    a = np.where(valid[..., None], issued[..., :2], 0.0)
+    xy = np.where(valid[..., None], xy, 0.0)
+    dot = (a * xy).sum(axis=(-1, -2))
+    cross = (a[..., 0] * xy[..., 1] - a[..., 1] * xy[..., 0]).sum(axis=-1)
+    return np.where(np.hypot(dot, cross) > 1e-10, np.degrees(np.arctan2(cross, dot)), 0.0)
 
 
 def _coord_grid(height: int, width: int):
@@ -359,16 +403,13 @@ def apply_reader(params, cfg: ReaderConfig, batch):
     import jax
     import jax.numpy as jnp
 
-    valid = jnp.asarray(batch["valid"], dtype=bool)
-    has_valid = jnp.any(valid, axis=1)
-    issued = jnp.asarray(batch["issued_mean"], dtype=jnp.float32)
-    delta_eef = jnp.asarray(batch["delta_eef"], dtype=jnp.float32)
-    delta_jaw = jnp.asarray(batch["delta_jaw"], dtype=jnp.float32)
-    img_before = jnp.asarray(batch["img_before"], dtype=jnp.float32)
-    img_after = jnp.asarray(batch["img_after"], dtype=jnp.float32)
+    def unit_rgb(value):
+        image = jnp.asarray(value)
+        # Disk tapes use bytes. The motor's online callback already supplies [0, 1].
+        return image.astype(jnp.float32) / 255.0 if image.dtype == jnp.uint8 else image.astype(jnp.float32)
 
     if cfg.model_type == "frame0_probe":
-        f0_img = jnp.asarray(batch["frame0_img"], dtype=jnp.float32)
+        f0_img = unit_rgb(batch["frame0_img"])
         f0_state = jnp.asarray(batch["frame0_state"], dtype=jnp.float32)
         b, h, w, _ = f0_img.shape
         coords = jnp.broadcast_to(_coord_grid(h, w)[None], (b, h, w, 2))
@@ -377,6 +418,18 @@ def apply_reader(params, cfg: ReaderConfig, batch):
         cos_hat, sin_hat = _normalize_cs(raw[:, 0], raw[:, 1], jnp.ones((b,), dtype=bool))
         return cos_hat, sin_hat, raw[:, 2], raw[:, 3]
 
+    valid = jnp.asarray(batch["valid"], dtype=bool)
+    has_valid = jnp.any(valid, axis=1)
+    def signal(field):
+        return jnp.where(valid[..., None], jnp.asarray(batch[field], dtype=jnp.float32), 0.0)
+
+    issued = signal("issued_mean")
+    # Commands are dimensionless. Feed centimetres to the neural motion heads.
+    delta_eef = 100.0 * signal("delta_eef")
+    delta_jaw = 100.0 * signal("delta_jaw")
+    pixels_valid = valid[..., None, None, None]
+    img_before = jnp.where(pixels_valid, unit_rgb(batch["img_before"]), 0.0)
+    img_after = jnp.where(pixels_valid, unit_rgb(batch["img_after"]), 0.0)
     vis_in, b, k = _vis_inputs(img_before, img_after)
     vis = _apply_cnn(params["cnn"], vis_in).reshape(b, k, cfg.cnn_width)
 
@@ -415,11 +468,11 @@ def apply_reader(params, cfg: ReaderConfig, batch):
 
 def predict_embodiment(params, cfg: ReaderConfig, batch):
     """Return decoded (yaw_deg_hat, xy_scale_hat, gripper_sign_hat) as NumPy arrays [B]."""
-    import jax.numpy as jnp
-
-    cos_h, sin_h, log_scale_h, grip_logit_h = apply_reader(params, cfg, batch)
+    cos_h, sin_h, log_scale_h, grip_logit_h = map(np.asarray, apply_reader(params, cfg, batch))
+    if not all(np.isfinite(x).all() for x in (cos_h, sin_h, log_scale_h, grip_logit_h)):
+        raise FloatingPointError("Nonfinite reader prediction")
     yaw_deg = np.degrees(np.arctan2(np.asarray(sin_h), np.asarray(cos_h))).astype(np.float32)
-    xy_scale = np.clip(np.exp(np.asarray(log_scale_h)), 0.25, 4.0).astype(np.float32)
+    xy_scale = np.exp(np.clip(log_scale_h, np.log(0.25), np.log(4.0))).astype(np.float32)
     grip_sign = np.where(np.asarray(grip_logit_h) >= 0.0, 1, -1).astype(np.int32)
     return yaw_deg, xy_scale, grip_sign
 
