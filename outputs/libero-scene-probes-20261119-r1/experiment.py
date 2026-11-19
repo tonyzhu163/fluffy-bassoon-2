@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import time
@@ -63,6 +64,8 @@ def collect(motor,root,scenes,goals,model):
         for scene in scenes:
             for layout,(variant,world) in LAYOUTS.items():
                 block=root/f'p{scene}'/layout
+                if block.is_symlink():
+                    continue
                 block.mkdir(parents=True)
                 reset=(scene,variant,world)
                 raw,physics,prompts=pilot.call(pipe,'reset',reset)
@@ -88,17 +91,41 @@ def collect(motor,root,scenes,goals,model):
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('output',type=Path)
-    out=parser.parse_args().output
+    parser.add_argument('--source-attempt',type=Path)
+    args=parser.parse_args()
+    out=args.output
     out.mkdir()
     assert len(pilot.jax.devices())==1 and pilot.jax.devices()[0].platform=='gpu'
     for repo,pin in [(pilot.SRC,'215abfb217dbac7d5f1273282331b9b1866c0479'),(pilot.PRO,'e5500c690c1498eca1b7050350654964190cdf70')]:
         assert subprocess.check_output(['git','-C',repo,'rev-parse','HEAD'],text=True).strip()==pin
     motor=pilot.policy_config.create_trained_policy(pilot.config.get_config('pi05_libero'),str(pilot.CKPT))
-    collect(motor,out/'fitting',range(28,32),TRAIN,None)
     frozen=out/'frozen.npz'
-    model=fit(out/'fitting',frozen)
-    pilot.write(out/'fit.json',dict(rows=len(model.goals),scale=model.scale.tolist(),
-        sha256=hashlib.sha256(frozen.read_bytes()).hexdigest(),goals=TRAIN,finish=time.time()))
+    if args.source_attempt:
+        from selector import Reachability
+        import json
+        prior=args.source_attempt.resolve()
+        receipt=json.loads((prior/'fit.json').read_text())
+        assert receipt['rows']==64 and receipt['goals']==list(TRAIN)
+        assert hashlib.sha256((prior/'frozen.npz').read_bytes()).hexdigest()==receipt['sha256']
+        assert len(list((prior/'fitting').glob('p*/*/g*/result.json')))==64
+        (out/'fitting').symlink_to(prior/'fitting',target_is_directory=True)
+        shutil.copyfile(prior/'frozen.npz',frozen)
+        shutil.copyfile(prior/'fit.json',out/'fit.json')
+        base=prior/'fresh/p32/base'
+        for goal in EVAL:
+            r=json.loads((base/f'g{goal}/result.json').read_text())
+            assert r['goal']==goal and r['scene']==32 and r['layout']=='base'
+            hits=np.load(base/f'g{goal}/native.npy')
+            assert hits.shape==(300,len(EVAL))
+        (out/'fresh/p32').mkdir(parents=True)
+        (out/'fresh/p32/base').symlink_to(base,target_is_directory=True)
+        pilot.write(out/'migration.json',dict(source=str(prior),fit_rows=64,fresh_rows=6,feature_hash=receipt['sha256']))
+        model=Reachability(frozen)
+    else:
+        collect(motor,out/'fitting',range(28,32),TRAIN,None)
+        model=fit(out/'fitting',frozen)
+        pilot.write(out/'fit.json',dict(rows=len(model.goals),scale=model.scale.tolist(),
+            sha256=hashlib.sha256(frozen.read_bytes()).hexdigest(),goals=TRAIN,finish=time.time()))
     print('frozen before fresh collection',flush=True)
     collect(motor,out/'fresh',range(32,36),EVAL,model)
     pilot.write(out/'complete.json',dict(fitting=64,fresh=96,finish=time.time()))

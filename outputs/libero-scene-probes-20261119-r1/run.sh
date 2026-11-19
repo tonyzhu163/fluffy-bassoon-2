@@ -24,4 +24,6 @@ start=$(date +%s)
 trap 'rc=$?; echo "$rc $(date +%s) $start" > "$out/exit.txt"' EXIT
 echo "$pin $(hostname) $$" > "$out/launch.txt"
 "$root/setups/robocasa365-native-20261101-r1/env/bin/python" -Bu "$code/scripts/[train]gpu_probe.py" --expected-count 1 --purpose training --direct-hostname "$(hostname)" --output "$out/gpu.json" > "$out/probe.log" 2>&1
-timeout --kill-after=20s 115m "$legacy/envs/openpi-215abfb/bin/python" -Bu "$here/experiment.py" "$out/episodes" > "$out/run.log" 2>&1
+resume=()
+if [[ ${3:-panel} == resume01 ]]; then resume=(--source-attempt "$(dirname "$out")/scene01/episodes"); fi
+timeout --kill-after=20s 115m "$legacy/envs/openpi-215abfb/bin/python" -Bu "$here/experiment.py" "$out/episodes" "${resume[@]}" > "$out/run.log" 2>&1

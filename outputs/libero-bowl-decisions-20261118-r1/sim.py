@@ -23,13 +23,15 @@ def serve(pipe, task_ids=(4, 8)):
                 scene, variant = value[:2]
                 world_task = value[2] if len(value) == 3 else task_ids[0]
                 world_index = task_ids.index(world_task)
-                paths = [manifest.resolve_bddl('libero_goal', task, variant) for task in task_ids]
+                label_variant = 'BASE' if len(value) == 3 else variant
+                paths = [manifest.resolve_bddl('libero_goal', task, label_variant) for task in task_ids]
+                world_path = manifest.resolve_bddl('libero_goal', world_task, variant)
                 problems = [robosuite_parse_problem(str(p)) for p in paths]
                 goals = [p['goal_state'] for p in problems]
                 prompts = [' '.join(p['language_instruction']) if isinstance(p['language_instruction'], list)
                            else p['language_instruction'] for p in problems]
                 initial = env.create(dict(suite='libero_goal', task_id=task_ids[0], variant=variant,
-                    init_state_id=scene, seed=18180100 + scene, _bddl_path=str(paths[world_index]),
+                    init_state_id=scene, seed=18180100 + scene, _bddl_path=str(world_path),
                     camera_names=['agentview', 'robot0_eye_in_hand'], camera_height=256,
                     camera_width=256, control_mode='relative', max_steps=300))
                 world = env._env.env
