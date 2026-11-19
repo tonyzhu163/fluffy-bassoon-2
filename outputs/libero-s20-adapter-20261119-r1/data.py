@@ -213,7 +213,9 @@ class DemonstrationSampler:
             row = demos[rng.integers(len(demos))]
             group = self.archive(row["hdf5_path"])[row["demo"]]
             steps = row["steps"]
-            t = int(rng.integers(max(1, steps - CHUNK)))
+            if steps < 2:
+                raise ValueError(f"Expected at least two controls in {row['hdf5_path']}:{row['demo']}")
+            t = int(rng.integers(steps - 1))
             end = min(t + CHUNK + 1, steps)
             action_len = end - t - 1
             actions[i, :action_len] = group["actions"][t + 1:end]

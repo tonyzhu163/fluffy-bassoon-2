@@ -27,12 +27,15 @@ Report distinct trajectories and task/reset groups actually sampled.
 Evaluate on the eight project development tasks, each with two fresh resets
 under BASE and S20. Compare default, original paced execution, the adapter's
 solver with its correction forced to zero, and the learned adapter forced
-to BASE, adapter forced to S20, and adapter using public command–motion lag.
-Force both flags independently to measure the informed adapter and the fixed
-flag selected on separate fitting resets. The adapter arms and the default
+to BASE, adapter forced to S20, and adapter using public command–motion lag,
+as well as from-reset `adapter_base_full` and `adapter_s20_full` arms
+(running without the 40-control default opening) to measure the cross-episode
+informed motor ceiling separately from the 40-control online-lag switching
+arms. Force both flags independently to measure the informed adapter and the fixed
+flag selected on separate fitting resets. The 40-control adapter arms and the default
 share a charged 40-control opening. The lag estimator then uses that opening
 with threshold eight, falling back to the source-selected flag if undefined.
-The paced control keeps its original cadence from reset. Compare the paired
+The paced control and `*_full` adapter arms run from reset. Compare the paired
 native successes and BASE regressions. Timing-conditioned improvement over
 the strongest fixed setting establishes motor coverage. Improvement over the
 lag-estimate arm measures the remaining opportunity for learned inference.

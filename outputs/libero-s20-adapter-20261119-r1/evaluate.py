@@ -21,7 +21,10 @@ from simulator import Simulator
 
 TIMING = {"BASE": 0, "S20": 1}
 FORCED = {"adapter_base": 0, "adapter_s20": 1}
-ARMS = ("default", "paced", "solver_zero", *FORCED, "adapter_lag")
+FORCED_FULL = {"adapter_base_full": 0, "adapter_s20_full": 1}
+ALL_FORCED = {**FORCED, **FORCED_FULL}
+NO_SHARED_OPENING = frozenset(("paced", *FORCED_FULL))
+ARMS = ("default", "paced", "solver_zero", *FORCED, "adapter_lag", *FORCED_FULL)
 PREFIX_CONTROLS = 40
 LAG_THRESHOLD = 8
 LAG_MAX = 21
@@ -79,14 +82,14 @@ def episode(simulator, motor, case, arm, prompt, fallback):
 
     done = False
     opening = None
-    if arm != "paced":
+    if arm not in NO_SHARED_OPENING:
         while len(issued) < PREFIX_CONTROLS and not done:
             done = advance(None, 5)
         opening = dict(controls=len(issued), issued=digest(issued), positions=digest(positions),
                        gripper=digest(gripper), rewards=digest(rewards), public=public_digest(raw),
                        ended=done)
 
-    timing = -1 if arm == "solver_zero" else FORCED.get(arm)
+    timing = -1 if arm == "solver_zero" else ALL_FORCED.get(arm)
     lag = None
     if arm == "adapter_lag" and not done:
         lag = estimate_command_lag(issued, positions, positions_timing="after",
@@ -124,7 +127,7 @@ def collect(simulator, motor, cases, output, arms, fallback):
         prompts.setdefault(task, first["reset"]["prompt"])
         if any(row["reset"] != first["reset"] for row in comparison.values()):
             raise ValueError(f"Paired reset changed on {case}")
-        if any(comparison[arm]["opening"] != first["opening"] for arm in arms if arm != "paced"):
+        if any(comparison[arm]["opening"] != first["opening"] for arm in arms if arm not in NO_SHARED_OPENING):
             raise ValueError(f"Shared opening changed on {case}")
         row = dict(case=case, arms=comparison)
         rows.append(row)
@@ -147,16 +150,23 @@ def summarize(rows, fixed, source_success):
         scores = {arm: [row["arms"][arm]["success"] for row in group] for arm in ARMS}
         scores["adapter_true"] = [row["arms"]["adapter_base" if row["case"]["variant"] == "BASE"
                                             else "adapter_s20"]["success"] for row in group]
+        scores["adapter_true_full"] = [row["arms"]["adapter_base_full" if row["case"]["variant"] == "BASE"
+                                                 else "adapter_s20_full"]["success"] for row in group]
         scores["adapter_fixed"] = scores[fixed]
-        pairs = {}
-        for arm, arms in scores.items():
-            if arm == "adapter_true":
-                continue
-            pairs[arm] = dict(true_wins=sum(a and not b for a, b in zip(scores["adapter_true"], arms)),
-                              true_losses=sum(b and not a for a, b in zip(scores["adapter_true"], arms)))
+
+        def paired_vs(reference_name):
+            ref = scores[reference_name]
+            return {
+                arm: dict(true_wins=sum(a and not b for a, b in zip(ref, xs)),
+                          true_losses=sum(b and not a for a, b in zip(ref, xs)))
+                for arm, xs in scores.items() if arm != reference_name
+            }
+
+        pairs = paired_vs("adapter_true")
+        pairs_full = paired_vs("adapter_true_full")
         lag_rows = [row for row in group if not row["arms"]["adapter_lag"]["opening"]["ended"]]
         readout[panel] = dict(trials=len(group), successes={arm: sum(xs) for arm, xs in scores.items()},
-                              true_vs=pairs, lag_decisions=len(lag_rows),
+                              true_vs=pairs, true_full_vs=pairs_full, lag_decisions=len(lag_rows),
                               lag_abstentions=sum(row["arms"]["adapter_lag"]["lag"] is None for row in lag_rows),
                               lag_correct=sum(row["arms"]["adapter_lag"]["timing_chosen"] ==
                                               TIMING[row["case"]["variant"]] for row in lag_rows))
@@ -186,8 +196,8 @@ def main():
     args.output.mkdir()
     write(args.output / "design.json", dict(panel=args.panel, checkpoint=str(args.checkpoint),
           source_cases=source_cases, query_cases=query_cases, arms=ARMS, prefix_controls=PREFIX_CONTROLS,
-          paced_opening="from reset", noise_seed_offset=NOISE_SEED_OFFSET,
-          lag_threshold=LAG_THRESHOLD, lag_max=LAG_MAX,
+          paced_opening="from reset", no_shared_opening=sorted(NO_SHARED_OPENING),
+          noise_seed_offset=NOISE_SEED_OFFSET, lag_threshold=LAG_THRESHOLD, lag_max=LAG_MAX,
           prompt="BASE wording in both timing arms", native_relative=True))
     motor = Motor(args.checkpoint)
     with Simulator() as simulator:
