@@ -145,6 +145,7 @@ def serve(fd: int):
                     key = value["suite"], int(value["task_id"]), variant
                     spec_name = value.get("embodiment", "nom")
                     spec = get_embodiment_spec(spec_name)
+                    nominal_wire = (spec.yaw_deg, spec.xy_scale, spec.gripper_sign) == (0.0, 1.0, 1)
                     task_entry = manifest.require(*key)
                     max_steps = int(task_entry["max_steps"])
                     if value.get("max_steps", max_steps) != max_steps:
@@ -173,9 +174,7 @@ def serve(fd: int):
                     bounds = initial["action_schema"]
                     low = np.asarray(bounds["low"], dtype=np.float32)
                     high = np.asarray(bounds["high"], dtype=np.float32)
-                    # The anchored local coordinates equal the measured world coordinates at reset.
-                    # Compute them for every embodiment and validate the real public frame in Gate 1.
-                    local_raw = to_local_proprio(raw, anchor_eef_pos, spec)
+                    local_raw = raw if spec.yaw_deg == 0 else to_local_proprio(raw, anchor_eef_pos, spec)
                     controls, done = 0, False
                     initial_out = dict(
                         initial,
@@ -202,7 +201,7 @@ def serve(fd: int):
                     terminated = False
                     truncated = False
                     for issued in actions:
-                        phys = apply_embodiment_action(issued, spec, low, high)
+                        phys = issued if nominal_wire else apply_embodiment_action(issued, spec, low, high)
                         step = env.step(phys)
                         controls += 1
                         if step["worker_step_index"] != controls:

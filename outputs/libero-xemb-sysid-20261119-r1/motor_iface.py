@@ -134,6 +134,7 @@ def run_episode(
 
     rewards = []
     view_hashes = []
+    opening_proposal_sha256 = None
     controls = 0
     done = False
     step = None
@@ -224,6 +225,8 @@ def run_episode(
         proposal = np.asarray(policy.infer(item, noise=noise)["actions"], dtype=np.float32)
         if proposal.shape != (10, 7) or not np.isfinite(proposal).all():
             raise ValueError(f"Invalid π0.5 proposal on {case} / {spec.name}")
+        if controls == 0:
+            opening_proposal_sha256 = array_digest(proposal)
         count = min(5, limit - controls)
         # OpenPI outputs decoded relative OSC controls, including the native gripper sign.
         canonical = np.clip(proposal[:count], low, high)
@@ -241,7 +244,9 @@ def run_episode(
         reset=reset_info,
         released_prompt=released_prompt,
         controls=controls,
+        native_rewards=rewards,
         native_return=sum(rewards, 0.0),
+        opening_proposal_sha256=opening_proposal_sha256,
         success=bool(step["success"]) if step is not None else False,
         terminated=bool(step["terminated"]) if step is not None else False,
         truncated=bool(step["truncated"]) if step is not None else False,

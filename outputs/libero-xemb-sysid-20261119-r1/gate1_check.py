@@ -1,6 +1,7 @@
 """Gate 1 realizability check: nominal vs. privileged-oracle frozen π0.5 across 6 embodiments."""
 
 import argparse
+from functools import partial
 import json
 from pathlib import Path
 
@@ -17,6 +18,17 @@ GATE1_EMBODIMENT_NAMES = (
     "cont_45_nom",
     "cont_135_075_inv",
 )
+
+
+def check_paired_reset(reference, actual, *, output, case, embodiment, arm):
+    if reference == actual:
+        return
+    differences = {key: dict(expected=reference.get(key), observed=actual.get(key))
+                   for key in reference.keys() | actual.keys() if reference.get(key) != actual.get(key)}
+    write_json(output / "gate1-reset-mismatch.json", dict(
+        case=case, embodiment=embodiment, arm=arm, reference="fam_nom/nominal", differences=differences,
+    ))
+    raise ValueError(f"Unpaired frame 0 on {case} / {embodiment} / {arm}: {list(differences)}")
 
 
 def main():
@@ -48,29 +60,20 @@ def main():
                 case = dict(suite=suite, task_id=int(task_id), variant="BASE",
                             init_state_id=args.init_state_id, seed=seed)
                 reference = None
-
-                def check_reset(actual):
-                    nonlocal reference
-                    if reference is None:
-                        reference = actual
-                    elif reference != actual:
-                        differences = {k: dict(expected=reference[k], observed=actual[k])
-                                       for k in reference if reference[k] != actual[k]}
-                        write_json(args.output / "gate1-reset-mismatch.json", dict(
-                            case=case, embodiment=emb_name, arm=arm, reference="fam_nom/nominal",
-                            differences=differences,
-                        ))
-                        raise ValueError(f"Unpaired frame 0 on {case} / {emb_name} / {arm}: {list(differences)}")
-
                 for emb_name in emb_names:
                     spec = get_embodiment_spec(emb_name)
                     arms = {}
                     for arm, estimates in (("nominal", (0.0, 1.0, 1)),
                                            ("privileged_oracle", (spec.yaw_deg, spec.xy_scale, spec.gripper_sign))):
                         yaw, scale, grip = estimates
+                        check_reset = None if reference is None else partial(
+                            check_paired_reset, reference, output=args.output, case=case, embodiment=emb_name, arm=arm,
+                        )
                         arms[arm] = run_episode(simulator, policy, case, spec, yaw_hat=yaw,
                                                 scale_hat=scale, grip_hat=grip, check_reset=check_reset,
                                                 audit_base_views=emb_name == "fam_nom")
+                        if reference is None:
+                            reference = arms[arm]["reset"]
                     nom_rec, ora_rec = arms["nominal"], arms["privileged_oracle"]
                     row = dict(
                         suite=suite,

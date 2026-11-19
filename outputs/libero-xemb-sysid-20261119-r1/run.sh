@@ -144,6 +144,18 @@ case "$stage" in
         time_limit=60m
         command=("$here/gate1_check.py" --output "$out/gate1" --panel development)
         ;;
+    pilot-collect)
+        time_limit=45m
+        command=("$here/collect.py" --output "$out/archive" --panel poc --modes active_probe,passive_attempt1 --passive-max-controls 15)
+        ;;
+    pilot-train)
+        time_limit=45m
+        command=("$here/train_readers.py" --archive "$4" --output "$out/train" --steps 1500 --batch-size 32 --seeds 41)
+        ;;
+    pilot-eval)
+        time_limit=60m
+        command=("$here/eval_live.py" --archive "$4" --train-dir "$5" --output "$out/live" --panel poc --seed-ckpt 41)
+        ;;
     collect)
         time_limit=90m
         command=("$here/collect.py" --output "$out/archive" --panel full --modes active_probe,passive_attempt1)
