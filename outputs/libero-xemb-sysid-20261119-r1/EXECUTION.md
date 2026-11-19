@@ -24,3 +24,15 @@ Gate 1 finished 48 pairs (96 independent development episodes), plus the four ea
 Baige accepted the live query job `job-xmk8bfnp5dx2` at 20:13:26 Shanghai on one Pro6K GPU with a 45-minute limit. It uses the same detached 65c83998 motor, 62 supports and eight frozen reader checkpoints as the fit. The submission rechecks the positive final Gate 1 file before starting any query. A later source audit added additional input-admission checks. The active pilot remains on its original source. The later reader code passed all seven Linux tests. [Linux qualification](evidence/cpu06/run.log)
 
 The 33 live pilot episodes completed with all 11 arms present. Both shifted cases satisfied the same-case rescue rule. A sensor-only follow-up matched the three support starts and verified a 2.07° mean yaw error for the public-joint Jacobian. The first fresh GPU query worker, `job-8c59yp555fsw`, stopped before the first control because its opening action hash differed from the original pilot, despite matching reset fields and noise. It supplied zero scored queries. The hash difference identifies a cross-allocation reproducibility limit; the cause and numerical magnitude are unknown. The follow-up keeps the original score and frozen predictions, and replays nominal, retained-active, analytic visual and public-joint choices on all three queries in one new process. Admission requires exact archived reset and noise and identical opening actions across all 12 fresh episodes. It retains the full fresh opening proposal and both hashes.
+
+The fresh four-controller comparison ran on `job-06ktn1ir67wb` at 8c51ba0c. All 12 queries completed. Each controller shared an exact opening proposal within this worker, and all reset and noise fields matched the original pilot. Nominal, learned retained, analytic visual and analytic joint scored 2, 3, 3 and 3 out of 3. Nominal again failed the composition and now succeeded at +45°. The independent reward readback verified all twelve return sequences, fixed estimates, source hashes and terminal flags. [Readback](evidence/scoring/joint.json) · [Per-control rewards](evidence/gpu05joint/joint.json)
+
+| Baige job | Final scheduler state | Scheduler time on one Pro6K |
+| --- | --- | ---: |
+| job-94hoq9rcbqeo, smoke and motor gate | Succeeded | 16m 10s |
+| job-ilmqlamr20k0, support collection and fits | Succeeded | 6m 50s |
+| job-xmk8bfnp5dx2, 33 live reader comparisons | Succeeded | 5m 10s |
+| job-8c59yp555fsw, cross-allocation admission | Failed before first control | 2m 51s |
+| job-06ktn1ir67wb, 12 fresh paired comparisons | Succeeded | 2m 30s |
+
+Scheduler durations sum to 2,011 seconds (0.559 GPUh). The seven worker-stage timers sum to 1,906 seconds (0.529 GPUh). Charging submission through terminal reporting for every job, including the delayed failure status, gives a conservative 0.631 GPUh. All jobs terminated within the shared 12 GPU-hour ceiling. No new allocation or fit was scheduled after the matched sensor replay. Checkpoints and native tapes remain on the Baige project volume. [Scheduler receipt](evidence/baige-complete.jpg) · [Frozen checkpoint manifest](evidence/gpu02fit/checkpoint-sha256.txt)
