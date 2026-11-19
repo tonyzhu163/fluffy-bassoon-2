@@ -8,7 +8,7 @@ The manifest is the sister run's `../libero90-meta-retry-20261119-r1/cases.json`
 
 Every episode has `public.npz` and `result.json`. Load archives with `allow_pickle=False`. The public tape has chronological issued actions `issued[T,7]`, post-control wrist `positions[T,3]`, pre-first-control `initial_position[3]`, post-control jaw `gripper[T,2]` and native `rewards[T]`. The scalar `controls` is T. The scalar boolean `terminal` is native terminal success. A horizon failure retains all 400 controls, has terminal false and is marked truncated in result.json. The JSON fields `controls`, `score` (sum of native rewards), `success`, `truncated`, `policy_calls`, `feature_calls` and timings describe the completed episode. Settling controls are separate.
 
-Each query also has `decisions.npz`. Its arrays are finite float32 `state[J,8]` (position, axis-angle, two jaw positions), `embedding[J,D]` (pooled frozen visual/language prefix, expected D=2048), `proposals[J,K,10,7]`, `scores[J,K]` (before execution), integer `index[J]`, `offset[J]` (zero-based physical control count at decision) and `length[J]` (executed prefix length, 1–5). Concatenate state then embedding to recover the frozen query feature. K=2 throughout except for live `base`, where K=1. Both collection branches choose by independent fair coins, with prospective constant zero scores. The native result labels only the chosen trajectory. All failed episodes are retained.
+Each query also has `decisions.npz`. Its arrays are finite float32 `state[J,8]` (position, axis-angle, two jaw positions), `embedding[J,D]` (pooled frozen visual/language prefix, expected D=2048), native-precision `proposals[J,K,10,7]`, float32 `scores[J,K]` (before execution), integer `index[J]`, `offset[J]` (zero-based physical control count at decision) and `length[J]` (executed prefix length, 1–5). Concatenate state then embedding to recover the frozen query feature. K=2 throughout except for live `base`, where K=1. Both collection branches choose by independent fair coins, with prospective constant zero scores. The native result labels only the chosen trajectory. All failed episodes are retained.
 
 ## Frozen reader import
 
@@ -20,3 +20,18 @@ The collector starts a persistent CPU-only Python subprocess in the reader envir
 `path` is a single self-contained portable weights file for the recipe, including ensemble and normalization parameters. Its SHA-256 is recorded. `recipe` is exactly `meta` or `imitation`. `support` is a dictionary of the seven numeric public tape arrays named above, or Python `None` for cleared history. The reader constructs its history including the episode boundary from this tape. `state` is float32 [8], `embedding` float32 [D] and `proposals` float32 [2,10,7]. The callable returns two finite scores in proposal order as a NumPy-compatible array, averaging logits across frozen seeds before returning. Calls are stateless with respect to query history. All tensor/device conversion belongs in the reader. The collector executes the first argmax. It supplies no query rewards, earlier query decisions, timing, IDs, seeds, sibling outcomes or evaluator metadata.
 
 Across live policies, proposal noise is shared by trial, replan ordinal and candidate index. Each policy resets the simulator and visits its own observations. Base executes one draw. Matched computes both and executes candidate zero. For live matched and learned queries the collector also makes one feature call per decision. Base saves the same feature for analysis and its cost is recorded separately from the one native action inference. Support uses one native draw per five controls.
+
+## Running on Baige
+
+From the clean deployed worktree, set `pin` to its verified full Git SHA. Run smoke on the existing development GPU. It selects only the first registered fitting row and publishes three episodes. All other stages require a one-GPU Distributed Training allocation. The runner writes the GPU probe, run log and exit times under `EPISODE_ROOT/.attempts/`. Use the same episode root, pin, weights and shard arguments to resume interrupted work. A complete trial is verified and skipped. An incomplete trial is repeated from reset.
+
+    run=outputs/libero90-full-action-20261119-r1
+    pin=$(git rev-parse HEAD)
+    out=/mowenjie/fluffy-bassoon-2/$run
+    bash "$run/runner.sh" "$pin" smoke "$out/smoke01"
+    bash "$run/runner.sh" "$pin" fitting "$out/episodes" --shard-index 0 --shards 1
+    bash "$run/runner.sh" "$pin" development "$out/episodes" --shard-index 0 --shards 1
+    bash "$run/runner.sh" "$pin" live-development "$out/episodes" --meta "$meta" --imitation "$imitation"
+    bash "$run/runner.sh" "$pin" live-test "$out/episodes" --meta "$meta" --imitation "$imitation"
+
+Set `meta` and `imitation` to the frozen weight files produced by the model worker. For parallel collection use a common shard count with distinct zero-based indices per allocation. The stages above describe separate allocation entry points.
