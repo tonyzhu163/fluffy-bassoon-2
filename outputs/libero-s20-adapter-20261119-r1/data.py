@@ -49,6 +49,8 @@ def file_matches(path, row):
 def fetch(row, path, endpoints):
     if file_matches(path, row):
         return
+    if not endpoints:
+        raise RuntimeError(f"Previously staged archive failed verification: {path}")
     path.parent.mkdir(parents=True, exist_ok=True)
     partial = path.with_suffix(".part")
     failure = []
@@ -121,6 +123,7 @@ def prepare(args):
             return cached
         return args.payload.resolve() / name
 
+    destination = args.payload.resolve()
     local = {name: payload_path(name) for name in inventory}
     reserve = sum(row["bytes"] for name, row in inventory.items() if not local[name].exists())
     if shutil.disk_usage(args.payload).free < reserve:
@@ -131,7 +134,11 @@ def prepare(args):
     progress_path = args.output.with_name(args.output.stem + "-progress.json")
     status = {}
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
-        jobs = {pool.submit(fetch, row, local[name], args.endpoint): name for name, row in inventory.items()}
+        jobs = {}
+        for name, row in inventory.items():
+            path = local[name]
+            endpoints = args.endpoint if path.is_relative_to(destination) else []
+            jobs[pool.submit(fetch, row, path, endpoints)] = name
         for job in as_completed(jobs):
             name = jobs[job]
             try:

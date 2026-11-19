@@ -87,7 +87,7 @@ def main():
         zero_adapter = motor.proposal(preview["raw"][0], preview["prompt"][0], noise, int(preview["timing"][0]))
         parity = float(np.max(np.abs(original - zero_adapter)))
         if parity > 1e-4:
-            raise ValueError(f"Zero adapter changed normalized-runtime commands by {parity}")
+            raise ValueError(f"Zero adapter changed decoded commands by {parity}")
         print(json.dumps(dict(zero_adapter_max_command_error=parity,
                               adapter_parameters=sum(int(p.size) for p in jax.tree.leaves(params)))), flush=True)
         start = 0
