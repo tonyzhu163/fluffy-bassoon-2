@@ -152,6 +152,10 @@ case "$stage" in
         time_limit=45m
         command=("$here/train_readers.py" --archive "$4" --output "$out/train" --steps 1500 --batch-size 32 --seeds 41)
         ;;
+    joint-query)
+        time_limit=20m
+        command=("$here/joint_queries.py" --predictions "$4" --pilot "$5" --output "$out/joint.json")
+        ;;
     pilot-eval)
         time_limit=60m
         command=("$here/eval_live.py" --archive "$4" --train-dir "$5" --output "$out/live" --panel poc --seed-ckpt 41)
