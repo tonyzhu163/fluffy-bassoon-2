@@ -77,7 +77,7 @@ def evaluate(out,openings):
     pairs={(r['pose'],r['regime']):im for r,im,_ in rows}
     summary=dict(rows=[r for r,_,_ in rows],hit=sum(r['hit'] for r,_,_ in rows),
                  final=sum(r['final'] for r,_,_ in rows),
-                 identical_reset_images=sum(np.array_equal(pairs[p,'BASE'],pairs[p,'D02']) for p in range(12)))
+                 identical_reset_images=sum(np.array_equal(pairs[p,'BASE'],pairs[p,'D02']) for p in range(12,24)))
     (out/'fresh.json').write_text(json.dumps(summary,indent=2))
 
 
