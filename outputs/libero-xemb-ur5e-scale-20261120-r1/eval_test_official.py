@@ -61,6 +61,7 @@ def build_test_plan():
     plan = []
     idx = 0
     for suite, tid in tasks:
+        sup_seed = 31800000 + 10_000 * suites.index(suite) + 100 * tid + 11
         for spec in EVAL_EMBODIMENTS:
             plan.append(
                 dict(
@@ -69,6 +70,8 @@ def build_test_plan():
                     arm=DEV_ARM,
                     suite=suite,
                     task_id=tid,
+                    init_state_id=11,
+                    seed=sup_seed,
                     support_init_state_id=11,
                     query_init_state_id=13,
                     embodiment=spec.name,
