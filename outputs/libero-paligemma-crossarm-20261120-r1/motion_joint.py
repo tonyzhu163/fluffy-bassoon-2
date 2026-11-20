@@ -229,7 +229,7 @@ def main():
                                 "source_control.py", "sim.py", "motor.py", "motor_data.py", "motor_weights.py")]
     files.extend(prior / n for n in ("arm_env.py", "sim_reset.py"))
     report = {
-        "stage": "motion_joint", "train_bodies": list(BODIES), "status": "running", "revision": args.revision,
+        "stage": "source_motion_joint_diagnostic", "train_bodies": list(BODIES), "status": "running", "revision": args.revision,
         "argv": sys.argv, "torch": str(torch.__version__), "numpy": np.__version__,
         "code_sha256": {p.name: ae.digest_file(p) for p in files},
         "config": {"task": ae.TASK, "bodies": BODIES, "support": ae.SUPPORT, "basis": ae.MOTION_QUERY,
