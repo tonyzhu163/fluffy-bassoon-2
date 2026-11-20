@@ -29,7 +29,10 @@ START_TS="$(date +%s)"
 echo "$COMMIT $(hostname) $$ phase-a-hybrid" > "$OUT/launch.txt"
 date -u +"%Y-%m-%dT%H:%M:%SZ" > "$OUT/gpu-start.txt"
 
-"$PY" "$REPO/scripts/[train]gpu_probe.py" --baige-container --expected-count "$NUM_GPUS" --output "$OUT/gpu.json" > "$OUT/probe.log" 2>&1
+export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+"$PY" -Bu "$REPO/scripts/[train]gpu_probe.py" \
+  --expected-count "$NUM_GPUS" --purpose training --baige-container --baige-exclusive-training \
+  --output "$OUT/gpu.json" > "$OUT/probe.log" 2>&1
 
 # Step 1: Train 3-seed 10-channel hybrid reader on GPU 0 (~3 min).
 CUDA_VISIBLE_DEVICES=0 "$PY" "$SCRIPT" train-hybrid \
