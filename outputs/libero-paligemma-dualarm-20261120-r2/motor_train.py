@@ -24,6 +24,7 @@ import transformers
 
 import motor as base
 import servo_motor as policies
+from generated_split import SOURCE_KIND
 from motor_bank import BODIES, coverage, load_bank, partition, sample, validation_anchors
 from motor_weights import sha256
 
@@ -38,14 +39,17 @@ def exclusive(directory):
         yield
 
 
-def source_ids():
-    return {p.name: sha256(p) for p in (
+def source_ids(include_generated=False):
+    paths = (
         HERE / "motor_train.py", HERE / "motor_bank.py", HERE / "motor_eval.py", HERE / "servo_motor.py",
         PRIOR / "motor.py", PRIOR / "motor_data.py", PRIOR / "motor_weights.py",
         PRIOR / "adapt_eval.py", PRIOR / "sim.py", PRIOR / "pretrain_reader.py", PRIOR / "oracle_fallback.py",
         HERE.parent / "libero-crossarm-20261120-r1" / "arm_env.py",
         HERE.parent / "libero-crossarm-20261120-r1" / "sim_reset.py",
-    )}
+    )
+    if include_generated:
+        paths += (HERE / "generated_split.py",)
+    return {p.name: sha256(p) for p in paths}
 
 
 def runtime():
@@ -63,6 +67,45 @@ def save_pt(path, value):
 
 def read_pt(path):
     return torch.load(path, map_location="cpu", weights_only=True, mmap=True)
+
+
+def initialize_candidate(args, motor, records, indices, validation):
+    """Bind inherited weights to the parent fit and its original ordered source tapes."""
+    path = args.init_candidate.resolve(strict=True)
+    fit = path.parent.parent
+    manifest = fit / "manifest.json"
+    fit_id = sha256(manifest)
+    parent = json.loads(manifest.read_bytes())["contract"]
+    index = json.loads((fit / "candidates.json").read_bytes())
+    snap, = [s for s in index["snapshots"] if s["file"] == str(path.relative_to(fit))]
+    digest = sha256(path)
+    if (path != fit / "candidates" / f"step-{snap['step']:06d}.pt"
+            or index["status"] != "complete" or index["fit_id"] != fit_id
+            or digest != args.init_sha256 or digest != snap["sha256"]
+            or parent["protocol"] != "dualarm-native-goal5-v2" or parent["source_bodies"] != list(BODIES)
+            or parent["weights"] != motor.identity or policies.architecture_name(parent) != args.architecture):
+        raise ValueError("Initialization differs from its pinned dual-source candidate")
+    previous = parent["collector_index_sha256"]
+    if not previous or previous != indices[:len(previous)]:
+        raise ValueError("Prepend the exact ordered bank snapshot from the parent fit")
+    if parent["validation_anchors"] != validation:
+        raise ValueError("Offline validation tapes and control indices must match the parent fit")
+    original = parent["episodes"]
+    reused = [r for r in records if r["bank"] < len(previous)]
+    if any(r["split"] != "train" for r in records if r["bank"] >= len(previous)):
+        raise ValueError("A continuation can add only training episodes to its parent's offline split")
+    identity = ("body", "pose", "seed", "split", "bank", "file", "sha256", "trajectory_sha256")
+    if len(original) != len(reused) or any(
+            any(old[k] != new[k] for k in identity) for old, new in zip(original, reused, strict=True)):
+        raise ValueError("Parent fit and expanded fit disagree on inherited source tapes")
+    saved = read_pt(path)
+    if (saved["schema"] != base.SCHEMA or saved["contract"] != parent or saved["fit_id"] != fit_id
+            or saved["step"] != snap["step"] or saved["best"]["step"] != snap["step"]
+            or saved["best"]["mae"] != snap["validation"]["mae"]):
+        raise ValueError("Parent candidate and fit contract disagree")
+    motor.restore_delta(saved["best"]["model"])
+    return dict(file=str(path), sha256=digest, step=snap["step"], fit_id=fit_id,
+                optimizer="fresh AdamW", normalization="parent candidate")
 
 
 def schedule(args):
@@ -123,9 +166,14 @@ def train(args):
             raise ValueError(f"This run is pinned to {MIX}")
         unique = [r for r in records if "duplicate_of" not in r]
         episode_files = {id(e): [r["bank"], r["file"]] for e, r in zip(episodes, unique, strict=True)}
-        states = np.concatenate([e.state for e in episodes if int(e.pose) < 28]).astype(np.float64)
-        motor.state_mean.copy_(torch.as_tensor(states.mean(0)))
-        motor.state_scale.copy_(torch.as_tensor(np.maximum(states.std(0), 0.01)))
+        validation = [[*episode_files[id(e)], t] for e, t in anchors]
+        initialization = {}
+        if args.init_candidate:
+            initialization["initial_candidate"] = initialize_candidate(args, motor, records, indices, validation)
+        else:
+            states = np.concatenate([e.state for e in episodes if e.pose in groups[e.body]]).astype(np.float64)
+            motor.state_mean.copy_(torch.as_tensor(states.mean(0)))
+            motor.state_scale.copy_(torch.as_tensor(np.maximum(states.std(0), 0.01)))
         lora = [p for p in motor.vlm.parameters() if p.requires_grad]
         head = list(motor.head.parameters())
         params = lora + head
@@ -137,13 +185,14 @@ def train(args):
                           anchors_per_offline_pose=args.anchors_per_pose, total_steps=args.steps,
                           sampler="equal arm; uniform successful pose, unique tape, control")
         contract = dict(protocol="dualarm-native-goal5-v2", revision=args.revision, seed=args.seed,
-                        architecture=args.architecture,
+                        architecture=args.architecture, **initialization,
                         microbatch=args.microbatch, weights=motor.identity, source_bodies=list(BODIES),
                         episodes=records, coverage=coverage(records), collector_index_sha256=indices, recipe=fit_recipe,
-                        holdout_poses=sorted({int(e.pose) for e in episodes if int(e.pose) >= 28}),
-                        train_poses=sorted({int(e.pose) for e in episodes if int(e.pose) < 28}),
-                        all_motor_poses=sorted({int(e.pose) for e in episodes}), sources=source_ids(),
-                        validation_anchors=[[*episode_files[id(e)], t] for e, t in anchors],
+                        holdout_poses=sorted({int(pose) for arm in held.values() for pose in arm}),
+                        train_poses=sorted({int(pose) for arm in groups.values() for pose in arm}),
+                        all_motor_poses=sorted({int(e.pose) for e in episodes}),
+                        sources=source_ids(include_generated=any(r.get("source_kind") == SOURCE_KIND for r in records)),
+                        validation_anchors=validation,
                         runtime=runtime(), trainable=dict(lora=sum(p.numel() for p in lora),
                                                          head=sum(p.numel() for p in head)))
         if args.resume:
@@ -223,8 +272,12 @@ def main():
     fit.add_argument("--microbatch", type=int, choices=(1, 2, 4, 8), default=4)
     fit.add_argument("--scratch", type=Path, help="local or shared project NVMe for staged camera arrays")
     fit.add_argument("--resume", action="store_true")
+    fit.add_argument("--init-candidate", type=Path, help="warm-start from this registered source candidate")
+    fit.add_argument("--init-sha256", help="preselected SHA-256 of the parent candidate")
     confirm.add_argument("--seal-dir", type=Path, required=True, help="one shared directory for this campaign")
     args = parser.parse_args()
+    if args.stage == "train" and bool(args.init_candidate) != bool(args.init_sha256):
+        parser.error("--init-candidate and --init-sha256 must be specified together")
     args.output = args.output.resolve()
     with exclusive(args.output):
         if args.stage == "train":

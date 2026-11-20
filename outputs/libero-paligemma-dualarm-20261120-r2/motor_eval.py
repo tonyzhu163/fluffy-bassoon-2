@@ -1,6 +1,7 @@
 """Fixed native source panels, resumable episode receipts and checkpoint promotion."""
 
 import json
+from pathlib import Path
 import shutil
 
 import numpy as np
@@ -8,7 +9,8 @@ import torch
 
 import adapt_eval as ae
 import motor as base
-from motor_bank import BODIES, NATIVE_RESET, OFFLINE, TRAIN, verify_reset
+from generated_split import SOURCE_KIND
+from motor_bank import BODIES, NATIVE_RESET, OFFLINE, TRAIN, source_fingerprint, validate_source_records, verify_reset
 from motor_weights import sha256
 
 PANELS = {"dev": (tuple(range(32, 36)), 3), "confirm": (tuple(range(40, 48)), 6)}
@@ -32,16 +34,29 @@ def audit_fit(out, sources):
     fit_id = sha256(manifest)
     contract = read(manifest)["contract"]
     candidates = read(out / "candidates.json")
+    rows = contract["episodes"]
+    if any(r.get("source_kind") == SOURCE_KIND for r in rows):
+        helper_sha = sha256(Path(__file__).with_name("generated_split.py"))
+        if sources.get("generated_split.py", helper_sha) != helper_sha:
+            raise ValueError("Generated source validation helper differs from the fit")
+        sources = {**sources, "generated_split.py": helper_sha}
+        validate_source_records(rows, contract.get("public_row_fingerprints"))
+        unique = [r for r in rows if "duplicate_of" not in r]
+        for key, split in (("train_poses", "train"), ("holdout_poses", "validation")):
+            if contract[key] != sorted({r["pose"] for r in unique if r["split"] == split}):
+                raise ValueError(f"Saved {key} differs from the motor episodes")
+        if contract["all_motor_poses"] != sorted({r["pose"] for r in unique}):
+            raise ValueError("Saved motor pose groups differ from the motor episodes")
+    else:
+        for r in rows:
+            split = "train" if r["pose"] in TRAIN else "validation" if r["pose"] in OFFLINE else None
+            if r["body"] not in BODIES or split is None or r["split"] != split:
+                raise ValueError("Motor used an unauthorized arm or pose")
     if (contract["protocol"] != "dualarm-native-goal5-v2" or contract["source_bodies"] != list(BODIES)
             or contract["sources"] != sources or candidates["fit_id"] != fit_id
             or candidates["status"] != "complete"):
         raise ValueError("Need a completed dual-arm fit with the same motor and evaluation implementation")
-    rows = contract["episodes"]
     prompts = {r["prompt"] for r in rows}
-    for r in rows:
-        split = "train" if r["pose"] in TRAIN else "validation" if r["pose"] in OFFLINE else None
-        if r["body"] not in BODIES or split is None or r["split"] != split:
-            raise ValueError("Motor used an unauthorized arm or pose")
     if len(prompts) != 1 or any(not any(r["body"] == b and r["split"] == s for r in rows)
                                 for b in BODIES for s in ("train", "validation")):
         raise ValueError("Incomplete dual-arm fit or inconsistent prompt")
@@ -177,7 +192,7 @@ def score_panel(args, stage_dir, stage_contract, candidates, prompt, contract):
         report.update(motor_checkpoint_sha256=candidates[0]["sha256"], selected_step=candidates[0]["step"])
     backend = None
     openings = {}
-    used_rows = {r["released_row_fingerprint"]: r["pose"] for r in contract["episodes"]}
+    used_rows = {source_fingerprint(r): r["pose"] for r in contract["episodes"]}
     used_rows.update(stage_contract.get("development_reset_rows", {}))
     panel_rows = {}
     for c in candidates:
@@ -265,6 +280,7 @@ def run(args, sources, runtime, exclusive):
     torch.backends.cudnn.benchmark = False
     torch.use_deterministic_algorithms(True)
     contract, fit_id, candidates, prompt = audit_fit(args.output, sources)
+    sources = contract["sources"]
     stage_dir = args.output / args.stage
     stage_dir.mkdir(exist_ok=True)
     stage_contract = dict(stage=args.stage, fit_id=fit_id, revision=args.revision, sources=sources,

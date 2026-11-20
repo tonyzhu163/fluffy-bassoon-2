@@ -71,12 +71,19 @@ def main():
                 row["returncode"] = process.wait()
                 index = Path(row["bank"]) / "index.json"
                 if index.is_file():
-                    raw = index.read_bytes()
-                    row.update(index=str(index), index_sha256=hashlib.sha256(raw).hexdigest())
-                    receipt = json.loads(raw)
-                    for key in ("status", "admitted_layouts", "accepted_by_body", "paired_positive_groups"):
-                        row[key] = receipt.get(key)
+                    try:
+                        raw = index.read_bytes()
+                        row.update(index=str(index), index_sha256=hashlib.sha256(raw).hexdigest())
+                        receipt = json.loads(raw)
+                        for key in ("status", "admitted_layouts", "accepted_by_body", "paired_positive_groups"):
+                            row[key] = receipt[key]
+                    except (OSError, ValueError, KeyError, TypeError) as exc:
+                        row.update(status="invalid_index", error=str(exc))
                 write(path, plan)
+    except BaseException:
+        plan["status"] = "interrupted"
+        write(path, plan)
+        raise
     finally:
         for process in processes:
             if process.poll() is None:

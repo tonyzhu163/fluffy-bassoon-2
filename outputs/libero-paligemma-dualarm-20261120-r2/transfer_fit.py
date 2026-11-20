@@ -81,6 +81,15 @@ def load_stage1(directory, reserved):
     }
 
 
+def check_reserved(records, reserved):
+    for row in records:
+        identities = {motor_bank.source_fingerprint(row), row["seed"]}
+        if "layout_origin" in row:
+            identities.update(row["layout_origin"][k] for k in ("scene_hash", "movable_xy_hash"))
+        if identities & reserved:
+            raise ValueError("A source expert overlaps a reserved evaluation layout")
+
+
 @torch.inference_mode()
 def cache_experts(out, directories, motor, prompt, reserved):
     # Use the two-arm trainer's loader for validation of native reset and reward receipts,
@@ -90,8 +99,7 @@ def cache_experts(out, directories, motor, prompt, reserved):
     with TemporaryDirectory(dir=out, prefix="expert-frames-") as scratch:
         episodes, records, indices = motor_bank.load_bank(directories, Path(scratch))
         coverage = motor_bank.coverage(records)
-        if any(r["released_row_fingerprint"] in reserved for r in records):
-            raise ValueError("A Stage 2 expert tape overlaps a released confirmation layout")
+        check_reserved(records, reserved)
         unique = [r for r in records if "duplicate_of" not in r]
         for split in banks:
             if {r["body"] for r in unique if r["split"] == split} != set(ev.SOURCES):
@@ -116,6 +124,37 @@ def cache_experts(out, directories, motor, prompt, reserved):
     source_indices = [{"path": str((d / "index.json").resolve()), "sha256": h}
                       for d, h in zip(directories, indices, strict=True)]
     return banks, {"indices": source_indices, "coverage": coverage, "episodes": receipts}
+
+
+def verify_expert_data(directory, data, prompt, reserved):
+    """Reopen the exact collector indices and match source labels and proposal caches."""
+    roots = []
+    for index in data["indices"]:
+        path = Path(index["path"])
+        if (path.name != "index.json" or str(path.resolve(strict=True)) != index["path"]
+                or ev.digest_file(path) != index["sha256"] or path.parent in roots):
+            raise ValueError("Changed, redirected or repeated source expert index")
+        roots.append(path.parent)
+    with TemporaryDirectory(dir=directory, prefix="expert-readback-") as scratch:
+        episodes, records, hashes = motor_bank.load_bank(roots, Path(scratch))
+        if (hashes != [r["sha256"] for r in data["indices"]]
+                or motor_bank.coverage(records) != data["coverage"]):
+            raise ValueError("Source bank indices or training/validation coverage changed")
+        check_reserved(records, reserved)
+        unique = [r for r in records if "duplicate_of" not in r]
+        for i, (ep, row, saved) in enumerate(zip(episodes, unique, data["episodes"], strict=True)):
+            name = f"expert-{i:04d}-{ep.body}-{int(ep.pose)}.npz"
+            path = motor_bank.bank_path(directory.resolve(), name, ".npz")
+            if (row["prompt"] != prompt or saved != {**row, "proposal_bank": name,
+                                                     "proposal_bank_sha256": ev.digest_file(path)}):
+                raise ValueError("Saved source identity, native tape or frozen proposals changed")
+            with np.load(path, allow_pickle=False) as cache:
+                proposals = motor_bank.numeric(cache, "proposals", ep.actions.shape)
+                if np.abs(proposals).max() > 1 or not np.array_equal(cache["expert"], ep.actions):
+                    raise ValueError("Invalid proposal bank or changed native expert actions")
+        if {(r["body"], r["split"]) for r in unique} != {
+                (body, split) for body in ev.SOURCES for split in ("train", "validation")}:
+            raise ValueError("Source fit needs both arms and released validation")
 
 
 def joint_fit(net, histories, banks):

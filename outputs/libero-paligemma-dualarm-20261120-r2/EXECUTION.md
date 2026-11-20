@@ -27,7 +27,7 @@ Both extended 6,400-update source fits completed on Baige. The 1,600-update orig
 | --- | --- | --- |
 | Extended regression SFT | `job-1wu7hwcwz4pb` | `sft02/fit` |
 | Extended categorical action SFT | `job-8chpqr0tr9kp` | `sft03/fit` |
-| Source recovery | `job-lf7wfg7kuxrh` | `recover01/bank/index.json`, 49 positive suffixes from 120 handoffs (17 Panda and 32 Sawyer), 3,653 positive teacher controls. The bank completed before the launcher reported its nonzero pre-existing threshold exit. |
+| Source recovery | `job-lf7wfg7kuxrh` | `recover01/bank/index.json`, 49 positive suffixes from 120 handoffs (17 Panda and 32 Sawyer), 3,653 positive teacher controls. The remaining handoffs comprised 65 teacher failures and six prefix mismatches. The collector flagged those mismatches with exit 2. Only the 49 verified positive suffixes are eligible. |
 | Counterfactual replanning frequency on the four pilot layouts | `job-ybo867hh45g6` | `stride01/dev/report.json` |
 | Successful trajectory auxiliary labels | `job-qdo245oqvkdu` | `labels01/bank/index.json` |
 | Waypoint-supervised source fit | `job-6un3g38a249n` | `waypoint03`. The preceding fixed-demo reader expected a trace absent from the published Panda recording. Replay now checks every recorded wrist state, issued action, measured motion and native reward. One fixed Panda validation trajectory passed. |

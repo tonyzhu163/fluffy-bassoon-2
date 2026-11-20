@@ -18,6 +18,8 @@ R1 = HERE.parent / "libero-paligemma-crossarm-20261120-r1"
 sys.path.insert(1, str(R1))
 
 import adapt_eval as ev
+from generated_split import SOURCE_KIND
+from motor_bank import source_split
 from motor_train import source_ids
 from pretrain_reader import NATIVE_RESET
 import transfer_fit as trainer
@@ -32,7 +34,7 @@ CONDITIONS = ("raw", "correct", "empty", "wrong", "calibration")
 
 
 def implementations():
-    own = ("transfer.py", "transfer_fit.py", "transfer_gate.py")
+    own = ("transfer.py", "transfer_fit.py", "transfer_gate.py", "generated_split.py")
     return {**source_ids(), **{name: ev.digest_file(HERE / name) for name in own}}
 
 
@@ -77,13 +79,17 @@ def fitted_reader(directory, gate, report):
             or training["confirmation"] != gate or training["checkpoint_sha256"] != digest
             or training["motor_sha256_after"] != gate["motor_sha256"]):
         raise ValueError("Completed source fit, confirmed motor and current implementations must match")
-    actual = training["expert_data"]["episodes"]
+    data = training["expert_data"]
+    actual = data["episodes"]
+    if any(r.get("source_kind") == SOURCE_KIND or r["pose"] not in range(32) for r in actual):
+        trainer.verify_expert_data(directory, data, gate["prompt"], set(gate["released_rows"].values()))
     if any(r["body"] not in ev.SOURCES or r["split"] not in ("train", "validation") for r in actual):
         raise ValueError("Unregistered body or split in the source joint fit")
-    for split, allowed in (("train", trainer.TRAIN), ("validation", trainer.VALID)):
+    for split in ("train", "validation"):
         used = [r for r in actual if r["split"] == split]
         if ({r["body"] for r in used} != set(ev.SOURCES)
-                or any(r["pose"] not in allowed or not r["native_terminal_reward"] > 0 for r in used)):
+                or any(source_split(r["pose"]) != split
+                       or not r["native_terminal_reward"] > 0 for r in used)):
             raise ValueError("Stage 2 fit lacks the required two-body native expert data")
     curve = training["joint"]["curve"]
     if (len(curve) != trainer.STEPS or any(set(row["action_mse"]) != set(ev.SOURCES) for row in curve)

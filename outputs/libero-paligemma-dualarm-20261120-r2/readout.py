@@ -4,6 +4,8 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+from gen_campaign import TRAIN_SEEDS
+from generated_split import GROUP_BASE, SOURCE_KIND
 
 
 def sha(path):
@@ -30,20 +32,41 @@ def main():
             rc,stop,begin=map(int,(job/"exit.txt").read_text().split())
             receipt.update(exit_code=rc,end_unix=stop,worker_seconds=stop-begin)
         result["jobs"][job.name]=receipt
-        index=job/"bank/index.json"
-        if index.exists():
+        indices = [job / "bank/index.json"] if (job / "bank/index.json").exists() else []
+        for campaign in sorted(job.glob("*/campaign.json")):
+            plan = json.loads(campaign.read_bytes())
+            if plan.get("status") not in ("complete", "shortfall") or "workers" not in plan:
+                continue
+            for worker in plan["workers"]:
+                index = campaign.parent / f"bank{worker['worker']}" / "index.json"
+                if sha(index) != worker["index_sha256"]:
+                    raise ValueError(f"Generated campaign index changed: {index}")
+                indices.append(index)
+        for index in indices:
             raw=json.loads(index.read_text())
             accepted=[r for r in raw["attempts"] if r.get("accepted")]
-            receipt.update(accepted=len(accepted), searchable_attempts=len(raw["attempts"]),index_sha256=sha(index))
+            bank_stats = dict(accepted=len(accepted), searchable_attempts=len(raw["attempts"]),index_sha256=sha(index))
+            if index == job/"bank/index.json":
+                receipt.update(bank_stats)
+            else:
+                receipt.setdefault("generated_banks", {})[str(index.relative_to(job))] = bank_stats
             for r in accepted:
                 assert r['native_success'] and r['terminal_reward']>0 and r['done']
-                path=job/'bank'/r['file']
+                path=index.parent/r['file']
                 if not path.is_file():
                     raise FileNotFoundError(path)
+                generated = raw.get("source_kind") == SOURCE_KIND
+                if generated and (r["seed"] not in TRAIN_SEEDS or r["pose"] != GROUP_BASE + r["seed"]
+                                  or r["split"] != "train"):
+                    raise ValueError(f"Invalid generated training group in {index}")
+                if not generated and r["pose"] not in range(32):
+                    raise ValueError(f"Unregistered released layout in {index}")
+                split = "training" if generated or r["pose"] < 28 else "offline_validation"
+                physics = r["reset"]["environment_reproducibility"]
+                fingerprint = physics["generated_row_fingerprint"] if generated else physics["released_row_fingerprint"]
                 counts[r['body']].append(dict(job=job.name,pose=r['pose'],seed=r['seed'],steps=r['steps'],
-                           file=r['file'],reward=r['terminal_reward'],
-                           released_row=r['reset']['environment_reproducibility']['released_row_fingerprint'],
-                           initial_state=r['reset']['environment_reproducibility']['initial_state_fingerprint']))
+                           file=r['file'],reward=r['terminal_reward'],split=split,
+                           source_row=fingerprint, initial_state=physics['initial_state_fingerprint']))
         if (job/'fit/manifest.json').exists():
             fit={'manifest_sha256':sha(job/'fit/manifest.json'),
                  'training_coverage':json.loads((job/'fit/manifest.json').read_text())['contract']['coverage']}
@@ -57,7 +80,8 @@ def main():
             result['fits'][job.name]=fit
     for body,rows in counts.items():
         result['source'][body]={}
-        for split,subset in [('training',[r for r in rows if r['pose']<28]),('offline_validation',[r for r in rows if r['pose']>=28])]:
+        for split in ("training", "offline_validation"):
+            subset = [r for r in rows if r["split"] == split]
             result['source'][body][split]=dict(accepted_tapes=len(subset),layout_ids=sorted({r['pose'] for r in subset}),
                          unique_native_initial_states=len({r['initial_state'] for r in subset}),controls=sum(r['steps'] for r in subset))
     result['total_completed_worker_gpu_hours']=sum(j.get('worker_seconds',0) for j in result['jobs'].values())/3600

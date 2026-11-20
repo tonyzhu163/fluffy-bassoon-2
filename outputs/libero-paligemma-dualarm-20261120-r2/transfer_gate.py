@@ -9,6 +9,7 @@ from pathlib import Path
 import torch
 
 import adapt_eval as ev
+from motor_bank import source_fingerprint, source_split, validate_source_records
 from motor_eval import check_episode, rank
 from pretrain_reader import NATIVE_RESET
 
@@ -25,10 +26,10 @@ def check_source_contract(saved):
         raise ValueError("Expected a two-source R2 PaliGemma motor")
     prompts = set()
     layouts = {k: {b: set() for b in ev.SOURCES} for k in ("train", "validation")}
+    validate_source_records(contract["episodes"], contract.get("public_row_fingerprints"))
     for row in contract["episodes"]:
         body, pose, split = row["body"], int(row["pose"]), row["split"]
-        allowed = range(28) if split == "train" else range(28, 32)
-        if (body not in ev.SOURCES or split not in layouts or pose not in allowed
+        if (body not in ev.SOURCES or split not in layouts or source_split(pose) != split
                 or row["frames"] < 1 or not row["native_terminal_reward"] > 0):
             raise ValueError("Motor fit contains an undeclared body, layout or non-expert episode")
         if row.get("reference_pose") is not None and int(row["reference_pose"]) not in (
@@ -110,7 +111,7 @@ def confirm_receipt(directory, motor_sha, saved, code_ids):
         counts[body] += int(row["success"])
     if seen != {(b, p) for b in ev.SOURCES for p in CONFIRM} or counts != result["native_successes"]:
         raise ValueError("Incomplete confirmation panel or inconsistent native counts")
-    exposed = {r["released_row_fingerprint"] for r in saved["contract"]["episodes"]}
+    exposed = {source_fingerprint(r) for r in saved["contract"]["episodes"]}
     exposed.update(r["opening"]["physics"]["released_row_fingerprint"] for r in dev["episodes"])
     reserved = set(fingerprints.values())
     if len(reserved) != len(CONFIRM) or exposed & reserved:
