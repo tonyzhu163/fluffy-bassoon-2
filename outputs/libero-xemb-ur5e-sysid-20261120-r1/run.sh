@@ -128,6 +128,21 @@ case "$stage" in
         time_limit=60m
         command=("$here/gate1_ur5e.py" --output "$out/gate1" --panel development)
         ;;
+    collect)
+        time_limit=75m
+        command=("$here/collect_ur5e.py" --output "$out/archive" --panel full)
+        ;;
+    train)
+        col_attempt=${4:?Missing collect attempt name}
+        time_limit=30m
+        command=("$here/train_ur5e_readers.py" --archive "$run/$col_attempt/archive/archive.json" --output "$out/train" --steps 1500 --seeds 41,42,43)
+        ;;
+    eval-live)
+        col_attempt=${4:?Missing collect attempt name}
+        fit_attempt=${5:?Missing train attempt name}
+        time_limit=120m
+        command=("$here/eval_live_ur5e.py" --archive "$run/$col_attempt/archive/archive.json" --train-dir "$run/$fit_attempt/train" --output "$out/live" --panel development --seed-ckpt 41)
+        ;;
     *)
         echo "Unsupported stage $stage" >&2
         exit 2
