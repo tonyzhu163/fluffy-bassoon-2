@@ -41,3 +41,14 @@ The first preparation generated 50/50 distinct layouts on seeds 740000–740049.
 The first rendered source reset on `large-panel-v2` stopped at audit time before any policy action. The one-layout cross-check on Baige `job-kh6e6dhi7ct2` gave **identical full simulator state and public wrist state** with cameras enabled and disabled on the same host, on both arms. The prepared CPU reference and the independent GPU host agreed on the exact donor row, pre-settle scene, source ID and seed. The maximum post-settle object displacement was 1.74 × 10⁻¹⁸ m. Exact floating-point hashes of the settled state and settled scene differed across hosts. The rollout uses full numerical agreement and preserves native hash receipts on each host. [Numerical evidence](evidence/phys01/diagnostic.json)
 
 Additional native training collection uses disjoint windows beginning at 301000 and 302000 on `job-bt2z25374394` and `job-1da0x4xol75p`, each requesting 128 layouts. A separate continuation fits 2,400 updates beginning from the existing categorical motor and the 49 validated source recovery suffixes.
+
+## Native source results on fifty fresh placements
+
+Both arms were evaluated on the fifty distinct native BDDL draws at seeds 740000–740049, using the standard sparse success signal and five issued controls per policy query. Within each row the identical motor checkpoint ran on both arms. Each count is out of fifty, with Wilson 95% intervals.
+
+| Source SFT checkpoint | Panda | Sawyer |
+| --- | --- | --- |
+| Original, 1,600 updates | 25/50 (36.6–63.4%) | 6/50 (5.6–23.8%) |
+| Extended Huber regression, 6,400 updates | 34/50 (54.2–79.2%) | 20/50 (27.6–53.8%) |
+
+The first result used a single-host prepare, score and readback. The second used the same 50 seeds with a full numerical cross-host reset check. The evaluation implementation and manifests are independently identified in the receipts. The training bank and update budget both changed between rows. The comparison does not isolate the effect of training longer. Neither model cleared the predeclared 38/50 per-arm development criterion. No adapter ran in these source baselines. [Counts, successful layout IDs, intervals, exact checkpoint and full-report hashes](evidence/source50/native.json)

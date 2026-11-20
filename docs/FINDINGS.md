@@ -4,6 +4,8 @@ The controlled OpenDrawer reader used one probe to choose a useful correction on
 
 ## Synthetic learning histories
 
+- On 50 new native Goal 5 tabletop placements, one dual-source PaliGemma SFT checkpoint completed 25/50 Panda and 6/50 Sawyer episodes. Extended action-regression SFT on a larger bank completed 34/50 and 20/50. Each row used identical frozen weights across both arms and each controller issued five controls per replan. These are source-motor results on one task. [Native counts and checkpoint evidence](../outputs/libero-paligemma-dualarm-20261120-r2/evidence/source50/native.json)
+
 A five-condition, three-seed hidden-rule selection grid trained four-layer
 Transformers for 20,000 updates per fit, then evaluated frozen weights using
 each learner's own attempts on fresh scenes. Execution was perfect. On held-out
