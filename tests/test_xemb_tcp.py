@@ -309,10 +309,11 @@ def test_run_tcp_episode_chunk_clear_and_nom_passthrough(monkeypatch):
     assert res_nom["grasp_triggers"] == 0
 
     shift_spec = TcpOffsetSpec("tcp_px", 0.035, 0.0, 0.0, "familiar")
-    sim_shift = FakeSim(horizon=38)
+    sim_shift = FakeSim(horizon=45)
     pol_shift = FakePolicy()
     res_shift = tcp_motor.run_tcp_episode(sim_shift, pol_shift, case, shift_spec, dx_hat_m=0.035, dy_hat_m=0.0)
     assert "chunk" not in sim_shift.ops
+    assert "observe" not in sim_shift.ops
     assert res_shift["grasp_triggers"] == 1
     assert pol_shift.calls >= 2
     assert res_nom["opening_proposal_sha256"] == res_shift["opening_proposal_sha256"]
