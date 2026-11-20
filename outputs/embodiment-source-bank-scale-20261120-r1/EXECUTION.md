@@ -1,0 +1,7 @@
+# Three-bank source comparison
+
+November 20, 16:34 Shanghai. Recounted all 100 native outcomes for one-bank scorer `job-alhror6iloul` on seeds 740000–740049. Panda scored 23/50 and Sawyer 16/50. The registered wider fit is active. Its data, producer revision and duplicate ownership are being checked. Incremental GPU use so far is zero of three hours. [One-bank receipts](../embodiment-probe-order-20261120-r1/evidence/broad/broad-native.json)
+
+16:37–16:39 Shanghai. The scheduler showed the one-bank jobs terminal and no later matching job. All seven available R2 fit manifests were checked on PFS. None had the required 19 ordered indexes. Verified the 6 parent, 1 recovery and 12 generated shard indexes, the three producer manifests, 352 admitted donor geometries, 349 distinct generated layouts with a successful tape, and zero overlap with the 50 development starts. PFS had 398.5 GiB available for a 35.4 GiB camera staging bound and passed a write test. [Input audit](evidence/inputs.json)
+
+Baige Distributed Training admitted `job-29i0nmouha71` at 16:37:47. The shared console appended another operator's job label to the display name. The PFS launch receipt identifies the exact owned job, `scale3fit01`, and producer `29f1db5581f1a674002cebff2ef723342e8a6604`. Its direct scheduler-container probe passed on one NVIDIA RPBZZZ6, 101,973,950,464 bytes, at 16:38. The producer snapshotted all 13 added indexes. Next check is the first saved optimizer update.
