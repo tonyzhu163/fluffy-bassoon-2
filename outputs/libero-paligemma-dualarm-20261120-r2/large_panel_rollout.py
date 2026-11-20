@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import sys
+from uuid import uuid4
 
 import numpy as np
 
@@ -91,6 +92,15 @@ def run_group(pool, sessions, rows, model, stage, arm, contract):
                 continue
             history = {k: [] for k in ("observations", "chunks", "actions", "motion", "done", "success", "rewards")}
             active[env] = (row, history)
+        # A receipt precedes each native reset. A process death leaves an identifiable
+        # interrupted attempt; a retry still owes this exact arm and layout.
+        attempts = {}
+        for env, (row, _) in active.items():
+            path = stage / "attempts" / arm / str(row["layout_seed"]) / uuid4().hex
+            bind(path.with_suffix(".start.json"), dict(arm=arm, layout_id=row["layout_id"],
+                 layout_seed=row["layout_seed"], contract_sha256=digest(contract),
+                 revision=os.environ.get("MOTOR_CODE_REVISION"), scheduler_host=os.uname().nodename))
+            attempts[env] = path
         opening = {env: pool.submit(env.reset, row["layout_id"]) for env, (row, _) in active.items()}
         observations = {env: f.result() for env, f in opening.items()}
         while active:
@@ -120,6 +130,7 @@ def run_group(pool, sessions, rows, model, stage, arm, contract):
                     history["rewards"].append(reward)
                 if trace[-1][2]:
                     rec = record(stage, arm, row, contract, env.reset_info, history)
+                    bind(attempts[env].with_suffix(".complete.json"), dict(tape_sha256=rec["tape_sha256"]))
                     print(json.dumps({k: rec[k] for k in ("arm", "layout_id", "steps", "success")}), flush=True)
                     del active[env]
                 else:

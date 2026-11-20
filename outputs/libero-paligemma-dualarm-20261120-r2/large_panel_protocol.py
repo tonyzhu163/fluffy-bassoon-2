@@ -8,13 +8,16 @@ import math
 import os
 from pathlib import Path
 import shutil
+from types import SimpleNamespace
 import tempfile
 
 ARMS = ("Panda", "Sawyer")
 # Inherit the registered 3/4 development and 6/8 confirmation gates.
 PHASES = {"dev": (740000, 50, 38), "test": (840000, 100, 75)}
 HASH_FIELDS = ("initial_state_sha256", "scene_hash", "movable_xy_hash")
+GEOMETRY_FIELDS = (*HASH_FIELDS, "mobile_joint_xy_hash")
 PUBLIC = {"rgb", "wrist", "state", "prompt"}
+SFT01 = "0d8353ace1d15b7c6fa6a10b2dd3022b8637f6d71bac5748cdd72b69924dccdd"
 
 
 def require(condition, message):
@@ -106,6 +109,8 @@ def candidate(fit, step):
     row, = [r for r in idx["snapshots"] if r["step"] == step]
     file = f"candidates/step-{step:06d}.pt"
     require(row["file"] == file and sha(fit / file) == row["sha256"], "Candidate file changed")
+    if step == 1600 and fit.parent.name == "sft01":
+        require(row["sha256"] == SFT01, "sft01 update 1600 differs from the preregistered checkpoint")
     return dict(fit_id=fit_id, step=step, checkpoint_sha256=row["sha256"],
                 architecture=contract.get("architecture", "chunk_huber_v1"),
                 prompt=contract["episodes"][0]["prompt"]), fit / file
@@ -123,7 +128,11 @@ def manifest(root, phase):
     rejected = [r["layout_seed"] for r in data["rejected"]]
     require(seeds == sorted(set(seeds)) and start <= seeds[0] <= seeds[-1] < start + 10000 and
             sorted(seeds + rejected) == list(range(start, seeds[-1] + 1)), "Panel seed order or coverage changed")
-    for field in HASH_FIELDS:
+    public = data["released"]
+    require([r["released_id"] for r in public] == list(range(50)), "Incomplete released arrangement denylist")
+    for field in GEOMETRY_FIELDS:
+        denied = {r[field] for r in public if field in r}
+        require(not denied.intersection(r[field] for r in rows), f"Released {field} in panel")
         require(len({r[field] for r in rows}) == count, f"Duplicate {field}")
     for r in rows:
         seed = r["layout_seed"]
@@ -131,6 +140,11 @@ def manifest(root, phase):
                 r["state_file"] == f"rows/{seed}.npy" and set(r["preflight"]) == set(ARMS) and
                 all(r["preflight"][b]["scene_fingerprint"] == r["scene_hash"] for b in ARMS) and
                 sha(path.parent / r["state_file"]) == r["file_sha256"], f"Bad native row {seed}")
+    if phase == "test":
+        dev = manifest(root, "dev")
+        for k in GEOMETRY_FIELDS:
+            require(not {r[k] for r in dev["layouts"]}.intersection(r[k] for r in rows),
+                    f"Sealed test overlaps development on {k}")
     return data
 
 
@@ -144,6 +158,11 @@ def selection(root):
             all(report[k] == seal[k] for k in ("stride", "fit_id", "step", "checkpoint_sha256")) and
             all(report["arms"][arm]["total"] == 50 and report["arms"][arm]["successes"] >= PHASES["dev"][2]
                 for arm in ARMS), "Sealed test requires completed accepted development evidence")
+    comparison = read(root / "dev/comparison.json")
+    winner = comparison["candidates"][comparison["winner"]]
+    require(sha(root / "dev/comparison.json") == seal["comparison_sha256"] and comparison["passed"] and
+            all(winner[k] == seal[k] for k in ("fit_id", "step", "checkpoint_sha256", "report_sha256")),
+            "Saved development comparison differs from accepted checkpoint")
     return seal
 
 
@@ -160,11 +179,15 @@ def inputs(args):
         file = args.root / "accepted/checkpoint.pt"
     panel = manifest(args.root, args.phase)
     _, seeds, hashes = training(args.fit)
+    versions = implementation()
+    require(all(panel["implementation"][name] == versions[name] for name in
+                ("large_panel_sim.py", "generated_layouts.py", "generated_split.py", "expert.py",
+                 "sim.py", "arm_env.py", "sim_reset.py")), "Physical evaluator changed since panel preparation")
     require(not any(r["layout_seed"] in seeds or any(r[k] in hashes for k in HASH_FIELDS)
                     for r in panel["layouts"]), "Evaluation overlaps fit exposure")
     contract = dict(**c, phase=args.phase, stride=args.stride,
                     panel_sha256=sha(args.root / args.phase / "manifest.json"),
-                    evaluator=implementation(), horizon=300)
+                    evaluator=versions, horizon=300, inference_batch_size=8)
     if args.phase == "test":
         require(panel["development_selection_sha256"] == sha(args.root / "accepted/selection.json") and
                 selection(args.root)["evaluator"] == contract["evaluator"],
@@ -178,7 +201,7 @@ def implementation():
     native = here.parent / "libero-crossarm-20261120-r1"
     paths = [*here.glob("large_panel*.py"), here / "generated_layouts.py", here / "generated_split.py",
              here / "expert.py", here / "servo_motor.py", here / "waypoint_motor.py",
-             prior / "sim.py", prior / "motor.py", prior / "motor_weights.py", native / "arm_env.py", native / "sim_reset.py"]
+             prior / "sim.py", prior / "motor.py", prior / "motor_data.py", prior / "motor_weights.py", native / "arm_env.py", native / "sim_reset.py"]
     return {p.name: sha(p) for p in paths}
 
 
@@ -203,6 +226,12 @@ def check_tape(stage, arm, row, contract, recover=False):
     n = len(rewards)
     plans = math.ceil(n / stride)
     reset = header["reset"]
+    phys = reset["environment_reproducibility"]
+    require(reset["max_steps"] == 300 and reset["admission"] == {k: phys[k] for k in reset["admission"]} and
+            phys["perturbation_plan"]["case_id"] == "BASE" and phys["perturbation_plan"]["seed"] == row["layout_seed"]
+            and (phys["init_state_id"], phys["bank_row_index"], phys["seed"], phys["suite"], phys["task_id"]) ==
+            (row["layout_id"], 0, row["layout_seed"], "libero_goal", 5) and
+            all(phys[k] == row[k] for k in ("source_pin", "bddl_sha256", "manifest_sha256")), "Bad native receipt")
     require(header["contract_sha256"] == digest(contract) and header["arm"] == arm and
             header["layout_id"] == row["layout_id"] and header["layout_seed"] == row["layout_seed"] and
             reset["admission"] == row["preflight"][arm] and reset["model_identity"]["arm"] == arm and
@@ -255,11 +284,33 @@ def summarize(args, accept=False):
     print(json.dumps({b: {k: v[k] for k in ("successes", "total", "wilson95")}
                       for b, v in report["arms"].items()}), flush=True)
     if accept:
-        require(args.phase == "dev" and report["passed"], "Acceptance requires a passing full dev panel")
+        require((args.phase, args.stride, args.step, contract["checkpoint_sha256"]) == ("dev", 5, 1600, SFT01),
+                "Acceptance starts with the registered sft01 update 1600, stride five")
+        comparison = []
+        options = [(contract, file, stage, report)]
+        for fit, arch in zip(args.extended_fits, ("chunk_huber_v1", "spatial_bins_v1")):
+            extended = SimpleNamespace(root=args.root, fit=fit.resolve(strict=True), phase="dev", step=6400, stride=5)
+            data, ckpt, c, path = inputs(extended)
+            require(c["architecture"] == arch and c["panel_sha256"] == contract["panel_sha256"],
+                    "Extended candidate or shared panel differs from registration")
+            result = report_for(data, c, path)
+            bind(path / "report.json", result)
+            options.append((c, ckpt, path, result))
+        for c, _, path, result in options:
+            counts = [result["arms"][b]["successes"] for b in ARMS]
+            comparison.append(dict(fit_id=c["fit_id"], step=c["step"], checkpoint_sha256=c["checkpoint_sha256"],
+                                   architecture=c["architecture"], counts=dict(zip(ARMS, counts)),
+                                   report_sha256=sha(path / "report.json")))
+        best = max(range(len(options)), key=lambda i: (min(comparison[i]["counts"].values()),
+                                                       sum(comparison[i]["counts"].values()), -i))
+        contract, file, stage, report = options[best]
+        bind(args.root / "dev/comparison.json", dict(candidates=comparison, winner=best, passed=report["passed"]))
+        require(report["passed"], "No candidate reached the complete development gate on both arms")
         selected = args.root / "accepted"
         with lock(selected / ".lock"):
             with publish(selected / "checkpoint.pt") as tmp:
                 shutil.copyfile(file, tmp)
                 require(sha(tmp) == contract["checkpoint_sha256"], "Checkpoint changed during promotion")
-            bind(selected / "selection.json", dict(**contract, report_sha256=sha(stage / "report.json")))
+            bind(selected / "selection.json", dict(**contract, report_sha256=sha(stage / "report.json"),
+                                                   comparison_sha256=sha(args.root / "dev/comparison.json")))
             selection(args.root)

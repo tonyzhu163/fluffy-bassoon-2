@@ -1,11 +1,12 @@
 """Native Goal 5 panel preparation and isolated public-observation session bridge."""
 
-from contextlib import closing
+from contextlib import closing, contextmanager
 import os
 from pathlib import Path
 import subprocess
 import sys
 import traceback
+from uuid import uuid4
 
 from large_panel_protocol import (ARMS, HASH_FIELDS, PHASES, bind, digest, directory, implementation,
                                  lock, manifest, publish, read, report_for, require, selection, sha, training)
@@ -41,6 +42,9 @@ def released():
     return rows
 
 
+_authorized_target_rows = set()
+
+
 def target_gate(root, phase):
     require(phase == "test", "Held-out body requires the identical sealed test layouts")
     seal = selection(root)
@@ -56,6 +60,7 @@ def target_gate(root, phase):
     report = report_for(panel, contract, stage)
     require(report["passed"] and read(stage / "report.json") == report,
             "Held-out reset requires a passing, complete two-arm source test")
+    _authorized_target_rows.update((r["layout_id"], r["initial_state_sha256"], r["scene_hash"]) for r in panel["layouts"])
     return panel
 
 
@@ -68,7 +73,9 @@ def physical_reset(env, arm, camera, state, row):
     else:
         # ArmEnv.reset performs the official donor transfer, bounded IK, ten settle
         # controls and scene validation. Its private singleton slot is restored even on errors.
-        require(arm == "UR5e" and camera and target.arm == arm, "Unsupported physical body")
+        require(arm == "UR5e" and camera and target.arm == arm and
+                (row["layout_id"], row["initial_state_sha256"], row["scene_hash"]) in _authorized_target_rows,
+                "Held-out physical reset requires the audited source gate for this exact layout")
         original, target._states = target._states, (state,)
         try:
             obs = env.reset(0, row["layout_seed"])
@@ -103,6 +110,16 @@ def physical_reset(env, arm, camera, state, row):
     return obs, info, poses
 
 
+@contextmanager
+def preparing(base, seed):
+    try:
+        yield
+    except Exception as exc:
+        bind(base / "errors" / f"{seed}-{uuid4().hex}.json",
+             dict(layout_seed=seed, error=type(exc).__name__, reason=str(exc)))
+        raise
+
+
 def prepare(args):
     import numpy as np
     import generated_layouts as g
@@ -134,32 +151,35 @@ def prepare(args):
             for seed in range(first, first + 10000):
                 # Membership filtering lives here so every skip records the actual matched hash.
                 # Other sampler, geometry, pairing or runtime exceptions abort this seed.
-                state, origin = g.sample_layout(sampler, seed, frozenset())
-                row = dict(origin, split=phase, layout_id=origin["source_index"],
-                           mobile_joint_xy_hash=mobile_joints(origin["sampled_scene"]),
-                           state_file=f"rows/{seed}.npy", preflight={})
-                matched = {k: row[k] for k in fields if row[k] in seen[k]}
-                if matched:
-                    rejected.append(dict(layout_seed=seed, matching_hashes=matched))
-                    continue
-                for arm in ARMS:
-                    with session(arm, False) as env:
-                        _, info, poses = physical_reset(env, arm, False, state, row)
-                    row["preflight"][arm] = info["admission"]
-                    if arm == "Panda":
-                        row["panda_settled_poses"] = poses
-                    else:
-                        row["source_pair_errors"] = info["paired_scene_errors"]
-                path = base / row["state_file"]
-                with publish(path) as tmp, tmp.open("wb") as stream:
-                    np.save(stream, state, allow_pickle=False)
-                row["file_sha256"] = sha(path)
-                for k in fields:
-                    seen[k].add(row[k])
-                layouts.append(row)
-                print(f"preflight {phase} {len(layouts)}/{count} seed={seed}", flush=True)
-                if len(layouts) == count:
-                    break
+                with preparing(base, seed):
+                    state, origin = g.sample_layout(sampler, seed, frozenset())
+                    row = dict(origin, split=phase, layout_id=origin["source_index"],
+                               mobile_joint_xy_hash=mobile_joints(origin["sampled_scene"]),
+                               state_file=f"rows/{seed}.npy", preflight={})
+                    matched = {k: row[k] for k in fields if row[k] in seen[k]}
+                    if matched:
+                        rejection = dict(layout_seed=seed, matching_hashes=matched)
+                        bind(base / "hash-rejects" / f"{seed}.json", rejection)
+                        rejected.append(rejection)
+                        continue
+                    for arm in ARMS:
+                        with session(arm, False) as env:
+                            _, info, poses = physical_reset(env, arm, False, state, row)
+                        row["preflight"][arm] = info["admission"]
+                        if arm == "Panda":
+                            row["panda_settled_poses"] = poses
+                        else:
+                            row["source_pair_errors"] = info["paired_scene_errors"]
+                    path = base / row["state_file"]
+                    with publish(path) as tmp, tmp.open("wb") as stream:
+                        np.save(stream, state, allow_pickle=False)
+                    row["file_sha256"] = sha(path)
+                    for k in fields:
+                        seen[k].add(row[k])
+                    layouts.append(row)
+                    print(f"preflight {phase} {len(layouts)}/{count} seed={seed}", flush=True)
+                    if len(layouts) == count:
+                        break
         require(len(layouts) == count, "Reserved seed window exhausted")
         bind(base / "manifest.json", dict(phase=phase, size=count, required=threshold,
              seed_range=[first, first+9999], suite=g.SUITE, task_id=g.TASK, case=g.CASE,

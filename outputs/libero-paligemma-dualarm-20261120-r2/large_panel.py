@@ -16,6 +16,10 @@ def main(argv=None):
         if name != "prepare":
             q.add_argument("--step", type=int, default=1600)
             q.add_argument("--stride", type=int, choices=(1, 2, 5), default=5)
+        if name == "accept":
+            q.add_argument("--extended-fits", nargs=2, type=Path, required=True,
+                           metavar=("CONVENTIONAL_FIT", "SERVO_FIT"),
+                           help="Registered 6400-update fits, following the original 1600-update --fit")
         if name == "source":
             q.add_argument("--weights", type=Path, default=os.environ.get("DUAL_WEIGHTS"))
             q.add_argument("--workers", type=int, default=8)
