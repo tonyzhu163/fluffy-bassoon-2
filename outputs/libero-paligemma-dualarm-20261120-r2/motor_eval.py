@@ -62,7 +62,8 @@ class FrozenMotor:
     """Load the verified 3B base once. Swap only the supervised deltas between candidates."""
 
     def __init__(self, weights, contract, fit_id):
-        self.model = base.Motor(weights)
+        from servo_motor import architecture_name, build_motor
+        self.model = build_motor(weights, architecture_name(contract))
         if self.model.identity != contract["weights"]:
             raise ValueError("Evaluation base weights differ from training")
         self.trained = [p for p in self.model.parameters() if p.requires_grad]
@@ -148,7 +149,7 @@ def check_episode(path, stage_dir, body, pose, prompt, candidate, fit_id, prior_
                 or not np.array_equal(chunk[:first], proposals[:first])
                 or not np.array_equal(actions, proposals) or not np.array_equal(success, rewards > 0)
                 or np.any(rewards[:-1] != 0) or done[:-1].any() or (success[-1] and not done[-1])
-                or (n < ae.HORIZON and not done[-1]) or row["success"] != bool(success[-1])
+                or not done[-1] or (n < ae.HORIZON and not success[-1]) or row["success"] != bool(success[-1])
                 or row["done"] != bool(done[-1]) or row["terminal_reward"] != float(rewards[-1])
                 or row["native_return"] != float(rewards.sum())):
             raise ValueError(f"Invalid native trace or assisted action in {path}")

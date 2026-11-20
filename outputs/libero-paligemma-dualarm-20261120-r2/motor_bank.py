@@ -80,6 +80,9 @@ def load_indices(roots):
                     row.get("native_return", row["terminal_reward"]) == row["terminal_reward"]):
                 raise ValueError(f"{index}: invalid accepted receipt for {body}/{pose}/{seed}")
             physics = verify_reset(row["reset"], body, pose, seed)
+            renderer = row["reset"].get("renderer", [])
+            if len(renderer) != 2 or "NVIDIA" not in renderer[0].upper() or not renderer[1]:
+                raise ValueError(f"{index}: successful camera trajectory lacks allocated NVIDIA rendering evidence")
             # A cross-pose reference can also expose a held-out layout during SFT.
             donor_pose = row.get("reference_pose")
             if "reference_demo" in row:
@@ -101,7 +104,7 @@ def load_indices(roots):
                 raise ValueError(f"{index}: invalid or repeated archive {relative}")
             paths.add(path)
             record = dict(bank=bank, file=str(relative), body=body, pose=pose, seed=seed,
-                          frames=row["steps"], native_terminal_reward=row["terminal_reward"],
+                          frames=row["steps"], native_terminal_reward=row["terminal_reward"], renderer=renderer,
                           split="train" if pose in TRAIN else "validation",
                           released_row_fingerprint=physics["released_row_fingerprint"],
                           initial_state_fingerprint=physics["initial_state_fingerprint"],

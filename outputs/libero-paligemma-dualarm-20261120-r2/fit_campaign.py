@@ -10,13 +10,15 @@ import sys
 HERE = Path(__file__).resolve().parent
 
 
-def snapshot(path, out):
+def snapshot(path, out, fixed_offline):
     raw = (path / "index.json").read_bytes()
     data = json.loads(raw)
     if not set(data["bodies"]) <= {"Panda", "Sawyer"} or data["task_id"] != 5:
         raise ValueError("Expected native Goal 5 source episodes only")
     out.mkdir()
-    rows = [dict(row) for row in data["attempts"] if row["accepted"]]
+    rows = [dict(row) for row in data["attempts"] if row["accepted"] and
+            not (fixed_offline and data.get("source_constructor") and row["pose"] >= 28
+                 and row.get("candidate_number") != 0)]
     for row in rows:
         f = Path(row["file"])
         if f.is_absolute() or not (path / f).resolve().is_relative_to(path.resolve()):
@@ -43,6 +45,9 @@ def main():
     p.add_argument("--shortlist",type=int,default=3)
     p.add_argument("--microbatch",type=int,default=4)
     p.add_argument("--stage1",type=Path)
+    p.add_argument("--architecture",choices=("chunk_huber_v1","spatial_bins_v1"),default="chunk_huber_v1")
+    p.add_argument("--fixed-offline",action="store_true")
+    p.add_argument("--dev-only",action="store_true")
     args=p.parse_args()
     out=Path.cwd()
     parent=out/"data"
@@ -50,13 +55,16 @@ def main():
     banks=[]
     for i,path in enumerate(args.banks):
         bank=parent/f"bank{i}"
-        snapshot(path,bank)
+        snapshot(path,bank,args.fixed_offline)
         banks.append(bank)
     fit=out/"fit"
     run("motor_train.py","train","--output",fit,"--demos",*banks,"--steps",args.steps,
-        "--shortlist",args.shortlist,"--microbatch",args.microbatch)
+        "--shortlist",args.shortlist,"--microbatch",args.microbatch,"--architecture",args.architecture)
     run("motor_train.py","dev","--output",fit,allow_gate=True)
     dev=json.loads((fit/"dev/report.json").read_text())
+    if args.dev_only:
+        print("Source development completed",dev.get("scores"),flush=True)
+        return
     if not dev.get("source_gate"):
         print("Source development stopped before confirmation",dev.get("scores"),flush=True)
         return

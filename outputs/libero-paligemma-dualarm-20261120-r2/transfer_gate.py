@@ -148,7 +148,8 @@ def confirmed_motor(args, report):
         saved = torch.load(path, weights_only=True, mmap=True, map_location="cpu")
         report["confirmation"] = confirm_receipt(args.confirmation, digest, saved, report["code_sha256"])
         ev.write_json(args.out / "report.json", report)
-        motor = ev.load_motor(args)
+        from servo_motor import load_selected
+        motor = load_selected(saved, args.weights)
         report["motor_before"] = inspect_motor(motor, saved)
         yield motor
         report["motor_after"] = inspect_motor(motor, saved)

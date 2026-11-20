@@ -20,10 +20,10 @@ os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
 import numpy as np
 import torch
 from torch import nn
-from torch.nn import functional as F
 import transformers
 
 import motor as base
+import servo_motor as policies
 from motor_bank import BODIES, coverage, load_bank, partition, sample, validation_anchors
 from motor_weights import sha256
 
@@ -40,7 +40,7 @@ def exclusive(directory):
 
 def source_ids():
     return {p.name: sha256(p) for p in (
-        HERE / "motor_train.py", HERE / "motor_bank.py", HERE / "motor_eval.py",
+        HERE / "motor_train.py", HERE / "motor_bank.py", HERE / "motor_eval.py", HERE / "servo_motor.py",
         PRIOR / "motor.py", PRIOR / "motor_data.py", PRIOR / "motor_weights.py",
         PRIOR / "adapt_eval.py", PRIOR / "sim.py", PRIOR / "pretrain_reader.py", PRIOR / "oracle_fallback.py",
         HERE.parent / "libero-crossarm-20261120-r1" / "arm_env.py",
@@ -80,9 +80,7 @@ def update(motor, optim, params, trainable_lora, batch, microbatch, step):
     loss_sum = torch.zeros((), device="cuda")
     for i in range(0, len(batch), microbatch):
         obs, target, mask = base.collate(batch[i:i + microbatch])
-        pred = motor(obs)
-        errors = F.smooth_l1_loss(pred, target, beta=0.1, reduction="none").mean(-1)
-        loss = ((errors * mask).sum(1) / mask.sum(1)).sum() / len(batch)
+        loss = policies.loss_per_anchor(motor, obs, target, mask).sum() / len(batch)
         loss.backward()
         loss_sum += loss.detach()
     metrics = {}
@@ -93,7 +91,7 @@ def update(motor, optim, params, trainable_lora, batch, microbatch, step):
         metrics["lora_grad_norm"] = lora_norm
     norm = nn.utils.clip_grad_norm_(params, 1.0, error_if_nonfinite=True)
     optim.step()
-    metrics.update(step=step, train_huber=loss_sum.item(), grad_norm=norm.item())
+    metrics.update(step=step, train_loss=loss_sum.item(), grad_norm=norm.item())
     return metrics
 
 
@@ -120,7 +118,7 @@ def train(args):
         episodes, records, indices = load_bank(args.demos, Path(temporary))
         groups, held = partition(episodes)
         anchors = validation_anchors(held, args.anchors_per_pose)
-        motor = base.Motor(args.weights)
+        motor = policies.build_motor(args.weights, args.architecture)
         if motor.identity["repo"] != MIX:
             raise ValueError(f"This run is pinned to {MIX}")
         unique = [r for r in records if "duplicate_of" not in r]
@@ -133,12 +131,13 @@ def train(args):
         params = lora + head
         optim = torch.optim.AdamW([dict(params=lora, lr=base.LORA_LR), dict(params=head, lr=base.HEAD_LR)],
                                   weight_decay=0.01)
-        fit_recipe = base.recipe()
+        fit_recipe = policies.training_recipe(args.architecture)
         fit_recipe.pop("validate_every")
         fit_recipe.update(candidate_steps=candidates, online_shortlist=args.shortlist,
                           anchors_per_offline_pose=args.anchors_per_pose, total_steps=args.steps,
                           sampler="equal arm; uniform successful pose, unique tape, control")
         contract = dict(protocol="dualarm-native-goal5-v2", revision=args.revision, seed=args.seed,
+                        architecture=args.architecture,
                         microbatch=args.microbatch, weights=motor.identity, source_bodies=list(BODIES),
                         episodes=records, coverage=coverage(records), collector_index_sha256=indices, recipe=fit_recipe,
                         holdout_poses=sorted({int(e.pose) for e in episodes if int(e.pose) >= 28}),
@@ -215,6 +214,7 @@ def main():
         p.add_argument("--revision", default=os.environ.get("MOTOR_CODE_REVISION"),
                        required=not bool(os.environ.get("MOTOR_CODE_REVISION")))
     fit.add_argument("--demos", type=Path, nargs="+", action="extend", required=True)
+    fit.add_argument("--architecture", choices=policies.ARCHITECTURES, default=policies.BASELINE)
     fit.add_argument("--steps", type=int, default=800)
     fit.add_argument("--candidate-steps", type=int, nargs="+", help="default quarter, half and final update")
     fit.add_argument("--shortlist", type=int, default=3, help="maximum offline candidates for native development")
