@@ -16,6 +16,11 @@ from .embodiment import (
     rot2,
     to_local_proprio,
 )
+from .joint_audit import (
+    evaluate_cross_morphology_joint_jacobian,
+    fit_joint_jacobian,
+    predict_yaw_from_joint_jacobian,
+)
 from .readers import (
     MODEL_NAMES,
     ReaderConfig,
@@ -53,12 +58,15 @@ __all__ = [
     "apply_reader",
     "circular_yaw_error_deg",
     "downsample_agentview",
+    "evaluate_cross_morphology_joint_jacobian",
+    "fit_joint_jacobian",
     "fit_nominal_gain",
     "get_embodiment_spec",
     "init_reader",
     "jaw_width_from_qpos",
     "make_tcp_catalogue",
     "predict_embodiment",
+    "predict_yaw_from_joint_jacobian",
     "quat_xyzw_to_mat",
     "reader_loss",
     "retarget_action_from_motor",
