@@ -13,6 +13,7 @@ python="$legacy/envs/openpi-215abfb/bin/python"
 pin=$1
 attempt=$2
 src_attempt=${3:-gpu01}
+reuse_attempt=${4:-}
 host=$(hostname)
 [[ "$attempt" =~ ^[a-z0-9]+$ ]]
 [[ "$host" == job-* ]] || { echo "Require Baige Distributed Training container" >&2; exit 2; }
@@ -52,6 +53,11 @@ date +%s > "$out/gpu-start.txt"
     --expected-count 8 --purpose training --baige-container --baige-exclusive-training \
     --output "$out/gpu.json" > "$out/probe.log" 2>&1
 
+REUSE_ARGS=()
+if [[ -n "$reuse_attempt" ]]; then
+    REUSE_ARGS=(--reuse-support-dir "$run/$reuse_attempt/test_live")
+fi
+
 pids=()
 for s in 0 1 2 3 4 5 6 7; do
     CUDA_VISIBLE_DEVICES="$s" MUJOCO_EGL_DEVICE_ID="$s" \
@@ -61,6 +67,7 @@ for s in 0 1 2 3 4 5 6 7; do
         --shard-idx "$s" \
         --num-shards 8 \
         --seed-ckpt 41 \
+        "${REUSE_ARGS[@]}" \
         > "$out/logs/test-shard-$s.log" 2>&1 &
     pids+=($!)
 done

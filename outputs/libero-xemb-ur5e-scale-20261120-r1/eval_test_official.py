@@ -94,7 +94,7 @@ def support_to_batch(tapes: dict, mode: str):
     )
 
 
-def run_shard(train_dir: Path, output_dir: Path, shard_idx: int, num_shards: int, seed_ckpt: int):
+def run_shard(train_dir: Path, output_dir: Path, shard_idx: int, num_shards: int, seed_ckpt: int, reuse_support_dir: Path | None = None):
     audit = json.loads((train_dir / "offline-audit.json").read_text())
     if audit.get("complete") is not True:
         raise ValueError("Completed offline-audit.json is required")
@@ -132,55 +132,61 @@ def run_shard(train_dir: Path, output_dir: Path, shard_idx: int, num_shards: int
     support_dir.mkdir(parents=True, exist_ok=True)
     policy = load_frozen_pi05()
 
-    # Step 1: Collect matched 15-control active_probe & passive_attempt1 support tapes on UR5e (init_state_id=11) for all 12 embodiments of this test task.
+    # Step 1: Reuse already-collected official test support tapes if provided, otherwise collect matched 15-control tapes on UR5e.
     support_rows = []
     prompts = {}
     max_passive_chunks = SUPPORT_BUDGET // CHUNK_SIZE
+    reused_meta = (reuse_support_dir / f"shard-{shard_idx}" / "support-meta.json") if reuse_support_dir else None
     with UR5eSimulator() as simulator:
-        for local_i, entry in enumerate(my_entries):
-            suite = entry["suite"]
-            task_id = int(entry["task_id"])
-            spec = get_embodiment_spec(entry["embodiment"])
-            sup_seed = 31800000 + 10_000 * suites.index(suite) + 100 * task_id + entry["support_init_state_id"]
-            sup_case = dict(
-                arm=DEV_ARM,
-                suite=suite,
-                task_id=task_id,
-                variant="BASE",
-                init_state_id=entry["support_init_state_id"],
-                seed=sup_seed,
-            )
-            key = (suite, task_id)
-            prompt = prompts.get(key)
-            act_meta, act_trace = run_active_probe_episode(simulator, sup_case, spec, prompt=prompt)
-            prompts.setdefault(key, act_meta["prompt"])
-            prompt = prompts[key]
-            pas_rec, pas_trace = run_episode(
-                simulator,
-                policy,
-                sup_case,
-                spec,
-                prompt=prompt,
-                yaw_hat=0.0,
-                scale_hat=1.0,
-                grip_hat=1,
-                max_controls=SUPPORT_BUDGET,
-                record_chunks=True,
-                max_record_chunks=max_passive_chunks,
-            )
-            act_npz = support_dir / f"{local_i:02d}-{spec.name}-active.npz"
-            pas_npz = support_dir / f"{local_i:02d}-{spec.name}-passive.npz"
-            np.savez_compressed(act_npz, **act_trace)
-            np.savez_compressed(pas_npz, **pas_trace)
-            support_rows.append(
-                dict(
-                    embodiment=spec.name,
-                    physics=act_meta["physics"],
-                    active_npz=str(act_npz),
-                    passive_npz=str(pas_npz),
+        if reused_meta and reused_meta.exists():
+            support_rows = json.loads(reused_meta.read_text())
+            if len(support_rows) != len(my_entries):
+                raise ValueError(f"Reused support-meta length mismatch on shard {shard_idx}")
+        else:
+            for local_i, entry in enumerate(my_entries):
+                suite = entry["suite"]
+                task_id = int(entry["task_id"])
+                spec = get_embodiment_spec(entry["embodiment"])
+                sup_seed = 31800000 + 10_000 * suites.index(suite) + 100 * task_id + entry["support_init_state_id"]
+                sup_case = dict(
+                    arm=DEV_ARM,
+                    suite=suite,
+                    task_id=task_id,
+                    variant="BASE",
+                    init_state_id=entry["support_init_state_id"],
+                    seed=sup_seed,
                 )
-            )
-        write_json(shard_dir / "support-meta.json", support_rows)
+                key = (suite, task_id)
+                prompt = prompts.get(key)
+                act_meta, act_trace = run_active_probe_episode(simulator, sup_case, spec, prompt=prompt)
+                prompts.setdefault(key, act_meta["prompt"])
+                prompt = prompts[key]
+                pas_rec, pas_trace = run_episode(
+                    simulator,
+                    policy,
+                    sup_case,
+                    spec,
+                    prompt=prompt,
+                    yaw_hat=0.0,
+                    scale_hat=1.0,
+                    grip_hat=1,
+                    max_controls=SUPPORT_BUDGET,
+                    record_chunks=True,
+                    max_record_chunks=max_passive_chunks,
+                )
+                act_npz = support_dir / f"{local_i:02d}-{spec.name}-active.npz"
+                pas_npz = support_dir / f"{local_i:02d}-{spec.name}-passive.npz"
+                np.savez_compressed(act_npz, **act_trace)
+                np.savez_compressed(pas_npz, **pas_trace)
+                support_rows.append(
+                    dict(
+                        embodiment=spec.name,
+                        physics=act_meta["physics"],
+                        active_npz=str(act_npz),
+                        passive_npz=str(pas_npz),
+                    )
+                )
+            write_json(shard_dir / "support-meta.json", support_rows)
 
         # Step 2: Live closed-loop evaluation on query reset (init_state_id=13) across all 12 arms.
         rows = []
@@ -198,7 +204,9 @@ def run_shard(train_dir: Path, output_dir: Path, shard_idx: int, num_shards: int
 
             def _load_npz(path_str: str):
                 with np.load(path_str) as z:
-                    return {k: np.asarray(z[k])[None] for k in z.files}
+                    d = {k: np.asarray(z[k])[None] for k in z.files}
+                d["chunk_steps"] = np.where(d["valid"], CHUNK_SIZE, 0).astype(np.int32)
+                return d
 
             act_batch = _load_npz(sup_row["active_npz"])
             pas_batch = _load_npz(sup_row["passive_npz"])
@@ -371,6 +379,7 @@ def main():
     p_ev.add_argument("--shard-idx", type=int, required=True)
     p_ev.add_argument("--num-shards", type=int, default=8)
     p_ev.add_argument("--seed-ckpt", type=int, default=41)
+    p_ev.add_argument("--reuse-support-dir", type=Path, default=None)
 
     p_mg = sub.add_parser("merge")
     p_mg.add_argument("--output-dir", type=Path, required=True)
@@ -378,7 +387,7 @@ def main():
 
     args = parser.parse_args()
     if args.cmd == "run-shard":
-        run_shard(args.train_dir, args.output_dir, args.shard_idx, args.num_shards, args.seed_ckpt)
+        run_shard(args.train_dir, args.output_dir, args.shard_idx, args.num_shards, args.seed_ckpt, args.reuse_support_dir)
     else:
         merge_shards(args.output_dir, args.num_shards)
 
