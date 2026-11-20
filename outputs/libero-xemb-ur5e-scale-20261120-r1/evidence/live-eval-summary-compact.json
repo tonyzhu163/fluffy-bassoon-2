@@ -1,0 +1,376 @@
+{
+  "arm": "UR5e",
+  "panel": "scale24_dev96",
+  "arms": [
+    "nominal",
+    "privileged_oracle",
+    "analytic_proprio_sysid",
+    "analytic_visual_sysid_active",
+    "analytic_visual_sysid_passive",
+    "joint_transformer_active",
+    "factored_no_equiv_active",
+    "ours_retained_active",
+    "ours_retained_passive",
+    "ours_cleared",
+    "ours_swapped_donor"
+  ],
+  "archive_sha256": "37f062958cb63b962ceefb760f0592fdb120da966369ee308b509e2d82449076",
+  "matched_support_cap": 15,
+  "seed_ckpt": 41,
+  "trials": 96,
+  "by_regime": {
+    "familiar": {
+      "trials": 32,
+      "successes": {
+        "nominal": 5,
+        "privileged_oracle": 20,
+        "analytic_proprio_sysid": 10,
+        "analytic_visual_sysid_active": 16,
+        "analytic_visual_sysid_passive": 22,
+        "joint_transformer_active": 24,
+        "factored_no_equiv_active": 12,
+        "ours_retained_active": 19,
+        "ours_retained_passive": 13,
+        "ours_cleared": 5,
+        "ours_swapped_donor": 0
+      },
+      "rates": {
+        "nominal": 0.15625,
+        "privileged_oracle": 0.625,
+        "analytic_proprio_sysid": 0.3125,
+        "analytic_visual_sysid_active": 0.5,
+        "analytic_visual_sysid_passive": 0.6875,
+        "joint_transformer_active": 0.75,
+        "factored_no_equiv_active": 0.375,
+        "ours_retained_active": 0.59375,
+        "ours_retained_passive": 0.40625,
+        "ours_cleared": 0.15625,
+        "ours_swapped_donor": 0.0
+      }
+    },
+    "compositional_ood": {
+      "trials": 32,
+      "successes": {
+        "nominal": 0,
+        "privileged_oracle": 20,
+        "analytic_proprio_sysid": 0,
+        "analytic_visual_sysid_active": 12,
+        "analytic_visual_sysid_passive": 17,
+        "joint_transformer_active": 0,
+        "factored_no_equiv_active": 0,
+        "ours_retained_active": 14,
+        "ours_retained_passive": 11,
+        "ours_cleared": 0,
+        "ours_swapped_donor": 1
+      },
+      "rates": {
+        "nominal": 0.0,
+        "privileged_oracle": 0.625,
+        "analytic_proprio_sysid": 0.0,
+        "analytic_visual_sysid_active": 0.375,
+        "analytic_visual_sysid_passive": 0.53125,
+        "joint_transformer_active": 0.0,
+        "factored_no_equiv_active": 0.0,
+        "ours_retained_active": 0.4375,
+        "ours_retained_passive": 0.34375,
+        "ours_cleared": 0.0,
+        "ours_swapped_donor": 0.03125
+      }
+    },
+    "continuous_angle_ood": {
+      "trials": 32,
+      "successes": {
+        "nominal": 2,
+        "privileged_oracle": 23,
+        "analytic_proprio_sysid": 3,
+        "analytic_visual_sysid_active": 11,
+        "analytic_visual_sysid_passive": 20,
+        "joint_transformer_active": 4,
+        "factored_no_equiv_active": 1,
+        "ours_retained_active": 17,
+        "ours_retained_passive": 14,
+        "ours_cleared": 2,
+        "ours_swapped_donor": 2
+      },
+      "rates": {
+        "nominal": 0.0625,
+        "privileged_oracle": 0.71875,
+        "analytic_proprio_sysid": 0.09375,
+        "analytic_visual_sysid_active": 0.34375,
+        "analytic_visual_sysid_passive": 0.625,
+        "joint_transformer_active": 0.125,
+        "factored_no_equiv_active": 0.03125,
+        "ours_retained_active": 0.53125,
+        "ours_retained_passive": 0.4375,
+        "ours_cleared": 0.0625,
+        "ours_swapped_donor": 0.0625
+      }
+    },
+    "shifted": {
+      "trials": 88,
+      "successes": {
+        "nominal": 2,
+        "privileged_oracle": 58,
+        "analytic_proprio_sysid": 8,
+        "analytic_visual_sysid_active": 34,
+        "analytic_visual_sysid_passive": 54,
+        "joint_transformer_active": 22,
+        "factored_no_equiv_active": 7,
+        "ours_retained_active": 45,
+        "ours_retained_passive": 37,
+        "ours_cleared": 2,
+        "ours_swapped_donor": 3
+      },
+      "rates": {
+        "nominal": 0.022727272727272728,
+        "privileged_oracle": 0.6590909090909091,
+        "analytic_proprio_sysid": 0.09090909090909091,
+        "analytic_visual_sysid_active": 0.38636363636363635,
+        "analytic_visual_sysid_passive": 0.6136363636363636,
+        "joint_transformer_active": 0.25,
+        "factored_no_equiv_active": 0.07954545454545454,
+        "ours_retained_active": 0.5113636363636364,
+        "ours_retained_passive": 0.42045454545454547,
+        "ours_cleared": 0.022727272727272728,
+        "ours_swapped_donor": 0.03409090909090909
+      }
+    },
+    "overall": {
+      "trials": 96,
+      "successes": {
+        "nominal": 7,
+        "privileged_oracle": 63,
+        "analytic_proprio_sysid": 13,
+        "analytic_visual_sysid_active": 39,
+        "analytic_visual_sysid_passive": 59,
+        "joint_transformer_active": 28,
+        "factored_no_equiv_active": 13,
+        "ours_retained_active": 50,
+        "ours_retained_passive": 38,
+        "ours_cleared": 7,
+        "ours_swapped_donor": 3
+      },
+      "rates": {
+        "nominal": 0.07291666666666667,
+        "privileged_oracle": 0.65625,
+        "analytic_proprio_sysid": 0.13541666666666666,
+        "analytic_visual_sysid_active": 0.40625,
+        "analytic_visual_sysid_passive": 0.6145833333333334,
+        "joint_transformer_active": 0.2916666666666667,
+        "factored_no_equiv_active": 0.13541666666666666,
+        "ours_retained_active": 0.5208333333333334,
+        "ours_retained_passive": 0.3958333333333333,
+        "ours_cleared": 0.07291666666666667,
+        "ours_swapped_donor": 0.03125
+      }
+    }
+  },
+  "paired_contrasts_overall": {
+    "ours_retained_active": {
+      "nominal": {
+        "mean_diff": 0.4479166666666667,
+        "ci95": [
+          0.21848958333333335,
+          0.6669270833333318
+        ],
+        "wins": 43,
+        "losses": 0,
+        "ties": 53
+      },
+      "privileged_oracle": {
+        "mean_diff": -0.13541666666666666,
+        "ci95": [
+          -0.2708333333333333,
+          -0.010416666666666666
+        ],
+        "wins": 2,
+        "losses": 15,
+        "ties": 79
+      },
+      "analytic_proprio_sysid": {
+        "mean_diff": 0.3854166666666667,
+        "ci95": [
+          0.13541666666666666,
+          0.6145833333333334
+        ],
+        "wins": 40,
+        "losses": 3,
+        "ties": 53
+      },
+      "analytic_visual_sysid_active": {
+        "mean_diff": 0.11458333333333333,
+        "ci95": [
+          -0.041927083333333316,
+          0.2604166666666667
+        ],
+        "wins": 22,
+        "losses": 11,
+        "ties": 63
+      },
+      "analytic_visual_sysid_passive": {
+        "mean_diff": -0.09375,
+        "ci95": [
+          -0.28125,
+          0.041666666666666664
+        ],
+        "wins": 8,
+        "losses": 17,
+        "ties": 71
+      },
+      "joint_transformer_active": {
+        "mean_diff": 0.22916666666666666,
+        "ci95": [
+          0.03125,
+          0.4166666666666667
+        ],
+        "wins": 27,
+        "losses": 5,
+        "ties": 64
+      },
+      "factored_no_equiv_active": {
+        "mean_diff": 0.3854166666666667,
+        "ci95": [
+          0.14583333333333334,
+          0.6145833333333334
+        ],
+        "wins": 39,
+        "losses": 2,
+        "ties": 55
+      },
+      "ours_retained_passive": {
+        "mean_diff": 0.125,
+        "ci95": [
+          -0.03125,
+          0.2916666666666667
+        ],
+        "wins": 23,
+        "losses": 11,
+        "ties": 62
+      },
+      "ours_cleared": {
+        "mean_diff": 0.4479166666666667,
+        "ci95": [
+          0.21848958333333335,
+          0.6669270833333318
+        ],
+        "wins": 43,
+        "losses": 0,
+        "ties": 53
+      },
+      "ours_swapped_donor": {
+        "mean_diff": 0.4895833333333333,
+        "ci95": [
+          0.21875,
+          0.7502604166666652
+        ],
+        "wins": 48,
+        "losses": 1,
+        "ties": 47
+      }
+    },
+    "ours_retained_passive": {
+      "nominal": {
+        "mean_diff": 0.3229166666666667,
+        "ci95": [
+          0.16666666666666666,
+          0.4895833333333333
+        ],
+        "wins": 36,
+        "losses": 5,
+        "ties": 55
+      },
+      "privileged_oracle": {
+        "mean_diff": -0.2604166666666667,
+        "ci95": [
+          -0.4375,
+          -0.10416666666666667
+        ],
+        "wins": 4,
+        "losses": 29,
+        "ties": 63
+      },
+      "analytic_proprio_sysid": {
+        "mean_diff": 0.2604166666666667,
+        "ci95": [
+          0.11458333333333333,
+          0.40625
+        ],
+        "wins": 33,
+        "losses": 8,
+        "ties": 55
+      },
+      "analytic_visual_sysid_active": {
+        "mean_diff": -0.010416666666666666,
+        "ci95": [
+          -0.125,
+          0.11458333333333333
+        ],
+        "wins": 16,
+        "losses": 17,
+        "ties": 63
+      },
+      "analytic_visual_sysid_passive": {
+        "mean_diff": -0.21875,
+        "ci95": [
+          -0.3541666666666667,
+          -0.08333333333333333
+        ],
+        "wins": 6,
+        "losses": 27,
+        "ties": 63
+      },
+      "joint_transformer_active": {
+        "mean_diff": 0.10416666666666667,
+        "ci95": [
+          0.020833333333333332,
+          0.21875
+        ],
+        "wins": 22,
+        "losses": 12,
+        "ties": 62
+      },
+      "factored_no_equiv_active": {
+        "mean_diff": 0.2604166666666667,
+        "ci95": [
+          0.125,
+          0.4166666666666667
+        ],
+        "wins": 33,
+        "losses": 8,
+        "ties": 55
+      },
+      "ours_retained_active": {
+        "mean_diff": -0.125,
+        "ci95": [
+          -0.2916666666666667,
+          0.03125
+        ],
+        "wins": 11,
+        "losses": 23,
+        "ties": 62
+      },
+      "ours_cleared": {
+        "mean_diff": 0.3229166666666667,
+        "ci95": [
+          0.16666666666666666,
+          0.4895833333333333
+        ],
+        "wins": 36,
+        "losses": 5,
+        "ties": 55
+      },
+      "ours_swapped_donor": {
+        "mean_diff": 0.3645833333333333,
+        "ci95": [
+          0.17708333333333334,
+          0.5520833333333334
+        ],
+        "wins": 36,
+        "losses": 1,
+        "ties": 59
+      }
+    }
+  },
+  "full_file_sha256": "25843794284ea9bca6009944ccb33db1889ed7181e775893887dccd668d7a7a3",
+  "rows_count": 96
+}
