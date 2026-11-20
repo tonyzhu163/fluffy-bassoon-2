@@ -16,7 +16,7 @@ ACTUAL_COMMIT="$(git -C "$REPO" rev-parse HEAD)"
 test "$ACTUAL_COMMIT" = "$COMMIT"
 
 export PYTHONUNBUFFERED=1
-export MS_ASSET_DIR="$BASE/setups/maniskill3-xemb/assets/data"
+export MS_ASSET_DIR="$BASE/setups/maniskill3-xemb/assets"
 LIBS="$BASE/setups/libero90-full-action-20261119-r1/desktop-libs02/prefix/usr/lib/x86_64-linux-gnu"
 export LD_LIBRARY_PATH="$LIBS:${LD_LIBRARY_PATH:-}"
 export PYTHONPATH="$REPO/src:${PYTHONPATH:-}"
