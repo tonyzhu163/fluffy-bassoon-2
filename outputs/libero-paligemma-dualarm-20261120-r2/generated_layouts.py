@@ -7,22 +7,35 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import subprocess
 import sys
 
 from expert import write_json  # establishes the pinned sibling sim.py import path
+from generated_split import API_ORIGIN, BANK_SHA, FIXTURES, GROUP_BASE, MOVABLES, SOURCE_KIND, public_denylist
 
 SUITE, TASK, CASE = "libero_goal", 5, "BASE"
-GROUP_BASE = 1_000_000
-BANK_SHA = "794beed679b18bbd7d9fb851c81877a974915ad63addff2d5ac5af0607fafac9"
 BDDL_SHA = "c2db20071f58fd43fe029e5bf9176f3c7371ee62cadc311f2b8682c089174c0d"
-SOURCE_KIND = "native_bddl_sample"
-API_ORIGIN = "ControlEnv.seed/reset/get_sim_state"
-MOVABLES = ("akita_black_bowl_1", "cream_cheese_1", "plate_1", "wine_bottle_1")
-FIXTURES = ("flat_stove_1", "wine_rack_1", "wooden_cabinet_1")
 
 
 class LayoutRejected(ValueError):
     """Expected sampler/admission failure for one training seed."""
+
+
+def code_receipt():
+    here = Path(__file__).resolve().parent
+    sibling = here.parent / "libero-paligemma-crossarm-20261120-r1"
+    arm = here.parent / "libero-crossarm-20261120-r1"
+    files = [*(here / n for n in ("generated_layouts.py", "generated_collect.py", "generated_split.py",
+                                  "expert.py", "paddle.py", "sweep_bank.py", "expert_sweep.py", "recover.py")),
+             sibling / "sim.py", sibling / "demos.py", arm / "arm_env.py", arm / "sim_reset.py"]
+    revision = os.environ.get("MOTOR_CODE_REVISION")
+    if not revision:
+        try:
+            revision = subprocess.check_output(["git", "-C", str(here), "rev-parse", "HEAD"],
+                                               stderr=subprocess.DEVNULL, text=True).strip()
+        except (FileNotFoundError, subprocess.CalledProcessError):
+            revision = None
+    return dict(revision=revision, code_sha256={p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in files})
 
 
 @lru_cache(maxsize=1)
@@ -33,8 +46,8 @@ def native_module():
 
 
 @lru_cache(maxsize=1)
-def released_fingerprints():
-    """Only use the 50 public flat rows as an exact hash denylist."""
+def released_row_fingerprints():
+    """The 50 public flat-state hashes in native bank order, for membership checks only."""
     from libero.libero import benchmark, get_libero_path
     from libero_remote.reproducibility import numerical_state_fingerprint
 
@@ -46,7 +59,14 @@ def released_fingerprints():
     rows = suite.get_task_init_states(TASK)
     if len(rows) != 50:
         raise ValueError("Expected all 50 published Goal 5 rows")
-    return frozenset(numerical_state_fingerprint(row) for row in rows)
+    hashes = tuple(numerical_state_fingerprint(row) for row in rows)
+    public_denylist(hashes)
+    return hashes
+
+
+@lru_cache(maxsize=1)
+def released_fingerprints():
+    return frozenset(released_row_fingerprints())
 
 
 def make_sampler():
@@ -71,19 +91,52 @@ def make_sampler():
 
 def collision_admission(wrapper):
     """Check signed MuJoCo placement contacts at a reset boundary without stepping the simulator."""
-    from libero.libero.envs.nonphysical_perturbations import _entity_deep_contacts
+    from types import SimpleNamespace
+
+    import mujoco
+    from libero.libero.envs.nonphysical_perturbations import _entity_body_ids, _entity_deep_contacts
 
     env = wrapper.env
     if set(env.objects_dict) != set(MOVABLES) or set(env.fixtures_dict) != set(FIXTURES):
         raise ValueError("Unexpected Goal 5 object/fixture identities")
     # The release's scene-validation predicate allows shallow support contacts.
     # Include every named sampled fixture (and its articulated descendants).
+    model, live = env.sim.model, env.sim.data
+    # A policy boundary can follow mj_step. Recompute contacts at the actual
+    # recorded qpos in scratch MjData without perturbing solver warm starts.
+    data = mujoco.MjData(model._model)
+    data.qpos[:] = live.qpos
+    data.mocap_pos[:] = live.mocap_pos
+    data.mocap_quat[:] = live.mocap_quat
+    mujoco.mj_fwdPosition(model._model, data)
+    view = SimpleNamespace(obj_body_id=env.obj_body_id, sim=SimpleNamespace(model=model, data=data))
+    owners = {}
     for name in MOVABLES + FIXTURES:
-        deep = _entity_deep_contacts(env, name, tolerance=0.002)
+        deep = _entity_deep_contacts(view, name, tolerance=0.002)
         if deep:
             raise LayoutRejected(f"Native placement penetration at {name}: {deep}")
+        owners.update((idx, name) for idx in _entity_body_ids(view, name))
+    table = model.geom_name2id("table_collision")
+    for i in range(data.ncon):
+        contact = data.contact[i]
+        a, b = int(contact.geom1), int(contact.geom2)
+        first, second = owners.get(int(model.geom_bodyid[a])), owners.get(int(model.geom_bodyid[b]))
+        if first != second and table not in (a, b) and contact.dist <= 0:
+            names = model.geom_id2name(a), model.geom_id2name(b)
+            raise LayoutRejected(f"Non-support contact {names} at signed distance {contact.dist} m")
+    # MuJoCo's constraint generation filters fixed-fixed pairs. Query the
+    # collision geometries of distinct welded fixtures explicitly at this pose.
+    fixed = [g for g in range(model.ngeom) if owners.get(int(model.geom_bodyid[g])) in FIXTURES
+             and model.body_weldid[model.geom_bodyid[g]] == 0 and (model.geom_contype[g] or model.geom_conaffinity[g])]
+    for i, a in enumerate(fixed):
+        for b in fixed[i + 1:]:
+            if owners[int(model.geom_bodyid[a])] != owners[int(model.geom_bodyid[b])]:
+                distance = mujoco.mj_geomDistance(model._model, data, a, b, 0.002, None)
+                if distance <= 0:
+                    raise LayoutRejected(f"Welded fixture geoms {a}, {b} at signed distance {distance} m")
     return dict(method="LIBERO _entity_deep_contacts", tolerance_m=0.002,
-                entities=list(MOVABLES + FIXTURES), deep_contacts=0, ncon=int(env.sim.data.ncon))
+                entities=list(MOVABLES + FIXTURES), deep_contacts=0, non_support_contacts=0,
+                welded_fixture_overlaps=0, ncon=int(data.ncon))
 
 
 def sample_layout(sampler_env, layout_seed, released_fingerprints):
@@ -102,6 +155,7 @@ def sample_layout(sampler_env, layout_seed, released_fingerprints):
     except RandomizationError as exc:
         raise LayoutRejected(f"Native placement sampler exhausted its retries: {exc}") from exc
     plan = sampler_env.get_perturbation_plan()
+    native._identity(sampler_env, "Panda")
     if (plan["case_id"], plan["seed"]) != (CASE, layout_seed):
         raise RuntimeError("Native case/seed readback disagrees with requested reset")
     state = np.asarray(sampler_env.get_sim_state(), dtype=np.float64).copy()
@@ -128,6 +182,45 @@ def sample_layout(sampler_env, layout_seed, released_fingerprints):
     )
 
 
+def reset_generated(session, body, camera, state, origin):
+    """Reset an R2 session from a private one-row bank. Return its observation and honest receipt."""
+    if body not in ("Panda", "Sawyer") or origin["source_kind"] != SOURCE_KIND:
+        raise ValueError("Only generated Panda/Sawyer training starts are supported")
+    arm = session.native.arm if camera else session.arm
+    if arm.arm != body or arm.task_id != TASK or arm.suite != SUITE:
+        raise ValueError("Session does not match requested generated source body or task")
+    seed, group = origin["native_sampler_seed"], origin["source_index"]
+    if origin["bank_row_index"] != 0 or seed != origin["layout_seed"] or group != GROUP_BASE + seed:
+        raise ValueError("Inconsistent generated seed, group or private bank slot")
+    # ArmEnv rebuilds this arm (and its Panda donor for Sawyer) using the sampler
+    # seed, so model-level fixture poses are regenerated too. scene_fingerprint
+    # below checks every fixture as well as all non-arm qpos and qvel.
+    original_bank, arm._states = arm._states, (state,)
+    try:
+        observation = session.reset(0, seed)
+    finally:
+        arm._states = original_bank
+    reset = session.reset_info
+    physics = reset["environment_reproducibility"]
+    if (reset["model_identity"]["arm"] != body or reset["max_steps"] != 300 or
+            (physics["init_state_id"], physics["seed"]) != (0, seed) or
+            (physics["perturbation_plan"]["case_id"], physics["perturbation_plan"]["seed"]) != (CASE, seed) or
+            any(physics[k] != origin[k] for k in ("suite", "task_id", "bddl_sha256", "manifest_sha256", "source_pin")) or
+            physics["released_row_fingerprint"] != origin["initial_state_sha256"] or
+            physics["scene_fingerprint"] != origin["scene_hash"]):
+        raise ValueError("R2 reset did not reproduce the sampled Panda row and full fixture/joint scene")
+    # This new receipt is private to the generated session. The legacy keys were
+    # constructed by ArmEnv under the assumption of a published bank.
+    physics["generated_row_fingerprint"] = physics.pop("released_row_fingerprint")
+    physics.update(init_state_id=group, bank_row_index=0, source_kind=SOURCE_KIND,
+                   native_sampler_seed=seed, layout_seed=seed, native_api_origin=API_ORIGIN,
+                   source_index=group, scene_hash=origin["scene_hash"])
+    if body == "Panda":
+        physics["alignment"] = dict(method="native_sampled_panda_state")
+    physics["settled_collision_check"] = collision_admission(arm._env)
+    return observation
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--seed-start", type=int, default=283100)
@@ -144,8 +237,9 @@ def main():
     args.out.mkdir(parents=True, exist_ok=False)
     accepted, rejected = [], []
     index = dict(suite=SUITE, task_id=TASK, case=CASE, source_kind=SOURCE_KIND, split="train",
-                 command=sys.argv, revision=os.environ.get("MOTOR_CODE_REVISION"), camera=False,
+                 command=sys.argv, **code_receipt(), camera=False,
                  requested=args.count, max_seeds=budget, released_rows_checked=50, released_bank_sha256=BANK_SHA,
+                 public_row_fingerprints=released_row_fingerprints(),
                  accepted=accepted, rejected=rejected)
     write_json(args.out / "index.json", index)
     seen = set()

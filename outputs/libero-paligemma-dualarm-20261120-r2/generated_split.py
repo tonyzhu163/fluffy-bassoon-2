@@ -1,170 +1,149 @@
-"""Validate native BDDL samples for R2 Goal 5 source training.
+"""Source-training provenance checks for generated Goal 5 banks, without simulator imports."""
 
-For accepted rows of a native_generated_layout index, call
-`validate_generated_attempt(index, row, native_reset=NATIVE_RESET)`. Check the
-NPZ pose against the collector row and its embedded JSON origin against
-row["origin"]. Merge the returned fields into the motor-bank episode record;
-its pose is the training group ID. Retain the usual tape, reward, donor and
-renderer checks. At fit or transfer readback, call
-`validate_generated_groups(generated_records, released_fingerprints)` across
-all supplied banks. Supply generated_layouts.released_fingerprints() from the
-pinned 50-row bank, or its values saved at ingestion.
-
-Dispatch ordinary released rows through the existing R2 loader (0..27 train,
-28..31 validation). A missing origin on a generated pose is an error. The
-development and sealed confirmation panels use their existing released resets.
-"""
-
-from collections.abc import Mapping
+import hashlib
+import json
+from pathlib import Path
 import re
 
-
 SOURCE_KIND = "native_bddl_sample"
-SOURCE_INDEX_BASE = 1_000_000
-NATIVE_API_ORIGIN = "ControlEnv.seed/reset/get_sim_state"
-BODIES = ("Panda", "Sawyer")
-TASK = {"suite": "libero_goal", "task_id": 5, "case": "BASE"}
-PIN_FIELDS = ("source_pin", "manifest_sha256", "bddl_sha256")
+GROUP_BASE = 1_000_000
+API_ORIGIN = "ControlEnv.seed/reset/get_sim_state"
 BANK_SHA = "794beed679b18bbd7d9fb851c81877a974915ad63addff2d5ac5af0607fafac9"
+PUBLIC_LIST_SHA = "52d3d8066748eddea7ac875260cd198d3c49b15d69adb63cd3888e89b7cbadaf"
+TASK = dict(suite="libero_goal", task_id=5, case="BASE")
+MOVABLES = ("akita_black_bowl_1", "cream_cheese_1", "plate_1", "wine_bottle_1")
+FIXTURES = ("flat_stove_1", "wine_rack_1", "wooden_cabinet_1")
 
 
-def _expect(mapping, expected, where):
-    if not isinstance(mapping, Mapping):
-        raise ValueError(f"{where}: expected an object")
+def expect(mapping, expected):
     for key, value in expected.items():
         actual = mapping.get(key)
         if type(actual) is not type(value) or actual != value:
-            raise ValueError(f"{where}: expected {key}={value!r}, got {actual!r}")
+            raise ValueError(f"Generated source provenance mismatch for {key}")
 
 
-def _seed(mapping, key):
-    value = mapping.get(key)
-    if type(value) is not int or not 0 <= value < 2**32:
-        raise ValueError(f"Expected an unsigned 32-bit {key}, got {value!r}")
-    return value
+def canonical(value):
+    payload = json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False)
+    return hashlib.sha256(payload.encode()).hexdigest()
 
 
-def _sha256(value, name):
-    if not isinstance(value, str) or not re.fullmatch("[0-9a-f]{64}", value):
-        raise ValueError(f"Invalid SHA-256 for {name}")
-    return value
+def public_denylist(ordered):
+    """Accept only the 50 numerical_state_fingerprint digests of the pinned public bank."""
+    if len(ordered) != 50 or not all(isinstance(h, str) and re.fullmatch("[a-f0-9]{64}", h) for h in ordered):
+        raise ValueError("Expected the 50 public Goal 5 SHA-256 digests in bank order")
+    if hashlib.sha256(b"".join(bytes.fromhex(h) for h in ordered)).hexdigest() != PUBLIC_LIST_SHA:
+        raise ValueError("Different public Goal 5 row list")
+    return frozenset(ordered)
 
 
 def validate_origin(origin):
-    """Return the JSON provenance fields shared by all attempts on one layout."""
-    if not isinstance(origin, Mapping):
-        raise ValueError("Missing generated layout origin")
-    seed = _seed(origin, "layout_seed")
-    identity = dict(**TASK, split="train", source_kind=SOURCE_KIND, source_index=SOURCE_INDEX_BASE + seed,
-                    layout_seed=seed, native_sampler_seed=seed, bank_row_index=0,
-                    native_api_origin=NATIVE_API_ORIGIN, collision_free=True,
-                    released_rows_checked=50, released_bank_sha256=BANK_SHA)
-    _expect(origin, identity, "generated layout origin")
-    for key in ("initial_state_sha256", "scene_hash"):
-        identity[key] = _sha256(origin.get(key), key)
-    if "movable_xy_hash" in origin:
-        _sha256(origin["movable_xy_hash"], "movable XY placement")
-    return dict(origin)
+    seed = origin["layout_seed"]
+    if type(seed) is not int or not 0 <= seed < 2**32:
+        raise ValueError("Invalid native layout seed")
+    expect(origin, dict(**TASK, split="train", source_kind=SOURCE_KIND, source_index=GROUP_BASE + seed,
+                        native_sampler_seed=seed, native_api_origin=API_ORIGIN, bank_row_index=0,
+                        released_rows_checked=50, released_bank_sha256=BANK_SHA, collision_free=True))
+    if not re.fullmatch("[0-9a-f]{64}", origin["initial_state_sha256"]):
+        raise ValueError("Invalid generated row fingerprint")
+    positions = origin["movable_xyz_m"]
+    if set(positions) != set(MOVABLES) or any(len(xyz) != 3 for xyz in positions.values()):
+        raise ValueError("Incomplete movable world positions")
+    expect(origin, dict(scene_hash=canonical(origin["sampled_scene"]),
+                        movable_xy_hash=canonical({k: v[:2] for k, v in positions.items()})))
+    expect(origin["collision_check"], dict(tolerance_m=0.002, deep_contacts=0, non_support_contacts=0,
+                                           entities=list(MOVABLES + FIXTURES)))
+    return origin
 
 
-def _check_copies(mapping, origin, where):
-    # Both the sampler entry and the reset/collector can carry provenance.
-    _expect(mapping, {k: v for k, v in origin.items() if k in mapping}, where)
-    if "origin" in mapping:
-        _expect(mapping["origin"], origin, where)
-
-
-def _source_row(row, origin):
-    body = row.get("body")
-    if body not in BODIES:
-        raise ValueError(f"Unexpected generated training arm {body!r}")
-    _expect(row, {"pose": origin["source_index"], "split": "train"}, "generated training row")
-    if "group_id" in row:
-        _expect(row, {"group_id": origin["source_index"]}, "generated training group")
-    _expect(row, {"seed": origin["layout_seed"]}, "generated rollout")
-    _check_copies(row, origin, "generated training row")
-    return body
+def source_record(row, native_reset):
+    origin = validate_origin(row["layout_origin"])
+    expect(origin, native_reset)
+    expect(row, dict(split="train", source_kind=SOURCE_KIND, pose=origin["source_index"],
+                     seed=origin["layout_seed"]))
+    if row["body"] not in ("Panda", "Sawyer") or "released_row_fingerprint" in row:
+        raise ValueError("Generated records require a source arm and generated row identity")
+    return origin
 
 
 def validate_generated_attempt(index, row, *, native_reset):
-    """Bind one collector row and the sampler entry to the witnessed native reset.
-
-    native_reset is the existing pretrain_reader.NATIVE_RESET. The collector
-    uses its layout seed for the native rollout and the perturbation plan.
-    """
-    origin = validate_origin(row.get("origin"))
-    seed, group = origin["layout_seed"], origin["source_index"]
-    _expect(index, {**TASK, "source_constructor": "native_generated_layout"}, "generated bank")
-    if "layout_bank_row" in index:
-        _expect(index, {"layout_bank_row": origin["bank_row_index"]}, "generated bank slot")
-    _expect(row, {"layout_seed": seed, "seed": seed}, "generated attempt")
-    tape_pose = row.get("pose")
-    if type(tape_pose) is not int or tape_pose not in (origin["bank_row_index"], group):
-        raise ValueError("Generated tape pose disagrees with its bank slot or training group")
-    if "split" in row:
-        _expect(row, {"split": "train"}, "generated attempt")
-    body = _source_row({**row, "pose": group, "split": "train"}, origin)
-    layouts = [entry for entry in index["layouts"] if entry["layout_seed"] == seed]
+    """Validate one accepted camera receipt and return fields to merge into a motor-bank record."""
+    origin = source_record(row, native_reset)
+    expect(index, dict(**TASK, split="train", source_kind=SOURCE_KIND, source_constructor="native_generated_layout"))
+    if row["body"] not in index["bodies"] or set(index["bodies"]) - {"Panda", "Sawyer"}:
+        raise ValueError("Generated bank declares inconsistent source arms")
+    if row["pose"] not in index["poses"] or any(type(p) is not int or p < GROUP_BASE for p in index["poses"]):
+        raise ValueError("Generated index contains an invalid training group")
+    layouts = [entry for entry in index["layouts"] if entry["layout_seed"] == row["seed"]]
     if len(layouts) != 1:
-        raise ValueError(f"Expected one sampler entry for generated group {group}")
-    layout = layouts[0]
-    _expect(layout, {"layout_seed": seed, "origin": origin, "row_fingerprint": origin["initial_state_sha256"],
-                     "scene_fingerprint": origin["scene_hash"]}, "sampler entry")
-    _check_copies(layout, origin, "sampler entry")
-    declared = index.get("bodies")
-    if (not isinstance(declared, (tuple, list)) or body not in declared
-            or any(b not in BODIES for b in declared)):
-        raise ValueError("Generated bank must declare only its source arms")
-    _expect(row, {k: v for k, v in TASK.items() if k in row}, "generated attempt")
+        raise ValueError("Expected one native layout receipt per generated seed")
+    expect(layouts[0], {**origin, "row_fingerprint": origin["initial_state_sha256"]})
+    if origin["initial_state_sha256"] in public_denylist(index["public_row_fingerprints"]):
+        raise ValueError("Generated row matches a public row")
+    expect(row, dict(accepted=True, done=True, native_success=True, camera=True, same_initial_state=True,
+                     layout_seed=origin["layout_seed"]))
+    if not (0 < row["steps"] == row["search_steps"] <= 300 and row["terminal_reward"] == row["native_return"] == 1):
+        raise ValueError("Incomplete positive command replay")
     reset = row["reset"]
-    _expect(reset["model_identity"], {"arm": body}, "native model")
+    expect(reset["model_identity"], {"arm": row["body"]})
+    expect(reset, {"max_steps": 300})
+    vendor, renderer = reset["renderer"]
+    if "NVIDIA" not in vendor.upper() or not renderer:
+        raise ValueError("Missing allocated camera renderer")
     physics = reset["environment_reproducibility"]
-    pins = {k: native_reset[k] for k in PIN_FIELDS}
-    _expect(origin, pins, "native sampler")
-    _expect(physics, {**pins, "suite": TASK["suite"], "task_id": TASK["task_id"],
-                      "seed": seed, "released_row_fingerprint": origin["initial_state_sha256"],
-                      "scene_fingerprint": origin["scene_hash"]},
-            "generated reset")
-    _expect(physics["perturbation_plan"], {"case_id": TASK["case"], "seed": seed}, "BASE plan")
-    _check_copies(reset, origin, "generated reset")
-    _check_copies(physics, origin, "generated reset physics")
-    # ArmEnv reads the sole sampled row at zero. A collector may relabel the
-    # public init_state_id to the logical group if it preserves the native slot.
-    if physics.get("init_state_id") == origin["source_index"]:
-        _expect(physics, {"init_state_id": origin["source_index"]}, "generated group")
-        if "bank_row_index" not in physics and "origin" not in physics:
-            raise ValueError("Relabeled native init_state_id lacks its internal bank_row_index")
-    else:
-        _expect(physics, {"init_state_id": origin["bank_row_index"]}, "internal generated bank")
-    settled = _sha256(physics.get("initial_state_fingerprint"), "settled arm state")
-    scene = _sha256(physics.get("scene_fingerprint"), "pre-settle task scene")
-    return dict(**TASK, body=body, pose=group, seed=seed, split="train", origin=origin,
-                released_row_fingerprint=origin["initial_state_sha256"],
-                initial_state_fingerprint=settled, scene_fingerprint=scene)
+    expect(physics, {**native_reset, "suite": TASK["suite"], "task_id": 5, "init_state_id": row["pose"],
+                     "seed": row["seed"], "bank_row_index": 0, "source_kind": SOURCE_KIND,
+                     "native_sampler_seed": row["seed"], "native_api_origin": API_ORIGIN,
+                     "generated_row_fingerprint": origin["initial_state_sha256"], "scene_fingerprint": origin["scene_hash"],
+                     "initial_state_fingerprint": row["search_initial_state_fingerprint"]})
+    if "released_row_fingerprint" in physics or not re.fullmatch("[0-9a-f]{64}", physics["initial_state_fingerprint"]):
+        raise ValueError("Invalid generated reset fingerprint")
+    expect(physics["perturbation_plan"], {"case_id": "BASE", "seed": row["seed"]})
+    expect(physics["settled_collision_check"], {"deep_contacts": 0, "non_support_contacts": 0, "tolerance_m": 0.002})
+    return dict(**TASK, body=row["body"], pose=row["pose"], seed=row["seed"], split="train", source_kind=SOURCE_KIND,
+                layout_origin=origin, generated_row_fingerprint=origin["initial_state_sha256"],
+                initial_state_fingerprint=physics["initial_state_fingerprint"], scene_fingerprint=origin["scene_hash"])
 
 
-def validate_generated_groups(records, released_fingerprints):
-    """Check saved generated records across banks, arms and collector repeats."""
-    if not isinstance(released_fingerprints, (set, frozenset, list, tuple)) or len(released_fingerprints) != 50:
-        raise ValueError("Supply the raw fingerprints of all 50 released Goal 5 rows")
-    released = {_sha256(fp, f"released row {i}") for i, fp in enumerate(released_fingerprints)}
-    groups, raw_owners, scene_owners, xy_owners = {}, {}, {}, {}
+def validate_generated_tape(tape, row):
+    """Bind an open pickle-free save_tape NPZ to its generated receipt."""
+    expect({k: tape[k].item() for k in ("body", "pose", "seed", "layout_seed")},
+           {k: row[k] for k in ("body", "pose", "seed", "layout_seed")})
+    if json.loads(tape["layout_origin"].item()) != row["layout_origin"]:
+        raise ValueError("Generated tape and bank origins differ")
+
+
+def validate_layout_file(root, layout):
+    """Verify the small raw Panda state file once per layout at bank ingestion."""
+    import numpy as np
+
+    origin = validate_origin(layout)
+    relative = f"layouts/{origin['layout_seed']}.npy"
+    expect(layout, {"state_file": relative})
+    path = Path(root) / relative
+    if hashlib.sha256(path.read_bytes()).hexdigest() != layout["state_sha256"]:
+        raise ValueError("Generated Panda state file digest mismatch")
+    state = np.load(path, allow_pickle=False)
+    if state.shape != (79,) or state.dtype != np.float64 or not np.isfinite(state).all():
+        raise ValueError("Expected a finite flat Goal 5 Panda state")
+    payload = b'{"dtype":"<f8","shape":[79]}\0' + state.astype("<f8", copy=False).tobytes()
+    expect(layout, {"initial_state_sha256": hashlib.sha256(payload).hexdigest(),
+                    "row_fingerprint": origin["initial_state_sha256"]})
+
+
+def validate_generated_groups(records, public_row_fingerprints, *, native_reset):
+    """Check generated training records together across banks and bodies at source fit/readback."""
+    released = public_denylist(public_row_fingerprints)
+    groups, owners, starts = {}, {}, {}
     for row in records:
-        origin = validate_origin(row.get("origin"))
-        _source_row(row, origin)
-        _expect(row, {**TASK, "released_row_fingerprint": origin["initial_state_sha256"],
-                      "scene_fingerprint": origin["scene_hash"]},
-                "saved generated record")
-        _sha256(row.get("initial_state_fingerprint"), "settled arm state")
-        pose, raw = origin["source_index"], origin["initial_state_sha256"]
-        if raw in released:
-            raise ValueError(f"Generated group {pose} reproduces a released Goal 5 row")
-        if groups.setdefault(pose, origin) != origin:
-            raise ValueError(f"Inconsistent generated layout provenance for group {pose}")
-        identities = [(raw_owners, raw), (scene_owners, origin["scene_hash"])]
-        if "movable_xy_hash" in origin:
-            identities.append((xy_owners, origin["movable_xy_hash"]))
-        for owners, digest in identities:
-            owner = owners.setdefault(digest, pose)
-            if owner != pose:
-                raise ValueError(f"Generated groups {owner} and {pose} identify the same layout")
+        origin = source_record(row, native_reset)
+        pose, raw = row["pose"], origin["initial_state_sha256"]
+        expect(row, {**TASK, "generated_row_fingerprint": raw, "scene_fingerprint": origin["scene_hash"]})
+        if raw in released or groups.setdefault(pose, origin) != origin:
+            raise ValueError(f"Published or inconsistent generated group {pose}")
+        start = row["initial_state_fingerprint"]
+        if (not re.fullmatch("[0-9a-f]{64}", start)
+                or starts.setdefault((row["body"], pose), start) != start):
+            raise ValueError(f"Inconsistent settled state for {row['body']} group {pose}")
+        for key in ("initial_state_sha256", "scene_hash", "movable_xy_hash"):
+            if owners.setdefault((key, origin[key]), pose) != pose:
+                raise ValueError(f"Duplicate {key} across generated groups")
