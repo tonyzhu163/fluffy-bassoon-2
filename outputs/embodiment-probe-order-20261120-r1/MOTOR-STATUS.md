@@ -22,3 +22,13 @@ At 15:55 the finished reports at `<directory>/dev/scores/<checkpoint SHA>/stride
 | large-panel-hostrecover01 | 2,400 | 17/50 | 15/50 | `76737313e15bbfea22cea1745859777ffdf45eaba4f174b9077435ea8ce19a73` |
 | large-panel-hostcat01 | 6,400 | 14/50 | 15/50 | `9e0dd7754ba86d09e7a64447ee9c580be60f85164eff430103740dd3403bed46` |
 | large-panel-v3 | 6,400 | 34/50 | 20/50 | `7e2122efbd976638680c8215c3830eeb974179c5944f5185b38771988a3d464a` |
+
+The four bank indices in each collection gave the following admitted-layout and accepted-demonstration counts. The accepted counts match the NPZ file totals above.
+
+| Collection | Admitted layouts | Panda accepted | Sawyer accepted |
+| --- | ---: | ---: | ---: |
+| gendemos01 | 96 | 66 | 94 |
+| gendemos02 | 128 | 93 | 128 |
+| gendemos03 | 128 | 98 | 123 |
+
+On the four paired starts in `stride01/dev/report.json`, strides 1 and 2 each scored 3/4 Panda and 0/4 Sawyer. Holding five actions scored 2/4 Panda and 1/4 Sawyer. Against stride 5, stride 1 had two wins and one loss on Panda, and stride 2 had one win and zero losses. Both shorter strides lost the same Sawyer success at pose 35 and rescued none.
