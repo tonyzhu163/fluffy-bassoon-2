@@ -26,6 +26,11 @@ class Episode:
         self.truncated = []
         self.successes = []
         self.observations = []
+        self.live_observations = []
+        self.policy_packets = []
+        self.snapshots = [reset["control_zero_snapshot"]] if "control_zero_snapshot" in reset else []
+        self.integration = []
+        self.precommit = None
         self.proposals = []
         self.proposal_source = []
         self.features = []
@@ -33,16 +38,20 @@ class Episode:
         self.score = None
         self.enabled = False
 
-    def command(self, public, raw, policy, hashes=None, source="live"):
+    def command(self, public, raw, policy, hashes=None, source="live", dispatch=None):
         import model
         step = len(self.actions)
         self.observations.append(hashes if hashes is not None else observation_hashes(public))
         self.proposal_source.append(source)
+        self.policy_packets.append(public)
         self.proposals.append(raw.copy())
         if step == FORK:
             self.fork_x = model.features(public, raw, step)
+            if self.mode == "off" and policy is not None:
+                self.precommit = float(policy.score(public, raw, step))
+                require(np.isfinite(self.precommit), "Nonfinite public gate precommitment")
             if self.mode == "gated":
-                self.score = float(policy.score(public, raw, step))
+                self.score = float(dispatch) if dispatch is not None else float(policy.score(public, raw, step))
                 require(np.isfinite(self.score), "Nonfinite gate score")
                 self.enabled = self.score > model.GATE_THRESHOLD
             else:
@@ -62,7 +71,8 @@ class Episode:
         self.obs = observation
         start = len(self.actions)
         require(1 <= len(trace) <= 5, "Invalid native step count")
-        for j, (action, reward, terminated, truncated, success, index) in enumerate(trace):
+        for j, (action, reward, terminated, truncated, success, index, integration) in enumerate(trace):
+            self.integration.append(integration)
             require(index == start + j + 1 and reward in (0, 1) and (reward == 1) == success and
                     (not success or terminated) and not (terminated and truncated) and
                     (not (terminated or truncated) or j == len(trace) - 1), "Native step or reward mismatch")
@@ -84,7 +94,9 @@ class Episode:
     def evidence(self):
         return dict(actions=np.asarray(self.actions, np.float32), base=np.asarray(self.proposals, np.float32),
                     observations=np.asarray(json.dumps(self.observations, sort_keys=True)),
-                    proposal_source=np.asarray(self.proposal_source),
+                    live_observations=np.asarray(json.dumps(self.live_observations, sort_keys=True)),
+                    physical_snapshots=np.asarray(json.dumps(self.snapshots, sort_keys=True)),
+                    integration_sha256=np.asarray(self.integration), proposal_source=np.asarray(self.proposal_source),
                     native_steps=np.arange(1, len(self.actions) + 1, dtype=np.int32),
                     rewards=np.asarray(self.rewards, np.float32), success=np.asarray(self.successes, bool),
                     terminated=np.asarray(self.terminated, bool), truncated=np.asarray(self.truncated, bool))
@@ -95,42 +107,69 @@ class Episode:
                     gate_score=self.score, enabled=bool(self.enabled))
 
 
-def rollout(pool, base, arm, split, rows, mode, motor, policy, prompt, previous):
-    # All sibling episodes begin in fresh interpreters with the same native
-    # module state. Every physical branch resets, renders and actually steps.
+def reference_at(mode, episode, plan, previous, i):
+    # Branch selection depends only on the public step and the precommitted
+    # gate. The physics fingerprints below assert replay identity separately.
+    if mode == "off":
+        return None
+    if plan * 5 <= FORK:
+        return previous["off"][i]
+    if mode == "gated":
+        return previous["always" if episode.enabled else "off"][i]
+    return None
+
+
+def rollout(pool, base, arm, split, rows, mode, motor, policy, prompt, previous, dest):
+    import model
     with ExitStack() as stack:
         sessions = [stack.enter_context(RenderedSession(base, arm, split)) for _ in rows]
         resets = [pool.submit(env.start, row["layout_seed"], mode) for env, row in zip(sessions, rows)]
         episodes = [Episode(*f.result(), mode) for f in resets]
         active = list(range(len(episodes)))
         while active:
-            observations = [public_observation(episodes[i].obs, prompt) for i in active]
-            hashes = [observation_hashes(obs) for obs in observations]
-            proposals = {}
-            sources = {}
-            for i, public_hash in zip(active, hashes, strict=True):
-                plan = len(episodes[i].proposals)
-                # Cache lookup is restricted to this layout, time, and exact
-                # rendered pixels, public state and prompt. No outcome is a key.
-                for label, branch in previous.items():
-                    other = branch[i]
-                    if plan < len(other.proposals) and public_hash == other.observations[plan]:
-                        proposals[i], sources[i] = other.proposals[plan], label
-                        break
-            if len(proposals) != len(active):
-                # Keep R2's original batch/padding on all live input images.
-                chunks = infer(motor, observations)
-                for i, chunk in zip(active, chunks, strict=True):
-                    if i not in proposals:
-                        proposals[i], sources[i] = chunk, "live"
+            public = {i: public_observation(episodes[i].obs, prompt) for i in active}
+            fresh = []
+            proposals, sources, policy_hashes = {}, {}, {}
+            for i in active:
+                ep = episodes[i]
+                plan = len(ep.proposals)
+                live = observation_hashes(public[i])
+                ep.live_observations.append(live)
+                ref = reference_at(mode, ep, plan, previous, i)
+                if ref is None:
+                    fresh.append(i)
+                    sources[i], policy_hashes[i] = "live", live
+                    continue
+                if plan >= len(ref.proposals):
+                    raise ValueError(f"Physical replay exceeded reference at {arm}/{rows[i]['layout_seed']} control {5*plan}")
+                # Only the already measured public packet and frozen proposal
+                # from this branch's causal history reach the action function.
+                public[i] = ref.policy_packets[plan]
+                proposals[i], sources[i], policy_hashes[i] = ref.proposals[plan], ref.mode, ref.observations[plan]
+            if fresh:
+                chunks = infer(motor, [public[i] for i in fresh])
+                proposals.update(zip(fresh, chunks, strict=True))
             jobs = []
-            for i, obs, public_hash in zip(active, observations, hashes, strict=True):
-                command = episodes[i].command(obs, proposals[i], policy, public_hash, sources[i])
+            for i in active:
+                ep = episodes[i]
+                step = len(ep.actions)
+                dispatch = previous["off"][i].precommit if mode == "gated" and step == FORK else None
+                if mode == "gated" and step == FORK:
+                    require(dispatch is not None, "Missing public decision made before the raw suffix")
+                command = ep.command(public[i], proposals[i], policy, policy_hashes[i], sources[i], dispatch)
+                if step == FORK and ep.precommit is not None:
+                    # Persist before the first raw suffix action is sent for this layout.
+                    bind(dest / "decisions" / arm / f"{rows[i]['layout_seed']}.json", dict(
+                         elapsed_controls=FORK, score=ep.precommit, enabled=ep.precommit > model.GATE_THRESHOLD,
+                         threshold=model.GATE_THRESHOLD, layout_seed=rows[i]["layout_seed"], arm=arm,
+                         public=ep.observations[-1], raw_proposal=ep.proposals[-1].tolist()))
                 jobs.append((i, command, pool.submit(sessions[i].advance_native, command)))
             active = []
             for i, command, f in jobs:
-                observation, trace = f.result()
-                if not episodes[i].consume(observation, trace, command):
+                observation, (trace, stamp) = f.result()
+                ep = episodes[i]
+                ep.snapshots.append(stamp)
+                if not ep.consume(observation, trace, command):
                     active.append(i)
         return episodes
 
@@ -163,7 +202,14 @@ def compare(raw, other, *, complete=False):
     for j in range(plans):
         for k in ("rgb", "wrist", "state", "prompt"):
             same(k, j * 5, raw.observations[j][k], other.observations[j][k])
+        for k in ("state", "prompt"):
+            same("live_" + k, j * 5, raw.live_observations[j][k], other.live_observations[j][k])
         numeric("base", j * 5, raw.proposals[j], other.proposals[j])
+    for j in range((steps + 4) // 5 + 1):
+        for k in ("integration", "controller", "clocks", "public", "full"):
+            same("physical_" + k, min(j * 5, steps), raw.snapshots[j][k], other.snapshots[j][k])
+    for j in range(steps):
+        same("integration_sha256", j + 1, raw.integration[j], other.integration[j])
     same("decision reached", FORK, raw.fork_x is not None, other.fork_x is not None)
     if raw.fork_x is not None:
         numeric("fork_x", FORK, raw.fork_x, other.fork_x)
@@ -229,8 +275,13 @@ def save_pair(args, dest, row, arm, cases, contract, archive):
         selected = "always" if cases["gated"].enabled else "off"
         compare(cases[selected], cases["gated"], complete=True)
         result["gated_reproduces"] = selected
+        require(off.precommit == cases["gated"].score, "Gate readback differs from pre-suffix commitment")
+        result["precommitted_gate_score"] = off.precommit
         if archive is not None:
             result["archived_raw"] = archived_reference(args, row, arm, off, archive)
+    result["camera_replay_differences"] = {name: {
+        camera: [j*5 for j, (a, b) in enumerate(zip(case.observations, case.live_observations, strict=True))
+                 if a[camera] != b[camera]] for camera in ("rgb", "wrist")} for name, case in cases.items()}
     for name, case in cases.items():
         for field, values in case.evidence().items():
             arrays[f"trace_{name}_{field}"] = values
@@ -252,7 +303,9 @@ def run_stage(args, motor, prompt, rows, out, split, policy=None, archive=None, 
     contract = dict(checkpoint_sha256=CHECKPOINT, fit_sha256=FIT_SHA, r2_revision=PIN, split=split,
                     motor_prompt=prompt, fork=FORK, cadence=5, horizon=300, inference_batch=BATCH,
                     manifest_sha256=sha(base / "manifest.json"), arms=list(ARMS), branches=list(branch_names),
-                    proposal_reuse="exact same layout, control, full public input; bounded live native steps",
+                    proposal_reuse="canonical live public packets for the shared raw prefix and selected gated path",
+                    fork_qualification="exact native/OSC/clock/public snapshot at every replan and integration each control",
+                    gate_qualification="public score committed on the raw rollout before its suffix",
                     simulator_lifetime="fresh interpreter per layout and condition, PYTHONHASHSEED=0",
                     seeds=[r["layout_seed"] for r in rows], model_sha256=None if collecting else sha(model_dir / "model.npz"),
                     files={f: sha(HERE / f) for f in ("native.py", "native_sim.py", "teacher.py", "model.py")})
@@ -276,7 +329,7 @@ def run_stage(args, motor, prompt, rows, out, split, policy=None, archive=None, 
                     group = pending[i:i + count]
                     branches = {}
                     for mode in branch_names:
-                        branches[mode] = rollout(pool, base, arm, split, group, mode, motor, policy, prompt, branches)
+                        branches[mode] = rollout(pool, base, arm, split, group, mode, motor, policy, prompt, branches, dest)
                     for j, row in enumerate(group):
                         cases = {mode: branch[j] for mode, branch in branches.items()}
                         path = dest / arm / str(row["layout_seed"])

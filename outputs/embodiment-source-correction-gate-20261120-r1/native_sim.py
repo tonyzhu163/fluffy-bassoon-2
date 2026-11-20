@@ -3,6 +3,7 @@
 from contextlib import closing
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import traceback
@@ -16,7 +17,7 @@ CHECKOUT = Path(os.environ.get("R2_CHECKOUT", f"/mowenjie/fluffy-bassoon-2/setup
 sys.path[1:1] = [str(CHECKOUT / "outputs" / NAME),
                  str(CHECKOUT / "outputs/libero-paligemma-crossarm-20261120-r1"), str(CHECKOUT / "src")]
 
-from large_panel_protocol import (ARMS, GEOMETRY_FIELDS, bind, implementation,
+from large_panel_protocol import (ARMS, GEOMETRY_FIELDS, bind, digest, implementation,
                                  mobile_joints, publish, read, require, sha, training)
 from large_panel_sim import Session, physical_reset
 
@@ -46,6 +47,25 @@ def prepare(args):
     from generated_split import validate_origin
 
     data = dev_panel(args)
+    prior = args.out.parent / "native02/layouts"
+    if args.out.name != "native02" and prior.is_dir():
+        # Both admitted attempts independently produced this exact manifest.
+        expected = "94cd71a5e9f7d6f3819723debb04c22186702f50ebb68a1e38d6a19d08726e66"
+        require(sha(prior / "manifest.json") == expected, "Prior geometry manifest differs")
+        rows = train_rows(prior.parent)
+        current_panels = set(args.panel.parent.glob("large-panel*/dev/manifest.json")) | set(
+            args.panel.parent.glob("large-panel*/test/manifest.json"))
+        require({str(p): sha(p) for p in current_panels} == read(prior / "manifest.json")["denied_manifests"],
+                "Prior geometry denylist has changed")
+        for name, value in [(r["state_file"], r["file_sha256"]) for r in rows] + [("manifest.json", expected)]:
+            require(sha(prior / name) == value, f"Prior layout bytes changed: {name}")
+            with publish(args.out / "layouts" / name) as tmp:
+                shutil.copyfile(prior / name, tmp)
+                require(sha(tmp) == value, f"Layout transfer failed: {name}")
+        bind(args.out / "layouts/manifest.sha256.json", expected)
+        bind(args.out / "layouts/reuse.json", dict(source=str(prior), manifest_sha256=expected, verified_donors=len(rows)))
+        print(f"Verified and copied {len(rows)} previously admitted donor arrays and their manifest", flush=True)
+        return
     _, fit_seeds, fit_hashes = training(args.fit)
     base = args.out / "layouts"
     # Compare identity/geometry fields only. Future uninstantiated reservations are
@@ -128,8 +148,31 @@ def train_rows(out):
     return rows
 
 
+def snapshot(arm, obs):
+    # Use the previously qualified full native/OSC snapshot. Camera bytes are
+    # captured separately, so this fingerprint diagnoses physics independently.
+    from fork import snapshot as capture
+    from replay import state_sha
+    fields = capture(arm, {k: obs[k] for k in ("state", "prompt")})
+    hashes = {k: state_sha(v) for k, v in fields.items()}
+    return dict(full=digest(hashes), integration=hashes["integration"], public=hashes["public.state"],
+                controller=digest({k: v for k, v in hashes.items() if k.startswith("osc.")}),
+                clocks=digest({k: v for k, v in hashes.items() if k.startswith("scene.") or k == "mj.time"}))
+
+
+def integration_sha(arm):
+    import mujoco
+    from replay import state_sha
+    sim = arm._env.sim
+    spec = mujoco.mjtState.mjSTATE_INTEGRATION
+    x = np.empty(mujoco.mj_stateSize(sim.model._model, spec), dtype=np.float64)
+    mujoco.mj_getState(sim.model._model, sim.data._data, x, spec)
+    return state_sha(x)
+
+
 def serve(fd, base, arm, split):
     from multiprocessing.connection import Connection
+    sys.path.insert(1, str(HERE.parent / "embodiment-sawyer-contact-fork-20261120-r1"))
     from expert import session
     from sim import _pack, _public
 
@@ -153,6 +196,7 @@ def serve(fd, base, arm, split):
                         require(row["split"] == split and sha(path) == row["file_sha256"], "Donor changed")
                         teacher = None
                         obs, info, _ = physical_reset(env, arm, True, np.load(path, allow_pickle=False), row)
+                        info["control_zero_snapshot"] = snapshot(env.native.arm, obs)
                         result = _pack(obs), info
                     elif op == "advance":
                         native = env.native.arm
@@ -172,10 +216,10 @@ def serve(fd, base, arm, split):
                             require(np.array_equal(issued, np.asarray(action, np.float32)),
                                     "Native action differs from requested control")
                             trace.append((issued.tolist(), p["reward"], p["terminated"], p["truncated"], p["success"],
-                                          p["worker_step_index"]))
+                                          p["worker_step_index"], integration_sha(native)))
                             if p["terminated"] or p["truncated"]:
                                 break
-                        result = _pack(obs), trace
+                        result = _pack(obs), (trace, snapshot(native, obs))
                     else:
                         raise ValueError(f"Unknown native operation {op}")
                     channel.send((True, result))
