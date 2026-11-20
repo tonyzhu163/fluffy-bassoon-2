@@ -81,12 +81,11 @@ def _fit_response(episodes):
     if rank != 7:
         raise ValueError("Calibration needs independent excitation of all six Cartesian axes plus offset")
     gain, drift = coef[:6], coef[6]
-    if np.linalg.matrix_rank(gain) != 6:
-        raise ValueError("Observed Cartesian calibration response has a missing direction")
     return _Response(gain, drift, {
         "episode_ids": [ep.episode_id for ep in episodes],
         "rows": len(commands),
         "design_condition": float(sv[0] / sv[-1]),
+        "response_rank": int(np.linalg.matrix_rank(gain)),
         "cartesian_gain": gain.tolist(),
         "drift_m_rad": drift.tolist(),
         "fit_rmse_m_rad": np.sqrt(np.mean((design @ coef - motion) ** 2, axis=0)).tolist(),
@@ -98,6 +97,8 @@ class _Teacher:
         # Normalize the six motion errors by the reference arm's per-axis response.
         # Among commands with similar motion prefer a small change to the proposal.
         scale = np.linalg.norm(reference.gain, axis=0)
+        if np.any(scale < 1e-12):
+            raise ValueError("Panda reference calibration has an unobserved Cartesian axis")
         target_gain = target.gain / scale
         damping = 0.01
         inverse = np.linalg.solve(target_gain @ target_gain.T + damping * np.eye(6), target_gain).T
@@ -186,6 +187,7 @@ class _Pair(NamedTuple):
 
 def _pair_episodes(support, queries, size, rng, *, independent_commands):
     paired = {}
+    practice_for_query = {}
     for body, query_episodes in queries.items():
         practices = [(ep, _support(ep.commands, ep.target, size)) for ep in support[body]]
         pairs = []
@@ -195,7 +197,15 @@ def _pair_episodes(support, queries, size, rng, *, independent_commands):
             if not eligible:
                 raise ValueError(f"{body}/{query.episode_id} needs an independent support episode"
                                  " with a different command trajectory")
-            ep, data = eligible[rng.integers(len(eligible))]
+            if query.episode_id in practice_for_query:
+                uid, commands = practice_for_query[query.episode_id]
+                matched = [(ep, data) for ep, data in eligible if ep.episode_id == uid]
+                if len(matched) != 1 or not np.array_equal(matched[0][0].commands, commands):
+                    raise ValueError(f"Missing command-matched practice for {body}/{query.episode_id}")
+                ep, data = matched[0]
+            else:
+                ep, data = eligible[rng.integers(len(eligible))]
+                practice_for_query[query.episode_id] = ep.episode_id, ep.commands
             pairs.append(_Pair(ep.episode_id, data, query))
         paired[body] = pairs
     return paired

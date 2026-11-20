@@ -264,42 +264,10 @@ def run(out):
     with Simulator() as sim:
         source_cal, source_records = collect_probes(sim, out, "calibration", SOURCES, FIT_TASKS,
                                                     train_poses["calibration"], calibration=True)
-        target_cal, target_records = collect_probes(sim, out, "oracle_calibration", [TARGET], FIT_TASKS,
-                                                    train_poses["calibration"], calibration=True)
-        check_bodies(out, source_records + target_records)
         panda_cal = [r for r in source_cal if r["body"] == "Panda"]
         teachers = {body: fit_teacher(panda_cal, [r for r in source_cal if r["body"] == body])
                     for body in SOURCES}
-        target_teacher = fit_teacher(panda_cal, target_cal)
-        responses = {}
-        for body, teacher in {**teachers, TARGET: target_teacher}.items():
-            validation, _ = collect_probes(sim, out, "calibration_check", [body], FIT_TASKS,
-                                            [plan["calibration_check_pose"]])
-            responses[body] = dict(fit=teacher.diagnostics, validation=check_response(teacher, validation))
-            write_json(out / "responses.json", responses)
-
-        # These ceiling measurements constrain interpretation of the fixed, exploratory panel.
         policy = load_frozen_pi05()
-        gate = dict(source={}, target={}, passed=False)
-        for body in SOURCES:
-            c = case(body, FIT_TASKS[0], plan["admission_pose"])
-            baseline, _ = episode(sim, out, "source_gate", c, "unadapted", policy=policy)
-            oracle, _ = episode(sim, out, "source_gate", c, "action_oracle", policy=policy,
-                                adapt=teachers[body].act, reference=baseline)
-            gate["source"][body] = dict(unadapted=baseline["native_success"], oracle=oracle["native_success"])
-            write_json(out / "gate.json", gate)
-        for task in DEV_TASKS:
-            c = case(TARGET, task, plan["admission_pose"])
-            oracle, _ = episode(sim, out, "target_gate", c, "action_oracle", policy=policy,
-                                adapt=target_teacher.act)
-            gate["target"][lineage(c)] = oracle["native_success"]
-            write_json(out / "gate.json", gate)
-        gate["passed"] = bool(all(r["validation"]["passed"] for r in responses.values())
-                              and gate["source"]["Panda"]["unadapted"]
-                              and all(r["oracle"] for r in gate["source"].values())
-                              and any(gate["target"].values()))
-        write_json(out / "gate.json", gate)
-
         pretrain, _ = collect_probes(sim, out, "pretrain", SOURCES, FIT_TASKS, train_poses["pretrain"])
         joint_support, _ = collect_probes(sim, out, "joint_support", SOURCES, FIT_TASKS, train_poses["joint_support"])
         joint_queries, banks = [], []
@@ -321,6 +289,40 @@ def run(out):
         model.save(model_path)
         write_json(out / "fit.json", report)
         frozen = load(model_path)
+
+        # Open the target calibration only after the source-only weights are saved and frozen.
+        target_cal, target_records = collect_probes(sim, out, "oracle_calibration", [TARGET], FIT_TASKS,
+                                                    train_poses["calibration"], calibration=True)
+        check_bodies(out, source_records + target_records)
+        target_teacher = fit_teacher(panda_cal, target_cal)
+        responses = {}
+        for body, teacher in {**teachers, TARGET: target_teacher}.items():
+            validation, _ = collect_probes(sim, out, "calibration_check", [body], FIT_TASKS,
+                                            [plan["calibration_check_pose"]])
+            responses[body] = dict(fit=teacher.diagnostics, validation=check_response(teacher, validation))
+            write_json(out / "responses.json", responses)
+
+        # These ceiling measurements constrain interpretation of the fixed, exploratory panel.
+        gate = dict(source={}, target={}, passed=False)
+        for body in SOURCES:
+            c = case(body, FIT_TASKS[0], plan["admission_pose"])
+            baseline, _ = episode(sim, out, "source_gate", c, "unadapted", policy=policy)
+            oracle, _ = episode(sim, out, "source_gate", c, "action_oracle", policy=policy,
+                                adapt=teachers[body].act, reference=baseline)
+            gate["source"][body] = dict(unadapted=baseline["native_success"], oracle=oracle["native_success"])
+            write_json(out / "gate.json", gate)
+        for task in DEV_TASKS:
+            c = case(TARGET, task, plan["admission_pose"])
+            oracle, _ = episode(sim, out, "target_gate", c, "action_oracle", policy=policy,
+                                adapt=target_teacher.act)
+            gate["target"][lineage(c)] = oracle["native_success"]
+            write_json(out / "gate.json", gate)
+        gate["passed"] = bool(all(r["validation"]["passed"] for r in responses.values())
+                              and gate["source"]["Panda"]["unadapted"]
+                              and all(r["oracle"] for r in gate["source"].values())
+                              and any(gate["target"].values()))
+        write_json(out / "gate.json", gate)
+
 
         pairs = []
         for task_index, task in enumerate(DEV_TASKS):
