@@ -37,3 +37,7 @@ Both extended 6,400-update source fits completed on Baige. The 1,600-update orig
 | Categorical checkpoint on the 50-layout source panel | `job-lpvjnb88lzlo` | `bigcat02`, same panel |
 
 The first preparation generated 50/50 distinct layouts on seeds 740000–740049. The initial scoring jobs exited before any episode because the evaluator revision had advanced after preparation. The replacement preparation and scoring use the same immutable `e2f794c4` source. Keep the original preparation and failed launcher receipts in their original directories.
+
+The first rendered source reset on `large-panel-v2` stopped at audit time before any policy action. The one-layout cross-check on Baige `job-kh6e6dhi7ct2` gave **identical full simulator state and public wrist state** with cameras enabled and disabled on the same host, on both arms. The prepared CPU reference and the independent GPU host agreed on the exact donor row, pre-settle scene, source ID and seed. The maximum post-settle object displacement was 1.74 × 10⁻¹⁸ m. Exact floating-point hashes of the settled state and settled scene differed across hosts. The rollout uses full numerical agreement and preserves native hash receipts on each host. [Numerical evidence](evidence/phys01/diagnostic.json)
+
+Additional native training collection uses disjoint windows beginning at 301000 and 302000 on `job-bt2z25374394` and `job-1da0x4xol75p`, each requesting 128 layouts. A separate continuation fits 2,400 updates beginning from the existing categorical motor and the 49 validated source recovery suffixes.
