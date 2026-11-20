@@ -94,11 +94,11 @@ class Paddle:
         return a.astype(np.float32)
 
 
-def trial(job):
+def trial(job, *, body="Sawyer", replay=None):
     out, pose, seed, index, route, camera = job
     stem = f"{pose}-{seed}-{index}"
-    target = out / ("Sawyer" if camera else "drafts")
-    with session("Sawyer", camera) as env:
+    target = out / (body if camera else "drafts")
+    with session(body, camera) as env:
         obs = env.reset(pose, seed)
         s = env.expert_scene()
         geometry = env.native.geometry if camera else env.geometry
@@ -106,8 +106,9 @@ def trial(job):
         initial_d = np.linalg.norm(expert.goal-expert.origin)
         best, last_progress = 0., 0
         frames, acts, motions, rewards, samples = [], [], [], [], []
-        for t in range(300):
-            a = expert.action(geometry, s)
+        for t in range(len(replay) if replay is not None else 300):
+            proposal = expert.action(geometry, s)
+            a = replay[t].copy() if replay is not None else proposal
             if camera:
                 frames.append(obs)
             obs, motion, reward, done, success = env.step(a)
@@ -120,16 +121,16 @@ def trial(job):
                 best, last_progress = float(gain), t
             if t % 20 == 0:
                 samples.append(dict(t=t, **expert.last))
-            if done or (expert.phase == 2 and expert.tick >= 65 and t-last_progress > 65):
+            if done or (replay is None and expert.phase == 2 and expert.tick >= 65 and t-last_progress > 65):
                 break
         ok = bool(done and success and reward > 0)
-        row = dict(body="Sawyer", pose=pose, seed=seed, recipe=index, params=asdict(route), steps=len(acts),
+        row = dict(body=body, route="rendered_commands" if replay is not None else "whole_gripper_push", pose=pose, seed=seed, recipe=index, params=asdict(route), steps=len(acts),
                    native_success=bool(success), terminal_reward=float(reward), done=bool(done), accepted=bool(ok and camera),
                    search_success=ok, goal_gain_m=float(gain), best_gain_m=best, trace=samples, last=expert.last,
                    reset=env.reset_info)
         if ok and camera:
             dest=target / (stem+".npz")
-            save_tape(dest, frames, acts, motions, rewards, obs["state"], obs["prompt"], "Sawyer", pose, seed)
+            save_tape(dest, frames, acts, motions, rewards, obs["state"], obs["prompt"], body, pose, seed)
             row["file"] = str(dest.relative_to(out))
         elif ok:
             np.save(target/(stem+".npy"), np.stack(acts))
