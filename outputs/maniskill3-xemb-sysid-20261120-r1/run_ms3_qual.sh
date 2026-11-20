@@ -20,7 +20,7 @@ START_TS="$(date +%s)"
 echo "$COMMIT $(hostname) $$ ms3-gate0-qual" > "$OUT/launch.txt"
 date -u +"%Y-%m-%dT%H:%M:%SZ" > "$OUT/gpu-start.txt"
 
-"$PROBE_PY" "$REPO/scripts/[train]gpu_probe.py" --expected-count 1 --output "$OUT/gpu.json" > "$OUT/probe.log" 2>&1
+"$PROBE_PY" "$REPO/scripts/[train]gpu_probe.py" --baige-container --expected-count 1 --output "$OUT/gpu.json" > "$OUT/probe.log" 2>&1
 
 "$PY" "$SCRIPT" --out "$OUT/ms3-qual-summary.json" > "$OUT/run.log" 2>&1
 echo "0 $(date +%s) $START_TS" > "$OUT/exit.txt"
