@@ -53,6 +53,9 @@ def record(root, row):
     with (root / "index.lock").open("a") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         index = json.loads((root / "index.json").read_text())
+        if "official_demo" in row:
+            donor = row["official_demo"]
+            index["references"][str(donor["demo"])] = donor
         index["attempts"].append(row)
         write_json(root / "index.json", index)
     print(f"{row['body']} layout={row['pose']} seed={row['seed']} {row['route']} "
@@ -104,7 +107,7 @@ def session(body, camera):
     module = sys.modules[arm_class.__module__]
     headless = partial(module.ControlEnv, use_camera_obs=False, has_offscreen_renderer=False)
 
-    def public(raw, joint_count):
+    def public(raw, _joint_count):
         return module.normalize_standard_observation(raw, ())
 
     # Narrow observation-only substitutions around the original reset and step.
@@ -118,7 +121,7 @@ def native_trial(args, body, pose, seed, repeat, tag, *, candidate=None, command
                  tracker_ref=None, donor=None, raw_probe=False, source_receipt=None):
     import numpy as np
     from demos import save_tape
-    from expert_sweep import OuterSweep, contact_names
+    from expert_sweep import OuterSweep, contact_names, final_arm_geometry
     from oracle_fallback import BDDL_SHA, TrajectoryExpert
 
     cam = not raw_probe
@@ -129,7 +132,17 @@ def native_trial(args, body, pose, seed, repeat, tag, *, candidate=None, command
     frames, actions, motions, rewards = [], [], [], []
     dest = Path(body) / (f"{pose}.npz" if repeat == 0 else f"{pose}-r{repeat}-s{seed}.npz")
     with session(body, cam) as env, trace_path.open("x") as trace:
-        obs = env.reset(pose, seed)
+        try:
+            obs = env.reset(pose, seed)
+        except ValueError as exc:
+            if not str(exc).startswith(("Released grip-site pose unreachable",
+                                        "Settling moved the paired task scene", "Task already successful")):
+                raise
+            row = unattempted(body, pose, seed, repeat, tag, str(exc))
+            row.update(trace=str(trace_path.relative_to(root)), reset_rejected=True, camera=cam)
+            trace.write(json.dumps(dict(result=row)) + "\n")
+            record(root, row)
+            return row, []
         reset = env.reset_info
         lineage = reset["environment_reproducibility"]
         prompt = obs["prompt"]
@@ -148,10 +161,14 @@ def native_trial(args, body, pose, seed, repeat, tag, *, candidate=None, command
             row["candidate"] = asdict(candidate)
         if donor:
             row.update(official_demo=donor, reference_demo=donor["demo"], reference_pose=donor["pose"])
+        if commands is not None:
+            row["available_controls"] = len(commands)
         if source_receipt is not None:
             row["search_trace"] = source_receipt["trace"]
+            row["search_root"] = str(args.search_bank or root)
             row["same_initial_state"] = lineage["initial_state_fingerprint"] == (
                 source_receipt["reset"]["environment_reproducibility"]["initial_state_fingerprint"])
+
         def emit(obj):
             trace.write(json.dumps(obj, allow_nan=False, separators=(",", ":")) + "\n")
 
@@ -161,19 +178,21 @@ def native_trial(args, body, pose, seed, repeat, tag, *, candidate=None, command
         goal = np.array(scene["goal"][:2]) + .5 * np.array(scene["goal_half"][:2])
         initial_dist = np.linalg.norm(goal-start_plate)
         best_gain = 0.
+        best_history = [best_gain]
         history = [np.array(scene["tcp"])]
         plate_history = [start_plate]
+        angular_travel = [0.]
         phase_ticks = 0
         previous_phase = None
         first_stall = None
-        peak_contact_progress = None
+        first_contact = None
+        contact_steps = 0
+        phase_counts = {}
         success = done = False
         stop = None
         limit = min(args.max_steps, reset["max_steps"])
         if commands is not None:
             limit = min(limit, len(commands))
-        if source_receipt is not None and not row["same_initial_state"]:
-            stop, limit = "search and normal reset fingerprints differ", 0
         for t in range(limit):
             if commands is not None:
                 a = np.asarray(commands[t], np.float32)
@@ -193,30 +212,38 @@ def native_trial(args, body, pose, seed, repeat, tag, *, candidate=None, command
             tcp, plate = np.array(new["tcp"]), np.array(new["plate"][:2])
             history.append(tcp)
             plate_history.append(plate)
+            angular_travel.append(angular_travel[-1] + float(np.linalg.norm(motion[3:6])))
             gain = float(initial_dist - np.linalg.norm(goal-plate))
             best_gain = max(best_gain, gain)
+            best_history.append(best_gain)
             contacts = contact_names(geometry)
+            phase_counts[diag["phase"]] = phase_counts.get(diag["phase"], 0) + 1
             phase_ticks = phase_ticks + 1 if previous_phase == diag["phase"] else 1
             previous_phase = diag["phase"]
             w = min(12, phase_ticks)
             held_tcp = np.stack(history[-w-1:])
             tcp_span = float(np.linalg.norm(np.ptp(held_tcp, axis=0)))
             recent_plate = float(np.linalg.norm(plate-plate_history[-w-1]))
+            recent_rotation = angular_travel[-1] - angular_travel[-w-1]
             step = dict(step=t+1, pre_action_state=obs["state"].tolist(), issued=a.tolist(),
                         measured_motion=motion.tolist(), control=diag, post_scene=new, active_contacts=contacts,
                         goal_gain_m=gain, best_goal_gain_m=best_gain, tcp_span_m=tcp_span,
-                        window_controls=w, plate_window_travel_m=recent_plate, native_reward=reward,
+                        window_controls=w, plate_window_travel_m=recent_plate, rotation_window_rad=recent_rotation,
+                        native_reward=reward,
                         done=done, native_success=success)
-            if new["contact"] and peak_contact_progress is None:
-                peak_contact_progress = dict(step=t+1, goal_gain_m=gain, plate=plate.tolist())
-            if (controller and w == 12 and tcp_span < .0025 and
-                    np.linalg.norm(diag["tcp_error"]) > .010 and first_stall is None):
+            if new["contact"]:
+                contact_steps += 1
+                if first_contact is None:
+                    first_contact = dict(step=t+1, goal_gain_m=gain, plate=plate.tolist())
+            if (controller and w == 12 and tcp_span < .0025 and recent_rotation < .06 and
+                    recent_plate < .0025 and np.linalg.norm(diag["tcp_error"]) > .010):
                 first_stall = dict(step=t+1, window_start=t+1-w, phase=diag["phase"],
                                    plate_before_window=plate_history[-w-1].tolist(), plate_now=plate.tolist(),
                                    tcp_before_window=history[-w-1].tolist(), tcp_now=tcp.tolist(),
-                                   best_goal_gain_m=best_gain, active_contacts=contacts)
+                                   goal_gain_before_window_m=float(initial_dist - np.linalg.norm(goal-plate_history[-w-1])),
+                                   best_goal_gain_before_window_m=best_history[-w-1], active_contacts=contacts)
                 step["tcp_stall"] = first_stall
-                stop = "TCP span below 2.5 mm over 12 controls with >10 mm commanded error"
+                stop = "TCP and plate stationary across 12 controls with >10 mm commanded error"
             emit(step)
             if t % 8 == 0:
                 trace.flush()
@@ -231,6 +258,9 @@ def native_trial(args, body, pose, seed, repeat, tag, *, candidate=None, command
                 if stop:
                     break
         native = bool(done and success and rewards and rewards[-1] > 0 and not any(rewards[:-1]))
+        if body == "Sawyer":
+            wrapper = env.native.arm._env if cam else env.arm._env
+            row["final_arm_geometry"] = final_arm_geometry(wrapper, geometry)
         if native and cam:
             if (root / dest).exists():
                 raise FileExistsError(root / dest)
@@ -239,7 +269,9 @@ def native_trial(args, body, pose, seed, repeat, tag, *, candidate=None, command
         row.update(steps=len(actions), terminal_reward=rewards[-1] if rewards else None,
                    done=bool(done), native_success=bool(success), search_success=bool(native and not cam),
                    best_goal_gain_m=best_gain, final_goal_gain_m=float(initial_dist-np.linalg.norm(
-                       goal-np.array(scene["plate"][:2]))), first_plate_contact=peak_contact_progress,
+                       goal-np.array(scene["plate"][:2]))), first_plate_contact=first_contact,
+                   plate_travel_xy_m=float(np.linalg.norm(plate_history[-1]-start_plate)),
+                   plate_contact_steps=contact_steps, phase_counts=phase_counts,
                    first_tcp_stall=first_stall, outcome="accepted" if row["accepted"] else (
                        "search_success" if native else stop or ("native termination" if done else "action/step limit")))
         emit(dict(result={k: v for k,v in row.items() if k != "reset"}))
@@ -251,6 +283,12 @@ def targets(args):
     for repeat in range(args.repeats):
         for pose in args.layouts:
             yield pose, args.seed + pose + 1000*repeat, repeat
+
+
+def unattempted(body, pose, seed, repeat, route, reason):
+    return dict(body=body, pose=pose, seed=seed, repeat=repeat, route=route, outcome=reason,
+                steps=0, terminal_reward=None, done=False, native_success=False,
+                accepted=False, search_success=False)
 
 
 def external_search(path):
@@ -284,15 +322,18 @@ def trace_actions(root, row):
 
 def sawyer(args):
     from expert_sweep import Candidate, candidate_list
-    candidates = candidate_list(args.params, args.candidates)
+    candidates = [] if args.search_bank else candidate_list(args.params, args.candidates)
     winners = external_search(args.search_bank)
     complete = 0
     for pose, seed, repeat in targets(args):
         if args.search_bank:
-            for previous in winners.get((pose, seed), []):
+            matches = [r for r in winners.get((pose, seed), [])
+                       if not args.candidates or r["candidate"]["name"] in args.candidates]
+            if not matches:
+                record(args.output, unattempted("Sawyer", pose, seed, repeat, "render",
+                                                "no matching positive search receipt"))
+            for previous in matches:
                 c = Candidate(**previous["candidate"])
-                if args.candidates and c.name not in args.candidates:
-                    continue
                 row, _ = native_trial(args, "Sawyer", pose, seed, repeat, f"render-{c.name}",
                                       candidate=c, commands=trace_actions(args.search_bank, previous),
                                       source_receipt=previous)
@@ -306,6 +347,8 @@ def sawyer(args):
             probe = args.mode == "search" or args.search_first
             tag = ("search-" if probe else "outer-") + c.name
             row, actions = native_trial(args, "Sawyer", pose, seed, repeat, tag, candidate=c, raw_probe=probe)
+            if row.get("reset_rejected"):
+                break
             if args.mode == "collect" and row["search_success"]:
                 row, _ = native_trial(args, "Sawyer", pose, seed, repeat, f"render-{c.name}",
                                       candidate=c, commands=actions, source_receipt=row)
@@ -331,19 +374,24 @@ def panda(args):
         for key, group in archive["data"].items():
             info = json.loads(group.attrs["source_metadata"])
             p = int(info["init_state_id"])
-            if p not in range(32):
+            if p not in range(32) or (p >= 28 and p not in args.layouts):
                 continue
             num = int(key.removeprefix("demo_"))
             if not (group.attrs["success"] and group["rewards"][-1] > 0 and group["dones"][-1]):
                 continue
             available[num] = dict(demo=num, pose=p, seed=int(info["seed"]), instruction=info["instruction"])
             by_pose.setdefault(p, []).append(num)
-        for n in args.panda_donors:
-            if n not in available or available[n]["pose"] >= 28:
-                raise ValueError(f"Fallback donor {n} must be a verified training-layout release")
+        if not args.official_only:
+            for n in args.panda_donors:
+                if n not in available or available[n]["pose"] >= 28:
+                    raise ValueError(f"Fallback donor {n} must be a verified training-layout release")
         complete = 0
         for pose, seed, repeat in targets(args):
             matches = sorted(by_pose.get(pose, []))
+            if args.official_only and not matches:
+                record(args.output, unattempted("Panda", pose, seed, repeat, "official",
+                                                "no matching published successful demonstration"))
+                continue
             ordered = matches[repeat % len(matches):] + matches[:repeat % len(matches)] if matches else []
             accepted = False
             for num in ordered:
@@ -423,7 +471,7 @@ def arguments():
         parser.error("Panda requires --archive or DUAL_ARCHIVE")
     if args.mode == "search" and any(p >= 28 for p in args.layouts):
         parser.error("Tune Sawyer candidates on training layouts 0..27 only")
-    if (args.search_first or args.search_bank) and not "Sawyer" in args.bodies:
+    if (args.search_first or args.search_bank) and "Sawyer" not in args.bodies:
         parser.error("Sawyer replay mode needs the Sawyer body")
     args.output = args.output.resolve()
     return args
@@ -442,14 +490,18 @@ def main():
             raise ValueError("Official Goal 5 BASE archive SHA-256 mismatch")
     params = []
     if "Sawyer" in args.bodies:
-        from expert_sweep import candidate_list
-        params = [asdict(c) for c in candidate_list(args.params, args.candidates)]
+        if args.search_bank:
+            search_index = json.loads((args.search_bank / "index.json").read_text())
+            params = [c for c in search_index["candidates"] if not args.candidates or c["name"] in args.candidates]
+        else:
+            from expert_sweep import candidate_list
+            params = [asdict(c) for c in candidate_list(args.params, args.candidates)]
     args.output.mkdir(parents=True, exist_ok=False)
     write_json(args.output / "index.json", dict(
         suite="libero_goal", task_id=5, case="BASE", bodies=args.bodies, mode=args.mode,
         poses=args.layouts, repeats=args.repeats, seed_base=args.seed, candidates=params,
         archive_sha256=archive_sha, command=sys.argv, code_sha256={p.name: sha(p) for p in source},
-        revision=os.environ.get("MOTOR_CODE_REVISION"), attempts=[]))
+        revision=os.environ.get("MOTOR_CODE_REVISION"), references={}, attempts=[]))
     if len(args.bodies) == 2:
         with ProcessPoolExecutor(max_workers=2, mp_context=multiprocessing.get_context("spawn")) as pool:
             runs = {body: pool.submit(lane, args, body) for body in args.bodies}

@@ -8,6 +8,8 @@ import mujoco
 import numpy as np
 from scipy.spatial.transform import Rotation
 
+LEG_TOLERANCE_M = 0.016
+
 
 @dataclass(frozen=True)
 class Candidate:
@@ -21,6 +23,16 @@ class Candidate:
     lead: float = 0.028       # tangential feedforward during plate transport (m)
     depth: float = 0.017      # push-in setpoint, measured at leading finger surface (m)
     detour: bool = True       # clearance waypoint on the open side of the cheese
+
+    def __post_init__(self):
+        if not isinstance(self.name, str) or not self.name or not self.name.replace("-", "").isalnum():
+            raise ValueError("Use a unique alphanumeric or hyphenated candidate name")
+        numeric = [v for k, v in asdict(self).items() if k not in ("name", "detour")]
+        if (type(self.detour) is not bool
+                or not all(type(v) in (float, int) and math.isfinite(v) for v in numeric)
+                or not (self.height >= 0 and self.gap > 0 and self.lead >= 0 and self.depth > 0
+                        and abs(self.trailing) < 90 and abs(self.flank) <= 180 and abs(self.tilt) < 90)):
+            raise ValueError(f"Invalid outer-edge candidate {self.name}")
 
 
 DEFAULTS = (
@@ -36,17 +48,7 @@ DEFAULTS = (
 def candidate_list(path, names):
     candidates = list(DEFAULTS)
     if path:
-        for spec in json.loads(path.read_text()):
-            c = Candidate(**spec)
-            num = [v for k, v in asdict(c).items() if k not in ("name", "detour")]
-            if (not isinstance(c.name, str) or not c.name or not c.name.replace("-", "").isalnum()
-                    or not all(isinstance(v, (float, int)) and math.isfinite(v) for v in num)
-                    or type(c.detour) is not bool
-                    or not (0 <= c.height <= .020 and 0 < c.gap <= .060 and 0 <= c.lead <= .080
-                            and 0 < c.depth <= .045 and abs(c.trailing) < 85 and abs(c.flank) <= 110
-                            and abs(c.tilt) <= 80 and abs(c.yaw) <= 180)):
-                raise ValueError(f"Invalid outer-edge candidate: {spec}")
-            candidates.append(c)
+        candidates.extend(Candidate(**spec) for spec in json.loads(path.read_text()))
     by_name = {c.name: c for c in candidates}
     if len(by_name) != len(candidates):
         raise ValueError("Candidate names must be unique")
@@ -88,6 +90,21 @@ def contact_names(geometry):
     return list(pairs.values())
 
 
+def final_arm_geometry(wrapper, geom):
+    robot = wrapper.robots[0]
+    m, d = geom.model._model, geom.data._data
+    joints = d.qpos[robot._ref_joint_pos_indexes]
+    limits = m.jnt_range[robot._ref_joint_indexes]
+    fingers = geom._points("fingers")
+    # The specific link/fixture pair observed in the pilot. Contact summaries
+    # separately include every active pair, even if this pair is clear.
+    elbow, cabinet = (m.geom(name).id for name in ("robot0_right_l4_2", "wooden_cabinet_1_g9"))
+    return dict(joint_positions_rad=joints.tolist(),
+                nearest_joint_limit_rad=np.minimum(joints-limits[:, 0], limits[:, 1]-joints).tolist(),
+                finger_bounds_xyz_m=[fingers.min(axis=0).tolist(), fingers.max(axis=0).tolist()],
+                elbow_cabinet_gap_capped_10cm_m=float(mujoco.mj_geomDistance(m, d, elbow, cabinet, .1, None)))
+
+
 class OuterSweep:
     def __init__(self, geom, scene, candidate):
         self.geom = geom
@@ -104,7 +121,7 @@ class OuterSweep:
         side = np.array([-d[1], d[0]])
         xy = obstacle - self.start
         along, across = xy @ d, xy @ side
-        radius = scene["plate_radius"] + .010
+        radius = scene["plate_radius"] + .006 + LEG_TOLERANCE_M
         if (c.detour and along.min() - radius < np.linalg.norm(self.goal - self.start)
                 and along.max() + radius > 0 and across.min() < radius and across.max() > -radius):
             left, right = across.max() + radius, across.min() - radius
@@ -142,11 +159,11 @@ class OuterSweep:
         offsets = (self.orientation * current.inv()).apply(fingers - tcp)
         low = offsets[:, 2].min()
         patch = offsets[offsets[:, 2] <= low + max(.004, s["rim_z"] - table - c.height + .003)]
-        for _ in range(8):
+        while True:
             waypoint = self.waypoints[self.leg]
             delta = waypoint - plate
             distance = np.linalg.norm(delta)
-            if self.leg < len(self.waypoints) - 1 and distance < .025:
+            if self.leg < len(self.waypoints) - 1 and distance < LEG_TOLERANCE_M:
                 self.leg += 1
                 self.arc = c.flank
                 self.best_distance, self.no_gain = np.inf, 0
@@ -169,17 +186,18 @@ class OuterSweep:
             if self.phase == "arc":
                 gap = .002
             elif self.phase == "push":
-                gap = -c.depth
+                gap = -min(c.depth, .5*rim_extent)
                 tangent_lead = c.lead * (direction @ tangent)
             target_xy = plate + (rim_extent + gap) * normal + tangent_lead*tangent - front
             if self.phase == "lift":
                 target_xy = tcp[:2]
             target = np.r_[target_xy, table + clearance - low]
             error = target - tcp
-            # Use the measured vertical offset once the fingers are near the
-            # working attitude. Servo pressure is bounded through the low pass.
+            # In contact use measured finger height rather than a projected
+            # tip offset. The translation cap bounds the corrective command.
             if self.phase in ("lower", "arc", "push"):
                 error[2] = table + clearance - s["finger_low"]
+                target[2] = tcp[2] + error[2]
             angle_ok = np.linalg.norm(angular) < .19
             xy_ok = np.linalg.norm(error[:2]) < .014
             low_ok = s["finger_low"] <= table + clearance + .004
