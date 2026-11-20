@@ -1,0 +1,7 @@
+# Conditional source checkpoint readback and evaluation
+
+The November 20 readback found an existing 100-episode waypoint development result, 1/50 per arm. It also found a terminal broader source fit in `broadfit01`. [Mounted reports](MOTOR-STATUS.md)
+
+Before a new PaliGemma evaluation, resolve `broadfit01/fit/candidates.json` and its final 6,400-update candidate. If its bytes match an already evaluated model, reuse the verified native report. Otherwise check the shared source campaign and scheduler using checkpoint digest, phase (dev) and stride five. If the independently trained final candidate has no completed or active scorer, measure it on the same registered 50 development placements per arm. This is a source-only comparison fixed before viewing results from this candidate. A supervisor may reuse another fully verified result only for the same candidate, selection, native seed panel, and inference cadence. No new training is included.
+
+Use the existing native source rollout, a clean pinned compatible checkout and a fresh execution directory; preserve program and manifest hashes. Allow one Pro6K or 4090 card through Baige Distributed Training with a 95-minute cap. A passing result on both arms makes a separate 100-start-per-arm source confirmation necessary. A missing, invalid, failed, or incompletely scored candidate has its own status. Report any opening or runtime issue and check whether the cluster retains an eligible replacement at the same protocol. Leave UR5e and hardware out of source qualification.
