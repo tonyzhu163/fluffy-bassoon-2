@@ -149,8 +149,14 @@ def run_task_family(job):
             # Determine post-contact window frames to render once nominal first contact is known.
             if nom_first_contact is not None:
                 check_controls = {
-                    max(0, nom_precontact_last // 2),
-                    nom_precontact_last,
+                    c
+                    for c in (
+                        min(5, nom_precontact_last),
+                        min(10, nom_precontact_last),
+                        nom_precontact_last // 2,
+                        nom_precontact_last,
+                    )
+                    if c >= 1
                 }
                 window_controls = [
                     min(len(issued), nom_first_contact + off)
@@ -215,6 +221,13 @@ def run_task_family(job):
             while len(window_frames) < len(window_controls) and window_frames:
                 window_frames.append(window_frames[-1])
 
+            var_fc = int(watcher.first_contact["control"]) if watcher.first_contact is not None else len(issued) + 1
+            joint_pre_last = (
+                max(0, min(nom_first_contact, var_fc) - 1)
+                if nom_first_contact is not None
+                else nom_precontact_last
+            )
+
             results[vname] = dict(
                 variant=vname,
                 radius_m=rad,
@@ -223,6 +236,7 @@ def run_task_family(job):
                 physics=first["environment_reproducibility"]["initial_state_fingerprint"],
                 shift_meta=shift_meta,
                 first_contact=watcher.first_contact,
+                joint_precontact_last=joint_pre_last,
                 controls=stopped,
                 success=success,
                 native_return=float(sum(rewards)),
@@ -231,7 +245,7 @@ def run_task_family(job):
                 precontact_proprio_equal=(
                     all(
                         np.array_equal(proprio_steps[t][f], nom_proprio_seq[t][f])
-                        for t in range(min(len(proprio_steps), len(nom_proprio_seq)))
+                        for t in range(min(len(proprio_steps), len(nom_proprio_seq), joint_pre_last + 1))
                         for f in PROPRIO_FIELDS
                     )
                     if nom_proprio_seq is not None
@@ -246,7 +260,16 @@ def run_task_family(job):
 
     # Check mid & last precontact camera equality cleanly against nom using a quick prefix replay of nom!
     nom_row = results["nom"]
-    nom_mid = max(0, nom_precontact_last // 2)
+    nom_checks = {
+        c
+        for c in (
+            min(5, nom_precontact_last),
+            min(10, nom_precontact_last),
+            nom_precontact_last // 2,
+            nom_precontact_last,
+        )
+        if c >= 1
+    }
     env = LiberoEnvironmentAdapter()
     env._init_states = bank
     env._max_steps = horizon
@@ -260,7 +283,7 @@ def run_task_family(job):
             sensors[cam_names[0]] = cam_sens[0]
         for idx in range(1, nom_precontact_last + 1):
             env.step(issued[idx - 1].copy())
-            if idx in (nom_mid, nom_precontact_last):
+            if idx in nom_checks:
                 cams = {k: fn({}) for k, fn in sensors.items()}
                 nom_row["precontact_cam_hashes"][str(idx)] = {k: digest(v) for k, v in cams.items()}
     finally:
@@ -271,9 +294,12 @@ def run_task_family(job):
     separability = {}
     for vname, row in results.items():
         frame0_eq = row["cam0_hashes"] == nom_row["cam0_hashes"]
-        pre_cam_eq = all(
+        shared_cam_keys = [
+            k for k in nom_row["precontact_cam_hashes"] if int(k) <= row["joint_precontact_last"]
+        ]
+        pre_cam_eq = len(shared_cam_keys) >= 1 and all(
             row["precontact_cam_hashes"].get(k) == nom_row["precontact_cam_hashes"].get(k)
-            for k in nom_row["precontact_cam_hashes"]
+            for k in shared_cam_keys
         )
         summary_rows.append(
             dict(
@@ -285,6 +311,8 @@ def run_task_family(job):
                 success=row["success"],
                 controls=row["controls"],
                 first_contact=row["first_contact"],
+                joint_precontact_last=row["joint_precontact_last"],
+                precontact_cam_checkpoints=len(shared_cam_keys),
                 frame0_rgb_equal=frame0_eq,
                 precontact_rgb_equal=pre_cam_eq,
                 precontact_proprio_equal=row["precontact_proprio_equal"],

@@ -36,9 +36,9 @@ export TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD=1 PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSER
 export PYTHONPATH="$code/src:$release:$sim/simulator-source:$here"
 
 if [[ "$stage" == "test" || "$stage" == "gate0-cpu" ]]; then
-    export CUDA_VISIBLE_DEVICES="" JAX_PLATFORMS=cpu
+    export CUDA_VISIBLE_DEVICES="" NVIDIA_VISIBLE_DEVICES=void JAX_PLATFORMS=cpu
     export LIBGL_ALWAYS_SOFTWARE=1 MUJOCO_GL=egl PYOPENGL_PLATFORM=egl
-    export MUJOCO_EGL_DEVICE_ID=1 __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json
+    export MUJOCO_EGL_DEVICE_ID="${MUJOCO_EGL_DEVICE_ID:-0}" __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json
     export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 LP_NUM_THREADS=1
     if [[ "$stage" == "test" ]]; then
         export PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
