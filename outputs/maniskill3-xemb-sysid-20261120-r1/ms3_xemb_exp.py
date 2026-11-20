@@ -86,12 +86,21 @@ def get_jaw_width(env) -> float:
 
 
 def format_env_action(env, cmd7: np.ndarray) -> np.ndarray:
+    c = np.clip(cmd7, -1.0, 1.0).astype(np.float32).copy()
+    arm_ctrl = env.unwrapped.agent.controller.controllers.get("arm")
+    if arm_ctrl is not None and getattr(arm_ctrl.config, "frame", "") == "ee_align":
+        # Convert world-aligned translation delta into the EE frame expected by ee_align controllers (e.g. xarm6_robotiq).
+        mat = env.unwrapped.agent.tcp.pose.to_transformation_matrix()
+        if hasattr(mat, "cpu"):
+            mat = mat.cpu().numpy()
+        r_ee = np.asarray(mat[0, :3, :3] if mat.ndim == 3 else mat[:3, :3], dtype=np.float32)
+        c[:3] = np.clip(r_ee.T @ c[:3], -1.0, 1.0)
     act_dim = int(env.action_space.shape[-1])
     if act_dim == 7:
-        return np.clip(cmd7, -1.0, 1.0).astype(np.float32)
+        return c
     # Fetch has 12 dims: arm(6) + gripper(1) + body/head/base(5) -> keep base/head static
     out = np.zeros(act_dim, dtype=np.float32)
-    out[:7] = np.clip(cmd7, -1.0, 1.0)
+    out[:7] = c
     return out
 
 
