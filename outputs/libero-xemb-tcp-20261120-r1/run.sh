@@ -58,5 +58,79 @@ raise SystemExit(pytest.main(["-p", "no:cacheprovider", "-q", sys.argv[2]]))
     exit 0
 fi
 
-echo "Unsupported stage $stage (GPU stages will be added after Gate 0)" >&2
-exit 2
+if [[ "$host" == job-* ]]; then
+    probe=(--baige-container --baige-exclusive-training)
+    if [[ -z ${CUDA_VISIBLE_DEVICES:-} ]]; then
+        visible=$(nvidia-smi --query-gpu=uuid --format=csv,noheader)
+        [[ "$visible" == GPU-* && "$visible" == "${NVIDIA_VISIBLE_DEVICES:?}" && "$visible" != *$'\n'* ]]
+        export CUDA_VISIBLE_DEVICES=0
+    fi
+else
+    [[ "$stage" == "gate1-smoke" ]] || {
+        echo 'Use Baige Distributed Training for full Gate 1 evaluation.' >&2
+        exit 2
+    }
+    [[ $CGPU_COUNT == 1 && $NVIDIA_VISIBLE_DEVICES == "$NVIDIA_VISIBLE_GPUS_UUID" && $NVIDIA_VISIBLE_DEVICES != *,* ]]
+    probe=(--direct-hostname "$host")
+    export CUDA_VISIBLE_DEVICES="$NVIDIA_VISIBLE_DEVICES"
+fi
+
+case $(nvidia-smi --query-gpu=name --format=csv,noheader) in
+    *6000D*|*RPBZZZ6*) export NCCL_P2P_DISABLE=1 ;;
+esac
+export JAX_PLATFORMS=cuda FLUFFY_GPU_EXECUTION=baige XLA_PYTHON_CLIENT_PREALLOCATE=false
+export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl MUJOCO_EGL_DEVICE_ID=0
+
+if [[ "$host" == job-* ]]; then
+    libs="$root/setups/libero90-full-action-20261119-r1/desktop-libs02"
+    glvnd="$libs/prefix/usr/lib/x86_64-linux-gnu"
+    test -r "$glvnd/libEGL.so.1"
+    test -r "$glvnd/libOpenGL.so.0"
+    test -r "$glvnd/libX11.so.6"
+    test -r "$libs/nvidia-vendor.json"
+    IFS=: read -ra paths <<< "${LD_LIBRARY_PATH:-}"
+    driver_paths=""
+    for path in "${paths[@]}"; do
+        if [[ -n "$path" && ! -f "$path/libtorch_python.so" ]]; then driver_paths+=":$path"; fi
+    done
+    export LD_LIBRARY_PATH="$glvnd:$libs/prefix/lib/x86_64-linux-gnu$driver_paths"
+    export __EGL_VENDOR_LIBRARY_FILENAMES="$libs/nvidia-vendor.json"
+fi
+
+date +%s > "$out/gpu-start.txt"
+"$root/setups/robocasa365-native-20261101-r1/env/bin/python" -Bu "$code/scripts/[train]gpu_probe.py" \
+    --expected-count 1 --purpose training "${probe[@]}" --output "$out/gpu.json" > "$out/probe.log" 2>&1
+
+"$sim/env/bin/python" -B - <<'PY' > "$out/egl.log" 2>&1
+from mujoco.egl import GLContext
+from OpenGL import GL
+
+context = GLContext(16, 16)
+try:
+    context.make_current()
+    vendor = GL.glGetString(GL.GL_VENDOR)
+    renderer = GL.glGetString(GL.GL_RENDERER)
+    print(vendor, renderer)
+    if not vendor or b"nvidia" not in vendor.lower() or not renderer:
+        raise RuntimeError("Require NVIDIA EGL rendering on the assigned device")
+finally:
+    context.free()
+PY
+
+case "$stage" in
+    gate1-smoke)
+        time_limit=20m
+        command=("$here/gate1_tcp.py" --output "$out/smoke" --panel smoke --radius-m 0.035)
+        ;;
+    gate1)
+        time_limit=75m
+        command=("$here/gate1_tcp.py" --output "$out/gate1" --panel development --radius-m 0.035)
+        ;;
+    *)
+        echo "Unsupported stage $stage" >&2
+        exit 2
+        ;;
+esac
+
+timeout --kill-after=20s "$time_limit" "$python" -Bu "${command[@]}" > "$out/run.log" 2>&1
+date +%s > "$out/gpu-end.txt"

@@ -181,3 +181,138 @@ def test_apply_mujoco_tcp_offset_handles_stale_kinematics():
     assert meta["max_shift_err_m"] < 1e-12
     assert meta["pad_gap_err_m"] < 1e-12
     assert meta["before_ncon"] == meta["after_ncon"] == 12
+
+
+def test_run_tcp_episode_chunk_clear_and_nom_passthrough(monkeypatch):
+    from pathlib import Path
+    import sys
+
+    script_dir = str(Path(__file__).resolve().parents[1] / "outputs" / "libero-xemb-tcp-20261120-r1")
+    monkeypatch.syspath_prepend(script_dir)
+    import tcp_motor
+    from fluffy_bassoon.xemb.tcp import TcpOffsetSpec
+
+    monkeypatch.setattr(
+        tcp_motor,
+        "to_openpi_observation",
+        lambda raw, prompt: {
+            "observation/image": raw["agentview_image"],
+            "observation/wrist_image": raw["robot0_eye_in_hand_image"],
+            "observation/state": np.zeros((8,), dtype=np.float32),
+            "prompt": prompt,
+        },
+    )
+
+    def make_raw(eef_pos, jaw=0.08):
+        half = np.float32(jaw * 0.5)
+        return {
+            "agentview_image": np.zeros((256, 256, 3), dtype=np.uint8),
+            "robot0_eye_in_hand_image": np.zeros((256, 256, 3), dtype=np.uint8),
+            "robot0_joint_pos": np.zeros((7,), dtype=np.float32),
+            "robot0_joint_vel": np.zeros((7,), dtype=np.float32),
+            "robot0_eef_pos": np.asarray(eef_pos, dtype=np.float32),
+            "robot0_eef_quat_xyzw": np.array([0.0, 0.0, 0.0, 1.0], dtype=np.float32),
+            "robot0_gripper_qpos": np.array([half, -half], dtype=np.float32),
+        }
+
+    class FakeSim:
+        def __init__(self, horizon=38):
+            self.horizon = horizon
+            self.controls = 0
+            self.ops = []
+            self.eef = np.array([0.0, 0.0, 0.85], dtype=np.float32)
+
+        def call(self, op, value=None):
+            self.ops.append(op)
+            if op == "create":
+                self.controls = 0
+                self.eef = np.array([0.0, 0.0, 0.85], dtype=np.float32)
+                raw = make_raw(self.eef)
+                spec = dict(max_steps=self.horizon)
+                init = dict(
+                    observation=raw,
+                    language_instruction="pick bowl",
+                    action_schema={"low": [-1.0] * 7, "high": [1.0] * 7},
+                    environment_reproducibility={
+                        "initial_state_fingerprint": "fp",
+                        "perturbation_plan_fingerprint": "pfp",
+                    },
+                    worker_step_index=0,
+                    observation_schema={"ok": True},
+                    observation_schema_version="v1",
+                    renderer="FakeGL",
+                    renderer_vendor="NVIDIA",
+                    shift_meta={"dx_m": value["dx_m"], "dy_m": value["dy_m"]},
+                )
+                return spec, init
+            if op == "chunk":
+                acts = np.asarray(value, dtype=np.float32)
+                rewards = []
+                for act in acts:
+                    self.controls += 1
+                    self.eef = self.eef + 0.015 * act[:3]
+                    rewards.append(0.0)
+                done = self.controls >= self.horizon
+                return dict(
+                    observation=make_raw(self.eef),
+                    has_full_rgb=True,
+                    rewards=rewards,
+                    steps=len(acts),
+                    success=done,
+                    terminated=False,
+                    truncated=done,
+                    controls=self.controls,
+                    language_instruction="pick bowl",
+                )
+            if op == "step":
+                act = np.asarray(value["action"], dtype=np.float32)
+                self.controls += 1
+                self.eef = self.eef + 0.015 * act[:3]
+                done = self.controls >= self.horizon
+                need_rgb = bool(value.get("need_rgb", False))
+                raw = make_raw(self.eef)
+                obs = raw if need_rgb else {k: raw[k] for k in raw if not k.endswith("_image")}
+                return dict(
+                    observation=obs,
+                    has_full_rgb=need_rgb,
+                    reward=0.0,
+                    success=done,
+                    terminated=False,
+                    truncated=done,
+                    controls=self.controls,
+                    language_instruction="pick bowl",
+                )
+            if op == "observe":
+                return dict(observation=make_raw(self.eef), has_full_rgb=True, language_instruction="pick bowl")
+            raise AssertionError(op)
+
+    class FakePolicy:
+        def __init__(self):
+            self.calls = 0
+
+        def infer(self, item, noise=None):
+            self.calls += 1
+            if self.calls == 1:
+                actions = np.zeros((10, 7), dtype=np.float32)
+                # Close command on steps 0, 1, plus trailing positive actions that must be cleared on trigger.
+                actions[:5, 6] = 1.0
+                return {"actions": actions}
+            actions = np.zeros((10, 7), dtype=np.float32)
+            actions[:, 6] = -1.0
+            return {"actions": actions}
+
+    case = dict(suite="libero_goal", task_id=0, variant="BASE", init_state_id=13, seed=42)
+    nom_spec = TcpOffsetSpec("tcp_nom", 0.0, 0.0, 0.0, "familiar")
+    sim_nom = FakeSim(horizon=10)
+    res_nom = tcp_motor.run_tcp_episode(sim_nom, FakePolicy(), case, nom_spec, dx_hat_m=0.0, dy_hat_m=0.0)
+    assert sim_nom.ops == ["create", "chunk", "chunk"]
+    assert res_nom["grasp_triggers"] == 0
+
+    shift_spec = TcpOffsetSpec("tcp_px", 0.035, 0.0, 0.0, "familiar")
+    sim_shift = FakeSim(horizon=38)
+    pol_shift = FakePolicy()
+    res_shift = tcp_motor.run_tcp_episode(sim_shift, pol_shift, case, shift_spec, dx_hat_m=0.035, dy_hat_m=0.0)
+    assert "chunk" not in sim_shift.ops
+    assert res_shift["grasp_triggers"] == 1
+    assert pol_shift.calls >= 2
+    assert res_nom["opening_proposal_sha256"] == res_shift["opening_proposal_sha256"]
