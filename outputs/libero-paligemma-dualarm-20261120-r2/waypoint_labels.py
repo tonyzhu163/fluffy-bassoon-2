@@ -137,8 +137,18 @@ def read_tape(path, row):
 
 def replay(row, data, audit):
     states, actions, motions, rewards = data
-    samples = {s["t"]: s for s in row["trace"]}
-    samples[len(actions) - 1] = row["last"]
+    released = (
+        row["route"] == "released_actions" and row["body"] == "Panda"
+        and row["variant"] == 0 and isinstance(row["reference_demo"], int)
+    )
+    if released:
+        # The published action tape records the wrist and reward at every step.
+        # Its source collector did not sample the object pose.
+        samples = {}
+    else:
+        samples = {s["t"]: s for s in row["trace"]}
+        samples[len(actions) - 1] = row["last"]
+    audit["recorded_object_trace_points"] = len(samples)
     plate = []
     with session(row["body"], False) as env:
         try:
