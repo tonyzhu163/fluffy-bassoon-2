@@ -1,75 +1,74 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-COMMIT="${1:?commit required}"
-RUN_TAG="${2:-gpu03phasea}"
-SRC_TAG="${3:-gpu01}"
-NUM_GPUS=8
+here=$(cd "$(dirname "$0")" && pwd)
+code=$(git -C "$here" rev-parse --show-toplevel)
+root=/mowenjie/fluffy-bassoon-2
+legacy=/mowenjie/fluffy-bassoon
+release="$root/sources/libero-pro2-e5500c69"
+sim="$root/setups/libero-meta-learning-20261117-r1"
+run="$root/outputs/$(basename "$here")"
+python="$legacy/envs/openpi-215abfb/bin/python"
 
-BASE="/mowenjie/fluffy-bassoon-2"
-REPO="$(cd "$(dirname "$0")/../.." && pwd)"
-OUT="$BASE/outputs/libero-xemb-ur5e-scale-20261120-r1/$RUN_TAG"
-SRC="$BASE/outputs/libero-xemb-ur5e-scale-20261120-r1/$SRC_TAG"
-PY="$BASE/setups/robocasa365-native-20261101-r1/env/bin/python"
-SCRIPT="$REPO/outputs/libero-xemb-ur5e-scale-20261120-r1/phase_a_hybrid.py"
+pin=$1
+attempt=$2
+src_attempt=${3:-gpu01}
+hybrid_attempt=${4:-gpu06phasea}
+host=$(hostname)
+[[ "$attempt" =~ ^[a-z0-9]+$ ]]
+[[ "$host" == job-* ]] || { echo "Require Baige Distributed Training container" >&2; exit 2; }
+[[ $(git -C "$code" rev-parse HEAD) == "$pin" && -z $(git -C "$code" status --porcelain) ]]
 
-mkdir -p "$OUT/logs" "$OUT/train" "$OUT/live"
-ACTUAL_COMMIT="$(git -C "$REPO" rev-parse HEAD)"
-test "$ACTUAL_COMMIT" = "$COMMIT"
+out="$run/$attempt"
+src="$run/$src_attempt"
+hyb="$run/$hybrid_attempt"
+mkdir -p "$out/logs" "$out/live"
+df -h "$out" > "$out/storage.txt"
+printf '%s %s %s phase-a-eval\n' "$pin" "$host" "$$" > "$out/launch.txt"
+start=$(date +%s)
+trap 'rc=$?; printf "%s %s %s\n" "$rc" "$(date +%s)" "$start" > "$out/exit.txt"' EXIT
 
-export PYTHONPATH="$REPO/src:$REPO/outputs/libero-xemb-ur5e-sysid-20261120-r1:$REPO/outputs/libero-xemb-ur5e-scale-20261120-r1"
+export LIBERO_PRO_ROOT="$sim/simulator-source" LIBERO_CONFIG_PATH="$sim/libero-config"
+export CROSSARM_RELEASE="$release"
+export OPENPI_DATA_HOME="$legacy/cache/openpi-215abfb"
+export TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD=1 PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1
+export PYTHONPATH="$code/src:$release:$sim/simulator-source:$code/outputs/libero-crossarm-20261120-r1:$code/outputs/libero-xemb-ur5e-sysid-20261120-r1:$here"
+export JAX_PLATFORMS=cuda FLUFFY_GPU_EXECUTION=baige XLA_PYTHON_CLIENT_PREALLOCATE=false
 export NCCL_P2P_DISABLE=1
-export XLA_PYTHON_CLIENT_PREALLOCATE=false
-export XLA_PYTHON_CLIENT_MEM_FRACTION=0.55
-export MUJOCO_GL=egl
-export PYOPENGL_PLATFORM=egl
+export MUJOCO_GL=egl PYOPENGL_PLATFORM=egl
 export PYTHONUNBUFFERED=1
 
-START_TS="$(date +%s)"
-echo "$COMMIT $(hostname) $$ phase-a-hybrid" > "$OUT/launch.txt"
-date -u +"%Y-%m-%dT%H:%M:%SZ" > "$OUT/gpu-start.txt"
+libs="$root/setups/libero90-full-action-20261119-r1/desktop-libs02"
+glvnd="$libs/prefix/usr/lib/x86_64-linux-gnu"
+IFS=: read -ra paths <<< "${LD_LIBRARY_PATH:-}"
+driver_paths=""
+for path in "${paths[@]}"; do
+    if [[ -n "$path" && ! -f "$path/libtorch_python.so" ]]; then driver_paths+=":$path"; fi
+done
+export LD_LIBRARY_PATH="$glvnd:$libs/prefix/usr/lib/x86_64-linux-gnu$driver_paths"
+export __EGL_VENDOR_LIBRARY_FILENAMES="$libs/nvidia-vendor.json"
 
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
-"$PY" -Bu "$REPO/scripts/[train]gpu_probe.py" \
-  --expected-count "$NUM_GPUS" --purpose training --baige-container --baige-exclusive-training \
-  --output "$OUT/gpu.json" > "$OUT/probe.log" 2>&1
+date +%s > "$out/gpu-start.txt"
+"$root/setups/robocasa365-native-20261101-r1/env/bin/python" -Bu "$code/scripts/[train]gpu_probe.py" \
+    --expected-count 8 --purpose training --baige-container --baige-exclusive-training \
+    --output "$out/gpu.json" > "$out/probe.log" 2>&1
 
-# Step 1: Train 3-seed 10-channel hybrid reader on GPU 0 (~3 min).
-CUDA_VISIBLE_DEVICES=0 "$PY" "$SCRIPT" train-hybrid \
-  --archive "$SRC/archive/archive.json" \
-  --out-dir "$OUT/train" \
-  --steps 3000 --batch-size 64 --seeds 41 42 43 --cnn-width 96 --mlp-width 192 \
-  > "$OUT/logs/train-hybrid.log" 2>&1
-
-# Step 2: 8-GPU sharded live closed-loop eval (96 UR5e queries x 6 arms = 576 episodes, ~18 min).
-PIDS=()
-for i in $(seq 0 $((NUM_GPUS - 1))); do
-  CUDA_VISIBLE_DEVICES="$i" MUJOCO_EGL_DEVICE_ID="$i" "$PY" "$SCRIPT" eval-shard \
-    --archive "$SRC/archive/archive.json" \
-    --base-train-dir "$SRC/train" \
-    --hybrid-train-dir "$OUT/train" \
-    --output-dir "$OUT/live" \
-    --shard-idx "$i" \
-    --num-shards "$NUM_GPUS" \
-    --seed-ckpt 41 \
-    > "$OUT/logs/eval-shard-$i.log" 2>&1 &
-  PIDS+=($!)
+pids=()
+for s in 0 1 2 3 4 5 6 7; do
+    CUDA_VISIBLE_DEVICES="$s" MUJOCO_EGL_DEVICE_ID="$s" \
+        timeout --kill-after=20s 60m "$python" -Bu "$here/phase_a_hybrid.py" eval-shard \
+        --archive "$src/archive/archive.json" \
+        --base-train-dir "$src/train" \
+        --hybrid-train-dir "$hyb/train" \
+        --output-dir "$out/live" \
+        --shard-idx "$s" \
+        --num-shards 8 \
+        --seed-ckpt 41 \
+        > "$out/logs/eval-shard-$s.log" 2>&1 &
+    pids+=($!)
 done
+for p in "${pids[@]}"; do wait "$p"; done
 
-FAIL=0
-for pid in "${PIDS[@]}"; do
-  if ! wait "$pid"; then
-    FAIL=1
-  fi
-done
-if [ "$FAIL" -ne 0 ]; then
-  echo "1 $(date +%s) $START_TS" > "$OUT/exit.txt"
-  exit 1
-fi
-
-CUDA_VISIBLE_DEVICES=0 "$PY" "$SCRIPT" merge \
-  --output-dir "$OUT/live" \
-  --num-shards "$NUM_GPUS" \
-  > "$OUT/logs/merge.log" 2>&1
-
-echo "0 $(date +%s) $START_TS" > "$OUT/exit.txt"
+CUDA_VISIBLE_DEVICES=0 "$python" -Bu "$here/phase_a_hybrid.py" merge \
+    --output-dir "$out/live" --num-shards 8 > "$out/logs/merge.log" 2>&1
