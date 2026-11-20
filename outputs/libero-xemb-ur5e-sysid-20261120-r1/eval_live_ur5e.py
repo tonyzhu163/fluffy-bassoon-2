@@ -33,10 +33,10 @@ ARMS = (
     "analytic_proprio_sysid",
     "analytic_visual_sysid_active",
     "analytic_visual_sysid_passive",
-    "joint_transformer_passive",
-    "factored_no_equiv_passive",
-    "ours_retained_passive",
+    "joint_transformer_active",
+    "factored_no_equiv_active",
     "ours_retained_active",
+    "ours_retained_passive",
     "ours_cleared",
     "ours_swapped_donor",
 )
@@ -140,8 +140,8 @@ def main():
     for arm_name, mode, model_type in (
         ("ours_retained_active", "active_probe", "factored_equiv"),
         ("ours_retained_passive", "passive_attempt1", "factored_equiv"),
-        ("joint_transformer_passive", "passive_attempt1", "joint_transformer"),
-        ("factored_no_equiv_passive", "passive_attempt1", "factored_no_equiv"),
+        ("joint_transformer_active", "active_probe", "joint_transformer"),
+        ("factored_no_equiv_active", "active_probe", "factored_no_equiv"),
     ):
         readers[arm_name] = load_reader_checkpoint(
             args.train_dir / "checkpoints", mode, model_type, args.seed_ckpt, archive_sha, audit["steps"]
@@ -176,9 +176,9 @@ def main():
 
             act_batch = load_support_batch(archive_dir, sup_row, "active_probe")
             pas_batch = load_support_batch(archive_dir, sup_row, "passive_attempt1")
-            clr_batch = dict(pas_batch, valid=np.zeros_like(pas_batch["valid"]))
+            clr_batch = dict(act_batch, valid=np.zeros_like(act_batch["valid"]))
             donor_row = trial_rows[donors[idx]]
-            don_batch = load_support_batch(archive_dir, donor_row, "passive_attempt1")
+            don_batch = load_support_batch(archive_dir, donor_row, "active_probe")
 
             act_iss = issued_exposure(act_batch)
             ya, sa, ga = analytic_proprio_sysid(
@@ -217,11 +217,11 @@ def main():
                 "analytic_proprio_sysid": (float(ya[0]), float(sa[0]), int(ga[0])),
                 "analytic_visual_sysid_active": (yaw_va, float(sa[0]), int(ga[0])),
                 "analytic_visual_sysid_passive": (yaw_vp, float(sp[0]), int(gp[0])),
-                "ours_cleared": infer_one(*readers["ours_retained_passive"], clr_batch),
-                "ours_swapped_donor": infer_one(*readers["ours_retained_passive"], don_batch),
+                "ours_cleared": infer_one(*readers["ours_retained_active"], clr_batch),
+                "ours_swapped_donor": infer_one(*readers["ours_retained_active"], don_batch),
             }
             for name, reader in readers.items():
-                batch = act_batch if name == "ours_retained_active" else pas_batch
+                batch = pas_batch if name == "ours_retained_passive" else act_batch
                 preds[name] = infer_one(*reader, batch)
 
             key = (suite, task_id)
